@@ -83,6 +83,11 @@ module RubyLLM
       additional_properties true
     end
 
+    any_of :unlisted_at, required: false, description: 'When the provider stopped listing the model' do
+      string
+      null
+    end
+
     # The Draft 2020-12 JSON Schema document for one model entry. Wrap it in an
     # array schema to validate a whole registry.
     def self.json_schema

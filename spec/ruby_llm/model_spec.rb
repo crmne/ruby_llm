@@ -99,6 +99,21 @@ RSpec.describe RubyLLM::Model do
     end
   end
 
+  describe '#unlisted?' do
+    it 'returns false for a model the provider still lists' do
+      expect(model.unlisted?).to be false
+      expect(model.to_h).not_to have_key(:unlisted_at)
+    end
+
+    it 'returns true once the registry reports the time the provider stopped listing it' do
+      gone = described_class.new(data.merge(unlisted_at: '2026-02-20 00:00:00 +0700'))
+
+      expect(gone.unlisted?).to be true
+      expect(gone.unlisted_at).to eq(Time.utc(2026, 2, 19, 17))
+      expect(gone.to_h[:unlisted_at]).to eq(gone.unlisted_at)
+    end
+  end
+
   describe '#reasoning_options' do
     it 'normalizes metadata reasoning options' do
       expect(model.reasoning_options).to eq(

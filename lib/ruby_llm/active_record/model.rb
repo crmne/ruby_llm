@@ -11,6 +11,11 @@ module RubyLLM
       validates :model_id, presence: true, uniqueness: { scope: :provider }
       validates :provider, :name, presence: true
 
+      scope :listed, -> { where(unlisted_at: nil) }
+      scope :unlisted, -> { where.not(unlisted_at: nil) }
+
+      UNLISTED_WARNING_LIMIT = 5 # :nodoc:
+
       class << self
         def read
           return [] unless table_exists?
@@ -35,10 +40,12 @@ module RubyLLM
 
         def save_to_database(registry = RubyLLM.models)
           transaction do
-            registry.all.each do |model_info|
+            kept = registry.all.map do |model_info|
               model = find_or_initialize_by(model_id: model_info.id, provider: model_info.provider)
               model.update!(attributes_from_llm(model_info))
+              model.id
             end
+            unlist(kept)
           end
         end
 
@@ -47,6 +54,38 @@ module RubyLLM
         end
 
         private
+
+        # A refresh replaces the registry, so models it no longer carries go
+        # away. A row an application record points at cannot: deleting it would
+        # dangle the reference. That row is stamped unlisted instead, keeping
+        # the chats that use it resolvable while the application migrates them.
+        def unlist(kept_ids)
+          stayed = []
+          where.not(id: kept_ids).find_each do |model|
+            transaction(requires_new: true) { model.destroy! }
+          rescue ::ActiveRecord::InvalidForeignKey
+            model.update!(unlisted_at: Time.current) unless model.unlisted_at
+            stayed << "#{model.provider}/#{model.model_id}"
+          end
+          warn_unlisted(stayed)
+        end
+
+        def warn_unlisted(names)
+          return if names.empty?
+
+          subject = names.size == 1 ? '1 model is' : "#{names.size} models are"
+          RubyLLM.logger.warn do
+            "#{subject} no longer listed by the provider and may no longer work: #{unlisted_listing(names)}. " \
+              'The rows stay because application records still reference them. The provider may have dropped ' \
+              'them, or your configured region may not offer them.'
+          end
+        end
+
+        def unlisted_listing(names)
+          extra = names.size - UNLISTED_WARNING_LIMIT
+          listing = names.first(UNLISTED_WARNING_LIMIT).join(', ')
+          extra.positive? ? "#{listing}, and #{extra} more" : listing
+        end
 
         def attributes_from_llm(model_info)
           {
@@ -61,7 +100,8 @@ module RubyLLM
             modalities: model_info.modalities.to_h,
             capabilities: model_info.capabilities,
             pricing: model_info.pricing.to_h,
-            metadata: model_info.metadata
+            metadata: model_info.metadata,
+            unlisted_at: nil
           }
         end
       end
@@ -79,11 +119,12 @@ module RubyLLM
           modalities: modalities&.deep_symbolize_keys || {},
           capabilities: capabilities,
           pricing: pricing&.deep_symbolize_keys || {},
-          metadata: metadata&.deep_symbolize_keys || {}
+          metadata: metadata&.deep_symbolize_keys || {},
+          unlisted_at: unlisted_at
         )
       end
 
-      delegate :supports?, :price, :type, :provider_class, :label, :cost_for, to: :to_llm
+      delegate :supports?, :price, :type, :provider_class, :label, :cost_for, :unlisted?, to: :to_llm
     end
   end
 end

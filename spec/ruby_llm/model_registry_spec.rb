@@ -76,6 +76,20 @@ RSpec.describe RubyLLM::ModelRegistry do
         expect(File.read(File.join(directory, 'models.json.etag')).strip).to eq('"registry-1"')
       end
     end
+
+    it 'leaves the registry readable instead of inheriting the tempfile mode' do
+      Dir.mktmpdir do |directory|
+        path = File.join(directory, 'models.json')
+        store = described_class.new(path)
+
+        store.write([model], etag: nil)
+        expect(File.stat(path).mode & 0o777).to eq(0o666 & ~File.umask)
+
+        File.chmod(0o640, path)
+        store.write([model], etag: nil)
+        expect(File.stat(path).mode & 0o777).to eq(0o640)
+      end
+    end
   end
 
   describe RubyLLM::ModelRegistry::PublishedSource do
@@ -226,6 +240,24 @@ RSpec.describe RubyLLM::ModelRegistry do
       registry.refresh!
 
       expect(registry.all.map(&:id)).to eq(['new-model'])
+    end
+
+    it 'adopts what the store reports, keeping the unlisted models the merge dropped' do
+      unlisted = RubyLLM::Model.new(id: 'old-model', name: 'Old Model', provider: 'openai',
+                                    unlisted_at: Time.now.utc)
+      store = double('model registry store', description: 'database:Model', write: nil, # rubocop:disable RSpec/VerifiedDoubles
+                                             read: [model, unlisted])
+      RubyLLM.config.model_registry_store = store
+      allow(described_class).to receive_messages(
+        fetch_provider_models: empty_fetch,
+        fetch_published_registry: RubyLLM::ModelRegistry::PublishedSource::Result.new([model], nil, false)
+      )
+
+      registry = described_class.new([old_model]).refresh!
+
+      expect(registry.all.map(&:id)).to eq(['new-model'])
+      expect(registry.unlisted.map(&:id)).to eq(['old-model'])
+      expect(registry.find('old-model', :openai).id).to eq('old-model')
     end
   end
 

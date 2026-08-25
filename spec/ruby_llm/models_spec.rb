@@ -45,6 +45,29 @@ RSpec.describe RubyLLM::Models do
       expect(described_class.count).to eq(RubyLLM.models.count)
     end
 
+    it 'leaves unlisted models out of every listing method but still finds them' do
+      live = RubyLLM::Model.new(id: 'live-model', name: 'Live Model', provider: 'openai')
+      gone = RubyLLM::Model.new(id: 'gone-model', name: 'Gone Model', provider: 'openai',
+                                unlisted_at: Time.now.utc)
+      registry = described_class.new([live, gone])
+
+      expect(registry.all.map(&:id)).to eq(['live-model'])
+      expect(registry.map(&:id)).to eq(['live-model'])
+      expect(registry.by_provider(:openai).chat_models.map(&:id)).to eq(['live-model'])
+      expect(registry.unlisted.map(&:id)).to eq(['gone-model'])
+      expect(registry.by_provider(:openai).unlisted.map(&:id)).to eq(['gone-model'])
+      expect(registry.find('gone-model').id).to eq('gone-model')
+      expect(registry.find('gone-model', :openai).id).to eq('gone-model')
+      expect(RubyLLM.models.unlisted).to be_empty
+    end
+
+    it 'prefers a listed model over an unlisted one when no provider is given' do
+      gone = RubyLLM::Model.new(id: 'shared-model', name: 'Gone', provider: 'openai', unlisted_at: Time.now.utc)
+      live = RubyLLM::Model.new(id: 'shared-model', name: 'Live', provider: 'openrouter')
+
+      expect(described_class.new([gone, live]).find('shared-model').provider).to eq('openrouter')
+    end
+
     it 'filters by vision support' do
       vision_models = RubyLLM.models.select { |m| m.supports?(:vision) }
       expect(vision_models).not_to be_empty
@@ -361,7 +384,7 @@ RSpec.describe RubyLLM::Models do
       )
     end
 
-    it 'keeps models.dev authoritative for overlapping capabilities when merging provider metadata' do
+    it 'keeps models.dev authoritative for the capabilities it reports on when merging provider metadata' do
       models_dev_model = RubyLLM::Model.new(
         id: 'test-model',
         name: 'Test Model',
@@ -370,7 +393,7 @@ RSpec.describe RubyLLM::Models do
         max_output_tokens: 100,
         modalities: { input: ['text'], output: ['text'] },
         capabilities: ['function_calling'],
-        metadata: { source: 'models.dev' }
+        metadata: { source: 'models.dev', tool_call: true, reasoning: false }
       )
       provider_model = RubyLLM::Model.new(
         id: 'test-model',
@@ -383,7 +406,7 @@ RSpec.describe RubyLLM::Models do
 
       merged = described_class.add_provider_metadata(models_dev_model, provider_model)
 
-      expect(merged.capabilities).to contain_exactly('function_calling', 'streaming')
+      expect(merged.capabilities).to contain_exactly('function_calling', 'streaming', 'structured_output')
     end
 
     it 'uses release_date cast to midnight as created_at' do

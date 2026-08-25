@@ -100,6 +100,16 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
+  describe '.models_from_bundle' do
+    it 'warns and starts empty when the bundled registry is absent' do
+      allow(described_class).to receive(:bundled_registry_file).and_return('/nonexistent/models.json')
+      allow(RubyLLM.logger).to receive(:warn)
+
+      expect(described_class.models_from_bundle).to eq([])
+      expect(RubyLLM.logger).to have_received(:warn).with(/Bundled model registry is missing/)
+    end
+  end
+
   describe 'refresh models output structure' do
     before do
       # Mock the API responses to ensure consistent test results

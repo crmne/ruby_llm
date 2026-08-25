@@ -44,6 +44,7 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
 
   def move_models
     move_table(:<%= legacy_model_table_name %>, :ruby_llm_models) { create_models }
+    add_column :ruby_llm_models, :unlisted_at, :datetime unless column_exists?(:ruby_llm_models, :unlisted_at)
     normalize_chat_model_reference(:<%= chat_table_name %>, :<%= legacy_model_foreign_key %>)
     replace_message_model_reference(:<%= message_table_name %>, :<%= legacy_model_foreign_key %>)
   end
@@ -58,6 +59,7 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
       t.integer :context_window
       t.integer :max_output_tokens
       t.date :knowledge_cutoff
+      t.datetime :unlisted_at
 <% if postgresql? %>
       t.jsonb :modalities, default: {}
       t.jsonb :capabilities, default: []

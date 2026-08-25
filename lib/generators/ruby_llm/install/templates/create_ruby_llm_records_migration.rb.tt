@@ -9,6 +9,7 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
       t.integer :context_window
       t.integer :max_output_tokens
       t.date :knowledge_cutoff
+      t.datetime :unlisted_at
 <% if postgresql? %>
       t.jsonb :modalities, default: {}
       t.jsonb :capabilities, default: []

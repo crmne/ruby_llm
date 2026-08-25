@@ -125,6 +125,69 @@ This creates RubyLLM's internal model table. Load or refresh it with the same pu
 RubyLLM.models.refresh!
 ```
 
+### When a Model Disappears
+
+A refresh reports the models your configured provider lists today, so a model you used yesterday can be missing tomorrow, and looking it up raises `RubyLLM::ModelNotFoundError`.
+
+RubyLLM does not guess what you meant by a model it cannot find. Deciding what happens next is application logic, because only your application knows whether an old conversation should move to a successor model, fall back to a different provider, or stop and tell the person using it.
+
+Handle the lookup where you resolve a model:
+
+```ruby
+def chat_for(record)
+  record.to_llm
+rescue RubyLLM::ModelNotFoundError
+  record.with_model('claude-sonnet-4-6')
+end
+```
+
+Or migrate the records once, after a refresh:
+
+```ruby
+Chat.where(model_id: 'claude-3-opus-20240229').find_each do |chat|
+  chat.with_model('claude-opus-4-5')
+end
+```
+
+For a chat that should survive on its own, configure fallbacks so the request moves to the next model instead of raising. See [Advanced Request Control]({% link _core_features/chat-request-control.md %}).
+
+In Rails, a refresh deletes the rows for the models the provider no longer lists. A row one of your chats points at cannot go: the chat's foreign key holds it there. RubyLLM keeps that row, stamps it with `unlisted_at`, and logs one warning per refresh naming the models it kept.
+
+RubyLLM calls those models unlisted, not retired, because a refresh only tells it what the provider listed. A provider that dropped a model and a provider that serves a different catalog in your configured region look the same from here. Vertex AI lists `gemini-embedding-001` in `us-central1` but not in `global`, and `gemini-2.0-flash-001` the other way around.
+
+Listing methods leave unlisted models out. `RubyLLM.models.all`, `chat_models`, `by_provider`, and the rest report what the provider lists, so a picker built from them never offers a model that has gone away:
+
+```ruby
+RubyLLM.models.chat_models
+```
+
+Resolving by id does not. `find` still returns an unlisted model, so the chats that point at one keep working:
+
+```ruby
+RubyLLM.models.find('claude-3-opus-20240229')  # resolves while the row is there
+Chat.last.to_llm                               # so an old chat does not raise
+```
+
+It is a model you name directly, in code or in a form, that raises once its row is gone.
+
+The `unlisted` scope drives the migration pass after a refresh:
+
+```ruby
+RubyLLM.models.refresh!
+
+RubyLLM::ActiveRecord::Model.unlisted.find_each do |model|
+  Chat.where(model: model).find_each do |chat|
+    chat.with_model('claude-opus-4-5')
+  end
+end
+```
+
+`RubyLLM.models.unlisted` reports the same models from the registry, as `RubyLLM::Model` entries.
+
+Once nothing references an unlisted model, the next refresh deletes its row. A model the provider lists again loses its `unlisted_at` on the refresh that carries it.
+
+Only the Rails registry keeps unlisted models. The registry file and the published `models.json` hold what the last refresh returned, so an unlisted model is not in them at all.
+
 ## Exploring and Finding Models
 
 Use `RubyLLM.models` to explore the registry.

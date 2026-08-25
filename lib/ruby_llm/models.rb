@@ -33,7 +33,6 @@ module RubyLLM
     }.freeze
     MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze # :nodoc:
     MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation rerank].freeze # :nodoc:
-    MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze # :nodoc:
     # First-party providers outrank the aggregators that resell their models.
     PROVIDER_PREFERENCE = %w[
       openai
@@ -56,6 +55,8 @@ module RubyLLM
       all
       each
       find
+      listed
+      unlisted
       chat_models
       embedding_models
       audio_models
@@ -68,6 +69,11 @@ module RubyLLM
     ]).uniq.freeze # :nodoc:
 
     class << self
+      # The providers whose model list could not be fetched during the last
+      # refresh, as hashes of +:name+, +:slug+, and +:error+. Their previous
+      # models are kept, so an unreported failure leaves stale entries behind.
+      attr_reader :last_provider_failures
+
       INSTANCE_DELEGATES.each do |method_name|
         define_method(method_name) do |*args, **kwargs, &block|
           instance.public_send(method_name, *args, **kwargs, &block)
@@ -109,8 +115,13 @@ module RubyLLM
       end
 
       def models_from_bundle # :nodoc:
-        ModelRegistry.read(bundled_registry_file) ||
-          raise(ModelRegistryError, "Bundled model registry is missing: #{bundled_registry_file}")
+        ModelRegistry.read(bundled_registry_file) || begin
+          RubyLLM.logger.warn(
+            "Bundled model registry is missing: #{bundled_registry_file}. " \
+            'Refresh the registry to rebuild it.'
+          )
+          []
+        end
       end
 
       def fetch_published_registry(etag: nil) # :nodoc:
@@ -137,7 +148,9 @@ module RubyLLM
           existing_models = read_existing_models
 
           provider_fetch = fetch_provider_models(remote_only: remote_only)
+          @last_provider_failures = provider_fetch[:failed]
           log_provider_fetch(provider_fetch)
+          payload[:failed_providers] = provider_fetch[:failed].map { |failure| failure[:slug] }
 
           models_dev_fetch = fetch_models_dev_models(existing_models)
           log_models_dev_fetch(models_dev_fetch)
@@ -151,11 +164,18 @@ module RubyLLM
       def fetch_provider_models(remote_only: true) # :nodoc:
         config = RubyLLM.config
         providers = remote_only ? Provider.configured_remote_providers(config) : Provider.configured_providers(config)
-        result = { models: [], fetched_providers: [], configured_names: providers.map(&:display_name), failed: [] }
+        result = {
+          models: [], fetched_providers: [], configured_names: providers.map(&:display_name), failed: [], empty: []
+        }
 
         providers.each do |provider_class|
-          result[:models].concat(provider_class.new(config).list_models)
-          result[:fetched_providers] << provider_class.slug
+          models = provider_class.new(config).list_models
+          if models.empty?
+            result[:empty] << { name: provider_class.display_name, slug: provider_class.slug }
+          else
+            result[:models].concat(models)
+            result[:fetched_providers] << provider_class.slug
+          end
         rescue StandardError => e
           result[:failed] << { name: provider_class.display_name, slug: provider_class.slug, error: e }
         end
@@ -187,31 +207,41 @@ module RubyLLM
         [model, provider_class.new(config)]
       end
 
-      def fetch_models_dev_models(existing_models) # rubocop:disable Metrics/PerceivedComplexity
+      def fetch_models_dev_models(existing_models) # :nodoc:
         RubyLLM.logger.info 'Fetching models from models.dev API...'
 
         connection = Connection.basic do |f|
           f.request :json
           f.response :json, parser_options: { symbolize_names: true }
         end
-        response = connection.get 'https://models.dev/api.json'
-        providers = response.body || {}
-
-        models = providers.flat_map do |provider_key, provider_data|
-          provider_slug = MODELS_DEV_PROVIDER_MAP[provider_key.to_s]
-          next [] unless provider_slug
-
-          (provider_data[:models] || {}).values.map do |model_data|
-            Model.new(models_dev_model_attributes(model_data, provider_slug, provider_key.to_s))
-          end
-        end
-        { models: models.reject { |model| model.provider.nil? || model.id.nil? }, fetched: true }
+        { models: parse_models_dev_catalog(connection.get('https://models.dev/api.json').body), fetched: true }
       rescue StandardError => e
         RubyLLM.logger.warn("Failed to fetch models.dev (#{e.class}: #{e.message}). Keeping existing.")
         {
           models: existing_models.select { |model| model.metadata[:source] == 'models.dev' },
           fetched: false
         }
+      end
+
+      # An answer RubyLLM cannot read a single model out of is no answer:
+      # only a catalog carrying models may overrule what the registry holds.
+      def parse_models_dev_catalog(body) # :nodoc:
+        raise ModelRegistryError, "models.dev returned #{body.class} instead of a catalog" unless body.is_a?(Hash)
+
+        models = body.flat_map { |provider_key, data| models_dev_provider_models(provider_key, data) }
+        raise ModelRegistryError, 'models.dev returned no models RubyLLM knows a provider for' if models.empty?
+
+        models
+      end
+
+      def models_dev_provider_models(provider_key, provider_data) # :nodoc:
+        provider_slug = MODELS_DEV_PROVIDER_MAP[provider_key.to_s]
+        return [] unless provider_slug
+
+        (provider_data[:models] || {}).values.filter_map do |model_data|
+          model = Model.new(models_dev_model_attributes(model_data, provider_slug, provider_key.to_s))
+          model unless model.provider.nil? || model.id.nil?
+        end
       end
 
       def read_existing_models # :nodoc:
@@ -226,6 +256,9 @@ module RubyLLM
             "Failed to fetch #{failure[:name]} models (#{failure[:error].class}: #{failure[:error].message}). " \
             'Keeping existing.'
           )
+        end
+        Array(provider_fetch[:empty]).each do |provider|
+          RubyLLM.logger.warn("#{provider[:name]} listed no models. Keeping existing.")
         end
       end
 
@@ -317,13 +350,30 @@ module RubyLLM
         data[:created_at] = provider_model.created_at if blank_value?(data[:created_at])
         data[:context_window] = provider_model.context_window if blank_value?(data[:context_window])
         data[:max_output_tokens] = provider_model.max_output_tokens if blank_value?(data[:max_output_tokens])
+        data[:knowledge_cutoff] = provider_model.knowledge_cutoff if blank_value?(data[:knowledge_cutoff])
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
         data[:pricing] = provider_model.pricing.to_h if blank_value?(data[:pricing])
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
-        provider_capabilities = provider_model.capabilities - MODELS_DEV_AUTHORITY_CAPABILITIES
-        data[:capabilities] = (models_dev_model.capabilities + provider_capabilities).uniq
+        data[:capabilities] = merge_capabilities(models_dev_model, provider_model)
         normalize_embedding_modalities(data)
         Model.new(data)
+      end
+
+      def merge_capabilities(models_dev_model, provider_model) # :nodoc:
+        denied = models_dev_reported_capabilities(models_dev_model) - models_dev_model.capabilities
+        (models_dev_model.capabilities + provider_model.capabilities).uniq - denied
+      end
+
+      # models.dev leaves a field out where it has no opinion, so only the
+      # capabilities it reports on can overrule what a provider claims.
+      def models_dev_reported_capabilities(models_dev_model) # :nodoc:
+        metadata = models_dev_model.metadata
+        reported = []
+        reported << 'function_calling' unless metadata[:tool_call].nil?
+        reported << 'structured_output' unless metadata[:structured_output].nil?
+        reported << 'reasoning' unless metadata[:reasoning].nil? && metadata[:reasoning_options].nil?
+        reported << 'vision' unless models_dev_model.modalities.input.empty?
+        reported
       end
 
       def normalize_embedding_modalities(data) # :nodoc:
@@ -447,6 +497,9 @@ module RubyLLM
           last_updated: model_data[:last_updated],
           status: model_data[:status],
           interleaved: model_data[:interleaved],
+          tool_call: model_data[:tool_call],
+          structured_output: model_data[:structured_output],
+          reasoning: model_data[:reasoning],
           reasoning_options: model_data[:reasoning_options],
           cost: model_data[:cost],
           limit: model_data[:limit],
@@ -510,8 +563,28 @@ module RubyLLM
       self
     end
 
-    # Returns an array of all Model entries in this registry.
+    # Returns an array of the Model entries the configured provider still
+    # lists. Models it has stopped listing are left out; #find still resolves
+    # them, and #unlisted reports them.
     def all
+      all_including_unlisted.reject(&:unlisted?)
+    end
+
+    # Returns an array of the Model entries the configured provider has
+    # stopped listing. Only a store that keeps them, such as the Rails model
+    # table, ever reports one.
+    #
+    #   RubyLLM.models.unlisted.map(&:id)
+    #
+    def unlisted
+      all_including_unlisted.select(&:unlisted?)
+    end
+
+    # Returns an array of the Model entries the configured provider still
+    # lists. Reads the same as #all, which already excludes the rest.
+    alias listed all
+
+    def all_including_unlisted # :nodoc:
       @models
     end
 
@@ -541,24 +614,24 @@ module RubyLLM
 
     # Returns a new Models registry containing only chat models.
     def chat_models
-      self.class.new(all.select { |m| m.type == 'chat' })
+      select_models { |m| m.type == 'chat' }
     end
 
     # Returns a new Models registry containing only embedding models.
     def embedding_models
-      self.class.new(all.select { |m| m.type == 'embedding' || m.modalities.output.include?('embeddings') })
+      select_models { |m| m.type == 'embedding' || m.modalities.output.include?('embeddings') }
     end
 
     # Returns a new Models registry containing only models with audio
     # output.
     def audio_models
-      self.class.new(all.select { |m| m.type == 'audio' || m.modalities.output.include?('audio') })
+      select_models { |m| m.type == 'audio' || m.modalities.output.include?('audio') }
     end
 
     # Returns a new Models registry containing only models with image
     # output.
     def image_models
-      self.class.new(all.select { |m| m.type == 'image' || m.modalities.output.include?('image') })
+      select_models { |m| m.type == 'image' || m.modalities.output.include?('image') }
     end
 
     # Returns a new Models registry containing only models in +family+.
@@ -566,7 +639,7 @@ module RubyLLM
     #   RubyLLM.models.by_family('claude3_sonnet')
     #
     def by_family(family)
-      self.class.new(all.select { |m| m.family == family.to_s })
+      select_models { |m| m.family == family.to_s }
     end
 
     # Returns a new Models registry containing only models from +provider+.
@@ -575,7 +648,7 @@ module RubyLLM
     #   RubyLLM.models.by_provider(:openai).select { |model| model.supports?(:vision) }
     #
     def by_provider(provider)
-      self.class.new(all.select { |m| m.provider == provider.to_s })
+      select_models { |m| m.provider == provider.to_s }
     end
 
     # Replaces the registry with the latest published RubyLLM catalog,
@@ -594,8 +667,8 @@ module RubyLLM
       RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
         published = fetch_published_models
         merged_models = merge_discovered_models(published.models, remote_only:)
-        persist_registry!(merged_models, etag: published.etag)
-        @models = merged_models
+        persist_registry!(merged_models, published:)
+        @models = stored_models || merged_models
         payload.merge!(model_count: all.size, not_modified: published.not_modified)
       end
       self
@@ -612,6 +685,12 @@ module RubyLLM
 
     private
 
+    # Filters keep the unlisted entries so #find and #unlisted still see them
+    # after a chain such as by_provider(:openai).unlisted.
+    def select_models(&)
+      self.class.new(all_including_unlisted.select(&))
+    end
+
     def file_store
       return if RubyLLM.config.model_registry_store
       return unless RubyLLM.config.model_registry_file
@@ -619,17 +698,22 @@ module RubyLLM
       ModelRegistry::FileStore.new(RubyLLM.config.model_registry_file)
     end
 
-    def fetch_published_models
-      store = file_store
-      cached = cached_models(store)
-      etag = store.etag if cached
-      result = self.class.fetch_published_registry(etag:)
-      result.models ||= cached
-      result
+    # The ETag identifies the published catalog, not the merged registry, so
+    # it may only be sent while the catalog it stands for is still on disk.
+    def published_store
+      file = file_store
+      ModelRegistry::FileStore.new("#{file.path}.published.json") if file
     end
 
-    def cached_models(store)
-      models = store&.read
+    def fetch_published_models
+      cached = published_catalog
+      result = self.class.fetch_published_registry(etag: (file_store.etag if cached))
+      result.models ||= cached
+      result.models ? result : self.class.fetch_published_registry
+    end
+
+    def published_catalog
+      models = published_store&.read
       models unless models.nil? || models.empty?
     rescue ModelRegistryError
       nil
@@ -652,7 +736,7 @@ module RubyLLM
       failed | (all.map(&:provider).uniq - covered)
     end
 
-    def persist_registry!(models, etag:)
+    def persist_registry!(models, published:)
       store = RubyLLM.config.model_registry_store
       if store
         raise ModelRegistryError, "Model registry store #{store.class} is read-only" unless store.respond_to?(:write)
@@ -664,12 +748,30 @@ module RubyLLM
       file = file_store
       raise ModelRegistryError, 'No writable model registry store is configured' unless file
 
-      file.write(models, etag:)
+      write_published_catalog(published)
+      file.write(models, etag: published.etag)
     rescue ModelRegistryError
       raise
     rescue StandardError => e
       destination = store_description(store) || file&.path || 'the configured store'
       raise ModelRegistryError, "Could not save the model registry to #{destination}: #{e.message}"
+    end
+
+    # A store keeps entries the merge dropped, such as the unlisted rows a
+    # Rails application still references, so its answer wins over the merge.
+    def stored_models
+      store = RubyLLM.config.model_registry_store
+      return unless store.respond_to?(:read)
+
+      models = Array(store.read)
+      models unless models.empty?
+    rescue StandardError => e
+      RubyLLM.logger.debug { "Could not re-read the model registry store: #{e.message}" }
+      nil
+    end
+
+    def write_published_catalog(published)
+      published_store.write(published.models) unless published.not_modified
     end
 
     def store_description(store)
@@ -681,8 +783,8 @@ module RubyLLM
     def find_with_provider(model_id, provider, config = nil)
       resolved_id = Aliases.resolve(model_id, provider)
       resolved_id = resolve_provider_registry_id(resolved_id, provider, config)
-      all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
-        all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
+      all_including_unlisted.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
+        all_including_unlisted.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         raise_model_not_found(model_id, provider: provider)
     end
 
@@ -698,8 +800,8 @@ module RubyLLM
     # Provider preference settles it, not the kind of match.
     def find_without_provider(model_id)
       resolved_id = Aliases.resolve(model_id)
-      matches = all.select { |m| [model_id, resolved_id].include?(m.id) }
-                   .sort_by { |m| m.id == model_id ? 0 : 1 }
+      matches = all_including_unlisted.select { |m| [model_id, resolved_id].include?(m.id) }
+                                      .sort_by { |m| m.id == model_id ? 0 : 1 }
 
       preferred_match(matches) || raise_model_not_found(model_id)
     end
@@ -720,7 +822,7 @@ module RubyLLM
 
       candidates.min_by do |model|
         index = PROVIDER_PREFERENCE.index(model.provider)
-        index || PROVIDER_PREFERENCE.length
+        [model.unlisted? ? 1 : 0, index || PROVIDER_PREFERENCE.length]
       end
     end
   end

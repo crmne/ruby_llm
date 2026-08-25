@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_260_818_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_818_120_000) do
     t.integer 'context_window'
     t.integer 'max_output_tokens'
     t.date 'knowledge_cutoff'
+    t.datetime 'unlisted_at'
     t.json 'modalities', default: {}
     t.json 'capabilities', default: []
     t.json 'pricing', default: {}

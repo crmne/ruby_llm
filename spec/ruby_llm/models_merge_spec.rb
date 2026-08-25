@@ -47,6 +47,18 @@ RSpec.describe RubyLLM::Models do
       expect(result[:fetched_providers]).to eq(['acme'])
       expect(result[:configured_names]).to eq(['Acme'])
       expect(result[:failed]).to be_empty
+      expect(result[:empty]).to be_empty
+    end
+
+    it 'treats a provider that lists nothing as one that did not answer' do
+      silent = fake_provider(slug: 'acme', display_name: 'Acme', models: [])
+      allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([silent])
+
+      result = described_class.fetch_provider_models
+
+      expect(result[:fetched_providers]).to be_empty
+      expect(result[:failed]).to be_empty
+      expect(result[:empty]).to eq([{ name: 'Acme', slug: 'acme' }])
     end
 
     it 'records a provider that fails instead of aborting the refresh' do
@@ -77,6 +89,17 @@ RSpec.describe RubyLLM::Models do
 
       expect(RubyLLM.logger).to have_received(:info).with('Fetching models from providers: Acme')
       expect(RubyLLM.logger).to have_received(:warn).with(/Failed to fetch Acme models \(ArgumentError: boom\)/)
+    end
+
+    it 'warns about a provider that listed nothing' do
+      allow(RubyLLM.logger).to receive(:info)
+      allow(RubyLLM.logger).to receive(:warn)
+
+      described_class.log_provider_fetch(
+        configured_names: ['Acme'], failed: [], empty: [{ name: 'Acme', slug: 'acme' }]
+      )
+
+      expect(RubyLLM.logger).to have_received(:warn).with('Acme listed no models. Keeping existing.')
     end
   end
 
@@ -140,6 +163,23 @@ RSpec.describe RubyLLM::Models do
         text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } },
         audio_tokens: { standard: { input_per_million: 3.0, output_per_million: 4.0 } }
       )
+    end
+
+    it 'keeps the models.dev entries it already had when the answer carries no models' do
+      allow(RubyLLM.logger).to receive(:warn)
+      cached = model(id: 'cached', provider: 'openai', metadata: { source: 'models.dev' })
+
+      [{}, nil, { 'openai-inc': { models: { a: { id: 'a' } } } }].each do |body|
+        stub_request(:get, 'https://models.dev/api.json')
+          .to_return(status: 200, body: body.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        result = described_class.fetch_models_dev_models([cached])
+
+        expect(result[:fetched]).to be(false)
+        expect(result[:models]).to eq([cached])
+      end
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/models\.dev returned/).exactly(3).times
     end
 
     it 'keeps the models.dev entries it already had when the fetch fails' do
@@ -225,6 +265,7 @@ RSpec.describe RubyLLM::Models do
         created_at: '2025-01-01 00:00:00 UTC',
         context_window: 1000,
         max_output_tokens: 100,
+        knowledge_cutoff: '2024-10-01',
         modalities: { input: ['text'], output: ['text'] },
         pricing: { text_tokens: { standard: { input_per_million: 1.0 } } },
         capabilities: %w[streaming vision],
@@ -238,9 +279,50 @@ RSpec.describe RubyLLM::Models do
       expect(merged.created_at).to eq(Time.parse('2025-01-01 00:00:00 UTC'))
       expect(merged.context_window).to eq(1000)
       expect(merged.max_output_tokens).to eq(100)
+      expect(merged.knowledge_cutoff).to eq(Date.new(2024, 10, 1))
       expect(merged.modalities.input).to eq(['text'])
       expect(merged.pricing.to_h).to eq(text_tokens: { standard: { input_per_million: 1.0 } })
       expect(merged.metadata).to include(source: 'models.dev', provider_note: 'kept')
+      expect(merged.capabilities).to contain_exactly('streaming', 'vision')
+    end
+
+    it 'keeps the models.dev values it does have' do
+      models_dev_model = model(
+        id: 'test', provider: 'openai', knowledge_cutoff: '2025-06-01', metadata: { source: 'models.dev' }
+      )
+      provider_model = model(id: 'test', provider: 'openai', knowledge_cutoff: '2024-10-01')
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
+      expect(merged.knowledge_cutoff).to eq(Date.new(2025, 6, 1))
+    end
+
+    it 'keeps a provider capability models.dev does not report on' do
+      models_dev_model = model(
+        id: 'test', provider: 'openai', capabilities: ['function_calling'],
+        modalities: { input: ['text'], output: ['text'] },
+        metadata: { source: 'models.dev', tool_call: true }
+      )
+      provider_model = model(id: 'test', provider: 'openai', capabilities: %w[function_calling structured_output])
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
+      expect(merged.capabilities).to contain_exactly('function_calling', 'structured_output')
+    end
+
+    it 'drops a provider capability models.dev reports as absent' do
+      models_dev_model = model(
+        id: 'test', provider: 'openai', capabilities: [],
+        modalities: { input: ['text'], output: ['text'] },
+        metadata: { source: 'models.dev', tool_call: false, structured_output: false, reasoning: false }
+      )
+      provider_model = model(
+        id: 'test', provider: 'openai',
+        capabilities: %w[streaming function_calling structured_output reasoning vision]
+      )
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
       expect(merged.capabilities).to eq(['streaming'])
     end
 
@@ -346,6 +428,17 @@ RSpec.describe RubyLLM::Models do
 
       expect(merged.map(&:id)).to eq(['cached'])
     end
+
+    it 'keeps the models of a provider that listed nothing' do
+      existing = [model(id: 'kept', provider: 'deepgram')]
+      silent = fake_provider(slug: 'deepgram', display_name: 'Deepgram', models: [])
+      allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([silent])
+
+      provider_fetch = described_class.fetch_provider_models
+      merged = described_class.merge_with_existing(existing, provider_fetch, { models: [], fetched: true })
+
+      expect(merged.map(&:id)).to eq(['kept'])
+    end
   end
 
   describe '.read_existing_models' do
@@ -429,6 +522,7 @@ RSpec.describe RubyLLM::Models do
 
   describe '#persist_registry!' do
     let(:registry) { described_class.new([]) }
+    let(:published) { RubyLLM::ModelRegistry::PublishedSource::Result.new([], nil, false) }
 
     it 'writes through a store that supports it' do
       writes = []
@@ -436,7 +530,7 @@ RSpec.describe RubyLLM::Models do
         define_method(:write) { |models| writes << models }
       end.new
 
-      registry.send(:persist_registry!, [model(id: 'a', provider: 'openai')], etag: nil)
+      registry.send(:persist_registry!, [model(id: 'a', provider: 'openai')], published:)
 
       expect(writes.first).to be_a(described_class)
     end
@@ -444,7 +538,7 @@ RSpec.describe RubyLLM::Models do
     it 'rejects a read-only store' do
       RubyLLM.config.model_registry_store = Object.new
 
-      expect { registry.send(:persist_registry!, [], etag: nil) }.to raise_error(
+      expect { registry.send(:persist_registry!, [], published:) }.to raise_error(
         RubyLLM::ModelRegistryError, /is read-only/
       )
     end
@@ -452,7 +546,7 @@ RSpec.describe RubyLLM::Models do
     it 'rejects a configuration with nowhere to write' do
       RubyLLM.config.model_registry_file = nil
 
-      expect { registry.send(:persist_registry!, [], etag: nil) }.to raise_error(
+      expect { registry.send(:persist_registry!, [], published:) }.to raise_error(
         RubyLLM::ModelRegistryError, 'No writable model registry store is configured'
       )
     end
@@ -463,7 +557,7 @@ RSpec.describe RubyLLM::Models do
         def write(_models) = raise(IOError, 'disk full')
       end.new
 
-      expect { registry.send(:persist_registry!, [], etag: nil) }.to raise_error(
+      expect { registry.send(:persist_registry!, [], published:) }.to raise_error(
         RubyLLM::ModelRegistryError, 'Could not save the model registry to the Rails model table: disk full'
       )
     end
@@ -474,19 +568,72 @@ RSpec.describe RubyLLM::Models do
         def write(_models) = raise(IOError, 'disk full')
       end.new
 
-      expect { registry.send(:persist_registry!, [], etag: nil) }.to raise_error(
+      expect { registry.send(:persist_registry!, [], published:) }.to raise_error(
         RubyLLM::ModelRegistryError, /Could not save the model registry to AnonymousStore/
       )
     end
   end
 
-  describe '#cached_models' do
-    it 'treats an unreadable store as no cache' do
-      store = Class.new do
-        def read = raise(RubyLLM::ModelRegistryError, 'corrupt')
-      end.new
+  describe '#published_catalog' do
+    it 'treats a corrupt snapshot as no cache' do
+      Dir.mktmpdir do |directory|
+        path = File.join(directory, 'models.json')
+        File.write("#{path}.published.json", '{broken')
+        RubyLLM.config.model_registry_file = path
 
-      expect(described_class.new([]).send(:cached_models, store)).to be_nil
+        expect(described_class.new([]).send(:published_catalog)).to be_nil
+      end
+    end
+  end
+
+  describe '#refresh! against the published catalog' do
+    let(:published) { [model(id: 'gpt-x', provider: 'openai', name: 'GPT X', context_window: 400_000)] }
+
+    def local_provider(context_window)
+      fake_provider(
+        slug: 'ollama', display_name: 'Ollama',
+        models: [model(id: 'llama', provider: 'ollama', name: 'llama', context_window: context_window)]
+      )
+    end
+
+    def stub_published(models, etag, not_modified)
+      allow(described_class).to receive(:fetch_published_registry)
+        .and_return(RubyLLM::ModelRegistry::PublishedSource::Result.new(models, etag, not_modified))
+    end
+
+    around do |example|
+      Dir.mktmpdir do |directory|
+        RubyLLM.config.model_registry_file = File.join(directory, 'models.json')
+        example.run
+      end
+    end
+
+    it 'prunes and refreshes on a not-modified answer just as it does on a fresh one' do
+      allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(8192)])
+      stub_published(published, 'etag-1', false)
+      described_class.new([]).refresh!
+
+      stale = described_class.load_models + [model(id: 'retired', provider: 'openai')]
+      allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(131_072)])
+      stub_published(nil, 'etag-1', true)
+      registry = described_class.new(stale).refresh!
+
+      expect(registry.all.map(&:id)).to contain_exactly('llama', 'gpt-x')
+      expect(registry.all.find { |m| m.id == 'llama' }.context_window).to eq(131_072)
+    end
+
+    it 'fetches the whole catalog again when the snapshot behind the ETag is gone' do
+      allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(8192)])
+      results = [
+        RubyLLM::ModelRegistry::PublishedSource::Result.new(nil, 'etag-1', true),
+        RubyLLM::ModelRegistry::PublishedSource::Result.new(published, 'etag-1', false)
+      ]
+      allow(described_class).to receive(:fetch_published_registry) { results.shift }
+
+      registry = described_class.new([])
+      registry.refresh!
+
+      expect(registry.all.map(&:id)).to contain_exactly('llama', 'gpt-x')
     end
   end
 

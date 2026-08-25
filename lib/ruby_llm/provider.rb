@@ -229,7 +229,7 @@ module RubyLLM
     end
 
     def list_models # :nodoc:
-      default_protocol.new(self).list_models
+      listing_protocol.new(self).list_models
     end
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {}) # :nodoc:
@@ -556,6 +556,12 @@ module RubyLLM
 
     def default_protocol
       fetch_protocol(configured_protocol || self.class.default_protocol)
+    end
+
+    # The model catalog lives at the provider's own listing endpoint, which
+    # the chat protocol override has no say over.
+    def listing_protocol
+      fetch_protocol(self.class.default_protocol)
     end
 
     def batch_protocol

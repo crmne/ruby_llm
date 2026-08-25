@@ -327,6 +327,16 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.send(:resolve_protocol, :responses, model)).to eq(RubyLLM::Protocols::Responses)
     end
 
+    it 'lists models through the declared protocol whatever the chat protocol is' do
+      config = config_for(:vertexai)
+      config.vertexai_protocol = :anthropic
+
+      provider = RubyLLM::Providers::VertexAI.new(config)
+
+      expect(provider.send(:default_protocol)).to eq(RubyLLM::Providers::VertexAI::Anthropic)
+      expect(provider.send(:listing_protocol)).to eq(RubyLLM::Providers::VertexAI::Gemini)
+    end
+
     it 'routes one-shot APIs through protocol_for' do
       routed_model = instance_double(RubyLLM::Model, id: 'gpt-audio-mini')
       protocol = instance_double(

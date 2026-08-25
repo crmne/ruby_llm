@@ -55,6 +55,11 @@ module RubyLLM
     # Provider-specific metadata as a Hash.
     attr_reader :metadata
 
+    # The time the configured provider stopped listing the model, as a UTC
+    # Time, or +nil+ while the provider still lists it. Only a store that keeps
+    # unlisted entries, such as the Rails model table, sets it.
+    attr_reader :unlisted_at
+
     attr_reader :reasoning_options # :nodoc:
 
     def self.default(model_id, provider) # :nodoc:
@@ -80,6 +85,7 @@ module RubyLLM
       @modalities = Modalities.new(data[:modalities] || {})
       @capabilities = data[:capabilities] || []
       @metadata = data[:metadata]&.dup || {}
+      @unlisted_at = Utils.to_time(data[:unlisted_at])&.utc
       @pricing = Pricing.new(pricing_data_with_long_context(data[:pricing] || {}))
       @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
       store_reasoning_options_metadata
@@ -92,6 +98,16 @@ module RubyLLM
     #
     def supports?(capability)
       capabilities.include?(capability.to_s)
+    end
+
+    # Returns whether the configured provider has stopped listing the model.
+    # An unlisted model is kept only because application records still
+    # reference it, and it may already be failing at the provider.
+    #
+    #   model.unlisted? # => false
+    #
+    def unlisted?
+      !unlisted_at.nil?
     end
 
     # Returns the provider display name and model name combined,
@@ -167,7 +183,7 @@ module RubyLLM
     end
 
     def to_h # :nodoc:
-      {
+      data = {
         id: id,
         name: name,
         provider: provider,
@@ -181,6 +197,9 @@ module RubyLLM
         pricing: pricing.to_h,
         metadata: metadata
       }
+      # A JSON registry drops unlisted models, so the key stays out of it.
+      data[:unlisted_at] = unlisted_at if unlisted_at
+      data
     end
 
     private

@@ -61,8 +61,17 @@ module RubyLLM
           temporary.write(contents)
           temporary.flush
           temporary.fsync
+          temporary.chmod(readable_mode(destination))
           replace_file(temporary.path, destination)
         end
+      end
+
+      # Tempfile is 0600 and the rename carries that mode onto the registry,
+      # which then reads as unreadable to any other user on the machine.
+      def readable_mode(destination)
+        return File.stat(destination).mode & 0o7777 if File.exist?(destination)
+
+        0o666 & ~File.umask
       end
 
       def replace_file(source, destination)
