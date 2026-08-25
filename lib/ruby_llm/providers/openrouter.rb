@@ -51,9 +51,10 @@ module RubyLLM
         when Hash
           parse_error_part_message body
         when Array
-          body.map do |part|
+          messages = body.filter_map do |part|
             parse_error_part_message part
-          end.join('. ')
+          end.reject(&:empty?)
+          messages.join('. ') unless messages.empty?
         else
           body
         end

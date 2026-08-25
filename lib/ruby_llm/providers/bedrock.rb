@@ -59,8 +59,7 @@ module RubyLLM
       def parse_error(response)
         body = parse_error_body(response)
         return unless body
-
-        return body if body.is_a?(String)
+        return super unless body.is_a?(Hash)
 
         body['message'] || body['Message'] || nested_error_message(body) || body['__type'] || super
       end

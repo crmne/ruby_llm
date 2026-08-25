@@ -84,6 +84,18 @@ RSpec.describe RubyLLM::Providers::Bedrock do
     end
   end
 
+  describe '#parse_error' do
+    let(:provider) do
+      described_class.new(bedrock_config(api_key: 'static-key', secret_key: 'static-secret'))
+    end
+
+    it 'falls back to the generic parser for list-shaped errors' do
+      response = instance_double(Faraday::Response, body: [{ 'message' => 'first' }, 'second'])
+
+      expect(provider.parse_error(response)).to eq('first. second')
+    end
+  end
+
   describe '#sign_headers' do
     it 'signs with static credentials' do
       provider = described_class.new(

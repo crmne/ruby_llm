@@ -360,17 +360,10 @@ module RubyLLM
 
       case body
       when Hash
-        error = body['error']
-        return error if error.is_a?(String)
-
-        [body.dig('error', 'message'), body['message'], body['detail']].find do |message|
-          message.is_a?(String)
-        end
+        error_part_message(body)
       when Array
-        body.map do |part|
-          error = part['error']
-          error.is_a?(String) ? error : part.dig('error', 'message')
-        end.join('. ')
+        messages = body.filter_map { |part| error_part_message(part) }.reject(&:empty?)
+        messages.join('. ') unless messages.empty?
       else
         body
       end
@@ -613,6 +606,16 @@ module RubyLLM
       return if body.nil? || (body.respond_to?(:empty?) && body.empty?)
 
       try_parse_json(body)
+    end
+
+    def error_part_message(part)
+      return part.to_s unless part.is_a?(Hash)
+
+      error = part['error']
+      return error if error.is_a?(String)
+
+      nested_message = error['message'] if error.is_a?(Hash)
+      [nested_message, part['message'], part['detail']].find { |message| message.is_a?(String) }
     end
 
     def ensure_configured!

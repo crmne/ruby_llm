@@ -62,6 +62,15 @@ RSpec.describe RubyLLM::Providers::OpenRouter do # rubocop:disable RSpec/SpecFil
       expect(provider.parse_error(response)).to eq('first. second')
     end
 
+    it 'skips empty list entries' do
+      response = instance_double(
+        Faraday::Response,
+        body: [nil, '', { 'error' => [] }, { 'error' => { 'message' => 'second' } }]
+      )
+
+      expect(provider.parse_error(response)).to eq('second')
+    end
+
     it 'passes a body it cannot interpret through' do
       expect(provider.parse_error(instance_double(Faraday::Response, body: 42))).to eq(42)
     end

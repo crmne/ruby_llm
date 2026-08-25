@@ -512,6 +512,13 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.parse_error(response_for(body))).to eq('first. second')
     end
 
+    it 'ignores empty error shapes and stringifies scalar list entries' do
+      body = [nil, '', { 'error' => [] }, 'second', { 'message' => 'third' }]
+
+      expect(provider.parse_error(response_for(body))).to eq('second. third')
+      expect(provider.parse_error(response_for({ 'error' => [] }))).to be_nil
+    end
+
     it 'passes a body it cannot interpret through' do
       expect(provider.parse_error(response_for(42))).to eq(42)
     end
