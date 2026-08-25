@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM?output_format=wav_44100
+    body:
+      encoding: UTF-8
+      string: '{"text":"Save this as a WAV file.","model_id":"eleven_flash_v2_5"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Xi-Api-Key:
+      - "<ELEVENLABS_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Thu, 20 Aug 2026 07:04:05 GMT
+      Server:
+      - uvicorn
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Language, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - "*"
+      Access-Control-Allow-Methods:
+      - POST, PATCH, OPTIONS, DELETE, GET, PUT
+      Access-Control-Max-Age:
+      - '600'
+      Strict-Transport-Security:
+      - max-age=1800;
+      X-Trace-Id:
+      - a26e5a8a5a3416327318825c04e5d9ab
+      X-Region:
+      - europe-west4
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"detail":{"type":"authorization_error","code":"subscription_required","message":"Output
+        format ''wav_44100'' is only available on the Pro tier and above.","status":"output_format_not_allowed","request_id":"a26e5a8a5a3416327318825c04e5d9ab"}}'
+  recorded_at: Thu, 20 Aug 2026 07:04:06 GMT
+recorded_with: VCR 6.4.0
