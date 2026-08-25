@@ -768,7 +768,7 @@ module RubyLLM
                    :with_headers, :with_schema, :with_fallbacks, :before_request, :before_message, :after_message,
                    :before_tool_call, :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,
                    :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals,
-                   :add_message, :add_completion, :tokens, :cost
+                   :add_message, :add_completion, :tokens, :cost, :count_tokens, :render
 
     ##
     # :method: ask
