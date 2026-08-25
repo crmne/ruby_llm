@@ -104,7 +104,7 @@ module RubyLLM
             family: model_data['modelFamily'] || model_data['providerName']&.downcase,
             created_at: nil,
             context_window: parse_context_window(model_data),
-            max_output_tokens: converse_data['maxTokensDefault'] || converse_data['maxTokensMaximum'],
+            max_output_tokens: converse_data['maxTokensMaximum'] || converse_data['maxTokensDefault'],
             modalities: {
               input: normalize_modalities(model_data['inputModalities']),
               output: normalize_modalities(model_data['outputModalities'])
@@ -156,7 +156,7 @@ module RubyLLM
         end
 
         def registered_model(model_id, models)
-          models.all.find { |model| model.provider == 'bedrock' && model.id == model_id }
+          models.all_including_unlisted.find { |model| model.provider == 'bedrock' && model.id == model_id }
         end
 
         # The bedrock-mantle endpoint serves bare vendor.model ids under
@@ -186,7 +186,7 @@ module RubyLLM
             prefixed = prefixed_with(model_id, prefix)
             next if prefixed == model_id
 
-            candidate = models.all.find { |m| m.provider == 'bedrock' && m.id == prefixed }
+            candidate = models.all_including_unlisted.find { |m| m.provider == 'bedrock' && m.id == prefixed }
             return candidate if candidate
           end
 
@@ -250,12 +250,17 @@ module RubyLLM
           end
         end
 
+        # A summary's converse block is metadata Bedrock fills in for some
+        # models, not a statement that Converse serves them: Nova Lite,
+        # Llama 3.3 and Mistral Large take tool calls without one. Whether
+        # Converse accepts the model at all is the closest thing the listing
+        # has to a tool-use flag.
         def parse_capabilities(model_data)
           capabilities = []
           capabilities << 'streaming' if model_data['responseStreamingSupported']
 
           converse = model_data['converse'] || {}
-          capabilities << 'function_calling' if converse.is_a?(Hash)
+          capabilities << 'function_calling' if model_data.dig('inferenceAPIsSupported', 'converse', 'sync')
           capabilities << 'reasoning' if converse.dig('reasoningSupported', 'embedded')
           capabilities << 'structured_output' if supports_structured_output?(model_data['modelId'])
 

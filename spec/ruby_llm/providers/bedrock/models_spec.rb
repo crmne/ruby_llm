@@ -43,6 +43,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
         'inferenceTypesSupported' => ['ON_DEMAND'],
         'responseStreamingSupported' => true,
         'description' => { 'maxContextWindow' => '200k' },
+        'inferenceAPIsSupported' => { 'converse' => { 'streaming' => true, 'sync' => true } },
         'converse' => { 'maxTokensDefault' => 8192, 'reasoningSupported' => { 'embedded' => true } }
       }
     end
@@ -87,9 +88,18 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       expect(model.family).to be_nil
     end
 
-    it 'falls back to the maximum output tokens Bedrock reports' do
+    it 'records the ceiling rather than the default output token count' do
       model = provider.send(
-        :create_model_info, model_data.merge('converse' => { 'maxTokensMaximum' => 4096 }), 'bedrock'
+        :create_model_info,
+        model_data.merge('converse' => { 'maxTokensDefault' => 8192, 'maxTokensMaximum' => 65_536 }), 'bedrock'
+      )
+
+      expect(model.max_output_tokens).to eq(65_536)
+    end
+
+    it 'falls back to the default output token count when Bedrock reports no ceiling' do
+      model = provider.send(
+        :create_model_info, model_data.merge('converse' => { 'maxTokensDefault' => 4096 }), 'bedrock'
       )
 
       expect(model.max_output_tokens).to eq(4096)
@@ -117,14 +127,38 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
   end
 
   describe '#parse_capabilities' do
-    it 'treats a missing converse block as an empty one' do
-      expect(provider.send(:parse_capabilities, { 'modelId' => 'amazon.titan-text-v1' })).to eq(['function_calling'])
+    it 'claims nothing for a summary that carries no Converse listing' do
+      expect(provider.send(:parse_capabilities, { 'modelId' => 'amazon.titan-text-v1' })).to be_empty
+    end
+
+    it 'reads tool use from the Converse listing rather than the converse metadata block' do
+      served = {
+        'modelId' => 'meta.llama3-3-70b-instruct-v1:0',
+        'inferenceAPIsSupported' => { 'converse' => { 'streaming' => true, 'sync' => true } }
+      }
+
+      expect(provider.send(:parse_capabilities, served)).to eq(['function_calling'])
+    end
+
+    it 'claims no tool use for models Converse will not take' do
+      embedding = {
+        'modelId' => 'amazon.titan-embed-text-v2:0',
+        'converse' => {},
+        'inferenceAPIsSupported' => { 'converse' => { 'streaming' => false, 'sync' => false } }
+      }
+
+      expect(provider.send(:parse_capabilities, embedding)).to be_empty
     end
 
     it 'reports only what the summary claims' do
       capabilities = provider.send(
         :parse_capabilities,
-        { 'modelId' => 'amazon.nova-2-lite-v1:0', 'responseStreamingSupported' => false, 'converse' => {} }
+        {
+          'modelId' => 'amazon.nova-2-lite-v1:0',
+          'responseStreamingSupported' => false,
+          'converse' => {},
+          'inferenceAPIsSupported' => { 'converse' => { 'streaming' => true, 'sync' => true } }
+        }
       )
 
       expect(capabilities).to eq(['function_calling'])
