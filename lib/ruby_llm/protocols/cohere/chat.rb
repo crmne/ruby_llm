@@ -197,7 +197,7 @@ module RubyLLM
 
         def citation_url(document)
           url = document['url']
-          url if url.is_a?(String) && url.match?(%r{\Ahttps?://})
+          url if url.is_a?(String) && url.match?(%r{\Ahttps?://}i)
         end
 
         # Documents RubyLLM sends, and those Cohere numbers itself, are

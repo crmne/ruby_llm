@@ -22,6 +22,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
+  describe '.parse_citation' do
+    it 'accepts URL schemes regardless of case' do
+      citation = described_class.parse_citation({ 'url' => 'HTTPS://example.com/source' })
+
+      expect(citation.url).to eq('HTTPS://example.com/source')
+    end
+  end
+
   describe '.build_system_content' do
     let(:logger) { instance_double(Logger, info: nil, debug: nil, error: nil, warn: nil) }
 

@@ -80,6 +80,13 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment.byte_size).to be_nil
   end
 
+  it 'recognizes URL schemes regardless of case' do
+    attachment = described_class.new('HTTPS://example.com/report.pdf')
+
+    expect(attachment).to be_url
+    expect(attachment.source).to be_a(URI::HTTPS)
+  end
+
   it 'treats partially loaded ActiveStorage constants as unavailable' do
     stub_const('ActiveStorage', Module.new)
     stub_const('ActiveStorage::Blob', Class.new)

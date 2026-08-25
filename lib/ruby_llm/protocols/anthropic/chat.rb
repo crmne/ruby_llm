@@ -271,7 +271,7 @@ module RubyLLM
         # Search result citations carry the developer-provided source string.
         def citation_url(data)
           url = data['url'] || data['source']
-          url if url&.match?(%r{\Ahttps?://})
+          url if url&.match?(%r{\Ahttps?://}i)
         end
 
         def extract_thinking_content(blocks)

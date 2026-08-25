@@ -565,7 +565,7 @@ module RubyLLM
         # Search result citations carry the developer-provided source string.
         def citation_url(data, location)
           url = location.dig('web', 'url') || data['source']
-          url if url&.match?(%r{\Ahttps?://})
+          url if url&.match?(%r{\Ahttps?://}i)
         end
 
         def citation_source_index(location)

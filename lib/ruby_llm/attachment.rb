@@ -81,7 +81,7 @@ module RubyLLM
     end
 
     def url? # :nodoc:
-      @source.is_a?(URI) || (@source.is_a?(String) && @source.match?(%r{^https?://}))
+      @source.is_a?(URI) || (@source.is_a?(String) && @source.match?(%r{\Ahttps?://}i))
     end
 
     def provider_file? # :nodoc:

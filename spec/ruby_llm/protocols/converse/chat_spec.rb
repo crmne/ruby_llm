@@ -752,6 +752,14 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(citation.cited_text).to be_nil
     end
 
+    it 'accepts URL schemes regardless of case' do
+      citation = described_class.parse_citation(
+        { 'location' => { 'web' => { 'url' => 'HTTPS://ruby-lang.org' } } }
+      )
+
+      expect(citation.url).to eq('HTTPS://ruby-lang.org')
+    end
+
     it 'parses grounded turns into server tool calls and web citations' do
       response_body = {
         'output' => {

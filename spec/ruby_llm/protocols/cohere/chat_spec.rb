@@ -262,6 +262,14 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       )
     end
 
+    it 'accepts URL schemes regardless of case' do
+      body['message']['citations'].first['sources'].first['document']['url'] = 'HTTPS://example.com/source'
+
+      citation = protocol.send(:parse_completion_body, body, raw: nil).citations.first
+
+      expect(citation.url).to eq('HTTPS://example.com/source')
+    end
+
     it 'offsets spans by the text blocks that came before' do
       body['message']['content'].unshift({ 'type' => 'text', 'text' => 'Answer: ' })
       body['message']['citations'].first['content_index'] = 1
