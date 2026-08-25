@@ -183,6 +183,17 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.model).to eq('gpt-5-nano')
     end
 
+    it 'surfaces refusal parts as content' do
+      response = response_with([
+                                 { 'type' => 'message',
+                                   'content' => [{ 'type' => 'refusal', 'refusal' => 'I cannot help with that.' }] }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.content).to eq('I cannot help with that.')
+    end
+
     it 'parses function calls keyed by call_id' do
       response = response_with([
                                  { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',

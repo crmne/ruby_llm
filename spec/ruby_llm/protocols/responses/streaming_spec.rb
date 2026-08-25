@@ -15,6 +15,12 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.content).to eq('Hel')
   end
 
+  it 'streams refusal deltas as content' do
+    chunk = build_chunk({ 'type' => 'response.refusal.delta', 'delta' => 'I cannot help' })
+
+    expect(chunk.content).to eq('I cannot help')
+  end
+
   it 'streams reasoning summary deltas as thinking' do
     chunk = build_chunk({ 'type' => 'response.reasoning_summary_text.delta', 'delta' => 'hmm' })
 
@@ -107,6 +113,41 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                         })
 
     expect(chunk.finish_reason).to be_nil
+  end
+
+  describe '#parse_streaming_error' do
+    def parse_streaming_error(payload)
+      protocol.send(:parse_streaming_error, payload.to_json)
+    end
+
+    it 'classifies a rate limit reported by a flat error event' do
+      status, message = parse_streaming_error(
+        { type: 'error', code: 'rate_limit_exceeded', message: 'Slow down', param: nil, sequence_number: 3 }
+      )
+
+      expect(status).to eq(429)
+      expect(message).to eq('Slow down')
+    end
+
+    it 'classifies a server error reported by a flat error event' do
+      status, = parse_streaming_error({ type: 'error', code: 'server_error', message: 'Internal error' })
+
+      expect(status).to eq(500)
+    end
+
+    it 'falls back to a 400 for other flat error codes' do
+      status, message = parse_streaming_error({ type: 'error', code: 'invalid_prompt', message: 'Bad prompt' })
+
+      expect(status).to eq(400)
+      expect(message).to eq('Bad prompt')
+    end
+
+    it 'still classifies nested error objects' do
+      status, message = parse_streaming_error({ error: { type: 'rate_limit_exceeded', message: 'Slow down' } })
+
+      expect(status).to eq(429)
+      expect(message).to eq('Slow down')
+    end
   end
 
   it 'preserves incomplete_details reason on completed events' do

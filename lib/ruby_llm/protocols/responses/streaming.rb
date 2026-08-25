@@ -6,11 +6,17 @@ module RubyLLM
       # Streaming methods of the OpenAI Responses API. Events are semantic:
       # each SSE data frame carries a `type` describing what changed.
       module Streaming
+        ERROR_STATUSES = {
+          'server_error' => 500,
+          'rate_limit_exceeded' => 429,
+          'insufficient_quota' => 429
+        }.freeze
+
         module_function
 
         def build_chunk(data)
           case data['type']
-          when 'response.output_text.delta'
+          when 'response.output_text.delta', 'response.refusal.delta'
             chunk content: data['delta']
           when 'response.reasoning_summary_text.delta'
             chunk thinking: Thinking.build(text: data['delta'])
@@ -65,6 +71,15 @@ module RubyLLM
                 server_tool_calls: server_tool_calls,
                 raw_content: server_tool_calls.any? ? output : nil,
                 **parse_usage(response['usage'] || {})
+        end
+
+        # Responses reports a stream error as a flat event carrying a code,
+        # where Chat Completions nests type and message under an error object.
+        def parse_streaming_error(data)
+          event = JSON.parse(data)
+          return super unless event.is_a?(Hash) && event['type'] == 'error'
+
+          [ERROR_STATUSES.fetch(event['code'], 400), event['message']]
         end
 
         def chunk(content: nil, **attributes)

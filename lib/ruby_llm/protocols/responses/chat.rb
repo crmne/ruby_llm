@@ -337,9 +337,14 @@ module RubyLLM
           content.nil? || content.strip.empty?
         end
 
+        MESSAGE_TEXT_KEYS = { 'output_text' => 'text', 'refusal' => 'refusal' }.freeze
+
         def parse_output_text(output)
           texts = output.select { |item| item['type'] == 'message' }.flat_map do |message|
-            Array(message['content']).filter_map { |part| part['text'] if part['type'] == 'output_text' }
+            Array(message['content']).filter_map do |part|
+              key = MESSAGE_TEXT_KEYS[part['type']]
+              part[key] if key
+            end
           end
 
           texts.empty? ? nil : texts.join
