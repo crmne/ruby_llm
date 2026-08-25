@@ -184,7 +184,7 @@ transcription.words.each do |word|
 end
 ```
 
-OpenAI's diarization models also send `chunking_strategy: "auto"` by default. Override it in OpenAI's own request shape through `provider_options:`:
+OpenAI picks a chunking strategy for you. To choose one yourself, pass it in OpenAI's own request shape through `provider_options:`:
 
 ```ruby
 RubyLLM.transcribe(

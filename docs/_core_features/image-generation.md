@@ -159,7 +159,7 @@ Refer to the [Working with Models Guide]({% link _reference/models.md %}) and th
 
 ## Image Sizes
 
-Some models, like DALL-E 3, allow you to specify the desired image dimensions via the `size:` argument.
+Ask for the dimensions you want with the `size:` argument. It defaults to `"1024x1024"`, and every provider that can size an image gets the value you pass.
 
 ```ruby
 # Standard square (1024x1024 - default for DALL-E 3)
@@ -184,7 +184,17 @@ image_portrait = RubyLLM.paint(
 )
 ```
 
-> Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for supported sizes.
+Gemini sizes an image by aspect ratio and resolution tier rather than by pixel dimensions, so RubyLLM reduces the size you pass to the ratio it represents: `"1024x1024"` becomes `1:1`, `"1536x1024"` becomes `3:2`. You can also pass the ratio directly as `"16:9"`, or a resolution as `"1K"`, `"2K"` or `"4K"`. A size Gemini has no field for, such as `"large"`, raises `ArgumentError`. To let Gemini pick the shape itself, pass `size: nil`.
+
+```ruby
+image = RubyLLM.paint(
+  "a red ruby gemstone on white",
+  model: "gemini-3-pro-image",
+  size: "16:9"
+)
+```
+
+> Not every model accepts every size. The provider rejects a size it does not support, so check its documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for what each one takes. Imagen models ignore `size:` and log a debug message.
 {: .note }
 
 ## Working with Generated Images

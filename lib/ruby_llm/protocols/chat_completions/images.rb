@@ -59,7 +59,7 @@ module RubyLLM
           if json_image_references?(model)
             payload[:images] = build_image_references(with)
             payload[:mask] = build_image_reference(mask) if mask
-            payload[:size] = size if flexible_size?(model) && size
+            payload[:size] = size if size
           else
             payload[:image] = single_upload_part(build_upload_parts(with))
             payload[:mask] = build_upload_part(mask) if mask
@@ -69,10 +69,6 @@ module RubyLLM
 
         def json_image_references?(model)
           model.match?(/\A(gpt-image|chatgpt-image)/)
-        end
-
-        def flexible_size?(model)
-          model.include?('gpt-image-2')
         end
 
         def build_image_references(sources)

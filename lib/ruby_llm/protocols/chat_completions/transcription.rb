@@ -18,7 +18,6 @@ module RubyLLM
             model: model,
             file: file_part,
             language: language,
-            chunking_strategy: default_chunking_strategy(model),
             response_format: format || default_response_format(model),
             prompt: prompt,
             temperature: temperature,
@@ -35,14 +34,12 @@ module RubyLLM
           end
         end
 
-        def default_chunking_strategy(model)
-          'auto' if model.include?('diarize')
-        end
-
         def reported_cost(_usage)
           nil
         end
 
+        # Diarization models return plain text with no segments unless the
+        # response format asks for them.
         def default_response_format(model)
           'diarized_json' if model.include?('diarize')
         end

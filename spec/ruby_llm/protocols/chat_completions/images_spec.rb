@@ -24,6 +24,24 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
 
       expect(payload[:n]).to eq(2)
     end
+
+    it 'sends the size the caller asked for when editing' do
+      %w[gpt-image-1 gpt-image-2 chatgpt-image-1].each do |model|
+        payload = described_class.render_image_payload(
+          'make it green', model: model, size: '1536x1024', with: 'https://example.com/logo.png'
+        )
+
+        expect(payload[:size]).to eq('1536x1024')
+      end
+    end
+
+    it 'sends no size when the caller chose none' do
+      payload = described_class.render_image_payload(
+        'make it green', model: 'gpt-image-1', size: nil, with: 'https://example.com/logo.png'
+      )
+
+      expect(payload).not_to have_key(:size)
+    end
   end
 
   describe '#parse_image_responses' do

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
   describe '.render_transcription_payload' do
-    it 'defaults diarize models to diarized_json with auto chunking' do
+    it 'defaults diarize models to diarized_json and chooses no chunking strategy' do
       payload = described_class.render_transcription_payload(
         'file-part', model: 'gpt-4o-transcribe-diarize', language: nil
       )
@@ -12,9 +12,16 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
       expect(payload).to eq(
         model: 'gpt-4o-transcribe-diarize',
         file: 'file-part',
-        chunking_strategy: 'auto',
         response_format: 'diarized_json'
       )
+    end
+
+    it 'keeps the format the caller asked for on a diarize model' do
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-4o-transcribe-diarize', language: nil, format: 'json'
+      )
+
+      expect(payload[:response_format]).to eq('json')
     end
 
     it 'sets no defaults for other models' do
