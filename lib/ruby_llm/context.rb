@@ -38,6 +38,12 @@ module RubyLLM
       Chat.new(*args, **kwargs, context: self, &)
     end
 
+    # Counts tokens using this context's configuration.
+    # Accepts the same arguments as RubyLLM.count_tokens.
+    def count_tokens(text, model: nil, provider: nil)
+      chat(model:, provider:).count_tokens(text)
+    end
+
     # Runs a named workflow using this context's instrumenter. Accepts the same
     # arguments as RubyLLM.workflow.
     def workflow(name, id: nil, metadata: nil, &)
@@ -48,6 +54,12 @@ module RubyLLM
     # Accepts the same arguments as RubyLLM.embed.
     def embed(*args, **kwargs, &)
       Embedding.embed(*args, **kwargs, context: self, &)
+    end
+
+    # Stages an embedding request using this context's configuration.
+    # Accepts the same arguments as RubyLLM.embed_later.
+    def embed_later(text, model: nil, provider: nil, dimensions: nil)
+      EmbeddingRequest.new(text, model:, provider:, dimensions:, context: self)
     end
 
     # Generates an image using this context's configuration.
@@ -84,6 +96,18 @@ module RubyLLM
     # Accepts the same arguments as RubyLLM.transcribe.
     def transcribe(*args, **kwargs, &)
       Transcription.transcribe(*args, **kwargs, context: self, &)
+    end
+
+    # Extracts document text using this context's configuration.
+    # Accepts the same arguments as RubyLLM.ocr.
+    def ocr(*args, **kwargs, &)
+      OCR.ocr(*args, **kwargs, context: self, &)
+    end
+
+    # Ranks documents using this context's configuration.
+    # Accepts the same arguments as RubyLLM.rerank.
+    def rerank(*args, **kwargs, &)
+      Rerank.rerank(*args, **kwargs, context: self, &)
     end
 
     # Uploads a file to a provider using this context's configuration.
