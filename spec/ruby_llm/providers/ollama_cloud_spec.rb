@@ -66,10 +66,21 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
     end
 
     it 'reports no structured output, which Ollama Cloud does not support' do
-      models = described_class::ChatCompletions.allocate.parse_list_models_response(response, 'ollama_cloud', nil)
+      models = described_class::ChatCompletions.allocate.parse_list_models_response(
+        response, 'ollama_cloud', nil, details: { 'gpt-oss:120b' => %w[completion tools thinking] }
+      )
 
-      expect(models.first.capabilities).to eq(%w[streaming function_calling vision])
+      expect(models.first.capabilities).to eq(%w[streaming function_calling reasoning])
       expect(models.first.supports?(:structured_output)).to be(false)
+    end
+
+    it 'leaves vision to the models that /api/show says have it' do
+      models = described_class::ChatCompletions.allocate.parse_list_models_response(
+        response, 'ollama_cloud', nil, details: { 'gpt-oss:120b' => %w[completion tools thinking] }
+      )
+
+      expect(models.first.supports?(:vision)).to be(false)
+      expect(models.first.modalities.input).to eq(%w[text])
     end
   end
 end
