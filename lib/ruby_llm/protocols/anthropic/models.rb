@@ -11,6 +11,14 @@ module RubyLLM
           input_tokens output_tokens cache_read_input_tokens cache_creation_input_tokens
         ].freeze
 
+        REPORTED_CAPABILITIES = {
+          'batch' => 'batch',
+          'citations' => 'citations',
+          'image_input' => 'vision',
+          'structured_outputs' => 'structured_output',
+          'thinking' => 'reasoning'
+        }.freeze
+
         def list_models
           models = []
           after_id = nil
@@ -45,9 +53,21 @@ module RubyLLM
               name: model_data['display_name'] || model_id,
               provider: slug,
               created_at: Time.parse(model_data['created_at']),
-              capabilities: capabilities.critical_capabilities_for(model_id),
+              context_window: model_data['max_input_tokens'],
+              max_output_tokens: model_data['max_tokens'],
+              capabilities: model_capabilities(model_data, capabilities),
               metadata: {}
             )
+          end
+        end
+
+        def model_capabilities(model_data, capabilities)
+          fallback = Array(capabilities&.critical_capabilities_for(model_data['id']))
+          reported = model_data['capabilities']
+          return fallback unless reported.is_a?(Hash)
+
+          fallback | reported.filter_map do |name, detail|
+            REPORTED_CAPABILITIES[name] if detail.is_a?(Hash) && detail['supported']
           end
         end
 
