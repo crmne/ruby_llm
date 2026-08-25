@@ -232,16 +232,27 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       expect(provider.list_models.map(&:id)).not_to include('claude-3-opus')
     end
 
-    it 'keeps the rest of the catalog when a publisher fails' do
-      allow(connection).to receive(:get).with('publishers/google/models').and_raise(RubyLLM::Error.new)
+    it 'fails the fetch when a publisher fails rather than shipping a partial catalog' do
+      allow(connection).to receive(:get).with('publishers/google/models').and_raise(
+        RubyLLM::UnauthorizedError.new('token expired')
+      )
       allow(connection).to receive(:get).with('publishers/anthropic/models').and_return(
         catalog([entry('anthropic', 'claude-sonnet-4-6')])
       )
 
+      expect { provider.list_models }.to raise_error(RubyLLM::Error, /google .*token expired/)
+    end
+
+    it 'appends a known model only when the catalog did not already return it' do
+      allow(connection).to receive(:get).with('publishers/google/models').and_return(
+        catalog([entry('google', 'gemini-2.5-pro')])
+      )
+
       ids = provider.list_models.map(&:id)
 
-      expect(ids).to include('claude-sonnet-4-6')
-      expect(ids).to include('gemini-2.5-pro') # known models still fill the gap
+      expect(ids.count('gemini-2.5-pro')).to eq(1)
+      expect(ids).to include('gemini-pro') # region-dependent id the catalog omits
+      expect(ids).to eq(ids.uniq)
     end
   end
 

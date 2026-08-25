@@ -5,24 +5,19 @@ module RubyLLM
     class VertexAI
       # Models methods for the Vertex AI integration
       module Models
-        # Gemini and other Google models that aren't returned by the API
+        # Google models the publisher catalog omits in some regions while still
+        # serving them there. Every id must be callable in at least one region;
+        # ids that answer nowhere do not belong here.
         KNOWN_GOOGLE_MODELS = %w[
           gemini-2.5-flash-lite
           gemini-2.5-pro
           gemini-2.5-flash
           gemini-2.0-flash-lite-001
           gemini-2.0-flash-001
-          gemini-2.0-flash
-          gemini-2.0-flash-exp
           gemini-1.5-pro-002
           gemini-1.5-pro
-          gemini-1.5-flash-002
-          gemini-1.5-flash
-          gemini-1.5-flash-8b
           gemini-pro
           gemini-pro-vision
-          gemini-exp-1206
-          gemini-exp-1121
           gemini-embedding-001
           text-embedding-005
           text-embedding-004
@@ -33,14 +28,78 @@ module RubyLLM
         # of the Model Garden is deploy-it-yourself and not callable directly.
         PUBLISHERS = %w[google anthropic mistralai meta deepseek-ai qwen openai moonshotai zai-org].freeze
 
+        # Vertex AI serves a different slice of the catalog in each location and
+        # neither of these is a superset of the other, so a listing unions them.
+        CATALOG_LOCATIONS = %w[global us-central1].freeze
+
+        # The configured location has to answer: without it we would report a
+        # catalog the caller cannot reach. A supplementary location is a bonus,
+        # so a failure there is a warning and the rest of the union stands.
         def list_models
-          build_known_models + PUBLISHERS.flat_map { |publisher| publisher_models(publisher) }
+          fetched = []
+          counts = {}
+
+          catalog_connections.each do |location, connection|
+            models = location_models(connection)
+            counts[location] = models.size
+            fetched.concat(models)
+          rescue StandardError => e
+            raise if location == configured_location
+
+            RubyLLM.logger.warn "Skipping the Vertex AI catalog at #{location}: #{e.class}: #{e.message}"
+          end
+
+          models = fetched.uniq(&:id)
+          log_catalog(counts, models)
+
+          models + build_known_models(models.map(&:id))
         end
 
         private
 
-        def publisher_models(publisher)
-          catalog(publisher).filter_map { |model_data| build_publisher_model(publisher, model_data) }
+        def configured_location
+          @config.vertexai_location.to_s
+        end
+
+        # The location lives in the host, so locations sharing one api base,
+        # as they do behind a custom vertexai_api_base, are one catalog.
+        def catalog_connections
+          [configured_location, *CATALOG_LOCATIONS]
+            .uniq { |location| @provider.api_base_for(location) }
+            .to_h { |location| [location, connection_for(location)] }
+        end
+
+        def connection_for(location)
+          return @connection if location == configured_location
+
+          Connection.new(@provider, @config, api_base: @provider.api_base_for(location))
+        end
+
+        def log_catalog(counts, models)
+          per_location = counts.map { |location, count| "#{location} (#{count})" }.join(', ')
+          RubyLLM.logger.info "Fetched the Vertex AI catalog from #{per_location}: #{models.size} models"
+        end
+
+        # A publisher with nothing to offer in a region answers 200 with an
+        # empty list, so any error here is infrastructure, not an empty
+        # catalog. Reporting a partial catalog as a success would drop the
+        # missing publishers from the registry.
+        def location_models(connection)
+          failures = []
+          models = PUBLISHERS.flat_map do |publisher|
+            publisher_models(publisher, connection)
+          rescue StandardError => e
+            failures << "#{publisher} (#{e.class}: #{e.message})"
+            []
+          end
+
+          raise Error, "Could not fetch the Vertex AI catalog for #{failures.join(', ')}" if failures.any?
+
+          models
+        end
+
+        def publisher_models(publisher, connection)
+          catalog(publisher, connection).filter_map { |model_data| build_publisher_model(publisher, model_data) }
         end
 
         # MaaS models are called as publisher/name through the OpenAI-compatible
@@ -75,12 +134,12 @@ module RubyLLM
           end
         end
 
-        def catalog(publisher)
+        def catalog(publisher, connection)
           models = []
           page_token = nil
 
           loop do
-            response = @connection.get("publishers/#{publisher}/models") do |req|
+            response = connection.get("publishers/#{publisher}/models") do |req|
               req.headers['x-goog-user-project'] = @config.vertexai_project_id
               req.params = { pageSize: 100 }
               req.params[:pageToken] = page_token if page_token
@@ -92,13 +151,10 @@ module RubyLLM
           end
 
           models.reject { |model_data| model_data['launchStage'] == 'DEPRECATED' }
-        rescue StandardError => e
-          RubyLLM.logger.debug { "Error fetching Vertex AI #{publisher} models: #{e.message}" }
-          []
         end
 
-        def build_known_models
-          KNOWN_GOOGLE_MODELS.map do |model_id|
+        def build_known_models(fetched_ids)
+          (KNOWN_GOOGLE_MODELS - fetched_ids).map do |model_id|
             Model.new(
               id: model_id,
               name: model_id,
@@ -108,7 +164,7 @@ module RubyLLM
               context_window: nil,
               max_output_tokens: nil,
               modalities: nil,
-              capabilities: %w[streaming function_calling],
+              capabilities: extract_capabilities(model_id),
               pricing: nil,
               metadata: {
                 source: 'known_models'
@@ -127,7 +183,7 @@ module RubyLLM
             context_window: nil,
             max_output_tokens: nil,
             modalities: nil,
-            capabilities: extract_capabilities(model_data),
+            capabilities: extract_capabilities(model_data['name']),
             pricing: nil,
             metadata: {
               version_id: model_data['versionId'],
@@ -162,8 +218,8 @@ module RubyLLM
           end
         end
 
-        def extract_capabilities(model_data)
-          model_data['name'].match?(/ocr|embedding/) ? %w[streaming] : %w[streaming function_calling]
+        def extract_capabilities(name)
+          name.match?(/ocr|embedding/) ? %w[streaming] : %w[streaming function_calling]
         end
       end
     end
