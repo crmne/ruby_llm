@@ -32,14 +32,21 @@ module RubyLLM
           model_id.start_with?('pplx-embed')
         end
 
+        def sonar_model?(model_id)
+          model_id.match?(%r{\A(?:perplexity/)?sonar})
+        end
+
+        # The models endpoint reports no token limits for the third-party
+        # models it resells, so they stay nil for models.dev to fill in.
         def context_window_for(model_id)
           return 32_768 if embedding_model?(model_id)
+          return nil unless sonar_model?(model_id)
 
           model_id.match?(/sonar-pro/) ? 200_000 : 128_000
         end
 
         def max_tokens_for(model_id)
-          return nil if embedding_model?(model_id)
+          return nil if embedding_model?(model_id) || !sonar_model?(model_id)
 
           model_id.match?(/sonar-(?:pro|reasoning-pro)/) ? 8_192 : 4_096
         end

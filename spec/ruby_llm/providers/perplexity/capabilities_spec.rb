@@ -25,6 +25,13 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
       expect(described_class.context_window_for('sonar')).to eq(128_000)
       expect(described_class.context_window_for('pplx-embed-v1-0.6b')).to eq(32_768)
     end
+
+    it 'leaves the resold third-party models nil' do
+      expect(described_class.context_window_for('anthropic/claude-opus-5')).to be_nil
+      expect(described_class.context_window_for('openai/gpt-5.4')).to be_nil
+      expect(described_class.context_window_for('perplexity/kimi-k3')).to be_nil
+      expect(described_class.context_window_for('perplexity/sonar')).to eq(128_000)
+    end
   end
 
   describe '.max_tokens_for' do
@@ -33,6 +40,12 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
       expect(described_class.max_tokens_for('sonar-reasoning-pro')).to eq(8_192)
       expect(described_class.max_tokens_for('sonar')).to eq(4_096)
       expect(described_class.max_tokens_for('pplx-embed-v1-4b')).to be_nil
+    end
+
+    it 'leaves the resold third-party models nil' do
+      expect(described_class.max_tokens_for('anthropic/claude-opus-5')).to be_nil
+      expect(described_class.max_tokens_for('google/gemini-3.7-flash')).to be_nil
+      expect(described_class.max_tokens_for('perplexity/sonar')).to eq(4_096)
     end
   end
 

@@ -42,6 +42,36 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
     end
   end
 
+  describe '#parse_list_models_response' do
+    let(:protocol) { RubyLLM::Providers::Perplexity::ChatCompletions.allocate }
+    let(:response) do
+      instance_double(
+        Faraday::Response,
+        body: {
+          'data' => [
+            {
+              'id' => 'anthropic/claude-opus-5',
+              'pricing' => { 'input' => 5, 'output' => 25, 'cache_read' => 0.5, 'cache_write' => 6.25 }
+            }
+          ]
+        }
+      )
+    end
+
+    it 'keeps the endpoint pricing without inventing token limits' do
+      models = protocol.parse_list_models_response(response, 'perplexity',
+                                                   RubyLLM::Providers::Perplexity::Capabilities)
+
+      opus = models.find { |model| model.id == 'anthropic/claude-opus-5' }
+      expect(opus.context_window).to be_nil
+      expect(opus.max_output_tokens).to be_nil
+      expect(opus.pricing.to_h[:text_tokens][:standard]).to eq(
+        input_per_million: 5, output_per_million: 25,
+        cache_read_input_per_million: 0.5, cache_write_input_per_million: 6.25
+      )
+    end
+  end
+
   describe 'error parsing' do
     subject(:provider) do
       RubyLLM::Providers::Perplexity.new(
