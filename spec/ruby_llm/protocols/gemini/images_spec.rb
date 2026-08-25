@@ -37,7 +37,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
     end
 
     it 'uses generateContent for Gemini image models' do
-      payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: '1792x1024')
+      payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: nil)
 
       expect(protocol.images_url).to eq('models/gemini-2.5-flash-image:generateContent')
       expect(payload).to eq(
@@ -53,6 +53,39 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       )
     end
 
+    it 'reduces pixel dimensions to the aspect ratio Gemini takes' do
+      {
+        '1024x1024' => '1:1',
+        '1536x1024' => '3:2',
+        '1024x1536' => '2:3',
+        '1920x1080' => '16:9'
+      }.each do |size, ratio|
+        payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: size)
+
+        expect(payload.dig(:generationConfig, :imageConfig)).to eq(aspectRatio: ratio)
+      end
+    end
+
+    it 'passes an aspect ratio or a resolution through untouched' do
+      payload = protocol.render_image_payload('a cat', model: 'gemini-3-pro-image', size: '21:9')
+      expect(payload.dig(:generationConfig, :imageConfig)).to eq(aspectRatio: '21:9')
+
+      payload = protocol.render_image_payload('a cat', model: 'gemini-3-pro-image', size: '2k')
+      expect(payload.dig(:generationConfig, :imageConfig)).to eq(imageSize: '2K')
+    end
+
+    it 'refuses a size it cannot express instead of dropping it' do
+      expect do
+        protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: 'large')
+      end.to raise_error(ArgumentError, /Gemini cannot generate an image of size "large"/)
+    end
+
+    it 'sends no image config when the caller chose no size' do
+      payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: nil)
+
+      expect(payload[:generationConfig]).not_to have_key(:imageConfig)
+    end
+
     it 'uses generateContent for Nano Banana aliases' do
       protocol.render_image_payload('a cat', model: 'nano-banana-pro', size: '1024x1024')
 
@@ -63,18 +96,20 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       payload = protocol.render_image_payload(
         'a cat',
         model: 'gemini-2.5-flash-image',
-        size: '1792x1024',
+        size: '1024x1024',
         provider_options: {
           generationConfig: {
             responseModalities: ['IMAGE'],
-            candidateCount: 1
+            candidateCount: 1,
+            imageConfig: { aspectRatio: '16:9', imageSize: '4K' }
           }
         }
       )
 
       expect(payload[:generationConfig]).to eq(
         responseModalities: ['IMAGE'],
-        candidateCount: 1
+        candidateCount: 1,
+        imageConfig: { aspectRatio: '16:9', imageSize: '4K' }
       )
     end
 

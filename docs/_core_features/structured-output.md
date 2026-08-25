@@ -151,7 +151,10 @@ end
 Not all models support structured output. Currently supported:
 - **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
 - **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
-- **Gemini**: Gemini 2.0 and newer models
+- **Gemini**: every model Google still serves
+
+Gemini takes your schema as JSON Schema, so keywords such as `anyOf`, `pattern`, `minLength`, `const`, `oneOf`, `$ref` and `additionalProperties` reach the model as you wrote them.
+{: .note }
 
 Models that don't support structured output:
 

@@ -5,6 +5,10 @@ module RubyLLM
     class Gemini
       # Image generation methods for the Gemini API implementation
       module Images
+        IMAGE_SIZES = %w[512 512P 512PX 1K 2K 4K].freeze
+        ASPECT_RATIO = /\A\d+:\d+\z/
+        PIXEL_DIMENSIONS = /\A(\d+)\s*[x×]\s*(\d+)\z/i
+
         def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
           id = model_id(@model)
 
@@ -12,12 +16,11 @@ module RubyLLM
         end
 
         def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
-          RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
           @model = model
           payload = if gemini_image_model?(model)
-                      render_gemini_image_payload(prompt, with:, count:)
+                      render_gemini_image_payload(prompt, with:, count:, size:)
                     else
-                      render_imagen_payload(prompt, count:)
+                      render_imagen_payload(prompt, count:, size:)
                     end
 
           Utils.deep_merge(payload, provider_options)
@@ -48,7 +51,9 @@ module RubyLLM
           raise UnsupportedAttachmentError, 'image reference'
         end
 
-        def render_imagen_payload(prompt, count: nil)
+        def render_imagen_payload(prompt, count: nil, size: nil)
+          RubyLLM.logger.debug { "Ignoring size #{size}. Imagen sizing is not supported." } if size
+
           {
             instances: [
               {
@@ -61,9 +66,11 @@ module RubyLLM
           }
         end
 
-        def render_gemini_image_payload(prompt, with:, count: nil)
+        def render_gemini_image_payload(prompt, with:, count: nil, size: nil)
           generation_config = { responseModalities: %w[TEXT IMAGE] }
           generation_config[:candidateCount] = count if count && count > 1
+          image_config = build_image_config(size)
+          generation_config[:imageConfig] = image_config if image_config
 
           {
             contents: [
@@ -74,6 +81,33 @@ module RubyLLM
             ],
             generationConfig: generation_config
           }
+        end
+
+        # Gemini sizes an image by aspect ratio and resolution tier rather
+        # than by pixel dimensions, so WxH becomes the ratio it reduces to.
+        def build_image_config(size)
+          value = size.to_s.strip
+          return nil if value.empty?
+          return { imageSize: value.upcase } if IMAGE_SIZES.include?(value.upcase)
+          return { aspectRatio: value } if value.match?(ASPECT_RATIO)
+
+          match = value.match(PIXEL_DIMENSIONS)
+          raise ArgumentError, unsupported_size_message(size) unless match
+
+          { aspectRatio: aspect_ratio(match[1].to_i, match[2].to_i) }
+        end
+
+        def aspect_ratio(width, height)
+          raise ArgumentError, unsupported_size_message("#{width}x#{height}") unless width.positive? && height.positive?
+
+          divisor = width.gcd(height)
+          "#{width / divisor}:#{height / divisor}"
+        end
+
+        def unsupported_size_message(size)
+          "Gemini cannot generate an image of size #{size.inspect}. Give pixel dimensions such as " \
+            '"1024x1024", an aspect ratio such as "16:9", or a resolution ' \
+            "such as #{IMAGE_SIZES.join(', ')}."
         end
 
         def parse_imagen_responses(data, model:)

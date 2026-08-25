@@ -14,382 +14,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
-  describe '#convert_schema_to_gemini' do
-    it 'extracts inner schema from wrapper format' do
-      # Simulate what Schematist::Schema.to_json_schema returns
-      schema = {
-        name: 'PersonSchema',
-        schema: {
-          type: 'object',
-          properties: {
-            name: { type: 'string' },
-            age: { type: 'integer' }
-          }
-        }
-      }
-
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      # Should extract the inner schema and convert it
-      expect(result[:type]).to eq('OBJECT')
-      expect(result[:properties][:name][:type]).to eq('STRING')
-      expect(result[:properties][:age][:type]).to eq('INTEGER')
-    end
-
-    it 'converts simple string schema' do
-      schema = { type: 'string' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'STRING' })
-    end
-
-    it 'converts string schema with enum' do
-      schema = { type: 'string', enum: %w[red green blue] }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'STRING', enum: %w[red green blue] })
-    end
-
-    it 'converts string schema with format' do
-      schema = { type: 'string', format: 'email' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'STRING', format: 'email' })
-    end
-
-    it 'converts number schema' do
-      schema = { type: 'number' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'NUMBER' })
-    end
-
-    it 'converts number schema with constraints' do
-      schema = {
-        type: 'number',
-        minimum: 0,
-        maximum: 100,
-        format: 'float'
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'NUMBER',
-                             format: 'float',
-                             minimum: 0,
-                             maximum: 100
-                           })
-    end
-
-    it 'converts integer schema' do
-      schema = { type: 'integer' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'INTEGER' })
-    end
-
-    it 'converts boolean schema' do
-      schema = { type: 'boolean' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'BOOLEAN' })
-    end
-
-    it 'converts array schema' do
-      schema = {
-        type: 'array',
-        items: { type: 'string' }
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'ARRAY',
-                             items: { type: 'STRING' }
-                           })
-    end
-
-    it 'converts array schema with constraints' do
-      schema = {
-        type: 'array',
-        items: { type: 'integer' },
-        minItems: 1,
-        maxItems: 10
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'ARRAY',
-                             items: { type: 'INTEGER' },
-                             minItems: 1,
-                             maxItems: 10
-                           })
-    end
-
-    it 'converts array schema without items to default STRING' do
-      schema = { type: 'array' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'ARRAY',
-                             items: { type: 'STRING' }
-                           })
-    end
-
-    it 'converts object schema' do
-      schema = {
-        type: 'object',
-        properties: {
-          name: { type: 'string' },
-          age: { type: 'integer' }
-        },
-        required: %w[name]
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'OBJECT',
-                             properties: {
-                               name: { type: 'STRING' },
-                               age: { type: 'INTEGER' }
-                             },
-                             required: %w[name]
-                           })
-    end
-
-    it 'converts object schema with propertyOrdering' do
-      schema = {
-        type: 'object',
-        properties: {
-          name: { type: 'string' },
-          age: { type: 'integer' }
-        },
-        propertyOrdering: %w[name age]
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to include(propertyOrdering: %w[name age])
-    end
-
-    it 'handles nullable fields' do
-      schema = {
-        type: 'string',
-        nullable: true
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'STRING',
-                             nullable: true
-                           })
-    end
-
-    it 'handles descriptions' do
-      schema = {
-        type: 'string',
-        description: 'A user name'
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'STRING',
-                             description: 'A user name'
-                           })
-    end
-
-    it 'converts nested object schemas' do
-      schema = {
-        type: 'object',
-        properties: {
-          user: {
-            type: 'object',
-            properties: {
-              name: { type: 'string' },
-              contacts: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    type: { type: 'string', enum: %w[email phone] },
-                    value: { type: 'string' }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result[:type]).to eq('OBJECT')
-      expect(result[:properties][:user][:type]).to eq('OBJECT')
-      expect(result[:properties][:user][:properties][:name][:type]).to eq('STRING')
-      expect(result[:properties][:user][:properties][:contacts][:type]).to eq('ARRAY')
-      expect(result[:properties][:user][:properties][:contacts][:items][:type]).to eq('OBJECT')
-      expect(result[:properties][:user][:properties][:contacts][:items][:properties][:type][:enum]).to eq(%w[email
-                                                                                                             phone])
-    end
-
-    it 'handles nil schema' do
-      result = test_obj.send(:convert_schema_to_gemini, nil)
-      expect(result).to be_nil
-    end
-
-    it 'converts schemas provided with string keys' do
-      schema = {
-        'type' => 'object',
-        'properties' => {
-          'status' => {
-            'anyOf' => [
-              {
-                'type' => 'string',
-                'enum' => %w[pending done],
-                'description' => 'Current status value'
-              },
-              { 'type' => 'null' }
-            ]
-          },
-          'count' => {
-            'type' => 'integer',
-            'minimum' => 0
-          }
-        },
-        'required' => %w[status count],
-        'propertyOrdering' => %w[status count],
-        'nullable' => false
-      }
-
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'OBJECT',
-                             properties: {
-                               status: {
-                                 type: 'STRING',
-                                 enum: %w[pending done],
-                                 nullable: true,
-                                 description: 'Current status value'
-                               },
-                               count: {
-                                 type: 'INTEGER',
-                                 minimum: 0
-                               }
-                             },
-                             required: %w[status count],
-                             propertyOrdering: %w[status count],
-                             nullable: false
-                           })
-    end
-
-    it 'expands $ref definitions in array items' do
-      schema = {
-        type: 'object',
-        properties: {
-          answers: {
-            type: 'array',
-            items: { '$ref' => '#/$defs/answer' }
-          }
-        },
-        required: %w[answers],
-        '$defs' => {
-          'answer' => {
-            type: 'object',
-            properties: {
-              score: { type: 'integer' }
-            },
-            required: %w[score]
-          }
-        }
-      }
-
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      answers_schema = result[:properties][:answers]
-      expect(answers_schema[:type]).to eq('ARRAY')
-      expect(answers_schema[:items]).to eq(
-        type: 'OBJECT',
-        properties: {
-          score: { type: 'INTEGER' }
-        },
-        required: %w[score]
-      )
-    end
-
-    it 'defaults unknown types to STRING' do
-      schema = { type: 'unknown' }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'STRING' })
-    end
-
-    it 'converts anyOf with null to nullable' do
-      schema = {
-        anyOf: [
-          { type: 'string', format: 'email' },
-          { type: 'null' }
-        ]
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'STRING',
-                             format: 'email',
-                             nullable: true
-                           })
-    end
-
-    it 'converts anyOf with multiple non-null types by choosing first' do
-      schema = {
-        anyOf: [
-          { type: 'string' },
-          { type: 'integer' }
-        ]
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({ type: 'STRING' })
-    end
-
-    it 'converts anyOf with only null to nullable string' do
-      schema = {
-        anyOf: [
-          { type: 'null' }
-        ]
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result).to eq({
-                             type: 'STRING',
-                             nullable: true
-                           })
-    end
-
-    it 'converts complex schema with anyOf in properties' do
-      schema = {
-        type: 'object',
-        properties: {
-          email: {
-            anyOf: [
-              { type: 'string', format: 'email' },
-              { type: 'null' }
-            ]
-          },
-          name: { type: 'string' }
-        },
-        required: %w[name]
-      }
-      result = test_obj.send(:convert_schema_to_gemini, schema)
-
-      expect(result[:type]).to eq('OBJECT')
-      expect(result[:properties][:email]).to eq({
-                                                  type: 'STRING',
-                                                  format: 'email',
-                                                  nullable: true
-                                                })
-      expect(result[:properties][:name]).to eq({ type: 'STRING' })
-    end
-  end
-
   describe '#render_payload' do
     let(:messages) { [] }
     let(:tools) { {} }
@@ -419,23 +43,25 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(payload[:contents].map { |message| message[:role] }).to eq(['user'])
     end
 
-    it 'uses responseJsonSchema for Gemini 2.5 models' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash', family: nil, metadata: {})
+    it 'sends responseJsonSchema whatever the model is named' do
+      %w[gemini-2.5-flash gemini-flash-latest gemini-pro-latest gemini-flash-lite-latest gemini-3.6-flash].each do |id|
+        model = instance_double(RubyLLM::Model, id:, family: nil, metadata: {})
 
-      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
+        payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
-      expect(payload[:generationConfig][:responseJsonSchema]).to eq(
-        'type' => 'object',
-        'properties' => {
-          'result' => { 'type' => 'string' }
-        }
-      )
-      expect(payload[:generationConfig]).not_to have_key(:responseSchema)
-      expect(payload[:generationConfig]).not_to have_key('responseSchema')
+        expect(payload[:generationConfig][:responseJsonSchema]).to eq(
+          'type' => 'object',
+          'properties' => {
+            'result' => { 'type' => 'string' }
+          }
+        )
+        expect(payload[:generationConfig]).not_to have_key(:responseSchema)
+        expect(payload[:generationConfig]).not_to have_key('responseSchema')
+      end
     end
 
-    it 'unwraps wrapper schemas for responseJsonSchema' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-3.0-pro', family: nil, metadata: {})
+    it 'strips strict, which Gemini has no field for' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-flash-latest', family: nil, metadata: {})
       wrapped_schema = {
         name: 'PersonSchema',
         schema: {
@@ -457,56 +83,37 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       )
     end
 
-    it 'falls back to responseSchema for non-2.5 models' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-2.0-flash', family: nil, metadata: {})
-
-      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
-
-      expect(payload[:generationConfig][:responseSchema]).to include(type: 'OBJECT')
-      expect(payload[:generationConfig]).not_to have_key(:responseJsonSchema)
-      expect(payload[:generationConfig]).not_to have_key('responseJsonSchema')
-    end
-
-    it 'treats newer Gemini versions as JSON schema capable' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-3.0-pro', family: nil, metadata: {})
-
-      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
-
-      expect(payload[:generationConfig]).to include(:responseJsonSchema)
-      expect(payload[:generationConfig]).not_to have_key(:responseSchema)
-    end
-
-    it 'expands referenced definitions when using responseSchema' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-2.0-flash', family: nil, metadata: {})
-      schema_with_defs = {
-        type: 'object',
-        properties: {
-          answers: {
-            type: 'array',
-            items: { '$ref' => '#/$defs/answer' }
-          }
-        },
-        '$defs' => {
-          'answer' => {
-            type: 'object',
-            properties: {
-              score: { type: 'integer' }
-            },
-            required: %w[score]
-          }
+    it 'keeps the JSON Schema keywords the old conversion dropped' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-flash-latest', family: nil, metadata: {})
+      rich_schema = {
+        name: 'contact',
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          '$defs' => { 'Tag' => { type: 'string' } },
+          properties: {
+            name: { type: 'string', pattern: '^[A-Z][a-z]+$', minLength: 2 },
+            kind: { const: 'person' },
+            contact: { anyOf: [{ type: 'string', format: 'email' }, { type: 'integer', minimum: 1 }] },
+            tags: { type: 'array', items: { '$ref' => '#/$defs/Tag' }, default: [] }
+          },
+          required: %w[name kind contact]
         }
       }
 
-      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema: schema_with_defs)
+      rendered = test_obj.send(
+        :render_payload, messages, tools:, temperature: nil, model:, schema: rich_schema
+      )[:generationConfig][:responseJsonSchema]
 
-      items_schema = payload[:generationConfig][:responseSchema][:properties][:answers][:items]
-      expect(items_schema).to eq(
-        type: 'OBJECT',
-        properties: {
-          score: { type: 'INTEGER' }
-        },
-        required: %w[score]
+      expect(rendered['additionalProperties']).to be(false)
+      expect(rendered['$defs']).to eq('Tag' => { 'type' => 'string' })
+      expect(rendered['properties']['name']).to eq(
+        'type' => 'string', 'pattern' => '^[A-Z][a-z]+$', 'minLength' => 2
       )
+      expect(rendered['properties']['kind']).to eq('const' => 'person')
+      expect(rendered['properties']['contact']['anyOf'].length).to eq(2)
+      expect(rendered['properties']['tags']['items']).to eq('$ref' => '#/$defs/Tag')
+      expect(rendered['properties']['tags']['default']).to eq([])
     end
   end
 
@@ -739,199 +346,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
 
     it 'returns nil when no part carries one' do
       expect(test_obj.send(:extract_thought_signature, [{ 'text' => 'hi' }])).to be_nil
-    end
-  end
-
-  describe '#gemini_version' do
-    it 'is nil without a model' do
-      expect(test_obj.send(:gemini_version, nil)).to be_nil
-    end
-
-    it 'is nil when nothing in the model names a version' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-flash', family: nil, metadata: {})
-
-      expect(test_obj.send(:gemini_version, model)).to be_nil
-    end
-
-    it 'falls back to the model metadata' do
-      model = instance_double(RubyLLM::Model, id: 'gemini-flash', family: nil, metadata: { version: '2.5' })
-
-      expect(test_obj.send(:gemini_version, model)).to eq(Gem::Version.new('2.5'))
-    end
-  end
-
-  describe '#extract_version' do
-    it 'is nil for text without a version' do
-      expect(test_obj.send(:extract_version, nil)).to be_nil
-      expect(test_obj.send(:extract_version, 'flash')).to be_nil
-    end
-  end
-
-  describe RubyLLM::Protocols::Gemini::Chat::GeminiSchema do
-    def convert(schema)
-      described_class.new(schema).to_h
-    end
-
-    it 'returns nothing for a nil schema' do
-      expect(convert(nil)).to be_nil
-    end
-
-    it 'falls back to a string schema for a non-object node' do
-      expect(convert({ type: 'object', properties: { name: 'nonsense' } })[:properties][:name]).to eq(type: 'STRING')
-    end
-
-    it 'reads definitions from the legacy definitions key' do
-      schema = {
-        type: 'object',
-        definitions: { Name: { type: 'string' } },
-        properties: { name: { '$ref' => '#/definitions/Name' } }
-      }
-
-      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
-    end
-
-    it 'merges definitions found at more than one level' do
-      schema = {
-        type: 'object',
-        '$defs' => { Outer: { type: 'string' } },
-        properties: {
-          nested: {
-            type: 'object',
-            definitions: { Inner: { type: 'integer' } },
-            properties: {
-              outer: { '$ref' => '#/$defs/Outer' },
-              inner: { '$ref' => '#/$defs/Inner' }
-            }
-          }
-        }
-      }
-
-      nested = convert(schema)[:properties][:nested][:properties]
-
-      expect(nested[:outer]).to eq(type: 'STRING')
-      expect(nested[:inner]).to eq(type: 'INTEGER')
-    end
-
-    it 'ignores an empty definitions block' do
-      expect(convert({ type: 'object', '$defs' => nil, properties: {} })[:type]).to eq('OBJECT')
-    end
-
-    it 'falls back to a string schema for an unresolvable reference' do
-      schema = { type: 'object', properties: { name: { '$ref' => '#/$defs/Missing' } } }
-
-      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
-    end
-
-    it 'stops at a self-referential definition' do
-      schema = {
-        type: 'object',
-        '$defs' => {
-          Node: {
-            type: 'object',
-            properties: { child: { '$ref' => '#/$defs/Node' } }
-          }
-        },
-        properties: { root: { '$ref' => '#/$defs/Node' } }
-      }
-
-      root = convert(schema)[:properties][:root]
-
-      expect(root[:type]).to eq('OBJECT')
-      expect(root[:properties][:child]).to eq(type: 'STRING')
-    end
-
-    it 'stops at a self-referential definition reached from sibling properties' do
-      schema = {
-        type: 'object',
-        '$defs' => {
-          Node: {
-            type: 'object',
-            properties: { left: { '$ref' => '#/$defs/Node' }, right: { '$ref' => '#/$defs/Node' } }
-          }
-        },
-        properties: { root: { '$ref' => '#/$defs/Node' } }
-      }
-
-      root = convert(schema)[:properties][:root]
-
-      expect(root[:properties]).to eq(left: { type: 'STRING' }, right: { type: 'STRING' })
-    end
-
-    it 'keeps a property literally named definitions' do
-      schema = {
-        type: 'object',
-        properties: { word: { type: 'string' }, definitions: { type: 'array', items: { type: 'string' } } },
-        required: %w[word definitions]
-      }
-
-      expect(convert(schema)[:properties][:definitions]).to eq(type: 'ARRAY', items: { type: 'STRING' })
-    end
-
-    it 'handles a reference that names no path' do
-      schema = { type: 'object', properties: { name: { '$ref' => '' } } }
-
-      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
-    end
-
-    it 'stops walking a definition path through a non-object' do
-      schema = {
-        type: 'object',
-        '$defs' => { Name: { type: 'string' } },
-        properties: { name: { '$ref' => '#/$defs/Name/deeper' } }
-      }
-
-      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
-    end
-
-    it 'keeps the sibling keys of an anyOf' do
-      schema = {
-        type: 'object',
-        properties: {
-          name: { description: 'a name', anyOf: [{ type: 'string' }, { type: 'null' }] }
-        }
-      }
-
-      expect(convert(schema)[:properties][:name]).to eq(
-        type: 'STRING', nullable: true, description: 'a name'
-      )
-    end
-
-    def converted_property(property)
-      convert({ type: 'object', properties: { value: property } })[:properties][:value]
-    end
-
-    it 'keeps the declared type of a nullable union' do
-      expect(converted_property({ type: %w[integer null] })).to eq(type: 'INTEGER', nullable: true)
-    end
-
-    it 'takes the first branch of a multi-type union' do
-      expect(converted_property({ type: %w[number string] })).to eq(type: 'NUMBER')
-    end
-
-    it 'keeps the items of a nullable array union' do
-      expect(converted_property({ type: %w[array null], items: { type: 'integer' } })).to eq(
-        type: 'ARRAY', items: { type: 'INTEGER' }, nullable: true
-      )
-    end
-
-    it 'keeps the properties of a nullable object union' do
-      expect(
-        converted_property({ type: %w[object null], properties: { a: { type: 'integer' } }, required: ['a'] })
-      ).to eq(type: 'OBJECT', properties: { a: { type: 'INTEGER' } }, required: ['a'], nullable: true)
-    end
-
-    it 'falls back to a nullable string for a null-only union' do
-      expect(converted_property({ type: ['null'] })).to eq(type: 'STRING', nullable: true)
-    end
-
-    it 'normalizes a union reached through a reference' do
-      schema = {
-        type: 'object',
-        '$defs' => { Aged: { type: %w[integer null], description: 'via ref' } },
-        properties: { age: { '$ref' => '#/$defs/Aged' } }
-      }
-
-      expect(convert(schema)[:properties][:age]).to eq(type: 'INTEGER', nullable: true, description: 'via ref')
     end
   end
 

@@ -120,6 +120,15 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
         expect(result.last).to have_key(:inline_data)
       end
 
+      it 'nests media for the latest aliases, which track the newest release' do
+        %w[gemini-flash-latest gemini-pro-latest gemini-flash-lite-latest].each do |id|
+          result = format_for(id, image_path)
+
+          expect(result.length).to eq(1)
+          expect(result.first[:functionResponse][:parts].first[:inline_data][:mime_type]).to eq('image/png')
+        end
+      end
+
       it 'keeps text files as sibling text parts on Gemini 3 models' do
         result = format_for('gemini-3-flash-preview', File.expand_path('../../../fixtures/ruby.txt', __dir__))
 
@@ -181,104 +190,70 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
     end
   end
 
-  describe '#convert_tool_schema_to_gemini' do
-    it 'is nil without a schema' do
-      expect(test_obj.send(:convert_tool_schema_to_gemini, nil)).to be_nil
+  describe '#multimodal_function_responses_supported?' do
+    def supported?(id)
+      test_obj.send(:multimodal_function_responses_supported?, id)
     end
 
-    it 'rejects a non-object parameter schema' do
-      expect { test_obj.send(:convert_tool_schema_to_gemini, { 'type' => 'string' }) }.to raise_error(
-        ArgumentError, 'Gemini tool parameters must be objects'
+    it 'reads the generation off the Gemini id' do
+      expect(supported?('gemini-2.5-flash')).to be(false)
+      expect(supported?('gemini-2.5-pro')).to be(false)
+      expect(supported?('gemini-3-flash-preview')).to be(true)
+      expect(supported?('gemini-3.6-flash')).to be(true)
+    end
+
+    it 'treats the latest aliases as the newest generation' do
+      expect(supported?('gemini-flash-latest')).to be(true)
+      expect(supported?('gemini-pro-latest')).to be(true)
+      expect(supported?('gemini-flash-lite-latest')).to be(true)
+    end
+
+    it 'reads no generation out of an id that names none' do
+      expect(supported?('gemini-omni-flash-preview')).to be(false)
+      expect(supported?('deep-research-max-preview-04-2026')).to be(false)
+      expect(supported?('openai/gpt-oss-120b-maas')).to be(false)
+      expect(supported?('moonshotai/kimi-k2-thinking-maas')).to be(false)
+      expect(supported?(nil)).to be(false)
+    end
+  end
+
+  describe 'tool parameter schemas' do
+    def declared(schema)
+      tool = instance_double(
+        RubyLLM::Tool, name: 'lookup', description: 'Looks up', parameters_schema: schema,
+                       declared_parameters: {}, provider_options: {}
       )
-    end
-  end
 
-  describe '#param_type_for_gemini' do
-    {
-      'integer' => 'INTEGER',
-      'number' => 'NUMBER',
-      'float' => 'NUMBER',
-      'double' => 'NUMBER',
-      'boolean' => 'BOOLEAN',
-      'array' => 'ARRAY',
-      'object' => 'OBJECT',
-      'anything else' => 'STRING'
-    }.each do |declared, expected|
-      it "maps #{declared} to #{expected}" do
-        expect(test_obj.send(:param_type_for_gemini, declared)).to eq(expected)
-      end
-    end
-  end
-
-  describe '#schema_value' do
-    it 'accepts both camelCase and snake_case spellings' do
-      expect(test_obj.send(:schema_value, { 'multiple_of' => 2 }, 'multipleOf')).to eq(2)
-      expect(test_obj.send(:schema_value, { min_items: 1 }, 'minItems')).to eq(1)
-      expect(test_obj.send(:schema_value, { 'maxItems' => 3 }, 'maxItems')).to eq(3)
-      expect(test_obj.send(:schema_value, { description: 'text' }, 'description')).to eq('text')
-    end
-  end
-
-  describe 'anyOf parameters' do
-    def converted(property)
-      test_obj.send(
-        :convert_tool_schema_to_gemini,
-        { 'type' => 'object', 'properties' => { 'value' => property } }
-      )[:properties]['value']
+      test_obj.format_tools({ 'lookup' => tool }).first[:functionDeclarations].first
     end
 
-    it 'marks a nullable union as nullable' do
-      expect(converted({ 'anyOf' => [{ 'type' => 'integer' }, { 'type' => 'null' }] })).to include(
-        type: 'INTEGER', nullable: true
+    it 'sends the schema as parametersJsonSchema' do
+      schema = { 'type' => 'object', 'properties' => { 'city' => { 'type' => 'string' } }, 'required' => ['city'] }
+
+      expect(declared(schema)).to eq(
+        name: 'lookup', description: 'Looks up', parametersJsonSchema: schema
       )
     end
 
-    it 'takes the first branch of a multi-type union' do
-      expect(converted({ 'anyOf' => [{ 'type' => 'integer' }, { 'type' => 'string' }] })).to include(type: 'INTEGER')
+    it 'keeps an anyOf union intact instead of collapsing it' do
+      union = { 'anyOf' => [{ 'type' => 'integer', 'minimum' => 1 }, { 'type' => 'string', 'pattern' => '^[a-z]+$' }] }
+      schema = { 'type' => 'object', 'properties' => { 'id' => union } }
+
+      expect(declared(schema)[:parametersJsonSchema]['properties']['id']).to eq(union)
     end
 
-    it 'falls back to a nullable string for a null-only union' do
-      expect(converted({ 'anyOf' => [{ 'type' => 'null' }] })).to include(type: 'STRING', nullable: true)
-    end
+    it 'keeps type unions, references, and constraints the converter dropped' do
+      schema = {
+        'type' => 'object',
+        'additionalProperties' => false,
+        '$defs' => { 'Tag' => { 'type' => 'string', 'minLength' => 2 } },
+        'properties' => {
+          'count' => { 'type' => %w[integer null], 'multipleOf' => 2 },
+          'tag' => { '$ref' => '#/$defs/Tag' }
+        }
+      }
 
-    it 'ignores an empty anyOf' do
-      expect(converted({ 'type' => 'string', 'anyOf' => [] })).to include(type: 'STRING')
-    end
-  end
-
-  describe 'type union parameters' do
-    def converted(property)
-      test_obj.send(
-        :convert_tool_schema_to_gemini,
-        { 'type' => 'object', 'properties' => { 'value' => property } }
-      )[:properties]['value']
-    end
-
-    it 'keeps the declared type and marks the union nullable' do
-      expect(converted({ 'type' => %w[integer null] })).to include(type: 'INTEGER', nullable: true)
-      expect(converted({ type: %i[integer null] })).to include(type: 'INTEGER', nullable: true)
-    end
-
-    it 'takes the first branch of a multi-type union' do
-      expect(converted({ 'type' => %w[number string] })).to include(type: 'NUMBER')
-      expect(converted({ 'type' => %w[number string] })).not_to have_key(:nullable)
-    end
-
-    it 'keeps the items of a nullable array' do
-      expect(converted({ 'type' => %w[array null], 'items' => { 'type' => 'integer' } })).to include(
-        type: 'ARRAY', nullable: true, items: { type: 'INTEGER' }
-      )
-    end
-
-    it 'keeps the properties of a nullable object' do
-      expect(
-        converted({ 'type' => %w[object null], 'properties' => { 'a' => { 'type' => 'integer' } },
-                    'required' => ['a'] })
-      ).to include(type: 'OBJECT', nullable: true, properties: { 'a' => { type: 'INTEGER' } }, required: ['a'])
-    end
-
-    it 'falls back to a nullable string for a null-only union' do
-      expect(converted({ 'type' => ['null'] })).to include(type: 'STRING', nullable: true)
+      expect(declared(schema)[:parametersJsonSchema]).to eq(schema)
     end
   end
 

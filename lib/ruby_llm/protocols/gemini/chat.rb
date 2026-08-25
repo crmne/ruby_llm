@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'set'
-require 'rubygems/version'
-
 module RubyLLM
   module Protocols
     class Gemini
@@ -33,7 +30,7 @@ module RubyLLM
           payload[:generationConfig][:temperature] = temperature unless temperature.nil?
           payload[:generationConfig][:maxOutputTokens] = max_output_tokens unless max_output_tokens.nil?
 
-          payload[:generationConfig].merge!(structured_output_config(schema, model)) if schema
+          payload[:generationConfig].merge!(structured_output_config(schema)) if schema
           payload[:generationConfig][:thinkingConfig] = build_thinking_config(model, thinking) if thinking&.enabled?
 
           if tools.any?
@@ -204,15 +201,6 @@ module RubyLLM
           [prompt_tokens.to_i - data.dig('usageMetadata', 'cachedContentTokenCount').to_i, 0].max
         end
 
-        def convert_schema_to_gemini(schema)
-          return nil unless schema
-
-          # Extract inner schema if wrapper format (e.g., from Schematist::Schema.to_json_schema)
-          schema = schema[:schema] || schema
-
-          GeminiSchema.new(schema).to_h
-        end
-
         def parse_content(data)
           candidate = data.dig('candidates', 0)
           return ['', []] unless candidate
@@ -339,11 +327,6 @@ module RubyLLM
           candidates + thoughts
         end
 
-        def response_json_schema_supported?(model)
-          version = gemini_version(model)
-          version && version >= Gem::Version.new('2.5')
-        end
-
         def build_json_schema(schema)
           normalized = RubyLLM::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
@@ -351,47 +334,11 @@ module RubyLLM
           RubyLLM::Utils.deep_stringify_keys(normalized)
         end
 
-        def gemini_version(model)
-          return nil unless model
-
-          metadata = model.metadata
-          candidates = [
-            model.id,
-            model.family,
-            metadata[:version],
-            metadata['version'],
-            metadata[:description]
-          ].compact.map(&:to_s)
-
-          candidates.each do |candidate|
-            version = extract_version(candidate)
-            return version if version
-          end
-
-          nil
-        end
-
-        def extract_version(text)
-          return nil unless text
-
-          match = text.match(/(\d+\.\d+|\d+)/)
-          return nil unless match
-
-          Gem::Version.new(match[1])
-        rescue ArgumentError
-          nil
-        end
-
-        def structured_output_config(schema, model)
+        def structured_output_config(schema)
           {
-            responseMimeType: 'application/json'
-          }.tap do |config|
-            if response_json_schema_supported?(model)
-              config[:responseJsonSchema] = build_json_schema(schema)
-            else
-              config[:responseSchema] = convert_schema_to_gemini(schema)
-            end
-          end
+            responseMimeType: 'application/json',
+            responseJsonSchema: build_json_schema(schema)
+          }
         end
 
         # formats a message
@@ -476,224 +423,6 @@ module RubyLLM
 
           def format_tool_result(message, tool_name)
             @provider.send(:format_tool_result, message, tool_name)
-          end
-        end
-
-        # converts json schema to gemini
-        class GeminiSchema
-          def initialize(schema)
-            @raw_schema = RubyLLM::Utils.deep_dup(schema)
-            @definitions = {}
-          end
-
-          def to_h
-            return nil unless @raw_schema
-
-            symbolized = symbolize_and_extract_definitions(@raw_schema)
-            convert(symbolized, Set.new)
-          end
-
-          private
-
-          attr_reader :definitions
-
-          # Inside a properties or definitions map the keys are caller-chosen
-          # names, so a property literally named "definitions" is a schema,
-          # not a definitions block.
-          def symbolize_and_extract_definitions(value, names: false)
-            case value
-            when Hash
-              value.each_with_object({}) do |(key, val), hash|
-                key_sym = symbolize_key(key)
-
-                if !names && definition_key?(key_sym)
-                  merge_definitions(val)
-                else
-                  hash[key_sym] = symbolize_and_extract_definitions(val, names: !names && key_sym == :properties)
-                end
-              end
-            when Array
-              value.map { |item| symbolize_and_extract_definitions(item) }
-            else
-              value
-            end
-          end
-
-          def symbolize_key(key)
-            key.to_sym
-          rescue StandardError
-            key
-          end
-
-          def definition_key?(key)
-            %i[$defs definitions].include?(key)
-          end
-
-          def merge_definitions(raw_defs)
-            return unless raw_defs
-
-            symbolized = symbolize_and_extract_definitions(raw_defs, names: true)
-            @definitions = if definitions.empty?
-                             symbolized
-                           else
-                             RubyLLM::Utils.deep_merge(definitions, symbolized)
-                           end
-          end
-
-          def convert(schema, visited_refs)
-            return default_string_schema unless schema.is_a?(Hash)
-
-            schema = strip_unsupported_keys(schema)
-
-            if schema[:$ref]
-              resolved = resolve_reference(schema, visited_refs)
-              return resolved if resolved
-            end
-
-            schema = normalize_type_union(normalize_any_of(schema))
-
-            result = case schema[:type].to_s
-                     when 'object'
-                       build_object(schema, visited_refs)
-                     when 'array'
-                       build_array(schema, visited_refs)
-                     when 'number'
-                       build_scalar('NUMBER', schema, %i[format minimum maximum enum nullable multipleOf])
-                     when 'integer'
-                       build_scalar('INTEGER', schema, %i[format minimum maximum enum nullable multipleOf])
-                     when 'boolean'
-                       build_scalar('BOOLEAN', schema, %i[nullable])
-                     else
-                       build_scalar('STRING', schema, %i[enum format nullable])
-                     end
-
-            apply_description(result, schema)
-            result
-          end
-
-          def strip_unsupported_keys(schema)
-            schema.dup.tap do |copy|
-              copy.delete(:strict)
-              copy.delete(:additionalProperties)
-            end
-          end
-
-          def resolve_reference(schema, visited_refs)
-            ref = schema[:$ref]
-            return unless ref
-            return if visited_refs.include?(ref)
-
-            referenced = lookup_definition(ref)
-            return unless referenced
-
-            overrides = schema.except(:$ref)
-            merged = RubyLLM::Utils.deep_merge(referenced, overrides)
-            convert(merged, visited_refs | [ref])
-          end
-
-          def lookup_definition(ref) # rubocop:disable Metrics/PerceivedComplexity
-            segments = ref.to_s.split('/').reject(&:empty?)
-            return nil if segments.empty?
-
-            segments.shift if segments.first == '#'
-            segments.shift if %w[$defs definitions].include?(segments.first)
-
-            current = definitions
-
-            segments.each do |segment|
-              break current = nil unless current.is_a?(Hash)
-
-              key = begin
-                segment.to_sym
-              rescue StandardError
-                segment
-              end
-              current = current[key]
-            end
-
-            current ? RubyLLM::Utils.deep_dup(current) : nil
-          end
-
-          def normalize_any_of(schema)
-            any_of = schema[:anyOf]
-            return schema unless any_of
-
-            options = Array(any_of).map { |option| RubyLLM::Utils.deep_symbolize_keys(option) }
-            nullables, non_null = options.partition { |option| schema_type(option) == 'null' }
-
-            base = RubyLLM::Utils.deep_symbolize_keys(non_null.first || { type: 'string' })
-            base[:nullable] = true if nullables.any?
-
-            without_any_of = schema.each_with_object({}) do |(key, value), result|
-              result[key] = value unless key == :anyOf
-            end
-
-            without_any_of.merge(base)
-          end
-
-          def schema_type(option)
-            (option[:type] || option['type']).to_s.downcase
-          end
-
-          # Gemini's Schema.type is a scalar enum, so a JSON Schema type union
-          # has to collapse to one type plus nullable.
-          def normalize_type_union(schema)
-            types = schema[:type]
-            return schema unless types.is_a?(Array)
-
-            nulls, concrete = types.partition { |type| type.to_s.downcase == 'null' }
-
-            schema.merge(type: concrete.first || 'string').tap do |normalized|
-              normalized[:nullable] = true if nulls.any?
-            end
-          end
-
-          def build_object(schema, visited_refs)
-            properties = schema.fetch(:properties, {}).transform_values do |child|
-              convert(child, visited_refs)
-            end
-
-            {
-              type: 'OBJECT',
-              properties: properties
-            }.tap do |object|
-              required = Array(schema[:required]).map(&:to_s).uniq
-              object[:required] = required if required.any?
-              object[:propertyOrdering] = schema[:propertyOrdering] if schema[:propertyOrdering]
-              copy_attribute(object, schema, :nullable)
-            end
-          end
-
-          def build_array(schema, visited_refs)
-            items_schema = schema[:items] ? convert(schema[:items], visited_refs) : default_string_schema
-
-            {
-              type: 'ARRAY',
-              items: items_schema
-            }.tap do |array|
-              copy_attribute(array, schema, :minItems)
-              copy_attribute(array, schema, :maxItems)
-              copy_attribute(array, schema, :nullable)
-            end
-          end
-
-          def build_scalar(type, schema, allowed_keys)
-            { type: type }.tap do |result|
-              allowed_keys.each { |key| copy_attribute(result, schema, key) }
-            end
-          end
-
-          def apply_description(target, schema)
-            description = schema[:description]
-            target[:description] = description if description
-          end
-
-          def copy_attribute(target, source, key)
-            target[key] = source[key] if source.key?(key)
-          end
-
-          def default_string_schema
-            { type: 'STRING' }
           end
         end
       end
