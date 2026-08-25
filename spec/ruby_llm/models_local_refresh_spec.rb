@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
   before do
-    skip 'Local provider specs disabled via SKIP_LOCAL_PROVIDER_TESTS' if ENV['SKIP_LOCAL_PROVIDER_TESTS']
+    skip 'Local provider specs disabled via SKIP_LOCAL_PROVIDER_TESTS' if SKIP_LOCAL_PROVIDER_TESTS
 
     published = RubyLLM::ModelRegistry.read(described_class.bundled_registry_file)
     allow(described_class).to receive(:fetch_published_registry)
@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Models do
         expect(models.first).to be_a(RubyLLM::Model)
         expect(models.first.id).to eq('llama3:latest')
         expect(models.first.provider).to eq('ollama')
-        expect(models.first.capabilities).to include('streaming', 'function_calling', 'vision')
+        expect(models.first.capabilities).to eq(%w[streaming structured_output])
       end
     end
 
