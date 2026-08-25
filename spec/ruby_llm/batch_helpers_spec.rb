@@ -30,6 +30,11 @@ RSpec.describe RubyLLM::Batch do
         )
       end
 
+      it 'reads nested string errors' do
+        expect(helpers.batch_error_message({ 'response' => { 'body' => { 'error' => 'body' } } })).to eq('body')
+        expect(helpers.batch_error_message({ 'response' => { 'error' => 'response' } })).to eq('response')
+      end
+
       it 'is nil when the line carries no error' do
         expect(helpers.batch_error_message({})).to be_nil
       end

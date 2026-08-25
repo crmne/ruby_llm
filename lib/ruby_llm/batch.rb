@@ -302,13 +302,22 @@ module RubyLLM
       end
 
       def batch_error_message(line)
-        error = line['error']
-        return error if error.is_a?(String)
+        response = line['response']
+        body = response['body'] if response.is_a?(Hash)
+        body_error = body['error'] if body.is_a?(Hash)
+        response_error = response['error'] if response.is_a?(Hash)
 
-        error&.dig('message') ||
+        batch_error_value(line['error']) ||
           line['error_message'] ||
-          line.dig('response', 'body', 'error', 'message') ||
-          line.dig('response', 'error', 'message')
+          batch_error_value(body_error) ||
+          batch_error_value(response_error)
+      end
+
+      def batch_error_value(error)
+        case error
+        when Hash then error['message']
+        when String then error
+        end
       end
 
       def single_batch_model!(requests, provider_name)
