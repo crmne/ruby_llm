@@ -12,7 +12,8 @@ module RubyLLM
     module_function
 
     def hash_get(hash, key)
-      hash[key.to_sym] || hash[key.to_s]
+      symbol_key = key.to_sym
+      hash.key?(symbol_key) ? hash[symbol_key] : hash[key.to_s]
     end
 
     def strip_schema_metadata(schema)

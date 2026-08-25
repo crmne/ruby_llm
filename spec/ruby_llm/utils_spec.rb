@@ -15,6 +15,10 @@ RSpec.describe RubyLLM::Utils do
 
       expect(described_class.hash_get(hash, 'name')).to eq('RubyLLM')
     end
+
+    it 'preserves false values' do
+      expect(described_class.hash_get({ enabled: false }, 'enabled')).to be(false)
+    end
   end
 
   describe '.underscore' do
