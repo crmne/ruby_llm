@@ -81,7 +81,7 @@ module RubyLLM
     # Entries that already went through normalize (an Agent's declared
     # server_tools, for example) pass through unchanged.
     def normalized_entry?(hash)
-      hash.key?(:raw) ? hash.size == 1 : hash.keys.sort == %i[name options]
+      hash.key?(:raw) ? hash.size == 1 : hash.size == 2 && hash.key?(:name) && hash.key?(:options)
     end
 
     # Resolves normalized entries against a protocol's alias table.
