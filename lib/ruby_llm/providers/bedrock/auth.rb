@@ -95,8 +95,9 @@ module RubyLLM
           return '' if raw_query.nil? || raw_query.empty?
 
           URI.decode_www_form(raw_query)
-             .sort_by(&:first)
-             .map { |k, v| "#{uri_encode(k)}=#{uri_encode(v)}" }
+             .map { |key, value| [uri_encode(key), uri_encode(value)] }
+             .sort
+             .map { |key, value| "#{key}=#{value}" }
              .join('&')
         end
 

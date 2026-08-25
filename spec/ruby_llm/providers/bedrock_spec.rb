@@ -227,6 +227,10 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       expect(signer.send(:canonical_query_string, 'b=2&a=1&c=hello world')).to eq('a=1&b=2&c=hello%20world')
     end
 
+    it 'sorts repeated parameters by their encoded values' do
+      expect(signer.send(:canonical_query_string, 'tag=z&tag=a&name=ruby')).to eq('name=ruby&tag=a&tag=z')
+    end
+
     it 'treats a missing query string as empty' do
       expect(signer.send(:canonical_query_string, nil)).to eq('')
       expect(signer.send(:canonical_query_string, '')).to eq('')
