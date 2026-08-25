@@ -21,15 +21,17 @@ module RubyLLM
                            thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
+          # store: false leaves the provider holding no state, so reasoning has
+          # to ride back in the response. xAI only encrypts it when asked.
           payload = {
             model: model.id,
             input: format_input(messages),
             instructions: format_instructions(messages),
             stream: stream,
-            store: false
+            store: false,
+            include: ['reasoning.encrypted_content']
           }.compact
 
-          payload[:include] = ['reasoning.encrypted_content'] if reasoning_model?(model.id)
           payload[:temperature] = temperature unless temperature.nil?
           payload[:max_output_tokens] = max_output_tokens unless max_output_tokens.nil?
 
@@ -153,10 +155,6 @@ module RubyLLM
           return annotation if annotation.key?('url_citation') || annotation['type'] != 'url_citation'
 
           { 'url_citation' => annotation }
-        end
-
-        def reasoning_model?(model_id)
-          model_id.match?(/^o\d|^gpt-5/)
         end
 
         def prompt_cache_params(caching)

@@ -4,8 +4,7 @@ module RubyLLM
   module Providers
     class XAI
       # xAI's dialect of the OpenAI Responses API, the primary protocol for
-      # Grok models. Every Grok model reasons and returns encrypted reasoning,
-      # and usage counts agentic tool activity.
+      # Grok models. Usage counts agentic tool activity.
       class Responses < Protocols::Responses
         include XAI::Images
         include XAI::Models
@@ -28,10 +27,6 @@ module RubyLLM
 
         def server_tool_aliases
           SERVER_TOOL_ALIASES
-        end
-
-        def reasoning_model?(_model_id)
-          true
         end
 
         USD_PER_TICK = 1e-10

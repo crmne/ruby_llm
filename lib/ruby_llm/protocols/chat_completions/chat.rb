@@ -57,11 +57,11 @@ module RubyLLM
           payload
         end
 
-        # OpenAI and Azure reject max_tokens on their reasoning models.
-        def max_output_tokens_field(model)
-          return :max_tokens unless %w[openai azure].include?(@provider.slug)
-
-          model.id.match?(/^o\d|^gpt-5/) ? :max_completion_tokens : :max_tokens
+        # OpenAI and Azure reject max_tokens on their reasoning models and
+        # accept max_completion_tokens on every model; the rest of the wire
+        # format only knows max_tokens.
+        def max_output_tokens_field(_model)
+          %w[openai azure].include?(@provider.slug) ? :max_completion_tokens : :max_tokens
         end
 
         def warn_unsupported_citations(model)

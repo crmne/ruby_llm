@@ -614,6 +614,36 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     end
   end
 
+  describe '#max_output_tokens_field' do
+    def rendered_field(slug, model_id)
+      protocol = Object.new
+      protocol.extend(RubyLLM::Protocols::ChatCompletions::Media)
+      protocol.extend(RubyLLM::Protocols::ChatCompletions::Tools)
+      protocol.extend(described_class)
+      protocol.instance_variable_set(:@provider, instance_double(RubyLLM::Provider, slug: slug))
+      model = instance_double(RubyLLM::Model, id: model_id, supports?: true)
+
+      payload = protocol.send(
+        :render_payload, [RubyLLM::Message.new(role: :user, content: 'Hi')],
+        tools: {}, temperature: nil, model: model, max_output_tokens: 1000
+      )
+
+      payload.keys.find { |key| key.to_s.start_with?('max_') }
+    end
+
+    it 'always sends max_completion_tokens to OpenAI and Azure' do
+      %w[gpt-3.5-turbo gpt-4o-mini gpt-5.1 o4-mini ft:gpt-5.1:acme::abc123 prod-reasoner].each do |id|
+        expect(rendered_field('openai', id)).to eq(:max_completion_tokens)
+        expect(rendered_field('azure', id)).to eq(:max_completion_tokens)
+      end
+    end
+
+    it 'sends max_tokens to every other service on this wire format' do
+      expect(rendered_field('deepseek', 'deepseek-chat')).to eq(:max_tokens)
+      expect(rendered_field('perplexity', 'sonar')).to eq(:max_tokens)
+    end
+  end
+
   describe 'tool preferences' do
     it 'renders tool choice and parallel tool calls' do
       protocol = Object.new

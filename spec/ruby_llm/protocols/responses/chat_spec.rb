@@ -18,6 +18,17 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(payload[:include]).to eq(['reasoning.encrypted_content'])
     end
 
+    it 'asks for encrypted reasoning whatever the model is named' do
+      %w[gpt-4.1-mini grok-4-fast-reasoning deepseek-reasoner prod-reasoner].each do |id|
+        payload = protocol.send(
+          :render_payload, [RubyLLM::Message.new(role: :user, content: 'hi')],
+          tools: {}, temperature: nil, model: instance_double(RubyLLM::Model, id:), tool_prefs: nil
+        )
+
+        expect(payload[:include]).to eq(['reasoning.encrypted_content'])
+      end
+    end
+
     it 'turns system messages into instructions' do
       messages = [
         RubyLLM::Message.new(role: :system, content: 'Be brief.'),
