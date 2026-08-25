@@ -185,16 +185,23 @@ module RubyLLM
 
       private
 
-      # A request that never reached the provider cannot have been billed;
-      # possibly-billed failures keep their usage unknown.
+      # A request that never reached the provider, or that the provider
+      # refused before running it, cannot have been billed; possibly-billed
+      # failures keep their usage unknown.
       def failure_tokens(entry, error)
-        return entry.tokens if entry.usage_available? || !never_sent?(error)
+        return entry.tokens if entry.usage_available? || (!never_sent?(error) && !refused?(error))
 
         Tokens.new(input: 0, output: 0)
       end
 
       def never_sent?(error)
         error.is_a?(Faraday::ConnectionFailed) || error.is_a?(Faraday::SSLError)
+      end
+
+      def refused?(error)
+        return false unless error.is_a?(Error) && error.response.respond_to?(:status)
+
+        (400..499).cover?(error.response.status)
       end
 
       def finish(entry, status:, tokens:, **details)

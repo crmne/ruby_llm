@@ -28,6 +28,37 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
     expect(entry).to be_usage_available
   end
 
+  it 'records zero tokens for attempts the provider refused' do
+    tracker = build_tracker
+    entry = tracker.start
+    response = Struct.new(:status, :body).new(429, '')
+
+    tracker.fail_attempt(entry, RubyLLM::RateLimitError.new('rate limit exceeded', response: response))
+
+    expect(entry.status).to eq(:failed)
+    expect(entry.tokens.to_h).to eq(input_tokens: 0, output_tokens: 0)
+    expect(entry).to be_usage_available
+  end
+
+  it 'prices a call whose first attempt was rate limited' do
+    tracker = RubyLLM.const_get(:Usage)::Tracker.new(
+      operation: :chat,
+      provider: provider,
+      model: RubyLLM.models.find('gpt-4.1-nano'),
+      config: RubyLLM.config
+    )
+    refused = tracker.start
+    response = Struct.new(:status, :body).new(429, '')
+    tracker.fail_attempt(refused, RubyLLM::RateLimitError.new('rate limit exceeded', response: response))
+    tracker.start
+    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: 'gpt-4.1-nano',
+                                  input_tokens: 10, output_tokens: 4)
+
+    tracker.succeed(result)
+
+    expect(result.cost.total).to be_positive
+  end
+
   it 'keeps tokens unknown for attempts that may have been billed' do
     tracker = build_tracker
     entry = tracker.start
