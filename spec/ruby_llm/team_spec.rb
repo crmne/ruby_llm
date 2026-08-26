@@ -158,6 +158,38 @@ RSpec.describe RubyLLM::Team do
       expect(result[:error]).to eq("Unknown coworker 'nobody'. Available: researcher")
     end
 
+    it 'returns a recoverable error when a coworker raises while answering' do
+      coworker = Class.new do
+        def ask(_prompt)
+          raise 'boom'
+        end
+      end
+
+      result = team_with(coworker).collaboration_tools.first.call(
+        { 'task' => 'check', 'coworker' => 'researcher' }
+      )
+
+      expect(result).to eq(error: "Coworker 'researcher' failed: boom")
+    end
+
+    it 'returns a recoverable error when a registered class cannot be instantiated' do
+      coworker = Class.new do
+        def initialize(name)
+          @name = name
+        end
+
+        def ask(_prompt)
+          'ok'
+        end
+      end
+
+      result = team_with(coworker).collaboration_tools.first.call(
+        { 'task' => 'check', 'coworker' => 'researcher' }
+      )
+
+      expect(result[:error]).to include("Coworker 'researcher' failed:")
+    end
+
     it 'returns message attachments with the reply content' do
       attachment = RubyLLM::Attachment.new(StringIO.new('image bytes'), filename: 'diagram.png')
       coworker = Class.new do

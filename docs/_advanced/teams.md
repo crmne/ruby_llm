@@ -73,6 +73,8 @@ When a coworker replies with attachments, the tool returns `[content, *attachmen
 
 When the model names an unknown coworker, the tool returns an error such as `{ error: "Unknown coworker 'Editor'. Available: Researcher, Writer" }`. The model can then correct the call and continue.
 
+When a coworker raises while answering, the tool turns the failure into an error such as `{ error: "Coworker 'Editor' failed: <message>" }` instead, so the orchestrator can retry or move on.
+
 ## Concurrency
 
 Register every coworker before calling `collaboration_tools`. The returned tools capture a stable snapshot of the registry, so concurrent calls only read Team state and need no locks.

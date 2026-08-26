@@ -53,8 +53,13 @@ module RubyLLM
         agent = @agents[coworker.to_s]
         return unknown_coworker(coworker) unless agent
 
-        agent = agent.new if agent.is_a?(Class)
-        content, attachments = extract_result(agent.ask(prompt))
+        begin
+          agent = agent.new if agent.is_a?(Class)
+          content, attachments = extract_result(agent.ask(prompt))
+        rescue StandardError => e
+          return { error: "Coworker '#{coworker}' failed: #{e.message}" }
+        end
+
         attachments.empty? ? content : [content, *attachments]
       end
 
