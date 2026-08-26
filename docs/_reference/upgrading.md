@@ -85,7 +85,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 
 ## How to Upgrade
 
-The upgrade migration renames tables in place, backfills, and then removes legacy columns, and its `down` refuses to run. Snapshot your database before you start, and rehearse the migration on a copy of production data.
+The upgrade migration renames tables in place, backfills, and then removes legacy columns, and its `down` refuses to run. It is a maintenance-window migration: 1.x processes cannot keep using the schema while it changes, and 2.0 processes cannot use it until the migration finishes. Snapshot your database, rehearse on a recent copy of production data, record the runtime and disk growth, and stop web processes and background workers before the production run. Leave enough free space for the usage ledger, its indexes, and your database's write-ahead or replication logs.
 {: .warning }
 
 ### 1. Finish what is in flight
@@ -97,19 +97,22 @@ Complete or cancel conversations parked mid-tool-round before migrating. 2.0 req
 ```bash
 bundle update ruby_llm
 bin/rails generate ruby_llm:upgrade
-bin/rails db:migrate
 ```
+
+Review the generated migration and rehearse it before production. When the maintenance window begins, stop every process that can write chats, run `bin/rails db:migrate`, deploy and boot 2.0, then restore traffic. The migration disables its outer DDL transaction so PostgreSQL does not retain early schema locks throughout the data backfill. It builds PostgreSQL indexes concurrently and records completion of the usage backfill so retrying after a process or MySQL DDL failure does not duplicate ledger rows.
+
+The data backfills use set-based SQL on PostgreSQL, MySQL, and SQLite. MySQL groups each large table's new indexes into one online alteration and verifies chat model references before installing the foreign key without a table copy. SQLite removes the legacy message columns in one table rebuild. MySQL and SQLite still take adapter-specific schema and writer locks, so neither path makes this a zero-downtime migration.
 
 The generated migration:
 
 * adds a boolean `cancelled` column to chats, and citations, server-tool replay data, raw reasoning, finish reasons, and prompt-cache boundaries to messages;
-* moves the existing model and tool-call tables, plus any batch table created by a 2.0 prerelease, under RubyLLM's `ruby_llm_` prefix;
-* keeps the chat's model reference under the `ruby_llm_model_id` name while converting message-level model references into provider and model-id strings;
+* moves the existing model and tool-call tables, plus any recognized batch table created by a 2.0 prerelease, under RubyLLM's `ruby_llm_` prefix; an unrelated application table named `batches` stays untouched;
+* keeps the chat's model reference under the `ruby_llm_model_id` name while copying message-level model identity into the usage ledger and then removing the obsolete message foreign key;
 * adds approval and reasoning metadata to tool-call records;
 * renumbers duplicated `tool_call_id`s before adding the unique index;
-* creates the usage ledger, backfills it from your messages' token and cost columns (one succeeded entry per message that recorded usage), and then removes those columns from your messages table.
+* creates the usage ledger, adds one succeeded entry for each historical assistant response whose model can be resolved, copies any recorded tokens and costs into it, and then removes those columns from your messages table.
 
-It stops with an explicit error if an old and a new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
+It stops with an explicit error rather than discarding ambiguous data. Its preflight checks table shapes, conflicting old and new tables, and duplicate model or batch identities before changing the schema. Reconcile the records before retrying if a message with usage cannot resolve its provider and model from either the message or its chat. The temporary progress table is removed after the ledger is complete.
 
 ### 3. Delete what RubyLLM now owns
 
@@ -138,7 +141,7 @@ If you previously generated the Chat UI, update or regenerate its models control
 
 ### 6. Verify the money before you trust it
 
-Cost and usage moved out of the transcript into a per-attempt ledger, and the migration backfilled it from your message rows. Before deleting any accounting of your own, reconcile: `chat.cost.total` and ledger sums (`SUM(total_cost)` on `ruby_llm_usages`) should match what your old columns reported. Attempt costs are frozen decimals; keep pricing current for new attempts with a periodic `RubyLLM.models.refresh!`. See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
+Cost and usage moved out of the transcript into a per-attempt ledger, and the migration backfilled what your message rows actually persisted. RubyLLM 1.16 stored tokens but did not store historical costs by default, so those migrated entries have unknown costs. The generator copies `total_cost` and `cost_details` when a prerelease or application added them, but it does not guess that an application-specific money column represents provider cost. Copy such a column into `ruby_llm_usages.total_cost` in an application migration, then reconcile `chat.cost.total` and ledger sums before deleting your old accounting. New attempt costs are frozen decimals; keep pricing current with a periodic `RubyLLM.models.refresh!`. See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
 
 ## When Your App Outgrew the Defaults
 
@@ -146,7 +149,7 @@ The patterns below come from upgrading a production app that had grown its own m
 
 ### App concerns on the model catalog
 
-RubyLLM owns `ruby_llm_models` now, and the upgrade strips application columns from it. If your app decorated the old model table with its own concerns (availability toggles, a default flag, admin pricing overrides, slugs), move them to a settings table of your own that shadows the registry and re-syncs after every refresh:
+RubyLLM owns `ruby_llm_models` now. The upgrade preserves extra application columns physically rather than discarding data, but RubyLLM does not maintain or provide an API for them. If your app decorated the old model table with its own concerns (availability toggles, a default flag, admin pricing overrides, slugs), move them to a settings table of your own that shadows the registry and re-syncs after every refresh:
 
 ```ruby
 class ModelSetting < ApplicationRecord
@@ -164,7 +167,7 @@ class ModelSetting < ApplicationRecord
 end
 ```
 
-Your rows carry the app's opinions; RubyLLM's rows carry the catalog. The migration for this split copies your old columns out before the upgrade strips them, so write it first and rehearse it.
+Your rows carry the app's opinions; RubyLLM's rows carry the catalog. The generated upgrade preserves your extra columns, so copy them into your settings table in an application migration and remove them from `ruby_llm_models` only after you reconcile the new rows.
 
 ### Your own usage ledger
 
@@ -183,6 +186,8 @@ user.ruby_llm_usages.where("ruby_llm_usages.created_at >= ?", period_start).sum(
 Keep your application ledger if it also represents customer billing, credits, quotas, or adjustments that RubyLLM cannot know about. Otherwise, reconcile the internal ledger against your old totals before dropping your columns, and re-home any UI updates that hung off your old table's callbacks (a job-level `ensure` block is the usual landing spot), or those updates silently stop firing.
 
 ### Text you persisted before 2.0
+
+The migration copies each 1.x `content_raw` value into the message's String `content` as JSON when `content` is `NULL`. This migrates structured output without trying to infer whether the request used a schema. It leaves `content_raw` in place because the column also held provider-specific raw blocks. Review those values before dropping the old column; raw blocks need an application fallback or a `before_request` conversion.
 
 Anything your app wrote to the database in a 1.x format needs a read path for old rows forever, not just through the migration. Parse the 2.0 format first and fall back:
 

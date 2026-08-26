@@ -434,7 +434,7 @@ module RubyLLM
 
         # Inference profile and foundation model ARNs name the model in their last segment.
         def foundation_model_id(model_id)
-          prefixes = Providers::Bedrock::Models::REGION_PREFIXES.join('|')
+          prefixes = Converse::REGION_PREFIXES.join('|')
           model_id.to_s.rpartition('/').last.sub(/\A(?:#{prefixes})\./, '')
         end
 

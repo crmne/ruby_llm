@@ -7,8 +7,6 @@ module RubyLLM
       module Models
         module_function
 
-        REGION_PREFIXES = %w[global us-gov us eu apac ap sa ca me af il au jp].freeze
-
         JP_REGIONS = %w[ap-northeast-1 ap-northeast-3].freeze
         AU_REGIONS = %w[ap-southeast-2 ap-southeast-4].freeze
 
@@ -209,7 +207,7 @@ module RubyLLM
 
         def prefixed_with(model_id, prefix)
           if region_prefixed?(model_id)
-            model_id.sub(/\A(?:#{REGION_PREFIXES.join('|')})\./, "#{prefix}.")
+            model_id.sub(/\A(?:#{Protocols::Converse::REGION_PREFIXES.join('|')})\./, "#{prefix}.")
           else
             "#{prefix}.#{model_id}"
           end
@@ -236,7 +234,7 @@ module RubyLLM
         end
 
         def region_prefixed?(model_id)
-          model_id.match?(/\A(?:#{REGION_PREFIXES.join('|')})\./)
+          model_id.match?(/\A(?:#{Protocols::Converse::REGION_PREFIXES.join('|')})\./)
         end
 
         def normalize_modalities(modalities)
@@ -273,7 +271,8 @@ module RubyLLM
         def supports_structured_output?(model_id)
           return false unless model_id
 
-          normalized = model_id.sub(/\A(?:#{REGION_PREFIXES.join('|')})\./, '').delete_prefix('anthropic.')
+          normalized = model_id.sub(/\A(?:#{Protocols::Converse::REGION_PREFIXES.join('|')})\./, '')
+                               .delete_prefix('anthropic.')
           match = normalized.match(/claude-(?:opus|sonnet|haiku)-(\d+)-(\d{1,2})(?:\b|-)/)
           return false unless match
 

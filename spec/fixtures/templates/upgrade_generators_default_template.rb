@@ -8,6 +8,10 @@ after_bundle do
       config.openai_api_key = ENV.fetch("OPENAI_API_KEY", "test")
     end
   RUBY
+  file 'config/initializers/strong_migrations.rb', <<~RUBY
+    require "strong_migrations"
+    StrongMigrations.skip_database(:primary)
+  RUBY
 
   generate 'ruby_llm:upgrade'
 end

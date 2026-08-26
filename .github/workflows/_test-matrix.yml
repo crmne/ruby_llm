@@ -16,6 +16,59 @@ permissions:
   contents: read
 
 jobs:
+  migration-adapters:
+    name: Migration adapters (PostgreSQL, MySQL)
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_DISABLE_SHARED_GEMS: "true"
+      RUBY_LLM_POSTGRES_URL: postgresql://postgres:postgres@127.0.0.1:5432/ruby_llm_test
+      RUBY_LLM_MYSQL_URL: mysql2://root:mysql@127.0.0.1:3306/ruby_llm_test
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ruby_llm_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: mysql
+          MYSQL_DATABASE: ruby_llm_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost -pmysql"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: ${{ inputs.bundler-cache }}
+
+      - name: Install dependencies
+        run: |
+          bundle install
+          bundle exec appraisal rails-8.1 bundle install
+
+      - name: Test migrations on supported adapters
+        run: >-
+          bundle exec appraisal rails-8.1 rspec
+          spec/ruby_llm/generators/upgrade_migration_adapters_spec.rb
+
   test:
     # No " / " in the name: GitHub joins the caller job id and this name with
     # " / ", then splits on it to build the checks tree, so an inner slash
@@ -53,6 +106,7 @@ jobs:
       - name: Install dependencies
         run: |
           bundle install
+          bundle exec appraisal generate
           bundle exec appraisal ${{ matrix.rails-version }} bundle install
 
       - name: Run eager-load guard (appraisal)

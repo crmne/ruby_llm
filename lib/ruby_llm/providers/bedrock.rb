@@ -169,7 +169,7 @@ module RubyLLM
       end
 
       def bedrock_model_id_pattern(prefix)
-        /\A(?:(?:#{Bedrock::Models::REGION_PREFIXES.join('|')})\.)?#{Regexp.escape(prefix)}/
+        /\A(?:(?:#{Protocols::Converse::REGION_PREFIXES.join('|')})\.)?#{Regexp.escape(prefix)}/
       end
     end
   end

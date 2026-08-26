@@ -6,7 +6,9 @@ gemspec
 
 group :development do
   gem 'appraisal'
-  gem 'archspec', github: 'crmne/archspec', branch: 'master'
+  if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
+    gem 'archspec', github: 'crmne/archspec', tag: 'v1.1.0.rc1'
+  end
   gem 'bundler', '>= 2.0'
   gem 'dotenv'
   gem 'flay'

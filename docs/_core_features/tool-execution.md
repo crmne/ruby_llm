@@ -203,7 +203,7 @@ chat.with_tools(Weather, StockPrice, Currency).with_tool_options(concurrency: :f
 The `:fibers` mode uses the optional `async` gem:
 
 ```ruby
-gem "async"
+gem "async", ">= 2.0"
 ```
 
 Enable concurrent tool execution globally:

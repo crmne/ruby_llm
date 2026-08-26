@@ -4,6 +4,8 @@ module RubyLLM
   module Protocols
     # The AWS Bedrock Converse API. Requests are SigV4-signed by the provider.
     class Converse < Protocol
+      REGION_PREFIXES = %w[global us-gov us eu apac ap sa ca me af il au jp].freeze
+
       include Converse::Chat
       include Converse::Media
       include Converse::Streaming
