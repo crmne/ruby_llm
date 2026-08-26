@@ -9,7 +9,7 @@ module RubyLLM
     #
     # Instances come from PricingCategory#standard, #batch, and #long_context:
     #
-    #   model = RubyLLM.models.find "claude-sonnet-4-6"
+    #   model = RubyLLM.models.find "claude-sonnet-5"
     #   tier  = model.pricing.text_tokens.standard
     #   tier.input_per_million  # => 3
     #   tier.output_per_million # => 15

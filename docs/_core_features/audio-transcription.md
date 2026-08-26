@@ -32,7 +32,7 @@ puts transcription.text
 # => "Welcome to today's meeting. Let's discuss..."
 
 puts transcription.model
-# => "whisper-1"
+# => "gpt-transcribe"
 ```
 
 Supports MP3, M4A, WAV, WebM, OGG, and more.
@@ -40,8 +40,8 @@ Supports MP3, M4A, WAV, WebM, OGG, and more.
 ## Choosing Models
 
 ```ruby
-# Whisper-1 (default, good for general use)
-RubyLLM.transcribe("audio.mp3", model: "whisper-1")
+# GPT Transcribe (default, high accuracy)
+RubyLLM.transcribe("audio.mp3", model: "gpt-transcribe")
 
 # GPT-4o Transcribe (faster, better for technical content)
 RubyLLM.transcribe("audio.mp3", model: "gpt-4o-transcribe")
@@ -78,7 +78,7 @@ Configure the default globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_transcription_model = "gpt-4o-transcribe"
+  config.default_transcription_model = "gpt-transcribe"
 end
 ```
 

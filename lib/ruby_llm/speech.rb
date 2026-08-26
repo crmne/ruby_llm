@@ -58,7 +58,7 @@ module RubyLLM
     #   RubyLLM.speak "Welcome back.", voice: "nova"
     #   RubyLLM.speak "Save this as a WAV file.", format: "wav"
     #   RubyLLM.speak "Say cheerfully: Have a wonderful day!",
-    #                 model: "gemini-2.5-flash-preview-tts", provider: :gemini
+    #                 model: "gemini-3.1-flash-tts-preview", provider: :gemini
     #
     # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
     def self.speak(input,

@@ -133,7 +133,7 @@
 
     if (!model || !provider) {
       var stringSpan = Array.prototype.find.call(code.querySelectorAll(".s2"), function (span) {
-        return span.textContent.indexOf("claude-opus-4-7") !== -1;
+        return span.textContent.indexOf("claude-opus-5") !== -1;
       });
       if (!stringSpan) return;
 
@@ -154,22 +154,22 @@
 
     var examples = [
       {
-        model: "claude-opus-4-7",
+        model: "claude-opus-5",
         provider: "",
         title: "Anthropic"
       },
       {
-        model: "claude-opus-4-7",
+        model: "claude-opus-5",
         provider: ', <span class="ss">provider:</span> <span class="ss">:azure</span>',
         title: "Azure AI"
       },
       {
-        model: "claude-opus-4-7",
+        model: "claude-opus-5",
         provider: ', <span class="ss">provider:</span> <span class="ss">:bedrock</span>',
         title: "Amazon Bedrock"
       },
       {
-        model: "command-a-plus",
+        model: "command-a-plus-05-2026",
         provider: "",
         title: "Cohere"
       },
@@ -179,7 +179,7 @@
         title: "DeepSeek"
       },
       {
-        model: "gemini-3.1-pro-preview",
+        model: "gemini-3.7-flash",
         provider: "",
         title: "Gemini"
       },
@@ -199,12 +199,12 @@
         title: "Ollama"
       },
       {
-        model: "gpt-5.5",
+        model: "gpt-5.6",
         provider: "",
         title: "OpenAI"
       },
       {
-        model: "claude-opus-4-7",
+        model: "claude-opus-5",
         provider: ', <span class="ss">provider:</span> <span class="ss">:openrouter</span>',
         title: "OpenRouter"
       },
@@ -214,12 +214,12 @@
         title: "Perplexity"
       },
       {
-        model: "gemini-3.1-pro-preview",
+        model: "gemini-3.7-flash",
         provider: ', <span class="ss">provider:</span> <span class="ss">:vertexai</span>',
         title: "Vertex AI"
       },
       {
-        model: "grok-4.3",
+        model: "grok-4.6",
         provider: "",
         title: "xAI"
       }

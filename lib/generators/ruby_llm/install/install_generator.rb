@@ -71,7 +71,7 @@ module RubyLLM
         say '     2. Run: bin/rails ruby_llm:load_models'
         say '     3. Set your API keys in config/initializers/ruby_llm.rb'
 
-        say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-5-nano').ask('Hello!')"
+        say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-5.6-luna').ask('Hello!')"
         say "     5. Optional UI: #{chat_ui_generator_command}"
 
         if options[:skip_active_storage]

@@ -6,7 +6,7 @@ module RubyLLM
   # normalizes all of them into Citation objects on Message#citations.
   # Fields a provider does not report are +nil+.
   #
-  #   chat = RubyLLM.chat(model: 'claude-sonnet-4-5').with_citations
+  #   chat = RubyLLM.chat(model: 'claude-sonnet-5').with_citations
   #   response = chat.ask "Who created Ruby?", with: "facts.txt"
   #
   #   response.citations.each do |citation|

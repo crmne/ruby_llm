@@ -143,7 +143,7 @@ module RubyLLM
     #   chat = RubyLLM.chat
     #   chat.ask "What is the capital of France?"
     #
-    #   chat = RubyLLM.chat(model: 'claude-sonnet-4-5')
+    #   chat = RubyLLM.chat(model: 'claude-sonnet-5')
     #
     def chat(...)
       Chat.new(...)
@@ -308,8 +308,8 @@ module RubyLLM
     # that chats can attach with Chat#with_caching. Arguments are
     # forwarded to CachedContent.create.
     #
-    #   cache = RubyLLM.cache(big_document, model: 'gemini-2.5-flash', ttl: 3600)
-    #   chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(id: cache)
+    #   cache = RubyLLM.cache(big_document, model: 'gemini-3.7-flash', ttl: 3600)
+    #   chat = RubyLLM.chat(model: 'gemini-3.7-flash').with_caching(id: cache)
     #
     def cache(...)
       CachedContent.create(...)

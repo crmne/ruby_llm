@@ -80,7 +80,7 @@ bundle add ruby_llm
     <div class="home-code-grid home-model-switcher" data-model-switcher aria-label="Same RubyLLM API across providers">
 {% capture model_switcher_code %}
 ```ruby
-chat = RubyLLM.chat(model: "claude-opus-4-7")
+chat = RubyLLM.chat(model: "claude-opus-5")
 chat.ask "Hello!"
 ```
 {: .home-code-card .home-model-switcher-code data-title="Anthropic" data-model-switcher-code="true" }
@@ -373,7 +373,7 @@ RubyLLM.moderate("Some user-generated content").flagged?
   <div class="home-code-grid home-code-grid--columns home-rails-code-grid" markdown="1">
 
 ```ruby
-chat = Chat.create! model: "claude-opus-4-7"
+chat = Chat.create! model: "claude-opus-5"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
 {: .home-code-card data-title="Persist chats with Active Record" data-href="{% link _advanced/rails-persistence.md %}#two-application-models" data-doc-title="Core Models and acts_as Methods" }

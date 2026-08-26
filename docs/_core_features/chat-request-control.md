@@ -98,7 +98,7 @@ end
 A conversation that runs long enough overflows the model's context window and the provider starts rejecting requests. Several providers can handle that themselves: once the conversation crosses a token threshold, the provider condenses the earlier turns and carries on. `with_compaction` turns it on:
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-sonnet-4-6").with_compaction
+chat = RubyLLM.chat(model: "claude-sonnet-5").with_compaction
 chat.ask "Let's go through the whole migration plan."
 ```
 
@@ -131,7 +131,7 @@ Agents declare it with the matching `compaction` macro:
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  model "claude-sonnet-4-6"
+  model "claude-sonnet-5"
   compaction at: 50_000
 end
 ```
@@ -159,15 +159,15 @@ chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
 Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Azure defaults to Chat Completions and routes deployments named after gpt-5.4+ models to the Responses API; Vertex AI speaks Gemini for Google models, Anthropic for Claude, Mistral for Mistral, and Chat Completions for the publisher-prefixed MaaS models. RubyLLM picks the right protocol per request:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4-6', provider: :vertexai)               # speaks Anthropic
+chat = RubyLLM.chat(model: 'claude-opus-5', provider: :vertexai)                 # speaks Anthropic
 chat = RubyLLM.chat(model: 'meta/llama-3.3-70b-instruct-maas', provider: :vertexai) # speaks Chat Completions
 ```
 
 Override it per chat with the `protocol:` model option, or app-wide with configuration:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-5.4', protocol: :chat_completions)
-chat = RubyLLM.chat(model: 'gpt-5.4').with_model('gpt-5.4', protocol: :chat_completions)
+chat = RubyLLM.chat(model: 'gpt-5.6', protocol: :chat_completions)
+chat = RubyLLM.chat(model: 'gpt-5.6').with_model('gpt-5.6', protocol: :chat_completions)
 
 RubyLLM.configure do |config|
   config.openai_protocol = :chat_completions

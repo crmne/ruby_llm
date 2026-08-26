@@ -13,7 +13,7 @@ module RubyLLM
   #     config.request_timeout = 180
   #   end
   #
-  #   chat = ctx.chat(model: 'gpt-5.4')
+  #   chat = ctx.chat(model: 'gpt-5.6')
   #   chat.ask "Process this with another provider..."
   #
   # The global configuration is left untouched.

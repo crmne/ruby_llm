@@ -65,7 +65,7 @@ Models that support image-to-video take a reference image through `with:`, the s
 ```ruby
 video = RubyLLM.animate(
   "Make the waterfall crash down and slowly pan out",
-  model: "grok-imagine-video",
+  model: "grok-imagine-video-1.5",
   with: "waterfall.png",
   provider_options: { duration: 5 }
 )
@@ -88,7 +88,7 @@ You can change the default globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_video_model = "grok-imagine-video"
+  config.default_video_model = "grok-imagine-video-1.5"
 end
 ```
 
@@ -111,7 +111,7 @@ Durations, resolutions, and aspect ratios vary by provider, so they travel throu
 # xAI and OpenRouter take flat request fields
 RubyLLM.animate(
   "A calm ocean wave at sunset",
-  model: "grok-imagine-video",
+  model: "grok-imagine-video-1.5",
   provider_options: { duration: 5, resolution: "720p" }
 )
 
@@ -210,7 +210,7 @@ end
 Providers without video generation raise a clear error as well:
 
 ```ruby
-RubyLLM.animate_later("A cat", model: "claude-sonnet-4-6")
+RubyLLM.animate_later("A cat", model: "claude-sonnet-5")
 # => RubyLLM::Error: Anthropic doesn't support video generation
 ```
 

@@ -13,7 +13,7 @@ module RubyLLM
     #     acts_as_chat
     #   end
     #
-    #   chat = Chat.create!(model: 'gpt-5-nano')
+    #   chat = Chat.create!(model: 'gpt-5.6-luna')
     #   chat.ask "What is the capital of France?"
     #   chat.messages.count # => 2
     #
@@ -113,7 +113,7 @@ module RubyLLM
       # Sets the chat's model from an id, a RubyLLM::Model value, or the
       # associated internal model record.
       #
-      #   chat.model = 'gpt-5-nano'
+      #   chat.model = 'gpt-5.6-luna'
       #
       def model=(value)
         if value.is_a?(RubyLLM::ActiveRecord::Model)
@@ -133,7 +133,7 @@ module RubyLLM
 
       # Returns the model id of the associated model record, or +nil+.
       #
-      #   chat.model_id # => "gpt-5-nano"
+      #   chat.model_id # => "gpt-5.6-luna"
       #
       def model_id
         model&.model_id || @pending_model_id
@@ -274,7 +274,7 @@ module RubyLLM
       # default model when +model_name+ is +nil+. Pass +protocol:+ to override
       # the wire protocol the provider would pick for the model. Returns +self+.
       #
-      #   chat.with_model 'claude-sonnet-4-6'
+      #   chat.with_model 'claude-sonnet-5'
       #
       def with_model(model_name, provider: nil, protocol: nil, assume_model_exists: false)
         model_name ||= (context&.config || RubyLLM.config).default_model

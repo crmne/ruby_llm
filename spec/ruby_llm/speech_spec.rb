@@ -19,10 +19,12 @@ RSpec.describe RubyLLM::Speech, :live do
 
   describe '.speak' do
     it 'uses the configured default speech model' do
-      model = instance_double(RubyLLM::Model, id: 'gpt-4o-mini-tts', provider: 'openai')
+      model = instance_double(RubyLLM::Model, id: 'gpt-4o-mini-tts-2025-12-15', provider: 'openai')
       provider = instance_double(RubyLLM::Provider, slug: 'openai')
       provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
-      speech = described_class.new(data: 'audio bytes', model: 'gpt-4o-mini-tts', voice: 'alloy', format: 'mp3')
+      speech = described_class.new(
+        data: 'audio bytes', model: 'gpt-4o-mini-tts-2025-12-15', voice: 'alloy', format: 'mp3'
+      )
       allow(provider).to receive_messages(speak: speech, class: provider_class)
       allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
@@ -30,7 +32,7 @@ RSpec.describe RubyLLM::Speech, :live do
 
       expect(result).to eq(speech)
       expect(RubyLLM::Models).to have_received(:resolve).with(
-        'gpt-4o-mini-tts',
+        'gpt-4o-mini-tts-2025-12-15',
         provider: nil,
         assume_model_exists: false,
         config: RubyLLM.config

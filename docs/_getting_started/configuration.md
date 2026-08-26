@@ -58,17 +58,17 @@ Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `Ruby
 RubyLLM.configure do |config|
   config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
   config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
-  config.default_image_model = 'dall-e-3'              # For RubyLLM.paint
-  config.default_video_model = 'grok-imagine-video'    # For RubyLLM.animate
+  config.default_image_model = 'gpt-image-2'                   # For RubyLLM.paint
+  config.default_video_model = 'grok-imagine-video-1.5'        # For RubyLLM.animate
   config.default_speech_model = '{{ site.models.default_speech }}'       # For RubyLLM.speak
 end
 ```
 
 Defaults if not configured:
-- Chat: `gpt-5.4`
+- Chat: `gpt-5.6`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
-- Videos: `grok-imagine-video`
+- Videos: `grok-imagine-video-1.5`
 - Speech: `{{ site.models.default_speech }}`
 
 ## Rails Integration

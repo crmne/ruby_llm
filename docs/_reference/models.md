@@ -137,7 +137,7 @@ Handle the lookup where you resolve a model:
 def chat_for(record)
   record.to_llm
 rescue RubyLLM::ModelNotFoundError
-  record.with_model('claude-sonnet-4-6')
+  record.with_model('{{ site.models.anthropic_current }}')
 end
 ```
 

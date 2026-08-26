@@ -64,8 +64,8 @@ module RubyLLM
     # :attr_accessor: default_model
     #
     # The model id used by RubyLLM.chat when no model is given.
-    # Default: <tt>'gpt-5.4'</tt>.
-    option :default_model, 'gpt-5.4'
+    # Default: <tt>'gpt-5.6'</tt>.
+    option :default_model, 'gpt-5.6'
 
     ##
     # :attr_accessor: default_embedding_model
@@ -85,22 +85,22 @@ module RubyLLM
     # :attr_accessor: default_image_model
     #
     # The model id used by RubyLLM.paint when no model is given.
-    # Default: <tt>'gpt-image-1.5'</tt>.
-    option :default_image_model, 'gpt-image-1.5'
+    # Default: <tt>'gpt-image-2'</tt>.
+    option :default_image_model, 'gpt-image-2'
 
     ##
     # :attr_accessor: default_speech_model
     #
     # The model id used by RubyLLM.speak when no model is given.
-    # Default: <tt>'gpt-4o-mini-tts'</tt>.
-    option :default_speech_model, 'gpt-4o-mini-tts'
+    # Default: <tt>'gpt-4o-mini-tts-2025-12-15'</tt>.
+    option :default_speech_model, 'gpt-4o-mini-tts-2025-12-15'
 
     ##
     # :attr_accessor: default_transcription_model
     #
     # The model id used by RubyLLM.transcribe when no model is given.
-    # Default: <tt>'whisper-1'</tt>.
-    option :default_transcription_model, 'whisper-1'
+    # Default: <tt>'gpt-transcribe'</tt>.
+    option :default_transcription_model, 'gpt-transcribe'
 
     ##
     # :attr_accessor: default_ocr_model
@@ -112,8 +112,8 @@ module RubyLLM
     # :attr_accessor: default_video_model
     #
     # The model id used by RubyLLM.animate when no model is given.
-    # Default: <tt>'grok-imagine-video'</tt>.
-    option :default_video_model, 'grok-imagine-video'
+    # Default: <tt>'grok-imagine-video-1.5'</tt>.
+    option :default_video_model, 'grok-imagine-video-1.5'
 
     ##
     # :attr_accessor: video_generation_timeout

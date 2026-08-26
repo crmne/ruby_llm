@@ -278,56 +278,57 @@ og_image:
 
 models:
   # Default models for basic examples
-  default_chat: "gpt-5-nano"
+  default_chat: "gpt-5.6-luna"
   default_embedding: "text-embedding-3-small"
-  default_image: "gpt-image-1.5"
-  default_speech: "gpt-4o-mini-tts"
+  default_image: "gpt-image-2"
+  default_speech: "gpt-4o-mini-tts-2025-12-15"
 
   # OpenAI models
-  openai_latest: "gpt-5.4"
-  openai_current: "gpt-5-nano"
-  openai_vision: "gpt-5.4"
-  openai_tools: "gpt-5.4"
-  openai_mini: "gpt-5-mini"
-  openai_audio: "gpt-audio-mini"
-  openai_speech: "gpt-4o-mini-tts"
+  openai_latest: "gpt-5.6"
+  openai_current: "gpt-5.6-luna"
+  openai_vision: "gpt-5.6"
+  openai_tools: "gpt-5.6"
+  openai_mini: "gpt-5.6-terra"
+  openai_audio: "gpt-audio-1.5"
+  openai_speech: "gpt-4o-mini-tts-2025-12-15"
   openai_legacy: "gpt-3.5-turbo" # schema unsupported
-  openai_standard: "gpt-5.4"
+  openai_standard: "gpt-5.6"
 
   # Anthropic models
   anthropic_server_tools: "claude-sonnet-5"
-  anthropic_latest: "claude-sonnet-4-6"
-  anthropic_current: "claude-sonnet-4-6"
-  anthropic_newest: "claude-sonnet-4-6"
-  anthropic_opus: "claude-opus-4-6"
+  anthropic_latest: "claude-sonnet-5"
+  anthropic_current: "claude-sonnet-5"
+  anthropic_newest: "claude-sonnet-5"
+  anthropic_opus: "claude-opus-5"
 
   # Google models
-  gemini_latest: "gemini-3.1-pro-preview"
-  gemini_current: "gemini-3.1-pro-preview"
-  gemini_current_latest: "gemini-3.1-pro-preview"
+  gemini_latest: "gemini-3.7-flash"
+  gemini_current: "gemini-3.7-flash"
+  gemini_current_latest: "gemini-3.7-flash"
 
   # Embedding models
   embedding_small: "text-embedding-3-small"
   embedding_large: "text-embedding-3-large"
-  embedding_google: "text-embedding-004"
+  embedding_google: "gemini-embedding-2"
+  embedding_google_text: "gemini-embedding-001"
 
   # Image generation models
-  image_openai: "gpt-image-1.5"
-  image_dalle: "gpt-image-1"
+  image_openai: "gpt-image-2"
+  image_dalle: "gpt-image-2"
   image_google: "gemini-3.1-flash-lite-image"
 
   # Speech generation models
-  speech_openai: "gpt-4o-mini-tts"
-  speech_google: "gemini-2.5-flash-preview-tts"
+  speech_openai: "gpt-4o-mini-tts-2025-12-15"
+  speech_google: "gemini-3.1-flash-tts-preview"
 
   # Local/Other models
-  local_llama: "llama-3"
+  local_llama: "llama4"
 
   # Model categories for different use cases
-  best_for_code: "gpt-5.4"
-  best_for_creative: "claude-opus-4-6"
-  best_for_factual: "gemini-3.1-pro-preview"
-  best_for_vision: "gpt-5.4"
-  best_for_audio: "gpt-audio-mini"
-  best_for_tools: "gpt-5.4"
-  best_for_budget: "gemini-3-flash-preview"
+  best_for_code: "gpt-5.6"
+  best_for_creative: "claude-opus-5"
+  best_for_factual: "gemini-3.7-flash"
+  best_for_vision: "gpt-5.6"
+  best_for_audio: "gpt-audio-1.5"
+  best_for_tools: "gpt-5.6"
+  best_for_budget: "gpt-5.6-luna"

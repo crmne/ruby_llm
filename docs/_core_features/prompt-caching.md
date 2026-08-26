@@ -45,7 +45,7 @@ RubyLLM renders the closest provider-native request:
 Prompt cache durations do not line up cleanly across providers, so RubyLLM does not alias them. Use the provider's own option name and value:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-5.5').with_caching(
+chat = RubyLLM.chat(model: 'gpt-5.6').with_caching(
   key: "repo:#{repository.cache_key}",
   ttl: "30m"
 )

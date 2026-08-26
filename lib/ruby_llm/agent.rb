@@ -9,7 +9,7 @@ module RubyLLM
   # configured chats wherever they are needed.
   #
   #   class SupportAgent < RubyLLM::Agent
-  #     model "gpt-5-nano"
+  #     model "gpt-5.6-luna"
   #     instructions "You are a concise support assistant."
   #     tools SearchDocs, LookupAccount
   #   end
@@ -107,9 +107,9 @@ module RubyLLM
       # available as methods. Called with no arguments, returns the
       # configured chat keywords.
       #
-      #   model "gpt-5-nano"
-      #   model "gpt-5.4", provider: :openai, protocol: :responses
-      #   model { quality == :high ? "gpt-5.4" : "gpt-5-nano" }
+      #   model "gpt-5.6-luna"
+      #   model "gpt-5.6", provider: :openai, protocol: :responses
+      #   model { quality == :high ? "gpt-5.6" : "gpt-5.6-luna" }
       #
       # The block runs before the chat exists, so it can read inputs but not
       # +chat+.

@@ -52,7 +52,7 @@ module RubyLLM
     #
     #   RubyLLM.animate(
     #     "Make the waterfall crash down",
-    #     model: "grok-imagine-video",
+    #     model: "grok-imagine-video-1.5",
     #     with: "waterfall.png",
     #     provider_options: { duration: 5 }
     #   )

@@ -7,7 +7,7 @@ module RubyLLM
   # including their capabilities, context windows, and pricing. The global
   # registry is available through RubyLLM.models.
   #
-  #   RubyLLM.models.find 'claude-sonnet-4-6'
+  #   RubyLLM.models.find 'claude-sonnet-5'
   #   RubyLLM.models.by_provider(:openai).chat_models
   #   RubyLLM.models.refresh!
   #
@@ -601,8 +601,8 @@ module RubyLLM
     # the model, first-party providers before aggregators. Raises
     # RubyLLM::ModelNotFoundError if no model matches.
     #
-    #   RubyLLM.models.find 'gpt-5.4'
-    #   RubyLLM.models.find 'claude-sonnet-4-6', :bedrock
+    #   RubyLLM.models.find 'gpt-5.6'
+    #   RubyLLM.models.find 'claude-sonnet-5', :bedrock
     #
     def find(model_id, provider = nil, config: nil)
       if provider

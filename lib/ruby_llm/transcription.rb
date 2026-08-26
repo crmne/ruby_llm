@@ -7,7 +7,7 @@ module RubyLLM
   #
   #   transcription = RubyLLM.transcribe("meeting.wav")
   #   transcription.text   # => "Welcome to today's meeting..."
-  #   transcription.model  # => "whisper-1"
+  #   transcription.model  # => "gpt-transcribe"
   #
   class Transcription
     include Inspectable

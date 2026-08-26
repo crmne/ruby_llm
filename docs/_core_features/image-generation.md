@@ -58,7 +58,7 @@ The `paint` method abstracts the differences between provider APIs.
 Pass `count:` to get several images from one request, which is cheaper and faster than repeating the call. RubyLLM returns an array when the request comes back with several images, and a single image otherwise:
 
 ```ruby
-images = RubyLLM.paint("a siamese cat", model: "gpt-image-1.5", count: 4)
+images = RubyLLM.paint("a siamese cat", model: "gpt-image-2", count: 4)
 
 images.each_with_index do |image, index|
   image.save("cat-#{index}.png")
@@ -75,7 +75,7 @@ The call is billed once, and the usage lands on the first image, so `images.sum 
 When providers return image token usage, images expose the same cost shape as chats and messages:
 
 ```ruby
-image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-1")
+image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-2")
 
 image.tokens.input
 image.tokens.output
@@ -94,7 +94,7 @@ Some models, such as OpenAI's GPT Image models, can edit an existing image inste
 ```ruby
 image = RubyLLM.paint(
   "Turn the logo green and keep the background transparent",
-  model: "gpt-image-1",
+  model: "gpt-image-2",
   with: "logo.png"
 )
 ```
@@ -106,7 +106,7 @@ image = RubyLLM.paint(
 ```ruby
 image = RubyLLM.paint(
   "Combine these references into a postcard illustration",
-  model: "gpt-image-1",
+  model: "gpt-image-2",
   with: ["person.png", "style-reference.png"]
 )
 ```
@@ -116,7 +116,7 @@ image = RubyLLM.paint(
 ```ruby
 image = RubyLLM.paint(
   "Replace only the background with a sunset sky",
-  model: "gpt-image-1",
+  model: "gpt-image-2",
   with: "portrait.png",
   mask: "portrait-mask.png",
   provider_options: { size: "1024x1024" }

@@ -5,7 +5,7 @@ module RubyLLM
   # capabilities, modalities, pricing, and provider metadata. Instances come
   # from the registry through RubyLLM.models and from Chat#model.
   #
-  #   model = RubyLLM.models.find('gpt-5.4')
+  #   model = RubyLLM.models.find('gpt-5.6')
   #   model.name              # => "GPT-5.4"
   #   model.provider          # => "openai"
   #   model.context_window    # => 1050000
@@ -14,7 +14,7 @@ module RubyLLM
   class Model
     include Inspectable
 
-    # The provider's identifier for the model, e.g. <tt>"gpt-5.4"</tt>.
+    # The provider's identifier for the model, e.g. <tt>"gpt-5.6"</tt>.
     attr_reader :id
 
     # The human-readable model name, e.g. <tt>"GPT-5.4"</tt>.

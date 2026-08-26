@@ -7,7 +7,7 @@ module RubyLLM
     # Model#pricing returns a Pricing collection whose categories are
     # PricingCategory instances. Prices are in USD per million tokens.
     #
-    #   model    = RubyLLM.models.find "claude-sonnet-4-6"
+    #   model    = RubyLLM.models.find "claude-sonnet-5"
     #   category = model.pricing.text_tokens
     #   category.input  # => 3
     #   category.output # => 15

@@ -45,14 +45,14 @@ module RubyLLM
     # +context:+ supplies a Context whose configuration replaces the
     # global one. +metadata:+ is included in the instrumentation payload.
     #
-    #   image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-1")
+    #   image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-2")
     #
     #   images = RubyLLM.paint("A small watercolor robot", count: 4)
     #   images.each_with_index { |image, i| image.save("robot-#{i}.png") }
     #
     #   RubyLLM.paint(
     #     "Turn the logo green and keep the background transparent",
-    #     model: "gpt-image-1",
+    #     model: "gpt-image-2",
     #     with: "logo.png"
     #   )
     #

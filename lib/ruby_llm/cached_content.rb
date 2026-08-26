@@ -6,8 +6,8 @@ module RubyLLM
   # chat so later requests read the cached tokens instead of resending
   # them. Gemini is the only provider with this resource lifecycle today.
   #
-  #   cache = RubyLLM.cache(big_document, model: 'gemini-2.5-flash', ttl: 3600)
-  #   chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(id: cache)
+  #   cache = RubyLLM.cache(big_document, model: 'gemini-3.7-flash', ttl: 3600)
+  #   chat = RubyLLM.chat(model: 'gemini-3.7-flash').with_caching(id: cache)
   #   chat.ask "What does the document conclude?"
   #   cache.delete!
   #
@@ -69,7 +69,7 @@ module RubyLLM
     # Creates a provider-side prompt cache from +content+ and returns a
     # CachedContent. Also available as RubyLLM.cache.
     #
-    #   RubyLLM::CachedContent.create(big_document, model: 'gemini-2.5-flash')
+    #   RubyLLM::CachedContent.create(big_document, model: 'gemini-3.7-flash')
     #
     # +content+ is the text to cache; pass file attachments with +with:+
     # the way Chat#ask accepts them. +instructions:+ caches a system

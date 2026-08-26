@@ -65,7 +65,7 @@ module RubyLLM
     #                 model: "text-embedding-3-large",
     #                 dimensions: 512
     #   RubyLLM.embed "RubyLLM makes provider APIs feel native to Ruby.",
-    #                 model: "text-embedding-004",
+    #                 model: "gemini-embedding-001",
     #                 provider: :vertexai,
     #                 task_type: "RETRIEVAL_DOCUMENT",
     #                 title: "RubyLLM docs"

@@ -106,12 +106,12 @@ Note that not all models support custom dimensions. If you specify dimensions th
 
 Some providers tune embeddings for a specific task, such as indexing a document versus matching a search query. Pass `task_type:` with a value in the provider's own vocabulary and RubyLLM places it on the right request field for you.
 
-Vertex AI and Gemini accept values like `RETRIEVAL_QUERY`, `RETRIEVAL_DOCUMENT`, `SEMANTIC_SIMILARITY`, and `CLASSIFICATION`. On these providers you can also pass `title:` to label the document being embedded:
+Vertex AI and Gemini accept values like `RETRIEVAL_QUERY`, `RETRIEVAL_DOCUMENT`, `SEMANTIC_SIMILARITY`, and `CLASSIFICATION` with Gemini Embedding 001. On these providers you can also pass `title:` to label the document being embedded. Gemini Embedding 2 does not accept `task_type:` or `title:`. Put task instructions in the text instead.
 
 ```ruby
 embedding = RubyLLM.embed(
   "RubyLLM makes provider APIs feel native to Ruby.",
-  model: "{{ site.models.embedding_google }}",
+  model: "{{ site.models.embedding_google_text }}",
   provider: :vertexai,
   task_type: "RETRIEVAL_DOCUMENT",
   title: "RubyLLM docs"
@@ -140,7 +140,7 @@ Use `provider_options:` for request fields in the provider's own vocabulary that
 ```ruby
 embedding = RubyLLM.embed(
   "RubyLLM makes provider APIs feel native to Ruby.",
-  model: "{{ site.models.embedding_google }}",
+  model: "{{ site.models.embedding_google_text }}",
   provider: :vertexai,
   provider_options: { parameters: { autoTruncate: false } }
 )

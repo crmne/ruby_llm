@@ -12,7 +12,7 @@ module RubyLLM
   #
   # Configuration methods return +self+, so calls chain:
   #
-  #   chat = RubyLLM.chat(model: 'claude-sonnet-4-5')
+  #   chat = RubyLLM.chat(model: 'claude-sonnet-5')
   #   chat.with_instructions("Be terse.").with_tools(Weather)
   #
   # #ask runs the agentic loop to completion, executing tool calls until the
@@ -377,8 +377,8 @@ module RubyLLM
     # Raises ModelNotFoundError if +model_id+ is not in the registry and
     # +assume_model_exists:+ is false.
     #
-    #   chat.with_model('claude-sonnet-4-5')
-    #   chat.with_model('gpt-5.4', protocol: :chat_completions)
+    #   chat.with_model('claude-sonnet-5')
+    #   chat.with_model('gpt-5.6', protocol: :chat_completions)
     #
     def with_model(model_id, provider: nil, protocol: nil, assume_model_exists: false)
       model_id ||= @config.default_model
