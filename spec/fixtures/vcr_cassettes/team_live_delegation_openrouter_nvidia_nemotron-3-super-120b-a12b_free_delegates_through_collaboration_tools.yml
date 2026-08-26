@@ -1,0 +1,212 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"nvidia/nemotron-3-super-120b-a12b:free","messages":[{"role":"developer","content":"You
+        must call the delegate_work tool with coworker \"researcher\" and task \"What
+        is 2 + 2?\" before answering. Then report what it says."},{"role":"user","content":"What
+        is 2 plus 2? Ask your researcher teammate first."}],"stream":false,"tools":[{"type":"function","function":{"name":"delegate_work","description":"Delegate
+        a task to a teammate and get their result\n\nCoworkers: researcher","parameters":{"type":"object","properties":{"coworker":{"type":"string","description":"Name
+        of the teammate to consult"},"context":{"type":"string","description":"Shared
+        context for the teammate"},"task":{"type":"string","description":"The task
+        to delegate"}},"required":["coworker","task"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"ask_question","description":"Ask
+        a teammate a question about their expertise\n\nCoworkers: researcher","parameters":{"type":"object","properties":{"coworker":{"type":"string","description":"Name
+        of the teammate to consult"},"context":{"type":"string","description":"Shared
+        context for the teammate"},"question":{"type":"string","description":"The
+        question to ask"}},"required":["coworker","question"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 26 Aug 2026 18:10:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1787767819-kb2OPcxhk1aTQYtIbSeC
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n{\"id\":\"gen-1787767819-kb2OPcxhk1aTQYtIbSeC\",\"object\":\"chat.completion\",\"created\":1787767819,\"model\":\"nvidia/nemotron-3-super-120b-a12b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":\"We
+        need to follow instruction: call delegate_work with coworker \\\"researcher\\\"
+        and task \\\"What is 2 + 2?\\\" Then report what it says.\\n\\nWe'll call
+        delegate_work with those parameters. Let's do that.\\n\\n\",\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"call-f02816c5-c725-4d2d-8169-a0a72cea64e4\",\"function\":{\"name\":\"delegate_work\",\"arguments\":\"{\\\"coworker\\\":\\\"researcher\\\",\\\"task\\\":\\\"What
+        is 2 + 2?\\\"}\"}}],\"reasoning_details\":[{\"type\":\"reasoning.text\",\"text\":\"We
+        need to follow instruction: call delegate_work with coworker \\\"researcher\\\"
+        and task \\\"What is 2 + 2?\\\" Then report what it says.\\n\\nWe'll call
+        delegate_work with those parameters. Let's do that.\\n\\n\",\"format\":\"unknown\",\"index\":0}]}}],\"usage\":{\"prompt_tokens\":585,\"completion_tokens\":94,\"total_tokens\":679,\"cost\":0,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0,\"upstream_inference_prompt_cost\":0,\"upstream_inference_completions_cost\":0},\"completion_tokens_details\":{\"reasoning_tokens\":50,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 26 Aug 2026 18:10:20 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"nvidia/nemotron-3-super-120b-a12b:free","messages":[{"role":"developer","content":"You
+        are a terse assistant. Answer in one short sentence."},{"role":"user","content":"What
+        is 2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 26 Aug 2026 18:10:20 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1787767820-6wczIaldO7xlTcwSvige
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzg3NzY3ODIwLTZ3Y3pJYWxkTzd4bFRjd1N2aWdlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc4Nzc2NzgyMCwibW9kZWwiOiJudmlkaWEvbmVtb3Ryb24tMy1zdXBlci0xMjBiLWExMmI6ZnJlZSIsInByb3ZpZGVyIjoiTnZpZGlhIiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJzZXJ2aWNlX3RpZXIiOm51bGwsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiMuKAryvigK8yIGVxdWFscyA0LiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6IlRoZSB1c2VyIGFza3M6IFwiV2hhdCBpcyAyICsgMj9cIiBUaGUgYW5zd2VyIGlzIDQuIFByb3ZpZGUgc2hvcnQgc2VudGVuY2U6IFwiMiArIDIgZXF1YWxzIDQuXCJcblxuIiwicmVhc29uaW5nX2RldGFpbHMiOlt7InR5cGUiOiJyZWFzb25pbmcudGV4dCIsInRleHQiOiJUaGUgdXNlciBhc2tzOiBcIldoYXQgaXMgMiArIDI/XCIgVGhlIGFuc3dlciBpcyA0LiBQcm92aWRlIHNob3J0IHNlbnRlbmNlOiBcIjIgKyAyIGVxdWFscyA0LlwiXG5cbiIsImZvcm1hdCI6InVua25vd24iLCJpbmRleCI6MH1dfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNiwiY29tcGxldGlvbl90b2tlbnMiOjQ0LCJ0b3RhbF90b2tlbnMiOjgwLCJjb3N0IjowLCJpc19ieW9rIjpmYWxzZSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNhY2hlX3dyaXRlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ2aWRlb190b2tlbnMiOjB9LCJjb3N0X2RldGFpbHMiOnsidXBzdHJlYW1faW5mZXJlbmNlX2Nvc3QiOjAsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MCwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjI0LCJpbWFnZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MH19fQ==
+  recorded_at: Wed, 26 Aug 2026 18:10:22 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"nvidia/nemotron-3-super-120b-a12b:free","messages":[{"role":"developer","content":"You
+        must call the delegate_work tool with coworker \"researcher\" and task \"What
+        is 2 + 2?\" before answering. Then report what it says."},{"role":"user","content":"What
+        is 2 plus 2? Ask your researcher teammate first."},{"role":"assistant","content":"","tool_calls":[{"id":"call-f02816c5-c725-4d2d-8169-a0a72cea64e4","type":"function","function":{"name":"delegate_work","arguments":"{\"coworker\":\"researcher\",\"task\":\"What
+        is 2 + 2?\"}"}}],"reasoning_details":[{"type":"reasoning.text","text":"We
+        need to follow instruction: call delegate_work with coworker \"researcher\"
+        and task \"What is 2 + 2?\" Then report what it says.\n\nWe''ll call delegate_work
+        with those parameters. Let''s do that.\n\n","format":"unknown","index":0}]},{"role":"tool","content":"2 + 2
+        equals 4.","tool_call_id":"call-f02816c5-c725-4d2d-8169-a0a72cea64e4"}],"stream":false,"tools":[{"type":"function","function":{"name":"delegate_work","description":"Delegate
+        a task to a teammate and get their result\n\nCoworkers: researcher","parameters":{"type":"object","properties":{"coworker":{"type":"string","description":"Name
+        of the teammate to consult"},"context":{"type":"string","description":"Shared
+        context for the teammate"},"task":{"type":"string","description":"The task
+        to delegate"}},"required":["coworker","task"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"ask_question","description":"Ask
+        a teammate a question about their expertise\n\nCoworkers: researcher","parameters":{"type":"object","properties":{"coworker":{"type":"string","description":"Name
+        of the teammate to consult"},"context":{"type":"string","description":"Shared
+        context for the teammate"},"question":{"type":"string","description":"The
+        question to ask"}},"required":["coworker","question"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 26 Aug 2026 18:10:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1787767822-e6AZ5vHUjqcmToRYI89x
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc4Nzc2NzgyMi1lNkFaNXZIVWpxY21Ub1JZSTg5eCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODc3Njc4MjIsIm1vZGVsIjoibnZpZGlhL25lbW90cm9uLTMtc3VwZXItMTIwYi1hMTJiOmZyZWUiLCJwcm92aWRlciI6Ik52aWRpYSIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjpudWxsLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSByZXNlYXJjaGVyIHRlYW1tYXRlIHNheXMgdGhhdCAy4oCvK+KArzIgZXF1YWxzIDQuIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjoiTm93IHdlIGhhdmUgcmVzdWx0OiBcIjLigK8r4oCvMiBlcXVhbHMgNC5cIiBXZSBzaG91bGQgcmVwb3J0IHdoYXQgaXQgc2F5cy4gUHJvYmFibHkgYW5zd2VyOiBUaGUgcmVzZWFyY2hlciBzYXlzIDIrMiBlcXVhbHMgNC5cbiIsInJlYXNvbmluZ19kZXRhaWxzIjpbeyJ0eXBlIjoicmVhc29uaW5nLnRleHQiLCJ0ZXh0IjoiTm93IHdlIGhhdmUgcmVzdWx0OiBcIjLigK8r4oCvMiBlcXVhbHMgNC5cIiBXZSBzaG91bGQgcmVwb3J0IHdoYXQgaXQgc2F5cy4gUHJvYmFibHkgYW5zd2VyOiBUaGUgcmVzZWFyY2hlciBzYXlzIDIrMiBlcXVhbHMgNC5cbiIsImZvcm1hdCI6InVua25vd24iLCJpbmRleCI6MH1dfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3MDQsImNvbXBsZXRpb25fdG9rZW5zIjo1NCwidG90YWxfdG9rZW5zIjo3NTgsImNvc3QiOjAsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MCwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MzMsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Wed, 26 Aug 2026 18:10:23 GMT
+recorded_with: VCR 6.4.0

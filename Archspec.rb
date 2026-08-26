@@ -25,6 +25,7 @@ component :domain, in: %w[
   lib/ruby_llm/search_results.rb
   lib/ruby_llm/stream_accumulator.rb
   lib/ruby_llm/streaming.rb
+  lib/ruby_llm/team.rb
   lib/ruby_llm/thinking.rb
   lib/ruby_llm/tokens.rb
   lib/ruby_llm/tool.rb
