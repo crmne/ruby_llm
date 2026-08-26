@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Teams
-nav_order: 12
+parent: "Agents"
+nav_order: 5
 description: Coordinate specialized agents as one team the model can delegate work to
 ---
 

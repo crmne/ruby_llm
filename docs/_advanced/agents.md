@@ -434,7 +434,7 @@ WorkAssistant.new.ask("Help me find docs about callbacks.")
 
 * Compose agents with [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
 * Run them as jobs that survive anything with [Durable Agents]({% link _advanced/durable-agents.md %})
-* Coordinate several as one [Team]({% link _core_features/teams.md %}) the model can delegate to
+* Coordinate several as one [Team]({% link _advanced/teams.md %}) the model can delegate to
 * Give them [Memory]({% link _advanced/memory.md %}) across conversations
 * Ground them in your documents with [RAG]({% link _advanced/rag.md %})
 * Learn about [Chat Basics]({% link _core_features/chat.md %})
