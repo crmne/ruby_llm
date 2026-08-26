@@ -38,6 +38,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 * **Model fallbacks.** `chat.with_fallbacks("backup-model")` retries the request on backup models when the primary fails. See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
 * **Chat cancellation.** `chat.cancel!` stops a run from another thread; in Rails the request travels through the database, so a stop button in the web process halts a background job mid-stream. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
 * **Server tools.** `chat.with_server_tools(:web_search, :code_execution)` turns on the tools that run on the provider's own servers, with one portable name per capability across every provider that offers it. Raw provider definitions pass through untouched, so a tool shipped after this release works without a gem upgrade. See [Server Tools]({% link _core_features/server-tools.md %}).
+* **Agent error handlers.** Agents declare `rescue_from` handlers for provider-facing operations, with inheritance and re-raising semantics familiar from Rails. See [Handling Errors with `rescue_from`]({% link _advanced/agents.md %}#handling-errors-with-rescue_from).
 
 #### Accounting
 
@@ -48,9 +49,10 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 
 #### Content In, Content Out
 
-* **Provider-managed files.** `RubyLLM.upload("manual.pdf")` uploads once so you can reuse the file across chats; large local attachments are promoted to provider files automatically (disable with `config.auto_upload_large_files = false`). See [Files]({% link _core_features/files.md %}).
+* **Provider-managed files.** `RubyLLM.upload("manual.pdf", provider: :anthropic)` uploads once so you can reuse the file across chats; large local attachments are promoted to provider files automatically (disable with `config.auto_upload_large_files = false`). See [Files]({% link _core_features/files.md %}).
 * **Citations.** `chat.with_citations` makes attached documents and web sources citable, and every provider's native format is normalized into `RubyLLM::Citation` objects on `response.citations`. See [Citations]({% link _core_features/citations.md %}).
 * **Text to speech.** `RubyLLM.speak("Hello!").save("hello.mp3")`. See [Text to Speech]({% link _core_features/text-to-speech.md %}).
+* **Streaming transcription.** Pass a block to `RubyLLM.transcribe` to receive `TranscriptionChunk` objects as they arrive while still getting the completed transcription back. See [Streaming Transcripts]({% link _core_features/audio-transcription.md %}#streaming-transcripts).
 * **Tools can return attachments.** Return an image or file from a tool and RubyLLM renders it through each provider's supported file path, raising `UnsupportedAttachmentError` when the selected model cannot accept it. See [Tools]({% link _core_features/tools.md %}).
 * **Transcript replacement.** `chat.messages = messages_for_model` shows the LLM a different transcript from your users: compaction, redaction, moderation. See [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
 * **Provider-side compaction.** `chat.with_compaction(at: 100_000)` hands the summarizing to providers that condense a long conversation themselves, instead of you assembling a summary prompt. See [Compacting Long Conversations]({% link _core_features/chat-request-control.md %}#compacting-long-conversations).
@@ -88,7 +90,7 @@ The upgrade migration renames tables in place, backfills, and then removes legac
 
 ### 1. Finish what is in flight
 
-Complete or cancel conversations parked mid-tool-round before migrating. 2.0 adds a unique index on `tool_call_id`, and the migration renumbers duplicated historical ids; finished rounds keep their links (they join by primary key), but a round waiting on its tool results is simplest to close out beforehand.
+Complete or cancel conversations parked mid-tool-round before migrating. 2.0 requires a unique index on `tool_call_id`, and the migration renumbers duplicated historical ids before ensuring the index exists; finished rounds keep their links (they join by primary key), but a round waiting on its tool results is simplest to close out beforehand.
 
 ### 2. Bump the gem and run the generator
 
@@ -100,9 +102,10 @@ bin/rails db:migrate
 
 The generated migration:
 
-* adds a boolean `cancelled` column to chats, and citations, finish reasons, and prompt-cache boundaries to messages;
-* moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix;
+* adds a boolean `cancelled` column to chats, and citations, server-tool replay data, raw reasoning, finish reasons, and prompt-cache boundaries to messages;
+* moves the existing model and tool-call tables, plus any batch table created by a 2.0 prerelease, under RubyLLM's `ruby_llm_` prefix;
 * keeps the chat's model reference under the `ruby_llm_model_id` name while converting message-level model references into provider and model-id strings;
+* adds approval and reasoning metadata to tool-call records;
 * renumbers duplicated `tool_call_id`s before adding the unique index;
 * creates the usage ledger, backfills it from your messages' token and cost columns (one succeeded entry per message that recorded usage), and then removes those columns from your messages table.
 
@@ -110,7 +113,7 @@ It stops with an explicit error if an old and a new version of the same supporti
 
 ### 3. Delete what RubyLLM now owns
 
-Applications own only chats and messages in 2.0. Remove the old `Model`, `ToolCall`, and `Batch` files from `app/models`; their tables have been renamed in place, so do not add a second migration to drop them. Remove `config.model_registry_class` and any `acts_as_model`, `acts_as_tool_call`, or `acts_as_batch` declarations. Also strip the removed keywords from the two macros that stay: `acts_as_chat` keeps only `messages:`, `message_class:`, and `messages_foreign_key:`, and `acts_as_message` keeps `chat:`, `chat_class:`, `chat_foreign_key:`, and `touch_chat:`. A leftover `model:` or `tool_calls:` option raises `ArgumentError` on boot. Everything they provided reads through RubyLLM now: `RubyLLM.models`, `message.tool_calls`, `message.tokens`, `chat.tokens`, `chat.cost`, `RubyLLM.batch`, and `RubyLLM::Batch.find`.
+Applications own only chats and messages in 2.0. Remove the old `Model` and `ToolCall` files from `app/models`; if you ran a 2.0 prerelease that generated `Batch`, remove that too. Their tables have been renamed in place, so do not add a second migration to drop them. Remove `config.model_registry_class` and any `acts_as_model`, `acts_as_tool_call`, or `acts_as_batch` declarations. Also strip the removed keywords from the two macros that stay: `acts_as_chat` keeps only `messages:`, `message_class:`, and `messages_foreign_key:`, and `acts_as_message` keeps `chat:`, `chat_class:`, `chat_foreign_key:`, and `touch_chat:`. A leftover `model:` or `tool_calls:` option raises `ArgumentError` on boot. Everything they provided reads through RubyLLM now: `RubyLLM.models`, `message.tool_calls`, `message.tokens`, `chat.tokens`, `chat.cost`, `RubyLLM.batch`, and `RubyLLM::Batch.find`.
 
 ### 4. Fix the renames every app hits
 
@@ -165,7 +168,7 @@ Your rows carry the app's opinions; RubyLLM's rows carry the catalog. The migrat
 
 ### Your own usage ledger
 
-If you metered usage with your own events table and per-user counters, the internal ledger replaces all of it. Reach it through associations and sum in SQL:
+If you metered usage with your own events table and per-user counters, the internal ledger can become the accounting source for provider attempts. Reach it through associations and sum in SQL:
 
 ```ruby
 class User < ApplicationRecord
@@ -177,7 +180,7 @@ user.ruby_llm_usages.sum(:total_cost)
 user.ruby_llm_usages.where("ruby_llm_usages.created_at >= ?", period_start).sum(:total_cost)
 ```
 
-Two things move with it: reconcile the ledger against your old totals before dropping your columns, and re-home any UI updates that hung off your old table's callbacks (a job-level `ensure` block is the usual landing spot), or those updates silently stop firing.
+Keep your application ledger if it also represents customer billing, credits, quotas, or adjustments that RubyLLM cannot know about. Otherwise, reconcile the internal ledger against your old totals before dropping your columns, and re-home any UI updates that hung off your old table's callbacks (a job-level `ensure` block is the usual landing spot), or those updates silently stop firing.
 
 ### Text you persisted before 2.0
 
@@ -199,18 +202,24 @@ Scan the table for anything your app uses, then read its section below.
 |---|---|
 | `response.content` returning a Hash for structured output | `response.parsed` - `content` is the JSON string |
 | `RubyLLM::Content`, raw content blocks | String `content` plus `message.attachments`; `before_request` hook |
+| `RubyLLM::Schema` | `Schematist::Schema` |
 | Tool `halt("done")`, `RubyLLM::Tool::Halt` | Loop verbs (`step`, `complete?`) or `with_tool_options` |
 | `response.input_tokens`, `response.output_tokens` | `response.tokens.input`, `response.tokens.output` |
 | `message.cached_tokens`, `message.cache_creation_tokens` | `message.tokens.cache_read`, `message.tokens.cache_write` |
 | `message.reasoning_tokens`, `tokens.reasoning` | `message.tokens.thinking` |
+| `RubyLLM::Tokens.build(...)` | `RubyLLM::Tokens.new(...)`; preserve the old all-`nil` guard yourself if it mattered |
+| `cost.tokens`, `cost.model`, `cost.category` | Read tokens and model from the result; `Cost` exposes priced amounts only |
 | `message.tool_results` reading a tool message's text | `message.content` (`tool_results` now returns the answering messages) |
 | Legacy `acts_as`, `config.use_new_acts_as` | Association-based `acts_as` only |
 | `chat.reset_messages!` | `chat.messages = []` |
 | `model.display_name`, `model.max_tokens` | `model.name`, `model.max_output_tokens` |
 | `model.input_price_per_million` and friends | `model.price(:input)`, `:output`, `:cache_read`, `:cache_write` |
+| `pricing_category[:batch]`, `pricing_tier[:input_per_million]`, tier price writers | `pricing_category.batch`, `pricing_tier.input_per_million`; rebuild registry data instead of mutating it |
 | `model.supports_vision?`, `model.supports_functions?` | `model.supports?(:vision)`, `model.supports?(:function_calling)` |
 | `RubyLLM::Model::Info` | `RubyLLM::Model` |
 | `config.model_registry_source` | `config.model_registry_store` |
+| `RubyLLM::ModelRegistry::JsonSource`, `RubyLLM::ModelRegistry::ActiveRecordSource` | `config.model_registry_file`, or a `model_registry_store` object; Rails configures its store automatically |
+| `RubyLLM.models.load_from_database!` | `RubyLLM.models.load_from_store!` |
 | `on_new_message`, `on_end_message` | `before_message`, `after_message` |
 | `on_tool_call`, `on_tool_result` | `before_tool_call`, `after_tool_result` |
 | `with_instructions(text, replace: true)` | `with_instructions(text)` replaces by default |
@@ -219,7 +228,7 @@ Scan the table for anything your app uses, then read its section below.
 | `with_model("gpt-5", assume_exists: true)` | `assume_model_exists:` |
 | Tool `desc` / `param` / `params` | `description` / `parameter` / `parameters` |
 | Tool `provider_params` and `params_schema` readers | `provider_options` and `parameters_schema` |
-| `response.model_id` | `response.model` |
+| `response.model_id`, `image.model_id` | `response.model`, `image.model` |
 | `Error.new(response, "msg")` | `Error.new("msg", response: response)` |
 | `with_tool(Weather)` | `with_tools(Weather)` |
 | `with_tools(W, choice: :required, calls: :one)` | `with_tools(W).with_tool_options(choice: :required, calls: :one)` |
@@ -227,6 +236,10 @@ Scan the table for anything your app uses, then read its section below.
 | `with_params(...)`, `params:`, tool `with_params` | `with_provider_options(...)`, `provider_options:` |
 | `transcribe(audio, response_format: "srt")` | `transcribe(audio, format: "srt")` |
 | `Moderation#results` raw hashes | Typed `Moderation::Result` objects |
+| `Moderation#categories` | `moderation.flagged_categories`, or categories on each typed result |
+| `Moderation#content`, `Image#usage`, Tool `#parameters` reader | `Moderation#results`, `image.tokens` / `image.cost`, no public reader |
+| Bare `Agent.instructions` requiring its conventional prompt | Named agents load it automatically when present; use `instructions { prompt("instructions") }` to require it |
+| `attachment.save(path)` | `File.binwrite(path, attachment.content)` |
 | Temperature rewritten to `1.0` or dropped for some models | The temperature you set is the temperature sent |
 
 ## Breaking Changes in Detail
@@ -274,6 +287,14 @@ response.tokens.thinking     # now
 
 The `reasoning` synonyms are gone with them: `message.reasoning_tokens`, `tokens.reasoning`, and the `reasoning:` keyword on `Tokens.new` are all spelled `thinking` now.
 
+`RubyLLM::Tokens.build` was also removed. Construct `RubyLLM::Tokens` directly. In 1.16, `build` returned `nil` when every count was `nil`; preserve that guard in caller code if you depended on the sentinel:
+
+```ruby
+counts.values.all?(&:nil?) ? nil : RubyLLM::Tokens.new(**counts)
+```
+
+`Cost` is now only the priced value: `input`, `output`, `cache_read`, `cache_write`, `thinking`, `total`, and `to_h`. Its old `tokens`, `model`, and `category` construction-input readers are gone. Read the tokens and model from the result that owns the cost, or retain those inputs yourself when constructing a cost directly.
+
 ### Message#tool_results Means the Answers
 
 `Message#tool_results` changed meaning. It used to return a tool-result message's own content; it now returns the tool-result messages answering an assistant message's tool calls (an empty array when it made none), mirroring the `tool_results` association on `acts_as_message` records. Read a tool result's text with `message.content`.
@@ -315,9 +336,20 @@ end
 schema -> { strict ? StrictSchema : LooseSchema }    # dynamic - evaluated per run
 ```
 
+### RubyLLM::Schema Is Now Schematist
+
+The JSON Schema DSL moved from the `ruby_llm-schema` gem and `RubyLLM::Schema` constant to the general-purpose `schematist` gem and `Schematist::Schema`. RubyLLM installs the dependency, but classes that inherit from the old constant need the new name:
+
+```ruby
+class PersonSchema < RubyLLM::Schema      # before
+class PersonSchema < Schematist::Schema   # now
+```
+
+Tool and agent `parameters do` / `schema do` blocks keep the same DSL. The schema generator emits `Schematist::Schema` in 2.0.
+
 ### Cache Naming
 
-Cache naming is `cache_read` / `cache_write` everywhere. The `cached_input*` / `cache_creation*` aliases on `Cost` and `Model` were removed in favor of `cache_read*` / `cache_write*` (e.g. `model.price(:cache_read)`, `cost.cache_read`). Token counts now follow: `tokens.cached` and `tokens.cache_creation` are gone (`tokens.cache_read` / `tokens.cache_write`), and `message.cached_tokens` / `message.cache_creation_tokens` are gone (`message.tokens.cache_read` / `message.tokens.cache_write`). The upgrade generator renames the Rails columns to match.
+Cache naming is `cache_read` / `cache_write` everywhere. The `cached_input*` / `cache_creation*` aliases on `Cost`, `Model`, `PricingCategory`, and `PricingTier` were removed in favor of `cache_read*` / `cache_write*` (e.g. `model.price(:cache_read)`, `cost.cache_read`, `category.cache_read_input`, `tier.cache_read_input_per_million`). Token counts now follow: `tokens.cached` and `tokens.cache_creation` are gone (`tokens.cache_read` / `tokens.cache_write`), and `message.cached_tokens` / `message.cache_creation_tokens` are gone (`message.tokens.cache_read` / `message.tokens.cache_write`). The upgrade generator backfills the ledger under the new bucket names, then drops the old message columns.
 
 ### One Model API
 
@@ -344,6 +376,8 @@ model.supports?(:function_calling)        # now - same for :structured_output,
 ```
 
 Tool-steering support is a registry capability too: query `model.supports?(:tool_choice)` and `model.supports?(:parallel_tool_calls)` instead of the removed provider predicates. Registry entries expose the same API through `RubyLLM.models`; application-owned `acts_as_model` records no longer exist.
+
+The pricing tree is read-only in 2.0. Use the named readers (`pricing_category.standard`, `pricing_category.batch`, `pricing_tier.input_per_million`) instead of `#[]`, and change the registry data used to build a model instead of assigning prices through `PricingTier` writers.
 
 ### One Name per Concept
 
@@ -443,7 +477,21 @@ Passing `nil` to the class macro was a no-op clear that made no sense on a class
 
 ### The Model Registry Has a Store
 
-`config.model_registry_source` is now `config.model_registry_store` - an object responding to `read`, and optionally `write(registry)` for persistence. `config.model_registry_file` defaults to a per-user OS cache path instead of the gem's bundled JSON. `RubyLLM.models.refresh!` now does the whole job: it fetches the published registry from [rubyllm.com/models.json](https://rubyllm.com/models.json), merges models discovered from your configured providers, updates the registry in place, and persists the result to the store - raising `RubyLLM::ModelRegistryError` and leaving the registry untouched when the fetch fails. The old provider-API rebuild survives as `refresh_from_providers!` for registry maintainers.
+`config.model_registry_source` is now `config.model_registry_store` - an object responding to `read`, and optionally `write(registry)` for persistence. The old `RubyLLM::ModelRegistry::JsonSource` and `RubyLLM::ModelRegistry::ActiveRecordSource` wrappers are gone: set `config.model_registry_file` for the file fallback, assign your own store object when you need one, or let the Rails integration configure its internal database store. Accordingly, `RubyLLM.models.load_from_database!` is now `RubyLLM.models.load_from_store!`. `config.model_registry_file` defaults to a per-user OS cache path instead of the gem's bundled JSON. `RubyLLM.models.refresh!` now does the whole job: it fetches the published registry from [rubyllm.com/models.json](https://rubyllm.com/models.json), merges models discovered from your configured providers, updates the registry in place, and persists the result to the store - raising `RubyLLM::ModelRegistryError` and leaving the registry untouched when the fetch fails. The old provider-API rebuild survives as `refresh_from_providers!` for registry maintainers.
+
+### Agent Prompt Convention
+
+In 1.16, calling the bare `instructions` class macro made an agent require its conventional `instructions.txt.erb` prompt. In 2.0, a named agent loads that prompt automatically when it exists, while bare `instructions` is only the reader for the configured value. Require the file explicitly when a missing prompt should fail:
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  instructions { prompt("instructions") }
+end
+```
+
+### Attachment Saving
+
+`Attachment#save` was removed. To copy a local or inline attachment's bytes, use `File.binwrite(path, attachment.content)`.
 
 ### The provider_options Escape Hatch
 
@@ -501,7 +549,7 @@ RubyLLM 1.x rewrote the temperature to `1.0` for OpenAI reasoning models, droppe
 
 ### Typed Results
 
-Results are typed, not raw provider hashes. `Moderation#results` returns `Moderation::Result` objects (`flagged?`, `categories`, `category_scores`) instead of string-keyed OpenAI hashes, the top-level helpers aggregate consistently across all results, and the misleading `Moderation#content` alias is gone. `Image#usage` is no longer public; use `image.tokens` and `image.cost`. `Tool.parameters` as a public reader is gone (it is the whole-schema macro now); tools declare their arguments, they do not expose them.
+Results are typed, not raw provider hashes. `Moderation#results` returns `Moderation::Result` objects (`flagged?`, `categories`, `category_scores`) instead of string-keyed OpenAI hashes, the top-level helpers aggregate consistently across all results, and the misleading `Moderation#content` alias is gone. The old top-level `Moderation#categories` hash is gone too; use `moderation.flagged_categories` for the combined flagged names, or inspect each typed result. `Image#usage` is no longer public; use `image.tokens` and `image.cost`. `Tool.parameters` as a public reader is gone (it is the whole-schema macro now); tools declare their arguments, they do not expose them.
 
 ### Tool-Building Gems
 
@@ -524,7 +572,7 @@ RubyLLM.chat(model: 'gpt-5.4', protocol: :chat_completions)
 
 If you pass Chat Completions-only options via `with_provider_options` (like `response_format`), either switch those chats to `:chat_completions` or use the Responses API equivalents (`text: { format: ... }`).
 
-Function tools keep their Chat Completions behavior on the Responses API: RubyLLM sends `strict: false` explicitly because the Responses API otherwise defaults to strict schema validation, which forces the model to fill in every parameter — including ones you declared optional. To opt a tool into strict validation, declare `provider_options strict: true` on the tool class and make sure its schema meets the [strict mode requirements](https://platform.openai.com/docs/guides/function-calling#strict-mode) (every property in `required`, optional parameters expressed as nullable types).
+Function tools keep their Chat Completions behavior on the Responses API: RubyLLM sends `strict: false` explicitly because the Responses API otherwise defaults to strict schema validation, which forces the model to fill in every parameter, including ones you declared optional. To opt a tool into strict validation, declare `provider_options strict: true` on the tool class and make sure its schema meets the [strict mode requirements](https://platform.openai.com/docs/guides/function-calling#strict-mode) (every property in `required`, optional parameters expressed as nullable types).
 
 **Wire-format internals moved to `RubyLLM::Protocols`.** `RubyLLM::Providers::OpenAI::Chat` and sibling modules are now `RubyLLM::Protocols::ChatCompletions::Chat` and friends; Anthropic, Gemini, and Bedrock Converse internals moved the same way. Provider classes no longer inherit from each other (`Mistral < OpenAI` is gone) - a provider declares its protocols instead. Providers also no longer override `#name`: the human name is `display_name` and the identifier is the registration-derived `slug`.
 

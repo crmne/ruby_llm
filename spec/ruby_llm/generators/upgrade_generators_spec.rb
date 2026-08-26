@@ -78,6 +78,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
               t.json :arguments
               t.timestamps
             end
+            add_index :tool_calls, :tool_call_id
             create_table :messages do |t|
               t.bigint :chat_id, null: false
               t.bigint :model_id
@@ -88,6 +89,8 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
               t.integer :output_tokens
               t.integer :cached_tokens
               t.integer :cache_creation_tokens
+              t.decimal :total_cost, precision: 16, scale: 10
+              t.json :cost_details
               t.timestamps
             end
             create_table :batches do |t|
@@ -115,13 +118,20 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
               (id, chat_id, model_id, role, content, input_tokens, output_tokens, created_at, updated_at)
             VALUES
               (1, 1, 1, 'assistant', '', 7, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-              (2, 1, 1, 'tool', '9', NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+              (2, 1, 1, 'tool', '9', NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+              (3, 1, 1, 'assistant', 'cost only', NULL, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+          SQL
+          connection.execute <<~SQL
+            UPDATE messages
+            SET total_cost = 0.0123, cost_details = '{"input":0.004,"output":0.0083,"total":0.0123}'
+            WHERE id = 3
           SQL
           connection.execute <<~SQL
             INSERT INTO tool_calls
               (id, message_id, tool_call_id, name, arguments, created_at, updated_at)
             VALUES
-              (1, 1, 'call_legacy', 'calculator', '{"expression":"4 + 5"}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+              (1, 1, 'call_legacy', 'calculator', '{"expression":"4 + 5"}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+              (2, 1, 'call_legacy', 'calculator', '{"expression":"5 + 6"}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
           SQL
           connection.execute('UPDATE messages SET tool_call_id = 1 WHERE id = 2')
           connection.execute <<~SQL
@@ -146,31 +156,40 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
           connection = ActiveRecord::Base.connection
           model = connection.select_one('SELECT * FROM ruby_llm_models')
           chat = connection.select_one('SELECT * FROM chats WHERE id = 1')
-          tool_call = connection.select_one('SELECT * FROM ruby_llm_tool_calls')
+          tool_call = connection.select_one('SELECT * FROM ruby_llm_tool_calls WHERE id = 1')
+          duplicate_tool_call = connection.select_one('SELECT * FROM ruby_llm_tool_calls WHERE id = 2')
           batch = connection.select_one('SELECT * FROM ruby_llm_batches')
 
           ok = model['model_id'] == 'gpt-legacy' &&
                chat['ruby_llm_model_id'].to_i == model['id'].to_i && !chat.key?('provider') &&
                tool_call['message_type'] == 'Message' && tool_call['message_id'].to_i == 1 &&
                tool_call['result_type'] == 'Message' && tool_call['result_id'].to_i == 2 &&
+               duplicate_tool_call['tool_call_id'] == 'call_legacy-migrated-2' &&
                batch['provider_batch_id'] == 'batch_legacy' && batch['chat_type'] == 'Chat' &&
                !connection.table_exists?(:models) && !connection.table_exists?(:tool_calls) &&
                !connection.table_exists?(:batches)
           model_foreign_key = connection.foreign_keys(:chats).find { |key| key.column == 'ruby_llm_model_id' }
           ok &&= model_foreign_key&.to_table == 'ruby_llm_models'
+          tool_call_index = connection.indexes(:ruby_llm_tool_calls).find do |index|
+            index.columns == ['tool_call_id']
+          end
+          ok &&= tool_call_index&.unique
           ok &&= connection.columns(:ruby_llm_tool_calls).map(&:name).include?('thought_signature')
           ok &&= connection.columns(:ruby_llm_models).map(&:name).include?('unlisted_at')
 
-          entry = connection.select_one('SELECT * FROM ruby_llm_usages')
+          entry = connection.select_one('SELECT * FROM ruby_llm_usages WHERE message_id = 1')
+          cost_only_entry = connection.select_one('SELECT * FROM ruby_llm_usages WHERE message_id = 3')
           message_columns = connection.columns(:messages).map(&:name)
           legacy_columns = %w[input_tokens output_tokens cache_read_tokens cache_write_tokens
                               thinking_tokens total_cost cost_details]
-          ok &&= connection.select_value('SELECT COUNT(*) FROM ruby_llm_usages').to_i == 1 &&
+          ok &&= connection.select_value('SELECT COUNT(*) FROM ruby_llm_usages').to_i == 2 &&
                  entry['chat_type'] == 'Chat' && entry['chat_id'].to_i == 1 &&
                  entry['message_type'] == 'Message' && entry['message_id'].to_i == 1 &&
                  entry['operation'] == 'chat' && entry['status'] == 'succeeded' &&
                  entry['provider'] == 'openai' && entry['model'] == 'gpt-legacy' &&
                  entry['input_tokens'].to_i == 7 && entry['output_tokens'].to_i == 2 &&
+                 cost_only_entry['input_tokens'].nil? && cost_only_entry['output_tokens'].nil? &&
+                 cost_only_entry['total_cost'].to_f == 0.0123 &&
                  (message_columns & legacy_columns).empty? &&
                  message_columns.include?('model_id') && message_columns.include?('provider')
           exit(ok ? 0 : 1)

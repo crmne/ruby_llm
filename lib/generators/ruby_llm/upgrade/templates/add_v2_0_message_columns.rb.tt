@@ -180,8 +180,11 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
 
     add_index table, [ :message_type, :message_id ] unless index_exists?(table, [ :message_type, :message_id ])
     add_index table, [ :result_type, :result_id ] unless index_exists?(table, [ :result_type, :result_id ])
-    deduplicate_tool_call_ids unless index_exists?(table, :tool_call_id)
-    add_index table, :tool_call_id, unique: true unless index_exists?(table, :tool_call_id)
+    unless index_exists?(table, :tool_call_id, unique: true)
+      remove_index table, :tool_call_id if index_exists?(table, :tool_call_id)
+      deduplicate_tool_call_ids
+      add_index table, :tool_call_id, unique: true
+    end
     add_index table, :name unless index_exists?(table, :name)
   end
 
@@ -275,7 +278,9 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
   end
 
   def backfill_usage_entries
-    present = LEGACY_TOKEN_COLUMNS.select { |column| column_exists?(:<%= message_table_name %>, column) }
+    present = (LEGACY_TOKEN_COLUMNS + LEGACY_COST_COLUMNS).select do |column|
+      column_exists?(:<%= message_table_name %>, column)
+    end
     return if present.empty?
 
     entries = migration_record(:ruby_llm_usages)
