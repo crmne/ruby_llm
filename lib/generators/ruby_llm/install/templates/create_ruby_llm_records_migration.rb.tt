@@ -93,12 +93,16 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
       t.boolean :completed, null: false, default: false
       t.string :chat_type
       t.string :batch_protocol
-<% if mysql? %>
+<% if postgresql? %>
+      t.jsonb :chat_ids, default: []
+      t.jsonb :request_counts
+<% elsif mysql? %>
       t.json :chat_ids
+      t.json :request_counts
 <% else %>
       t.json :chat_ids, default: []
-<% end %>
       t.json :request_counts
+<% end %>
       t.timestamps
 
       t.index [ :provider, :provider_batch_id ], unique: true

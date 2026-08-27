@@ -7,10 +7,17 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.boolean :cache_until_here, null: false, default: false
       t.text :thinking_text
       t.text :thinking_signature
+<% if postgresql? %>
+      t.jsonb :citations
+      t.jsonb :server_tool_calls
+      t.jsonb :raw_content
+      t.jsonb :raw_reasoning
+<% else %>
       t.json :citations
       t.json :server_tool_calls
       t.json :raw_content
       t.json :raw_reasoning
+<% end %>
       t.string :finish_reason
       t.timestamps
     end

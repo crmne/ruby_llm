@@ -140,4 +140,12 @@ RSpec.describe RubyLLM::ToolConcurrency do
       LoadError, /The 'async' gem is required/
     )
   end
+
+  it 'explains the minimum async version' do
+    allow(Gem.loaded_specs.fetch('async')).to receive(:version).and_return(Gem::Version.new('1.15.5'))
+
+    expect { described_class.run(:fibers, tool_calls) { |tool_call| tool_call } }.to raise_error(
+      LoadError, /version 2.0 or newer/
+    )
+  end
 end

@@ -49,24 +49,29 @@ module RubyLLM
         say_status :success, 'Upgrade prepared!', :green
         say <<~INSTRUCTIONS
 
+          IMPORTANT: The 2.0 migration renames tables and removes columns used by 1.x.
+          Stop web processes and background workers before running it, then deploy 2.0
+          before accepting traffic again. Rehearse it on a recent production snapshot.
+
           Next steps:
           1. Review the generated migration
-          2. Run: bin/rails db:migrate
-          3. Remove RubyLLM's old application-owned model files:
+          2. Schedule a maintenance window and stop every process that writes chats
+          3. Run: bin/rails db:migrate
+          4. Remove RubyLLM's old application-owned model files:
              #{obsolete_model_paths.join("\n     ")}
-          4. Keep only the current declarations in your application models:
+          5. Keep only the current declarations in your application models:
              #{chat_model_path}: #{acts_as_chat_declaration}
              #{message_model_path}: #{acts_as_message_declaration}
-          5. Remove config.model_registry_class from config/initializers/ruby_llm.rb, if present
-          6. Review the generated Chat UI files listed below, if present
-          7. Grep your app for the 1.x names and update them:
+          6. Remove config.model_registry_class from config/initializers/ruby_llm.rb, if present
+          7. Review the generated Chat UI files listed below, if present
+          8. Grep your app for the 1.x names and update them:
                input_tokens, output_tokens, cached_tokens  ->  tokens.input / tokens.output / tokens.cache_read
                RubyLLM::Content, content_raw               ->  String content plus message.attachments
                create_user_message                         ->  ask_later or add_message
                on_new_message, on_tool_call                ->  before_message, before_tool_call
                halt, Tool::Halt                            ->  loop verbs or requires_approval
                with_params, params:                        ->  with_provider_options, provider_options:
-          8. Restart your application server
+          9. Deploy 2.0, restart your processes, and end the maintenance window
 
           Generated UI files that reference the old records:
           #{generated_ui_paths.any? ? generated_ui_paths.join("\n  ") : '(none detected)'}
@@ -84,6 +89,10 @@ module RubyLLM
         mapping ? mapping.split(':', 2).last.classify : default
       end
 
+      def model_mapping?(type)
+        model_mappings.any? { |item| item.start_with?("#{type}:") }
+      end
+
       def legacy_table_name(type, default)
         table_name_for(legacy_model_name(type, default))
       end
@@ -98,6 +107,10 @@ module RubyLLM
 
       def legacy_batch_table_name
         legacy_table_name(:batch, 'Batch')
+      end
+
+      def legacy_batch_explicit?
+        model_mapping?(:batch)
       end
 
       def legacy_model_foreign_key
@@ -121,13 +134,26 @@ module RubyLLM
       end
 
       def obsolete_model_paths
-        {
+        models = {
           model: 'Model',
-          tool_call: 'ToolCall',
-          batch: 'Batch'
-        }.map do |type, default|
+          tool_call: 'ToolCall'
+        }
+        models[:batch] = 'Batch' if legacy_batch_model?
+        models.map do |type, default|
           "app/models/#{legacy_model_name(type, default).underscore}.rb"
         end
+      end
+
+      def legacy_batch_model?
+        return true if model_mapping?(:batch)
+        return false unless table_exists?(legacy_batch_table_name)
+
+        columns = ::ActiveRecord::Base.connection.columns(legacy_batch_table_name).map(&:name)
+        %w[provider_batch_id provider status completed chat_ids created_at updated_at].all? do |column|
+          columns.include?(column)
+        end
+      rescue StandardError
+        false
       end
 
       def generated_ui_paths
