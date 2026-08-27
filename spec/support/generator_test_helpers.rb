@@ -24,6 +24,7 @@ module GeneratorTestHelpers
 
     create_command = [
       'bundle', 'exec', 'rails', 'new', name,
+      '--no-rc',
       '--skip-bootsnap', '--skip-bundle', '--skip-kamal', '--skip-thruster',
       '--skip-asset-pipeline', '--skip-javascript', '--skip-hotwire'
     ]
