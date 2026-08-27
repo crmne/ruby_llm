@@ -77,6 +77,14 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
 
       after do
         drop_test_tables
+        restore_test_connection
+      end
+
+      def restore_test_connection
+        return unless defined?(Rails) && Rails.respond_to?(:application) && Rails.application
+
+        dummy_config = Rails.application.config.database_configuration['test']
+        ActiveRecord::Base.establish_connection(dummy_config)
       end
 
       it 'rejects an incompatible application schema before changing it' do
