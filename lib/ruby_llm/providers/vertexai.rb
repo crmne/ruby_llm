@@ -10,12 +10,22 @@ module RubyLLM
       protocol :anthropic, VertexAI::Anthropic, batches: VertexAI::Anthropic::Batches
       protocol :mistral, VertexAI::Mistral
       protocol :chat_completions, VertexAI::ChatCompletions, batches: VertexAI::ChatCompletions::Batches
-      files VertexAI::Files
+      protocol :files, Protocols::VertexAI::Files
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
         'https://www.googleapis.com/auth/generative-language.retriever'
       ].freeze
+
+      class << self
+        def capabilities
+          VertexAI::Capabilities
+        end
+
+        def models_dev_alias(...)
+          VertexAI::Models.models_dev_alias(...)
+        end
+      end
 
       # Vertex AI hosts models from several publishers, each speaking its
       # native protocol. Publisher-prefixed ids are MaaS models served

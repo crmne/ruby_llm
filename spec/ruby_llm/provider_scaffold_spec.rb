@@ -19,40 +19,85 @@ RSpec.describe RubyLLM::ProviderScaffold do
         mode: :gem,
         destination: dir,
         api_base: 'https://api.acmecloud.example/v1',
-        model: 'acme-large',
         github_owner: 'crmne'
       ).generate!
 
       expect(result.written).to include(
         'Gemfile',
-        'Appraisals',
         'Archspec.rb',
         '.flayignore',
+        '.env',
         '.github/workflows/ci.yml',
         '.github/workflows/release.yml',
-        'lib/ruby_llm/acme_cloud.rb',
         'lib/ruby_llm/providers/acme_cloud.rb',
         'spec/ruby_llm/chat_spec.rb',
         'spec/ruby_llm/chat_streaming_spec.rb',
+        'spec/ruby_llm/chat_tools_spec.rb',
+        'spec/ruby_llm/chat_schema_spec.rb',
+        'spec/ruby_llm/embedding_spec.rb',
+        'spec/support/models.rb',
         'spec/ruby_llm/models_spec.rb'
+      )
+      expect(result.written).not_to include('Appraisals')
+      expect(result.written).not_to include(
+        'lib/ruby_llm/acme_cloud.rb',
+        'lib/ruby_llm/acme_cloud/version.rb'
       )
       expect(File.executable?(File.join(dir, 'bin/setup'))).to be(true)
 
       provider = File.read(File.join(dir, 'lib/ruby_llm/providers/acme_cloud.rb'))
+      expect(provider).to include("require 'ruby_llm'")
       expect(provider).to include('class AcmeCloud < Provider')
       expect(provider).to include('protocol :chat_completions, ChatCompletions')
+      expect(provider).to include("def models_url\n          'models'")
       expect(provider).to include('def assume_models_exist?')
+      expect(provider).to include('RubyLLM::Provider.register :acme_cloud, RubyLLM::Providers::AcmeCloud')
+      expect(provider).to include("models: File.expand_path('../../../models.json', __dir__)")
 
-      gemspec = File.read(File.join(dir, 'ruby_llm-acme-cloud.gemspec'))
+      gemspec = File.read(File.join(dir, 'ruby_llm-providers-acme-cloud.gemspec'))
+      expect(gemspec).to include("spec.version = '0.1.0'")
       expect(gemspec).to include("spec.add_dependency 'ruby_llm', '>= 2.0'")
+      expect(gemspec).to include("Dir.glob('models.json')")
+      expect(gemspec).not_to include('Appraisals')
+
+      rakefile = File.read(File.join(dir, 'Rakefile'))
+      expect(rakefile).to include('provider = RubyLLM::Provider.resolve!(:acme_cloud).new(RubyLLM.config)')
+      expect(rakefile).to include("save_to_json(File.expand_path('models.json', __dir__))")
 
       provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/acme_cloud_spec.rb'))
       expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')
 
       ci = File.read(File.join(dir, '.github/workflows/ci.yml'))
-      expect(ci).to include('appraisal: ["ruby-llm-latest", "ruby-llm-main"]')
-      expect(ci).to include('bundle exec appraisal generate')
-      expect(ci).to include('bundle exec appraisal ${{ matrix.appraisal }} bundle install')
+      expect(ci).not_to include('appraisal')
+
+      appraisal_files = %w[Gemfile Rakefile bin/setup].map { |path| File.read(File.join(dir, path)) }.join
+      expect(appraisal_files).not_to include('appraisal')
+      expect(appraisal_files).not_to include('simplecov')
+
+      env = File.read(File.join(dir, '.env'))
+      expect(env).to include('ACME_CLOUD_API_KEY=$(op read "op://RubyLLM/AcmeCloud/credential")')
+      expect(env).not_to include('RUN_PROVIDER_INTEGRATION')
+      expect(File).not_to exist(File.join(dir, '.env.example'))
+
+      models = File.read(File.join(dir, 'spec/support/models.rb'))
+      expect(models).to include('CHAT_MODELS = [].freeze')
+      expect(models).to include('TOOL_MODELS = CHAT_MODELS')
+      expect(models).to include('EMBEDDING_MODELS = [].freeze')
+
+      readme = File.read(File.join(dir, 'README.md'))
+      expect(readme).to include('bundle exec rake models')
+      expect(readme).to include('The suite always runs the provider integration specs.')
+
+      vcr = File.read(File.join(dir, 'spec/support/vcr_configuration.rb'))
+      expect(vcr).to include('config.allow_http_connections_when_no_cassette = true')
+      expect(vcr).not_to include('RUN_PROVIDER_INTEGRATION')
+
+      live_specs = Dir[File.join(dir, 'spec/ruby_llm/*_spec.rb')].map { |path| File.read(path) }.join
+      expect(live_specs).not_to include('RUN_PROVIDER_INTEGRATION')
+
+      spec_helper = File.read(File.join(dir, 'spec/spec_helper.rb'))
+      expect(spec_helper).not_to include('SimpleCov')
+      expect(File.read(File.join(dir, '.gitignore'))).not_to include('coverage')
 
       assert_generated_gem_boots
     end
@@ -65,7 +110,6 @@ RSpec.describe RubyLLM::ProviderScaffold do
         mode: :core,
         destination: dir,
         api_base: 'https://api.acmecloud.example/v1',
-        model: 'acme-large',
         api_key_env: 'ACME_CLOUD_API_KEY',
         api_base_env: 'ACME_CLOUD_API_BASE',
         dialect: :ollama,
@@ -75,8 +119,10 @@ RSpec.describe RubyLLM::ProviderScaffold do
 
       expect(result.written).to include(
         'lib/ruby_llm/providers/acme_cloud.rb',
+        'spec/ruby_llm/providers/acme_cloud_spec.rb'
+      )
+      expect(result.written).not_to include(
         'lib/ruby_llm/providers/acme_cloud/capabilities.rb',
-        'spec/ruby_llm/providers/acme_cloud_spec.rb',
         'spec/ruby_llm/providers/acme_cloud/capabilities_spec.rb'
       )
       expect(result.updated).to include(
@@ -100,6 +146,26 @@ RSpec.describe RubyLLM::ProviderScaffold do
 
       models = File.read(File.join(dir, 'lib/ruby_llm/models.rb'))
       expect(models).to include("'acme-cloud' => 'acme_cloud',")
+    end
+
+    it 'resolves a shipped provider model without an explicit provider' do
+      described_class.new('MiniMax', mode: :gem, destination: dir).generate!
+      models = [RubyLLM::Model.new(id: 'MiniMax-M3', name: 'MiniMax M3', provider: 'mini_max')]
+      File.write(File.join(dir, 'models.json'), RubyLLM::ModelRegistry.pretty_json(models))
+
+      script = <<~RUBY
+        require 'ruby_llm/providers/mini_max'
+
+        RubyLLM.configure { |config| config.mini_max_api_key = 'test' }
+        model, provider = RubyLLM::Models.resolve('MiniMax-M3')
+
+        raise "bad model: \#{model.inspect}" unless model.provider == 'mini_max'
+        raise "bad provider: \#{provider.inspect}" unless provider.is_a?(RubyLLM::Providers::MiniMax)
+      RUBY
+
+      output, status = run_generated_ruby(script)
+
+      expect(status.success?).to be(true), output
     end
 
     it 'rejects names that could escape the destination' do
@@ -128,22 +194,32 @@ RSpec.describe RubyLLM::ProviderScaffold do
 
   def assert_generated_gem_boots
     script = <<~RUBY
-      require 'ruby_llm/acme_cloud'
+      require 'ruby_llm/providers/acme_cloud'
 
       RubyLLM.configure do |config|
         config.acme_cloud_api_key = 'test'
         config.acme_cloud_api_base = 'https://api.acmecloud.example/v1'
       end
 
-      model, provider = RubyLLM::Models.resolve('acme-large', provider: :acme_cloud)
-      raise "bad model: \#{model.inspect}" unless model.id == 'acme-large'
+      provider_class = RubyLLM::Provider.resolve!(:acme_cloud)
+      provider = provider_class.new(RubyLLM.config)
+      catalog = RubyLLM::Provider.model_registry_files.fetch(:acme_cloud)
+      expected_catalog = File.expand_path('models.json', #{dir.inspect})
+
       raise "bad provider: \#{provider.inspect}" unless provider.is_a?(RubyLLM::Providers::AcmeCloud)
+      raise 'dynamic models unexpectedly enabled' if provider_class.assume_models_exist?
+      raise "bad catalog: \#{catalog.inspect}" unless catalog == expected_catalog
     RUBY
 
+    output, status = run_generated_ruby(script)
+    expect(status.success?).to be(true), output
+  end
+
+  def run_generated_ruby(script)
     env = {}
     env['BUNDLE_GEMFILE'] = ENV['BUNDLE_GEMFILE'] if ENV.key?('BUNDLE_GEMFILE')
 
-    output, status = Open3.capture2e(
+    Open3.capture2e(
       env,
       RbConfig.ruby,
       '-Ilib',
@@ -152,7 +228,6 @@ RSpec.describe RubyLLM::ProviderScaffold do
       script,
       chdir: File.expand_path('../..', __dir__)
     )
-    expect(status.success?).to be(true), output
   end
 
   describe 'option handling' do
@@ -168,6 +243,12 @@ RSpec.describe RubyLLM::ProviderScaffold do
       )
     end
 
+    it 'rejects gem names that could escape the generated directory' do
+      expect do
+        described_class.new('Acme', mode: :gem, gem_name: '../ruby_llm-providers-acme')
+      end.to raise_error(ArgumentError, /gem name must contain only/)
+    end
+
     it 'keeps a name that is already a class name' do
       expect(described_class.new('OpenAI', mode: :gem, destination: dir).class_name).to eq('OpenAI')
     end
@@ -176,12 +257,21 @@ RSpec.describe RubyLLM::ProviderScaffold do
       scaffold = described_class.new('Acme', mode: :gem, destination: dir)
 
       expect(scaffold.api_base).to eq('https://api.example.com/v1')
-      expect(scaffold.model).to eq('example-chat-model')
       expect(scaffold.api_key_env).to eq('ACME_API_KEY')
       expect(scaffold.api_base_env).to eq('ACME_API_BASE')
-      expect(scaffold.gem_name).to eq('ruby_llm-acme')
+      expect(scaffold.gem_name).to eq('ruby_llm-providers-acme')
       expect(scaffold.github_owner).to eq('your-github-org')
       expect(scaffold.models_dev_provider).to be_nil
+    end
+
+    it 'creates provider gems in a named directory by default' do
+      Dir.chdir(dir) do
+        scaffold = described_class.new('AcmeCloud', mode: :gem)
+        custom = described_class.new('AcmeCloud', mode: :gem, gem_name: 'ruby_llm-providers-custom')
+
+        expect(scaffold.destination).to eq(File.join(dir, 'ruby_llm-providers-acme-cloud'))
+        expect(custom.destination).to eq(File.join(dir, 'ruby_llm-providers-custom'))
+      end
     end
 
     it 'treats a blank models.dev provider as none' do
@@ -225,7 +315,9 @@ RSpec.describe RubyLLM::ProviderScaffold do
       result = described_class.new('Acme', mode: :gem, destination: dir, force: true).generate!
 
       expect(result.skipped).to be_empty
-      expect(result.written).not_to be_empty
+      expect(result.written).to be_empty
+      expect(result.updated).not_to be_empty
+      expect(result.actions).to all(satisfy { |action, _path| action == :updated })
     end
   end
 end

@@ -117,7 +117,7 @@ RSpec.describe RubyLLM::Providers::GPUStack::Models do
     it 'parses a plain OpenAI list without meta or categories' do
       response = response_for('id' => 'qwen3', 'object' => 'model', 'owned_by' => 'gpustack')
 
-      model = protocol.parse_list_models_response(response, 'gpustack', nil).first
+      model = protocol.parse_list_models_response(response, 'gpustack').first
 
       expect(model).to be_a(RubyLLM::Model)
       expect(model.id).to eq('qwen3')
@@ -130,7 +130,7 @@ RSpec.describe RubyLLM::Providers::GPUStack::Models do
     it 'returns an empty list when the payload has no data' do
       response = instance_double(Faraday::Response, body: {})
 
-      expect(protocol.parse_list_models_response(response, 'gpustack', nil)).to eq([])
+      expect(protocol.parse_list_models_response(response, 'gpustack')).to eq([])
     end
   end
 end

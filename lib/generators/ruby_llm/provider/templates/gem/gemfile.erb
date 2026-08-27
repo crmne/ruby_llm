@@ -5,7 +5,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'appraisal'
   if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
     gem 'archspec', github: 'crmne/archspec', tag: 'v1.1.0.rc1'
   end
@@ -21,7 +20,6 @@ group :development do
   gem 'rubocop-performance'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
-  gem 'simplecov', '>= 0.21'
   gem 'vcr'
   gem 'webmock', '~> 3.18'
 end

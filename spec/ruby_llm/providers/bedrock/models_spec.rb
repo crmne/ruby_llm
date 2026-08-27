@@ -51,13 +51,13 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
     it 'returns an empty list when Bedrock sends no summaries' do
       response = Struct.new(:body).new({})
 
-      expect(provider.send(:parse_list_models_response, response, 'bedrock', nil)).to eq([])
+      expect(provider.send(:parse_list_models_response, response, 'bedrock')).to eq([])
     end
 
     it 'maps a model summary onto a Model' do
       response = Struct.new(:body).new({ 'modelSummaries' => [model_data] })
 
-      model = provider.send(:parse_list_models_response, response, 'bedrock', nil).first
+      model = provider.send(:parse_list_models_response, response, 'bedrock').first
 
       expect(model.id).to eq('anthropic.claude-haiku-4-5-20251001-v1:0')
       expect(model.name).to eq('Claude Haiku 4.5')

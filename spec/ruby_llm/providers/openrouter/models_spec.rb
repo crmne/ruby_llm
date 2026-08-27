@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
 
   describe '#parse_list_models_response' do
     it 'returns an empty list when the payload has no data' do
-      expect(parser.parse_list_models_response(Struct.new(:body).new({}), 'openrouter', nil)).to eq([])
+      expect(parser.parse_list_models_response(Struct.new(:body).new({}), 'openrouter')).to eq([])
     end
 
     it 'maps the OpenRouter payload onto a Model' do
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
         'pricing' => { 'prompt' => '0.000001', 'completion' => '0.000005', 'input_cache_read' => '0.0000001' }
       )
 
-      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+      model = parser.parse_list_models_response(response, 'openrouter').first
 
       expect(model.id).to eq('anthropic/claude-haiku-4-5')
       expect(model.name).to eq('Anthropic: Claude Haiku 4.5')
@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
         }
       )
 
-      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+      model = parser.parse_list_models_response(response, 'openrouter').first
 
       expect(model.pricing.to_h).to eq(
         text_tokens: {
@@ -94,7 +94,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
         }
       )
 
-      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+      model = parser.parse_list_models_response(response, 'openrouter').first
 
       expect(model.price(:cache_write)).to eq(3.125)
       expect(model.price(:cache_read)).to eq(0.25)
@@ -107,14 +107,14 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
         'expiration_date' => '2026-12-31'
       )
 
-      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+      model = parser.parse_list_models_response(response, 'openrouter').first
 
       expect(model.knowledge_cutoff).to eq(Date.new(2024, 12, 31))
       expect(model.metadata[:expiration_date]).to eq('2026-12-31')
     end
 
     it 'leaves created_at nil when OpenRouter omits the timestamp' do
-      model = parser.parse_list_models_response(response_for('id' => 'vendor/model'), 'openrouter', nil).first
+      model = parser.parse_list_models_response(response_for('id' => 'vendor/model'), 'openrouter').first
 
       expect(model.created_at).to be_nil
       expect(model.capabilities).to be_empty
@@ -127,7 +127,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
         'architecture' => { 'input_modalities' => ['text'], 'output_modalities' => ['rerank'] }
       )
 
-      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+      model = parser.parse_list_models_response(response, 'openrouter').first
 
       expect(model.modalities.to_h).to eq(input: ['text'], output: ['rerank'])
       expect(model.type).to eq('rerank')

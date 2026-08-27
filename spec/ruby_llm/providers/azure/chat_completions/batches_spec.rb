@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions::Batches do
     end
   end
   let(:provider) { RubyLLM::Providers::Azure.new(config) }
-  let(:protocol) { RubyLLM::Providers::Azure.batch_protocols.fetch(:chat_completions).new(provider) }
+  let(:protocol) { RubyLLM::Providers::Azure.protocols.fetch(:chat_completions).new(provider) }
 
   describe '#batch_endpoint' do
     it 'uses Azure endpoint paths without the OpenAI /v1 prefix' do

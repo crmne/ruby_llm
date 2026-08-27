@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Gemini::Batches do
-  let(:protocol) { RubyLLM::Providers::Gemini.batch_protocols.fetch(:gemini).allocate }
+  let(:protocol) { RubyLLM::Providers::Gemini.protocols.fetch(:gemini).allocate }
 
   describe '#gemini_batch_request' do
     it 'wraps rendered GenerateContent payloads with model and metadata' do

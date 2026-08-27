@@ -81,6 +81,11 @@ component :protocols,
           in: 'lib/ruby_llm/protocols/**/*.rb',
           namespace: 'RubyLLM::Protocols'
 
+component :file_protocols, in: %w[
+  lib/ruby_llm/protocols/files.rb
+  lib/ruby_llm/protocols/*/files.rb
+]
+
 # The wire-protocol family classes that speak chat (not their helper modules),
 # so the shared chat contract can be enforced on them alone. Families that
 # serve other operations, such as ElevenLabs audio and AWS InvokeModel
@@ -100,6 +105,19 @@ component :chat_protocol_families, in: %w[
 component :providers,
           in: 'lib/ruby_llm/providers/**/*.rb',
           namespace: 'RubyLLM::Providers'
+
+# Provider gem model catalogs are explicitly registered package data. They are
+# read-only runtime fallbacks; the main registry owns refresh and wins conflicts.
+
+component(:provider_file_protocols, in: 'lib/ruby_llm/providers/*/files.rb')
+  .must_be_empty(because: 'file wire formats belong under RubyLLM::Protocols')
+component(:domain_file_protocol, constants: 'RubyLLM::UploadedFile::Protocol')
+  .must_be_empty(because: 'protocol implementations do not belong inside domain objects')
+
+# Capability overrides fill narrow feature gaps in upstream catalogs. Model
+# metadata such as limits and pricing belongs to models.dev or provider model
+# listings, never a parallel hand-maintained table.
+component :provider_capabilities, in: 'lib/ruby_llm/providers/*/capabilities.rb'
 
 component :rails_integration,
           in: %w[
@@ -154,6 +172,14 @@ protocols.cannot_reference_constants 'RubyLLM::Providers'
 # Protocol means defining a new wire format inside an adapter, which belongs
 # under RubyLLM::Protocols instead.
 providers.cannot_reference_constants 'RubyLLM::Protocol'
+providers.cannot_call :batch_protocol, :files, receiver: :none,
+                                               because: 'register every wire operation with protocol'
+
+provider_contract.method_names(scope: :class)
+                 .matching(/\A(?:batch|file)_protocols?\z/)
+                 .forbidden(because: 'keep one protocol macro and one protocol registry')
+
+file_protocols.must_implement :upload, :find, :download
 
 # The plain-Ruby library must never reach into the Rails integration; this is
 # what keeps `require "ruby_llm"` free of ActiveRecord. Support is a leaf layer
@@ -179,6 +205,13 @@ preset :ruby_conventions
 
 # Capabilities are one query, supports?(:name), never a supports_*? predicate.
 support.method_names.matching(/\Asupports_\w+\?\z/).forbidden(because: 'query capabilities with supports?(:name)')
+
+provider_capabilities.method_names
+                     .matching(
+                       /context_window|max_(?:output_)?tokens|pric|family|modalit|release_date|knowledge_cutoff/
+                     )
+                     .forbidden(because: 'keep model metadata in models.dev or provider model listings')
+provider_capabilities.must_implement :augment, scope: :class
 
 # The Agent is a declarative wrapper over Chat: every Chat#with_x setter has a
 # matching bare class-level macro on Agent. temperature and max_output_tokens

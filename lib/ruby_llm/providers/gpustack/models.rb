@@ -25,7 +25,7 @@ module RubyLLM
           models.values.map { |model| build_model(model, @provider.slug) }
         end
 
-        def parse_list_models_response(response, slug, _capabilities)
+        def parse_list_models_response(response, slug)
           data = response.body['data'] || []
           data.map { |model| build_model(model, slug) }
         end

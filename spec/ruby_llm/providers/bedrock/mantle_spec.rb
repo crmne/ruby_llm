@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
         openai.gpt-5.5
       ].each do |id|
         model = RubyLLM::Model.default(id, 'bedrock')
-        expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
+        expect(provider.protocol_for(model)).to eq(provider.protocols[:converse])
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
         meta.llama3-70b-instruct-v1:0
       ].each do |id|
         model = RubyLLM::Model.default(id, 'bedrock')
-        expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
+        expect(provider.protocol_for(model)).to eq(provider.protocols[:converse])
       end
     end
 

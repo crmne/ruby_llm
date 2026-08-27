@@ -6,7 +6,6 @@ require 'spec_helper'
 # https://docs.cohere.com/reference/list-models.
 RSpec.describe RubyLLM::Protocols::Cohere::Models do
   let(:protocol) { Object.new.extend(described_class) }
-  let(:capabilities) { RubyLLM::Providers::Cohere::Capabilities }
 
   let(:body) do
     {
@@ -19,7 +18,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Models do
           'context_length' => 128_000,
           'tokenizer_url' => 'https://cohere.com/tokenizer/command-a-plus-05-2026.json',
           'default_endpoints' => ['chat'],
-          'features' => %w[json_schema tools]
+          'features' => %w[json_mode json_schema tools tool_choice citations]
         },
         {
           'name' => 'embed-v4.0',
@@ -38,7 +37,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Models do
   end
 
   def parse
-    protocol.send(:parse_list_models_response, instance_double(Faraday::Response, body: body), 'cohere', capabilities)
+    protocol.send(:parse_list_models_response, instance_double(Faraday::Response, body: body), 'cohere')
   end
 
   describe '#models_url' do
@@ -59,12 +58,14 @@ RSpec.describe RubyLLM::Protocols::Cohere::Models do
       expect(model).to have_attributes(
         id: 'command-a-plus-05-2026',
         provider: 'cohere',
-        family: 'command-a-plus',
+        family: nil,
         context_window: 128_000,
-        max_output_tokens: 64_000
+        max_output_tokens: nil
       )
-      expect(model.capabilities).to include('streaming', 'function_calling', 'citations', 'vision', 'reasoning')
-      expect(model.modalities.input).to include('text', 'image')
+      expect(model.capabilities).to contain_exactly(
+        'streaming', 'function_calling', 'tool_choice', 'structured_output', 'json_mode', 'citations'
+      )
+      expect(model.modalities.input).to eq(['text'])
     end
 
     it 'maps an embedding model' do
@@ -74,16 +75,23 @@ RSpec.describe RubyLLM::Protocols::Cohere::Models do
       expect(model.capabilities).to be_empty
     end
 
+    it 'uses the exact endpoint variants Cohere reports' do
+      expect(protocol.send(:modalities_from, ['embed_image'])).to eq(input: ['image'], output: ['embeddings'])
+      expect(protocol.send(:modalities_from, ['transcriptions'])).to eq(input: ['audio'], output: ['text'])
+      expect(protocol.send(:capabilities_from, ['transcriptions'], nil)).to eq(['transcription'])
+    end
+
     it 'keeps the Cohere endpoint list in metadata' do
       expect(parse.first.metadata).to include(
         endpoints: ['chat'],
-        features: %w[json_schema tools],
+        features: %w[json_mode json_schema tools tool_choice citations],
         tokenizer_url: 'https://cohere.com/tokenizer/command-a-plus-05-2026.json'
       )
     end
 
-    it 'dates models from the published release dates' do
-      expect(parse.first.created_at).to eq(Time.parse('2026-05-20'))
+    it 'does not fill metadata the provider omits' do
+      expect(parse.first.created_at).to be_nil
+      expect(parse.first.pricing.to_h).to be_empty
     end
   end
 end

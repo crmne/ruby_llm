@@ -5,7 +5,7 @@ module RubyLLM
     # Native Gemini API implementation
     class Gemini < Provider
       protocol :gemini, Protocols::Gemini, batches: Protocols::Gemini::Batches
-      files Protocols::Gemini::Files
+      protocol :files, Protocols::Gemini::Files
 
       def api_base
         @config.gemini_api_base || 'https://generativelanguage.googleapis.com/v1beta'

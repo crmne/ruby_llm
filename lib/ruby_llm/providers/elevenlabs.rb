@@ -18,10 +18,6 @@ module RubyLLM
       end
 
       class << self
-        def capabilities
-          ElevenLabs::Capabilities
-        end
-
         def configuration_options
           %i[elevenlabs_api_key elevenlabs_api_base]
         end

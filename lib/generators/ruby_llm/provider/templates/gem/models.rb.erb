@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+# Remove chat-derived matrices the model does not support and add real ids for the empty operation matrices.
+# See RubyLLM's full live matrix and specs: https://github.com/crmne/ruby_llm/tree/main/spec
+PROVIDER = :<%= slug %>
+CHAT_MODELS = [].freeze
+TOOL_MODELS = CHAT_MODELS
+STRUCTURED_OUTPUT_MODELS = CHAT_MODELS
+
+EMBEDDING_MODELS = [].freeze
+IMAGE_GENERATION_MODELS = [].freeze
+SPEECH_MODELS = [].freeze
+VIDEO_GENERATION_MODELS = [].freeze
+MODERATION_MODELS = [].freeze
+RERANK_MODELS = [].freeze
+
+def each_model(models)
+  models.each { |model_info| yield model_info[:provider], model_info[:model], model_info }
+end

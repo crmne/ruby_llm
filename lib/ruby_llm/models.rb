@@ -29,6 +29,7 @@ module RubyLLM
       'ollama-cloud' => 'ollama_cloud',
       'openrouter' => 'openrouter',
       'perplexity' => 'perplexity',
+      'perplexity-agent' => 'perplexity',
       'xai' => 'xai'
     }.freeze
     MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze # :nodoc:
@@ -89,9 +90,17 @@ module RubyLLM
       end
 
       def load_models # :nodoc:
-        models_from_store(RubyLLM.config.model_registry_store) ||
-          models_from_file(RubyLLM.config.model_registry_file) ||
-          models_from_bundle
+        base = models_from_store(RubyLLM.config.model_registry_store) ||
+               models_from_file(RubyLLM.config.model_registry_file) ||
+               models_from_bundle
+
+        merge_models(models_from_provider_gems, base)
+      end
+
+      def models_from_provider_gems # :nodoc:
+        Provider.model_registry_files.flat_map do |provider, file|
+          Array(models_from_file(file)).select { |model| model.provider == provider.to_s }
+        end
       end
 
       def models_from_store(store) # :nodoc:
@@ -164,6 +173,7 @@ module RubyLLM
       def fetch_provider_models(remote_only: true) # :nodoc:
         config = RubyLLM.config
         providers = remote_only ? Provider.configured_remote_providers(config) : Provider.configured_providers(config)
+        providers = providers.reject { |provider| Provider.model_registry_files.key?(provider.slug.to_sym) }
         result = {
           models: [], fetched_providers: [], configured_names: providers.map(&:display_name), failed: [], empty: []
         }
@@ -288,58 +298,45 @@ module RubyLLM
       def merge_models(provider_models, models_dev_models) # :nodoc:
         models_dev_by_key = index_by_key(models_dev_models)
         provider_by_key = index_by_key(provider_models)
+        provider_by_alias = index_provider_aliases(provider_models)
 
         all_keys = models_dev_by_key.keys | provider_by_key.keys
 
         models = all_keys.map do |key|
-          models_dev_model = find_models_dev_model(key, models_dev_by_key)
-          provider_model = provider_by_key[key]
+          provider_model = provider_by_key[key] || provider_by_alias[key]
+          models_dev_model = find_models_dev_model(key, models_dev_by_key, provider_model)
 
           if models_dev_model && provider_model
             add_provider_metadata(models_dev_model, provider_model)
           elsif models_dev_model
             models_dev_model
           else
-            provider_model
+            augment_model_capabilities(provider_model)
           end
         end
 
         models.sort_by { |m| [m.provider, m.id] }
       end
 
-      def find_models_dev_model(key, models_dev_by_key) # :nodoc:
+      def find_models_dev_model(key, models_dev_by_key, provider_model = nil) # :nodoc:
         # Direct match
         return models_dev_by_key[key] if models_dev_by_key[key]
 
         provider, model_id = key.split(':', 2)
-        if provider == 'bedrock'
-          normalized_id = model_id.sub(/^[a-z]{2}\./, '')
-          context_override = nil
-          normalized_id = normalized_id.gsub(/:(\d+)k\b/) do
-            context_override = Regexp.last_match(1).to_i * 1000
-            ''
-          end
-          bedrock_model = models_dev_by_key["bedrock:#{normalized_id}"]
-          if bedrock_model
-            data = bedrock_model.to_h.merge(id: model_id)
-            data[:context_window] = context_override if context_override
-            return Model.new(data)
-          end
-        end
-
-        # VertexAI uses same models as Gemini
-        return unless provider == 'vertexai'
-
-        gemini_model = models_dev_by_key["gemini:#{model_id}"]
-        return unless gemini_model
-
-        # Return Gemini's models.dev data but with VertexAI as provider
-        Model.new(gemini_model.to_h.merge(provider: 'vertexai'))
+        Provider.resolve(provider)&.models_dev_alias(model_id, models_dev_by_key, provider_model)
       end
 
       def index_by_key(models) # :nodoc:
         models.to_h do |model|
           ["#{model.provider}:#{model.id}", model]
+        end
+      end
+
+      def index_provider_aliases(models) # :nodoc:
+        models.each_with_object({}) do |model, aliases|
+          Array(model.metadata[:aliases]).each do |alias_id|
+            aliases["#{model.provider}:#{alias_id}"] ||= model
+          end
         end
       end
 
@@ -352,16 +349,34 @@ module RubyLLM
         data[:max_output_tokens] = provider_model.max_output_tokens if blank_value?(data[:max_output_tokens])
         data[:knowledge_cutoff] = provider_model.knowledge_cutoff if blank_value?(data[:knowledge_cutoff])
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
-        data[:pricing] = provider_model.pricing.to_h if blank_value?(data[:pricing])
+        if models_dev_model.type == 'chat' && provider_model.type != 'chat'
+          data[:modalities] = provider_model.modalities.to_h
+        end
+        data[:pricing] = Utils.deep_merge(provider_model.pricing.to_h, data[:pricing].to_h)
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
-        data[:capabilities] = merge_capabilities(models_dev_model, provider_model)
+        data[:capabilities] = merge_capabilities(models_dev_model, provider_model, data[:modalities])
         normalize_embedding_modalities(data)
         Model.new(data)
       end
 
-      def merge_capabilities(models_dev_model, provider_model) # :nodoc:
+      def merge_capabilities(models_dev_model, provider_model, modalities) # :nodoc:
         denied = models_dev_reported_capabilities(models_dev_model) - models_dev_model.capabilities
-        (models_dev_model.capabilities + provider_model.capabilities).uniq - denied
+        reported = (models_dev_model.capabilities + provider_model.capabilities).uniq - denied
+        augment_capabilities(provider_model.provider, reported, provider_model.id, modalities)
+      end
+
+      def augment_model_capabilities(model) # :nodoc:
+        capabilities = augment_capabilities(model.provider, model.capabilities, model.id, model.modalities.to_h)
+        return model if capabilities == model.capabilities
+
+        Model.new(model.to_h.merge(capabilities: capabilities))
+      end
+
+      def augment_capabilities(provider_slug, capabilities, model_id, modalities) # :nodoc:
+        augmenter = Provider.resolve(provider_slug)&.capabilities
+        return capabilities unless augmenter
+
+        augmenter.augment(capabilities, model_id: model_id, modalities: modalities.to_h)
       end
 
       # models.dev leaves a field out where it has no opinion, so only the
@@ -439,15 +454,7 @@ module RubyLLM
         capabilities << 'reasoning' if model_data[:reasoning] || model_data[:reasoning_options]
         capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
         capabilities << 'video' if modalities[:input].include?('video')
-        capabilities << 'transcription' if transcription_capability?(model_data, modalities, provider_slug)
-        capabilities.uniq
-      end
-
-      def transcription_capability?(model_data, modalities, provider_slug) # :nodoc:
-        return false unless %w[gemini vertexai].include?(provider_slug)
-        return false if model_data[:id].to_s.include?('embedding')
-
-        modalities[:input].include?('audio') && modalities[:output].include?('text')
+        augment_capabilities(provider_slug, capabilities.uniq, model_data[:id], modalities)
       end
 
       def models_dev_pricing(cost) # :nodoc:
@@ -666,8 +673,10 @@ module RubyLLM
     def refresh!(remote_only: false)
       RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
         published = fetch_published_models
-        merged_models = merge_discovered_models(published.models, remote_only:)
-        persist_registry!(merged_models, published:)
+        main_models = merge_discovered_models(published.models, remote_only:)
+        merged_models = self.class.merge_models(self.class.models_from_provider_gems, main_models)
+        persisted_models = RubyLLM.config.model_registry_store ? merged_models : main_models
+        persist_registry!(persisted_models, published:)
         @models = stored_models || merged_models
         payload.merge!(model_count: all.size, not_modified: published.not_modified)
       end
@@ -733,7 +742,8 @@ module RubyLLM
     def preserved_providers(provider_fetch, published)
       failed = provider_fetch[:failed].map { |failure| failure[:slug] }
       covered = provider_fetch[:fetched_providers] + published.map(&:provider)
-      failed | (all.map(&:provider).uniq - covered)
+      provider_gems = Provider.model_registry_files.keys.map(&:to_s)
+      failed | (all.map(&:provider).uniq - covered - provider_gems)
     end
 
     def persist_registry!(models, published:)

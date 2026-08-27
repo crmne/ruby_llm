@@ -203,7 +203,7 @@ module RubyLLM
 
     def list_models
       response = @connection.get models_url
-      parse_list_models_response response, @provider.slug, @provider.capabilities
+      parse_list_models_response response, @provider.slug
     end
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})

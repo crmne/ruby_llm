@@ -17,10 +17,6 @@ module RubyLLM
       end
 
       class << self
-        def capabilities
-          Cohere::Capabilities
-        end
-
         def configuration_options
           %i[cohere_api_key cohere_api_base]
         end

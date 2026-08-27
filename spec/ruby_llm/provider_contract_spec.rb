@@ -25,6 +25,10 @@ RSpec.shared_examples 'a provider' do |provider_class|
     expect(provider_class.protocols).not_to be_empty
   end
 
+  it 'registers only Protocol subclasses' do
+    expect(provider_class.protocols.values).to all(be < RubyLLM::Protocol)
+  end
+
   {
     api_base: :instance,
     headers: :instance,
@@ -40,5 +44,10 @@ end
 RSpec.describe RubyLLM::Provider do
   RubyLLM::Provider.providers.each do |name, provider_class| # rubocop:disable RSpec/DescribedClass
     describe(name) { it_behaves_like 'a provider', provider_class }
+  end
+
+  it 'keeps every operation in the protocol registry' do
+    expect(described_class).not_to respond_to(:batch_protocols)
+    expect(described_class).not_to respond_to(:file_protocol)
   end
 end

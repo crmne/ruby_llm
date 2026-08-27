@@ -17,28 +17,45 @@ module RubyLLM
           'v1/models'
         end
 
-        def parse_list_models_response(response, slug, capabilities)
+        def parse_list_models_response(response, slug)
           listed = Array(response.body).map do |data|
-            build_model(data['model_id'], slug, capabilities, name: data['name'], description: data['description'])
+            build_model(data['model_id'], slug, name: data['name'], description: data['description'], data: data)
           end
           listed_ids = listed.map(&:id)
 
           listed + TRANSCRIPTION_MODELS.except(*listed_ids).map do |model_id, name|
-            build_model(model_id, slug, capabilities, name: name)
+            build_model(model_id, slug, name: name, transcription: true)
           end
         end
 
-        def build_model(model_id, slug, capabilities, name: nil, description: nil)
+        def build_model(model_id, slug, name: nil, description: nil, data: {}, transcription: false)
+          transcription ||= TRANSCRIPTION_MODELS.key?(model_id)
+
           Model.new(
             id: model_id,
-            name: name || capabilities.format_display_name(model_id),
+            name: name || model_id,
             provider: slug,
-            family: capabilities.model_family(model_id),
-            modalities: capabilities.modalities_for(model_id),
-            capabilities: capabilities.capabilities_for(model_id),
+            family: transcription ? 'scribe' : 'eleven',
+            modalities: modalities_for(data, transcription),
+            capabilities: capabilities_from(data, transcription),
             pricing: {},
             metadata: { description: description }.compact
           )
+        end
+
+        def modalities_for(data, transcription)
+          return { input: ['audio'], output: ['text'] } if transcription
+          return { input: ['audio'], output: ['audio'] } if data['can_do_voice_conversion']
+
+          { input: ['text'], output: ['audio'] }
+        end
+
+        def capabilities_from(data, transcription)
+          capabilities = []
+          capabilities << 'transcription' if transcription
+          capabilities << 'speech_generation' if data['can_do_text_to_speech']
+          capabilities << 'fine_tuning' if data['can_be_finetuned']
+          capabilities
         end
       end
     end

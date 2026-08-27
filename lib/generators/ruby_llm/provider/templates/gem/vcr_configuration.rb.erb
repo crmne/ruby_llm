@@ -3,9 +3,8 @@
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   config.hook_into :webmock
-  config.configure_rspec_metadata!
   config.default_cassette_options = { record: ENV['CI'] ? :none : :once }
-  config.allow_http_connections_when_no_cassette = ENV['RUN_PROVIDER_INTEGRATION'] == 'true'
+  config.allow_http_connections_when_no_cassette = true
   config.filter_sensitive_data('<%= "<#{api_key_env}>" %>') { ENV.fetch('<%= api_key_env %>', nil) }
   config.filter_sensitive_data('<%= "<#{api_base_env}>" %>') { ENV.fetch('<%= api_base_env %>', nil) }
 

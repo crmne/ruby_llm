@@ -12,34 +12,29 @@ module RubyLLM
     SUPPORTED_DIALECTS = %w[chat_completions responses anthropic gemini converse ollama].freeze
     TEMPLATE_ROOT = File.expand_path('../generators/ruby_llm/provider/templates', __dir__)
 
-    Result = Struct.new(:written, :updated, :skipped, keyword_init: true) do
+    Result = Struct.new(:written, :updated, :skipped, :actions, keyword_init: true) do
       def changed
         written + updated
       end
     end
 
-    attr_reader :name, :mode, :destination, :api_base, :model, :api_key_env, :api_base_env,
+    attr_reader :name, :mode, :destination, :api_base, :api_key_env, :api_base_env,
                 :dialect, :models_dev_provider, :gem_name, :github_owner
 
     def initialize(name, **options)
-      @name = name.to_s.strip
-      unless @name.match?(/\A[A-Za-z][A-Za-z0-9_-]*\z/)
-        raise ArgumentError, 'provider name must start with a letter and contain only letters, numbers, - or _'
-      end
-
+      @name = normalize_provider_name(name)
       @mode = normalize_option(options.fetch(:mode, :core), SUPPORTED_MODES, 'mode')
       @dialect = normalize_option(options.fetch(:dialect, :chat_completions), SUPPORTED_DIALECTS, 'dialect')
-      @destination = File.expand_path(options.fetch(:destination, Dir.pwd))
       @api_base = options[:api_base] || 'https://api.example.com/v1'
-      @model = options[:model] || 'example-chat-model'
       @api_key_env = options[:api_key_env] || "#{env_prefix}_API_KEY"
       @api_base_env = options[:api_base_env] || "#{env_prefix}_API_BASE"
       @models_dev_provider = blank_to_nil(options[:models_dev_provider])
       @dynamic_models = dynamic_models_option?(options)
-      @gem_name = options[:gem_name] || "ruby_llm-#{slug.tr('_', '-')}"
+      @gem_name = normalize_gem_name(options[:gem_name] || "ruby_llm-providers-#{slug.tr('_', '-')}")
+      @destination = File.expand_path(options[:destination] || default_destination)
       @github_owner = options[:github_owner] || 'your-github-org'
       @force = options.fetch(:force, false)
-      @result = Result.new(written: [], updated: [], skipped: [])
+      @result = Result.new(written: [], updated: [], skipped: [], actions: [])
     end
 
     def generate!
@@ -102,20 +97,14 @@ module RubyLLM
     end
 
     def require_path
-      "ruby_llm/#{slug}"
-    end
-
-    def version_namespace
-      class_name
+      "ruby_llm/providers/#{slug}"
     end
 
     private
 
     def generate_core_provider
       write_template 'core/provider.rb.erb', "lib/ruby_llm/providers/#{slug}.rb"
-      write_template 'shared/capabilities.rb.erb', "lib/ruby_llm/providers/#{slug}/capabilities.rb"
       write_template 'core/provider_spec.rb.erb', "spec/ruby_llm/providers/#{slug}_spec.rb"
-      write_template 'shared/capabilities_spec.rb.erb', "spec/ruby_llm/providers/#{slug}/capabilities_spec.rb"
 
       update_core_registration
       update_core_env_example
@@ -130,8 +119,7 @@ module RubyLLM
       write_template 'gem/rubocop.yml.erb', '.rubocop.yml'
       write_template 'gem/overcommit.yml.erb', '.overcommit.yml'
       write_template 'gem/flayignore.erb', '.flayignore'
-      write_template 'gem/env.example.erb', '.env.example'
-      write_template 'gem/appraisals.erb', 'Appraisals'
+      write_template 'gem/env.erb', '.env'
       write_template 'gem/gemfile.erb', 'Gemfile'
       write_template 'gem/rakefile.erb', 'Rakefile'
       write_template 'gem/archspec.rb.erb', 'Archspec.rb'
@@ -143,18 +131,22 @@ module RubyLLM
       write_template 'gem/gitleaks.yml.erb', '.github/workflows/gitleaks.yml'
       write_template 'gem/bin/setup.erb', 'bin/setup', executable: true
       write_template 'gem/bin/console.erb', 'bin/console', executable: true
-      write_template 'gem/entrypoint.rb.erb', "lib/ruby_llm/#{slug}.rb"
-      write_template 'gem/version.rb.erb', "lib/ruby_llm/#{slug}/version.rb"
       write_template 'gem/provider.rb.erb', "lib/ruby_llm/providers/#{slug}.rb"
-      write_template 'shared/capabilities.rb.erb', "lib/ruby_llm/providers/#{slug}/capabilities.rb"
       write_template 'gem/spec_helper.rb.erb', 'spec/spec_helper.rb'
       write_template 'gem/rubyllm_configuration.rb.erb', 'spec/support/rubyllm_configuration.rb'
       write_template 'gem/vcr_configuration.rb.erb', 'spec/support/vcr_configuration.rb'
-      write_template 'gem/streaming_error_helpers.rb.erb', 'spec/support/streaming_error_helpers.rb'
+      write_template 'gem/models.rb.erb', 'spec/support/models.rb'
       write_template 'gem/provider_spec.rb.erb', "spec/ruby_llm/providers/#{slug}_spec.rb"
-      write_template 'shared/capabilities_spec.rb.erb', "spec/ruby_llm/providers/#{slug}/capabilities_spec.rb"
       write_template 'gem/chat_spec.rb.erb', 'spec/ruby_llm/chat_spec.rb'
       write_template 'gem/chat_streaming_spec.rb.erb', 'spec/ruby_llm/chat_streaming_spec.rb'
+      write_template 'gem/chat_tools_spec.rb.erb', 'spec/ruby_llm/chat_tools_spec.rb'
+      write_template 'gem/chat_schema_spec.rb.erb', 'spec/ruby_llm/chat_schema_spec.rb'
+      write_template 'gem/embedding_spec.rb.erb', 'spec/ruby_llm/embedding_spec.rb'
+      write_template 'gem/image_spec.rb.erb', 'spec/ruby_llm/image_spec.rb'
+      write_template 'gem/speech_spec.rb.erb', 'spec/ruby_llm/speech_spec.rb'
+      write_template 'gem/video_spec.rb.erb', 'spec/ruby_llm/video_spec.rb'
+      write_template 'gem/moderation_spec.rb.erb', 'spec/ruby_llm/moderation_spec.rb'
+      write_template 'gem/rerank_spec.rb.erb', 'spec/ruby_llm/rerank_spec.rb'
       write_template 'gem/models_spec.rb.erb', 'spec/ruby_llm/models_spec.rb'
       write_template 'gem/fixtures_gitkeep.erb', 'spec/fixtures/vcr_cassettes/.gitkeep'
     end
@@ -212,47 +204,54 @@ module RubyLLM
 
     def write_file(relative_path, content, executable: false)
       path = file_path(relative_path)
-      if File.exist?(path) && !@force
-        @result.skipped << relative_path
+      existed = File.exist?(path)
+      if existed && !@force
+        record(:skipped, relative_path)
         return
       end
 
       FileUtils.mkdir_p(File.dirname(path))
       File.write(path, content)
       FileUtils.chmod('+x', path) if executable
-      @result.written << relative_path
+      record(existed ? :updated : :written, relative_path)
     end
 
     def append_unique_line(path, line)
       content = File.exist?(path) ? File.read(path) : ''
-      return @result.skipped << relative_path(path) if content.include?(line)
+      return record(:skipped, relative_path(path)) if content.include?(line)
 
       FileUtils.mkdir_p(File.dirname(path))
       File.write(path, "#{content.chomp}\n#{line}\n")
-      @result.updated << relative_path(path)
+      record(:updated, relative_path(path))
     end
 
     def insert_sorted_line(path, line, matcher)
       content = File.read(path)
-      return @result.skipped << relative_path(path) if content.include?(line)
+      return record(:skipped, relative_path(path)) if content.include?(line)
 
       lines = content.lines
       indexes = lines.each_index.select { |index| lines[index].match?(matcher) }
       insert_at = indexes.find { |index| line < lines[index].chomp } || indexes.last&.+(1) || lines.length
       lines.insert(insert_at, "#{line}\n")
       File.write(path, lines.join)
-      @result.updated << relative_path(path)
+      record(:updated, relative_path(path))
     end
 
     def insert_before_first(path, line, matcher)
       content = File.read(path)
-      return @result.skipped << relative_path(path) if content.include?(line)
+      return record(:skipped, relative_path(path)) if content.include?(line)
 
       lines = content.lines
       insert_at = lines.index { |candidate| candidate.match?(matcher) } || lines.length
       lines.insert(insert_at, "#{line}\n")
       File.write(path, lines.join)
-      @result.updated << relative_path(path)
+      record(:updated, relative_path(path))
+    end
+
+    def record(action, path)
+      @result.public_send(action) << path
+      @result.actions << [action, path]
+      path
     end
 
     def file_path(relative_path)
@@ -267,11 +266,29 @@ module RubyLLM
       File.join(TEMPLATE_ROOT, relative_path)
     end
 
+    def default_destination
+      mode == 'gem' ? File.join(Dir.pwd, gem_name) : Dir.pwd
+    end
+
     def normalize_option(value, allowed, name)
       normalized = value.to_s.tr('-', '_')
       return normalized if allowed.include?(normalized)
 
       raise ArgumentError, "unsupported #{name}: #{value.inspect}. Expected one of: #{allowed.join(', ')}"
+    end
+
+    def normalize_gem_name(value)
+      value = value.to_s
+      return value if value.match?(/\A[A-Za-z0-9][A-Za-z0-9._-]*\z/)
+
+      raise ArgumentError, 'gem name must contain only letters, numbers, ., - or _'
+    end
+
+    def normalize_provider_name(value)
+      value = value.to_s.strip
+      return value if value.match?(/\A[A-Za-z][A-Za-z0-9_-]*\z/)
+
+      raise ArgumentError, 'provider name must start with a letter and contain only letters, numbers, - or _'
     end
 
     def classify(value)
@@ -296,7 +313,7 @@ module RubyLLM
     def dynamic_models_option?(options)
       return truthy?(options[:dynamic_models]) if options.key?(:dynamic_models)
 
-      mode == 'gem'
+      false
     end
   end
 end

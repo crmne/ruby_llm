@@ -8,6 +8,23 @@ require 'rubocop/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new(:rubocop)
 
+desc 'Refresh the <%= class_name %> model catalog'
+task :models do
+  require 'dotenv/load'
+  require_relative 'lib/ruby_llm/providers/<%= slug %>'
+
+  RubyLLM.configure do |config|
+    config.<%= api_key_config %> = ENV.fetch('<%= api_key_env %>', nil)
+    config.<%= api_base_config %> = ENV.fetch('<%= api_base_env %>', '<%= api_base %>')
+  end
+
+  provider = RubyLLM::Provider.resolve!(:<%= slug %>).new(RubyLLM.config)
+  models = provider.list_models
+  abort '<%= class_name %> returned no models' if models.empty?
+
+  RubyLLM::Models.new(models).save_to_json(File.expand_path('models.json', __dir__))
+end
+
 desc 'Run Flay duplicate detection'
 task :flay do
   sh 'bundle exec flay --mass 70 lib spec'
@@ -16,11 +33,6 @@ end
 desc 'Run ArchSpec architecture checks'
 task :archspec do
   sh 'bundle exec archspec check'
-end
-
-desc 'Run Appraisal bundle install'
-task :appraisal_install do
-  sh 'bundle exec appraisal install'
 end
 
 task default: %i[rubocop flay archspec spec]

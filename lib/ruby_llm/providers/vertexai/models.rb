@@ -5,6 +5,11 @@ module RubyLLM
     class VertexAI
       # Models methods for the Vertex AI integration
       module Models
+        def self.models_dev_alias(model_id, models_dev_by_key, _provider_model = nil)
+          source = models_dev_by_key["gemini:#{model_id}"]
+          Model.new(source.to_h.merge(provider: 'vertexai')) if source
+        end
+
         # Google models the publisher catalog omits in some regions while still
         # serving them there. Every id must be callable in at least one region;
         # ids that answer nowhere do not belong here.

@@ -11,7 +11,7 @@ module RubyLLM
 
         # Azure reports the same id once per region it is offered in, and keeps
         # returning models whose inference deprecation date has passed.
-        def parse_list_models_response(response, slug, _capabilities)
+        def parse_list_models_response(response, slug)
           Array(response.body['data'])
             .uniq { |model_data| model_data['id'] }
             .reject { |model_data| azure_inference_retired?(model_data) }

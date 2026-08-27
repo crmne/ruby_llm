@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require 'open3'
 require 'stringio'
 require 'ruby_llm/provider_scaffold'
 
 module RubyLLM
   # Command-line interface for public provider gem generation.
   class ProviderGeneratorCLI
+    ACTION_LABELS = { written: 'create', updated: 'update', skipped: 'skip' }.freeze
+
     class HelpRequested < StandardError; end
 
     def self.run(argv, out: $stdout, err: $stderr)
@@ -47,15 +50,12 @@ module RubyLLM
     end
 
     def parse_provider_options(mode:)
-      options = {
-        mode: mode,
-        destination: Dir.pwd
-      }
+      options = { mode: mode }
+      options[:destination] = Dir.pwd if mode == 'core'
       parser = OptionParser.new
       parser.banner = "Usage: #{command_for(mode)} [options]"
-      parser.on('--destination PATH', 'Directory to write into') { |value| options[:destination] = value }
+      parser.on('--destination PATH', 'Exact directory to write into') { |value| options[:destination] = value }
       parser.on('--api-base URL', 'Provider API base URL') { |value| options[:api_base] = value }
-      parser.on('--model ID', 'Example model id for generated specs') { |value| options[:model] = value }
       parser.on('--api-key-env NAME', 'Environment variable for the provider API key') do |value|
         options[:api_key_env] = value
       end
@@ -78,6 +78,7 @@ module RubyLLM
         parser.on('--github-owner OWNER', 'GitHub owner or organization for generated metadata') do |value|
           options[:github_owner] = value
         end
+        parser.on('--skip-bundle', 'Do not run bundle install') { options[:skip_bundle] = true }
       end
       parser.on('--force', 'Overwrite existing generated files') { options[:force] = true }
       parser.on('-h', '--help', 'Print help') { raise HelpRequested, parser.to_s }
@@ -94,11 +95,60 @@ module RubyLLM
 
     def generate_provider_gem
       name, options = parse_provider_options(mode: 'gem')
-      result = ProviderScaffold.new(name, **options).generate!
+      skip_bundle = options.delete(:skip_bundle)
+      scaffold = ProviderScaffold.new(name, **options)
+      destination_existed = Dir.exist?(scaffold.destination)
+      result = scaffold.generate!
 
-      @out.puts "Generated #{result.changed.size} files in #{File.expand_path(options[:destination])}"
-      @out.puts "Skipped #{result.skipped.size} existing files" if result.skipped.any?
+      report_file_actions(result, scaffold.destination, destination_existed:)
+      return 1 unless initialize_git_repository(scaffold.destination)
+      return 1 unless skip_bundle || install_dependencies(scaffold.destination)
+
       0
+    end
+
+    def report_file_actions(result, destination, destination_existed:)
+      report_action(destination_existed ? 'exist' : 'create', destination)
+      result.actions.each do |action, path|
+        report_action(ACTION_LABELS.fetch(action), path)
+      end
+    end
+
+    def report_action(action, path)
+      @out.puts format('%<action>12s  %<path>s', action:, path:)
+    end
+
+    def initialize_git_repository(destination)
+      command = git_init_command
+      report_action('run', command.join(' '))
+      stdout, stderr, status = Open3.capture3(*command, chdir: destination)
+      @out.print(stdout)
+      @err.print(stderr)
+      @err.puts 'Git repository initialization failed.' unless status.success?
+      status.success?
+    rescue Errno::ENOENT => e
+      @err.puts "Git repository initialization failed: #{e.message}"
+      false
+    end
+
+    def install_dependencies(destination)
+      command = %w[bundle install]
+      report_action('run', command.join(' '))
+      stdout, stderr, status = Open3.capture3(*command, chdir: destination)
+      @out.print(stdout)
+      @err.print(stderr)
+      @err.puts 'Bundle install failed.' unless status.success?
+      status.success?
+    rescue Errno::ENOENT => e
+      @err.puts "Bundle install failed: #{e.message}"
+      false
+    end
+
+    def git_init_command
+      _output, status = Open3.capture2e('git', 'config', '--get', 'init.defaultBranch')
+      status.success? ? %w[git init] : %w[git init -b main]
+    rescue Errno::ENOENT
+      %w[git init]
     end
 
     def help
@@ -107,7 +157,10 @@ module RubyLLM
           ruby_llm provider-gem NAME [options]
 
         Generates a standalone RubyLLM provider gem with provider code, specs,
-        CI, release workflow, Appraisal, ArchSpec, Flay, RuboCop, and VCR setup.
+        CI, release workflow, ArchSpec, Flay, RuboCop, and live VCR specs.
+        Creates ruby_llm-providers-NAME in the current directory by default;
+        --destination selects an exact directory. Initializes the target as a
+        Git repository and runs bundle install.
       HELP
     end
 

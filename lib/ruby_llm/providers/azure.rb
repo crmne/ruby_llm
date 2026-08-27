@@ -10,7 +10,7 @@ module RubyLLM
 
       protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
       protocol :responses, Azure::Responses
-      files Azure::Files
+      protocol :files, Protocols::Azure::Files
 
       def api_base
         @config.azure_api_base

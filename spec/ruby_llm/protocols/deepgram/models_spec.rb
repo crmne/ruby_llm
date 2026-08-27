@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Deepgram::Models do
-  let(:capabilities) { RubyLLM::Providers::Deepgram::Capabilities }
-
   # Shaped after the models list response at
   # https://developers.deepgram.com/reference/manage/models/list
   let(:response) do
@@ -51,34 +49,34 @@ RSpec.describe RubyLLM::Protocols::Deepgram::Models do
 
   describe '.parse_list_models_response' do
     it 'reads both the stt and tts groups' do
-      models = described_class.parse_list_models_response(response, 'deepgram', capabilities)
+      models = described_class.parse_list_models_response(response, 'deepgram')
 
       expect(models.map(&:id)).to eq(['nova-3', 'aura-2-zeus-en'])
     end
 
     it 'describes the listening models' do
-      model = described_class.parse_list_models_response(response, 'deepgram', capabilities).first
+      model = described_class.parse_list_models_response(response, 'deepgram').first
 
-      expect(model.name).to eq('Nova 3')
+      expect(model.name).to eq('nova-3')
       expect(model.provider).to eq('deepgram')
-      expect(model.family).to eq('nova')
+      expect(model.family).to eq('base')
       expect(model.modalities.to_h).to eq(input: ['audio'], output: ['text'])
       expect(model.capabilities).to eq(['transcription'])
       expect(model.metadata).to include(architecture: 'base', languages: %w[en en-us], version: '2021-11-10.1')
     end
 
     it 'takes the callable canonical name as the id and keeps the voice name' do
-      model = described_class.parse_list_models_response(response, 'deepgram', capabilities).last
+      model = described_class.parse_list_models_response(response, 'deepgram').last
 
       expect(model.id).to eq('aura-2-zeus-en')
-      expect(model.name).to eq('Aura 2 Zeus EN')
-      expect(model.family).to eq('aura')
+      expect(model.name).to eq('aura-2-zeus-en')
+      expect(model.family).to eq('aura-2')
       expect(model.modalities.to_h).to eq(input: ['text'], output: ['audio'])
       expect(model.metadata).to include(voice: 'zeus', accent: 'American', use_cases: ['IVR'])
     end
 
     it 'survives a response with neither group' do
-      expect(described_class.parse_list_models_response(Struct.new(:body).new({}), 'deepgram', capabilities)).to eq([])
+      expect(described_class.parse_list_models_response(Struct.new(:body).new({}), 'deepgram')).to eq([])
     end
   end
 end

@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::EmbeddingBatches do
   let(:connection) { instance_double(RubyLLM::Connection) }
   let(:batch_calls) { { posts: [], uploads: [] } }
   let(:protocol) do
-    RubyLLM::Providers::OpenAI.batch_protocols.fetch(:embeddings).allocate.tap do |instance|
+    RubyLLM::Providers::OpenAI.protocols.fetch(:embeddings).allocate.tap do |instance|
       instance.instance_variable_set(:@provider, provider)
       instance.instance_variable_set(:@connection, connection)
     end

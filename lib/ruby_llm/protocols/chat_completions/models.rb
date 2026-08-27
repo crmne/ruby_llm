@@ -11,7 +11,7 @@ module RubyLLM
           'models'
         end
 
-        def parse_list_models_response(response, slug, capabilities)
+        def parse_list_models_response(response, slug)
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
 
@@ -20,10 +20,6 @@ module RubyLLM
               name: model_id,
               provider: slug,
               created_at: model_data['created'] ? Time.at(model_data['created']) : nil,
-              context_window: capabilities&.context_window_for(model_id),
-              max_output_tokens: capabilities&.max_tokens_for(model_id),
-              capabilities: capabilities&.critical_capabilities_for(model_id) || [],
-              pricing: capabilities&.pricing_for(model_id) || {},
               metadata: model_metadata(model_data)
             )
           end

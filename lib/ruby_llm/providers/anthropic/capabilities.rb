@@ -3,19 +3,15 @@
 module RubyLLM
   module Providers
     class Anthropic
-      # Provider-level capability checks used outside the model registry.
+      # Feature capability gaps not represented in upstream model catalogs.
       module Capabilities
-        extend CapabilityTable
+        TOOL_CAPABILITIES = %w[tool_choice parallel_tool_calls].freeze
 
-        module_function
+        def self.augment(capabilities, **)
+          return capabilities unless capabilities.include?('function_calling')
 
-        CAPABILITIES = {
-          'citations' => ->(model_id) { !model_id.include?('claude-3-haiku') },
-          'tool_choice' => true,
-          'parallel_tool_calls' => true
-        }.freeze
-
-        def critical_capabilities_for(model_id) = supported_capabilities(model_id)
+          capabilities | TOOL_CAPABILITIES
+        end
       end
     end
   end

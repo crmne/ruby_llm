@@ -29,7 +29,7 @@ module RubyLLM
 
         def list_models
           CATALOG_URLS.flat_map do |url|
-            parse_list_models_response @connection.get(url), @provider.slug, @provider.capabilities
+            parse_list_models_response @connection.get(url), @provider.slug
           end.uniq(&:id)
         end
 
@@ -39,7 +39,7 @@ module RubyLLM
           'models'
         end
 
-        def parse_list_models_response(response, slug, _capabilities)
+        def parse_list_models_response(response, slug)
           Array(response.body['data']).map do |model_data| # rubocop:disable Metrics/BlockLength
             output_modalities = Array(model_data.dig('architecture', 'output_modalities'))
             modalities = {

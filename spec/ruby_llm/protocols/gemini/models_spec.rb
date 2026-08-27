@@ -24,34 +24,38 @@ RSpec.describe RubyLLM::Protocols::Gemini::Models do
       )
     end
 
-    it 'restores only critical fallback metadata for sparse models' do
-      model = parser.send(
-        :parse_list_models_response,
-        response,
-        'gemini',
-        RubyLLM::Providers::Gemini::Capabilities
-      ).first
+    it 'keeps only metadata the provider reports' do
+      model = parser.send(:parse_list_models_response, response, 'gemini').first
 
       expect(model.id).to eq('gemini-2.0-flash-001')
       expect(model.name).to eq('Gemini 2.0 Flash')
       expect(model.provider).to eq('gemini')
       expect(model.family).to be_nil
-      expect(model.context_window).to eq(1_048_576)
-      expect(model.max_output_tokens).to eq(8192)
-      expect(model.capabilities).to contain_exactly('function_calling', 'tool_choice', 'structured_output', 'vision')
-      expect(model.pricing.to_h).to eq(
-        text_tokens: {
-          standard: {
-            input_per_million: 0.1,
-            output_per_million: 0.4
-          }
-        }
-      )
+      expect(model.context_window).to be_nil
+      expect(model.max_output_tokens).to be_nil
+      expect(model.capabilities).to be_empty
+      expect(model.pricing.to_h).to be_empty
       expect(model.metadata).to eq(
         version: '001',
         description: 'Fast Gemini model',
         supported_generation_methods: ['generateContent']
       )
+    end
+
+    it 'maps the operations reported by the provider' do
+      operations = %w[embedContent asyncBatchEmbedContent createCachedContent bidiGenerateContent]
+      operation_response = instance_double(
+        response_class,
+        body: {
+          'models' => [{ 'name' => 'models/gemini-embedding-test', 'supportedGenerationMethods' => operations }]
+        }
+      )
+
+      model = parser.send(:parse_list_models_response, operation_response, 'gemini').first
+
+      expect(model.type).to eq('embedding')
+      expect(model.modalities.to_h).to eq(input: ['text'], output: ['embeddings'])
+      expect(model.capabilities).to contain_exactly('batch', 'caching', 'streaming', 'realtime')
     end
   end
 end

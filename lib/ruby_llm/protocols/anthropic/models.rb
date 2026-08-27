@@ -29,7 +29,7 @@ module RubyLLM
               req.params[:after_id] = after_id if after_id
             end
 
-            models.concat(parse_list_models_response(response, @provider.slug, @provider.capabilities))
+            models.concat(parse_list_models_response(response, @provider.slug))
             break unless response.body['has_more']
 
             after_id = response.body['last_id']
@@ -44,7 +44,7 @@ module RubyLLM
           'v1/models'
         end
 
-        def parse_list_models_response(response, slug, capabilities)
+        def parse_list_models_response(response, slug)
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
 
@@ -55,18 +55,17 @@ module RubyLLM
               created_at: Time.parse(model_data['created_at']),
               context_window: model_data['max_input_tokens'],
               max_output_tokens: model_data['max_tokens'],
-              capabilities: model_capabilities(model_data, capabilities),
+              capabilities: model_capabilities(model_data),
               metadata: {}
             )
           end
         end
 
-        def model_capabilities(model_data, capabilities)
-          fallback = Array(capabilities&.critical_capabilities_for(model_data['id']))
+        def model_capabilities(model_data)
           reported = model_data['capabilities']
-          return fallback unless reported.is_a?(Hash)
+          return [] unless reported.is_a?(Hash)
 
-          fallback | reported.filter_map do |name, detail|
+          reported.filter_map do |name, detail|
             REPORTED_CAPABILITIES[name] if detail.is_a?(Hash) && detail['supported']
           end
         end

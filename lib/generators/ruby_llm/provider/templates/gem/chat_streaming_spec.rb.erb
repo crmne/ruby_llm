@@ -2,24 +2,21 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
+RSpec.describe RubyLLM::Chat, :live do
   include_context 'with configured RubyLLM'
 
-  let(:model_id) { ENV.fetch('<%= env_prefix %>_MODEL', '<%= model %>') }
+  each_model(CHAT_MODELS) do |provider, model|
+    it "#{provider}/#{model} supports streaming responses" do
+      chunks = []
+      chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: true)
 
-  it 'streams chat chunks', :vcr do
-    skip 'Set RUN_PROVIDER_INTEGRATION=true to run live provider specs' unless ENV['RUN_PROVIDER_INTEGRATION'] == 'true'
+      response = chat.ask('Count from 1 to 3') { |chunk| chunks << chunk }
 
-    chunks = []
-    response = RubyLLM.chat(
-      model: model_id,
-      provider: :<%= slug %>,
-      assume_model_exists: true
-    ).ask('Reply with only the word ok.') do |chunk|
-      chunks << chunk.content
+      expect(chunks).not_to be_empty
+      expect(chunks.first).to be_a(RubyLLM::Chunk)
+      expect(response.raw.status).to eq(200)
+      expect(response.raw.headers).not_to be_empty
+      expect(response.raw.env.request_body).not_to be_empty
     end
-
-    expect(response.content.to_s.downcase).to include('ok')
-    expect(chunks.join.downcase).to include('ok')
   end
 end

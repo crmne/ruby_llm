@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::ChatCompletions::Batches do
   end
   let(:provider) { instance_double(RubyLLM::Providers::VertexAI, slug: 'vertexai') }
   let(:protocol) do
-    RubyLLM::Providers::VertexAI.batch_protocols.fetch(:chat_completions).allocate.tap do |instance|
+    RubyLLM::Providers::VertexAI.protocols.fetch(:chat_completions).allocate.tap do |instance|
       instance.instance_variable_set(:@config, config)
       instance.instance_variable_set(:@provider, provider)
     end

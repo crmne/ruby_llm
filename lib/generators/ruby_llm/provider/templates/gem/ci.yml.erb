@@ -30,22 +30,3 @@ jobs:
 
       - run: bundle exec rake rubocop flay spec
         if: matrix.ruby-version == '3.1'
-
-  appraisal:
-    name: ${{ matrix.appraisal }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        appraisal: ["ruby-llm-latest", "ruby-llm-main"]
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.4"
-          bundler-cache: true
-
-      - run: bundle exec appraisal generate
-      - run: bundle exec appraisal ${{ matrix.appraisal }} bundle install
-      - run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec rake

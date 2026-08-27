@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::Models do
         )
 
         protocol = RubyLLM::Providers::Ollama::ChatCompletions.new(ollama)
-        models = protocol.parse_list_models_response(response, 'ollama', nil)
+        models = protocol.parse_list_models_response(response, 'ollama')
         expect(models).to be_an(Array)
         expect(models.first).to be_a(RubyLLM::Model)
         expect(models.first.id).to eq('llama3:latest')

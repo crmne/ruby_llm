@@ -249,7 +249,9 @@ RSpec.describe RubyLLM::Models do
       )
 
       expect(data[:modalities]).to eq(input: %w[text image], output: ['text'])
-      expect(data[:capabilities]).to match_array(%w[function_calling reasoning structured_output vision])
+      expect(data[:capabilities]).to match_array(
+        %w[function_calling tool_choice parallel_tool_calls reasoning structured_output vision]
+      )
       expect(data).not_to have_key(:reasoning_options)
       expect(data[:pricing]).to eq(
         text_tokens: {
@@ -306,6 +308,16 @@ RSpec.describe RubyLLM::Models do
       )
 
       expect(data[:capabilities]).not_to include('transcription')
+    end
+
+    it 'recognizes explicitly named OpenAI transcription models' do
+      data = described_class.models_dev_model_attributes(
+        model_data.merge(id: 'gpt-4o-transcribe', modalities: { input: ['audio'], output: ['text'] }),
+        'openai',
+        'openai'
+      )
+
+      expect(data[:capabilities]).to include('transcription')
     end
 
     it 'does not mark multimodal embedding models as transcription models' do

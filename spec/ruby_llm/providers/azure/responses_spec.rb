@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Providers::Azure::Responses do
       model = instance_double(RubyLLM::Model, id: 'grok-4-1-fast-non-reasoning')
 
       expect(RubyLLM::Providers::Azure.default_protocol).to eq(:chat_completions)
-      expect(provider.send(:resolve_protocol, nil, model)).to eq(RubyLLM::Providers::Azure::ChatCompletions)
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(provider.protocols[:chat_completions])
     end
 
     it 'routes gpt-5.4+ deployment names to Responses' do
@@ -79,9 +79,7 @@ RSpec.describe RubyLLM::Providers::Azure::Responses do
     it 'honors an explicit protocol over the routing' do
       model = instance_double(RubyLLM::Model, id: 'gpt-5.6-terra')
 
-      expect(provider.send(:resolve_protocol, :chat_completions, model)).to eq(
-        RubyLLM::Providers::Azure::ChatCompletions
-      )
+      expect(provider.send(:resolve_protocol, :chat_completions, model)).to eq(provider.protocols[:chat_completions])
     end
 
     it 'honors the azure_protocol configuration option' do

@@ -14,12 +14,12 @@ module RubyLLM
           'v1/models'
         end
 
-        def parse_list_models_response(response, slug, capabilities)
+        def parse_list_models_response(response, slug)
           body = response.body || {}
 
           %w[stt tts].flat_map do |group|
             Array(body[group]).group_by { |data| data['canonical_name'] || data['name'] }
-                              .map { |_, rows| build_model(merge_language_rows(rows), slug, capabilities) }
+                              .map { |_, rows| build_model(merge_language_rows(rows), slug, group) }
           end
         end
 
@@ -37,16 +37,22 @@ module RubyLLM
           merged
         end
 
-        def build_model(data, slug, capabilities)
+        def build_model(data, slug, group)
           model_id = data['canonical_name'] || data['name']
+          transcription = group == 'stt' && !model_id.start_with?('flux-')
+          modalities = if group == 'stt'
+                         { input: ['audio'], output: ['text'] }
+                       else
+                         { input: ['text'], output: ['audio'] }
+                       end
 
           Model.new(
             id: model_id,
-            name: capabilities.format_display_name(model_id),
+            name: model_id,
             provider: slug,
-            family: capabilities.model_family(model_id),
-            modalities: capabilities.modalities_for(model_id),
-            capabilities: capabilities.capabilities_for(model_id),
+            family: data['architecture'],
+            modalities: modalities,
+            capabilities: transcription ? ['transcription'] : [],
             pricing: {},
             metadata: build_metadata(data)
           )

@@ -24,6 +24,21 @@ module RubyLLM
           'v1/models'
         end
 
+        def models_dev_alias(model_id, models_dev_by_key, _provider_model = nil)
+          normalized_id = model_id.sub(/^[a-z]{2}\./, '')
+          context_override = nil
+          normalized_id = normalized_id.gsub(/:(\d+)k\b/) do
+            context_override = Regexp.last_match(1).to_i * 1000
+            ''
+          end
+          source = models_dev_by_key["bedrock:#{normalized_id}"]
+          return unless source
+
+          data = source.to_h.merge(id: model_id)
+          data[:context_window] = context_override if context_override
+          Model.new(data)
+        end
+
         # The mantle catalog reports ids and nothing else, so entries carry
         # only what the endpoint states. models.dev fills in limits and
         # pricing for the ids it knows during a registry refresh.
@@ -63,7 +78,7 @@ module RubyLLM
           Time.at(created).utc if created.is_a?(Numeric)
         end
 
-        def parse_list_models_response(response, slug, _capabilities, profile_ids: [])
+        def parse_list_models_response(response, slug, profile_ids: [])
           Array(response.body['modelSummaries']).map do |model_data|
             create_model_info(model_data, slug, profile_ids:)
           end

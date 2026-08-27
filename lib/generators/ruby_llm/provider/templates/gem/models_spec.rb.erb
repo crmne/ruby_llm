@@ -6,13 +6,8 @@ RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
 
 <% if dynamic_models? -%>
-  it 'resolves provider model ids that are missing from the registry' do
-    model, provider = described_class.resolve('<%= model %>', provider: :<%= slug %>)
-
-    expect(model.id).to eq('<%= model %>')
-    expect(model.provider).to eq('<%= slug %>')
-    expect(model.metadata).to include(warning: 'Assuming model exists, capabilities may not be accurate')
-    expect(provider).to be_a(RubyLLM::Providers::<%= class_name %>)
+  it 'allows provider model ids that are missing from the registry' do
+    expect(RubyLLM::Providers::<%= class_name %>.assume_models_exist?).to be(true)
   end
 <% else -%>
   it 'expects generated providers to add registry metadata before use' do

@@ -4,7 +4,7 @@ module RubyLLM
   module Protocols
     class Gemini
       # Gemini Files API.
-      class Files < UploadedFile::Protocol
+      class Files < Protocols::Files
         PROCESSING_POLL_INTERVAL = 2
         PROCESSING_TIMEOUT = 600
 

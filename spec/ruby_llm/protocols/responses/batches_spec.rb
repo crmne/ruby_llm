@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
   let(:connection) { instance_double(RubyLLM::Connection) }
   let(:batch_calls) { { posts: [], uploads: [] } }
   let(:protocol) do
-    RubyLLM::Providers::OpenAI.batch_protocols.fetch(:responses).allocate.tap do |instance|
+    RubyLLM::Providers::OpenAI.protocols.fetch(:responses).allocate.tap do |instance|
       instance.instance_variable_set(:@provider, provider)
       instance.instance_variable_set(:@connection, connection)
     end

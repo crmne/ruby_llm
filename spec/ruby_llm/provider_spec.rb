@@ -207,6 +207,24 @@ RSpec.describe RubyLLM::Provider do
         end
       end
     end
+
+    it 'registers a provider gem model catalog' do
+      provider_key = :openai
+      provider_class = described_class.resolve!(provider_key)
+      original_providers = described_class.providers.dup
+      original_files = described_class.model_registry_files.dup
+
+      begin
+        described_class.register(provider_key, provider_class, models: '/tmp/openai-models.json')
+
+        expect(described_class.model_registry_files).to include(
+          provider_key => '/tmp/openai-models.json'
+        )
+      ensure
+        described_class.providers.replace(original_providers)
+        described_class.model_registry_files.replace(original_files)
+      end
+    end
   end
 
   describe '.configured?' do
@@ -300,13 +318,13 @@ RSpec.describe RubyLLM::Provider do
     end
 
     it 'routes through protocol_for by default' do
-      expect(provider.send(:resolve_protocol, nil, model)).to eq(RubyLLM::Protocols::Responses)
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(provider.protocols[:responses])
     end
 
     it 'routes chat-completions-only models away from the default' do
       audio = instance_double(RubyLLM::Model, id: 'gpt-audio-mini')
 
-      expect(provider.send(:resolve_protocol, nil, audio)).to eq(RubyLLM::Protocols::ChatCompletions)
+      expect(provider.send(:resolve_protocol, nil, audio)).to eq(provider.protocols[:chat_completions])
     end
 
     it 'prefers the configured protocol over routing' do
@@ -315,7 +333,7 @@ RSpec.describe RubyLLM::Provider do
 
       provider = RubyLLM::Providers::OpenAI.new(config)
 
-      expect(provider.send(:resolve_protocol, nil, model)).to eq(RubyLLM::Protocols::ChatCompletions)
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(provider.protocols[:chat_completions])
     end
 
     it 'prefers an explicit protocol over the configured one' do
@@ -324,7 +342,7 @@ RSpec.describe RubyLLM::Provider do
 
       provider = RubyLLM::Providers::OpenAI.new(config)
 
-      expect(provider.send(:resolve_protocol, :responses, model)).to eq(RubyLLM::Protocols::Responses)
+      expect(provider.send(:resolve_protocol, :responses, model)).to eq(provider.protocols[:responses])
     end
 
     it 'lists models through the declared protocol whatever the chat protocol is' do
@@ -333,8 +351,8 @@ RSpec.describe RubyLLM::Provider do
 
       provider = RubyLLM::Providers::VertexAI.new(config)
 
-      expect(provider.send(:default_protocol)).to eq(RubyLLM::Providers::VertexAI::Anthropic)
-      expect(provider.send(:listing_protocol)).to eq(RubyLLM::Providers::VertexAI::Gemini)
+      expect(provider.send(:default_protocol)).to eq(provider.protocols[:anthropic])
+      expect(provider.send(:listing_protocol)).to eq(provider.protocols[:gemini])
     end
 
     it 'routes one-shot APIs through protocol_for' do
@@ -427,12 +445,14 @@ RSpec.describe RubyLLM::Provider do
     end
   end
 
-  describe 'file protocol resolution' do
+  describe 'files protocol registration' do
     it 'exposes provider-managed files only where implemented' do
       file_providers = %i[anthropic azure bedrock gemini mistral openai openrouter vertexai xai]
 
       described_class.providers.each do |slug, provider_class|
-        expect(provider_class.new(config_for(slug)).files?).to eq(file_providers.include?(slug))
+        provider = provider_class.new(config_for(slug))
+        expect(provider.files?).to eq(file_providers.include?(slug))
+        expect(provider.protocols[:files]).to be < RubyLLM::Protocols::Files if provider.files?
       end
     end
   end
@@ -455,7 +475,7 @@ RSpec.describe RubyLLM::Provider do
       expect(bare_provider.headers).to eq({})
     end
 
-    it 'reports no capabilities module and no configuration requirements' do
+    it 'reports no capability augmenter and no configuration requirements' do
       expect(bare_provider.capabilities).to be_nil
       expect(bare_provider.configuration_requirements).to eq([])
       expect(described_class.configuration_options).to eq([])

@@ -6,8 +6,9 @@ module RubyLLM
     class OpenAI < Provider
       protocol :responses, Protocols::Responses, batches: Protocols::Responses::Batches
       protocol :chat_completions, Protocols::ChatCompletions, batches: Protocols::ChatCompletions::Batches
-      batch_protocol :embeddings, Protocols::ChatCompletions::EmbeddingBatches, protocol: :chat_completions
-      files Protocols::OpenAI::Files
+      protocol :embeddings, Protocols::ChatCompletions,
+               batches: Protocols::ChatCompletions::EmbeddingBatches
+      protocol :files, Protocols::OpenAI::Files
 
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
       RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze
@@ -52,6 +53,10 @@ module RubyLLM
       class << self
         def capabilities
           OpenAI::Capabilities
+        end
+
+        def models_dev_alias(...)
+          OpenAI::Models.models_dev_alias(...)
         end
 
         def configuration_options

@@ -27,10 +27,6 @@ module RubyLLM
       end
 
       class << self
-        def capabilities
-          Deepgram::Capabilities
-        end
-
         def configuration_options
           %i[deepgram_api_key deepgram_api_base]
         end

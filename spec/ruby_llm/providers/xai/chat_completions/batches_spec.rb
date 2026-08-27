@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
-  let(:protocol) { RubyLLM::Providers::XAI.batch_protocols.fetch(:chat_completions).allocate }
+  let(:protocol) { RubyLLM::Providers::XAI.protocols.fetch(:chat_completions).allocate }
 
   describe '#xai_batch_request' do
     it 'wraps chat completion payloads as chat_get_completion requests' do

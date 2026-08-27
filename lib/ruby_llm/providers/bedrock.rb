@@ -15,10 +15,14 @@ module RubyLLM
       protocol :titan_multimodal_embeddings, Protocols::InvokeModel::TitanMultimodalEmbeddings
       protocol :cohere_embeddings, Protocols::InvokeModel::CohereEmbeddings
       protocol :nova_embeddings, Protocols::InvokeModel::NovaEmbeddings
-      files Bedrock::Files
+      protocol :files, Protocols::Bedrock::Files
 
       def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
         Models.resolve_registry_id(model_id, models, config)
+      end
+
+      def self.models_dev_alias(...)
+        Models.models_dev_alias(...)
       end
 
       def protocol_for(model, operation: nil, **)
@@ -136,8 +140,7 @@ module RubyLLM
       end
 
       def list_converse_models
-        parse_list_models_response(signed_get(models_api_base, models_url), slug, capabilities,
-                                   profile_ids: inference_profile_ids)
+        parse_list_models_response(signed_get(models_api_base, models_url), slug, profile_ids: inference_profile_ids)
       end
 
       def list_mantle_models

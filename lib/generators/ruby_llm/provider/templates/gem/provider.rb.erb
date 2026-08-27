@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
+require 'ruby_llm'
+
 module RubyLLM
   module Providers
     # <%= provider_description %>
     class <%= class_name %> < Provider
+      # <%= class_name %>'s <%= protocol_class_name %> protocol.
       class <%= protocol_class_name %> < <%= protocol_superclass %>
+        def models_url
+          'models'
+        end
       end
 
       protocol :<%= protocol_name %>, <%= protocol_class_name %>
@@ -18,10 +24,6 @@ module RubyLLM
       end
 
       class << self
-        def capabilities
-          <%= class_name %>::Capabilities
-        end
-
         def configuration_options
           %i[<%= api_key_config %> <%= api_base_config %>]
         end
@@ -34,8 +36,17 @@ module RubyLLM
         def assume_models_exist?
           true
         end
+<% else -%>
+
+        # Use this only when the provider has no model-listing endpoint.
+        # def assume_models_exist?
+        #   true
+        # end
 <% end -%>
       end
     end
   end
 end
+
+RubyLLM::Provider.register :<%= slug %>, RubyLLM::Providers::<%= class_name %>,
+                           models: File.expand_path('../../../models.json', __dir__)

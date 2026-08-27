@@ -2,8 +2,6 @@
 
 source 'lib/**/*.rb'
 
-component :entrypoint, in: 'lib/<%= require_path %>.rb'
-component :version, in: 'lib/<%= require_path %>/version.rb'
 component :provider,
           in: %w[
             lib/ruby_llm/providers/<%= slug %>.rb

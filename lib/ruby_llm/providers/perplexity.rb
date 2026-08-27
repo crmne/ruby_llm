@@ -41,10 +41,6 @@ module RubyLLM
       end
 
       class << self
-        def capabilities
-          Perplexity::Capabilities
-        end
-
         def configuration_options
           %i[perplexity_api_key perplexity_api_base]
         end

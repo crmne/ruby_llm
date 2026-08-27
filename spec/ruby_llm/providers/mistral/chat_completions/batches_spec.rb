@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
-  let(:protocol) { RubyLLM::Providers::Mistral.batch_protocols.fetch(:chat_completions).allocate }
+  let(:protocol) { RubyLLM::Providers::Mistral.protocols.fetch(:chat_completions).allocate }
 
   describe '#mistral_batch_request' do
     it 'moves the model to the batch job and leaves the chat body model-free' do

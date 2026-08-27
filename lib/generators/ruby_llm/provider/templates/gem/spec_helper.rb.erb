@@ -2,20 +2,25 @@
 
 require 'bundler/setup'
 require 'dotenv/load'
-require 'simplecov'
+require 'fileutils'
+
 require 'vcr'
 require '<%= require_path %>'
 require 'webmock/rspec'
 
 Dir[File.expand_path('support/**/*.rb', __dir__)].each { |file| require file }
 
-SimpleCov.start do
-  add_filter '/spec/'
-end
-
 RSpec.configure do |config|
   config.disable_monkey_patching!
   config.expect_with(:rspec) { |expectations| expectations.syntax = :expect }
   config.order = :random
   Kernel.srand config.seed
+
+  config.around(:each, :live) do |example|
+    cassette_name = example.full_description.downcase.gsub(/[^a-z0-9]+/, '_').delete_prefix('_').delete_suffix('_')
+    cassette_path = File.join(VCR.configuration.cassette_library_dir, "#{cassette_name}.yml")
+
+    VCR.use_cassette(cassette_name) { example.run }
+    FileUtils.rm_f(cassette_path) if example.exception
+  end
 end

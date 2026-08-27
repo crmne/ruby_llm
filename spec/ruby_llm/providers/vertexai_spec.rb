@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     it 'routes claude models to the Anthropic protocol' do
       model = instance_double(RubyLLM::Model, id: 'claude-haiku-4-5')
 
-      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Anthropic)
+      expect(provider.protocol_for(model)).to eq(provider.protocols[:anthropic])
     end
 
     it 'routes mistral models to the Mistral protocol' do
@@ -98,14 +98,14 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       %w[meta/llama-3.3-70b-instruct-maas google/gemma-4-26b-a4b-it-maas].each do |id|
         model = instance_double(RubyLLM::Model, id: id)
 
-        expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::ChatCompletions)
+        expect(provider.protocol_for(model)).to eq(provider.protocols[:chat_completions])
       end
     end
 
     it 'routes google models to the Gemini protocol' do
       model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash')
 
-      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Gemini)
+      expect(provider.protocol_for(model)).to eq(provider.protocols[:gemini])
     end
   end
 
@@ -369,11 +369,11 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     end
 
     it 'routes publisher-prefixed MaaS ids through the OpenAI-compatible endpoint' do
-      expect(protocol_for('meta/llama-4-maverick-maas')).to eq(described_class::ChatCompletions)
+      expect(protocol_for('meta/llama-4-maverick-maas')).to eq(provider.protocols[:chat_completions])
     end
 
     it 'routes Claude through the Anthropic dialect' do
-      expect(protocol_for('claude-haiku-4-5')).to eq(described_class::Anthropic)
+      expect(protocol_for('claude-haiku-4-5')).to eq(provider.protocols[:anthropic])
     end
 
     it 'routes Mistral through the Mistral dialect' do
@@ -381,7 +381,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     end
 
     it 'routes everything else through Gemini' do
-      expect(protocol_for('gemini-2.5-flash')).to eq(described_class::Gemini)
+      expect(protocol_for('gemini-2.5-flash')).to eq(provider.protocols[:gemini])
     end
   end
 

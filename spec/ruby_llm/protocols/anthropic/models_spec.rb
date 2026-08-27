@@ -23,12 +23,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Models do
     end
 
     it 'returns minimal provider metadata for models covered by models.dev' do
-      model = parser.send(
-        :parse_list_models_response,
-        response,
-        'anthropic',
-        RubyLLM::Providers::Anthropic::Capabilities
-      ).first
+      model = parser.send(:parse_list_models_response, response, 'anthropic').first
 
       expect(model.id).to eq('claude-sonnet-4-5')
       expect(model.name).to eq('Claude Sonnet 4.5')
@@ -37,7 +32,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Models do
       expect(model.family).to be_nil
       expect(model.context_window).to be_nil
       expect(model.max_output_tokens).to be_nil
-      expect(model.capabilities).to eq(%w[citations tool_choice parallel_tool_calls])
+      expect(model.capabilities).to eq([])
       expect(model.pricing.to_h).to eq({})
     end
 
@@ -67,27 +62,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Models do
         }
       )
 
-      model = parser.send(
-        :parse_list_models_response,
-        response,
-        'anthropic',
-        RubyLLM::Providers::Anthropic::Capabilities
-      ).first
+      model = parser.send(:parse_list_models_response, response, 'anthropic').first
 
       expect(model.context_window).to eq(1_000_000)
       expect(model.max_output_tokens).to eq(128_000)
       expect(model.capabilities).to contain_exactly(
-        'citations', 'tool_choice', 'parallel_tool_calls',
-        'batch', 'vision', 'structured_output', 'reasoning'
+        'citations', 'batch', 'vision', 'structured_output', 'reasoning'
       )
       expect(model.capabilities - RubyLLM::ModelSchema::CAPABILITIES).to be_empty
-    end
-
-    it 'parses providers that have no capability table' do
-      model = parser.send(:parse_list_models_response, response, 'vertexai', nil).first
-
-      expect(model.id).to eq('claude-sonnet-4-5')
-      expect(model.capabilities).to eq([])
     end
   end
 end

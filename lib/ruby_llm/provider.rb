@@ -221,11 +221,11 @@ module RubyLLM
     end
 
     def batch_protocol_name(protocol) # :nodoc:
-      self.class.batch_protocols.key(protocol)&.to_s
+      protocols.key(protocol)&.to_s
     end
 
     def files? # :nodoc:
-      !!file_protocol
+      protocols.key?(:files)
     end
 
     def list_models # :nodoc:
@@ -305,7 +305,7 @@ module RubyLLM
       options = { filename:, purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }
                 .compact
 
-      file_protocol.new(self).upload(file, **options)
+      protocols.fetch(:files).new(self).upload(file, **options)
     end
 
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil) # :nodoc:
@@ -329,17 +329,17 @@ module RubyLLM
 
     def find_file(file_id) # :nodoc:
       ensure_files_supported!
-      file_protocol.new(self).find(file_id)
+      protocols.fetch(:files).new(self).find(file_id)
     end
 
     def download_file(file_id) # :nodoc:
       ensure_files_supported!
-      file_protocol.new(self).download(file_id)
+      protocols.fetch(:files).new(self).download(file_id)
     end
 
     def list_file_uris(uri) # :nodoc:
       ensure_files_supported!
-      file_protocol.new(self).list_uris(uri)
+      protocols.fetch(:files).new(self).list_uris(uri)
     end
 
     def configured? # :nodoc:
@@ -370,7 +370,7 @@ module RubyLLM
     end
 
     class << self
-      attr_reader :default_protocol, :file_protocol # :nodoc:
+      attr_reader :default_protocol # :nodoc:
       attr_writer :slug # :nodoc:
 
       # Returns the provider slug, a short lowercase string that
@@ -386,11 +386,13 @@ module RubyLLM
         to_s.split('::').last
       end
 
-      # Returns a module that reports model capabilities (context
-      # window, pricing, feature support) for the provider's model ids.
-      # Used to fill in details the provider's model list API does not
-      # return. The base implementation returns +nil+.
+      # Returns the provider's narrow model capability augmenter, or +nil+
+      # when models.dev and the provider listing are sufficient.
       def capabilities
+        nil
+      end
+
+      def models_dev_alias(_model_id, _models_dev_by_key, _provider_model = nil) # :nodoc:
         nil
       end
 
@@ -440,50 +442,35 @@ module RubyLLM
       end
 
       # Registers +protocol_class+ under +name+. The first registered
-      # protocol becomes the provider's default. Pass +batches:+ with a
-      # module of batch operations to enable the batch API for that
-      # protocol.
+      # protocol becomes the provider's default. Pass +batches:+ to compose
+      # batch operations into the registered protocol.
       #
       #   protocol :chat_completions, ChatCompletions
       #   protocol :responses, Protocols::Responses, batches: Protocols::Responses::Batches
       #
       def protocol(name, protocol_class, batches: nil)
         @default_protocol = name.to_sym if protocols.empty?
-        protocols[name.to_sym] = protocol_class
-        batch_protocol(name, batches) if batches
-      end
-
-      # Declares the protocol class that handles file uploads for the
-      # provider.
-      #
-      #   files Protocols::OpenAI::Files
-      #
-      def files(protocol_class)
-        @file_protocol = protocol_class
+        protocols[name.to_sym] = batches ? Class.new(protocol_class) { include batches } : protocol_class
       end
 
       def protocols # :nodoc:
         @protocols ||= {}
       end
 
-      def batch_protocol(name, batches, protocol: name) # :nodoc:
-        batch_protocols[name.to_sym] = Class.new(protocols.fetch(protocol.to_sym)) { include batches }
-      end
-
-      def batch_protocols # :nodoc:
-        @batch_protocols ||= {}
-      end
-
       # Registers +provider_class+ under the slug +name+, making it
       # available to RubyLLM.chat and the other top-level helpers.
       # Stamps the class's slug, adds it to ::providers, and defines a
-      # Configuration accessor for each of its configuration options.
+      # Configuration accessor for each of its configuration options. A
+      # provider gem may pass the path to its bundled model catalog.
       #
       #   RubyLLM::Provider.register :acme, RubyLLM::Providers::Acme
+      #   RubyLLM::Provider.register :acme, RubyLLM::Providers::Acme,
+      #                              models: File.expand_path('../../../models.json', __dir__)
       #
-      def register(name, provider_class)
+      def register(name, provider_class, models: nil)
         provider_class.slug = name.to_s
         providers[name.to_sym] = provider_class
+        models ? model_registry_files[name.to_sym] = models : model_registry_files.delete(name.to_sym)
         RubyLLM::Configuration.register_provider_options(provider_class.configuration_options + [:"#{name}_protocol"])
       end
 
@@ -507,6 +494,10 @@ module RubyLLM
       # symbols to provider classes.
       def providers
         @providers ||= {}
+      end
+
+      def model_registry_files # :nodoc:
+        @model_registry_files ||= {}
       end
 
       def local_providers # :nodoc:
@@ -537,7 +528,7 @@ module RubyLLM
     end
 
     def ensure_files_supported!
-      return if file_protocol
+      return if files?
 
       raise Error, "#{slug} doesn't support file uploads"
     end
@@ -558,7 +549,7 @@ module RubyLLM
     end
 
     def batch_protocol
-      batch_protocol_for_name(self.class.default_protocol) || fetch_protocol(self.class.default_protocol)
+      fetch_protocol(self.class.default_protocol)
     end
 
     def batch_protocol_for(_requests)
@@ -566,17 +557,14 @@ module RubyLLM
     end
 
     def batch_protocol_for_name(name)
-      self.class.batch_protocols[name.to_sym]
+      protocol = protocols[name.to_sym]
+      protocol if protocol&.public_method_defined?(:create_batch)
     end
 
     def resolve_batch_protocol(protocol)
       return protocol if protocol.is_a?(Module)
 
       protocol && batch_protocol_for_name(protocol)
-    end
-
-    def file_protocol
-      self.class.file_protocol
     end
 
     def configured_protocol

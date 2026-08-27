@@ -13,7 +13,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
   end
   let(:provider) { instance_double(RubyLLM::Providers::Bedrock) }
   let(:protocol) do
-    RubyLLM::Providers::Bedrock.batch_protocols.fetch(:converse).allocate.tap do |instance|
+    RubyLLM::Providers::Bedrock.protocols.fetch(:converse).allocate.tap do |instance|
       instance.instance_variable_set(:@config, config)
       instance.instance_variable_set(:@provider, provider)
     end

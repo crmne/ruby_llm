@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-require 'time'
-
 module RubyLLM
   module Providers
     class Mistral
       # Model information for Mistral
       module Models
         # Mistral's capability flags, named as ModelSchema::CAPABILITIES names.
-        # Flags the listing leaves out fall back to the Capabilities table.
         CAPABILITY_FLAGS = {
           'function_calling' => 'function_calling',
           'reasoning' => 'reasoning',
@@ -27,44 +24,48 @@ module RubyLLM
           'models'
         end
 
-        def parse_list_models_response(response, slug, capabilities)
+        def models_dev_alias(model_id, models_dev_by_key, provider_model = nil)
+          source = Array(provider_model&.metadata&.[](:aliases)).filter_map do |alias_id|
+            models_dev_by_key["mistral:#{alias_id}"]
+          end.first
+          Model.new(source.to_h.merge(id: model_id)) if source
+        end
+
+        def parse_list_models_response(response, slug)
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
             flags = model_data['capabilities'] || {}
 
             Model.new(
               id: model_id,
-              name: capabilities&.format_display_name(model_id) || model_id,
+              name: model_id,
               provider: slug,
-              family: capabilities&.model_family(model_id),
-              created_at: release_date_from(capabilities, model_id),
-              context_window: model_data['max_context_length'] || capabilities&.context_window_for(model_id),
-              max_output_tokens: capabilities&.max_tokens_for(model_id),
-              modalities: modalities_from(flags, capabilities&.modalities_for(model_id)),
-              capabilities: capabilities_from(flags, capabilities&.capabilities_for(model_id)),
-              pricing: capabilities&.pricing_for(model_id) || {},
+              context_window: model_data['max_context_length'],
+              modalities: modalities_from(flags, model_data),
+              capabilities: capabilities_from(flags),
               metadata: metadata_from(model_data)
             )
           end
         end
 
-        def release_date_from(capabilities, model_id)
-          release_date = capabilities&.release_date_for(model_id)
-          Time.parse(release_date) if release_date
+        def capabilities_from(flags)
+          CAPABILITY_FLAGS.filter_map { |flag, capability| capability if flags[flag] }
         end
 
-        def capabilities_from(flags, fallback)
-          reported = CAPABILITY_FLAGS.select { |flag, _| flags.key?(flag) }
-          enabled, disabled = reported.partition { |flag, _| flags[flag] }
+        def modalities_from(flags, model_data)
+          return { input: ['text'], output: ['embeddings'] } if embedding_model?(model_data)
+          return { input: ['audio'], output: ['text'] } if flags['audio_transcription']
 
-          (Array(fallback) - disabled.map(&:last)) | enabled.map(&:last)
+          input = ['text']
+          input << 'image' if flags['vision'] || flags['ocr']
+          output = ['text']
+          output << 'audio' if flags['audio_speech']
+          { input: input, output: output }
         end
 
-        def modalities_from(flags, fallback)
-          modalities = fallback || { input: ['text'], output: ['text'] }
-          return modalities unless flags['vision'] || flags['ocr']
-
-          modalities.merge(input: modalities[:input] | ['image'])
+        def embedding_model?(model_data)
+          values = [model_data['id'], model_data['description'], *Array(model_data['aliases'])]
+          values.any? { |value| value.to_s.match?(/(?:\A|[-_ ])embed(?:ding)?(?:\z|[-_ ])/i) }
         end
 
         def metadata_from(model_data)

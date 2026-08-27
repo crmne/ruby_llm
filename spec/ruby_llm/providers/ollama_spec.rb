@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Providers::Ollama do
 
     it 'derives capabilities and modalities from what /api/show reports' do
       models = protocol.parse_list_models_response(
-        response_for('llava:7b', 'qwen3:8b'), 'ollama', nil,
+        response_for('llava:7b', 'qwen3:8b'), 'ollama',
         details: { 'llava:7b' => %w[completion vision], 'qwen3:8b' => %w[completion tools thinking] }
       )
 
@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Providers::Ollama do
     end
 
     it 'claims nothing beyond the server defaults when /api/show says nothing' do
-      model = protocol.parse_list_models_response(response_for('mystery:latest'), 'ollama', nil).first
+      model = protocol.parse_list_models_response(response_for('mystery:latest'), 'ollama').first
 
       expect(model.capabilities).to eq(%w[streaming structured_output])
       expect(model.modalities.to_h).to eq(input: %w[text], output: %w[text])
@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::Providers::Ollama do
 
     it 'reads embedding models as embedding models' do
       models = protocol.parse_list_models_response(
-        response_for('nomic-embed-text'), 'ollama', nil, details: { 'nomic-embed-text' => %w[embedding] }
+        response_for('nomic-embed-text'), 'ollama', details: { 'nomic-embed-text' => %w[embedding] }
       )
 
       expect(models.first.capabilities).to eq([])

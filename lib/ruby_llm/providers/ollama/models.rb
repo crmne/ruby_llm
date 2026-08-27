@@ -22,10 +22,10 @@ module RubyLLM
 
         def list_models
           response = @connection.get models_url
-          parse_list_models_response(response, @provider.slug, @provider.capabilities, details: show_models(response))
+          parse_list_models_response(response, @provider.slug, details: show_models(response))
         end
 
-        def parse_list_models_response(response, slug, _capabilities, details: {})
+        def parse_list_models_response(response, slug, details: {})
           Array(response.body['data']).map do |model|
             reported = Array(details[model['id']])
             Model.new(

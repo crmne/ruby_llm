@@ -48,8 +48,12 @@ overcommit --install   # required: installs the git hooks that gate every commit
 `Archspec.rb` at the repo root is the architecture documentation, and `archspec check` fails the build when code violates it. Read it before moving anything across layers. The short version:
 
 - Domain objects (`Chat`, `Message`, `Tool`, `Agent`, ...) never reference `RubyLLM::Providers` or `RubyLLM::Protocols`. They delegate through the `Provider` contract.
-- Protocols (`lib/ruby_llm/protocols`) are wire formats: Chat Completions, Responses, Anthropic, Gemini, Converse, Cohere. Serialization methods are `render_*`, parsing methods are `parse_*`.
+- Protocols (`lib/ruby_llm/protocols`) are wire formats: Chat Completions, Responses, Anthropic, Gemini, Converse, Cohere, Files, and provider-specific storage APIs. Serialization methods are `render_*`, parsing methods are `parse_*`. Register every operation through `protocol`; do not add operation-specific protocol registries or macros.
 - Providers (`lib/ruby_llm/providers`) are adapters: auth, endpoints, catalogs, dialect quirks. A provider declares which protocols it speaks; it never defines a new wire format inline.
+- Treat models.dev as the source of truth for the model metadata it publishes. Report incorrect or missing metadata upstream instead of maintaining parallel pricing, limits, release dates, knowledge cutoffs, families, or modalities in RubyLLM.
+- Provider model parsers record facts returned by the provider. Provider `capabilities.rb` files may only augment feature capabilities that neither the provider listing nor models.dev can express. Base those additions on explicit upstream fields, exact model ids, or unambiguous operation markers, never broad family matchers that guess about current or future models.
+- Keep registry reconciliation generic. Provider-specific model-id aliases belong with that provider's catalog code, and registry generation diagnostics belong under `tasks/`, outside the runtime library.
+- Treat provider gem `models.json` files as explicitly registered, read-only fallbacks. The main registry wins conflicts, global refresh never queries or rewrites catalog-backed provider gems, and only the provider gem's own `rake models` updates its packaged catalog.
 - The plain-Ruby library never touches ActiveRecord. Rails integration lives in `lib/ruby_llm/active_record` and `lib/ruby_llm/railtie.rb` only.
 - Every `Chat#with_x` setter needs a matching bare `x` class macro on `Agent`. The build checks this.
 - Capabilities are one query: `supports?(:vision)`, never a `supports_vision?` predicate.

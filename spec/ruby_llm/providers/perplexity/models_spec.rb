@@ -20,12 +20,14 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
 
       sonar = models.find { |model| model.id == 'sonar' }
       expect(sonar.context_window).to eq(128_000)
-      expect(sonar.max_output_tokens).to eq(4096)
-      expect(sonar.capabilities).to eq(%w[citations vision])
+      expect(sonar.max_output_tokens).to be_nil
+      expect(sonar.capabilities).to eq(%w[streaming structured_output citations])
+      expect(sonar.price(:input)).to eq(1.0)
 
       embedding = models.find { |model| model.id == 'pplx-embed-v1-0.6b' }
       expect(embedding.type).to eq('embedding')
-      expect(embedding.pricing.to_h.dig(:text_tokens, :standard, :input_per_million)).to eq(0.004)
+      expect(embedding.context_window).to eq(32_768)
+      expect(embedding.price(:input)).to eq(0.004)
 
       listed = models.find { |model| model.id == 'perplexity/sonar' }
       expect(listed.pricing.to_h.dig(:text_tokens, :standard, :output_per_million)).to eq(2.5)
@@ -59,8 +61,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
     end
 
     it 'keeps the endpoint pricing without inventing token limits' do
-      models = protocol.parse_list_models_response(response, 'perplexity',
-                                                   RubyLLM::Providers::Perplexity::Capabilities)
+      models = protocol.parse_list_models_response(response, 'perplexity')
 
       opus = models.find { |model| model.id == 'anthropic/claude-opus-5' }
       expect(opus.context_window).to be_nil

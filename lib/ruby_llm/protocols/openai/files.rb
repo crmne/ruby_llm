@@ -4,7 +4,7 @@ module RubyLLM
   module Protocols
     module OpenAI
       # OpenAI Files API.
-      class Files < UploadedFile::Protocol
+      class Files < Protocols::Files
         UPLOAD_PURPOSES = %w[assistants batch fine-tune vision user_data evals].freeze
 
         private

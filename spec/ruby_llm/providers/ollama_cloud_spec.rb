@@ -59,7 +59,7 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
     end
 
     it 'reads the cloud catalog without the local -cloud suffix' do
-      models = described_class::ChatCompletions.allocate.parse_list_models_response(response, 'ollama_cloud', nil)
+      models = described_class::ChatCompletions.allocate.parse_list_models_response(response, 'ollama_cloud')
 
       expect(models.map(&:id)).to eq(['gpt-oss:120b'])
       expect(models.first.provider).to eq('ollama_cloud')
@@ -67,7 +67,7 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
 
     it 'reports no structured output, which Ollama Cloud does not support' do
       models = described_class::ChatCompletions.allocate.parse_list_models_response(
-        response, 'ollama_cloud', nil, details: { 'gpt-oss:120b' => %w[completion tools thinking] }
+        response, 'ollama_cloud', details: { 'gpt-oss:120b' => %w[completion tools thinking] }
       )
 
       expect(models.first.capabilities).to eq(%w[streaming function_calling reasoning])
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Providers::OllamaCloud do
 
     it 'leaves vision to the models that /api/show says have it' do
       models = described_class::ChatCompletions.allocate.parse_list_models_response(
-        response, 'ollama_cloud', nil, details: { 'gpt-oss:120b' => %w[completion tools thinking] }
+        response, 'ollama_cloud', details: { 'gpt-oss:120b' => %w[completion tools thinking] }
       )
 
       expect(models.first.supports?(:vision)).to be(false)

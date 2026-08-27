@@ -5,6 +5,7 @@ require 'ruby_llm'
 require 'json'
 require 'json_schemer'
 require 'fileutils'
+require_relative 'support/model_registry_diff'
 
 desc 'Update models, docs, and aliases'
 task models: ['models:update', 'models:docs', 'models:aliases']
@@ -89,6 +90,13 @@ def persist_refreshed_models(existing_models, models, registry_file)
   if suspicious_model_drop?(initial_count, models.all.size)
     abort "Refusing to replace #{initial_count} models with #{models.all.size}. " \
           'Set ALLOW_MODEL_REGISTRY_DROP=true after reviewing the result.'
+  end
+
+  regressions = ModelRegistryDiff.call(existing_models, models.all)
+  if regressions.any? && ENV['ALLOW_MODEL_REGISTRY_REGRESSIONS'] != 'true'
+    puts(regressions.first(50).map { |regression| "  - #{regression}" })
+    abort "Refusing to accept #{regressions.size} registry regressions. " \
+          'Set ALLOW_MODEL_REGISTRY_REGRESSIONS=true after reviewing every reported change.'
   end
 
   if sorted_models_data(models.all) == sorted_models_data(existing_models) && initial_count.positive?

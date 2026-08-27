@@ -4,7 +4,7 @@ module RubyLLM
   module Protocols
     class Anthropic
       # Anthropic beta Files API.
-      class Files < UploadedFile::Protocol
+      class Files < Protocols::Files
         BETA_HEADER = 'files-api-2025-04-14'
 
         private

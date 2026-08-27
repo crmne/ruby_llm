@@ -1,8 +1,0 @@
-# frozen_string_literal: true
-
-# Shared helpers for provider streaming specs.
-module StreamingErrorHelpers
-  def provider_chat_url
-    "#{RubyLLM.config.<%= api_base_config %>.to_s.sub(%r{/+\z}, '')}/chat/completions"
-  end
-end

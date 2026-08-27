@@ -75,6 +75,18 @@ RSpec.describe RubyLLM::Models do
       expect(result[:failed].first).to include(name: 'Acme', slug: 'acme')
       expect(result[:failed].first[:error]).to be_a(ArgumentError)
     end
+
+    it 'leaves provider gem catalogs to their own rake task' do
+      provider = fake_provider(slug: 'openai', display_name: 'OpenAI')
+      allow(RubyLLM::Provider).to receive_messages(
+        configured_remote_providers: [provider],
+        model_registry_files: { openai: '/tmp/openai-models.json' }
+      )
+
+      result = described_class.fetch_provider_models
+
+      expect(result).to include(models: [], configured_names: [], fetched_providers: [])
+    end
   end
 
   describe '.log_provider_fetch' do
@@ -140,6 +152,11 @@ RSpec.describe RubyLLM::Models do
             'claude-haiku': { id: 'claude-haiku-4-5@20251001', name: 'Claude Haiku' }
           }
         },
+        'perplexity-agent': {
+          models: {
+            'third-party': { id: 'anthropic/claude-test', name: 'Claude Test' }
+          }
+        },
         unknownprovider: { models: { x: { id: 'x' } } }
       }
     end
@@ -152,13 +169,15 @@ RSpec.describe RubyLLM::Models do
 
       expect(result[:fetched]).to be(true)
       expect(result[:models].map { |m| [m.provider, m.id] }).to contain_exactly(
-        %w[openai gpt-test], %w[vertexai claude-haiku-4-5]
+        %w[openai gpt-test], %w[vertexai claude-haiku-4-5], %w[perplexity anthropic/claude-test]
       )
 
       openai_model = result[:models].find { |m| m.provider == 'openai' }
       expect(openai_model.modalities.input).to eq(%w[text video])
       expect(openai_model.modalities.output).to eq(['text'])
-      expect(openai_model.capabilities).to contain_exactly('function_calling', 'vision', 'video')
+      expect(openai_model.capabilities).to contain_exactly(
+        'function_calling', 'tool_choice', 'parallel_tool_calls', 'vision', 'video'
+      )
       expect(openai_model.pricing.to_h).to eq(
         text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } },
         audio_tokens: { standard: { input_per_million: 3.0, output_per_million: 4.0 } }
@@ -297,6 +316,27 @@ RSpec.describe RubyLLM::Models do
       expect(merged.knowledge_cutoff).to eq(Date.new(2025, 6, 1))
     end
 
+    it 'fills missing pricing rates without replacing models.dev rates' do
+      models_dev_model = model(
+        id: 'test', provider: 'perplexity',
+        pricing: { text_tokens: { standard: { input_per_million: 1.0 } } }
+      )
+      provider_model = model(
+        id: 'test', provider: 'perplexity',
+        pricing: {
+          text_tokens: {
+            standard: { input_per_million: 2.0, output_per_million: 3.0, cache_write_input_per_million: 0.5 }
+          }
+        }
+      )
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
+      expect(merged.pricing.to_h.dig(:text_tokens, :standard)).to eq(
+        input_per_million: 1.0, output_per_million: 3.0, cache_write_input_per_million: 0.5
+      )
+    end
+
     it 'keeps a provider capability models.dev does not report on' do
       models_dev_model = model(
         id: 'test', provider: 'openai', capabilities: ['function_calling'],
@@ -307,7 +347,9 @@ RSpec.describe RubyLLM::Models do
 
       merged = described_class.add_provider_metadata(models_dev_model, provider_model)
 
-      expect(merged.capabilities).to contain_exactly('function_calling', 'structured_output')
+      expect(merged.capabilities).to contain_exactly(
+        'function_calling', 'tool_choice', 'parallel_tool_calls', 'structured_output'
+      )
     end
 
     it 'drops a provider capability models.dev reports as absent' do
@@ -333,6 +375,20 @@ RSpec.describe RubyLLM::Models do
       merged = described_class.add_provider_metadata(models_dev_model, provider_model)
 
       expect(merged.modalities.input).to eq(['text'])
+      expect(merged.modalities.output).to eq(['embeddings'])
+    end
+
+    it 'prefers a provider-reported non-chat operation over a models.dev chat classification' do
+      models_dev_model = model(
+        id: 'mistral-embed', provider: 'mistral', modalities: { input: ['text'], output: ['text'] }
+      )
+      provider_model = model(
+        id: 'mistral-embed', provider: 'mistral', modalities: { input: ['text'], output: ['embeddings'] }
+      )
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
+      expect(merged.type).to eq('embedding')
       expect(merged.modalities.output).to eq(['embeddings'])
     end
   end
@@ -368,6 +424,45 @@ RSpec.describe RubyLLM::Models do
 
     it 'returns nothing for a Bedrock id models.dev does not know' do
       expect(described_class.find_models_dev_model('bedrock:acme.model', {})).to be_nil
+    end
+
+    it 'reuses an exact OpenAI base entry for its release-dated snapshot' do
+      entry = model(
+        id: 'gpt-5.4-mini', provider: 'openai', created_at: '2026-03-17 00:00:00 UTC', context_window: 400_000
+      )
+
+      found = described_class.find_models_dev_model(
+        'openai:gpt-5.4-mini-2026-03-17', { 'openai:gpt-5.4-mini' => entry }
+      )
+
+      expect(found.id).to eq('gpt-5.4-mini-2026-03-17')
+      expect(found.context_window).to eq(400_000)
+    end
+
+    it 'does not inherit OpenAI metadata when the release date differs' do
+      entry = model(
+        id: 'gpt-4o', provider: 'openai', created_at: '2024-05-13 00:00:00 UTC', context_window: 128_000
+      )
+
+      found = described_class.find_models_dev_model(
+        'openai:gpt-4o-2024-08-06', { 'openai:gpt-4o' => entry }
+      )
+
+      expect(found).to be_nil
+    end
+
+    it 'uses aliases reported by Mistral to find a models.dev entry' do
+      entry = model(id: 'mistral-embed', provider: 'mistral', context_window: 8_000)
+      provider_model = model(
+        id: 'mistral-embed-2312', provider: 'mistral', metadata: { aliases: ['mistral-embed'] }
+      )
+
+      found = described_class.find_models_dev_model(
+        'mistral:mistral-embed-2312', { 'mistral:mistral-embed' => entry }, provider_model
+      )
+
+      expect(found.id).to eq('mistral-embed-2312')
+      expect(found.context_window).to eq(8_000)
     end
 
     it 'reuses the Gemini entry for Vertex AI' do
@@ -503,6 +598,42 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
+  describe '.models_from_provider_gems' do
+    it 'loads only the registered provider models from each catalog' do
+      catalog = Tempfile.new(['provider-models', '.json'])
+      models = [
+        model(id: 'gpt-4.1-mini', provider: 'openai'),
+        model(id: 'claude-haiku-4-5', provider: 'anthropic')
+      ]
+      catalog.write(RubyLLM::ModelRegistry.pretty_json(models))
+      catalog.close
+      allow(RubyLLM::Provider).to receive(:model_registry_files).and_return(openai: catalog.path)
+
+      expect(described_class.models_from_provider_gems.map(&:id)).to eq(['gpt-4.1-mini'])
+    ensure
+      catalog&.unlink
+    end
+
+    it 'merges provider gem catalogs into the configured registry' do
+      bundled = model(id: 'gpt-4.1-mini', provider: 'openai', name: 'Main catalog')
+      provider_models = [
+        model(id: 'gpt-4.1-mini', provider: 'openai', name: 'Provider catalog'),
+        model(id: 'gpt-4.1', provider: 'openai')
+      ]
+      allow(described_class).to receive_messages(
+        models_from_store: nil,
+        models_from_file: nil,
+        models_from_bundle: [bundled],
+        models_from_provider_gems: provider_models
+      )
+
+      loaded = described_class.load_models
+
+      expect(loaded.map(&:id)).to contain_exactly('gpt-4.1', 'gpt-4.1-mini')
+      expect(loaded.find { |model| model.id == 'gpt-4.1-mini' }.name).to eq('Main catalog')
+    end
+  end
+
   describe '#load_from_store!' do
     it 'raises when no store is configured' do
       expect { described_class.new([]).load_from_store! }.to raise_error(
@@ -634,6 +765,43 @@ RSpec.describe RubyLLM::Models do
       registry.refresh!
 
       expect(registry.all.map(&:id)).to contain_exactly('llama', 'gpt-x')
+    end
+
+    it 'keeps provider gem catalogs out of the main file cache' do
+      published_models = [model(id: 'claude-haiku-4-5', provider: 'anthropic')]
+      provider_models = [model(id: 'gpt-4.1-mini', provider: 'openai')]
+      allow(RubyLLM::Provider).to receive_messages(
+        configured_providers: [],
+        model_registry_files: { openai: '/tmp/openai-models.json' }
+      )
+      allow(described_class).to receive(:models_from_provider_gems).and_return(provider_models)
+      stub_published(published_models, 'etag-1', false)
+
+      registry = described_class.new(provider_models).refresh!
+      cached = RubyLLM::ModelRegistry.read(RubyLLM.config.model_registry_file)
+
+      expect(registry.all.map(&:id)).to contain_exactly('claude-haiku-4-5', 'gpt-4.1-mini')
+      expect(cached.map(&:id)).to eq(['claude-haiku-4-5'])
+    end
+
+    it 'writes provider gem catalogs through the configured model store' do
+      published_models = [model(id: 'claude-haiku-4-5', provider: 'anthropic')]
+      provider_models = [model(id: 'gpt-4.1-mini', provider: 'openai')]
+      stored = []
+      RubyLLM.config.model_registry_store = Class.new do
+        define_method(:read) { stored }
+        define_method(:write) { |models| stored.replace(models.all) }
+      end.new
+      allow(RubyLLM::Provider).to receive_messages(
+        configured_providers: [],
+        model_registry_files: { openai: '/tmp/openai-models.json' }
+      )
+      allow(described_class).to receive(:models_from_provider_gems).and_return(provider_models)
+      stub_published(published_models, 'etag-1', false)
+
+      described_class.new(provider_models).refresh!
+
+      expect(stored.map(&:id)).to contain_exactly('claude-haiku-4-5', 'gpt-4.1-mini')
     end
   end
 

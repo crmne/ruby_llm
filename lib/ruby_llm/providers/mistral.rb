@@ -5,7 +5,7 @@ module RubyLLM
     # Mistral API integration.
     class Mistral < Provider
       protocol :chat_completions, ChatCompletions, batches: Mistral::ChatCompletions::Batches
-      files Mistral::Files
+      protocol :files, Protocols::Mistral::Files
 
       def api_base
         @config.mistral_api_base || 'https://api.mistral.ai/v1'
@@ -20,6 +20,10 @@ module RubyLLM
       class << self
         def capabilities
           Mistral::Capabilities
+        end
+
+        def models_dev_alias(...)
+          Mistral::Models.models_dev_alias(...)
         end
 
         def configuration_options
