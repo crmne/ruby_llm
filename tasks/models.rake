@@ -94,7 +94,7 @@ def persist_refreshed_models(existing_models, models, registry_file)
 
   regressions = ModelRegistryDiff.call(existing_models, models.all)
   if regressions.any? && ENV['ALLOW_MODEL_REGISTRY_REGRESSIONS'] != 'true'
-    puts(regressions.first(50).map { |regression| "  - #{regression}" })
+    puts(regressions.map { |regression| "  - #{regression}" })
     abort "Refusing to accept #{regressions.size} registry regressions. " \
           'Set ALLOW_MODEL_REGISTRY_REGRESSIONS=true after reviewing every reported change.'
   end

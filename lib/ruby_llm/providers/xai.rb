@@ -19,6 +19,10 @@ module RubyLLM
       end
 
       class << self
+        def capabilities
+          XAI::Capabilities
+        end
+
         def configuration_options
           %i[xai_api_key xai_api_base]
         end

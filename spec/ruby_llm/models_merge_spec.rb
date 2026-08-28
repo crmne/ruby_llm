@@ -439,6 +439,17 @@ RSpec.describe RubyLLM::Models do
       expect(found.context_window).to eq(400_000)
     end
 
+    it 'maps OpenAI snapshots whose public release date differs from their base entry' do
+      entry = model(id: 'o1', provider: 'openai', context_window: 200_000)
+
+      found = described_class.find_models_dev_model(
+        'openai:o1-2024-12-17', { 'openai:o1' => entry }
+      )
+
+      expect(found.id).to eq('o1-2024-12-17')
+      expect(found.context_window).to eq(200_000)
+    end
+
     it 'does not inherit OpenAI metadata when the release date differs' do
       entry = model(
         id: 'gpt-4o', provider: 'openai', created_at: '2024-05-13 00:00:00 UTC', context_window: 128_000
