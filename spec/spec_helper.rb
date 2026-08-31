@@ -9,6 +9,7 @@ require 'bundler/setup'
 require 'fileutils'
 require 'tempfile'
 require 'ruby_llm'
+RubyLLM.config.model_registry_file = nil
 require 'schematist'
 require 'webmock/rspec'
 require 'active_support'

@@ -62,6 +62,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 
 - No implementation comments. A comment earns its place only by stating a constraint the code cannot show. Public API gets RDoc; see `.rdoc_options` for what is documented.
 - Follow the wire-naming idioms above, and generic Ruby ones: no `get_`/`set_` accessor prefixes, no `is_` predicates.
+- Reserve public bang methods for a meaningfully different non-bang pair, such as `create`/`create!`. Mutation, persistence, blocking, or network activity alone does not earn a bang.
 - Flay rejects structural duplication above mass 70. If two providers or protocols share shape, extract, do not copy.
 
 ## Docs

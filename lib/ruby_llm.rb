@@ -232,7 +232,7 @@ module RubyLLM
     # VideoJob.animate_later.
     #
     #   job = RubyLLM.animate_later("a paper boat sailing down a gutter")
-    #   job.refresh! until job.done?
+    #   job.refresh until job.done?
     #   job.video.save("boat.mp4")
     #
     def animate_later(...)
@@ -334,7 +334,7 @@ module RubyLLM
     # metadata.
     #
     #   RubyLLM.models.find("claude-haiku-4-5")
-    #   RubyLLM.models.refresh!
+    #   RubyLLM.models.refresh
     #
     def models
       Models.instance

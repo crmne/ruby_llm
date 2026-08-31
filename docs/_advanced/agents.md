@@ -85,6 +85,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `max_output_tokens` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `thinking` (see [Thinking]({% link _core_features/thinking.md %}))
 * `citations` (see [Citations]({% link _core_features/citations.md %}))
+* `caching` (see [Prompt Caching]({% link _core_features/prompt-caching.md %}))
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
 * `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
 * `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
@@ -94,6 +95,27 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `context` (see [Configuration]({% link _getting_started/configuration.md %}))
 * `chat_model` (Rails-backed mode)
 * `inputs` (declared runtime inputs)
+
+Call `caching` without options to use the provider's default prompt cache policy:
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  caching
+end
+```
+
+This is the agent equivalent of calling `chat.with_caching`. Pass provider-specific options when you need them, such as `caching ttl: "1h"`.
+
+Feature macros follow the same shape as their `with_*` methods: call them bare to enable the registered default, pass `false` to disable them, or pass options to tune them.
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  thinking
+  caching
+  compaction
+  citations
+end
+```
 
 `tools` sets which tools the agent's chats may call. Use `tool_options` for `choice`, `calls`, and `concurrency`:
 
@@ -309,9 +331,9 @@ Delegated methods include:
 * `concurrency`, `caching`, `compaction`, `end_user`, `fallbacks`
 * `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
-* `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`, `pending_approvals`
+* `cancel`, `cancelled?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`
 * `add_message`, `each`
-* `cache_until_here!`, `with_tools`, `with_server_tools`, `with_tool_options`
+* `cache_until_here`, `with_tools`, `with_server_tools`, `with_tool_options`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
 * `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
@@ -385,7 +407,7 @@ chat = WorkAssistant.create!(user: current_user)
 
 chat = WorkAssistant.find(params[:id])
 
-WorkAssistant.sync_instructions!(chat)
+WorkAssistant.sync_instructions(chat)
 ```
 
 `create/create!/find` require `chat_model`. Calling them without it raises an error.
@@ -394,7 +416,7 @@ Instruction persistence contract in Rails mode:
 
 * `create/create!` applies and persists instructions
 * `find` applies instructions at runtime only (no persistence side effects)
-* `sync_instructions!` explicitly persists the current agent instructions
+* `sync_instructions` explicitly persists the current agent instructions
 
 ### Using an Existing Chat Record
 If you already have a `Chat` record, pass it to `Agent.new(chat:)` instead of calling `Agent.find`. This applies all agent configuration (instructions, tools, etc.) without an extra database query:

@@ -2,11 +2,11 @@
 
 module RubyLLM
   # A VideoJob is an in-flight video generation. RubyLLM.animate_later
-  # returns one immediately; poll it with #refresh! and read the finished
-  # clip with #video. RubyLLM.animate runs the same job through #wait!.
+  # returns one immediately; poll it with #refresh and read the finished
+  # clip with #video. RubyLLM.animate runs the same job through #wait.
   #
   #   job = RubyLLM.animate_later("a paper boat sailing down a gutter")
-  #   job.refresh! until job.done?
+  #   job.refresh until job.done?
   #   job.video.save("boat.mp4")
   #
   class VideoJob
@@ -96,7 +96,7 @@ module RubyLLM
 
     # Re-fetches the job from the provider, updating #status, #error, and
     # #raw. Does nothing once the job is #done?. Returns self.
-    def refresh!
+    def refresh
       return self if done?
 
       state = @protocol.refresh_video_job(self)
@@ -110,7 +110,7 @@ module RubyLLM
     # when the job fails or +timeout+ elapses first. +timeout+ and
     # +interval+ are seconds and default to the configured
     # +video_generation_timeout+ and +video_generation_poll_interval+.
-    def wait!(timeout: nil, interval: nil)
+    def wait(timeout: nil, interval: nil)
       timeout ||= @protocol.config.video_generation_timeout
       interval ||= @protocol.config.video_generation_poll_interval
       deadline = monotonic_time + timeout
@@ -119,7 +119,7 @@ module RubyLLM
         raise Error, "Video generation timed out after #{timeout} seconds" if monotonic_time > deadline
 
         sleep interval
-        refresh!
+        refresh
       end
       raise Error, "Video generation failed: #{error}" if failed?
 

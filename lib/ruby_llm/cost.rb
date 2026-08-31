@@ -87,20 +87,21 @@ module RubyLLM
       end
 
       def recorded_tokens?(amounts, tokens, total_recorded)
+        return true if total_recorded
         return COMPONENTS.any? { |component| !tokens.public_send(component).nil? } if tokens
 
-        amounts.values.any? { |amount| !amount.nil? } || total_recorded
+        amounts.values.any? { |amount| !amount.nil? }
       end
     end
 
-    def initialize(tokens: nil, model: nil, category: :text_tokens, input_details: nil, # :nodoc:
+    def initialize(tokens: nil, model: nil, category: :text_tokens, input_details: nil, tier: :standard, # :nodoc:
                    amounts: nil, missing: nil, reported: nil, complete: true, total: nil)
       if amounts
         @amounts = amounts
         @missing = missing || []
         @reported = reported
       else
-        price_tokens(tokens, model, category, input_details)
+        price_tokens(tokens, model, category, input_details, tier)
         total = reported_total if total.nil?
         @reported ||= !total.nil?
       end
@@ -179,11 +180,12 @@ module RubyLLM
 
     private
 
-    def price_tokens(tokens, model, category, input_details)
+    def price_tokens(tokens, model, category, input_details, tier)
       @tokens = tokens
       @model = normalize_model(model)
       @category = category.to_sym
       @input_details = input_details
+      @tier = tier.to_sym
       @amounts = COMPONENTS.to_h { |component| [component, amount_for(component)] }
       @missing = COMPONENTS.select { |component| missing_component?(component) }
       @reported = COMPONENTS.any? { |component| !tokens_for(component).nil? }
@@ -268,6 +270,8 @@ module RubyLLM
     end
 
     def applicable_text_tier
+      return text_pricing.batch if @tier == :batch
+
       text_pricing.tier_for(prompt_tokens)
     end
 

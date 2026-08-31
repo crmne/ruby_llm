@@ -155,10 +155,12 @@ module RubyLLM
     #   cost = model.cost_for(response.tokens)
     #   puts cost.total
     #
-    def cost_for(tokens)
+    # Pass <tt>tier: :batch</tt> to use the model's explicit batch rates.
+    #
+    def cost_for(tokens, tier: :standard)
       tokens = tokens.tokens if tokens.respond_to?(:tokens)
 
-      Cost.new(tokens:, model: self)
+      Cost.new(tokens:, model: self, tier:)
     end
 
     # Returns the Provider class registered for this model's provider slug,
@@ -235,6 +237,7 @@ module RubyLLM
         normalized = option.to_h.transform_keys(&:to_sym)
         normalized[:type] = normalized[:type].to_s if normalized[:type]
         normalized[:values] = Array(normalized[:values]).map(&:to_s) if normalized.key?(:values)
+        normalized[:default] = normalized[:default].to_s if normalized[:default].is_a?(Symbol)
         normalized
       end
     end

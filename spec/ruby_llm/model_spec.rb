@@ -139,7 +139,7 @@ RSpec.describe RubyLLM::Model do
     end
 
     it 'accepts string-keyed metadata reasoning options' do
-      legacy_model = described_class.new(
+      string_keyed_model = described_class.new(
         data.merge(
           metadata: {
             'reasoning_options' => [
@@ -149,7 +149,7 @@ RSpec.describe RubyLLM::Model do
         )
       )
 
-      expect(legacy_model.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(string_keyed_model.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
     end
 
     it 'prefers top-level reasoning options over metadata when both are present' do
@@ -287,6 +287,22 @@ RSpec.describe RubyLLM::Model do
       tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000)
 
       expect(model.cost_for(tokens).total).to eq(0.0225)
+    end
+
+    it 'builds a Cost from batch pricing when requested' do
+      model = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: { input_per_million: 2.50, output_per_million: 10.00 },
+              batch: { input_per_million: 1.25, output_per_million: 5.00 }
+            }
+          }
+        )
+      )
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000)
+
+      expect(model.cost_for(tokens, tier: :batch).total).to eq(0.01125)
     end
 
     it 'hydrates long_context pricing from metadata.cost when pricing lacks it' do

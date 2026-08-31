@@ -34,8 +34,8 @@ module RubyLLM
           "database:#{table_name}"
         end
 
-        def refresh!
-          RubyLLM.models.refresh!
+        def refresh
+          RubyLLM.models.refresh
         end
 
         def save_to_database(registry = RubyLLM.models)

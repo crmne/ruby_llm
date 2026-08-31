@@ -30,7 +30,7 @@ module RubyLLM
 
         # Returns +true+: Ollama retires cloud models faster than the
         # registry tracks them, so model ids are accepted as given. Call
-        # RubyLLM.models.refresh! to pull the live catalog.
+        # RubyLLM.models.refresh to pull the live catalog.
         def assume_models_exist?
           true
         end

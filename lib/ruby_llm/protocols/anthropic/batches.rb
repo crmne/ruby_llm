@@ -40,12 +40,19 @@ module RubyLLM
         end
 
         def parse_batch_response(data)
+          request_counts = data['request_counts']
+
           {
             id: data['id'],
-            status: data['processing_status'],
+            raw_status: data['processing_status'],
             completed: data['processing_status'] == 'ended',
-            request_counts: data['request_counts']
+            request_counts:,
+            request_count: request_counts&.values&.sum
           }
+        end
+
+        def parse_batch_status(raw_status, completed:)
+          completed && raw_status == 'ended' ? :succeeded : :pending
         end
 
         def parse_batch_result(line)
@@ -56,8 +63,8 @@ module RubyLLM
             body = result['message']
             [index, parse_completion_body(body, raw: body)]
           else
-            batch_failure(line['custom_id'], result.dig('error', 'error', 'message'), status: result['type'])
-            [index, nil]
+            status = batch_failure(line['custom_id'], result.dig('error', 'error', 'message'), status: result['type'])
+            [index, nil, status]
           end
         end
       end

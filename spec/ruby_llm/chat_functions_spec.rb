@@ -263,6 +263,14 @@ RSpec.describe RubyLLM::Chat do
       expect(system_messages.map(&:content)).to eq(['Be helpful', 'Be concise'])
     end
 
+    it 'marks an instruction as a cache boundary' do
+      chat = described_class.new
+
+      chat.with_instructions('Stable policy', cache_until_here: true)
+
+      expect(chat.messages.sole.cache_until_here?).to be(true)
+    end
+
     it 'keeps system instructions in chronological message history' do
       chat = described_class.new
 

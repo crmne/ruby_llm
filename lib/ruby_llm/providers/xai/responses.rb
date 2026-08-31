@@ -6,6 +6,7 @@ module RubyLLM
       # xAI's dialect of the OpenAI Responses API, the primary protocol for
       # Grok models. Usage counts agentic tool activity.
       class Responses < Protocols::Responses
+        include XAI::ReportedCost
         include XAI::Images
         include XAI::Models
         include XAI::Speech
@@ -29,12 +30,10 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
-        USD_PER_TICK = 1e-10
-
         def parse_usage(usage)
           super.merge(
             server_tool_use: server_side_tool_usage(usage),
-            reported_cost: reported_cost_from_ticks(usage)
+            reported_cost: reported_cost(usage)
           )
         end
 
@@ -43,11 +42,6 @@ module RubyLLM
         def server_side_tool_usage(usage)
           counters = usage.slice(*SERVER_TOOL_USAGE_COUNTERS).reject { |_, count| count.to_i.zero? }
           counters.empty? ? nil : counters
-        end
-
-        def reported_cost_from_ticks(usage)
-          ticks = usage['cost_in_usd_ticks']
-          ticks ? ticks * USD_PER_TICK : nil
         end
       end
     end

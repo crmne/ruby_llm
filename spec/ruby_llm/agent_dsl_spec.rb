@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Agent do
         temperature 0.4
         max_output_tokens 128
         thinking effort: :low
-        citations true
+        citations
         caching ttl: '1h'
         provider_options top_p: 0.9
         headers 'X-Test' => '1'
@@ -25,13 +25,9 @@ RSpec.describe RubyLLM::Agent do
       expect(agent_class.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
       expect(agent_class.temperature).to eq(0.4)
       expect(agent_class.max_output_tokens).to eq(128)
-      expect(agent_class.thinking).to eq(effort: :low, budget: nil, display: nil)
-      expect(agent_class.citations).to be(true)
-      expect(agent_class.caching).to eq(ttl: '1h')
       expect(agent_class.provider_options).to eq(top_p: 0.9)
       expect(agent_class.headers).to eq('X-Test' => '1')
       expect(agent_class.end_user).to eq('tenant-42')
-      expect(agent_class.compaction).to eq(at: 50_000)
     end
 
     it 'defaults the collection macros to empty' do
@@ -39,13 +35,9 @@ RSpec.describe RubyLLM::Agent do
 
       expect(bare.model).to eq({})
       expect(bare.temperature).to be_nil
-      expect(bare.thinking).to be_nil
-      expect(bare.citations).to be_nil
-      expect(bare.caching).to be_nil
       expect(bare.provider_options).to eq({})
       expect(bare.headers).to eq({})
       expect(bare.end_user).to be_nil
-      expect(bare.compaction).to be_nil
       expect(bare.context).to be_nil
       expect(bare.chat_model).to be_nil
     end
@@ -70,6 +62,61 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@thinking).effort).to eq('low')
       expect(chat.end_user).to eq('tenant-42')
       expect(chat.compaction).to eq(at: 50_000)
+    end
+
+    it 'enables provider-default caching without options' do
+      agent = Class.new(described_class) do
+        model 'gpt-4.1-nano', provider: :openai
+        caching
+      end
+
+      expect(agent.chat.caching).to eq({})
+    end
+
+    it 'enables feature defaults without options' do
+      agent = Class.new(described_class) do
+        model 'claude-sonnet-5', provider: :anthropic
+        thinking
+        citations
+        compaction
+      end
+
+      chat = agent.chat
+
+      expect(chat.render[:thinking]).to eq(type: 'adaptive')
+      expect(chat.instance_variable_get(:@citations)).to be(true)
+      expect(chat.compaction).to eq({})
+    end
+
+    it 'disables features with false' do
+      agent = Class.new(described_class) do
+        model 'claude-sonnet-5', provider: :anthropic
+        thinking false
+        caching false
+        compaction false
+        citations false
+      end
+
+      chat = agent.chat
+
+      expect(chat.render[:thinking]).to eq(type: 'disabled')
+      expect(chat.caching).to be(false)
+      expect(chat.compaction).to be(false)
+      expect(chat.instance_variable_get(:@citations)).to be(false)
+    end
+
+    it 'rejects nil feature declarations' do
+      expect { Class.new(described_class) { thinking nil } }.to raise_error(ArgumentError)
+      expect { Class.new(described_class) { caching nil } }.to raise_error(ArgumentError)
+      expect { Class.new(described_class) { compaction nil } }.to raise_error(ArgumentError)
+      expect { Class.new(described_class) { citations nil } }.to raise_error(ArgumentError)
+      expect { Class.new(described_class) { thinking effort: nil } }.to raise_error(ArgumentError)
+    end
+
+    it 'does not carry verb aliases' do
+      agent = Class.new(described_class)
+
+      expect(agent).not_to respond_to(:think, :cache, :compact, :cite)
     end
 
     it 'binds a configured context to the chat it builds' do
@@ -221,13 +268,13 @@ RSpec.describe RubyLLM::Agent do
       parent = Class.new(described_class) do
         model 'gpt-4.1-nano', provider: :openai
         temperature 0.2
-        citations true
+        citations
       end
 
       child = Class.new(parent)
 
       expect(child.temperature).to eq(0.2)
-      expect(child.citations).to be(true)
+      expect(child.chat.instance_variable_get(:@citations)).to be(true)
       expect(child.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
       expect(child.model).not_to equal(parent.model)
     end

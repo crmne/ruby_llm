@@ -106,9 +106,9 @@ RSpec.describe RubyLLM::Models do
         RubyLLM.models.find('nonexistent-model-12345')
       end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
         expect(error.message).to include('Unknown model: "nonexistent-model-12345"')
-        expect(error.message).to include('RubyLLM.models.refresh!')
+        expect(error.message).to include('RubyLLM.models.refresh')
         expect(error.message).not_to include('save_to_json')
-        expect(error.message).not_to include('Model.refresh!')
+        expect(error.message).not_to include('Model.refresh')
         expect(error.message).not_to include('Known')
       }
     end
@@ -118,8 +118,8 @@ RSpec.describe RubyLLM::Models do
         RubyLLM.models.find('nonexistent-model-12345', 'openai')
       end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
         expect(error.message).to include('Unknown model: "nonexistent-model-12345" for provider: "openai"')
-        expect(error.message).to include('RubyLLM.models.refresh!')
-        expect(error.message).not_to include('Model.refresh!')
+        expect(error.message).to include('RubyLLM.models.refresh')
+        expect(error.message).not_to include('Model.refresh')
         expect(error.message).not_to include('Known')
       }
     end
@@ -168,7 +168,7 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#refresh!' do
+  describe '#refresh' do
     before do
       published = RubyLLM::ModelRegistry.read(described_class.bundled_registry_file)
       allow(described_class).to receive_messages(
@@ -186,7 +186,7 @@ RSpec.describe RubyLLM::Models do
 
     it 'updates models and returns a chainable Models instance' do
       # Refresh and chain immediately
-      chat_models = RubyLLM.models.refresh!.chat_models
+      chat_models = RubyLLM.models.refresh.chat_models
 
       # Verify we got results
       expect(chat_models).to be_a(described_class)
@@ -198,7 +198,7 @@ RSpec.describe RubyLLM::Models do
     end
 
     it 'works as a class method too' do
-      described_class.refresh!
+      described_class.refresh
 
       # Verify singleton instance was updated
       expect(RubyLLM.models.all.size).to be_positive

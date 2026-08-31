@@ -50,7 +50,12 @@ module RubyLLM
         def batch_results(id)
           job = @provider.signed_get(@provider.control_api_base, bedrock_job_url(id)).body
           output_uri = job.dig('outputDataConfig', 's3OutputDataConfig', 's3Uri')
-          raise Error, 'bedrock batch has no S3 output URI yet' unless output_uri
+          unless output_uri
+            status = parse_batch_status(job['status'], completed: TERMINAL.include?(job['status']))
+            return [] if %i[failed cancelled].include?(status)
+
+            raise Error, 'bedrock batch has no S3 output URI yet'
+          end
 
           @provider.list_file_uris(output_uri)
                    .grep(/\.jsonl\.out\z/)
@@ -104,10 +109,18 @@ module RubyLLM
           status = data['status']
           {
             id: data['jobArn'] || data['jobIdentifier'],
-            status: status,
+            raw_status: status,
             completed: TERMINAL.include?(status),
             request_counts: bedrock_request_counts(data)
           }
+        end
+
+        def parse_batch_status(raw_status, completed:)
+          return :pending unless completed
+          return :succeeded if %w[Completed PartiallyCompleted].include?(raw_status)
+          return :cancelled if raw_status == 'Stopped'
+
+          :failed
         end
 
         def bedrock_request_counts(data)
@@ -129,8 +142,7 @@ module RubyLLM
             body = line['modelOutput']
             [index, parse_completion_body(body, raw: body)]
           else
-            batch_failure(record_id, line.dig('error', 'message') || line['errorMessage'])
-            [index, nil]
+            [index, nil, batch_failure(record_id, line.dig('error', 'message') || line['errorMessage'])]
           end
         end
       end

@@ -139,6 +139,17 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
 
       expect { protocol.batch_results('job-123') }.to raise_error(RubyLLM::Error, /no S3 output URI/)
     end
+
+    it 'returns no rows when a failed or stopped job has no output' do
+      %w[Failed Stopped Expired].each do |status|
+        allow(provider).to receive_messages(
+          control_api_base: 'https://bedrock.us-west-2.amazonaws.com',
+          signed_get: instance_double(Faraday::Response, body: { 'status' => status })
+        )
+
+        expect(protocol.batch_results('job-123')).to eq([])
+      end
+    end
   end
 
   describe '#parse_bedrock_record' do
@@ -178,7 +189,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
     it 'reads a job by ARN' do
       allow(provider).to receive(:signed_get).and_return(Struct.new(:body).new(job))
 
-      expect(protocol.find_batch(job['jobArn'])).to include(status: 'Completed', completed: true)
+      expect(protocol.find_batch(job['jobArn'])).to include(raw_status: 'Completed', completed: true)
     end
 
     it 'stops a running job and reads it back' do
@@ -186,7 +197,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
         signed_post: nil, signed_get: Struct.new(:body).new(job.merge('status' => 'Stopped'))
       )
 
-      expect(protocol.cancel_batch(job['jobArn'])[:status]).to eq('Stopped')
+      expect(protocol.cancel_batch(job['jobArn'])[:raw_status]).to eq('Stopped')
       expect(provider).to have_received(:signed_post).with(
         'https://bedrock.us-west-2.amazonaws.com', %r{/stop\z}, {}
       )

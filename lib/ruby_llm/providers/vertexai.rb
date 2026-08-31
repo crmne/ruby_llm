@@ -75,6 +75,13 @@ module RubyLLM
         protocol ? batch.merge(batch_protocol: protocol) : batch
       end
 
+      def batch_cost_multiplier(model:, component:)
+        return if model.id.include?('/')
+        return 1 if !model.id.start_with?('claude') && %i[cache_read cache_write].include?(component)
+
+        0.5
+      end
+
       def api_base
         api_base_for(@config.vertexai_location)
       end

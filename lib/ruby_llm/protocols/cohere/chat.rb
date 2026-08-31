@@ -64,7 +64,7 @@ module RubyLLM
         # explicit disable is as meaningful as an explicit enable.
         def add_thinking(payload, thinking)
           return unless thinking&.enabled?
-          return payload[:thinking] = { type: 'disabled' } if thinking.effort.to_s == 'none'
+          return payload[:thinking] = { type: 'disabled' } if thinking.disabled?
 
           payload[:thinking] = { type: 'enabled', token_budget: thinking.budget }.compact
         end

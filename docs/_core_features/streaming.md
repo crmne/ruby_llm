@@ -167,7 +167,7 @@ end
 
 ## Cancelling a Stream
 
-Call `cancel!` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused.
+Call `cancel` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused.
 
 ```ruby
 chat = RubyLLM.chat
@@ -175,19 +175,19 @@ chat = RubyLLM.chat
 begin
   chat.ask("Write a long report") do |chunk|
     print chunk.content
-    chat.cancel! if should_stop?
+    chat.cancel if should_stop?
   end
 rescue RubyLLM::CancelledError
   puts "Generation cancelled"
 end
 ```
 
-With `acts_as_chat`, `cancel!` records the cancellation in the chat record's `cancelled` column. That lets a controller stop a generation running in a background job:
+With `acts_as_chat`, `cancel` records the cancellation in the chat record's `cancelled` column. That lets a controller stop a generation running in a background job:
 
 ```ruby
 # app/controllers/chats_controller.rb
 def cancel
-  Chat.find(params[:id]).cancel!
+  Chat.find(params[:id]).cancel
   head :no_content
 end
 

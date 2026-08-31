@@ -220,7 +220,7 @@ module RubyLLM
           return unless openai_prompt_caching?
 
           payload.merge!(prompt_cache_params(caching)) if caching
-          force_explicit_cache_mode(payload) if cache_boundaries?(messages)
+          force_explicit_cache_mode(payload) if caching != false && cache_boundaries?(messages)
         end
 
         def openai_prompt_caching?
@@ -315,10 +315,10 @@ module RubyLLM
           system_messages + other_messages
         end
 
-        def format_message_content(msg, **)
+        def format_message_content(msg, caching: nil, **)
           content = format_content(msg.content, msg.tool_result? ? [] : msg.attachments)
           return '' if content.nil? && thinking_only_assistant_message?(msg)
-          return inject_cache_breakpoint(content) if msg.cache_until_here? && openai_prompt_caching?
+          return inject_cache_breakpoint(content) if caching != false && msg.cache_until_here? && openai_prompt_caching?
 
           content
         end

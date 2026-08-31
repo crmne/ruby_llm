@@ -42,7 +42,7 @@ module RubyLLM
         ruby_llm_usages.map(&:to_entry)
       end
 
-      def cache_until_here!
+      def cache_until_here
         update!(cache_until_here: true)
         self
       end
@@ -72,7 +72,7 @@ module RubyLLM
 
       def cost
         records = ruby_llm_usages.to_a
-        RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:usage_available?))
+        RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
       # Provider tool calls as RubyLLM::ToolCall values keyed by call id.

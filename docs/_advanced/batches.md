@@ -46,8 +46,9 @@ chats = documents.map do |doc|
 end
 
 batch = RubyLLM.batch(chats)
-batch.id     # => "msgbatch_01EhcDuvb5XfWqcdJArbsfNX"
-batch.status # => "in_progress"
+batch.id         # => "msgbatch_01EhcDuvb5XfWqcdJArbsfNX"
+batch.status     # => :pending
+batch.raw_status # => "in_progress"
 ```
 
 Chats in one Anthropic or xAI batch can use different models, instructions, schemas, and parameters; each request stands alone:
@@ -87,6 +88,8 @@ batch = RubyLLM::Batch.find(batch_id, provider: :anthropic, context: ctx)
 sleep 60 until batch.refresh.complete?
 ```
 
+`status` normalizes the lifecycle to `:pending`, `:succeeded`, `:failed`, or `:cancelled`. `raw_status` preserves the provider's own string. The matching `succeeded?`, `failed?`, and `cancelled?` predicates let a poller distinguish a successful completion from a failed, expired, or cancelled provider job.
+
 Once processing ends, `messages` returns the responses in submission order:
 
 ```ruby
@@ -103,14 +106,18 @@ chats.first.messages.map(&:role) # => [:system, :user, :assistant]
 chats.first.ask "Shorter, please."
 ```
 
-Requests can fail or expire individually without failing the whole batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`.
+Requests can fail or expire individually without failing the whole batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`. Read `statuses` to distinguish successful, failed, and cancelled slots without inspecting provider payloads:
+
+```ruby
+batch.messages
+batch.statuses # => [:succeeded, :failed, :cancelled]
+```
 
 Batch results arrive as JSONL rather than individual HTTP responses, so `message.raw` on a batch message is the provider result body hash, not a Faraday response with `status` or `headers`.
 
 You can stop a running batch with `batch.cancel`; already-processed requests still return results.
 
-{: .note }
-Providers apply their own batch rates. `message.cost` does not account for a batch discount yet and reports the registry's standard interactive rate, so use your provider's invoice or batch pricing when reconciling spend.
+RubyLLM freezes the provider's batch rate on each successful result. `message.cost`, `embedding.cost`, and `batch.cost` therefore report batch cost rather than the standard interactive rate. An exact cost reported by the provider takes precedence over a calculated rate. When neither the provider nor the model registry supplies enough information to determine the batch rate, `cost.total` is `nil` instead of an interactive-price estimate.
 
 ## Tools in Batches
 
@@ -140,16 +147,24 @@ end
 
 `run_tools` does nothing on chats without pending tool calls, and `reject(&:complete?)` keeps the chats heading into another round while finished conversations drop out.
 
-For tools that need human approval before acting, don't try to pause the loop. Ask inside the tool and return the outcome as its result, so the conversation stays valid:
+Tools declared with `requires_approval` park the chat after the batch result arrives. Record each decision, run the approved or denied tools, then submit the next model turn as another batch:
 
 ```ruby
-def execute(id:)
-  return "Approval not given; the user declined." unless approved?(id)
+class DeleteRecord < RubyLLM::Tool
+  requires_approval
 
-  Record.find(id).destroy!
-  "Deleted record #{id}."
+  def execute(id:)
+    Record.find(id).destroy!
+  end
 end
+
+batch.messages
+call = chat.pending_approvals.first
+chat.approve(call) # or chat.deny(call)
+chat.run_tools
 ```
+
+With `acts_as_chat`, the approval decision is stored on RubyLLM's internal tool-call row, so another process can resume the same conversation safely.
 
 ## Batching Embeddings
 

@@ -49,17 +49,29 @@ RSpec.describe RubyLLM::Chat, :live do
       expect { chat.render }.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl/)
     end
 
-    it 'clears caching options with with_caching(nil)' do
+    it 'disables caching with false' do
       chat = RubyLLM.chat.with_caching(ttl: '1h')
 
-      expect(chat.with_caching(nil)).to eq(chat)
-      expect(chat.caching).to be_nil
+      expect(chat.with_caching(false)).to eq(chat)
+      expect(chat.caching).to be(false)
     end
 
-    it 'rejects combining nil with caching options' do
-      chat = RubyLLM.chat
+    it 'omits RubyLLM cache controls and marked boundaries when disabled' do
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat.with_instructions('Stable instructions').cache_until_here
+      chat.ask_later('Hello').cache_until_here
+      chat.with_caching(false)
 
-      expect { chat.with_caching(nil, ttl: '1h') }.to raise_error(ArgumentError)
+      payload = chat.render
+
+      expect(payload[:instructions]).to eq('Stable instructions')
+      expect(payload[:input].last[:content]).to eq('Hello')
+      expect(payload).not_to have_key(:prompt_cache_options)
+    end
+
+    it 'rejects nil' do
+      expect { RubyLLM.chat.with_caching(nil) }
+        .to raise_error(ArgumentError, /accepts false or caching options/)
     end
 
     it 'renders OpenAI prompt cache controls as request params' do
@@ -97,7 +109,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'renders explicit breakpoints for OpenAI cache boundaries' do
       chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-      chat.ask_later('Long context').cache_until_here!
+      chat.ask_later('Long context').cache_until_here
 
       payload = chat.render
 
@@ -109,7 +121,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'sends cache-bounded instructions as input items on Responses' do
       chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-      chat.with_instructions('Stable instructions').cache_until_here!
+      chat.with_instructions('Stable instructions').cache_until_here
       chat.ask_later('Hello')
 
       payload = chat.render
@@ -164,7 +176,7 @@ RSpec.describe RubyLLM::Chat, :live do
       allow(RubyLLM.logger).to receive(:debug)
 
       chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
-      chat.ask_later('Long context').cache_until_here!
+      chat.ask_later('Long context').cache_until_here
       chat.render
 
       expect(RubyLLM.logger).to have_received(:debug).with(/implicit caching.*RubyLLM\.cache/m).once
@@ -187,25 +199,25 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  describe '#cache_until_here!' do
+  describe '#cache_until_here' do
     let(:chat) { RubyLLM.chat }
 
     it 'marks the last added message as a cache boundary' do
       message = chat.add_message(role: :user, content: 'Long context')
 
-      expect(chat.cache_until_here!).to eq(chat)
+      expect(chat.cache_until_here).to eq(chat)
       expect(message.cache_until_here?).to be true
     end
 
     it 'marks the staged user message from ask_later' do
-      chat.ask_later('Long context').cache_until_here!
+      chat.ask_later('Long context').cache_until_here
 
       expect(chat.messages.last.cache_until_here?).to be true
     end
 
     it 'marks the instruction added by with_instructions' do
       chat.add_message(role: :user, content: 'Existing message')
-      chat.with_instructions('Stable instructions').cache_until_here!
+      chat.with_instructions('Stable instructions').cache_until_here
 
       system_message = chat.messages.find { |msg| msg.role == :system }
       user_message = chat.messages.find { |msg| msg.role == :user }
@@ -214,7 +226,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'raises when the chat has no messages' do
-      expect { chat.cache_until_here! }.to raise_error(ArgumentError, 'No messages to cache')
+      expect { chat.cache_until_here }.to raise_error(ArgumentError, 'No messages to cache')
     end
   end
 
@@ -234,13 +246,13 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} writes then reads the prompt cache" do
         write_chat = RubyLLM.chat(model: model, provider: provider)
         write_chat.with_instructions(cacheable_instructions)
-        write_chat.cache_until_here!
+        write_chat.cache_until_here
         first = write_chat.ask('Reply with exactly: OK')
         expect(first.tokens.cache_write.to_i + first.tokens.cache_read.to_i).to be_positive
 
         read_chat = RubyLLM.chat(model: model, provider: provider)
         read_chat.with_instructions(cacheable_instructions)
-        read_chat.cache_until_here!
+        read_chat.cache_until_here
         second = read_chat.ask('Reply with exactly: OK')
         expect(second.tokens.cache_read).to be_positive
       end

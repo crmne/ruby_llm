@@ -33,6 +33,11 @@ RSpec.describe RubyLLM::Chat, :live do
 
       expect(chat.instance_variable_get(:@citations)).to be(false)
     end
+
+    it 'rejects nil' do
+      expect { RubyLLM.chat.with_citations(nil) }
+        .to raise_error(ArgumentError, /accepts true or false/)
+    end
   end
 
   describe 'citations' do

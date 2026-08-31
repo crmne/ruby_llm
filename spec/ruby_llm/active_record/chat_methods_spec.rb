@@ -11,11 +11,11 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ToolCall.new(id: id, name: name, arguments: arguments)
   end
 
-  describe '#cancel!' do
+  describe '#cancel' do
     it 'persists the request on a saved record' do
       chat = Chat.create!(model: model_id)
 
-      chat.cancel!
+      chat.cancel
 
       expect(chat).to be_cancelled
       expect(Chat.find(chat.id)[:cancelled]).to be(true)
@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'holds the request in memory for an unsaved record' do
       chat = Chat.new(model: model_id)
 
-      expect(chat.cancel!).to eq(chat)
+      expect(chat.cancel).to eq(chat)
       expect(chat).to be_cancelled
       expect(chat).not_to be_persisted
     end
@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
       chat.to_llm
 
-      chat.cancel!
+      chat.cancel
 
       expect(chat.to_llm).to be_cancelled
     end
@@ -205,11 +205,11 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  describe '#with_runtime_instructions' do
+  describe '#with_instructions with persistence disabled' do
     it 'applies instructions without persisting them' do
       chat = Chat.create!(model: model_id)
 
-      chat.with_runtime_instructions('Answer in French')
+      chat.with_instructions('Answer in French', persist: false)
 
       expect(chat.messages.where(role: 'system')).to be_empty
       expect(chat.to_llm.messages.map(&:content)).to eq(['Answer in French'])
@@ -218,15 +218,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'appends runtime instructions' do
       chat = Chat.create!(model: model_id)
 
-      chat.with_runtime_instructions('Answer in French')
-      chat.with_runtime_instructions('Be brief', append: true)
+      chat.with_instructions('Answer in French', persist: false)
+      chat.with_instructions('Be brief', append: true, persist: false)
 
       expect(chat.to_llm.messages.map(&:content)).to eq(['Answer in French', 'Be brief'])
     end
 
     it 'survives a reload' do
       chat = Chat.create!(model: model_id)
-      chat.with_runtime_instructions('Answer in French')
+      chat.with_instructions('Answer in French', persist: false)
 
       chat.reload
 
@@ -236,7 +236,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'appends to persisted instructions and keeps them through a reload' do
       chat = Chat.create!(model: model_id)
       chat.with_instructions('Be concise')
-      chat.with_runtime_instructions('Answer in French', append: true)
+      chat.with_instructions('Answer in French', append: true, persist: false)
 
       expect(chat.to_llm.messages.map(&:content)).to eq(['Be concise', 'Answer in French'])
 
@@ -245,12 +245,38 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.to_llm.messages.map(&:content)).to eq(['Be concise', 'Answer in French'])
     end
 
+    it 'keeps a runtime cache boundary through a reload' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Persisted history')
+      chat.with_instructions('Stable policy', persist: false, cache_until_here: true)
+      chat.with_instructions('Current context', append: true, persist: false)
+
+      expect(chat.to_llm.messages.map(&:cache_until_here?)).to eq([true, false])
+      expect(chat.messages.where(cache_until_here: true)).to be_empty
+
+      chat.reload
+
+      expect(chat.to_llm.messages.map(&:content)).to eq(['Stable policy', 'Current context'])
+      expect(chat.to_llm.messages.map(&:cache_until_here?)).to eq([true, false])
+    end
+
     it 'drops them when given nil' do
       chat = Chat.create!(model: model_id)
-      chat.with_runtime_instructions('Answer in French')
+      chat.with_instructions('Answer in French', persist: false)
 
-      expect(chat.with_runtime_instructions(nil)).to eq(chat)
+      expect(chat.with_instructions(nil, persist: false)).to eq(chat)
       expect(chat.to_llm.messages).to be_empty
+    end
+  end
+
+  describe '#with_instructions with a cache boundary' do
+    it 'persists the boundary with persisted instructions' do
+      chat = Chat.create!(model: model_id)
+
+      chat.with_instructions('Stable policy', cache_until_here: true)
+
+      expect(chat.messages.where(role: 'system').sole.cache_until_here?).to be(true)
+      expect(chat.to_llm.messages.sole.cache_until_here?).to be(true)
     end
   end
 
@@ -266,12 +292,12 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
-  describe '#cache_until_here!' do
+  describe '#cache_until_here' do
     it 'marks the last persisted message' do
       chat = Chat.create!(model: model_id)
       chat.add_message(role: :user, content: 'Reusable prompt')
 
-      chat.cache_until_here!
+      chat.cache_until_here
 
       expect(chat.messages.last.cache_until_here?).to be(true)
     end
@@ -280,7 +306,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
       chat.to_llm.add_message(role: :user, content: 'Reusable prompt')
 
-      chat.cache_until_here!
+      chat.cache_until_here
 
       expect(chat.to_llm.messages.last.cache_until_here?).to be(true)
     end
@@ -288,7 +314,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'raises when the chat has no messages at all' do
       chat = Chat.create!(model: model_id)
 
-      expect { chat.cache_until_here! }.to raise_error(ArgumentError, 'No messages to cache')
+      expect { chat.cache_until_here }.to raise_error(ArgumentError, 'No messages to cache')
     end
   end
 
@@ -309,6 +335,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
 
       expect(chat.cost.total).to be_nil
+    end
+
+    it 'uses a stored exact cost when token counts were unavailable' do
+      chat = Chat.create!(model: model_id)
+      message = chat.messages.create!(role: :assistant, content: 'done')
+      chat.ruby_llm_usages.create!(
+        message:,
+        operation: 'chat',
+        provider: 'openrouter',
+        model: model_id,
+        status: 'succeeded',
+        total_cost: 0.0042
+      )
+
+      expect(chat.reload.cost.total).to eq(0.0042)
+      expect(message.reload.cost.total).to eq(0.0042)
     end
   end
 
@@ -348,6 +390,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                  .with_tool_options(concurrency: :fibers)
                  .with_caching(ttl: '1h')
                  .with_compaction(at: 50_000)
+                 .with_thinking(effort: :low)
                  .with_end_user('customer-42')
                  .with_fallbacks('gpt-4.1-mini')
                  .with_headers('X-Trace' => 'abc')
@@ -357,6 +400,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.concurrency).to eq(:fibers)
       expect(chat.caching).to eq(ttl: '1h')
       expect(chat.compaction).to eq(at: 50_000)
+      expect(chat.thinking).to eq(effort: 'low')
       expect(chat.end_user).to eq('customer-42')
       expect(chat.fallbacks).to eq(chat.to_llm.fallbacks)
       expect(chat.headers).to eq('X-Trace' => 'abc')
@@ -472,7 +516,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
 
-      expect(chat.deny!(call.id)).to eq(chat)
+      expect(chat.deny(call.id)).to eq(chat)
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).approval).to eq('denied')
     end
 
@@ -481,7 +525,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = Chat.create!(model: model_id)
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
 
-      chat.approve!(call)
+      chat.approve(call)
 
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).approval).to eq('approved')
     end
@@ -489,7 +533,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'rejects an unknown tool call' do
       chat = Chat.create!(model: model_id)
 
-      expect { chat.approve!('call_missing') }.to raise_error(ArgumentError, /Unknown tool call: "call_missing"/)
+      expect { chat.approve('call_missing') }.to raise_error(ArgumentError, /Unknown tool call: "call_missing"/)
     end
   end
 

@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
   let(:model) { 'gpt-4.1-nano' }
 
-  def usage_tracker(provider, recorder)
+  def usage_tracker(provider, recorder, config: RubyLLM.config)
     RubyLLM.const_get(:Usage)::Tracker.new(
       operation: :chat,
       provider: provider,
       model: RubyLLM.models.find(model),
-      config: RubyLLM.config,
+      config:,
       on_finish: recorder
     )
   end
@@ -76,6 +76,58 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       expect(chat.messages.last).not_to respond_to(:usage)
     end
 
+    it 'persists each attempt before publishing its usage event' do
+      observed_counts = []
+      chat = Chat.create!(model: model)
+      instrumenter_class = Class.new do
+        def initialize(&callback)
+          @callback = callback
+        end
+
+        def instrument(name, payload, &block)
+          result = block&.call
+          @callback.call(payload) if name == 'usage.ruby_llm'
+          result
+        end
+      end
+      instrumenter = instrumenter_class.new { observed_counts << chat.ruby_llm_usages.count }
+      context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+      chat.with_context(context)
+      provider = chat.to_llm.provider
+
+      allow(provider).to receive(:complete) do |_messages, usage_recorder:, **|
+        tracker = usage_tracker(provider, usage_recorder, config: context.config)
+        failed = tracker.start
+        tracker.fail_attempt(failed, RubyLLM::ServerError.new('retry'))
+        tracker.start
+        tracker.succeed(RubyLLM::Message.new(role: :assistant, content: 'Hello', model:))
+      end
+
+      chat.ask('Hello')
+
+      expect(observed_counts).to eq([1, 2])
+    end
+
+    it 'persists a batch response as one usage attempt' do
+      chat = Chat.create!(model: model).ask_later('Hello')
+      llm_chat = chat.to_llm
+      provider = llm_chat.provider
+      response = RubyLLM::Message.new(
+        role: :assistant, content: 'Hello', model:, input_tokens: 8, output_tokens: 3
+      )
+      allow(provider).to receive(:batch_results).and_return([[0, response]])
+      batch = RubyLLM::Batch.new(
+        provider:, chats: [llm_chat], id: 'batch_test', raw_status: 'completed', completed: true
+      )
+
+      batch.messages
+
+      usage = chat.reload.ruby_llm_usages.sole
+      expect(usage).to have_attributes(status: 'succeeded', message: chat.messages.last)
+      expect(usage.tokens.to_h).to eq(input_tokens: 8, output_tokens: 3)
+      expect(chat.cost.total).to eq(usage.cost.total)
+    end
+
     it 'reloads linked and unlinked entries chronologically' do
       chat = Chat.create!(model: model)
       message = chat.messages.create!(role: :assistant, content: 'done', model_id: model, provider: 'openai')
@@ -108,7 +160,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
           chunk = RubyLLM::Chunk.new(role: :assistant, content: 'one', input_tokens: 5, output_tokens: 1)
           tracker.observe(chunk)
           block.call(chunk)
-          Chat.find(chat.id).cancel!
+          Chat.find(chat.id).cancel
           block.call(RubyLLM::Chunk.new(role: :assistant, content: 'two'))
         rescue StandardError => e
           tracker.fail_attempt(entry, e)

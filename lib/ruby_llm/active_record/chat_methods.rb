@@ -48,14 +48,14 @@ module RubyLLM
       # Requests cancellation of the current in-flight chat operation. The
       # request is persisted so a background job can observe it from another
       # process.
-      def cancel!
+      def cancel
         if persisted?
           update_column(:cancelled, true)
         else
           self[:cancelled] = true
         end
 
-        @chat&.cancel!
+        @chat&.cancel
         self
       end
 
@@ -69,10 +69,10 @@ module RubyLLM
       # an id) on the persisted tool call, so the next #complete executes it
       # from any process. Returns +self+.
       #
-      #   chat.approve!(params[:tool_call_id])
+      #   chat.approve(params[:tool_call_id])
       #   CompleteJob.perform_later(chat.id)
       #
-      def approve!(tool_call)
+      def approve(tool_call)
         record_tool_call_decision(tool_call, 'approved')
       end
 
@@ -80,7 +80,7 @@ module RubyLLM
       # an id) on the persisted tool call. The next #complete appends a
       # structured denial result instead of executing the tool. Returns
       # +self+.
-      def deny!(tool_call)
+      def deny(tool_call)
         record_tool_call_decision(tool_call, 'denied')
       end
 
@@ -93,7 +93,7 @@ module RubyLLM
 
       # Returns the persisted tool call records that require approval and
       # have no recorded decision, ready to render as approval cards. Pass
-      # a record (or its tool_call_id) to #approve! or #deny!.
+      # a record (or its tool_call_id) to #approve or #deny.
       #
       #   chat.pending_approvals.each { |record| render record }
       #
@@ -181,36 +181,29 @@ module RubyLLM
 
       # Sets the system instructions, persisting them as a message with the
       # +:system+ role. Replaces any persisted system messages unless
-      # +append:+ is true. Returns +self+.
+      # +append:+ is true. Pass <tt>persist: false</tt> to apply the
+      # instructions only to the in-memory chat for this record instance.
+      # With <tt>cache_until_here: true</tt> the instruction becomes an
+      # explicit prompt cache boundary. Returns +self+.
       #
       #   chat.with_instructions "You are a Ruby expert."
       #   chat.with_instructions "Use short bullet points.", append: true
+      #   chat.with_instructions current_context, persist: false
       #
-      def with_instructions(instructions, append: false)
+      def with_instructions(instructions, append: false, persist: true, cache_until_here: false)
         to_llm
 
-        if instructions.nil?
-          clear_persisted_system_instructions
+        if persist
+          if instructions.nil?
+            clear_persisted_system_instructions
+          else
+            persist_system_instruction(instructions, append:, cache_until_here:)
+          end
         else
-          persist_system_instruction(instructions, append:)
+          store_unpersisted_instruction(instructions, append:, cache_until_here:)
         end
 
-        @chat.with_instructions(instructions, append:)
-        self
-      end
-
-      def with_runtime_instructions(instructions, append: false) # :nodoc:
-        to_llm
-
-        if instructions.nil?
-          @runtime_instructions = []
-          sync_messages
-          return self
-        end
-
-        store_runtime_instruction(instructions, append:)
-
-        @chat.with_instructions(instructions, append:)
+        sync_messages
         self
       end
 
@@ -257,7 +250,7 @@ module RubyLLM
       # Returns the next request payload with #before_request hooks applied.
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching compaction concurrency end_user fallbacks headers provider_options schema server_tools tools
+        caching compaction concurrency end_user fallbacks headers provider_options schema server_tools thinking tools
         add_completion count_tokens each render
       ].freeze
 
@@ -314,15 +307,15 @@ module RubyLLM
       # Marks the latest persisted message as a prompt cache boundary, or the
       # latest in-memory message when none is persisted yet. Returns +self+.
       #
-      #   chat.with_instructions('Reusable analysis prompt').cache_until_here!
+      #   chat.with_instructions('Reusable analysis prompt').cache_until_here
       #
       # Raises ArgumentError if the chat has no messages.
-      def cache_until_here!
+      def cache_until_here
         message_record = messages_association.order(:id).last
         if message_record
-          message_record.cache_until_here!
+          message_record.cache_until_here
         elsif @chat&.messages&.any?
-          @chat.cache_until_here!
+          @chat.cache_until_here
         else
           raise ArgumentError, 'No messages to cache'
         end
@@ -346,7 +339,7 @@ module RubyLLM
       #
       def cost
         records = ruby_llm_usages.to_a
-        RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:usage_available?))
+        RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
       # Persists +message+ as a user message, then runs the completion loop
@@ -610,35 +603,51 @@ module RubyLLM
         association.reset
       end
 
-      def replace_persisted_system_instructions(instructions)
+      def replace_persisted_system_instructions(instructions, cache_until_here:)
         clear_persisted_system_instructions
-        messages_association.create!(role: :system, content: instructions)
+        messages_association.create!(
+          role: :system,
+          content: instructions,
+          cache_until_here: cache_until_here
+        )
       end
 
-      def persist_system_instruction(instructions, append:)
+      def persist_system_instruction(instructions, append:, cache_until_here:)
         transaction do
           if append
-            messages_association.create!(role: :system, content: instructions)
+            messages_association.create!(
+              role: :system,
+              content: instructions,
+              cache_until_here: cache_until_here
+            )
           else
-            replace_persisted_system_instructions(instructions)
+            replace_persisted_system_instructions(instructions, cache_until_here:)
           end
         end
       end
 
-      def runtime_instructions
-        @runtime_instructions ||= []
+      def unpersisted_instructions
+        @unpersisted_instructions ||= []
       end
 
-      def store_runtime_instruction(instructions, append:)
+      def store_unpersisted_instruction(instructions, append:, cache_until_here:)
+        if instructions.nil?
+          @unpersisted_instructions = []
+          return
+        end
+
+        entry = [instructions, append, cache_until_here]
         if append
-          runtime_instructions << [instructions, true]
+          unpersisted_instructions << entry
         else
-          @runtime_instructions = [[instructions, false]]
+          @unpersisted_instructions = [entry]
         end
       end
 
       def reapply_runtime_instructions(chat)
-        runtime_instructions.each { |instructions, append| chat.with_instructions(instructions, append:) }
+        unpersisted_instructions.each do |instructions, append, cache_until_here|
+          chat.with_instructions(instructions, append:, cache_until_here:)
+        end
       end
 
       def persist_new_message

@@ -104,7 +104,7 @@ The registry itself is persisted internally. Query and refresh it through `RubyL
 ```ruby
 RubyLLM.models.find('{{ site.models.openai_standard }}', :openai)
 RubyLLM.models.by_provider(:anthropic)
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 ```
 
 There is no application-owned `Model` class or configurable registry model class. `acts_as_chat` defines the `model` association against RubyLLM's private record, preserving referential integrity without putting provider metadata in your application models.
@@ -125,7 +125,7 @@ chat.cost.total           # includes retries and cancelled attempts
 
 An internal entry links to its resulting message when one exists. A failed retry or cancelled generation can remain linked only to the chat. Per-attempt details are available through `usage.ruby_llm` instrumentation rather than a second public usage API.
 
-Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. Message token and cost columns from older RubyLLM versions remain readable as a compatibility fallback, but new installs do not add them.
+Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the upgrade generator moves 1.16 message tokens into it before removing the old columns.
 
 See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for entry statuses, incomplete totals, cancellation behavior, and instrumentation.
 

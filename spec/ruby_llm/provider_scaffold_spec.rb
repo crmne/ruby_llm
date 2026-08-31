@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
     FileUtils.rm_rf(dir)
   end
 
-  describe '#generate!' do
+  describe '#generate' do
     it 'generates a standalone provider gem that boots' do
       result = described_class.new(
         'AcmeCloud',
@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
         destination: dir,
         api_base: 'https://api.acmecloud.example/v1',
         github_owner: 'crmne'
-      ).generate!
+      ).generate
 
       expect(result.written).to include(
         'Gemfile',
@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
         dialect: :ollama,
         models_dev_provider: 'acme-cloud',
         dynamic_models: true
-      ).generate!
+      ).generate
 
       expect(result.written).to include(
         'lib/ruby_llm/providers/acme_cloud.rb',
@@ -149,7 +149,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
     end
 
     it 'resolves a shipped provider model without an explicit provider' do
-      described_class.new('MiniMax', mode: :gem, destination: dir).generate!
+      described_class.new('MiniMax', mode: :gem, destination: dir).generate
       models = [RubyLLM::Model.new(id: 'MiniMax-M3', name: 'MiniMax M3', provider: 'mini_max')]
       File.write(File.join(dir, 'models.json'), RubyLLM::ModelRegistry.pretty_json(models))
 
@@ -292,7 +292,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
     it 'writes the provider without touching files that are not there' do
       result = described_class.new(
         'Acme', mode: :core, destination: dir, models_dev_provider: 'acme'
-      ).generate!
+      ).generate
 
       expect(result.written).to include('lib/ruby_llm/providers/acme.rb')
       expect(result.updated).to be_empty
@@ -301,18 +301,18 @@ RSpec.describe RubyLLM::ProviderScaffold do
 
   describe 'existing files' do
     it 'skips them unless asked to overwrite' do
-      described_class.new('Acme', mode: :gem, destination: dir).generate!
+      described_class.new('Acme', mode: :gem, destination: dir).generate
 
-      result = described_class.new('Acme', mode: :gem, destination: dir).generate!
+      result = described_class.new('Acme', mode: :gem, destination: dir).generate
 
       expect(result.written).to be_empty
       expect(result.skipped).not_to be_empty
     end
 
     it 'overwrites them with force' do
-      described_class.new('Acme', mode: :gem, destination: dir).generate!
+      described_class.new('Acme', mode: :gem, destination: dir).generate
 
-      result = described_class.new('Acme', mode: :gem, destination: dir, force: true).generate!
+      result = described_class.new('Acme', mode: :gem, destination: dir, force: true).generate
 
       expect(result.skipped).to be_empty
       expect(result.written).to be_empty

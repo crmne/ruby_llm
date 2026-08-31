@@ -116,7 +116,7 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      result = SignatureTool.new.call({ 'questions' => [], 'isOther' => true })
+      result = SignatureTool.new.call(**{ 'questions' => [], 'isOther' => true })
 
       expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: isOther' })
     end
@@ -128,7 +128,7 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      result = RequiredTool.new.call({})
+      result = RequiredTool.new.call
 
       expect(result).to eq({ error: 'Invalid tool arguments: missing keyword: questions' })
     end
@@ -140,7 +140,7 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      result = FlexibleTool.new.call({ 'questions' => [1], 'isOther' => true })
+      result = FlexibleTool.new.call(questions: [1], isOther: true)
 
       expect(result).to eq({ questions: [1], extra: { isOther: true } })
     end
@@ -153,7 +153,7 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      expect { ManualArgumentErrorTool.new.call({ 'questions' => [] }) }
+      expect { ManualArgumentErrorTool.new.call(questions: []) }
         .to raise_error(ArgumentError, 'bad value provided')
     end
 
@@ -164,21 +164,9 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      result = NoArgumentTool.new.call({ 'unexpected' => true })
+      result = NoArgumentTool.new.call(unexpected: true)
 
       expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: unexpected' })
-    end
-
-    it 'preserves legacy positional argument handling' do
-      stub_const('RestArgumentTool', Class.new(described_class) do
-        def execute(*args)
-          args
-        end
-      end)
-
-      result = RestArgumentTool.new.call({ 'legacy' => true })
-
-      expect(result).to eq([{ legacy: true }])
     end
 
     context 'with a tool_call keyword' do
@@ -191,7 +179,7 @@ RSpec.describe RubyLLM::Tool do
           end
         end)
 
-        result = AuditedTool.new.call({ 'query' => 'ruby' }, tool_call: tool_call)
+        result = AuditedTool.new.call(query: 'ruby', tool_call: tool_call)
 
         expect(result).to eq(query: 'ruby', tool_call_id: 'call_1')
       end
@@ -203,7 +191,7 @@ RSpec.describe RubyLLM::Tool do
           end
         end)
 
-        expect(PlainTool.new.call({ 'query' => 'ruby' }, tool_call: tool_call)).to eq('ruby')
+        expect(PlainTool.new.call(query: 'ruby', tool_call: tool_call)).to eq('ruby')
       end
 
       it 'stays callable without a tool call' do
@@ -213,7 +201,7 @@ RSpec.describe RubyLLM::Tool do
           end
         end)
 
-        expect(StandaloneTool.new.call({ 'query' => 'ruby' })).to eq(['ruby', nil])
+        expect(StandaloneTool.new.call(query: 'ruby')).to eq(['ruby', nil])
       end
 
       it 'rejects tool_call as a model-provided argument' do
@@ -223,7 +211,7 @@ RSpec.describe RubyLLM::Tool do
           end
         end)
 
-        result = GuardedTool.new.call({ 'query' => 'ruby', 'tool_call' => 'spoofed' }, tool_call: tool_call)
+        result = GuardedTool.new.call(tool_call: tool_call, **{ 'query' => 'ruby', 'tool_call' => 'spoofed' })
 
         expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: tool_call' })
       end
@@ -356,27 +344,6 @@ RSpec.describe RubyLLM::Tool do
       stub_const('AbstractTool', Class.new(described_class))
 
       expect { AbstractTool.new.execute }.to raise_error(NotImplementedError, /must implement #execute/)
-    end
-  end
-
-  describe '#normalize_args' do
-    let(:tool) do
-      stub_const('NormalizingTool', Class.new(described_class) do
-        def execute(**) = 'ok'
-      end)
-      NormalizingTool.new
-    end
-
-    it 'treats missing arguments as none' do
-      expect(tool.send(:normalize_args, nil)).to eq({})
-    end
-
-    it 'symbolizes string keys' do
-      expect(tool.send(:normalize_args, { 'city' => 'Rome' })).to eq(city: 'Rome')
-    end
-
-    it 'discards arguments that are not a hash' do
-      expect(tool.send(:normalize_args, 'Rome')).to eq({})
     end
   end
 

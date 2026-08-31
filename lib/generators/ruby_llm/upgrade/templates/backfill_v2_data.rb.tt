@@ -1,0 +1,431 @@
+# frozen_string_literal: true
+
+class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
+  disable_ddl_transaction!
+
+  BATCH_SIZE = 10_000
+  PROGRESS_TABLE = :ruby_llm_v2_backfills
+
+  def up
+    create_progress_table
+    backfill_required_defaults
+    backfill_message_content
+    backfill_tool_results
+    backfill_usages
+    verify_backfills
+  end
+
+  def down
+    raise ActiveRecord::IrreversibleMigration, 'RubyLLM 2.0 changes persisted record ownership'
+  end
+
+  private
+
+  def backfill_required_defaults
+    {
+      <%= chat_table_name %>: {cancelled: false},
+      <%= message_table_name %>: {cache_until_here: false},
+      ruby_llm_tool_calls: {message_type: '<%= message_model_name %>'}
+    }.each do |table, attributes|
+      column, value = attributes.first
+      migration_record(table).where(column => nil).in_batches(of: BATCH_SIZE) do |batch|
+        batch.update_all(column => value)
+      end
+    end
+  end
+
+  def backfill_message_content
+    return mark_completed('message_content') unless column_exists?(:<%= message_table_name %>, :content_raw)
+
+    each_message_range('message_content') do |range|
+      content_raw = message_value(:content_raw)
+      raw_content = message_value(:raw_content)
+      content = message_value(:content)
+<% if postgresql? -%>
+      structured_content = "#{content_raw}::jsonb"
+      rendered_content = "#{content_raw}::text"
+<% elsif mysql? -%>
+      structured_content = content_raw
+      rendered_content = "CAST(#{content_raw} AS CHAR)"
+<% else -%>
+      structured_content = content_raw
+      rendered_content = content_raw
+<% end -%>
+      execute <<~SQL
+        UPDATE #{quote_table(:<%= message_table_name %>)} AS legacy_messages
+           SET #{quote_column(:raw_content)} = COALESCE(#{raw_content}, #{structured_content}),
+               #{quote_column(:content)} = COALESCE(#{content}, #{rendered_content})
+         WHERE #{range}
+           AND #{content_raw} IS NOT NULL
+      SQL
+    end
+  end
+
+  def backfill_tool_results
+    result_reference = :<%= v1_tool_call_foreign_key %>
+    return mark_completed('tool_results') unless column_exists?(:<%= message_table_name %>, result_reference)
+
+    each_message_range('tool_results') do |range|
+      messages = quote_table(:<%= message_table_name %>)
+      tool_calls = quote_table(:ruby_llm_tool_calls)
+      message_id = quoted_primary_key(:<%= message_table_name %>)
+      tool_call_id = quoted_primary_key(:ruby_llm_tool_calls)
+      result_id = message_value(result_reference)
+      result_type = connection.quote('<%= message_model_name %>')
+<% if mysql? -%>
+      execute <<~SQL
+        UPDATE #{tool_calls}
+        INNER JOIN (
+          SELECT #{result_id} AS matched_tool_call_id,
+                 MIN(legacy_messages.#{message_id}) AS matched_result_id
+            FROM #{messages} legacy_messages
+           WHERE #{range}
+             AND #{result_id} IS NOT NULL
+           GROUP BY #{result_id}
+        ) matches ON matches.matched_tool_call_id = #{tool_calls}.#{tool_call_id}
+           SET #{tool_calls}.result_id = matches.matched_result_id,
+               #{tool_calls}.result_type = #{result_type}
+      SQL
+<% elsif postgresql? -%>
+      execute <<~SQL
+        UPDATE #{tool_calls}
+           SET result_id = matches.matched_result_id,
+               result_type = #{result_type}
+          FROM (
+            SELECT #{result_id} AS matched_tool_call_id,
+                   MIN(legacy_messages.#{message_id}) AS matched_result_id
+              FROM #{messages} legacy_messages
+             WHERE #{range}
+               AND #{result_id} IS NOT NULL
+             GROUP BY #{result_id}
+          ) matches
+         WHERE matches.matched_tool_call_id = #{tool_calls}.#{tool_call_id}
+      SQL
+<% else -%>
+      execute <<~SQL
+        UPDATE #{tool_calls}
+           SET result_id = (
+                 SELECT legacy_messages.#{message_id}
+                   FROM #{messages} legacy_messages
+                  WHERE #{range}
+                    AND #{result_id} = #{tool_calls}.#{tool_call_id}
+                  ORDER BY legacy_messages.#{message_id}
+                  LIMIT 1
+               ),
+               result_type = #{result_type}
+         WHERE EXISTS (
+                 SELECT 1
+                   FROM #{messages} legacy_messages
+                  WHERE #{range}
+                    AND #{result_id} = #{tool_calls}.#{tool_call_id}
+               )
+      SQL
+<% end -%>
+    end
+  end
+
+  def backfill_usages
+    joins, provider, model = usage_identity_sql
+    conditions = legacy_usage_conditions
+    return mark_completed('usages') if conditions.empty?
+
+    each_message_range('usages') do |range|
+      candidate = usage_candidate_sql(conditions, joins, range)
+      execute usage_insert_sql(candidate, provider, model)
+    end
+  end
+
+  def each_message_range(task)
+    return if completed?(task)
+
+    primary_key = connection.primary_key(:<%= message_table_name %>)
+    records = migration_record(:<%= message_table_name %>)
+    last_id = progress_value(task)
+    loop do
+      relation = records.order(primary_key => :asc)
+      relation = relation.where("#{quote_column(primary_key)} > ?", last_id) if last_id
+      ids = relation.limit(BATCH_SIZE).pluck(primary_key)
+      break mark_completed(task) if ids.empty?
+
+      upper_id = ids.last
+      range = message_range(primary_key, last_id, upper_id)
+      records.transaction do
+        with_upgrade_safety { yield range }
+        record_progress(task, upper_id)
+      end
+      last_id = upper_id
+    end
+  end
+
+  def message_range(primary_key, lower_id, upper_id)
+    upper = "#{message_value(primary_key)} <= #{connection.quote(upper_id)}"
+    return upper unless lower_id
+
+    "#{message_value(primary_key)} > #{connection.quote(lower_id)} AND #{upper}"
+  end
+
+  def verify_backfills
+    verify_message_content
+    verify_tool_results
+    verify_usages
+  end
+
+  def verify_message_content
+    return unless column_exists?(:<%= message_table_name %>, :content_raw)
+
+    missing = migration_record(:<%= message_table_name %>)
+              .where.not(content_raw: nil)
+              .where('raw_content IS NULL OR content IS NULL')
+              .limit(1)
+              .pick(connection.primary_key(:<%= message_table_name %>))
+    raise "Message #{missing} did not preserve content_raw" if missing
+  end
+
+  def verify_tool_results
+    result_reference = :<%= v1_tool_call_foreign_key %>
+    return unless column_exists?(:<%= message_table_name %>, result_reference)
+
+    messages = quote_table(:<%= message_table_name %>)
+    tool_calls = quote_table(:ruby_llm_tool_calls)
+    missing = select_value(<<~SQL)
+      SELECT legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}
+        FROM #{messages} legacy_messages
+        LEFT JOIN #{tool_calls} migrated_tool_calls
+          ON #{message_value(result_reference)} = migrated_tool_calls.#{quoted_primary_key(:ruby_llm_tool_calls)}
+         AND migrated_tool_calls.result_type = #{connection.quote('<%= message_model_name %>')}
+         AND migrated_tool_calls.result_id = legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}
+       WHERE #{message_value(result_reference)} IS NOT NULL
+         AND migrated_tool_calls.#{quoted_primary_key(:ruby_llm_tool_calls)} IS NULL
+       LIMIT 1
+    SQL
+    raise "Message #{missing} did not preserve its tool result association" if missing
+  end
+
+  def verify_usages
+    joins, provider, model = usage_identity_sql
+    conditions = legacy_usage_conditions
+    return if conditions.empty?
+
+    candidate = usage_candidate_sql(conditions, joins, '1 = 1')
+    missing = select_value(<<~SQL)
+      SELECT #{message_value(connection.primary_key(:<%= message_table_name %>))}
+        #{candidate}
+       LIMIT 1
+    SQL
+    return unless missing
+
+    raise "Message #{missing} did not receive its RubyLLM usage entry (provider: #{provider}, model: #{model})"
+  end
+
+  def usage_identity_sql
+    providers = []
+    models = []
+    joins = []
+    registry = quote_table(:ruby_llm_models)
+    registry_key = quoted_primary_key(:ruby_llm_models)
+
+    if column_exists?(:<%= message_table_name %>, :<%= v1_model_foreign_key %>)
+      explicit_model = column_definition(:<%= message_table_name %>, :<%= v1_model_foreign_key %>)
+      if explicit_model.type == :string
+        models << message_value(:<%= v1_model_foreign_key %>)
+        providers << message_value(:provider) if column_exists?(:<%= message_table_name %>, :provider)
+      else
+        joins << "LEFT JOIN #{registry} legacy_message_models " \
+                 "ON #{message_value(:<%= v1_model_foreign_key %>)} = legacy_message_models.#{registry_key}"
+        providers << "legacy_message_models.#{quote_column(:provider)}"
+        models << "legacy_message_models.#{quote_column(:model_id)}"
+      end
+    end
+
+    if column_exists?(:<%= chat_table_name %>, :ruby_llm_model_id)
+      chats = quote_table(:<%= chat_table_name %>)
+      joins << "LEFT JOIN #{chats} legacy_chats " \
+               "ON #{message_value(:<%= chat_foreign_key %>)} = legacy_chats.#{quoted_primary_key(:<%= chat_table_name %>)}"
+      joins << "LEFT JOIN #{registry} legacy_chat_models " \
+               "ON legacy_chats.#{quote_column(:ruby_llm_model_id)} = legacy_chat_models.#{registry_key}"
+      providers << "legacy_chat_models.#{quote_column(:provider)}"
+      models << "legacy_chat_models.#{quote_column(:model_id)}"
+    end
+
+    [joins.join("\n"), coalesce_sql(providers), coalesce_sql(models)]
+  end
+
+  def legacy_usage_conditions
+    token_columns = %i[
+      input_tokens output_tokens cached_tokens cache_creation_tokens cache_read_tokens cache_write_tokens
+      thinking_tokens total_cost
+    ]
+    conditions = token_columns.filter_map do |column|
+      "#{message_value(column)} IS NOT NULL" if column_exists?(:<%= message_table_name %>, column)
+    end
+    if column_exists?(:<%= message_table_name %>, :cost_details)
+      costs = %w[input output cache_read cache_write thinking total].map do |key|
+        "#{legacy_cost_detail(key)} IS NOT NULL"
+      end
+      conditions << "(#{costs.join(' OR ')})"
+    end
+    conditions << "#{message_value(:role)} = 'assistant'" if column_exists?(:<%= message_table_name %>, :role)
+    conditions
+  end
+
+  def usage_candidate_sql(conditions, joins, range)
+    usages = quote_table(:ruby_llm_usages)
+    <<~SQL
+      FROM #{quote_table(:<%= message_table_name %>)} legacy_messages
+      #{joins}
+      WHERE (#{conditions.join(' OR ')})
+        AND #{range}
+        AND NOT EXISTS (
+          SELECT 1
+            FROM #{usages} existing_usages
+           WHERE existing_usages.message_type = #{connection.quote('<%= message_model_name %>')}
+             AND existing_usages.message_id = #{message_value(connection.primary_key(:<%= message_table_name %>))}
+             AND existing_usages.operation = 'chat'
+             AND existing_usages.status = 'succeeded'
+        )
+    SQL
+  end
+
+  def usage_insert_sql(candidate, provider, model)
+    columns = %i[
+      chat_type chat_id message_type message_id operation provider model status
+      input_tokens output_tokens cache_read_tokens cache_write_tokens thinking_tokens
+      input_cost output_cost cache_read_cost cache_write_cost thinking_cost total_cost
+      created_at updated_at
+    ].map { |column| quote_column(column) }.join(', ')
+    values = [
+      connection.quote('<%= chat_model_name %>'),
+      message_value(:<%= chat_foreign_key %>),
+      connection.quote('<%= message_model_name %>'),
+      message_value(connection.primary_key(:<%= message_table_name %>)),
+      connection.quote('chat'),
+      provider,
+      model,
+      connection.quote('succeeded'),
+      legacy_message_value(:input_tokens),
+      legacy_message_value(:output_tokens),
+      preferred_message_value(:cache_read_tokens, :cached_tokens),
+      preferred_message_value(:cache_write_tokens, :cache_creation_tokens),
+      legacy_message_value(:thinking_tokens),
+      legacy_cost_detail('input'),
+      legacy_cost_detail('output'),
+      legacy_cost_detail('cache_read'),
+      legacy_cost_detail('cache_write'),
+      legacy_cost_detail('thinking'),
+      legacy_total_cost,
+      legacy_message_value(:created_at, fallback: 'CURRENT_TIMESTAMP'),
+      legacy_message_value(:updated_at, fallback: 'CURRENT_TIMESTAMP')
+    ].join(', ')
+    <<~SQL
+      INSERT INTO #{quote_table(:ruby_llm_usages)} (#{columns})
+      SELECT #{values}
+        #{candidate}
+    SQL
+  end
+
+  def preferred_message_value(preferred, fallback)
+    return message_value(preferred) if column_exists?(:<%= message_table_name %>, preferred)
+
+    legacy_message_value(fallback)
+  end
+
+  def legacy_message_value(column, fallback: 'NULL')
+    return fallback unless column_exists?(:<%= message_table_name %>, column)
+
+    message_value(column)
+  end
+
+  def legacy_cost_detail(key)
+    return 'NULL' unless column_exists?(:<%= message_table_name %>, :cost_details)
+
+    details = message_value(:cost_details)
+<% if postgresql? -%>
+    "NULLIF(#{details}::jsonb ->> '#{key}', '')::numeric"
+<% elsif mysql? -%>
+    "JSON_UNQUOTE(JSON_EXTRACT(#{details}, '$.#{key}'))"
+<% else -%>
+    "json_extract(#{details}, '$.#{key}')"
+<% end -%>
+  end
+
+  def legacy_total_cost
+    direct = legacy_message_value(:total_cost)
+    detailed = legacy_cost_detail('total')
+    return 'NULL' if direct == 'NULL' && detailed == 'NULL'
+    return detailed if direct == 'NULL'
+    return direct if detailed == 'NULL'
+
+    "COALESCE(#{direct}, #{detailed})"
+  end
+
+  def create_progress_table
+    return if table_exists?(PROGRESS_TABLE)
+
+    create_table PROGRESS_TABLE, id: false do |table|
+      table.string :task, null: false
+      table.column :last_id, reference_type_for(:<%= message_table_name %>)
+      table.boolean :completed, null: false, default: false
+      table.index :task, unique: true
+    end
+  end
+
+  def progress_value(task)
+    progress_records.where(task: task).pick(:last_id)
+  end
+
+  def completed?(task)
+    progress_records.where(task: task, completed: true).exists?
+  end
+
+  def record_progress(task, last_id)
+    row = progress_records.where(task: task)
+    return row.update_all(last_id: last_id, completed: false) if row.exists?
+
+    progress_records.insert_all!([{ task: task, last_id: last_id, completed: false }], returning: false)
+  end
+
+  def mark_completed(task)
+    row = progress_records.where(task: task)
+    return row.update_all(completed: true) if row.exists?
+
+    progress_records.insert_all!([{ task: task, completed: true }], returning: false)
+  end
+
+  def coalesce_sql(values)
+    values = Array(values).compact
+    return 'NULL' if values.empty?
+    return values.first if values.one?
+
+    "COALESCE(#{values.join(', ')})"
+  end
+
+  def message_value(column) = "legacy_messages.#{quote_column(column)}"
+  def column_definition(table, column) = connection.columns(table).find { |candidate| candidate.name == column.to_s }
+  def quoted_primary_key(table) = quote_column(connection.primary_key(table))
+  def quote_table(table) = connection.quote_table_name(table)
+  def quote_column(column) = connection.quote_column_name(column)
+
+  def reference_type_for(table)
+    column = column_definition(table, connection.primary_key(table))
+    raise "Could not determine the primary key type for #{table}" unless column
+
+    return :bigint if column.type == :integer && column.limit == 8
+
+    column.type
+  end
+
+  def with_upgrade_safety(&)
+    return safety_assured(&) if respond_to?(:safety_assured, true)
+
+    yield
+  end
+
+  def progress_records = migration_record(PROGRESS_TABLE)
+
+  def migration_record(table)
+    Class.new(ActiveRecord::Base) do
+      self.table_name = table.to_s
+      self.inheritance_column = :_type_disabled
+    end
+  end
+end

@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   it 'persists an approval recorded from a pending record' do
     chat = parked_chat
 
-    chat.approve!(chat.pending_approvals.first)
+    chat.approve(chat.pending_approvals.first)
 
     expect(chat.pending_approvals).to be_empty
     expect(chat).not_to be_awaiting_approval

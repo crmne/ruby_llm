@@ -50,6 +50,8 @@ module RubyLLM
         super(id, batch_protocol: resolve_batch_protocol(batch_protocol) || batch_protocol_for_stored_batch(id))
       end
 
+      def batch_cost_multiplier(**) = 0.5
+
       class << self
         def capabilities
           OpenAI::Capabilities

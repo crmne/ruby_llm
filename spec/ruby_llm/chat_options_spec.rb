@@ -169,6 +169,18 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe '#thinking' do
+    it 'returns nil when thinking is not configured' do
+      expect(chat.thinking).to be_nil
+    end
+
+    it 'returns the options configured for the current model' do
+      chat.with_thinking(effort: :high, budget: 2_000)
+
+      expect(chat.thinking).to eq(effort: 'high', budget: 2_000)
+    end
+  end
+
   describe 'callbacks without a block' do
     it 'registers nothing' do
       chat.before_message
@@ -177,9 +189,9 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe '#cancel!' do
+  describe '#cancel' do
     it 'raises on the next completion attempt' do
-      chat.cancel!
+      chat.cancel
 
       expect { chat.send(:raise_if_cancelled!) }.to raise_error(RubyLLM::CancelledError)
       expect(chat).not_to be_cancelled

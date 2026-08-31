@@ -132,7 +132,7 @@ RubyLLM.speak(
 # requests model=aura-2-zeus-en
 ```
 
-Aura 2 English voices include `thalia`, `asteria`, `luna`, `apollo`, `orion`, and `zeus`. Pass a whole model id such as `aura-2-celeste-es` as the `voice:` to reach the voices in other languages, and call `RubyLLM.models.refresh!` to pull the full catalog into the registry.
+Aura 2 English voices include `thalia`, `asteria`, `luna`, `apollo`, `orion`, and `zeus`. Pass a whole model id such as `aura-2-celeste-es` as the `voice:` to reach the voices in other languages, and call `RubyLLM.models.refresh` to pull the full catalog into the registry.
 
 ## Formats
 

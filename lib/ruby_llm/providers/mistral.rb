@@ -17,6 +17,8 @@ module RubyLLM
         }
       end
 
+      def batch_cost_multiplier(**) = 0.5
+
       class << self
         def capabilities
           Mistral::Capabilities

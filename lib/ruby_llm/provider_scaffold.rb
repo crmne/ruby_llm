@@ -37,7 +37,7 @@ module RubyLLM
       @result = Result.new(written: [], updated: [], skipped: [], actions: [])
     end
 
-    def generate!
+    def generate
       mode == 'core' ? generate_core_provider : generate_provider_gem
       @result
     end

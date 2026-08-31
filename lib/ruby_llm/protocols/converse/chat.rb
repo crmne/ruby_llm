@@ -175,7 +175,7 @@ module RubyLLM
               }
             end
           end
-          blocks << converse_cache_block_for(caching) if cache_boundary?(msg, automatic_cache_target)
+          blocks << converse_cache_block_for(caching) if cache_boundary?(msg, automatic_cache_target, caching:)
 
           blocks
         end
@@ -237,7 +237,11 @@ module RubyLLM
         def format_system(messages, caching: nil, automatic_cache_target: nil)
           messages.flat_map do |msg|
             blocks = Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names)
-            cache_boundary?(msg, automatic_cache_target) ? blocks + [converse_cache_block_for(caching)] : blocks
+            if cache_boundary?(msg, automatic_cache_target, caching:)
+              blocks + [converse_cache_block_for(caching)]
+            else
+              blocks
+            end
           end
         end
 
@@ -252,8 +256,8 @@ module RubyLLM
           !message.tool_result?
         end
 
-        def cache_boundary?(message, automatic_cache_target)
-          message.cache_until_here? || message.equal?(automatic_cache_target)
+        def cache_boundary?(message, automatic_cache_target, caching: nil)
+          caching != false && (message.cache_until_here? || message.equal?(automatic_cache_target))
         end
 
         def converse_cache_block_for(caching)
@@ -365,6 +369,7 @@ module RubyLLM
         def format_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
           return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
+          return { reasoning_config: { type: 'disabled' } } if thinking.enabled == false
 
           effort = thinking.effort.to_s
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
@@ -386,6 +391,8 @@ module RubyLLM
                   "#{model&.id} takes a reasoning effort, not a token budget of #{thinking.budget}. " \
                   'Pass with_thinking(effort:) instead.'
           end
+
+          return { reasoningConfig: { type: 'disabled' } } if thinking.enabled == false
 
           effort = thinking.effort.to_s
           return nil if effort == 'none'

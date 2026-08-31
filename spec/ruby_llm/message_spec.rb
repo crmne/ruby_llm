@@ -90,12 +90,12 @@ RSpec.describe RubyLLM::Message do
     end
   end
 
-  describe '#cache_until_here!' do
+  describe '#cache_until_here' do
     it 'marks the message as a cache boundary' do
       message = described_class.new(role: :user, content: 'hello')
 
       expect(message.cache_until_here?).to be false
-      expect(message.cache_until_here!).to eq(message)
+      expect(message.cache_until_here).to eq(message)
       expect(message.cache_until_here?).to be true
     end
 
@@ -182,7 +182,7 @@ RSpec.describe RubyLLM::Message do
     end
 
     it 'includes cache_until_here when marked' do
-      message = described_class.new(role: :user, content: 'Hello').cache_until_here!
+      message = described_class.new(role: :user, content: 'Hello').cache_until_here
 
       expect(message.to_h[:cache_until_here]).to be true
     end

@@ -124,14 +124,14 @@ chat.awaiting_approval? # => true, and nothing has executed
 ```ruby
 tool_call = response.tool_calls.values.first
 
-chat.approve!(tool_call)
+chat.approve(tool_call)
 chat.complete # executes the tool, then lets the model continue
 ```
 
-`approve!` and `deny!` accept a `ToolCall` or its id, and `chat.pending_approvals` lists the calls still waiting for a decision. A denied call never executes: the model receives a structured result saying the user denied the call, and the conversation continues from there.
+`approve` and `deny` accept a `ToolCall` or its id, and `chat.pending_approvals` lists the calls still waiting for a decision. A denied call never executes: the model receives a structured result saying the user denied the call, and the conversation continues from there.
 
 ```ruby
-chat.deny!(tool_call)
+chat.deny(tool_call)
 chat.complete # appends the denial result and asks the model to respond
 ```
 
@@ -169,7 +169,7 @@ end
 class ApprovalsController < ApplicationController
   def create
     chat = Chat.find(params[:chat_id])
-    params[:approved] ? chat.approve!(params[:tool_call_id]) : chat.deny!(params[:tool_call_id])
+    params[:approved] ? chat.approve(params[:tool_call_id]) : chat.deny(params[:tool_call_id])
     CompleteJob.perform_later(chat.id)
   end
 end

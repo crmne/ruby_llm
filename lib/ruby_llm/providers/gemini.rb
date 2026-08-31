@@ -17,6 +17,10 @@ module RubyLLM
         }
       end
 
+      def batch_cost_multiplier(component:, **)
+        %i[cache_read cache_write].include?(component) ? 1 : 0.5
+      end
+
       class << self
         def capabilities
           Gemini::Capabilities

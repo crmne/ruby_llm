@@ -52,16 +52,16 @@ You can see the full list of currently registered models in the [Available Model
 Refresh models everywhere with one call:
 
 ```ruby
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 ```
 
 The call has the same meaning in every environment. It replaces the in-memory registry and persists it to the active store: the platform cache in plain Ruby or RubyLLM's internal model table with the Active Record integration. You do not need a second save call.
 
 RubyLLM does not refresh automatically. Network access and provider credentials remain explicit application concerns, and a missing-model lookup never triggers network I/O.
 
-### How refresh! Works
+### How refresh Works
 
-The `refresh!` method performs the following steps:
+The `refresh` method performs the following steps:
 
 1. **Fetches the published catalog**: Downloads the current registry from rubyllm.com, using its ETag when a file cache is active.
 2. **Discovers configured providers**: Queries configured provider APIs, including local providers by default.
@@ -71,17 +71,17 @@ The `refresh!` method performs the following steps:
 The method returns a chainable `Models` instance, allowing you to immediately query the updated registry:
 
 ```ruby
-chat_models = RubyLLM.models.refresh!.chat_models
+chat_models = RubyLLM.models.refresh.chat_models
 ```
 
 The published registry is generated from provider APIs and [models.dev](https://models.dev). A failed refresh raises `RubyLLM::ModelRegistryError` and leaves the previously loaded registry available.
 
 ### Local Provider Models
 
-By default, `refresh!` includes models from local providers like Ollama and GPUStack if they're configured. To exclude local providers and only fetch from remote APIs:
+By default, `refresh` includes models from local providers like Ollama and GPUStack if they're configured. To exclude local providers and only fetch from remote APIs:
 
 ```ruby
-RubyLLM.models.refresh!(remote_only: true)
+RubyLLM.models.refresh(remote_only: true)
 ```
 
 ### Cache Location
@@ -94,7 +94,7 @@ The default plain Ruby cache locations are:
 
 Set `config.model_registry_file` to use another writable path. See [Connection, Logging and Contexts]({% link _getting_started/configuration-connection.md %}#model-registry-file).
 
-`refresh!` already saves to the active registry store. Use `save_to_json` separately when you want to export the currently loaded registry to another file:
+`refresh` already saves to the active registry store. Use `save_to_json` separately when you want to export the currently loaded registry to another file:
 
 ```ruby
 RubyLLM.models.save_to_json('/tmp/models.json')
@@ -122,7 +122,7 @@ bin/rails db:migrate
 This creates RubyLLM's internal model table. Load or refresh it with the same public entry point used by plain Ruby:
 
 ```ruby
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 ```
 
 ### When a Model Disappears
@@ -173,7 +173,7 @@ It is a model you name directly, in code or in a form, that raises once its row 
 The `unlisted` scope drives the migration pass after a refresh:
 
 ```ruby
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 
 RubyLLM::ActiveRecord::Model.unlisted.find_each do |model|
   Chat.where(model: model).find_each do |chat|

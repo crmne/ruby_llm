@@ -29,8 +29,8 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       Chat.create!(model: model).ask_later('Name the largest planet. One word.')
     ]
     stub_anthropic_batch(
-      create: { id: 'msgbatch_1', status: 'in_progress', completed: false },
-      find: { id: 'msgbatch_1', status: 'ended', completed: true },
+      create: { id: 'msgbatch_1', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_1', raw_status: 'ended', completed: true },
       results: [[0, answer('4')], [1, answer('Jupiter')]]
     )
 
@@ -45,7 +45,8 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     # Poll from a fresh record, the way a job in another process would.
     polled = described_class.find(batch.id).refresh
     expect(polled).to be_complete
-    expect(polled.status).to eq('ended')
+    expect(polled.status).to eq(:succeeded)
+    expect(polled.raw_status).to eq('ended')
 
     polled.messages
 
@@ -58,8 +59,8 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
   it 'is idempotent: re-collecting never appends an answer twice' do
     chat = Chat.create!(model: model).ask_later('What is 2 + 2?')
     stub_anthropic_batch(
-      create: { id: 'msgbatch_2', status: 'in_progress', completed: false },
-      find: { id: 'msgbatch_2', status: 'ended', completed: true },
+      create: { id: 'msgbatch_2', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_2', raw_status: 'ended', completed: true },
       results: [[0, answer('4')]]
     )
     batch = RubyLLM.batch([chat])
@@ -76,8 +77,8 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
       Chat.create!(model: model).ask_later('Second question.')
     ]
     stub_anthropic_batch(
-      create: { id: 'msgbatch_3', status: 'in_progress', completed: false },
-      find: { id: 'msgbatch_3', status: 'ended', completed: true },
+      create: { id: 'msgbatch_3', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_3', raw_status: 'ended', completed: true },
       results: [[0, answer('first')], [1, answer('second')]]
     )
     batch = RubyLLM.batch(chats)

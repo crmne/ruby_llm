@@ -9,7 +9,7 @@ module RubyLLM
   #   cache = RubyLLM.cache(big_document, model: 'gemini-3.7-flash', ttl: 3600)
   #   chat = RubyLLM.chat(model: 'gemini-3.7-flash').with_caching(id: cache)
   #   chat.ask "What does the document conclude?"
-  #   cache.delete!
+  #   cache.delete
   #
   # Cache names are provider-owned. Persist #provider alongside #name and
   # pass it back when finding the cache later.
@@ -48,7 +48,7 @@ module RubyLLM
     end
 
     # Deletes the cache resource from the provider. Returns +self+.
-    def delete!
+    def delete
       @provider_instance.delete_cache(name)
       self
     end
@@ -57,9 +57,9 @@ module RubyLLM
     # Integer or a provider duration string such as <tt>"600s"</tt>.
     # Updates #expires_at and returns +self+.
     #
-    #   cache.extend!(ttl: 3600)
+    #   cache.renew(ttl: 3600)
     #
-    def extend!(ttl:)
+    def renew(ttl:)
       refreshed = @provider_instance.extend_cache(name, ttl: ttl)
       @expires_at = refreshed.expires_at
       @metadata = refreshed.metadata

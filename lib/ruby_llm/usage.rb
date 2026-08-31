@@ -40,7 +40,7 @@ module RubyLLM
       def ruby_llm_usage_cost
         Cost.aggregate(
           ruby_llm_usage_entries.map(&:cost),
-          complete: ruby_llm_usage_entries.all?(&:usage_available?)
+          complete: ruby_llm_usage_entries.all?(&:cost_available?)
         )
       end
     end
@@ -75,6 +75,7 @@ module RubyLLM
       def failed? = status == :failed
       def cancelled? = status == :cancelled
       def usage_available? = tokens.to_h.any?
+      def cost_available? = !cost.total.nil?
 
       def to_h
         {
@@ -212,8 +213,8 @@ module RubyLLM
         )
         entry.finish(status:, tokens:, cost:)
         @pending.delete(entry)
-        instrument(entry)
         @on_finish&.call(entry)
+        instrument(entry)
       end
 
       def instrument(entry)

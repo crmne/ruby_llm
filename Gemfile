@@ -7,7 +7,7 @@ gemspec
 group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
-    gem 'archspec', github: 'crmne/archspec', tag: 'v1.1.0.rc1'
+    gem 'archspec', github: 'crmne/archspec', tag: 'v1.1.0'
     gem 'strong_migrations', '~> 2.5.2'
   end
   gem 'async', '>= 2.0', platform: :mri

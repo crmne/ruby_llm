@@ -108,13 +108,23 @@ Prompt caching configuration is applied to the underlying LLM chat, and explicit
 ```ruby
 chat = Chat.create!(model: 'claude-sonnet-4-5')
 chat.with_caching(ttl: "1h")
-chat.with_instructions('Reusable analysis prompt').cache_until_here!
-chat.add_message(role: :user, content: long_context).cache_until_here!
+chat.with_instructions('Reusable analysis prompt').cache_until_here
+chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```
 
 Existing apps: run the latest upgrade generator after updating RubyLLM so message tables include `cache_until_here` and the other current persistence columns. New apps get the proper columns from the install generator.
 {: .note }
+
+When the stable prefix should not be stored with the transcript, disable persistence. This is useful for an application-wide policy followed by tenant or request context:
+
+```ruby
+chat.with_caching
+chat.with_instructions(stable_policy, persist: false, cache_until_here: true)
+chat.with_instructions(current_context, append: true, persist: false)
+```
+
+Unpersisted instructions are not written to the message table. They and their cache boundary remain configured when you call `reload` on the same record instance. Reapply them after finding the record in another process, or declare them with `persist: false` on a RubyLLM agent so `Agent.find` does that for you.
 
 See [Prompt Caching]({% link _core_features/prompt-caching.md %}) for provider behavior.
 

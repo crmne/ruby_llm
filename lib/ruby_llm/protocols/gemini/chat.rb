@@ -39,13 +39,14 @@ module RubyLLM
             payload[:toolConfig] = build_tool_config(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
           end
 
-          payload[:cachedContent] = cache_name(caching[:id]) if caching&.dig(:id)
+          payload[:cachedContent] = cache_name(caching[:id]) if caching.is_a?(Hash) && caching[:id]
           maybe_log_implicit_caching_note(messages, caching)
 
           payload
         end
 
         def maybe_log_implicit_caching_note(messages, caching)
+          return if caching == false
           return unless (caching && !caching[:id]) || messages.any?(&:cache_until_here?)
 
           RubyLLM.logger.debug(
@@ -92,10 +93,13 @@ module RubyLLM
         end
 
         def build_thinking_config(_model, thinking)
+          return { includeThoughts: false, thinkingBudget: 0 } if thinking.enabled == false
+
           config = { includeThoughts: true }
 
           config[:thinkingLevel] = thinking.effort if thinking.effort
           config[:thinkingBudget] = thinking.budget if thinking.budget.is_a?(Integer)
+          config[:thinkingBudget] = -1 if thinking.enabled == true
 
           config
         end

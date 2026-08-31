@@ -98,7 +98,7 @@ module RubyLLM
       skip_bundle = options.delete(:skip_bundle)
       scaffold = ProviderScaffold.new(name, **options)
       destination_existed = Dir.exist?(scaffold.destination)
-      result = scaffold.generate!
+      result = scaffold.generate
 
       report_file_actions(result, scaffold.destination, destination_existed:)
       return 1 unless initialize_git_repository(scaffold.destination)

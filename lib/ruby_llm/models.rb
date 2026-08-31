@@ -9,7 +9,7 @@ module RubyLLM
   #
   #   RubyLLM.models.find 'claude-sonnet-5'
   #   RubyLLM.models.by_provider(:openai).chat_models
-  #   RubyLLM.models.refresh!
+  #   RubyLLM.models.refresh
   #
   # Filter methods return new Models instances, so calls chain. Models is
   # enumerable over its Model entries. Class-level calls such as
@@ -64,8 +64,8 @@ module RubyLLM
       image_models
       by_family
       by_provider
-      load_from_json!
-      load_from_store!
+      load_from_json
+      load_from_store
       save_to_json
     ]).uniq.freeze # :nodoc:
 
@@ -139,13 +139,13 @@ module RubyLLM
 
       # Refreshes the global model registry from the published catalog and
       # configured providers. Returns the global Models instance. See
-      # #refresh! for the +remote_only:+ option.
-      def refresh!(remote_only: false)
-        instance.refresh!(remote_only: remote_only)
+      # #refresh for the +remote_only:+ option.
+      def refresh(remote_only: false)
+        instance.refresh(remote_only: remote_only)
       end
 
-      def refresh_from_providers!(remote_only: false) # :nodoc:
-        instance.refresh_from_providers!(remote_only: remote_only)
+      def refresh_from_providers(remote_only: false) # :nodoc:
+        instance.refresh_from_providers(remote_only: remote_only)
       end
 
       # :stopdoc:
@@ -544,14 +544,14 @@ module RubyLLM
     # +file+. The default is the configured
     # <tt>RubyLLM.config.model_registry_file</tt>. A missing or invalid
     # file falls back to the registry bundled with the gem.
-    def load_from_json!(file = RubyLLM.config.model_registry_file)
+    def load_from_json(file = RubyLLM.config.model_registry_file)
       @models = self.class.models_from_file(file) || self.class.models_from_bundle
       self
     end
 
     # Replaces the models in this registry with entries from the configured
     # model-registry store.
-    def load_from_store!
+    def load_from_store
       store = RubyLLM.config.model_registry_store
       raise ModelRegistryError, 'No model registry store is configured' unless store
 
@@ -561,7 +561,7 @@ module RubyLLM
 
     # Exports this registry to +file+ as pretty-printed JSON. The default is
     # the configured <tt>RubyLLM.config.model_registry_file</tt>. A regular
-    # #refresh! already persists to the active registry store.
+    # #refresh already persists to the active registry store.
     #
     #   RubyLLM.models.save_to_json('/tmp/models.json')
     #
@@ -667,10 +667,10 @@ module RubyLLM
     # Raises ModelRegistryError when the catalog cannot be fetched or the
     # result cannot be persisted, leaving the current registry unchanged.
     #
-    #   RubyLLM.models.refresh!
-    #   RubyLLM.models.refresh!(remote_only: true).chat_models
+    #   RubyLLM.models.refresh
+    #   RubyLLM.models.refresh(remote_only: true).chat_models
     #
-    def refresh!(remote_only: false)
+    def refresh(remote_only: false)
       RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
         published = fetch_published_models
         main_models = merge_discovered_models(published.models, remote_only:)
@@ -683,7 +683,7 @@ module RubyLLM
       self
     end
 
-    def refresh_from_providers!(remote_only: false) # :nodoc:
+    def refresh_from_providers(remote_only: false) # :nodoc:
       @models = self.class.fetch_merged_models(remote_only: remote_only)
       self
     end
@@ -824,7 +824,7 @@ module RubyLLM
     end
 
     def refresh_registry_guidance
-      'If the model exists at the provider, refresh the registry with `RubyLLM.models.refresh!`.'
+      'If the model exists at the provider, refresh the registry with `RubyLLM.models.refresh`.'
     end
 
     def preferred_match(candidates)

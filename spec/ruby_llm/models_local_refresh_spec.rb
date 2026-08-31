@@ -14,13 +14,13 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe 'local provider model fetching' do
-    describe '.refresh!' do
+    describe '.refresh' do
       context 'with default parameters' do # rubocop:disable RSpec/NestedGroups
         it 'includes local providers' do
           allow(described_class).to receive(:fetch_models_dev_models).and_return({ models: [], fetched: true })
           allow(RubyLLM::Provider).to receive_messages(providers: {}, configured_providers: [])
 
-          described_class.refresh!
+          described_class.refresh
 
           expect(RubyLLM::Provider).to have_received(:configured_providers)
         end
@@ -31,7 +31,7 @@ RSpec.describe RubyLLM::Models do
           allow(described_class).to receive(:fetch_models_dev_models).and_return({ models: [], fetched: true })
           allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
 
-          described_class.refresh!(remote_only: true)
+          described_class.refresh(remote_only: true)
 
           expect(RubyLLM::Provider).to have_received(:configured_remote_providers)
         end
@@ -117,7 +117,7 @@ RSpec.describe RubyLLM::Models do
         )
         allow(RubyLLM.logger).to receive(:warn)
 
-        described_class.refresh!
+        described_class.refresh
 
         chat = RubyLLM.chat(provider: :ollama, model: 'test-model')
         expect(chat.model.id).to eq('test-model')

@@ -144,7 +144,7 @@ module RubyLLM
     # apps using the acts_as helpers set this to the database store
     # automatically. A store must respond to +read+, returning an array of
     # Model entries, and may respond to +write(registry)+ to let
-    # Models#refresh! persist. Default: +nil+ (use +model_registry_file+).
+    # Models#refresh persist. Default: +nil+ (use +model_registry_file+).
     option :model_registry_store, nil
 
     # Optional persistence adapter installed by the Rails integration.

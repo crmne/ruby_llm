@@ -31,7 +31,7 @@ module RubyLLM
         end
       end
 
-      def reload!
+      def reload
         @aliases = load_aliases
       end
     end

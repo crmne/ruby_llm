@@ -44,7 +44,12 @@ module RubyLLM
         def batch_results(id)
           job = @connection.get(vertex_batch_name(id)).body
           output_uri = vertex_output_uri(job)
-          raise Error, 'vertexai batch has no GCS output URI yet' unless output_uri
+          unless output_uri
+            status = parse_batch_status(job['state'], completed: TERMINAL.include?(job['state']))
+            return [] if %i[failed cancelled].include?(status)
+
+            raise Error, 'vertexai batch has no GCS output URI yet'
+          end
 
           index = -1
           @provider.list_file_uris(output_uri).grep(/\.jsonl\z/).flat_map do |uri|
@@ -104,13 +109,24 @@ module RubyLLM
 
         def parse_batch_response(data)
           state = data['state']
+          request_counts = data['completionStats']
+
           {
             id: data['name'],
-            status: state,
+            raw_status: state,
             completed: TERMINAL.include?(state),
-            request_counts: data['completionStats'],
+            request_counts:,
+            request_count: request_counts&.values&.sum,
             model: data['model']
           }
+        end
+
+        def parse_batch_status(raw_status, completed:)
+          return :pending unless completed
+          return :succeeded if %w[JOB_STATE_SUCCEEDED JOB_STATE_PARTIALLY_SUCCEEDED].include?(raw_status)
+          return :cancelled if raw_status == 'JOB_STATE_CANCELLED'
+
+          :failed
         end
 
         def vertex_batch_result_index(line, fallback_index)

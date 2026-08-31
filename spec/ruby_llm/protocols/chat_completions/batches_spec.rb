@@ -84,9 +84,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
 
       expect(attributes).to eq(
         id: 'batch_123',
-        status: 'completed',
+        raw_status: 'completed',
         completed: true,
-        request_counts: { 'total' => 2 }
+        request_counts: { 'total' => 2 },
+        request_count: 2
       )
     end
   end

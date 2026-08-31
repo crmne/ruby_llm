@@ -34,6 +34,15 @@ module RubyLLM
   class Provider
     include Inspectable
 
+    BATCH_RATE_BY_COMPONENT = {
+      input: :input_per_million,
+      output: :output_per_million,
+      cache_read: :cache_read_input_per_million,
+      cache_write: :cache_write_input_per_million,
+      thinking: :reasoning_output_per_million
+    }.freeze
+    private_constant :BATCH_RATE_BY_COMPONENT
+
     # The Configuration the provider was built with.
     attr_reader :config
 
@@ -218,6 +227,47 @@ module RubyLLM
       protocol = resolve_batch_protocol(batch_protocol) || self.batch_protocol
       ensure_batches_supported!(protocol)
       protocol.new(self).batch_results(id)
+    end
+
+    def batch_status(raw_status, completed:, batch_protocol: nil) # :nodoc:
+      protocol = resolve_batch_protocol(batch_protocol) || self.batch_protocol
+      ensure_batches_supported!(protocol)
+      parser = protocol.new(self)
+      return parser.send(:parse_batch_status, raw_status, completed:) if parser.respond_to?(:parse_batch_status, true)
+
+      completed ? :succeeded : :pending
+    end
+
+    def batch_cost(tokens, model:, category: :text_tokens) # :nodoc:
+      standard = Cost.new(tokens:, model:, category:)
+      return standard if tokens.reported_cost
+
+      pricing = model.pricing.public_send(category)
+      batch_tier = pricing.batch unless long_context_pricing?(pricing, tokens)
+      batch = Cost.new(tokens:, model:, category:, tier: :batch) if batch_tier
+      amounts = batch_cost_amounts(standard:, batch:, batch_tier:, model:)
+      Cost.from_h(amounts, tokens:)
+    end
+
+    def batch_cost_amounts(standard:, batch:, batch_tier:, model:) # :nodoc:
+      BATCH_RATE_BY_COMPONENT.to_h do |component, rate|
+        amount = if batch_tier&.public_send(rate)
+                   batch.public_send(component)
+                 else
+                   value = standard.public_send(component)
+                   multiplier = batch_cost_multiplier(model:, component:)
+                   value * multiplier if value && multiplier
+                 end
+        [component, amount]
+      end
+    end
+
+    def batch_cost_multiplier(**) = nil # :nodoc:
+
+    def long_context_pricing?(pricing, tokens) # :nodoc:
+      pricing.long_context &&
+        pricing.long_context_threshold &&
+        tokens.input.to_i + tokens.cache_read.to_i + tokens.cache_write.to_i > pricing.long_context_threshold
     end
 
     def batch_protocol_name(protocol) # :nodoc:

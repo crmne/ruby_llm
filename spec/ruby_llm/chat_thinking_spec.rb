@@ -4,12 +4,95 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat, :live do
   describe '#with_thinking' do
-    it 'clears thinking when both options are nil' do
-      chat = RubyLLM.chat.with_thinking(effort: :low)
+    it 'uses the registered model controls without options' do
+      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+                       .with_thinking
+                       .render
 
-      chat.with_thinking(effort: nil)
+      expect(payload.dig(:reasoning, :effort)).to eq('medium')
+    end
 
-      expect(chat.instance_variable_get(:@thinking)).to be_nil
+    it 'uses the new model controls after switching models' do
+      chat = RubyLLM.chat(model: 'gpt-5.2', provider: :openai).with_thinking
+
+      payload = chat.with_model('claude-haiku-4-5', provider: :anthropic).render
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 1024)
+    end
+
+    it 'uses a provider toggle before inventing a token budget' do
+      payload = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                       .with_thinking
+                       .render
+
+      expect(payload.dig(:generationConfig, :thinkingConfig, :thinkingBudget)).to eq(-1)
+    end
+
+    it 'uses a provider toggle before choosing an effort' do
+      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+                       .with_thinking
+                       .render
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
+    end
+
+    it 'sends the registered off control with false' do
+      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+                       .with_thinking(false)
+                       .render
+
+      expect(payload.dig(:reasoning, :effort)).to eq('none')
+    end
+
+    it 'maps false to a zero budget when the model uses one as its off control' do
+      payload = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                       .with_thinking(false)
+                       .render
+
+      expect(payload.dig(:generationConfig, :thinkingConfig, :thinkingBudget)).to eq(0)
+    end
+
+    it 'maps false to a provider toggle when the model exposes one' do
+      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+                       .with_thinking(false)
+                       .render
+
+      expect(payload[:additionalModelRequestFields]).to eq(reasoningConfig: { type: 'disabled' })
+    end
+
+    it 'does not add controls for an always-thinking model' do
+      payload = RubyLLM.chat(model: 'magistral-small', provider: :mistral)
+                       .with_thinking
+                       .render
+
+      expect(payload).not_to have_key(:thinking)
+      expect(payload).not_to have_key(:reasoning_effort)
+    end
+
+    it 'raises when the registry has no controls for the model' do
+      chat = RubyLLM.chat(model: 'private-reasoner', provider: :openai, assume_model_exists: true).with_thinking
+
+      expect { chat.render }.to raise_error(ArgumentError, /does not know how to enable thinking/)
+    end
+
+    it 'raises when the registry has no off control for the model' do
+      chat = RubyLLM.chat(model: 'magistral-small', provider: :mistral).with_thinking(false)
+
+      expect { chat.render }.to raise_error(ArgumentError, /does not know how to disable thinking/)
+    end
+
+    it 'rejects nil instead of treating it as false' do
+      expect { RubyLLM.chat.with_thinking(nil) }
+        .to raise_error(ArgumentError, /accepts false or thinking options/)
+      expect { RubyLLM.chat.with_thinking(effort: nil) }
+        .to raise_error(ArgumentError, /options cannot be nil/)
+    end
+
+    it 'keeps explicit options independent of registry defaults' do
+      chat = RubyLLM.chat(model: 'private-reasoner', provider: :openai, assume_model_exists: true)
+                    .with_thinking(effort: :high)
+
+      expect(chat.render.dig(:reasoning, :effort)).to eq('high')
     end
 
     it 'renders the display option inside the Anthropic thinking config' do

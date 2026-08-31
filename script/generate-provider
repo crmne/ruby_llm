@@ -11,7 +11,7 @@ rescue RubyLLM::ProviderGeneratorCLI::HelpRequested => e
   puts e.message
   exit 0
 end
-result = RubyLLM::ProviderScaffold.new(name, **options).generate!
+result = RubyLLM::ProviderScaffold.new(name, **options).generate
 
 puts "Generated #{result.changed.size} core provider changes"
 puts "Skipped #{result.skipped.size} existing files" if result.skipped.any?

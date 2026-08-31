@@ -14,7 +14,7 @@ description: Reuse stable prompt prefixes with automatic or explicit prompt cach
 After reading this guide, you will know:
 
 * How to turn on provider prompt caching with `with_caching`.
-* How to mark an exact prompt prefix with `cache_until_here!`.
+* How to mark an exact prompt prefix with `cache_until_here`.
 * How RubyLLM renders provider-native caching options.
 * How to create and attach a Gemini explicit cache with `RubyLLM.cache`.
 * How Rails persists explicit cache boundaries.
@@ -61,34 +61,36 @@ If you switch to a provider that needs different caching options, call `with_cac
 chat.with_caching(ttl: "1h")
 ```
 
-To disable caching for later requests, pass `nil`:
+To stop RubyLLM from sending cache controls or rendering marked boundaries for later requests, pass `false`:
 
 ```ruby
-chat.with_caching(nil)
+chat.with_caching(false)
 ```
+
+Some providers cache repeated prompts implicitly and do not expose an off switch. `false` disables RubyLLM's caching instructions, not caching performed independently by the provider.
 
 ## Explicit Cache Boundaries
 
-Use `cache_until_here!` when you know the exact prefix that should be cached:
+Use `cache_until_here` when you know the exact prefix that should be cached:
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
 
 chat.with_instructions(
   "You are a release-notes assistant. Always group changes by subsystem."
-).cache_until_here!
+).cache_until_here
 
 response = chat.ask("Summarize the API changes in this diff.", with: "large_diff.patch")
 ```
 
-`cache_until_here!` marks the latest message. That means these two forms are equivalent:
+`cache_until_here` marks the latest message. That means these two forms are equivalent:
 
 ```ruby
 message = chat.add_message(role: :user, content: long_context)
-message.cache_until_here!
+message.cache_until_here
 
 chat.add_message(role: :user, content: long_context)
-chat.cache_until_here!
+chat.cache_until_here
 ```
 
 When a chat has explicit boundaries, RubyLLM does not also add automatic `cache_control` for Anthropic or OpenRouter. The boundary is the source of truth.
@@ -109,7 +111,7 @@ Configure the TTL once and use explicit boundaries for the stable chunks:
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}').with_caching(ttl: "1h")
-chat.with_instructions(large_policy_prompt).cache_until_here!
+chat.with_instructions(large_policy_prompt).cache_until_here
 chat.ask("Apply the policy to this request: #{request_text}")
 ```
 
@@ -153,15 +155,15 @@ The cache is the conversation's prefix. RubyLLM sends the chat's own messages un
 `CachedContent` manages the rest of the lifecycle:
 
 ```ruby
-cache.extend!(ttl: 7200) # sets expiry to two hours from now
-cache.delete!            # removes the cache before its TTL
+cache.renew(ttl: 7200) # sets expiry to two hours from now
+cache.delete           # removes the cache before its TTL
 
 cache = RubyLLM::CachedContent.find("cachedContents/abc123", provider: :gemini)
 ```
 
 Vertex AI supports the same lifecycle; pass `provider: :vertexai` to `RubyLLM.cache` and cache names become full `projects/.../cachedContents/...` resource paths.
 
-On Gemini, `with_caching` without `id:` and `cache_until_here!` boundaries change nothing on the wire. Implicit caching is already on, so RubyLLM logs a debug note pointing to `RubyLLM.cache` and sends the request as usual.
+On Gemini, `with_caching` without `id:` and `cache_until_here` boundaries change nothing on the wire. Implicit caching is already on, so RubyLLM logs a debug note pointing to `RubyLLM.cache` and sends the request as usual.
 
 ## Rails Persistence
 
@@ -170,8 +172,8 @@ For persisted Rails chats, explicit cache boundaries are stored on messages with
 ```ruby
 chat = Chat.create!(model: '{{ site.models.anthropic_current }}')
 chat.with_caching(ttl: "1h")
-chat.with_instructions('Reusable analysis prompt').cache_until_here!
-chat.add_message(role: :user, content: long_context).cache_until_here!
+chat.with_instructions('Reusable analysis prompt').cache_until_here
+chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```
 
@@ -179,4 +181,4 @@ Existing apps should run the latest upgrade generator after updating RubyLLM so 
 
 ## Dropping Down
 
-`with_caching`, `cache_until_here!`, and `RubyLLM.cache` cover RubyLLM's prompt-caching API. Use `with_provider_options` only when you need another provider request option, and use a [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks) only when the rendered payload itself must be adjusted.
+`with_caching`, `cache_until_here`, and `RubyLLM.cache` cover RubyLLM's prompt-caching API. Use `with_provider_options` only when you need another provider request option, and use a [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks) only when the rendered payload itself must be adjusted.

@@ -53,11 +53,13 @@ module RubyLLM
       :@input_names => [],
       :@fallbacks => [],
       :@fallback_options => {},
-      :@rescue_handlers => []
+      :@rescue_handlers => [],
+      :@instructions => []
     }.freeze
     # Simple value options: a class-level getter/setter macro whose value the
     # agent forwards to the matching Chat#with_* when it builds its chat.
     PASSTHROUGH_OPTIONS = %i[temperature max_output_tokens].freeze
+    THINKING_OPTIONS = %i[effort budget display].freeze
 
     # The chat operations an agent instance runs through its ::rescue_from
     # handlers. Remaining delegated methods pass through untouched.
@@ -71,19 +73,18 @@ module RubyLLM
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result
       before_fallback after_fallback
-      cancel! approve! deny! cache_until_here!
+      cancel approve deny cache_until_here
     ].freeze
 
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools server_tools provider_options headers schema concurrency
-      caching compaction end_user fallbacks
+      caching compaction end_user fallbacks thinking
       each complete? cancelled? awaiting_approval? pending_approvals
       add_message add_completion tokens cost render
     ].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
-      @instructions
       @thinking
       @citations
       @end_user
@@ -91,8 +92,9 @@ module RubyLLM
       @context
       @chat_model
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
-    private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG, :PASSTHROUGH_OPTIONS,
-                     :GUARDED_OPERATIONS, :CHAINABLE_CHAT_DELEGATES, :PASSTHROUGH_CHAT_DELEGATES
+    private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG,
+                     :PASSTHROUGH_OPTIONS, :THINKING_OPTIONS, :GUARDED_OPERATIONS,
+                     :CHAINABLE_CHAT_DELEGATES, :PASSTHROUGH_CHAT_DELEGATES
 
     class << self
       def inherited(subclass) # :nodoc:
@@ -162,22 +164,33 @@ module RubyLLM
         @server_tools = block_given? ? block : ServerTools.normalize(tools, tools_with_options)
       end
 
-      # Sets system instructions for chats this agent builds. Accepts a
-      # string, a block evaluated when the chat is built, or keyword locals
-      # for the agent's conventional prompt template (for a WorkAssistant
-      # agent, <tt>app/prompts/work_assistant/instructions.txt.erb</tt>).
+      # Adds system instructions for chats this agent builds. Accepts a string,
+      # a block evaluated when the chat is built, or keyword locals for the
+      # agent's conventional prompt template (for a WorkAssistant agent,
+      # <tt>app/prompts/work_assistant/instructions.txt.erb</tt>). Multiple
+      # declarations are applied in order.
       #
       #   instructions "You are a helpful assistant."
       #   instructions { "You are helping #{workspace.name}" }
       #   instructions display_name: -> { chat.user.display_name_or_email }
+      #   instructions append: true, persist: false do
+      #     "Today is #{Date.current}"
+      #   end
       #
       # A named agent uses its conventional template automatically when it
-      # exists, even without calling this method. Called with no arguments,
-      # returns the configured value.
-      def instructions(text = nil, **prompt_locals, &block)
-        return @instructions if text.nil? && prompt_locals.empty? && !block_given?
+      # exists, even without calling this method. In Rails mode, declarations
+      # persist when the record is created unless <tt>persist: false</tt>;
+      # ::find always reapplies them without rewriting history. Called with no
+      # arguments, returns the declarations.
+      def instructions(text = nil, append: false, persist: true, cache_until_here: false, **prompt_locals, &block)
+        return instruction_declarations if text.nil? && prompt_locals.empty? && !block_given?
 
-        @instructions = block || text || { prompt: 'instructions', locals: prompt_locals }
+        instruction_declarations << {
+          value: block || text || { prompt: 'instructions', locals: prompt_locals },
+          append: append,
+          persist: persist,
+          cache_until_here: cache_until_here
+        }
       end
 
       ##
@@ -206,31 +219,42 @@ module RubyLLM
         end
       end
 
-      # Sets the thinking effort, budget, or display for chats this agent
-      # builds, applied via Chat#with_thinking. Called with no arguments,
-      # returns the configured value.
+      # Enables thinking for chats this agent builds, applied via
+      # Chat#with_thinking. With no options, RubyLLM chooses from the model's
+      # registered controls. Pass +false+ to disable it.
       #
+      #   thinking
+      #   thinking false
       #   thinking effort: :low
       #   thinking budget: 10_000
       #   thinking display: :summarized
       #
-      def thinking(effort: nil, budget: nil, display: nil)
-        return @thinking if effort.nil? && budget.nil? && display.nil?
+      def thinking(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
+        raise ArgumentError, 'thinking accepts false or thinking options' unless [true, false].include?(enabled)
+        raise ArgumentError, 'thinking false does not accept options' if !enabled && options.any?
+        raise ArgumentError, 'thinking options cannot be nil; use thinking false to disable' if options.value?(nil)
 
-        @thinking = { effort: effort, budget: budget, display: display }
+        if (unsupported = options.keys - THINKING_OPTIONS).any?
+          raise ArgumentError, "thinking accepts #{THINKING_OPTIONS.join(', ')}, got #{unsupported.join(', ')}"
+        end
+
+        @thinking = enabled ? options : false
       end
 
-      # Sets context compaction options for chats this agent builds, applied
-      # via Chat#with_compaction. Called with no arguments, returns the
-      # configured value; pass +true+ for the provider's own defaults.
+      # Enables context compaction for chats this agent builds, applied via
+      # Chat#with_compaction. With no options, the provider's own defaults
+      # apply. Pass +false+ to disable it.
       #
-      #   compaction true
+      #   compaction
+      #   compaction false
       #   compaction at: 50_000
       #
-      def compaction(options = nil)
-        return @compaction if options.nil?
+      def compaction(options = {})
+        unless options == false || options.is_a?(Hash)
+          raise ArgumentError, 'compaction accepts false or compaction options'
+        end
 
-        @compaction = options == true ? {} : options
+        @compaction = options
       end
 
       # Sets the safety identifier for chats this agent builds, applied via
@@ -247,28 +271,35 @@ module RubyLLM
         @end_user = block || value
       end
 
-      # Enables or disables citations for chats this agent builds, applied
-      # via Chat#with_citations. Called with no argument, returns the
-      # configured value.
+      # Enables citations for chats this agent builds, applied via
+      # Chat#with_citations. Pass +false+ to disable them.
       #
-      #   citations true
+      #   citations
+      #   citations false
       #
-      def citations(value = nil)
-        return @citations if value.nil?
+      def citations(value = true) # rubocop:disable Style/OptionalBooleanParameter
+        raise ArgumentError, 'citations accepts true or false' unless [true, false].include?(value)
 
         @citations = value
       end
 
-      # Sets prompt caching options for chats this agent builds, applied via
-      # Chat#with_caching. A block defers evaluation until the chat is
-      # built. Called with no arguments, returns the configured value.
+      # Enables prompt caching for chats this agent builds, applied via
+      # Chat#with_caching. With no options, the provider's default behavior
+      # applies. Pass +false+ to stop RubyLLM from sending cache controls. A
+      # provider may still cache prompts implicitly. A block defers evaluation
+      # until the chat is built.
       #
+      #   caching
+      #   caching false
       #   caching ttl: "1h"
+      #   caching { { ttl: workspace.cache_ttl } }
       #
-      def caching(**options, &block)
-        return @caching if options.empty? && !block_given?
+      def caching(enabled = true, **options, &block) # rubocop:disable Metrics/PerceivedComplexity, Style/OptionalBooleanParameter
+        raise ArgumentError, 'caching accepts false or caching options' unless [true, false].include?(enabled)
+        raise ArgumentError, 'caching accepts options or a block, not both' if options.any? && block
+        raise ArgumentError, 'caching false does not accept options or a block' if !enabled && (options.any? || block)
 
-        @caching = block_given? ? block : options
+        @caching = block || (enabled ? options : false)
       end
 
       # Sets options in the provider's request vocabulary for chats this
@@ -343,7 +374,7 @@ module RubyLLM
 
       # Sets the ActiveRecord chat class this agent creates and finds,
       # activating Rails mode (::create, ::create!, ::find, and
-      # ::sync_instructions!). Accepts the class or its name as a string.
+      # ::sync_instructions). Accepts the class or its name as a string.
       # Called with no argument, returns the configured value.
       #
       #   chat_model Chat
@@ -490,11 +521,11 @@ module RubyLLM
       # matching declared ::inputs become runtime inputs. Returns the
       # record.
       #
-      #   WorkAssistant.sync_instructions!(chat)
+      #   WorkAssistant.sync_instructions(chat)
       #
       # Raises ArgumentError if ::chat_model is not configured.
-      def sync_instructions!(chat_or_id, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use sync_instructions!' unless resolved_chat_model
+      def sync_instructions(chat_or_id, **kwargs)
+        raise ArgumentError, 'chat_model must be configured to use sync_instructions' unless resolved_chat_model
 
         input_values, = partition_inputs(kwargs)
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
@@ -502,10 +533,13 @@ module RubyLLM
         apply_protocol(record)
         apply_context(record)
         runtime = runtime_context(chat: record, inputs: input_values)
-        instructions_value = resolved_instructions_value(record, runtime, inputs: input_values)
-        return record if instructions_value.nil?
-
-        record.with_instructions(instructions_value)
+        apply_instructions(
+          record,
+          runtime,
+          inputs: input_values,
+          persist: true,
+          persistent_only: true
+        )
         record
       end
 
@@ -592,13 +626,20 @@ module RubyLLM
         chat.with_context(context) if context
       end
 
-      def apply_instructions(chat, runtime, inputs:, persist:)
-        value = resolved_instructions_value(chat, runtime, inputs:)
-        return if value.nil?
+      def apply_instructions(chat, runtime, inputs:, persist:, persistent_only: false)
+        instructions_config.each do |declaration|
+          next if persistent_only && !declaration[:persist]
 
-        return chat.with_runtime_instructions(value) if !persist && chat.respond_to?(:with_runtime_instructions)
+          value = resolved_instruction_value(declaration, chat, runtime, inputs:)
+          next if value.nil?
 
-        chat.with_instructions(value)
+          options = {
+            append: declaration[:append],
+            cache_until_here: declaration[:cache_until_here]
+          }
+          options[:persist] = persist && declaration[:persist] if rails_chat_record?(chat)
+          chat.with_instructions(value, **options)
+        end
       end
 
       def apply_tools(chat, runtime)
@@ -620,11 +661,13 @@ module RubyLLM
       end
 
       def apply_thinking(chat)
-        chat.with_thinking(**thinking) if thinking
+        return if @thinking.nil?
+
+        @thinking == false ? chat.with_thinking(false) : chat.with_thinking(**@thinking)
       end
 
       def apply_citations(chat)
-        chat.with_citations(citations) unless citations.nil?
+        chat.with_citations(@citations) unless @citations.nil?
       end
 
       def apply_end_user(chat, runtime)
@@ -633,12 +676,16 @@ module RubyLLM
       end
 
       def apply_caching(chat, runtime)
-        value = evaluate(caching, runtime)
-        chat.with_caching(**value) if value
+        value = evaluate(@caching, runtime)
+        return if value.nil?
+
+        value == false ? chat.with_caching(false) : chat.with_caching(**value)
       end
 
       def apply_compaction(chat)
-        chat.with_compaction(**compaction) if compaction
+        return if @compaction.nil?
+
+        @compaction == false ? chat.with_compaction(false) : chat.with_compaction(**@compaction)
       end
 
       def apply_provider_options(chat, runtime)
@@ -693,8 +740,8 @@ module RubyLLM
         value.is_a?(Proc) ? runtime.instance_exec(&value) : value
       end
 
-      def resolved_instructions_value(chat_object, runtime, inputs:)
-        value = evaluate(instructions_config, runtime)
+      def resolved_instruction_value(declaration, chat_object, runtime, inputs:)
+        value = evaluate(declaration[:value], runtime)
         return value unless prompt_instruction?(value)
 
         runtime.prompt(
@@ -704,10 +751,23 @@ module RubyLLM
       end
 
       def instructions_config
-        return @instructions unless @instructions.nil?
-        return unless default_instructions_prompt_exists?
+        return instruction_declarations if instruction_declarations.any?
+        return [] unless default_instructions_prompt_exists?
 
-        { prompt: 'instructions', locals: {} }
+        [{
+          value: { prompt: 'instructions', locals: {} },
+          append: false,
+          persist: true,
+          cache_until_here: false
+        }]
+      end
+
+      def instruction_declarations
+        @instruction_declarations ||= []
+      end
+
+      def rails_chat_record?(chat)
+        resolved_chat_model && chat.is_a?(resolved_chat_model)
       end
 
       def default_instructions_prompt_exists?

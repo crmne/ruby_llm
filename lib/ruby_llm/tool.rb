@@ -37,7 +37,6 @@ module RubyLLM
   # or ::parameters when arguments need explicit types, descriptions, or
   # structure.
   class Tool
-    POSITIONAL_PARAMETER_KINDS = %i[req opt rest].freeze # :nodoc:
     KEYWORD_PARAMETER_KINDS = %i[keyreq key].freeze # :nodoc:
     TOOL_CALL_KEYWORD = :tool_call # :nodoc:
 
@@ -144,7 +143,7 @@ module RubyLLM
 
       # Declares that this tool must be approved before it executes. The
       # agentic loop parks the tool call until a decision is recorded with
-      # Chat#approve! or Chat#deny!, so Chat#complete returns cleanly and
+      # Chat#approve or Chat#deny, so Chat#complete returns cleanly and
       # can be called again once the decision exists. In Rails the decision
       # persists on the tool call record and survives process restarts.
       #
@@ -276,8 +275,15 @@ module RubyLLM
       end
     end
 
-    def call(args, tool_call: nil) # :nodoc:
-      normalized_args = normalize_args(args)
+    # Runs the tool with keyword arguments, validating them against the
+    # #execute signature before invoking it. RubyLLM supplies +tool_call:+
+    # when the call comes from a chat; pass it yourself only when you need
+    # the ToolCall in a direct invocation.
+    #
+    #   Weather.new.call(latitude: 52.52, longitude: 13.405)
+    #
+    def call(tool_call: nil, **arguments)
+      normalized_args = arguments.transform_keys(&:to_sym)
       validation_error = validate_keyword_arguments(normalized_args)
       return { error: "Invalid tool arguments: #{validation_error}" } if validation_error
 
@@ -309,18 +315,8 @@ module RubyLLM
 
     protected
 
-    def normalize_args(args) # :nodoc:
-      return {} if args.nil?
-      return args.transform_keys(&:to_sym) if args.respond_to?(:transform_keys)
-
-      {}
-    end
-
     def validate_keyword_arguments(arguments) # :nodoc:
-      required_keywords, optional_keywords, accepts_extra_keywords, accepts_positional_arguments =
-        execute_keyword_signature
-
-      return nil if required_keywords.empty? && optional_keywords.empty? && accepts_positional_arguments
+      required_keywords, optional_keywords, accepts_extra_keywords = execute_keyword_signature
 
       argument_keys = arguments.keys
       missing_keyword = (required_keywords - argument_keys).first
@@ -344,11 +340,8 @@ module RubyLLM
       required_keywords = keyword_signature.filter_map { |kind, name| name if kind == :keyreq }
       optional_keywords = keyword_signature.filter_map { |kind, name| name if kind == :key }
       accepts_extra_keywords = keyword_signature.any? { |kind, _| kind == :keyrest }
-      accepts_positional_arguments = keyword_signature.any? do |kind, _|
-        POSITIONAL_PARAMETER_KINDS.include?(kind)
-      end
 
-      [required_keywords, optional_keywords, accepts_extra_keywords, accepts_positional_arguments]
+      [required_keywords, optional_keywords, accepts_extra_keywords]
     end
 
     def inferred_parameters # :nodoc:

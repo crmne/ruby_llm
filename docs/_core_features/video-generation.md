@@ -48,7 +48,7 @@ job.done?   # => false
 Poll the job whenever it suits you, from a scheduled job or a retry loop:
 
 ```ruby
-job.refresh!
+job.refresh
 job.done?      # => true
 job.completed? # => true
 
@@ -56,7 +56,7 @@ video = job.video
 video.save("hummingbird.mp4")
 ```
 
-`refresh!` re-fetches the job state from the provider and does nothing once the job is done. `video` returns `nil` while the job is pending and raises `RubyLLM::Error` when the job failed, with the provider's failure message. `wait!` runs the same polling loop `animate` uses, so `RubyLLM.animate(...)` is `RubyLLM.animate_later(...).wait!.video` with instrumentation around it.
+`refresh` re-fetches the job state from the provider and does nothing once the job is done. `video` returns `nil` while the job is pending and raises `RubyLLM::Error` when the job failed, with the provider's failure message. `wait` runs the same polling loop `animate` uses, so `RubyLLM.animate(...)` is `RubyLLM.animate_later(...).wait.video` with instrumentation around it.
 
 ## Animating a Still Image
 
@@ -98,7 +98,7 @@ These providers generate video through RubyLLM:
 | --- | --- | --- |
 | Gemini | `veo-3.1-generate-preview`, `veo-3.1-fast-generate-preview`, `veo-3.1-lite-generate-preview` | 4, 6, or 8 second clips with audio |
 | xAI | `grok-imagine-video`, `grok-imagine-video-1.5` | Clips up to 15 seconds, priced per second |
-| OpenRouter | `x-ai/grok-imagine-video` and the rest of its video catalog (after `RubyLLM.models.refresh!`) | One API across many video models |
+| OpenRouter | `x-ai/grok-imagine-video` and the rest of its video catalog (after `RubyLLM.models.refresh`) | One API across many video models |
 | Azure OpenAI | Sora deployments such as `sora-2` | Uses your deployment name as the model id |
 
 Refer to the [Working with Models Guide]({% link _reference/models.md %}) for finding and filtering models, and [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve.
@@ -145,11 +145,11 @@ RubyLLM.configure do |config|
 end
 ```
 
-When the timeout elapses, `animate` raises `RubyLLM::Error`. The provider keeps rendering; only the wait stops. `wait!` also accepts both values per call:
+When the timeout elapses, `animate` raises `RubyLLM::Error`. The provider keeps rendering; only the wait stops. `wait` also accepts both values per call:
 
 ```ruby
 job = RubyLLM.animate_later("A rocket launch seen from orbit")
-job.wait!(timeout: 900, interval: 10)
+job.wait(timeout: 900, interval: 10)
 ```
 
 ## Working with Generated Videos

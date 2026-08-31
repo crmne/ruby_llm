@@ -80,7 +80,6 @@ thinking_models = [
   { provider: :azure, model: 'gpt-5-nano' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :cohere, model: 'command-a-reasoning-08-2025' },
-  { provider: :deepseek, model: 'deepseek-reasoner' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gpustack, model: 'qwen3' },
   { provider: :mistral, model: 'mistral-small-latest' },

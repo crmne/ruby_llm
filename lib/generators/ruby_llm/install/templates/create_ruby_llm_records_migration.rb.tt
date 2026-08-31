@@ -89,7 +89,8 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
     create_table :ruby_llm_batches do |t|
       t.string :provider_batch_id, null: false
       t.string :provider, null: false
-      t.string :status
+      t.string :status, null: false
+      t.string :raw_status
       t.boolean :completed, null: false, default: false
       t.string :chat_type
       t.string :batch_protocol

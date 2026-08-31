@@ -22,7 +22,7 @@ namespace :models do
   desc 'Generate available models documentation'
   task :docs do
     registry_file = ENV.fetch('MODEL_REGISTRY_FILE', RubyLLM::Models.bundled_registry_file)
-    RubyLLM.models.load_from_json!(registry_file)
+    RubyLLM.models.load_from_json(registry_file)
     FileUtils.mkdir_p('docs/_reference')
     output = generate_models_markdown
     File.write('docs/_reference/available-models.md', output)
@@ -68,12 +68,12 @@ end
 
 def refresh_models
   registry_file = ENV.fetch('MODEL_REGISTRY_FILE', RubyLLM::Models.bundled_registry_file)
-  RubyLLM.models.load_from_json!(registry_file)
+  RubyLLM.models.load_from_json(registry_file)
   existing_models = RubyLLM.models.all.dup
   initial_count = existing_models.size
   puts "Refreshing models (#{initial_count} cached)..."
 
-  models = RubyLLM.models.refresh_from_providers!(remote_only: true)
+  models = RubyLLM.models.refresh_from_providers(remote_only: true)
 
   if models.all.empty? && initial_count.zero?
     puts 'Error: Failed to fetch models.'
@@ -218,7 +218,7 @@ def generate_models_markdown
     Your installed gem may bundle an older snapshot of the registry. Refresh it to get the latest models in your app too:
 
     ```ruby
-    RubyLLM.models.refresh!
+    RubyLLM.models.refresh
     ```
 
     See [the models guide]({{ "/models/" | relative_url }}) for how refreshing works in plain Ruby and Rails.

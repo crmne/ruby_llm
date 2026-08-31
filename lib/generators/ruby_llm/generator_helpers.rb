@@ -5,21 +5,32 @@ module RubyLLM
     # Shared helpers for RubyLLM generators
     module GeneratorHelpers
       APPLICATION_MODEL_TYPES = %w[chat message].freeze
+      DEFAULT_MODEL_NAMES = {
+        chat: 'Chat',
+        message: 'Message'
+      }.freeze
 
-      def parse_model_mappings
-        @model_names = {
-          chat: 'Chat',
-          message: 'Message'
-        }
+      def parse_model_mappings(allowed_types: APPLICATION_MODEL_TYPES, defaults: DEFAULT_MODEL_NAMES)
+        @model_names = defaults.dup
+        @explicit_model_mappings = []
 
         model_mappings.each do |mapping|
-          if mapping.include?(':')
-            key, value = mapping.split(':', 2)
-            @model_names[key.to_sym] = value.classify if APPLICATION_MODEL_TYPES.include?(key)
-          end
+          key, value = mapping.split(':', 2)
+          validate_model_mapping!(mapping, key, value, allowed_types)
+          raise Thor::Error, "Duplicate model mapping: #{key}" if @explicit_model_mappings.include?(key.to_sym)
+
+          @explicit_model_mappings << key.to_sym
+          @model_names[key.to_sym] = value.classify
         end
 
         @model_names
+      end
+
+      def validate_model_mapping!(mapping, key, value, allowed_types)
+        return if allowed_types.include?(key) && value.present?
+
+        expected = allowed_types.map { |type| "#{type}:ModelName" }.join(', ')
+        raise Thor::Error, "Invalid model mapping #{mapping.inspect}. Expected one of: #{expected}"
       end
 
       %i[chat message].each do |type|

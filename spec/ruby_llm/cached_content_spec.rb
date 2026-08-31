@@ -33,10 +33,10 @@ RSpec.describe RubyLLM::CachedContent, :live do
       expect(response.tokens.cache_read).to eq(cache.tokens)
 
       expires_at = cache.expires_at
-      expect(cache.extend!(ttl: 600)).to eq(cache)
+      expect(cache.renew(ttl: 600)).to eq(cache)
       expect(cache.expires_at).to be > expires_at
 
-      expect(cache.delete!).to eq(cache)
+      expect(cache.delete).to eq(cache)
     end
 
     it 'vertexai/gemini-2.5-flash creates, uses, and deletes a cache' do
@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::CachedContent, :live do
       expect(response.content).to be_present
       expect(response.tokens.cache_read).to eq(cache.tokens)
 
-      expect(cache.delete!).to eq(cache)
+      expect(cache.delete).to eq(cache)
     end
 
     it 'finds an existing cache by name' do
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::CachedContent, :live do
       expect(found.name).to eq(created.name)
       expect(found.tokens).to eq(created.tokens)
 
-      created.delete!
+      created.delete
     end
   end
 

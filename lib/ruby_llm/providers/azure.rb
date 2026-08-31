@@ -32,6 +32,8 @@ module RubyLLM
         end
       end
 
+      def batch_cost_multiplier(**) = 0.5
+
       def azure_openai_v1_base
         parts = azure_base_parts
         if parts[:mode] == :openai_v1_base

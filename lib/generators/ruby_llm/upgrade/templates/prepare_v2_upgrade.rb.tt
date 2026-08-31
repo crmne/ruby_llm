@@ -1,0 +1,594 @@
+# frozen_string_literal: true
+
+class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
+  disable_ddl_transaction!
+
+  def up
+    validate_upgrade
+    move_models
+    add_chat_and_message_columns
+    move_tool_calls
+    create_usages
+    create_batches
+  end
+
+  def down
+    raise ActiveRecord::IrreversibleMigration, 'RubyLLM 2.0 changes persisted record ownership'
+  end
+
+  private
+
+  def validate_upgrade
+    %i[<%= chat_table_name %> <%= message_table_name %>].each do |table|
+      raise "Expected #{table} to exist before upgrading RubyLLM" unless table_exists?(table)
+    end
+    validate_table_move(:<%= v1_model_table_name %>, :ruby_llm_models)
+    validate_table_move(:<%= v1_tool_call_table_name %>, :ruby_llm_tool_calls)
+
+    models = existing_table(:<%= v1_model_table_name %>, :ruby_llm_models)
+    raise 'Expected the RubyLLM 1.16 model table to exist' unless models
+
+    validate_table_shape(models, %i[model_id name provider], 'model')
+    validate_unique_values(models, %i[provider model_id])
+    validate_chat_model_references(models)
+
+    tool_calls = existing_table(:<%= v1_tool_call_table_name %>, :ruby_llm_tool_calls)
+    raise 'Expected the RubyLLM 1.16 tool-call table to exist' unless tool_calls
+
+    validate_table_shape(tool_calls, %i[tool_call_id name arguments created_at updated_at], 'tool-call')
+    unless column_exists?(tool_calls, :<%= message_foreign_key %>) || column_exists?(tool_calls, :message_id)
+      raise "#{tool_calls} does not have a message foreign key"
+    end
+    if migration_record(tool_calls).where(tool_call_id: nil).exists?
+      raise "#{tool_calls} contains a NULL tool_call_id. Set it before retrying."
+    end
+    validate_unique_tool_results
+
+    validate_usage_identities(models)
+    validate_existing_table(
+      :ruby_llm_usages,
+      %i[
+        chat_type chat_id message_type message_id operation provider model status
+        input_tokens output_tokens cache_read_tokens cache_write_tokens thinking_tokens
+        input_cost output_cost cache_read_cost cache_write_cost thinking_cost total_cost created_at updated_at
+      ],
+      'usage'
+    )
+    validate_existing_table(
+      :ruby_llm_batches,
+      %i[
+        provider_batch_id provider status raw_status completed chat_type batch_protocol
+        chat_ids request_counts created_at updated_at
+      ],
+      'batch'
+    )
+    validate_unique_values(:ruby_llm_batches, %i[provider provider_batch_id]) if table_exists?(:ruby_llm_batches)
+  end
+
+  def validate_table_move(source, target)
+    return if source == target || !table_exists?(source) || !table_exists?(target)
+
+    raise "Both #{source} and #{target} exist. Merge or remove one before running this migration."
+  end
+
+  def existing_table(source, target)
+    return source if table_exists?(source)
+
+    target if table_exists?(target)
+  end
+
+  def validate_existing_table(table, columns, label)
+    validate_table_shape(table, columns, label) if table_exists?(table)
+  end
+
+  def validate_table_shape(table, columns, label)
+    primary_key = connection.primary_key(table)
+    unless primary_key.is_a?(String) && column_exists?(table, primary_key)
+      raise "#{table} does not look like a RubyLLM #{label} table; expected one primary key column"
+    end
+
+    missing = columns.reject { |column| column_exists?(table, column) }
+    return if missing.empty?
+
+    raise "#{table} does not look like a RubyLLM #{label} table; missing columns: #{missing.join(', ')}"
+  end
+
+  def validate_unique_values(table, columns)
+    duplicates = migration_record(table).group(*columns).having('COUNT(*) > 1').limit(5).pluck(*columns)
+    return if duplicates.empty?
+
+    raise "Cannot add a unique index to #{table} on #{columns.join(', ')}; " \
+          "duplicate values include #{duplicates.inspect}. Reconcile them before retrying."
+  end
+
+  def validate_chat_model_references(models)
+    chats = :<%= chat_table_name %>
+    model_column = first_existing_column(chats, :<%= v1_model_foreign_key %>, :ruby_llm_model_id)
+    return unless model_column
+
+    ensure_reference_types_match(chats, model_column, models)
+    orphan = select_value(<<~SQL)
+      SELECT legacy_chats.#{quoted_primary_key(chats)}
+        FROM #{quote_table(chats)} legacy_chats
+        LEFT JOIN #{quote_table(models)} legacy_models
+          ON legacy_chats.#{quote_column(model_column)} = legacy_models.#{quoted_primary_key(models)}
+       WHERE legacy_chats.#{quote_column(model_column)} IS NOT NULL
+         AND legacy_models.#{quoted_primary_key(models)} IS NULL
+       LIMIT 1
+    SQL
+    return unless orphan
+
+    raise "Could not find #{models} record for #{chats} id #{orphan}. Repair its model reference before retrying."
+  end
+
+  def validate_usage_identities(models)
+    conditions = legacy_usage_conditions
+    return if conditions.empty?
+
+    joins, provider, model = usage_identity_sql(models)
+    message_id = "legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}"
+    missing = select_value(<<~SQL)
+      SELECT #{message_id}
+        FROM #{quote_table(:<%= message_table_name %>)} legacy_messages
+        #{joins}
+       WHERE (#{conditions.join(' OR ')})
+         AND (#{provider} IS NULL OR #{model} IS NULL)
+       LIMIT 1
+    SQL
+    return unless missing
+
+    raise "Could not determine provider and model for <%= message_table_name %> id #{missing}. " \
+          'Set its model reference, or its chat model reference, before retrying.'
+  end
+
+  def validate_unique_tool_results
+    column = :<%= v1_tool_call_foreign_key %>
+    return unless column_exists?(:<%= message_table_name %>, column)
+
+    duplicates = migration_record(:<%= message_table_name %>)
+                 .where.not(column => nil)
+                 .group(column)
+                 .having('COUNT(*) > 1')
+                 .limit(5)
+                 .pluck(column)
+    return if duplicates.empty?
+
+    raise "Multiple messages reference the same tool call: #{duplicates.inspect}. " \
+          'Keep one result message per tool call before retrying.'
+  end
+
+  def move_models
+    move_table(:<%= v1_model_table_name %>, :ruby_llm_models)
+<% if postgresql? -%>
+    normalize_postgresql_json_columns(:ruby_llm_models, %i[modalities capabilities pricing metadata])
+<% end -%>
+<% unless mysql? -%>
+    normalize_json_defaults(:ruby_llm_models, modalities: {}, capabilities: [], pricing: {}, metadata: {})
+<% end -%>
+    with_upgrade_safety do
+      change_table :ruby_llm_models, bulk: true do |table|
+        table.string :family unless column_exists?(:ruby_llm_models, :family)
+        table.datetime :model_created_at unless column_exists?(:ruby_llm_models, :model_created_at)
+        table.integer :context_window unless column_exists?(:ruby_llm_models, :context_window)
+        table.integer :max_output_tokens unless column_exists?(:ruby_llm_models, :max_output_tokens)
+        table.date :knowledge_cutoff unless column_exists?(:ruby_llm_models, :knowledge_cutoff)
+        table.datetime :unlisted_at unless column_exists?(:ruby_llm_models, :unlisted_at)
+<% if postgresql? -%>
+        table.jsonb :modalities, default: {} unless column_exists?(:ruby_llm_models, :modalities)
+        table.jsonb :capabilities, default: [] unless column_exists?(:ruby_llm_models, :capabilities)
+        table.jsonb :pricing, default: {} unless column_exists?(:ruby_llm_models, :pricing)
+        table.jsonb :metadata, default: {} unless column_exists?(:ruby_llm_models, :metadata)
+<% elsif mysql? -%>
+        table.json :modalities unless column_exists?(:ruby_llm_models, :modalities)
+        table.json :capabilities unless column_exists?(:ruby_llm_models, :capabilities)
+        table.json :pricing unless column_exists?(:ruby_llm_models, :pricing)
+        table.json :metadata unless column_exists?(:ruby_llm_models, :metadata)
+<% else -%>
+        table.json :modalities, default: {} unless column_exists?(:ruby_llm_models, :modalities)
+        table.json :capabilities, default: [] unless column_exists?(:ruby_llm_models, :capabilities)
+        table.json :pricing, default: {} unless column_exists?(:ruby_llm_models, :pricing)
+        table.json :metadata, default: {} unless column_exists?(:ruby_llm_models, :metadata)
+<% end -%>
+        table.datetime :created_at unless column_exists?(:ruby_llm_models, :created_at)
+        table.datetime :updated_at unless column_exists?(:ruby_llm_models, :updated_at)
+      end
+    end
+    ensure_unique_index(:ruby_llm_models, %i[provider model_id])
+    add_upgrade_index(:ruby_llm_models, :provider) unless valid_index_exists?(:ruby_llm_models, :provider)
+    add_upgrade_index(:ruby_llm_models, :family) unless valid_index_exists?(:ruby_llm_models, :family)
+<% if postgresql? -%>
+    ensure_index_method(:ruby_llm_models, :capabilities, using: :gin)
+    ensure_index_method(:ruby_llm_models, :modalities, using: :gin)
+<% end -%>
+    normalize_chat_model_reference
+  end
+
+  def normalize_chat_model_reference
+    table = :<%= chat_table_name %>
+    column = first_existing_column(table, :<%= v1_model_foreign_key %>, :ruby_llm_model_id)
+    return unless column
+
+    ensure_reference_types_match(table, column, :ruby_llm_models)
+    with_upgrade_safety { rename_column table, column, :ruby_llm_model_id } if column != :ruby_llm_model_id
+    add_upgrade_index(table, :ruby_llm_model_id) unless valid_index_exists?(table, :ruby_llm_model_id)
+    return if foreign_key_exists?(table, :ruby_llm_models, column: :ruby_llm_model_id)
+
+    add_upgrade_foreign_key(table, :ruby_llm_models, column: :ruby_llm_model_id)
+  end
+
+  def add_chat_and_message_columns
+    ensure_boolean_column(:<%= chat_table_name %>, :cancelled)
+    ensure_boolean_column(:<%= message_table_name %>, :cache_until_here)
+    with_upgrade_safety do
+      change_table :<%= message_table_name %>, bulk: true do |table|
+        table.string :finish_reason unless column_exists?(:<%= message_table_name %>, :finish_reason)
+<% if postgresql? -%>
+        table.jsonb :citations unless column_exists?(:<%= message_table_name %>, :citations)
+        table.jsonb :server_tool_calls unless column_exists?(:<%= message_table_name %>, :server_tool_calls)
+        table.jsonb :raw_content unless column_exists?(:<%= message_table_name %>, :raw_content)
+        table.jsonb :raw_reasoning unless column_exists?(:<%= message_table_name %>, :raw_reasoning)
+<% else -%>
+        table.json :citations unless column_exists?(:<%= message_table_name %>, :citations)
+        table.json :server_tool_calls unless column_exists?(:<%= message_table_name %>, :server_tool_calls)
+        table.json :raw_content unless column_exists?(:<%= message_table_name %>, :raw_content)
+        table.json :raw_reasoning unless column_exists?(:<%= message_table_name %>, :raw_reasoning)
+<% end -%>
+      end
+    end
+<% if postgresql? -%>
+    normalize_postgresql_json_columns(:<%= message_table_name %>, %i[citations server_tool_calls raw_content raw_reasoning])
+<% end -%>
+  end
+
+  def ensure_boolean_column(table, column)
+    add_column table, column, :boolean unless column_exists?(table, column)
+    change_column_default table, column, false
+  end
+
+  def move_tool_calls
+    move_table(:<%= v1_tool_call_table_name %>, :ruby_llm_tool_calls)
+    table = :ruby_llm_tool_calls
+<% if postgresql? -%>
+    normalize_postgresql_json_columns(table, %i[arguments])
+<% end -%>
+<% unless mysql? -%>
+    normalize_json_defaults(table, arguments: {})
+<% end -%>
+    legacy_message_column = :<%= message_foreign_key %>
+    if legacy_message_column != :message_id && column_exists?(table, legacy_message_column)
+      remove_column_foreign_keys(table, legacy_message_column)
+      remove_matching_indexes(table, legacy_message_column)
+      with_upgrade_safety { rename_column table, legacy_message_column, :message_id }
+    end
+    remove_column_foreign_keys(table, :message_id)
+    remove_matching_indexes(table, :message_id)
+
+    if column_exists?(table, :message_type)
+      change_column_default table, :message_type, nil
+    else
+      add_column table, :message_type, :string
+    end
+    with_upgrade_safety do
+      change_table table, bulk: true do |definition|
+        definition.string :result_type unless column_exists?(table, :result_type)
+        definition.column :result_id, reference_type_for(:<%= message_table_name %>) unless column_exists?(table, :result_id)
+        definition.text :thought_signature unless column_exists?(table, :thought_signature)
+        definition.string :approval unless column_exists?(table, :approval)
+      end
+    end
+    if column_exists?(table, :thought_signature, :string)
+      with_upgrade_safety { change_column table, :thought_signature, :text }
+    end
+    normalize_tool_call_indexes
+  end
+
+  def normalize_tool_call_indexes
+    table = :ruby_llm_tool_calls
+    indexes = []
+    indexes << [%i[message_type message_id], {}] unless valid_index_exists?(table, %i[message_type message_id])
+    indexes << [%i[result_type result_id], {}] unless valid_index_exists?(table, %i[result_type result_id])
+    unless valid_index_exists?(table, :tool_call_id, unique: true)
+      deduplicate_tool_call_ids
+      remove_matching_indexes(table, :tool_call_id)
+      indexes << [:tool_call_id, { unique: true }]
+    end
+    indexes << [:name, {}] unless valid_index_exists?(table, :name)
+    add_upgrade_indexes(table, indexes)
+  end
+
+  def deduplicate_tool_call_ids
+    records = migration_record(:ruby_llm_tool_calls)
+    loop do
+      duplicate_ids = records.group(:tool_call_id).having('COUNT(*) > 1').limit(1_000).pluck(:tool_call_id)
+      break if duplicate_ids.empty?
+
+      duplicate_ids.each do |tool_call_id|
+        matches = records.where(tool_call_id: tool_call_id)
+        keeper = matches.minimum(records.primary_key)
+        matches.where.not(records.primary_key => keeper).find_each(batch_size: 1_000) do |record|
+          record.update!(tool_call_id: available_tool_call_id(records, record))
+        end
+      end
+    end
+  end
+
+  def available_tool_call_id(records, record)
+    counter = nil
+    loop do
+      suffix = "-migrated-#{record.id}#{"-#{counter}" if counter}"
+      candidate = "#{record.tool_call_id.to_s.slice(0, 255 - suffix.length)}#{suffix}"
+      return candidate unless records.where(tool_call_id: candidate).exists?
+
+      counter = counter.to_i + 1
+    end
+  end
+
+  def create_usages
+    unless table_exists?(:ruby_llm_usages)
+      create_table :ruby_llm_usages do |table|
+        table.references :chat, polymorphic: true, null: false,
+                                type: reference_type_for(:<%= chat_table_name %>), index: false
+        table.references :message, polymorphic: true,
+                                   type: reference_type_for(:<%= message_table_name %>), index: false
+        table.string :operation, null: false
+        table.string :provider, null: false
+        table.string :model, null: false
+        table.string :status, null: false
+        table.integer :input_tokens
+        table.integer :output_tokens
+        table.integer :cache_read_tokens
+        table.integer :cache_write_tokens
+        table.integer :thinking_tokens
+        table.decimal :input_cost, precision: 16, scale: 10
+        table.decimal :output_cost, precision: 16, scale: 10
+        table.decimal :cache_read_cost, precision: 16, scale: 10
+        table.decimal :cache_write_cost, precision: 16, scale: 10
+        table.decimal :thinking_cost, precision: 16, scale: 10
+        table.decimal :total_cost, precision: 16, scale: 10
+        table.timestamps
+        table.check_constraint "operation IN (<%= usage_operations_sql %>)"
+        table.check_constraint "status IN (<%= usage_statuses_sql %>)"
+      end
+    end
+    indexes = [%i[chat_type chat_id], %i[message_type message_id], :status]
+    missing = indexes.reject { |columns| valid_index_exists?(:ruby_llm_usages, columns) }
+                     .map { |columns| [columns, {}] }
+    add_upgrade_indexes(:ruby_llm_usages, missing)
+  end
+
+  def create_batches
+    unless table_exists?(:ruby_llm_batches)
+      create_table :ruby_llm_batches do |table|
+        table.string :provider_batch_id, null: false
+        table.string :provider, null: false
+        table.string :status, null: false
+        table.string :raw_status
+        table.boolean :completed, null: false, default: false
+        table.string :chat_type
+        table.string :batch_protocol
+<% if postgresql? -%>
+        table.jsonb :chat_ids, default: []
+        table.jsonb :request_counts
+<% elsif mysql? -%>
+        table.json :chat_ids
+        table.json :request_counts
+<% else -%>
+        table.json :chat_ids, default: []
+        table.json :request_counts
+<% end -%>
+        table.timestamps
+      end
+    end
+    add_column :ruby_llm_batches, :raw_status, :string unless column_exists?(:ruby_llm_batches, :raw_status)
+    add_column :ruby_llm_batches, :chat_type, :string unless column_exists?(:ruby_llm_batches, :chat_type)
+    add_column :ruby_llm_batches, :batch_protocol, :string unless column_exists?(:ruby_llm_batches, :batch_protocol)
+<% if postgresql? -%>
+    add_column :ruby_llm_batches, :request_counts, :jsonb unless column_exists?(:ruby_llm_batches, :request_counts)
+    normalize_postgresql_json_columns(:ruby_llm_batches, %i[chat_ids request_counts])
+<% else -%>
+    add_column :ruby_llm_batches, :request_counts, :json unless column_exists?(:ruby_llm_batches, :request_counts)
+<% end -%>
+<% unless mysql? -%>
+    normalize_json_defaults(:ruby_llm_batches, chat_ids: [])
+<% end -%>
+    ensure_unique_index(:ruby_llm_batches, %i[provider provider_batch_id])
+    add_upgrade_index(:ruby_llm_batches, :status) unless valid_index_exists?(:ruby_llm_batches, :status)
+  end
+
+  def usage_identity_sql(models)
+    providers = []
+    model_ids = []
+    joins = []
+    if column_exists?(:<%= message_table_name %>, :<%= v1_model_foreign_key %>)
+      model_column = column_definition(:<%= message_table_name %>, :<%= v1_model_foreign_key %>)
+      if model_column.type == :string
+        providers << message_value(:provider) if column_exists?(:<%= message_table_name %>, :provider)
+        model_ids << message_value(:<%= v1_model_foreign_key %>)
+      else
+        joins << "LEFT JOIN #{quote_table(models)} legacy_message_models " \
+                 "ON #{message_value(:<%= v1_model_foreign_key %>)} = legacy_message_models.#{quoted_primary_key(models)}"
+        providers << "legacy_message_models.#{quote_column(:provider)}"
+        model_ids << "legacy_message_models.#{quote_column(:model_id)}"
+      end
+    end
+
+    chat_model_column = first_existing_column(:<%= chat_table_name %>, :<%= v1_model_foreign_key %>, :ruby_llm_model_id)
+    if chat_model_column
+      joins << "LEFT JOIN #{quote_table(:<%= chat_table_name %>)} legacy_chats " \
+               "ON #{message_value(:<%= chat_foreign_key %>)} = legacy_chats.#{quoted_primary_key(:<%= chat_table_name %>)}"
+      joins << "LEFT JOIN #{quote_table(models)} legacy_chat_models " \
+               "ON legacy_chats.#{quote_column(chat_model_column)} = legacy_chat_models.#{quoted_primary_key(models)}"
+      providers << "legacy_chat_models.#{quote_column(:provider)}"
+      model_ids << "legacy_chat_models.#{quote_column(:model_id)}"
+    end
+
+    [joins.join("\n"), coalesce_sql(providers), coalesce_sql(model_ids)]
+  end
+
+  def legacy_usage_conditions
+    columns = %i[
+      input_tokens output_tokens cached_tokens cache_creation_tokens cache_read_tokens cache_write_tokens
+      thinking_tokens total_cost cost_details
+    ]
+    conditions = columns.filter_map do |column|
+      "#{message_value(column)} IS NOT NULL" if column_exists?(:<%= message_table_name %>, column)
+    end
+    conditions << "#{message_value(:role)} = 'assistant'" if column_exists?(:<%= message_table_name %>, :role)
+    conditions
+  end
+
+  def coalesce_sql(values)
+    values = Array(values).compact
+    return 'NULL' if values.empty?
+    return values.first if values.one?
+
+    "COALESCE(#{values.join(', ')})"
+  end
+
+  def message_value(column) = "legacy_messages.#{quote_column(column)}"
+  def first_existing_column(table, *columns) = columns.find { |column| column_exists?(table, column) }
+  def column_definition(table, column) = connection.columns(table).find { |candidate| candidate.name == column.to_s }
+  def quoted_primary_key(table) = quote_column(connection.primary_key(table))
+  def quote_table(table) = connection.quote_table_name(table)
+  def quote_column(column) = connection.quote_column_name(column)
+
+  def ensure_reference_types_match(source, column, target)
+    source_column = column_definition(source, column)
+    target_column = column_definition(target, connection.primary_key(target))
+    return if source_column.type == target_column.type && source_column.limit == target_column.limit
+
+    raise "Expected #{source}.#{column} to match #{target}.#{connection.primary_key(target)}"
+  end
+
+  def move_table(source, target)
+    return if source == target || !table_exists?(source)
+
+    raise "Both #{source} and #{target} exist. Merge or remove one before retrying." if table_exists?(target)
+
+    with_upgrade_safety { rename_table source, target }
+  end
+
+<% if postgresql? -%>
+  def normalize_postgresql_json_columns(table, columns)
+    columns.each do |column_name|
+      column = column_definition(table, column_name)
+      next unless column&.type == :json
+
+      with_upgrade_safety do
+        change_column table, column_name, :jsonb, using: "#{quote_column(column_name)}::jsonb"
+      end
+    end
+  end
+
+<% end -%>
+<% unless mysql? -%>
+  def normalize_json_defaults(table, defaults)
+    defaults.each do |column_name, value|
+      column = column_definition(table, column_name)
+      next unless column&.default.nil?
+
+      with_upgrade_safety { change_column_default table, column_name, from: nil, to: value }
+    end
+  end
+
+<% end -%>
+  def ensure_unique_index(table, columns)
+    return if valid_index_exists?(table, columns, unique: true)
+
+    validate_unique_values(table, columns)
+    remove_matching_indexes(table, columns)
+    add_upgrade_index(table, columns, unique: true)
+  end
+
+  def ensure_index_method(table, columns, using:)
+    return if valid_index_exists?(table, columns, using: using)
+
+    remove_matching_indexes(table, columns)
+    add_upgrade_index(table, columns, using: using)
+  end
+
+  def remove_matching_indexes(table, columns)
+    connection.indexes(table).each do |index|
+      remove_upgrade_index(table, index.name) if index.columns == Array(columns).map(&:to_s)
+    end
+  end
+
+  def remove_column_foreign_keys(table, column)
+    connection.foreign_keys(table).each do |key|
+      remove_foreign_key(table, key.to_table, column: column) if key.column == column.to_s
+    end
+  end
+
+  def valid_index_exists?(table, columns, unique: nil, using: nil)
+    matching = connection.indexes(table).select do |index|
+      index.columns == Array(columns).map(&:to_s) &&
+        (unique.nil? || index.unique == unique) &&
+        (using.nil? || index.using.to_s == using.to_s)
+    end
+    valid, invalid = matching.partition { |index| !index.respond_to?(:valid?) || index.valid? }
+    invalid.each { |index| remove_upgrade_index(table, index.name) }
+    valid.any?
+  end
+
+  def add_upgrade_index(table, columns, **options)
+<% if postgresql? -%>
+    options[:algorithm] = :concurrently
+<% end -%>
+    add_index table, columns, **options
+  end
+
+  def add_upgrade_indexes(table, indexes)
+    return if indexes.empty?
+
+<% if mysql? -%>
+    with_upgrade_safety do
+      change_table table, bulk: true do |definition|
+        indexes.each { |columns, options| definition.index(columns, **options) }
+      end
+    end
+<% else -%>
+    indexes.each { |columns, options| add_upgrade_index(table, columns, **options) }
+<% end -%>
+  end
+
+  def remove_upgrade_index(table, name)
+    options = { name: name }
+<% if postgresql? -%>
+    options[:algorithm] = :concurrently
+<% end -%>
+    remove_index table, **options
+  end
+
+  def add_upgrade_foreign_key(table, target, column:)
+<% if postgresql? -%>
+    add_foreign_key table, target, column: column, validate: false
+    validate_foreign_key table, target, column: column
+<% elsif mysql? -%>
+    connection.disable_referential_integrity { add_foreign_key table, target, column: column }
+<% else -%>
+    add_foreign_key table, target, column: column
+<% end -%>
+  end
+
+  def reference_type_for(table)
+    column = column_definition(table, connection.primary_key(table))
+    raise "Could not determine the primary key type for #{table}" unless column
+
+    return :bigint if column.type == :integer && column.limit == 8
+
+    column.type
+  end
+
+  def with_upgrade_safety(&)
+    return safety_assured(&) if respond_to?(:safety_assured, true)
+
+    yield
+  end
+
+  def migration_record(table)
+    Class.new(ActiveRecord::Base) do
+      self.table_name = table.to_s
+      self.inheritance_column = :_type_disabled
+    end
+  end
+end

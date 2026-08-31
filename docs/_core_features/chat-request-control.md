@@ -30,14 +30,14 @@ chat = RubyLLM.chat
               .with_max_output_tokens(200)
 ```
 
-Calling a `with_*` method again replaces the setting, and `nil` returns it to its default:
+Calling a `with_*` method again replaces the setting. Value setters use `nil` to clear a value; feature switches use `false` to disable the feature:
 
 ```ruby
 chat.with_temperature(0.2)
 chat.with_temperature(nil)
 
 chat.with_caching(ttl: "1h")
-chat.with_caching(nil)
+chat.with_caching(false)
 
 chat.with_max_output_tokens(200)
 chat.with_max_output_tokens(nil)
@@ -46,7 +46,7 @@ chat.with_headers("X-Custom-Feature" => "enabled")
 chat.with_headers(nil)
 
 chat.with_thinking(effort: :high)
-chat.with_thinking(effort: nil)
+chat.with_thinking(false)
 
 chat.with_tools(SearchDocs)
 chat.with_tools(nil)
@@ -60,7 +60,21 @@ chat.with_instructions(nil)
 
 The same pattern covers `with_schema`, `with_fallbacks`, `with_provider_options`, and `with_context`.
 
-Methods with no arguments enable a feature with its default behavior, like provider-default prompt caching with `with_caching` or document citations with `with_citations`.
+Methods with no arguments enable a feature with its default behavior. Pass `false` to disable it:
+
+```ruby
+chat.with_caching
+chat.with_caching(false)
+
+chat.with_thinking
+chat.with_thinking(false)
+
+chat.with_compaction
+chat.with_compaction(false)
+
+chat.with_citations
+chat.with_citations(false)
+```
 
 ## Identifying End Users
 
@@ -108,10 +122,10 @@ With no arguments the provider's own defaults apply. Three provider-neutral opti
 chat.with_compaction(at: 50_000)
 chat.with_compaction(at: 100_000, instructions: "Keep every decision and open question.")
 chat.with_compaction(at: 50_000, pause_after: true)
-chat.with_compaction(nil)
+chat.with_compaction(false)
 ```
 
-`at:` is the input-token count that triggers compaction, `instructions:` steers the summary the provider writes, and `pause_after:` ends the turn once compaction runs instead of continuing straight into the answer. `nil` turns compaction back off. Each provider maps what it supports:
+`at:` is the input-token count that triggers compaction, `instructions:` steers the summary the provider writes, and `pause_after:` ends the turn once compaction runs instead of continuing straight into the answer. `false` turns compaction back off. Each provider maps what it supports:
 
 | Provider | Request field | `at:` | `instructions:` and `pause_after:` |
 |:---------|:--------------|:------|:-----------------------------------|
@@ -127,7 +141,7 @@ What happens at the threshold is not the same everywhere. Anthropic and OpenAI s
 
 Compacting is not free: the provider runs the model an extra time to write the summary, and that generation is billed. RubyLLM reports the whole bill, so `response.tokens.input` on a turn that compacted counts the summarization pass as well as the answer.
 
-Agents declare it with the matching `compaction` macro:
+Agents declare it with `compaction`:
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent

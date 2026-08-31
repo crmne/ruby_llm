@@ -585,14 +585,14 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#refresh_from_providers!' do
+  describe '#refresh_from_providers' do
     it 'replaces the registry with the merged provider catalog' do
       replacement = [model(id: 'only', provider: 'openai')]
       allow(described_class).to receive(:fetch_merged_models).and_return(replacement)
 
       registry = described_class.new([])
 
-      expect(registry.refresh_from_providers!.all).to eq(replacement)
+      expect(registry.refresh_from_providers.all).to eq(replacement)
     end
   end
 
@@ -645,9 +645,9 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#load_from_store!' do
+  describe '#load_from_store' do
     it 'raises when no store is configured' do
-      expect { described_class.new([]).load_from_store! }.to raise_error(
+      expect { described_class.new([]).load_from_store }.to raise_error(
         RubyLLM::ModelRegistryError, 'No model registry store is configured'
       )
     end
@@ -658,7 +658,7 @@ RSpec.describe RubyLLM::Models do
         define_method(:read) { stored }
       end.new
 
-      expect(described_class.new([]).load_from_store!.all).to eq(stored)
+      expect(described_class.new([]).load_from_store.all).to eq(stored)
     end
   end
 
@@ -728,7 +728,7 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#refresh! against the published catalog' do
+  describe '#refresh against the published catalog' do
     let(:published) { [model(id: 'gpt-x', provider: 'openai', name: 'GPT X', context_window: 400_000)] }
 
     def local_provider(context_window)
@@ -753,12 +753,12 @@ RSpec.describe RubyLLM::Models do
     it 'prunes and refreshes on a not-modified answer just as it does on a fresh one' do
       allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(8192)])
       stub_published(published, 'etag-1', false)
-      described_class.new([]).refresh!
+      described_class.new([]).refresh
 
       stale = described_class.load_models + [model(id: 'retired', provider: 'openai')]
       allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(131_072)])
       stub_published(nil, 'etag-1', true)
-      registry = described_class.new(stale).refresh!
+      registry = described_class.new(stale).refresh
 
       expect(registry.all.map(&:id)).to contain_exactly('llama', 'gpt-x')
       expect(registry.all.find { |m| m.id == 'llama' }.context_window).to eq(131_072)
@@ -773,7 +773,7 @@ RSpec.describe RubyLLM::Models do
       allow(described_class).to receive(:fetch_published_registry) { results.shift }
 
       registry = described_class.new([])
-      registry.refresh!
+      registry.refresh
 
       expect(registry.all.map(&:id)).to contain_exactly('llama', 'gpt-x')
     end
@@ -788,7 +788,7 @@ RSpec.describe RubyLLM::Models do
       allow(described_class).to receive(:models_from_provider_gems).and_return(provider_models)
       stub_published(published_models, 'etag-1', false)
 
-      registry = described_class.new(provider_models).refresh!
+      registry = described_class.new(provider_models).refresh
       cached = RubyLLM::ModelRegistry.read(RubyLLM.config.model_registry_file)
 
       expect(registry.all.map(&:id)).to contain_exactly('claude-haiku-4-5', 'gpt-4.1-mini')
@@ -810,7 +810,7 @@ RSpec.describe RubyLLM::Models do
       allow(described_class).to receive(:models_from_provider_gems).and_return(provider_models)
       stub_published(published_models, 'etag-1', false)
 
-      described_class.new(provider_models).refresh!
+      described_class.new(provider_models).refresh
 
       expect(stored.map(&:id)).to contain_exactly('claude-haiku-4-5', 'gpt-4.1-mini')
     end

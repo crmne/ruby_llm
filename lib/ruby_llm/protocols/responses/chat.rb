@@ -25,8 +25,8 @@ module RubyLLM
           # to ride back in the response. xAI only encrypts it when asked.
           payload = {
             model: model.id,
-            input: format_input(messages),
-            instructions: format_instructions(messages),
+            input: format_input(messages, caching:),
+            instructions: format_instructions(messages, caching:),
             stream: stream,
             store: false,
             include: ['reasoning.encrypted_content']
@@ -46,7 +46,7 @@ module RubyLLM
           effort = resolve_effort(thinking)
           payload[:reasoning] = { effort: effort } if effort
           payload.merge!(prompt_cache_params(caching)) if caching
-          force_explicit_cache_mode(payload) if cache_boundaries?(messages)
+          force_explicit_cache_mode(payload) if caching != false && cache_boundaries?(messages)
 
           payload
         end
@@ -234,32 +234,34 @@ module RubyLLM
         # System messages marked as cache boundaries, or carrying attachments,
         # ride along as input items, because the +instructions+ parameter is a
         # plain string and cannot carry a breakpoint marker or a file.
-        def format_instructions(messages)
-          instructions = messages.select { |msg| msg.role == :system && !system_input_item?(msg) }
+        def format_instructions(messages, caching: nil)
+          instructions = messages.select { |msg| msg.role == :system && !system_input_item?(msg, caching:) }
                                  .map { |msg| msg.content.to_s }
 
           instructions.empty? ? nil : instructions.join("\n\n")
         end
 
-        def format_input(messages)
-          messages.reject { |msg| msg.role == :system && !system_input_item?(msg) }.flat_map { |msg| format_item(msg) }
+        def format_input(messages, caching: nil)
+          messages.reject { |msg| msg.role == :system && !system_input_item?(msg, caching:) }
+                  .flat_map { |msg| format_item(msg, caching:) }
         end
 
-        def system_input_item?(msg)
-          msg.role == :system && (msg.cache_until_here? || msg.attachments.any?)
+        def system_input_item?(msg, caching: nil)
+          msg.role == :system && ((caching != false && msg.cache_until_here?) || msg.attachments.any?)
         end
 
-        def format_item(msg)
+        def format_item(msg, caching: nil)
           case msg.role
           when :system
-            inject_cache_breakpoint({ role: 'system', content: format_content(msg.content, msg.attachments) })
+            item = { role: 'system', content: format_content(msg.content, msg.attachments) }
+            caching != false && msg.cache_until_here? ? inject_cache_breakpoint(item) : item
           when :tool
             format_tool_items(msg)
           when :assistant
             format_assistant_items(msg)
           else
             item = { role: 'user', content: format_content(msg.content, msg.attachments) }
-            msg.cache_until_here? ? inject_cache_breakpoint(item) : item
+            caching != false && msg.cache_until_here? ? inject_cache_breakpoint(item) : item
           end
         end
 

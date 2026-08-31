@@ -164,7 +164,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'adds cache_control to a message marked as a cache boundary' do
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
       formatted = provider.send(:format_messages, [message])
 
@@ -172,7 +172,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'uses configured cache_control for a cache boundary' do
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
       formatted = provider.send(:format_messages, [message], caching: { ttl: '1h' })
 
@@ -257,7 +257,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'does not add top-level cache_control when an explicit boundary is present' do
-      messages = [RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!]
+      messages = [RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here]
 
       payload = provider.send(
         :render_payload,

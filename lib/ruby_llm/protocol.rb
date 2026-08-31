@@ -262,7 +262,7 @@ module RubyLLM
     end
 
     # Video generation is asynchronous on every provider: this submits the
-    # job and returns a VideoJob, whose #refresh! and #video poll and
+    # job and returns a VideoJob, whose #refresh and #video poll and
     # download through this protocol instance.
     def animate_later(prompt, model:, with: nil, provider_options: {})
       attachments = Attachment.wrap(with, config: @config)

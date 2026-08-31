@@ -70,6 +70,42 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
     expect(entry).not_to be_usage_available
   end
 
+  it 'recognizes an exact cost even when token counts are unavailable' do
+    entry = RubyLLM.const_get(:Usage)::Entry.new(
+      operation: :chat,
+      provider: 'openrouter',
+      model: 'test-model',
+      cost: RubyLLM::Cost.from_h({ total: 0.0042 })
+    )
+    message = RubyLLM::Message.new(role: :assistant, content: 'hi', usage_entries: [entry])
+    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat.usage_entries = [entry]
+
+    expect(entry).to be_cost_available
+    expect(entry).not_to be_usage_available
+    expect(message.cost.total).to eq(0.0042)
+    expect(chat.cost.total).to eq(0.0042)
+  end
+
+  it 'keeps aggregate cost unknown when any potentially billed attempt is unknown' do
+    known = RubyLLM.const_get(:Usage)::Entry.new(
+      operation: :chat,
+      provider: 'openrouter',
+      model: 'test-model',
+      cost: RubyLLM::Cost.from_h({ total: 0.0042 })
+    )
+    unknown = RubyLLM.const_get(:Usage)::Entry.new(
+      operation: :chat,
+      provider: 'openrouter',
+      model: 'test-model',
+      status: :failed
+    )
+    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat.usage_entries = [known, unknown]
+
+    expect(chat.cost.total).to be_nil
+  end
+
   it 'keeps stream tokens observed before a never-sent classification' do
     tracker = build_tracker
     entry = tracker.start

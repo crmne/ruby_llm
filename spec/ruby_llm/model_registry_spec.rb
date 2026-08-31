@@ -176,7 +176,7 @@ RSpec.describe RubyLLM::ModelRegistry do
           .and_return(RubyLLM::ModelRegistry::PublishedSource::Result.new([model], '"registry-1"', false))
 
         registry = described_class.new([old_model])
-        registry.refresh!
+        registry.refresh
 
         expect(JSON.parse(File.read(path))).to be_an(Array)
         expect(RubyLLM::ModelRegistry::FileStore.new(path).etag).to eq('"registry-1"')
@@ -185,7 +185,7 @@ RSpec.describe RubyLLM::ModelRegistry do
         allow(described_class).to receive(:fetch_published_registry)
           .with(etag: '"registry-1"')
           .and_return(RubyLLM::ModelRegistry::PublishedSource::Result.new(nil, '"registry-1"', true))
-        registry.refresh!
+        registry.refresh
 
         expect(registry.all.map(&:id)).to eq(['new-model'])
       ensure
@@ -194,19 +194,24 @@ RSpec.describe RubyLLM::ModelRegistry do
     end
 
     it 'raises on a cache write failure without changing the in-memory registry' do
-      published = [model]
-      allow(described_class).to receive_messages(
-        fetch_provider_models: empty_fetch,
-        fetch_published_registry: RubyLLM::ModelRegistry::PublishedSource::Result.new(published, nil, false)
-      )
-      allow_any_instance_of(RubyLLM::ModelRegistry::FileStore).to( # rubocop:disable RSpec/AnyInstance
-        receive(:write).and_raise(Errno::EACCES, RubyLLM.config.model_registry_file)
-      )
+      Dir.mktmpdir do |directory|
+        config = RubyLLM.config.dup
+        config.model_registry_file = File.join(directory, 'models.json')
+        allow(RubyLLM).to receive(:config).and_return(config)
+        published = [model]
+        allow(described_class).to receive_messages(
+          fetch_provider_models: empty_fetch,
+          fetch_published_registry: RubyLLM::ModelRegistry::PublishedSource::Result.new(published, nil, false)
+        )
+        allow_any_instance_of(RubyLLM::ModelRegistry::FileStore).to( # rubocop:disable RSpec/AnyInstance
+          receive(:write).and_raise(Errno::EACCES, config.model_registry_file)
+        )
 
-      registry = described_class.new([old_model])
+        registry = described_class.new([old_model])
 
-      expect { registry.refresh! }.to raise_error(RubyLLM::ModelRegistryError, /Could not save/)
-      expect(registry.all.map(&:id)).to eq(['old-model'])
+        expect { registry.refresh }.to raise_error(RubyLLM::ModelRegistryError, /Could not save/)
+        expect(registry.all.map(&:id)).to eq(['old-model'])
+      end
     end
 
     it 'raises on a database write failure without changing the in-memory registry' do
@@ -220,7 +225,7 @@ RSpec.describe RubyLLM::ModelRegistry do
 
       registry = described_class.new([old_model])
 
-      expect { registry.refresh! }.to raise_error(RubyLLM::ModelRegistryError, /database unavailable/)
+      expect { registry.refresh }.to raise_error(RubyLLM::ModelRegistryError, /database unavailable/)
       expect(registry.all.map(&:id)).to eq(['old-model'])
     end
 
@@ -237,7 +242,7 @@ RSpec.describe RubyLLM::ModelRegistry do
         expect(registry.all.map(&:id)).to eq(['old-model'])
       end
 
-      registry.refresh!
+      registry.refresh
 
       expect(registry.all.map(&:id)).to eq(['new-model'])
     end
@@ -253,7 +258,7 @@ RSpec.describe RubyLLM::ModelRegistry do
         fetch_published_registry: RubyLLM::ModelRegistry::PublishedSource::Result.new([model], nil, false)
       )
 
-      registry = described_class.new([old_model]).refresh!
+      registry = described_class.new([old_model]).refresh
 
       expect(registry.all.map(&:id)).to eq(['new-model'])
       expect(registry.unlisted.map(&:id)).to eq(['old-model'])

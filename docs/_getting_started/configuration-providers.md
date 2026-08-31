@@ -133,10 +133,10 @@ RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama_cloud) # Ollama's GPUs
 
 Model names differ between the two. Locally, cloud models carry a `-cloud` suffix (`gpt-oss:120b-cloud`) because your Ollama offloads them; the hosted API serves the plain name (`gpt-oss:120b`). Use the plain name with `:ollama_cloud`.
 
-Ollama retires cloud models regularly, so the shipped registry lags what the service serves today. RubyLLM accepts any model ID you give `:ollama_cloud` without a registry entry, and `refresh!` pulls the live catalog:
+Ollama retires cloud models regularly, so the shipped registry lags what the service serves today. RubyLLM accepts any model ID you give `:ollama_cloud` without a registry entry, and `refresh` pulls the live catalog:
 
 ```ruby
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 RubyLLM.models.by_provider(:ollama_cloud).map(&:id)
 ```
 

@@ -25,7 +25,7 @@ module RubyLLM
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
-          explicit_boundaries = cache_boundaries?(messages)
+          explicit_boundaries = cache_boundaries?(messages, caching:)
           system_content = build_system_content(system_messages, caching:)
 
           build_base_payload(chat_messages, model, stream, thinking, citations: citations, caching:).tap do |payload|
@@ -77,7 +77,7 @@ module RubyLLM
           # own block in the resulting array.
           system_messages.flat_map do |msg|
             blocks = Media.format_content(msg.content, msg.attachments).dup
-            msg.cache_until_here? ? inject_cache_control(blocks, caching:) : blocks
+            cache_boundary?(msg, caching:) ? inject_cache_control(blocks, caching:) : blocks
           end
         end
 
@@ -101,7 +101,7 @@ module RubyLLM
           messages.each do |msg|
             if msg.tool_result?
               tool_result_blocks << Tools.format_tool_result_block(msg)
-              inject_cache_control(tool_result_blocks, caching:) if msg.cache_until_here?
+              inject_cache_control(tool_result_blocks, caching:) if cache_boundary?(msg, caching:)
               next
             end
 
@@ -333,7 +333,7 @@ module RubyLLM
         # citations back exactly as returned.
         def format_raw_assistant_message(msg, caching: nil)
           blocks = msg.raw_content.dup
-          inject_cache_control(blocks, caching:) if msg.cache_until_here?
+          inject_cache_control(blocks, caching:) if cache_boundary?(msg, caching:)
 
           { role: 'assistant', content: blocks }
         end
@@ -347,7 +347,7 @@ module RubyLLM
           end
 
           append_formatted_content(content_blocks, msg, citations: citations)
-          inject_cache_control(content_blocks, caching:) if msg.cache_until_here?
+          inject_cache_control(content_blocks, caching:) if cache_boundary?(msg, caching:)
 
           {
             role: convert_role(msg.role),
@@ -367,7 +367,7 @@ module RubyLLM
               input: tool_call.arguments
             }
           end
-          inject_cache_control(content_blocks, caching:) if msg.cache_until_here?
+          inject_cache_control(content_blocks, caching:) if cache_boundary?(msg, caching:)
 
           {
             role: 'assistant',
@@ -405,8 +405,12 @@ module RubyLLM
           content_blocks.concat(Media.format_content(msg.content, msg.attachments, citations: citations))
         end
 
-        def cache_boundaries?(messages)
-          messages.any?(&:cache_until_here?)
+        def cache_boundaries?(messages, caching: nil)
+          caching != false && messages.any?(&:cache_until_here?)
+        end
+
+        def cache_boundary?(message, caching: nil)
+          caching != false && message.cache_until_here?
         end
 
         def inject_cache_control(blocks, caching: nil)
@@ -462,6 +466,7 @@ module RubyLLM
 
         def build_thinking_payload(thinking)
           return nil unless thinking&.enabled?
+          return { thinking: { type: 'disabled' } } if thinking.enabled == false
 
           effort = resolve_effort(thinking)
           return nil if effort == 'none'
@@ -477,6 +482,7 @@ module RubyLLM
         # adaptive is the only type Anthropic accepts without a budget. Effort
         # is a separate parameter, so it never picks a type.
         def thinking_mode(thinking)
+          return { type: 'adaptive' } if thinking.enabled == true
           return nil unless thinking.budget || thinking.display
 
           mode = if thinking.budget

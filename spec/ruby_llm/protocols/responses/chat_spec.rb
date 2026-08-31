@@ -144,7 +144,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
     it 'marks cache boundaries with explicit breakpoint parts' do
       messages = [
-        RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!,
+        RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here,
         RubyLLM::Message.new(role: :user, content: 'hi')
       ]
 
@@ -159,7 +159,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
     it 'sends cache-bounded system messages as input items' do
       messages = [
-        RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!,
+        RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here,
         RubyLLM::Message.new(role: :user, content: 'hi')
       ]
 

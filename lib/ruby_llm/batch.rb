@@ -24,9 +24,13 @@ module RubyLLM
     # from any process with ::find.
     attr_reader :id
 
+    # The provider-neutral lifecycle status: +:pending+, +:succeeded+,
+    # +:failed+, or +:cancelled+. Refreshed by #refresh.
+    attr_reader :status
+
     # The provider-reported status string, such as "in_progress".
     # Refreshed by #refresh.
-    attr_reader :status
+    attr_reader :raw_status
 
     # The provider-reported request tallies by state, or +nil+ when the
     # provider does not report them.
@@ -40,6 +44,10 @@ module RubyLLM
     # batch was loaded by id via ::find or holds chats.
     attr_reader :requests
 
+    # The normalized outcome of each collected request, in submission order.
+    # Values are +:succeeded+, +:failed+, or +:cancelled+.
+    attr_reader :statuses
+
     class << self
       # Submits chats or embedding requests to their shared provider as a
       # batch and returns a new Batch. Accepts a single Chat or an array.
@@ -50,7 +58,8 @@ module RubyLLM
       #     RubyLLM.chat(model: "claude-haiku-4-5").ask_later(ticket.body)
       #   end
       #   batch = RubyLLM::Batch.submit(chats)
-      #   batch.status # => "in_progress"
+      #   batch.status     # => :pending
+      #   batch.raw_status # => "in_progress"
       #
       # Raises ArgumentError if the batch is empty, mixes providers, mixes
       # chats with embedding requests, or includes a chat that is not
@@ -163,6 +172,7 @@ module RubyLLM
       @batch_protocol = protocol_name(batch_protocol)
       @store = store
       @delivered = {}
+      @statuses = []
       apply(attributes)
     end
 
@@ -182,7 +192,22 @@ module RubyLLM
       @completed
     end
 
-    # Re-fetches the batch from the provider, updating #status,
+    # Returns whether the provider completed the batch successfully.
+    def succeeded?
+      status == :succeeded
+    end
+
+    # Returns whether the provider failed or expired the batch.
+    def failed?
+      status == :failed
+    end
+
+    # Returns whether the provider cancelled the batch.
+    def cancelled?
+      status == :cancelled
+    end
+
+    # Re-fetches the batch from the provider, updating #status, #raw_status,
     # #request_counts, and #complete?. Returns +self+.
     def refresh
       apply(@provider.find_batch(id))
@@ -236,11 +261,13 @@ module RubyLLM
     end
 
     def apply(attributes)
+      @batch_protocol = protocol_name(attributes[:batch_protocol]) if attributes[:batch_protocol]
       @id = attributes.fetch(:id)
-      @status = attributes.fetch(:status)
+      @raw_status = attributes.fetch(:raw_status)
       @completed = attributes.fetch(:completed)
       @request_counts = attributes[:request_counts]
-      @batch_protocol = protocol_name(attributes[:batch_protocol]) if attributes[:batch_protocol]
+      @request_count = attributes[:request_count]
+      @status = @provider.batch_status(@raw_status, completed: @completed, batch_protocol: @batch_protocol)
     end
 
     def protocol_name(protocol)
@@ -251,32 +278,87 @@ module RubyLLM
 
     def collect_results
       results = @provider.batch_results(id, batch_protocol: @batch_protocol)
-      slots = Array.new(chats&.size || requests&.size || ((results.map(&:first).max || -1) + 1))
+      slots = Array.new(result_slot_count(results))
 
-      results.each do |index, result|
+      results.each do |index, result, failure_status|
         slots[index] = result
-        deliver(index, result)
+        deliver(index, result, failure_status)
       end
+
+      fill_missing_statuses(slots.size) if complete?
 
       slots
     end
 
+    def result_slot_count(results)
+      chats&.size || requests&.size || @request_count || ((results.map(&:first).max || -1) + 1)
+    end
+
+    def fill_missing_statuses(size)
+      missing_status = cancelled? ? :cancelled : :failed
+      size.times { |index| statuses[index] ||= missing_status }
+    end
+
     # Collecting early keeps reading fresh, so a result already delivered
     # comes back on every later poll: hand each one over once.
-    def deliver(index, result)
+    def deliver(index, result, failure_status)
+      statuses[index] = result ? :succeeded : failure_status
       return unless result
-      return if @delivered[index]
 
-      @delivered[index] = true
-      if requests
-        requests[index]&.result = result
+      if result.is_a?(Embedding)
+        deliver_embedding(index, result)
       else
-        add_answer(chats&.[](index), result)
+        deliver_message(index, result)
       end
     end
 
-    def add_answer(chat, message)
-      chat.add_completion(message) if message && chat && !already_in_chat?(chat, message)
+    def deliver_embedding(index, embedding)
+      request = requests&.[](index)
+      delivered = @delivered[index]
+      attach_batch_usage(
+        embedding,
+        operation: :embedding,
+        model: request&.model,
+        category: :embeddings,
+        instrument: !request.nil? && !delivered
+      )
+      return if delivered
+
+      @delivered[index] = true
+      request&.result = embedding
+    end
+
+    def deliver_message(index, message)
+      chat = chats&.[](index)
+      delivered = @delivered[index] || (chat && already_in_chat?(chat, message))
+      attach_batch_usage(
+        message,
+        operation: :chat,
+        model: chat&.model,
+        category: :text_tokens,
+        instrument: !chat.nil? && !delivered
+      )
+      return if delivered
+
+      @delivered[index] = true
+      chat&.add_completion(message, record_usage: true)
+    end
+
+    def attach_batch_usage(result, operation:, model:, category:, instrument:)
+      return unless result.ruby_llm_usage_entries.empty?
+
+      model ||= RubyLLM.models.find(result.model, @provider.slug, config: @provider.config)
+      entry = Usage::Entry.new(
+        operation:,
+        provider: @provider.slug,
+        model: result.model || model.id,
+        status: :succeeded,
+        tokens: result.tokens,
+        cost: @provider.batch_cost(result.tokens, model:, category:),
+        message: result.is_a?(Message) ? result : nil
+      )
+      result.ruby_llm_usage_entries = [entry]
+      Usage.instrument(entry, config: @provider.config) if instrument
     end
 
     # A plain answer is the chat's last message once it arrives. A tool-call
@@ -299,6 +381,7 @@ module RubyLLM
 
       def batch_failure(custom_id, detail, status: 'failed')
         RubyLLM.logger.warn ["Batch request #{custom_id} #{status}", detail].compact.join(': ')
+        status.to_s.match?(/cancel/i) ? :cancelled : :failed
       end
 
       def batch_error_message(line)
@@ -334,7 +417,7 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      { id: id, status: status, chats: chats&.count, requests: requests&.count }
+      { id: id, status: status, raw_status: raw_status, chats: chats&.count, requests: requests&.count }
     end
   end
 end

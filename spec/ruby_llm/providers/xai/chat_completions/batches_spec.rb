@@ -56,8 +56,9 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
 
       expect(attributes).to eq(
         id: 'batch_123',
-        status: 'processing',
+        raw_status: 'completed',
         completed: true,
+        request_count: 2,
         request_counts: {
           'num_requests' => 2,
           'num_pending' => 0,
@@ -77,7 +78,11 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
             'chat_get_completion' => {
               'model' => 'grok-4.3',
               'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => 'Hello' } }],
-              'usage' => { 'prompt_tokens' => 2, 'completion_tokens' => 1 }
+              'usage' => {
+                'prompt_tokens' => 2,
+                'completion_tokens' => 1,
+                'cost_in_usd_ticks' => 3_604_800
+              }
             }
           }
         }
@@ -88,6 +93,7 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
       expect(index).to eq(1)
       expect(message.content).to eq('Hello')
       expect(message.model).to eq('grok-4.3')
+      expect(message.tokens.reported_cost).to be_within(1e-12).of(0.00036048)
     end
   end
 
@@ -96,7 +102,8 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
       data = { 'batch_id' => 'batch_1', 'state' => { 'num_requests' => 2, 'num_pending' => 0 } }
 
       expect(protocol.send(:parse_batch_response, data)).to eq(
-        id: 'batch_1', status: 'processing', completed: true,
+        id: 'batch_1', raw_status: 'completed', completed: true,
+        request_count: 2,
         request_counts: { 'num_requests' => 2, 'num_pending' => 0 }
       )
     end
@@ -104,12 +111,12 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
     it 'reports a state carrying an error as failed and still running' do
       data = { 'id' => 'batch_1', 'state' => { 'num_requests' => 2, 'num_pending' => 1, 'error' => 'boom' } }
 
-      expect(protocol.send(:parse_batch_response, data)).to include(status: 'failed', completed: false)
+      expect(protocol.send(:parse_batch_response, data)).to include(raw_status: 'failed', completed: false)
     end
 
     it 'falls back to a plain status field' do
       expect(protocol.send(:parse_batch_response, { 'id' => 'batch_1', 'status' => 'queued' })).to include(
-        status: 'queued', completed: false
+        raw_status: 'queued', completed: false
       )
     end
   end

@@ -67,8 +67,15 @@ module RubyLLM
           reasoning = {}
           reasoning[:effort] = thinking.effort if thinking.respond_to?(:effort) && thinking.effort
           reasoning[:max_tokens] = thinking.budget if thinking.respond_to?(:budget) && thinking.budget
+          add_reasoning_toggle(reasoning, thinking)
           reasoning[:enabled] = true if reasoning.empty?
           reasoning
+        end
+
+        def add_reasoning_toggle(reasoning, thinking)
+          return unless thinking.respond_to?(:enabled) && !thinking.enabled.nil?
+
+          reasoning[:enabled] = thinking.enabled
         end
 
         def format_thinking(msg)
@@ -97,7 +104,7 @@ module RubyLLM
 
         def format_message_content(msg, caching: nil)
           content = super
-          msg.cache_until_here? ? inject_cache_control(content, caching:) : content
+          caching != false && msg.cache_until_here? ? inject_cache_control(content, caching:) : content
         end
 
         def inject_cache_control(content, caching: nil)

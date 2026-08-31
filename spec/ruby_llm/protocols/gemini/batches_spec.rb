@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
       data = { 'name' => 'batches/abc', 'metadata' => { 'state' => 'JOB_STATE_PENDING' } }
 
       expect(protocol.send(:parse_batch_response, data)).to include(
-        id: 'batches/abc', status: 'JOB_STATE_PENDING', completed: false
+        id: 'batches/abc', raw_status: 'JOB_STATE_PENDING', completed: false
       )
     end
 
@@ -54,8 +54,8 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
       data = { 'name' => 'batches/abc', 'state' => 'BATCH_STATE_RUNNING', 'batchStats' => { 'requestCount' => '2' } }
 
       expect(protocol.send(:parse_batch_response, data)).to include(
-        id: 'batches/abc', status: 'BATCH_STATE_RUNNING', completed: false,
-        request_counts: { 'requestCount' => '2' }
+        id: 'batches/abc', raw_status: 'BATCH_STATE_RUNNING', completed: false,
+        request_counts: { 'requestCount' => '2' }, request_count: 2
       )
     end
 

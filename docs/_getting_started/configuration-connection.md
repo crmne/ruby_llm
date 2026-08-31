@@ -26,7 +26,7 @@ RubyLLM ships with a registry snapshot, so a new installation works without a ne
 * macOS: `~/Library/Caches/RubyLLM/models.json`
 * Windows: `%LOCALAPPDATA%\RubyLLM\Cache\models.json`
 
-`RubyLLM.models.refresh!` fetches the latest published catalog, merges models discovered from your configured providers, and atomically updates this cache. If the cache cannot be written, it raises `RubyLLM::ModelRegistryError` and leaves the in-memory registry unchanged.
+`RubyLLM.models.refresh` fetches the latest published catalog, merges models discovered from your configured providers, and atomically updates this cache. If the cache cannot be written, it raises `RubyLLM::ModelRegistryError` and leaves the in-memory registry unchanged.
 
 Set `model_registry_file` only when your application needs a specific persistent location:
 
@@ -35,12 +35,12 @@ RubyLLM.configure do |config|
   config.model_registry_file = '/var/app/models.json'
 end
 
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 ```
 
 RubyLLM falls back to its bundled snapshot until the configured file exists. The first successful refresh creates the file, and later refreshes replace it. Use `RubyLLM.models.save_to_json('/another/path/models.json')` only when you want to export the currently loaded registry elsewhere.
 
-> With the Active Record integration, RubyLLM's internal `ruby_llm_models` table is the registry. `RubyLLM.models.refresh!` updates it automatically. While the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
+> With the Active Record integration, RubyLLM's internal `ruby_llm_models` table is the registry. `RubyLLM.models.refresh` updates it automatically. While the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
 {: .note }
 
 ## Connection Settings

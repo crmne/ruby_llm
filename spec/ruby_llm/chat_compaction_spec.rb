@@ -26,10 +26,15 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.compaction).to eq({})
     end
 
-    it 'clears the options when given nil' do
+    it 'disables compaction with false' do
       chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_compaction(at: 50_000)
 
-      expect(chat.with_compaction(nil).compaction).to be_nil
+      expect(chat.with_compaction(false).compaction).to be(false)
+    end
+
+    it 'rejects nil' do
+      expect { RubyLLM.chat.with_compaction(nil) }
+        .to raise_error(ArgumentError, /accepts false or compaction options/)
     end
 
     it 'names the portable options when given one it does not have' do

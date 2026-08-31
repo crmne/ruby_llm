@@ -53,8 +53,9 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
 
       expect(attributes).to eq(
         id: 'job_123',
-        status: 'SUCCESS',
+        raw_status: 'SUCCESS',
         completed: true,
+        request_count: 2,
         request_counts: {
           'total' => 2,
           'completed' => 2,

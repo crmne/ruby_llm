@@ -93,16 +93,16 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe '#cancel!' do
+  describe '#cancel' do
     it 'marks the chat for one-shot cancellation' do
-      expect(chat.cancel!).to be(chat)
+      expect(chat.cancel).to be(chat)
       expect(chat).to be_cancelled
     end
 
     it 'raises before the next model request and clears the cancellation flag' do
       allow(chat.provider).to receive(:complete)
       chat.ask_later('Echo "hello" back to me.')
-      chat.cancel!
+      chat.cancel
 
       expect { chat.step }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
       expect(chat).not_to be_cancelled
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Chat do
       expect do
         chat.complete do |chunk|
           chunks << chunk.content
-          chat.cancel!
+          chat.cancel
         end
       end.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
 
@@ -133,7 +133,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'raises before appending a non-streaming response when cancelled during the request' do
       allow(chat.provider).to receive(:complete) do |_messages, **|
-        chat.cancel!
+        chat.cancel
         answer_message
       end
 
@@ -149,7 +149,7 @@ RSpec.describe RubyLLM::Chat do
       allow(chat.provider).to receive(:complete)
       chat.ask_later('Echo "hello" back to me.')
       chat.add_message tool_call_message
-      chat.cancel!
+      chat.cancel
 
       expect { chat.run_tools }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
       expect(chat.messages.last).to be_tool_call

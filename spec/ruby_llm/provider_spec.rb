@@ -168,6 +168,130 @@ RSpec.describe RubyLLM::Provider do
     end
   end
 
+  describe '#batch_cost' do
+    let(:tokens) { RubyLLM::Tokens.new(input: 1_000, output: 2_000) }
+    let(:pricing) do
+      {
+        text_tokens: {
+          standard: { input_per_million: 1, output_per_million: 5 }
+        }
+      }
+    end
+
+    def batch_cost_for(provider, model_id: 'test-model')
+      model = RubyLLM::Model.new(id: model_id, name: model_id, provider: provider.to_s, pricing: pricing)
+      provider = RubyLLM::Provider.resolve!(provider).new(config_for(provider))
+
+      provider.batch_cost(tokens, model:).total
+    end
+
+    it 'uses half-price inference for providers whose batch routes guarantee it' do
+      providers = %i[anthropic azure bedrock gemini mistral openai]
+
+      expect(providers.to_h { |provider| [provider, batch_cost_for(provider)] })
+        .to all(have_attributes(last: be_within(1e-12).of(0.0055)))
+    end
+
+    it 'uses half-price inference for Vertex AI Gemini and Claude batches' do
+      expect(batch_cost_for(:vertexai, model_id: 'gemini-test')).to be_within(1e-12).of(0.0055)
+      expect(batch_cost_for(:vertexai, model_id: 'claude-test')).to be_within(1e-12).of(0.0055)
+    end
+
+    it 'leaves provider-variable batch rates unknown' do
+      expect(batch_cost_for(:vertexai, model_id: 'meta/test-model')).to be_nil
+      expect(batch_cost_for(:xai)).to be_nil
+    end
+
+    it 'does not present a partial component sum as a complete batch cost' do
+      partial_pricing = {
+        text_tokens: {
+          standard: { input_per_million: 1 }
+        }
+      }
+      model = RubyLLM::Model.new(
+        id: 'test-model', name: 'test-model', provider: 'openai', pricing: partial_pricing
+      )
+      provider = RubyLLM::Providers::OpenAI.new(config_for(:openai))
+
+      cost = provider.batch_cost(tokens, model:)
+
+      expect(cost.input).to eq(0.0005)
+      expect(cost.output).to be_nil
+      expect(cost.total).to be_nil
+    end
+
+    it 'does not combine Gemini batch and context-cache discounts' do
+      cached_tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, cache_read: 3_000)
+      cached_pricing = {
+        text_tokens: {
+          standard: {
+            input_per_million: 1,
+            output_per_million: 5,
+            cache_read_input_per_million: 0.1
+          }
+        }
+      }
+      model = RubyLLM::Model.new(id: 'gemini-test', name: 'gemini-test', provider: 'gemini', pricing: cached_pricing)
+      provider = RubyLLM::Providers::Gemini.new(config_for(:gemini))
+
+      cost = provider.batch_cost(cached_tokens, model:)
+
+      expect(cost.input).to eq(0.0005)
+      expect(cost.output).to eq(0.005)
+      expect(cost.cache_read).to be_within(1e-12).of(0.0003)
+      expect(cost.total).to be_within(1e-12).of(0.0058)
+    end
+
+    it 'uses explicit batch rates before provider defaults' do
+      explicit_pricing = {
+        text_tokens: {
+          standard: { input_per_million: 1, output_per_million: 5, cache_read_input_per_million: 0.1 },
+          batch: { input_per_million: 0.4, output_per_million: 2, cache_read_input_per_million: 0.02 }
+        }
+      }
+      model = RubyLLM::Model.new(id: 'test-model', name: 'test-model', provider: 'gemini', pricing: explicit_pricing)
+      provider = RubyLLM::Providers::Gemini.new(config_for(:gemini))
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, cache_read: 3_000)
+
+      cost = provider.batch_cost(tokens, model:)
+
+      expect(cost.input).to eq(0.0004)
+      expect(cost.output).to eq(0.004)
+      expect(cost.cache_read).to be_within(1e-12).of(0.00006)
+      expect(cost.total).to be_within(1e-12).of(0.00446)
+    end
+
+    it 'applies the batch modifier to long-context rates' do
+      long_context_pricing = {
+        text_tokens: {
+          standard: { input_per_million: 1, output_per_million: 5 },
+          batch: { input_per_million: 0.5, output_per_million: 2.5 },
+          long_context: { input_per_million: 2, output_per_million: 8 },
+          long_context_threshold: 1_000
+        }
+      }
+      model = RubyLLM::Model.new(
+        id: 'test-model', name: 'test-model', provider: 'anthropic', pricing: long_context_pricing
+      )
+      provider = RubyLLM::Providers::Anthropic.new(config_for(:anthropic))
+      tokens = RubyLLM::Tokens.new(input: 2_000, output: 1_000)
+
+      cost = provider.batch_cost(tokens, model:)
+
+      expect(cost.input).to eq(0.002)
+      expect(cost.output).to eq(0.004)
+      expect(cost.total).to eq(0.006)
+    end
+
+    it 'keeps an exact provider-reported batch total' do
+      model = RubyLLM::Model.new(id: 'test-model', name: 'test-model', provider: 'openai', pricing: pricing)
+      provider = RubyLLM::Providers::OpenAI.new(config_for(:openai))
+      reported = RubyLLM::Tokens.new(input: 1_000, output: 2_000, reported_cost: 0.008)
+
+      expect(provider.batch_cost(reported, model:).total).to eq(0.008)
+    end
+  end
+
   describe '.register' do
     it 'registers provider configuration options on Configuration' do
       provider_key = :test_provider_spec

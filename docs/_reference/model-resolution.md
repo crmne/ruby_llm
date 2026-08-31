@@ -171,13 +171,13 @@ If nothing matches and you didn't assume existence, RubyLLM raises `RubyLLM::Mod
 RubyLLM.chat(model: "gpt-7-ultra")
 # => RubyLLM::ModelNotFoundError: Unknown model: "gpt-7-ultra".
 #    If the model exists at the provider, refresh the registry with
-#    `RubyLLM.models.refresh!`.
+#    `RubyLLM.models.refresh`.
 ```
 
 A real but newly released model usually means your registry is stale. Refresh it from the published catalog and your configured providers:
 
 ```ruby
-RubyLLM.models.refresh!
+RubyLLM.models.refresh
 ```
 
 See [Working with Models]({% link _reference/models.md %}#refreshing-the-registry) for refreshing in applications and Rails. If the model genuinely isn't in any catalog, use `assume_model_exists: true` instead.

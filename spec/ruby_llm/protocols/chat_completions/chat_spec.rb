@@ -587,7 +587,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
     it 'marks cache boundaries with explicit breakpoint parts' do
       protocol = RubyLLM::Protocols::ChatCompletions.allocate
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
       model = instance_double(RubyLLM::Model, id: 'gpt-5.6')
 
       payload = protocol.send(:render_payload, [message], tools: {}, temperature: nil, model: model, stream: false)

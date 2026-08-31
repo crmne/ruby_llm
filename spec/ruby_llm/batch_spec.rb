@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Batch, :live do
     end
 
     it 'rejects providers without batch support' do
-      chats = [RubyLLM.chat(model: 'deepseek-chat').ask_later('Hi')]
+      chats = [RubyLLM.chat(model: 'deepseek-chat', provider: :deepseek, assume_model_exists: true).ask_later('Hi')]
 
       expect { RubyLLM.batch(chats) }.to raise_error(RubyLLM::Error, /batch/)
     end
@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Batch, :live do
           model: 'mistral-small-latest',
           payload: include(:model, :messages)
         )
-        { id: 'batch_test', status: 'RUNNING', completed: false }
+        { id: 'batch_test', raw_status: 'RUNNING', completed: false }
       end
 
       RubyLLM.batch(chat)
@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Batch, :live do
     it 'wraps it without decomposing the conversation' do
       chat = RubyLLM.chat(model: model).ask_later('Hi')
       allow(chat.provider).to receive(:create_batch)
-        .and_return(id: 'msgbatch_test', status: 'in_progress', completed: false)
+        .and_return(id: 'msgbatch_test', raw_status: 'in_progress', completed: false)
 
       batch = RubyLLM.batch(chat)
 
@@ -114,11 +114,12 @@ RSpec.describe RubyLLM::Batch, :live do
       ]
       provider = chats.first.provider
       message = RubyLLM::Message.new(role: :assistant, content: '4', input_tokens: 1, output_tokens: 1)
-      allow(provider).to receive(:batch_results).and_return([[1, message]])
+      allow(provider).to receive(:batch_results).and_return([[0, nil, :failed], [1, message]])
 
-      batch = described_class.new(provider:, chats:, id: 'msgbatch_test', status: 'ended', completed: true)
+      batch = described_class.new(provider:, chats:, id: 'msgbatch_test', raw_status: 'ended', completed: true)
 
       expect(batch.messages).to eq([nil, message])
+      expect(batch.statuses).to eq(%i[failed succeeded])
       expect(batch.tokens.to_h).to eq(input_tokens: 1, output_tokens: 1)
       expect(batch.cost).to be_a(RubyLLM::Cost)
       expect(chats.first).not_to be_complete
@@ -126,6 +127,74 @@ RSpec.describe RubyLLM::Batch, :live do
 
       batch.messages
       expect(provider).to have_received(:batch_results).once
+    end
+
+    it 'records successful responses at batch prices' do
+      instrumenter = CaptureInstrumenter.new
+      context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+      chat = context.chat(model: model).ask_later('Hi')
+      provider = chat.provider
+      batch_pricing = {
+        text_tokens: {
+          standard: { input_per_million: 1, output_per_million: 5 },
+          batch: { input_per_million: 0.5, output_per_million: 2.5 }
+        }
+      }
+      chat.instance_variable_set(:@model, RubyLLM::Model.new(chat.model.to_h.merge(pricing: batch_pricing)))
+      message = RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1_000, output_tokens: 2_000)
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+      batch = described_class.new(provider:, chats: [chat], id: 'msgbatch_test', raw_status: 'ended', completed: true)
+
+      batch.messages
+
+      expect(instrumenter.events.sole).to match(
+        ['usage.ruby_llm', include(
+          operation: :chat,
+          provider: 'anthropic',
+          model: model,
+          status: :succeeded,
+          cost: satisfy { |cost| cost.total.then { |total| (total - 0.0055).abs < 1e-12 } }
+        )]
+      )
+      expect(message.cost.total).to eq(0.0055)
+      expect(chat.cost.total).to eq(0.0055)
+      expect(chat.usage_entries).to eq(message.ruby_llm_usage_entries)
+    end
+
+    it 'applies the provider batch discount when the model has no batch tier' do
+      chat = RubyLLM.chat(model: model).ask_later('Hi')
+      provider = chat.provider
+      message = RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1_000, output_tokens: 2_000)
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+      standard_cost = chat.model.cost_for(message.tokens).total
+
+      batch = described_class.new(provider:, chats: [chat], id: 'msgbatch_test', raw_status: 'ended', completed: true)
+      batch.messages
+
+      expect(message.cost.total).to be_within(1e-12).of(standard_cost * 0.5)
+    end
+
+    it 'does not instrument an already-delivered response twice' do
+      instrumenter = CaptureInstrumenter.new
+      context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+      chat = context.chat(model: model).ask_later('Hi')
+      provider = chat.provider
+      first = RubyLLM::Message.new(role: :assistant, content: 'Hello', model:, input_tokens: 1, output_tokens: 1)
+      second = RubyLLM::Message.new(role: :assistant, content: 'Hello', model:, input_tokens: 1, output_tokens: 1)
+      allow(provider).to receive(:batch_results).and_return([[0, first]], [[0, second]])
+
+      collect = lambda do
+        described_class.new(
+          provider:, chats: [chat], id: 'msgbatch_test', raw_status: 'ended', completed: true
+        ).messages
+      end
+
+      collect.call
+      collect.call
+
+      expect(instrumenter.events.count { |name, _payload| name == 'usage.ruby_llm' }).to eq(1)
+      expect(second.ruby_llm_usage_entries).not_to be_empty
     end
 
     it 'does not re-deliver a tool-call answer after its tools have run' do
@@ -138,7 +207,9 @@ RSpec.describe RubyLLM::Batch, :live do
       allow(provider).to receive(:batch_results).and_return([[0, answer]])
 
       collect = lambda do
-        described_class.new(provider:, chats: [chat], id: 'msgbatch_test', status: 'ended', completed: true).messages
+        described_class.new(
+          provider:, chats: [chat], id: 'msgbatch_test', raw_status: 'ended', completed: true
+        ).messages
       end
 
       collect.call # first delivery appends the tool-call answer
@@ -158,14 +229,19 @@ RSpec.describe RubyLLM::Batch, :live do
       ]
       provider = requests.first.provider
       embedding = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: 'text-embedding-3-small', input_tokens: 3)
-      allow(provider).to receive(:batch_results).and_return([[1, embedding]])
+      standard_cost = embedding.cost.total
+      allow(provider).to receive(:batch_results).and_return([[0, nil, :failed], [1, embedding]])
 
-      batch = described_class.new(provider:, requests:, id: 'batch_test', status: 'completed', completed: true)
+      batch = described_class.new(provider:, requests:, id: 'batch_test', raw_status: 'completed', completed: true)
 
       expect(batch.results).to eq([nil, embedding])
+      expect(batch.statuses).to eq(%i[failed succeeded])
       expect(requests.first.result).to be_nil
       expect(requests.second.result).to be(embedding)
       expect(batch.tokens.input).to eq(3)
+      expect(embedding.ruby_llm_usage_entries.sole.operation).to eq(:embedding)
+      expect(embedding.cost.total).to be_within(1e-12).of(standard_cost * 0.5)
+      expect(batch.cost.total).to eq(embedding.cost.total)
     end
   end
 
@@ -231,7 +307,8 @@ RSpec.describe RubyLLM::Batch, :live do
       batch = RubyLLM.batch(chats)
 
       expect(batch.id).to start_with('msgbatch_')
-      expect(batch.status).to eq('in_progress')
+      expect(batch.status).to eq(:pending)
+      expect(batch.raw_status).to eq('in_progress')
 
       wait_for batch
 
@@ -257,7 +334,8 @@ RSpec.describe RubyLLM::Batch, :live do
 
       batch.cancel
 
-      expect(batch.status).to be_in(%w[canceling ended])
+      expect(batch.status).to be_in(%i[pending succeeded])
+      expect(batch.raw_status).to be_in(%w[canceling ended])
     end
   end
 end

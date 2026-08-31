@@ -10,7 +10,6 @@ after_bundle do
   RUBY
   file 'config/initializers/strong_migrations.rb', <<~RUBY
     require "strong_migrations"
-    StrongMigrations.skip_database(:primary)
   RUBY
 
   generate 'ruby_llm:upgrade'

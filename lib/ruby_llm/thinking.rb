@@ -45,17 +45,116 @@ module RubyLLM
   end
 
   class Thinking
-    class Config # :nodoc: all
-      attr_reader :effort, :budget, :display
+    class Controls # :nodoc: all
+      PREFERRED_EFFORTS = %w[medium low minimal high xhigh max].freeze
 
-      def initialize(effort: nil, budget: nil, display: nil)
+      def initialize(model)
+        @model = model
+      end
+
+      def enable
+        effort = default_effort
+        return { effort: effort } if effort
+
+        budget = explicit_budget
+        return { budget: budget } if budget
+        return { enabled: true } if model.reasoning_option(:toggle)
+
+        effort = preferred_effort
+        return { effort: effort } if effort
+
+        budget = minimum_budget
+        return { budget: budget } if budget
+
+        :already_on if reasoning_model? && model.reasoning_options.empty?
+      end
+
+      def disable
+        return { effort: 'none' } if model.reasoning_option_values(:effort).include?('none')
+
+        budget = model.reasoning_option(:budget_tokens)
+        return { budget: 0 } if budget && budget[:min].is_a?(Numeric) && budget[:min] <= 0
+
+        { enabled: false } if model.reasoning_option(:toggle)
+      end
+
+      private
+
+      attr_reader :model
+
+      def default_effort
+        option = model.reasoning_option(:effort)
+        return unless option&.key?(:default)
+
+        default = option[:default].to_s
+        default unless default == 'none'
+      end
+
+      def preferred_effort
+        PREFERRED_EFFORTS.find { |effort| model.reasoning_option_values(:effort).include?(effort) }
+      end
+
+      def explicit_budget
+        default = model.reasoning_option(:budget_tokens)&.fetch(:default, nil)
+        default if default.is_a?(Numeric) && default.positive?
+      end
+
+      def minimum_budget
+        minimum = model.reasoning_option(:budget_tokens)&.fetch(:min, nil)
+        return unless minimum.is_a?(Numeric)
+
+        [minimum, 1].max
+      end
+
+      def reasoning_model?
+        model.supports?(:reasoning) || model.metadata[:reasoning] || model.metadata['reasoning']
+      end
+    end
+
+    class Config # :nodoc: all
+      attr_reader :effort, :budget, :display, :enabled
+
+      def self.default
+        new(intent: :enable)
+      end
+
+      def self.disabled
+        new(intent: :disable)
+      end
+
+      def initialize(effort: nil, budget: nil, display: nil, enabled: nil, intent: nil)
         @effort = effort.is_a?(Symbol) ? effort.to_s : effort
         @budget = budget
         @display = display.is_a?(Symbol) ? display.to_s : display
+        @enabled = enabled
+        @intent = intent
       end
 
       def enabled?
-        !effort.nil? || !budget.nil? || !display.nil?
+        !@intent.nil? || !enabled.nil? || !effort.nil? || !budget.nil? || !display.nil?
+      end
+
+      def disabled?
+        enabled == false || effort == 'none'
+      end
+
+      def resolve(model)
+        return self if @intent.nil?
+
+        options = Controls.new(model).public_send(@intent)
+        return nil if options == :already_on
+        raise ArgumentError, resolution_error(model) unless options
+
+        self.class.new(**options)
+      end
+
+      private
+
+      def resolution_error(model)
+        message = "RubyLLM does not know how to #{@intent} thinking for #{model.provider}/#{model.id}."
+        return "#{message} Pass effort:, budget:, or display:." if @intent == :enable
+
+        "#{message} The model registry has no off control."
       end
     end
   end

@@ -71,7 +71,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
 
     it 'adds cache_control to a system message marked as a cache boundary' do
-      msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
+      msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here
 
       blocks = described_class.build_system_content([msg])
 
@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
 
     it 'uses configured cache_control for a system cache boundary' do
-      msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
+      msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here
 
       blocks = described_class.build_system_content([msg], caching: { ttl: '1h' })
 
@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
 
     it 'adds cache_control to a tool result marked as a cache boundary' do
-      message = RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'tool_1').cache_until_here!
+      message = RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'tool_1').cache_until_here
 
       rendered = described_class.format_messages([message], caching: { ttl: '1h' })
 
@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
 
     it 'adds cache_control to a user message marked as a cache boundary' do
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
       formatted = described_class.format_message(message)
 
@@ -236,7 +236,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
 
     it 'does not add top-level cache_control when an explicit boundary is present' do
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
       payload = described_class.render_payload(
         [message],

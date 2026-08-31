@@ -155,6 +155,60 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'combines persisted and unpersisted instruction declarations' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+
+      instructions 'Stable policy', cache_until_here: true
+      instructions append: true, persist: false do
+        "Current chat #{chat.id}"
+      end
+    end
+
+    stub_const('SpecLayeredInstructionsAgent', agent_class)
+
+    created = SpecLayeredInstructionsAgent.create!
+
+    expect(created.messages.where(role: 'system').pluck(:content, :cache_until_here)).to eq([
+                                                                                              ['Stable policy', true]
+                                                                                            ])
+    expect(created.to_llm.messages.map(&:content)).to eq([
+                                                           'Stable policy',
+                                                           "Current chat #{created.id}"
+                                                         ])
+
+    loaded = SpecLayeredInstructionsAgent.find(created.id)
+    expect(loaded.messages.where(role: 'system').pluck(:content, :cache_until_here)).to eq([
+                                                                                             ['Stable policy', true]
+                                                                                           ])
+    expect(loaded.to_llm.messages.map(&:content)).to eq([
+                                                          'Stable policy',
+                                                          "Current chat #{created.id}"
+                                                        ])
+    expect(loaded.to_llm.messages.map(&:cache_until_here?)).to eq([true, false])
+  end
+
+  it 'syncs only persistent instruction declarations' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      inputs :version
+
+      instructions { "Stable #{version}" }
+      instructions append: true, persist: false do
+        "Runtime #{version}"
+      end
+    end
+
+    stub_const('SpecInstructionPersistenceAgent', agent_class)
+
+    chat = SpecInstructionPersistenceAgent.create!(version: 'one')
+    SpecInstructionPersistenceAgent.sync_instructions(chat, version: 'two')
+
+    expect(chat.reload.messages.where(role: 'system').pluck(:content)).to eq(['Stable two'])
+  end
+
   it 'keeps runtime instructions on repeated to_llm calls after find' do
     prompt_dir = write_prompt(
       'spec_runtime_reuse_agent',
@@ -179,7 +233,7 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
-  it 'syncs instructions explicitly via .sync_instructions!' do
+  it 'syncs instructions explicitly via .sync_instructions' do
     prompt_dir = write_prompt(
       'spec_sync_agent',
       'System for <%= display_name %> on chat <%= chat.id %>'
@@ -200,10 +254,10 @@ RSpec.describe RubyLLM::Agent do
     SpecSyncAgent.find(chat.id, display_name: 'Bea')
     expect(chat.reload.messages.find_by(role: 'system').content).to eq("System for Ava on chat #{chat.id}")
 
-    SpecSyncAgent.sync_instructions!(chat, display_name: 'Bea')
+    SpecSyncAgent.sync_instructions(chat, display_name: 'Bea')
     expect(chat.reload.messages.find_by(role: 'system').content).to eq("System for Bea on chat #{chat.id}")
 
-    SpecSyncAgent.sync_instructions!(chat.id, display_name: 'Cia')
+    SpecSyncAgent.sync_instructions(chat.id, display_name: 'Cia')
     expect(chat.reload.messages.find_by(role: 'system').content).to eq("System for Cia on chat #{chat.id}")
   ensure
     FileUtils.rm_rf(prompt_dir) if prompt_dir
@@ -232,7 +286,7 @@ RSpec.describe RubyLLM::Agent do
     expect { SpecAssumeExistsAgent.find(created.id) }.not_to raise_error
   end
 
-  it 'propagates assume_model_exists from class config when using sync_instructions! with id' do
+  it 'propagates assume_model_exists from class config when using sync_instructions with id' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
       model 'not-a-real-model', provider: :openai, assume_model_exists: true
@@ -242,7 +296,7 @@ RSpec.describe RubyLLM::Agent do
     stub_const('SpecAssumeExistsSyncAgent', agent_class)
 
     created = SpecAssumeExistsSyncAgent.create!
-    expect { SpecAssumeExistsSyncAgent.sync_instructions!(created.id) }.not_to raise_error
+    expect { SpecAssumeExistsSyncAgent.sync_instructions(created.id) }.not_to raise_error
   end
 
   it 'propagates assume_model_exists from class config when initializing with a reloaded chat record' do
@@ -275,13 +329,13 @@ RSpec.describe RubyLLM::Agent do
     expect(found.to_llm.instance_variable_get(:@protocol)).to eq(:chat_completions)
   end
 
-  it 'raises when .sync_instructions! is used without chat_model' do
+  it 'raises when .sync_instructions is used without chat_model' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
     end
 
     expect do
-      agent_class.sync_instructions!(1)
+      agent_class.sync_instructions(1)
     end.to raise_error(ArgumentError, /chat_model must be configured/)
   end
 end

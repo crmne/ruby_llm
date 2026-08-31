@@ -55,15 +55,15 @@ RSpec.describe RubyLLM::Video, :live do
       allow(protocol).to receive(:refresh_video_job).and_return({ status: :pending })
       job = described_class.new(id: 'operations/op-1', protocol: protocol)
 
-      expect { job.wait!(timeout: 0, interval: 0) }.to raise_error(RubyLLM::Error, /timed out after 0 seconds/)
+      expect { job.wait(timeout: 0, interval: 0) }.to raise_error(RubyLLM::Error, /timed out after 0 seconds/)
     end
 
-    it 'surfaces the provider failure from wait! and #video' do
+    it 'surfaces the provider failure from wait and #video' do
       allow(protocol).to receive(:refresh_video_job)
         .and_return({ status: :failed, error: 'flagged by moderation' })
       job = described_class.new(id: 'operations/op-1', protocol: protocol)
 
-      expect { job.wait!(timeout: 10, interval: 0) }.to raise_error(RubyLLM::Error, /flagged by moderation/)
+      expect { job.wait(timeout: 10, interval: 0) }.to raise_error(RubyLLM::Error, /flagged by moderation/)
       expect { job.video }.to raise_error(RubyLLM::Error, /flagged by moderation/)
     end
 
@@ -72,9 +72,9 @@ RSpec.describe RubyLLM::Video, :live do
       job = described_class.new(id: 'operations/op-1', protocol: protocol)
 
       expect(job.video).to be_nil
-      expect(job.refresh!.status).to eq(:completed)
+      expect(job.refresh.status).to eq(:completed)
 
-      job.refresh!
+      job.refresh
       expect(protocol).to have_received(:refresh_video_job).once
     end
   end

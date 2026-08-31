@@ -26,6 +26,8 @@ module RubyLLM
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
+    THINKING_OPTIONS = %i[effort budget display].freeze
+    private_constant :THINKING_OPTIONS
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -56,10 +58,12 @@ module RubyLLM
     # The tool concurrency mode, or +nil+ when tools run sequentially.
     attr_reader :concurrency
 
-    # The prompt caching options set with #with_caching, or +nil+.
+    # The prompt caching options set with #with_caching, +false+ when
+    # explicitly disabled, or +nil+ when not configured.
     attr_reader :caching
 
-    # The context compaction options set with #with_compaction, or +nil+.
+    # The context compaction options set with #with_compaction, +false+ when
+    # explicitly disabled, or +nil+ when not configured.
     attr_reader :compaction
 
     # The opaque per-user identifier set with #with_end_user, or
@@ -140,7 +144,7 @@ module RubyLLM
     #   RubyLLM.batch(chats)
     #
     # Raises PendingToolCallsError while the last response has unanswered
-    # tool calls: finish the round first, recording #approve! or #deny!
+    # tool calls: finish the round first, recording #approve or #deny
     # decisions for calls that require approval.
     def ask_later(message = nil, with: nil)
       raise_if_pending_tool_calls!
@@ -165,7 +169,7 @@ module RubyLLM
     # their result messages, without asking the model to respond. Tool
     # calls that already have results are skipped, so a chat reloaded
     # mid-round resumes with only the remaining tools. Calls whose tool
-    # was declared with Tool.requires_approval only execute once #approve!
+    # was declared with Tool.requires_approval only execute once #approve
     # records a decision; denied calls receive a structured denial result,
     # and undecided calls stay pending. Does nothing when no tool calls
     # are pending. The chat is then ready for the next #generate, or the
@@ -195,7 +199,7 @@ module RubyLLM
     # When a pending tool call requires approval and no decision has been
     # recorded, the loop parks instead of finishing: #complete returns
     # cleanly with #awaiting_approval? true, and calling it again after
-    # #approve! or #deny! picks up exactly where it stopped.
+    # #approve or #deny picks up exactly where it stopped.
     def complete(&)
       step(&) until complete? || awaiting_approval?
       last_non_system_message || messages.last
@@ -215,10 +219,10 @@ module RubyLLM
     # Records approval for +tool_call+, a ToolCall or its id, so the next
     # #complete or #run_tools executes it. Returns +self+.
     #
-    #   chat.approve!(tool_call)
+    #   chat.approve(tool_call)
     #   chat.complete
     #
-    def approve!(tool_call)
+    def approve(tool_call)
       record_tool_call_decision(tool_call, true)
     end
 
@@ -226,14 +230,14 @@ module RubyLLM
     # #complete or #run_tools appends a structured denial result instead
     # of executing the tool, and the model continues from there. Returns
     # +self+.
-    def deny!(tool_call)
+    def deny(tool_call)
       record_tool_call_decision(tool_call, false)
     end
 
     # Returns whether the conversation can make no progress without an
     # approval decision: every remaining pending tool call requires
     # approval and has none recorded. While +true+, #complete returns
-    # without executing them; record decisions with #approve! or #deny!,
+    # without executing them; record decisions with #approve or #deny,
     # then call #complete again. Tool calls that need no approval still
     # execute before the loop parks.
     #
@@ -249,10 +253,10 @@ module RubyLLM
 
     # Returns the tool calls from the latest response that require approval
     # and have no recorded decision, as an array of ToolCall objects. Pairs
-    # with #approve! and #deny!.
+    # with #approve and #deny.
     #
     #   chat.pending_approvals.each { |tool_call| puts tool_call.name }
-    #   chat.approve!(chat.pending_approvals.first)
+    #   chat.approve(chat.pending_approvals.first)
     #
     def pending_approvals
       response = pending_tool_response
@@ -264,7 +268,7 @@ module RubyLLM
     # Cancels the current in-flight chat operation. The next cancellation
     # checkpoint raises CancelledError and clears the flag so the chat can be
     # reused.
-    def cancel!
+    def cancel
       @cancelled = true
       self
     end
@@ -276,16 +280,18 @@ module RubyLLM
 
     # Sets the system instructions for the conversation, replacing any
     # existing system messages. With <tt>append: true</tt> the instructions
-    # are added alongside the existing ones. Pass +nil+ to remove all
-    # system instructions. Returns +self+.
+    # are added alongside the existing ones. With <tt>cache_until_here:
+    # true</tt> the instruction becomes an explicit prompt cache boundary.
+    # Pass +nil+ to remove all system instructions. Returns +self+.
     #
     #   chat.with_instructions "You are a helpful Ruby tutor."
     #   chat.with_instructions "Use exactly one short paragraph.", append: true
     #   chat.with_instructions nil
     #
-    def with_instructions(instructions, append: false)
+    def with_instructions(instructions, append: false, cache_until_here: false)
       @messages.reject! { |message| message.role == :system } unless append
       @messages << Message.new(role: :system, content: instructions) unless instructions.nil?
+      @messages.last.cache_until_here if instructions && cache_until_here
       self
     end
 
@@ -425,36 +431,64 @@ module RubyLLM
       self
     end
 
-    # Configures extended thinking for models that support it, with
+    # Configures extended thinking for models that support it. With no
+    # arguments, RubyLLM uses the current model's registered default. Pass
+    # +false+ to disable thinking, or tune it with
     # +effort:+ (+:low+, +:medium+, +:high+, +:none+, or a
     # provider-specific tier such as +:minimal+, +:xhigh+, or +:max+,
     # passed through as-is), +budget:+ (a token count), and +display:+
     # (+:summarized+ or +:omitted+, controlling whether providers that
-    # support it return readable thinking text). With all +nil+, clears
-    # the configuration and returns to the model's default behavior.
-    # Returns +self+.
+    # support it return readable thinking text). Returns +self+.
     #
+    #   chat.with_thinking
+    #   chat.with_thinking(false)
     #   chat.with_thinking(effort: :high, budget: 8000)
     #   chat.with_thinking(budget: 10_000)
     #   chat.with_thinking(display: :summarized)
-    #   chat.with_thinking(effort: nil)
     #
-    def with_thinking(effort: nil, budget: nil, display: nil)
-      @thinking = if effort || budget || display
-                    Thinking::Config.new(effort: effort, budget: budget, display: display)
+    def with_thinking(enabled = true, **options) # rubocop:disable Metrics/PerceivedComplexity, Style/OptionalBooleanParameter
+      raise ArgumentError, 'with_thinking accepts false or thinking options' unless [true, false].include?(enabled)
+      raise ArgumentError, 'with_thinking(false) does not accept options' if !enabled && options.any?
+      raise ArgumentError, 'thinking options cannot be nil; pass false to disable' if options.value?(nil)
+      if (unsupported = options.keys - THINKING_OPTIONS).any?
+        raise ArgumentError,
+              "with_thinking accepts #{format_option_keys(THINKING_OPTIONS)}, " \
+              "got #{format_option_keys(unsupported)}"
+      end
+
+      @thinking = if enabled
+                    options.empty? ? Thinking::Config.default : Thinking::Config.new(**options)
+                  else
+                    Thinking::Config.disabled
                   end
       self
     end
 
+    # Returns the thinking options resolved for the current model, or +nil+
+    # when thinking was not configured or needs no provider control.
+    def thinking
+      config = resolved_thinking
+      return unless config
+
+      {
+        effort: config.effort,
+        budget: config.budget,
+        display: config.display,
+        enabled: config.enabled
+      }.compact
+    end
+
     # Enables document citations, so the model backs its claims with quotes
-    # from attached files. Pass +false+ or +nil+ to disable. Returns +self+.
+    # from attached files. Pass +false+ to disable. Returns +self+.
     #
     #   chat.with_citations
     #   response = chat.ask "Who created Ruby?", with: "facts.txt"
     #   response.citations.each { |citation| puts citation.cited_text }
     #
     def with_citations(enabled = true)
-      @citations = enabled ? true : false
+      raise ArgumentError, 'with_citations accepts true or false' unless [true, false].include?(enabled)
+
+      @citations = enabled
       self
     end
 
@@ -462,15 +496,21 @@ module RubyLLM
     # default behavior applies; options such as +ttl:+ are passed through
     # to providers that support them. On Gemini, pass +id:+ with a
     # CachedContent (or its name) from RubyLLM.cache to attach an explicit
-    # content cache. Pass +nil+ to disable caching. Returns +self+.
+    # content cache. Pass +false+ to stop RubyLLM from sending cache
+    # controls or rendering explicit cache boundaries. A provider may still
+    # cache prompts implicitly. Returns +self+.
     #
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
     #   chat.with_caching(id: cache)
-    #   chat.with_caching(nil)
+    #   chat.with_caching(false)
     #
     def with_caching(options = {})
-      @caching = options&.transform_keys(&:to_sym)&.freeze
+      unless options == false || options.is_a?(Hash)
+        raise ArgumentError, 'with_caching accepts false or caching options'
+      end
+
+      @caching = options == false ? false : options.transform_keys(&:to_sym).freeze
       self
     end
 
@@ -486,20 +526,24 @@ module RubyLLM
     #                 continuing straight into the answer.
     #
     # Each provider maps what it supports and drops the rest with a debug
-    # log, so the same call works everywhere. Pass +nil+ to disable.
+    # log, so the same call works everywhere. Pass +false+ to disable.
     # Returns +self+.
     #
     #   chat.with_compaction
     #   chat.with_compaction(at: 50_000)
     #   chat.with_compaction(at: 100_000, instructions: "Keep every decision.")
-    #   chat.with_compaction(nil)
+    #   chat.with_compaction(false)
     #
     # What a provider does when the threshold is crossed differs. Anthropic
     # and OpenAI summarize the compacted span into an opaque block that
     # replaces it; OpenRouter drops messages from the middle of the
     # conversation instead, and has no threshold of its own.
     def with_compaction(options = {})
-      @compaction = normalize_compaction(options)
+      unless options == false || options.is_a?(Hash)
+        raise ArgumentError, 'with_compaction accepts false or compaction options'
+      end
+
+      @compaction = options == false ? false : normalize_compaction(options)
       self
     end
 
@@ -651,7 +695,7 @@ module RubyLLM
     #   chat.cost.total
     #
     def cost
-      Cost.aggregate(usage_entries.map(&:cost), complete: usage_entries.all?(&:usage_available?))
+      Cost.aggregate(usage_entries.map(&:cost), complete: usage_entries.all?(&:cost_available?))
     end
 
     # Counts the tokens the chat's next request would consume as currently
@@ -671,7 +715,7 @@ module RubyLLM
         model: @model,
         tools: @tools,
         tool_prefs: @tool_prefs,
-        thinking: @thinking,
+        thinking: resolved_thinking,
         schema: @schema,
         citations: @citations,
         caching: @caching,
@@ -711,18 +755,22 @@ module RubyLLM
     # the provider to cache everything up to this point. Returns +self+.
     #
     # Raises ArgumentError if the chat has no messages.
-    def cache_until_here!
+    def cache_until_here
       message = messages.last
       raise ArgumentError, 'No messages to cache' unless message
 
-      message.cache_until_here!
+      message.cache_until_here
       self
     end
 
     # Receives a completion produced out-of-band (e.g. by a batch), running the
     # same callbacks as a synchronous completion so persistence works unchanged.
-    def add_completion(response) # :nodoc:
-      record_out_of_band_usage(response) if response.ruby_llm_usage_entries.empty?
+    def add_completion(response, record_usage: false) # :nodoc:
+      if response.ruby_llm_usage_entries.empty?
+        record_out_of_band_usage(response)
+      elsif record_usage
+        response.ruby_llm_usage_entries.each { |entry| record_usage_entry(entry) }
+      end
       run_callbacks(:before_message)
       add_message response
       run_callbacks(:after_message, response)
@@ -743,7 +791,7 @@ module RubyLLM
         model: @model,
         provider_options: Utils.deep_dup(@provider_options),
         schema: @schema,
-        thinking: @thinking,
+        thinking: resolved_thinking,
         citations: @citations,
         caching: @caching,
         compaction: @compaction,
@@ -763,15 +811,17 @@ module RubyLLM
       names = pending_tool_calls(response).values.map(&:name).uniq
       raise PendingToolCallsError,
             "The last response has unanswered tool calls (#{names.join(', ')}). " \
-            'Run complete, recording approve! or deny! decisions for calls that ' \
+            'Run complete, recording approve or deny decisions for calls that ' \
             'require approval, before asking again.'
     end
 
     private
 
-    def normalize_compaction(options)
-      return nil if options.nil?
+    def resolved_thinking
+      @thinking&.resolve(@model)
+    end
 
+    def normalize_compaction(options)
       compaction = options.to_h.transform_keys(&:to_sym)
       unsupported = compaction.keys - COMPACTION_OPTIONS
       return compaction.freeze if unsupported.empty?
@@ -897,7 +947,7 @@ module RubyLLM
         max_output_tokens: @max_output_tokens,
         provider_options: provider_options,
         schema: schema,
-        thinking: @thinking,
+        thinking: resolved_thinking,
         citations: @citations,
         caching: @caching,
         streaming: streaming,
@@ -1036,7 +1086,7 @@ module RubyLLM
         provider_options: Utils.deep_dup(@provider_options),
         headers: @headers,
         schema: @schema,
-        thinking: @thinking,
+        thinking: resolved_thinking,
         citations: @citations,
         caching: @caching,
         compaction: @compaction,
@@ -1214,7 +1264,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|
-        result = tool.call(args, tool_call: tool_call)
+        result = tool.call(**args, tool_call: tool_call)
         event[:result] = result
         event[:result_content] = result
         event[:result_class] = result.class.name

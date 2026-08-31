@@ -27,7 +27,17 @@ Extended Thinking gives supported models more time and a larger computation budg
 
 ## Controlling Extended Thinking
 
-Use `with_thinking` to control models that support thinking. Some models think by default, so `with_thinking` is for tuning (or disabling) rather than turning it on.
+Call `with_thinking` without options to enable thinking with the current model's registered controls:
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-opus-4-5').with_thinking
+```
+
+RubyLLM resolves those controls when it builds the request, so it follows later model changes and fallbacks. The registry may select an effort, a token budget, a provider toggle, or no request option for a model that always thinks. If the registry does not know how to enable thinking for the selected model, RubyLLM raises an `ArgumentError` instead of guessing.
+
+When the registry lists several controls, RubyLLM prefers an explicit default, then a provider toggle, then `medium` effort when available, then the smallest positive token budget the model accepts.
+
+Pass options when you want to tune the model explicitly:
 
 ```ruby
 chat = RubyLLM.chat(model: 'claude-opus-4-5')
@@ -48,11 +58,13 @@ chat.with_thinking(budget: 10_000)
 chat.with_thinking(effort: :none)
 ```
 
-Pass nil options to clear the thinking configuration and return to the model's default behavior:
+Pass `false` to disable thinking:
 
 ```ruby
-chat.with_thinking(effort: nil)
+chat.with_thinking(false)
 ```
+
+Disabling is model-specific too. RubyLLM sends the registered off control and raises an `ArgumentError` when the model does not expose one. Passing `nil` is invalid.
 
 ### Effort and Budget
 

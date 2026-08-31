@@ -137,7 +137,8 @@ ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
   create_table 'ruby_llm_batches', force: :cascade do |t|
     t.string 'provider_batch_id', null: false
     t.string 'provider', null: false
-    t.string 'status'
+    t.string 'status', null: false
+    t.string 'raw_status'
     t.boolean 'completed', default: false, null: false
     t.string 'chat_type'
     t.string 'batch_protocol'
@@ -146,6 +147,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[provider provider_batch_id], name: 'index_ruby_llm_batches_on_provider_and_id', unique: true
+    t.index ['status'], name: 'index_ruby_llm_batches_on_status'
   end
 
   create_table 'document_chats', force: :cascade do |t|

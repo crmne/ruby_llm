@@ -42,8 +42,7 @@ module RubyLLM
             if body
               [index, parse_completion_body(body, raw: body)]
             else
-              batch_failure(index, line.dig('status', 'message') || batch_error_message(line))
-              [index, nil]
+              [index, nil, batch_failure(index, line.dig('status', 'message') || batch_error_message(line))]
             end
           end
         end

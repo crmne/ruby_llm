@@ -330,6 +330,12 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.total).to eq(0.005)
     end
 
+    it 'preserves a recorded total when token counts were not stored' do
+      cost = described_class.from_h({ total: 0.005 }, tokens: RubyLLM::Tokens.new)
+
+      expect(cost.total).to eq(0.005)
+    end
+
     it 'keeps missing historical pricing missing when token usage is known' do
       tokens = RubyLLM::Tokens.new(input: 10)
       cost = described_class.from_h({}, tokens: tokens)

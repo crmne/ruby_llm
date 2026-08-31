@@ -121,6 +121,16 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
 
       expect { protocol.batch_results('123') }.to raise_error(RubyLLM::Error, /no GCS output URI/)
     end
+
+    it 'returns no rows when a failed or cancelled job has no output' do
+      %w[JOB_STATE_FAILED JOB_STATE_CANCELLED JOB_STATE_EXPIRED].each do |state|
+        allow(connection).to receive(:get).and_return(
+          instance_double(Faraday::Response, body: { 'state' => state })
+        )
+
+        expect(protocol.batch_results('123')).to eq([])
+      end
+    end
   end
 
   describe '#parse_vertex_batch_result' do
@@ -143,7 +153,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
     it 'reports a failed row whose status is a plain string' do
       line = { 'request' => { 'labels' => { 'ruby_llm_batch_id' => '1' } }, 'status' => 'Internal error occurred' }
 
-      expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil])
+      expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil, :failed])
     end
   end
 
@@ -163,8 +173,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
         .and_return(Struct.new(:body).new(job))
 
       expect(protocol.find_batch('1')).to include(
-        id: job['name'], status: 'JOB_STATE_SUCCEEDED', completed: true,
-        request_counts: { 'successfulCount' => 2 }, model: job['model']
+        id: job['name'], raw_status: 'JOB_STATE_SUCCEEDED', completed: true,
+        request_counts: { 'successfulCount' => 2 }, request_count: 2, model: job['model']
       )
     end
 

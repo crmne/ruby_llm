@@ -63,16 +63,26 @@ module RubyLLM
 
           def parse_batch_response(data)
             state = data['state'] || {}
+            completed = completed_batch_state?(state)
             {
               id: data['batch_id'] || data['id'],
-              status: data['state'] ? xai_batch_status(data) : data['status'],
-              completed: completed_batch_state?(state),
+              raw_status: data['state'] ? xai_batch_status(state, completed:) : data['status'],
+              completed:,
+              request_count: state['num_requests'],
               request_counts: state
             }
           end
 
-          def xai_batch_status(data)
-            data.dig('state', 'error').to_s.empty? ? 'processing' : 'failed'
+          def parse_batch_status(raw_status, completed:)
+            return :pending unless completed
+
+            raw_status == 'failed' ? :failed : :succeeded
+          end
+
+          def xai_batch_status(state, completed:)
+            return 'failed' unless state['error'].to_s.empty?
+
+            completed ? 'completed' : 'processing'
           end
 
           def completed_batch_state?(state)
@@ -88,8 +98,7 @@ module RubyLLM
             if body
               [index, parse_completion_body(body, raw: body)]
             else
-              batch_failure(request_id, batch_error_message(result))
-              [index, nil]
+              [index, nil, batch_failure(request_id, batch_error_message(result))]
             end
           end
         end

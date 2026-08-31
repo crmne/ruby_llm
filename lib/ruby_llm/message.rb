@@ -207,9 +207,9 @@ module RubyLLM
     # that support prompt caching cache the conversation up to and
     # including this message. Returns +self+.
     #
-    #   chat.add_message(role: :user, content: long_context).cache_until_here!
+    #   chat.add_message(role: :user, content: long_context).cache_until_here
     #
-    def cache_until_here!
+    def cache_until_here
       @cache_until_here = true
       self
     end

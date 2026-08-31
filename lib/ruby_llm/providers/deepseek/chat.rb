@@ -30,7 +30,7 @@ module RubyLLM
             RubyLLM.logger.debug { "DeepSeek has no thinking budgets; ignoring budget #{thinking.budget}" }
           end
 
-          if thinking.effort == 'none'
+          if thinking.disabled?
             payload.delete(:reasoning_effort)
             payload[:thinking] = { type: 'disabled' }
           else

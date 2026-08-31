@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Agent, :live do
   it 'lets agents enable provider-default prompt caching' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
-      caching { {} }
+      caching
     end
 
     expect(agent_class.chat.caching).to eq({})
@@ -125,15 +125,24 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(agent_class.chat.caching).to be_nil
   end
 
-  it 'lets agent instances clear prompt caching' do
+  it 'lets agent instances disable prompt caching' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
       caching { { retention: '24h' } }
     end
     agent = agent_class.new
 
-    expect(agent.with_caching(nil)).to eq(agent.chat)
-    expect(agent.caching).to be_nil
+    expect(agent.with_caching(false)).to eq(agent.chat)
+    expect(agent.caching).to be(false)
+  end
+
+  it 'exposes resolved thinking on agent instances' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      thinking effort: :low
+    end
+
+    expect(agent_class.new.thinking).to eq(effort: 'low')
   end
 
   it 'starts without instructions when the default prompt is missing' do
@@ -438,7 +447,7 @@ RSpec.describe RubyLLM::Agent, :live do
         @cancelled = false
       end
 
-      def cancel!
+      def cancel
         @cancelled = true
         self
       end
@@ -450,7 +459,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
     agent = Class.new(described_class).new(chat: fake_chat)
 
-    expect(agent.cancel!).to be(fake_chat)
+    expect(agent.cancel).to be(fake_chat)
     expect(agent).to be_cancelled
   end
 

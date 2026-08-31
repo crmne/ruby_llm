@@ -78,7 +78,7 @@ end
 class ApprovalsController < ApplicationController
   def create
     chat = Chat.find(params[:chat_id])
-    params[:approved] == "true" ? chat.approve!(params[:tool_call_id]) : chat.deny!(params[:tool_call_id])
+    params[:approved] == "true" ? chat.approve(params[:tool_call_id]) : chat.deny(params[:tool_call_id])
     CompleteJob.perform_later(chat.id)
   end
 end
@@ -88,7 +88,7 @@ The decision persists on the tool call record, so the next `complete` reads it f
 
 ## Stopping from Anywhere
 
-`chat.cancel!` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
+`chat.cancel` on a persisted chat writes the request to the database, so a stop button in the web process halts a background job mid-stream at its next checkpoint. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
 
 ## At-Least-Once, Not Exactly-Once
 

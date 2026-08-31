@@ -73,7 +73,7 @@ module RubyLLM
                                              context:, with:, provider_options:, metadata:)
         event[:model] = job.model
         event[:job_id] = job.id
-        job.wait!
+        job.wait
         result = job.video
         event[:result] = result
         event[:response_model] = result.model

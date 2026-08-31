@@ -86,11 +86,11 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
   end
 
   it 'refreshes through the public registry' do
-    allow(RubyLLM.models).to receive(:refresh!)
+    allow(RubyLLM.models).to receive(:refresh)
 
-    described_class.refresh!
+    described_class.refresh
 
-    expect(RubyLLM.models).to have_received(:refresh!)
+    expect(RubyLLM.models).to have_received(:refresh)
   end
 
   it 'builds an unsaved record from a public model' do
@@ -203,11 +203,11 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
       end
 
       it 'still resolves the chat that points at it' do
-        RubyLLM.models.load_from_store!
+        RubyLLM.models.load_from_store
 
         expect(Chat.last.to_llm.model.id).to eq('dropped-model')
       ensure
-        RubyLLM.models.load_from_json!
+        RubyLLM.models.load_from_json
       end
     end
   end

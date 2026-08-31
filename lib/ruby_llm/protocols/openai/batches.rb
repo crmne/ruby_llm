@@ -88,13 +88,26 @@ module RubyLLM
         end
 
         def parse_batch_response(data)
+          request_counts = data['request_counts']
+
           {
             id: data['id'],
-            status: data['status'],
+            raw_status: data['status'],
             completed: TERMINAL_STATUSES.include?(data['status']),
-            request_counts: data['request_counts'],
+            request_counts:,
+            request_count: request_counts&.fetch('total', nil),
             endpoint: data['endpoint']
           }.compact
+        end
+
+        def parse_batch_status(raw_status, completed:)
+          return :pending unless completed
+
+          case raw_status
+          when 'completed' then :succeeded
+          when 'cancelled' then :cancelled
+          else :failed
+          end
         end
 
         def parse_batch_result(line)
@@ -104,8 +117,7 @@ module RubyLLM
           if response && response['status_code'].to_i.between?(200, 299)
             [index, parse_batch_completion_response(response['body'])]
           else
-            batch_failure(line['custom_id'], batch_error_message(line))
-            [index, nil]
+            [index, nil, batch_failure(line['custom_id'], batch_error_message(line))]
           end
         end
       end

@@ -6,7 +6,10 @@ module RubyLLM
     class Batch < ::ActiveRecord::Base # :nodoc:
       self.table_name = 'ruby_llm_batches'
 
-      validates :provider_batch_id, :provider, presence: true
+      STATUSES = %w[pending succeeded failed cancelled].freeze
+
+      validates :provider_batch_id, :provider, :status, presence: true
+      validates :status, inclusion: { in: STATUSES }
 
       class << self
         def persist(batch, chats)
@@ -18,6 +21,7 @@ module RubyLLM
             provider_batch_id: batch.id,
             provider: batch.provider_slug,
             status: batch.status,
+            raw_status: batch.raw_status,
             completed: batch.complete?,
             request_counts: batch.request_counts,
             batch_protocol: batch.batch_protocol,
@@ -67,7 +71,7 @@ module RubyLLM
           provider: provider_instance,
           chats: chats.map { |chat| chat&.to_llm },
           id: provider_batch_id,
-          status: status,
+          raw_status: raw_status,
           completed: completed,
           request_counts: request_counts,
           batch_protocol: batch_protocol,
@@ -78,6 +82,7 @@ module RubyLLM
       def sync_from(batch)
         update!(
           status: batch.status,
+          raw_status: batch.raw_status,
           completed: batch.complete?,
           request_counts: batch.request_counts,
           batch_protocol: batch.batch_protocol

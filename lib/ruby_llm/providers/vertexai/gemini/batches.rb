@@ -23,8 +23,7 @@ module RubyLLM
               body = line['response']
               [index, parse_completion_body(body, raw: body)]
             else
-              batch_failure(index, vertex_batch_status_message(line))
-              [index, nil]
+              [index, nil, batch_failure(index, vertex_batch_status_message(line))]
             end
           end
 

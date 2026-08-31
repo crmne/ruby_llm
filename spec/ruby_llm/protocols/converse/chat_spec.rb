@@ -164,7 +164,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
 
     it 'appends cachePoint to a system message marked as a cache boundary' do
-      message = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
+      message = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here
 
       payload = render_payload([message, RubyLLM::Message.new(role: :user, content: 'Hi')])
 
@@ -172,7 +172,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
 
     it 'appends cachePoint to a user message marked as a cache boundary' do
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
       payload = render_payload([message])
 
@@ -180,7 +180,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
 
     it 'uses configured ttl for an explicit cache boundary' do
-      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
       payload = render_payload([message], caching: { ttl: '1h' })
 
@@ -198,7 +198,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
 
     it 'does not add automatic cachePoint when an explicit boundary exists' do
-      first = RubyLLM::Message.new(role: :user, content: 'Stable context').cache_until_here!
+      first = RubyLLM::Message.new(role: :user, content: 'Stable context').cache_until_here
       second = RubyLLM::Message.new(role: :user, content: 'Latest question')
 
       payload = render_payload([first, second], caching: { ttl: '1h' })

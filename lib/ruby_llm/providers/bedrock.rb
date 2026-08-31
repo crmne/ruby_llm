@@ -60,6 +60,8 @@ module RubyLLM
         {}
       end
 
+      def batch_cost_multiplier(**) = 0.5
+
       def parse_error(response)
         body = parse_error_body(response)
         return unless body

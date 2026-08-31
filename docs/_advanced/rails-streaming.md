@@ -111,13 +111,13 @@ The `broadcast_append_chunk` helper lives in your app model rather than in RubyL
 
 ## Cancelling a Background Stream
 
-`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel!` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.
+`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.
 
 ```ruby
 # app/controllers/chats_controller.rb
 class ChatsController < ApplicationController
   def cancel
-    Chat.find(params[:id]).cancel!
+    Chat.find(params[:id]).cancel
     head :no_content
   end
 end

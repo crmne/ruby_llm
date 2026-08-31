@@ -275,7 +275,7 @@ RubyLLM::Provider.register :acme, RubyLLM::Providers::Acme,
 
 `__dir__` is the directory containing `lib/ruby_llm/providers/acme.rb`, not the process working directory. The registered path therefore finds the gem-root `models.json` wherever the application starts. RubyLLM loads this catalog after the application's main registry, so the main registry wins when both carry the same model.
 
-The generated `rake models` task calls Acme and rewrites this packaged catalog. Run it from the provider gem when you want to publish updated models. `RubyLLM.models.refresh!` updates the application's main registry and does not refresh provider gem catalogs.
+The generated `rake models` task calls Acme and rewrites this packaged catalog. Run it from the provider gem when you want to publish updated models. `RubyLLM.models.refresh` updates the application's main registry and does not refresh provider gem catalogs.
 
 Now anyone who adds your gem and requires it gets a fully wired provider:
 

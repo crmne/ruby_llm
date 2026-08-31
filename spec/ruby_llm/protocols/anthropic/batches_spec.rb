@@ -17,9 +17,10 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
 
       expect(attributes).to eq(
         id: 'msgbatch_123',
-        status: 'in_progress',
+        raw_status: 'in_progress',
         completed: false,
-        request_counts: { 'processing' => 2, 'succeeded' => 0 }
+        request_counts: { 'processing' => 2, 'succeeded' => 0 },
+        request_count: 2
       )
     end
 
@@ -62,11 +63,24 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       }
       allow(RubyLLM.logger).to receive(:warn)
 
-      index, message = protocol.send(:parse_batch_result, line)
+      index, message, status = protocol.send(:parse_batch_result, line)
 
       expect(index).to eq(0)
       expect(message).to be_nil
+      expect(status).to eq(:failed)
       expect(RubyLLM.logger).to have_received(:warn).with(/errored: too long/)
+    end
+
+    it 'normalizes canceled request results' do
+      line = {
+        'custom_id' => '0',
+        'result' => { 'type' => 'canceled' }
+      }
+      allow(RubyLLM.logger).to receive(:warn)
+
+      _index, _message, status = protocol.send(:parse_batch_result, line)
+
+      expect(status).to eq(:cancelled)
     end
   end
 end

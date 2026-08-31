@@ -66,13 +66,23 @@ module RubyLLM
         def parse_batch_response(data)
           batch = data['metadata'] || data
           state = batch['state']
+          request_counts = batch['batchStats']
 
           {
             id: data['name'] || batch['name'],
-            status: state,
+            raw_status: state,
             completed: TERMINAL.any? { |terminal| state&.end_with?(terminal) },
-            request_counts: batch['batchStats']
+            request_counts:,
+            request_count: request_counts&.fetch('requestCount', nil)&.to_i
           }
+        end
+
+        def parse_batch_status(raw_status, completed:)
+          return :pending unless completed
+          return :succeeded if raw_status&.end_with?('SUCCEEDED')
+          return :cancelled if raw_status&.end_with?('CANCELLED')
+
+          :failed
         end
 
         def parse_inline_response(inline, index)
@@ -83,8 +93,7 @@ module RubyLLM
             body = inline['response']
             [index, parse_completion_body(body, raw: body)]
           else
-            batch_failure(key || index, inline.dig('error', 'message'))
-            [index, nil]
+            [index, nil, batch_failure(key || index, inline.dig('error', 'message'))]
           end
         end
       end

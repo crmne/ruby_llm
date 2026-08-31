@@ -41,6 +41,10 @@ module RubyLLM
         tokens.to_h.any?
       end
 
+      def cost_available?
+        !total_cost.nil?
+      end
+
       def to_entry
         ::RubyLLM::Usage::Entry.new(
           operation: operation,

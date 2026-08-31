@@ -5,6 +5,47 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Batch do
   include_context 'with configured RubyLLM'
 
+  describe '#status' do
+    it 'normalizes provider lifecycle statuses' do
+      cases = [
+        [:anthropic, 'in_progress', false, :pending],
+        [:anthropic, 'ended', true, :succeeded],
+        [:openai, 'failed', true, :failed],
+        [:openai, 'expired', true, :failed],
+        [:openai, 'cancelled', true, :cancelled],
+        [:gemini, 'JOB_STATE_SUCCEEDED', true, :succeeded],
+        [:gemini, 'JOB_STATE_FAILED', true, :failed],
+        [:gemini, 'JOB_STATE_CANCELLED', true, :cancelled],
+        [:mistral, 'TIMEOUT_EXCEEDED', true, :failed],
+        [:mistral, 'CANCELLED', true, :cancelled],
+        [:bedrock, 'PartiallyCompleted', true, :succeeded],
+        [:bedrock, 'Stopped', true, :cancelled],
+        [:vertexai, 'JOB_STATE_PARTIALLY_SUCCEEDED', true, :succeeded],
+        [:vertexai, 'JOB_STATE_EXPIRED', true, :failed],
+        [:xai, 'completed', true, :succeeded]
+      ]
+
+      cases.each do |provider_name, raw_status, completed, status|
+        provider = RubyLLM::Provider.resolve!(provider_name).new(RubyLLM.config)
+        batch = described_class.new(provider:, id: 'batch_1', raw_status:, completed:)
+
+        expect(batch.status).to eq(status), "expected #{provider_name} #{raw_status} to be #{status}"
+      end
+    end
+
+    it 'exposes the provider status separately' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      batch = described_class.new(provider:, id: 'batch_1', raw_status: 'cancelled', completed: true)
+
+      expect(batch.status).to eq(:cancelled)
+      expect(batch.raw_status).to eq('cancelled')
+      expect(batch).to be_complete
+      expect(batch).to be_cancelled
+      expect(batch).not_to be_succeeded
+      expect(batch).not_to be_failed
+    end
+  end
+
   describe RubyLLM::Batch::Helpers do
     subject(:helpers) do
       Class.new do
@@ -129,7 +170,7 @@ RSpec.describe RubyLLM::Batch do
       answer = RubyLLM::Message.new(role: :assistant, content: 'First answer', input_tokens: 1, output_tokens: 1)
       allow(provider).to receive(:batch_results).and_return([[0, answer]])
       batch = described_class.new(
-        provider:, chats: [chat], id: 'msgbatch_123', status: 'in_progress', completed: false
+        provider:, chats: [chat], id: 'msgbatch_123', raw_status: 'in_progress', completed: false
       )
 
       batch.messages
@@ -138,16 +179,48 @@ RSpec.describe RubyLLM::Batch do
       expect { batch.messages }.not_to change(chat, :messages)
       expect(chat.messages.map(&:role)).to eq(%i[user assistant user])
     end
+
+    it 'retains every missing slot when a reloaded provider batch fails' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      allow(provider).to receive(:batch_results).and_return([])
+      batch = described_class.new(
+        provider:,
+        id: 'batch_1',
+        raw_status: 'failed',
+        completed: true,
+        request_count: 3,
+        request_counts: { 'total' => 3 }
+      )
+
+      expect(batch.messages).to eq([nil, nil, nil])
+      expect(batch.statuses).to eq(%i[failed failed failed])
+    end
+
+    it 'marks unreturned slots cancelled on a cancelled provider batch' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      allow(provider).to receive(:batch_results).and_return([])
+      batch = described_class.new(
+        provider:,
+        id: 'batch_1',
+        raw_status: 'cancelled',
+        completed: true,
+        request_count: 2,
+        request_counts: { total: 2 }
+      )
+
+      expect(batch.messages).to eq([nil, nil])
+      expect(batch.statuses).to eq(%i[cancelled cancelled])
+    end
   end
 
   describe '#inspect' do
     it 'shows the id, status and chat count' do
       batch = described_class.new(
         provider: RubyLLM::Providers::Anthropic.new(RubyLLM.config),
-        chats: [], id: 'msgbatch_123', status: 'in_progress', completed: false
+        chats: [], id: 'msgbatch_123', raw_status: 'in_progress', completed: false
       )
 
-      expect(batch.inspect).to include('msgbatch_123', 'in_progress')
+      expect(batch.inspect).to include('msgbatch_123', 'pending', 'in_progress')
     end
   end
 
@@ -155,7 +228,7 @@ RSpec.describe RubyLLM::Batch do
     it 'is empty for a batch that collected nothing' do
       batch = described_class.new(
         provider: RubyLLM::Providers::Anthropic.new(RubyLLM.config),
-        chats: [], id: 'msgbatch_123', status: 'ended', completed: true
+        chats: [], id: 'msgbatch_123', raw_status: 'ended', completed: true
       )
       allow(batch).to receive(:messages).and_return([nil])
 

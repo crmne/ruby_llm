@@ -194,7 +194,7 @@ chat.tokens.input
 chat.cost.total
 ```
 
-The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Each usage row records the operation, provider, model, status, token buckets, cost components, and timestamps in normalized numeric columns, so ordinary SQL sums and period queries work directly against `ruby_llm_usages`. Costs are frozen at completion, so a later `RubyLLM.models.refresh!` that changes registry pricing leaves recorded usage untouched. The upgrade migration moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
+The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Each usage row records the operation, provider, model, status, token buckets, cost components, and timestamps in normalized numeric columns, so ordinary SQL sums and period queries work directly against `ruby_llm_usages`. Costs are frozen at completion, so a later `RubyLLM.models.refresh` that changes registry pricing leaves recorded usage untouched. The upgrade migration moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
 
 ## Keeping Registry Pricing Fresh
 
@@ -207,7 +207,7 @@ In a Rails app with the database-backed registry, the same refresh call writes t
 namespace :ruby_llm do
   desc 'Refresh the model registry pricing and capabilities'
   task refresh_models: :environment do
-    RubyLLM.models.refresh!
+    RubyLLM.models.refresh
   end
 end
 ```

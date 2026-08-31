@@ -128,7 +128,7 @@ RSpec.describe RubyLLM::Models do
     end
 
     after do
-      RubyLLM.models.load_from_json!
+      RubyLLM.models.load_from_json
     end
 
     let(:mock_provider_models) do
@@ -151,7 +151,7 @@ RSpec.describe RubyLLM::Models do
     end
 
     it 'returns models with consistent structure' do
-      models = described_class.refresh!
+      models = described_class.refresh
 
       expect(models).to be_a(described_class)
       expect(models.all).to all(be_a(RubyLLM::Model))
@@ -164,7 +164,7 @@ RSpec.describe RubyLLM::Models do
     end
 
     it 'saves models with correct JSON structure' do
-      models = described_class.refresh!
+      models = described_class.refresh
 
       # Create a temporary file for testing
       temp_file = Tempfile.new(['test_models', '.json'])
