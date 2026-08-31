@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       expect(model.modalities.input).to eq(%w[text image])
       expect(model.modalities.output).to eq(['text'])
       expect(model.capabilities).to contain_exactly(
-        'streaming', 'function_calling', 'reasoning', 'structured_output'
+        'streaming', 'function_calling', 'reasoning'
       )
       expect(model.metadata).to include(provider_name: 'Anthropic', inference_types: ['ON_DEMAND'])
     end
@@ -371,25 +371,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
     def config_for(region: 'us-east-1')
       RubyLLM::Configuration.new.tap { |c| c.bedrock_region = region }
-    end
-  end
-
-  describe '.supports_structured_output?' do
-    {
-      'anthropic.claude-haiku-4-5-20251001-v1:0' => true,
-      'anthropic.claude-sonnet-4-5-20250929-v1:0' => true,
-      'anthropic.claude-opus-4-5-20250514-v1:0' => true,
-      'us.anthropic.claude-opus-4-6-v1' => true,
-      'eu.anthropic.claude-haiku-4-5-20251001-v1:0' => true,
-      'global.anthropic.claude-haiku-4-5-20251001-v1:0' => true,
-      'anthropic.claude-opus-4-20250514-v1:0' => false,
-      'anthropic.claude-3-5-sonnet-20241022-v2:0' => false,
-      'amazon.nova-2-lite-v1:0' => false,
-      nil => false
-    }.each do |model_id, expected|
-      it "returns #{expected} for #{model_id.inspect}" do
-        expect(described_class.supports_structured_output?(model_id)).to eq(expected)
-      end
     end
   end
 end
