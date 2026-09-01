@@ -7,7 +7,7 @@ require 'stringio'
 require 'tmpdir'
 
 RSpec.describe RubyLLM::ProviderGeneratorCLI do
-  let(:dir) { Dir.mktmpdir('ruby_llm_provider_cli') }
+  let(:dir) { File.realpath(Dir.mktmpdir('ruby_llm_provider_cli')) }
 
   after do
     FileUtils.rm_rf(dir)
