@@ -60,6 +60,8 @@ module RubyLLM
     # agent forwards to the matching Chat#with_* when it builds its chat.
     PASSTHROUGH_OPTIONS = %i[temperature max_output_tokens].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
+    UNRESOLVED_CONTEXT = Object.new.freeze
+    private_constant :UNRESOLVED_CONTEXT
 
     # The chat operations an agent instance runs through its ::rescue_from
     # handlers. Remaining delegated methods pass through untouched.
@@ -364,12 +366,16 @@ module RubyLLM
       private :fallback_options
 
       # Sets a Context whose configuration chats this agent builds should
-      # use, applied via Chat#with_context. Called with no argument, returns
-      # the configured context.
-      def context(value = nil)
-        return @context if value.nil?
+      # use, applied via Chat#with_context. A block defers evaluation until a
+      # chat is built, with declared ::inputs available as methods. Called
+      # with no argument, returns the configured context.
+      #
+      #   context RubyLLM.context { |config| config.request_timeout = 10 }
+      #   context { RubyLLM.context { |config| config.openai_api_key = api_key } }
+      def context(value = nil, &block)
+        return @context if value.nil? && !block_given?
 
-        @context = value
+        @context = block || value
       end
 
       # Sets the ActiveRecord chat class this agent creates and finds,
@@ -454,6 +460,10 @@ module RubyLLM
         @chat_kwargs || {}
       end
 
+      def resolved_context(inputs:) # :nodoc:
+        evaluate(context, runtime_context(chat: nil, inputs:))
+      end
+
       def resolved_chat_kwargs(inputs: {}) # :nodoc:
         kwargs = chat_kwargs
         return kwargs unless kwargs[:model].is_a?(Proc)
@@ -461,8 +471,9 @@ module RubyLLM
         kwargs.merge(model: evaluate(kwargs[:model], runtime_context(chat: nil, inputs: inputs)))
       end
 
-      def build_chat(inputs:, options:) # :nodoc:
-        (context || RubyLLM).chat(**resolved_chat_kwargs(inputs:), **options)
+      def build_chat(inputs:, options:, resolved_context: UNRESOLVED_CONTEXT) # :nodoc:
+        context_value = resolved_context.equal?(UNRESOLVED_CONTEXT) ? self.resolved_context(inputs:) : resolved_context
+        (context_value || RubyLLM).chat(**resolved_chat_kwargs(inputs:), **options)
       end
 
       # Builds a Chat configured with this agent's declarations and returns
@@ -474,8 +485,9 @@ module RubyLLM
       #
       def chat(**kwargs)
         input_values, chat_options = partition_inputs(kwargs)
-        chat = build_chat(inputs: input_values, options: chat_options)
-        apply_configuration(chat, input_values:, persist_instructions: true)
+        context_value = resolved_context(inputs: input_values)
+        chat = build_chat(inputs: input_values, options: chat_options, resolved_context: context_value)
+        apply_configuration(chat, input_values:, persist_instructions: true, resolved_context: context_value)
         chat
       end
 
@@ -531,7 +543,7 @@ module RubyLLM
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
         apply_assume_model_exists(record)
         apply_protocol(record)
-        apply_context(record)
+        apply_context(record, runtime_context(chat: record, inputs: input_values))
         runtime = runtime_context(chat: record, inputs: input_values)
         apply_instructions(
           record,
@@ -564,10 +576,15 @@ module RubyLLM
         [input_values, chat_options]
       end
 
-      def apply_configuration(chat, input_values:, persist_instructions:) # :nodoc:
+      def apply_configuration(
+        chat,
+        input_values:,
+        persist_instructions:,
+        resolved_context: UNRESOLVED_CONTEXT
+      ) # :nodoc:
         runtime = runtime_context(chat:, inputs: input_values)
         apply_chat_options(chat)
-        apply_context(chat)
+        apply_context(chat, runtime, resolved_context:)
         apply_instructions(chat, runtime, inputs: input_values, persist: persist_instructions)
         apply_tools(chat, runtime)
         apply_passthrough_options(chat)
@@ -622,8 +639,9 @@ module RubyLLM
         record
       end
 
-      def apply_context(chat)
-        chat.with_context(context) if context
+      def apply_context(chat, runtime, resolved_context: UNRESOLVED_CONTEXT)
+        value = resolved_context.equal?(UNRESOLVED_CONTEXT) ? evaluate(context, runtime) : resolved_context
+        chat.with_context(value) if value
       end
 
       def apply_instructions(chat, runtime, inputs:, persist:, persistent_only: false)
@@ -832,8 +850,25 @@ module RubyLLM
     def initialize(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
       input_values, chat_options = self.class.partition_inputs(kwargs)
       input_values = input_values.merge(inputs || {})
-      @chat = chat || self.class.build_chat(inputs: input_values, options: chat_options)
-      self.class.apply_configuration(@chat, input_values:, persist_instructions:)
+
+      if chat
+        @chat = chat
+        self.class.apply_configuration(@chat, input_values:, persist_instructions:)
+        return
+      end
+
+      context_value = self.class.resolved_context(inputs: input_values)
+      @chat = self.class.build_chat(
+        inputs: input_values,
+        options: chat_options,
+        resolved_context: context_value
+      )
+      self.class.apply_configuration(
+        @chat,
+        input_values:,
+        persist_instructions:,
+        resolved_context: context_value
+      )
     end
 
     # The wrapped Chat, or the chat record in Rails mode.
