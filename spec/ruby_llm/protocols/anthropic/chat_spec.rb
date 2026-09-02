@@ -587,20 +587,12 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   describe '.prepend_thinking_block' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 
-    it 'leaves the blocks alone when thinking is off' do
+    it 'puts the stored thinking block first' do
       blocks = [{ type: 'text', text: 'hi' }]
       message = RubyLLM::Message.new(role: :assistant, content: 'hi',
                                      thinking: RubyLLM::Thinking.new(text: 'why'))
 
-      expect(protocol.send(:prepend_thinking_block, blocks, message, false)).to eq(blocks)
-    end
-
-    it 'puts the thinking block first when thinking is on' do
-      blocks = [{ type: 'text', text: 'hi' }]
-      message = RubyLLM::Message.new(role: :assistant, content: 'hi',
-                                     thinking: RubyLLM::Thinking.new(text: 'why'))
-
-      result = protocol.send(:prepend_thinking_block, blocks, message, true)
+      result = protocol.send(:prepend_thinking_block, blocks, message)
 
       expect(result.first[:type]).to eq('thinking')
     end
@@ -609,7 +601,33 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       blocks = [{ type: 'text', text: 'hi' }]
       message = RubyLLM::Message.new(role: :assistant, content: 'hi')
 
-      expect(protocol.send(:prepend_thinking_block, blocks, message, true)).to eq(blocks)
+      expect(protocol.send(:prepend_thinking_block, blocks, message)).to eq(blocks)
+    end
+  end
+
+  describe 'thinking replay' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    it 'replays a stored thinking block even when the request asks for no thinking' do
+      message = RubyLLM::Message.new(
+        role: :assistant, content: '',
+        tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'weather', arguments: {}) },
+        thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+      )
+
+      formatted = protocol.send(:format_message, message, thinking: nil)
+
+      expect(formatted[:content].map { |block| block[:type] }).to eq(%w[thinking tool_use])
+    end
+
+    it 'keeps a display-omitted thinking block as thinking, not redacted data' do
+      blocks = [{ 'type' => 'thinking', 'thinking' => '', 'signature' => 'sig' }, { 'type' => 'text', 'text' => 'hi' }]
+      thinking = RubyLLM::Thinking.build(
+        text: protocol.send(:extract_thinking_content, blocks),
+        signature: protocol.send(:extract_thinking_signature, blocks)
+      )
+
+      expect(protocol.send(:build_thinking_block, thinking)).to eq(type: 'thinking', thinking: '', signature: 'sig')
     end
   end
 

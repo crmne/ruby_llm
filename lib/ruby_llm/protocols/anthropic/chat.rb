@@ -274,10 +274,13 @@ module RubyLLM
           url if url&.match?(%r{\Ahttps?://}i)
         end
 
+        # An empty thinking text is a real block whose display was omitted;
+        # collapsing it to nil would replay the signature as redacted data.
         def extract_thinking_content(blocks)
           thinking_blocks = blocks.select { |c| c['type'] == 'thinking' }
-          thoughts = thinking_blocks.map { |c| c['thinking'] || c['text'] }.join
-          thoughts.empty? ? nil : thoughts
+          return nil if thinking_blocks.empty?
+
+          thinking_blocks.map { |c| c['thinking'] || c['text'] }.join
         end
 
         def extract_thinking_signature(blocks)
@@ -314,17 +317,18 @@ module RubyLLM
           )
         end
 
-        def format_message(msg, thinking: nil, citations: false, caching: nil)
-          thinking_enabled = thinking&.enabled?
-
+        # Stored thinking blocks replay whether or not this request asks for
+        # thinking: Claude emits them on its own and requires them back on
+        # tool-use turns.
+        def format_message(msg, thinking: nil, citations: false, caching: nil) # rubocop:disable Lint/UnusedMethodArgument
           if msg.role == :assistant && msg.raw_content
             format_raw_assistant_message(msg, caching:)
           elsif msg.tool_call?
-            format_tool_call_with_thinking(msg, thinking_enabled, caching:)
+            format_tool_call_with_thinking(msg, caching:)
           elsif msg.tool_result?
             Tools.format_tool_result(msg)
           else
-            format_basic_message_with_thinking(msg, thinking_enabled, citations: citations, caching:)
+            format_basic_message_with_thinking(msg, citations: citations, caching:)
           end
         end
 
@@ -338,10 +342,10 @@ module RubyLLM
           { role: 'assistant', content: blocks }
         end
 
-        def format_basic_message_with_thinking(msg, thinking_enabled, citations: false, caching: nil)
+        def format_basic_message_with_thinking(msg, citations: false, caching: nil)
           content_blocks = []
 
-          if msg.role == :assistant && thinking_enabled
+          if msg.role == :assistant
             thinking_block = build_thinking_block(msg.thinking)
             content_blocks << thinking_block if thinking_block
           end
@@ -355,8 +359,8 @@ module RubyLLM
           }
         end
 
-        def format_tool_call_with_thinking(msg, thinking_enabled, caching: nil)
-          content_blocks = prepend_thinking_block([], msg, thinking_enabled)
+        def format_tool_call_with_thinking(msg, caching: nil)
+          content_blocks = prepend_thinking_block([], msg)
           append_formatted_content(content_blocks, msg) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
@@ -375,9 +379,7 @@ module RubyLLM
           }
         end
 
-        def prepend_thinking_block(content_blocks, msg, thinking_enabled)
-          return content_blocks unless thinking_enabled
-
+        def prepend_thinking_block(content_blocks, msg)
           thinking_block = build_thinking_block(msg.thinking)
           content_blocks.unshift(thinking_block) if thinking_block
 

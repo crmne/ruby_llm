@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
 
     def format_tool_call(msg)
-      provider.send(:format_tool_call_with_thinking, msg, false)
+      provider.send(:format_tool_call_with_thinking, msg)
     end
 
     def message_double(content:, attachments: [])
@@ -20,6 +20,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
                       content: content,
                       attachments: attachments,
                       cache_until_here?: false,
+                      thinking: nil,
                       tool_calls: {
                         'tool_123' => instance_double(RubyLLM::ToolCall,
                                                       id: 'tool_123',
