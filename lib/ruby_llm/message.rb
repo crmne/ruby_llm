@@ -61,8 +61,6 @@ module RubyLLM
     # provider returned none.
     attr_reader :thinking
 
-    # The token usage as a Tokens object. Its fields are +nil+ when the
-    # provider did not report them.
     # The source citations as an array of Citation objects, normalized
     # across providers.
     attr_reader :citations
@@ -93,7 +91,7 @@ module RubyLLM
 
     def initialize(options = {}) # :nodoc:
       @role = options.fetch(:role).to_sym
-      @tool_calls = options[:tool_calls]
+      @tool_calls = coerce_tool_calls(options[:tool_calls])
       @content = normalize_content(options.fetch(:content))
       @config = options[:config]
       @attachments = Attachment.wrap(options[:attachments], config: @config)
@@ -109,9 +107,9 @@ module RubyLLM
         reported_cost: options[:reported_cost]
       )
       @raw = options[:raw]
-      @thinking = options[:thinking]
-      @citations = Array(options[:citations])
-      @server_tool_calls = Array(options[:server_tool_calls])
+      @thinking = coerce_thinking(options[:thinking], options[:thinking_signature])
+      @citations = Array(options[:citations]).map { |citation| coerce_value(citation, Citation) }
+      @server_tool_calls = Array(options[:server_tool_calls]).map { |call| coerce_value(call, ServerToolCall) }
       @raw_content = options[:raw_content]
       @raw_reasoning = options[:raw_reasoning]
       @finish_reason = options[:finish_reason]
@@ -128,7 +126,9 @@ module RubyLLM
     #   response.parsed # => {"name" => "Alice", "age" => 30}
     #
     def parsed
-      @parsed ||= JSON.parse(content) if content
+      return if content.nil? || content.empty?
+
+      @parsed ||= JSON.parse(content)
     end
 
     def with_attachments(attachments) # :nodoc:
@@ -264,6 +264,31 @@ module RubyLLM
 
     def finish_reason_key
       finish_reason.to_s.downcase.tr('-', '_')
+    end
+
+    def coerce_tool_calls(tool_calls)
+      return tool_calls unless tool_calls.is_a?(Hash)
+
+      tool_calls.to_h do |id, call|
+        next [id, call] unless call.is_a?(Hash)
+
+        attributes = call.transform_keys(&:to_sym)
+        [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
+                          arguments: attributes[:arguments] || {},
+                          thought_signature: attributes[:thought_signature])]
+      end
+    end
+
+    def coerce_thinking(thinking, signature)
+      case thinking
+      when nil, Thinking then thinking
+      when Hash then Thinking.build(**thinking.transform_keys(&:to_sym).slice(:text, :signature))
+      else Thinking.build(text: thinking.to_s, signature: signature)
+      end
+    end
+
+    def coerce_value(value, klass)
+      value.is_a?(Hash) ? klass.from_h(value) : value
     end
 
     def normalize_content(content)

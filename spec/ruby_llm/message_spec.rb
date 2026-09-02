@@ -58,6 +58,37 @@ RSpec.describe RubyLLM::Message do
 
       expect { message.parsed }.to raise_error(JSON::ParserError)
     end
+
+    it 'returns nil for a tool-call turn without text' do
+      tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+      message = described_class.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call })
+
+      expect(message.parsed).to be_nil
+    end
+  end
+
+  describe '.new from #to_h attributes' do
+    it 'rebuilds tool calls, thinking, and citations as value objects' do
+      original = described_class.new(
+        role: :assistant,
+        content: 'Berlin is sunny.',
+        tool_calls: {
+          'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Berlin' })
+        },
+        thinking: RubyLLM::Thinking.new(text: 'Check the forecast.', signature: 'sig'),
+        citations: [RubyLLM::Citation.new(url: 'https://example.com', title: 'Forecast')],
+        server_tool_calls: [RubyLLM::ServerToolCall.new(type: 'web_search', raw: { query: 'Berlin' })],
+        finish_reason: 'stop'
+      )
+
+      rebuilt = described_class.new(original.to_h)
+
+      expect(rebuilt.tool_calls['call_1']).to be_a(RubyLLM::ToolCall)
+      expect(rebuilt.thinking).to be_a(RubyLLM::Thinking)
+      expect(rebuilt.citations.first).to be_a(RubyLLM::Citation)
+      expect(rebuilt.server_tool_calls.first).to be_a(RubyLLM::ServerToolCall)
+      expect(rebuilt.to_h).to eq(original.to_h)
+    end
   end
 
   describe '#attachments' do
