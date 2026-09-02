@@ -290,7 +290,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tokens.cache_write).to eq(100)
     end
 
-    it 'does not synthesize finish_reason for completed function calls' do
+    it 'reports the completed status as finish_reason for function calls' do
       response = response_with([
                                  { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
                                    'arguments' => '{}' }

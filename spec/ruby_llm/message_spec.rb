@@ -253,6 +253,15 @@ RSpec.describe RubyLLM::Message do
 
       expect(chunk.max_tokens?).to be(true)
     end
+
+    it 'reports a tool-call stop even when the provider says the turn completed' do
+      tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+      message = described_class.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call },
+                                    finish_reason: 'completed')
+
+      expect(message).to be_tool_call_stop
+      expect(message).not_to be_stopped
+    end
   end
 
   describe '#tool_results' do

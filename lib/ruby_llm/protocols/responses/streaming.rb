@@ -67,7 +67,7 @@ module RubyLLM
           server_tool_calls = parse_server_tool_items(output)
 
           chunk model: response['model'],
-                finish_reason: response.dig('incomplete_details', 'reason'),
+                finish_reason: parse_finish_reason(response),
                 server_tool_calls: server_tool_calls,
                 raw_content: server_tool_calls.any? ? output : nil,
                 **parse_usage(response['usage'] || {})

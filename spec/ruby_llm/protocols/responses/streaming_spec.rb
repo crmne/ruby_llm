@@ -96,10 +96,10 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.tokens.output).to eq(7)
     expect(chunk.tokens.cache_read).to eq(4)
     expect(chunk.tokens.thinking).to eq(3)
-    expect(chunk.finish_reason).to be_nil
+    expect(chunk.finish_reason).to eq('completed')
   end
 
-  it 'does not synthesize finish_reason for completed function-call responses' do
+  it 'reports the completed status as finish_reason for function-call responses' do
     chunk = build_chunk({
                           'type' => 'response.completed',
                           'response' => {
@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                           }
                         })
 
-    expect(chunk.finish_reason).to be_nil
+    expect(chunk.finish_reason).to eq('completed')
   end
 
   describe '#parse_streaming_error' do

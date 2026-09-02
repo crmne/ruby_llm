@@ -21,7 +21,7 @@ module RubyLLM
     # The valid message roles: +:system+, +:user+, +:assistant+, and +:tool+.
     ROLES = %i[system user assistant tool].freeze
 
-    STOPPED_FINISH_REASONS = %w[stop end_turn stop_sequence complete].freeze
+    STOPPED_FINISH_REASONS = %w[stop end_turn stop_sequence complete completed].freeze
     MAX_TOKENS_FINISH_REASONS = %w[length max_tokens max_output_tokens model_context_window_exceeded].freeze
     TOOL_CALL_FINISH_REASONS = %w[tool_calls tool_use function_call tool_call].freeze
     CONTENT_FILTERED_FINISH_REASONS = %w[
@@ -160,9 +160,10 @@ module RubyLLM
     end
 
     # Returns +true+ if #finish_reason indicates the model finished
-    # normally, +false+ otherwise.
+    # normally, +false+ otherwise. A turn that stopped to call tools is
+    # reported by #tool_call_stop? instead, whatever the provider named it.
     def stopped?
-      finish_reason_in?(STOPPED_FINISH_REASONS)
+      finish_reason_in?(STOPPED_FINISH_REASONS) && !tool_call?
     end
 
     # Returns +true+ if the response was cut off by a token limit,
@@ -174,7 +175,7 @@ module RubyLLM
     # Returns +true+ if the model stopped to request tool calls,
     # +false+ otherwise.
     def tool_call_stop?
-      finish_reason_in?(TOOL_CALL_FINISH_REASONS)
+      finish_reason_in?(TOOL_CALL_FINISH_REASONS) || (tool_call? && finish_reason_in?(STOPPED_FINISH_REASONS))
     end
 
     # Returns +true+ if a provider safety filter stopped the response,

@@ -58,7 +58,7 @@ module RubyLLM
           content = parse_output_text(output)
           server_tool_calls = parse_server_tool_items(output)
 
-          finish_reason = data.dig('incomplete_details', 'reason')
+          finish_reason = parse_finish_reason(data)
 
           Message.new(
             role: :assistant,
@@ -348,6 +348,10 @@ module RubyLLM
           end
 
           texts.empty? ? nil : texts.join
+        end
+
+        def parse_finish_reason(data)
+          data.dig('incomplete_details', 'reason') || (data['status'] if data['status'] == 'completed')
         end
 
         def parse_function_calls(output, response: nil, finish_reason: nil)
