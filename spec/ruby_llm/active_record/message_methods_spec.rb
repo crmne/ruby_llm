@@ -24,6 +24,16 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
     expect(message_instance.tool_error_message).to eq('tool failed')
   end
 
+  it 'parses structured output content' do
+    message_instance.content = '{"name":"Alice","age":30}'
+    expect(message_instance.parsed).to eq({ 'name' => 'Alice', 'age' => 30 })
+  end
+
+  it 'returns nil from parsed when there is no content' do
+    message_instance.content = nil
+    expect(message_instance.parsed).to be_nil
+  end
+
   it 'returns nil for invalid content' do
     message_instance.content = 'not-json'
     expect(message_instance.tool_error_message).to be_nil

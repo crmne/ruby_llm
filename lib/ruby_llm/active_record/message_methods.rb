@@ -112,6 +112,15 @@ module RubyLLM
         payload_error_message(extract_content)
       end
 
+      # Returns the message text parsed as JSON, for structured output
+      # responses. Returns +nil+ when the message has no text.
+      def parsed
+        text = extract_content
+        return if text.nil? || text.empty?
+
+        JSON.parse(text)
+      end
+
       private
 
       def optional_column(name)
