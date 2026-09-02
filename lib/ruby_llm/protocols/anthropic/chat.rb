@@ -28,8 +28,8 @@ module RubyLLM
           explicit_boundaries = cache_boundaries?(messages, caching:)
           system_content = build_system_content(system_messages, caching:)
 
-          build_base_payload(chat_messages, model, stream, thinking, citations: citations, caching:).tap do |payload|
-            payload[:max_tokens] = max_output_tokens if max_output_tokens
+          build_base_payload(chat_messages, model, stream, thinking, citations: citations, caching:,
+                                                                     max_output_tokens:).tap do |payload|
             add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:)
             payload[:cache_control] = prompt_cache_control(caching) if caching && !explicit_boundaries
           end
@@ -81,12 +81,13 @@ module RubyLLM
           end
         end
 
-        def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil)
+        def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil,
+                               max_output_tokens: nil)
           payload = {
             model: model.id,
             messages: format_messages(chat_messages, thinking:, citations:, caching:),
             stream: stream,
-            max_tokens: model.max_output_tokens || 4096
+            max_tokens: max_output_tokens || model.max_output_tokens || 4096
           }
 
           add_thinking_fields(payload, thinking, model)

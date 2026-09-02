@@ -444,6 +444,27 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(low[:output_config]).to eq(effort: 'low')
     end
 
+    it 'keeps the effort budget under the max_output_tokens of the request' do
+      model = RubyLLM::Model.new(
+        id: 'claude-opus-4-5',
+        provider: 'anthropic',
+        metadata: { reasoning_options: [effort_option(:low, :medium, :high), budget_option] }
+      )
+
+      payload = described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        max_output_tokens: 4000,
+        thinking: RubyLLM::Thinking::Config.new(effort: :medium)
+      )
+
+      expect(payload[:max_tokens]).to eq(4000)
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 3999)
+    end
+
     it 'resolves a bare with_thinking to a request Claude honors' do
       model = RubyLLM::Model.new(
         id: 'claude-opus-4-8',
