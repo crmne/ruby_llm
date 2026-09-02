@@ -7,7 +7,7 @@ class <%= chat_controller_class_name %> < ApplicationController
 
   def new
     @<%= chat_variable_name %> = <%= chat_model_name %>.new
-    @selected_model = params[:provider] ? [params[:provider], params[:model]].join(":") : params[:model]
+    @selected_model = params[:provider] ? [ params[:provider], params[:model] ].join(":") : params[:model]
     @chat_models = available_chat_models
   end
 

@@ -109,6 +109,7 @@ module RubyLLM
         return if application_controller.include?('def available_chat_models')
 
         inject_into_file path, <<-RUBY, before: /^end\s*\z/
+
   private
 
   def available_chat_models
@@ -128,7 +129,7 @@ module RubyLLM
 
           routes_content = <<~ROUTES.strip
             namespace :#{namespace} do
-              resources :#{model_resource}, only: [ :index, :show ] do
+              resources :#{model_resource}, only: [ :index, :show ], constraints: { id: /[^\\/]+/ } do
                 collection do
                   post :refresh
                 end
@@ -141,7 +142,7 @@ module RubyLLM
           route routes_content
         else
           model_routes = <<~ROUTES.strip
-            resources :#{model_resource_name}, only: [ :index, :show ] do
+            resources :#{model_resource_name}, only: [ :index, :show ], constraints: { id: /[^\\/]+/ } do
               collection do
                 post :refresh
               end
