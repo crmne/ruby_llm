@@ -721,11 +721,18 @@ module RubyLLM
         end
         return unless persisted?
         return unless cancellation_poll_due?
-
-        return unless self.class.unscoped.where(self.class.primary_key => id).pick(:cancelled)
+        return unless persisted_cancellation_request?
 
         clear_cancellation_request
         :cancelled
+      end
+
+      # Jobs and requests run with the query cache on, which would replay the
+      # first poll's answer for the rest of the run.
+      def persisted_cancellation_request?
+        self.class.uncached do
+          self.class.unscoped.where(self.class.primary_key => id).pick(:cancelled)
+        end
       end
 
       def clear_cancellation_request

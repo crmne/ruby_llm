@@ -64,6 +64,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.send(:consume_persisted_cancellation_request)).to eq(:cancelled)
     end
 
+    it 'sees a request another connection writes while the query cache is on' do
+      chat = Chat.create!(model: model_id)
+
+      Chat.cache do
+        Chat.where(id: chat.id).pick(:cancelled)
+        Thread.new { Chat.where(id: chat.id).update_all(cancelled: true) }.join
+
+        expect(chat.send(:consume_persisted_cancellation_request)).to eq(:cancelled)
+      end
+    end
+
     it 'ignores an unsaved record' do
       expect(Chat.new(model: model_id).send(:consume_persisted_cancellation_request)).to be_nil
     end
