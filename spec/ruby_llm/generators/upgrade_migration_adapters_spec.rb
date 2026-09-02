@@ -188,7 +188,7 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
 
   def verify_message_data
     message = record_for(:messages).find(1)
-    raise 'structured content text was not preserved' unless message.content == '{"answer":42}'
+    raise 'structured content text was not preserved' unless JSON.parse(message.content) == { 'answer' => 42 }
     raise 'structured raw content was not preserved' unless message.raw_content == { 'answer' => 42 }
   end
 
