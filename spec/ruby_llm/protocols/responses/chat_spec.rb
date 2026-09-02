@@ -120,6 +120,14 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(payload[:reasoning]).to eq({ effort: 'low' })
     end
 
+    it 'asks for a reasoning summary when display is summarized' do
+      thinking = RubyLLM::Thinking::Config.new(effort: 'low', display: :summarized)
+
+      payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], thinking: thinking)
+
+      expect(payload[:reasoning]).to eq({ effort: 'low', summary: 'auto' })
+    end
+
     it 'renders prompt cache params for any Responses-compatible provider' do
       payload = render_payload(
         [RubyLLM::Message.new(role: :user, content: 'hi')],
@@ -298,7 +306,9 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.finish_reason).to be_nil
+      expect(message.finish_reason).to eq('completed')
+      expect(message).to be_tool_call_stop
+      expect(message).not_to be_stopped
     end
 
     it 'preserves incomplete_details reason as finish_reason when present' do

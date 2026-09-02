@@ -45,6 +45,7 @@ module RubyLLM
 
           effort = resolve_effort(thinking)
           payload[:reasoning] = { effort: effort } if effort
+          payload[:reasoning] = (payload[:reasoning] || {}).merge(summary: 'auto') if thinking&.display == 'summarized'
           payload.merge!(prompt_cache_params(caching)) if caching
           force_explicit_cache_mode(payload) if caching != false && cache_boundaries?(messages)
 
