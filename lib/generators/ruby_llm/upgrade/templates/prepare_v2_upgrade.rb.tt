@@ -304,7 +304,7 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 
       duplicate_ids.each do |tool_call_id|
         matches = records.where(tool_call_id: tool_call_id)
-        keeper = matches.minimum(records.primary_key)
+        keeper = matches.order(records.primary_key).pick(records.primary_key)
         matches.where.not(records.primary_key => keeper).find_each(batch_size: 1_000) do |record|
           record.update!(tool_call_id: available_tool_call_id(records, record))
         end

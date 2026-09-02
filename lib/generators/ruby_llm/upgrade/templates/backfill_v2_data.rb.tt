@@ -89,17 +89,12 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
 <% elsif postgresql? -%>
       execute <<~SQL
         UPDATE #{tool_calls}
-           SET result_id = matches.matched_result_id,
+           SET result_id = legacy_messages.#{message_id},
                result_type = #{result_type}
-          FROM (
-            SELECT #{result_id} AS matched_tool_call_id,
-                   MIN(legacy_messages.#{message_id}) AS matched_result_id
-              FROM #{messages} legacy_messages
-             WHERE #{range}
-               AND #{result_id} IS NOT NULL
-             GROUP BY #{result_id}
-          ) matches
-         WHERE matches.matched_tool_call_id = #{tool_calls}.#{tool_call_id}
+          FROM #{messages} legacy_messages
+         WHERE #{result_id} = #{tool_calls}.#{tool_call_id}
+           AND #{range}
+           AND #{result_id} IS NOT NULL
       SQL
 <% else -%>
       execute <<~SQL
