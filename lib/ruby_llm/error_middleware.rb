@@ -60,7 +60,8 @@ module RubyLLM
         /input[_\s-]?token/i,
         /input or output tokens? must be reduced/i,
         /reduce the length of messages/i,
-        /prompt is too long/i
+        /prompt is too long/i,
+        /context limit/i
       ].freeze
 
       RATE_LIMIT_PATTERNS = [
