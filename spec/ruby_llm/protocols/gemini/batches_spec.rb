@@ -27,6 +27,43 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
         }
       )
     end
+
+    it 'sends structured output as responseSchema, which batchGenerateContent honors' do
+      request = {
+        custom_id: '0',
+        model: 'gemini-2.5-flash',
+        payload: {
+          contents: [{ role: 'user', parts: [{ text: 'Hi' }] }],
+          generationConfig: {
+            responseMimeType: 'application/json',
+            responseJsonSchema: {
+              '$schema': 'https://json-schema.org/draft/2020-12/schema',
+              type: 'object',
+              properties: {
+                title: { type: 'string', description: 'Headline' },
+                score: { type: %w[integer null] },
+                tags: { type: 'array', items: { type: 'string' } }
+              },
+              required: %w[title tags],
+              additionalProperties: false
+            }
+          }
+        }
+      }
+
+      config = protocol.send(:gemini_batch_request, request, 'gemini-2.5-flash').dig(:request, :generationConfig)
+
+      expect(config).not_to have_key(:responseJsonSchema)
+      expect(config[:responseSchema]).to eq(
+        type: 'object',
+        properties: {
+          title: { type: 'string', description: 'Headline' },
+          score: { type: 'integer', nullable: true },
+          tags: { type: 'array', items: { type: 'string' } }
+        },
+        required: %w[title tags]
+      )
+    end
   end
 
   describe '#create_batch' do

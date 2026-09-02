@@ -50,11 +50,54 @@ module RubyLLM
 
         def gemini_batch_request(request, model)
           {
-            request: batch_payload(request).merge(model: "models/#{model}"),
+            request: batch_schema_payload(batch_payload(request)).merge(model: "models/#{model}"),
             metadata: {
               custom_id: request[:custom_id]
             }
           }
+        end
+
+        # batchGenerateContent ignores responseJsonSchema and returns JSON of
+        # its own shape, while the legacy responseSchema field is honored, so
+        # batches carry the schema in Gemini's Schema dialect.
+        def batch_schema_payload(payload)
+          config = payload[:generationConfig]
+          return payload unless config.is_a?(Hash) && config.key?(:responseJsonSchema)
+
+          schema = response_schema(config[:responseJsonSchema])
+          payload.merge(generationConfig: config.except(:responseJsonSchema).merge(responseSchema: schema))
+        end
+
+        JSON_SCHEMA_ONLY_KEYS = %w[$schema $id additionalProperties strict].freeze
+        private_constant :JSON_SCHEMA_ONLY_KEYS
+
+        def response_schema(node)
+          case node
+          when Hash then response_schema_hash(node)
+          when Array then node.map { |value| response_schema(value) }
+          else node
+          end
+        end
+
+        def response_schema_hash(node)
+          schema = node.each_with_object({}) do |(key, value), converted|
+            next if JSON_SCHEMA_ONLY_KEYS.include?(key.to_s)
+
+            converted[key] = if key.to_s == 'properties' && value.is_a?(Hash)
+                               value.transform_values { |property| response_schema(property) }
+                             else
+                               response_schema(value)
+                             end
+          end
+          nullable_type(schema)
+        end
+
+        def nullable_type(schema)
+          key = schema.key?(:type) ? :type : 'type'
+          types = Array(schema[key])
+          return schema unless types.length > 1 && types.include?('null')
+
+          schema.merge(key => (types - ['null']).first, nullable: true)
         end
 
         def batch_name(id)
