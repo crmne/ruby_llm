@@ -138,8 +138,8 @@ module RubyLLM
     end
 
     # Creates a Chat conversation. Arguments are forwarded to Chat.new:
-    # +model:+, +provider:+, +assume_model_exists:+, and +context:+. With
-    # no arguments, uses the configured default model.
+    # +model:+, +provider:+, +protocol:+, +assume_model_exists:+, and
+    # +context:+. With no arguments, uses the configured default model.
     #
     #   chat = RubyLLM.chat
     #   chat.ask "What is the capital of France?"

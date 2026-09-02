@@ -6,7 +6,7 @@ module RubyLLM
   # from the registry through RubyLLM.models and from Chat#model.
   #
   #   model = RubyLLM.models.find('gpt-5.6')
-  #   model.name              # => "GPT-5.4"
+  #   model.name              # => "GPT-5.6"
   #   model.provider          # => "openai"
   #   model.context_window    # => 1050000
   #   model.supports?(:vision) # => true
@@ -17,7 +17,7 @@ module RubyLLM
     # The provider's identifier for the model, e.g. <tt>"gpt-5.6"</tt>.
     attr_reader :id
 
-    # The human-readable model name, e.g. <tt>"GPT-5.4"</tt>.
+    # The human-readable model name, e.g. <tt>"GPT-5.6"</tt>.
     attr_reader :name
 
     # The provider slug as a String, e.g. <tt>"openai"</tt>.
@@ -111,7 +111,7 @@ module RubyLLM
     end
 
     # Returns the provider display name and model name combined,
-    # e.g. <tt>"OpenAI - GPT-5.4"</tt>.
+    # e.g. <tt>"OpenAI - GPT-5.6"</tt>.
     def label
       provider_name = provider_class&.display_name || provider
       "#{provider_name} - #{name}"
