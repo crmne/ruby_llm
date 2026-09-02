@@ -481,8 +481,17 @@ module RubyLLM
         RubyLLM.models.find(@pending_model_id, @pending_provider, config: context&.config)
       end
 
+      # An empty store would otherwise hold only this chat's model on the next
+      # boot, since the registry reads whatever the store returns.
+      def load_model_registry_into_store
+        RubyLLM::ActiveRecord::Model.save_to_database(RubyLLM.models)
+      rescue ::ActiveRecord::RecordInvalid, ::ActiveRecord::RecordNotUnique
+        nil
+      end
+
       def find_or_create_model(model_info)
         attributes = { model_id: model_info.id, provider: model_info.provider }
+        load_model_registry_into_store if RubyLLM::ActiveRecord::Model.none?
 
         RubyLLM::ActiveRecord::Model.find_or_create_by!(attributes) do |record|
           record.name = model_info.name || model_info.id

@@ -90,6 +90,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe 'model assignment' do
+    it 'fills an empty model store with the registry before adding the first chat' do
+      allow(RubyLLM::ActiveRecord::Model).to receive(:none?).and_return(true)
+      allow(RubyLLM::ActiveRecord::Model).to receive(:save_to_database).and_call_original
+
+      Chat.create!(model: model_id)
+
+      expect(RubyLLM::ActiveRecord::Model).to have_received(:save_to_database).with(RubyLLM.models)
+    end
+
     it 'accepts a RubyLLM::Model value' do
       chat = Chat.new
       chat.model = RubyLLM.models.find(model_id)
