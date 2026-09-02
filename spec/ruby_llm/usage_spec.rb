@@ -59,6 +59,23 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
     expect(result.cost.total).to be_positive
   end
 
+  it 'prices against the requested model when the provider echoes an unregistered id' do
+    tracker = RubyLLM.const_get(:Usage)::Tracker.new(
+      operation: :chat,
+      provider: provider,
+      model: RubyLLM.models.find('gpt-4.1-nano'),
+      config: RubyLLM.config
+    )
+    entry = tracker.start
+    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: 'gpt-4.1-nano-2099-01-01',
+                                  input_tokens: 10, output_tokens: 4)
+
+    tracker.succeed(result)
+
+    expect(entry.cost.total).to be_positive
+    expect(result.cost.total).to eq(entry.cost.total)
+  end
+
   it 'keeps tokens unknown for attempts that may have been billed' do
     tracker = build_tracker
     entry = tracker.start

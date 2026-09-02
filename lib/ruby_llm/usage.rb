@@ -206,7 +206,8 @@ module RubyLLM
       end
 
       def finish(entry, status:, tokens:, **details)
-        cost = details[:cost] || Cost.new(
+        supplied = details[:cost]
+        cost = (supplied if supplied&.total) || Cost.new(
           tokens:,
           model: @model_info,
           category: CATEGORY_BY_OPERATION.fetch(@operation)
