@@ -75,7 +75,7 @@ module RubyLLM
         budget = model.reasoning_option(:budget_tokens)
         return { budget: 0 } if budget && budget[:min].is_a?(Numeric) && budget[:min] <= 0
 
-        { enabled: false } if model.reasoning_option(:toggle)
+        { enabled: false } if model.reasoning_option(:toggle) || budget
       end
 
       private

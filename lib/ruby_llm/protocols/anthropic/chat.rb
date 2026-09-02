@@ -89,7 +89,7 @@ module RubyLLM
             max_tokens: model.max_output_tokens || 4096
           }
 
-          add_thinking_fields(payload, thinking)
+          add_thinking_fields(payload, thinking, model)
 
           payload
         end
@@ -454,8 +454,8 @@ module RubyLLM
           end
         end
 
-        def add_thinking_fields(payload, thinking)
-          thinking_payload = build_thinking_payload(thinking)
+        def add_thinking_fields(payload, thinking, model)
+          thinking_payload = build_thinking_payload(thinking, model, payload[:max_tokens])
           return unless thinking_payload
 
           payload[:thinking] = thinking_payload[:thinking] if thinking_payload[:thinking]
@@ -464,7 +464,7 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(thinking_payload[:output_config])
         end
 
-        def build_thinking_payload(thinking)
+        def build_thinking_payload(thinking, model, max_tokens)
           return nil unless thinking&.enabled?
           return { thinking: { type: 'disabled' } } if thinking.enabled == false
 
@@ -472,26 +472,46 @@ module RubyLLM
           return nil if effort == 'none'
 
           payload = {}
-          mode = thinking_mode(thinking)
+          mode = thinking_mode(thinking, model, effort, max_tokens)
           payload[:thinking] = mode if mode
           payload[:output_config] = { effort: effort } if effort
           payload
         end
 
-        # The thinking block is where a budget and a display setting live, and
-        # adaptive is the only type Anthropic accepts without a budget. Effort
-        # is a separate parameter, so it never picks a type.
-        def thinking_mode(thinking)
+        # Effort alone never turns thinking on: Claude needs a thinking block.
+        # Generations that take a budget get one sized from the effort, the
+        # way Bedrock publishes the levels; generations without a budget
+        # option think adaptively.
+        def thinking_mode(thinking, model, effort, max_tokens)
           return { type: 'adaptive' } if thinking.enabled == true
-          return nil unless thinking.budget || thinking.display
 
-          mode = if thinking.budget
-                   { type: 'enabled', budget_tokens: thinking.budget }
-                 else
+          budget = thinking.budget || effort_budget(effort, model, max_tokens)
+          mode = if budget
+                   { type: 'enabled', budget_tokens: budget }
+                 elsif adaptive_thinking?(thinking, effort, model)
                    { type: 'adaptive' }
                  end
-          mode[:display] = thinking.display if thinking.display
+          mode[:display] = thinking.display if mode && thinking.display
           mode
+        end
+
+        EFFORT_BUDGETS = { 'low' => 1024, 'medium' => 40_000, 'high' => 63_999 }.freeze
+
+        def adaptive_thinking?(thinking, effort, model)
+          return true if thinking.display
+          return false unless effort
+
+          model.reasoning_option(:effort) && !model.reasoning_option(:budget_tokens)
+        end
+
+        def effort_budget(effort, model, max_tokens)
+          return nil unless effort && model.reasoning_option(:budget_tokens)
+
+          budget = EFFORT_BUDGETS.fetch(effort, EFFORT_BUDGETS['high'])
+          minimum = [model.reasoning_option(:budget_tokens)[:min].to_i, 1].max
+          return [budget, minimum].max unless max_tokens
+
+          budget.clamp(minimum, [max_tokens - 1, minimum].max)
         end
 
         def resolve_effort(thinking)

@@ -411,25 +411,51 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(payload).not_to have_key(:output_config)
     end
 
-    it 'sends effort as output_config without a thinking type' do
+    it 'turns on adaptive thinking beside effort on generations without a budget' do
       payload = render_payload(
         model_id: 'claude-opus-4-7',
         thinking: RubyLLM::Thinking::Config.new(effort: :xhigh),
         reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
       )
 
-      expect(payload).not_to have_key(:thinking)
+      expect(payload[:thinking]).to eq(type: 'adaptive')
       expect(payload[:output_config]).to eq(effort: 'xhigh')
     end
 
-    it 'sends effort the registry does not advertise' do
+    it 'sizes a budget from the effort on generations that take one' do
       payload = render_payload(
-        model_id: 'claude-sonnet-4-5',
+        model_id: 'claude-opus-4-5',
         thinking: RubyLLM::Thinking::Config.new(effort: :medium),
+        reasoning_options: [effort_option(:low, :medium, :high), budget_option]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 4095)
+      expect(payload[:output_config]).to eq(effort: 'medium')
+    end
+
+    it 'keeps the effort budget under max_tokens and above the minimum' do
+      low = render_payload(
+        model_id: 'claude-sonnet-4-5',
+        thinking: RubyLLM::Thinking::Config.new(effort: :low),
         reasoning_options: [budget_option]
       )
 
-      expect(payload).not_to have_key(:thinking)
+      expect(low[:thinking]).to eq(type: 'enabled', budget_tokens: 1024)
+      expect(low[:output_config]).to eq(effort: 'low')
+    end
+
+    it 'resolves a bare with_thinking to a request Claude honors' do
+      model = RubyLLM::Model.new(
+        id: 'claude-opus-4-8',
+        provider: 'anthropic',
+        metadata: { reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)] }
+      )
+      thinking = RubyLLM::Thinking::Config.default.resolve(model)
+
+      payload = render_payload(model_id: 'claude-opus-4-8', thinking: thinking,
+                               reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)])
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
       expect(payload[:output_config]).to eq(effort: 'medium')
     end
 
@@ -634,26 +660,31 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
   describe '.build_thinking_payload' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+    let(:model) { RubyLLM::Model.new(id: 'claude-3-haiku', provider: 'anthropic') }
 
-    it 'is nil when thinking is off or explicitly none' do
-      expect(protocol.send(:build_thinking_payload, nil)).to be_nil
-      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
+    def build(thinking)
+      protocol.send(:build_thinking_payload, thinking, model, 4096)
     end
 
-    it 'keeps effort out of the thinking type' do
-      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :high))).to eq(
+    it 'is nil when thinking is off or explicitly none' do
+      expect(build(nil)).to be_nil
+      expect(build(RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
+    end
+
+    it 'sends effort alone when the registry lists no thinking controls' do
+      expect(build(RubyLLM::Thinking::Config.new(effort: :high))).to eq(
         output_config: { effort: 'high' }
       )
     end
 
     it 'keeps a budget out of output_config' do
-      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(budget: 1024))).to eq(
+      expect(build(RubyLLM::Thinking::Config.new(budget: 1024))).to eq(
         thinking: { type: 'enabled', budget_tokens: 1024 }
       )
     end
 
     it 'asks for adaptive thinking to carry a display without a budget' do
-      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(display: :summarized))).to eq(
+      expect(build(RubyLLM::Thinking::Config.new(display: :summarized))).to eq(
         thinking: { type: 'adaptive', display: 'summarized' }
       )
     end
