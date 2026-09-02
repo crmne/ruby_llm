@@ -48,6 +48,15 @@ RSpec.describe RubyLLM::Inspectable do
     expect(embedding.inspect).to eq('#<RubyLLM::Embedding model: "text-embedding-3-small", dimensions: 1536>')
   end
 
+  it 'summarizes a Rerank as its model and result count' do
+    rerank = RubyLLM::Rerank.new(
+      results: [RubyLLM::Rerank::Result.new(index: 0, document: 'Ruby', score: 0.9)],
+      model: 'rerank-v3.5'
+    )
+
+    expect(rerank.inspect).to eq('#<RubyLLM::Rerank model: "rerank-v3.5", results: 1>')
+  end
+
   it 'omits empty attributes' do
     empty = RubyLLM::Message.new(role: :user, content: '')
 

@@ -55,6 +55,10 @@ module RubyLLM
       nil
     end
 
+    def inspect_attributes # :nodoc:
+      { model: model, results: results.length }
+    end
+
     # Ranks +documents+ (an array of strings) by relevance to +query+ and
     # returns a Rerank. +model:+ is required; rerank catalogs are
     # provider-specific and have no cross-provider default. +top_n:+
