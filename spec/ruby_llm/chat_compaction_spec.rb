@@ -34,7 +34,11 @@ RSpec.describe RubyLLM::Chat do
 
     it 'rejects nil' do
       expect { RubyLLM.chat.with_compaction(nil) }
-        .to raise_error(ArgumentError, /accepts false or compaction options/)
+        .to raise_error(ArgumentError, /accepts true, false, or compaction options/)
+    end
+
+    it 'treats true like a bare call' do
+      expect(RubyLLM.chat.with_compaction(true).compaction).to eq({})
     end
 
     it 'names the portable options when given one it does not have' do

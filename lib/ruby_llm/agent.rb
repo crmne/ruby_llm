@@ -250,8 +250,9 @@ module RubyLLM
       #   compaction at: 50_000
       #
       def compaction(options = {})
+        options = {} if options == true
         unless options == false || options.is_a?(Hash)
-          raise ArgumentError, 'compaction accepts false or compaction options'
+          raise ArgumentError, 'compaction accepts true, false, or compaction options'
         end
 
         @compaction = options

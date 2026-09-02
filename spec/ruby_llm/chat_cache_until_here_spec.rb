@@ -71,7 +71,11 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'rejects nil' do
       expect { RubyLLM.chat.with_caching(nil) }
-        .to raise_error(ArgumentError, /accepts false or caching options/)
+        .to raise_error(ArgumentError, /accepts true, false, or caching options/)
+    end
+
+    it 'treats true like a bare call' do
+      expect(RubyLLM.chat.with_caching(true).caching).to eq({})
     end
 
     it 'renders OpenAI prompt cache controls as request params' do

@@ -506,8 +506,9 @@ module RubyLLM
     #   chat.with_caching(false)
     #
     def with_caching(options = {})
+      options = {} if options == true
       unless options == false || options.is_a?(Hash)
-        raise ArgumentError, 'with_caching accepts false or caching options'
+        raise ArgumentError, 'with_caching accepts true, false, or caching options'
       end
 
       @caching = options == false ? false : options.transform_keys(&:to_sym).freeze
@@ -539,8 +540,9 @@ module RubyLLM
     # replaces it; OpenRouter drops messages from the middle of the
     # conversation instead, and has no threshold of its own.
     def with_compaction(options = {})
+      options = {} if options == true
       unless options == false || options.is_a?(Hash)
-        raise ArgumentError, 'with_compaction accepts false or compaction options'
+        raise ArgumentError, 'with_compaction accepts true, false, or compaction options'
       end
 
       @compaction = options == false ? false : normalize_compaction(options)
