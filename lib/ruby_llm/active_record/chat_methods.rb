@@ -613,12 +613,24 @@ module RubyLLM
       end
 
       def replace_persisted_system_instructions(instructions, cache_until_here:)
-        clear_persisted_system_instructions
-        messages_association.create!(
-          role: :system,
-          content: instructions,
-          cache_until_here: cache_until_here
-        )
+        existing = messages_association.where(role: :system).order(:id).to_a
+        if existing.one?
+          update_persisted_system_instruction(existing.first, instructions, cache_until_here:)
+        else
+          clear_persisted_system_instructions
+          messages_association.create!(role: :system, content: instructions, cache_until_here: cache_until_here)
+        end
+      end
+
+      # Rewriting the same instructions every turn would move the system row
+      # behind the user messages and rebroadcast it each time.
+      def update_persisted_system_instruction(record, instructions, cache_until_here:)
+        attributes = { content: instructions }
+        attributes[:cache_until_here] = cache_until_here if record.has_attribute?(:cache_until_here)
+        changed = attributes.any? { |column, value| record[column] != value }
+        record.update!(attributes) if changed
+        messages_association.reset
+        record
       end
 
       def persist_system_instruction(instructions, append:, cache_until_here:)

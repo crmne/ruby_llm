@@ -195,6 +195,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.messages.where(role: 'system').pluck(:content)).to eq(['Be terse'])
     end
 
+    it 'keeps the system row in place ahead of the conversation' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Be concise')
+      system_id = chat.messages.find_by(role: 'system').id
+      chat.add_message(role: :user, content: 'Hello')
+
+      chat.with_instructions('Be concise')
+      chat.with_instructions('Be terse')
+
+      expect(chat.messages.find_by(role: 'system').id).to eq(system_id)
+      expect(chat.messages.pluck(:role, :content)).to eq([['system', 'Be terse'], %w[user Hello]])
+    end
+
     it 'appends when asked' do
       chat = Chat.create!(model: model_id)
 
