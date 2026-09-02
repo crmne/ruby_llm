@@ -100,7 +100,7 @@ This is particularly useful when:
 - Ensuring consistent dimensionality across different requests
 - Optimizing storage and query performance in your vector database
 
-Note that not all models support custom dimensions. If you specify dimensions that aren't supported by the chosen model, RubyLLM will use the model's default dimensions.
+Not every model takes custom dimensions. RubyLLM sends the value you set, so a model that does not support it rejects the request with the provider's own error (Mistral's `mistral-embed`, for example, returns a 400). Leave `dimensions:` out for those models.
 
 ## Task Types
 

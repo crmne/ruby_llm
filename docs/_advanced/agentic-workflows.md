@@ -149,7 +149,7 @@ end
 SPECIALISTS = { "billing" => BillingAgent, "technical" => TechnicalAgent }
 
 def handle(chat_id, message)
-  specialist = SupportRouter.new.ask(message).content["specialist"]
+  specialist = SupportRouter.new.ask(message).parsed["specialist"]
   SPECIALISTS.fetch(specialist).find(chat_id).ask(message)
 end
 ```
@@ -310,7 +310,7 @@ class EvaluatorOptimizerWorkflow
   private
 
   def review(task:, draft:)
-    result = CriticAgent.new.ask("Task:\n#{task}\n\nDraft:\n#{draft}").content
+    result = CriticAgent.new.ask("Task:\n#{task}\n\nDraft:\n#{draft}").parsed
     [result.fetch("verdict"), result.fetch("feedback")]
   end
 

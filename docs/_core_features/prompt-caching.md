@@ -53,7 +53,7 @@ chat = RubyLLM.chat(model: 'gpt-5.6').with_caching(
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}').with_caching(ttl: "1h")
 ```
 
-OpenAI-compatible Chat Completions and Responses accept `key:`, `ttl:`, and `mode:` (`"implicit"` or `"explicit"`). The old `retention:` option is deprecated; RubyLLM translates it into `prompt_cache_options` and logs a warning. Mistral accepts `key:`. Anthropic, OpenRouter, and Bedrock Converse accept `ttl:`.
+OpenAI-compatible Chat Completions and Responses accept `key:`, `ttl:`, and `mode:` (`"implicit"` or `"explicit"`). The old `retention:` option is deprecated; RubyLLM translates it into `prompt_cache_options` and logs a warning. OpenAI accepts `prompt_cache_options` and explicit boundaries only on models that support prompt cache controls: `gpt-5.6` does, while `gpt-5.4-nano` and `gpt-4.1-nano` reject them with a 400, so keep these options on chats pinned to a model that takes them. Mistral accepts `key:`. Anthropic, OpenRouter, and Bedrock Converse accept `ttl:`.
 
 If you switch to a provider that needs different caching options, call `with_caching` again. It replaces the previous cache policy:
 

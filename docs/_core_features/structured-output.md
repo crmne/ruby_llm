@@ -65,6 +65,9 @@ puts response.content # => '{"name":"Alice","age":30}'
 Schematist schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
 {: .note }
 
+OpenAI's strict mode requires every property to be listed in `required`. RubyLLM sends `strict: true` when your schema meets that requirement and `strict: false` when it declares optional properties, like `city` above, so the request is accepted either way. To keep strict validation with an optional field, make it required and allow `null` as a value (a string or null union), which is the shape OpenAI's strict mode expects.
+{: .note }
+
 ### Using Manual JSON Schemas
 
 If you prefer not to use Schematist, you can provide a JSON Schema directly:
@@ -148,10 +151,14 @@ end
 
 ### Provider Support
 
-Not all models support structured output. Currently supported:
-- **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
-- **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
-- **Gemini**: every model Google still serves
+Not every model supports structured output. Ask the registry before you rely on it:
+
+```ruby
+RubyLLM.models.find('{{ site.models.default_chat }}').supports?(:structured_output) # => true
+RubyLLM.models.chat_models.select { |model| model.supports?(:structured_output) }
+```
+
+Current OpenAI, Anthropic, and Gemini chat models support it; Ollama Cloud does not.
 
 Gemini takes your schema as JSON Schema, so keywords such as `anyOf`, `pattern`, `minLength`, `const`, `oneOf`, `$ref` and `additionalProperties` reach the model as you wrote them.
 {: .note }

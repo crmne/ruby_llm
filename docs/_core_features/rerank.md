@@ -95,7 +95,7 @@ Self-hosted rerankers work through GPUStack, and OpenRouter serves several vendo
 
 ## Cost and Usage
 
-Reranking bills for the tokens it reads, and lands in the same usage ledger as chat and embeddings:
+Reranking lands in the same usage ledger as chat and embeddings. Providers that bill per token report the count they read; Cohere bills per search unit instead, so `tokens.input` and `cost.total` are `nil` there and the charge lives in your provider invoice:
 
 ```ruby
 rerank = RubyLLM.rerank(query, documents, model: "rerank-v3.5")

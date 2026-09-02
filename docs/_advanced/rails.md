@@ -92,7 +92,7 @@ Each part of Rails integration has its own focused guide:
 *   [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - broadcast tokens in real time with Turbo Streams and background jobs.
 *   [Durable Agents]({% link _advanced/durable-agents.md %}) - run each agent turn as its own job, survive deploys with ActiveJob Continuations, and park for human approval.
 *   [Generators and App Conventions]({% link _advanced/rails-generators.md %}) - the install and chat UI generators, view conventions, and the conventional app directory structure.
-*   [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}) - provider overrides, custom contexts, raw provider payloads, and fiber-safe connections.
+*   [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}) - provider overrides, custom contexts, request hooks, and fiber-safe connections.
 
 ## Next Steps
 

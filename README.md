@@ -34,7 +34,7 @@ https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345
 
 Every AI provider ships their own bloated client. Different APIs. Different response formats. Different conventions. It's exhausting.
 
-RubyLLM gives you one beautiful framework for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. Just three dependencies: Faraday, Zeitwerk, and Marcel. That's it.
+RubyLLM gives you one beautiful framework for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. A handful of small dependencies, no heavyweight abstractions.
 
 ## Show me the code
 
@@ -152,11 +152,19 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Reranking:** Order retrieval candidates by relevance with `RubyLLM.rerank`
 * **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
+* **Tool approval:** Park a run until a human approves with `requires_approval`
+* **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
 * **Server tools:** Web search, code execution, and MCP connectors with `with_server_tools`
 * **Agents:** Reusable assistants with `RubyLLM::Agent`
+* **Prompt templates:** ERB prompts in `app/prompts`, rendered with `RubyLLM.render_prompt`
+* **Workflows:** Correlate multi-agent runs in your telemetry with `RubyLLM.workflow`
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
+* **Files:** Upload once and reuse across chats with `RubyLLM.upload`
+* **Prompt caching:** Turn on the provider's cache with `with_caching` and `cache_until_here`
+* **Fallbacks and cancellation:** Retry on backup models with `with_fallbacks`, stop a run with `cancel`
+* **Cost tracking:** A per-attempt usage ledger behind `chat.tokens` and `chat.cost`
 * **Async:** Fiber-based concurrency
 * **Model registry:** 1400+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
@@ -188,7 +196,7 @@ end
 # Install Rails Integration
 bin/rails generate ruby_llm:install
 bin/rails db:migrate
-bin/rails ruby_llm:load_models # v1.13+
+bin/rails ruby_llm:load_models
 
 # Add Chat UI (optional)
 bin/rails generate ruby_llm:chat_ui

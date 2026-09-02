@@ -82,12 +82,14 @@ class DocumentSearch < RubyLLM::Tool
       distance: "euclidean"
     ).limit(3)
 
-    documents.map do |doc|
-      "#{doc.title}: #{doc.content.truncate(500)}"
-    end.join("\n\n---\n\n")
+    RubyLLM::SearchResults.new(
+      *documents.map { |doc| { title: doc.title, text: doc.content.truncate(500) } }
+    )
   end
 end
 ```
+
+Returning `RubyLLM::SearchResults` instead of a joined string lets the model cite each document it used; see [Citing Tool Results]({% link _core_features/citations.md %}#citing-tool-results-rag).
 
 ## Answering Agent
 

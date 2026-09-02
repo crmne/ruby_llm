@@ -117,6 +117,7 @@ Want conversations saved to your database? One generator sets up Chat and Messag
 ```bash
 bin/rails generate ruby_llm:install
 bin/rails db:migrate
+bin/rails ruby_llm:load_models
 ```
 
 ```ruby

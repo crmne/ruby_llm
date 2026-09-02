@@ -35,7 +35,6 @@ The generator:
 - Creates one migration for RubyLLM's internal model, tool-call, usage, and batch tables
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs ActiveStorage for file attachments
-- Configures the database model registry
 - Creates an initializer with sensible defaults
 - Creates conventional AI app directories
 
@@ -130,6 +129,8 @@ What each generator creates:
 - `ruby_llm:agent`: `app/agents/support_agent.rb` and `app/prompts/support_agent/instructions.txt.erb`
 - `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
+
+`ruby_llm:chat_ui` and `ruby_llm:tool` take `--ui scaffold`, `--ui tailwind`, or the default `--ui auto`, which picks Tailwind when your app has it. Apps coming from 1.16 run `ruby_llm:upgrade` instead of `ruby_llm:install`; see [Upgrading]({% link _reference/upgrading.md %}).
 
 If your chat UI uses a custom message model, pass the same mapping you gave `ruby_llm:chat_ui` so the partials land where the UI looks for them:
 

@@ -123,7 +123,7 @@ chat.tokens.input         # includes retries and cancelled attempts
 chat.cost.total           # includes retries and cancelled attempts
 ```
 
-An internal entry links to its resulting message when one exists. A failed retry or cancelled generation can remain linked only to the chat. Per-attempt details are available through `usage.ruby_llm` instrumentation rather than a second public usage API.
+An internal entry links to its resulting message when one exists. A failed retry or cancelled generation can remain linked only to the chat. `acts_as_chat` and `acts_as_message` add a `ruby_llm_usages` association over those rows (`provider`, `model`, `status`, the token buckets, and `total_cost`), so you can sum spend in SQL; per-attempt events also arrive through `usage.ruby_llm` instrumentation, and the value objects stay `chat.tokens` and `chat.cost`.
 
 Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the upgrade generator moves 1.16 message tokens into it before removing the old columns.
 
@@ -205,8 +205,9 @@ class PersonSchema < Schematist::Schema
 end
 
 response = chat.with_schema(PersonSchema).ask("Generate a person")
-response.content                 # parsed Hash
-JSON.parse(chat.messages.last.content)
+response.parsed                  # => {"name" => "Ada", "age" => 36}
+response.content                 # => '{"name":"Ada","age":36}', what the row stores
+chat.messages.last.parsed        # the same Hash, read back from the record
 ```
 
 ## Separate User and LLM Transcripts

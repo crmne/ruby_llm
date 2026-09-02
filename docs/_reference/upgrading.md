@@ -103,6 +103,8 @@ bundle update ruby_llm
 bin/rails generate ruby_llm:upgrade
 ```
 
+The initializer that 1.16 wrote sets `config.use_new_acts_as`, and older apps may set `config.model_registry_class`. 2.0 ignores both with a deprecation warning so the app boots long enough to run the generator; remove the two lines once you are on 2.0.
+
 Pass every application model that uses a non-default name. The generator accepts `chat`, `message`, `model`, and `tool_call` mappings, including namespaced classes:
 
 ```bash
@@ -115,7 +117,7 @@ bin/rails generate ruby_llm:upgrade \
 
 The command prints the resolved classes and tables before writing anything. It rejects unknown, incomplete, and duplicate mappings, so a typo cannot silently send an irreversible migration to the default table.
 
-Review the generated migrations and rehearse them before production. When the maintenance window begins, stop every process that can write chats, run `bin/rails db:migrate`, deploy and boot 2.0, run `bin/rails ruby_llm:load_models`, then restore traffic. The data migration reads messages in batches of 10,000 and avoids duplicating usage rows when it resumes. These are maintenance-window migrations, not zero-downtime compatibility code.
+Review the generated migrations and rehearse them before production. When the maintenance window begins, stop every process that can write chats, run `bin/rails db:migrate`, deploy and boot 2.0, run `bin/rails ruby_llm:load_models` (loads the registry snapshot packaged with the gem, no network needed; `RubyLLM.models.refresh` fetches and persists the live one), then restore traffic. The data migration reads messages in batches of 10,000 and avoids duplicating usage rows when it resumes. These are maintenance-window migrations, not zero-downtime compatibility code.
 
 The generated migrations:
 
@@ -151,10 +153,11 @@ Grep for each pattern on the left; the sections below the table explain the reas
 | `halt`, `Tool::Halt` | the loop verbs (`step`, `complete?`) or [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval) |
 | `with_tool(`, `with_tools(..., choice:` | `with_tools` for the set, `with_tool_options(choice:, calls:, concurrency:)` for the steering |
 | Tool `desc `, `param :`, `params do` | `description`, `parameter`, `parameters` |
+| `RubyLLM.models.refresh!`, `load_from_json!`, `load_from_database!`, `Model.refresh!` | `RubyLLM.models.refresh`, `load_from_json`, `load_from_store`; the registry has no application model |
 
 ### 5. Boot, run your suite, and fix the UI edges
 
-If you previously generated the Chat UI, update or regenerate its models controller and model views so they read `RubyLLM.models`, and its tool-call partial so it iterates `message.tool_calls.each_value` (the Hash is keyed by tool-call id, and the persisted records are `message.ruby_llm_tool_calls`). Rails' `dom_id` does not work on RubyLLM's internal tool-call records; build the id string yourself. The upgrade generator reports the exact generated files it detects.
+If you previously generated the Chat UI, update or regenerate its models controller and model views so they read `RubyLLM.models`, and its tool-call partial so it iterates `message.tool_calls.each_value` (the Hash is keyed by tool-call id, and the persisted records are `message.ruby_llm_tool_calls`). Rails' `dom_id` does not work on RubyLLM's internal tool-call records; build the id string yourself. `bin/rails generate ruby_llm:chat_ui --force` regenerates every chat UI file at once.
 
 ### 6. Verify the money before you trust it
 
@@ -242,6 +245,7 @@ Scan the table for anything your app uses, then read its section below.
 | `config.model_registry_source` | `config.model_registry_store` |
 | `RubyLLM::ModelRegistry::JsonSource`, `RubyLLM::ModelRegistry::ActiveRecordSource` | `config.model_registry_file`, or a `model_registry_store` object; Rails configures its store automatically |
 | `RubyLLM.models.load_from_database!` | `RubyLLM.models.load_from_store` |
+| `RubyLLM.models.refresh!`, `RubyLLM.models.load_from_json!` | `RubyLLM.models.refresh`, `RubyLLM.models.load_from_json` |
 | `on_new_message`, `on_end_message` | `before_message`, `after_message` |
 | `on_tool_call`, `on_tool_result` | `before_tool_call`, `after_tool_result` |
 | `with_instructions(text, replace: true)` | `with_instructions(text)` replaces by default |
@@ -375,7 +379,7 @@ Cache naming is `cache_read` / `cache_write` everywhere. The `cached_input*` / `
 
 ### One Model API
 
-`RubyLLM::Model::Info` is now simply `RubyLLM::Model`, and model metadata has one name per fact:
+`RubyLLM::Model::Info` is now `RubyLLM::Model`, and model metadata has one name per fact:
 
 ```ruby
 model.display_name                        # before

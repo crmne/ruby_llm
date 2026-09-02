@@ -89,7 +89,7 @@ context = RubyLLM.context do |config|
 end
 chat = context.chat  # Uses context configuration
 
-chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}", temperature: 0.7)
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}").with_temperature(0.7)
 ```
 
 This layered approach supports everything from simple scripts to complex multi-tenant applications.
@@ -109,7 +109,8 @@ Simple things should be simple, and complex things should be possible. Basic cha
 ```ruby
 response = RubyLLM.chat.ask("Hello")
 
-chat = RubyLLM.chat(model: "{{ site.models.default_chat }}", temperature: 0.2)
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
+  .with_temperature(0.2)
   .with_instructions("You are a helpful assistant")
   .with_tools(DatabaseQuery)
   .with_schema(ResponseFormat)
@@ -182,7 +183,7 @@ conversation = Conversation.create!(model: "{{ site.models.default_chat }}")
 response = conversation.ask("How can I help you today?")
 ```
 
-The Rails integration handles persistence, associations, and real-time updates through Action Cable.
+The Rails integration handles persistence, associations, and streaming through Turbo Streams.
 
 ## Next Steps
 

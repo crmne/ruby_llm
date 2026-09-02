@@ -63,7 +63,7 @@ puts response.content
 
 Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
 
-Only Google Gemini and VertexAI models currently support video input.
+Gemini, Vertex AI, and Bedrock Converse (Nova) models accept video input.
 
 Large video files may be uploaded through the provider Files API when the selected provider supports stored file references in chat.
 {: .note }

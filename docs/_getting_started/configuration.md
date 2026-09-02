@@ -70,6 +70,9 @@ Defaults if not configured:
 - Images: `{{ site.models.default_image }}`
 - Videos: `grok-imagine-video-1.5`
 - Speech: `{{ site.models.default_speech }}`
+- Moderation: `omni-moderation-latest`
+- Transcription: `gpt-transcribe`
+- OCR: `mistral-ocr-latest`
 
 ## Rails Integration
 
@@ -113,6 +116,8 @@ RubyLLM.configure do |config|
   config.bedrock_credential_provider = Object # Aws::CredentialProvider
   config.bedrock_api_base = String
   config.bedrock_mantle_api_base = String
+  config.bedrock_batch_s3_uri = String   # s3://bucket/prefix for batches and large attachments
+  config.bedrock_batch_role_arn = String # IAM role Bedrock assumes to run batch jobs
 
   # Cohere
   config.cohere_api_key = String
@@ -173,6 +178,7 @@ RubyLLM.configure do |config|
   config.vertexai_location = String     # e.g., 'us-central1'
   config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
   config.vertexai_api_base = String
+  config.vertexai_batch_gcs_uri = String # gs://bucket/prefix for batches and large attachments
 
   # xAI
   config.xai_api_key = String

@@ -94,6 +94,9 @@ For detailed documentation, examples, and usage guides, visit the [RubyLLM::MCP 
 
 [`RubyLLM::Instrumentation`](https://github.com/sinaptia/ruby_llm-instrumentation) is a Rails plugin that instruments RubyLLM events with the built-in [ActiveSupport::Notifications](https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html) API.
 
+RubyLLM 2.0 emits these events itself; see [Instrumentation]({% link _advanced/instrumentation.md %}). This gem is for applications still on 1.x.
+{: .note }
+
 ### Why Use RubyLLM::Instrumentation?
 
 When building LLM applications, you may need custom monitoring, analytics, or logging pipelines based on your RubyLLM activity.

@@ -85,7 +85,7 @@ Valid values:
 - `:one`
 - `1`
 
-If `calls` is not provided, RubyLLM uses provider/model defaults, which are usually equivalent to `calls: :many`.
+If `calls` is not provided, RubyLLM uses provider/model defaults, which are usually equivalent to `calls: :many`. OpenAI and Anthropic honor `calls: :one`; Gemini has no equivalent request field and may still return several calls in one turn.
 
 > Tool choice and call-count controls are provider/model dependent.
 {: .note }
@@ -155,7 +155,7 @@ The block never runs at class definition. The loop consults it whenever it needs
 
 With `acts_as_chat`, decisions persist on RubyLLM's tool call records, so the loop can park in one process and resume in another. A worker restart while a call is pending does not ask again; the next `complete` finds the same undecided call and stays parked. On a record, `chat.pending_approvals` returns the persisted tool call records awaiting a decision, ready to render as approval cards with their names and arguments.
 
-The flow: the controller stages the message and enqueues a job; the job runs `complete`, which parks; your UI renders an approval card; the decision controller records the verdict and enqueues the job again.
+The flow: the controller stages the message and enqueues a job; the job runs `complete`, which parks; your UI renders an approval card; the decision controller records the verdict and enqueues the job again. The job loads the chat through the agent class, because a bare `Chat.find` has no tools registered and cannot tell an approval-gated call from any other.
 
 ```ruby
 class MessagesController < ApplicationController
@@ -176,7 +176,7 @@ end
 
 class CompleteJob < ApplicationJob
   def perform(chat_id)
-    Chat.find(chat_id).complete
+    SupportAgent.find(chat_id).complete
   end
 end
 ```

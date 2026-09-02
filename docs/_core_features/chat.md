@@ -153,7 +153,7 @@ RubyLLM sends the value you set, unchanged. Until you set one, no temperature go
 
 Not every model accepts one. Reasoning models such as OpenAI's `o` series and `gpt-5-nano`, the OpenAI search preview models, and newer Claude models such as `claude-sonnet-5` reject the parameter or restrict it to a single value, and the list differs from model to model even inside one family. Set a temperature a model rejects and the provider answers with an error, which RubyLLM raises as [`RubyLLM::BadRequestError`]({% link _advanced/error-handling.md %}). RubyLLM does not rewrite or drop your value to hide that error. When a model rejects the parameter, leave it unset and let the model use its default.
 
-For provider-specific request options, wire protocols, raw content blocks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}). For local ERB prompt templates, see [Prompt Rendering]({% link _core_features/prompt-rendering.md %}). For provider-side prompt reuse, see [Prompt Caching]({% link _core_features/prompt-caching.md %}).
+For provider-specific request options, wire protocols, request hooks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}). For local ERB prompt templates, see [Prompt Rendering]({% link _core_features/prompt-rendering.md %}). For provider-side prompt reuse, see [Prompt Caching]({% link _core_features/prompt-caching.md %}).
 
 ## Raw Responses
 
@@ -186,7 +186,7 @@ end
 response.finish_reason # Raw provider value, such as "stop", "max_tokens", or "MAX_TOKENS"
 ```
 
-Provider names differ: OpenAI Chat Completions may return `tool_calls`, Anthropic may return `max_tokens`, Gemini may return `MAX_TOKENS`, and Bedrock may return `stopReason` values such as `end_turn`. Finish reasons describe completed provider responses; failed requests still raise RubyLLM error classes. RubyLLM does not send `finish_reason` back to providers when replaying conversation history.
+Provider names differ: OpenAI Chat Completions may return `tool_calls`, the Responses API reports its `completed` status, Anthropic may return `max_tokens`, Gemini may return `MAX_TOKENS`, and Bedrock may return `stopReason` values such as `end_turn`. The predicates normalize those: a response that carries tool calls answers `tool_call_stop?` and not `stopped?`, whatever the provider named the reason. Finish reasons describe completed provider responses; failed requests still raise RubyLLM error classes. RubyLLM does not send `finish_reason` back to providers when replaying conversation history.
 
 ## Advanced: Replacing the LLM Transcript
 
@@ -210,7 +210,7 @@ This page covers the core `Chat` interface. Each facet of a conversation has its
 * [Citations]({% link _core_features/citations.md %}) - get verifiable answers backed by your documents and web sources.
 * [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) - render reusable ERB templates from `app/prompts`.
 * [Prompt Caching]({% link _core_features/prompt-caching.md %}) - reuse stable prompt prefixes automatically or with explicit boundaries.
-* [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - provider-specific parameters, wire protocols, raw content blocks, and custom headers.
+* [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - provider-specific parameters, wire protocols, request hooks, and custom headers.
 * [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - read per-turn and per-conversation token counts and costs, including retries, cancellations, and provider attempts.
 * [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}) - hook into the chat lifecycle for UI updates, logging, and analytics.
 

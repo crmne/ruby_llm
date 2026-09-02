@@ -391,7 +391,7 @@ bin/rails generate ruby_llm:schema Product
     <p>RubyLLM follows Rails conventions with
       <a href="{% link _advanced/rails-generators.md %}#conventional-directory-structure">conventional directory structures</a>,
       <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage attachments</a>,
-      <a href="{% link _advanced/rails-streaming.md %}#streaming-responses-with-hotwireturbo">Hotwire and Turbo streaming</a>,
+      <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Hotwire and Turbo streaming</a>,
       <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB prompt templates</a>, and
       <a href="{% link _advanced/durable-agents.md %}">durable execution across jobs and deploys</a>.
     </p>

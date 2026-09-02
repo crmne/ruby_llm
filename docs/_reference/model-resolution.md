@@ -24,9 +24,9 @@ After reading this guide, you will know:
 Every entry point that takes a `model:` argument runs the same resolution. `RubyLLM.chat`, `RubyLLM.embed`, and `RubyLLM.paint` all hand the name to the registry, which returns two things: a `RubyLLM::Model` describing the model, and the provider instance that will serve it.
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-opus-4")
-chat.model.id        # => "claude-opus-4-20250514"  (resolved from the alias)
-chat.model.provider  # => "anthropic"               (inferred from the registry)
+chat = RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock)
+chat.model.id        # => "anthropic.claude-haiku-4-5-20251001-v1:0"  (resolved from the alias)
+chat.model.provider  # => "bedrock"
 ```
 
 You gave a name; RubyLLM resolved it to a concrete model and chose a provider. The rest of this guide is the procedure behind that.
@@ -51,6 +51,7 @@ An alias is a stable, friendly name that maps to a provider's exact, versioned m
 {
   "claude-haiku-4-5": {
     "anthropic": "claude-haiku-4-5-20251001",
+    "openrouter": "anthropic/claude-haiku-4.5",
     "bedrock": "anthropic.claude-haiku-4-5-20251001-v1:0",
     "vertexai": "claude-haiku-4-5",
     "azure": "claude-haiku-4-5-20251001"
@@ -79,10 +80,10 @@ Provider preference puts first-party providers ahead of the aggregators that res
 | Cloud platforms | `vertexai`, `bedrock` |
 | Aggregators and local | `openrouter`, `azure`, `ollama_cloud`, `ollama`, `gpustack` |
 
-Preference decides the winner even when another provider has a more literal match. `claude-opus-4` is an exact ID on Vertex AI and an alias on Anthropic, but Anthropic outranks Vertex AI, so a bare `claude-opus-4` resolves to Anthropic:
+Preference decides the winner even when several providers carry the model. `claude-haiku-4-5` is an exact ID on both Anthropic and Vertex AI, and an alias for the longer Bedrock and OpenRouter names, but Anthropic outranks them all, so a bare `claude-haiku-4-5` resolves to Anthropic:
 
 ```ruby
-RubyLLM.chat(model: "claude-opus-4").model.provider  # => "anthropic"
+RubyLLM.chat(model: "claude-haiku-4-5").model.provider  # => "anthropic"
 ```
 
 To pin a different provider, name it:
@@ -160,7 +161,7 @@ chat.model.metadata      # => { warning: "Assuming model exists, capabilities ma
 
 You are responsible for using only the features the model actually supports. The same flag works on `RubyLLM.embed`, `RubyLLM.paint`, and `with_model`.
 
-> Local providers like Ollama and GPUStack assume models exist automatically. You can pull and run any model name without registering it first, and you don't need to pass the flag. Ollama Cloud does the same, because its catalog changes faster than the registry.
+> Local providers like Ollama and GPUStack assume models exist automatically. You can pull and run any model name without registering it first, and you don't need to pass the flag. Ollama Cloud does the same, because its catalog changes faster than the registry, and so does Azure, because deployment names are yours.
 {: .note }
 
 ## When Resolution Fails

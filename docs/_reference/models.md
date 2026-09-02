@@ -29,7 +29,7 @@ In plain Ruby, RubyLLM uses the valid registry in your operating system's user c
 
 The registry stores crucial information about each model, including:
 
-*   **`id`**: The unique identifier used by the provider (e.g., `gpt-4o-2024-08-06`).
+*   **`id`**: The unique identifier used by the provider (e.g., `gpt-5.6`).
 *   **`provider`**: The source provider (`openai`, `anthropic`, etc.).
 *   **`type`**: The model's primary function (`chat`, `embedding`, etc.).
 *   **`name`**: A human-friendly name.
@@ -144,12 +144,12 @@ end
 Or migrate the records once, after a refresh:
 
 ```ruby
-Chat.where(model_id: 'claude-3-opus-20240229').find_each do |chat|
+Chat.joins(:model).where(ruby_llm_models: { model_id: 'claude-3-opus-20240229' }).find_each do |chat|
   chat.with_model('claude-opus-4-5')
 end
 ```
 
-For a chat that should survive on its own, configure fallbacks so the request moves to the next model instead of raising. See [Advanced Request Control]({% link _core_features/chat-request-control.md %}).
+For a chat that should survive on its own, configure fallbacks so the request moves to the next model instead of raising. See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
 
 In Rails, a refresh deletes the rows for the models the provider no longer lists. A row one of your chats points at cannot go: the chat's foreign key holds it there. RubyLLM keeps that row, stamps it with `unlisted_at`, and logs one warning per refresh naming the models it kept.
 
@@ -229,12 +229,12 @@ puts "Context Window: #{model_info.context_window} tokens"
 
 ### Model Aliases
 
-RubyLLM uses aliases (defined in `lib/ruby_llm/aliases.json`) for convenience, mapping common names to specific versions.
+RubyLLM uses aliases (defined in `lib/ruby_llm/aliases.json`) for convenience, mapping common names to each provider's exact ID. Anthropic serves its models under un-dated IDs, so the alias matters most where the same model carries a longer name, such as Bedrock and Azure.
 
 ```ruby
-# 'claude-opus-4' maps to the dated release ID
-chat = RubyLLM.chat(model: 'claude-opus-4')
-puts chat.model.id # => "claude-opus-4-20250514"
+# 'claude-haiku-4-5' maps to Bedrock's exact ID
+chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock)
+puts chat.model.id # => "anthropic.claude-haiku-4-5-20251001-v1:0"
 ```
 
 When you call `find` without a provider, RubyLLM resolves the alias and then picks the most preferred provider that carries the model (first-party providers before aggregators). See [Model Resolution]({% link _reference/model-resolution.md %}) for the full procedure.

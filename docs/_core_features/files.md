@@ -38,6 +38,8 @@ file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.
 
 OpenAI and Azure require `purpose:` because their Files API requires it: `assistants`, `batch`, `fine-tune`, `vision`, `user_data`, or `evals`. Mistral accepts `purpose:` for batch, fine-tuning, and OCR workflows. Other providers infer the file use from the API call that later references the file.
 
+The remaining keywords are provider-specific: `visibility:` for Mistral, `display_name:` for Gemini, and `uri:` and `content_type:` for the storage-backed providers (Vertex AI and Bedrock), which store the file at that object URI instead of behind a file id.
+
 ## Expiration
 
 Pass `expires_in:` with a number of seconds to have the provider delete the file automatically:
@@ -80,7 +82,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Automatic uploads are enabled only for providers and protocols that can reference stored files in chat. Other providers keep their existing inline behavior and still raise provider errors when a request exceeds that provider's limits.
+Automatic uploads are enabled only for providers and protocols that can reference stored files in chat. Other providers keep their existing inline behavior and still raise provider errors when a request exceeds that provider's limits. Vertex AI and Bedrock stage large attachments in your own bucket, so they need `config.vertexai_batch_gcs_uri` or `config.bedrock_batch_s3_uri` set to a `gs://` or `s3://` prefix, and Vertex AI needs the `google-cloud-storage` gem in your bundle; without them a large attachment raises `RubyLLM::ConfigurationError`.
 
 ## Finding and Downloading
 

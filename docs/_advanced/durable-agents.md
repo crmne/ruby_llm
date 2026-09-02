@@ -28,12 +28,12 @@ That is the whole trick. A [chat persisted with `acts_as_chat`]({% link _advance
 
 ## One Turn per Job
 
-Because each [`step`]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) is a discrete move, you can run one move per job and let the queue carry the loop:
+Because each [`step`]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) is a discrete move, you can run one move per job and let the queue carry the loop. Load the chat through its agent class so the job has the agent's tools; a bare `Chat.find` carries the transcript but registers no tools, so it cannot run them or recognize an approval-gated call.
 
 ```ruby
 class AgentTurnJob < ApplicationJob
   def perform(chat_id)
-    chat = Chat.find(chat_id)
+    chat = SupportAgent.find(chat_id)
     chat.step
     AgentTurnJob.perform_later(chat_id) unless chat.complete?
   end
@@ -52,7 +52,7 @@ class AgentRunJob < ApplicationJob
 
   def perform(chat_id)
     step :agent_loop do |job_step|
-      chat = Chat.find(chat_id)
+      chat = SupportAgent.find(chat_id)
       until chat.complete?
         chat.step
         job_step.checkpoint!
@@ -71,7 +71,7 @@ A tool declared with [`requires_approval`]({% link _core_features/tool-execution
 ```ruby
 class CompleteJob < ApplicationJob
   def perform(chat_id)
-    Chat.find(chat_id).complete
+    SupportAgent.find(chat_id).complete
   end
 end
 

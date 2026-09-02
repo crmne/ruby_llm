@@ -136,12 +136,7 @@ class ResearchAgent < RubyLLM::Agent
 end
 ```
 
-To persist server tool turns, the messages table needs two JSON columns. New installs get them from the generator; existing apps add them with a migration:
-
-```ruby
-add_column :messages, :server_tool_calls, :json
-add_column :messages, :raw_content, :json
-```
+To persist server tool turns, the messages table needs the `server_tool_calls` and `raw_content` JSON columns. New installs get them from `bin/rails generate ruby_llm:install`; apps upgrading from 1.16 get them from `bin/rails generate ruby_llm:upgrade`.
 
 Without the columns everything still works in memory, but a chat reloaded from the database cannot replay a server tool turn to Anthropic, which rejects conversations missing those blocks.
 

@@ -3,7 +3,7 @@ layout: default
 title: Advanced Rails Configuration
 parent: "Rails Integration"
 nav_order: 4
-description: Route models through different providers, use per-tenant contexts, persist cache boundaries and raw payloads, and run fiber-safe.
+description: Route models through different providers, use per-tenant contexts, persist cache boundaries, adjust provider payloads per request, and run fiber-safe.
 ---
 
 # {{ page.title }}
@@ -16,7 +16,7 @@ After reading this guide, you will know:
 *   How to route a model through a different provider per chat.
 *   How to use per-tenant API keys with custom contexts.
 *   How to create chats for models that aren't in the registry.
-*   How to persist cache boundaries and raw provider payloads.
+*   How to persist cache boundaries and adjust provider payloads per request.
 *   How to run ActiveRecord safely inside fiber-based async workloads.
 
 Once the basics are in place, RubyLLM gives you fine-grained control over how persisted chats reach providers. This guide covers the configuration you reach for in production: routing models through alternate providers, isolating credentials per tenant, persisting cache boundaries and provider-specific payloads, and keeping ActiveRecord connections correct under async workloads.

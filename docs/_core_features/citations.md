@@ -96,7 +96,7 @@ For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: 
 
 ## Citing the Web
 
-When a provider searches the web, RubyLLM parses the resulting citations automatically - no `with_citations` needed. Enable search the way each provider expects:
+When a provider searches the web, RubyLLM parses the resulting citations automatically - no `with_citations` needed. Turn on search with the portable [server tool]({% link _core_features/server-tools.md %}) name, or use a model that searches by default:
 
 ```ruby
 # Perplexity searches by default
@@ -104,13 +104,13 @@ response = RubyLLM.chat(model: 'sonar', provider: :perplexity)
   .ask "What's new in Ruby?"
 
 # Gemini with Google Search grounding
-response = RubyLLM.chat(model: 'gemini-2.5-flash')
-  .with_provider_options(tools: [{ google_search: {} }])
+response = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
+  .with_server_tools(:web_search)
   .ask "What's the latest stable Ruby version?"
 
 # OpenAI with web search
-response = RubyLLM.chat(model: 'gpt-4o-mini-search-preview')
-  .with_provider_options(web_search_options: {})
+response = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
+  .with_server_tools(:web_search)
   .ask "What's the latest stable Ruby version?"
 
 response.citations.map(&:url).uniq
@@ -187,26 +187,7 @@ response = chat_record.ask "Who created Ruby?", with: "facts.txt"
 chat_record.messages.last.citations # => [RubyLLM::Citation, ...]
 ```
 
-### Upgrading Existing Installations
-
-Run the upgrade generator:
-
-```bash
-rails generate ruby_llm:upgrade
-rails db:migrate
-```
-
-Or add the column manually:
-
-```ruby
-class AddCitationsToMessages < ActiveRecord::Migration[7.1]
-  def change
-    add_column :messages, :citations, :json
-  end
-end
-```
-
-Without the column, everything still works - citations just aren't persisted.
+Apps upgrading from 1.16 get the column from `bin/rails generate ruby_llm:upgrade`. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Provider Notes
 

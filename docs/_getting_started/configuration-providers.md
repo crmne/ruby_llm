@@ -41,6 +41,8 @@ RubyLLM.configure do |config|
   # config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new # Optional Aws::CredentialProvider
   config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # optional custom Bedrock endpoint
   config.bedrock_mantle_api_base = ENV['BEDROCK_MANTLE_API_BASE'] # optional custom bedrock-mantle endpoint
+  config.bedrock_batch_s3_uri = ENV['BEDROCK_BATCH_S3_URI'] # s3://bucket/prefix for batches and large attachments
+  config.bedrock_batch_role_arn = ENV['BEDROCK_BATCH_ROLE_ARN'] # IAM role Bedrock assumes for batch jobs
 
   # Cohere
   config.cohere_api_key = ENV['COHERE_API_KEY']
@@ -97,6 +99,7 @@ RubyLLM.configure do |config|
   config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
   config.vertexai_service_account_key = ENV['VERTEXAI_SERVICE_ACCOUNT_KEY'] # Optional: service account JSON key
   config.vertexai_api_base = ENV['VERTEXAI_API_BASE'] # optional custom Vertex AI endpoint
+  config.vertexai_batch_gcs_uri = ENV['VERTEXAI_BATCH_GCS_URI'] # gs://bucket/prefix for batches and large attachments
 
   # xAI
   config.xai_api_key = ENV['XAI_API_KEY']
@@ -228,7 +231,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Some models are only available on specific API versions. For example, `gemini-1.5-flash-8b` requires `v1`. Check the [Gemini API documentation](https://ai.google.dev/gemini-api/docs/api-versions) for version-specific model availability.
+Some older models are only available on specific API versions. Check the [Gemini API documentation](https://ai.google.dev/gemini-api/docs/api-versions) for version-specific model availability.
 
 ### Provider-Specific API Base URLs
 

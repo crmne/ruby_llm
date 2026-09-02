@@ -35,7 +35,7 @@ chat = RubyLLM.chat(model: 'claude-opus-4-5').with_thinking
 
 RubyLLM resolves those controls when it builds the request, so it follows later model changes and fallbacks. The registry may select an effort, a token budget, a provider toggle, or no request option for a model that always thinks. If the registry does not know how to enable thinking for the selected model, RubyLLM raises an `ArgumentError` instead of guessing.
 
-When the registry lists several controls, RubyLLM prefers an explicit default, then a provider toggle, then `medium` effort when available, then the smallest positive token budget the model accepts.
+When the registry lists several controls, RubyLLM prefers an explicit default, then a provider toggle, then `medium` effort when available, then the smallest positive token budget the model accepts. Each protocol then sends what its provider needs to think at that level; on Claude, for example, an effort alone never turns thinking on, so RubyLLM adds the thinking block the generation takes (see [Provider Notes](#provider-notes)).
 
 Pass options when you want to tune the model explicitly:
 
@@ -113,38 +113,20 @@ response.tokens.thinking
 
 `tokens.thinking` reports reasoning work separately. `tokens.output` is already the billable output bucket, so do not add `tokens.thinking` to it when calculating costs. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
 
-### Upgrading Existing Installations
-
-Run the upgrade generator:
-
-```bash
-rails generate ruby_llm:upgrade
-rails db:migrate
-```
-
-Or add the content columns manually:
-
-```ruby
-class AddThinkingToMessages < ActiveRecord::Migration[7.1]
-  def change
-    add_column :messages, :thinking_text, :text
-    add_column :messages, :thinking_signature, :text
-  end
-end
-```
+Apps upgrading from 1.16 get the thinking columns from `bin/rails generate ruby_llm:upgrade`. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Provider Notes
 
-- Anthropic sends each option to its own Claude parameter. `budget` becomes a thinking budget, `effort` becomes Claude's effort setting, and `display` asks for adaptive thinking, where the model decides how much to think. Which of the three a Claude model accepts changes with the generation, and Anthropic names the parameter to use instead in its error. Newer Claude models keep their thinking text hidden, so pass `display: :summarized` when you want to read it.
+- Anthropic sends each option to its own Claude parameter: `budget` becomes a thinking budget, `effort` becomes Claude's effort setting, and `display` chooses how much thinking text comes back. Effort alone never turns thinking on for Claude, so RubyLLM always sends a thinking block beside it. Generations that take a budget (Opus 4.5, Opus and Sonnet 4.6, Sonnet and Haiku 4.5) get `budget:` when you set one, otherwise a budget sized from the effort with the levels Bedrock publishes (low 1024, medium 40000, high 63999), capped under `max_tokens`. Generations without a budget option (Opus 4.7 and later, Sonnet 5, Fable 5) get adaptive thinking, where the model decides how much to think. `with_thinking(false)` sends a disabled block on every generation. Newer Claude models keep their thinking text hidden, so pass `display: :summarized` when you want to read it.
 - Bedrock thinking params are model-dependent. Claude models on Bedrock only take a token budget, so RubyLLM converts `effort` into the budget level the model advertises. Pass `budget` to set the exact number of tokens.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
-- OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
+- OpenAI reasoning models accept `effort`, return an encrypted signature, and only return thinking text when you pass `display: :summarized`, which asks the Responses API for a reasoning summary.
 - Perplexity sonar reasoning models fold their reasoning into the answer text and return no separate thinking.
 - Mistral sends `effort` as `reasoning_effort` for every model. Its reasoning models take `high` and `none`, and models without reasoning reject the parameter. Mistral has no thinking budget, so `budget` has no effect.
 - DeepSeek accepts a wider range of effort levels than most providers and has no thinking budget. Its error lists the levels a model takes.
 - Cohere reasoning models think by default. `with_thinking(budget:)` caps the thinking tokens, and `with_thinking(effort: :none)` turns the default off. Models without reasoning reject the request. Cohere returns thinking text but no signature, and reports no separate thinking token count.
 - Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_provider_options`.
-- Anthropic and Ollama integrations currently do not report thinking token counts.
+- Ollama does not report thinking token counts.
 
 ## Next Steps
 
