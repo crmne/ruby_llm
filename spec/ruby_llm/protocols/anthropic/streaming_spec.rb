@@ -24,6 +24,19 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(chunk.finish_reason).to eq('end_turn')
   end
 
+  it 'reads thinking token counts from message_delta usage' do
+    chunk = protocol.send(
+      :build_chunk,
+      {
+        'type' => 'message_delta',
+        'delta' => { 'stop_reason' => 'end_turn' },
+        'usage' => { 'output_tokens' => 10, 'output_tokens_details' => { 'thinking_tokens' => 7 } }
+      }
+    )
+
+    expect(chunk.tokens.thinking).to eq(7)
+  end
+
   it 'sends Accept-Encoding: identity on streaming requests' do
     captured = nil
 

@@ -34,6 +34,7 @@ module RubyLLM
             ),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
+            thinking_tokens: extract_thinking_tokens(data),
             cache_read_tokens: extract_cache_read_tokens(data),
             cache_write_tokens: extract_cache_write_tokens(data),
             server_tool_use: extract_server_tool_use(data),

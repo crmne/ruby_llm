@@ -82,6 +82,11 @@ module RubyLLM
           message_usage(data)['output_tokens'] || delta_usage(data)['output_tokens']
         end
 
+        def extract_thinking_tokens(data)
+          message_usage(data).dig('output_tokens_details', 'thinking_tokens') ||
+            delta_usage(data).dig('output_tokens_details', 'thinking_tokens')
+        end
+
         def extract_cache_read_tokens(data)
           message_usage(data)['cache_read_input_tokens'] || delta_usage(data)['cache_read_input_tokens']
         end
