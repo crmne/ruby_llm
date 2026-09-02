@@ -29,12 +29,9 @@ module RubyLLM
 
     def to_safe_array(item)
       case item
-      when Array
-        item
-      when Hash
-        [item]
-      else
-        Array(item)
+      when Array then item
+      when Hash then [item]
+      else item.respond_to?(:read) ? [item] : Array(item)
       end
     end
 

@@ -37,6 +37,15 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment.content.encoding).to eq(Encoding::ASCII_8BIT)
   end
 
+  it 'wraps an IO as one attachment instead of splitting it into lines' do
+    File.open(File.expand_path('../fixtures/ruby.png', __dir__), 'rb') do |io|
+      attachments = described_class.wrap(io)
+
+      expect(attachments.length).to eq(1)
+      expect(attachments.first.mime_type).to eq('image/png')
+    end
+  end
+
   it 'classifies rich document files semantically' do
     attachment = described_class.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
