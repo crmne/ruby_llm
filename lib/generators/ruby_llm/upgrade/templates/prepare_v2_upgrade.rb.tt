@@ -22,6 +22,7 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     %i[<%= chat_table_name %> <%= message_table_name %>].each do |table|
       raise "Expected #{table} to exist before upgrading RubyLLM" unless table_exists?(table)
     end
+    validate_legacy_message_columns
     validate_table_move(:<%= v1_model_table_name %>, :ruby_llm_models)
     validate_table_move(:<%= v1_tool_call_table_name %>, :ruby_llm_tool_calls)
 
@@ -63,6 +64,17 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
       'batch'
     )
     validate_unique_values(:ruby_llm_batches, %i[provider provider_batch_id]) if table_exists?(:ruby_llm_batches)
+  end
+
+  # A schema the finish migration already cleaned has none of these columns;
+  # running the backfill again there would invent usage rows.
+  def validate_legacy_message_columns
+    legacy_columns = %i[content_raw input_tokens output_tokens <%= v1_model_foreign_key %> <%= v1_tool_call_foreign_key %>]
+    return if legacy_columns.any? { |column| column_exists?(:<%= message_table_name %>, column) }
+    return unless table_exists?(:ruby_llm_usages)
+
+    raise '<%= message_table_name %> already has the RubyLLM 2.0 schema. ' \
+          'Remove the generated upgrade migrations instead of running them again.'
   end
 
   def validate_table_move(source, target)

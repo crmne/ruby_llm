@@ -61,7 +61,8 @@ module RubyLLM
           5. Keep only the current declarations in your application models:
              #{chat_model_path}: #{acts_as_chat_declaration}
              #{message_model_path}: #{acts_as_message_declaration}
-          6. Remove the 1.x model and tool-call classes and config.model_registry_class
+          6. Remove the 1.x model and tool-call classes, config.model_registry_class,
+             and config.use_new_acts_as
           7. Update 1.x API calls using the upgrade guide
 
           Full upgrade guide:
