@@ -52,6 +52,13 @@ module RubyLLM
     # Extra HTTP headers set with #with_headers.
     attr_reader :headers
 
+    # The sampling temperature set with #with_temperature, or +nil+ to let
+    # the model use its default.
+    attr_reader :temperature
+
+    # The output cap set with #with_max_output_tokens, or +nil+.
+    attr_reader :max_output_tokens
+
     # The normalized structured output schema set with #with_schema, or +nil+.
     attr_reader :schema
 

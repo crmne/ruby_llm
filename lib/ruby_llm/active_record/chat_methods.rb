@@ -250,7 +250,8 @@ module RubyLLM
       # Returns the next request payload with #before_request hooks applied.
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching compaction concurrency end_user fallbacks headers provider_options schema server_tools thinking tools
+        caching compaction concurrency end_user fallbacks headers max_output_tokens provider_options schema
+        server_tools temperature thinking tools
         add_completion count_tokens each render
       ].freeze
 
