@@ -101,7 +101,14 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      to_h
+      {
+        input: input,
+        output: output,
+        cache_read: cache_read,
+        cache_write: cache_write,
+        thinking: thinking,
+        server_tool_use: server_tool_use
+      }.compact
     end
   end
 end
