@@ -109,6 +109,7 @@ module RubyLLM
     # Default: <tt>'mistral-ocr-latest'</tt>.
     option :default_ocr_model, 'mistral-ocr-latest'
 
+    ##
     # :attr_accessor: default_video_model
     #
     # The model id used by RubyLLM.animate when no model is given.
@@ -155,6 +156,12 @@ module RubyLLM
     def model_registry_class=(_value) # :nodoc:
       RubyLLM.deprecator.warn(
         'config.model_registry_class is ignored in RubyLLM 2.0; remove it from your initializer'
+      )
+    end
+
+    def use_new_acts_as=(_value) # :nodoc:
+      RubyLLM.deprecator.warn(
+        'config.use_new_acts_as is ignored in RubyLLM 2.0; remove it from your initializer'
       )
     end
 

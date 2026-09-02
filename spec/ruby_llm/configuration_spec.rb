@@ -78,6 +78,19 @@ RSpec.describe RubyLLM::Configuration do
     end
   end
 
+  describe 'removed 1.x options' do
+    it 'keeps a 1.16 initializer booting with a deprecation warning' do
+      config = described_class.new
+      allow(RubyLLM.deprecator).to receive(:warn)
+
+      config.use_new_acts_as = true
+      config.model_registry_class = 'Model'
+
+      expect(RubyLLM.deprecator).to have_received(:warn).with(/use_new_acts_as is ignored/)
+      expect(RubyLLM.deprecator).to have_received(:warn).with(/model_registry_class is ignored/)
+    end
+  end
+
   describe 'method redefinition warnings' do
     it 'does not emit method redefined warning for log_regexp_timeout=' do
       warnings = `#{RbConfig.ruby} -W -e 'require "ruby_llm"' 2>&1`
