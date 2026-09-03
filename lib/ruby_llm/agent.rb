@@ -632,7 +632,7 @@ module RubyLLM
           next if persistent_only && !declaration[:persist]
 
           value = resolved_instruction_value(declaration, chat, runtime, inputs:)
-          next if value.nil?
+          next if blank_instruction?(value)
 
           options = {
             append: declaration[:append],
@@ -641,6 +641,12 @@ module RubyLLM
           options[:persist] = persist && declaration[:persist] if rails_chat_record?(chat)
           chat.with_instructions(value, **options)
         end
+      end
+
+      # An empty prompt file, such as the one the agent generator writes,
+      # means no instructions rather than an empty system message.
+      def blank_instruction?(value)
+        value.nil? || (value.respond_to?(:strip) && value.strip.empty?)
       end
 
       def apply_tools(chat, runtime)
