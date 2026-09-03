@@ -178,6 +178,16 @@ RSpec.describe RubyLLM::ErrorMiddleware do
       end.to raise_error(RubyLLM::ContextLengthExceededError)
     end
 
+    it "maps Anthropic's 'input length and max_tokens exceed context limit' 400 error to ContextLengthExceededError" do
+      msg = 'input length and max_tokens exceed context limit: 900000 + 128000 > 1000000'
+      response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::ContextLengthExceededError)
+    end
+
     it 'keeps regular 400 errors as BadRequestError' do
       response = Struct.new(:status, :body).new(400, '{"error":{"message":"Invalid model specified"}}')
       provider = instance_double(RubyLLM::Provider, parse_error: 'Invalid model specified')
