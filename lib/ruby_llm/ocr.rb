@@ -37,13 +37,14 @@ module RubyLLM
     # +default_ocr_model+. +provider:+ forces a specific provider, and
     # +assume_model_exists:+ skips the registry lookup. +context:+ supplies
     # a Context whose configuration replaces the global one. +metadata:+ is
-    # included in the instrumentation payload. Every other keyword passes
-    # through to the request in the provider's own vocabulary, such as
-    # Mistral's +pages:+, +include_image_base64:+, or +table_format:+.
+    # included in the instrumentation payload. +pages:+ limits the read to
+    # the given zero-based page indexes. +provider_options:+ merges options
+    # into the request in the provider's own vocabulary, such as Mistral's
+    # +include_image_base64:+ or +table_format:+.
     #
     #   RubyLLM.ocr("report.pdf")
     #   RubyLLM.ocr("https://example.com/scan.png")
-    #   RubyLLM.ocr("report.pdf", pages: [0, 1], table_format: "html")
+    #   RubyLLM.ocr("report.pdf", pages: [0, 1], provider_options: { table_format: "html" })
     #
     # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry,
     # and RubyLLM::Error when the provider has no OCR support.
@@ -52,6 +53,7 @@ module RubyLLM
                  provider: nil,
                  assume_model_exists: false,
                  context: nil,
+                 pages: nil,
                  provider_options: {},
                  metadata: nil)
       config = context&.config || RubyLLM.config
@@ -63,12 +65,13 @@ module RubyLLM
         provider_class: provider_instance.class.display_name,
         model: model.id,
         model_info: model,
+        pages: pages,
         provider_options: provider_options,
         metadata: metadata
       }
 
       RubyLLM.instrument('ocr.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.ocr(file, model:, provider_options:)
+        result = provider_instance.ocr(file, model:, pages:, provider_options:)
         event[:result] = result
         event[:response_model] = result.model
         result

@@ -38,11 +38,13 @@ file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.
 
 OpenAI and Azure require `purpose:` because their Files API requires it: `assistants`, `batch`, `fine-tune`, `vision`, `user_data`, or `evals`. Mistral accepts `purpose:` for batch, fine-tuning, and OCR workflows. Other providers infer the file use from the API call that later references the file.
 
-Everything else goes through `provider_options:` in the provider's own vocabulary: `visibility:` on Mistral, `display_name:` on Gemini, and `uri:` and `content_type:` on Vertex AI and Bedrock, which store the file at that object URI instead of behind a file id.
+Vertex AI and Bedrock store files in a bucket rather than behind a file id. Pass `uri:` to choose the object, and `content_type:` when the MIME type RubyLLM detects is not the one you want:
 
 ```ruby
-RubyLLM.upload("batch.jsonl", provider: :vertexai, provider_options: { uri: "gs://my-bucket/in/batch.jsonl" })
+RubyLLM.upload("batch.jsonl", provider: :vertexai, uri: "gs://my-bucket/in/batch.jsonl")
 ```
+
+Provider-specific options go through `provider_options:` in the provider's own vocabulary: `visibility:` on Mistral, `display_name:` on Gemini.
 
 ## Expiration
 

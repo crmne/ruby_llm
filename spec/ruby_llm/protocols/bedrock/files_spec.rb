@@ -50,7 +50,7 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Files do
 
       file = files.upload(
         StringIO.new('x'), filename: 'batch.jsonl',
-                           provider_options: { uri: 's3://other/in.jsonl', content_type: 'text/plain' }
+                           uri: 's3://other/in.jsonl', content_type: 'text/plain'
       )
 
       expect(file.uri).to eq('s3://other/in.jsonl')
@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Files do
     end
 
     it 'rejects a destination that is not an s3 URI' do
-      expect { files.upload(StringIO.new('x'), filename: 'batch.jsonl', provider_options: { uri: 'https://example.test/x' }) }
+      expect { files.upload(StringIO.new('x'), filename: 'batch.jsonl', uri: 'https://example.test/x') }
         .to raise_error(ArgumentError, %r{Expected an s3:// URI})
     end
   end

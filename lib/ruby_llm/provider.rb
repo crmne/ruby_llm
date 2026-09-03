@@ -339,9 +339,9 @@ module RubyLLM
       )
     end
 
-    def ocr(file, model:, options: {}) # :nodoc:
+    def ocr(file, model:, pages: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :ocr)
-      protocol.new(self, model).ocr(file, model: model_id_for(model), options:)
+      protocol.new(self, model).ocr(file, model: model_id_for(model), pages:, provider_options:)
     end
 
     def rerank(query, documents, model:, top_n: nil, provider_options: {}) # :nodoc:
@@ -349,9 +349,10 @@ module RubyLLM
       protocol.new(self, model).rerank(query, documents, model: model_id_for(model), top_n:, provider_options:)
     end
 
-    def upload_file(file, filename: nil, purpose: nil, expires_in: nil, provider_options: {}) # :nodoc:
+    def upload_file(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil, # :nodoc:
+                    provider_options: {})
       ensure_files_supported!
-      options = { filename:, purpose:, expires_in:, provider_options: }.compact
+      options = { filename:, purpose:, expires_in:, uri:, content_type:, provider_options: }.compact
 
       protocols.fetch(:files).new(self).upload(file, **options)
     end

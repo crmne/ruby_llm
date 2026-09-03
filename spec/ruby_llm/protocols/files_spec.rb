@@ -307,7 +307,7 @@ RSpec.describe RubyLLM::Protocols::Files do
       file = protocol.upload(
         StringIO.new("{\"hello\":\"world\"}\n"),
         filename: 'input.jsonl',
-        provider_options: { uri: 's3://bucket/path/input.jsonl', content_type: 'application/jsonl' }
+        uri: 's3://bucket/path/input.jsonl', content_type: 'application/jsonl'
       )
 
       expect(file).to have_attributes(id: 's3://bucket/path/input.jsonl', uri: 's3://bucket/path/input.jsonl')
@@ -361,7 +361,7 @@ RSpec.describe RubyLLM::Protocols::Files do
       file = protocol.upload(
         StringIO.new("{\"hello\":\"world\"}\n"),
         filename: 'input.jsonl',
-        provider_options: { uri: 'gs://bucket/path/input.jsonl', content_type: 'application/jsonl' }
+        uri: 'gs://bucket/path/input.jsonl', content_type: 'application/jsonl'
       )
 
       expect(file).to have_attributes(id: 'gs://bucket/path/input.jsonl', uri: 'gs://bucket/path/input.jsonl')

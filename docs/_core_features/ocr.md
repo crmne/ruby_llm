@@ -83,7 +83,7 @@ end
 Every keyword beyond `model:` and `provider:` passes through to the request in the provider's own vocabulary. Mistral takes `pages:` with zero-based page numbers:
 
 ```ruby
-ocr = RubyLLM.ocr("annual-report.pdf", provider_options: { pages: [0, 1, 2] })
+ocr = RubyLLM.ocr("annual-report.pdf", pages: [0, 1, 2])
 
 ocr.pages.length
 # => 3

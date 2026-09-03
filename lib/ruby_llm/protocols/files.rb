@@ -6,7 +6,8 @@ module RubyLLM
   module Protocols
     # Provider-managed file storage APIs.
     class Files < Protocol
-      def upload(file, filename: nil, purpose: nil, expires_in: nil, provider_options: {})
+      # rubocop:disable-next Lint/UnusedMethodArgument
+      def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil, provider_options: {})
         attachment = file_attachment(file, filename:)
         options = { purpose:, expires_in: }.compact.merge(provider_options.transform_keys(&:to_sym))
         response = @connection.post(files_url, render_upload_payload(attachment, **options),

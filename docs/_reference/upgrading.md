@@ -251,7 +251,7 @@ Scan the table for anything your app uses, then read its section below.
 | `RubyLLM.models.find(id, :openai)` | `RubyLLM.models.find(id, provider: :openai)` |
 | `response.finish_reason` as a provider String (`"end_turn"`, `"STOP"`) | a Symbol normalized across providers: `:stop`, `:max_tokens`, `:tool_calls`, `:content_filter` |
 | `chat.thinking` returning `{effort: "low"}`, `model.type` returning `"chat"` | Symbols: `{effort: :low}`, `:chat` |
-| `RubyLLM.ocr(file, pages: [0])`, `RubyLLM.upload(file, uri:, display_name:)` | `provider_options: { pages: [0] }`, `provider_options: { uri:, display_name: }` |
+| `RubyLLM.ocr(file, table_format: "html")`, `RubyLLM.upload(file, display_name:)` | `provider_options: { table_format: "html" }`, `provider_options: { display_name: }`; shared concepts such as `pages:`, `uri:`, and `content_type:` stay keywords |
 | `batch.provider_slug`, `fallback.provider` as a Symbol | `batch.provider`, `fallback.provider` as a String, like every other provider reader |
 | `on_new_message`, `on_end_message` | `before_message`, `after_message` |
 | `on_tool_call`, `on_tool_result` | `before_tool_call`, `after_tool_result` |

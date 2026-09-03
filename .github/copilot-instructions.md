@@ -30,8 +30,9 @@ Look for these, in this order, and treat the first four as blockers:
   `docs/_reference/available-models.md`.
 - Public API drift. A `with_x` without its reader, its `Agent` macro, or its
   delegate entries; a new bang method without a meaningful non-bang pair; a
-  `supports_x?` predicate; a second name for an existing concept; a raw
-  provider Hash returned where a value object exists; a String where the
+  `supports_x?` predicate; a second name for an existing concept; a concept
+  two providers share pushed through `provider_options` instead of getting
+  one keyword; a raw provider Hash returned where a value object exists; a String where the
   gem's own enumeration is a Symbol (`finish_reason`, statuses, thinking
   effort, `Model#type`); an error constructor that does not take the
   message first.

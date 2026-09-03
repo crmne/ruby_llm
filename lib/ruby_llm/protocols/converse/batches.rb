@@ -22,7 +22,8 @@ module RubyLLM
           @provider.upload_file(
             StringIO.new(bedrock_batch_jsonl(requests)),
             filename: 'input.jsonl',
-            provider_options: { uri: input_uri, content_type: 'application/jsonl' }
+            uri: input_uri,
+            content_type: 'application/jsonl'
           )
 
           response = @provider.signed_post(@provider.control_api_base, '/model-invocation-job', {

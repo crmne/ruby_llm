@@ -15,6 +15,10 @@ module RubyLLM
   class UploadedFile
     include Inspectable
 
+    def inspect_attributes # :nodoc:
+      { id: id, provider: provider, filename: filename, byte_size: byte_size }
+    end
+
     # The provider-assigned file identifier, such as <tt>"file_..."</tt>.
     attr_reader :id
 
@@ -90,17 +94,16 @@ module RubyLLM
     # OpenAI and Azure require +purpose:+. Pass +expires_in:+ as a number of
     # seconds to have the provider delete the file automatically; OpenAI,
     # xAI, and Mistral support it, and Mistral rounds up to whole hours.
-    # Anything else goes through +provider_options:+ in the provider's own
-    # vocabulary: +visibility:+ on Mistral, +display_name:+ on Gemini, and
-    # +uri:+ and +content_type:+ on the storage-backed providers (Vertex AI
-    # and Bedrock).
-    def inspect_attributes # :nodoc:
-      { id: id, provider: provider, filename: filename, byte_size: byte_size }
-    end
-
+    # Storage-backed providers (Vertex AI and Bedrock) store the file at
+    # +uri:+ when given, otherwise at a generated object name under the
+    # configured bucket. +content_type:+ overrides the MIME type RubyLLM
+    # detects. +provider_options:+ carries the rest in the provider's own
+    # vocabulary: +visibility:+ on Mistral, +display_name:+ on Gemini.
     def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil,
-                    provider_options: {})
-      provider_for(provider, context).upload_file(file, filename:, purpose:, expires_in:, provider_options:)
+                    uri: nil, content_type: nil, provider_options: {})
+      options = { filename:, purpose:, expires_in:, uri:, content_type: }.compact
+      options[:provider_options] = provider_options unless provider_options.empty?
+      provider_for(provider, context).upload_file(file, **options)
     end
 
     # Fetches metadata for an existing provider file by +id+ and returns an

@@ -26,7 +26,8 @@ module RubyLLM
           @provider.upload_file(
             StringIO.new(vertex_batch_jsonl(requests)),
             filename: 'input.jsonl',
-            provider_options: { uri: input_uri, content_type: 'application/jsonl' }
+            uri: input_uri,
+            content_type: 'application/jsonl'
           )
 
           response = @connection.post("#{@provider.location_path}/batchPredictionJobs",

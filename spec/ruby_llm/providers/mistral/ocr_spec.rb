@@ -35,7 +35,8 @@ RSpec.describe RubyLLM::Providers::Mistral::OCR do
       payload = described_class.render_ocr_payload(
         'https://example.com/report.pdf',
         model: 'mistral-ocr-latest',
-        provider_options: { pages: [0], include_image_base64: true, table_format: 'html' }
+        pages: [0],
+        provider_options: { include_image_base64: true, table_format: 'html' }
       )
 
       expect(payload[:pages]).to eq([0])

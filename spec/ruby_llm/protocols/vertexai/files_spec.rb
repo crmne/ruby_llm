@@ -50,7 +50,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Files do
 
       file = files.upload(
         StringIO.new('x'), filename: 'batch.jsonl',
-                           provider_options: { uri: 'gs://other/in.jsonl', content_type: 'text/plain' }
+                           uri: 'gs://other/in.jsonl', content_type: 'text/plain'
       )
 
       expect(file.uri).to eq('gs://other/in.jsonl')
@@ -80,7 +80,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Files do
 
     it 'rejects a destination that is not a gs URI' do
       expect do
-        files.upload(StringIO.new('x'), filename: 'batch.jsonl', provider_options: { uri: 's3://bucket/in.jsonl' })
+        files.upload(StringIO.new('x'), filename: 'batch.jsonl', uri: 's3://bucket/in.jsonl')
       end
         .to raise_error(ArgumentError, %r{Expected a gs:// URI})
     end
