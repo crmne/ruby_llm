@@ -1,0 +1,37 @@
+name: Setup Development Environment for GitHub Copilot
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # The job must be called `copilot-setup-steps` or Copilot will not pick it up.
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 30
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+
+      - name: Validate setup
+        run: |
+          bundle exec ruby -e 'require "ruby_llm"; puts "RubyLLM #{RubyLLM::VERSION} loads"'
+          bundle exec rubocop --version
+          bundle exec archspec check
+          bundle exec rspec --tag ~live --tag ~generator --fail-fast
