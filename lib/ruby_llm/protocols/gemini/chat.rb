@@ -5,11 +5,27 @@ module RubyLLM
     class Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        FINISH_REASONS = {
+          'STOP' => 'stop', 'MAX_TOKENS' => 'max_tokens',
+          'SAFETY' => 'content_filter', 'RECITATION' => 'content_filter', 'BLOCKLIST' => 'content_filter',
+          'PROHIBITED_CONTENT' => 'content_filter', 'SPII' => 'content_filter', 'IMAGE_SAFETY' => 'content_filter',
+          'IMAGE_RECITATION' => 'content_filter', 'IMAGE_PROHIBITED_CONTENT' => 'content_filter',
+          'MODEL_ARMOR' => 'content_filter'
+        }.freeze
+
         GEMINI_INLINE_FILE_THRESHOLD = 20 * 1024 * 1024
         VERTEX_INLINE_FILE_THRESHOLD = 7 * 1024 * 1024
         GEMINI_FILE_UPLOAD_LIMIT = 2 * 1024 * 1024 * 1024
 
         module_function
+
+        def finish_reasons = FINISH_REASONS
+
+        def normalize_finish_reason(reason)
+          return nil if reason.nil?
+
+          finish_reasons.fetch(reason.to_s, reason)
+        end
 
         def completion_url
           "models/#{@model.id}:generateContent"
@@ -192,7 +208,9 @@ module RubyLLM
             output_tokens: calculate_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
-            finish_reason: data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason'),
+            finish_reason: normalize_finish_reason(
+              data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
+            ),
             model: data['modelVersion'] || @model&.id,
             raw: raw
           )

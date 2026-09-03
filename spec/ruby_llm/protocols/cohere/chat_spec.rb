@@ -139,7 +139,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
 
       expect(message.role).to eq(:assistant)
       expect(message.content).to eq('LLMs stand for Large Language Models.')
-      expect(message.finish_reason).to eq('COMPLETE')
+      expect(message.finish_reason).to eq('stop')
       expect(message).to be_stopped
     end
 

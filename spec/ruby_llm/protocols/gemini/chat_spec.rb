@@ -350,7 +350,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
   end
 
   describe '#parse_completion_response' do
-    it 'preserves raw finishReason' do
+    it 'normalizes finishReason' do
       response = instance_double(
         Faraday::Response,
         body: {
@@ -366,7 +366,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       provider = RubyLLM::Protocols::Gemini.allocate
       message = provider.send(:parse_completion_response, response)
 
-      expect(message.finish_reason).to eq('SAFETY')
+      expect(message.finish_reason).to eq('content_filter')
     end
 
     it 'keeps thought-only parts out of assistant content' do

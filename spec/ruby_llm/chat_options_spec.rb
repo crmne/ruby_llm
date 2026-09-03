@@ -142,42 +142,10 @@ RSpec.describe RubyLLM::Chat do
       expect(payload[:schema]).not_to have_key(:strict)
     end
 
-    it 'defaults to strict when every property is required' do
-      chat.with_schema({
-                         type: 'object',
-                         properties: { name: { type: 'string' } },
-                         required: ['name'],
-                         additionalProperties: false
-                       })
+    it 'leaves strict unset for the protocol to decide' do
+      chat.with_schema({ type: 'object', properties: { name: { type: 'string' } } })
 
-      expect(chat.instance_variable_get(:@schema)[:strict]).to be(true)
-    end
-
-    it 'defaults to non-strict when a property is optional' do
-      schema_class = Class.new(Schematist::Schema) do
-        string :name
-        string :city, required: false
-      end
-
-      chat.with_schema(schema_class)
-
-      expect(chat.instance_variable_get(:@schema)[:strict]).to be(false)
-    end
-
-    it 'defaults to non-strict when a nested object has optional properties' do
-      chat.with_schema({
-                         type: 'object',
-                         properties: {
-                           address: {
-                             type: 'object',
-                             properties: { street: { type: 'string' }, unit: { type: 'string' } },
-                             required: ['street']
-                           }
-                         },
-                         required: ['address']
-                       })
-
-      expect(chat.instance_variable_get(:@schema)[:strict]).to be(false)
+      expect(chat.instance_variable_get(:@schema)).not_to have_key(:strict)
     end
 
     it 'names an unnamed schema' do

@@ -39,7 +39,7 @@ module RubyLLM
             cache_write_tokens: extract_cache_write_tokens(data),
             server_tool_use: extract_server_tool_use(data),
             tool_calls: extract_tool_calls(data),
-            finish_reason: data.dig('delta', 'stop_reason'),
+            finish_reason: normalize_finish_reason(data.dig('delta', 'stop_reason')),
             **stream_end_fields(data)
           )
         end

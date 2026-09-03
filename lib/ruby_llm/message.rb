@@ -21,16 +21,6 @@ module RubyLLM
     # The valid message roles: +:system+, +:user+, +:assistant+, and +:tool+.
     ROLES = %i[system user assistant tool].freeze
 
-    STOPPED_FINISH_REASONS = %w[stop end_turn stop_sequence complete completed].freeze
-    MAX_TOKENS_FINISH_REASONS = %w[length max_tokens max_output_tokens model_context_window_exceeded].freeze
-    TOOL_CALL_FINISH_REASONS = %w[tool_calls tool_use function_call tool_call].freeze
-    CONTENT_FILTERED_FINISH_REASONS = %w[
-      blocklist content_filter content_filtered guardrail_intervened image_recitation image_safety
-      model_armor prohibited_content recitation safety spii
-    ].freeze
-    private_constant :STOPPED_FINISH_REASONS, :MAX_TOKENS_FINISH_REASONS, :TOOL_CALL_FINISH_REASONS,
-                     :CONTENT_FILTERED_FINISH_REASONS
-
     # The role of the message: +:system+, +:user+, +:assistant+, or +:tool+.
     attr_reader :role
 
@@ -65,9 +55,11 @@ module RubyLLM
     # across providers.
     attr_reader :citations
 
-    # The provider-reported reason the model stopped, preserved as-is,
-    # such as <tt>"stop"</tt>, <tt>"max_tokens"</tt>, or
-    # <tt>"MAX_TOKENS"</tt>.
+    # Why the model stopped, normalized across providers to <tt>"stop"</tt>,
+    # <tt>"max_tokens"</tt>, <tt>"tool_calls"</tt>, or
+    # <tt>"content_filter"</tt>. A reason a provider reports outside those
+    # four, such as Anthropic's <tt>"pause_turn"</tt>, comes through as the
+    # provider spelled it.
     attr_reader :finish_reason
 
     # The provider-executed tool steps in this response, as an array of
@@ -163,25 +155,25 @@ module RubyLLM
     # normally, +false+ otherwise. A turn that stopped to call tools is
     # reported by #tool_call_stop? instead, whatever the provider named it.
     def stopped?
-      finish_reason_in?(STOPPED_FINISH_REASONS) && !tool_call?
+      finish_reason == 'stop' && !tool_call?
     end
 
     # Returns +true+ if the response was cut off by a token limit,
     # +false+ otherwise.
     def max_tokens?
-      finish_reason_in?(MAX_TOKENS_FINISH_REASONS)
+      finish_reason == 'max_tokens'
     end
 
     # Returns +true+ if the model stopped to request tool calls,
     # +false+ otherwise.
     def tool_call_stop?
-      finish_reason_in?(TOOL_CALL_FINISH_REASONS) || (tool_call? && finish_reason_in?(STOPPED_FINISH_REASONS))
+      finish_reason == 'tool_calls' || (tool_call? && finish_reason == 'stop')
     end
 
     # Returns +true+ if a provider safety filter stopped the response,
     # +false+ otherwise.
     def content_filtered?
-      finish_reason_in?(CONTENT_FILTERED_FINISH_REASONS)
+      finish_reason == 'content_filter'
     end
 
     # Returns usage aggregated across every provider attempt that produced this
@@ -257,14 +249,6 @@ module RubyLLM
 
     def list_to_h(list)
       list.empty? ? nil : list.map(&:to_h)
-    end
-
-    def finish_reason_in?(reasons)
-      reasons.include?(finish_reason_key)
-    end
-
-    def finish_reason_key
-      finish_reason.to_s.downcase.tr('-', '_')
     end
 
     def coerce_tool_calls(tool_calls)

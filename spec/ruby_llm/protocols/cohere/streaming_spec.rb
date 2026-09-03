@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
         '"tokens":{"input_tokens":71,"output_tokens":26}}},"type":"message-end"}'
       )
 
-      expect(chunk.finish_reason).to eq('COMPLETE')
+      expect(chunk.finish_reason).to eq('stop')
       expect(chunk.tokens.input).to eq(71)
       expect(chunk.tokens.output).to eq(26)
     end
@@ -107,7 +107,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
       )
 
       expect(response.content).to eq('LLMs stand')
-      expect(response.finish_reason).to eq('COMPLETE')
+      expect(response.finish_reason).to eq('stop')
       expect(response.tokens.input).to eq(71)
       expect(chunks.filter_map(&:content).join).to eq('LLMs stand')
     end

@@ -168,7 +168,7 @@ The raw response is a `Faraday::Response` object, which you can use to access th
 
 ## Finish Reasons
 
-Responses expose `finish_reason` when the provider reports why the model stopped. RubyLLM preserves the provider value as-is and provides predicate methods for common cases.
+Responses expose `finish_reason` when the provider reports why the model stopped. Each protocol maps its own vocabulary onto four values, `stop`, `max_tokens`, `tool_calls`, and `content_filter`, and the predicates read those. A reason outside the four, such as Anthropic's `pause_turn`, comes through as the provider spelled it.
 
 ```ruby
 response = chat.ask("Summarize this in one paragraph")
@@ -183,10 +183,10 @@ elsif response.stopped?
   puts "The model finished normally."
 end
 
-response.finish_reason # Raw provider value, such as "stop", "max_tokens", or "MAX_TOKENS"
+response.finish_reason # => "stop", "max_tokens", "tool_calls", or "content_filter"
 ```
 
-Provider names differ: OpenAI Chat Completions may return `tool_calls`, the Responses API reports its `completed` status, Anthropic may return `max_tokens`, Gemini may return `MAX_TOKENS`, and Bedrock may return `stopReason` values such as `end_turn`. The predicates normalize those: a response that carries tool calls answers `tool_call_stop?` and not `stopped?`, whatever the provider named the reason. Finish reasons describe completed provider responses; failed requests still raise RubyLLM error classes. RubyLLM does not send `finish_reason` back to providers when replaying conversation history.
+Anthropic's `end_turn`, Gemini's `MAX_TOKENS`, Cohere's `COMPLETE`, and the Responses API's `completed` status all arrive under those four names, so the same code reads every provider. A response that carries tool calls answers `tool_call_stop?` and not `stopped?`, whatever the provider named the reason. Finish reasons describe completed provider responses; failed requests still raise RubyLLM error classes. RubyLLM does not send `finish_reason` back to providers when replaying conversation history.
 
 ## Advanced: Replacing the LLM Transcript
 

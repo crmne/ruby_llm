@@ -229,7 +229,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
     chat = agent_class.chat
 
-    expect(chat.schema).to include(name: 'Schema', strict: true, schema: include(type: 'object'))
+    expect(chat.schema).to include(name: 'Schema', schema: include(type: 'object'))
     expect(chat.schema.dig(:schema, :properties)).to include(
       verdict: include(type: 'string'),
       feedback: include(type: 'string')
@@ -256,7 +256,7 @@ RSpec.describe RubyLLM::Agent, :live do
     strict_chat = agent_class.chat(strict: true)
     loose_chat = agent_class.chat(strict: false)
 
-    expect(strict_chat.schema).to include(name: 'response', strict: true, schema: include(type: 'object'))
+    expect(strict_chat.schema).to include(name: 'response', schema: include(type: 'object'))
     expect(loose_chat.schema).to be_nil
   end
 

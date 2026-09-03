@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(message.tokens.input).to eq(28)
     end
 
-    it 'preserves raw finish reasons' do
+    it 'normalizes finish reasons' do
       response_body = {
         'model' => 'gpt-4.1-nano',
         'choices' => [
@@ -666,6 +666,70 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(payload[:tools].first[:function][:name]).to eq('lookup')
       expect(payload[:tool_choice]).to eq(:required)
       expect(payload[:parallel_tool_calls]).to be(false)
+    end
+  end
+
+  describe '.render_payload with a schema' do
+    let(:model) { instance_double(RubyLLM::Model, id: 'gpt-4.1-nano', supports?: true) }
+    let(:protocol) do
+      Object.new.tap do |object|
+        object.extend(RubyLLM::Protocols::ChatCompletions::Tools)
+        object.extend(RubyLLM::Protocols::ChatCompletions::Media)
+        object.extend(described_class)
+      end
+    end
+
+    def strict_for(schema)
+      payload = protocol.send(
+        :render_payload,
+        [RubyLLM::Message.new(role: :user, content: 'Hi')],
+        tools: {}, temperature: nil, model: model, schema: schema
+      )
+      payload.dig(:response_format, :json_schema, :strict)
+    end
+
+    it 'sends strict when every property is required' do
+      schema = {
+        name: 'person',
+        schema: { type: 'object', properties: { name: { type: 'string' } }, required: ['name'] }
+      }
+
+      expect(strict_for(schema)).to be(true)
+    end
+
+    it 'sends non-strict when a property is optional, since strict mode would reject it' do
+      schema = {
+        name: 'person',
+        schema: {
+          type: 'object',
+          properties: { name: { type: 'string' }, city: { type: 'string' } },
+          required: ['name']
+        }
+      }
+
+      expect(strict_for(schema)).to be(false)
+    end
+
+    it 'sends non-strict when a nested object has optional properties' do
+      schema = {
+        name: 'person',
+        schema: {
+          type: 'object',
+          properties: {
+            address: { type: 'object', properties: { street: { type: 'string' }, unit: { type: 'string' } },
+                       required: ['street'] }
+          },
+          required: ['address']
+        }
+      }
+
+      expect(strict_for(schema)).to be(false)
+    end
+
+    it 'keeps an explicit strict choice' do
+      schema = { name: 'person', schema: { type: 'object', properties: { city: { type: 'string' } } }, strict: true }
+
+      expect(strict_for(schema)).to be(true)
     end
   end
 end

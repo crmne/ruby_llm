@@ -207,7 +207,7 @@ module RubyLLM
         end
 
         def extract_finish_reason(event)
-          event.dig('messageStop', 'stopReason') || event['stopReason']
+          normalize_finish_reason(event.dig('messageStop', 'stopReason') || event['stopReason'])
         end
 
         def event_usage(event)

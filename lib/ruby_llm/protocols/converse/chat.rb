@@ -7,6 +7,12 @@ module RubyLLM
     class Converse
       # Chat methods for Bedrock Converse API.
       module Chat
+        FINISH_REASONS = {
+          'end_turn' => 'stop', 'stop_sequence' => 'stop', 'max_tokens' => 'max_tokens',
+          'model_context_window_exceeded' => 'max_tokens', 'tool_use' => 'tool_calls',
+          'guardrail_intervened' => 'content_filter', 'content_filtered' => 'content_filter'
+        }.freeze
+
         BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
@@ -14,6 +20,14 @@ module RubyLLM
         MINIMUM_BUDGET_TOKENS = 1
 
         module_function
+
+        def finish_reasons = FINISH_REASONS
+
+        def normalize_finish_reason(reason)
+          return nil if reason.nil?
+
+          finish_reasons.fetch(reason.to_s, reason)
+        end
 
         def completion_url
           "/model/#{escape_model_id(@model.id)}/converse"
@@ -110,7 +124,7 @@ module RubyLLM
             cache_read_tokens: usage['cacheReadInputTokens'],
             cache_write_tokens: usage['cacheWriteInputTokens'],
             thinking_tokens: reasoning_tokens(usage),
-            finish_reason: data['stopReason'],
+            finish_reason: normalize_finish_reason(data['stopReason']),
             model: data['modelId'] || @model&.id,
             raw: raw
           )

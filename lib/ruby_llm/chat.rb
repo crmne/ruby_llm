@@ -894,30 +894,9 @@ module RubyLLM
       {
         name: sanitize_schema_name(schema[:name] || schema[:title] || 'response'),
         schema: schema_def,
-        strict: strict.nil? ? strict_capable?(schema_def) : strict,
+        strict: strict,
         description: schema[:description]
       }.compact
-    end
-
-    # OpenAI's strict mode rejects any object whose properties are not all
-    # required, so a schema with optional fields is sent non-strict unless
-    # the caller asked for strict explicitly.
-    def strict_capable?(node)
-      case node
-      when Hash
-        return false if optional_properties?(node)
-
-        node.values.all? { |value| strict_capable?(value) }
-      when Array then node.all? { |value| strict_capable?(value) }
-      else true
-      end
-    end
-
-    def optional_properties?(node)
-      properties = node[:properties]
-      return false unless properties.is_a?(Hash)
-
-      (properties.keys.map(&:to_s) - Array(node[:required]).map(&:to_s)).any?
     end
 
     def sanitize_schema_name(name)

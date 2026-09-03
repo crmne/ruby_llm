@@ -36,7 +36,7 @@ module RubyLLM
             thinking_tokens: thinking_tokens(usage),
             server_tool_use: server_tool_use(usage),
             reported_cost: reported_cost(usage),
-            finish_reason: data.dig('choices', 0, 'finish_reason')
+            finish_reason: normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
           )
         end
 

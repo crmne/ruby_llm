@@ -22,7 +22,7 @@ module RubyLLM
             citations: extract_citations_delta(data, type),
             thinking: Thinking.build(text: extract_thinking_delta(data, type)),
             tool_calls: extract_tool_calls(data, type),
-            finish_reason: data.dig('delta', 'finish_reason'),
+            finish_reason: normalize_finish_reason(data.dig('delta', 'finish_reason')),
             **stream_usage(data.dig('delta', 'usage'))
           )
         end

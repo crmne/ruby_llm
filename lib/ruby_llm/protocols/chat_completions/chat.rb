@@ -5,6 +5,11 @@ module RubyLLM
     class ChatCompletions
       # Chat methods of the OpenAI API integration
       module Chat
+        FINISH_REASONS = {
+          'stop' => 'stop', 'length' => 'max_tokens', 'tool_calls' => 'tool_calls',
+          'function_call' => 'tool_calls', 'content_filter' => 'content_filter'
+        }.freeze
+
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
         PROMPT_CACHE_OPTIONS = %i[key ttl mode retention].freeze
@@ -14,6 +19,39 @@ module RubyLLM
         end
 
         module_function
+
+        def finish_reasons = FINISH_REASONS
+
+        def normalize_finish_reason(reason)
+          return nil if reason.nil?
+
+          finish_reasons.fetch(reason.to_s, reason)
+        end
+
+        # OpenAI strict mode rejects an object whose properties are not all
+        # required, so a schema with optional properties goes out non-strict
+        # unless the caller asked for strict explicitly.
+        def schema_strict(schema)
+          schema.key?(:strict) ? schema[:strict] : strict_schema?(schema[:schema])
+        end
+
+        def strict_schema?(node)
+          case node
+          when Hash
+            return false if optional_properties?(node)
+
+            node.values.all? { |value| strict_schema?(value) }
+          when Array then node.all? { |value| strict_schema?(value) }
+          else true
+          end
+        end
+
+        def optional_properties?(node)
+          properties = node[:properties]
+          return false unless properties.is_a?(Hash)
+
+          (properties.keys.map(&:to_s) - Array(node[:required]).map(&:to_s)).any?
+        end
 
         # rubocop:disable-next Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
@@ -35,16 +73,12 @@ module RubyLLM
           end
 
           if schema
-            schema_name = schema[:name]
-            schema_def = schema[:schema]
-            strict = schema[:strict]
-
             payload[:response_format] = {
               type: 'json_schema',
               json_schema: {
-                name: schema_name,
-                schema: schema_def,
-                strict: strict
+                name: schema[:name],
+                schema: schema[:schema],
+                strict: schema_strict(schema)
               }
             }
           end
@@ -83,7 +117,7 @@ module RubyLLM
           thinking_text = thinking_from_blocks || extract_thinking_text(message_data)
           thinking_signature = extract_thinking_signature(message_data)
 
-          finish_reason = data.dig('choices', 0, 'finish_reason')
+          finish_reason = normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
 
           Message.new(
             role: :assistant,

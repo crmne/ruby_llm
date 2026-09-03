@@ -5,6 +5,11 @@ module RubyLLM
     class Anthropic
       # Chat methods for the Anthropic API implementation
       module Chat
+        FINISH_REASONS = {
+          'end_turn' => 'stop', 'stop_sequence' => 'stop', 'max_tokens' => 'max_tokens',
+          'model_context_window_exceeded' => 'max_tokens', 'tool_use' => 'tool_calls', 'refusal' => 'content_filter'
+        }.freeze
+
         ANTHROPIC_INLINE_REQUEST_LIMIT = 24 * 1024 * 1024
         ANTHROPIC_FILE_UPLOAD_LIMIT = 500 * 1024 * 1024
         CACHE_CONTROL_TYPE = 'ephemeral'
@@ -15,6 +20,14 @@ module RubyLLM
         COUNT_TOKENS_KEYS = %i[model messages system tools tool_choice thinking].freeze
 
         module_function
+
+        def finish_reasons = FINISH_REASONS
+
+        def normalize_finish_reason(reason)
+          return nil if reason.nil?
+
+          finish_reasons.fetch(reason.to_s, reason)
+        end
 
         def completion_url
           'v1/messages'
@@ -312,7 +325,7 @@ module RubyLLM
             cache_write_tokens: extract_cache_write_tokens(data),
             thinking_tokens: thinking_tokens,
             server_tool_use: usage['server_tool_use'],
-            finish_reason: data['stop_reason'],
+            finish_reason: normalize_finish_reason(data['stop_reason']),
             model: data['model'],
             raw: raw
           )

@@ -6,6 +6,7 @@ require 'aws-eventstream'
 RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   let(:streaming) do
     Object.new.tap do |object|
+      object.extend(RubyLLM::Protocols::Converse::Chat)
       object.extend(described_class)
       object.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: 'bedrock-test-model'))
       object.define_singleton_method(:escape_model_id) { |id| id.to_s.gsub('/', '%2F') }
@@ -107,7 +108,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     expect(chunk.thinking.signature).to eq('redacted-thinking')
   end
 
-  it 'preserves raw stopReason from messageStop events' do
+  it 'normalizes stopReason from messageStop events' do
     event = {
       'messageStop' => {
         'stopReason' => 'max_tokens'

@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
 
     chunk = test_obj.send(:build_chunk, data)
 
-    expect(chunk.finish_reason).to eq('MAX_TOKENS')
+    expect(chunk.finish_reason).to eq('max_tokens')
   end
 
   describe '#parse_streaming_error' do

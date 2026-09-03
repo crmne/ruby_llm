@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(message.tokens.cache_write).to eq(327)
     end
 
-    it 'preserves raw stopReason as finish_reason' do
+    it 'normalizes stopReason into finish_reason' do
       response_body = {
         'modelId' => 'amazon.nova-lite-v1:0',
         'output' => {
@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.finish_reason).to eq('guardrail_intervened')
+      expect(message.finish_reason).to eq('content_filter')
     end
 
     it 'falls back to the request model when Bedrock omits modelId' do

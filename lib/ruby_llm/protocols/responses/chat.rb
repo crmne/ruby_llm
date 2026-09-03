@@ -228,7 +228,7 @@ module RubyLLM
             type: 'json_schema',
             name: schema[:name],
             schema: schema[:schema],
-            strict: schema[:strict]
+            strict: schema_strict(schema)
           }
         end
 
@@ -351,8 +351,15 @@ module RubyLLM
           texts.empty? ? nil : texts.join
         end
 
+        FINISH_REASONS = {
+          'completed' => 'stop', 'max_output_tokens' => 'max_tokens', 'content_filter' => 'content_filter'
+        }.freeze
+
+        def finish_reasons = FINISH_REASONS
+
         def parse_finish_reason(data)
-          data.dig('incomplete_details', 'reason') || (data['status'] if data['status'] == 'completed')
+          reason = data.dig('incomplete_details', 'reason') || (data['status'] if data['status'] == 'completed')
+          normalize_finish_reason(reason)
         end
 
         def parse_function_calls(output, response: nil, finish_reason: nil)

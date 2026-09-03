@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
       }
     )
 
-    expect(chunk.finish_reason).to eq('end_turn')
+    expect(chunk.finish_reason).to eq('stop')
   end
 
   it 'reads thinking token counts from message_delta usage' do
