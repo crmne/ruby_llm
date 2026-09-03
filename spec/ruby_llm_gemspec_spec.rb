@@ -17,4 +17,8 @@ RSpec.describe 'ruby_llm.gemspec' do
   it 'keeps faraday-retry compatible with Faraday v1 and v2' do
     expect(runtime_dependency('faraday-retry').requirement.to_s).to eq('>= 1')
   end
+
+  it 'supports Marcel v1 and v2' do
+    expect(runtime_dependency('marcel').requirement.to_s).to eq('>= 1.0, < 3')
+  end
 end
