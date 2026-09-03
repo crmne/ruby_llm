@@ -14,6 +14,8 @@ module RubyLLM
   # Cache names are provider-owned. Persist #provider alongside #name and
   # pass it back when finding the cache later.
   class CachedContent
+    include Inspectable
+
     # The provider-assigned resource name, such as
     # <tt>"cachedContents/abc123"</tt>.
     attr_reader :name
@@ -78,6 +80,10 @@ module RubyLLM
     # <tt>"300s"</tt>. When +provider:+ is omitted, the model's default
     # provider is used. The content must exceed the model's minimum
     # cacheable token count.
+    def inspect_attributes # :nodoc:
+      { name: name, model: model, provider: provider, expires_at: expires_at }
+    end
+
     def self.create(content, model:, ttl: nil, instructions: nil, provider: nil, context: nil, with: nil)
       config = context&.config || RubyLLM.config
       model_instance, provider_instance = Models.resolve(model, provider: provider, config: config)

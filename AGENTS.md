@@ -47,7 +47,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 
 ## Public API rules
 
-- **Chain setters, read state.** Every `Chat#with_x` returns `self`, accepts `nil` to reset, and has a bare `x` reader. Every `with_x` also has a bare `x` class macro on `Agent` and appears in the delegate lists in `Agent` and `ActiveRecord::ChatMethods`; the delegation specs fail when the three drift.
+- **Chain setters, read state.** Every `Chat#with_x` returns `self`, accepts `nil` to reset, and has a bare `x` reader (instructions are the one exception: they live in the transcript, so read `chat.messages`). Every `with_x` also has a bare `x` class macro on `Agent` and appears in the delegate lists in `Agent` and `ActiveRecord::ChatMethods`; the delegation specs fail when the three drift.
 - **Feature switches share one shape.** `with_thinking`, `with_citations`, `with_caching`, and `with_compaction` take nothing or `true` to enable, `false` to disable, and options as keywords or a Hash. They reject `nil`.
 - **One name per concept, everywhere.** `max_output_tokens` not `max_tokens`, `thinking` not `reasoning`, `cache_read` and `cache_write`, `provider_options` for the provider's own vocabulary, `provider:` as a keyword. The registry's capability names come from models.dev and stay as they are (`supports?(:reasoning)`).
 - **Capabilities are one query**, `supports?(:vision)`, never a `supports_vision?` predicate.

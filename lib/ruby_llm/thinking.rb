@@ -11,6 +11,8 @@ module RubyLLM
   #   response.thinking&.signature
   #
   class Thinking
+    include Inspectable
+
     # The reasoning text the provider returned, or +nil+.
     attr_reader :text
 
@@ -32,15 +34,8 @@ module RubyLLM
       new(text: text, signature: signature)
     end
 
-    def pretty_print(printer) # :nodoc:
-      printer.object_group(self) do
-        printer.breakable
-        printer.text 'text='
-        printer.pp text
-        printer.comma_breakable
-        printer.text 'signature='
-        printer.pp(signature ? '[REDACTED]' : nil)
-      end
+    def inspect_attributes # :nodoc:
+      { text: text, signature: signature ? '[REDACTED]' : nil }
     end
   end
 

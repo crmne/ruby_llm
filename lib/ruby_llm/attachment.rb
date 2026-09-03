@@ -276,7 +276,7 @@ module RubyLLM
 
       @mime_type = RubyLLM::MimeType.for(url? ? nil : @source, name: @filename)
       @mime_type = RubyLLM::MimeType.for(content) if @mime_type == 'application/octet-stream'
-      @mime_type = 'audio/wav' if @mime_type == 'audio/x-wav' # Normalize WAV type
+      @mime_type = 'audio/wav' if @mime_type == 'audio/x-wav'
     end
 
     def fetch_content

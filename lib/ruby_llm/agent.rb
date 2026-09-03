@@ -78,8 +78,8 @@ module RubyLLM
 
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
-      model provider messages tools server_tools provider_options headers schema concurrency
-      caching compaction end_user fallbacks thinking temperature max_output_tokens
+      model provider messages tools server_tools tool_options provider_options headers schema concurrency
+      caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
       each complete? cancelled? awaiting_approval? pending_approvals
       add_message add_completion tokens cost render
     ].freeze

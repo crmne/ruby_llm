@@ -11,6 +11,8 @@ module RubyLLM
   #   end
   #
   class ToolCall
+    include Inspectable
+
     # The unique identifier for this call. The tool result message
     # answering this call carries the same id.
     attr_reader :id
@@ -34,6 +36,10 @@ module RubyLLM
 
     # Returns a Hash with the keys +:id+, +:name+, +:arguments+, and
     # +:thought_signature+. Keys with +nil+ values are omitted.
+    def inspect_attributes # :nodoc:
+      { id: id, name: name, arguments: arguments }
+    end
+
     def to_h
       {
         id: @id,

@@ -80,7 +80,20 @@ module RubyLLM
     # The Fallback models tried in order when generation fails.
     attr_reader :fallbacks
 
+    # Whether #with_citations asked the provider for citations.
+    attr_reader :citations
+
+    # The Context this chat sends requests through, or +nil+ for the global
+    # configuration.
+    attr_reader :context
+
     attr_reader :tool_prefs, :fallback_errors, :usage_entries # :nodoc:
+
+    # The tool steering set with #with_tool_options: +choice+, +calls+, and
+    # +concurrency+, with +nil+ for anything left at the default.
+    def tool_options
+      { choice: tool_prefs[:choice], calls: tool_prefs[:calls], concurrency: concurrency }
+    end
 
     # Creates a chat with +model:+, or with the configured default model
     # when +model:+ is +nil+. Most code calls RubyLLM.chat instead.
@@ -191,12 +204,17 @@ module RubyLLM
 
     # Advances the conversation by one move: runs the pending tool calls
     # if any are unanswered, otherwise generates the next response.
-    # Returns +nil+ once there is nothing left to do.
+    # Returns the Message that move produced, and +nil+ once there is
+    # nothing left to do or the loop is parked on an approval.
     def step(&)
       return if complete?
 
       raise_if_cancelled!
-      pending_tool_response ? run_tools : generate(&)
+      return generate(&) unless pending_tool_response
+
+      before = messages.length
+      run_tools
+      messages.last if messages.length > before
     end
 
     # Runs the agentic loop until #complete? is +true+ and returns the last

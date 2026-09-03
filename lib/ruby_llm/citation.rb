@@ -16,6 +16,8 @@ module RubyLLM
   #   end
   #
   class Citation
+    include Inspectable
+
     # The URL of the cited source, when citing the web, or +nil+.
     attr_reader :url
 
@@ -63,6 +65,10 @@ module RubyLLM
 
     def self.from_h(data) # :nodoc:
       new(Utils.deep_symbolize_keys(data))
+    end
+
+    def inspect_attributes # :nodoc:
+      { url: url, title: title, start_index: start_index, end_index: end_index }
     end
 
     # Returns the citation as a Hash with symbol keys, omitting +nil+ fields.

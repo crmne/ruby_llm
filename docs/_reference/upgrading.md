@@ -154,6 +154,8 @@ Grep for each pattern on the left; the sections below the table explain the reas
 | `with_tool(`, `with_tools(..., choice:` | `with_tools` for the set, `with_tool_options(choice:, calls:, concurrency:)` for the steering |
 | Tool `desc `, `param :`, `params do` | `description`, `parameter`, `parameters` |
 | `RubyLLM.models.refresh!`, `load_from_json!`, `load_from_database!`, `Model.refresh!` | `RubyLLM.models.refresh`, `load_from_json`, `load_from_store`; the registry has no application model |
+| `RubyLLM.models.find(id, :openai)` | `RubyLLM.models.find(id, provider: :openai)` |
+| `finish_reason == "stop"`, `finish_reason == "end_turn"` | `finish_reason == :stop`; every protocol maps its own values onto `:stop`, `:max_tokens`, `:tool_calls`, and `:content_filter` |
 
 ### 5. Boot, run your suite, and fix the UI edges
 
@@ -246,6 +248,11 @@ Scan the table for anything your app uses, then read its section below.
 | `RubyLLM::ModelRegistry::JsonSource`, `RubyLLM::ModelRegistry::ActiveRecordSource` | `config.model_registry_file`, or a `model_registry_store` object; Rails configures its store automatically |
 | `RubyLLM.models.load_from_database!` | `RubyLLM.models.load_from_store` |
 | `RubyLLM.models.refresh!`, `RubyLLM.models.load_from_json!` | `RubyLLM.models.refresh`, `RubyLLM.models.load_from_json` |
+| `RubyLLM.models.find(id, :openai)` | `RubyLLM.models.find(id, provider: :openai)` |
+| `response.finish_reason` as a provider String (`"end_turn"`, `"STOP"`) | a Symbol normalized across providers: `:stop`, `:max_tokens`, `:tool_calls`, `:content_filter` |
+| `chat.thinking` returning `{effort: "low"}`, `model.type` returning `"chat"` | Symbols: `{effort: :low}`, `:chat` |
+| `RubyLLM.ocr(file, pages: [0])`, `RubyLLM.upload(file, uri:, display_name:)` | `provider_options: { pages: [0] }`, `provider_options: { uri:, display_name: }` |
+| `batch.provider_slug`, `fallback.provider` as a Symbol | `batch.provider`, `fallback.provider` as a String, like every other provider reader |
 | `on_new_message`, `on_end_message` | `before_message`, `after_message` |
 | `on_tool_call`, `on_tool_result` | `before_tool_call`, `after_tool_result` |
 | `with_instructions(text, replace: true)` | `with_instructions(text)` replaces by default |

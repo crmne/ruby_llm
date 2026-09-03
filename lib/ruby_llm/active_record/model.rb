@@ -4,8 +4,12 @@ require 'active_support/core_ext/module/delegation'
 
 module RubyLLM
   module ActiveRecord
-    # RubyLLM's private, database-backed model registry.
-    class Model < ::ActiveRecord::Base # :nodoc:
+    # The row behind the model registry in a Rails app, one per registry
+    # entry, in the +ruby_llm_models+ table. Chats point at it through
+    # +belongs_to :model+. The +listed+ and +unlisted+ scopes tell the
+    # models the configured provider still serves from the ones kept only
+    # because a chat references them.
+    class Model < ::ActiveRecord::Base
       self.table_name = 'ruby_llm_models'
 
       validates :model_id, presence: true, uniqueness: { scope: :provider }
@@ -17,7 +21,7 @@ module RubyLLM
       UNLISTED_WARNING_LIMIT = 5 # :nodoc:
 
       class << self
-        def read
+        def read # :nodoc:
           return [] unless table_exists?
 
           all.map(&:to_llm)
@@ -26,19 +30,19 @@ module RubyLLM
           []
         end
 
-        def write(registry)
+        def write(registry) # :nodoc:
           save_to_database(registry)
         end
 
-        def description
+        def description # :nodoc:
           "database:#{table_name}"
         end
 
-        def refresh
+        def refresh # :nodoc:
           RubyLLM.models.refresh
         end
 
-        def save_to_database(registry = RubyLLM.models)
+        def save_to_database(registry = RubyLLM.models) # :nodoc:
           transaction do
             kept = registry.all.map do |model_info|
               model = find_or_initialize_by(model_id: model_info.id, provider: model_info.provider)
@@ -49,7 +53,7 @@ module RubyLLM
           end
         end
 
-        def from_llm(model_info)
+        def from_llm(model_info) # :nodoc:
           new(attributes_from_llm(model_info))
         end
 
@@ -124,6 +128,7 @@ module RubyLLM
         )
       end
 
+      # Registry readers answered from the RubyLLM::Model value of the row.
       delegate :supports?, :price, :type, :provider_class, :label, :cost_for, :unlisted?, to: :to_llm
     end
   end

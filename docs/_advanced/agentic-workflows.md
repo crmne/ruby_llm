@@ -31,7 +31,7 @@ When you want to see the whole operation as one unit in your observability stack
 
 * `generate` runs the model once and appends its response (the model's move). It returns the response.
 * `run_tools` executes the tool calls the model asked for and appends their results (your move). It makes no model call and returns the chat.
-* `step` does whichever move is next: `run_tools` if tools are pending, otherwise `generate`. It returns `nil` once there is nothing left.
+* `step` does whichever move is next: `run_tools` if tools are pending, otherwise `generate`. It returns the message that move produced, and `nil` once there is nothing left or the loop is parked for approval.
 * `complete` steps until done. This is what `ask` calls, and it returns the final response.
 * `complete?` is true when the model answered without calling a tool.
 

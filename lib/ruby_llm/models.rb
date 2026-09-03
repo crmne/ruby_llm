@@ -319,7 +319,6 @@ module RubyLLM
       end
 
       def find_models_dev_model(key, models_dev_by_key, provider_model = nil) # :nodoc:
-        # Direct match
         return models_dev_by_key[key] if models_dev_by_key[key]
 
         provider, model_id = key.split(':', 2)
