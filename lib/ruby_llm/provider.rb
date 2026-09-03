@@ -446,6 +446,12 @@ module RubyLLM
         nil
       end
 
+      # The id RubyLLM registers for a models.dev entry. Providers whose
+      # catalog spells ids differently from models.dev override this.
+      def models_dev_model_id(id) # :nodoc:
+        id
+      end
+
       # Returns the configuration keys that must be set before the
       # provider is usable. The base implementation returns an empty
       # array.

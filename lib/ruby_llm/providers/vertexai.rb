@@ -25,6 +25,12 @@ module RubyLLM
         def models_dev_alias(...)
           VertexAI::Models.models_dev_alias(...)
         end
+
+        # models.dev pins Vertex AI models to a version (claude-haiku-4-5@20251001);
+        # Vertex AI serves them by bare name.
+        def models_dev_model_id(id)
+          id&.split('@')&.first
+        end
       end
 
       # Vertex AI hosts models from several publishers, each speaking its

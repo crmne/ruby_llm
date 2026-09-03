@@ -439,12 +439,9 @@ module RubyLLM
         data
       end
 
-      # models.dev pins Vertex AI models to a version (claude-haiku-4-5@20251001);
-      # Vertex AI serves them by bare name.
       def models_dev_model_id(id, provider_slug) # :nodoc:
-        return id unless provider_slug == 'vertexai'
-
-        id&.split('@')&.first
+        provider = Provider.resolve(provider_slug)
+        provider ? provider.models_dev_model_id(id) : id
       end
 
       def models_dev_capabilities(model_data, modalities, provider_slug) # :nodoc:

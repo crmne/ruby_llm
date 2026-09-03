@@ -154,7 +154,7 @@ protocol_contract.cannot_reference_constants 'RubyLLM::Providers'
 # The chat wire contract every protocol family implements. The Protocol base
 # declares these abstract with define_method, invisible to static analysis, so
 # must_implement is real here: a family that forgets a seam fails the build.
-chat_protocol_families.must_implement :render_payload, :completion_url, :parse_completion_body
+chat_protocol_families.must_implement :render_payload, :completion_url, :parse_completion_body, :finish_reasons
 
 # Wire serialization is render_*, deserialization is parse_*. The non-idiomatic
 # serialize_/to_wire_ forms have no place in a protocol.
@@ -219,3 +219,14 @@ provider_capabilities.must_implement :augment, scope: :class
 # static analysis cannot see.
 chat.method_names.matching(/\Awith_(?<option>.+)/)
     .requires('%<option>s', on: agent, scope: :class, except: %i[with_temperature with_max_output_tokens])
+
+# Provider and protocol vocabulary stays in providers and protocols. A domain
+# object or the Rails integration never names a provider or a wire format in a
+# method, and never carries a table of provider values (finish reasons, error
+# phrases, strict-mode rules): protocols normalize on the way in and out.
+PROVIDER_VOCABULARY = /openai|anthropic|gemini|bedrock|converse|cohere|mistral|vertex|azure|ollama|xai|deepseek|
+                       perplexity|openrouter|gpustack|elevenlabs|deepgram|responses|chat_completions/xi
+domain.method_names.matching(PROVIDER_VOCABULARY)
+      .forbidden(because: 'provider and protocol vocabulary belongs in providers and protocols')
+rails_integration.method_names.matching(PROVIDER_VOCABULARY)
+                 .forbidden(because: 'provider and protocol vocabulary belongs in providers and protocols')
