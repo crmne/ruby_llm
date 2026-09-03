@@ -474,7 +474,7 @@ RSpec.describe RubyLLM::Agent, :live do
     chat = agent_class.chat
 
     expect(chat.fallbacks.map(&:id)).to eq(%w[gpt-4.1-mini claude-haiku-4-5-20251001])
-    expect(chat.fallbacks.last.provider).to eq(:anthropic)
+    expect(chat.fallbacks.last.provider).to eq('anthropic')
     expect(chat.fallback_errors).to eq([RubyLLM::RateLimitError])
   end
 
