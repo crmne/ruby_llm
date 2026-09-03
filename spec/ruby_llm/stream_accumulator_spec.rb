@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::StreamAccumulator do
 
       expect(error).to be_a(RubyLLM::Error)
       expect(error.response).to eq(response)
-      expect(error.finish_reason).to eq('length')
+      expect(error.finish_reason).to eq(:length)
       expect(error.cause).to be_a(JSON::ParserError)
     end
 
@@ -121,7 +121,7 @@ RSpec.describe RubyLLM::StreamAccumulator do
       accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: 'tool_use'))
 
       message = accumulator.to_message(nil)
-      expect(message.finish_reason).to eq('tool_use')
+      expect(message.finish_reason).to eq(:tool_use)
     end
   end
 

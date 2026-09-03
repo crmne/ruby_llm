@@ -170,18 +170,18 @@ module RubyLLM
     end
 
     # Returns the model's primary function, inferred from its output
-    # modalities: <tt>"chat"</tt>, <tt>"embedding"</tt>, <tt>"moderation"</tt>,
-    # <tt>"image"</tt>, <tt>"audio"</tt>, <tt>"video"</tt>, or <tt>"rerank"</tt>.
+    # modalities: +:chat+, +:embedding+, +:moderation+, +:image+, +:audio+,
+    # +:video+, or +:rerank+.
     def type
       output = modalities.output
-      return 'embedding' if output.include?('embeddings')
-      return 'moderation' if output.include?('moderation')
-      return 'image' if output.include?('image')
-      return 'audio' if output.include?('audio')
-      return 'video' if output.include?('video')
-      return 'rerank' if output.include?('rerank')
+      return :embedding if output.include?('embeddings')
+      return :moderation if output.include?('moderation')
+      return :image if output.include?('image')
+      return :audio if output.include?('audio')
+      return :video if output.include?('video')
+      return :rerank if output.include?('rerank')
 
-      'chat'
+      :chat
     end
 
     def to_h # :nodoc:

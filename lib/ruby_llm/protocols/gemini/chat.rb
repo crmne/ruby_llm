@@ -6,11 +6,11 @@ module RubyLLM
       # Chat methods for the Gemini API implementation
       module Chat
         FINISH_REASONS = {
-          'STOP' => 'stop', 'MAX_TOKENS' => 'max_tokens',
-          'SAFETY' => 'content_filter', 'RECITATION' => 'content_filter', 'BLOCKLIST' => 'content_filter',
-          'PROHIBITED_CONTENT' => 'content_filter', 'SPII' => 'content_filter', 'IMAGE_SAFETY' => 'content_filter',
-          'IMAGE_RECITATION' => 'content_filter', 'IMAGE_PROHIBITED_CONTENT' => 'content_filter',
-          'MODEL_ARMOR' => 'content_filter'
+          'STOP' => :stop, 'MAX_TOKENS' => :max_tokens,
+          'SAFETY' => :content_filter, 'RECITATION' => :content_filter, 'BLOCKLIST' => :content_filter,
+          'PROHIBITED_CONTENT' => :content_filter, 'SPII' => :content_filter, 'IMAGE_SAFETY' => :content_filter,
+          'IMAGE_RECITATION' => :content_filter, 'IMAGE_PROHIBITED_CONTENT' => :content_filter,
+          'MODEL_ARMOR' => :content_filter
         }.freeze
 
         GEMINI_INLINE_FILE_THRESHOLD = 20 * 1024 * 1024
@@ -24,7 +24,7 @@ module RubyLLM
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
-          finish_reasons.fetch(reason.to_s, reason)
+          finish_reasons.fetch(reason.to_s) { reason.to_s.to_sym }
         end
 
         def completion_url
@@ -113,7 +113,7 @@ module RubyLLM
 
           config = { includeThoughts: true }
 
-          config[:thinkingLevel] = thinking.effort if thinking.effort
+          config[:thinkingLevel] = thinking.effort.to_s if thinking.effort
           config[:thinkingBudget] = thinking.budget if thinking.budget.is_a?(Integer)
           config[:thinkingBudget] = -1 if thinking.enabled == true
 

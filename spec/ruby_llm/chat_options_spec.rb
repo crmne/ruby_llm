@@ -183,7 +183,7 @@ RSpec.describe RubyLLM::Chat do
     it 'returns the options configured for the current model' do
       chat.with_thinking(effort: :high, budget: 2_000)
 
-      expect(chat.thinking).to eq(effort: 'high', budget: 2_000)
+      expect(chat.thinking).to eq(effort: :high, budget: 2_000)
     end
   end
 

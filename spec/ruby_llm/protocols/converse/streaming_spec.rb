@@ -117,7 +117,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
     chunk = streaming.send(:build_chunk, event)
 
-    expect(chunk.finish_reason).to eq('max_tokens')
+    expect(chunk.finish_reason).to eq(:max_tokens)
   end
 
   it 'extracts thinking tokens from nested usage output token details' do

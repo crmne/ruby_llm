@@ -130,7 +130,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       model = parser.parse_list_models_response(response, 'openrouter').first
 
       expect(model.modalities.to_h).to eq(input: ['text'], output: ['rerank'])
-      expect(model.type).to eq('rerank')
+      expect(model.type).to eq(:rerank)
     end
   end
 

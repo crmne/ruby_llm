@@ -6,7 +6,7 @@ module RubyLLM
       # Chat methods for the Cohere v2 API implementation
       module Chat
         FINISH_REASONS = {
-          'COMPLETE' => 'stop', 'STOP_SEQUENCE' => 'stop', 'MAX_TOKENS' => 'max_tokens', 'TOOL_CALL' => 'tool_calls'
+          'COMPLETE' => :stop, 'STOP_SEQUENCE' => :stop, 'MAX_TOKENS' => :max_tokens, 'TOOL_CALL' => :tool_calls
         }.freeze
 
         module_function
@@ -16,7 +16,7 @@ module RubyLLM
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
-          finish_reasons.fetch(reason.to_s, reason)
+          finish_reasons.fetch(reason.to_s) { reason.to_s.to_sym }
         end
 
         def completion_url

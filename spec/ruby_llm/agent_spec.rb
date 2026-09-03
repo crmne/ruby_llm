@@ -142,7 +142,7 @@ RSpec.describe RubyLLM::Agent, :live do
       thinking effort: :low
     end
 
-    expect(agent_class.new.thinking).to eq(effort: 'low')
+    expect(agent_class.new.thinking).to eq(effort: :low)
   end
 
   it 'starts without instructions when the default prompt is missing' do

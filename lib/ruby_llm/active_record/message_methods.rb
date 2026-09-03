@@ -112,6 +112,11 @@ module RubyLLM
         payload_error_message(extract_content)
       end
 
+      # Why the model stopped, as the Symbol RubyLLM::Message reports.
+      def finish_reason
+        optional_column(:finish_reason)&.to_sym
+      end
+
       # Returns the message text parsed as JSON, for structured output
       # responses. Returns +nil+ when the message has no text.
       def parsed

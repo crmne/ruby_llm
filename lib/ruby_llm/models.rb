@@ -349,7 +349,7 @@ module RubyLLM
         data[:max_output_tokens] = provider_model.max_output_tokens if blank_value?(data[:max_output_tokens])
         data[:knowledge_cutoff] = provider_model.knowledge_cutoff if blank_value?(data[:knowledge_cutoff])
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
-        if models_dev_model.type == 'chat' && provider_model.type != 'chat'
+        if models_dev_model.type == :chat && provider_model.type != :chat
           data[:modalities] = provider_model.modalities.to_h
         end
         data[:pricing] = Utils.deep_merge(provider_model.pricing.to_h, data[:pricing].to_h)
@@ -618,24 +618,24 @@ module RubyLLM
 
     # Returns a new Models registry containing only chat models.
     def chat_models
-      select_models { |m| m.type == 'chat' }
+      select_models { |m| m.type == :chat }
     end
 
     # Returns a new Models registry containing only embedding models.
     def embedding_models
-      select_models { |m| m.type == 'embedding' || m.modalities.output.include?('embeddings') }
+      select_models { |m| m.type == :embedding || m.modalities.output.include?('embeddings') }
     end
 
     # Returns a new Models registry containing only models with audio
     # output.
     def audio_models
-      select_models { |m| m.type == 'audio' || m.modalities.output.include?('audio') }
+      select_models { |m| m.type == :audio || m.modalities.output.include?('audio') }
     end
 
     # Returns a new Models registry containing only models with image
     # output.
     def image_models
-      select_models { |m| m.type == 'image' || m.modalities.output.include?('image') }
+      select_models { |m| m.type == :image || m.modalities.output.include?('image') }
     end
 
     # Returns a new Models registry containing only models in +family+.

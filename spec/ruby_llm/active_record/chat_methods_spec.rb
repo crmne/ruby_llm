@@ -433,7 +433,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.concurrency).to eq(:fibers)
       expect(chat.caching).to eq(ttl: '1h')
       expect(chat.compaction).to eq(at: 50_000)
-      expect(chat.thinking).to eq(effort: 'low')
+      expect(chat.thinking).to eq(effort: :low)
       expect(chat.end_user).to eq('customer-42')
       expect(chat.fallbacks).to eq(chat.to_llm.fallbacks)
       expect(chat.headers).to eq('X-Trace' => 'abc')
@@ -631,7 +631,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(record.content).to eq('done')
       expect(record.reload.to_llm.thinking.text).to eq('')
       expect(record.thinking_signature).to eq('sig')
-      expect(record.finish_reason).to eq('stop')
+      expect(record.finish_reason).to eq(:stop)
       expect(record.citations.first.url).to eq('https://example.test')
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result).to eq(record)
     end

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   describe '.parse_completion_response' do
-    it 'preserves raw stop_reason as finish_reason' do
+    it 'normalizes stop_reason into finish_reason' do
       protocol = RubyLLM::Protocols::Anthropic.allocate
       response = instance_double(
         Faraday::Response,
@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.finish_reason).to eq('max_tokens')
+      expect(message.finish_reason).to eq(:max_tokens)
     end
   end
 

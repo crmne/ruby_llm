@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
       }
     )
 
-    expect(chunk.finish_reason).to eq('tool_calls')
+    expect(chunk.finish_reason).to eq(:tool_calls)
   end
 
   describe '#parse_streaming_error' do

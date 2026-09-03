@@ -25,7 +25,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
       expect(sonar.price(:input)).to eq(1.0)
 
       embedding = models.find { |model| model.id == 'pplx-embed-v1-0.6b' }
-      expect(embedding.type).to eq('embedding')
+      expect(embedding.type).to eq(:embedding)
       expect(embedding.context_window).to eq(32_768)
       expect(embedding.price(:input)).to eq(0.004)
 

@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.finish_reason).to eq('content_filter')
+      expect(message.finish_reason).to eq(:content_filter)
     end
 
     it 'falls back to the request model when Bedrock omits modelId' do

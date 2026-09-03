@@ -65,7 +65,7 @@ module RubyLLM
           return nil unless thinking&.enabled?
 
           reasoning = {}
-          reasoning[:effort] = thinking.effort if thinking.respond_to?(:effort) && thinking.effort
+          reasoning[:effort] = thinking.effort.to_s if thinking.respond_to?(:effort) && thinking.effort
           reasoning[:max_tokens] = thinking.budget if thinking.respond_to?(:budget) && thinking.budget
           add_reasoning_toggle(reasoning, thinking)
           reasoning[:enabled] = true if reasoning.empty?

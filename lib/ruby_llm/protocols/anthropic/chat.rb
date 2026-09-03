@@ -6,8 +6,8 @@ module RubyLLM
       # Chat methods for the Anthropic API implementation
       module Chat
         FINISH_REASONS = {
-          'end_turn' => 'stop', 'stop_sequence' => 'stop', 'max_tokens' => 'max_tokens',
-          'model_context_window_exceeded' => 'max_tokens', 'tool_use' => 'tool_calls', 'refusal' => 'content_filter'
+          'end_turn' => :stop, 'stop_sequence' => :stop, 'max_tokens' => :max_tokens,
+          'model_context_window_exceeded' => :max_tokens, 'tool_use' => :tool_calls, 'refusal' => :content_filter
         }.freeze
 
         ANTHROPIC_INLINE_REQUEST_LIMIT = 24 * 1024 * 1024
@@ -26,7 +26,7 @@ module RubyLLM
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
-          finish_reasons.fetch(reason.to_s, reason)
+          finish_reasons.fetch(reason.to_s) { reason.to_s.to_sym }
         end
 
         def completion_url
@@ -507,7 +507,7 @@ module RubyLLM
                  elsif adaptive_thinking?(thinking, effort, model)
                    { type: 'adaptive' }
                  end
-          mode[:display] = thinking.display if mode && thinking.display
+          mode[:display] = thinking.display.to_s if mode && thinking.display
           mode
         end
 

@@ -190,7 +190,7 @@ RSpec.describe RubyLLM::Models do
 
       # Verify we got results
       expect(chat_models).to be_a(described_class)
-      expect(chat_models.all).to all(have_attributes(type: 'chat'))
+      expect(chat_models.all).to all(have_attributes(type: :chat))
 
       # Verify we got models from at least OpenAI and Anthropic
       providers = chat_models.map(&:provider).uniq

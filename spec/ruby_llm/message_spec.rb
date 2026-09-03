@@ -208,8 +208,8 @@ RSpec.describe RubyLLM::Message do
     it 'includes finish_reason when present' do
       message = described_class.new(role: :assistant, content: 'Hello', finish_reason: 'length')
 
-      expect(message.finish_reason).to eq('length')
-      expect(message.to_h[:finish_reason]).to eq('length')
+      expect(message.finish_reason).to eq(:length)
+      expect(message.to_h[:finish_reason]).to eq(:length)
     end
 
     it 'includes cache_until_here when marked' do
@@ -237,7 +237,7 @@ RSpec.describe RubyLLM::Message do
       message = described_class.new(role: :assistant, content: 'Hello', finish_reason: 'end_turn')
 
       expect(message).not_to be_stopped
-      expect(message.finish_reason).to eq('end_turn')
+      expect(message.finish_reason).to eq(:end_turn)
     end
 
     it 'returns false when finish_reason is nil or unknown' do

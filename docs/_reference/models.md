@@ -31,7 +31,7 @@ The registry stores crucial information about each model, including:
 
 *   **`id`**: The unique identifier used by the provider (e.g., `gpt-5.6`).
 *   **`provider`**: The source provider (`openai`, `anthropic`, etc.).
-*   **`type`**: The model's primary function (`chat`, `embedding`, etc.).
+*   **`type`**: The model's primary function as a Symbol (`:chat`, `:embedding`, and so on).
 *   **`name`**: A human-friendly name.
 *   **`context_window`**: Max input tokens (e.g., `128_000`).
 *   **`max_output_tokens`**: Max output tokens (e.g., `16_384`).

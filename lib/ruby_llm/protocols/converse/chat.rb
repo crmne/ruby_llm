@@ -8,9 +8,9 @@ module RubyLLM
       # Chat methods for Bedrock Converse API.
       module Chat
         FINISH_REASONS = {
-          'end_turn' => 'stop', 'stop_sequence' => 'stop', 'max_tokens' => 'max_tokens',
-          'model_context_window_exceeded' => 'max_tokens', 'tool_use' => 'tool_calls',
-          'guardrail_intervened' => 'content_filter', 'content_filtered' => 'content_filter'
+          'end_turn' => :stop, 'stop_sequence' => :stop, 'max_tokens' => :max_tokens,
+          'model_context_window_exceeded' => :max_tokens, 'tool_use' => :tool_calls,
+          'guardrail_intervened' => :content_filter, 'content_filtered' => :content_filter
         }.freeze
 
         BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
@@ -26,7 +26,7 @@ module RubyLLM
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
-          finish_reasons.fetch(reason.to_s, reason)
+          finish_reasons.fetch(reason.to_s) { reason.to_s.to_sym }
         end
 
         def completion_url

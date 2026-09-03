@@ -104,7 +104,7 @@ module RubyLLM
       @server_tool_calls = Array(options[:server_tool_calls]).map { |call| coerce_value(call, ServerToolCall) }
       @raw_content = options[:raw_content]
       @raw_reasoning = options[:raw_reasoning]
-      @finish_reason = options[:finish_reason]
+      @finish_reason = options[:finish_reason]&.to_sym
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
 
@@ -155,25 +155,25 @@ module RubyLLM
     # normally, +false+ otherwise. A turn that stopped to call tools is
     # reported by #tool_call_stop? instead, whatever the provider named it.
     def stopped?
-      finish_reason == 'stop' && !tool_call?
+      finish_reason == :stop && !tool_call?
     end
 
     # Returns +true+ if the response was cut off by a token limit,
     # +false+ otherwise.
     def max_tokens?
-      finish_reason == 'max_tokens'
+      finish_reason == :max_tokens
     end
 
     # Returns +true+ if the model stopped to request tool calls,
     # +false+ otherwise.
     def tool_call_stop?
-      finish_reason == 'tool_calls' || (tool_call? && finish_reason == 'stop')
+      finish_reason == :tool_calls || (tool_call? && finish_reason == :stop)
     end
 
     # Returns +true+ if a provider safety filter stopped the response,
     # +false+ otherwise.
     def content_filtered?
-      finish_reason == 'content_filter'
+      finish_reason == :content_filter
     end
 
     # Returns usage aggregated across every provider attempt that produced this

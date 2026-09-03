@@ -6,8 +6,8 @@ module RubyLLM
       # Chat methods of the OpenAI API integration
       module Chat
         FINISH_REASONS = {
-          'stop' => 'stop', 'length' => 'max_tokens', 'tool_calls' => 'tool_calls',
-          'function_call' => 'tool_calls', 'content_filter' => 'content_filter'
+          'stop' => :stop, 'length' => :max_tokens, 'tool_calls' => :tool_calls,
+          'function_call' => :tool_calls, 'content_filter' => :content_filter
         }.freeze
 
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
@@ -25,7 +25,7 @@ module RubyLLM
         def normalize_finish_reason(reason)
           return nil if reason.nil?
 
-          finish_reasons.fetch(reason.to_s, reason)
+          finish_reasons.fetch(reason.to_s) { reason.to_s.to_sym }
         end
 
         # OpenAI strict mode rejects an object whose properties are not all
@@ -392,7 +392,8 @@ module RubyLLM
         def resolve_effort(thinking)
           return nil unless thinking
 
-          thinking.respond_to?(:effort) ? thinking.effort : thinking
+          effort = thinking.respond_to?(:effort) ? thinking.effort : thinking
+          effort&.to_s
         end
 
         # safety_identifier is an OpenAI parameter; the other services on

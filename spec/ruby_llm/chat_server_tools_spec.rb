@@ -206,7 +206,7 @@ RSpec.describe RubyLLM::Chat, :live do
       merged = protocol.send(:merge_turn_segments, [paused, final])
 
       expect(merged.content).to eq('Searching. Done.')
-      expect(merged.finish_reason).to eq('end_turn')
+      expect(merged.finish_reason).to eq(:end_turn)
       expect(merged.raw_content.length).to eq(2)
       expect(merged.server_tool_calls.length).to eq(1)
       expect(merged.tokens.input).to eq(30)

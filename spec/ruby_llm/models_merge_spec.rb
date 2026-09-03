@@ -388,7 +388,7 @@ RSpec.describe RubyLLM::Models do
 
       merged = described_class.add_provider_metadata(models_dev_model, provider_model)
 
-      expect(merged.type).to eq('embedding')
+      expect(merged.type).to eq(:embedding)
       expect(merged.modalities.output).to eq(['embeddings'])
     end
   end

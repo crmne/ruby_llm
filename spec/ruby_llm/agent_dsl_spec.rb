@@ -59,7 +59,7 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@caching)).to eq(ttl: '1h')
       expect(chat.instance_variable_get(:@provider_options)).to eq(top_p: 0.9)
       expect(chat.instance_variable_get(:@headers)).to eq('X-Test' => '1')
-      expect(chat.instance_variable_get(:@thinking).effort).to eq('low')
+      expect(chat.instance_variable_get(:@thinking).effort).to eq(:low)
       expect(chat.end_user).to eq('tenant-42')
       expect(chat.compaction).to eq(at: 50_000)
     end

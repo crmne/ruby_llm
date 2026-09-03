@@ -49,7 +49,7 @@ module RubyLLM
         MAX_PAUSE_TURN_CONTINUATIONS.times do
           message = super(current_messages, ...)
           segments << message
-          break unless message.finish_reason == 'pause_turn'
+          break unless message.finish_reason == :pause_turn
 
           current_messages = current_messages + [message] # rubocop:disable Style/SelfAssignment
         end

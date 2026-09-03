@@ -88,7 +88,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       )
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.finish_reason).to eq('tool_calls')
+      expect(message.finish_reason).to eq(:tool_calls)
     end
 
     it 'normalizes DeepSeek cache hit and miss usage fields' do

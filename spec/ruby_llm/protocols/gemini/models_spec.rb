@@ -53,7 +53,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Models do
 
       model = parser.send(:parse_list_models_response, operation_response, 'gemini').first
 
-      expect(model.type).to eq('embedding')
+      expect(model.type).to eq(:embedding)
       expect(model.modalities.to_h).to eq(input: ['text'], output: ['embeddings'])
       expect(model.capabilities).to contain_exactly('batch', 'caching', 'streaming', 'realtime')
     end

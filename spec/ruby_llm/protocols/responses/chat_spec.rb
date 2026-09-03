@@ -251,7 +251,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       expect(error).to be_a(RubyLLM::Error)
       expect(error.response).to eq(response)
-      expect(error.finish_reason).to eq('max_tokens')
+      expect(error.finish_reason).to eq(:max_tokens)
       expect(error.cause).to be_a(JSON::ParserError)
     end
 
@@ -306,7 +306,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.finish_reason).to eq('stop')
+      expect(message.finish_reason).to eq(:stop)
       expect(message).to be_tool_call_stop
       expect(message).not_to be_stopped
     end
@@ -324,7 +324,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.finish_reason).to eq('max_tokens')
+      expect(message.finish_reason).to eq(:max_tokens)
     end
   end
 end

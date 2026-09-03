@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Providers::Mistral::Models do
       model_data['capabilities'] = { 'completion_chat' => false }
 
       expect(model.modalities.to_h).to eq(input: ['text'], output: ['embeddings'])
-      expect(model.type).to eq('embedding')
+      expect(model.type).to eq(:embedding)
     end
 
     it 'keeps the deprecation, description and aliases in metadata' do

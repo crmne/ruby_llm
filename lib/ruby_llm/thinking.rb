@@ -70,7 +70,7 @@ module RubyLLM
       end
 
       def disable
-        return { effort: 'none' } if model.reasoning_option_values(:effort).include?('none')
+        return { effort: :none } if model.reasoning_option_values(:effort).include?('none')
 
         budget = model.reasoning_option(:budget_tokens)
         return { budget: 0 } if budget && budget[:min].is_a?(Numeric) && budget[:min] <= 0
@@ -87,11 +87,11 @@ module RubyLLM
         return unless option&.key?(:default)
 
         default = option[:default].to_s
-        default unless default == 'none'
+        default.to_sym unless default == 'none'
       end
 
       def preferred_effort
-        PREFERRED_EFFORTS.find { |effort| model.reasoning_option_values(:effort).include?(effort) }
+        PREFERRED_EFFORTS.find { |effort| model.reasoning_option_values(:effort).include?(effort) }&.to_sym
       end
 
       def explicit_budget
@@ -123,9 +123,9 @@ module RubyLLM
       end
 
       def initialize(effort: nil, budget: nil, display: nil, enabled: nil, intent: nil)
-        @effort = effort.is_a?(Symbol) ? effort.to_s : effort
+        @effort = effort&.to_sym
         @budget = budget
-        @display = display.is_a?(Symbol) ? display.to_s : display
+        @display = display&.to_sym
         @enabled = enabled
         @intent = intent
       end
@@ -135,7 +135,7 @@ module RubyLLM
       end
 
       def disabled?
-        enabled == false || effort == 'none'
+        enabled == false || effort == :none
       end
 
       def resolve(model)

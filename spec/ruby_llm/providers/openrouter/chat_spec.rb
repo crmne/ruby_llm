@@ -117,7 +117,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
         }
       )
 
-      expect(chunk.finish_reason).to eq('tool_calls')
+      expect(chunk.finish_reason).to eq(:tool_calls)
     end
 
     it 'captures the reported cost from the final usage chunk' do

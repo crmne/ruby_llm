@@ -59,7 +59,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 * **Transcript replacement.** `chat.messages = messages_for_model` shows the LLM a different transcript from your users: compaction, redaction, moderation. See [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
 * **Provider-side compaction.** `chat.with_compaction(at: 100_000)` hands the summarizing to providers that condense a long conversation themselves, instead of you assembling a summary prompt. See [Compacting Long Conversations]({% link _core_features/chat-request-control.md %}#compacting-long-conversations).
 * **Request hooks.** `chat.before_request { |payload| ... }` edits the wire payload just before it is sent - the 2.0 answer to raw content blocks. See [Request Hooks]({% link _core_features/chat-request-control.md %}#request-hooks).
-* **Finish reasons.** `response.finish_reason` tells you why generation stopped, normalized across providers, with predicates like `stopped?` and `max_tokens?`.
+* **Finish reasons.** `response.finish_reason` tells you why generation stopped, normalized across providers to `:stop`, `:max_tokens`, `:tool_calls`, or `:content_filter`, with predicates like `stopped?` and `max_tokens?`.
 
 #### Developer Experience
 
