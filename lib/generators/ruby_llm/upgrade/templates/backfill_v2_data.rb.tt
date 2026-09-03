@@ -42,18 +42,18 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
       raw_content = message_value(:raw_content)
       content = message_value(:content)
 <% if postgresql? -%>
-      raw_content_value = "COALESCE(#{raw_content}, #{content_raw}::jsonb)"
+      structured_content = "#{content_raw}::jsonb"
       rendered_content = "#{content_raw}::text"
 <% elsif mysql? -%>
-      raw_content_value = "CAST(COALESCE(#{raw_content}, #{content_raw}) AS JSON)"
+      structured_content = content_raw
       rendered_content = "CAST(#{content_raw} AS CHAR)"
 <% else -%>
-      raw_content_value = "COALESCE(#{raw_content}, #{content_raw})"
+      structured_content = content_raw
       rendered_content = content_raw
 <% end -%>
       execute <<~SQL
         UPDATE #{quote_table(:<%= message_table_name %>)} AS legacy_messages
-           SET #{quote_column(:raw_content)} = #{raw_content_value},
+           SET #{quote_column(:raw_content)} = COALESCE(#{raw_content}, #{structured_content}),
                #{quote_column(:content)} = COALESCE(#{content}, #{rendered_content})
          WHERE #{range}
            AND #{content_raw} IS NOT NULL
