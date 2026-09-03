@@ -28,7 +28,7 @@ That is the whole trick. A [chat persisted with `acts_as_chat`]({% link _advance
 
 ## One Turn per Job
 
-Because each [`step`]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) is a discrete move, you can run one move per job and let the queue carry the loop. Load the chat through its agent class so the job has the agent's tools; a bare `Chat.find` carries the transcript but registers no tools, so it cannot run them or recognize an approval-gated call.
+Each [`step`]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) is one move, so a job can make one move and hand the loop back to the queue. Load the chat through its agent class. A bare `Chat.find` has the transcript but no tools, so it can neither run them nor see that a call needs approval.
 
 ```ruby
 class AgentTurnJob < ApplicationJob

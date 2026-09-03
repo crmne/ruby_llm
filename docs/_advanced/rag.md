@@ -89,7 +89,7 @@ class DocumentSearch < RubyLLM::Tool
 end
 ```
 
-Returning `RubyLLM::SearchResults` instead of a joined string lets the model cite each document it used; see [Citing Tool Results]({% link _core_features/citations.md %}#citing-tool-results-rag).
+Return `RubyLLM::SearchResults` rather than a joined string and the model can cite each document it used. See [Citing Tool Results]({% link _core_features/citations.md %}#citing-tool-results-rag).
 
 ## Answering Agent
 

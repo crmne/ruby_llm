@@ -89,8 +89,8 @@ module RubyLLM
 
     attr_reader :tool_prefs, :fallback_errors, :usage_entries # :nodoc:
 
-    # The tool steering set with #with_tool_options: +choice+, +calls+, and
-    # +concurrency+, with +nil+ for anything left at the default.
+    # Returns the +choice+, +calls+, and +concurrency+ set with
+    # #with_tool_options, with +nil+ for anything left at the default.
     def tool_options
       { choice: tool_prefs[:choice], calls: tool_prefs[:calls], concurrency: concurrency }
     end

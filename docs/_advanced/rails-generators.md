@@ -130,7 +130,7 @@ What each generator creates:
 - `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
 
-`ruby_llm:chat_ui` and `ruby_llm:tool` take `--ui scaffold`, `--ui tailwind`, or the default `--ui auto`, which picks Tailwind when your app has it. Apps coming from 1.16 run `ruby_llm:upgrade` instead of `ruby_llm:install`; see [Upgrading]({% link _reference/upgrading.md %}).
+`ruby_llm:chat_ui` and `ruby_llm:tool` accept `--ui scaffold` or `--ui tailwind`. The default, `--ui auto`, picks Tailwind when your app has it. An app coming from 1.16 runs `ruby_llm:upgrade` instead of `ruby_llm:install`. See [Upgrading]({% link _reference/upgrading.md %}).
 
 If your chat UI uses a custom message model, pass the same mapping you gave `ruby_llm:chat_ui` so the partials land where the UI looks for them:
 

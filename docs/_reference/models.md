@@ -229,7 +229,7 @@ puts "Context Window: #{model_info.context_window} tokens"
 
 ### Model Aliases
 
-RubyLLM uses aliases (defined in `lib/ruby_llm/aliases.json`) for convenience, mapping common names to each provider's exact ID. Anthropic serves its models under un-dated IDs, so the alias matters most where the same model carries a longer name, such as Bedrock and Azure.
+Aliases in `lib/ruby_llm/aliases.json` map a short name to each provider's exact ID. Anthropic already serves its models under short IDs, so an alias matters most on Bedrock and Azure, where the same model has a longer name.
 
 ```ruby
 # 'claude-haiku-4-5' maps to Bedrock's exact ID

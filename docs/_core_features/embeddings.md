@@ -100,7 +100,7 @@ This is particularly useful when:
 - Ensuring consistent dimensionality across different requests
 - Optimizing storage and query performance in your vector database
 
-Not every model takes custom dimensions. RubyLLM sends the value you set, so a model that does not support it rejects the request with the provider's own error (Mistral's `mistral-embed`, for example, returns a 400). Leave `dimensions:` out for those models.
+Not every model accepts `dimensions:`. RubyLLM sends the value you set, and a model that does not support it rejects the request. `mistral-embed`, for example, returns a 400. Leave `dimensions:` out for those models.
 
 ## Task Types
 

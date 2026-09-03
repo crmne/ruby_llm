@@ -42,18 +42,18 @@ module RubyLLM
         ruby_llm_usages.map(&:to_entry)
       end
 
-      # Marks this message as an explicit prompt cache boundary and returns it.
+      # Marks the message as a prompt cache boundary and returns it.
       def cache_until_here
         update!(cache_until_here: true)
         self
       end
 
-      # Whether this message is a prompt cache boundary.
+      # Returns +true+ if the message is a prompt cache boundary.
       def cache_until_here?
         optional_column(:cache_until_here) || false
       end
 
-      # The reasoning the model returned with this message, as a RubyLLM::Thinking, or +nil+.
+      # Returns the reasoning the model returned as a RubyLLM::Thinking, or +nil+.
       def thinking
         RubyLLM::Thinking.build(
           text: optional_column(:thinking_text),
@@ -61,54 +61,54 @@ module RubyLLM
         )
       end
 
-      # The source citations attached to this message, as RubyLLM::Citation values.
+      # Returns the citations as an array of RubyLLM::Citation.
       def citations
         Array(optional_column(:citations)).map { |citation| RubyLLM::Citation.from_h(citation) }
       end
 
-      # The provider-executed tool steps behind this message, as RubyLLM::ServerToolCall values.
+      # Returns the provider-executed tool steps as an array of RubyLLM::ServerToolCall.
       def server_tool_calls
         Array(optional_column(:server_tool_calls)).map { |call| RubyLLM::ServerToolCall.from_h(call) }
       end
 
-      # Token usage across every provider attempt that produced this message.
+      # Returns the token usage across every attempt that produced the message.
       def tokens
         RubyLLM::Tokens.aggregate(ruby_llm_usages.map(&:tokens))
       end
 
-      # The priced cost of every attempt that produced this message, as a RubyLLM::Cost.
+      # Returns the cost across every attempt that produced the message, as a RubyLLM::Cost.
       def cost
         records = ruby_llm_usages.to_a
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
-      # Provider tool calls as RubyLLM::ToolCall values keyed by call id.
+      # Returns the tool calls as RubyLLM::ToolCall values keyed by call id.
       def tool_calls
         ruby_llm_tool_calls.to_h { |record| [record.tool_call_id, record.to_llm] }
       end
 
-      # The tool call this message answers, as a RubyLLM::ToolCall, or +nil+.
+      # Returns the tool call this message answers, or +nil+.
       def parent_tool_call
         ruby_llm_parent_tool_call&.to_llm
       end
 
-      # The message records answering this message's tool calls.
+      # Returns the message records that answer this message's tool calls.
       def tool_results
         ruby_llm_tool_calls.filter_map(&:result)
       end
 
-      # Whether this message carries tool calls.
+      # Returns +true+ if the message carries tool calls.
       def tool_call?
         ruby_llm_tool_calls.any?
       end
 
-      # Whether this message answers a tool call.
+      # Returns +true+ if the message answers a tool call.
       def tool_result?
         ruby_llm_parent_tool_call.present?
       end
 
-      # The view partial for this message, by role: +messages/user+, +messages/assistant+,
-      # +messages/tool_calls+, or +messages/tool+.
+      # Returns the partial path for the message by role, such as +messages/assistant+
+      # or +messages/tool_calls+.
       def to_partial_path
         partial_prefix = self.class.name.underscore.pluralize
         role_partial = if tool_call?
@@ -121,18 +121,17 @@ module RubyLLM
         "#{partial_prefix}/#{role_partial}"
       end
 
-      # The error text a tool result carries, or +nil+ when the result is not an error.
+      # Returns the error text of a failed tool result, or +nil+.
       def tool_error_message
         payload_error_message(extract_content)
       end
 
-      # Why the model stopped, as the Symbol RubyLLM::Message reports.
+      # Returns why the model stopped, as the Symbol RubyLLM::Message#finish_reason reports.
       def finish_reason
         optional_column(:finish_reason)&.to_sym
       end
 
-      # Returns the message text parsed as JSON, for structured output
-      # responses. Returns +nil+ when the message has no text.
+      # Returns the content parsed as JSON, or +nil+ when the message has no text.
       def parsed
         text = extract_content
         return if text.nil? || text.empty?

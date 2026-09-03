@@ -98,7 +98,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 ## Docs
 
 - The Jekyll site lives in `docs/` with four collections: `_getting_started`, `_core_features`, `_advanced`, `_reference`. Preview with `docs/bin/serve.sh`.
-- Voice is Rails-guides style: second person, present tense, code first, motivate before mechanics. No em dashes. No hype, no "simply".
+- Voice is Rails-guides style: second person, present tense, short sentences, code first, motivate before mechanics. No em dashes. No hype, no "simply". RDoc follows the Rails API voice: "Returns the ...", one line where one line will do.
 - Front-matter `title` and `description` feed llms.txt and the social-card images. Keep descriptions to one compelling sentence and never use `&`, `<`, or `>` in them.
 - Cross-link with `{% link _collection/page.md %}`, never hard-coded URLs. Use the `site.models.*` ids from `docs/_config.yml` in examples so model names stay current.
 - A public API change is not done until its docs page changes in the same commit, and `docs/_reference/upgrading.md` records anything that breaks.

@@ -27,17 +27,22 @@ module RubyLLM
       end
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        # Turns an application record into a persisted RubyLLM chat. The
-        # record gains the RubyLLM::Chat API (see ChatMethods), a +messages+
-        # association named by +messages:+ (its class inferred from the name
-        # unless +message_class:+ says otherwise, and its foreign key from
-        # Rails conventions unless +messages_foreign_key:+ does), a +model+
-        # association to RubyLLM's registry row, and a +ruby_llm_usages+
-        # association over the attempts the chat paid for.
+        # Turns an application record into a persisted RubyLLM chat.
         #
-        #   acts_as_chat
-        #   acts_as_chat messages: :turns, message_class: 'Conversation::Turn'
+        #   class Chat < ApplicationRecord
+        #     acts_as_chat
+        #   end
         #
+        # Adds the RubyLLM::Chat API (see ChatMethods), a +has_many+
+        # association to the messages, a +belongs_to :model+ association to
+        # the registry row, and a +has_many :ruby_llm_usages+ association over
+        # the attempts the chat paid for.
+        #
+        # Options:
+        #
+        # [+messages:+] Name of the messages association. Defaults to +:messages+.
+        # [+message_class:+] Class of the messages. Inferred from the association name.
+        # [+messages_foreign_key:+] Foreign key on the messages table. Inferred by Rails.
         def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil)
           include RubyLLM::ActiveRecord::ChatMethods
 
@@ -63,18 +68,22 @@ module RubyLLM
                    dependent: :destroy
         end
 
-        # Turns an application record into a persisted RubyLLM message. The
-        # record gains the RubyLLM::Message readers (see MessageMethods) and
-        # a +chat+ association named by +chat:+ (its class inferred from the
-        # name unless +chat_class:+ says otherwise, its foreign key from Rails
-        # conventions unless +chat_foreign_key:+ does, touching the chat on
-        # save when +touch_chat:+ is true), plus the private tool-call and
-        # usage associations RubyLLM reads through +tool_calls+, +tokens+,
-        # and +cost+.
+        # Turns an application record into a persisted RubyLLM message.
         #
-        #   acts_as_message
-        #   acts_as_message chat: :conversation, touch_chat: true
+        #   class Message < ApplicationRecord
+        #     acts_as_message
+        #   end
         #
+        # Adds the RubyLLM::Message readers (see MessageMethods), a
+        # +belongs_to+ association to the chat, and the tool-call and usage
+        # associations behind +tool_calls+, +tokens+, and +cost+.
+        #
+        # Options:
+        #
+        # [+chat:+] Name of the chat association. Defaults to +:chat+.
+        # [+chat_class:+] Class of the chat. Inferred from the association name.
+        # [+chat_foreign_key:+] Foreign key on this table. Inferred by Rails.
+        # [+touch_chat:+] Touch the chat when a message is saved. Defaults to +false+.
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false)
           include RubyLLM::ActiveRecord::MessageMethods
 

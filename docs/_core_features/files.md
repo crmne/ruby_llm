@@ -38,7 +38,7 @@ file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.
 
 OpenAI and Azure require `purpose:` because their Files API requires it: `assistants`, `batch`, `fine-tune`, `vision`, `user_data`, or `evals`. Mistral accepts `purpose:` for batch, fine-tuning, and OCR workflows. Other providers infer the file use from the API call that later references the file.
 
-Anything else goes through `provider_options:` in the provider's own vocabulary: `visibility:` on Mistral, `display_name:` on Gemini, and `uri:` and `content_type:` on the storage-backed providers (Vertex AI and Bedrock), which store the file at that object URI instead of behind a file id.
+Everything else goes through `provider_options:` in the provider's own vocabulary: `visibility:` on Mistral, `display_name:` on Gemini, and `uri:` and `content_type:` on Vertex AI and Bedrock, which store the file at that object URI instead of behind a file id.
 
 ```ruby
 RubyLLM.upload("batch.jsonl", provider: :vertexai, provider_options: { uri: "gs://my-bucket/in/batch.jsonl" })
@@ -86,7 +86,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Automatic uploads are enabled only for providers and protocols that can reference stored files in chat. Other providers keep their existing inline behavior and still raise provider errors when a request exceeds that provider's limits. Vertex AI and Bedrock stage large attachments in your own bucket, so they need `config.vertexai_batch_gcs_uri` or `config.bedrock_batch_s3_uri` set to a `gs://` or `s3://` prefix, and Vertex AI needs the `google-cloud-storage` gem in your bundle; without them a large attachment raises `RubyLLM::ConfigurationError`.
+Automatic uploads are enabled only for providers and protocols that can reference stored files in chat. Other providers keep their existing inline behavior and still raise provider errors when a request exceeds that provider's limits. Vertex AI and Bedrock stage large attachments in a bucket you own. Set `config.vertexai_batch_gcs_uri` or `config.bedrock_batch_s3_uri` to a `gs://` or `s3://` prefix, and add the `google-cloud-storage` gem for Vertex AI. Without them a large attachment raises `RubyLLM::ConfigurationError`.
 
 ## Finding and Downloading
 

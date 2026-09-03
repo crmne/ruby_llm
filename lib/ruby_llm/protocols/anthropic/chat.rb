@@ -494,10 +494,10 @@ module RubyLLM
           payload
         end
 
-        # Effort alone never turns thinking on: Claude needs a thinking block.
-        # Generations that take a budget get one sized from the effort, the
-        # way Bedrock publishes the levels; generations without a budget
-        # option think adaptively.
+        # Effort alone never turns thinking on; Claude needs a thinking block.
+        # Generations that take a budget get one sized from the effort with
+        # the levels Bedrock publishes. Generations without a budget option
+        # think adaptively.
         def thinking_mode(thinking, model, effort, max_tokens)
           return { type: 'adaptive' } if thinking.enabled == true
 

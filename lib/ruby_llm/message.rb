@@ -55,11 +55,9 @@ module RubyLLM
     # across providers.
     attr_reader :citations
 
-    # Why the model stopped, normalized across providers to <tt>"stop"</tt>,
-    # <tt>"max_tokens"</tt>, <tt>"tool_calls"</tt>, or
-    # <tt>"content_filter"</tt>. A reason a provider reports outside those
-    # four, such as Anthropic's <tt>"pause_turn"</tt>, comes through as the
-    # provider spelled it.
+    # Why the model stopped: +:stop+, +:max_tokens+, +:tool_calls+, or
+    # +:content_filter+. Any other reason comes through as the provider
+    # spelled it, such as Anthropic's +:pause_turn+.
     attr_reader :finish_reason
 
     # The provider-executed tool steps in this response, as an array of

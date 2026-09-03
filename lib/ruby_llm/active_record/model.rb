@@ -4,10 +4,9 @@ require 'active_support/core_ext/module/delegation'
 
 module RubyLLM
   module ActiveRecord
-    # The row behind the model registry in a Rails app, one per registry
-    # entry, in the +ruby_llm_models+ table. Chats point at it through
-    # +belongs_to :model+. The +listed+ and +unlisted+ scopes tell the
-    # models the configured provider still serves from the ones kept only
+    # A row of the +ruby_llm_models+ table, one per registry entry. Chats
+    # point at it through +belongs_to :model+. The +listed+ scope returns the
+    # models the provider still serves; +unlisted+ returns the ones kept only
     # because a chat references them.
     class Model < ::ActiveRecord::Base
       self.table_name = 'ruby_llm_models'

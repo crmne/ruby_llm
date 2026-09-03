@@ -65,7 +65,7 @@ puts response.content # => '{"name":"Alice","age":30}'
 Schematist schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
 {: .note }
 
-OpenAI's strict mode requires every property to be listed in `required`. RubyLLM sends `strict: true` when your schema meets that requirement and `strict: false` when it declares optional properties, like `city` above, so the request is accepted either way. To keep strict validation with an optional field, make it required and allow `null` as a value (a string or null union), which is the shape OpenAI's strict mode expects.
+OpenAI's strict mode needs every property in `required`. RubyLLM sends `strict: true` when your schema qualifies and `strict: false` when it has optional properties like `city` above. To keep strict validation with an optional field, make the field required and let its type include `null`.
 {: .note }
 
 ### Using Manual JSON Schemas

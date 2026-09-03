@@ -168,7 +168,7 @@ The raw response is a `Faraday::Response` object, which you can use to access th
 
 ## Finish Reasons
 
-Responses expose `finish_reason` when the provider reports why the model stopped. Each protocol maps its own vocabulary onto four symbols, `:stop`, `:max_tokens`, `:tool_calls`, and `:content_filter`, and the predicates read those. A reason outside the four, such as Anthropic's `:pause_turn`, comes through as the provider spelled it.
+`finish_reason` tells you why the model stopped. RubyLLM maps each provider's values onto four symbols: `:stop`, `:max_tokens`, `:tool_calls`, and `:content_filter`. Anything else, such as Anthropic's `:pause_turn`, comes through as the provider spelled it.
 
 ```ruby
 response = chat.ask("Summarize this in one paragraph")
@@ -186,7 +186,7 @@ end
 response.finish_reason # => :stop, :max_tokens, :tool_calls, or :content_filter
 ```
 
-Anthropic's `end_turn`, Gemini's `MAX_TOKENS`, Cohere's `COMPLETE`, and the Responses API's `completed` status all arrive under those four names, so the same code reads every provider. A response that carries tool calls answers `tool_call_stop?` and not `stopped?`, whatever the provider named the reason. Finish reasons describe completed provider responses; failed requests still raise RubyLLM error classes. RubyLLM does not send `finish_reason` back to providers when replaying conversation history.
+Anthropic's `end_turn`, Gemini's `MAX_TOKENS`, Cohere's `COMPLETE`, and the Responses API's `completed` all arrive as `:stop`, so the same code reads every provider. A response that carries tool calls answers `tool_call_stop?`, not `stopped?`. A finish reason describes a response the provider completed. A failed request raises an error instead. RubyLLM never sends `finish_reason` back to a provider.
 
 ## Advanced: Replacing the LLM Transcript
 

@@ -103,7 +103,7 @@ bundle update ruby_llm
 bin/rails generate ruby_llm:upgrade
 ```
 
-The initializer that 1.16 wrote sets `config.use_new_acts_as`, and older apps may set `config.model_registry_class`. 2.0 ignores both with a deprecation warning so the app boots long enough to run the generator; remove the two lines once you are on 2.0.
+The initializer 1.16 wrote sets `config.use_new_acts_as`, and older apps may set `config.model_registry_class`. 2.0 ignores both with a deprecation warning, so the app boots and the generator can run. Remove the two lines once you are on 2.0.
 
 Pass every application model that uses a non-default name. The generator accepts `chat`, `message`, `model`, and `tool_call` mappings, including namespaced classes:
 
@@ -117,7 +117,7 @@ bin/rails generate ruby_llm:upgrade \
 
 The command prints the resolved classes and tables before writing anything. It rejects unknown, incomplete, and duplicate mappings, so a typo cannot silently send an irreversible migration to the default table.
 
-Review the generated migrations and rehearse them before production. When the maintenance window begins, stop every process that can write chats, run `bin/rails db:migrate`, deploy and boot 2.0, run `bin/rails ruby_llm:load_models` (loads the registry snapshot packaged with the gem, no network needed; `RubyLLM.models.refresh` fetches and persists the live one), then restore traffic. The data migration reads messages in batches of 10,000 and avoids duplicating usage rows when it resumes. These are maintenance-window migrations, not zero-downtime compatibility code.
+Review the generated migrations and rehearse them before production. When the maintenance window begins, stop every process that can write chats, run `bin/rails db:migrate`, deploy and boot 2.0, run `bin/rails ruby_llm:load_models`, then restore traffic. `load_models` loads the registry packaged with the gem and needs no network; `RubyLLM.models.refresh` fetches the live one later. The data migration reads messages in batches of 10,000 and avoids duplicating usage rows when it resumes. These are maintenance-window migrations, not zero-downtime compatibility code.
 
 The generated migrations:
 
