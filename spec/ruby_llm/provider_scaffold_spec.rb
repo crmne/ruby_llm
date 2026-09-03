@@ -6,7 +6,7 @@ require 'rbconfig'
 require 'tmpdir'
 
 RSpec.describe RubyLLM::ProviderScaffold do
-  let(:dir) { Dir.mktmpdir('ruby_llm_provider_scaffold') }
+  let(:dir) { File.realpath(Dir.mktmpdir('ruby_llm_provider_scaffold')) }
 
   after do
     FileUtils.rm_rf(dir)
