@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Models do
       expect(registry.unlisted.map(&:id)).to eq(['gone-model'])
       expect(registry.by_provider(:openai).unlisted.map(&:id)).to eq(['gone-model'])
       expect(registry.find('gone-model').id).to eq('gone-model')
-      expect(registry.find('gone-model', :openai).id).to eq('gone-model')
+      expect(registry.find('gone-model', provider: :openai).id).to eq('gone-model')
       expect(RubyLLM.models.unlisted).to be_empty
     end
 
@@ -80,8 +80,8 @@ RSpec.describe RubyLLM::Models do
     end
 
     it 'finds transcription support in the bundled registry' do
-      expect(RubyLLM.models.find('whisper-1', 'openai').supports?(:transcription)).to be(true)
-      expect(RubyLLM.models.find('gemini-2.5-flash', 'gemini').supports?(:transcription)).to be(true)
+      expect(RubyLLM.models.find('whisper-1', provider: 'openai').supports?(:transcription)).to be(true)
+      expect(RubyLLM.models.find('gemini-2.5-flash', provider: 'gemini').supports?(:transcription)).to be(true)
     end
   end
 
@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::Models do
 
     it 'includes provider-specific refresh guidance for unknown models' do
       expect do
-        RubyLLM.models.find('nonexistent-model-12345', 'openai')
+        RubyLLM.models.find('nonexistent-model-12345', provider: 'openai')
       end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
         expect(error.message).to include('Unknown model: "nonexistent-model-12345" for provider: "openai"')
         expect(error.message).to include('RubyLLM.models.refresh')
@@ -163,7 +163,7 @@ RSpec.describe RubyLLM::Models do
         instance_double(RubyLLM::Configuration, bedrock_region: 'us-west-2')
       )
 
-      found = models.find('meta.llama4-maverick-17b-instruct-v1:0', 'bedrock')
+      found = models.find('meta.llama4-maverick-17b-instruct-v1:0', provider: 'bedrock')
       expect(found.id).to eq('us.meta.llama4-maverick-17b-instruct-v1:0')
     end
   end

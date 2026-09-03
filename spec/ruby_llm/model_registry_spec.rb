@@ -262,7 +262,7 @@ RSpec.describe RubyLLM::ModelRegistry do
 
       expect(registry.all.map(&:id)).to eq(['new-model'])
       expect(registry.unlisted.map(&:id)).to eq(['old-model'])
-      expect(registry.find('old-model', :openai).id).to eq('old-model')
+      expect(registry.find('old-model', provider: :openai).id).to eq('old-model')
     end
   end
 

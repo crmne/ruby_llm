@@ -250,8 +250,8 @@ module RubyLLM
       # Returns the next request payload with #before_request hooks applied.
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching compaction concurrency end_user fallbacks headers max_output_tokens provider_options schema
-        server_tools temperature thinking tools
+        caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
+        schema server_tools temperature thinking tool_options tools
         add_completion count_tokens each render
       ].freeze
 
@@ -479,7 +479,7 @@ module RubyLLM
       end
 
       def find_registered_model
-        RubyLLM.models.find(@pending_model_id, @pending_provider, config: context&.config)
+        RubyLLM.models.find(@pending_model_id, provider: @pending_provider, config: context&.config)
       end
 
       # An empty store would otherwise hold only this chat's model on the next

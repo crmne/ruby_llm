@@ -165,7 +165,7 @@ RubyLLM emits these events:
 *   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video
 *   `video_job.ruby_llm` - one video job submission with model, prompt, and the provider's job id
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
-*   `ocr.ruby_llm` - OCR model, options, and extracted document result
+*   `ocr.ruby_llm` - OCR model, provider options, and extracted document result
 *   `rerank.ruby_llm` - reranking model, query, document count, result, token usage, and cost
 *   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage

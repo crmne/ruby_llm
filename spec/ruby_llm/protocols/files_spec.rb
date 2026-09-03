@@ -304,10 +304,11 @@ RSpec.describe RubyLLM::Protocols::Files do
       end.new
       allow(protocol).to receive(:s3_client).and_return(client)
 
-      file = protocol.upload(StringIO.new("{\"hello\":\"world\"}\n"),
-                             uri: 's3://bucket/path/input.jsonl',
-                             filename: 'input.jsonl',
-                             content_type: 'application/jsonl')
+      file = protocol.upload(
+        StringIO.new("{\"hello\":\"world\"}\n"),
+        filename: 'input.jsonl',
+        provider_options: { uri: 's3://bucket/path/input.jsonl', content_type: 'application/jsonl' }
+      )
 
       expect(file).to have_attributes(id: 's3://bucket/path/input.jsonl', uri: 's3://bucket/path/input.jsonl')
       expect(client.put_options).to include(
@@ -357,10 +358,11 @@ RSpec.describe RubyLLM::Protocols::Files do
       end.new
       allow(protocol).to receive(:bucket).with('bucket').and_return(bucket)
 
-      file = protocol.upload(StringIO.new("{\"hello\":\"world\"}\n"),
-                             uri: 'gs://bucket/path/input.jsonl',
-                             filename: 'input.jsonl',
-                             content_type: 'application/jsonl')
+      file = protocol.upload(
+        StringIO.new("{\"hello\":\"world\"}\n"),
+        filename: 'input.jsonl',
+        provider_options: { uri: 'gs://bucket/path/input.jsonl', content_type: 'application/jsonl' }
+      )
 
       expect(file).to have_attributes(id: 'gs://bucket/path/input.jsonl', uri: 'gs://bucket/path/input.jsonl')
       expect(bucket.create_file_args).to match(

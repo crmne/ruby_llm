@@ -98,7 +98,7 @@ module RubyLLM
 
     # Returns the human-readable provider name, delegating to
     # ::display_name.
-    def name
+    def name # :nodoc:
       self.class.display_name
     end
 
@@ -349,11 +349,9 @@ module RubyLLM
       protocol.new(self, model).rerank(query, documents, model: model_id_for(model), top_n:, provider_options:)
     end
 
-    def upload_file(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil, # :nodoc:
-                    display_name: nil, uri: nil, content_type: nil)
+    def upload_file(file, filename: nil, purpose: nil, expires_in: nil, provider_options: {}) # :nodoc:
       ensure_files_supported!
-      options = { filename:, purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }
-                .compact
+      options = { filename:, purpose:, expires_in:, provider_options: }.compact
 
       protocols.fetch(:files).new(self).upload(file, **options)
     end

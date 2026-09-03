@@ -183,7 +183,7 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
       it 'still finds the unlisted model by id' do
         registry = RubyLLM::Models.new(described_class.read)
 
-        expect(registry.find('dropped-model', :openai).id).to eq('dropped-model')
+        expect(registry.find('dropped-model', provider: :openai).id).to eq('dropped-model')
       end
 
       it 'keeps the first unlisting time while the model stays unlisted' do

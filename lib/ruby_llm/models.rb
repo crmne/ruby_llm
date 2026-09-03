@@ -204,14 +204,14 @@ module RubyLLM
           provider_class ||= Provider.resolve!(provider)
 
           model = begin
-            Models.find(model_id, provider, config: config)
+            Models.find(model_id, provider: provider, config: config)
           rescue ModelNotFoundError
             nil
           end
 
           model ||= Model.default(model_id, provider_class.slug)
         else
-          model = Models.find model_id, provider, config: config
+          model = Models.find model_id, provider: provider, config: config
           provider_class = Provider.resolve!(model.provider)
         end
         [model, provider_class.new(config)]
@@ -608,7 +608,7 @@ module RubyLLM
     #   RubyLLM.models.find 'gpt-5.6'
     #   RubyLLM.models.find 'claude-sonnet-5', :bedrock
     #
-    def find(model_id, provider = nil, config: nil)
+    def find(model_id, provider: nil, config: nil)
       if provider
         find_with_provider(model_id, provider, config)
       else

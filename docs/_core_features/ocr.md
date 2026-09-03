@@ -83,23 +83,25 @@ end
 Every keyword beyond `model:` and `provider:` passes through to the request in the provider's own vocabulary. Mistral takes `pages:` with zero-based page numbers:
 
 ```ruby
-ocr = RubyLLM.ocr("annual-report.pdf", pages: [0, 1, 2])
+ocr = RubyLLM.ocr("annual-report.pdf", provider_options: { pages: [0, 1, 2] })
 
-ocr.usage["pages_processed"]
+ocr.pages.length
 # => 3
 ```
 
 ## Provider Options
 
-Mistral's other request options pass through the same way:
+Mistral's other request options pass through `provider_options:` in Mistral's own vocabulary:
 
 ```ruby
 RubyLLM.ocr(
   "annual-report.pdf",
-  table_format: "html",          # extract tables as HTML instead of markdown
-  include_image_base64: true,    # include embedded images as base64
-  extract_header: true,          # separate page headers from the body
-  extract_footer: true           # separate page footers from the body
+  provider_options: {
+    table_format: "html",          # extract tables as HTML instead of markdown
+    include_image_base64: true,    # include embedded images as base64
+    extract_header: true,          # separate page headers from the body
+    extract_footer: true           # separate page footers from the body
+  }
 )
 ```
 

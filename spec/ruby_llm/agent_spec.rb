@@ -467,7 +467,7 @@ RSpec.describe RubyLLM::Agent, :live do
     agent_class = Class.new(described_class) do
       model 'gpt-4.1-nano'
       fallbacks 'gpt-4.1-mini',
-                RubyLLM.models.find('claude-haiku-4-5', :anthropic),
+                RubyLLM.models.find('claude-haiku-4-5', provider: :anthropic),
                 on: RubyLLM::RateLimitError
     end
 

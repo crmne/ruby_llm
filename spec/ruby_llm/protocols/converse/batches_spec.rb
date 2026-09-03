@@ -111,9 +111,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
       expect(uploaded_body).to include('"recordId":"0"')
       expect(provider).to have_received(:upload_file).with(
         kind_of(StringIO),
-        uri: match(%r{\As3://ruby-llm-batches/test/ruby_llm_batches/.+/input\.jsonl\z}),
         filename: 'input.jsonl',
-        content_type: 'application/jsonl'
+        provider_options: { uri: match(%r{\As3://ruby-llm-batches/test/ruby_llm_batches/.+/input\.jsonl\z}),
+                            content_type: 'application/jsonl' }
       )
       expect(provider).to have_received(:signed_post).with(
         'https://bedrock.us-west-2.amazonaws.com',

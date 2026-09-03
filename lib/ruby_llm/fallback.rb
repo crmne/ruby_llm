@@ -18,6 +18,8 @@ module RubyLLM
   #     puts "Fallback #{fallback.succeeded? ? 'succeeded' : 'failed'}"
   #   end
   class Fallback
+    include Inspectable
+
     # The error classes that trigger a fallback when Chat#with_fallbacks is
     # called without +on:+.
     DEFAULT_ERRORS = [
@@ -32,7 +34,7 @@ module RubyLLM
     # The model id of the fallback target.
     attr_reader :id
 
-    # The provider of the fallback target as a Symbol, or +nil+.
+    # The provider slug of the fallback target as a String, or +nil+.
     attr_reader :provider
 
     # The Model object the fallback was configured with, or +nil+ when it was
@@ -76,9 +78,13 @@ module RubyLLM
       end
     end
 
+    def inspect_attributes # :nodoc:
+      { id: id, provider: provider, attempt: attempt }
+    end
+
     def initialize(id: nil, provider: nil, model: nil, **attributes) # :nodoc:
       @id = id || model&.id
-      @provider = (provider || model&.provider)&.to_sym
+      @provider = (provider || model&.provider)&.to_s
       @model = model
       @chat = attributes[:chat]
       @error = attributes[:error]

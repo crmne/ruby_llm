@@ -23,7 +23,7 @@ RSpec.describe RubyLLM::OCR, :live do
     end
 
     it 'mistral/mistral-ocr-latest passes options through in provider vocabulary' do
-      ocr = RubyLLM.ocr(pdf_path, model: 'mistral-ocr-latest', provider: :mistral, pages: [0])
+      ocr = RubyLLM.ocr(pdf_path, model: 'mistral-ocr-latest', provider: :mistral, provider_options: { pages: [0] })
 
       expect(ocr.pages.length).to eq(1)
       expect(ocr.usage['pages_processed']).to eq(1)

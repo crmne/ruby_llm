@@ -19,8 +19,11 @@ module RubyLLM
           validate_bedrock_batch_requests!(requests)
           role_arn = bedrock_batch_role_arn
           input_uri, output_uri = bedrock_batch_storage_uris
-          @provider.upload_file(StringIO.new(bedrock_batch_jsonl(requests)),
-                                uri: input_uri, filename: 'input.jsonl', content_type: 'application/jsonl')
+          @provider.upload_file(
+            StringIO.new(bedrock_batch_jsonl(requests)),
+            filename: 'input.jsonl',
+            provider_options: { uri: input_uri, content_type: 'application/jsonl' }
+          )
 
           response = @provider.signed_post(@provider.control_api_base, '/model-invocation-job', {
                                              jobName: bedrock_job_name(input_uri),

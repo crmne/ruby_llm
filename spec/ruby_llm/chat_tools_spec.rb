@@ -11,7 +11,7 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   def skip_unless_capable(provider, model, capability, message)
-    model_info = RubyLLM.models.find(model, provider)
+    model_info = RubyLLM.models.find(model, provider: provider)
     skip message unless model_info&.supports?(capability)
   rescue RubyLLM::ModelNotFoundError
     skip message

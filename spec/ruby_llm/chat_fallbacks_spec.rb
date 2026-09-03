@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Chat do
     chat.with_fallbacks('fallback-model', second_fallback_model)
 
     expect(chat.fallbacks.map(&:id)).to eq(%w[fallback-model second-fallback-model])
-    expect(chat.fallbacks.last.provider).to eq(:openrouter)
+    expect(chat.fallbacks.last.provider).to eq('openrouter')
     expect(chat.fallback_errors).to eq(RubyLLM::Fallback::DEFAULT_ERRORS)
   end
 

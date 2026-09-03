@@ -323,9 +323,9 @@ module RubyLLM
       false
     end
 
-    def ocr(file, model:, options: {})
+    def ocr(file, model:, provider_options: {})
       track_usage(:ocr) do
-        payload = render_ocr_payload(file, model:, options:)
+        payload = render_ocr_payload(file, model:, provider_options:)
         response = @connection.post ocr_url, payload, usage: @usage_tracker
         parse_ocr_response(response, model:)
       end

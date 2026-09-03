@@ -170,7 +170,7 @@ Fallbacks can be model IDs or `RubyLLM::Model` objects:
 ```ruby
 class WorkAssistant < RubyLLM::Agent
   model "gpt-4.1"
-  fallbacks RubyLLM.models.find("claude-haiku-4-5", :anthropic)
+  fallbacks RubyLLM.models.find("claude-haiku-4-5", provider: :anthropic)
 end
 ```
 

@@ -90,9 +90,9 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
       expect(uploaded_body).to include('ruby_llm_batch_id')
       expect(provider).to have_received(:upload_file).with(
         kind_of(StringIO),
-        uri: match(%r{\Ags://ruby-llm-batches/test/ruby_llm_batches/.+/input\.jsonl\z}),
         filename: 'input.jsonl',
-        content_type: 'application/jsonl'
+        provider_options: { uri: match(%r{\Ags://ruby-llm-batches/test/ruby_llm_batches/.+/input\.jsonl\z}),
+                            content_type: 'application/jsonl' }
       )
       expect(connection).to have_received(:post).with(
         'projects/test/locations/us-central1/batchPredictionJobs',

@@ -172,7 +172,7 @@ Fallbacks can be model IDs or `RubyLLM::Model` objects:
 
 ```ruby
 chat.with_fallbacks(
-  RubyLLM.models.find("claude-haiku-4-5", :anthropic)
+  RubyLLM.models.find("claude-haiku-4-5", provider: :anthropic)
 )
 ```
 

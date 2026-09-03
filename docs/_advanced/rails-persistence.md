@@ -102,7 +102,7 @@ chat.model.context_window
 The registry itself is persisted internally. Query and refresh it through `RubyLLM.models`:
 
 ```ruby
-RubyLLM.models.find('{{ site.models.openai_standard }}', :openai)
+RubyLLM.models.find('{{ site.models.openai_standard }}', provider: :openai)
 RubyLLM.models.by_provider(:anthropic)
 RubyLLM.models.refresh
 ```

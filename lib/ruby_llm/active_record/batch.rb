@@ -19,7 +19,7 @@ module RubyLLM
 
           create!(
             provider_batch_id: batch.id,
-            provider: batch.provider_slug,
+            provider: batch.provider,
             status: batch.status,
             raw_status: batch.raw_status,
             completed: batch.complete?,
@@ -35,7 +35,7 @@ module RubyLLM
         end
 
         def sync(batch)
-          find_record(batch.id, provider: batch.provider_slug)&.sync_from(batch)
+          find_record(batch.id, provider: batch.provider)&.sync_from(batch)
         end
 
         private

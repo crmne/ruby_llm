@@ -341,7 +341,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'sends the temperature you set even when the registry marks the model as rejecting it' do
-      model = RubyLLM.models.find('claude-sonnet-5', :anthropic)
+      model = RubyLLM.models.find('claude-sonnet-5', provider: :anthropic)
       expect(model.metadata[:temperature]).to be(false)
 
       payload = described_class.new(model: 'claude-sonnet-5', provider: :anthropic)

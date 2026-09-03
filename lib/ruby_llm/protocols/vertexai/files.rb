@@ -9,9 +9,10 @@ module RubyLLM
         GCS_URI = %r{\Ags://([^/]+)/?(.*)\z}m
 
         # rubocop:disable-next Lint/UnusedMethodArgument
-        def upload(file, uri: nil, filename: nil, content_type: nil, purpose: nil, expires_in: nil,
-                   visibility: nil, display_name: nil)
+        def upload(file, filename: nil, purpose: nil, expires_in: nil, provider_options: {})
           attachment = file_attachment(file, filename:)
+          uri = provider_options[:uri]
+          content_type = provider_options[:content_type]
           target_uri = uri || storage_uri_for(attachment)
           bucket_name, key = parse_gcs_uri(target_uri)
 

@@ -6,10 +6,9 @@ module RubyLLM
   module Protocols
     # Provider-managed file storage APIs.
     class Files < Protocol
-      def upload(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil,
-                 display_name: nil, uri: nil, content_type: nil)
+      def upload(file, filename: nil, purpose: nil, expires_in: nil, provider_options: {})
         attachment = file_attachment(file, filename:)
-        options = { purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }.compact
+        options = { purpose:, expires_in: }.compact.merge(provider_options.transform_keys(&:to_sym))
         response = @connection.post(files_url, render_upload_payload(attachment, **options),
                                     idempotent: false) do |request|
           request.headers.delete('Content-Type')

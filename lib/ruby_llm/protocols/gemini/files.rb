@@ -9,10 +9,10 @@ module RubyLLM
         PROCESSING_TIMEOUT = 600
 
         # rubocop:disable-next Lint/UnusedMethodArgument
-        def upload(file, filename: nil, display_name: nil, purpose: nil, expires_in: nil,
-                   visibility: nil, uri: nil, content_type: nil)
+        def upload(file, filename: nil, purpose: nil, expires_in: nil, provider_options: {})
           attachment = file_attachment(file, filename:)
-          upload_url = start_resumable_upload(attachment, display_name: display_name || attachment.filename)
+          display_name = provider_options[:display_name] || attachment.filename
+          upload_url = start_resumable_upload(attachment, display_name:)
           response = upload_file_bytes(upload_url, attachment)
           await_active(parse_file_response(response.body.fetch('file')))
         end

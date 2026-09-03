@@ -13,13 +13,13 @@ module RubyLLM
           'ocr'
         end
 
-        def render_ocr_payload(file, model:, options: {})
+        def render_ocr_payload(file, model:, provider_options: {})
           attachment = file.is_a?(Attachment) ? file : Attachment.new(file, config: @config)
 
           {
             model: model,
             document: ocr_document_part(attachment)
-          }.merge(options)
+          }.merge(provider_options)
         end
 
         def ocr_document_part(attachment)

@@ -24,7 +24,7 @@ module RubyLLM
 
     # The provider's usage block for the request, such as the number of
     # pages processed, or +nil+ when the provider does not report one.
-    attr_reader :usage
+    attr_reader :usage # :nodoc:
 
     # The provider's raw response hash.
     attr_reader :raw
@@ -52,8 +52,8 @@ module RubyLLM
                  provider: nil,
                  assume_model_exists: false,
                  context: nil,
-                 metadata: nil,
-                 **options)
+                 provider_options: {},
+                 metadata: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_ocr_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -63,12 +63,12 @@ module RubyLLM
         provider_class: provider_instance.class.display_name,
         model: model.id,
         model_info: model,
-        options: options,
+        provider_options: provider_options,
         metadata: metadata
       }
 
       RubyLLM.instrument('ocr.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.ocr(file, model:, options:)
+        result = provider_instance.ocr(file, model:, provider_options:)
         event[:result] = result
         event[:response_model] = result.model
         result

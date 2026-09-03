@@ -176,11 +176,12 @@ module RubyLLM
       apply(attributes)
     end
 
-    def provider_slug
+    # The slug of the provider running the batch, as a String.
+    def provider
       @provider.slug
     end
 
-    attr_reader :batch_protocol
+    attr_reader :batch_protocol # :nodoc:
 
     # Returns whether the batch has finished processing, as of the last
     # state fetched from the provider. Never contacts the provider; poll
@@ -347,7 +348,7 @@ module RubyLLM
     def attach_batch_usage(result, operation:, model:, category:, instrument:)
       return unless result.ruby_llm_usage_entries.empty?
 
-      model ||= RubyLLM.models.find(result.model, @provider.slug, config: @provider.config)
+      model ||= RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
       entry = Usage::Entry.new(
         operation:,
         provider: @provider.slug,
