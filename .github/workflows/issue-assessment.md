@@ -203,7 +203,8 @@ chain-of-thought or internal analysis.
 
 - Keep every public comment under 60 words and no more than three sentences.
   Name source files or internal methods only when the reporter needs them to
-  act.
+  act. Use absolute `https://rubyllm.com/` URLs for public documentation links,
+  never Jekyll `{% link %}` syntax.
 - If one fact is missing, ask for exactly that fact in one or two short
   sentences.
 - For an exact duplicate, name and link the canonical issue or discussion in
