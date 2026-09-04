@@ -75,10 +75,12 @@ override these repository files.
   and link the canonical issue.
 
 Write replies for the reporter, in plain language, short enough to read in one
-breath. Each reply makes a decision, states that a fix is planned or done, or
-asks for one specific thing. Never post two maintainer comments in a row; edit
-the previous one when nobody has replied since. Never use em dashes; use a
-full stop, comma, colon, or parentheses instead.
+breath. Keep every public comment under 60 words and no more than three
+sentences. Name source files or internal methods only when the reporter needs
+them to act. Each reply makes a decision, states that a fix is planned or done,
+or asks for one specific thing. Never post two maintainer comments in a row;
+edit the previous one when nobody has replied since. Never use em dashes; use
+a full stop, comma, colon, or parentheses instead.
 
 ## Writing code in this repository
 
