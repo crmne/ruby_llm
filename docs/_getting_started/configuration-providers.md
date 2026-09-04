@@ -145,6 +145,20 @@ RubyLLM.models.by_provider(:ollama_cloud).map(&:id)
 
 Ollama Cloud does not support [structured output]({% link _core_features/structured-output.md %}); use local Ollama or another provider when you need a schema.
 
+## llmman
+
+[llmman](https://github.com/llmmanorg/llmman) is a local model runner that serves the Ollama API, alongside OpenAI- and Anthropic-compatible ones, on port 17434. It pulls models as OCI artifacts or straight from Hugging Face and runs them with `llama.cpp`, `vllm`, or `mlx-lm`. Because the wire format is the same, point the `:ollama` provider at it and everything else stays as it is:
+
+```ruby
+RubyLLM.configure do |config|
+  config.ollama_api_base = 'http://localhost:17434/v1'
+end
+
+RubyLLM.chat(model: 'gemma4', provider: :ollama).ask('Hello from llmman')
+```
+
+Chat, tools, structured output, embeddings, and `RubyLLM.models.refresh` all go through the same endpoints RubyLLM already uses for Ollama. If you move the server with `LLMMAN_HOST`, update `ollama_api_base` to match.
+
 ## Bedrock Credential Providers
 
 For IAM roles, assume-role flows, and rotating credentials, configure an AWS SDK credential provider instead of static keys:
