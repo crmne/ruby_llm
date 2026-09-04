@@ -195,6 +195,10 @@ supported by the evidence. Do not add labels to discussions.
 - For a discussion, answer a direct question when the documented behavior is
   clear, or point to the canonical issue or guide. Leave product decisions,
   release timing, and speculative designs for the maintainer.
+- Verify usage and testing answers against the current public API. To stub a
+  tool, instantiate the real tool and stub only `execute`, so its name,
+  description, and parameter schema stay real. Never recommend a null-object
+  tool double.
 
 ## Communicate
 

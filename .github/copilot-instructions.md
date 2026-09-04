@@ -74,6 +74,10 @@ override these repository files.
   plan in the issue.
 - Close an exact duplicate only when it is the same request or root cause,
   and link the canonical issue.
+- Verify usage and testing answers against the current public API. To stub a
+  tool, instantiate the real tool and stub only `execute`, so its name,
+  description, and parameter schema remain real. Never recommend a null-object
+  tool double.
 
 Write replies for the reporter, in plain language, short enough to read in one
 breath. Keep every public comment under 60 words and no more than three
