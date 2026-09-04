@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../../support/query_helpers'
 require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
@@ -28,11 +29,53 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
     message
   end
 
+  def message_with_attachments(count)
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    message = chat.messages.create!(role: 'user', content: 'see attached')
+    message.attachments.attach(Array.new(count) { |index| stored_blob("file#{index}.txt") })
+    message
+  end
+
+  def stored_blob(filename)
+    ActiveStorage::Blob.create_and_upload!(
+      io: StringIO.new("content of #{filename}"), filename: filename, content_type: 'text/plain'
+    )
+  end
+
   def uploaded_file
     tempfile = Tempfile.new(%w[upload .txt])
     tempfile.write('uploaded')
     tempfile.rewind
     ActionDispatch::Http::UploadedFile.new(tempfile: tempfile, filename: 'upload.txt', type: 'text/plain')
+  end
+
+  describe 'blob loading' do
+    it 'loads every stored blob in one query' do
+      message = message_with_attachments(4)
+
+      queries = QueryHelpers.matching(/active_storage_blobs/) { Message.find(message.id).to_llm }
+
+      expect(queries.size).to eq(1)
+    end
+
+    it 'keeps the eager loading the application already did' do
+      message = message_with_attachments(4)
+      loaded = Message.with_attached_attachments.find(message.id)
+
+      queries = QueryHelpers.matching(/active_storage_attachments|active_storage_blobs/) { loaded.to_llm }
+
+      expect(queries).to be_empty
+    end
+
+    it 'reads a pending attachment without querying for its blob' do
+      chat = Chat.create!(model: 'gpt-4.1-nano')
+      message = chat.messages.build(role: 'user', content: 'see attached')
+      message.attachments.attach([stored_blob('pending.txt')])
+
+      queries = QueryHelpers.matching(/active_storage_blobs/) { message.to_llm }
+
+      expect(queries).to be_empty
+    end
   end
 
   describe '#persist_content' do

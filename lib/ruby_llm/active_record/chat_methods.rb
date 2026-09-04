@@ -548,9 +548,14 @@ module RubyLLM
         return messages unless assoc.respond_to?(:klass)
 
         associations = %i[ruby_llm_tool_calls ruby_llm_parent_tool_call ruby_llm_usages]
+        associations << { attachments_attachments: :blob } if attachment_association?(assoc.klass)
 
         ::ActiveRecord::Associations::Preloader.new(records: messages, associations: associations).call
         messages
+      end
+
+      def attachment_association?(message_class)
+        message_class.reflect_on_association(:attachments_attachments).present?
       end
 
       def build_llm_chat
