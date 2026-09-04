@@ -368,7 +368,7 @@ module RubyLLM
       # Sets a Context whose configuration chats this agent builds should
       # use, applied via Chat#with_context. A block defers evaluation until a
       # chat is built, with declared ::inputs available as methods. Called
-      # with no argument, returns the configured context.
+      # with no argument, returns the configured Context, deferred Proc, or nil.
       #
       #   context RubyLLM.context { |config| config.request_timeout = 10 }
       #   context { RubyLLM.context { |config| config.openai_api_key = api_key } }
@@ -543,8 +543,8 @@ module RubyLLM
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
         apply_assume_model_exists(record)
         apply_protocol(record)
-        apply_context(record, runtime_context(chat: record, inputs: input_values))
         runtime = runtime_context(chat: record, inputs: input_values)
+        apply_context(record, runtime)
         apply_instructions(
           record,
           runtime,
