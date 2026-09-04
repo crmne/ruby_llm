@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
@@ -699,11 +700,43 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe '#eager_load_messages' do
+    def chat_with_attachments(messages:, attachments:)
+      chat = Chat.create!(model: model_id)
+      messages.times do |index|
+        message = chat.messages.create!(role: 'user', content: "message #{index}")
+        message.attachments.attach(Array.new(attachments) do |slot|
+          ActiveStorage::Blob.create_and_upload!(
+            io: StringIO.new("content #{index}-#{slot}"),
+            filename: "file#{index}-#{slot}.txt",
+            content_type: 'text/plain'
+          )
+        end)
+      end
+      chat
+    end
+
     it 'falls back to a plain list for an association without a class' do
       chat = Chat.create!(model: model_id)
       allow(chat).to receive(:messages_association).and_return([])
 
       expect(chat.send(:eager_load_messages)).to eq([])
+    end
+
+    it 'loads the attachments and their blobs once for the whole transcript' do
+      chat = chat_with_attachments(messages: 3, attachments: 3)
+
+      queries = QueryHelpers.matching(/active_storage_attachments|active_storage_blobs/) { Chat.find(chat.id).to_llm }
+
+      expect(queries.size).to eq(2)
+    end
+
+    it 'checks for attachments once for a transcript that has none' do
+      chat = Chat.create!(model: model_id)
+      10.times { |index| chat.messages.create!(role: 'user', content: "message #{index}") }
+
+      queries = QueryHelpers.matching(/active_storage_attachments|active_storage_blobs/) { Chat.find(chat.id).to_llm }
+
+      expect(queries.size).to eq(1)
     end
   end
 
