@@ -194,6 +194,45 @@ RSpec.describe RubyLLM::Agent do
       expect(agent.chat(tenant: 'acme').end_user).to eq('tenant-acme')
     end
 
+    it 'resolves a context block from agent inputs before building the chat' do
+      agent = Class.new(described_class) do
+        model 'gpt-4.1-nano', provider: :openai
+        inputs :timeout
+
+        send(:context) { RubyLLM.context { |config| config.request_timeout = timeout } }
+      end
+
+      chat = agent.chat(timeout: 42)
+
+      expect(chat.provider.config.request_timeout).to eq(42)
+    end
+
+    it 'resolves a context block for agent instances' do
+      agent = Class.new(described_class) do
+        model 'gpt-4.1-nano', provider: :openai
+        inputs :timeout
+
+        send(:context) { RubyLLM.context { |config| config.request_timeout = timeout } }
+      end
+
+      expect(agent.new(timeout: 42).chat.provider.config.request_timeout).to eq(42)
+    end
+
+    it 'evaluates a context block once when building an agent chat' do
+      evaluations = 0
+      agent = Class.new(described_class) do
+        model 'gpt-4.1-nano', provider: :openai
+        send(:context) do
+          evaluations += 1
+          RubyLLM.context
+        end
+      end
+
+      agent.chat
+
+      expect(evaluations).to eq(1)
+    end
+
     it 'leaves the chat alone when a block returns nothing' do
       agent = Class.new(described_class) do
         model 'gpt-4.1-nano', provider: :openai
