@@ -113,6 +113,11 @@ permissions:
 
 engine: copilot
 
+network:
+  allowed:
+    - defaults
+    - rubyllm.com
+
 tools:
   bash: false
   cli-proxy: false
