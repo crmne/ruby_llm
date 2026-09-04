@@ -385,7 +385,6 @@ module RubyLLM
                       value
                     end
       end
-      end
 
       # Sets the ActiveRecord chat class this agent creates and finds,
       # activating Rails mode (::create, ::create!, ::find, and
@@ -552,8 +551,8 @@ module RubyLLM
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
         apply_assume_model_exists(record)
         apply_protocol(record)
-        apply_context(record, runtime_context(chat: record, inputs: input_values))
         runtime = runtime_context(chat: record, inputs: input_values)
+        apply_context(record, runtime)
         apply_instructions(
           record,
           runtime,
