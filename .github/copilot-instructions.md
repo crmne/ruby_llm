@@ -79,11 +79,12 @@ Write replies for the reporter, in plain language, short enough to read in one
 breath. Keep every public comment under 60 words and no more than three
 sentences. Name source files or internal methods only when the reporter needs
 them to act. Public documentation links use absolute `https://rubyllm.com/`
-URLs, never the site's internal Jekyll `{% link %}` syntax. Each reply makes a
-decision, states that a fix is planned or done, or asks for one specific thing.
-Never post two maintainer comments in a row; edit the previous one when nobody
-has replied since. Never use em dashes; use a full stop, comma, colon, or
-parentheses instead.
+URLs, never the site's internal Jekyll `{% link %}` syntax. The collection
+permalink is `https://rubyllm.com/<page-name>/`; verify the page name instead of
+inventing a collection prefix. Each reply makes a decision, states that a fix
+is planned or done, or asks for one specific thing. Never post two maintainer
+comments in a row; edit the previous one when nobody has replied since. Never
+use em dashes; use a full stop, comma, colon, or parentheses instead.
 
 ## Writing code in this repository
 
