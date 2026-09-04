@@ -36,6 +36,7 @@ on:
           const itemNumber = context.payload.issue?.number
             || context.payload.discussion?.number
             || routed.item_number;
+          const forceAssessment = routed.force_assessment === true;
 
           if (!["issue", "discussion"].includes(itemType) || !itemNumber) {
             core.setFailed("An issue or discussion number is required");
@@ -78,12 +79,14 @@ on:
               && trustedActors.has(reaction.user?.login),
           );
 
-          if (alreadyAssessed) {
+          if (alreadyAssessed && !forceAssessment) {
             core.setFailed(`${itemType} #${itemNumber} was already assessed`);
             return;
           }
 
-          if (itemType === "issue") {
+          if (alreadyAssessed) {
+            core.info(`Retrying ${itemType} #${itemNumber} after an incomplete assessment`);
+          } else if (itemType === "issue") {
             await github.rest.reactions.createForIssue({
               ...context.repo,
               issue_number: itemNumber,
