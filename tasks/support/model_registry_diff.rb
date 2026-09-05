@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Prevents a registry refresh from silently discarding published model facts.
+# Reports model removals and metadata losses during a registry refresh.
 class ModelRegistryDiff
   GUARDED_FIELDS = %i[family created_at context_window max_output_tokens knowledge_cutoff].freeze
 

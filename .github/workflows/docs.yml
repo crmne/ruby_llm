@@ -11,11 +11,16 @@ on:
       - '.rdoc_options'
       - '.github/workflows/docs.yml'
       - 'Rakefile'
-      - 'tasks/models.rake'
+      - 'tasks/**'
   workflow_dispatch:
     inputs:
-      allow_model_registry_regressions:
-        description: Accept reviewed model registry regressions while refreshing the registry
+      refresh_model_registry:
+        description: Refresh the model registry from upstream sources before deploying
+        required: false
+        type: boolean
+        default: false
+      allow_model_registry_drop:
+        description: Accept reviewed model count drops while refreshing the registry
         required: false
         type: boolean
         default: false
@@ -68,7 +73,8 @@ jobs:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
           VERTEXAI_SERVICE_ACCOUNT_KEY: ${{ secrets.VERTEXAI_SERVICE_ACCOUNT_KEY }}
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
-          ALLOW_MODEL_REGISTRY_REGRESSIONS: ${{ inputs.allow_model_registry_regressions && 'true' || 'false' }}
+          REFRESH_MODEL_REGISTRY: ${{ github.event_name == 'schedule' || inputs.refresh_model_registry || inputs.allow_model_registry_drop }}
+          ALLOW_MODEL_REGISTRY_DROP: ${{ inputs.allow_model_registry_drop && 'true' || 'false' }}
         run: |
           registry="$RUNNER_TEMP/ruby-llm-models.json"
           if ! curl --fail --silent --show-error --retry 3 \
@@ -83,6 +89,7 @@ jobs:
             registry_schema = {
               "$schema" => "https://json-schema.org/draft/2020-12/schema",
               "type" => "array",
+              "minItems" => 1,
               "items" => RubyLLM::ModelSchema.json_schema
             }
             errors = JSONSchemer.schema(registry_schema).validate(data).first(5).map do |error|
@@ -94,12 +101,13 @@ jobs:
           fi
 
           deploy=true
-          if [ "${{ github.event_name }}" = "schedule" ] || \
-             [ "$ALLOW_MODEL_REGISTRY_REGRESSIONS" = "true" ]; then
+          if [ "$REFRESH_MODEL_REGISTRY" = "true" ]; then
             before="$(sha256sum "$registry" | cut -d ' ' -f 1)"
             MODEL_REGISTRY_FILE="$registry" bundle exec rake models:update
             after="$(sha256sum "$registry" | cut -d ' ' -f 1)"
-            [ "$before" != "$after" ] || deploy=false
+            if [ "${{ github.event_name }}" = "schedule" ] && [ "$before" = "$after" ]; then
+              deploy=false
+            fi
           fi
 
           echo "file=$registry" >> "$GITHUB_OUTPUT"

@@ -110,6 +110,16 @@ bundle exec rake models:update
 
 These tasks live outside the gem's packaged Rake task directory. They are not application commands and are intentionally unavailable after installing the gem.
 
+The task reports model removals and metadata changes from upstream sources without blocking the refresh. It validates the schema before saving and rejects empty registries or a model count drop greater than 20%, both overall and for each provider. A rejected refresh leaves the registry file unchanged.
+
+After reviewing a large model count drop, you can accept it explicitly:
+
+```bash
+ALLOW_MODEL_REGISTRY_DROP=true bundle exec rake models:update
+```
+
+The Deploy docs workflow refreshes the published catalog every six hours. You can also run it manually with `refresh_model_registry`, or use `allow_model_registry_drop` to refresh and accept a reviewed count drop. Push builds use the published catalog without refreshing upstream sources.
+
 ### Rails Database Registry
 
 For Rails applications, the install generator sets up everything automatically:

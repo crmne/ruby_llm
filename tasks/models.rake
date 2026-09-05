@@ -87,16 +87,12 @@ end
 
 def persist_refreshed_models(existing_models, models, registry_file)
   initial_count = existing_models.size
-  if suspicious_model_drop?(initial_count, models.all.size)
-    abort "Refusing to replace #{initial_count} models with #{models.all.size}. " \
-          'Set ALLOW_MODEL_REGISTRY_DROP=true after reviewing the result.'
-  end
+  validate_model_counts!(existing_models, models.all)
 
-  regressions = ModelRegistryDiff.call(existing_models, models.all)
-  if regressions.any? && ENV['ALLOW_MODEL_REGISTRY_REGRESSIONS'] != 'true'
-    puts(regressions.map { |regression| "  - #{regression}" })
-    abort "Refusing to accept #{regressions.size} registry regressions. " \
-          'Set ALLOW_MODEL_REGISTRY_REGRESSIONS=true after reviewing every reported change.'
+  changes = ModelRegistryDiff.call(existing_models, models.all)
+  if changes.any?
+    puts "Upstream catalog changes (#{changes.size}):"
+    puts(changes.map { |change| "  - #{change}" })
   end
 
   if sorted_models_data(models.all) == sorted_models_data(existing_models) && initial_count.positive?
@@ -108,6 +104,24 @@ def persist_refreshed_models(existing_models, models, registry_file)
   validate_models!(models)
   puts "Saving models.json (#{models.all.size} models)"
   models.save_to_json(registry_file)
+end
+
+def validate_model_counts!(existing_models, new_models)
+  abort 'Refusing to publish an empty model registry.' if new_models.empty?
+
+  new_counts = model_counts(new_models)
+  drops = model_counts(existing_models).filter_map do |name, initial_count|
+    new_count = new_counts.fetch(name, 0)
+    "#{name}: #{initial_count} models -> #{new_count}" if suspicious_model_drop?(initial_count, new_count)
+  end
+  return if drops.empty?
+
+  abort "Refusing suspicious model count drops:\n#{drops.join("\n")}\n" \
+        'Set ALLOW_MODEL_REGISTRY_DROP=true after reviewing the result.'
+end
+
+def model_counts(models)
+  models.group_by(&:provider).transform_values(&:size).merge('registry' => models.size)
 end
 
 def suspicious_model_drop?(initial_count, new_count)
