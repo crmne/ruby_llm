@@ -221,7 +221,8 @@ module RubyLLM
 
       # Enables thinking for chats this agent builds, applied via
       # Chat#with_thinking. With no options, RubyLLM chooses from the model's
-      # registered controls. Pass +false+ to disable it.
+      # registered controls. Accepts keywords or an options Hash. Pass +false+
+      # to disable it. Passing +nil+ raises ArgumentError.
       #
       #   thinking
       #   thinking false
@@ -230,14 +231,9 @@ module RubyLLM
       #   thinking display: :summarized
       #
       def thinking(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
-        raise ArgumentError, 'thinking accepts false or thinking options' unless [true, false].include?(enabled)
-        raise ArgumentError, 'thinking false does not accept options' if !enabled && options.any?
-        raise ArgumentError, 'thinking options cannot be nil; use thinking false to disable' if options.value?(nil)
+        return thinking(**enabled.transform_keys(&:to_sym), **options) if enabled.is_a?(Hash)
 
-        if (unsupported = options.keys - THINKING_OPTIONS).any?
-          raise ArgumentError, "thinking accepts #{THINKING_OPTIONS.join(', ')}, got #{unsupported.join(', ')}"
-        end
-
+        validate_thinking_options(enabled, options)
         @thinking = enabled ? options : false
       end
 
@@ -288,7 +284,7 @@ module RubyLLM
       # Chat#with_caching. With no options, the provider's default behavior
       # applies. Pass +false+ to stop RubyLLM from sending cache controls. A
       # provider may still cache prompts implicitly. A block defers evaluation
-      # until the chat is built.
+      # until the chat is built. Accepts keywords or an options Hash.
       #
       #   caching
       #   caching false
@@ -296,6 +292,8 @@ module RubyLLM
       #   caching { { ttl: workspace.cache_ttl } }
       #
       def caching(enabled = true, **options, &block) # rubocop:disable Metrics/PerceivedComplexity, Style/OptionalBooleanParameter
+        return caching(**enabled.transform_keys(&:to_sym), **options, &block) if enabled.is_a?(Hash)
+
         raise ArgumentError, 'caching accepts false or caching options' unless [true, false].include?(enabled)
         raise ArgumentError, 'caching accepts options or a block, not both' if options.any? && block
         raise ArgumentError, 'caching false does not accept options or a block' if !enabled && (options.any? || block)
@@ -584,6 +582,17 @@ module RubyLLM
       end
 
       private
+
+      def validate_thinking_options(enabled, options)
+        raise ArgumentError, 'thinking accepts false or thinking options' unless [true, false].include?(enabled)
+        raise ArgumentError, 'thinking false does not accept options' if !enabled && options.any?
+        raise ArgumentError, 'thinking options cannot be nil; use thinking false to disable' if options.value?(nil)
+
+        unsupported = options.keys - THINKING_OPTIONS
+        return if unsupported.empty?
+
+        raise ArgumentError, "thinking accepts #{THINKING_OPTIONS.join(', ')}, got #{unsupported.join(', ')}"
+      end
 
       def rescue_handler_key(exception_class)
         case exception_class

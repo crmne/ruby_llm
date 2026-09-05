@@ -4,7 +4,7 @@ require 'faraday'
 
 module RubyLLM
   # Internal accounting for physical provider attempts.
-  class Usage # :nodoc:
+  class Usage # :nodoc: all
     def self.instrument(entry, config:) # :nodoc:
       RubyLLM.instrument(
         'usage.ruby_llm',

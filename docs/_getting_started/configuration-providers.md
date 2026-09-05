@@ -203,7 +203,7 @@ RubyLLM.configure do |config|
   config.openai_api_base = "http://localhost:8080/v1"  # vLLM, LiteLLM, etc.
 end
 
-chat = RubyLLM.chat(model: 'my-custom-model', provider: :openai, assume_model_exists: true)
+chat = RubyLLM.chat(model: ENV.fetch("CUSTOM_CHAT_MODEL"), provider: :openai, assume_model_exists: true)
 ```
 
 #### System Role Compatibility

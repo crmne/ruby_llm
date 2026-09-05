@@ -5,7 +5,7 @@ module RubyLLM
   # Chat#with_server_tools. Protocols declare an alias table mapping portable
   # names such as +:web_search+ to their wire format; raw Hashes pass through
   # verbatim so new provider tools work without a gem update. :nodoc:
-  module ServerTools
+  module ServerTools # :nodoc: all
     # The result of resolving a chat's server tools against a protocol's
     # alias table: tool entries for the payload's tools slot, extra payload
     # fields to merge, and request headers to add.

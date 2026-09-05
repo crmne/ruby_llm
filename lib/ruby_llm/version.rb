@@ -2,5 +2,5 @@
 
 module RubyLLM
   # The version of the ruby_llm gem, as a string.
-  VERSION = '1.16.0'
+  VERSION = '2.0.0.rc1'
 end

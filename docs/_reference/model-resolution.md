@@ -146,7 +146,7 @@ New releases, custom fine-tunes, and private deployments won't be in the registr
 
 ```ruby
 chat = RubyLLM.chat(
-  model: "my-custom-deployment",
+  model: ENV.fetch("CUSTOM_CHAT_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )
@@ -169,8 +169,8 @@ You are responsible for using only the features the model actually supports. The
 If nothing matches and you didn't assume existence, RubyLLM raises `RubyLLM::ModelNotFoundError` with guidance to refresh the registry:
 
 ```ruby
-RubyLLM.chat(model: "gpt-7-ultra")
-# => RubyLLM::ModelNotFoundError: Unknown model: "gpt-7-ultra".
+RubyLLM.chat(model: unknown_model_id)
+# => RubyLLM::ModelNotFoundError: Unknown model: ...
 #    If the model exists at the provider, refresh the registry with
 #    `RubyLLM.models.refresh`.
 ```

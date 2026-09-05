@@ -175,6 +175,22 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'feature option hashes' do
+    it 'accepts thinking options from a hash without mutating its options' do
+      options = { 'effort' => :high }
+
+      expect(chat.with_thinking(options)).to be(chat)
+      expect(chat.thinking).to eq(effort: :high)
+      expect(options).to eq('effort' => :high)
+    end
+
+    it 'rejects nil for every feature switch' do
+      %i[with_thinking with_citations with_caching with_compaction].each do |setter|
+        expect { chat.public_send(setter, nil) }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe '#thinking' do
     it 'returns nil when thinking is not configured' do
       expect(chat.thinking).to be_nil

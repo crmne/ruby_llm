@@ -42,6 +42,16 @@ module RubyLLM
         ruby_llm_usages.map(&:to_entry)
       end
 
+      # Returns the model ID from the last successful attempt, or +nil+.
+      def model
+        to_llm.model
+      end
+
+      # Returns the model from the registry, or +nil+ if it is unknown.
+      def model_info
+        to_llm.model_info
+      end
+
       # Marks the message as a prompt cache boundary and returns it.
       def cache_until_here
         update!(cache_until_here: true)
@@ -129,6 +139,26 @@ module RubyLLM
       # Returns why the model stopped, as the Symbol RubyLLM::Message#finish_reason reports.
       def finish_reason
         optional_column(:finish_reason)&.to_sym
+      end
+
+      # Returns +true+ if the model finished normally without requesting tools.
+      def stopped?
+        to_llm.stopped?
+      end
+
+      # Returns +true+ if a token limit stopped the response.
+      def max_tokens?
+        to_llm.max_tokens?
+      end
+
+      # Returns +true+ if the model stopped to request tool calls.
+      def tool_call_stop?
+        to_llm.tool_call_stop?
+      end
+
+      # Returns +true+ if a provider safety filter stopped the response.
+      def content_filtered?
+        to_llm.content_filtered?
       end
 
       # Returns the content parsed as JSON, or +nil+ when the message has no text.

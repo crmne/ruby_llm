@@ -141,7 +141,7 @@ image_google = RubyLLM.paint(
 # Use a model not in the registry (useful for custom endpoints)
 image_custom = RubyLLM.paint(
   "A sunset over mountains",
-  model: "my-custom-image-model",
+  model: ENV.fetch("CUSTOM_IMAGE_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )
@@ -279,7 +279,7 @@ end
 
 ## Prompt Engineering for Images
 
-Crafting effective prompts is key to getting the desired image. Be descriptive!
+Describe the subject, composition, lighting, and style you want in the image.
 
 ```ruby
 # Simple prompt - often yields generic results

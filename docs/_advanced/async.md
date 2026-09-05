@@ -201,7 +201,7 @@ end
 Then run these processes:
 
 **Option 1: Add to Procfile.dev (Recommended)**
-```ruby
+```procfile
 # Procfile.dev
 web: bin/rails server
 css: bin/rails tailwindcss:watch  # or your CSS processor

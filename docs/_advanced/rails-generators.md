@@ -35,7 +35,7 @@ The generator:
 - Creates one migration for RubyLLM's internal model, tool-call, usage, and batch tables
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs ActiveStorage for file attachments
-- Creates an initializer with sensible defaults
+- Creates an initializer for provider configuration
 - Creates conventional AI app directories
 
 After running the generator:
@@ -45,7 +45,7 @@ bin/rails db:migrate
 bin/rails ruby_llm:load_models
 ```
 
-Your Rails app is now AI-ready!
+You can now create a persisted chat with `Chat.create!` and send a message with `chat.ask`.
 
 ### Install Generator Options
 
@@ -68,25 +68,32 @@ For most apps, keep the default behavior (install ActiveStorage) so file attachm
 
 ## Adding a Chat UI
 
-Want a ready-to-use chat interface? Run the chat UI generator:
+Run the chat UI generator to add controllers, views, and a background job:
 
 ```bash
 bin/rails generate ruby_llm:chat_ui
 ```
 
-This creates a complete chat interface with:
-- **Controllers**: Handles chat and message creation with background processing
-- **Views**: Modern UI with Turbo Streams for real-time updates
-- **Jobs**: Background job for processing AI responses without blocking
+The generator creates:
+
+- **Controllers**: Create chats and enqueue message processing
+- **Views**: Render messages and update them with Turbo Streams
+- **Jobs**: Request AI responses in the background
 - **Routes**: RESTful routes for chats and messages
 
-After running the generator, start your server and visit `http://localhost:3000/chats` to begin chatting!
+Start your server and visit `http://localhost:3000/chats`.
 
 The UI generator also supports custom model names:
 
 ```bash
 bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 ```
+
+## Upgrading an Existing Integration
+
+For an application on RubyLLM 1.16, use `ruby_llm:upgrade`. It generates preparation, backfill, and finish migrations. Generate one phase with `--phase prepare`, `--phase backfill`, or `--phase finish` when you need to schedule them separately. Generate `--phase cleanup` in a later deployment to remove legacy message columns.
+
+Keep affected activity paused until the upgrade and application-specific data conversion are complete. Review the [upgrade and recovery procedure]({% link _reference/upgrading.md %}#how-to-upgrade) before running these migrations.
 
 ## Conventional Directory Structure
 

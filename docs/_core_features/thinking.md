@@ -37,7 +37,7 @@ RubyLLM resolves those controls when it builds the request, so it follows later 
 
 When the registry lists several controls, RubyLLM prefers an explicit default, then a provider toggle, then `medium` effort when available, then the smallest positive token budget the model accepts. Each protocol then sends what its provider needs. Claude never turns thinking on from an effort alone, so RubyLLM adds the thinking block that generation takes. See [Provider Notes](#provider-notes).
 
-Pass options when you want to tune the model explicitly:
+Pass keyword options or a Hash to configure thinking explicitly:
 
 ```ruby
 chat = RubyLLM.chat(model: 'claude-opus-4-5')
@@ -55,6 +55,7 @@ Pass `effort`, `budget`, or both:
 ```ruby
 chat.with_thinking(effort: :low)
 chat.with_thinking(budget: 10_000)
+chat.with_thinking({ effort: :high })
 chat.with_thinking(effort: :none)
 ```
 

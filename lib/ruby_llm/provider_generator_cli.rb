@@ -7,7 +7,7 @@ require 'ruby_llm/provider_scaffold'
 
 module RubyLLM
   # Command-line interface for public provider gem generation.
-  class ProviderGeneratorCLI
+  class ProviderGeneratorCLI # :nodoc: all
     ACTION_LABELS = { written: 'create', updated: 'update', skipped: 'skip' }.freeze
 
     class HelpRequested < StandardError; end

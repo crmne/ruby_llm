@@ -67,7 +67,7 @@ embedding_google = RubyLLM.embed(
 # Use a model not in the registry (useful for custom endpoints)
 embedding_custom = RubyLLM.embed(
   "Custom model test",
-  model: "my-custom-embedding-model",
+  model: ENV.fetch("CUSTOM_EMBEDDING_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )

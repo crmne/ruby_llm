@@ -55,7 +55,7 @@ RSpec.describe 'Published model registry workflow', type: :task do
       'PUBLISHED_REGISTRY' => File.join(tmpdir, 'published.json'),
       'REFRESHED_REGISTRY' => File.join(tmpdir, 'refreshed.json'),
       'REAL_BUNDLE' => Gem.bin_path('bundler', 'bundle'),
-      'BUNDLE_GEMFILE' => File.expand_path('../../Gemfile', __dir__)
+      'BUNDLE_GEMFILE' => Bundler.default_gemfile.expand_path.to_s
     }.merge(overrides)
     Open3.capture3(env, 'bash', '-e', '-c', script.gsub('${{ github.event_name }}', event), chdir: tmpdir)
   end

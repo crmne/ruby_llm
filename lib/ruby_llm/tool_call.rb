@@ -34,12 +34,11 @@ module RubyLLM
       @thought_signature = thought_signature
     end
 
-    # Returns a Hash with the keys +:id+, +:name+, +:arguments+, and
-    # +:thought_signature+. Keys with +nil+ values are omitted.
     def inspect_attributes # :nodoc:
       { id: id, name: name, arguments: arguments }
     end
 
+    # Returns the call as a Hash, omitting +nil+ values.
     def to_h
       {
         id: @id,

@@ -86,7 +86,7 @@ When using models not in the registry (e.g., new OpenRouter models), pass `assum
 
 ```ruby
 chat = Chat.create!(
-  model: 'experimental-llm-v2',
+  model: ENV.fetch("OPENROUTER_MODEL"),
   provider: 'openrouter',
   assume_model_exists: true  # Skips registry validation
 )
@@ -98,7 +98,7 @@ Like context, `assume_model_exists` is not persisted.
 ```ruby
 # When switching to another dynamic model later
 chat = Chat.find(chat_id)
-chat.with_model('another-experimental-model', provider: 'openrouter', assume_model_exists: true)
+chat.with_model(ENV.fetch("OPENROUTER_FALLBACK_MODEL"), provider: 'openrouter', assume_model_exists: true)
 ```
 
 ## Working with Prompt Caching

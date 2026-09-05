@@ -73,7 +73,7 @@ module RubyLLM
       @metadata = attributes[:metadata] || {}
     end
 
-    EXPIRY_MARGIN = 60 # seconds
+    EXPIRY_MARGIN = 60 # :nodoc:
 
     # Returns +true+ once the provider's retention window for this file has
     # passed or is about to; a file expiring within the next minute cannot

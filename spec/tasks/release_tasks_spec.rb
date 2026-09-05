@@ -2,6 +2,7 @@
 
 require 'rake'
 require 'tmpdir'
+require 'open3'
 
 load File.expand_path('../../tasks/release.rake', __dir__)
 
@@ -11,6 +12,22 @@ RSpec.describe ReleaseTasks do
 
   after do
     FileUtils.rm_rf(tmpdir)
+  end
+
+  it 'loads repository tasks even when a dependency ships the same task path' do
+    FileUtils.mkdir_p(File.join(tmpdir, 'tasks'))
+    File.write(File.join(tmpdir, 'tasks/release.rake'), 'task :shadowed_release')
+    script = <<~RUBY
+      load './Rakefile'
+      puts Rake::Task['release:verify_cassettes'].name
+    RUBY
+
+    stdout, stderr, status = Open3.capture3(
+      RbConfig.ruby, '-I', tmpdir, '-rrake', '-e', script, chdir: File.expand_path('../..', __dir__)
+    )
+
+    expect(status).to be_success, stderr
+    expect(stdout).to include('release:verify_cassettes')
   end
 
   def write_cassette(name, recorded_at_times)

@@ -136,8 +136,8 @@ When you specify a model, RubyLLM determines which provider to use. The framewor
 chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")  # Uses OpenAI
 
 chat = RubyLLM.chat(
-  model: "{{ site.models.local_llama }}",
-  provider: :ollama,
+  model: "{{ site.models.anthropic_current }}",
+  provider: :anthropic
 )
 ```
 

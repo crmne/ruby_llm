@@ -18,6 +18,7 @@ class UpgradeMigrationTemplateContext
   def prepare_migration_class_name = 'PrepareRubyLlmV2Upgrade'
   def backfill_migration_class_name = 'BackfillRubyLlmV2Data'
   def finish_migration_class_name = 'FinishRubyLlmV2Upgrade'
+  def cleanup_migration_class_name = 'CleanupRubyLlmV2Upgrade'
   def reference_type = 'bigint'
   def chat_table_name = 'chats'
   def message_table_name = 'messages'
@@ -51,7 +52,7 @@ end
 
 RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:disable RSpec/DescribeClass
   it 'renders valid migrations for every supported adapter' do
-    templates = %w[prepare_v2_upgrade.rb.tt backfill_v2_data.rb.tt finish_v2_upgrade.rb.tt]
+    templates = %w[prepare_v2_upgrade.rb.tt backfill_v2_data.rb.tt finish_v2_upgrade.rb.tt cleanup_v2_upgrade.rb.tt]
 
     %w[postgresql mysql2 sqlite3].each do |adapter|
       templates.each do |filename|
@@ -78,17 +79,25 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
 
         expect(success).to be(true), output
       end
+
+      if name == :postgresql
+        it 'preserves UUID references and resumes UUID checkpoints' do
+          success, output = run_in_isolated_process(adapter, url, scenario: :run_uuid_scenario)
+
+          expect(success).to be(true), output
+        end
+      end
     end
   end
 
-  def run_in_isolated_process(adapter, database)
+  def run_in_isolated_process(adapter, database, scenario: :run_adapter_scenario)
     reader, writer = IO.pipe
     pid = fork do
       reader.close
       success = true
       output = nil
       begin
-        isolate_database(adapter, database) { run_adapter_scenario(adapter) }
+        isolate_database(adapter, database) { send(scenario, adapter) }
       rescue Exception => e # rubocop:disable Lint/RescueException
         success = false
         output = e.full_message
@@ -108,11 +117,19 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
   def isolate_database(adapter, database, &block)
     ActiveRecord::Base.establish_connection(database)
     ActiveRecord::Migration.verbose = false
+    configure_migration_safety(adapter)
     return block.call unless %w[postgresql mysql2].include?(adapter)
 
     adapter == 'postgresql' ? isolate_postgresql(&block) : isolate_mysql(&block)
   ensure
     ActiveRecord::Base.remove_connection
+  end
+
+  def configure_migration_safety(adapter)
+    return unless Gem.loaded_specs.key?('strong_migrations')
+
+    require 'strong_migrations'
+    StrongMigrations.skipped_databases = adapter == 'sqlite3' ? [:primary] : []
   end
 
   def isolate_postgresql
@@ -147,11 +164,17 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     migrations = load_upgrade_migrations(adapter)
 
     migrations.fetch(:prepare).new.migrate(:up)
+    verify_interrupted_backfill(migrations)
     migrations.fetch(:backfill).new.migrate(:up)
     record_for(:ruby_llm_usages).where('message_id > ?', 10_000).delete_all
     record_for(:ruby_llm_v2_backfills).where(task: 'usages').update_all(last_id: 10_000, completed: false)
     migrations.fetch(:backfill).new.migrate(:up)
     migrations.fetch(:finish).new.migrate(:up)
+    migrations.fetch(:finish).new.migrate(:up)
+    verify_retained_columns(migrations)
+    migrations.fetch(:cleanup).new.migrate(:up)
+    migrations.fetch(:cleanup).new.migrate(:up)
+    verify_rollback_guards(migrations)
 
     verify_migrated_data
     verify_clean_install_contract(adapter)
@@ -159,6 +182,103 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     verify_finish_guard(adapter, migrations)
   ensure
     drop_test_tables
+  end
+
+  def run_uuid_scenario(adapter)
+    create_v1_schema(adapter, id: :uuid)
+    now = Time.now.utc
+    model_id, chat_id, tool_call_id = Array.new(3) { SecureRandom.uuid }
+    message_ids = Array.new(5) { SecureRandom.uuid }.sort
+    record_for(:models).create!(
+      id: model_id, model_id: 'gpt-4.1', name: 'GPT-4.1', provider: 'openai', created_at: now, updated_at: now
+    )
+    record_for(:chats).create!(id: chat_id, model_id: model_id, created_at: now, updated_at: now)
+    message_ids.each do |id|
+      record_for(:messages).create!(
+        id: id, chat_id: chat_id, model_id: model_id, role: 'assistant', content: 'Answer', input_tokens: 10,
+        created_at: now, updated_at: now
+      )
+    end
+    record_for(:tool_calls).create!(
+      id: tool_call_id, message_id: message_ids.first, tool_call_id: 'call-uuid', name: 'lookup', arguments: {},
+      created_at: now, updated_at: now
+    )
+    record_for(:messages).find(message_ids.last).update!(tool_call_id: tool_call_id)
+    connection.change_column_null(:messages, :model_id, false)
+    migrations = load_upgrade_migrations(adapter)
+    stub_const('UuidBackfill', migrations.fetch(:backfill))
+    stub_const('UuidBackfill::BATCH_SIZE', 2)
+    migrations.fetch(:prepare).new.migrate(:up)
+    migrations.fetch(:backfill).new.migrate(:up)
+    verify_uuid_checkpoint(migrations, message_ids)
+    migrations.fetch(:finish).new.migrate(:up)
+    legacy_model_column = connection.columns(:messages).find { |column| column.name == 'model_id' }
+    raise 'legacy reference still requires a model' unless legacy_model_column.null
+
+    record_for(:messages).create!(id: SecureRandom.uuid, chat_id: chat_id, role: 'user', content: 'Continue')
+    migrated = record_for(:ruby_llm_tool_calls).find(tool_call_id)
+    raise 'UUID tool result reference was lost' unless migrated.result_id == message_ids.last
+
+    migrations.fetch(:cleanup).new.migrate(:up)
+    raise 'UUID usage reference was lost' unless record_for(:ruby_llm_usages).pluck(:message_id).sort == message_ids
+  ensure
+    drop_test_tables
+  end
+
+  def verify_uuid_checkpoint(migrations, message_ids)
+    checkpoint = message_ids[1]
+    record_for(:ruby_llm_usages).where('message_id > ?', checkpoint).delete_all
+    record_for(:ruby_llm_v2_backfills).where(task: 'usages').update_all(last_id: checkpoint, completed: false)
+    migrations.fetch(:backfill).new.migrate(:up)
+    progress = record_for(:ruby_llm_v2_backfills).find_by!(task: 'usages')
+    raise 'UUID checkpoint was not preserved' unless progress.last_id == message_ids.last && progress.completed
+  end
+
+  def verify_interrupted_backfill(migrations)
+    migration = migrations.fetch(:backfill).new
+    migration.define_singleton_method(:record_progress) do |task, last_id|
+      super(task, last_id)
+      raise 'simulated batch failure' if task == 'usages' && last_id.to_i > 10_000
+    end
+
+    error = migration_error { migration.migrate(:up) }
+    raise 'backfill did not reach the interrupted batch' unless error.message == 'simulated batch failure'
+    raise 'uncommitted usage rows survived' unless record_for(:ruby_llm_usages).count == 10_000
+
+    checkpoint = record_for(:ruby_llm_v2_backfills).find_by!(task: 'usages')
+    raise 'checkpoint was not rolled back with the batch' unless checkpoint.last_id == 10_000 && !checkpoint.completed
+
+    verify_incomplete_upgrade_guards(migrations)
+  end
+
+  def verify_incomplete_upgrade_guards(migrations)
+    error = migration_error { migrations.fetch(:finish).new.migrate(:up) }
+    raise 'finish accepted incomplete backfills' unless error.message.include?('incomplete')
+
+    error = migration_error { migrations.fetch(:cleanup).new.migrate(:up) }
+    raise 'cleanup accepted an unfinished upgrade' unless error.message.include?('before removing')
+  end
+
+  def verify_retained_columns(migrations)
+    raise 'finish removed legacy message data' unless connection.column_exists?(:messages, :input_tokens)
+    raise 'finish removed backfill progress' unless connection.table_exists?(:ruby_llm_v2_backfills)
+
+    %i[prepare backfill].each do |phase|
+      error = migration_error { migrations.fetch(phase).new.migrate(:up) }
+      raise "#{phase} accepted an already finished upgrade" unless error&.message&.include?('already finished')
+    end
+    columns = record_for(:messages)
+    columns.create!(id: synthetic_message_count + 2, chat_id: 1, role: 'user', content: 'A new conversation message')
+    columns.where(role: 'user').delete_all
+  end
+
+  def verify_rollback_guards(migrations)
+    migrations.each_value do |migration|
+      error = migration_error { migration.new.migrate(:down) }
+      raise 'down silently discarded migrated data' unless error.is_a?(ActiveRecord::IrreversibleMigration)
+    end
+    error = migration_error { migrations.fetch(:backfill).new.migrate(:up) }
+    raise 'backfill accepted a cleaned schema' unless error&.message&.include?('already been cleaned')
   end
 
   def verify_migrated_data
@@ -274,12 +394,12 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     end
   end
 
-  def create_v1_schema(adapter)
+  def create_v1_schema(adapter, id: :bigint)
     registry_json_type = adapter == 'postgresql' ? :jsonb : :json
     json_defaults = adapter == 'mysql2' ? {} : { default: {} }
 
     ActiveRecord::Schema.define do
-      create_table :models do |table|
+      create_table :models, id: id do |table|
         table.string :model_id, null: false
         table.string :name, null: false
         table.string :provider, null: false
@@ -302,9 +422,9 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
         end
       end
 
-      create_table(:chats, &:timestamps)
+      create_table(:chats, id: id, &:timestamps)
 
-      create_table :messages do |table|
+      create_table :messages, id: id do |table|
         table.string :role, null: false
         table.text :content
         table.json :content_raw
@@ -321,7 +441,7 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
         table.index :role
       end
 
-      create_table :tool_calls do |table|
+      create_table :tool_calls, id: id do |table|
         table.string :tool_call_id, null: false
         table.string :name, null: false
         table.text :thought_signature
@@ -331,11 +451,11 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
         table.index :name
       end
 
-      add_reference :chats, :model, foreign_key: true
-      add_reference :tool_calls, :message, null: false, foreign_key: true
-      add_reference :messages, :chat, null: false, foreign_key: true
-      add_reference :messages, :model, foreign_key: true
-      add_reference :messages, :tool_call, foreign_key: true
+      add_reference :chats, :model, type: id, foreign_key: true
+      add_reference :tool_calls, :message, type: id, null: false, foreign_key: true
+      add_reference :messages, :chat, type: id, null: false, foreign_key: true
+      add_reference :messages, :model, type: id, foreign_key: true
+      add_reference :messages, :tool_call, type: id, foreign_key: true
     end
   end
 
@@ -343,8 +463,8 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     now = Time.now.utc
     record_for(:models).create!(
       id: 1,
-      model_id: 'gpt-adapter-test',
-      name: 'Adapter Test',
+      model_id: 'gpt-4.1',
+      name: 'GPT-4.1',
       provider: 'openai',
       modalities: {},
       capabilities: [],
@@ -399,13 +519,13 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
   def insert_identity_records
     now = Time.now.utc
     record_for(:models).create!(
-      id: 1, model_id: 'gpt-adapter-test', name: 'Adapter Test', provider: 'openai',
+      id: 1, model_id: 'gpt-4.1', name: 'GPT-4.1', provider: 'openai',
       modalities: {}, capabilities: [], pricing: {}, metadata: {}, created_at: now, updated_at: now
     )
     record_for(:chats).create!(id: 1, model_id: 1, created_at: now, updated_at: now)
   end
 
-  def synthetic_message_count = 20_005
+  def synthetic_message_count = Integer(ENV.fetch('RUBY_LLM_MIGRATION_MESSAGE_COUNT', 20_005))
 
   def record_for(table)
     Class.new(ActiveRecord::Base) do
@@ -420,7 +540,8 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     {
       prepare: ['prepare_v2_upgrade.rb.tt', :PrepareRubyLlmV2Upgrade],
       backfill: ['backfill_v2_data.rb.tt', :BackfillRubyLlmV2Data],
-      finish: ['finish_v2_upgrade.rb.tt', :FinishRubyLlmV2Upgrade]
+      finish: ['finish_v2_upgrade.rb.tt', :FinishRubyLlmV2Upgrade],
+      cleanup: ['cleanup_v2_upgrade.rb.tt', :CleanupRubyLlmV2Upgrade]
     }.transform_values do |filename, class_name|
       template = File.expand_path("../../../lib/generators/ruby_llm/upgrade/templates/#{filename}", __dir__)
       scope.module_eval(context.render(template), template)

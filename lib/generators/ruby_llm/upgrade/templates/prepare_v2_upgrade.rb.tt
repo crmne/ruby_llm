@@ -69,6 +69,11 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   # A schema the finish migration already cleaned has none of these columns;
   # running the backfill again there would invent usage rows.
   def validate_legacy_message_columns
+    if table_exists?(:ruby_llm_v2_backfills) &&
+       migration_record(:ruby_llm_v2_backfills).where(task: 'finished', completed: true).exists?
+      raise 'The RubyLLM 2.0 upgrade is already finished. Generate --phase cleanup to remove the legacy columns.'
+    end
+
     legacy_columns = %i[content_raw input_tokens output_tokens <%= v1_model_foreign_key %> <%= v1_tool_call_foreign_key %>]
     return if legacy_columns.any? { |column| column_exists?(:<%= message_table_name %>, column) }
     return unless table_exists?(:ruby_llm_usages)

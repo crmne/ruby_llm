@@ -314,6 +314,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe '#add_message' do
+    it 'copies an existing message record into the conversation' do
+      source = Chat.create!(model: model_id)
+      original = source.add_message(role: :user, content: 'Keep this context')
+      destination = Chat.create!(model: model_id)
+      destination.to_llm
+
+      copied = destination.add_message(original)
+
+      expect(copied).to be_persisted
+      expect(copied.id).not_to eq(original.id)
+      expect(copied.content).to eq(original.content)
+      expect(original.reload.chat).to eq(source)
+      expect(destination.to_llm.messages.map(&:content)).to eq(['Keep this context'])
+      expect(destination.reload.messages.pluck(:content)).to eq(['Keep this context'])
+    end
+
     it 'links a tool result to the tool call that produced it' do
       call = tool_call
       chat = Chat.create!(model: model_id)

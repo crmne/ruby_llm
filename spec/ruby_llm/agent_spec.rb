@@ -108,6 +108,17 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(chat.messages.first.content).to eq('RubyLLM::Chat')
   end
 
+  it 'accepts the same thinking and caching option hashes as Chat' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      thinking({ 'effort' => :high })
+      caching({ 'ttl' => '1h' })
+    end
+
+    expect(agent_class.chat.thinking).to eq(effort: :high)
+    expect(agent_class.chat.caching).to eq(ttl: '1h')
+  end
+
   it 'lets agents enable provider-default prompt caching' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'

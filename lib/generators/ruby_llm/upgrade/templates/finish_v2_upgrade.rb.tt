@@ -12,8 +12,8 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
     verify_tool_results
     verify_usages
     enforce_required_defaults
-    remove_legacy_message_columns
-    drop_table PROGRESS_TABLE
+    relax_legacy_message_constraints
+    mark_finished
   end
 
   def down
@@ -21,6 +21,21 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
   end
 
   private
+
+  def relax_legacy_message_constraints
+    %i[<%= v1_model_foreign_key %> <%= v1_tool_call_foreign_key %>].each do |column|
+      next unless column_definition(:<%= message_table_name %>, column)&.null == false
+
+      with_upgrade_safety { change_column_null :<%= message_table_name %>, column, true }
+    end
+  end
+
+  def mark_finished
+    progress = migration_record(PROGRESS_TABLE)
+    return if progress.where(task: 'finished', completed: true).exists?
+
+    progress.insert_all!([{ task: 'finished', completed: true }], returning: false)
+  end
 
   def enforce_required_defaults
     enforce_not_null(:<%= chat_table_name %>, :cancelled)
@@ -153,42 +168,6 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
 <% else -%>
     "json_extract(#{details}, '$.#{key}')"
 <% end -%>
-  end
-
-  def remove_legacy_message_columns
-    table = :<%= message_table_name %>
-    reference_columns = %i[<%= v1_model_foreign_key %> <%= v1_tool_call_foreign_key %>]
-    reference_columns.each do |column|
-      remove_column_foreign_keys(table, column)
-      remove_matching_indexes(table, column)
-    end
-
-    candidates = reference_columns + %i[
-      content_raw input_tokens output_tokens cached_tokens cache_creation_tokens cache_read_tokens
-      cache_write_tokens thinking_tokens total_cost cost_details
-    ]
-    columns = candidates.uniq.select { |column| column_exists?(table, column) }
-    with_upgrade_safety { remove_columns table, *columns } if columns.any?
-  end
-
-  def remove_column_foreign_keys(table, column)
-    connection.foreign_keys(table).each do |key|
-      remove_foreign_key(table, key.to_table, column: column) if key.column == column.to_s
-    end
-  end
-
-  def remove_matching_indexes(table, columns)
-    connection.indexes(table).each do |index|
-      remove_upgrade_index(table, index.name) if index.columns == Array(columns).map(&:to_s)
-    end
-  end
-
-  def remove_upgrade_index(table, name)
-    options = { name: name }
-<% if postgresql? -%>
-    options[:algorithm] = :concurrently
-<% end -%>
-    remove_index table, **options
   end
 
   def with_upgrade_safety(&)

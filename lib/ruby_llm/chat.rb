@@ -463,7 +463,8 @@ module RubyLLM
     # provider-specific tier such as +:minimal+, +:xhigh+, or +:max+,
     # passed through as-is), +budget:+ (a token count), and +display:+
     # (+:summarized+ or +:omitted+, controlling whether providers that
-    # support it return readable thinking text). Returns +self+.
+    # support it return readable thinking text). Accepts keywords or an options
+    # Hash. Passing +nil+ raises ArgumentError. Returns +self+.
     #
     #   chat.with_thinking
     #   chat.with_thinking(false)
@@ -472,6 +473,8 @@ module RubyLLM
     #   chat.with_thinking(display: :summarized)
     #
     def with_thinking(enabled = true, **options) # rubocop:disable Metrics/PerceivedComplexity, Style/OptionalBooleanParameter
+      return with_thinking(**enabled.transform_keys(&:to_sym), **options) if enabled.is_a?(Hash)
+
       raise ArgumentError, 'with_thinking accepts false or thinking options' unless [true, false].include?(enabled)
       raise ArgumentError, 'with_thinking(false) does not accept options' if !enabled && options.any?
       raise ArgumentError, 'thinking options cannot be nil; pass false to disable' if options.value?(nil)

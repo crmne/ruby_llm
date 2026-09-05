@@ -2,7 +2,7 @@
 layout: default
 title: Getting Started
 nav_order: 1
-description: Start building AI apps in Ruby in 5 minutes. Chat, generate images, create embeddings - all with one gem.
+description: Install RubyLLM, configure a provider, and add chat, streaming, images, and embeddings to a Ruby or Rails application.
 redirect_from:
   - /guides/getting-started
   - /installation
@@ -24,10 +24,10 @@ After reading this guide, you will know:
 
 ## Installation
 
-Add RubyLLM with bundler:
+Add the RubyLLM 2.0 release candidate with Bundler:
 
 ```sh
-bundle add ruby_llm
+bundle add ruby_llm --version 2.0.0.rc1
 ```
 
 ## Minimal Configuration
@@ -72,7 +72,7 @@ chat.ask "Tell me a story about a Ruby programmer" do |chunk|
 end
 ```
 
-That is all streaming takes. See the [Streaming Guide]({% link _core_features/streaming.md %}) for streaming into web pages and background jobs.
+See the [Streaming Guide]({% link _core_features/streaming.md %}) for streaming into web pages and background jobs.
 
 ## Generating an Image
 
@@ -112,7 +112,7 @@ Explore further in the [Embeddings Guide]({% link _core_features/embeddings.md %
 
 ## Using It in Rails
 
-Want conversations saved to your database? One generator sets up Chat and Message models with ActiveRecord persistence:
+Use the install generator to create Chat and Message models with Active Record persistence:
 
 ```bash
 bin/rails generate ruby_llm:install
@@ -135,12 +135,13 @@ Then visit `http://localhost:3000/chats` to start chatting. See the [Rails Integ
 
 ## What's Next?
 
-You've covered the basics! Now you're ready to explore RubyLLM's features in more detail:
+Continue with the guide for the feature you want to build:
 
 *   [Chatting with AI Models]({% link _core_features/chat.md %})
 *   [Working with Models]({% link _reference/models.md %}) (Choosing models, custom endpoints)
 *   [Using Tools]({% link _core_features/tools.md %}) (Letting AI call your code)
 *   [Streaming Responses]({% link _core_features/streaming.md %})
 *   [Rails Integration]({% link _advanced/rails.md %})
+*   [AI Coding Assistants]({% link _getting_started/ai-coding-assistants.md %})
 *   [Configuration]({% link _getting_started/configuration.md %})
 *   [Error Handling]({% link _advanced/error-handling.md %})

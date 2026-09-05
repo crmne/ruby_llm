@@ -22,8 +22,8 @@ module RubyLLM
       include Enumerable
       include AttachmentHelpers
 
-      CANCELLATION_POLL_INTERVAL = 1.0
-      COMPLETION_ERRORS = [
+      CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
+      COMPLETION_ERRORS = [ # :nodoc:
         RubyLLM::CancelledError, RubyLLM::Error, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
       ].freeze
 
@@ -282,14 +282,17 @@ module RubyLLM
         self
       end
 
-      # Persists +message_or_attributes+ (a RubyLLM::Message or an attributes
-      # Hash) as a message record, including any attachments and tool calls.
+      # Persists +message_or_attributes+ as a message record, including any
+      # attachments and tool calls. Accepts a RubyLLM::Message, an attributes
+      # Hash, or a record responding to +to_llm+.
       # Returns the message record.
       #
       #   chat.add_message(role: :user, content: long_context)
       #
       def add_message(message_or_attributes)
-        llm_message = message_or_attributes.is_a?(RubyLLM::Message) ? message_or_attributes : RubyLLM::Message.new(message_or_attributes)
+        llm_message = message_or_attributes
+        llm_message = llm_message.to_llm if llm_message.respond_to?(:to_llm)
+        llm_message = RubyLLM::Message.new(llm_message) unless llm_message.is_a?(RubyLLM::Message)
 
         message_record = messages_association.create!(message_attributes(llm_message))
 

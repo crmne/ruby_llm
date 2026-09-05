@@ -9,7 +9,7 @@ module RubyLLM
   #   response = chat.ask "What is the capital of France?"
   #   response.role          # => :assistant
   #   response.content       # => "The capital of France is Paris."
-  #   response.finish_reason # => "stop"
+  #   response.finish_reason # => :stop
   #
   # A Message also carries everything else the provider returned: token
   # usage (#tokens), reasoning output (#thinking), source citations

@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   lint:
-    name: Lint (RuboCop, ArchSpec)
+    name: Lint (RuboCop, ArchSpec, RDoc)
     runs-on: ubuntu-latest
     env:
       BUNDLE_PATH: vendor/bundle
@@ -52,3 +52,7 @@ jobs:
       - name: Run ArchSpec
         working-directory: ${{ inputs.working-directory }}
         run: bundle exec archspec check
+
+      - name: Check public API documentation
+        working-directory: ${{ inputs.working-directory }}
+        run: bundle exec rdoc --coverage-report lib

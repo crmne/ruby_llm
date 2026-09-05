@@ -4,7 +4,8 @@ require 'erb'
 require 'pathname'
 
 module RubyLLM
-  class Prompt # :nodoc:
+  # Resolves prompt templates from the application and registered engine directories.
+  class Prompt
     # The ordered directories searched for prompt files. The application's
     # prompt directory is always first, so an application can override any
     # prompt an engine ships by placing a file at the same relative path.
@@ -17,48 +18,51 @@ module RubyLLM
     class Roots
       include Enumerable
 
-      def initialize(&default)
+      def initialize(&default) # :nodoc:
         @default = default
         @registered = []
       end
 
+      # Appends a prompt directory and returns +self+.
       def <<(path)
         @registered << Pathname.new(path)
         self
       end
       alias push <<
 
+      # Yields each prompt directory in lookup order. Returns an Enumerator without a block.
       def each(&)
         [@default.call, *@registered].each(&)
       end
     end
 
-    attr_reader :name
+    attr_reader :name # :nodoc:
 
-    def initialize(name)
+    def initialize(name) # :nodoc:
       @name = name.to_s
       @filename = @name.end_with?('.txt.erb') ? @name : "#{@name}.txt.erb"
     end
 
-    def path
+    def path # :nodoc:
       @path ||= candidates.find { |candidate| File.exist?(candidate) } || candidates.first
     end
 
-    def render(**locals)
+    def render(**locals) # :nodoc:
       raise PromptNotFoundError, "Prompt file not found: #{path}" unless File.exist?(path)
 
       ERB.new(File.read(path)).result_with_hash(locals)
     end
 
-    def self.render(name, **locals)
+    def self.render(name, **locals) # :nodoc:
       new(name).render(**locals)
     end
 
+    # Returns the ordered prompt directories. Append engine directories with +<<+.
     def self.roots
       @roots ||= Roots.new { root }
     end
 
-    def self.root
+    def self.root # :nodoc:
       if defined?(Rails) && Rails.respond_to?(:root) && Rails.root
         Rails.root.join('app/prompts')
       else

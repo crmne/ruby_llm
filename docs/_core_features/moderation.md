@@ -100,7 +100,7 @@ result = RubyLLM.moderate(
 # Using assume_model_exists for custom models
 result = RubyLLM.moderate(
   "Content to check",
-  model: "my-moderation-model",
+  model: ENV.fetch("CUSTOM_MODERATION_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )

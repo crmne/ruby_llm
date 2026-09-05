@@ -13,16 +13,23 @@ component :domain, in: %w[
   lib/ruby_llm/agent.rb
   lib/ruby_llm/attachment.rb
   lib/ruby_llm/batch.rb
+  lib/ruby_llm/cached_content.rb
   lib/ruby_llm/chat.rb
   lib/ruby_llm/chunk.rb
   lib/ruby_llm/citation.rb
   lib/ruby_llm/context.rb
   lib/ruby_llm/cost.rb
   lib/ruby_llm/embedding.rb
+  lib/ruby_llm/embedding_request.rb
   lib/ruby_llm/image.rb
+  lib/ruby_llm/fallback.rb
   lib/ruby_llm/message.rb
   lib/ruby_llm/moderation.rb
+  lib/ruby_llm/ocr.rb
+  lib/ruby_llm/rerank.rb
   lib/ruby_llm/search_results.rb
+  lib/ruby_llm/server_tool_call.rb
+  lib/ruby_llm/speech.rb
   lib/ruby_llm/stream_accumulator.rb
   lib/ruby_llm/streaming.rb
   lib/ruby_llm/thinking.rb

@@ -169,7 +169,8 @@ end
 class ApprovalsController < ApplicationController
   def create
     chat = Chat.find(params[:chat_id])
-    params[:approved] ? chat.approve(params[:tool_call_id]) : chat.deny(params[:tool_call_id])
+    approved = ActiveModel::Type::Boolean.new.cast(params[:approved])
+    approved ? chat.approve(params[:tool_call_id]) : chat.deny(params[:tool_call_id])
     CompleteJob.perform_later(chat.id)
   end
 end

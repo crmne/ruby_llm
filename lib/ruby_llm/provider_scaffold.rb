@@ -7,7 +7,7 @@ require 'ruby_llm/utils'
 
 module RubyLLM
   # Generates first-party providers and standalone provider gems.
-  class ProviderScaffold
+  class ProviderScaffold # :nodoc: all
     SUPPORTED_MODES = %w[core gem].freeze
     SUPPORTED_DIALECTS = %w[chat_completions responses anthropic gemini converse ollama].freeze
     TEMPLATE_ROOT = File.expand_path('../generators/ruby_llm/provider/templates', __dir__)
