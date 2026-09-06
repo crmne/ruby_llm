@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require_relative '../../support/query_helpers'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
