@@ -6,7 +6,7 @@ module RubyLLM
   # clip with #video. RubyLLM.animate runs the same job through #wait.
   #
   #   job = RubyLLM.animate_later("a paper boat sailing down a gutter")
-  #   job.refresh until job.done?
+  #   job.wait
   #   job.video.save("boat.mp4")
   #
   class VideoJob

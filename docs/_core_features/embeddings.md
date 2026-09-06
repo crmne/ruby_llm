@@ -23,16 +23,13 @@ After reading this guide, you will know:
 
 ## Basic Embedding Generation
 
-The simplest way to create an embedding is with the global `RubyLLM.embed` method:
+Turn text into a vector you can store or use for similarity search:
 
 ```ruby
 embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 
 vector = embedding.vectors
-puts "Vector dimension: #{vector.length}" # e.g., 1536 for {{ site.models.embedding_small }}
-
-puts "Model used: #{embedding.model}"
-puts "Input tokens: #{embedding.tokens.input}"
+# => [0.018, -0.027, ...]
 ```
 
 ## Embedding Multiple Texts
@@ -43,10 +40,8 @@ You can efficiently embed multiple texts in a single API call:
 texts = ["Ruby", "Python", "JavaScript"]
 embeddings = RubyLLM.embed(texts)
 
-puts "Number of vectors: #{embeddings.vectors.length}" # => 3
-puts "First vector dimensions: #{embeddings.vectors.first.length}"
-puts "Model used: #{embeddings.model}"
-puts "Total input tokens: #{embeddings.tokens.input}"
+embeddings.vectors.length # => 3
+texts.zip(embeddings.vectors)
 ```
 
 ## Choosing Models
@@ -81,7 +76,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link _reference/models.md %}) for details on finding available embedding models and their capabilities, and to [Model Resolution]({% link _reference/model-resolution.md %}) for how `model:`, `provider:`, and `assume_model_exists:` resolve.
+Refer to the [Model Registry guide]({% link _reference/models.md %}) for details on finding available embedding models and their capabilities, and to [Model Resolution]({% link _reference/model-resolution.md %}) for how `model:`, `provider:`, and `assume_model_exists:` resolve.
 
 ## Choosing Dimensions
 
@@ -95,10 +90,7 @@ embedding = RubyLLM.embed(
 )
 ```
 
-This is particularly useful when:
-- Working with vector databases that have specific dimension requirements
-- Ensuring consistent dimensionality across different requests
-- Optimizing storage and query performance in your vector database
+Choose dimensions that match your database column. Smaller vectors use less storage; measure retrieval quality on your own data before changing an existing index.
 
 Not every model accepts `dimensions:`. RubyLLM sends the value you set, and a model that does not support it rejects the request. `mistral-embed`, for example, returns a 400. Leave `dimensions:` out for those models.
 
@@ -184,11 +176,8 @@ A primary use case for embeddings is measuring the semantic similarity between t
 ```ruby
 require 'matrix' # Ruby's built-in Vector class requires 'matrix'
 
-embedding1 = RubyLLM.embed("I love Ruby programming")
-embedding2 = RubyLLM.embed("Ruby is my favorite language")
-
-vector1 = Vector.elements(embedding1.vectors)
-vector2 = Vector.elements(embedding2.vectors)
+embedding = RubyLLM.embed(["I love Ruby programming", "Ruby is my favorite language"])
+vector1, vector2 = embedding.vectors.map { |values| Vector.elements(values) }
 
 # Calculate cosine similarity (value between -1 and 1, closer to 1 means more similar)
 similarity = vector1.inner_product(vector2) / (vector1.norm * vector2.norm)
@@ -207,7 +196,7 @@ rescue RubyLLM::Error => e
 end
 ```
 
-For comprehensive error handling patterns and retry strategies, see the [Error Handling Guide]({% link _advanced/error-handling.md %}).
+For retries and specific exceptions, see [Error Handling]({% link _advanced/error-handling.md %}).
 
 ## Performance and Best Practices
 
@@ -218,57 +207,38 @@ For comprehensive error handling patterns and retry strategies, see the [Error H
 
 ## Rails Integration Example
 
-In a Rails application using PostgreSQL with the `pgvector` extension, you might store and search embeddings like this:
+With PostgreSQL, pgvector, and the `neighbor` gem configured, store vectors on your own records:
 
 ```ruby
-# Migration:
-# add_column :documents, :embedding, :vector, limit: 1536 # Match your model's dimensions
-
-# app/models/document.rb
 class Document < ApplicationRecord
-  has_neighbors :embedding # From the neighbor gem for pgvector
+  has_neighbors :embedding
 
-  # Automatically generate embedding before saving if content changed
   before_save :generate_embedding, if: :content_changed?
 
-  # Scope for nearest neighbor search
-  scope :search_by_similarity, ->(query_text, limit: 5) {
-    query_embedding = RubyLLM.embed(query_text).vectors
-    nearest_neighbors(:embedding, query_embedding, distance: :cosine).limit(limit)
-  }
+  def self.search(query)
+    vector = RubyLLM.embed(query).vectors
+    nearest_neighbors(:embedding, vector, distance: :cosine).limit(5)
+  end
 
   private
 
   def generate_embedding
-    return if content.blank?
-    puts "Generating embedding for Document #{id}..."
-    begin
-      embedding_result = RubyLLM.embed(content) # Uses default embedding model
-      self.embedding = embedding_result.vectors
-    rescue RubyLLM::Error => e
-      errors.add(:base, "Failed to generate embedding: #{e.message}")
-      # Prevent saving if embedding fails (optional, depending on requirements)
-      throw :abort
-    end
+    self.embedding = RubyLLM.embed(content).vectors
   end
 end
-
-# Document.create(title: "Intro to Ruby", content: "Ruby is a dynamic language...")
-# results = Document.search_by_similarity("What is Ruby?")
-# results.each { |doc| puts "- #{doc.title}" }
 ```
 
-> This Rails example assumes you have the `pgvector` extension enabled in PostgreSQL and are using a gem like `neighbor` for ActiveRecord integration.
-{: .note }
+```ruby
+Document.create!(title: "Ruby blocks", content: "A block is a piece of Ruby code...")
+Document.search("How do I pass behavior to a method?").pluck(:title)
+```
 
-This covers storing and searching embeddings. To turn that store into a retrieval-augmented chat - a retrieval tool the model calls, plus an answering agent that cites its sources - see [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}).
+The `embedding` vector column must match your model's dimensions. This example generates embeddings during save; use a job for imports that should run in the background. See [RAG]({% link _advanced/rag.md %}) for database setup and an agent that searches these records.
 
 ## Next Steps
-
-Now that you understand embeddings, you might want to explore:
 
 *   [Reranking]({% link _core_features/rerank.md %}) to order your candidates by relevance before you use them.
 *   [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) to ground answers in your own documents.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) for interactive conversations.
 *   [Using Tools]({% link _core_features/tools.md %}) to extend AI capabilities.
-*   [Error Handling]({% link _advanced/error-handling.md %}) for building robust applications.
+*   [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.

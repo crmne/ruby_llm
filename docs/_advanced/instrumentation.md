@@ -25,12 +25,13 @@ Rails apps automatically emit RubyLLM events through `ActiveSupport::Notificatio
 
 ```ruby
 # config/initializers/ruby_llm_instrumentation.rb
-ActiveSupport::Notifications.subscribe('chat.ruby_llm') do |_name, _start, _finish, _id, payload|
+ActiveSupport::Notifications.subscribe('chat.ruby_llm') do |event|
+  payload = event.payload
   Rails.logger.info(
     provider: payload[:provider],
     model: payload[:model],
-    input_tokens: payload[:tokens].input,
-    output_tokens: payload[:tokens].output
+    duration_ms: event.duration,
+    cost: payload[:cost].total
   )
 end
 ```
@@ -39,15 +40,29 @@ When an instrumented block raises, Rails adds the standard `:exception` and `:ex
 
 ## Outside Rails
 
-Outside Rails, set `config.instrumenter` to any object that responds to `instrument(name, payload) { ... }`:
+You can use the same subscribers outside Rails. Add `activesupport` to your bundle, then configure its notifications module:
+
+```ruby
+require 'active_support'
+require 'active_support/notifications'
+
+RubyLLM.configure do |config|
+  config.instrumenter = ActiveSupport::Notifications
+end
+```
+
+Use your application's logger in subscribers instead of `Rails.logger`.
+
+### Custom Instrumenters
+
+To connect another observability system, set `config.instrumenter` to an object that responds to `instrument(name, payload)` with an optional block. This example passes timing and exception details to your application's `Observability.record` method:
 
 ```ruby
 class AppInstrumenter
   def instrument(name, payload)
     started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-    result = yield if block_given?
-    result
+    yield if block_given?
   rescue StandardError => error
     payload = payload.merge(
       exception: [error.class.name, error.message],
@@ -69,16 +84,17 @@ You can also set `instrumenter` on a [context]({% link _getting_started/configur
 
 ## Workflows and Steps
 
-Use `RubyLLM.workflow` to correlate all the RubyLLM activity produced by ordinary Ruby orchestration. It does not execute, route, retry, or persist the workflow; your Ruby code remains in charge:
+Use `RubyLLM.workflow` to group events from a piece of work. Each step adds its own timing and name. The code inside can call chats, agents, or individual operations:
 
 ```ruby
-RubyLLM.workflow("Write article", id: "article-42") do |workflow|
-  notes = workflow.step("Research") do
-    ResearchAgent.new.ask("Research Ruby 3.3 features").content
+RubyLLM.workflow("Summarize meeting", id: "meeting-42") do |workflow|
+  transcript = workflow.step("Transcribe") do
+    RubyLLM.transcribe("meeting.wav").text
   end
 
-  workflow.step("Draft") do
-    WriterAgent.new.ask(notes).content
+  workflow.step("Summarize") do
+    RubyLLM.chat.with_instructions("Summarize the decisions and action items.")
+      .ask(transcript).content
   end
 end
 ```
@@ -124,7 +140,7 @@ RubyLLM.workflow("Review code") do |workflow|
 end
 ```
 
-RubyLLM automatically carries the current workflow and step through its own concurrent tool execution. A dashboard can reconstruct what ran from these events, but the API deliberately does not declare a static graph or represent branches that never executed.
+RubyLLM carries the current workflow and step through its own concurrent tool execution. A dashboard can reconstruct the work that ran from these events. Your application controls scheduling, retries, and persistence.
 
 Workflows can nest. A `RubyLLM.workflow` call inside another workflow keeps its own identity: its events carry the inner `workflow_id` and `workflow_name`, plus `workflow_parent_id` and, when the nesting happened inside a step, `workflow_parent_step_id`. The outer workflow's context is restored when the inner block returns. A service object that declares its own workflow therefore appears as a sub-tree when a larger workflow calls it, the same way nested spans appear in OpenTelemetry.
 

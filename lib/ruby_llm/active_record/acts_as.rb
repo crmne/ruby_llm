@@ -4,10 +4,12 @@ require 'active_support/concern'
 require 'active_support/inflector'
 
 module RubyLLM
-  # The Rails integration. Applications own chats and messages; RubyLLM owns
-  # the supporting usage, tool-call, model-registry, and batch records.
+  # Rails integration brings the RubyLLM API to Active Record models, with
+  # Active Storage attachments and a persisted message lifecycle for Hotwire
+  # streaming and background jobs. Applications own chats and messages;
+  # RubyLLM owns the supporting usage, tool-call, registry, and batch records.
   module ActiveRecord
-    # Adds the two application-facing persistence roles used by RubyLLM.
+    # Adds the RubyLLM conversation API to application-owned records.
     #
     #   class Chat < ApplicationRecord
     #     acts_as_chat
@@ -15,7 +17,16 @@ module RubyLLM
     #
     #   class Message < ApplicationRecord
     #     acts_as_message
+    #     has_many_attached :attachments
     #   end
+    #
+    #   chat = Chat.create!(model: "gpt-5.6-luna")
+    #   response = chat.ask "Summarize this report.", with: report.document
+    #   response.content
+    #   chat.cost.total
+    #
+    # The install generator creates the required schema. The chat_ui
+    # generator adds controllers, an Active Job, and Turbo Stream views.
     #
     module ActsAs
       extend ActiveSupport::Concern

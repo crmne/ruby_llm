@@ -22,7 +22,7 @@ local_versions() { # <out> <current-id>
   ruby -ryaml -e '
     d = YAML.load_file(ARGV[0]); latest = d["latest"]
     d["items"].each { |i| i["url"] = "/" if i["id"] == "next"; i["url"] = "/v1/" if i["id"] == latest }
-    d["current"] = ARGV[1]
+    d["current"] = d["items"].find { |i| i["id"] == ARGV[1] }.fetch("title")
     File.write(ARGV[2], YAML.dump(d))
   ' "$versions" "$2" "$1"
 }

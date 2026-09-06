@@ -1,11 +1,17 @@
 ---
 name: contributing
-description: Contribute to RubyLLM - set up the repo, run and record specs, add providers or chat options, work on the Rails integration, and edit docs. Use when fixing a bug, building a feature, writing specs, or changing documentation in the RubyLLM codebase.
+description: Contribute to the RubyLLM AI framework - set up the repo, run and record specs, work on conversations, individual AI operations, providers, protocols, Rails integration, and docs. Use when fixing a bug, building a feature, writing specs, or changing documentation in the RubyLLM codebase.
 ---
 
 # Contributing to RubyLLM
 
 Read AGENTS.md at the repo root first: it has the ground rules, the command table, and the architecture constraints that `archspec check` enforces. This skill adds the step-by-step recipes.
+
+## Choose the layer
+
+The public API covers conversations (`Chat`, `Message`, `Tool`, `Agent`, structured output, streaming, and loop control) and individual operations (`paint`, `animate`, `speak`, `transcribe`, `ocr`, `moderate`, `embed`, and `rerank`). Both connect to services through providers and protocols: providers supply endpoints, authentication, catalogs, and protocol selection; protocols implement formats and their dialects.
+
+Model resolution, configuration, accounting, instrumentation, batches, and provider resources support the framework as a whole. Keep independent operations independent of `Chat`. Rails integration adds Active Record, Active Storage, Hotwire, jobs, and generators around the same Ruby API; it does not define a second conversation API.
 
 ## The fast loop
 
@@ -46,6 +52,13 @@ Rules that bite:
 5. Spec it in `spec/ruby_llm/chat_<x>_spec.rb`; add live coverage over the matrix in `spec/support/models_to_test.rb` when providers differ.
 6. Document it on the matching page in `docs/_core_features/`.
 
+## Working on an individual AI operation
+
+1. Start with the public operation and its typed result. Keep the shared RubyLLM names consistent across providers.
+2. Route service calls through the `Provider` contract and registered protocols. Keep request rendering, response parsing, and format quirks in protocols.
+3. Reuse model resolution, configuration, usage accounting, and instrumentation where applicable. Preserve the operation's streaming or job lifecycle.
+4. Test public behavior and protocol translation at their respective layers. Document the operation in its feature guide and keep its Getting Started example short.
+
 ## Adding a provider
 
 For smaller or emerging providers, ship a community gem instead of a core PR (the core bar is high, see CONTRIBUTING.md):
@@ -72,6 +85,7 @@ Then make it real:
 
 - Rails specs run against the dummy app in `spec/dummy`; `acts_as_chat` and `acts_as_message` live in `lib/ruby_llm/active_record/`.
 - The Rails integration builds on the domain layer and the `Provider` contract only. It converts records with `to_llm`/`from_llm`; plain-Ruby objects never define those.
+- Preserve the Ruby conversation API on records, Active Storage attachment support, and the persisted message lifecycle used by Hotwire streaming and background jobs. Individual operations remain callable directly from Rails services and jobs.
 - Generators live in `lib/generators/ruby_llm/` (install, upgrade, chat_ui, agent, tool, schema, provider). Their specs are tagged `:generator` and excluded from the pre-commit run; run them explicitly with `bundle exec rspec --tag generator`.
 - Check Rails-version compatibility across the matrix: `bundle exec appraisal rails-7.1 rspec` through `rails-8.1`.
 
@@ -79,6 +93,7 @@ Then make it real:
 
 - Pages live in `docs/` under `_getting_started`, `_core_features`, `_advanced`, and `_reference`. Preview with `docs/bin/serve.sh`.
 - Voice: Rails guides. Second person, present tense, show the code before explaining it, motivate each feature with the problem it solves in one sentence. No em dashes, no hype, no "simply".
+- Lead with short, working public API examples. Show how features combine when it helps the reader build something. Keep the title, description, and "After reading this guide" opening; introduce concepts before adding a summary table.
 - Front-matter `description` becomes the page's llms.txt entry and social card text: one compelling sentence, no `&`, `<`, or `>`.
 - Cross-link with `{% link _collection/page.md %}`, never hard-coded URLs.
 - `docs/_reference/available-models.md` is generated; never edit it.

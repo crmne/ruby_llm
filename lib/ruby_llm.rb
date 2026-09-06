@@ -42,9 +42,9 @@ loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
 loader.setup
 
-# RubyLLM is a Ruby interface to large language models. One API for
-# OpenAI, Anthropic, Google, AWS, and every other major provider. These
-# pages document every public class and method; the guides at
+# RubyLLM is an AI framework for Ruby and Rails. One API for conversations,
+# agents, media generation, document processing, and search across providers.
+# These pages document every public class and method; the guides at
 # https://rubyllm.com show how to build things with them.
 #
 #   RubyLLM.configure do |config|
@@ -54,42 +54,61 @@ loader.setup
 #   chat = RubyLLM.chat
 #   chat.ask "What is the capital of France?"
 #
-# == Start here
+# == Text generation and conversations
 #
-# Chat is the heart of the library. ::chat starts a conversation, and
-# Chat#ask sends a message and returns a Message. Everything else builds
-# on this: attachments, streaming, structured output, and tool calls.
+# ::chat starts a conversation, and Chat#ask sends a message and returns
+# a Message. Chat supports attachments, streaming, structured output,
+# tools, and explicit control over the conversation loop.
 #
 # Tool gives the model abilities. Subclass it, declare parameters,
 # implement +execute+, and pass it to Chat#with_tools. Agent packages a
 # configured chat (model, instructions, tools, schema) into a reusable
-# class. Internally, accounting follows provider attempts rather than the
-# transcript so retries and cancellations remain visible in costs.
+# class.
 #
-# == Beyond chat
+# == Individual AI operations
+#
+# These operations return typed results without maintaining a conversation:
 #
 # - ::paint generates images (Image)
 # - ::animate generates videos (Video)
 # - ::embed turns text into vectors (Embedding)
+# - ::rerank orders documents by relevance (Rerank)
 # - ::transcribe converts audio to text (Transcription)
 # - ::ocr extracts text from documents (OCR)
 # - ::speak converts text to audio (Speech)
 # - ::moderate screens content (Moderation)
-# - ::batch processes many chats at lower cost (Batch)
-# - ::upload manages provider files (UploadedFile)
-# - ::cache stores a reusable prompt prefix with a provider (CachedContent)
+#
+# Images, video, and speech have a +save+ method:
+#
+#   image = RubyLLM.paint "A red panda coding Ruby, watercolor"
+#   image.save "red_panda.png"
+#
+# ::animate waits for the video; ::animate_later returns a VideoJob for
+# background work.
 #
 # == Rails
 #
-# +acts_as_chat+ and +acts_as_message+ keep application-owned conversation
-# records while RubyLLM privately persists usage, tool calls, models, and
-# batches. See ActiveRecord::ActsAs.
+# +acts_as_chat+ and +acts_as_message+ bring the conversation API to your
+# Active Record models. Rails integration adds Active Storage attachments,
+# support for Hotwire streaming, background jobs, and generators. Your app
+# owns chats and messages; RubyLLM owns usage, tool calls, models, and batches.
+# Individual operations also work directly in Rails services and jobs.
+# See ActiveRecord::ActsAs.
 #
-# == Configuration and models
+# == Shared services
 #
 # Configuration holds global settings, set through ::configure. Context
 # scopes overrides to a group of calls. Models finds, filters, and
-# prices every known model.
+# describes known models. Providers supply service endpoints, credentials,
+# and protocol selection; protocols translate request and response formats.
+#
+# Tokens and Cost expose usage and pricing. Accounting follows provider
+# attempts so retries and cancellations remain visible. ::workflow groups
+# instrumentation events from ordinary Ruby code.
+#
+# ::batch submits chats or embedding requests for provider-side processing.
+# ::upload and ::download manage provider files; ::cache stores reusable
+# prompt content with a provider.
 #
 # Provider errors raise subclasses of Error, one per HTTP status family.
 module RubyLLM
@@ -207,8 +226,9 @@ module RubyLLM
       Moderation.moderate(...)
     end
 
-    # Generates an image from a text prompt and returns an Image. Arguments
-    # are forwarded to Image.paint.
+    # Generates or edits an image and returns an Image, or an array when
+    # the provider returns several images. Pass +with:+ for source images,
+    # +mask:+ for a mask, and +count:+ for multiple results. See Image.paint.
     #
     #   image = RubyLLM.paint("a sunset over mountains in watercolor style")
     #   image.save("sunset.png")
@@ -233,7 +253,7 @@ module RubyLLM
     # VideoJob.animate_later.
     #
     #   job = RubyLLM.animate_later("a paper boat sailing down a gutter")
-    #   job.refresh until job.done?
+    #   job.wait
     #   job.video.save("boat.mp4")
     #
     def animate_later(...)

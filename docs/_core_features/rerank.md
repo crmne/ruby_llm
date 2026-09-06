@@ -27,7 +27,7 @@ rerank = RubyLLM.rerank(
   "What is the capital of the United States?",
   ["Carson City is the capital city of the American state of Nevada.",
    "Washington, D.C. is the capital of the United States."],
-  model: "rerank-v3.5"
+  model: "{{ site.models.rerank_cohere }}"
 )
 
 rerank.results.first.document # => "Washington, D.C. is the capital of the United States."
@@ -41,16 +41,14 @@ Unlike `chat` and `embed`, `rerank` has no default model. Rerank catalogs are pr
 
 ## Why Rerank
 
-Embedding similarity is fast and cheap, which is what makes it a good way to narrow thousands of documents down to a few dozen candidates. It is also shallow: it compares a query vector to a document vector, and never looks at the two together.
-
-A reranker does look at them together. It reads the query and each document as a pair and scores how well that document answers that query, which catches relevance that vector distance misses. It is far too slow to run over your whole corpus, and far more accurate over a short list. That is the division of labor: embeddings retrieve, reranking orders.
+Use embeddings to retrieve a manageable set of candidates. Then let a reranker score each document against the query. This can improve the ordering before you show results or pass them to a chat model.
 
 ## Reading the Results
 
 Each entry in `results` is a `RubyLLM::Rerank::Result` with three readers:
 
 ```ruby
-rerank = RubyLLM.rerank("ruby", documents, model: "rerank-v3.5")
+rerank = RubyLLM.rerank("ruby", documents, model: "{{ site.models.rerank_cohere }}")
 
 result = rerank.results.first
 result.index    # => 2
@@ -62,7 +60,7 @@ result.score    # => 0.87
 
 ```ruby
 articles = Article.where(id: candidate_ids).to_a
-rerank   = RubyLLM.rerank(query, articles.map(&:body), model: "rerank-v3.5")
+rerank   = RubyLLM.rerank(query, articles.map(&:body), model: "{{ site.models.rerank_cohere }}")
 
 best = rerank.results.first(5).map { |result| articles[result.index] }
 ```
@@ -75,7 +73,7 @@ Scores are provider-specific. Use them to order results and to set a cutoff you 
 Pass `top_n:` to have the provider return only the best few, rather than reordering everything you sent:
 
 ```ruby
-rerank = RubyLLM.rerank(query, documents, model: "rerank-v3.5", top_n: 5)
+rerank = RubyLLM.rerank(query, documents, model: "{{ site.models.rerank_cohere }}", top_n: 5)
 rerank.results.length # => 5
 ```
 
@@ -86,7 +84,7 @@ You still send every candidate, because the reranker has to score them all to pi
 Several providers offer rerankers, and RubyLLM resolves the provider from the model id the same way it does everywhere else:
 
 ```ruby
-RubyLLM.rerank(query, documents, model: "rerank-v3.5")                              # Cohere
+RubyLLM.rerank(query, documents, model: "{{ site.models.rerank_cohere }}")                              # Cohere
 RubyLLM.rerank(query, documents, model: "cohere.rerank-v3-5:0", provider: :bedrock) # Bedrock
 RubyLLM.rerank(query, documents, model: "Cohere-rerank-v4.0-pro", provider: :azure) # Azure
 ```
@@ -119,13 +117,13 @@ class Article < ApplicationRecord
     query_vector = RubyLLM.embed(query).vectors
     candidates   = nearest_neighbors(:embedding, query_vector, distance: :cosine).limit(50).to_a
 
-    rerank = RubyLLM.rerank(query, candidates.map(&:body), model: "rerank-v3.5", top_n: limit)
+    rerank = RubyLLM.rerank(query, candidates.map(&:body), model: "{{ site.models.rerank_cohere }}", top_n: limit)
     rerank.results.map { |result| candidates[result.index] }
   end
 end
 ```
 
-Fifty candidates by vector similarity, five by relevance. The reranker never sees the rest of the table, and the user never sees the forty-five that did not survive.
+The vector query retrieves fifty candidates; the reranker selects five. This example uses the `neighbor` gem with a configured `embedding` vector column.
 
 See the [RAG guide]({% link _advanced/rag.md %}) for the retrieval-augmented generation pipeline this feeds.
 
@@ -138,7 +136,6 @@ RubyLLM.rerank("query", ["doc"], model: "claude-haiku-4-5", provider: :anthropic
 # => RubyLLM::Error: Anthropic doesn't support reranking
 ```
 
-A guessed ordering is worse than no ordering, so RubyLLM does not simulate a reranker with a chat model.
 
 ## Next Steps
 

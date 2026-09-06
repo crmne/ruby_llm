@@ -9,12 +9,13 @@ module RubyLLM
   # Contexts are created with RubyLLM.context:
   #
   #   ctx = RubyLLM.context do |config|
-  #     config.openai_api_key = ENV['ANOTHER_PROVIDER_KEY']
+  #     config.openai_api_key = ENV.fetch('TENANT_OPENAI_API_KEY')
   #     config.request_timeout = 180
   #   end
   #
-  #   chat = ctx.chat(model: 'gpt-5.6')
-  #   chat.ask "Process this with another provider..."
+  #   ctx.chat.ask "Explain Ruby blocks."
+  #   ctx.paint("A paper boat in the rain").save("boat.png")
+  #   ctx.transcribe("meeting.wav").text
   #
   # The global configuration is left untouched.
   #

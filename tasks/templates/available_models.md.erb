@@ -1,0 +1,93 @@
+---
+layout: models
+title: Models
+llms: false
+description: Browse <%= @models.size %> AI models across <%= @models.map(&:provider).uniq.size %> remote providers, with capabilities, context limits, and pricing.
+canonical_url: https://rubyllm.com/available-models/
+redirect_from:
+  - /guides/available-models
+---
+
+<div class="model-catalog" data-model-catalog>
+  <header class="catalog-header">
+    <div>
+      <h1>Models</h1>
+      <p class="catalog-description"><strong><%= number(@models.size) %> models</strong> across <strong><%= @models.map(&:provider).uniq.size %> providers</strong>. Find the capabilities you need and compare what they cost.</p>
+      <p class="catalog-updated">Updated <time datetime="<%= @updated_on %>"><%= @updated_on %></time></p>
+    </div>
+    <div class="catalog-usage">
+      <div class="catalog-command">
+        <code>curl https://rubyllm.com/models.json</code>
+        <button type="button" data-copy-command aria-label="Copy curl command" hidden>Copy</button>
+      </div>
+      <p><a href="https://rubyllm.com/models.json">Download JSON</a> · In Ruby: <code>RubyLLM.models.refresh</code></p>
+      <p><a href="{% link _reference/models.md %}#refreshing-the-registry">How the registry works</a></p>
+    </div>
+  </header>
+
+  <div class="catalog-toolbar" data-catalog-controls hidden>
+    <fieldset class="catalog-grouping">
+      <legend>Browse by</legend>
+      <label><input type="radio" name="catalog-group" value="provider" checked><span>Provider</span></label>
+      <label><input type="radio" name="catalog-group" value="capabilities"><span>Capability</span></label>
+      <label><input type="radio" name="catalog-group" value="modalities"><span>Modality</span></label>
+    </fieldset>
+    <label class="catalog-search"><span class="visually-hidden">Search all models</span><input type="search" data-catalog-search placeholder="Search all models…" autocomplete="off"></label>
+  </div>
+
+  <div class="catalog-filters" data-catalog-filters role="group" aria-label="Filter by provider" hidden></div>
+
+  <div class="catalog-results-header">
+    <h2 data-catalog-heading>All providers</h2>
+    <p data-catalog-count role="status"><%= number(@models.size) %> models</p>
+  </div>
+  <p class="catalog-pricing-note">Prices are USD per million text tokens at standard rates. Cache rates appear below input prices when listed. A dash means the value is not listed.</p>
+
+  <div class="catalog-table-scroll" tabindex="0" role="region" aria-label="Model comparison, scroll horizontally for more columns">
+    <table class="catalog-table">
+      <caption class="visually-hidden">Models, providers, modalities, capabilities, token limits, and standard text token pricing</caption>
+      <thead>
+        <tr>
+          <th scope="col"><button type="button" data-sort="name" disabled>Model</button></th>
+          <th scope="col"><button type="button" data-sort="provider" disabled>Provider</button></th>
+          <th scope="col">Input / output</th>
+          <th scope="col">Capabilities</th>
+          <th scope="col" class="catalog-numeric"><button type="button" data-sort="context" disabled>Context</button></th>
+          <th scope="col" class="catalog-numeric"><button type="button" data-sort="output" disabled>Max output</button></th>
+          <th scope="col" class="catalog-numeric"><button type="button" data-sort="input_price" disabled>Input price</button></th>
+          <th scope="col" class="catalog-numeric"><button type="button" data-sort="output_price" disabled>Output price</button></th>
+        </tr>
+      </thead>
+      <tbody data-catalog-rows>
+<% @models.each do |model| -%>
+        <tr data-model="<%= escape(row_data(model)) %>">
+          <th scope="row"><span class="catalog-model-name"><%= escape(model.name) %></span><code><%= escape(model.id) %></code></th>
+          <td><%= escape(provider_name(model)) %></td>
+          <td class="catalog-modalities"><span><b>In</b> <%= escape(Array(model.modalities.input).join(', ')) %></span><span><b>Out</b> <%= escape(Array(model.modalities.output).join(', ')) %></span></td>
+          <td><div class="catalog-capabilities"><% model.capabilities.each do |capability| %><span><%= escape(capability_name(capability)) %></span><% end %><% if model.capabilities.empty? %>—<% end %></div></td>
+          <td class="catalog-numeric"><%= number(model.context_window) %></td>
+          <td class="catalog-numeric"><%= number(model.max_output_tokens) %></td>
+          <td class="catalog-numeric"><%= price(text_prices(model)[:input_per_million]) %><% { cache_read_input_per_million: 'Cache read', cache_write_input_per_million: 'Cache write' }.each do |key, label| %><% unless text_prices(model)[key].nil? %><small><%= label %> <%= price(text_prices(model)[key]) %></small><% end %><% end %></td>
+          <td class="catalog-numeric"><%= price(text_prices(model)[:output_per_million]) %></td>
+        </tr>
+<% end -%>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="catalog-empty" data-catalog-empty hidden>
+    <h3>No matching models</h3>
+    <p>Try another name or remove your filters.</p>
+    <button type="button" data-catalog-reset>Clear search and filters</button>
+  </div>
+
+  <nav class="catalog-pagination" data-catalog-pagination aria-label="Model results pages" hidden>
+    <label>Rows per page <select data-catalog-page-size><option>25</option><option>50</option><option>100</option></select></label>
+    <div><button type="button" data-catalog-previous>Previous</button><span data-catalog-page></span><button type="button" data-catalog-next>Next</button></div>
+  </nav>
+
+  <footer class="catalog-footer">
+    <p>Model information comes from <a href="https://models.dev/">models.dev</a> and RubyLLM's provider integrations. Availability varies by account and region. See the JSON registry for image, audio, embedding, and tiered pricing.</p>
+    <p>This registry covers remote providers. Models on Ollama and GPUStack are discovered from your own servers when you refresh.</p>
+  </footer>
+</div>

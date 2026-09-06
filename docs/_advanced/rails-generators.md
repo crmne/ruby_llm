@@ -19,7 +19,7 @@ After reading this guide, you will know:
 *   How the generated chat UI renders messages, tool calls, and tool results.
 *   How to customize model names and set up ActiveStorage.
 
-RubyLLM's Rails generators take you from an empty app to a working chat in two commands. They write migrations, models, controllers, jobs, views, and a conventional directory layout so your team starts from one shared structure. This guide walks through each generator and the conventions the generated code relies on.
+RubyLLM's generators write models, migrations, controllers, jobs, and views into your application. Start with persistence, then add the chat UI or generate individual agents, tools, and schemas as you need them.
 
 ## Quick Setup with Generator
 

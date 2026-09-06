@@ -23,13 +23,13 @@ After reading this guide, you will know:
 
 ## What are Citations?
 
-Citations link spans of a model's answer back to the source material that supports them - a document you attached, or a web page found through search or grounding. They make answers verifiable and reduce hallucinations, and providers parse them server-side so cited quotes are guaranteed to exist in the source.
+Citations link spans of a model's answer back to the source material that supports them - a document you attached, or a web page found through search or grounding. They let readers inspect the source behind a claim. A citation points to evidence; your application or reader still needs to assess whether it supports the answer.
 
 Every provider returns citations in a different shape. RubyLLM normalizes all of them into `RubyLLM::Citation` objects on `response.citations`, so your rendering code never branches on provider.
 
 ## Citing Your Documents
 
-Use `with_citations` to make attached documents citable. The model will then back its claims with quotes from your files:
+Use `with_citations` to make attached documents citable. The response can then include citations to your files:
 
 ```ruby
 chat = RubyLLM.chat(model: 'claude-sonnet-4-5').with_citations

@@ -2,7 +2,7 @@
 layout: default
 title: Files
 nav_order: 11
-description: Upload provider-managed files for APIs that require file IDs
+description: Upload files once, reuse them in chats and batches, and download provider results.
 ---
 
 # {{ page.title }}
@@ -10,7 +10,22 @@ description: Upload provider-managed files for APIs that require file IDs
 {{ page.description }}
 {: .fs-6 .fw-300 }
 
-Provider-managed files are different from inline chat attachments. Use `with:` for normal prompt files. RubyLLM automatically promotes large eligible local attachments to provider-managed files when the selected provider can reference stored files in chat. Use `RubyLLM.upload` when you want to upload once and reuse the same provider file ID or URI yourself.
+After reading this guide, you will know:
+
+* How to upload a file and reuse it in a chat or batch.
+* When RubyLLM uploads large chat attachments automatically.
+* How to set expiration and download provider results.
+* Which file operations each provider supports.
+
+Use `with:` to send a file with a question. Use `RubyLLM.upload` when you want to upload once and reuse the provider's file ID or URI across requests.
+
+```ruby
+file = RubyLLM.upload("report.pdf", provider: :anthropic)
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
+chat.ask "Summarize the financial risks.", with: file
+```
+
+RubyLLM can also upload large local attachments automatically when the provider supports stored file references in chat. See [Attachments]({% link _core_features/attachments.md %}) for sending files directly.
 
 ## Uploading
 
@@ -65,7 +80,7 @@ Pass an uploaded file through `with:` to reuse it by provider-managed ID or URI:
 ```ruby
 file = RubyLLM.upload("large-report.pdf", provider: :openai, purpose: "user_data")
 
-chat = RubyLLM.chat(model: "gpt-5-nano", provider: :openai)
+chat = RubyLLM.chat(model: "{{ site.models.openai_current }}", provider: :openai)
 chat.ask("Summarize the financial risks.", with: file)
 ```
 
@@ -74,7 +89,7 @@ For Gemini and Vertex AI, uploaded files are referenced by URI:
 ```ruby
 file = RubyLLM.upload("demo.mp4", provider: :gemini)
 
-chat = RubyLLM.chat(model: "gemini-2.5-flash", provider: :gemini)
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}", provider: :gemini)
 chat.ask("What happens in this video?", with: file)
 ```
 
@@ -93,8 +108,8 @@ Automatic uploads are enabled only for providers and protocols that can referenc
 ## Finding and Downloading
 
 ```ruby
-file = RubyLLM::UploadedFile.find("file_123")
-content = RubyLLM.download(file.id)
+file = RubyLLM::UploadedFile.find("file_123", provider: :openai)
+content = RubyLLM.download(file.id, provider: :openai)
 ```
 
 File IDs are provider-owned, so persist the provider alongside any file id you store and pass it back explicitly when reading later.

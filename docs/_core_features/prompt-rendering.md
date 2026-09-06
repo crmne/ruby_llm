@@ -23,10 +23,9 @@ After reading this guide, you will know:
 
 `RubyLLM.render_prompt` renders a local ERB template and returns the rendered string. It does not call a model or add anything to a chat by itself.
 
-Create a prompt file:
+Create `app/prompts/support/instructions.txt.erb`:
 
 ```erb
-<!-- app/prompts/support/instructions.txt.erb -->
 You are a support assistant for <%= product_name %>.
 
 The current customer is <%= customer_name %>.
@@ -57,10 +56,9 @@ In Rails apps, the path is relative to `Rails.root`. Outside Rails, it is relati
 
 ## Static Prompts
 
-Prompts do not need locals:
+Prompts do not need locals. For example, `app/prompts/reviewer.txt.erb`:
 
 ```erb
-<!-- app/prompts/reviewer.txt.erb -->
 You are a careful code reviewer. Focus on correctness, security, and missing tests.
 ```
 
@@ -71,10 +69,9 @@ chat.with_instructions(instructions)
 
 ## Locals
 
-Every keyword argument passed to `render_prompt` is available in the ERB template:
+Every keyword argument passed to `render_prompt` is available in the ERB template. Create `app/prompts/messages/welcome.txt.erb`:
 
 ```erb
-<!-- app/prompts/messages/welcome.txt.erb -->
 Welcome <%= name %>.
 
 Your plan is <%= plan_name %>.
@@ -145,11 +142,8 @@ app/prompts/my_engine/chat_agent/instructions.txt.erb
 If RubyLLM cannot find the prompt file, it raises `RubyLLM::PromptNotFoundError`:
 
 ```ruby
-begin
-  RubyLLM.render_prompt("missing")
-rescue RubyLLM::PromptNotFoundError => error
-  Rails.logger.warn(error.message)
-end
+RubyLLM.render_prompt("missing")
+# => raises RubyLLM::PromptNotFoundError
 ```
 
 ## Using Rendered Prompts in Chat

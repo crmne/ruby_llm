@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+  {% include head.html %}
+  <body>
+    {% assign theme = site.jekyll_vitepress %}
+    <div id="app">
+      <div class="Layout">
+        <a href="#VPContent" class="VPSkipLink visually-hidden">Skip to content</a>
+        <div class="VPBackdrop backdrop" id="vp-backdrop"></div>
+        {% include nav.html has_sidebar=false is_home=false %}
+        {% include search.html %}
+        <main class="VPContent" id="VPContent">{{ content }}</main>
+        {% include jekyll_vitepress/layout_end.html %}
+      </div>
+    </div>
+  </body>
+</html>

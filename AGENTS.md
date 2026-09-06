@@ -4,7 +4,16 @@ How RubyLLM is built. For coding agents first, humans welcome. Read [CONTRIBUTIN
 
 ## What this is
 
-RubyLLM is a Ruby AI framework: chat, tools, agents, structured output, embeddings, images, video, audio, and Rails integration behind one API, with seventeen providers in the box. Plain Ruby (>= 3.1.3), a handful of small dependencies, no heavyweight abstractions.
+RubyLLM is a Ruby AI framework: chat, tools, agents, structured output, embeddings, reranking, images, video, audio, OCR, moderation, and Rails integration behind one API, with seventeen providers in the box. Plain Ruby (>= 3.1.3), a handful of small dependencies, no heavyweight abstractions.
+
+## Framework structure
+
+There are two main parts: the public Ruby API and the providers and protocols that connect it to AI services.
+
+- **The public API has two families.** Text generation and conversations use `Chat`, `Message`, `Tool`, and `Agent`, with structured output, streaming, and loop control. Individual AI operations use `paint`, `animate`, `speak`, `transcribe`, `ocr`, `moderate`, `embed`, and `rerank`, each with a typed result. These operations do not require a conversation; some have streaming or asynchronous lifecycles.
+- **Providers and protocols connect both families to services.** Providers supply endpoints, authentication, catalogs, protocol selection, and service-specific settings. Protocols implement request formats, response parsing, streaming, and error normalization. Format quirks belong in protocol dialects selected by providers.
+- **Shared services support the API.** Model and provider resolution, configuration, usage and cost tracking, instrumentation, batches, file storage, and prompt caching belong to the framework as a whole. Do not force an independent operation through `Chat` to reuse them.
+- **Rails adds a native application integration.** The same conversation API works on application-owned records, with Active Record persistence, Active Storage attachments, Hotwire streaming, Active Job workflows, and generators. Individual operations remain available in Rails services and jobs. Rails integration builds on the Ruby API; the plain-Ruby library has no Rails dependency.
 
 ## What we are optimizing for
 
@@ -100,6 +109,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 
 - The Jekyll site lives in `docs/` with four collections: `_getting_started`, `_core_features`, `_advanced`, `_reference`. Preview with `docs/bin/serve.sh`.
 - Voice is Rails-guides style: second person, present tense, short sentences, code first, motivate before mechanics. No em dashes. No hype, no "simply". RDoc follows the Rails API voice: "Returns the ...", one line where one line will do.
+- Let working examples show what the framework can do. Start with the shortest useful public API call, then add options, integration examples, and provider details where readers need them. Keep guide openings consistent: title, description, and "After reading this guide, you will know". Explain concepts before summarizing them in a table.
 - Front-matter `title` and `description` feed llms.txt and the social-card images. Keep descriptions to one compelling sentence and never use `&`, `<`, or `>` in them.
 - Cross-link with `{% link _collection/page.md %}`, never hard-coded URLs. Use the `site.models.*` ids from `docs/_config.yml` in examples so model names stay current.
 - A public API change is not done until its docs page changes in the same commit, and `docs/_reference/upgrading.md` records anything that breaks.

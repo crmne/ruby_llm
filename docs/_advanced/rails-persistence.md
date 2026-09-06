@@ -311,4 +311,4 @@ Keep transcript content and application relationships in these models. Observe p
 * [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - understand attempts, retries, cancellations, and incomplete totals.
 * [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - broadcast persisted responses in real time.
 * [Generators and App Conventions]({% link _advanced/rails-generators.md %}) - see exactly what installation creates.
-* [Working with Models]({% link _reference/models.md %}) - inspect and refresh the internal registry through the public API.
+* [Model Registry]({% link _reference/models.md %}) - inspect and refresh the internal registry through the public API.

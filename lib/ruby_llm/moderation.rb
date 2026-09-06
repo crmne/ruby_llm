@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A Moderation holds the result of screening text for potentially harmful
-  # content with a provider moderation model. Most code obtains one through
+  # A Moderation holds the result of screening text or images for
+  # potentially harmful content. Most code obtains one through
   # RubyLLM.moderate.
   #
   #   result = RubyLLM.moderate("This is a safe message about Ruby programming")
   #   result.flagged?  # => false
-  #   result.model     # => "omni-moderation-latest"
+  #
+  #   RubyLLM.moderate(with: "profile.png").flagged?
   #
   class Moderation
     include Inspectable
@@ -74,9 +75,9 @@ module RubyLLM
     # +model+ is not given. Pass +provider:+ and <tt>assume_model_exists: true</tt>
     # to use a model that is not in the registry.
     #
-    #   RubyLLM::Moderation.moderate("Your content here")
-    #   RubyLLM::Moderation.moderate("User message", model: "omni-moderation-latest")
-    #   RubyLLM::Moderation.moderate("Caption", with: "screenshot.png", provider: "openai")
+    #   RubyLLM.moderate("User message")
+    #   RubyLLM.moderate(["First comment", "Second comment"]).results
+    #   RubyLLM.moderate("Caption", with: "screenshot.png")
     #
     def self.moderate(input = nil,
                       model: nil,

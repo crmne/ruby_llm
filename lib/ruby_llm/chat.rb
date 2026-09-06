@@ -607,7 +607,7 @@ module RubyLLM
     # request payload as-is and overriding RubyLLM's defaults. Replaces any
     # previously set provider options; +nil+ clears them. Returns +self+.
     #
-    #   chat.with_provider_options(max_output_tokens: 200)
+    #   chat.with_provider_options(service_tier: "flex")
     #
     def with_provider_options(provider_options)
       @provider_options = provider_options.to_h

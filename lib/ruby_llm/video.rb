@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A Video is the result of a video generation request. It holds either a
-  # hosted URL or the raw video bytes, depending on the provider, along
-  # with the model id and MIME type of the clip.
+  # A Video is a generated clip. Save it with #save or read the raw bytes
+  # with #to_blob. Both handle hosted URLs and inline data.
   #
   #   video = RubyLLM.animate("a paper boat sailing down a rainy gutter")
   #   video.save("boat.mp4")
@@ -101,7 +100,7 @@ module RubyLLM
     # Returns the raw binary video bytes, downloading from #url when the
     # provider returned a hosted video.
     #
-    #   File.binwrite("clip.mp4", video.to_blob)
+    #   video_bytes = video.to_blob
     #
     def to_blob
       data || Connection.basic(config).get(url).body

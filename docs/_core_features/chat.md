@@ -3,7 +3,7 @@ layout: default
 title: Chat
 nav_order: 1
 has_children: true
-description: Learn how to have conversations with AI models, work with different providers, and attach files like images and PDFs
+description: Start a conversation, give it instructions, and switch models while keeping the same Ruby API.
 redirect_from:
   - /guides/chat
 ---
@@ -24,7 +24,7 @@ After reading this guide, you will know:
 
 ## Starting a Conversation
 
-When you want to interact with an AI model, you create a chat instance. The simplest approach uses `RubyLLM.chat`, which creates a new conversation with your configured default model.
+`RubyLLM.chat` starts a conversation with your configured default model:
 
 ```ruby
 chat = RubyLLM.chat
@@ -34,10 +34,6 @@ response = chat.ask "Explain the concept of 'Convention over Configuration' in R
 puts response.content
 # => "Convention over Configuration (CoC) is a core principle of Ruby on Rails..."
 
-puts "Model Used: #{response.model}"
-puts "Tokens Used: #{response.tokens.input} input, #{response.tokens.output} output"
-puts "Cache Reads: #{response.tokens.cache_read}"
-puts "Cache Writes: #{response.tokens.cache_write}"
 ```
 
 The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
@@ -48,7 +44,7 @@ When the model uses [tools]({% link _core_features/tools.md %}), `ask` runs the 
 
 ## Continuing the Conversation
 
-One of the key features of chat-based AI models is their ability to maintain context across multiple exchanges. The `Chat` object automatically manages this conversation history for you.
+Ask a follow-up question on the same chat:
 
 ```ruby
 response = chat.ask "Can you give a specific example in Rails?"
@@ -64,7 +60,7 @@ end
 # => [ASSISTANT] Certainly! A classic example is database table naming...
 ```
 
-Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue.
+`chat.messages` holds the conversation. RubyLLM includes that history in each request, so you do not need to assemble it yourself.
 
 ## Guiding AI Behavior with System Prompts
 
@@ -73,7 +69,7 @@ System prompts, also called instructions, allow you to set the overall behavior,
 ```ruby
 chat = RubyLLM.chat
 
-chat.with_instructions "You are a helpful assistant that explains Ruby concepts simply, like explaining to a five-year-old."
+chat.with_instructions "Explain Ruby concepts to a beginner. Use short, runnable examples."
 
 response = chat.ask "What is a variable?"
 puts response.content
@@ -93,7 +89,7 @@ chat.with_instructions "Use exactly one short paragraph.", append: true
 chat.with_instructions(nil)
 ```
 
-System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
+Instructions are `:system` messages included in each request.
 
 For reusable instructions stored in `app/prompts`, render a template with [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) and pass the result to `with_instructions`.
 
@@ -121,7 +117,7 @@ Pass `nil` to return to your configured default model:
 chat.with_model(nil)
 ```
 
-For detailed information about model selection, capabilities, aliases, and working with custom models, see [Working with Models]({% link _reference/models.md %}). For exactly how a name becomes a model and provider, see [Model Resolution]({% link _reference/model-resolution.md %}).
+For detailed information about model selection, capabilities, aliases, and working with custom models, see [Model Registry]({% link _reference/models.md %}). For exactly how a name becomes a model and provider, see [Model Resolution]({% link _reference/model-resolution.md %}).
 
 ## Controlling Responses
 
@@ -217,6 +213,6 @@ This page covers the core `Chat` interface. Each facet of a conversation has its
 ## Next Steps
 
 * [Using Tools]({% link _core_features/tools.md %}) - enable the AI to call your Ruby code.
-* [Working with Models]({% link _reference/models.md %}) - choose the best model and handle custom endpoints.
-* [Rails Integration]({% link _advanced/rails.md %}) - persist your chat conversations easily.
-* [Error Handling]({% link _advanced/error-handling.md %}) - build robust applications that handle API issues.
+* [Model Registry]({% link _reference/models.md %}) - choose the best model and handle custom endpoints.
+* [Rails Integration]({% link _advanced/rails.md %}) - use the same API on your Active Record models.
+* [Error Handling]({% link _advanced/error-handling.md %}) - retry requests and fall back to another model.

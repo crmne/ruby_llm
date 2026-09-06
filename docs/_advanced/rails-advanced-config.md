@@ -19,7 +19,7 @@ After reading this guide, you will know:
 *   How to persist cache boundaries and adjust provider payloads per request.
 *   How to run ActiveRecord safely inside fiber-based async workloads.
 
-Once the basics are in place, RubyLLM gives you fine-grained control over how persisted chats reach providers. This guide covers the configuration you reach for in production: routing models through alternate providers, isolating credentials per tenant, persisting cache boundaries and provider-specific payloads, and keeping ActiveRecord connections correct under async workloads.
+Persisted chats use the same configuration methods as plain Ruby. Use them to select a provider, isolate tenant credentials, or set cache boundaries on a conversation.
 
 ## Provider Overrides
 
@@ -138,14 +138,14 @@ Message content is always text: what you persist is the conversation, not a prov
 Rails 7.2.1+ / 8.x
 {: .label .label-green }
 
-If your app performs database work inside Fibers (for example with async-based workflow stacks), use fiber-safe connection isolation:
+If your app uses [Solid Queue fiber workers]({% link _advanced/async.md %}#background-jobs-with-solid-queue) or runs database work inside Async tasks, enable fiber isolation:
 
 ```ruby
 # config/application.rb
 config.active_support.isolation_level = :fiber
 ```
 
-Why: Rails defaults to thread-based connection isolation. In fiber-heavy flows, that can cause intermittent connection-state issues. `:fiber` scopes ActiveRecord connections per Fiber instead of per Thread.
+Rails defaults to thread-scoped execution state. `:fiber` keeps that state, including Active Record connections, separate for each fiber. This setting applies to the whole application; Solid Queue requires it before starting fiber workers.
 
 If you use this setting, prefer Rails versions with fiber isolation fixes (Rails 7.2.1+ / 8.x).
 {: .note }

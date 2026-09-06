@@ -3,7 +3,7 @@ layout: default
 title: Configuration
 nav_order: 3
 has_children: true
-description: Configure once, use everywhere. API keys, defaults, timeouts, and multi-tenant contexts made simple.
+description: Set provider credentials, choose default models, and share configuration across the RubyLLM API.
 redirect_from:
   - /configuration-reference/
 ---
@@ -16,22 +16,21 @@ redirect_from:
 After reading this guide, you will know:
 
 * How to configure API keys for the providers you use.
-* How to set default models for chat, embeddings, and images.
+* How to set default models for conversations, media, and document processing.
 * How to wire RubyLLM into a Rails initializer.
 * Where to find provider, connection, and reference details.
 
 ## Quick Start
 
-The simplest configuration sets your API keys and nothing else:
+Configure a provider to start using its models:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
+  config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
 end
 ```
 
-That's it. RubyLLM uses sensible defaults for everything else.
+RubyLLM uses its defaults for models, timeouts, and retries. Set only what your application needs.
 
 ## API Keys
 
@@ -52,15 +51,18 @@ Each provider has its own key (and sometimes region or project settings). For th
 
 ## Default Models
 
-Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`, `RubyLLM.animate`, `RubyLLM.speak`):
+Set defaults for the operations you use:
 
 ```ruby
 RubyLLM.configure do |config|
   config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
   config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
-  config.default_image_model = 'gpt-image-2'                   # For RubyLLM.paint
-  config.default_video_model = 'grok-imagine-video-1.5'        # For RubyLLM.animate
+  config.default_image_model = '{{ site.models.default_image }}'        # For RubyLLM.paint
+  config.default_video_model = '{{ site.models.default_video }}'        # For RubyLLM.animate
   config.default_speech_model = '{{ site.models.default_speech }}'       # For RubyLLM.speak
+  config.default_transcription_model = '{{ site.models.default_transcription }}' # For RubyLLM.transcribe
+  config.default_ocr_model = '{{ site.models.default_ocr }}'              # For RubyLLM.ocr
+  config.default_moderation_model = '{{ site.models.default_moderation }}' # For RubyLLM.moderate
 end
 ```
 
@@ -74,24 +76,20 @@ Defaults if not configured:
 - Transcription: `gpt-transcribe`
 - OCR: `mistral-ocr-latest`
 
+`rerank` requires `model:` on each call; it has no default model setting.
+
 ## Rails Integration
 
-For Rails applications, create an initializer:
+Put the same configuration in `config/initializers/ruby_llm.rb`. For example, with Rails credentials:
 
 ```ruby
-# config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
   config.openai_api_key = Rails.application.credentials.openai_api_key
-  config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
-  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # optional custom Anthropic endpoint
-  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # optional for remote/authenticated Ollama
-
   config.logger = Rails.logger
-
-  config.request_timeout = Rails.env.production? ? 120 : 30
-  config.log_level = Rails.env.production? ? :info : :debug
 end
 ```
+
+See [Rails Integration]({% link _advanced/rails.md %}) for persistence, Active Storage attachments, streaming, and jobs.
 
 ## Full Reference
 

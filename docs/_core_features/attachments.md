@@ -3,7 +3,7 @@ layout: default
 title: Attachments
 parent: "Chat"
 nav_order: 1
-description: Attach images, video, audio, text files, and PDFs to a chat message with a single unified interface
+description: Ask questions about images, recordings, videos, and documents through one attachment API.
 ---
 
 # {{ page.title }}
@@ -21,7 +21,13 @@ After reading this guide, you will know:
 
 ## Attaching Files
 
-Send images, audio, video, documents, and other files to a model alongside your question. RubyLLM takes them all through one `with:` parameter, whatever the provider underneath.
+Send files alongside your question with `with:`. Choose a model that accepts the file's input type; the [Models]({% link _reference/available-models.md %}) page lets you filter by input modality.
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
+response = chat.ask "What happens in this video?", with: "demo.mp4"
+puts response.content
+```
 
 Small attachments travel inline with the request. For large eligible local files, RubyLLM can upload through the provider's Files API and send a file ID or URI instead. To upload once and reuse the same provider-managed file across many requests, see [Files]({% link _core_features/files.md %}).
 {: .note }
@@ -47,10 +53,10 @@ RubyLLM automatically handles image encoding and formatting for each provider's 
 
 ### Working with Videos
 
-You can also analyze video files or URLs with video-capable models. RubyLLM will automatically detect video files and handle them appropriately.
+Ask a video-capable model about local videos or URLs:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
 response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
 puts response.content
 
@@ -70,10 +76,10 @@ Large video files may be uploaded through the provider Files API when the select
 
 ### Working with Audio
 
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` and Google's `gemini-2.5` series of models support audio input.
+Audio-capable models can transcribe speech and answer questions about a recording. Use `{{ site.models.openai_audio }}` or `{{ site.models.gemini_current }}`, for example:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
+chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}')
 
 response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
 puts response.content
@@ -81,7 +87,7 @@ puts response.content
 response = chat.ask "What were the main action items discussed?"
 puts response.content
 
-gemini_chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+gemini_chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
 response = gemini_chat.ask "Summarize this podcast.", with: "path/to/podcast.mp3"
 puts response.content
 ```
@@ -102,7 +108,7 @@ puts response.content
 
 ### Working with PDFs
 
-PDF support allows models to analyze complex documents including reports, manuals, and research papers. Claude and Gemini models offer the best PDF support.
+Ask about a report, manual, or research paper with a model that accepts PDFs:
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')

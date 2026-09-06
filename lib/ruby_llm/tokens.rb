@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A Tokens holds the token counts a provider reported for a single
-  # response. Instances are read from Message#tokens and Chunk#tokens.
+  # A Tokens holds normalized token counts for a provider attempt, a
+  # response, or an aggregate. Read them from Chat#tokens, Message#tokens,
+  # Chunk#tokens, and individual operation results such as Embedding.
   # Counts the provider did not report are +nil+.
   #
   #   response = chat.ask "What is the capital of France?"

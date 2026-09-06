@@ -26,25 +26,29 @@ After reading this guide, you will know:
 
 ## Reading Tokens and Costs
 
-Token counts always live on a `RubyLLM::Tokens` value, and costs always live on a `RubyLLM::Cost` value. Both objects are present even when a provider does not report every field; unknown fields are `nil`:
+Read token counts and costs directly from the response:
 
 ```ruby
-response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
+chat = RubyLLM.chat
+response = chat.ask "Explain Ruby blocks."
 
-input_tokens = response.tokens.input
-output_tokens = response.tokens.output
-cache_read_tokens = response.tokens.cache_read
-cache_write_tokens = response.tokens.cache_write
-thinking_tokens = response.tokens.thinking
+response.tokens.input
+response.tokens.output
+response.cost.total
 
-puts "Input Tokens: #{input_tokens}"
-puts "Output Tokens: #{output_tokens}"
+chat.cost.total
+```
 
-puts "Input Cost: $#{format('%.6f', response.cost.input)}" if response.cost.input
-puts "Output Cost: $#{format('%.6f', response.cost.output)}" if response.cost.output
-puts "Total Cost: $#{format('%.6f', response.cost.total)}" if response.cost.total
+`response.tokens` is a `RubyLLM::Tokens`; `response.cost` is a `RubyLLM::Cost`. Both are present even when some fields are unknown. Unknown values are `nil`, so a missing price does not look like a free request.
 
-puts "Total Conversation Cost: $#{format('%.6f', chat.cost.total)}" if chat.cost.total
+More detailed readers use the same shape:
+
+```ruby
+response.tokens.cache_read
+response.tokens.cache_write
+response.tokens.thinking
+response.cost.input
+response.cost.output
 ```
 
 `response.tokens` aggregates every transport attempt associated with the response. `chat.tokens` and `chat.cost` aggregate the chat's whole internal ledger, including failed retries and cancelled attempts (see [The Usage Ledger](#the-usage-ledger) below).
@@ -242,7 +246,7 @@ Instrumentation is an observer, not the source of truth for a persisted Rails ch
 ## Next Steps
 
 * [Chat]({% link _core_features/chat.md %}) - the core conversation interface these counts come from.
-* [Working with Models]({% link _reference/models.md %}) - explore the registry and the `RubyLLM::Model` pricing fields behind `cost_for`.
+* [Model Registry]({% link _reference/models.md %}) - explore the registry and the `RubyLLM::Model` pricing fields behind `cost_for`.
 * [Extended Thinking]({% link _core_features/thinking.md %}) - work with reasoning-capable models.
 * [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - configure subscribers and custom instrumenters.
 * [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - persist chats while RubyLLM manages the internal ledger.

@@ -11,6 +11,25 @@ like the plain-Ruby objects; providers and protocols stay in their layers with
 no wire vocabulary in the domain; and the work is small, tested, documented,
 and free of implementation comments.
 
+## Framework structure
+
+RubyLLM is an AI framework with two main parts: its public Ruby API and its
+providers and protocols. The API covers conversations (`Chat`, `Message`,
+`Tool`, `Agent`, structured output, streaming, and loop control) and individual
+operations (`paint`, `animate`, `speak`, `transcribe`, `ocr`, `moderate`, `embed`,
+and `rerank`). Use the relevant operation instead of routing every AI feature
+through a chat.
+
+Providers supply endpoints, credentials, catalogs, and protocol selection.
+Protocols implement request and response formats, including dialect quirks.
+Model resolution, configuration, accounting, instrumentation, batches, and
+provider resources support both API families.
+
+Rails integration brings the same API to application records, with Active
+Record persistence, Active Storage attachments, Hotwire streaming, jobs, and
+generators. Preserve that native Rails experience without introducing Rails
+dependencies into the plain-Ruby library. See `AGENTS.md` for the boundaries.
+
 ## Reviewing a pull request
 
 Read the linked issue first. A feature without an approved issue is closed

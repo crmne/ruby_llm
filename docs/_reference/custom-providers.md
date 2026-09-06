@@ -20,9 +20,9 @@ After reading this guide, you will know:
 
 ## The Provider/Protocol Split
 
-RubyLLM separates two concerns that other libraries tangle together. A **provider** knows *where* to talk and *who* you are: its host, its authentication headers, the configuration it needs, and its model catalog. A **protocol** knows *how* to talk to a family of APIs: rendering request payloads, parsing responses, streaming chunks, and naming the endpoints involved.
+RubyLLM separates service configuration from API formats. A **provider** knows *where* to talk and *who* you are: its host, its authentication headers, the configuration it needs, and its model catalog. A **protocol** knows *how* to talk to a family of APIs: rendering request payloads, parsing responses, streaming chunks, and naming the endpoints involved.
 
-This split is the whole reason RubyLLM scales across services. One wire format serves many hosts - the OpenAI Chat Completions dialect is reused by Ollama, Perplexity, and DeepSeek, each with its own host and auth. One host can serve many wire formats - Vertex AI is a single provider that speaks Gemini, Anthropic, Mistral, and Chat Completions, picking one per model.
+The same protocol can serve several providers, and one provider can offer several protocols. One wire format serves many hosts - the OpenAI Chat Completions dialect is reused by Ollama, Perplexity, and DeepSeek, each with its own host and auth. One host can serve many wire formats - Vertex AI is a single provider that speaks Gemini, Anthropic, Mistral, and Chat Completions, picking one per model.
 
 So before you write anything, decide which case you are in:
 

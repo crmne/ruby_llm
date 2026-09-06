@@ -7,6 +7,15 @@ description: Install the RubyLLM skill to help your coding assistant use the API
 
 # {{ page.title }}
 
+{{ page.description }}
+{: .fs-6 .fw-300 }
+
+After reading this guide, you will know:
+
+* How to install the skill packaged with your RubyLLM version.
+* How to use it when building features in your application.
+* When to update it alongside the gem.
+
 The RubyLLM gem includes an [Agent Skill](https://agentskills.io/) for building Ruby and Rails applications. It helps coding assistants select the correct API, find relevant documentation, and follow RubyLLM's persistence and upgrade conventions.
 
 ## Install the Skill

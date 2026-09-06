@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Custom Endpoints and Unlisted Models
-parent: "Working with Models"
+parent: "Model Registry"
 nav_order: 3
 description: Target OpenAI-compatible endpoints and use model IDs the registry doesn't list
 ---
@@ -100,4 +100,4 @@ Use these features when the standard registry doesn't cover your specific model 
 
 *   [Chat]({% link _core_features/chat.md %}) - start a conversation once your custom endpoint or unlisted model is wired up.
 *   [Model Resolution]({% link _reference/model-resolution.md %}) - the exact procedure behind `assume_model_exists` and provider selection.
-*   [Working with Models]({% link _reference/models.md %}) - return to the registry for validated, capability-aware models.
+*   [Model Registry]({% link _reference/models.md %}) - return to the registry for validated, capability-aware models.

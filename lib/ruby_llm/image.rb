@@ -3,9 +3,8 @@
 require 'base64'
 
 module RubyLLM
-  # An Image is the result of an image generation request. It holds either
-  # a hosted URL or inline Base64 data, depending on the provider, along
-  # with the model id and token usage of the call.
+  # An Image is a generated or edited image. Save it to a file with #save
+  # or read its bytes with #to_blob. Both handle hosted URLs and inline data.
   #
   #   image = RubyLLM.paint("a sunset over mountains in watercolor style")
   #   image.save("sunset.png")
@@ -127,7 +126,7 @@ module RubyLLM
     # Returns the raw binary image bytes, decoding #data when present or
     # downloading from #url otherwise.
     #
-    #   File.binwrite("image.png", image.to_blob)
+    #   image_bytes = image.to_blob
     #
     def to_blob
       if base64?

@@ -22,16 +22,14 @@ After reading this guide, you will know:
 
 ## Basic Video Generation
 
-Video generation is asynchronous on every provider: you submit a job, the provider renders the clip over the next seconds or minutes, and you download the result. `RubyLLM.animate` hides that lifecycle. It submits the job, polls until the video is ready, and returns a `RubyLLM::Video`:
+Describe the scene and save the result:
 
 ```ruby
-video = RubyLLM.animate("A paper boat sailing down a rainy gutter")
-
-video.mime_type # => "video/mp4"
-video.save("boat.mp4")
+video = RubyLLM.animate "A paper boat sailing down a rainy gutter"
+video.save "boat.mp4"
 ```
 
-The call blocks for as long as the provider takes to render, typically under a minute for short clips. Because of that, run it from a background job in web applications, exactly as you would image generation.
+`animate` submits the job, waits for rendering, and returns a `RubyLLM::Video`. Run it in a background job when your web request should return immediately.
 
 ## Generating Without Blocking
 
@@ -56,7 +54,7 @@ video = job.video
 video.save("hummingbird.mp4")
 ```
 
-`refresh` re-fetches the job state from the provider and does nothing once the job is done. `video` returns `nil` while the job is pending and raises `RubyLLM::Error` when the job failed, with the provider's failure message. `wait` runs the same polling loop `animate` uses, so `RubyLLM.animate(...)` is `RubyLLM.animate_later(...).wait.video` with instrumentation around it.
+`refresh` updates the job state and does nothing after completion. Read `job.video` when `job.completed?` is true. It is `nil` while pending and raises `RubyLLM::Error` if rendering failed. Use `job.wait` when you want RubyLLM to handle polling.
 
 ## Animating a Still Image
 
@@ -101,7 +99,7 @@ These providers generate video through RubyLLM:
 | OpenRouter | `x-ai/grok-imagine-video` and the rest of its video catalog (after `RubyLLM.models.refresh`) | One API across many video models |
 | Azure OpenAI | Sora deployments such as `sora-2` | Uses your deployment name as the model id |
 
-Refer to the [Working with Models Guide]({% link _reference/models.md %}) for finding and filtering models, and [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve.
+Refer to the [Model Registry guide]({% link _reference/models.md %}) for finding and filtering models, and [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve.
 
 ## Provider Options
 
@@ -214,7 +212,7 @@ RubyLLM.animate_later("A cat", model: "claude-sonnet-5")
 # => RubyLLM::Error: Anthropic doesn't support video generation
 ```
 
-See the [Error Handling Guide]({% link _advanced/error-handling.md %}) for comprehensive error handling strategies.
+See [Error Handling]({% link _advanced/error-handling.md %}) for specific exceptions and recovery options.
 
 ## Next Steps
 

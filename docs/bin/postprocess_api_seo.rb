@@ -9,6 +9,7 @@ site_root = ARGV.fetch(1).sub(%r{/+\z}, '')
 image_url = "#{site_root}/assets/images/logotype.jpg"
 default_robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
 api_urls = []
+index_pages = %w[index.html RubyLLM.html]
 
 def tag(name, attributes)
   rendered = attributes.map { |key, value| %(#{key}="#{CGI.escapeHTML(value)}") }.join(' ')
@@ -24,13 +25,13 @@ def json_ld(graph)
   JSON.generate(graph).gsub(/[<>&\u2028\u2029]/) { |char| format('\\u%04x', char.ord) }
 end
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 output_dir.glob('**/*.html').sort.each do |path|
   relative_path = path.relative_path_from(output_dir).to_s
   html = path.read
   redirect = html.match?(/<meta[^>]+http-equiv="refresh"/i)
   target = html[/<meta[^>]+http-equiv="refresh"[^>]+url=([^";]+)[^>]*>/i, 1]
-  canonical = if relative_path == 'index.html'
+  canonical = if index_pages.include?(relative_path)
                 "#{site_root}/api/"
               elsif redirect && target
                 "#{site_root}/api/#{target}"
@@ -85,7 +86,6 @@ output_dir.glob('**/*.html').sort.each do |path|
   html = "#{html.rstrip}\n</html>\n" unless html.match?(%r{</html>}i)
   path.write(html)
 end
-# rubocop:enable Metrics/BlockLength
 
 sitemap_path = output_dir.parent.join('sitemap.xml')
 if sitemap_path.file?

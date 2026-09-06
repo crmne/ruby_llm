@@ -1,6 +1,6 @@
 ---
 name: rubyllm
-description: Build and maintain Ruby or Rails applications that use RubyLLM for AI features. Use for application integration, agents, tools, structured output, streaming, and RubyLLM upgrades; not for contributing to the framework itself.
+description: Build and maintain Ruby or Rails applications with the RubyLLM AI framework. Use for chats, agents, tools, structured output, media generation, transcription, OCR, moderation, embeddings, reranking, Rails integration, and RubyLLM upgrades; not for contributing to the framework itself.
 license: MIT
 metadata:
   api_version: "2.0"
@@ -17,6 +17,14 @@ bundle show ruby_llm
 
 For a 1.x application, use its version's documentation and keep the requested change on 1.x unless the user asks for an upgrade. Adding an AI feature does not require upgrading the application's framework.
 
+## Choose the API for the task
+
+RubyLLM has two public API families: conversations use chats, messages, tools, agents, structured output, streaming, and loop control; individual operations use `paint`, `animate`, `speak`, `transcribe`, `ocr`, `moderate`, `embed`, and `rerank`. Individual operations return typed results without requiring a chat. Some stream or have an asynchronous lifecycle.
+
+Providers supply service endpoints, authentication, catalogs, and protocol selection. Protocols translate requests and responses. Both API families use this integration layer and shared services for model selection, configuration, accounting, and instrumentation. Build against the public API and let RubyLLM handle the service formats.
+
+Rails integration adds persistence, attachments, streaming UI support, jobs, and generators around the same Ruby API.
+
 ## Find the relevant API
 
 The installed gem's public method signatures and RDoc describe the code the application actually runs. Use them when online documentation differs. Find the matching version through [RubyLLM's documentation](https://rubyllm.com/). During the 2.0 release-candidate period, the 2.0 guides and Markdown API reference are under [rubyllm.com/next/](https://rubyllm.com/next/).
@@ -25,12 +33,18 @@ Read the relevant page instead of loading the entire documentation site:
 
 | Task | Guide path under the matching documentation version |
 | --- | --- |
+| Understand the framework's structure | `overview/` |
 | Configure a provider or select a model | `configuration/`, `configuration-providers/`, `models/` |
 | Chat, stream, or attach files | `chat/`, `streaming/`, `attachments/` |
 | Declare tools or require approval | `tools/`, `tool-parameters/`, `tool-execution/` |
 | Parse structured output | `structured-output/` |
 | Build reusable agents | `agents/`, `prompt-rendering/` |
-| Persist chats or run background jobs | `rails/`, `rails-persistence/`, `rails-streaming/` |
+| Generate images or video | `image-generation/`, `video-generation/` |
+| Generate speech or transcribe audio | `text-to-speech/`, `audio-transcription/` |
+| Extract document text or moderate content | `ocr/`, `moderation/` |
+| Embed text or rank search results | `embeddings/`, `rerank/` |
+| Persist chats, attach files, or stream with Hotwire | `rails/`, `rails-persistence/`, `rails-streaming/`, `rails-generators/` |
+| Resume agents in background jobs | `durable-agents/` |
 | Track spend or handle failures | `cost-and-usage-tracking/`, `error-handling/` |
 | Submit batches or drive the conversation loop | `batches/`, `agentic-workflows/` |
 | Upgrade an existing application | `upgrading/` |
@@ -41,6 +55,7 @@ Markdown guides use the same name with `.md`, such as `chat.md`. The API referen
 
 - Configure credentials through `RubyLLM.configure`, following the application's secret storage. Select an existing configured provider. Verify explicit model IDs with `RubyLLM.models.find(id, provider: ...)`; do not invent IDs or use `assume_model_exists` to hide a typo.
 - Start with `RubyLLM.chat` for a conversation. Set options with chainable `with_*` methods. Use `RubyLLM::Agent` when instructions, tools, or options should be reused. Ordinary Ruby methods and jobs compose workflows.
+- Use individual operations directly for media, document processing, moderation, embeddings, and reranking. Read their typed results and use `save` on generated images, video, and speech. Check each operation's provider, model, and credentials; a configured chat provider may not offer every operation. `animate` waits for completion; use `animate_later` when the application needs to manage the job.
 - `ask` runs the conversation and returns a message. `ask_later` stages input and returns the chat. For explicit loop control, use `generate`, `run_tools`, `step`, and `complete?`. Approval can park the loop before completion; inspect `awaiting_approval?` and resume after `approve` or `deny`.
 - Read text through `message.content` and structured output through `message.parsed`. Declare schemas with `Schematist::Schema` or the schema DSL. Do not assume `content` is a parsed Hash.
 - Subclass `RubyLLM::Tool`. Use `description`, `parameter`, or a `parameters` block, and keyword arguments on `execute`. Register tools with `with_tools`; configure choice and concurrency with `with_tool_options`. Keep application authorization in the tool or underlying service. Use `requires_approval` when the product needs a user's decision before execution.
@@ -56,6 +71,8 @@ For a new integration, use `bin/rails generate ruby_llm:install`, review its mig
 Applications own their chat and message models, declared with `acts_as_chat` and `acts_as_message`. RubyLLM owns the supporting model, tool-call, usage, and batch tables. Do not generate application `Model` or `ToolCall` classes from 1.x examples. Pass custom chat and message mappings to the generators when the application uses different names.
 
 Use the same chat API on persisted records. Persisted `ask` returns the application's message record. Use the existing job backend for background work; retrieve and configure agents through their documented persistence API when a job resumes in another process. Prompt templates live under `app/prompts` by convention.
+
+Pass Active Storage attachments through `with:` and retain the message attachment association set up by the install generator. For a Hotwire UI, use the Rails streaming guide or `ruby_llm:chat_ui` generator: persisted messages provide the targets for Turbo Streams. Individual operations work directly in Rails services and jobs with the same methods as plain Ruby.
 
 For an upgrade, read the complete matching upgrade guide before editing migrations. The 2.0 cutover requires preparation, backfill, finish, and application-specific reconciliation before affected activity resumes. Legacy-column cleanup is a later phase. Checkpoints make a stopped backfill resumable; retained columns do not make a 1.x code rollback safe. Rehearse against an isolated snapshot and respect the application's deployment and recovery process.
 

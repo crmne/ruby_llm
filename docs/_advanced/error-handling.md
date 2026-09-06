@@ -290,7 +290,7 @@ If you encounter unexpected errors or behavior, enable debug logging by setting 
 export RUBYLLM_DEBUG=true
 ```
 
-This will cause RubyLLM to log detailed information about API requests and responses, including headers and bodies (with sensitive data like API keys filtered), which can be invaluable for troubleshooting.
+Debug logs show request and response headers and bodies, with API keys filtered. Use them to inspect the call that failed.
 
 ## Next Steps
 

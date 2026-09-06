@@ -18,7 +18,7 @@ After reading this guide, you will know:
 
 ## Basic OCR
 
-Extract a document with the global `RubyLLM.ocr` method:
+Turn a PDF or scan into text you can search, summarize, or store:
 
 ```ruby
 ocr = RubyLLM.ocr("contract.pdf")
@@ -26,8 +26,6 @@ ocr = RubyLLM.ocr("contract.pdf")
 puts ocr.markdown
 # => "# Service Agreement\n\nThis agreement is made between..."
 
-puts ocr.model
-# => "mistral-ocr-latest"
 ```
 
 The file may be a local path, an `http(s)` URL, an IO object, or a `RubyLLM::Attachment`. Local files are inlined into the request; URLs are passed to the provider as-is, so the file must be publicly reachable.
@@ -55,12 +53,7 @@ Each page carries:
 *   `tables`: the tables found on the page, when the provider extracts them separately.
 *   `raw`: the provider's unmodified page hash, including any fields beyond these.
 
-The result also exposes `usage`, the provider's usage block for the request, and `raw`, the full response:
-
-```ruby
-ocr.usage
-# => {"pages_processed" => 12, "doc_size_bytes" => 483210}
-```
+`ocr.raw` holds the full provider response when you need fields beyond the normalized page readers.
 
 ## Choosing Models
 
@@ -74,13 +67,13 @@ Configure the default globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_ocr_model = "mistral-ocr-latest"
+  config.default_ocr_model = "{{ site.models.default_ocr }}"
 end
 ```
 
 ## Processing Specific Pages
 
-Every keyword beyond `model:` and `provider:` passes through to the request in the provider's own vocabulary. Mistral takes `pages:` with zero-based page numbers:
+Pass `pages:` to extract specific pages, using zero-based page numbers:
 
 ```ruby
 ocr = RubyLLM.ocr("annual-report.pdf", pages: [0, 1, 2])
@@ -107,31 +100,32 @@ RubyLLM.ocr(
 
 See the [Mistral Document AI documentation](https://docs.mistral.ai/capabilities/document_ai/basic_ocr/) for the full list, including `image_limit:`, `image_min_size:`, `include_blocks:`, and `confidence_scores_granularity:`.
 
+## Extracting Structured Data
+
+Combine OCR with structured output to turn a scan into application data:
+
+```ruby
+class InvoiceSchema < Schematist::Schema
+  string :invoice_number
+  string :currency
+  number :total
+end
+
+text = RubyLLM.ocr("invoice.pdf").markdown
+response = RubyLLM.chat.with_schema(InvoiceSchema)
+                  .ask("Extract the invoice details:\n#{text}")
+response.parsed
+# => {"invoice_number" => "INV-1042", "currency" => "EUR", "total" => 120.0}
+```
+
+This makes two model calls: OCR extracts the text, then a chat model structures it. Configure Mistral for OCR and your chosen chat provider. See [Structured Output]({% link _core_features/structured-output.md %}) for schemas and typed fields.
+
 ## Error Handling
 
-Providers without OCR support raise a `RubyLLM::Error`:
-
-```ruby
-begin
-  ocr = RubyLLM.ocr("contract.pdf")
-  puts ocr.markdown
-rescue RubyLLM::BadRequestError => e
-  puts "Invalid request: #{e.message}"
-rescue RubyLLM::Error => e
-  puts "OCR failed: #{e.message}"
-end
-```
-
-For long documents, raise the request timeout:
-
-```ruby
-RubyLLM.configure do |config|
-  config.request_timeout = 600 # 10 minutes
-end
-```
+A provider without OCR support raises `RubyLLM::Error`. Rejected files or options raise `RubyLLM::BadRequestError`. See [Error Handling]({% link _advanced/error-handling.md %}) for retries and [Connection Settings]({% link _getting_started/configuration-connection.md %}#connection-settings) for longer document timeouts.
 
 ## Next Steps
 
 *   [File Attachments]({% link _core_features/attachments.md %}): Send documents to chat models instead.
-*   [Audio Transcription]({% link _core_features/audio-transcription.md %}): Convert speech to text.
-*   [Error Handling]({% link _advanced/error-handling.md %}): Master handling API errors.
+*   [Structured Output]({% link _core_features/structured-output.md %}) - extract fields from document text.
+*   [Embeddings]({% link _core_features/embeddings.md %}) - make extracted documents searchable.

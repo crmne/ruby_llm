@@ -2,7 +2,7 @@
 layout: default
 title: Scale with Async
 nav_order: 5
-description: Handle hundreds of concurrent AI requests on modest hardware. Ruby's async ecosystem meets AI.
+description: Run AI jobs with Solid Queue fiber workers, use Async for concurrent Ruby calls, and choose Async::Job for higher throughput.
 redirect_from:
   - /guides/async
 ---
@@ -14,87 +14,125 @@ redirect_from:
 
 After reading this guide, you will know:
 
-* Why LLM applications benefit dramatically from async Ruby
-* How RubyLLM automatically works with async
-* How to perform concurrent LLM operations
-* How to use async-job for background processing
-* How to handle rate limits with semaphores
+* Why AI calls benefit from concurrent execution.
+* How to use Solid Queue fiber workers for Rails jobs.
+* How to mix fiber and thread workers for different queues.
+* When to consider Async::Job for higher throughput.
+* How to run independent RubyLLM calls with Async and limit concurrency.
 
 ## Why Async for LLMs?
 
-LLM operations are unique - they take 5-60 seconds and spend 99% of that time waiting for tokens to stream back. Using traditional thread-based job queues (Sidekiq, GoodJob, SolidQueue) for LLM operations creates a problem:
+AI calls spend much of their time waiting for a provider. Ruby fibers let other work progress during that wait. Use concurrency when calls are independent, such as answering several questions or processing separate documents.
+
+## Background Jobs with Solid Queue
+
+For Rails applications, start with **Solid Queue 1.6 or later**. Fiber workers let many AI jobs wait for provider responses while keeping Solid Queue's persisted jobs, retries, and Mission Control integration. Your job's RubyLLM calls stay the same.
+
+### Enable Fiber Workers
+
+Upgrade Solid Queue and add Async to your Gemfile, then run `bundle install`:
 
 ```ruby
-# With 25 worker threads configured:
-class ChatResponseJob < ApplicationJob
-  def perform(conversation_id, message)
-    # This occupies 1 of your 25 slots for 30-60 seconds...
-    response = RubyLLM.chat.ask(message)
-    # ...even though the thread is 99% idle
+# Gemfile
+gem "solid_queue", "~> 1.6"
+gem "async"
+```
+
+Enable fiber isolation in your Rails application:
+
+```ruby
+# config/application.rb
+config.active_job.queue_adapter = :solid_queue
+config.active_support.isolation_level = :fiber
+```
+
+The isolation setting keeps Rails execution state separate for each fiber. It applies to the whole application and is required for Solid Queue fiber workers.
+
+In `config/queue.yml`, replace `threads:` with `fibers:` for the worker that handles AI jobs. You can keep thread workers for your other queues:
+
+```yaml
+# config/queue.yml
+production:
+  dispatchers:
+    - polling_interval: 1
+      batch_size: 500
+  workers:
+    - queues: llm
+      fibers: 50
+    - queues: default
+      threads: 3
+```
+
+Adapt the workers in your existing configuration, keeping any other queues, environments, and dispatcher settings you use. Choose `threads` or `fibers` for each worker, and keep their queue names separate so a thread worker does not also claim the AI jobs.
+
+Route a job to the fiber worker with `queue_as`:
+
+```ruby
+class DocumentAnalyzerJob < ApplicationJob
+  queue_as :llm
+
+  def perform(document_id)
+    document = Document.find(document_id)
+    response = RubyLLM.chat.ask "Summarize this document", with: document.file
+    document.update!(summary: response.content)
   end
 end
 
-# Your 26th user? They're waiting in line.
+DocumentAnalyzerJob.perform_later(document.id)
 ```
 
-Async solves this by using fibers instead of threads:
-- **Threads**: OS-managed, preemptive, heavy (each needs its own database connection)
-- **Fibers**: Userspace, cooperative, lightweight (thousands can share a few connections)
+Start the workers with `bin/jobs`. Solid Queue supplies the Async context, so the job does not need an `Async` block. This works with Puma or Falcon as your web server.
+
+### What the Fiber Count Means
+
+`fibers: 50` allows up to 50 jobs in flight in that worker. Jobs run as fibers on one reactor thread, yielding while RubyLLM waits for network I/O. Execution fibers are created as jobs arrive; the setting does not preallocate 50 idle fibers.
+
+The choice belongs to each worker entry, which can serve one queue or a list of queues. Put AI requests and streaming on fiber workers. Keep CPU-heavy work and libraries that block the reactor on separate thread workers or processes.
+
+With the default supervisor mode, `processes: 2` creates two worker processes with their own limits, so `fibers: 50` allows up to 100 jobs across them. This is separate from the supervisor's `--mode async` option; you do not need that option to use fiber workers.
+
+### Database Connections
+
+On Rails 7.2+, Solid Queue recommends starting with 3–5 queue database connections per fiber worker process. The pool does not need to match the number of jobs waiting on provider I/O. Size application database pools for the database work your jobs actually perform, and avoid holding a transaction or leased connection open across an AI call. Rails 7.1 needs more conservative pool sizing.
+
+See Solid Queue's [worker configuration](https://github.com/rails/solid_queue#configuration) and [Fiber-Safe ActiveRecord Connections]({% link _advanced/rails-advanced-config.md %}#fiber-safe-activerecord-connections-for-asyncfiber-workloads) for details.
+
+Fiber mode was contributed by RubyLLM's author, Carmine Paolino, and shipped in [Solid Queue 1.6.0](https://github.com/rails/solid_queue/releases/tag/v1.6.0). His post, [Making the Rails Default Job Queue Fiber-Based](https://paolino.me/solid-queue-doesnt-need-a-thread-per-job/), explains the implementation and tradeoffs.
 
 ## How RubyLLM Works with Async
 
-RubyLLM becomes non-blocking in an async context. No configuration needed.
+Wrap independent calls in Async tasks:
 
 ```ruby
 require 'async'
 require 'ruby_llm'
 
-Async do
-  10.times.map do
-    Async do
-      message = RubyLLM.chat.ask "Explain quantum computing"
-      puts message.content
-    end
+questions = ["What is a Ruby block?", "What is a Ruby symbol?", "What is a module?"]
+
+answers = Async do |task|
+  questions.map do |question|
+    task.async { RubyLLM.chat.ask(question).content }
   end.map(&:wait)
-end
+end.wait
 ```
 
-This works because RubyLLM uses `Net::HTTP`, which cooperates with Ruby's fiber scheduler.
+RubyLLM's default HTTP adapter cooperates with Ruby's fiber scheduler. Each task above creates its own chat, so the conversations stay independent. See Async's [task guide](https://socketry.github.io/async/guides/tasks/index.html) for task creation and waiting.
 
 ## Concurrent Operations
 
 ### Multiple Chat Requests
 
-Process multiple questions concurrently:
+Collect each question with its answer:
 
 ```ruby
-require 'async'
-require 'ruby_llm'
-
-def process_questions(questions)
-  Async do
-    tasks = questions.map do |question|
-      Async do
-        response = RubyLLM.chat.ask(question)
-        { question: question, answer: response.content }
-      end
+results = Async do |task|
+  questions.map do |question|
+    task.async do
+      response = RubyLLM.chat.ask(question)
+      { question: question, answer: response.content }
     end
-
-    tasks.map(&:wait)
-  end.result
-end
-
-questions = [
-  "What is Ruby?",
-  "Explain metaprogramming",
-  "What are symbols?"
-]
-
-results = process_questions(questions)
-results.each do |result|
-  puts "Q: #{result[:question]}"
-  puts "A: #{result[:answer]}\n\n"
-end
+  end.map(&:wait)
+end.wait
 ```
 
 ### Concurrent Embeddings
@@ -150,164 +188,77 @@ puts "Sentiment: #{result[:sentiment]}"
 
 ## Background Processing with `Async::Job`
 
-Use `Async::Job` for background processing. Unlike thread-based processors that block during long LLM operations, it uses fibers to handle thousands of concurrent jobs.
+Consider `Async::Job` when throughput is the priority and you are happy to operate a Redis-backed job processor. In Carmine's [queue benchmark](https://github.com/crmne/solid_queue_bench#asyncjob-comparison), Async::Job with Redis achieved higher throughput than Solid Queue fiber workers on the tested workloads, including RubyLLM streaming with Turbo broadcasts. Those results use the April 2026 Solid Queue PR implementation; they are a backend comparison, not measurements of the final 1.6 release.
 
-### Setup with Falcon (Recommended)
+For most Rails applications, Solid Queue fiber mode is the starting point. Benchmark your workload with Async::Job if you need more throughput, and review its job storage, failure handling, and monitoring options for your deployment.
 
-Falcon is a Ruby application server built on fibers. With Falcon, async works out of the box.
+### Add a Redis Queue
+
+Add the adapter and Redis processor to your Gemfile, then run `bundle install`:
 
 ```ruby
 # Gemfile
-gem 'falcon'
-gem 'async-job-adapter-active_job'
+gem "async-job-adapter-active_job"
+gem "async-job-processor-redis"
 ```
 
-```ruby
-# config/application.rb
-config.active_job.queue_adapter = :async_job
-```
+Define a queue:
 
 ```ruby
-# config/initializers/async_job_adapter.rb
-require 'async/job/processor/inline'
+# config/initializers/async_job.rb
+require "async/job/processor/redis"
 
 Rails.application.configure do
-  config.async_job.define_queue "default" do
-    dequeue Async::Job::Processor::Inline
-  end
-end
-```
-
-Start your server with `bin/dev`. One process, thousands of concurrent LLM operations, no extra infrastructure.
-
-### Note on Puma
-
-Still using Puma? You'll need a Redis-backed job processor for concurrent execution:
-
-```ruby
-# Gemfile additions
-gem 'async-job-processor-redis'
-
-# config/initializers/async_job_adapter.rb
-require 'async/job/processor/redis'
-
-Rails.application.configure do
-  config.async_job.define_queue "default" do
+  config.async_job.define_queue "llm" do
     dequeue Async::Job::Processor::Redis
   end
 end
 ```
 
-Then run these processes:
-
-**Option 1: Add to Procfile.dev (Recommended)**
-```procfile
-# Procfile.dev
-web: bin/rails server
-css: bin/rails tailwindcss:watch  # or your CSS processor
-redis: redis-server
-async_job: bundle exec async-job-adapter-active_job-server
-```
-
-Then run `bin/dev` to start everything.
-
-**Option 2: Separate terminals**
-```bash
-# Terminal 1: Redis
-redis-server
-
-# Terminal 2: Job processor (auto-scales to CPU cores)
-bundle exec async-job-adapter-active_job-server
-
-# Terminal 3: Rails
-bin/dev
-```
-
-This setup requires more infrastructure but still delivers the concurrency benefits of async for your LLM operations.
-
-### Your Jobs Work Unchanged
-
-You don't need to modify your jobs. `Async::Job` runs each job inside an async context automatically:
+You can select the adapter per job while the rest of the application keeps Solid Queue:
 
 ```ruby
 class DocumentAnalyzerJob < ApplicationJob
+  self.queue_adapter = :async_job
+  queue_as :llm
+
   def perform(document_id)
     document = Document.find(document_id)
-
-    response = RubyLLM.chat.ask("Analyze: #{document.content}")
-
-    document.update!(
-      analysis: response.content,
-      analyzed_at: Time.current
-    )
+    response = RubyLLM.chat.ask "Summarize this document", with: document.file
+    document.update!(summary: response.content)
   end
 end
 ```
 
-### Mixing Job Adapters: Best of Both Worlds
+With Redis running, start the separate processor:
 
-You don't have to go all-in. Use async-job only for LLM operations while keeping your existing job processor for everything else:
-
-```ruby
-config.active_job.queue_adapter = :solid_queue  # or :sidekiq, :good_job, etc.
-
-class LLMJob < ApplicationJob
-  self.queue_adapter = :async_job
-end
-
-class ChatResponseJob < LLMJob
-  def perform(conversation_id, message)
-    # Runs with async-job - perfect for streaming
-    response = RubyLLM.chat.ask(message)
-    # ...
-  end
-end
-
-class ImageProcessingJob < ApplicationJob
-  def perform(image_id)
-    # Runs with solid_queue - better for CPU work
-    # ...
-  end
-end
+```bash
+bundle exec async-job-adapter-active_job-server
 ```
 
-This approach lets you optimize each job type for its workload without disrupting your existing infrastructure.
+The processor supplies the Async context independently of your web server. For Redis connection settings, inline execution with Falcon, and deployment options, follow the adapter's [documentation](https://github.com/socketry/async-job-adapter-active_job#usage).
 
 ## Rate Limiting with Semaphores
 
-When making many concurrent requests, use a semaphore to respect rate limits:
+A semaphore limits the number of requests in flight:
 
 ```ruby
 require 'async'
 require 'async/semaphore'
 
-class RateLimitedProcessor
-  def initialize(max_concurrent: 10)
-    @semaphore = Async::Semaphore.new(max_concurrent)
-  end
-
-  def process_items(items)
-    Async do
-      items.map do |item|
-        Async do
-          @semaphore.acquire do
-            response = RubyLLM.chat.ask("Process: #{item}")
-            { item: item, result: response.content }
-          end
-        end
-      end.map(&:wait)
-    end.result
-  end
-end
-
-processor = RateLimitedProcessor.new(max_concurrent: 5)
-items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"]
-results = processor.process_items(items)
+answers = Async do
+  semaphore = Async::Semaphore.new(5)
+  questions.map do |question|
+    semaphore.async { RubyLLM.chat.ask(question).content }
+  end.map(&:wait)
+end.wait
 ```
 
-The semaphore ensures only 5 requests run concurrently, preventing rate limit errors while still maintaining high throughput.
+At most five calls run at once. That limits concurrency, but does not enforce a requests-per-minute or tokens-per-minute quota. Keep [retry and rate-limit handling]({% link _advanced/error-handling.md %}#automatic-retries) in place. See the [Semaphore reference](https://socketry.github.io/async/source/Async/Semaphore/index.html).
 
-For benchmarks and architectural comparisons, read [Async Ruby is the Future of AI Apps](https://paolino.me/async-ruby-is-the-future/).
+For Active Record work inside fibers, follow [Fiber-Safe ActiveRecord Connections]({% link _advanced/rails-advanced-config.md %}#fiber-safe-activerecord-connections-for-asyncfiber-workloads).
+
+For more on fibers, threads, and processes, read [Ruby Concurrency: What Actually Happens](https://paolino.me/ruby-concurrency-what-actually-happens/).
 
 ## Next Steps
 

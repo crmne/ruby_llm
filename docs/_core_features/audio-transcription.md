@@ -23,7 +23,7 @@ After reading this guide, you will know:
 
 ## Basic Transcription
 
-Transcribe audio with the global `RubyLLM.transcribe` method:
+Turn a recording into text:
 
 ```ruby
 transcription = RubyLLM.transcribe("meeting.wav")
@@ -31,8 +31,6 @@ transcription = RubyLLM.transcribe("meeting.wav")
 puts transcription.text
 # => "Welcome to today's meeting. Let's discuss..."
 
-puts transcription.model
-# => "gpt-transcribe"
 ```
 
 Supports MP3, M4A, WAV, WebM, OGG, and more.
@@ -40,13 +38,13 @@ Supports MP3, M4A, WAV, WebM, OGG, and more.
 ## Choosing Models
 
 ```ruby
-# GPT Transcribe (default, high accuracy)
+# GPT Transcribe (default)
 RubyLLM.transcribe("audio.mp3", model: "gpt-transcribe")
 
-# GPT-4o Transcribe (faster, better for technical content)
+# GPT-4o Transcribe
 RubyLLM.transcribe("audio.mp3", model: "gpt-4o-transcribe")
 
-# GPT-4o Mini Transcribe (fastest, lowest cost)
+# GPT-4o Mini Transcribe
 RubyLLM.transcribe("audio.mp3", model: "gpt-4o-mini-transcribe")
 
 # Diarization model (identifies speakers)
@@ -194,7 +192,7 @@ RubyLLM.transcribe(
 )
 ```
 
-> Gemini models currently return plain text transcripts without segment metadata. Use OpenAI's diarization models when you need speaker labels or timestamps.
+> Gemini transcripts do not include segment metadata. The OpenAI, ElevenLabs, and Deepgram examples above show how to read speaker information.
 {: .note }
 
 ## Streaming Transcripts
@@ -273,7 +271,7 @@ RubyLLM.transcribe(
 Access detailed timing information:
 
 ```ruby
-transcription = RubyLLM.transcribe("interview.mp3", model: "gpt-4o-transcribe")
+transcription = RubyLLM.transcribe("interview.mp3", model: "whisper-1", format: "verbose_json")
 
 puts "Duration: #{transcription.duration} seconds"
 
@@ -355,17 +353,27 @@ RubyLLM.transcribe(
 
 The same hash turns RubyLLM's defaults back off, with `smart_format: false` or `utterances: false`.
 
+## Turning a Recording into Meeting Notes
+
+Use the transcript as input to a chat:
+
+```ruby
+transcript = RubyLLM.transcribe "meeting.wav"
+notes = RubyLLM.chat.ask "Summarize the decisions and action items:\n#{transcript.text}"
+puts notes.content
+```
+
+For fields your application can process, add a schema with [Structured Output]({% link _core_features/structured-output.md %}). To make an audio summary, pass the notes to `RubyLLM.speak` and save the result.
+
 ## Handling Longer Files
 
-The default timeout is 5 minutes. Increase it for longer audio:
+Choose a provider and format that accept your recording's size. Longer recordings may also need a longer timeout:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.request_timeout = 600 # 10 minutes
+  config.request_timeout = 600
 end
 ```
-
-OpenAI accepts audio files up to 25 MB. For larger files, use compressed formats (MP3, M4A), split the audio into chunks, or use a provider with higher limits.
 
 ## Error Handling
 
@@ -385,5 +393,5 @@ end
 ## Next Steps
 
 *   [Chatting with AI Models]({% link _core_features/chat.md %}): Learn about conversational AI.
-*   [Image Generation]({% link _core_features/image-generation.md %}): Generate images from text.
-*   [Error Handling]({% link _advanced/error-handling.md %}): Master handling API errors.
+*   [Text to Speech]({% link _core_features/text-to-speech.md %}) - turn a summary into audio.
+*   [Structured Output]({% link _core_features/structured-output.md %}) - extract decisions, speakers, and action items.

@@ -5,9 +5,14 @@ module RubyLLM
   # RubyLLM.embed returns one:
   #
   #   embedding = RubyLLM.embed("Ruby is a programmer's best friend")
-  #   embedding.vectors.length  # => 1536
-  #   embedding.model           # => "text-embedding-3-small"
-  #   embedding.tokens.input    # => 8
+  #   embedding.vectors # => [0.018, -0.027, ...]
+  #
+  # Pass an array to embed several texts in one call:
+  #
+  #   RubyLLM.embed(["Ruby", "Rails"]).vectors # => [[...], [...]]
+  #
+  # Store the vectors for similarity search. #tokens and #cost report
+  # usage when the provider supplies it.
   #
   class Embedding
     include Inspectable

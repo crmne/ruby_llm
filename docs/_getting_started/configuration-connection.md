@@ -136,7 +136,7 @@ end
 
 `log_stream_debug` notes:
 - Shows chunk-by-chunk streaming internals (accumulator state, parsing, tool chunks)
-- Invaluable for diagnosing streaming/provider parsing issues
+- Helps diagnose streaming and response parsing issues
 - Can also be enabled with `RUBYLLM_STREAM_DEBUG=true`
 
 `log_regexp_timeout` notes:
@@ -151,7 +151,7 @@ Built-in debug log redaction:
 
 ## Contexts: Isolated Configurations
 
-Create temporary configuration scopes without affecting global settings. Perfect for multi-tenancy, testing, or specific task requirements.
+Use a context for a tenant's credentials or a task's defaults without changing global configuration.
 
 ### Basic Context Usage
 
@@ -173,7 +173,7 @@ response = ctx_chat.ask("Process this with another provider...")
 regular_chat = RubyLLM.chat  # Still uses production OpenAI
 ```
 
-### Beyond Chat
+### Individual Operations
 
 A context offers the same entry points as the top-level `RubyLLM` module, so the rest of the API runs under its configuration too:
 
@@ -185,7 +185,7 @@ embedding = ctx.embed("Ruby is a joy to write")
 transcript = ctx.transcribe("interview.mp3")
 ```
 
-`paint`, `animate`, `animate_later`, `embed`, `moderate`, `speak`, `transcribe`, `upload`, `download`, and `cache` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy` and `request_timeout` rather than the global ones.
+`paint`, `animate`, `animate_later`, `embed`, `embed_later`, `moderate`, `speak`, `transcribe`, `ocr`, `rerank`, `upload`, `download`, and `cache` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy` and `request_timeout` rather than the global ones.
 
 ### Multi-Tenant Applications
 
@@ -221,4 +221,4 @@ tenant_b_service = TenantService.new(tenant_b)
 - [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list in one block.
 - [Provider Setup and Custom Endpoints]({% link _getting_started/configuration-providers.md %}) - per-provider keys and OpenAI-compatible endpoints.
 - [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - hook RubyLLM into your metrics and tracing stack.
-- [Working with Models]({% link _reference/models.md %}) - discover, select, and refresh models.
+- [Model Registry]({% link _reference/models.md %}) - discover, select, and refresh models.

@@ -21,15 +21,9 @@ After reading this guide, you will know:
 
 ## Getting Structured Output
 
-When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
-
-JSON mode (using `with_provider_options(text: { format: { type: 'json_object' } })` on OpenAI's default Responses protocol) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
-{: .note }
+Describe the data your application needs with `with_schema`, then read it through `response.parsed`:
 
 ```ruby
-chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
-response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
-
 class LanguagesSchema < Schematist::Schema
   array :languages do
     object do
@@ -39,14 +33,17 @@ class LanguagesSchema < Schematist::Schema
   end
 end
 
-chat = RubyLLM.chat.with_schema(LanguagesSchema)
-response = chat.ask("List 3 programming languages with their year created")
-# Always returns: {"languages" => [{"name" => "...", "year" => ...}, ...]}
+response = RubyLLM.chat.with_schema(LanguagesSchema)
+                  .ask("List 3 programming languages with their year created.")
+response.parsed["languages"]
+# => [{"name" => "Ruby", "year" => 1995}, ...]
 ```
 
-### Using Schematist (Recommended)
+RubyLLM sends the schema in the format the provider expects. `response.content` contains the JSON text; `response.parsed` gives you Ruby Hashes and Arrays.
 
-The easiest way to define schemas is with [Schematist](https://github.com/crmne/schematist), formerly known as `RubyLLM::Schema`. It ships with RubyLLM as a dependency, so there is nothing to add to your Gemfile:
+### Using Schematist
+
+[Schematist](https://github.com/crmne/schematist) ships with RubyLLM. Add descriptions and optional fields as your schema grows:
 
 ```ruby
 class PersonSchema < Schematist::Schema
@@ -62,7 +59,7 @@ puts response.parsed # => {"name" => "Alice", "age" => 30}
 puts response.content # => '{"name":"Alice","age":30}'
 ```
 
-Schematist schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
+Schematist uses the class name, such as `PersonSchema`, as the schema name in API requests.
 {: .note }
 
 OpenAI's strict mode needs every property in `required`. RubyLLM sends `strict: true` when your schema qualifies and `strict: false` when it has optional properties like `city` above. To keep strict validation with an optional field, make the field required and let its type include `null`.
@@ -194,12 +191,25 @@ end
 chat.with_schema(CareerPlanSchema)
 career = chat.ask("Now structure a career plan")
 
-puts person.content
-puts analysis.content
-puts career.content
+person.parsed
+analysis.content
+career.parsed
 ```
 
+## JSON Mode
+
+Use JSON mode when you need valid JSON without a particular schema. This OpenAI example uses the default Responses protocol:
+
+```ruby
+chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
+response = chat.ask "List three programming languages. Return JSON."
+response.parsed
+```
+
+JSON mode does not enforce fields or types. Use `with_schema` when your application depends on a particular structure.
+
 ## Next Steps
+
 
 * [Chat]({% link _core_features/chat.md %}) - the conversation interface `with_schema` builds on.
 * [Tools]({% link _core_features/tools.md %}) - let the model call your Ruby code when a schema is not enough.

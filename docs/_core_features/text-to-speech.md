@@ -22,7 +22,7 @@ After reading this guide, you will know:
 
 ## Basic Speech Generation
 
-Generate audio with the global `RubyLLM.speak` method:
+Give your application a voice. Generate speech and save the audio:
 
 ```ruby
 speech = RubyLLM.speak "Hello, welcome to RubyLLM!"
@@ -145,7 +145,7 @@ speech.save("voiceover.wav")
 
 Supported OpenAI formats are `mp3`, `opus`, `aac`, `flac`, `wav`, and `pcm`.
 
-Gemini's generateContent speech endpoint returns raw PCM audio. RubyLLM reports that honestly:
+Gemini's speech endpoint returns raw PCM audio:
 
 ```ruby
 speech = RubyLLM.speak(
@@ -156,6 +156,7 @@ speech = RubyLLM.speak(
 
 speech.format
 # => "pcm"
+speech.save "out.pcm"
 ```
 
 Convert PCM with a tool like ffmpeg when you need a container format:

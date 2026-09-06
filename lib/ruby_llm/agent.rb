@@ -306,7 +306,7 @@ module RubyLLM
       # defers evaluation until the chat is built. Called with no
       # arguments, returns the configured value.
       #
-      #   provider_options max_output_tokens: 256
+      #   provider_options service_tier: "flex"
       #
       def provider_options(**provider_options, &block)
         return @provider_options || {} if provider_options.empty? && !block_given?
