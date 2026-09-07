@@ -17,11 +17,12 @@ module RubyLLM
   # pricing for tokens that were used, the affected component and #total
   # return +nil+ instead of a false zero.
   #
-  # When the provider reports the exact cost of a call (OpenRouter does on
-  # every response), #total returns the reported amount instead of a
-  # registry-price estimate, even when registry pricing is missing.
+  # When the provider reports the exact cost of a call, #total returns the
+  # reported amount instead of a registry-price estimate, even when
+  # registry pricing is missing.
   #
-  # Costs are computed when the object is built and frozen from then on.
+  # Costs are computed when the object is built. Readers do not recalculate
+  # them when registry prices change.
   # ::aggregate and ::from_h return the same class, so a single call, a
   # whole chat, and a stored breakdown all read the same way.
   class Cost
@@ -34,7 +35,8 @@ module RubyLLM
       # Combines several costs into one Cost that sums each component.
       # Ignores +nil+ entries. A component returns +nil+ when pricing was
       # missing for one of the calls, or when no call has a cost for that
-      # component.
+      # component. Pass <tt>complete: false</tt> when some requests are still
+      # running or their costs are unknown; #total then remains +nil+.
       #
       #   cost = RubyLLM::Cost.aggregate(messages.map(&:cost))
       #   cost.total

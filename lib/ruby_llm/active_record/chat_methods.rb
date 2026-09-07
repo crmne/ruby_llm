@@ -84,7 +84,7 @@ module RubyLLM
         record_tool_call_decision(tool_call, 'denied')
       end
 
-      # Returns whether the conversation is parked on tool calls that
+      # Returns whether the conversation is waiting on tool calls that
       # require approval and have no recorded decision. See
       # RubyLLM::Chat#awaiting_approval?.
       def awaiting_approval?
@@ -94,6 +94,7 @@ module RubyLLM
       # Returns the persisted tool call records that require approval and
       # have no recorded decision, ready to render as approval cards. Pass
       # a record (or its tool_call_id) to #approve or #deny.
+      # A record's +remote?+ identifies a provider-executed call.
       #
       #   chat.pending_approvals.each { |record| render record }
       #
@@ -219,6 +220,222 @@ module RubyLLM
         before_fallback after_fallback
       ].freeze
 
+      ##
+      # :method: with_tools
+      # :call-seq: with_tools(*tools)
+      #
+      # Applies Chat#with_tools and returns this record.
+
+      ##
+      # :method: with_tool_options
+      # :call-seq: with_tool_options(**options)
+      #
+      # Applies Chat#with_tool_options and returns this record.
+
+      ##
+      # :method: with_server_tools
+      # :call-seq: with_server_tools(*tools, **tools_with_options)
+      #
+      # Applies Chat#with_server_tools and returns this record.
+
+      ##
+      # :method: with_fallbacks
+      # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+      #
+      # Applies Chat#with_fallbacks and returns this record.
+
+      ##
+      # :method: with_temperature
+      # :call-seq: with_temperature(temperature)
+      #
+      # Applies Chat#with_temperature and returns this record.
+
+      ##
+      # :method: with_max_output_tokens
+      # :call-seq: with_max_output_tokens(max_output_tokens)
+      #
+      # Applies Chat#with_max_output_tokens and returns this record.
+
+      ##
+      # :method: with_thinking
+      # :call-seq: with_thinking(enabled = true, **options)
+      #
+      # Applies Chat#with_thinking and returns this record.
+
+      ##
+      # :method: with_citations
+      # :call-seq: with_citations(enabled = true)
+      #
+      # Applies Chat#with_citations and returns this record.
+
+      ##
+      # :method: with_caching
+      # :call-seq: with_caching(options = {})
+      #
+      # Applies Chat#with_caching and returns this record.
+
+      ##
+      # :method: with_end_user
+      # :call-seq: with_end_user(end_user)
+      #
+      # Applies Chat#with_end_user and returns this record.
+
+      ##
+      # :method: with_compaction
+      # :call-seq: with_compaction(options = {})
+      #
+      # Applies Chat#with_compaction and returns this record.
+
+      ##
+      # :method: with_provider_options
+      # :call-seq: with_provider_options(provider_options)
+      #
+      # Applies Chat#with_provider_options and returns this record.
+
+      ##
+      # :method: with_headers
+      # :call-seq: with_headers(headers)
+      #
+      # Applies Chat#with_headers and returns this record.
+
+      ##
+      # :method: with_schema
+      # :call-seq: with_schema(schema)
+      #
+      # Applies Chat#with_schema and returns this record.
+
+      ##
+      # :method: before_request
+      # :call-seq: before_request(&block)
+      #
+      # Applies Chat#before_request and returns this record.
+
+      ##
+      # :method: before_message
+      # :call-seq: before_message(&block)
+      #
+      # Applies Chat#before_message and returns this record.
+
+      ##
+      # :method: after_message
+      # :call-seq: after_message(&block)
+      #
+      # Applies Chat#after_message and returns this record.
+
+      ##
+      # :method: before_tool_call
+      # :call-seq: before_tool_call(&block)
+      #
+      # Applies Chat#before_tool_call and returns this record.
+
+      ##
+      # :method: after_tool_result
+      # :call-seq: after_tool_result(&block)
+      #
+      # Applies Chat#after_tool_result and returns this record.
+
+      ##
+      # :method: before_fallback
+      # :call-seq: before_fallback(&block)
+      #
+      # Applies Chat#before_fallback and returns this record.
+
+      ##
+      # :method: after_fallback
+      # :call-seq: after_fallback(&block)
+      #
+      # Applies Chat#after_fallback and returns this record.
+
+      ##
+      # :method: caching
+      # :call-seq: caching
+      #
+      # Delegates to Chat#caching. See that method for arguments and return values.
+
+      ##
+      # :method: citations
+      # :call-seq: citations
+      #
+      # Delegates to Chat#citations. See that method for arguments and return values.
+
+      ##
+      # :method: compaction
+      # :call-seq: compaction
+      #
+      # Delegates to Chat#compaction. See that method for arguments and return values.
+
+      ##
+      # :method: concurrency
+      # :call-seq: concurrency
+      #
+      # Delegates to Chat#concurrency. See that method for arguments and return values.
+
+      ##
+      # :method: end_user
+      # :call-seq: end_user
+      #
+      # Delegates to Chat#end_user. See that method for arguments and return values.
+
+      ##
+      # :method: fallbacks
+      # :call-seq: fallbacks
+      #
+      # Delegates to Chat#fallbacks. See that method for arguments and return values.
+
+      ##
+      # :method: headers
+      # :call-seq: headers
+      #
+      # Delegates to Chat#headers. See that method for arguments and return values.
+
+      ##
+      # :method: max_output_tokens
+      # :call-seq: max_output_tokens
+      #
+      # Delegates to Chat#max_output_tokens. See that method for arguments and return values.
+
+      ##
+      # :method: provider_options
+      # :call-seq: provider_options
+      #
+      # Delegates to Chat#provider_options. See that method for arguments and return values.
+
+      ##
+      # :method: schema
+      # :call-seq: schema
+      #
+      # Delegates to Chat#schema. See that method for arguments and return values.
+
+      ##
+      # :method: server_tools
+      # :call-seq: server_tools
+      #
+      # Delegates to Chat#server_tools. See that method for arguments and return values.
+
+      ##
+      # :method: temperature
+      # :call-seq: temperature
+      #
+      # Delegates to Chat#temperature. See that method for arguments and return values.
+
+      ##
+      # :method: thinking
+      # :call-seq: thinking()
+      #
+      # Delegates to Chat#thinking. See that method for arguments and return values.
+
+      ##
+      # :method: tool_options
+      # :call-seq: tool_options()
+      #
+      # Delegates to Chat#tool_options. See that method for arguments and return values.
+
+      ##
+      # :method: tools
+      # :call-seq: tools
+      #
+      # Delegates to Chat#tools. See that method for arguments and return values.
+
       CHAINABLE_CHAT_DELEGATES.each do |name|
         define_method(name) do |*args, **kwargs, &block|
           to_llm.public_send(name, *args, **kwargs, &block)
@@ -229,6 +446,12 @@ module RubyLLM
       # Chat values and operations whose return values pass through unchanged.
       #
       # The public methods behave as documented on RubyLLM::Chat.
+
+      PASSTHROUGH_CHAT_DELEGATES = %i[
+        caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
+        schema server_tools temperature thinking tool_options tools
+        add_completion count_tokens each render
+      ].freeze
 
       ##
       # :method: count_tokens
@@ -248,12 +471,6 @@ module RubyLLM
       # :call-seq: render
       #
       # Returns the next request payload with #before_request hooks applied.
-
-      PASSTHROUGH_CHAT_DELEGATES = %i[
-        caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
-        schema server_tools temperature thinking tool_options tools
-        add_completion count_tokens each render
-      ].freeze
 
       PASSTHROUGH_CHAT_DELEGATES.each do |name|
         define_method(name) do |*args, **kwargs, &block|
@@ -346,9 +563,9 @@ module RubyLLM
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
-      # Persists +message+ as a user message, then runs the completion loop
-      # and returns the assistant RubyLLM::Message. Yields streaming chunks
-      # to the block when given.
+      # Persists +message+ as a user message, then runs the conversation loop
+      # and returns the latest assistant RubyLLM::Message. The loop pauses
+      # when #awaiting_approval? is true. Yields streaming chunks to a block.
       #
       #   chat.ask "What is the capital of France?"
       #   chat.ask "What's in this file?", with: "diagram.png"
@@ -400,9 +617,9 @@ module RubyLLM
 
       # Advances the conversation by one move: runs the pending tool calls if
       # there are any, otherwise generates a response. Returns +nil+ once the
-      # chat is complete. See RubyLLM::Chat#step.
+      # chat is complete or waiting for approval. See RubyLLM::Chat#step.
       #
-      #   chat.step until chat.complete?
+      #   chat.step until chat.complete? || chat.awaiting_approval?
       #
       def step(...)
         to_llm.step(...)
@@ -419,9 +636,9 @@ module RubyLLM
       end
 
       # Runs the completion loop on the underlying chat, persisting each
-      # message, and returns the final assistant RubyLLM::Message. When the
-      # API call fails, destroys the empty assistant message and any orphaned
-      # tool results, then re-raises the error.
+      # message, and returns the latest RubyLLM::Message. Pauses when a tool
+      # requires approval. When the API call fails, destroys the empty assistant
+      # message and any orphaned tool results, then re-raises the error.
       def complete(...)
         to_llm.complete(...)
       rescue *COMPLETION_ERRORS => e

@@ -400,9 +400,9 @@ module RubyLLM
 
       # Registers a handler for exceptions raised by the chat operations of
       # this agent's instances: #ask, #say, #ask_later, #complete,
-      # #generate, #run_tools, and #step. Name the handler with +with:+ or
-      # pass a block; either runs on the agent instance, so the agent's
-      # #chat, inputs, and class name are available for instrumentation.
+      # #generate, #run_tools, #step, #count_tokens, and #compact. Name the
+      # handler with +with:+ or pass a block; either runs on the agent instance,
+      # so the agent's #chat, inputs, and class name are available for instrumentation.
       #
       #   class ApplicationAgent < RubyLLM::Agent
       #     rescue_from RubyLLM::RateLimitError, Faraday::TimeoutError, with: :handle_transient
@@ -860,6 +860,342 @@ module RubyLLM
     def_delegators :chat, *CHAINABLE_CHAT_DELEGATES, *PASSTHROUGH_CHAT_DELEGATES
 
     ##
+    # :method: with_instructions
+    # :call-seq: with_instructions(instructions, append: false, cache_until_here: false)
+    #
+    # Delegates to Chat#with_instructions. See that method for arguments and return values.
+
+    ##
+    # :method: with_tools
+    # :call-seq: with_tools(*tools)
+    #
+    # Delegates to Chat#with_tools. See that method for arguments and return values.
+
+    ##
+    # :method: with_server_tools
+    # :call-seq: with_server_tools(*tools, **tools_with_options)
+    #
+    # Delegates to Chat#with_server_tools. See that method for arguments and return values.
+
+    ##
+    # :method: with_tool_options
+    # :call-seq: with_tool_options(**options)
+    #
+    # Delegates to Chat#with_tool_options. See that method for arguments and return values.
+
+    ##
+    # :method: with_model
+    # :call-seq: with_model(model_id, provider: nil, protocol: nil, assume_model_exists: false)
+    #
+    # Delegates to Chat#with_model. See that method for arguments and return values.
+
+    ##
+    # :method: with_temperature
+    # :call-seq: with_temperature(temperature)
+    #
+    # Delegates to Chat#with_temperature. See that method for arguments and return values.
+
+    ##
+    # :method: with_max_output_tokens
+    # :call-seq: with_max_output_tokens(max_output_tokens)
+    #
+    # Delegates to Chat#with_max_output_tokens. See that method for arguments and return values.
+
+    ##
+    # :method: with_thinking
+    # :call-seq: with_thinking(enabled = true, **options)
+    #
+    # Delegates to Chat#with_thinking. See that method for arguments and return values.
+
+    ##
+    # :method: with_citations
+    # :call-seq: with_citations(enabled = true)
+    #
+    # Delegates to Chat#with_citations. See that method for arguments and return values.
+
+    ##
+    # :method: with_end_user
+    # :call-seq: with_end_user(end_user)
+    #
+    # Delegates to Chat#with_end_user. See that method for arguments and return values.
+
+    ##
+    # :method: with_compaction
+    # :call-seq: with_compaction(options = {})
+    #
+    # Delegates to Chat#with_compaction. See that method for arguments and return values.
+
+    ##
+    # :method: with_caching
+    # :call-seq: with_caching(options = {})
+    #
+    # Delegates to Chat#with_caching. See that method for arguments and return values.
+
+    ##
+    # :method: with_context
+    # :call-seq: with_context(context)
+    #
+    # Delegates to Chat#with_context. See that method for arguments and return values.
+
+    ##
+    # :method: with_provider_options
+    # :call-seq: with_provider_options(provider_options)
+    #
+    # Delegates to Chat#with_provider_options. See that method for arguments and return values.
+
+    ##
+    # :method: with_headers
+    # :call-seq: with_headers(headers)
+    #
+    # Delegates to Chat#with_headers. See that method for arguments and return values.
+
+    ##
+    # :method: with_schema
+    # :call-seq: with_schema(schema)
+    #
+    # Delegates to Chat#with_schema. See that method for arguments and return values.
+
+    ##
+    # :method: with_fallbacks
+    # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+    #
+    # Delegates to Chat#with_fallbacks. See that method for arguments and return values.
+
+    ##
+    # :method: before_request
+    # :call-seq: before_request(&block)
+    #
+    # Delegates to Chat#before_request. See that method for arguments and return values.
+
+    ##
+    # :method: before_message
+    # :call-seq: before_message(&block)
+    #
+    # Delegates to Chat#before_message. See that method for arguments and return values.
+
+    ##
+    # :method: after_message
+    # :call-seq: after_message(&block)
+    #
+    # Delegates to Chat#after_message. See that method for arguments and return values.
+
+    ##
+    # :method: before_tool_call
+    # :call-seq: before_tool_call(&block)
+    #
+    # Delegates to Chat#before_tool_call. See that method for arguments and return values.
+
+    ##
+    # :method: after_tool_result
+    # :call-seq: after_tool_result(&block)
+    #
+    # Delegates to Chat#after_tool_result. See that method for arguments and return values.
+
+    ##
+    # :method: before_fallback
+    # :call-seq: before_fallback(&block)
+    #
+    # Delegates to Chat#before_fallback. See that method for arguments and return values.
+
+    ##
+    # :method: after_fallback
+    # :call-seq: after_fallback(&block)
+    #
+    # Delegates to Chat#after_fallback. See that method for arguments and return values.
+
+    ##
+    # :method: cancel
+    # :call-seq: cancel()
+    #
+    # Delegates to Chat#cancel. See that method for arguments and return values.
+
+    ##
+    # :method: approve
+    # :call-seq: approve(tool_call)
+    #
+    # Delegates to Chat#approve. See that method for arguments and return values.
+
+    ##
+    # :method: deny
+    # :call-seq: deny(tool_call)
+    #
+    # Delegates to Chat#deny. See that method for arguments and return values.
+
+    ##
+    # :method: cache_until_here
+    # :call-seq: cache_until_here()
+    #
+    # Delegates to Chat#cache_until_here. See that method for arguments and return values.
+
+    ##
+    # :method: model
+    # :call-seq: model
+    #
+    # Delegates to Chat#model. See that method for arguments and return values.
+
+    ##
+    # :method: provider
+    # :call-seq: provider
+    #
+    # Delegates to Chat#provider. See that method for arguments and return values.
+
+    ##
+    # :method: messages
+    # :call-seq: messages
+    #
+    # Delegates to Chat#messages. See that method for arguments and return values.
+
+    ##
+    # :method: tools
+    # :call-seq: tools
+    #
+    # Delegates to Chat#tools. See that method for arguments and return values.
+
+    ##
+    # :method: server_tools
+    # :call-seq: server_tools
+    #
+    # Delegates to Chat#server_tools. See that method for arguments and return values.
+
+    ##
+    # :method: tool_options
+    # :call-seq: tool_options()
+    #
+    # Delegates to Chat#tool_options. See that method for arguments and return values.
+
+    ##
+    # :method: provider_options
+    # :call-seq: provider_options
+    #
+    # Delegates to Chat#provider_options. See that method for arguments and return values.
+
+    ##
+    # :method: headers
+    # :call-seq: headers
+    #
+    # Delegates to Chat#headers. See that method for arguments and return values.
+
+    ##
+    # :method: schema
+    # :call-seq: schema
+    #
+    # Delegates to Chat#schema. See that method for arguments and return values.
+
+    ##
+    # :method: concurrency
+    # :call-seq: concurrency
+    #
+    # Delegates to Chat#concurrency. See that method for arguments and return values.
+
+    ##
+    # :method: caching
+    # :call-seq: caching
+    #
+    # Delegates to Chat#caching. See that method for arguments and return values.
+
+    ##
+    # :method: citations
+    # :call-seq: citations
+    #
+    # Delegates to Chat#citations. See that method for arguments and return values.
+
+    ##
+    # :method: compaction
+    # :call-seq: compaction
+    #
+    # Delegates to Chat#compaction. See that method for arguments and return values.
+
+    ##
+    # :method: context
+    # :call-seq: context
+    #
+    # Delegates to Chat#context. See that method for arguments and return values.
+
+    ##
+    # :method: end_user
+    # :call-seq: end_user
+    #
+    # Delegates to Chat#end_user. See that method for arguments and return values.
+
+    ##
+    # :method: fallbacks
+    # :call-seq: fallbacks
+    #
+    # Delegates to Chat#fallbacks. See that method for arguments and return values.
+
+    ##
+    # :method: thinking
+    # :call-seq: thinking()
+    #
+    # Delegates to Chat#thinking. See that method for arguments and return values.
+
+    ##
+    # :method: temperature
+    # :call-seq: temperature
+    #
+    # Returns Chat#temperature from the wrapped chat.
+
+    ##
+    # :method: max_output_tokens
+    # :call-seq: max_output_tokens
+    #
+    # Returns Chat#max_output_tokens from the wrapped chat.
+
+    ##
+    # :method: each
+    # :call-seq: each(&block)
+    #
+    # Delegates to Chat#each. See that method for arguments and return values.
+
+    ##
+    # :method: complete?
+    # :call-seq: complete?()
+    #
+    # Delegates to Chat#complete?. See that method for arguments and return values.
+
+    ##
+    # :method: cancelled?
+    # :call-seq: cancelled?()
+    #
+    # Delegates to Chat#cancelled?. See that method for arguments and return values.
+
+    ##
+    # :method: awaiting_approval?
+    # :call-seq: awaiting_approval?()
+    #
+    # Delegates to Chat#awaiting_approval?. See that method for arguments and return values.
+
+    ##
+    # :method: pending_approvals
+    # :call-seq: pending_approvals()
+    #
+    # Delegates to Chat#pending_approvals. See that method for arguments and return values.
+
+    ##
+    # :method: add_message
+    # :call-seq: add_message(message_or_attributes)
+    #
+    # Delegates to Chat#add_message. See that method for arguments and return values.
+
+    ##
+    # :method: tokens
+    # :call-seq: tokens()
+    #
+    # Delegates to Chat#tokens. See that method for arguments and return values.
+
+    ##
+    # :method: cost
+    # :call-seq: cost()
+    #
+    # Delegates to Chat#cost. See that method for arguments and return values.
+
+    ##
+    # :method: render
+    # :call-seq: render()
+    #
+    # Delegates to Chat#render. See that method for arguments and return values.
+
+    ##
     # :method: ask
     # :call-seq: ask(message = nil, with: nil, &block)
     #
@@ -872,6 +1208,54 @@ module RubyLLM
     #
     # Delegates to Chat#complete, routing exceptions through the handlers
     # declared with ::rescue_from.
+
+    ##
+    # :method: say
+    # :call-seq: say(message = nil, with: nil, &block)
+    #
+    # Delegates to Chat#say, the alias for Chat#ask, with ::rescue_from handling.
+
+    ##
+    # :method: ask_later
+    # :call-seq: ask_later(message = nil, with: nil)
+    #
+    # Stages a message through Chat#ask_later without calling the provider.
+    # Returns the wrapped chat. Exceptions use ::rescue_from handlers.
+
+    ##
+    # :method: generate
+    # :call-seq: generate(&block)
+    #
+    # Generates one response through Chat#generate without executing tools.
+    # Returns a Message. Exceptions use ::rescue_from handlers.
+
+    ##
+    # :method: run_tools
+    # :call-seq: run_tools
+    #
+    # Runs pending tools through Chat#run_tools, respecting approval decisions.
+    # Returns the wrapped chat. Exceptions use ::rescue_from handlers.
+
+    ##
+    # :method: step
+    # :call-seq: step(&block)
+    #
+    # Advances the conversation through Chat#step. Returns a Message or
+    # +nil+ when no progress is possible. Exceptions use ::rescue_from handlers.
+
+    ##
+    # :method: count_tokens
+    # :call-seq: count_tokens(message = nil)
+    #
+    # Counts request tokens through Chat#count_tokens without generating a
+    # response. Returns an Integer. Exceptions use ::rescue_from handlers.
+
+    ##
+    # :method: compact
+    # :call-seq: compact
+    #
+    # Compacts the model context through Chat#compact and returns its Message.
+    # Exceptions use ::rescue_from handlers.
 
     GUARDED_OPERATIONS.each do |operation|
       define_method(operation) do |*args, **kwargs, &block|

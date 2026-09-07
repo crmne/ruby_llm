@@ -17,7 +17,8 @@ module RubyLLM
   # overrides.
   #
   # Provider credentials such as +openai_api_key+ are declared by each
-  # provider. See the configuration guides for the full list.
+  # provider. See https://rubyllm.com/next/configuration-providers/ for
+  # provider credentials and endpoint settings.
   #
   # Assigning an empty or whitespace-only string to any option stores
   # +nil+, so unset environment variables behave as if the option was

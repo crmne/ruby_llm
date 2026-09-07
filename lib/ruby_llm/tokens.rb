@@ -43,12 +43,20 @@ module RubyLLM
     attr_reader :server_tool_use
 
     # The exact cost of the call in US dollars as reported by the
-    # provider, or +nil+ if the provider does not report one. OpenRouter
-    # reports it on every response; most providers leave it +nil+. When
-    # present, Cost#total returns it instead of a registry-price estimate.
+    # provider, or +nil+ if the provider does not report one. When present,
+    # Cost#total returns it instead of a registry-price estimate.
     attr_reader :reported_cost
 
-    def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil, # :nodoc:
+    # Creates token counts from the supplied values. Omitted counts remain
+    # +nil+; zero means a reported count of zero. Returns a Tokens object
+    # even when every count is +nil+.
+    #
+    #   tokens = RubyLLM::Tokens.new(input: 100, output: 20)
+    #   RubyLLM.models.find("gpt-5.6").cost_for(tokens).total
+    #
+    # +server_tool_use:+ holds provider tool-usage counters;
+    # +reported_cost:+ holds the provider's total price in US dollars.
+    def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil,
                    server_tool_use: nil, reported_cost: nil)
       @input = input
       @output = output
@@ -85,7 +93,9 @@ module RubyLLM
 
     # Returns the counts as a hash with keys +:input_tokens+,
     # +:output_tokens+, +:cache_read_tokens+, +:cache_write_tokens+, and
-    # +:thinking_tokens+, omitting +nil+ counts.
+    # +:thinking_tokens+, omitting +nil+ counts. Includes +:server_tool_use+
+    # when reported. The provider's reported cost is available separately
+    # through #reported_cost.
     #
     #   response.tokens.to_h
     #   # => {input_tokens: 14, output_tokens: 5}

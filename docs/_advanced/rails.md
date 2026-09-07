@@ -31,7 +31,7 @@ response = chat.ask "Help me plan a Ruby study group."
 response.content
 ```
 
-`response` is your application's message record. RubyLLM saves the conversation as it runs, including tool calls, attachments, and usage.
+`response` is a `RubyLLM::Message`. RubyLLM also saves it as your application's message record, together with tool calls, attachments, and usage. Read those records through `chat.messages`.
 
 ## Setting Up Your Rails Application
 

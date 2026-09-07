@@ -612,7 +612,7 @@ module RubyLLM
     # RubyLLM::ModelNotFoundError if no model matches.
     #
     #   RubyLLM.models.find 'gpt-5.6'
-    #   RubyLLM.models.find 'claude-sonnet-5', :bedrock
+    #   RubyLLM.models.find 'claude-sonnet-5', provider: :bedrock
     #
     def find(model_id, provider: nil, config: nil)
       if provider

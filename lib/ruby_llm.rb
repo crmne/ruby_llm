@@ -42,10 +42,10 @@ loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
 loader.setup
 
-# RubyLLM is an AI framework for Ruby and Rails. One API for conversations,
-# agents, media generation, document processing, and search across providers.
-# These pages document every public class and method; the guides at
-# https://rubyllm.com show how to build things with them.
+# RubyLLM is an AI framework for Ruby and Rails. Build conversations and
+# agents, generate media, process documents, and work with model providers
+# through one Ruby API. The guides at https://rubyllm.com/next/ introduce
+# each feature; this reference documents its classes, arguments, and results.
 #
 #   RubyLLM.configure do |config|
 #     config.openai_api_key = ENV['OPENAI_API_KEY']
@@ -54,63 +54,115 @@ loader.setup
 #   chat = RubyLLM.chat
 #   chat.ask "What is the capital of France?"
 #
-# == Text generation and conversations
+# == Conversations, tools, and agents
 #
-# ::chat starts a conversation, and Chat#ask sends a message and returns
-# a Message. Chat supports attachments, streaming, structured output,
-# tools, and explicit control over the conversation loop.
+# RubyLLM.chat returns a Chat that holds the conversation. Chat#ask accepts
+# text and attachments, runs tools as needed, and returns a Message. Give
+# it a block to receive Chunk objects as the response streams:
 #
-# Tool gives the model abilities. Subclass it, declare parameters,
-# implement +execute+, and pass it to Chat#with_tools. Agent packages a
-# configured chat (model, instructions, tools, schema) into a reusable
-# class.
+#   chat.ask("Summarize this report", with: "report.pdf") do |chunk|
+#     print chunk.content
+#   end
 #
-# == Individual AI operations
+# Configure the request with chainable methods:
 #
-# These operations return typed results without maintaining a conversation:
+# - Chat#with_schema requests structured output; Message#parsed reads it.
+# - Chat#with_thinking sets thinking effort, budget, or display preferences.
+# - Chat#with_citations requests source citations, read through Message#citations.
+# - Chat#with_fallbacks tries other models when a request fails.
+# - Chat#with_caching enables prompt caching; Chat#cache_until_here marks
+#   a reusable prefix. Chat#with_compaction manages long conversations.
 #
-# - ::paint generates images (Image)
-# - ::animate generates videos (Video)
-# - ::embed turns text into vectors (Embedding)
-# - ::rerank orders documents by relevance (Rerank)
-# - ::transcribe converts audio to text (Transcription)
-# - ::ocr extracts text from documents (OCR)
-# - ::speak converts text to audio (Speech)
-# - ::moderate screens content (Moderation)
+# Subclass Tool and implement +execute+ to give the model an application
+# action. Tool.requires_approval pauses execution for a human decision;
+# Chat#approve and Chat#deny record it. Chat#with_server_tools enables
+# provider-executed tools such as web search, code execution, and remote MCP.
+# Their calls appear as ServerToolCall values, with Citation values for sources.
 #
-# Images, video, and speech have a +save+ method:
+# Agent defines a reusable configuration with model, instructions, tools,
+# schema, and runtime inputs. Chat#ask_later, Chat#generate, Chat#run_tools,
+# and Chat#step expose the conversation loop for jobs and application logic.
 #
-#   image = RubyLLM.paint "A red panda coding Ruby, watercolor"
-#   image.save "red_panda.png"
+# == Images, video, and speech
 #
-# ::animate waits for the video; ::animate_later returns a VideoJob for
-# background work.
+# Individual operations do not require a chat. Image, Video, and Speech
+# results share +save(path)+ and +to_blob+:
 #
-# == Rails
+#   RubyLLM.paint("A red panda coding Ruby, watercolor").save("panda.png")
+#   RubyLLM.animate("A paper boat sailing down a gutter").save("boat.mp4")
+#   RubyLLM.speak("Welcome to RubyLLM.").save("welcome.mp3")
 #
-# +acts_as_chat+ and +acts_as_message+ bring the conversation API to your
-# Active Record models. Rails integration adds Active Storage attachments,
-# support for Hotwire streaming, background jobs, and generators. Your app
-# owns chats and messages; RubyLLM owns usage, tool calls, models, and batches.
-# Individual operations also work directly in Rails services and jobs.
-# See ActiveRecord::ActsAs.
+# Image.paint accepts source images and masks for editing. Video.animate
+# accepts reference media, video edits, and extensions on supported models.
+# RubyLLM.animate waits for the clip; RubyLLM.animate_later returns a
+# VideoJob that you can poll. Speech.speak also streams SpeechChunk objects
+# while retaining the complete audio result.
 #
-# == Shared services
+# == Documents, audio, and retrieval
 #
-# Configuration holds global settings, set through ::configure. Context
-# scopes overrides to a group of calls. Models finds, filters, and
-# describes known models. Providers supply service endpoints, credentials,
-# and protocol selection; protocols translate request and response formats.
+#   transcript = RubyLLM.transcribe("meeting.wav")
+#   document = RubyLLM.ocr("report.pdf", pages: [0, 1])
+#   embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 #
-# Tokens and Cost expose usage and pricing. Accounting follows provider
-# attempts so retries and cancellations remain visible. ::workflow groups
-# instrumentation events from ordinary Ruby code.
+# Transcription provides text, timestamps, and speaker information when
+# the model reports them; streaming yields TranscriptionChunk objects.
+# OCR returns document pages and combined markdown. Embedding returns
+# vectors for text or supported media, and RubyLLM.rerank returns a Rerank
+# whose results order documents by relevance. SearchResults lets a Tool
+# return source documents that the model can cite.
 #
-# ::batch submits chats or embedding requests for provider-side processing.
-# ::upload and ::download manage provider files; ::cache stores reusable
-# prompt content with a provider.
+# RubyLLM.upload returns an UploadedFile for reuse across requests.
+# RubyLLM.download returns a DownloadedFile with the same saving interface:
 #
-# Provider errors raise subclasses of Error, one per HTTP status family.
+#   RubyLLM.download(file.id, provider: file.provider).save("report.pdf")
+#
+# == Tokenization, moderation, and research
+#
+# RubyLLM.count_tokens and Chat#count_tokens count a model request without
+# generating a response. RubyLLM.tokenize returns plain-text token IDs and
+# a count as a Tokenization, excluding chat formatting and attachments.
+#
+#   result = RubyLLM.tokenize("Hello Ruby", model: "grok-4.3", provider: :xai)
+#   result.ids
+#   result.count
+#
+# RubyLLM.moderate screens text and images, returning Moderation results
+# with categories, scores, and +flagged?+. RubyLLM.research runs a hosted
+# research task and returns its report as a Message; RubyLLM.research_later
+# returns a ResearchJob for polling and cancellation. Hosted agent identities
+# are selected separately from model IDs.
+#
+# == Batches, usage, and configuration
+#
+# RubyLLM.batch submits staged chats or EmbeddingRequest objects for
+# provider-side processing. Batch exposes progress, results, token usage,
+# and cost. RubyLLM.cache creates a managed CachedContent resource for
+# reuse with Chat#with_caching.
+#
+# Tokens and Cost report usage and pricing. Chat totals include retries
+# and attempts that produced no message. Provider-reported costs take
+# precedence over estimates; unknown usage and prices remain +nil+.
+# RubyLLM.workflow groups instrumentation from ordinary Ruby code into
+# named Workflow steps.
+#
+# RubyLLM.configure sets global Configuration; RubyLLM.context creates
+# isolated settings for a request or tenant. Models finds, filters, and
+# describes the model catalog. Provider supplies endpoints, authentication,
+# and protocol selection; Protocol implements request and response formats.
+# Error subclasses normalize provider failures.
+#
+# == Rails integration
+#
+# ActiveRecord::ActsAs adds +acts_as_chat+ and +acts_as_message+ to your
+# application's models. ActiveRecord::ChatMethods and
+# ActiveRecord::MessageMethods provide the conversation API with persistence,
+# Active Storage attachments, and support for Hotwire streaming and jobs.
+# Approvals and cancellation survive requests and processes.
+#
+# Your application owns chats and messages; RubyLLM owns usage, tool calls,
+# models, and batches. Agent can create and reload your chat records through
+# Agent.chat_model. Individual operations also work directly in Rails
+# services and jobs.
 module RubyLLM
   class << self
     def deprecator # :nodoc:

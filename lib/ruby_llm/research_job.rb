@@ -12,7 +12,7 @@ module RubyLLM
   class ResearchJob
     include Support::Inspectable
 
-    class DeadlineExpired < StandardError; end
+    class DeadlineExpired < StandardError; end # :nodoc:
     private_constant :DeadlineExpired
 
     # A research failure that retains the job for inspection or recovery.

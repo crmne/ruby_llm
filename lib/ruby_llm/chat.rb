@@ -15,9 +15,10 @@ module RubyLLM
   #   chat = RubyLLM.chat(model: 'claude-sonnet-5')
   #   chat.with_instructions("Be terse.").with_tools(Weather)
   #
-  # #ask runs the agentic loop to completion, executing tool calls until the
-  # model produces a final answer. #ask_later, #generate, #run_tools, and
-  # #step expose the individual moves of that loop.
+  # #ask runs the conversation loop, executing tools until the model answers
+  # or a call needs approval. #ask_later, #generate, #run_tools, and #step
+  # expose individual operations. Resume an approval pause with #approve
+  # or #deny followed by #complete.
   #
   # A Chat is Enumerable over its messages.
   class Chat # rubocop:disable Metrics/ClassLength
@@ -138,9 +139,10 @@ module RubyLLM
       @approval_checker = nil
     end
 
-    # Adds +message+ to the conversation as a user message and runs the
-    # agentic loop to completion, executing tool calls along the way.
-    # Returns the final assistant Message. Attach files with +with:+.
+    # Adds +message+ as a user message and runs the conversation loop,
+    # executing tools until the model answers or a call needs approval.
+    # Returns the latest assistant Message; check #awaiting_approval? before
+    # treating it as a final answer. Attach files with +with:+.
     # A given block receives streamed Chunk objects as they arrive.
     #
     #   chat.ask "What's the best way to learn Ruby?"
@@ -217,21 +219,20 @@ module RubyLLM
       messages.last if messages.length > before
     end
 
-    # Runs the agentic loop until #complete? is +true+ and returns the last
-    # non-system Message. Used after #ask_later; #ask stages a message and
-    # calls #complete for you.
+    # Runs the conversation loop until #complete? or #awaiting_approval?
+    # is +true+. Returns the last conversation Message, or +nil+ for an
+    # empty chat. Used after #ask_later; #ask calls #complete for you.
     #
     # When a pending tool call requires approval and no decision has been
-    # recorded, the loop parks instead of finishing: #complete returns
-    # cleanly with #awaiting_approval? true, and calling it again after
-    # #approve or #deny picks up exactly where it stopped.
+    # recorded, the loop pauses. Record #approve or #deny decisions, then
+    # call #complete again to continue.
     def complete(&)
       step(&) until complete? || awaiting_approval?
       last_non_system_message || messages.last
     end
 
-    # Returns whether the model owes this chat nothing more: nothing is
-    # staged, or the model answered without calling a tool.
+    # Returns whether the chat has no pending response or tool execution:
+    # nothing is staged, or the model answered without requesting tools.
     def complete?
       last = last_non_system_message
       case last&.role
@@ -266,7 +267,7 @@ module RubyLLM
     # approval and has none recorded. While +true+, #complete returns
     # without executing them; record decisions with #approve or #deny,
     # then call #complete again. Tool calls that need no approval still
-    # execute before the loop parks.
+    # execute before the loop pauses.
     #
     # Consults each pending tool's approval resolver when one is declared,
     # so resolvers must be idempotent reads.
@@ -446,9 +447,8 @@ module RubyLLM
       self
     end
 
-    # Caps the number of tokens the model may generate, mapping to each
-    # provider's request field (+max_tokens+, +max_output_tokens+,
-    # +maxOutputTokens+, and so on). Pass +nil+ to remove the limit.
+    # Caps the number of tokens the model may generate.
+    # Pass +nil+ to remove the limit.
     # Returns +self+.
     #
     #   chat.with_max_output_tokens(1000)
@@ -470,7 +470,7 @@ module RubyLLM
     #
     #   chat.with_thinking
     #   chat.with_thinking(false)
-    #   chat.with_thinking(effort: :high, budget: 8000)
+    #   chat.with_thinking(effort: :high)
     #   chat.with_thinking(budget: 10_000)
     #   chat.with_thinking(display: :summarized)
     #
@@ -509,7 +509,8 @@ module RubyLLM
     end
 
     # Enables document citations, so the model backs its claims with quotes
-    # from attached files. Pass +false+ to disable. Returns +self+.
+    # from attached files. Pass +false+ to disable. Passing +nil+ raises
+    # ArgumentError. Returns +self+.
     #
     #   chat.with_citations
     #   response = chat.ask "Who created Ruby?", with: "facts.txt"
@@ -523,12 +524,13 @@ module RubyLLM
     end
 
     # Enables provider prompt caching. With no arguments the provider's
-    # default behavior applies; options such as +ttl:+ are passed through
-    # to providers that support them. On Gemini, pass +id:+ with a
-    # CachedContent (or its name) from RubyLLM.cache to attach an explicit
+    # default behavior applies; options such as +ttl:+ apply where
+    # supported. Pass +id:+ with a CachedContent (or its name) from
+    # RubyLLM.cache to attach an explicit
     # content cache. Pass +false+ to stop RubyLLM from sending cache
     # controls or rendering explicit cache boundaries. A provider may still
-    # cache prompts implicitly. Returns +self+.
+    # cache prompts implicitly. Passing +nil+ raises ArgumentError.
+    # Returns +self+.
     #
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
@@ -556,9 +558,9 @@ module RubyLLM
     # +pause_after+:: end the turn once compaction runs, instead of
     #                 continuing straight into the answer.
     #
-    # Each provider maps what it supports and drops the rest with a debug
-    # log, so the same call works everywhere. Pass +false+ to disable.
-    # Returns +self+.
+    # Each provider applies the options it supports. Unsupported options
+    # are ignored with a debug log. Pass +false+ to disable; passing +nil+
+    # raises ArgumentError. Returns +self+.
     #
     #   chat.with_compaction
     #   chat.with_compaction(at: 50_000)
@@ -580,10 +582,8 @@ module RubyLLM
     end
 
     # Identifies the end user behind the conversation for the provider's
-    # abuse tooling, mapping to each provider's own field
-    # (+safety_identifier+ on OpenAI, <tt>metadata.user_id</tt> on
-    # Anthropic, +user_id+ on DeepSeek, +user+ on OpenRouter). Providers
-    # without an equivalent field omit it. Pass +nil+ to remove it.
+    # abuse monitoring. Providers without an equivalent field omit it.
+    # Pass +nil+ to remove it.
     # Returns +self+.
     #
     #   chat.with_end_user("user-123").ask "Hello"

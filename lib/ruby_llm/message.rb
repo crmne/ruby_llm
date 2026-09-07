@@ -198,8 +198,8 @@ module RubyLLM
     end
 
     # Marks this message as an explicit prompt cache boundary. Providers
-    # that support prompt caching cache the conversation up to and
-    # including this message. Returns +self+.
+    # with boundary controls use the conversation up to and including this
+    # message as the cacheable prefix. Returns +self+.
     #
     #   chat.add_message(role: :user, content: long_context).cache_until_here
     #
