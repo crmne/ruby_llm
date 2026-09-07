@@ -18,21 +18,21 @@ After reading this guide, you will know:
 * How to enable document citations with `with_citations`
 * How to make tool results citable with `RubyLLM::SearchResults`
 * How to read normalized citations from responses and streams
-* How citations map to each provider's native format
+* Which citation fields your application can use
 * How to persist citations with ActiveRecord
 
 ## What are Citations?
 
 Citations link spans of a model's answer back to the source material that supports them - a document you attached, or a web page found through search or grounding. They let readers inspect the source behind a claim. A citation points to evidence; your application or reader still needs to assess whether it supports the answer.
 
-Every provider returns citations in a different shape. RubyLLM normalizes all of them into `RubyLLM::Citation` objects on `response.citations`, so your rendering code never branches on provider.
+Read citations as `RubyLLM::Citation` objects on `response.citations`. Available fields depend on the source and model.
 
 ## Citing Your Documents
 
 Use `with_citations` to make attached documents citable. The response can then include citations to your files:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-sonnet-4-5').with_citations
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}').with_citations
 
 response = chat.ask "Who created Ruby?", with: "facts.txt"
 
@@ -62,7 +62,7 @@ response.citations.first.end_page   # => 5
 ```
 
 {: .note }
-Document citations are currently supported by Anthropic, Cohere, and Claude models through Bedrock Converse. RubyLLM checks the [model registry]({% link _reference/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
+Document citations are supported by Anthropic, Cohere, and Claude models through Bedrock Converse. Anthropic cannot combine document citations with `with_schema`. Citations from search arrive automatically, without this setting.
 
 ## Citing Tool Results (RAG)
 
@@ -82,7 +82,7 @@ class KnowledgeBase < RubyLLM::Tool
   end
 end
 
-response = RubyLLM.chat(model: 'claude-sonnet-4-5')
+response = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
   .with_tools(KnowledgeBase)
   .ask "Who created Ruby? Cite your sources."
 
@@ -92,30 +92,39 @@ response.citations.first.cited_text # => the quoted passage
 
 For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
 
-`SearchResults` serializes into the tool message as JSON with a `search_results` key. On Anthropic that shape becomes native citable search result blocks, including after the conversation is reloaded from the database. Other providers receive the same results as JSON text, so your tools stay provider-agnostic. A tool that returns the `{"search_results": [...]}` shape directly gets the same treatment; the class is just the convenient way to build and validate it.
+`SearchResults` gives Anthropic citable passages, including after a Rails conversation is reloaded. Other providers receive the results as JSON text.
 
 ## Citing the Web
 
-When a provider searches the web, RubyLLM parses the resulting citations automatically - no `with_citations` needed. Turn on search with the portable [server tool]({% link _core_features/server-tools.md %}) name, or use a model that searches by default:
+Search citations arrive automatically. Enable [web search]({% link _core_features/server-tools.md %}) and read the returned sources:
 
 ```ruby
-# Perplexity searches by default
-response = RubyLLM.chat(model: 'sonar', provider: :perplexity)
-  .ask "What's new in Ruby?"
-
-# Gemini with Google Search grounding
-response = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
-  .with_server_tools(:web_search)
-  .ask "What's the latest stable Ruby version?"
-
-# OpenAI with web search
 response = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
   .with_server_tools(:web_search)
   .ask "What's the latest stable Ruby version?"
 
-response.citations.map(&:url).uniq
+response.citations.map(&:url).compact.uniq
 # => ["https://www.ruby-lang.org/...", ...]
 ```
+
+Models that search by default, such as Perplexity Sonar, need no tool setting.
+
+## Citing Files from Search
+
+OpenAI and Azure return file citations when you use file search. Pass an existing vector store to the server tool:
+
+```ruby
+response = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
+  .with_server_tools(file_search: { vector_store_ids: [vector_store_id] })
+  .ask "What does our refund policy cover?"
+
+response.citations.each do |citation|
+  citation.source_id # => "file_..."
+  citation.title     # => "refund-policy.pdf"
+end
+```
+
+File-search citations may identify a file without quoting a passage or marking a response range. Check the available fields before rendering them.
 
 ## The Citation Object
 
@@ -123,11 +132,12 @@ Each citation exposes a normalized set of fields. Fields a provider doesn't repo
 
 | Field | Description |
 | :--- | :--- |
-| `url` | Source URL, when citing the web |
+| `url` | Source URL or provider collection URI |
 | `title` | Document or page title |
 | `cited_text` | The quoted snippet from the source |
 | `text` | The span of the response this citation supports |
 | `start_index` / `end_index` | Character range of that span in `response.content` |
+| `source_id` | Provider identifier for the source, such as a file ID |
 | `source_index` | 0-indexed position of the source document or search result |
 | `start_page` / `end_page` | Page range for PDF citations (1-indexed, inclusive) |
 
@@ -160,7 +170,7 @@ footnotes = sources.map.with_index(1) { |url, i| "[^#{i}]: #{url}" }
 Citations arrive in streaming chunks alongside content, and the final message accumulates all of them:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-sonnet-4-5').with_citations
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}').with_citations
 
 response = chat.ask("Who created Ruby?", with: "facts.txt") do |chunk|
   chunk.citations.each { |citation| puts "Cited: #{citation.cited_text || citation.url}" }
@@ -169,8 +179,7 @@ end
 response.citations # all citations, deduplicated
 ```
 
-What arrives mid-stream varies by provider. Anthropic streams each citation (with `cited_text`) as the cited sentence completes, but without response positions; OpenAI sends its `url_citation` annotations in one chunk near the end of the stream, with positions but no quoted snippet. The finished message is always the complete picture: RubyLLM resolves `text` from `start_index`/`end_index` against the full content where positions are available.
-{: .note }
+Some citations arrive only when the response finishes. Read the final message for the complete list and response positions.
 
 ## ActiveRecord Integration
 
@@ -180,7 +189,7 @@ When using `acts_as_chat` and `acts_as_message`, citations are persisted to the 
 # Migration (generated automatically with new installs)
 # t.json :citations
 
-chat_record = Chat.create!(model: 'claude-sonnet-4-5')
+chat_record = Chat.create!(model: '{{ site.models.anthropic_current }}')
 chat_record.with_citations
 response = chat_record.ask "Who created Ruby?", with: "facts.txt"
 
@@ -188,17 +197,6 @@ chat_record.messages.last.citations # => [RubyLLM::Citation, ...]
 ```
 
 Apps upgrading from 1.16 get the column from `bin/rails generate ruby_llm:upgrade`. See [Upgrading]({% link _reference/upgrading.md %}).
-
-## Provider Notes
-
-- **Anthropic** returns the richest citations: quoted snippets, document titles, exact response spans, and page numbers for PDFs. Citations and structured output (`with_schema`) cannot be combined.
-- **OpenAI** (and Azure/OpenRouter) return `url_citation` annotations from web search, with response spans.
-- **Gemini / Vertex AI** return grounding metadata when the `google_search` tool is enabled. RubyLLM converts grounding byte offsets to character offsets for you.
-- **Perplexity** returns its search results on every response; `cited_text` carries the result snippet when available.
-- **xAI** returns a list of cited URLs when live search is enabled via `with_provider_options`.
-- **Cohere** cites the documents you attach with `with_citations`, and the search results your tools return, with quoted snippets and exact response spans.
-- **Bedrock** supports document citations for Claude models through the Converse protocol.
-- **DeepSeek, Mistral, Ollama, GPUStack** don't currently surface citations through RubyLLM.
 
 ## Next Steps
 

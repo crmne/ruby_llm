@@ -1,0 +1,16 @@
+{% assign coverage = site.data.provider_coverage %}
+<figure class="coverage-summary" aria-labelledby="coverage-summary-title">
+  <figcaption id="coverage-summary-title">RubyLLM support and provider offerings</figcaption>
+  <div class="coverage-chart-key" aria-hidden="true">{% unless include.current %}<span class="coverage-version-old">1.16</span>{% endunless %}<span class="coverage-version-new">{% if include.current %}Built in{% else %}2.0{% endif %}</span><span class="coverage-version-offered">Provider offers</span></div>
+  {% for group in coverage.summary.groups %}
+  <div class="coverage-chart-row">
+    <div class="coverage-chart-label">{{ group.name }}</div>
+    <div class="coverage-chart-bars">
+      {% unless include.current %}<div class="coverage-bar-line"><span class="coverage-bar coverage-bar-old" style="width: {{ group.v1 | times: 100.0 | divided_by: coverage.summary.maximum }}%"></span><span><span class="visually-hidden">1.16: </span>{{ group.v1 }}</span></div>{% endunless %}
+      <div class="coverage-bar-line"><span class="coverage-bar coverage-bar-new" style="width: {{ group.v2 | times: 100.0 | divided_by: coverage.summary.maximum }}%"></span><span><span class="visually-hidden">{% if include.current %}Built in{% else %}2.0{% endif %}: </span>{{ group.v2 }}</span></div>
+      <div class="coverage-bar-line"><span class="coverage-bar coverage-bar-offered" style="width: {{ group.offered | times: 100.0 | divided_by: coverage.summary.maximum }}%"></span><span><span class="visually-hidden">Provider offers: </span>{{ group.offered }}</span></div>
+    </div>
+  </div>
+  {% endfor %}
+  <p class="coverage-chart-note">Each count is one feature on one provider, across {{ coverage.summary.feature_count }} shared feature rows. The outlined bar counts verified provider offerings within RubyLLM's scope. Filled bars count built-in RubyLLM support; usable raw options and partial integrations are listed separately in the matrix. Unverified offerings, realtime conversations, and provider-stored conversation lifecycles are excluded. These selected features do not represent a complete API inventory.</p>
+</figure>

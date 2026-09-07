@@ -21,6 +21,7 @@ loader.inflector.inflect(
   'UI' => 'UI',
   'api' => 'API',
   'bedrock' => 'Bedrock',
+  'cli' => 'CLI',
   'deepseek' => 'DeepSeek',
   'elevenlabs' => 'ElevenLabs',
   'gpustack' => 'GPUStack',
@@ -31,7 +32,6 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
   'perplexity' => 'Perplexity',
-  'provider_generator_cli' => 'ProviderGeneratorCLI',
   'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
   'xai' => 'XAI'
@@ -114,11 +114,11 @@ loader.setup
 module RubyLLM
   class << self
     def deprecator # :nodoc:
-      @deprecator ||= Deprecator.new
+      @deprecator ||= Support::Deprecator.new
     end
 
     def instrument(...) # :nodoc:
-      Instrumentation.instrument(...)
+      Support::Instrumentation.instrument(...)
     end
 
     # Returns a Context, an isolated set of configuration overrides.
@@ -179,6 +179,13 @@ module RubyLLM
       chat(model: model, provider: provider).count_tokens(text)
     end
 
+    # Tokenizes plain text and returns a Tokenization with its token IDs
+    # and count. Excludes chat formatting and billable generation usage.
+    # See Tokenization.tokenize for options.
+    def tokenize(...)
+      Tokenization.tokenize(...)
+    end
+
     # Submits requests staged with Chat#ask_later or ::embed_later as a
     # provider-side batch and returns a Batch. A batch takes chats or
     # embedding requests, not both. Look up an existing batch with
@@ -218,12 +225,26 @@ module RubyLLM
 
     # Checks text or image attachments against the provider's moderation model and returns a
     # Moderation result. Arguments are forwarded to Moderation.moderate.
+    # An explicitly selected provider can use a configured moderation
+    # resource without a model.
     #
     #   result = RubyLLM.moderate("Some user input text")
     #   result.flagged? # => false
     #
     def moderate(...)
       Moderation.moderate(...)
+    end
+
+    # Runs a hosted research task and returns its report as a Message.
+    # Requires explicit +provider:+ and +agent:+. See ResearchJob.research.
+    def research(...)
+      ResearchJob.research(...)
+    end
+
+    # Submits a hosted research task and returns a ResearchJob immediately.
+    # Requires explicit +provider:+ and +agent:+. See ResearchJob.research_later.
+    def research_later(...)
+      ResearchJob.research_later(...)
     end
 
     # Generates or edits an image and returns an Image, or an array when
@@ -260,7 +281,8 @@ module RubyLLM
       VideoJob.animate_later(...)
     end
 
-    # Synthesizes speech from text and returns a Speech. Arguments are
+    # Synthesizes speech from text and returns a Speech. Given a block,
+    # yields SpeechChunk objects as audio arrives. Arguments are
     # forwarded to Speech.speak.
     #
     #   speech = RubyLLM.speak "Hello, welcome to RubyLLM!"
@@ -316,10 +338,11 @@ module RubyLLM
       UploadedFile.upload(...)
     end
 
-    # Downloads the content of a provider-managed file. Arguments are
-    # forwarded to UploadedFile.download.
+    # Downloads a provider file and returns a DownloadedFile. Save it with
+    # DownloadedFile#save or read its bytes with DownloadedFile#to_blob.
+    # Arguments are forwarded to UploadedFile.download.
     #
-    #   content = RubyLLM.download(file.id)
+    #   RubyLLM.download(file.id, provider: :openai).save("report.pdf")
     #
     def download(...)
       UploadedFile.download(...)

@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Models do
 
       models = described_class.parse_list_models_response(response, 'elevenlabs')
 
-      expect(models.map(&:id)).to eq(['scribe_v2'])
+      expect(models.map(&:id)).to eq(%w[scribe_v2 scribe_v2_realtime])
       expect(models.first.name).to eq('Scribe v2 (listed)')
     end
 

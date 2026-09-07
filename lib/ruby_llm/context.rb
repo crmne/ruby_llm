@@ -45,6 +45,12 @@ module RubyLLM
       chat(model:, provider:).count_tokens(text)
     end
 
+    # Tokenizes plain text using this context's configuration.
+    # Accepts the same arguments as RubyLLM.tokenize.
+    def tokenize(*args, **kwargs)
+      Tokenization.tokenize(*args, **kwargs, context: self)
+    end
+
     # Runs a named workflow using this context's instrumenter. Accepts the same
     # arguments as RubyLLM.workflow.
     def workflow(name, id: nil, metadata: nil, &)
@@ -87,7 +93,20 @@ module RubyLLM
       Moderation.moderate(*args, **kwargs, context: self, &)
     end
 
-    # Generates speech audio using this context's configuration.
+    # Runs hosted research using this context's configuration.
+    # Accepts the same arguments as RubyLLM.research.
+    def research(*args, **kwargs)
+      ResearchJob.research(*args, **kwargs, context: self)
+    end
+
+    # Submits hosted research using this context's configuration.
+    # Accepts the same arguments as RubyLLM.research_later.
+    def research_later(*args, **kwargs)
+      ResearchJob.research_later(*args, **kwargs, context: self)
+    end
+
+    # Generates speech audio using this context's configuration. Given a
+    # block, yields SpeechChunk objects and returns the complete Speech.
     # Accepts the same arguments as RubyLLM.speak.
     def speak(*args, **kwargs, &)
       Speech.speak(*args, **kwargs, context: self, &)

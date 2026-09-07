@@ -59,7 +59,7 @@ module RubyLLM
     private
 
     def normalize(entry)
-      entry = Utils.deep_symbolize_keys(entry.to_h)
+      entry = Support::Utils.deep_symbolize_keys(entry.to_h)
       raise ArgumentError, 'Search results require :title and :text' unless entry[:title] && entry[:text]
 
       entry.slice(:title, :url, :text)

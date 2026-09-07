@@ -22,11 +22,13 @@ After reading this guide, you will know:
 
 This guide covers **1.16 to 2.0.0.rc1**. Coming from an earlier release? Follow the [1.16 upgrade guide](https://rubyllm.com/upgrading/) first.
 
+For a tour of the new features with examples, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
+
 The upgrade has two parts: update your Ruby code and, if you use Rails persistence, migrate your stored records. Plain Ruby applications can skip the database steps.
 
-## Why These Changes
+## What Changes for Your App
 
-2.0 brings agents, tool approvals, usage tracking, and persisted batches into the framework. Two decisions account for most of the upgrade work:
+2.0 adds tool approvals, more AI operations, and persisted batches, and tracks usage for each provider attempt. Two changes account for most of the upgrade work:
 
 * **One name for each concept.** Tokens live under `tokens`, provider-specific options use `provider_options`, and callbacks follow the Rails-style `before_` and `after_` names.
 * **RubyLLM maintains its supporting records.** The model registry, tool calls, usage entries, and batches belong to RubyLLM. You no longer need to maintain application models for them as the framework adds features. Your application keeps its chats and messages, with their existing IDs and relationships.
@@ -156,7 +158,7 @@ Keeping the old columns helps you verify the conversion. It does not keep 1.16's
 
 Most applications can use the generated migrations as they are. These extra steps apply if you added your own data or behavior to RubyLLM's supporting records.
 
-### App Concerns on the Model Catalog
+### Application Data on Model Records
 
 Extra columns on your old model table survive the rename, but RubyLLM does not maintain them. Move your availability settings, pricing overrides, or other application data to a table you own, keyed by provider and model ID. Copy and verify the values before removing the extra columns from `ruby_llm_models`.
 
@@ -179,9 +181,25 @@ If you replace an existing usage table, compare the totals first and move any ca
 
 1.16 did not store costs by default. The backfill preserves `total_cost` and supported `cost_details` fields when present; otherwise historical costs stay unknown. It creates one succeeded usage entry per historical assistant response or other message with recorded usage. If a candidate has no identifiable model, preparation stops and names the record to repair.
 
-### Text You Persisted Before 2.0
+### Existing Message Content
 
 The backfill copies `content_raw` into `raw_content` and fills an empty (`NULL`) `content` column with its JSON text. It leaves existing text in place. If your app stored a custom format, check those rows and adapt your readers before cleanup. Keep tests for older formats that remain in your database.
+
+## Updating an Earlier 2.0 Preview
+
+If you already ran the Rails migrations from an earlier 2.0 preview, check these columns before deploying:
+
+| Table | Required change |
+| --- | --- |
+| `ruby_llm_usages` | Require a model with `change_column_null :ruby_llm_usages, :model, false` if the column currently allows `NULL`. |
+| `ruby_llm_tool_calls` | Add boolean `remote` with `default: false, null: false`. If your preview has `server` or `server_label`, set `remote` to `true` on rows with a label before removing that column. Use `tool_call.remote?` in application code. |
+| `ruby_llm_batches` | Add nullable `reported_cost` for the provider's batch invoice, using `jsonb` on PostgreSQL or `json` on SQLite and MySQL. |
+
+Add an application migration for any changes your schema needs. The current install and 1.16 upgrade generators include these columns. Read all batch pricing through `batch.cost`; its total stays `nil` until processing ends.
+
+The model constraint stops the migration if any usage rows have `model: nil`. Recover their model IDs from the original requests before retrying. The migration does not assign a default model or delete usage records.
+
+The preview APIs `RubyLLM.realtime` and `chat.with_storage` have been removed. Chats use local message history. Streaming [speech generation]({% link _core_features/text-to-speech.md %}) and [transcription]({% link _core_features/audio-transcription.md %}) remain available. Features that require provider-stored conversations are outside this release's scope.
 
 ## API Changes
 
@@ -241,7 +259,7 @@ Use this as your search-and-replace reference. Only change the calls your app us
 
 ## Behavior Changes
 
-### Message Content Is Always a String
+### Message Content and Structured Output
 
 `Message#content` is read-only and returns text as a String, or `nil` when there is no text. Attachments live on `message.attachments`. Structured output responses carry the JSON text in `content`; read the parsed Hash through `Message#parsed`:
 
@@ -277,7 +295,7 @@ counts.values.all?(&:nil?) ? nil : RubyLLM::Tokens.new(**counts)
 
 `Cost` exposes amounts: `input`, `output`, `cache_read`, `cache_write`, `thinking`, `total`, and `to_h`. Read tokens and model identity from the result that owns the cost.
 
-### Message#tool_results Means the Answers
+### Tool Result Messages
 
 `Message#tool_results` changed meaning. It used to return a tool-result message's own content; it now returns the tool-result messages answering an assistant message's tool calls (an empty array when it made none), mirroring the `tool_results` association on `acts_as_message` records. Read a tool result's text with `message.content`.
 
@@ -329,7 +347,7 @@ Tool and agent `parameters do` / `schema do` blocks keep the same DSL. The schem
 
 The `cache_read` and `cache_write` names also apply to costs and pricing. Replace `cached_input*` and `cache_creation*` readers with `cache_read*` and `cache_write*`, such as `cost.cache_write` or `tier.cache_read_input_per_million`.
 
-### One Model API
+### Model Metadata and Pricing
 
 Use `RubyLLM::Model` for model metadata, including entries returned by `RubyLLM.models`. Query tool-steering capabilities with `model.supports?(:tool_choice)` and `model.supports?(:parallel_tool_calls)` instead of provider predicates.
 
@@ -341,11 +359,11 @@ Errors take the message first, like `StandardError`, and accept the response as 
 
 `UnsupportedAttachmentError` now inherits from `RubyLLM::Error`, so `rescue RubyLLM::Error` catches it. Malformed tool-call JSON raises `RubyLLM::ToolCallParseError` instead of `JSON::ParserError`.
 
-### Protocol Joins Model Selection
+### Protocol Selection
 
 `RubyLLM.chat`, `with_model`, and the agent `model` macro accept `protocol:` alongside `provider:`. Omitting it selects the provider's default for that model. Calling `with_model` without a protocol resets any previous override. See [Choosing the Wire Protocol]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol).
 
-### Tools: One Method for the Set, One for the Options
+### Tool Registration and Options
 
 `with_tools` accepts one or many tools. Configure `choice:`, `calls:`, and `concurrency:` separately with `with_tool_options`.
 
@@ -370,7 +388,7 @@ end
 
 For human approval, use [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval). For handing work to another agent, see [Agent Handoffs]({% link _advanced/agentic-workflows.md %}#agent-handoffs). A normal tool result does not stop the loop.
 
-### Tool.provider_options nil Raises
+### Tool Provider Options Require a Hash
 
 The tool class macro `provider_options` now requires a Hash. Passing `nil` raises instead of doing nothing.
 
@@ -378,7 +396,7 @@ The tool class macro `provider_options` now requires a Hash. Passing `nil` raise
 
 `model.pricing` used to drop 0.0 prices, making a free model indistinguishable from one with no pricing data. Zero now flows through as a real price (`cost.total` returns `0.0`); `nil` means the registry has no price.
 
-### The Model Registry Has a Store
+### Model Registry Storage
 
 A custom `model_registry_store` responds to `read` and, optionally, `write(registry)`. Rails configures its database store automatically. For a file fallback, set `model_registry_file`; its default is now a per-user OS cache path.
 
@@ -394,7 +412,7 @@ class WorkAssistant < RubyLLM::Agent
 end
 ```
 
-### The provider_options Escape Hatch
+### Provider-Specific Options
 
 Use `provider_options` for options specific to a provider, on chat instances, agent and tool classes, and media calls:
 
@@ -406,20 +424,23 @@ These values pass through in the provider's request format. RubyLLM no longer mo
 
 For instrumentation subscribers, the event payload key `:params` is now `:provider_options`.
 
-### Media Signatures Carry Only Shared Concepts
+### Transcription and Embedding Options
 
 `RubyLLM.transcribe` uses `format:` instead of `response_format:`. It also accepts `speaker_names:` and `speaker_references:`; providers without speaker identification ignore them. Format values remain provider-specific, such as `"diarized_json"` on OpenAI or a MIME type on Gemini.
 
-Other provider options, such as OpenAI's `timestamp_granularities` and `chunking_strategy`, or Gemini's `max_output_tokens` and `safety_settings`, belong in `provider_options` using the provider's request format:
+Use `timestamps:` to request timing information:
 
 ```ruby
 RubyLLM.transcribe("talk.wav",
-  provider_options: { timestamp_granularities: ["word"] })
+  model: "{{ site.models.transcription_openai_timestamps }}",
+  timestamps: :word)
 ```
+
+Available granularities depend on the model. See [Audio Transcription]({% link _core_features/audio-transcription.md %}#segments-and-timestamps).
 
 For embeddings, `task_type:` and `title:` replace hand-built provider payloads such as Vertex AI's `instances:` array. See [Embeddings]({% link _core_features/embeddings.md %}).
 
-### Temperature Goes Out As You Set It
+### Temperature Handling
 
 2.0 sends the temperature you set. 1.x sometimes changed it to `1.0` or removed it based on the model.
 

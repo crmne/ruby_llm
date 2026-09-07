@@ -138,11 +138,11 @@ def sorted_models_data(models)
 end
 
 def validate_models!(models)
-  models_data = JSON.parse(RubyLLM::ModelRegistry.pretty_json(models.all))
+  models_data = JSON.parse(RubyLLM::Models::Registry.pretty_json(models.all))
   registry_schema = {
     '$schema' => 'https://json-schema.org/draft/2020-12/schema',
     'type' => 'array',
-    'items' => RubyLLM::ModelSchema.json_schema
+    'items' => RubyLLM::Models::Schema.json_schema
   }
   validation_errors = JSONSchemer.schema(registry_schema).validate(models_data).map do |error|
     "#{error['data_pointer']}: #{error['error']}"
@@ -319,7 +319,7 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
   add_deepgram_aliases(aliases, models['deepgram'])
 
   sorted_aliases = aliases.sort.to_h
-  File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
+  File.write(RubyLLM::Models::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
 
   puts "Generated #{sorted_aliases.size} aliases"
 end

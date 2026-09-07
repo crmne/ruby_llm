@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
   describe '#find_batch' do
     let(:location) { 'us-central1' }
-    let(:connection) { instance_double(RubyLLM::Connection) }
+    let(:connection) { instance_double(RubyLLM::Transport::Connection) }
 
     before do
       provider.instance_variable_set(:@connection, connection)
@@ -134,10 +134,10 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
   describe '#list_models' do
     let(:location) { 'us-central1' }
-    let(:connection) { instance_double(RubyLLM::Connection) }
+    let(:connection) { instance_double(RubyLLM::Transport::Connection) }
 
     before do
-      allow(RubyLLM::Connection).to receive(:new).and_return(connection)
+      allow(RubyLLM::Transport::Connection).to receive(:new).and_return(connection)
       allow(connection).to receive(:get).and_return(catalog([]))
     end
 

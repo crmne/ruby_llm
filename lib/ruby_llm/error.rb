@@ -39,6 +39,15 @@ module RubyLLM
     end
   end
 
+  # Raised when a deprecated API is used and
+  # Configuration#deprecation_behavior is +:raise+. With the default
+  # +:warn+, deprecations are logged instead.
+  #
+  #   RubyLLM.configure do |config|
+  #     config.deprecation_behavior = :raise
+  #   end
+  class DeprecationError < StandardError; end
+
   # Raised when required configuration, such as a provider API key, is
   # missing.
   class ConfigurationError < StandardError; end

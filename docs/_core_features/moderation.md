@@ -29,7 +29,7 @@ result = RubyLLM.moderate "I love programming in Ruby."
 result.flagged? # => false
 ```
 
-`flagged?` reports the model's decision. Your application decides whether to publish the content, reject it, or send it for review.
+`flagged?` reports the provider's decision. Your application decides whether to publish the content, reject it, or send it for review.
 
 ## Understanding Moderation Results
 
@@ -42,6 +42,8 @@ result.category_scores
 ```
 
 Categories depend on the provider and model. Common categories include harassment, hate, violence, sexual content, and self-harm. Scores are model outputs you can use in a review policy; tune any thresholds against examples from your own application.
+
+`category_scores` is empty when the provider does not return probability scores. Read `result.raw` for the original response, including provider-specific assessments.
 
 ### Checking Several Inputs
 
@@ -79,20 +81,28 @@ Choose a model that supports image moderation. Other attachment types raise `Rub
 The default model is OpenAI's `{{ site.models.default_moderation }}`. Pass `model:` to use another moderation model:
 
 ```ruby
-RubyLLM.moderate(user_input, model: "{{ site.models.default_moderation }}")
 RubyLLM.moderate(user_input, model: "{{ site.models.moderation_mistral }}")
 ```
 
-Configure the key for the provider you use and, optionally, a default model:
+Set `default_moderation_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. Browse the [Models]({% link _reference/available-models.md %}) page for moderation models.
+
+## Bedrock Guardrails
+
+Apply a [configured Bedrock guardrail]({% link _getting_started/configuration-providers.md %}#guardrails) without selecting a model:
 
 ```ruby
-RubyLLM.configure do |config|
-  config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY')
-  config.default_moderation_model = "{{ site.models.moderation_mistral }}"
-end
+result = RubyLLM.moderate(user_input, provider: :bedrock)
+result.flagged?
+result.raw['outputs']
 ```
 
-Pass `provider:` when you need to select the service explicitly. For unlisted models, see [Custom Endpoints]({% link _reference/custom-endpoints.md %}). Browse moderation models on the [Models]({% link _reference/available-models.md %}) page.
+`flagged?` includes sensitive-information masking. Read replacement text and policy assessments from `raw`; `category_scores` is empty because Bedrock does not return numeric scores.
+
+To check generated output instead of user input:
+
+```ruby
+RubyLLM.moderate(answer, provider: :bedrock, provider_options: { source: 'OUTPUT' })
+```
 
 ## Integration Patterns
 

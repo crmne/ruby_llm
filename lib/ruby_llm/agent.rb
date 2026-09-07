@@ -63,7 +63,7 @@ module RubyLLM
 
     # The chat operations an agent instance runs through its ::rescue_from
     # handlers. Remaining delegated methods pass through untouched.
-    GUARDED_OPERATIONS = %i[ask say ask_later complete generate run_tools step count_tokens].freeze
+    GUARDED_OPERATIONS = %i[ask say ask_later complete generate run_tools step count_tokens compact].freeze
 
     # Chat methods that return the wrapped chat so calls can be chained there.
     CHAINABLE_CHAT_DELEGATES = %i[
@@ -161,7 +161,7 @@ module RubyLLM
       def server_tools(*tools, **tools_with_options, &block)
         return @server_tools || [] if tools.empty? && tools_with_options.empty? && !block_given?
 
-        @server_tools = block_given? ? block : ServerTools.normalize(tools, tools_with_options)
+        @server_tools = block_given? ? block : RubyLLM::Tools::ServerTools.normalize(tools, tools_with_options)
       end
 
       # Adds system instructions for chats this agent builds. Accepts a string,
@@ -818,7 +818,7 @@ module RubyLLM
 
       def prompt_agent_path
         class_name = name || 'agent'
-        Utils.underscore(class_name.gsub('::', '/')).tr('-', '_')
+        Support::Utils.underscore(class_name.gsub('::', '/')).tr('-', '_')
       end
 
       def resolved_chat_model

@@ -164,6 +164,7 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     migrations = load_upgrade_migrations(adapter)
 
     migrations.fetch(:prepare).new.migrate(:up)
+    verify_usage_model_constraint(migrations)
     verify_interrupted_backfill(migrations)
     migrations.fetch(:backfill).new.migrate(:up)
     record_for(:ruby_llm_usages).where('message_id > ?', 10_000).delete_all
@@ -223,6 +224,32 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     raise 'UUID usage reference was lost' unless record_for(:ruby_llm_usages).pluck(:message_id).sort == message_ids
   ensure
     drop_test_tables
+  end
+
+  def verify_usage_model_constraint(migrations)
+    column = -> { connection.columns(:ruby_llm_usages).find { |item| item.name == 'model' } }
+    raise 'New usage model column must require a model' if column.call.null
+
+    connection.change_column_null :ruby_llm_usages, :model, true
+    verify_missing_usage_model(migrations)
+    raise 'An existing nullable usage model column was not constrained' if column.call.null
+
+    migrations.fetch(:prepare).new.migrate(:up)
+    raise 'Existing usage model constraint was relaxed' if column.call.null
+  end
+
+  def verify_missing_usage_model(migrations)
+    usage = record_for(:ruby_llm_usages).create!(chat_type: 'Chat', chat_id: 1, operation: 'chat',
+                                                 provider: 'openai', status: 'succeeded')
+    error = migration_error { migrations.fetch(:prepare).new.migrate(:up) }
+    raise 'A NULL usage model did not stop the migration' unless error.is_a?(ActiveRecord::StatementInvalid)
+    raise 'The migration replaced the missing usage model' unless usage.reload.model.nil?
+
+    usage.update!(model: 'gpt-4.1')
+    migrations.fetch(:prepare).new.migrate(:up)
+    raise 'The migration changed an existing usage model' unless usage.reload.model == 'gpt-4.1'
+  ensure
+    usage&.destroy!
   end
 
   def verify_uuid_checkpoint(migrations, message_ids)

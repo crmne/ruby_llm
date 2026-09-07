@@ -11,8 +11,8 @@ module RubyLLM
   #   RubyLLM.moderate(with: "profile.png").flagged?
   #
   class Moderation
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # A Result is the verdict for a single moderated input. Providers return
     # results in different shapes. RubyLLM normalizes all of them into Result
@@ -29,7 +29,7 @@ module RubyLLM
       attr_reader :categories
 
       # The confidence scores for this input, as a hash of category name to
-      # a score between 0.0 and 1.0.
+      # a score between 0.0 and 1.0. Empty when the provider reports none.
       attr_reader :category_scores
 
       def initialize(flagged:, categories:, category_scores:) # :nodoc:
@@ -57,23 +57,30 @@ module RubyLLM
     # The provider-assigned identifier of the moderation request.
     attr_reader :id
 
-    # The id of the model that performed the moderation.
+    # The id of the model that performed the moderation, or +nil+ for an
+    # operation that does not select a model.
     attr_reader :model
 
     # The per-input verdicts, as an array of Result objects, one per
     # moderated input.
     attr_reader :results
 
-    def initialize(id:, model:, results:) # :nodoc:
+    # The original provider response, or an array of responses when each
+    # input requires a separate request.
+    attr_reader :raw
+
+    def initialize(id:, model:, results:, raw: nil) # :nodoc:
       @id = id
       @model = model
       @results = results
+      @raw = raw
     end
 
-    # Sends +input+ and optional image attachments to a moderation model and returns a Moderation with the
+    # Screens +input+ and optional image attachments and returns a Moderation with the
     # provider's verdict. Uses the configured default moderation model when
     # +model+ is not given. Pass +provider:+ and <tt>assume_model_exists: true</tt>
-    # to use a model that is not in the registry.
+    # to use a model that is not in the registry. An explicitly selected
+    # provider may instead use a configured resource without a model.
     #
     #   RubyLLM.moderate("User message")
     #   RubyLLM.moderate(["First comment", "Second comment"]).results
@@ -91,14 +98,14 @@ module RubyLLM
       raise ArgumentError, 'must provide input text, image attachment, or both' if input.nil? && attachments.empty?
 
       config = context&.config || RubyLLM.config
-      model ||= config.default_moderation_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
-                                                       config: config)
+                                                       config: config, operation: :moderate,
+                                                       default_model: config.default_moderation_model)
       empty_tokens = Tokens.new
       payload = {
         provider: provider_instance.slug,
         provider_class: provider_instance.class.display_name,
-        model: model.id,
+        model: model&.id,
         model_info: model,
         input: input,
         attachment_count: attachments.size,

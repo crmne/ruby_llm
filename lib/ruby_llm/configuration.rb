@@ -136,7 +136,7 @@ module RubyLLM
     # Path of the writable JSON cache holding the model registry. Defaults
     # to the operating system's user cache directory. The copy bundled with
     # the gem is used until this file exists.
-    option :model_registry_file, -> { ModelRegistry.cache_path }
+    option :model_registry_file, -> { Models::Registry.cache_path }
 
     ##
     # :attr_accessor: model_registry_store

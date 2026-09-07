@@ -15,6 +15,8 @@ module RubyLLM
               format_image(attachment)
             when :audio
               Protocols::ChatCompletions::Media.format_audio(attachment)
+            when :video
+              format_video(attachment)
             when :text
               Protocols::ChatCompletions::Media.format_text_file(attachment)
             else
@@ -30,6 +32,13 @@ module RubyLLM
               url: image.for_llm,
               detail: 'auto'
             }
+          }
+        end
+
+        def format_video(video)
+          {
+            type: 'video_url',
+            video_url: { url: video.url? ? video.source.to_s : video.for_llm }
           }
         end
       end

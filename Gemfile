@@ -11,6 +11,7 @@ group :development do # rubocop:disable Metrics/BlockLength
     gem 'strong_migrations', '~> 2.5.2'
   end
   gem 'async', '>= 2.0', platform: :mri
+  gem 'avro'
   gem 'bundler', '>= 2.0'
   gem 'colorize'
   gem 'dotenv'
@@ -44,12 +45,15 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   gem 'vcr'
   gem 'webmock', '~> 3.18'
+  gem 'websocket-driver'
 
   # Optional dependency for Vertex AI
   gem 'googleauth'
+  gem 'google-cloud-storage'
 
   # Optional dependency for Bedrock
   gem 'aws-eventstream'
+  gem 'aws-sdk-s3'
 end
 
 group :development, :test do

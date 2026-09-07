@@ -11,7 +11,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
     )
   end
   let(:provider) { instance_double(RubyLLM::Providers::VertexAI, slug: 'vertexai') }
-  let(:connection) { instance_double(RubyLLM::Connection) }
+  let(:connection) { instance_double(RubyLLM::Transport::Connection) }
   let(:protocol) do
     RubyLLM::Providers::VertexAI.protocols.fetch(:gemini).allocate.tap do |instance|
       instance.instance_variable_set(:@config, config)

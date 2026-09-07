@@ -21,6 +21,73 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.content).to eq('I cannot help')
   end
 
+  it 'streams file citations with their source identities' do
+    chunk = build_chunk({
+                          'type' => 'response.output_text.annotation.added',
+                          'annotation' => { 'type' => 'file_citation', 'file_id' => 'file_facts',
+                                            'filename' => 'facts.pdf', 'index' => 0 }
+                        })
+
+    expect(chunk.citations.first).to have_attributes(source_id: 'file_facts', title: 'facts.pdf', source_index: 0)
+  end
+
+  it 'keeps streamed citation positions across output parts without duplicating final annotations' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    annotation = { 'type' => 'container_file_citation', 'container_id' => 'container_1',
+                   'file_id' => 'file_report', 'filename' => 'report.txt', 'start_index' => 0, 'end_index' => 4 }
+    events = [
+      { 'type' => 'response.output_text.delta', 'output_index' => 0, 'content_index' => 0, 'delta' => 'Café. ' },
+      { 'type' => 'response.output_text.delta', 'output_index' => 1, 'content_index' => 0, 'delta' => 'Read ' },
+      { 'type' => 'response.output_text.delta', 'output_index' => 1, 'content_index' => 1, 'delta' => 'Ruby' },
+      { 'type' => 'response.output_text.annotation.added', 'output_index' => 1, 'content_index' => 1,
+        'annotation' => annotation },
+      { 'type' => 'response.completed', 'response' => { 'status' => 'completed', 'output' => [
+        { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Café. ' }] },
+        { 'type' => 'message', 'content' => [
+          { 'type' => 'output_text', 'text' => 'Read ' },
+          { 'type' => 'output_text', 'text' => 'Ruby', 'annotations' => [annotation] }
+        ] }
+      ] } }
+    ]
+
+    events.each { |event| accumulator.add(build_chunk(event)) }
+    citations = accumulator.to_message(nil).citations
+
+    expect(citations.length).to eq(1)
+    expect(citations.first).to have_attributes(source_id: 'file_report', start_index: 11, end_index: 15, text: 'Ruby')
+  end
+
+  it 'reads citations included only in the completed response' do
+    chunk = build_chunk({
+                          'type' => 'response.completed', 'response' => { 'status' => 'completed', 'output' => [
+                            { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Ruby',
+                                                                   'annotations' => [{ 'type' => 'file_citation',
+                                                                                       'file_id' => 'file_facts',
+                                                                                       'filename' => 'facts.pdf',
+                                                                                       'index' => 0 }] }] }
+                          ] }
+                        })
+
+    expect(chunk.citations.first).to have_attributes(source_id: 'file_facts', title: 'facts.pdf')
+  end
+
+  it 'resets citation positions when the protocol starts another stream' do
+    allow(protocol).to receive(:stream_events) do |*, &block|
+      block.call({ 'type' => 'response.output_text.delta', 'output_index' => 0, 'delta' => 'Read ' })
+      block.call({ 'type' => 'response.output_text.delta', 'output_index' => 1, 'delta' => 'Ruby' })
+      block.call({ 'type' => 'response.output_text.annotation.added', 'output_index' => 1,
+                   'annotation' => { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
+                                     'start_index' => 0, 'end_index' => 4 } })
+      nil
+    end
+
+    2.times do
+      response = protocol.send(:stream_response, {}, &:itself)
+
+      expect(response.citations.first).to have_attributes(start_index: 5, end_index: 9, text: 'Ruby')
+    end
+  end
+
   it 'streams reasoning summary deltas as thinking' do
     chunk = build_chunk({ 'type' => 'response.reasoning_summary_text.delta', 'delta' => 'hmm' })
 
@@ -28,7 +95,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
   end
 
   it 'separates reasoning summary parts' do
-    accumulator = RubyLLM::StreamAccumulator.new
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
     events = [
       { 'type' => 'response.reasoning_summary_part.added', 'summary_index' => 0 },
       { 'type' => 'response.reasoning_summary_text.delta', 'delta' => '**First summary**' },
@@ -42,7 +109,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
   end
 
   it 'accumulates a function call across item and argument events' do
-    accumulator = RubyLLM::StreamAccumulator.new
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
 
     accumulator.add build_chunk({
                                   'type' => 'response.output_item.added',

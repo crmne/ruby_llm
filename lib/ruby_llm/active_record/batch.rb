@@ -24,6 +24,7 @@ module RubyLLM
             raw_status: batch.raw_status,
             completed: batch.complete?,
             request_counts: batch.request_counts,
+            reported_cost: batch.reported_cost&.to_h,
             batch_protocol: batch.batch_protocol,
             chat_type: records.first.class.polymorphic_name,
             chat_ids: records.map(&:id)
@@ -74,19 +75,22 @@ module RubyLLM
           raw_status: raw_status,
           completed: completed,
           request_counts: request_counts,
+          reported_cost: reported_cost && RubyLLM::Cost.from_h(reported_cost),
           batch_protocol: batch_protocol,
           store: store
         )
       end
 
       def sync_from(batch)
-        update!(
+        attributes = {
           status: batch.status,
           raw_status: batch.raw_status,
           completed: batch.complete?,
           request_counts: batch.request_counts,
           batch_protocol: batch.batch_protocol
-        )
+        }
+        attributes[:reported_cost] = batch.reported_cost.to_h if batch.reported_cost
+        update!(attributes)
       end
     end
   end

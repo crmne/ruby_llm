@@ -11,6 +11,8 @@ module RubyLLM
         include Azure::Media
         include Azure::Models
         include Azure::Videos
+        include Azure::Images
+        include Azure::Audio
 
         def azure_endpoint(kind)
           parts = azure_base_parts

@@ -5,10 +5,13 @@ module RubyLLM
     # The Cohere v2 API, a native wire format shared by Cohere's own host and
     # the platforms that serve Command, Embed, Rerank, and Transcribe models.
     class Cohere < Protocol
+      include Cohere::Batches
       include Cohere::Chat
       include Cohere::Embeddings
       include Cohere::Media
       include Cohere::Models
+      include Cohere::OCR
+      include Cohere::Tokenization
       include Cohere::Rerank
       include Cohere::Streaming
       include Cohere::Tools

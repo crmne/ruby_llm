@@ -3,7 +3,7 @@ layout: default
 title: Server Tools
 parent: "Tools"
 nav_order: 3
-description: Let the provider run tools for you. Web search, code execution, and MCP servers with one API across providers.
+description: Search the web, run code, and connect remote MCP tools through the same chat API
 ---
 
 # {{ page.title }}
@@ -14,120 +14,196 @@ description: Let the provider run tools for you. Web search, code execution, and
 After reading this guide, you will know:
 
 * How to enable provider-executed tools with `with_server_tools`.
-* How to pass tool options and use tools RubyLLM has no alias for.
-* How to read tool results, citations, and billing counters from responses.
-* How server tool turns persist and replay in Rails apps.
-
-## What are Server Tools?
-
-Regular [tools]({% link _core_features/tools.md %}) run in your Ruby process: the model asks, your code answers. Server tools run on the provider's own infrastructure instead. The model searches the web, fetches pages, or executes code in a sandbox, all within a single API request, and the response arrives with the work already done.
-
-Provider-specific tool charges can apply on top of token costs.
+* How to read results, citations, and usage.
+* How to connect a search store or MCP server.
+* How to approve remote tool calls and resume them in Rails.
 
 ## Enabling Server Tools
 
-Enable server tools with `with_server_tools`. Portable aliases cover the common tools on every supported provider:
+Server tools run on the provider's infrastructure. Use them to search the web or run code without writing a local tool:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_server_tools }}")
               .with_server_tools(:web_search)
 
 response = chat.ask "What is the latest stable Ruby version? Cite your source."
-response.content   # => "The latest stable release is..."
-response.citations # => [#<RubyLLM::Citation url="https://www.ruby-lang.org/...">]
+puts response.content
+response.citations
 ```
 
-Enable several at once, or mix in your own function tools:
+Enable several at once, or combine them with your own [Ruby tools]({% link _core_features/tools.md %}):
 
 ```ruby
 chat.with_server_tools(:web_search, :code_execution)
 chat.with_tools(Weather).with_server_tools(:web_search)
 ```
 
-The aliases map to each provider's current tool versions:
+| Alias | Purpose |
+| --- | --- |
+| `:web_search` | Search the web |
+| `:web_fetch` / `:url_context` | Read a web page |
+| `:x_search` | Search X |
+| `:code_execution` | Run code in a hosted environment |
+| `:file_search` | Search an existing document store |
+| `:image_generation` | Generate an image during a conversation |
+| `:apply_patch` | Request file edits where supported |
+| `:mcp` | Use a remote MCP tool server |
 
-| Alias | Anthropic | OpenAI (Responses) | Azure (Responses) | Gemini | xAI | DeepSeek (Responses) | OpenRouter | Bedrock Converse |
-|-------|-----------|--------------------|-------------------|--------|-----|----------------------|------------|------------------|
-| `:web_search` | `web_search_20260318` | `web_search` | not offered | `google_search` | `web_search` | `web_search` | `openrouter:web_search` | `nova_grounding` |
-| `:web_fetch` / `:url_context` | `web_fetch_20260318` | not offered | not offered | `url_context` | not offered | not offered | `openrouter:web_fetch` | not offered |
-| `:x_search` | not offered | not offered | not offered | not offered | `x_search` | not offered | not offered | not offered |
-| `:code_execution` | `code_execution_20260521` | `code_interpreter` | `code_interpreter` | `code_execution` | `code_execution` | not offered | `openrouter:shell` | not offered |
-| `:file_search` | not offered | `file_search` | `file_search` | `file_search` | `file_search` | not offered | not offered | not offered |
-| `:image_generation` | not offered | `image_generation` | `image_generation` | not offered | `image_generation` | not offered | `openrouter:image_generation` | not offered |
-| `:apply_patch` | not offered | not offered | not offered | not offered | not offered | `custom` (`apply_patch`) | `openrouter:apply_patch` | not offered |
-| `:mcp` | `mcp_toolset` + `mcp_servers` | `mcp` | `mcp` | not offered | `mcp` | not offered | not offered | not offered |
+Availability depends on the provider, model, and protocol. An unsupported alias raises `RubyLLM::UnsupportedServerToolError`, listing the available aliases. See [Provider API Coverage]({% link _reference/provider-coverage.md %}) for supported operations and limits.
 
-Asking for an alias the provider does not define raises `RubyLLM::UnsupportedServerToolError` naming the aliases it does.
+### Protocol Selection
 
-xAI serves server tools on its Responses API, the default protocol for Grok models. DeepSeek serves them on its opt-in Responses API, so pass `protocol: :responses` when creating the chat. The same goes for Azure: deployments named after gpt-5.4+ models route to its Responses API automatically; everything else needs `protocol: :responses`.
+Some tools need a protocol other than the provider's default:
 
-Bedrock's `:web_search` alias targets the `nova_grounding` system tool and requires a Nova 2 model.
+| Provider | Select | Needed for |
+| --- | --- | --- |
+| Azure | `protocol: :responses` when the deployment does not already use it | Responses server tools |
+| DeepSeek | `protocol: :responses` | Web search and patch tools |
+| Gemini | `protocol: :interactions` | Remote MCP |
+| Mistral | `protocol: :conversations` | Web search, page fetching, code execution, and library search |
+| OpenRouter | `protocol: :responses` | Hosted shell, patch tools, and remote MCP |
+| GPUStack | `protocol: :responses` | Tools configured on the deployed vLLM server |
 
-OpenRouter runs its tools transparently: results surface as citations and usage counters rather than as `server_tool_calls` entries.
+For example, select OpenRouter's hosted shell and use the same tool alias:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openrouter_server_tools }}",
+                   provider: :openrouter, protocol: :responses)
+              .with_server_tools(:code_execution)
+response = chat.ask "Run Python to calculate 17 times 23."
+```
+
+On OpenAI and Azure, `:web_search` also opens pages; a separate `:web_fetch` tool is unnecessary. Bedrock web search requires a Nova 2 model. Mistral's default protocol already supports image generation and configured MCP connectors.
 
 ## Tool Options
 
-Pass options in the provider's own vocabulary with the keyword form:
+Pass options in the provider's vocabulary with the keyword form:
 
 ```ruby
 chat.with_server_tools(web_search: { allowed_domains: ["ruby-lang.org"], max_uses: 3 })
 ```
 
-RubyLLM merges the options into the tool definition and does not translate them, so anything in the provider's documentation works as written.
+Options such as domain filters, connector IDs, and search-store IDs depend on the service. Use its documented settings for the selected tool.
 
-## Tools Without an Alias
-
-A raw Hash passes through to the provider verbatim. This is the escape hatch that keeps you current when a provider ships a new tool, or when you want to pin an older tool version:
+A raw Hash lets you use a tool without a RubyLLM alias or select a particular tool version:
 
 ```ruby
 chat.with_server_tools({ type: "tool_search_tool_regex_20251119", name: "tool_search" })
 ```
 
-RubyLLM places the definition in the request correctly, parses whatever result blocks come back, and replays them in later turns. No gem update required.
+The selected protocol must support that tool's request and results. Passing a raw definition does not enable another endpoint.
 
 ## Reading Results
 
-The tool steps the model ran come back on `server_tool_calls`:
+Read tool activity from the completed response:
 
 ```ruby
-response = chat.with_server_tools(:web_search).ask "Who won the 2026 Ruby Prize?"
+response.server_tool_calls.each do |call|
+  puts call.name
+  p call.input
+  p call.result
+end
 
-response.server_tool_calls.map(&:type)
-# => ["server_tool_use", "web_search_tool_result"]
-
-search = response.server_tool_calls.first
-search.name   # => "web_search"
-search.input  # => {"query" => "2026 Ruby Prize winner"}
+response.citations
+response.attachments
+response.tokens.server_tool_use
 ```
 
-Each `ServerToolCall` keeps the provider's block verbatim in `raw`, so nothing the provider returns is lost.
+Search results use the same [Citation objects]({% link _core_features/citations.md %}) as document citations. Generated images and files appear in [attachments]({% link _core_features/files.md %}). Each tool call's `raw` holds additional details returned by the service.
 
-Search results feed the same [citations]({% link _core_features/citations.md %}) API as document citations. Per-use billing counters arrive on the token accounting:
+Streaming and follow-up questions use the normal `ask` API. Read the completed message for the full result list. Some services omit intermediate tool records or results; their answer and citations can still be available. OpenRouter MCP currently omits tool names and results from streamed records.
+
+Providers can charge for tool use as well as the tokens in the results. `tokens.server_tool_use` contains reported per-use counters; see [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
+
+## Search Your Documents
+
+File search needs a document store that already exists on the service:
+
+| Service | `file_search:` options |
+| --- | --- |
+| OpenAI and Azure | `{ vector_store_ids: [vector_store_id] }` |
+| Mistral Conversations | `{ library_ids: [library_id] }` |
+| Vertex AI Search | `{ datastore: datastore_resource_name }` |
+
+For example, query a Vertex AI Search data store:
 
 ```ruby
-response.tokens.server_tool_use # => {"web_search_requests" => 2}
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}", provider: :vertexai)
+              .with_server_tools(file_search: {
+                datastore: ENV.fetch("VERTEX_SEARCH_DATASTORE")
+              })
+
+response = chat.ask "What does our documentation say about account recovery?"
+response.citations
 ```
 
-## Multi-Turn Conversations and Streaming
-
-Providers require server tool blocks back verbatim in later turns, and RubyLLM handles that replay for you. Streaming works the same as any other chat, and the final message carries the same `server_tool_calls`.
-
-Anthropic sometimes pauses a long tool-using turn with a `pause_turn` stop reason. RubyLLM continues the turn automatically and merges the segments, so you always see one complete response.
+Use the data store's full resource name. Its contents and access permissions are managed in Vertex AI Search, separately from Gemini API file-search stores.
 
 ## MCP Servers
 
-The `:mcp` alias connects a remote MCP server on providers that support the connector:
+Connect a remote MCP server by name and URL:
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_server_tools }}")
-              .with_server_tools(mcp: { url: "https://mcp.example.com", name: "example" })
+              .with_server_tools(mcp: {
+                name: "docs",
+                url: "https://learn.microsoft.com/api/mcp"
+              })
+response = chat.ask "Find the Azure Functions overview in Microsoft Learn."
 ```
 
-On Anthropic this fills both the `mcp_servers` parameter and the matching toolset entry, and sends the required beta header.
+Some services use an existing connector or require additional settings:
+
+| Service | Connection and execution requirements |
+| --- | --- |
+| Anthropic | Use `default_config` and `configs` to select allowed tools |
+| Gemini Interactions | Streamable HTTP server; names cannot contain hyphens; allowed tools execute automatically |
+| xAI | Use `allowed_tools` to select tools; allowed calls execute automatically |
+| Mistral | Use `connector_id:` for a connector configured in Mistral Studio |
+| Bedrock Mantle | Use `connector_id:` with an accessible Lambda or AgentCore Gateway ARN; Gateway requires `require_approval: "never"` |
+| OpenRouter Responses | Explicit `require_approval: "never"`; approval requests are unavailable |
+
+Vertex AI connects remote MCP through a hosted Deep Research agent. Use the [Hosted Research API]({% link _advanced/hosted-research.md %}) for its single-turn report and job lifecycle.
+
+### Self-Hosted Tool Servers
+
+Configure the MCP servers on your [GPUStack deployment]({% link _getting_started/configuration-providers.md %}#gpustack-deployments). Per-request URLs are not supported. Select Responses and explicitly allow execution:
+
+```ruby
+chat = RubyLLM.chat(model: ENV.fetch("GPUSTACK_MODEL"), provider: :gpustack,
+                   protocol: :responses, assume_model_exists: true)
+              .with_server_tools(code_execution: { require_approval: "never" })
+chat.ask "Use Python to calculate 17 * 23."
+```
+
+The backend must supply the corresponding Python or browser tool. Page fetching also requires a backend that can dispatch the browser's `open` operation. Tool results may be absent from returned records. Configure permissions on the tool server; `allowed_tools` describes tools to the model but does not enforce execution restrictions.
+
+### Remote Tool Approval
+
+OpenAI and Azure Responses can pause before executing an MCP call. Use the same approval API as [local tools]({% link _core_features/tool-execution.md %}#requiring-approval):
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.openai_mcp }}", provider: :openai)
+              .with_server_tools(mcp: {
+                name: "docs",
+                url: "https://learn.microsoft.com/api/mcp",
+                allowed_tools: ["microsoft_docs_search"],
+                require_approval: "always"
+              })
+
+chat.ask "Search Microsoft documentation for Azure Blob Storage."
+call = chat.pending_approvals.first
+call.remote? # => true
+
+chat.approve(call) # or chat.deny(call)
+response = chat.complete
+```
+
+`remote?` distinguishes provider-executed tools from local Ruby tools. The call's `id` identifies the individual approval request. The decision goes to the provider; denied calls do not execute. Approvals work with streaming and require no provider storage on these protocols.
 
 ## Rails
 
-Chats built with `acts_as_chat` accept `with_server_tools` like any other chat setting, and agents can declare them:
+Persisted chats use the same API, and agents can declare server tools:
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
@@ -136,10 +212,4 @@ class ResearchAgent < RubyLLM::Agent
 end
 ```
 
-To persist server tool turns, the messages table needs the `server_tool_calls` and `raw_content` JSON columns. New installs get them from `bin/rails generate ruby_llm:install`; apps upgrading from 1.16 get them from `bin/rails generate ruby_llm:upgrade`.
-
-Without the columns everything still works in memory, but a chat reloaded from the database cannot replay a server tool turn to Anthropic, which rejects conversations missing those blocks.
-
-## Costs
-
-Server tools bill per use, not per token. Current prices are on each provider's pricing page; the per-request counters in `tokens.server_tool_use` tell you what a response consumed.
+Tool history and approval decisions survive `Agent.find` and worker restarts. Run the [upgrade generator]({% link _reference/upgrading.md %}) for an existing app so its message and tool-call tables have the required columns.

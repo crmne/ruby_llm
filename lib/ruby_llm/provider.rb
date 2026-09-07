@@ -32,7 +32,7 @@ module RubyLLM
   #
   # See the custom providers guide for the full walkthrough.
   class Provider
-    include Inspectable
+    include Support::Inspectable
 
     BATCH_RATE_BY_COMPONENT = {
       input: :input_per_million,
@@ -51,7 +51,7 @@ module RubyLLM
     def initialize(config) # :nodoc:
       @config = config
       ensure_configured!
-      @connection = Connection.new(self, @config)
+      @connection = Transport::Connection.new(self, @config)
     end
 
     # Returns the base URL that relative endpoint paths resolve against.
@@ -151,6 +151,16 @@ module RubyLLM
         before_request: before_request,
         usage_recorder: usage_recorder,
         &
+      )
+    end
+
+    def tool_approval_response(tool_call, approved:, model:, protocol: nil) # :nodoc:
+      resolve_protocol(protocol, model).new(self, model).tool_approval_response(tool_call, approved:)
+    end
+
+    def compact(messages, model:, protocol: nil, headers: {}, before_request: [], usage_recorder: nil) # :nodoc:
+      resolve_protocol(protocol, model).new(self, model).compact(
+        messages, headers:, before_request:, usage_recorder:
       )
     end
 
@@ -282,6 +292,11 @@ module RubyLLM
       listing_protocol.new(self).list_models
     end
 
+    def tokenize(text, model:) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :tokenize)
+      protocol.new(self, model).tokenize(text, model: model_id_for(model))
+    end
+
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :embed)
       protocol.new(self, model).embed(
@@ -301,6 +316,14 @@ module RubyLLM
       )
     end
 
+    def research_later(prompt, **options) # :nodoc:
+      fetch_protocol(:research).new(self).create_research_job(prompt, **options)
+    end
+
+    def find_research_job(id) # :nodoc:
+      fetch_protocol(:research).new(self).find_research_job(id)
+    end
+
     def paint(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :paint)
       protocol.new(self, model).paint(
@@ -308,24 +331,26 @@ module RubyLLM
       )
     end
 
-    def animate_later(prompt, model:, with: nil, provider_options: {}) # :nodoc:
+    def animate_later(prompt, model:, with: nil, extend: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :animate)
       protocol.new(self, model).animate_later(
-        prompt, model: model_id_for(model), with:, provider_options:
+        prompt, model: model_id_for(model), with:, extend:, provider_options:
       )
     end
 
-    def speak(input, model:, voice:, format:, provider_options: {}) # :nodoc:
+    def speak(input, model:, voice:, format:, provider_options: {}, &) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :speak)
       protocol.new(self, model).speak(
-        input, model: model_id_for(model), voice:, format:, provider_options:
+        input, model: model_id_for(model), voice:, format:, provider_options:, &
       )
     end
 
-    def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil, # :nodoc:
+    def transcribe(audio_file, model:, language:, format: nil, timestamps: nil, speaker_names: nil, # :nodoc:
                    speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil, &)
-      protocol = resolve_protocol(nil, model, operation: :transcribe)
-      protocol.new(self, model).transcribe(
+      protocol = resolve_protocol(nil, model, operation: :transcribe).new(self, model)
+      options = protocol.render_transcription_options(timestamps:, format:, streaming: block_given?)
+      provider_options = Support::Utils.deep_merge(options, provider_options)
+      protocol.transcribe(
         audio_file,
         model: model_id_for(model),
         language:,
@@ -490,6 +515,12 @@ module RubyLLM
       # model registry. The base implementation returns +false+.
       def assume_models_exist?
         false
+      end
+
+      # Returns whether +operation+ requires an inference model. Override
+      # for endpoints that operate on an explicitly configured resource.
+      def model_required?(**)
+        true
       end
 
       def configured?(config) # :nodoc:

@@ -4,17 +4,18 @@ module RubyLLM
   module Providers
     class Mistral
       class ChatCompletions
-        # Mistral batch jobs for chat completions.
+        # Mistral batch jobs for chat completions and embeddings.
         module Batches
           include RubyLLM::Batch::Helpers
 
           TERMINAL_STATUSES = %w[SUCCESS FAILED TIMEOUT_EXCEEDED CANCELLED].freeze
-          private_constant :TERMINAL_STATUSES
+          Response = Struct.new(:body)
+          private_constant :TERMINAL_STATUSES, :Response
 
           def create_batch(requests)
             model = single_batch_model!(requests, 'mistral')
             response = @connection.post('batch/jobs', {
-                                          endpoint: '/v1/chat/completions',
+                                          endpoint: mistral_batch_endpoint(requests),
                                           model: model,
                                           requests: requests.map { |request| mistral_batch_request(request) }
                                         }, idempotent: false)
@@ -23,7 +24,16 @@ module RubyLLM
           end
 
           def find_batch(id)
-            parse_batch_response @connection.get(batch_url(id)).body
+            attempts = 0
+            begin
+              parse_batch_response @connection.get(batch_url(id)).body
+            rescue Error => e
+              attempts += 1
+              raise unless e.response&.status == 404 && attempts < 3
+
+              sleep(0.5 * attempts)
+              retry
+            end
           end
 
           def cancel_batch(id)
@@ -42,10 +52,24 @@ module RubyLLM
           end
 
           def mistral_batch_request(request)
+            body = batch_payload(request, except: :model)
+            custom_id = request[:custom_id]
+            custom_id = "#{custom_id}:array" if (body[:input] || body['input']).is_a?(Array)
+
             {
-              custom_id: request[:custom_id],
-              body: batch_payload(request, except: :model)
+              custom_id: custom_id,
+              body: body
             }
+          end
+
+          def mistral_batch_endpoint(requests)
+            endpoints = requests.map do |request|
+              payload = request.fetch(:payload)
+              payload.key?(:input) || payload.key?('input') ? '/v1/embeddings' : '/v1/chat/completions'
+            end.uniq
+            return endpoints.first if endpoints.one?
+
+            raise Error, 'Mistral batches cannot mix chat and embedding requests'
           end
 
           def parse_batch_response(data)
@@ -72,15 +96,22 @@ module RubyLLM
           end
 
           def parse_batch_result(line)
-            index = batch_result_index(line['custom_id'])
+            custom_id, shape = line['custom_id'].split(':', 2)
+            index = batch_result_index(custom_id)
             response = line['response']
 
             if response && response['body']
               body = response['body']
-              [index, parse_completion_body(body, raw: body)]
+              [index, parse_mistral_batch_body(body, shape:)]
             else
               [index, nil, batch_failure(line['custom_id'], batch_error_message(line))]
             end
+          end
+
+          def parse_mistral_batch_body(body, shape:)
+            return parse_completion_body(body, raw: body) unless body['data'].is_a?(Array)
+
+            parse_embedding_response(Response.new(body), model: body['model'], text: shape == 'array' ? [] : nil)
           end
         end
       end

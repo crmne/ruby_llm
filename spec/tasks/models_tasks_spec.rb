@@ -30,7 +30,7 @@ RSpec.describe 'models:update', type: :task do
   end
 
   def saved_models
-    RubyLLM::ModelRegistry.read(registry_file)
+    RubyLLM::Models::Registry.read(registry_file)
   end
 
   it 'reports and saves routine model removals without an override' do

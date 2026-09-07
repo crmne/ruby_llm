@@ -16,7 +16,7 @@ After reading this guide, you will know:
 * How to read the ranked results and their scores.
 * How to limit how many results come back.
 * How to combine reranking with embeddings in a retrieval pipeline.
-* What reranking costs and how to handle providers that do not offer it.
+* How to track reranking usage.
 
 ## Reranking Documents
 
@@ -34,9 +34,7 @@ rerank.results.first.document # => "Washington, D.C. is the capital of the Unite
 rerank.results.first.score    # => 0.99
 ```
 
-The documents go in as an array of strings and come back reordered, most relevant first.
-
-Unlike `chat` and `embed`, `rerank` has no default model. Rerank catalogs are provider-specific and share no common names, so `model:` is required.
+`rerank` requires `model:`; it has no default model.
 {: .note }
 
 ## Why Rerank
@@ -81,15 +79,31 @@ You still send every candidate, because the reranker has to score them all to pi
 
 ## Choosing a Model
 
-Several providers offer rerankers, and RubyLLM resolves the provider from the model id the same way it does everywhere else:
+Pass `provider:` to select a hosted deployment explicitly:
 
 ```ruby
-RubyLLM.rerank(query, documents, model: "{{ site.models.rerank_cohere }}")                              # Cohere
-RubyLLM.rerank(query, documents, model: "cohere.rerank-v3-5:0", provider: :bedrock) # Bedrock
-RubyLLM.rerank(query, documents, model: "Cohere-rerank-v4.0-pro", provider: :azure) # Azure
+RubyLLM.rerank(query, documents, model: "{{ site.models.rerank_cohere }}")
+RubyLLM.rerank(query, documents, model: "{{ site.models.rerank_bedrock }}", provider: :bedrock)
+RubyLLM.rerank(query, documents, model: "{{ site.models.azure_rerank }}", provider: :azure)
 ```
 
-Self-hosted rerankers work through GPUStack, and OpenRouter serves several vendors' rerankers behind one endpoint. Pass `provider:` when the same model id is available from more than one of them.
+Azure requires a [deployed reranker]({% link _getting_started/configuration-providers.md %}#azure-deployments). Bedrock reranking uses your AWS credentials without a knowledge base.
+
+### Vertex AI Search
+
+Enable the Discovery Engine API in your project and use your [Vertex AI ranking configuration]({% link _getting_started/configuration-providers.md %}#reranking):
+
+```ruby
+RubyLLM.rerank(
+  query, documents,
+  model: "{{ site.models.rerank_vertexai }}",
+  provider: :vertexai,
+  assume_model_exists: true,
+  top_n: 3
+)
+```
+
+The semantic ranker is absent from the general model catalog, so it requires `assume_model_exists: true`. It does not require a search data store.
 
 ## Cost and Usage
 
@@ -102,9 +116,9 @@ rerank.tokens.input # => 812
 rerank.cost.total   # => 0.0016
 ```
 
-Cohere bills per search unit instead, so `tokens.input` and `cost.total` are `nil` for `rerank-v3.5` and the charge shows up on your Cohere invoice.
+Token counts and cost remain `nil` when a provider reports neither token usage nor a charge. Cohere, for example, bills reranking per search unit.
 
-Providers that report what they charged put it on `rerank.tokens.reported_cost`, and RubyLLM prefers that figure over its own calculation. See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
+See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) for usage accounting.
 
 ## Retrieval End to End
 
@@ -126,16 +140,6 @@ end
 The vector query retrieves fifty candidates; the reranker selects five. This example uses the `neighbor` gem with a configured `embedding` vector column.
 
 See the [RAG guide]({% link _advanced/rag.md %}) for the retrieval-augmented generation pipeline this feeds.
-
-## When a Provider Has No Reranker
-
-Most chat providers do not offer reranking. Asking one to rerank raises immediately rather than falling back to something approximate:
-
-```ruby
-RubyLLM.rerank("query", ["doc"], model: "claude-haiku-4-5", provider: :anthropic)
-# => RubyLLM::Error: Anthropic doesn't support reranking
-```
-
 
 ## Next Steps
 

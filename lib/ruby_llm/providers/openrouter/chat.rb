@@ -55,7 +55,7 @@ module RubyLLM
           schema_def = payload.dig(:response_format, :json_schema, :schema)
           return unless schema_def.is_a?(Hash)
 
-          schema_def = RubyLLM::Utils.deep_dup(schema_def)
+          schema_def = RubyLLM::Support::Utils.deep_dup(schema_def)
           schema_def.delete(:strict)
           schema_def.delete('strict')
           payload[:response_format][:json_schema][:schema] = schema_def

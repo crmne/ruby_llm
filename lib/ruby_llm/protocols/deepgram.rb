@@ -13,6 +13,7 @@ module RubyLLM
       include Deepgram::Models
       include Deepgram::Speech
       include Deepgram::Transcription
+      include Deepgram::StreamingTranscription
     end
   end
 end

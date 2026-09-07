@@ -14,6 +14,25 @@ There are two main parts: the public Ruby API and the providers and protocols th
 - **Providers and protocols connect both families to services.** Providers supply endpoints, authentication, catalogs, protocol selection, and service-specific settings. Protocols implement request formats, response parsing, streaming, and error normalization. Format quirks belong in protocol dialects selected by providers.
 - **Shared services support the API.** Model and provider resolution, configuration, usage and cost tracking, instrumentation, batches, file storage, and prompt caching belong to the framework as a whole. Do not force an independent operation through `Chat` to reuse them.
 - **Rails adds a native application integration.** The same conversation API works on application-owned records, with Active Record persistence, Active Storage attachments, Hotwire streaming, Active Job workflows, and generators. Individual operations remain available in Rails services and jobs. Rails integration builds on the Ruby API; the plain-Ruby library has no Rails dependency.
+- **Conversation history belongs to the application.** Build requests from the local transcript. Do not introduce provider-stored conversation cursors or continue a remote history that can diverge from local messages. Defer provider features that require that lifecycle. Preserving native response content for replay is different from storing a conversation remotely.
+- **Realtime conversations are outside 2.0's scope.** Keep speech generation and transcription, including streamed results. A WebSocket transport for one operation does not justify a separate live conversation API. Hosted asynchronous research jobs remain individual operations, not persisted chat sessions.
+
+## Source layout
+
+Keep public API objects directly under `lib/ruby_llm`. This includes objects applications receive and use, such as `EmbeddingRequest`, `SpeechChunk`, `TranscriptionChunk`, `VideoJob`, `UploadedFile`, and `DownloadedFile`, even when their constructors are internal. Put implementation helpers in the namespace that owns them, with matching directories: `Protocol::BinaryStreaming`, `Transport::Connection`, `Models::Registry`, and `Support::Inspectable`. Use ordinary Zeitwerk naming and update references when moving internal constants; do not use `loader.collapse` or compatibility aliases to rearrange internal code. Keep operation arguments and public result behavior unchanged. Follow the same namespaces in specs.
+
+| Directory | Responsibility |
+| --- | --- |
+| `transport/` | HTTP, WebSockets, retry boundaries, and connection middleware |
+| `protocol/` | Shared streaming and response assembly |
+| `models/` | Model catalog schemas, reconciliation, and alias lookup |
+| `provider_generator/` | Standalone provider scaffolding and its command line |
+| `accounting/` | Usage entries and operation accounting |
+| `files/` | File handling internals such as MIME detection |
+| `tools/` | Shared tool selection and resolution |
+| `support/` | Cross-cutting primitives such as inspection, instrumentation, deprecation, and utility functions |
+
+Keep operation behavior with its owning domain or protocol; `support/` is not a place for provider logic or unrelated features. Preserve bundled JSON and generator-template locations when moving code that uses `__dir__`. Archspec enforces the boundaries independently of these organizational folders.
 
 ## What we are optimizing for
 
@@ -64,6 +83,9 @@ overcommit --install   # required: installs the git hooks that gate every commit
 - **RubyLLM's own enumerations are Symbols.** `finish_reason` is `:stop`, a usage entry's status is `:succeeded`, thinking effort is `:medium`, `Model#type` is `:chat`. Values that come from a provider or from models.dev (slugs, model ids, MIME types, reasoning option values) stay Strings, and protocols turn Symbols into Strings only at the wire.
 - **Bang methods are for a meaningfully different pair**, like `create`/`create!`. Mutation, persistence, blocking, or network activity alone does not earn a bang. `cancel`, `approve`, `refresh` are plain.
 - **Value objects, not hashes.** Results are typed (`Message`, `Tokens`, `Cost`, `Citation`, `Moderation::Result`) with readers named after the concept. `to_h` is for serialization, `inspect` is one short line through `Inspectable`.
+- **One cost interface.** `cost` returns `RubyLLM::Cost`, using the provider's reported amount when available and calculated cost otherwise. Preserve unknown amounts as `nil`. The source of a stored amount is internal accounting information, not a second public cost API.
+- **Remote approvals use a predicate.** A tool call's `remote?` distinguishes provider-executed tools from local Ruby tools. Persist that boolean; its call ID identifies the approval request. Do not use a provider's server label as the execution-mode flag.
+- **Save file and media results consistently.** Complete downloadable results expose `save(path)`, returning the path, and `to_blob` for their bytes. Show `RubyLLM.speak(...).save(path)` and equivalent calls before manual file writing. Streaming is optional; when an operation also returns its complete result, that result keeps the same saving API.
 - **Errors take the message first** and the response as a keyword: `Error.new("msg", response: response)`.
 - **Public means documented.** RDoc on the method, an example in `docs/`, and `:nodoc:` on everything that is internal.
 
@@ -74,6 +96,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 - **Domain objects** (`Chat`, `Message`, `Tool`, `Agent`, ...) never reference `RubyLLM::Providers` or `RubyLLM::Protocols`, never name a provider or a wire format in a method, and never carry a table of provider values. They delegate through the `Provider` contract.
 - **Protocols** (`lib/ruby_llm/protocols`) are wire formats: Chat Completions, Responses, Anthropic, Gemini, Converse, Cohere, Files, and provider-specific storage APIs. Serialization methods are `render_*`, parsing methods are `parse_*`. A protocol normalizes on the way in and out: it maps its finish reasons onto `stop`, `max_tokens`, `tool_calls`, and `content_filter` in its `finish_reasons` table, it decides its own request rules (OpenAI strict mode lives in the OpenAI protocols, not in `Chat`), and it turns its error bodies into RubyLLM errors. Register every operation through `protocol`; do not add operation-specific protocol registries or macros.
 - **Providers** (`lib/ruby_llm/providers`) are adapters: auth, endpoints, catalogs, dialect quirks. A provider declares which protocols it speaks; it never defines a new wire format inline. A protocol that needs something only the provider knows asks its `@provider` for it.
+- **Hosting does not create a new protocol.** When a cloud provider hosts an existing wire format, reuse that protocol's modules. Keep endpoint and deployment-name differences with the provider; put serialization shared with the original service in the common protocol. Compose only the operations the hosted endpoint supports.
 - **Support** (`Configuration`, `Models`, `Model`, `Connection`, errors) is a leaf layer: it knows neither protocols nor concrete providers, nor Active Record. Provider-specific registry behavior, such as how a provider spells a models.dev id, goes through a `Provider` class hook (`models_dev_alias`, `models_dev_model_id`), not a branch on the slug.
 - **Model metadata comes from models.dev.** Report incorrect or missing pricing, limits, release dates, knowledge cutoffs, families, or modalities upstream instead of maintaining parallel tables. Provider model parsers record facts the provider returns. Provider `capabilities.rb` files may only augment feature capabilities that neither the provider listing nor models.dev can express, based on explicit upstream fields, exact model ids, or unambiguous operation markers, never broad family matchers that guess about current or future models.
 - **Registry reconciliation stays generic.** Provider-specific model-id aliases belong with that provider's catalog code, and registry generation diagnostics belong under `tasks/`, outside the runtime library. Provider gem `models.json` files are explicitly registered, read-only fallbacks: the main registry wins conflicts, global refresh never queries or rewrites catalog-backed provider gems, and only the provider gem's own `rake models` updates its packaged catalog.
@@ -85,6 +108,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 
 - A persisted chat behaves like a plain chat. Whatever `Chat` can do, `acts_as_chat` records do through the same names, and `Agent.find` gives back the record with the agent's tools, instructions, and options applied.
 - RubyLLM owns `ruby_llm_models`, `ruby_llm_tool_calls`, `ruby_llm_usages`, and `ruby_llm_batches`. Applications own chats and messages. Schema changes go through the install generator for new apps and the upgrade generator for existing ones; both templates must move together.
+- Persisted usage entries require both a provider and a model ID, with presence validation and `NOT NULL` constraints. Never invent a model to satisfy a migration. Existing rows without a model must be corrected from their original requests before upgrading. A standalone model-free operation may report usage without persisting it into a chat's ledger.
 - Persistence must survive other processes: cancellation, approvals, and the loop verbs read and write the database, and anything polled inside a job runs outside the query cache.
 - Generators write what a Rails scaffold would: omakase style, conventional paths, no starter prose, no TODO comments beyond the one place the developer has to type. An empty prompt file means no instructions.
 - Rails specs run against the dummy app in `spec/dummy`. Generator specs are tagged `:generator` and excluded from the pre-commit run because they are slow.
@@ -111,6 +135,8 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 - The Jekyll site lives in `docs/` with four collections: `_getting_started`, `_core_features`, `_advanced`, `_reference`. Preview with `docs/bin/serve.sh`.
 - Voice is Rails-guides style: second person, present tense, short sentences, code first, motivate before mechanics. No em dashes. No hype, no "simply". RDoc follows the Rails API voice: "Returns the ...", one line where one line will do.
 - Let working examples show what the framework can do. Start with the shortest useful public API call, then add options, integration examples, and provider details where readers need them. Keep guide openings consistent: title, description, and "After reading this guide, you will know". Explain concepts before summarizing them in a table.
+- Document the shared API once. Adding provider support usually updates an existing example or coverage entry, not a new section. Include provider-specific notes only when a difference changes what the reader must configure, call, or handle. Put setup requirements in provider configuration and link to them. Omit interchangeable examples, wire-format details RubyLLM handles, and accounts of implementation or live-test results from user guides.
+- Give each standalone AI operation a discoverable guide, and feature new operations in the release overview. Group closely related operations, such as file uploads and downloads, on one page. Do not bury an operation such as `RubyLLM.tokenize` inside a guide about another feature.
 - Front-matter `title` and `description` feed llms.txt and the social-card images. Keep descriptions to one compelling sentence and never use `&`, `<`, or `>` in them.
 - Cross-link with `{% link _collection/page.md %}`, never hard-coded URLs. Use the `site.models.*` ids from `docs/_config.yml` in examples so model names stay current.
 - A public API change is not done until its docs page changes in the same commit, and `docs/_reference/upgrading.md` records anything that breaks.

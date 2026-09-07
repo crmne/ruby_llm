@@ -1,0 +1,347 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/batches
+    body:
+      encoding: UTF-8
+      string: '{"name":"ruby_llm_46561fda4a79c25a"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 11:51:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 16cff44f49088aa0f35dfadb36746ba3
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '72'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3","name":"ruby_llm_46561fda4a79c25a","create_time":"2026-09-07","expire_time":"2026-10-07","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":0,"num_pending":0,"num_success":0,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 07 Sep 2026 11:51:10 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/batches/batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3/requests
+    body:
+      encoding: UTF-8
+      string: '{"batch_requests":[{"batch_request_id":"0","batch_request":{"responses":{"model":"grok-4.3","input":[{"role":"user","content":"Return
+        language Ruby."}],"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":256,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"language":{"type":"string"}},"required":["language"],"additionalProperties":false},"strict":true}}}}},{"batch_request_id":"1","batch_request":{"chat_get_completion":{"model":"grok-4.3","messages":[{"role":"user","content":"Reply
+        with exactly one word: Rails"}],"max_tokens":256}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 11:51:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4'
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 18bb1c40a5813b443495dd3c7d675480
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '447'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: 'null'
+  recorded_at: Mon, 07 Sep 2026 11:51:10 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 11:51:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 215d74ad7994b43ebf3807bbd667bd2c
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '143'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3","name":"ruby_llm_46561fda4a79c25a","create_time":"2026-09-07","expire_time":"2026-10-07","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":2,"num_pending":2,"num_success":0,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 07 Sep 2026 11:51:11 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 11:51:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 3278934a618db102950d491ed040d423
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '137'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3","name":"ruby_llm_46561fda4a79c25a","create_time":"2026-09-07","expire_time":"2026-10-07","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":2,"num_pending":2,"num_success":0,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 07 Sep 2026 11:51:11 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 11:51:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 3a32a4b080deace7beb93ac7cff7fa47
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '141'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3","name":"ruby_llm_46561fda4a79c25a","create_time":"2026-09-07","expire_time":"2026-10-07","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":2,"num_pending":0,"num_success":2,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 07 Sep 2026 11:51:16 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_b0f63e5d-cdfe-4f10-9d37-347093f482a3/results?limit=100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 11:51:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - c46cdb780b026021f096d904751f0f02
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '437'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"results":[{"batch_request_id":"0","batch_result":{"response":{"chat_get_completion":{"id":"83e77495-c888-98cc-923d-692c1689c194","object":"chat.completion","created":1788781871,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"language\":\"Ruby\"}","reasoning_content":"The
+        user says: \"Return language Ruby.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":239,"completion_tokens":5,"total_tokens":388,"prompt_tokens_details":{"text_tokens":239,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":144,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":3757200},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}}}},{"batch_request_id":"1","batch_result":{"response":{"chat_get_completion":{"id":"e605eefb-65f3-9f11-a0d4-2d1c7066d4d4","object":"chat.completion","created":1788781871,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Rails","reasoning_content":"The
+        user says: \"Reply with exactly one word: Rails\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":1,"total_tokens":308,"prompt_tokens_details":{"text_tokens":199,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":108,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2557200},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}}}}],"pagination_token":null}'
+  recorded_at: Mon, 07 Sep 2026 11:51:17 GMT
+recorded_with: VCR 6.4.0

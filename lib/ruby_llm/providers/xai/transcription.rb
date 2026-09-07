@@ -8,15 +8,16 @@ module RubyLLM
       # speaker names turns on diarization, which labels each word with a
       # numeric speaker index.
       module Transcription
+        def render_transcription_options(timestamps:, **)
+          return {} if timestamps.nil? || timestamps == :word
+
+          raise ArgumentError, 'xAI transcription timestamps must be word'
+        end
+
         module_function
 
         def transcription_url
           'stt'
-        end
-
-        # The xAI Voice API returns the whole transcript at once.
-        def stream_transcription(*, **, &)
-          raise_transcription_streaming_unsupported
         end
 
         # rubocop:disable-next Lint/UnusedMethodArgument

@@ -81,14 +81,7 @@ end
 > `WeatherLookup.tool_name` reads the model-facing name without instantiating the tool, which is useful when you select tool classes by name before building them. The instance method `#name` delegates to it, so overriding `name` on the instance still works.
 {: .note }
 
-> If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
->
-> 1. Returning an error message to the model indicating which tool it tried to call
-> 2. Listing the actually available tools
-> 3. Allowing the conversation to continue so the model can correct itself
->
-> This prevents crashes and gives the model a chance to use the correct tool or respond appropriately.
-{: .note }
+If the model requests an unavailable tool, RubyLLM returns an error listing the available tools and lets the conversation continue.
 
 ## Declaring Parameters
 
@@ -173,7 +166,7 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#handling-e
 
 ## Model Context Protocol (MCP) Support
 
-For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
+Use built-in [Server Tools]({% link _core_features/server-tools.md %}#mcp-servers) when the provider should connect to a remote MCP server. For an MCP client running in your Ruby application, see the community [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
 
 ## Debugging Tools
 
@@ -184,12 +177,6 @@ export RUBYLLM_DEBUG=true
 # Run your script
 ```
 
-You'll see log lines similar to:
-
-```
-D, [timestamp] -- RubyLLM: Tool weather_lookup called with: {:latitude=>52.52, :longitude=>13.4}
-D, [timestamp] -- RubyLLM: Tool weather_lookup returned: "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
-```
 See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging) for more on debugging.
 
 ## Next Steps

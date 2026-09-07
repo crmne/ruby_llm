@@ -10,8 +10,8 @@ module RubyLLM
   #   ocr.pages.first.markdown # => "# Contract\n..."
   #
   class OCR
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # One page of an OCR result: the zero-based page +index+, the extracted
     # +markdown+, and the +images+ and +tables+ the provider reports for the
@@ -31,7 +31,7 @@ module RubyLLM
 
     # Extracts the text of +file+ and returns an OCR result. Most code calls
     # this through RubyLLM.ocr. The file may be a path, URL, IO object, or
-    # Attachment; PDFs, office documents, and images are accepted.
+    # Attachment; accepted document and image formats depend on the provider.
     #
     # +model:+ selects the OCR model and defaults to the configured
     # +default_ocr_model+. +provider:+ forces a specific provider, and
@@ -88,6 +88,8 @@ module RubyLLM
     # Returns the pages of the document as an array of Page structs.
     def pages
       @pages ||= @page_hashes.map.with_index do |page, position|
+        next page if page.is_a?(Page)
+
         Page.new(
           index: page['index'] || position,
           markdown: page['markdown'],

@@ -14,7 +14,7 @@ description: Reach provider-specific features with custom parameters, wire proto
 After reading this guide, you will know:
 
 * How to identify end users to a provider's abuse tooling with `with_end_user`.
-* How to keep long conversations inside the context window with `with_compaction`.
+* How to compact long conversations automatically or when you choose.
 * How to pass options in the provider's request vocabulary with `with_provider_options`.
 * How to choose the wire protocol a provider speaks.
 * How to modify the final request payload with `before_request`.
@@ -30,51 +30,20 @@ chat = RubyLLM.chat
               .with_max_output_tokens(200)
 ```
 
-Calling a `with_*` method again replaces the setting. Value setters use `nil` to clear a value; feature switches use `false` to disable the feature:
+Value setters accept `nil` to clear a setting. Feature switches accept no arguments to enable their default behavior, options to configure it, and `false` to disable it:
 
 ```ruby
 chat.with_temperature(0.2)
 chat.with_temperature(nil)
 
-chat.with_caching(ttl: "1h")
-chat.with_caching(false)
-
-chat.with_max_output_tokens(200)
-chat.with_max_output_tokens(nil)
-
-chat.with_headers("X-Custom-Feature" => "enabled")
-chat.with_headers(nil)
-
 chat.with_thinking(effort: :high)
 chat.with_thinking(false)
 
-chat.with_tools(SearchDocs)
-chat.with_tools(nil)
-
-chat.with_citations
-chat.with_citations(false)
-
-chat.with_instructions "Be terse."
-chat.with_instructions(nil)
-```
-
-The same pattern covers `with_schema`, `with_fallbacks`, `with_provider_options`, and `with_context`.
-
-Methods with no arguments enable a feature with its default behavior. Pass `false` to disable it:
-
-```ruby
 chat.with_caching
 chat.with_caching(false)
-
-chat.with_thinking
-chat.with_thinking(false)
-
-chat.with_compaction
-chat.with_compaction(false)
-
-chat.with_citations
-chat.with_citations(false)
 ```
+
+The same feature-switch pattern applies to `with_citations` and `with_compaction`. These switches reject `nil`. `with_tools(nil)` clears the tool list; other tool settings are covered in [Controlling Tool Execution]({% link _core_features/tool-execution.md %}).
 
 ## Identifying End Users
 
@@ -85,18 +54,7 @@ chat = RubyLLM.chat.with_end_user("user-#{current_user.id}")
 chat.ask "Hello"
 ```
 
-| Provider | Request field |
-|:---------|:--------------|
-| OpenAI, Azure | `safety_identifier` |
-| Anthropic | `metadata.user_id` |
-| DeepSeek | `user_id` |
-| OpenRouter | `user` |
-| Everything else | omitted |
-
-The value goes to the provider as given, so send an opaque id such as a hash or a UUID, never an email address or any other personal data.
-{: .warning }
-
-Providers without an equivalent field drop it and log the decision at debug level, so the same code works across every model.
+Use an opaque ID such as an account's public ID or a UUID. The value is sent as given. Providers without support for end-user attribution ignore this setting.
 
 Agents declare it with the matching `end_user` macro, which also takes a block:
 
@@ -112,7 +70,7 @@ end
 A conversation that runs long enough overflows the model's context window and the provider starts rejecting requests. Several providers can handle that themselves: once the conversation crosses a token threshold, the provider condenses the earlier turns and carries on. `with_compaction` turns it on:
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-sonnet-5").with_compaction
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}").with_compaction
 chat.ask "Let's go through the whole migration plan."
 ```
 
@@ -125,30 +83,48 @@ chat.with_compaction(at: 50_000, pause_after: true)
 chat.with_compaction(false)
 ```
 
-`at:` is the input-token count that triggers compaction, `instructions:` steers the summary the provider writes, and `pause_after:` ends the turn once compaction runs instead of continuing straight into the answer. `false` turns compaction back off. Each provider maps what it supports:
+`at:` sets the input-token threshold. `instructions:` guides the summary, and `pause_after:` stops the turn after compaction. Support differs:
 
-| Provider | Request field | `at:` | `instructions:` and `pause_after:` |
-|:---------|:--------------|:------|:-----------------------------------|
-| Anthropic, Bedrock (Mantle) | `context_management.edits[].trigger.value` | yes, minimum 50,000 | yes |
-| OpenAI, Azure (Responses) | `context_management[].compact_threshold` | yes | dropped |
-| OpenRouter | `plugins[]` entry `context-compression` | dropped | dropped |
-| Everything else | omitted | | |
+| Provider | Automatic compaction behavior |
+| --- | --- |
+| Anthropic and Bedrock Mantle | Summarizes earlier turns; supports all three options, with a minimum threshold of 50,000 tokens |
+| OpenAI and Azure Responses | Summarizes earlier turns; supports `at:` |
+| OpenRouter | Drops messages from the middle at the model's context limit; ignores these options |
 
-Providers with nothing equivalent drop the request and log the decision at debug level, so the same code runs against every model. Compaction is also newer than most models: Anthropic serves it on Claude Sonnet 4.6, Opus 4.6 and later, and the 5 series, and OpenAI on GPT-5.2 and later.
-
-What happens at the threshold is not the same everywhere. Anthropic and OpenAI summarize the compacted span and return an opaque block in its place, which RubyLLM keeps on the message and replays on every later request, so the model still knows what was decided. OpenRouter's `context-compression` plugin drops messages from the middle of the conversation rather than summarizing them, and it triggers at the model's own context limit rather than at a threshold you pick.
-{: .warning }
-
-Compacting is not free: the provider runs the model an extra time to write the summary, and that generation is billed. RubyLLM reports the whole bill, so `response.tokens.input` on a turn that compacted counts the summarization pass as well as the answer.
+Use a model that supports compaction. Unsupported providers ignore the setting. Summarization can incur additional usage and charges, which are included in the response's tokens and cost.
 
 Agents declare it with `compaction`:
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  model "claude-sonnet-5"
+  model "{{ site.models.anthropic_current }}"
   compaction at: 50_000
 end
 ```
+
+### Compacting Now
+
+Call `compact` to reduce the context sent on subsequent requests while keeping every message in your transcript:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.xai_tokenization }}", provider: :xai)
+chat.ask "The project codename is Thimble. We write it in Ruby."
+
+summary = chat.compact
+chat.ask "What is the project codename?"
+
+summary.tokens.input
+summary.cost.total
+chat.messages # includes the original conversation and the compaction message
+```
+
+Manual compaction works with xAI, OpenAI, and Azure through their Responses APIs. For Azure deployments using Chat Completions by default, pass `protocol: :responses` when creating the chat. It is separate from `with_compaction`, which asks the provider to compact automatically during generation.
+
+`compact` returns a `Message` whose text can be empty. Later requests use its compacted context while your transcript keeps the original messages. You can still change instructions with `with_instructions`. The returned message and `chat.tokens` include compaction usage.
+
+The same call works on an agent or a Rails chat. Rails persists the compacted context and usage, and `Agent.find` or a reloaded chat can continue from it without deleting earlier messages. Finish any pending tool calls, including approval decisions, before compacting.
+
+Compaction uses the current HTTP headers and `before_request` hooks. Generation options such as tools, temperature, and `provider_options` are not forwarded to the compaction endpoint. Keep the conversation on a provider and model that can read its compacted context.
 
 ## Provider Options
 
@@ -170,12 +146,7 @@ chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
 
 ## Choosing the Wire Protocol
 
-Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Azure defaults to Chat Completions and routes deployments named after gpt-5.4+ models to the Responses API; Vertex AI speaks Gemini for Google models, Anthropic for Claude, Mistral for Mistral, and Chat Completions for the publisher-prefixed MaaS models. RubyLLM picks the right protocol per request:
-
-```ruby
-chat = RubyLLM.chat(model: 'claude-opus-5', provider: :vertexai)                 # speaks Anthropic
-chat = RubyLLM.chat(model: 'meta/llama-3.3-70b-instruct-maas', provider: :vertexai) # speaks Chat Completions
-```
+RubyLLM normally selects the protocol for your model and operation. Choose one explicitly when a guide requires a different endpoint, such as Responses for a provider's hosted tools.
 
 Override it per chat with the `protocol:` model option, or app-wide with configuration:
 
@@ -189,6 +160,21 @@ end
 ```
 
 The `protocol:` option sits alongside `provider:` in model selection: a model is identified by its name, its provider, and its protocol. Unknown protocol names raise when the request is rendered or sent, listing the protocols the provider supports. A bare `with_model` returns the chat to the provider's default protocol, just as it re-resolves the provider.
+
+### Perplexity Router
+
+Perplexity's Router requires separate account access and an explicit protocol. Use it for function tools, tool-choice controls, and cache boundaries:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.perplexity_router }}", provider: :perplexity,
+                   protocol: :router_chat_completions)
+              .with_tools(SearchDocs)
+              .with_tool_options(choice: :required, calls: :one)
+
+chat.ask "Find the installation guide."
+```
+
+Router requires tool descriptions and strict JSON schemas. For hosted search and MCP, use the Agent protocol described in [Server Tools]({% link _core_features/server-tools.md %}#protocol-selection).
 
 ## Request Hooks
 
@@ -235,7 +221,7 @@ payload[:service_tier] # => "flex"
 
 ## Custom HTTP Headers
 
-Some providers offer beta features or special capabilities through custom HTTP headers. The `with_headers` method lets you add these headers to your API requests while maintaining RubyLLM's security model.
+Some providers offer beta features or special capabilities through custom HTTP headers. Use `with_headers` to add them to your requests.
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
@@ -246,15 +232,6 @@ response = chat.ask "Tell me about the weather"
 
 Headers are merged with provider defaults, with provider headers taking precedence for security. This means you can't override authentication or critical headers, but you can add supplementary headers for optional features.
 
-```ruby
-chat = RubyLLM.chat
-      .with_temperature(0.5)
-      .with_headers('X-Custom-Feature' => 'enabled')
-      .with_provider_options(max_tokens: 1000)
-```
-
-Use custom headers with caution. They may enable experimental features that could change or be removed without notice. Always refer to your provider's documentation for supported headers and their behavior.
-{: .warning }
 
 ## Next Steps
 

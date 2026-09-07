@@ -5,7 +5,7 @@ module RubyLLM
     class Mistral
       # Model information for Mistral
       module Models
-        # Mistral's capability flags, named as ModelSchema::CAPABILITIES names.
+        # Mistral's capability flags, named as Models::Schema::CAPABILITIES names.
         CAPABILITY_FLAGS = {
           'function_calling' => 'function_calling',
           'reasoning' => 'reasoning',

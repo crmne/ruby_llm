@@ -6,7 +6,7 @@ module RubyLLM
       class Anthropic
         # Vertex AI Claude batch prediction rows.
         module Batches
-          include VertexAI::BatchPrediction
+          include Protocols::VertexAI::BatchPrediction
 
           private
 

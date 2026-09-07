@@ -10,6 +10,12 @@ module RubyLLM
       protocol :anthropic, VertexAI::Anthropic, batches: VertexAI::Anthropic::Batches
       protocol :mistral, VertexAI::Mistral
       protocol :chat_completions, VertexAI::ChatCompletions, batches: VertexAI::ChatCompletions::Batches
+      protocol :embed_content, VertexAI::EmbedContent
+      protocol :embedding_prediction, Protocols::VertexAI::EmbeddingPrediction
+      protocol :transcription, VertexAI::Transcription
+      protocol :live_transcription, VertexAI::LiveTranscription
+      protocol :ranking, Protocols::VertexAI::Ranking
+      protocol :research, Protocols::VertexAI::Research
       protocol :files, Protocols::VertexAI::Files
 
       SCOPES = [
@@ -36,7 +42,16 @@ module RubyLLM
       # Vertex AI hosts models from several publishers, each speaking its
       # native protocol. Publisher-prefixed ids are MaaS models served
       # through the OpenAI-compatible endpoint.
-      def protocol_for(model, **)
+      def protocol_for(model, operation: nil, **)
+        return protocols[:ranking] if operation == :rerank
+
+        transcription = transcription_protocol_for(model.id) if operation == :transcribe
+        return transcription if transcription
+
+        if operation == :embed && %w[gemini-embedding-2 gemini-embedding-2-preview].include?(model.id)
+          return protocols[:embed_content]
+        end
+
         case model.id
         when %r{/} then protocols[:chat_completions]
         when /\Aclaude/ then protocols[:anthropic]
@@ -63,6 +78,10 @@ module RubyLLM
       end
 
       def batch_protocol_for(requests)
+        kinds = requests.map { |request| request.key?(:text) }.uniq
+        raise Error, 'Vertex AI batches take chat or embedding requests, not both' unless kinds.size == 1
+        return protocols[:embedding_prediction] if kinds.first
+
         models = requests.map { |request| request.fetch(:model) }.uniq
         raise Error, 'vertexai batch requests must use one model per submission' unless models.one?
 
@@ -102,6 +121,18 @@ module RubyLLM
         end
       end
 
+      def ranking_config # :nodoc:
+        @config.vertexai_ranking_config ||
+          "projects/#{@config.vertexai_project_id}/locations/global/rankingConfigs/default_ranking_config"
+      end
+
+      def ranking_connection # :nodoc:
+        base = @config.vertexai_ranking_api_base || 'https://discoveryengine.googleapis.com/v1'
+        @ranking_connection ||= Transport::Connection.new(self, @config, api_base: base).tap do |connection|
+          connection.connection.headers['X-Goog-User-Project'] = @config.vertexai_project_id
+        end
+      end
+
       # The rescue can't name Google::Auth::AuthorizationError directly:
       # when googleauth is missing, evaluating the constant would replace
       # the helpful install error with a NameError.
@@ -122,6 +153,8 @@ module RubyLLM
             vertexai_service_account_key
             vertexai_api_base
             vertexai_batch_gcs_uri
+            vertexai_ranking_api_base
+            vertexai_ranking_config
           ]
         end
 
@@ -131,6 +164,13 @@ module RubyLLM
       end
 
       private
+
+      def transcription_protocol_for(id)
+        case id
+        when 'gemini-3.5-transcribe-preview' then protocols[:transcription]
+        when 'gemini-3.5-transcribe-live-preview' then protocols[:live_transcription]
+        end
+      end
 
       def initialize_authorizer
         require 'googleauth'
@@ -158,6 +198,10 @@ module RubyLLM
       end
 
       def batch_protocol_for_model_path(model_path)
+        if Protocols::VertexAI::EmbeddingPrediction::MODELS.include?(model_path.to_s.split('/').last)
+          return protocols[:embedding_prediction]
+        end
+
         case model_path.to_s
         when %r{/publishers/google/models/}, %r{\Apublishers/google/models/}
           batch_protocol_for_name(:gemini)

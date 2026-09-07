@@ -11,6 +11,12 @@ module RubyLLM
       # turns on diarization, which labels each word and utterance with a
       # numeric speaker index.
       module Transcription
+        def render_transcription_options(timestamps:, **)
+          return {} if timestamps.nil? || timestamps == :word
+
+          raise ArgumentError, 'Deepgram transcription timestamps must be word'
+        end
+
         # Turned on by default so the transcript reads like the transcripts
         # every other provider returns. Smart formatting punctuates and
         # formats numbers, dates, and currency; utterances split the
@@ -22,10 +28,17 @@ module RubyLLM
         # it deprecates does not.
         DIARIZE_MODEL = 'latest'
 
-        # rubocop:disable-next Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
-                       speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
-          raise_transcription_streaming_unsupported if block_given?
+                       speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil, &block)
+          if block
+            if format || speaker_references || temperature
+              raise ArgumentError,
+                    'Deepgram streaming transcription does not accept format, speaker_references or temperature'
+            end
+
+            return stream_live_transcription(audio_file, model:, language:, speaker_names:, provider_options:, prompt:,
+                                             &block)
+          end
 
           track_usage(:transcription) do
             attachment = Attachment.new(audio_file, config: @config)

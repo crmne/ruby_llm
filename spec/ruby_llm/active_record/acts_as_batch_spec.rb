@@ -56,6 +56,32 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     expect(chats.second.messages.reload.last.content).to eq('Jupiter')
   end
 
+  it 'persists a reported batch invoice through refresh and fresh Batch.find calls' do
+    chat = Chat.create!(model: model).ask_later('What is 2 + 2?')
+    stub_anthropic_batch(
+      create: { id: 'batch_invoice', raw_status: 'in_progress', completed: false,
+                reported_cost: RubyLLM::Cost.from_h({ total: 0 }) },
+      find: { id: 'batch_invoice', raw_status: 'ended', completed: true,
+              reported_cost: RubyLLM::Cost.from_h({ total: 0.001 }) },
+      results: [[0, answer('4')]]
+    )
+    batch = RubyLLM.batch(chat)
+    pending = described_class.find(batch.id)
+    expect(pending.reported_cost.total).to eq(0)
+    expect(pending.cost.total).to be_nil
+
+    pending.refresh
+    restored = described_class.find(batch.id)
+    expect(restored.reported_cost.total).to eq(0.001)
+    expect(restored.cost.total).to eq(0.001)
+    expect(RubyLLM::ActiveRecord::Batch.find_by!(provider_batch_id: batch.id).reported_cost)
+      .to eq('total' => 0.001)
+    stale = described_class.new(provider: RubyLLM::Providers::Anthropic.new(RubyLLM.config),
+                                id: batch.id, raw_status: 'ended', completed: true)
+    RubyLLM::ActiveRecord::Batch.sync(stale)
+    expect(described_class.find(batch.id).reported_cost.total).to eq(0.001)
+  end
+
   it 'is idempotent: re-collecting never appends an answer twice' do
     chat = Chat.create!(model: model).ask_later('What is 2 + 2?')
     stub_anthropic_batch(

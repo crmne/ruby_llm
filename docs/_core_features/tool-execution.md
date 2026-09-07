@@ -3,7 +3,7 @@ layout: default
 title: Controlling Tool Execution
 parent: "Tools"
 nav_order: 2
-description: Steer which tools the model uses, how many calls it makes, whether they run concurrently, and observe each call with callbacks.
+description: Choose tools, require approval, run calls concurrently, and observe their results
 ---
 
 # {{ page.title }}
@@ -26,18 +26,14 @@ By default RubyLLM lets the model decide when to call tools and runs them sequen
 
 ## Tool Call Controls
 
-`with_tools` sets which tools the model may call. `with_tool_options` controls how it uses them, with two options:
-- `choice` controls which tools the model is allowed/required to use.
-- `calls` controls how many tool calls can appear in one assistant response.
-
-The two concerns are separate, so you can change either without touching the other:
+Use `choice:` to require or select a tool and `calls:` to limit how many calls the model returns in one response:
 
 ```ruby
 chat.with_tools(Weather, Calculator)
 chat.with_tool_options(choice: :required, calls: :one)
 ```
 
-### Tool Choice (`choice`)
+### Tool Choice
 
 Use `choice` to control whether the model can call tools and which one it can call.
 
@@ -56,19 +52,9 @@ chat.with_tools(Weather, Calculator).with_tool_options(choice: :weather)
 chat.with_tools(Weather, Calculator).with_tool_options(choice: Weather)
 ```
 
-Valid values:
-- `:auto`
-- `:required`
-- `:none`
-- tool name symbol/string or `ToolClass`
+After a required or specific tool executes, RubyLLM clears that choice so the model can answer without calling it again.
 
-> With `:required` or specific tool choices, `tool_choice` is automatically reset to `nil` after tool execution to prevent infinite loops.
-{: .note }
-
-### "Parallel" Tool Calling (`calls`)
-
-> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless RubyLLM is configured to run them concurrently.
-{: .note }
+### Calls Per Response
 
 Use `calls` to control how many tool calls the model may return in a single assistant response.
 
@@ -80,15 +66,7 @@ chat.with_tools(Weather, Calculator).with_tool_options(calls: :one)
 chat.with_tools(Weather, Calculator).with_tool_options(calls: 1)
 ```
 
-Valid values:
-- `:many`
-- `:one`
-- `1`
-
-Without `calls`, the provider default applies, which is usually `calls: :many`. OpenAI and Anthropic honor `calls: :one`. Gemini has no such field and may still return several calls in one turn.
-
-> Tool choice and call-count controls are provider/model dependent.
-{: .note }
+Without `calls:`, the provider's default applies. OpenAI and Anthropic honor `calls: :one`; Gemini can still return several calls. Multiple calls run sequentially unless you enable [concurrent execution](#concurrent-tool-execution).
 
 ### Clearing Tools and Options
 
@@ -101,7 +79,7 @@ chat.with_tool_options(choice: nil, calls: nil, concurrency: nil) # reset all th
 
 ## Requiring Approval
 
-Some tools should not run without a human decision: issuing refunds, deleting records, sending email. Declare them with `requires_approval` and the agentic loop parks the tool call until a decision is recorded:
+Some tools should not run without a human decision: issuing refunds, deleting records, sending email. Declare them with `requires_approval` to pause execution until a decision is recorded:
 
 ```ruby
 class IssueRefund < RubyLLM::Tool
@@ -135,13 +113,13 @@ chat.deny(tool_call)
 chat.complete # appends the denial result and asks the model to respond
 ```
 
-Tool calls that need no approval still run before the loop parks, so a response mixing safe and protected calls makes as much progress as it can.
+Calls that need no approval still run while protected calls wait.
 
-If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), park the same way `complete` does: `chat.step until chat.complete? || chat.awaiting_approval?`.
+If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop at pending approvals: `chat.step until chat.complete? || chat.awaiting_approval?`.
 
-A parked round has to finish before the conversation moves on. Asking a new question while tool calls are unanswered raises `RubyLLM::PendingToolCallsError` instead of sending the provider a transcript it would reject; record the decisions and call `complete`, then ask away. The chat also shows what it is waiting for: `chat.inspect` includes `awaiting_approval: ["issue_refund"]` while parked.
+Finish the pending calls before asking another question. Otherwise `ask` raises `RubyLLM::PendingToolCallsError`.
 
-When the decision lives somewhere of your own, pass a resolver block. It receives the `ToolCall` and returns `true` to execute, `false` to deny, or `nil` while the decision is pending:
+To read decisions from your application, pass a resolver block. It receives the `ToolCall` and returns `true` to execute, `false` to deny, or `nil` while the decision is pending:
 
 ```ruby
 class DeleteRecord < RubyLLM::Tool
@@ -149,13 +127,17 @@ class DeleteRecord < RubyLLM::Tool
 end
 ```
 
-The block never runs at class definition. The loop consults it whenever it needs the decision, which can be several times while the call is pending, and a crashed job consults it again on resume. Write it as an idempotent read. If the block also creates the approval request (a row in an approvals table, a message to an operator), make that a find-or-create, or the rerun will ask twice.
+The resolver can run repeatedly while a call waits, including after a job resumes. Make it an idempotent read. If it creates an approval request, use a find-or-create operation.
+
+### Remote Tool Approval
+
+Providers can also request approval for a tool running on an MCP server. These requests appear in `chat.pending_approvals` with a `server` label. Use `approve`, `deny`, and `complete` as above; RubyLLM sends the decision to the provider instead of executing a Ruby tool. See [MCP servers]({% link _core_features/server-tools.md %}#remote-tool-approval) for a working example.
 
 ### Approval in Rails
 
-With `acts_as_chat`, decisions persist on RubyLLM's tool call records, so the loop can park in one process and resume in another. A worker restart while a call is pending does not ask again; the next `complete` finds the same undecided call and stays parked. On a record, `chat.pending_approvals` returns the persisted tool call records awaiting a decision, ready to render as approval cards with their names and arguments.
+With `acts_as_chat`, decisions persist on tool-call records. One process can request approval and another can resume execution. Use `chat.pending_approvals` to render each call's name and arguments in your approval UI.
 
-The flow: the controller stages the message and enqueues a job; the job runs `complete`, which parks; your UI renders an approval card; the decision controller records the verdict and enqueues the job again. The job loads the chat through the agent class. A bare `Chat.find` has no tools registered, so it cannot tell a gated call from any other.
+After recording a decision, enqueue the job again. Load the chat through its agent class to restore the tools and approval rules:
 
 ```ruby
 class MessagesController < ApplicationController
@@ -184,7 +166,7 @@ end
 
 Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and a retry will run it again.
 
-[Durable Agents]({% link _advanced/durable-agents.md %}) covers the full lifecycle this parking builds on: turns as jobs, deploys, and cancellation.
+[Durable Agents]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation.
 
 ## Concurrent Tool Execution
 
@@ -223,13 +205,7 @@ Override it per chat when needed:
 chat.with_tool_options(concurrency: false)
 ```
 
-Rails chat records use the same setting and override:
-
-```ruby
-chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: false)
-chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: :threads)
-chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: :fibers)
-```
+Rails chat records use the same settings.
 
 With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
 for all tool results before asking the model for the next response.
@@ -250,7 +226,7 @@ class SearchTool < RubyLLM::Tool
 end
 ```
 
-The keyword is reserved: it never appears in the tool's argument schema, the model cannot set it, and tools that don't declare it are called exactly as before. Because the identity arrives as a method argument rather than thread-local state, it stays correct under [concurrent tool execution](#concurrent-tool-execution).
+`tool_call:` is reserved for RubyLLM and is not shown to the model. It also works during concurrent execution.
 
 ## Model Compatibility
 
@@ -278,13 +254,8 @@ response = chat.ask "What's the weather in Paris?"
 # Tool returned: {"temperature": 15, "conditions": "Partly cloudy"}
 ```
 
-These callbacks are useful for:
-- **Logging and Analytics:** Track which tools are used most frequently
-- **UI Updates:** Show loading states or progress indicators
-- **Debugging:** Monitor tool inputs and outputs in production
-- **Auditing:** Record tool usage for compliance or billing
 
-### Example: Limiting Tool Calls
+### Limiting Tool Calls
 
 To cap a runaway loop, give the loop a step budget instead of raising inside a callback:
 

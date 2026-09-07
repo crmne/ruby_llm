@@ -8,13 +8,13 @@ module RubyLLM
   #   video.save("boat.mp4")
   #
   class Video
-    include Inspectable
+    include Support::Inspectable
 
     # The URL of the hosted video, for providers that return one, or +nil+.
     attr_reader :url
 
-    # The raw video bytes, for providers whose videos require an
-    # authenticated download, or +nil+ when the video is hosted at #url.
+    # The raw video bytes, returned inline or downloaded with the
+    # provider's credentials, or +nil+ when the video is hosted at #url.
     attr_reader :data
 
     # The MIME type of the video, such as <tt>"video/mp4"</tt>.
@@ -40,8 +40,12 @@ module RubyLLM
     # +model:+ selects the video model and defaults to the configured
     # +default_video_model+. +provider:+ forces a specific provider, and
     # +assume_model_exists:+ skips the registry lookup. +with:+ passes a
-    # reference image for image-to-video generation on models that support
-    # it. +provider_options:+ takes options in the provider's request
+    # reference image or a video to edit on models that support it. Models
+    # driven by image and audio input can omit the prompt and pass both
+    # attachments through +with:+.
+    # +extend:+ continues a source video instead. It accepts a Video,
+    # file path, URL, or Attachment and cannot be combined with +with:+.
+    # +provider_options:+ takes options in the provider's request
     # vocabulary, such as durations and resolutions, and merges them into
     # the request as-is. +context:+ supplies a Context whose configuration
     # replaces the global one. +metadata:+ is included in the
@@ -56,12 +60,13 @@ module RubyLLM
     #     provider_options: { duration: 5 }
     #   )
     #
-    def self.animate(prompt,
+    def self.animate(prompt = nil,
                      model: nil,
                      provider: nil,
                      assume_model_exists: false,
                      context: nil,
                      with: nil,
+                     extend: nil,
                      provider_options: {},
                      metadata: nil)
       config = context&.config || RubyLLM.config
@@ -69,7 +74,7 @@ module RubyLLM
 
       RubyLLM.instrument('video.ruby_llm', payload, config: config) do |event|
         job = VideoJob.animate_later(prompt, model:, provider:, assume_model_exists:,
-                                             context:, with:, provider_options:, metadata:)
+                                             context:, with:, extend:, provider_options:, metadata:)
         event[:model] = job.model
         event[:job_id] = job.id
         job.wait
@@ -103,7 +108,7 @@ module RubyLLM
     #   video_bytes = video.to_blob
     #
     def to_blob
-      data || Connection.basic(config).get(url).body
+      data || Transport::Connection.basic(config).get(url).body
     end
 
     # Writes the binary video to +path+, expanding it first. Returns

@@ -15,8 +15,8 @@ After reading this guide, you will know:
 
 * How to turn on provider prompt caching with `with_caching`.
 * How to mark an exact prompt prefix with `cache_until_here`.
-* How RubyLLM renders provider-native caching options.
-* How to create and attach a Gemini explicit cache with `RubyLLM.cache`.
+* How to choose cache lifetimes and read cache usage.
+* How to create, reuse, and expire an explicit cache with `RubyLLM.cache`.
 * How Rails persists explicit cache boundaries.
 
 ## Automatic Prompt Caching
@@ -30,36 +30,26 @@ chat.with_instructions("You are a careful code reviewer.")
 response = chat.ask("Summarize the public API changes.", with: "large_diff.patch")
 ```
 
-RubyLLM renders the closest provider-native request:
+Keep reusable instructions and documents at the beginning of the conversation. Changing that prefix can prevent a cache hit. Read the result through `response.tokens.cache_read` and `response.tokens.cache_write`.
 
-| Provider | Rendering |
-| --- | --- |
-| Anthropic | Adds top-level `cache_control`. |
-| OpenRouter | Adds top-level `cache_control` when no explicit boundary is marked. |
-| OpenAI-compatible Chat Completions and Responses | Uses the provider's automatic prompt cache; `key:` becomes `prompt_cache_key`, and `ttl:` and `mode:` become `prompt_cache_options`. |
-| Mistral | Uses `key:` as the provider's `prompt_cache_key`. |
-| Bedrock Converse | Adds a `cachePoint` to the last cacheable message. |
-| Gemini and Vertex AI | Cache automatically; `id:` attaches an explicit cache created with `RubyLLM.cache` (see below). |
-| Other providers | Sends no extra caching fields unless the provider already caches automatically. |
-
-Prompt cache durations do not line up cleanly across providers, so RubyLLM does not alias them. Use the provider's own option name and value:
-
-```ruby
-chat = RubyLLM.chat(model: 'gpt-5.6').with_caching(
-  key: "repo:#{repository.cache_key}",
-  ttl: "30m"
-)
-
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}').with_caching(ttl: "1h")
-```
-
-OpenAI-compatible Chat Completions and Responses accept `key:`, `ttl:`, and `mode:` (`"implicit"` or `"explicit"`). The old `retention:` option is deprecated; RubyLLM translates it into `prompt_cache_options` and logs a warning. Only some OpenAI models take `prompt_cache_options` and explicit boundaries. `gpt-5.6` does; `gpt-5.4-nano` and `gpt-4.1-nano` reject them with a 400. Mistral accepts `key:`. Anthropic, OpenRouter, and Bedrock Converse accept `ttl:`.
-
-Both `with_caching` and the Agent `caching` macro accept keyword options or a Hash. If you switch to a provider that needs different caching options, call `with_caching` again. It replaces the previous cache policy:
+Use options when you need a cache key or lifetime:
 
 ```ruby
 chat.with_caching(ttl: "1h")
 ```
+
+Options depend on the provider and model:
+
+| Setting | Availability |
+| --- | --- |
+| `key:` | OpenAI-compatible protocols and Mistral |
+| `ttl:` | Supported OpenAI models, Anthropic, OpenRouter, and Bedrock Converse; accepted lifetimes vary |
+| `mode:` | Supported OpenAI-compatible models, using `"implicit"` or `"explicit"` |
+| `id:` | An explicit Gemini or Vertex AI cache, described below |
+
+Leave options unset to use provider defaults. Some models support automatic caching but reject explicit lifetimes or boundaries.
+
+Both `with_caching` and the Agent `caching` macro accept keyword options or a Hash. Calling either again replaces the previous cache policy.
 
 To stop RubyLLM from sending cache controls or rendering marked boundaries for later requests, pass `false`:
 
@@ -93,31 +83,19 @@ chat.add_message(role: :user, content: long_context)
 chat.cache_until_here
 ```
 
-When a chat has explicit boundaries, RubyLLM does not also add automatic `cache_control` for Anthropic or OpenRouter. The boundary is the source of truth.
-
-## Provider Mapping
-
-RubyLLM translates message boundaries at render time:
-
-| Provider | Boundary rendering |
-| --- | --- |
-| Anthropic | Adds `cache_control` to the final content block. |
-| OpenRouter | Adds `cache_control` to the final content block. |
-| Bedrock Converse | Appends a `cachePoint` block. |
-| OpenAI and Azure OpenAI | Add `prompt_cache_breakpoint` to the final content part and set `prompt_cache_options` mode to `explicit`. |
-| Others | Ignore explicit boundaries when the provider has no boundary concept. |
-
-Configure the TTL once and use explicit boundaries for the stable chunks:
+A marked boundary takes precedence over automatic boundary placement. You can combine it with a lifetime:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}').with_caching(ttl: "1h")
+chat.with_caching(ttl: "1h")
 chat.with_instructions(large_policy_prompt).cache_until_here
 chat.ask("Apply the policy to this request: #{request_text}")
 ```
 
-## Gemini Explicit Caching
+Boundaries are supported by Anthropic, OpenRouter, Bedrock Converse, and selected OpenAI-compatible models. Perplexity requires its [Router protocol]({% link _core_features/chat-request-control.md %}#perplexity-router). Providers without boundary support continue to use their own caching behavior.
 
-Gemini caches repeated prompt prefixes on its own, so most chats need no caching calls at all. When you want control over what is cached and how long it lives, create the cache yourself. Gemini models it as a resource: you store the stable content once, the API keeps it for a TTL, and each request references it by name.
+## Creating an Explicit Cache
+
+On Gemini and Vertex AI, create an explicit cache to reuse the same documents across requests or conversations. The provider stores the content until its expiry, and chats reference it by name.
 
 `RubyLLM.cache` creates the resource and returns a `RubyLLM::CachedContent`:
 
@@ -140,7 +118,7 @@ Pass file attachments with `with:`, the same way `ask` accepts them:
 cache = RubyLLM.cache("Reference material:", model: 'gemini-2.5-flash', with: "manual.pdf")
 ```
 
-The content must exceed the model's minimum cacheable size, 2,048 tokens for the gemini-2.5 family and 4,096 for newer Flash models, or Gemini rejects the cache. `ttl:` accepts seconds or a duration string such as `"300s"` and defaults to one hour.
+The content must meet the model's minimum cacheable size. `ttl:` accepts seconds or a duration string such as `"300s"` and defaults to one hour.
 
 Attach the cache with `with_caching(id:)`, passing the `CachedContent` or its name:
 
@@ -161,9 +139,7 @@ cache.delete           # removes the cache before its TTL
 cache = RubyLLM::CachedContent.find("cachedContents/abc123", provider: :gemini)
 ```
 
-Vertex AI supports the same lifecycle; pass `provider: :vertexai` to `RubyLLM.cache` and cache names become full `projects/.../cachedContents/...` resource paths.
-
-On Gemini, `with_caching` without `id:` and `cache_until_here` boundaries change nothing on the wire. Implicit caching is already on, so RubyLLM logs a debug note pointing to `RubyLLM.cache` and sends the request as usual.
+Use the same model and provider when creating and using a cache.
 
 ## Rails Persistence
 
@@ -178,7 +154,3 @@ chat.ask("Today's request: #{summary}")
 ```
 
 Existing apps should run the latest upgrade generator after updating RubyLLM so message tables include `cache_until_here`. New apps get the column from the install generator.
-
-## Dropping Down
-
-`with_caching`, `cache_until_here`, and `RubyLLM.cache` cover RubyLLM's prompt-caching API. Use `with_provider_options` only when you need another provider request option, and use a [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks) only when the rendered payload itself must be adjusted.

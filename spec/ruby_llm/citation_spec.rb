@@ -11,6 +11,7 @@ RSpec.describe RubyLLM::Citation do
       text: 'the grass is green',
       start_index: 28,
       end_index: 46,
+      source_id: 'file_facts',
       source_index: 0,
       start_page: 5,
       end_page: 5
@@ -29,6 +30,14 @@ RSpec.describe RubyLLM::Citation do
 
     expect(citation.url).to eq('https://example.com')
     expect(citation.start_index).to eq(3)
+  end
+
+  it 'preserves file identities through JSON persistence' do
+    citation = described_class.new(source_id: 'file_facts', title: 'facts.pdf')
+    restored = described_class.from_h(JSON.parse(JSON.generate(citation.to_h)))
+
+    expect(restored).to have_attributes(source_id: 'file_facts', title: 'facts.pdf', url: nil)
+    expect(restored).not_to eq(described_class.new(source_id: 'file_other', title: 'facts.pdf'))
   end
 
   it 'omits missing fields from to_h' do

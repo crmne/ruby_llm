@@ -137,7 +137,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   end
 
   it 'accumulates Bedrock Converse Stream thinking deltas into the final message' do
-    accumulator = RubyLLM::StreamAccumulator.new
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
     text_event = {
       'contentBlockDelta' => {
         'delta' => {
@@ -166,7 +166,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   end
 
   it 'preserves omitted thinking through stream accumulation' do
-    accumulator = RubyLLM::StreamAccumulator.new
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
     event = {
       'contentBlockDelta' => {
         'delta' => {
@@ -257,7 +257,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       event = { 'contentBlockDelta' => { 'delta' => { 'text' => 'hi' } } }
       allow(streaming).to receive(:decode_events).and_return([event])
 
-      streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::StreamAccumulator.new, progress) { |_chunk| nil }
+      streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::Protocol::StreamAccumulator.new, progress) { |_chunk| nil }
 
       expect(progress[:started]).to be(true)
     end
@@ -268,7 +268,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       allow(streaming).to receive(:decode_events).and_return([event])
 
       expect do
-        streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::StreamAccumulator.new, progress) { |_c| nil }
+        streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::Protocol::StreamAccumulator.new, progress) { |_c| nil }
       end.to raise_error(RubyLLM::RateLimitError)
       expect(progress).to be_empty
     end
@@ -284,7 +284,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
       expect do
         streaming.send(:parse_stream_chunk, Aws::EventStream::Decoder.new, chunk,
-                       RubyLLM::StreamAccumulator.new, {}) { |received| yielded << received.content }
+                       RubyLLM::Protocol::StreamAccumulator.new, {}) { |received| yielded << received.content }
       end.to raise_error(RubyLLM::ServerError, /ModelStreamErrorException: stream failed/)
       expect(yielded).to eq(['partial'])
     end
@@ -508,7 +508,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       req.define_singleton_method(:headers) { {} }
       req.define_singleton_method(:options) { request_options }
 
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(connection).to receive(:post) do |_url, _payload, &block|
         block.call(req)
         nil
@@ -520,8 +520,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       streaming.instance_variable_set(:@provider, provider)
       allow(streaming).to receive_messages(event_stream_decoder: :decoder, parse_stream_chunk: nil,
                                            handle_failed_stream: nil)
-      allow(RubyLLM::StreamAccumulator).to receive(:new).and_return(
-        instance_double(RubyLLM::StreamAccumulator, to_message: RubyLLM::Message.new(role: :assistant, content: ''))
+      allow(RubyLLM::Protocol::StreamAccumulator).to receive(:new).and_return(
+        instance_double(RubyLLM::Protocol::StreamAccumulator,
+                        to_message: RubyLLM::Message.new(role: :assistant, content: ''))
       )
 
       streaming.send(:stream_response, {})

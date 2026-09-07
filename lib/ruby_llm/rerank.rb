@@ -11,8 +11,8 @@ module RubyLLM
   #   rerank.results.first.score    # => 0.80078125
   #
   class Rerank
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # One reranked document: its +index+ in the input array, the
     # +document+ text, and the provider's relevance +score+.

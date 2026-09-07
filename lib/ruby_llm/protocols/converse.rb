@@ -14,7 +14,7 @@ module RubyLLM
       # names them as system tools.
       SERVER_TOOL_ALIASES = {
         web_search: lambda { |options|
-          { tool: { systemTool: { name: 'nova_grounding' }.merge(Utils.deep_symbolize_keys(options)) } }
+          { tool: { systemTool: { name: 'nova_grounding' }.merge(Support::Utils.deep_symbolize_keys(options)) } }
         }
       }.freeze
 

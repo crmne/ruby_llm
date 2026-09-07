@@ -92,7 +92,7 @@ RSpec.describe 'Published model registry workflow', type: :task do
 
     expect(status).to be_success, "#{stdout}\n#{stderr}"
     expect(outputs).to include('deploy=true')
-    expect(RubyLLM::ModelRegistry.read(File.join(tmpdir, 'ruby-llm-models.json')).map(&:id)).to eq(models.map(&:id))
+    expect(RubyLLM::Models::Registry.read(File.join(tmpdir, 'ruby-llm-models.json')).map(&:id)).to eq(models.map(&:id))
   end
 
   it 'does not deploy when the registry task rejects a refresh' do

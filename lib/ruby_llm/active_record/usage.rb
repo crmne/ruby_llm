@@ -9,8 +9,8 @@ module RubyLLM
       belongs_to :chat, polymorphic: true
       belongs_to :message, polymorphic: true, optional: true
 
-      validates :operation, inclusion: { in: ::RubyLLM::Usage::Entry::OPERATIONS.map(&:to_s) }
-      validates :status, inclusion: { in: ::RubyLLM::Usage::Entry::STATUSES.map(&:to_s) }
+      validates :operation, inclusion: { in: ::RubyLLM::Accounting::Usage::Entry::OPERATIONS.map(&:to_s) }
+      validates :status, inclusion: { in: ::RubyLLM::Accounting::Usage::Entry::STATUSES.map(&:to_s) }
       validates :provider, :model, presence: true
 
       scope :chronological, -> { order(created_at: :asc, id: :asc) }
@@ -46,7 +46,7 @@ module RubyLLM
       end
 
       def to_entry
-        ::RubyLLM::Usage::Entry.new(
+        ::RubyLLM::Accounting::Usage::Entry.new(
           operation: operation,
           provider: provider,
           model: model,

@@ -113,9 +113,9 @@ RSpec.describe RubyLLM::Models do
   describe 'refresh models output structure' do
     before do
       # Mock the API responses to ensure consistent test results
-      published = RubyLLM::ModelRegistry.read(described_class.bundled_registry_file)
+      published = RubyLLM::Models::Registry.read(described_class.bundled_registry_file)
       allow(described_class).to receive_messages(
-        fetch_published_registry: RubyLLM::ModelRegistry::PublishedSource::Result.new(published, 'test-etag', false),
+        fetch_published_registry: RubyLLM::Models::Registry::PublishedSource::Result.new(published, 'test-etag', false),
         fetch_provider_models: {
           models: mock_provider_models,
           fetched_providers: mock_provider_models.map(&:provider).uniq,

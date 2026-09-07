@@ -16,7 +16,7 @@ module RubyLLM
   #   end
   #
   class Citation
-    include Inspectable
+    include Support::Inspectable
 
     # The URL of the cited source, when citing the web, or +nil+.
     attr_reader :url
@@ -41,6 +41,9 @@ module RubyLLM
     # content, or +nil+.
     attr_reader :end_index
 
+    # The provider's identifier for the cited source, or +nil+.
+    attr_reader :source_id
+
     # The 0-indexed position of the source document or search result,
     # or +nil+.
     attr_reader :source_index
@@ -58,13 +61,14 @@ module RubyLLM
       @text = options[:text]
       @start_index = options[:start_index]
       @end_index = options[:end_index]
+      @source_id = options[:source_id]
       @source_index = options[:source_index]
       @start_page = options[:start_page]
       @end_page = options[:end_page]
     end
 
     def self.from_h(data) # :nodoc:
-      new(Utils.deep_symbolize_keys(data))
+      new(Support::Utils.deep_symbolize_keys(data))
     end
 
     def inspect_attributes # :nodoc:
@@ -80,6 +84,7 @@ module RubyLLM
         text: text,
         start_index: start_index,
         end_index: end_index,
+        source_id: source_id,
         source_index: source_index,
         start_page: start_page,
         end_page: end_page

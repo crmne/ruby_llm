@@ -25,7 +25,7 @@ module RubyLLM
   # ::aggregate and ::from_h return the same class, so a single call, a
   # whole chat, and a stored breakdown all read the same way.
   class Cost
-    include Inspectable
+    include Support::Inspectable
 
     COMPONENTS = %i[input output cache_read cache_write thinking].freeze # :nodoc:
     PER_MILLION = 1_000_000.0 # :nodoc:

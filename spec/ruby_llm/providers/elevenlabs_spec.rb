@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
     end
   end
 
-  describe 'operations ElevenLabs has no endpoint for' do
+  describe 'operation routing' do
     it 'refuses to chat' do
       chat = RubyLLM.chat(model: 'eleven_v3', provider: :elevenlabs)
 
@@ -42,10 +42,19 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
       end.to raise_error(RubyLLM::Error, "ElevenLabs doesn't support embeddings")
     end
 
-    it 'refuses to paint' do
-      expect do
-        RubyLLM.paint('A ruby', model: 'eleven_v3', provider: :elevenlabs)
-      end.to raise_error(RubyLLM::Error, "ElevenLabs doesn't support image generation")
+    it 'routes image generation through the Image and Video API' do
+      model = model_for(:elevenlabs, :elevenlabs_image)
+      request = stub_request(:post, 'https://api.elevenlabs.io/v1/flows/image')
+                .with(body: { model_id: model, prompt: 'A ruby' })
+                .to_return_json(body: { id: 'generation_ruby', status: 'pending' })
+      stub_request(:get, 'https://api.elevenlabs.io/v1/flows/image/generation_ruby')
+        .to_return_json(body: { id: 'generation_ruby', status: 'completed',
+                                content_url: 'https://images.example.test/ruby.png', content_mime_type: 'image/png' })
+
+      image = RubyLLM.paint('A ruby', model:, provider: :elevenlabs, assume_model_exists: true)
+
+      expect(image).to have_attributes(model:, mime_type: 'image/png')
+      expect(request).to have_been_requested.once
     end
 
     it 'has no chat model to fall back on' do

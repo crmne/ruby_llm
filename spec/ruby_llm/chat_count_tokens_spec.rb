@@ -13,6 +13,36 @@ end
 
 RSpec.describe RubyLLM::Chat, :live do
   describe '#count_tokens' do
+    context "with openai/#{model_for(:openai)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:openai), provider: :openai) }
+
+      it 'counts a staged message without mutating the chat' do
+        count = chat.count_tokens('What is the capital of France?')
+
+        expect(count).to be_a(Integer)
+        expect(count).to be_positive
+        expect(chat.messages).to be_empty
+      end
+
+      it 'counts instructions, tools and structured output' do
+        chat.ask_later('What is the weather in Berlin?')
+        base = chat.count_tokens
+        schema = { type: 'object', properties: { weather: { type: 'string' } },
+                   required: ['weather'], additionalProperties: false }
+
+        configured = chat.with_instructions('Be terse.').with_tools(CountingWeather).with_schema(schema).count_tokens
+
+        expect(configured).to be > base
+      end
+
+      it 'counts image attachments before generation' do
+        base = chat.count_tokens('Describe this image.')
+        chat.ask_later('Describe this image.', with: File.expand_path('../fixtures/ruby.png', __dir__))
+
+        expect(chat.count_tokens).to be > base
+      end
+    end
+
     context "with anthropic/#{model_for(:anthropic)}" do
       let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic) }
 
@@ -71,7 +101,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     context 'with a provider without token counting' do
       it 'raises a clear error' do
-        chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
+        chat = RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek)
 
         expect { chat.count_tokens('Hello') }
           .to raise_error(RubyLLM::Error, /doesn't support token counting/)

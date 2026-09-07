@@ -150,20 +150,14 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ type: 'custom', name: 'apply_patch' })
     end
 
-    it 'renders Azure Responses aliases, which lack web_search' do
+    it 'renders Azure Responses aliases' do
       payload = RubyLLM.chat(model: model_for(:azure, :thinking), provider: :azure, protocol: :responses)
-                       .with_server_tools(:code_execution)
+                       .with_server_tools(:web_search, :code_execution)
                        .render
 
       expect(payload[:input]).to be_an(Array)
+      expect(payload[:tools]).to include({ type: 'web_search' })
       expect(payload[:tools]).to include({ type: 'code_interpreter', container: { type: 'auto' } })
-    end
-
-    it 'raises for web_search on Azure, which does not offer it' do
-      chat = RubyLLM.chat(model: model_for(:azure, :thinking), provider: :azure, protocol: :responses)
-                    .with_server_tools(:web_search)
-
-      expect { chat.render }.to raise_error(RubyLLM::UnsupportedServerToolError, /:code_interpreter/)
     end
 
     it 'renders OpenRouter aliases as openrouter-prefixed tools' do
@@ -419,6 +413,10 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.raw.env.url.path).to end_with('/responses')
         expect(response.content).to include('4')
         expect(response.thinking&.text).to be_present
+
+        followup = chat.ask('Multiply that answer by 3. Just the number.')
+
+        expect(followup.content).to include('12')
       end
 
       it 'streams reasoning deltas' do

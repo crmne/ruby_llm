@@ -15,7 +15,7 @@ After reading this guide, you will know:
 * How to upload a file and reuse it in a chat or batch.
 * When RubyLLM uploads large chat attachments automatically.
 * How to set expiration and download provider results.
-* Which file operations each provider supports.
+* Which retention and download restrictions affect stored files.
 
 Use `with:` to send a file with a question. Use `RubyLLM.upload` when you want to upload once and reuse the provider's file ID or URI across requests.
 
@@ -38,7 +38,7 @@ file.byte_size  # => 1234
 file.mime_type  # => "application/jsonl"
 ```
 
-When `provider:` is omitted, RubyLLM uses the provider of `config.default_model`, the same model resolution path as `RubyLLM.chat`. Pass `provider:` when the file belongs to a different provider:
+When `provider:` is omitted, RubyLLM uses the provider of `config.default_model`. Select another provider explicitly:
 
 ```ruby
 file = RubyLLM.upload("document.pdf", provider: :anthropic)
@@ -51,7 +51,7 @@ io = StringIO.new(jsonl)
 file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.jsonl")
 ```
 
-OpenAI and Azure require `purpose:` because their Files API requires it: `assistants`, `batch`, `fine-tune`, `vision`, `user_data`, or `evals`. Mistral accepts `purpose:` for batch, fine-tuning, and OCR workflows. Other providers infer the file use from the API call that later references the file.
+OpenAI and Azure require `purpose:`. Use `"batch"` for batch inputs, `"user_data"` for OpenAI documents, and `"assistants"` for Azure documents.
 
 Vertex AI and Bedrock store files in a bucket rather than behind a file id. Pass `uri:` to choose the object, and `content_type:` when the MIME type RubyLLM detects is not the one you want:
 
@@ -71,7 +71,7 @@ file = RubyLLM.upload("batch.jsonl", purpose: "batch", expires_in: 24 * 60 * 60)
 file.expires_at # => 2026-07-05 12:00:00 +0000
 ```
 
-RubyLLM translates the duration into each provider's wire format. OpenAI anchors the expiration to the upload time and accepts between 1 hour and 30 days. xAI takes the value as seconds from upload, in the same range. Mistral counts expiration in whole hours, so RubyLLM rounds `expires_in` up to the next hour. Providers without upload expiration ignore the option; Gemini files always expire after 48 hours.
+OpenAI and xAI accept 1 hour to 30 days. Mistral rounds up to whole hours. Other providers may ignore `expires_in:`; Gemini files always expire after 48 hours.
 
 ## Using Files in Chat
 
@@ -84,15 +84,6 @@ chat = RubyLLM.chat(model: "{{ site.models.openai_current }}", provider: :openai
 chat.ask("Summarize the financial risks.", with: file)
 ```
 
-For Gemini and Vertex AI, uploaded files are referenced by URI:
-
-```ruby
-file = RubyLLM.upload("demo.mp4", provider: :gemini)
-
-chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}", provider: :gemini)
-chat.ask("What happens in this video?", with: file)
-```
-
 ## Large Chat Attachments
 
 Automatic uploads are on by default. Set `config.auto_upload_large_files` to `false` to keep attachments inline:
@@ -103,30 +94,76 @@ RubyLLM.configure do |config|
 end
 ```
 
-Automatic uploads are enabled only for providers and protocols that can reference stored files in chat. Other providers keep their existing inline behavior and still raise provider errors when a request exceeds that provider's limits. Vertex AI and Bedrock stage large attachments in a bucket you own. Set `config.vertexai_batch_gcs_uri` or `config.bedrock_batch_s3_uri` to a `gs://` or `s3://` prefix, and add the `google-cloud-storage` gem for Vertex AI. Without them a large attachment raises `RubyLLM::ConfigurationError`.
+Automatic uploads require a provider that supports stored attachments. Vertex AI and Bedrock also need a [configured storage bucket]({% link _getting_started/configuration-providers.md %}#batch-processing). Uploading separately does not remove the model's input or context limits.
 
 ## Finding and Downloading
 
 ```ruby
 file = RubyLLM::UploadedFile.find("file_123", provider: :openai)
-content = RubyLLM.download(file.id, provider: :openai)
+RubyLLM.download(file.id, provider: :openai).save("report.pdf")
 ```
+
+`download` returns a `RubyLLM::DownloadedFile`. Use `save` to write it to disk or `to_blob` to read its bytes. It is also a Ruby String, so you can pass it directly to a parser or process it with `each_line`.
 
 File IDs are provider-owned, so persist the provider alongside any file id you store and pass it back explicitly when reading later.
 
-## Provider Notes
+## ElevenLabs Media Assets
 
-| Provider | Files API limit | Chat file references | Automatic large attachments |
-| --- | --- | --- | --- |
-| OpenAI | 512 MB per file; `purpose:` required | PDF files by `file_id` in Responses and Chat Completions | PDFs above 50 MB, uploaded with `purpose: "user_data"` |
-| Azure OpenAI / Foundry | 512 MB per API upload for assistants and fine-tuning; `purpose:` required | Upload/find/download only; Azure chat file references are not enabled | No |
-| Anthropic | 500 MB per file; beta Files API | Images, PDFs, and text files by `file_id` | Images, PDFs, and text files above 24 MB |
-| Gemini | 2 GB per file, 20 GB per project, 48-hour retention | Media, PDFs, and text files by Files API URI | Supported attachments above 20 MB |
-| Mistral | 512 MB per file | Upload/find/download for batch, fine-tuning, OCR, and retrieval workflows | No |
-| xAI | 48 MB per file | Upload/find/download only in RubyLLM's current xAI Chat Completions protocol | No |
-| OpenRouter | 100 MB per file | PDF files by `file_id` in Chat Completions file parts | PDFs above 50 MB |
-| Vertex AI | Google Cloud Storage backed; Gemini `fileData` supports large `gs://` inputs | Gemini models by `gs://` URI; batch workflows also use GCS | Supported Gemini attachments above 7 MB |
-| Bedrock | S3 backed | Supported Converse document formats by S3 URI | Supported documents above 4.5 MB |
-| DeepSeek, GPUStack, Ollama, Perplexity | No provider-managed Files API in RubyLLM | Inline/provider-specific attachment behavior only | No |
+Upload an image once and reuse it in image or video generation:
+
+```ruby
+logo = RubyLLM.upload "logo.png", provider: :elevenlabs
+
+image = RubyLLM.paint(
+  "Place this logo on a white coffee mug",
+  with: logo,
+  model: "{{ site.models.image_elevenlabs }}",
+  provider: :elevenlabs,
+  assume_model_exists: true
+)
+
+image.save "mug.png"
+```
+
+ElevenLabs media assets require the [Image & Video plan and permissions]({% link _getting_started/configuration-providers.md %}#media-generation). They are separate from voice-agent knowledge base documents.
+
+## Cohere Datasets
+
+Upload CSV or JSONL data with a dataset type as its purpose:
+
+```ruby
+dataset = RubyLLM.upload(
+  "documents.jsonl",
+  provider: :cohere,
+  purpose: "embed-input",
+  provider_options: { name: "documents", keep_fields: ["document_id"] }
+)
+
+content = RubyLLM.download(dataset.id, provider: :cohere)
+```
+
+Cohere validates datasets asynchronously; downloading waits for validation. Uploaded datasets download as the original file by default. Generated datasets and uploads made with `keep_original_file: false` download as JSONL and require `gem "avro"`.
+
+Datasets are separate from chat attachments and expire after 30 days. For [chat and embedding batches]({% link _advanced/batches.md %}#batching-embeddings), `RubyLLM.batch` prepares the datasets for you.
+
+## Downloading Generated Files
+
+A conversation can return generated files as attachments:
+
+```ruby
+response = RubyLLM.chat(model: "{{ site.models.mistral_server_tools }}",
+                        provider: :mistral, protocol: :conversations)
+                 .with_server_tools(:code_execution)
+                 .ask("Create a CSV of the first ten squares as a downloadable file.")
+
+file = response.attachments.first.source
+RubyLLM.download(file.id, provider: file.provider).save(file.filename)
+```
+
+Keep the complete file ID and its provider when storing the reference. For generated images, [use `paint`]({% link _core_features/image-generation.md %}) to save the result directly.
+
+## Download Restrictions
+
+DeepSeek does not allow downloading uploaded images. Perplexity supports downloads of generated Agent files, without general file uploads.
 
 Downloads depend on the provider. Anthropic and OpenRouter only allow downloading files created server-side; uploaded files are not downloadable through their Files APIs.

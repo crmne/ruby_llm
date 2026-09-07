@@ -13,7 +13,7 @@ module RubyLLM
   # File ids are provider-owned. Persist #provider alongside #id and pass it
   # back when finding or downloading the file later.
   class UploadedFile
-    include Inspectable
+    include Support::Inspectable
 
     def inspect_attributes # :nodoc:
       { id: id, provider: provider, filename: filename, byte_size: byte_size }
@@ -91,7 +91,9 @@ module RubyLLM
     #   RubyLLM::UploadedFile.upload(io, provider: :openai, purpose: "batch",
     #                                filename: "batch.jsonl")
     #
-    # OpenAI and Azure require +purpose:+. Pass +expires_in:+ as a number of
+    # OpenAI and Azure require +purpose:+. Cohere uses +purpose:+ for its
+    # dataset type, such as <tt>"embed-input"</tt>.
+    # Pass +expires_in:+ as a number of
     # seconds to have the provider delete the file automatically; OpenAI,
     # xAI, and Mistral support it, and Mistral rounds up to whole hours.
     # Storage-backed providers (Vertex AI and Bedrock) store the file at
@@ -116,14 +118,16 @@ module RubyLLM
       provider_for(provider, context).find_file(id)
     end
 
-    # Downloads the content of the provider file +id+ and returns the raw
-    # body. Also available as RubyLLM.download.
+    # Downloads the provider file +id+ and returns a DownloadedFile.
+    # Also available as RubyLLM.download.
     #
-    #   content = RubyLLM.download(file.id)
+    #   RubyLLM.download(file.id, provider: :openai).save("report.pdf")
     #
-    # Not every provider allows downloads; see #downloadable.
+    # Not every provider allows downloads; see #downloadable. Cohere
+    # downloads original uploaded bytes when preserved; generated datasets
+    # return JSONL and require the optional +avro+ gem.
     def self.download(id, provider: nil, context: nil)
-      provider_for(provider, context).download_file(id)
+      DownloadedFile.new(provider_for(provider, context).download_file(id))
     end
 
     def self.provider_for(provider, context)

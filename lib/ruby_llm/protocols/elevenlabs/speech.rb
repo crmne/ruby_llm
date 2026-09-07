@@ -20,20 +20,27 @@ module RubyLLM
           'wav' => 'wav_44100'
         }.freeze
 
-        def speak(input, model:, voice:, format:, provider_options: {})
+        def speak(input, model:, voice:, format:, provider_options: {}, &block)
           track_usage(:speech) do
             payload = render_speech_payload(input, model:, voice:, format:, provider_options:)
+            if block
+              next stream_speech_response(speech_url(voice:, format:, streaming: true), payload,
+                                          model:, voice:, format:, &block)
+            end
+
             response = @connection.post speech_url(voice:, format:), payload, usage: @usage_tracker
             parse_speech_response(response, model:, voice:, format:)
           end
         end
 
-        def speech_url(voice: nil, format: nil)
-          "v1/text-to-speech/#{voice || DEFAULT_VOICE}?output_format=#{output_format_for(format)}"
+        def speech_url(voice: nil, format: nil, streaming: false)
+          path = "v1/text-to-speech/#{voice || DEFAULT_VOICE}"
+          path += '/stream' if streaming
+          "#{path}?output_format=#{output_format_for(format)}"
         end
 
         def render_speech_payload(input, model:, voice: nil, format: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
-          Utils.deep_merge({ text: input, model_id: model }, provider_options)
+          Support::Utils.deep_merge({ text: input, model_id: model }, provider_options)
         end
 
         def parse_speech_response(response, model:, voice:, format:)

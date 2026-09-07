@@ -47,7 +47,7 @@ module RubyLLM
             generationConfig: build_generation_config(format:, temperature:)
           }
 
-          Utils.deep_merge(payload, provider_options)
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def build_generation_config(format:, temperature:)

@@ -46,7 +46,7 @@ module RubyLLM
       def deep_merge_provider_options(payload, provider_options)
         return payload if provider_options.empty?
 
-        Utils.deep_merge(payload, provider_options)
+        Support::Utils.deep_merge(payload, provider_options)
       end
 
       def extract_embedding(body)

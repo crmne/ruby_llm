@@ -6,6 +6,17 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
   let(:protocol) { RubyLLM::Providers::XAI.protocols.fetch(:chat_completions).allocate }
 
   describe '#xai_batch_request' do
+    it 'preserves Responses input, tools, and schema when submitting a batch' do
+      payload = {
+        model: model_for(:xai, :server_tools), input: [{ role: 'user', content: 'Hi' }], stream: false,
+        tools: [{ type: 'web_search' }], text: { format: { type: 'json_schema', schema: { type: 'object' } } }
+      }
+
+      formatted = protocol.send(:xai_batch_request, custom_id: '0', payload:)
+
+      expect(formatted).to eq(batch_request_id: '0', batch_request: { responses: payload.except(:stream) })
+    end
+
     it 'wraps chat completion payloads as chat_get_completion requests' do
       request = {
         custom_id: '0',

@@ -14,6 +14,8 @@ module RubyLLM
       include ChatCompletions::Media
       include ChatCompletions::Speech
       include ChatCompletions::Transcription
+
+      public :render_transcription_options
     end
   end
 end

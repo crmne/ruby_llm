@@ -12,6 +12,9 @@ module RubyLLM
         include Mistral::OCR
         include Mistral::Speech
         include Mistral::Transcription
+        include Protocols::Mistral::MultiCompletion
+
+        public :server_tool_aliases
       end
     end
   end

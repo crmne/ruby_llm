@@ -20,7 +20,7 @@ module RubyLLM
 
         private
 
-        def render_embedding_payload(text, dimensions:, provider_options:)
+        def render_embedding_payload(text, dimensions:, provider_options:, **)
           payload = {}
           payload[:inputText] = text.to_s unless text.nil? || text.to_s.empty?
           payload[:embeddingConfig] = { outputEmbeddingLength: dimensions } if dimensions

@@ -116,6 +116,9 @@ RubyLLM.configure do |config|
   config.bedrock_mantle_api_base = String
   config.bedrock_batch_s3_uri = String   # s3://bucket/prefix for batches and large attachments
   config.bedrock_batch_role_arn = String # IAM role Bedrock assumes to run batch jobs
+  config.bedrock_video_s3_uri = String # s3://bucket/prefix for generated videos
+  config.bedrock_guardrail_id = String
+  config.bedrock_guardrail_version = String
 
   # Cohere
   config.cohere_api_key = String
@@ -177,6 +180,8 @@ RubyLLM.configure do |config|
   config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
   config.vertexai_api_base = String
   config.vertexai_batch_gcs_uri = String # gs://bucket/prefix for batches and large attachments
+  config.vertexai_ranking_api_base = String # Optional Discovery Engine endpoint
+  config.vertexai_ranking_config = String # Optional full rankingConfig resource name
 
   # xAI
   config.xai_api_key = String

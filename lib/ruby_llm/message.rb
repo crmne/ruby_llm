@@ -15,8 +15,8 @@ module RubyLLM
   # usage (#tokens), reasoning output (#thinking), source citations
   # (#citations), and requested tool calls (#tool_calls).
   class Message
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # The valid message roles: +:system+, +:user+, +:assistant+, and +:tool+.
     ROLES = %i[system user assistant tool].freeze
@@ -86,6 +86,7 @@ module RubyLLM
       @config = options[:config]
       @attachments = Attachment.wrap(options[:attachments], config: @config)
       @model = options[:model]
+      @supplied_cost = coerce_value(options[:cost], Cost)
       @tool_call_id = options[:tool_call_id]
       @tokens = options[:tokens] || Tokens.new(
         input: options[:input_tokens],
@@ -184,12 +185,14 @@ module RubyLLM
     end
 
     # Returns a Cost pricing this message's token usage in US dollars.
-    # Pricing comes from #model_info, or from +model:+ when given.
+    # Uses recorded attempt costs, an explicitly supplied +cost:+, or pricing
+    # from #model_info. An explicit +model:+ overrides those costs for repricing.
     #
     #   response.cost.total
     #
     def cost(model: nil)
       return ruby_llm_usage_cost if model.nil? && ruby_llm_usage_entries.any?
+      return @supplied_cost if model.nil? && @supplied_cost
 
       Cost.new(tokens:, model: model || model_info)
     end
@@ -213,13 +216,15 @@ module RubyLLM
 
     # Returns a Hash of the message's attributes, with token counts merged
     # in as +:input_tokens+, +:output_tokens+, and related keys. Omits
-    # +nil+ values and empty attachment and citation lists.
+    # +nil+ values and empty attachment and citation lists. Includes +:cost+
+    # only when supplied explicitly, preserving unknown costs on round-trip.
     def to_h
       {
         role: role,
         content: content,
         attachments: list_to_h(attachments),
         model: model,
+        cost: @supplied_cost && cost.to_h,
         tool_calls: tool_calls&.transform_values(&:to_h),
         tool_call_id: tool_call_id,
         thinking: thinking&.text,
@@ -258,7 +263,7 @@ module RubyLLM
         attributes = call.transform_keys(&:to_sym)
         [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
                           arguments: attributes[:arguments] || {},
-                          thought_signature: attributes[:thought_signature])]
+                          thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))]
       end
     end
 

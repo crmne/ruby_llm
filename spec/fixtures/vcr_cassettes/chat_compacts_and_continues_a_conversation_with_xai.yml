@@ -1,0 +1,131 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses/compact
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"The project
+        codename is Thimble. We write it in Ruby."},{"role":"assistant","content":[{"type":"output_text","text":"I
+        will remember the Thimble project and Ruby."}]}],"instructions":"Answer in
+        one short sentence."}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 12:17:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Traceparent:
+      - 00-c640c0cafcae36150fcc8ff85618d5c4-0f99c60b0000790e-01
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"object":"response.compaction","id":"cmp_338262af-fe3c-42dd-95a6-bdee20b22885","created_at":1788783433,"model":"grok-4.3","output":[{"type":"compaction","id":"cmp_338262af-fe3c-42dd-95a6-bdee20b22885","encrypted_content":"haA5tbIxgcmiNDIZosktVeTX9UiL5TNfeqWeZUsDU5KnJNU6u/uJOdMWTPCQV7h40y1KeH31NC4fcZi4VwoLrO47WOndThyknnFuw/nU11UEBKTP3I0dtkN0FDX3RuAfnBBDqegA/g7S1ql0Eh3VsBBuPZ68FptYpHFWjTgsbTUO9SG9w+ffhXKPLPeWFBEwWRYjQ4Ni3LXxMzb4wYs6K0tIyP1hcCdj4p+BVDYaNh6DaE2MKMu1CYR/wPX+fsR/hwQLrg90TOdKWdjru1RNvJsyOq2YXn7TWVKus7vCwoaz1XNfJsGFGHD1Y8xXj/rKzHCpem9OZ7VdsDdZ5Ww6jgXLMG+wrTOwUtVToxzQTMw1Av0YWVXullG3ylk0wXbwbxafqiHx0p7JQHl+WcOftL14h9N8Afy+S8moadxDZlA0PKn6fvxB/TYXlv2JvfAZF5dGfgzgU6OSiOPtYDjBC/UUr3X/xvClL0VhSlN/7hqENE2QPcQlGyGcYZDAO+IiEodsHw791S+w13PpWefLmzYDqokZe0R2li6/OjOXVS8MPmu/mWlUrI02KbCmo2ox5FShS4MQWw0qlDPcxc+b3SZdLlkod7TCGGjdsk5Lm58u46cMGInTTUC2eGKRoftJKwoEGW1OtSjAjgZMKPis98FUme/xgYS5hH4P0kmJggsRAVETldsogE/LkFN2bzqWTymZ453PcsvMYXrllzRxmkTbdI8Mmt+HAaFcqxKLtLOaseLiXdPT5An8osZ8YEn3APd5bwAJDP+vuvtV7HapBqpqjPZ1MGHtOyy8mUu/XB0skWTbOqPcbARuquPevx6JjkuUvbVS/oBveECJffo+Qzat0WomSeGkWjZ17WfGISjrn6sOkx+wp1PutVPPmLOq1SZYi1iUV9nLWLNt/yQH5cg3pImI2sO8tDndisRjtbCbDK0uJ6gwg/McciX3toVFAYqHxMhbi4kfRCl70P40zlDcf2VoT2t9cG81ig3Lyh21aXkKX163mPMOff7UCes206agtRGXJCC/8iKE/B+/vBFPKUMyzmv3FNatKLd2j7K/dGgzeV4rxHrjBpUmYHoJgKOgRk7jEBPApsbmhDUlhdVIGncVWBciDnXpMV9SyNxYZmUqFYhTJL9LQLay6KM2sa4Euxk5hnI01WvbupLJOi5+0iAbp9e8qOxfDcb32sM4xpBMl2iQIJK1QhoQuLOKTf7+f0x/l1AphFSs35WJJznR4+5m/V0gya76mzlCJa2axLafjj/6Uv8EsdfnlBg+umPwg2YCZ7m4ldqerRbTNNlichq7dHR+kl0TWgzNwNXpfq7L2xbzuok5wZr/JL64w1hV5R0TezGVAd1iI3h1ZGmP7p3CDuhYKTUySV55apUiPzvN3XV/m0FX3SO4/Pt6c0CqCiAb+onZCMfBUK1saPhTeWaSKx+blrv4HQGKhUr8E8UwWl/q+9XuptaHCEQeKd6iL1ev7kFxG3gjQmhmjW5K4JMIdPvIyg"}],"usage":{"input_tokens":589,"input_tokens_details":{"cached_tokens":128},"output_tokens":172,"output_tokens_details":{"reasoning_tokens":512},"total_tokens":1273,"dropped_message_count":1}}'
+  recorded_at: Mon, 07 Sep 2026 12:17:13 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"type":"compaction","id":"cmp_338262af-fe3c-42dd-95a6-bdee20b22885","encrypted_content":"haA5tbIxgcmiNDIZosktVeTX9UiL5TNfeqWeZUsDU5KnJNU6u/uJOdMWTPCQV7h40y1KeH31NC4fcZi4VwoLrO47WOndThyknnFuw/nU11UEBKTP3I0dtkN0FDX3RuAfnBBDqegA/g7S1ql0Eh3VsBBuPZ68FptYpHFWjTgsbTUO9SG9w+ffhXKPLPeWFBEwWRYjQ4Ni3LXxMzb4wYs6K0tIyP1hcCdj4p+BVDYaNh6DaE2MKMu1CYR/wPX+fsR/hwQLrg90TOdKWdjru1RNvJsyOq2YXn7TWVKus7vCwoaz1XNfJsGFGHD1Y8xXj/rKzHCpem9OZ7VdsDdZ5Ww6jgXLMG+wrTOwUtVToxzQTMw1Av0YWVXullG3ylk0wXbwbxafqiHx0p7JQHl+WcOftL14h9N8Afy+S8moadxDZlA0PKn6fvxB/TYXlv2JvfAZF5dGfgzgU6OSiOPtYDjBC/UUr3X/xvClL0VhSlN/7hqENE2QPcQlGyGcYZDAO+IiEodsHw791S+w13PpWefLmzYDqokZe0R2li6/OjOXVS8MPmu/mWlUrI02KbCmo2ox5FShS4MQWw0qlDPcxc+b3SZdLlkod7TCGGjdsk5Lm58u46cMGInTTUC2eGKRoftJKwoEGW1OtSjAjgZMKPis98FUme/xgYS5hH4P0kmJggsRAVETldsogE/LkFN2bzqWTymZ453PcsvMYXrllzRxmkTbdI8Mmt+HAaFcqxKLtLOaseLiXdPT5An8osZ8YEn3APd5bwAJDP+vuvtV7HapBqpqjPZ1MGHtOyy8mUu/XB0skWTbOqPcbARuquPevx6JjkuUvbVS/oBveECJffo+Qzat0WomSeGkWjZ17WfGISjrn6sOkx+wp1PutVPPmLOq1SZYi1iUV9nLWLNt/yQH5cg3pImI2sO8tDndisRjtbCbDK0uJ6gwg/McciX3toVFAYqHxMhbi4kfRCl70P40zlDcf2VoT2t9cG81ig3Lyh21aXkKX163mPMOff7UCes206agtRGXJCC/8iKE/B+/vBFPKUMyzmv3FNatKLd2j7K/dGgzeV4rxHrjBpUmYHoJgKOgRk7jEBPApsbmhDUlhdVIGncVWBciDnXpMV9SyNxYZmUqFYhTJL9LQLay6KM2sa4Euxk5hnI01WvbupLJOi5+0iAbp9e8qOxfDcb32sM4xpBMl2iQIJK1QhoQuLOKTf7+f0x/l1AphFSs35WJJznR4+5m/V0gya76mzlCJa2axLafjj/6Uv8EsdfnlBg+umPwg2YCZ7m4ldqerRbTNNlichq7dHR+kl0TWgzNwNXpfq7L2xbzuok5wZr/JL64w1hV5R0TezGVAd1iI3h1ZGmP7p3CDuhYKTUySV55apUiPzvN3XV/m0FX3SO4/Pt6c0CqCiAb+onZCMfBUK1saPhTeWaSKx+blrv4HQGKhUr8E8UwWl/q+9XuptaHCEQeKd6iL1ev7kFxG3gjQmhmjW5K4JMIdPvIyg"},{"role":"user","content":"What
+        is the project codename?"}],"instructions":"Answer in one short sentence.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 12:17:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Metrics-Ttft-Ms:
+      - '233.1'
+      X-Metrics-E2e-Ms:
+      - '1899.2'
+      Traceparent:
+      - 00-d2c153844b2eadd089179ec6e8a2e6a4-e7f681a8000063ed-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1788783435,"completed_at":1788783435,"id":"878caa51-3067-92ba-b400-441a0e12ed18","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_878caa51-3067-92ba-b400-441a0e12ed18","summary":[{"text":"The
+        user is asking: \"What is the project codename?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"bD9FuESaQem/wv+9OJTOq4im9JwJwKSfQOWZ/A/C1IY9pA0JUj1w0P/4/8w0G9NPbV+XHoaTOdX2tvT7KAMv9ZeXVsLCtUgIfgwz0d0uvflBv8PmP6/qzJIJbnSxs2MPgQ7idTsIk1mltRegbVDcTukNCpEJM7RGI2Vg3BSwM8j6uiobF7zmdPUdxRQKUfRjHH45KH0+3EWMwtirkvo4EgncOlkWuSFx2UF1OS7K4zHQYy33wS1f7O23xecggyLWIMebfutv1xRtIBWdk+miKsvkLBR/opvswISPD7imrjW9WHvn0Lc/dYtakZvhWQ2Xg359kVkbTPHV8oOPG4EO5B2jblwJUa4qtbISSSFpkzGp+qnVuIJvz6DlcMI9Ow8j0RXYRy00a856ZvXUnzn7y+kwtE9TO0DbIGy3VHantUiR7Wn8Ckj2AC8BkXSaMqOFSMlHS7FO2jGbYFtBJCAfo//dZJlvMw4Oab+uiNovWFZSviFoz26eWhL1DfyBKWpAXsKLbxca/weowYgx0JzeahwLdFHg+H7EfxcLKX9x2J8jBarHK+murSzVH0uCG4WYUIaxAWsmD9JaICCL/jCVxWVRufmG0zyUrqOjZ52sV6zMB/9TMLjKh7kxk8gqagqX6wSVx3ZqZaGcpc/MWEtvTz+nMbHB6ooiPAcOCVj33ao6kaAufKBCqqR8tzPiAj+kBbl14yn7rJNM6HSiQ52MpchwnCbRmsJ/CHYNkLOnWwCMPYnvuipX7fYv1VPSVVhRGkbqIP8XY7Lz5vwGmBFGkZSipSYoYTRvcyw5ttVs44smZBujNnNWxgtl6BJuPMLjvDH+4U1QCAZIMRo9UUWUFc4DNYx1Riby+LeYkFt1mIN+JTIjdGud9zqRIe2WU5U6jkoISL+/97+ghbxMzDDk07weFQiFtfXbbuOpg9zoa4Aq1Egi0Ss/Vj7qrtF5m9HyHE0PGYRvCCwaCrQ3uzVQUE/u6kk1Ijjy9v/FKw3KghBvtPNJKmULkZLt0r+bdW8h7pPDZ0Qtq/lUG/f+1J6ZUAi4Cuz9Pvhx3vckDqQl3W880vp7H+igZhgBznNGFdi0ZmbVQCYWm57dXFDyEQ"},{"content":[{"type":"output_text","text":"Thimble.","logprobs":[],"annotations":[]}],"id":"msg_878caa51-3067-92ba-b400-441a0e12ed18","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":408,"input_tokens_details":{"cached_tokens":128},"output_tokens":181,"output_tokens_details":{"reasoning_tokens":173},"total_tokens":589,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8281000,"context_details":{"input_tokens":408,"output_tokens":182}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Answer
+        in one short sentence."}'
+  recorded_at: Mon, 07 Sep 2026 12:17:16 GMT
+recorded_with: VCR 6.4.0

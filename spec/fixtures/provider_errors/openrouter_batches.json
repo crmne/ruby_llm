@@ -1,0 +1,24 @@
+{
+  "observed_at": "2026-09-07",
+  "endpoint": "https://openrouter.ai/api/beta/batches",
+  "observations": [
+    {
+      "model": "anthropic/claude-haiku-4.5",
+      "endpoint": "/v1/chat/completions",
+      "status": 400,
+      "error": "Model 'anthropic/claude-haiku-4.5' does not have a :batch endpoint."
+    },
+    {
+      "model": "openai/text-embedding-3-small",
+      "endpoint": "/v1/embeddings",
+      "status": 400,
+      "error": "Model 'openai/text-embedding-3-small' does not have a :batch endpoint."
+    },
+    {
+      "model": "openai/gpt-4.1-nano:batch",
+      "endpoint": "/v1/chat/completions",
+      "status": 400,
+      "error": "Model 'openai/gpt-4.1-nano:batch' does not have a :batch endpoint."
+    }
+  ]
+}

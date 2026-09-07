@@ -2,7 +2,7 @@
 layout: default
 title: Batches
 nav_order: 4
-description: Process thousands of chats asynchronously through provider-side batch APIs
+description: Process chats and embeddings in batches, then collect their results when they are ready.
 ---
 
 # {{ page.title }}
@@ -17,21 +17,21 @@ After reading this guide, you will know:
 * How to check on a batch and collect its messages, from any process
 * How to handle tool calls in batched conversations
 * How to batch embeddings with `embed_later`
-* How to persist batch results with ActiveRecord
+* How to persist batch results with Active Record
 
 ## What Are Batches?
 
-Providers process batched requests asynchronously on their own schedule, usually at a discount from their interactive APIs. Several supported providers price batch inference at 50% of standard rates and target a 24-hour turnaround, but pricing, deadlines, and expiration behavior are provider-specific and can change. Batches are the right tool whenever nobody is waiting on the answer: nightly classification runs, bulk summarization, evaluations, and backfills.
+Batches process requests in the background, often at lower prices than interactive calls. Use them for document summaries, evaluations, and backfills when nobody is waiting for an immediate answer. Prices and turnaround depend on the provider.
 
-A batch in RubyLLM is an array of chats, each ending on an unanswered question. Everything in the request (model, instructions, history, schemas, temperature, attachments) rides along, so there is nothing new to learn about building requests. The one exception is `with_headers`: batch APIs have no per-request HTTP headers, so custom headers set on a chat don't apply to batched requests. Embeddings batch too; see [Batching Embeddings](#batching-embeddings).
+Stage chats or embedding requests, submit them together, and collect their results later. Some providers need [additional setup]({% link _getting_started/configuration-providers.md %}#batch-processing).
 
 ## Staging Questions
 
-`ask_later` is `ask` without the waiting: it adds your question to the conversation and returns the chat, leaving it awaiting a response.
+`ask_later` adds a question and returns the chat without contacting the provider:
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-haiku-4-5").with_instructions("Be terse.").ask_later("What is 2 + 2?")
-chat.complete? # => false, the model still owes a response
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}").ask_later("What is 2 + 2?")
+chat.complete? # => false
 ```
 
 ## Submitting a Batch
@@ -40,47 +40,30 @@ Pass the staged chats to `RubyLLM.batch`. Submission happens immediately and ret
 
 ```ruby
 chats = documents.map do |doc|
-  RubyLLM.chat(model: "claude-haiku-4-5")
+  RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
     .with_instructions("Summarize the document in one paragraph.")
     .ask_later(doc.text)
 end
 
 batch = RubyLLM.batch(chats)
-batch.id         # => "msgbatch_01EhcDuvb5XfWqcdJArbsfNX"
-batch.status     # => :pending
-batch.raw_status # => "in_progress"
+batch.id     # Save this to collect the results later
+batch.status # => :pending
 ```
 
-Chats in one Anthropic or xAI batch can use different models, instructions, schemas, and parameters; each request stands alone:
+The chats keep their instructions, history, tools, schemas, and other request settings, subject to the [provider's batch restrictions](#provider-restrictions). Custom headers set with `with_headers` do not apply to batch requests.
 
-```ruby
-chats = tickets.map do |ticket|
-  RubyLLM.chat(model: ticket.urgent? ? "claude-sonnet-4-5" : "claude-haiku-4-5")
-    .with_instructions("You are #{ticket.team} support.")
-    .ask_later(ticket.body)
-end
-
-batch = RubyLLM.batch(chats)
-```
-
-OpenAI, Azure OpenAI, Mistral, Gemini, Vertex AI, and Bedrock batch jobs are model-scoped, so those providers require one model per batch. Split mixed-model work into one batch per model.
-
-One provider per batch, though: submitting chats from different providers raises `ArgumentError`.
+Use one provider per batch. Anthropic and xAI allow different models in the same batch; other integrations require one model per submission.
 
 ## Collecting the Answers
 
-Persist `batch.id` and walk away. From any process, any time later, look the batch up by id with `RubyLLM::Batch.find`:
+Save `batch.id`. Another process can retrieve the batch with `RubyLLM::Batch.find`:
 
 ```ruby
-batch = RubyLLM::Batch.find("msgbatch_01EhcDuvb5XfWqcdJArbsfNX", provider: :anthropic)
+batch = RubyLLM::Batch.find(batch_id, provider: :anthropic)
 batch.complete? # => true
 ```
 
-`Batch.find` uses the global configuration. Pass `context:` to use an isolated [configuration context]({% link _getting_started/configuration-connection.md %}) instead:
-
-```ruby
-batch = RubyLLM::Batch.find(batch_id, provider: :anthropic, context: ctx)
-```
+`Batch.find` needs `provider:` when RubyLLM has not persisted the batch. Pass `context: ctx` to use an isolated [configuration context]({% link _getting_started/configuration-connection.md %}).
 
 `complete?` reads the batch's last known state without contacting the provider. In a long-running process, poll with `refresh`, which re-fetches the state from the provider and returns the batch:
 
@@ -113,72 +96,57 @@ batch.messages
 batch.statuses # => [:succeeded, :failed, :cancelled]
 ```
 
-Batch results arrive as JSONL rather than individual HTTP responses, so `message.raw` on a batch message is the provider result body hash, not a Faraday response with `status` or `headers`.
+Use `batch.cancel` to stop unfinished work where the provider supports cancellation. Collect any completed results afterward.
 
-You can stop a running batch with `batch.cancel`; already-processed requests still return results.
+## Cost and Usage
 
-RubyLLM freezes the provider's batch rate on each successful result. `message.cost`, `embedding.cost`, and `batch.cost` therefore report batch cost rather than the standard interactive rate. An exact cost reported by the provider takes precedence over a calculated rate. When neither the provider nor the model registry supplies enough information to determine the batch rate, `cost.total` is `nil` instead of an interactive-price estimate.
+Read a batch's cost and token usage through the same objects as other RubyLLM results:
+
+```ruby
+batch.cost.total
+batch.tokens.input
+```
+
+`batch.cost` returns a `RubyLLM::Cost`. Its total stays `nil` until processing ends. It uses the provider's reported total when available; otherwise it adds the collected results' costs at batch rates. Missing pricing stays `nil`.
+
+Each result also exposes `message.cost` or `embedding.cost`. A charge reported for the whole batch is not divided among its results. Rails retains batch costs when another process retrieves the batch.
 
 ## Tools in Batches
 
-A batch generates one model turn. When the model asks for a tool, the round ends there (providers can't call your Ruby code) and the response comes back with `tool_call?` true. You drive the rest of the [agentic loop]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) yourself between rounds:
-
-* `chat.complete` runs the tools and finishes the conversation synchronously, at standard prices.
-* `chat.run_tools` runs the tools and stops, leaving the chat ready for the model again, i.e. for the next batch.
-
-Looping `run_tools` into fresh batches runs entire agentic workloads at batch prices, one model turn per round:
+A batch generates one model turn. If a response requests a Ruby tool, run it before submitting the next turn:
 
 ```ruby
-chats = tickets.map { |t| support_chat(t).ask_later(t.body) }
+batch.messages
+chats.each(&:run_tools)
 
-loop do
-  chats.each(&:run_tools)
-  pending = chats.reject(&:complete?)
-  break if pending.empty?
-
-  batch = RubyLLM.batch(pending)
-  sleep 60 until batch.refresh.complete?
-
-  # batch.messages appends each answer to its chat; drop chats whose request
-  # failed (a nil slot) so the loop can terminate.
-  chats -= pending.zip(batch.messages).filter_map { |chat, message| chat unless message }
-end
+pending = chats.reject(&:complete?)
+next_batch = RubyLLM.batch(pending) if pending.any?
 ```
 
-`run_tools` does nothing on chats without pending tool calls, and `reject(&:complete?)` keeps the chats heading into another round while finished conversations drop out.
+Repeat this sequence for more batch turns. `run_tools` does nothing when there are no pending calls. To finish a conversation immediately, call `chat.complete`; subsequent requests use interactive prices.
 
-Tools declared with `requires_approval` park the chat after the batch result arrives. Record each decision, run the approved or denied tools, then submit the next model turn as another batch:
+For tools declared with `requires_approval`, record each decision before running tools:
 
 ```ruby
-class DeleteRecord < RubyLLM::Tool
-  requires_approval
-
-  def execute(id:)
-    Record.find(id).destroy!
-  end
-end
-
-batch.messages
-call = chat.pending_approvals.first
-chat.approve(call) # or chat.deny(call)
+chat.approve(chat.pending_approvals.first) # Or chat.deny(...)
 chat.run_tools
 ```
 
-With `acts_as_chat`, the approval decision is stored on RubyLLM's internal tool-call row, so another process can resume the same conversation safely.
+Rails saves approval decisions so another process can resume. See [Tool Approvals]({% link _core_features/tool-execution.md %}#requiring-approval) and [Agentic Workflows]({% link _advanced/agentic-workflows.md %}).
 
 ## Batching Embeddings
 
-Embeddings batch too, on OpenAI. `RubyLLM.embed_later` is `RubyLLM.embed` without the waiting: it stages a text and returns a `RubyLLM::EmbeddingRequest` instead of contacting the provider. Submit an array of staged requests with `RubyLLM.batch`:
+`RubyLLM.embed_later` stages an embedding request without contacting the provider. Submit the requests with the same batch API:
 
 ```ruby
 requests = documents.map do |doc|
-  RubyLLM.embed_later(doc.text, model: "text-embedding-3-small")
+  RubyLLM.embed_later(doc.text, model: "{{ site.models.embedding_small }}")
 end
 
 batch = RubyLLM.batch(requests)
 ```
 
-`embed_later` takes `model:`, `provider:`, and `dimensions:`, with the same defaults as `embed`. Each request carries its own dimensions, but OpenAI batch jobs are model-scoped, so every request in a batch must use one embedding model.
+`embed_later` accepts `model:`, `provider:`, and `dimensions:`, with the same defaults as `embed`. Choose a model that supports batches and use the same model and provider throughout the submission.
 
 Poll with `refresh` as usual. Once processing ends, `results` returns the embeddings in submission order and fills in each request's `result`:
 
@@ -188,25 +156,25 @@ sleep 60 until batch.refresh.complete?
 batch.results.first.vectors # => [0.018, -0.027, ...]
 
 documents.zip(requests).each do |doc, request|
-  doc.update!(embedding: request.result.vectors)
+  doc.update!(embedding: request.result.vectors) if request.result
 end
 ```
 
 Failed slots are `nil` in `results`, and their requests keep a `nil` result; resubmit them in a fresh batch or embed them synchronously with `RubyLLM.embed`.
 
-A batch takes chats or embedding requests, not both; mixing them raises `ArgumentError`. Embedding batches are OpenAI-only for now.
+A batch takes chats or embedding requests, not both; mixing them raises `ArgumentError`. `embed_later` stages text inputs; media attachments use the synchronous [embedding API]({% link _core_features/embeddings.md %}#embedding-images-and-other-media).
 
 ## Rails Integration
 
 Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later`, `run_tools`, and `complete?` all work on your records, so staged questions and collected answers land in the database with their usage entries attached.
 
-The one new thing a batch needs is somewhere to keep its id while the provider works. RubyLLM stores that state internally when all inputs are persisted chats; the conversations themselves stay in your `chats` and `messages` tables. No application `Batch` model is required. (Upgrading an app from 1.x? `bin/rails generate ruby_llm:upgrade` creates the internal table.)
+When all inputs are persisted chats, RubyLLM saves the batch ID and state in its own table. Your application keeps its chats and messages; it does not need a `Batch` model. The [upgrade generator]({% link _reference/upgrading.md %}) creates the supporting table for existing apps.
 
 `RubyLLM.batch` sends the staged chats to the provider and persists the batch state in one step:
 
 ```ruby
 chats = tickets.map do |ticket|
-  Chat.create!(model: "claude-haiku-4-5").ask_later(ticket.body)
+  Chat.create!(model: "{{ site.models.anthropic_current }}").ask_later(ticket.body)
 end
 
 batch = RubyLLM.batch(chats)
@@ -226,21 +194,23 @@ class BatchPollJob < ApplicationJob
 end
 ```
 
-`batch.messages` appends each answer to its chat and persists it, so the conversations come back complete with no bookkeeping on your side. It is idempotent: an answered chat ends on an assistant message, so re-running the job (a retry, an at-least-once queue) never appends an answer twice. Stop a running batch with `batch.cancel`.
+`batch.messages` appends and persists each answer once. Retrying the polling job does not duplicate messages.
 
-Tools work the same way they do for plain chats. Because the records carry the whole conversation, a poll job can `run_tools` on the collected chats and submit the ones still awaiting the model as the next batch, running an agentic workload across batches at batch prices.
+The same tool workflow works on these records: run pending tools, then batch the next model turns.
 
-## Provider Notes
+## Provider Restrictions
 
-* **Anthropic:** up to 100,000 requests or 256 MB per batch. Mixed models in one batch are supported. Request validation is asynchronous: a malformed request comes back as a failed result after the batch ends, not as a submission error. Results stay downloadable for 29 days.
-* **OpenAI:** uses the file-backed Batch API. RubyLLM supports Responses, Chat Completions, and embeddings payloads, and enforces OpenAI's one-model-per-file rule. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
-* **Azure OpenAI / Foundry:** uses the OpenAI-style file-backed batch workflow under `/openai/v1`. Your Azure deployment must be a batch-capable deployment type. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
-* **Mistral:** uses inline batch jobs for Chat Completions. One model per batch is required. Mistral provider files are available through `RubyLLM.upload` and `RubyLLM.download`.
-* **Gemini:** uses inline `generateContent` batches. One model per batch is required.
-* **Vertex AI:** uses `batchPredictionJobs` with Google Cloud Storage through the same storage-backed file protocol as `RubyLLM.upload`. Configure `vertexai_batch_gcs_uri` with a `gs://bucket/prefix`; the configured credentials need permission to create batch prediction jobs and read/write that bucket. RubyLLM supports Vertex Gemini, Anthropic Claude, and MaaS chat batches; Vertex-hosted Mistral batches are not wired yet.
-* **Bedrock:** uses Model Invocation Jobs with Converse payloads and S3 through the same storage-backed file protocol as `RubyLLM.upload`. Configure `bedrock_batch_s3_uri` and `bedrock_batch_role_arn`; the configured static keys or `bedrock_credential_provider` need permission to submit the job and write the input object, while the batch role must allow Bedrock to read the input prefix and write results. Bedrock batch inference does not support tools or structured output, so RubyLLM rejects those requests before submission.
-* **xAI:** uses native batch containers with chat completion requests. Each request carries its own model, and results are paginated and can be collected before every request has finished. xAI provider files are available through `RubyLLM.upload` and `RubyLLM.download`.
-* **Other providers:** not supported by RubyLLM batches yet. `RubyLLM.batch` raises `RubyLLM::Error` for providers without batch support.
+The batch workflow above is shared. These differences affect which requests you can submit:
+
+| Provider | Restriction |
+|----------|-------------|
+| Azure | Requires a batch-capable deployment. Azure embedding batches are not currently available through RubyLLM. |
+| Bedrock | Chat batches do not support tools or structured output. Region and batch-size limits depend on the model. |
+| Cohere | Chat batches do not support structured output, forced tool choice, or retrieval documents. Omit `dimensions:` for embedding batches. |
+| OpenRouter | Requires a model with batch access. Batches accept text input and output, with one protocol per batch. Embedding task types and provider-routing preferences are unavailable. Cancellation is not supported. |
+| Vertex AI | Text embedding batches require matching dimensions and parameters across requests. |
+
+See [batch setup]({% link _getting_started/configuration-providers.md %}#batch-processing) for dependencies, cloud storage, and permissions. Bedrock and Vertex AI keep batch files in your configured bucket after processing or cancellation; your application controls their cleanup.
 
 ## Next Steps
 

@@ -3,21 +3,33 @@
 module RubyLLM
   module Providers
     class XAI
-      # Grok Imagine video generation. Jobs take a single reference image
-      # as a URL, file id, or data URI, and finished videos are public
-      # hosted URLs.
+      # Grok Imagine generation, editing, and extension jobs.
       module Videos
         def video_url
           'videos/generations'
         end
 
+        def video_request_url(payload)
+          payload.key?(:video) ? 'videos/edits' : video_url
+        end
+
+        def video_extension_url
+          'videos/extensions'
+        end
+
         def render_video_payload(prompt, model:, with: [], provider_options: {})
           payload = { model: model, prompt: prompt }
-          if (image = with.first)
-            payload[:image] = { url: video_image_reference(image) }
+          if (attachment = with.first)
+            key = attachment.video? ? :video : :image
+            payload[key] = video_reference(attachment)
           end
 
           payload.merge(provider_options)
+        end
+
+        def render_video_extension_payload(prompt, model:, extend:, provider_options: {})
+          video = video_extension_attachment(extend)
+          { model: model, prompt: prompt, video: video_reference(video) }.merge(provider_options)
         end
 
         def parse_video_job(response, model:)
@@ -55,19 +67,19 @@ module RubyLLM
         private
 
         def validate_animate_inputs!(with:)
-          raise Error, 'xAI video generation takes a single reference image' if with.size > 1
+          raise Error, 'xAI video generation takes a single reference image or video' if with.size > 1
 
           with.each do |attachment|
             next if attachment.provider_file? || attachment.url?
-            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
+            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image? || attachment.video?
           end
         end
 
-        def video_image_reference(attachment)
-          return attachment.provider_file_id if attachment.provider_file?
-          return attachment.source.to_s if attachment.url?
+        def video_reference(attachment)
+          return { file_id: attachment.provider_file_id } if attachment.provider_file?
+          return { url: attachment.source.to_s } if attachment.url?
 
-          attachment.for_llm
+          { url: attachment.for_llm }
         end
       end
     end

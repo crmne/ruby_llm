@@ -2,10 +2,7 @@
 
 module RubyLLM
   module Providers
-    # Deepgram API integration. Deepgram is a speech company, so this
-    # provider covers speech to text and text to speech only. Chat,
-    # embeddings, and image generation have no Deepgram endpoint and
-    # raise NotImplementedError.
+    # Integrates Deepgram transcription and speech synthesis.
     class Deepgram < Provider
       protocol :deepgram, Protocols::Deepgram
 

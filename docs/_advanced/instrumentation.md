@@ -211,6 +211,8 @@ end
 
 This event fires once for every finished physical attempt. Its payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both objects are always present, while individual fields are `nil` when the provider supplied no defensible figure. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
+`model` is `nil` for operations that do not select a model, so event subscribers should accept a missing model.
+
 ## Payloads
 
 Payloads include the Ruby objects needed by observability adapters, but message content, tool arguments, and provider responses may be sensitive. Only export or log those fields when your application policy allows it.

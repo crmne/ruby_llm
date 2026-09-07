@@ -12,6 +12,8 @@ module RubyLLM
             case attachment.type
             when :image
               format_image(attachment)
+            when :audio
+              Protocols::ChatCompletions::Media.format_audio(attachment)
             when :text
               Protocols::ChatCompletions::Media.format_text_file(attachment)
             else

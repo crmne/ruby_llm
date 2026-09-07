@@ -25,12 +25,11 @@ ocr = RubyLLM.ocr("contract.pdf")
 
 puts ocr.markdown
 # => "# Service Agreement\n\nThis agreement is made between..."
-
 ```
 
-The file may be a local path, an `http(s)` URL, an IO object, or a `RubyLLM::Attachment`. Local files are inlined into the request; URLs are passed to the provider as-is, so the file must be publicly reachable.
+The file may be a local path, an `http(s)` URL, an IO object, or a `RubyLLM::Attachment`. Remote URLs must be publicly reachable.
 
-PDFs, office documents (DOCX, PPTX), and images (PNG, JPEG, AVIF) are supported. Mistral Document AI is the only OCR provider today.
+Mistral accepts PDFs, office documents, and images. Cohere Parse accepts one image per request.
 
 ## Working with Pages
 
@@ -57,10 +56,10 @@ Each page carries:
 
 ## Choosing Models
 
-`mistral-ocr-latest` is the default. Pin a specific version with `model:`:
+Choose another OCR model with `model:`:
 
 ```ruby
-RubyLLM.ocr("scan.png", model: "mistral-ocr-2512")
+RubyLLM.ocr("scan.png", model: "{{ site.models.cohere_ocr }}")
 ```
 
 Configure the default globally:
@@ -98,7 +97,9 @@ RubyLLM.ocr(
 )
 ```
 
-See the [Mistral Document AI documentation](https://docs.mistral.ai/capabilities/document_ai/basic_ocr/) for the full list, including `image_limit:`, `image_min_size:`, `include_blocks:`, and `confidence_scores_granularity:`.
+See [Mistral Document AI](https://docs.mistral.ai/capabilities/document_ai/basic_ocr/) for more extraction options.
+
+For Cohere, `provider_options: { output_format: "blocks" }` includes text, image, and table blocks in `ocr.pages.first.raw["blocks"]`.
 
 ## Extracting Structured Data
 
@@ -118,7 +119,7 @@ response.parsed
 # => {"invoice_number" => "INV-1042", "currency" => "EUR", "total" => 120.0}
 ```
 
-This makes two model calls: OCR extracts the text, then a chat model structures it. Configure Mistral for OCR and your chosen chat provider. See [Structured Output]({% link _core_features/structured-output.md %}) for schemas and typed fields.
+OCR extracts the text, then a chat model structures it. See [Structured Output]({% link _core_features/structured-output.md %}) for schemas and typed fields.
 
 ## Error Handling
 

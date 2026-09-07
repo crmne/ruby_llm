@@ -3,8 +3,8 @@
 module RubyLLM
   module Providers
     class DeepSeek
-      # DeepSeek's dialect of the OpenAI Responses API, served for
-      # deepseek-v4-flash. Reasoning arrives as reasoning_text content parts
+      # DeepSeek's dialect of the OpenAI Responses API.
+      # Reasoning arrives as reasoning_text content parts
       # instead of summaries, both in responses and in the stream.
       class Responses < Protocols::Responses
         SERVER_TOOL_ALIASES = {
@@ -32,6 +32,35 @@ module RubyLLM
           end
 
           texts.empty? ? super : texts.join("\n")
+        end
+
+        def format_assistant_items(message)
+          items = super
+          return items if message.raw_content || message.thinking&.text.to_s.empty? || message.thinking.signature
+
+          items.unshift(format_reasoning_item(message.thinking))
+        end
+
+        def format_reasoning_item(thinking)
+          { type: 'reasoning', content: [{ type: 'reasoning_text', text: thinking.text }] }
+        end
+
+        def format_tool_items(message)
+          [{
+            type: 'function_call_output',
+            call_id: message.tool_call_id,
+            output: format_content(message.content, message.attachments)
+          }]
+        end
+
+        def format_provider_file(file)
+          raise UnsupportedAttachmentError, file.mime_type unless file.image?
+
+          { type: 'input_image', file_id: file.provider_file_id }
+        end
+
+        def format_document(document)
+          raise UnsupportedAttachmentError, document.mime_type
         end
       end
     end

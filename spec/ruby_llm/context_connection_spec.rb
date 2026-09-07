@@ -15,11 +15,11 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
   let(:model) { instance_double(RubyLLM::Model, id: 'test-model') }
 
   def proxy_and_timeout(config)
-    connection = RubyLLM::Connection.basic(config)
+    connection = RubyLLM::Transport::Connection.basic(config)
     [connection.proxy&.uri&.to_s, connection.options.timeout]
   end
 
-  describe RubyLLM::Connection do
+  describe RubyLLM::Transport::Connection do
     it 'builds a basic connection from the configuration it is given' do
       expect(proxy_and_timeout(context.config)).to eq(['http://proxy.example:8080', 7])
     end

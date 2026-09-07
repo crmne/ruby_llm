@@ -638,7 +638,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         RubyLLM::Message.new(
           role: :tool, content: 'done', tool_call_id: call.id,
           thinking: RubyLLM::Thinking.new(text: '', signature: 'sig'),
-          citations: [RubyLLM::Citation.new(url: 'https://example.test')],
+          citations: [RubyLLM::Citation.new(url: 'https://example.test', source_id: 'file_facts')],
           finish_reason: 'stop'
         )
       )
@@ -649,6 +649,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(record.thinking_signature).to eq('sig')
       expect(record.finish_reason).to eq(:stop)
       expect(record.citations.first.url).to eq('https://example.test')
+      expect(record.to_llm.citations.first.source_id).to eq('file_facts')
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result).to eq(record)
     end
 
@@ -682,7 +683,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       record = chat.instance_variable_get(:@message)
       restored = record.to_llm
       expect(restored.server_tool_calls.first.type).to eq('server_tool_use')
-      expect(restored.server_tool_calls.first.raw).to eq(RubyLLM::Utils.deep_symbolize_keys(raw_block))
+      expect(restored.server_tool_calls.first.raw).to eq(RubyLLM::Support::Utils.deep_symbolize_keys(raw_block))
       expect(restored.raw_content.length).to eq(2)
     end
   end

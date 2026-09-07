@@ -22,7 +22,7 @@ module RubyLLM
 
         # The G1 and V1 models take inputText alone; Bedrock rejects the V2
         # tuning keys as extraneous.
-        def render_embedding_payload(text, model:, dimensions:, provider_options:)
+        def render_embedding_payload(text, model:, dimensions:, provider_options:, **)
           payload = { inputText: text.to_s }
 
           if titan_v2?(model)

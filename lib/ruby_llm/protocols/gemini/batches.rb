@@ -6,6 +6,7 @@ module RubyLLM
       # Gemini Batch API with inlined generateContent requests.
       module Batches
         include RubyLLM::Batch::Helpers
+        include Gemini::EmbeddingBatches
 
         # The wire enum is BATCH_STATE_*; the SDKs print JOB_STATE_*. Match the
         # suffix so either spelling works.
@@ -14,12 +15,19 @@ module RubyLLM
 
         def create_batch(requests)
           model = single_batch_model!(requests, 'gemini')
-          response = @connection.post("models/#{model}:batchGenerateContent", {
+          action = embedding_batch?(requests) ? 'asyncBatchEmbedContent' : 'batchGenerateContent'
+          response = @connection.post("models/#{model}:#{action}", {
                                         batch: {
                                           displayName: "ruby_llm_#{SecureRandom.hex(8)}",
                                           inputConfig: {
                                             requests: {
-                                              requests: requests.map { |request| gemini_batch_request(request, model) }
+                                              requests: requests.flat_map do |request|
+                                                if embedding_batch_payload?(request.fetch(:payload))
+                                                  embedding_batch_requests(request, model)
+                                                else
+                                                  [gemini_batch_request(request, model)]
+                                                end
+                                              end
                                             }
                                           }
                                         }
@@ -41,12 +49,21 @@ module RubyLLM
         # Gemini also returns them in order, so we fall back to position.
         def batch_results(id)
           body = @connection.get(batch_name(id)).body
-          inlined = body.dig('response', 'inlinedResponses', 'inlinedResponses') ||
-                    body.dig('output', 'inlinedResponses', 'inlinedResponses') || []
+          inlined = inline_batch_responses(body)
+          return parse_embedding_batch_results(inlined) if embedding_batch_response?(body)
+
           inlined.each_with_index.map { |response, index| parse_inline_response(response, index) }
         end
 
         private
+
+        def inline_batch_responses(body)
+          body.dig('response', 'inlinedEmbedContentResponses', 'inlinedResponses') ||
+            body.dig('output', 'inlinedEmbedContentResponses', 'inlinedResponses') ||
+            body.dig('response', 'inlinedResponses', 'inlinedResponses') ||
+            body.dig('output', 'inlinedResponses', 'inlinedResponses') ||
+            body.dig('metadata', 'output', 'inlinedResponses', 'inlinedResponses') || []
+        end
 
         def gemini_batch_request(request, model)
           {
@@ -116,7 +133,7 @@ module RubyLLM
             raw_status: state,
             completed: TERMINAL.any? { |terminal| state&.end_with?(terminal) },
             request_counts:,
-            request_count: request_counts&.fetch('requestCount', nil)&.to_i
+            request_count: (request_counts&.fetch('requestCount', nil)&.to_i unless embedding_batch_response?(data))
           }
         end
 

@@ -60,6 +60,27 @@ RSpec.describe RubyLLM::Embedding, :live do
   describe 'multimodal embeddings' do
     let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
 
+    it "openrouter/#{model_for(:openrouter, :multimodal_embedding)} embeds an image alongside text" do
+      embedding = RubyLLM.embed('The Ruby logo', model: model_for(:openrouter, :multimodal_embedding),
+                                                 provider: :openrouter, with: image_path, dimensions: test_dimensions)
+
+      expect(embedding.vectors.length).to eq(test_dimensions)
+      expect(embedding.vectors).to all(be_a(Float))
+      expect(embedding.tokens.input).to be_positive
+    end
+
+    %w[sample.pdf ruby.wav ruby.mp4].each do |filename|
+      it "openrouter/#{model_for(:openrouter, :multimodal_embedding)} embeds #{filename}" do
+        path = File.expand_path("../fixtures/#{filename}", __dir__)
+        embedding = RubyLLM.embed(nil, model: model_for(:openrouter, :multimodal_embedding),
+                                       provider: :openrouter, with: path, dimensions: test_dimensions)
+
+        expect(embedding.vectors.length).to eq(test_dimensions)
+        expect(embedding.vectors).to all(be_a(Float))
+        expect(embedding.tokens.input).to be_positive
+      end
+    end
+
     it "gemini/#{model_for(:gemini, :multimodal_embedding)} embeds text with custom dimensions" do
       embedding = RubyLLM.embed(test_text, model: model_for(:gemini, :multimodal_embedding), provider: :gemini,
                                            dimensions: test_dimensions)

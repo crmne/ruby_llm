@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5.2","input":[{"role":"user","content":"Use the
+        hosted shell to run python3 -c \"print(17*23)\". Reply with the result only."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":700,"tools":[{"type":"openrouter:shell","parameters":{"engine":"openrouter"}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 14:01:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1788789657-4VkBImZxpoVgk7Snkre6
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788789657-4VkBImZxpoVgk7Snkre6\",\"object\":\"response\",\"created_at\":1788789657,\"model\":\"openai/gpt-5.2\",\"status\":\"completed\",\"completed_at\":1788789664,\"output\":[{\"id\":\"rs_076ee9ef4af1bdc0016a9ec39a8d5c87d1aab638737ef4151c\",\"type\":\"reasoning\",\"status\":\"completed\",\"summary\":[],\"encrypted_content\":\"gAAAAABqnsObuU2JruYWnKVrUDBFcA8Xn5kWMmXZgJIBp1xvl5K08C-NBnA32PuqVP-Girvk9UshlN7xbI1NvXau3t6bhYdrQDJ-uZsnYP5AOdxRJHKyjzTlmFFHfyf_RnV6tJSbeKzicY1-yXekq3TBv9Q2PBPPr3h39LYtRItddN5e9hLPkrpZrAPFW2rb_hZv53NOCDoU7mKl9XAYCdG81R6q9nmnNT1MyaDKKFy9riy2goKd1fgnPlkagUQAEaaIEr7B9oh5SxLynBpYW70GI-3-a3tOc1msgYon3J5rkUpEu5pquGtp6vggZAwcZjPBqFYCtKjkDE7MI5cSujolpN8IOSYzHJcL1C47l9T_oUqqNqF0jKLiyuEbkWRPRrl_WsKpURLaX0VFsFsKlVJC7iF3-PBCZCjdcH6at76ILAkZ-_7eV5JJo6KUtjcezYNkdMJ4ImMzDvIYOj-_hwSMQFyshuoyHxYad8IzkDFAkZpBNMcjgol7BDVVr4lX8vdWUdO_i7fzRRZ3Vf4TWnNg3Vn5baKd9hHZt-IEHnVOC4iFIKHoSEl_XlKyJ1gOUND1O1hnPOQNQ-a0L1_qMGxyKSUubNz3bsl3f1ppBLox4JwFL4twJBKSpdD05Uq3b7Mf0vtGDTowzUeVYiDdcolpaNk7szYNWFT14IAuP-VXqW9L6gSnzuuzAnFnyqTa58lldHkZAny73RtwMZL48JKfYVtLrlu-YgieIw0VGLJPdvEvl0WzFcf8FEBU-uYq0ZPhuJ7NlKTU_G0F8HOOMEpvsNYYSs-LdUlg9iIwTSqeiIyCBX0sdK0x0hoyNHkHYpYWRc1l5frTBiXFLXIeZEWPc9yZwWnKjYqQHK_nFns8U2f5Xz9jj8jMVQRg7gfypsZZUvNyDMCbPfwedKYmGopa424ClTyZbjMFnJOJiJ90_XLC9qnASQkTH4ejV1lSI0Rz7du5IamkA-lobkuj666bcx2HhNNfCBnXaFk8RXi1lrp2SmRDZ2dHi--aJTo2LArSJxuVwEtYdvtIP0jlAmr8EWLqruf7Mh787XO-nAACHileA-2ZdVJeL9nDTdlDILB3dZcr_XqFvDY4vzkSa66tGAltRhXo5UYH5gRb3ELKJDrrXrHMJEyMQEUb90w0wohubytpvn-Hq0K20uidQR0cDi38WKN2aXCw4WjLrFSe8Os961UVu79Mg5hWx8_esa_rcgwIKrxBf4iTGGd2cOEttL2WCIwHcZJu6OaV9PUz_6MbQYV_X6dH-xTt-9QBnsUEA6Nzehk8ZjfiTEGT4nDUxoOuv6BEOF5Y1NeWNBnuSzdtMgCOhoGfqx-5Ykf99JVWBPZpHTcz-8mH2PwwSap1HosKKIeXGM36xZ4iGNkOfWc5hZ7CgzVSbKB7IHvyJYEepSwFVnhN_Zevx_g2A7HhFGqRWAwixQ==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjItMjAyNTEyMTF8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\"},{\"type\":\"openrouter:shell\",\"id\":\"st_tmp_wjazefvyq9b\",\"status\":\"completed\",\"action\":{\"commands\":[\"python3
+        -c \\\"print(17*23)\\\"\"],\"max_output_length\":8013,\"timeout_ms\":100000},\"output\":[{\"stdout\":\"391\",\"stderr\":\"\",\"outcome\":{\"type\":\"exit\",\"exit_code\":0}}],\"container_id\":\"gen_b76a2c4f2ddb\",\"call_id\":\"call_51LRhumoirMI81lrPoctb12r\",\"arguments\":\"{\\\"commands\\\":[\\\"python3
+        -c \\\\\\\"print(17*23)\\\\\\\"\\\"],\\\"timeout_ms\\\":100000,\\\"max_output_length\\\":8013}\"},{\"id\":\"msg_tmp_t9j926hteqr\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"391\",\"annotations\":[],\"logprobs\":[]}]}],\"error\":null,\"incomplete_details\":null,\"tools\":[],\"tool_choice\":\"auto\",\"parallel_tool_calls\":true,\"max_output_tokens\":700,\"temperature\":1,\"top_p\":1,\"presence_penalty\":0,\"frequency_penalty\":0,\"top_logprobs\":0,\"max_tool_calls\":null,\"metadata\":{},\"background\":false,\"previous_response_id\":null,\"service_tier\":\"auto\",\"truncation\":\"disabled\",\"store\":false,\"instructions\":null,\"text\":{\"format\":{\"type\":\"text\"}},\"reasoning\":null,\"safety_identifier\":null,\"prompt_cache_key\":null,\"prompt_cache_options\":null,\"usage\":{\"input_tokens\":416,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":67,\"output_tokens_details\":{\"reasoning_tokens\":16},\"total_tokens\":483,\"cost\":0.001666,\"cost_details\":{\"upstream_inference_cost\":0.001666,\"upstream_inference_input_cost\":0.0007279999999999999,\"upstream_inference_output_cost\":0.0009379999999999999,\"server_tool_cost\":0},\"server_tool_use_details\":{\"tool_calls_requested\":1,\"tool_calls_executed\":1}}}"
+  recorded_at: Mon, 07 Sep 2026 14:01:04 GMT
+recorded_with: VCR 6.4.0

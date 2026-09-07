@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="{{ '/assets/css/model-catalog.css' | relative_url }}">
 <script defer src="{{ '/assets/js/model-catalog.js' | relative_url }}"></script>
 {% endif %}
+{% if page.provider_coverage %}
+<link rel="stylesheet" href="{{ '/assets/css/provider-coverage.css' | relative_url }}">
+<meta name="turbo-visit-control" content="reload">
+<script defer src="{{ '/assets/js/provider-coverage.js' | relative_url }}"></script>
+{% endif %}
 <link rel="icon" type="image/png" href="{{ '/assets/images/favicon/favicon-96x96.png' | relative_url }}" sizes="96x96">
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/logo.svg' | relative_url }}">
 <link rel="shortcut icon" href="{{ '/assets/images/favicon/favicon.ico' | relative_url }}">

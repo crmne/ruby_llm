@@ -18,13 +18,13 @@ module RubyLLM
         end
 
         def stream_response(payload, additional_headers = {}, &block)
-          accumulator = StreamAccumulator.new
+          accumulator = RubyLLM::Protocol::StreamAccumulator.new
           decoder = event_stream_decoder
           body = JSON.generate(payload)
           progress = {}
 
           faraday_v1 = Faraday::VERSION.start_with?('1')
-          on_data = RubyLLM::Streaming::FaradayHandlers.build(
+          on_data = RubyLLM::Protocol::Streaming::FaradayHandlers.build(
             faraday_v1: faraday_v1,
             on_chunk: ->(chunk, _env) { parse_stream_chunk(decoder, chunk, accumulator, progress, &block) },
             on_failed_response: ->(chunk, env) { handle_failed_stream(chunk, env) }
@@ -34,7 +34,7 @@ module RubyLLM
             req.headers.merge!(@provider.sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'
-            (req.options.context ||= {})[RubyLLM::Streaming::PROGRESS_KEY] = progress
+            (req.options.context ||= {})[RubyLLM::Transport::Connection::STREAM_PROGRESS_KEY] = progress
 
             if faraday_v1
               req.options[:on_data] = on_data
@@ -63,13 +63,13 @@ module RubyLLM
           buffer = failed_stream_buffer(env)
           buffer << chunk
           error_response = env.merge(body: JSON.parse(buffer))
-          ErrorMiddleware.parse_error(provider: self, response: error_response)
+          Transport::ErrorMiddleware.parse_error(provider: self, response: error_response)
         rescue JSON::ParserError
           RubyLLM.logger.debug { "Accumulating Bedrock stream error chunk: #{chunk}" }
         end
 
         def failed_stream_buffer(env)
-          (env[:streaming_state] ||= RubyLLM::Streaming::StreamState.new).buffer
+          (env[:streaming_state] ||= RubyLLM::Protocol::Streaming::StreamState.new).buffer
         end
 
         def parse_stream_chunk(decoder, raw_chunk, accumulator, progress)
@@ -103,7 +103,7 @@ module RubyLLM
           parsed = JSON.parse(payload)
           message = parsed.dig('error', 'message') || parsed['message'] || 'Bedrock streaming error'
           response = ErrorResponse.new({ 'message' => message }, 500)
-          ErrorMiddleware.parse_error(provider: self, response: response)
+          Transport::ErrorMiddleware.parse_error(provider: self, response: response)
         rescue JSON::ParserError
           nil
         end
@@ -246,7 +246,7 @@ module RubyLLM
           if event['type'] == 'error'
             message = event.dig('error', 'message') || 'Bedrock streaming error'
             response = ErrorResponse.new({ 'message' => message }, 500)
-            ErrorMiddleware.parse_error(provider: self, response: response)
+            Transport::ErrorMiddleware.parse_error(provider: self, response: response)
             return
           end
 
@@ -262,7 +262,7 @@ module RubyLLM
                    end
 
           response = ErrorResponse.new({ 'message' => message }, status)
-          ErrorMiddleware.parse_error(provider: self, response: response)
+          Transport::ErrorMiddleware.parse_error(provider: self, response: response)
         end
 
         def extract_content_delta(event)

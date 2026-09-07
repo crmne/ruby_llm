@@ -23,12 +23,20 @@ module RubyLLM
                        end
                      end
 
-          Utils.deep_merge({ requests: requests }, provider_options)
+          Support::Utils.deep_merge({ requests: requests }, provider_options)
         end
 
         def supports_embedding_media?
           true
         end
+
+        def render_embedding(text, dimensions: nil, **options)
+          payload = render_embedding_payload(text, dimensions:, **options)
+          return payload if text.is_a?(Array) || !payload.key?(:requests)
+
+          payload.fetch(:requests).first
+        end
+        public :render_embedding
 
         def parse_embedding_response(response, model:, text:)
           vectors = response.body['embeddings']&.map { |e| e['values'] }

@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
     RubyLLM::Configuration.new.tap { |config| config.openai_api_key = 'test' }
   end
   let(:provider) { RubyLLM::Providers::OpenAI.new(config) }
-  let(:connection) { instance_double(RubyLLM::Connection) }
+  let(:connection) { instance_double(RubyLLM::Transport::Connection) }
   let(:batch_calls) { { posts: [], uploads: [] } }
   let(:protocol) do
     RubyLLM::Providers::OpenAI.protocols.fetch(:responses).allocate.tap do |instance|

@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-agent-runtime.<AWS_REGION>.amazonaws.com/rerank
+    body:
+      encoding: UTF-8
+      string: '{"queries":[{"type":"TEXT","textQuery":{"text":"Ruby language"}}],"sources":[{"type":"INLINE","inlineDocumentSource":{"type":"TEXT","textDocument":{"text":"Bananas
+        are fruit."}}},{"type":"INLINE","inlineDocumentSource":{"type":"TEXT","textDocument":{"text":"Ruby
+        is a programming language."}}}],"rerankingConfiguration":{"type":"BEDROCK_RERANKING_MODEL","bedrockRerankingConfiguration":{"modelConfiguration":{"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.rerank-v1:0"},"numberOfResults":1}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Amz-Date:
+      - 20260907T142646Z
+      X-Amz-Content-Sha256:
+      - 5ed2674f05c3311b1573cd7d83dd2f39c45a186e50e07045bf39e4c58ae7ff30
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 14:26:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '61'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 894f6580-6a86-452a-85b4-cec4a53a3c2e
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"index":1,"relevanceScore":0.8854334950447083}]}'
+  recorded_at: Mon, 07 Sep 2026 14:26:47 GMT
+recorded_with: VCR 6.4.0

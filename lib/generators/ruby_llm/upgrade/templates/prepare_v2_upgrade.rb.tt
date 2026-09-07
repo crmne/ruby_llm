@@ -291,6 +291,7 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
         definition.column :result_id, reference_type_for(:<%= message_table_name %>) unless column_exists?(table, :result_id)
         definition.text :thought_signature unless column_exists?(table, :thought_signature)
         definition.string :approval unless column_exists?(table, :approval)
+        definition.boolean :remote, default: false, null: false unless column_exists?(table, :remote)
       end
     end
     if column_exists?(table, :thought_signature, :string)
@@ -367,6 +368,8 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
         table.check_constraint "status IN (<%= usage_statuses_sql %>)"
       end
     end
+    model_column = connection.columns(:ruby_llm_usages).find { |column| column.name == 'model' }
+    with_upgrade_safety { change_column_null :ruby_llm_usages, :model, false } if model_column.null
     indexes = [%i[chat_type chat_id], %i[message_type message_id], :status]
     missing = indexes.reject { |columns| valid_index_exists?(:ruby_llm_usages, columns) }
                      .map { |columns| [columns, {}] }
@@ -386,12 +389,15 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 <% if postgresql? -%>
         table.jsonb :chat_ids, default: []
         table.jsonb :request_counts
+        table.jsonb :reported_cost
 <% elsif mysql? -%>
         table.json :chat_ids
         table.json :request_counts
+        table.json :reported_cost
 <% else -%>
         table.json :chat_ids, default: []
         table.json :request_counts
+        table.json :reported_cost
 <% end -%>
         table.timestamps
       end
@@ -401,9 +407,11 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     add_column :ruby_llm_batches, :batch_protocol, :string unless column_exists?(:ruby_llm_batches, :batch_protocol)
 <% if postgresql? -%>
     add_column :ruby_llm_batches, :request_counts, :jsonb unless column_exists?(:ruby_llm_batches, :request_counts)
-    normalize_postgresql_json_columns(:ruby_llm_batches, %i[chat_ids request_counts])
+    add_column :ruby_llm_batches, :reported_cost, :jsonb unless column_exists?(:ruby_llm_batches, :reported_cost)
+    normalize_postgresql_json_columns(:ruby_llm_batches, %i[chat_ids request_counts reported_cost])
 <% else -%>
     add_column :ruby_llm_batches, :request_counts, :json unless column_exists?(:ruby_llm_batches, :request_counts)
+    add_column :ruby_llm_batches, :reported_cost, :json unless column_exists?(:ruby_llm_batches, :reported_cost)
 <% end -%>
 <% unless mysql? -%>
     normalize_json_defaults(:ruby_llm_batches, chat_ids: [])

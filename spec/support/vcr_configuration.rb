@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'uri'
+require_relative 'realtime_credentials'
+require_relative 'signed_media_urls'
+require_relative 'cohere_vcr_configuration'
 
 def googleapis_host?(uri)
   host = URI.parse(uri).host.to_s.downcase
@@ -108,6 +111,9 @@ VCR.configure do |config|
 
   # Filter cookies
   config.before_record do |interaction|
+    RealtimeCredentials.filter_elevenlabs(interaction)
+    SignedMediaUrls.filter(interaction)
+
     # Remove auth headers that may include provider secrets or signed credentials
     if interaction.request.headers['Authorization']
       interaction.request.headers['Authorization'] =

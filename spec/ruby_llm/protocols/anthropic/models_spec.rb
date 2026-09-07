@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Models do
       expect(model.capabilities).to contain_exactly(
         'citations', 'batch', 'vision', 'structured_output', 'reasoning'
       )
-      expect(model.capabilities - RubyLLM::ModelSchema::CAPABILITIES).to be_empty
+      expect(model.capabilities - RubyLLM::Models::Schema::CAPABILITIES).to be_empty
     end
   end
 end

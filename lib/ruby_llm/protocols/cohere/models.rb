@@ -44,21 +44,17 @@ module RubyLLM
         end
 
         def modalities_from(endpoints)
+          return { input: ['image'], output: ['text'] } if endpoints.include?('parse')
           return { input: ['audio'], output: ['text'] } if transcription_endpoint?(endpoints)
 
-          if embedding_endpoint?(endpoints)
-            input = []
-            input << 'text' if endpoints.include?('embed')
-            input << 'image' if endpoints.any? { |endpoint| endpoint.start_with?('embed_image') }
-            return { input: input.empty? ? ['text'] : input, output: ['embeddings'] }
-          end
-
+          return embedding_modalities(endpoints) if embedding_endpoint?(endpoints)
           return { input: ['text'], output: ['rerank'] } if rerank_endpoint?(endpoints)
 
           { input: ['text'], output: ['text'] }
         end
 
         def capabilities_from(endpoints, features)
+          return ['ocr'] if endpoints.include?('parse')
           return ['transcription'] if transcription_endpoint?(endpoints)
           return [] if embedding_endpoint?(endpoints) || rerank_endpoint?(endpoints)
 
@@ -74,6 +70,13 @@ module RubyLLM
 
         def embedding_endpoint?(endpoints)
           endpoints.any? { |endpoint| endpoint.start_with?('embed') }
+        end
+
+        def embedding_modalities(endpoints)
+          input = []
+          input << 'text' if endpoints.include?('embed')
+          input << 'image' if endpoints.any? { |endpoint| endpoint.start_with?('embed_image') }
+          { input: input.empty? ? ['text'] : input, output: ['embeddings'] }
         end
 
         def rerank_endpoint?(endpoints)

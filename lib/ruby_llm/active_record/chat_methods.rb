@@ -382,6 +382,15 @@ module RubyLLM
         raise
       end
 
+      # Compacts the model context and persists its assistant Message without
+      # deleting earlier messages. See RubyLLM::Chat#compact.
+      def compact
+        to_llm.compact
+      rescue *COMPLETION_ERRORS => e
+        cleanup_after_failure(e)
+        raise
+      end
+
       # Executes the pending tool calls and persists their results without
       # calling the model. See RubyLLM::Chat#run_tools. Returns +self+.
       def run_tools
@@ -580,7 +589,7 @@ module RubyLLM
       end
 
       def persisted_tool_call_approval(tool_call)
-        record = find_tool_call(tool_call.id)
+        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
         return unless record&.has_attribute?(:approval)
 
         case record.approval

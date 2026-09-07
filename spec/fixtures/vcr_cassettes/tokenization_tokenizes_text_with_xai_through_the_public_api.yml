@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/tokenize-text
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","text":"Ruby makes AI useful."}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 12:13:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      X-Metrics-E2e-Ms:
+      - '1.7'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      Traceparent:
+      - 00-d67ad088ee3ceea2d765cef8d6b5b966-17cfdac100003844-01
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token_ids":[{"token_id":94804,"string_token":"Ruby","token_bytes":[82,117,98,121]},{"token_id":4512,"string_token":"
+        makes","token_bytes":[32,109,97,107,101,115]},{"token_id":11558,"string_token":"
+        AI","token_bytes":[32,65,73]},{"token_id":6519,"string_token":" useful","token_bytes":[32,117,115,101,102,117,108]},{"token_id":174,"string_token":".","token_bytes":[46]}]}'
+  recorded_at: Mon, 07 Sep 2026 12:13:04 GMT
+recorded_with: VCR 6.4.0

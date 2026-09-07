@@ -8,6 +8,18 @@ module RubyLLM
       # speaker names turns on diarization and caps the speaker count at
       # the number of names.
       module Transcription
+        def render_transcription_options(timestamps:, format:, streaming:)
+          return {} if timestamps.nil?
+
+          value = timestamps.to_s
+          allowed = streaming ? ['word'] : %w[none word character]
+          unless allowed.include?(value) && (format.nil? || format == value)
+            raise ArgumentError, "ElevenLabs timestamps must be #{allowed.join(', ')} and match format when provided"
+          end
+
+          streaming ? { include_timestamps: true } : { timestamps_granularity: value }
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,

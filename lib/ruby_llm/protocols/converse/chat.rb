@@ -346,14 +346,14 @@ module RubyLLM
 
           return tool_spec if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(tool_spec, tool.provider_options)
+          RubyLLM::Support::Utils.deep_merge(tool_spec, tool.provider_options)
         end
 
         def format_additional_model_request_fields(thinking, model, max_output_tokens = nil)
           fields = {}
 
           reasoning_fields = format_reasoning_fields(thinking, model, max_output_tokens)
-          fields = RubyLLM::Utils.deep_merge(fields, reasoning_fields) if reasoning_fields
+          fields = RubyLLM::Support::Utils.deep_merge(fields, reasoning_fields) if reasoning_fields
 
           fields.empty? ? nil : fields
         end
@@ -361,7 +361,7 @@ module RubyLLM
         def build_output_config(schema)
           return nil unless schema
 
-          cleaned = RubyLLM::Utils.deep_dup(schema[:schema])
+          cleaned = RubyLLM::Support::Utils.deep_dup(schema[:schema])
           cleaned.delete(:strict)
           cleaned.delete('strict')
 
@@ -442,7 +442,7 @@ module RubyLLM
         end
 
         def budget_tokens_schema(model)
-          metadata = RubyLLM::Utils.deep_symbolize_keys(model&.metadata || {})
+          metadata = RubyLLM::Support::Utils.deep_symbolize_keys(model&.metadata || {})
           raw_schema = metadata.dig(:converse, :additionalRequestFieldsSchema)
           return unless raw_schema.is_a?(String)
 

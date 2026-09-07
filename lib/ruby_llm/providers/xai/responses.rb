@@ -12,6 +12,9 @@ module RubyLLM
         include XAI::Speech
         include XAI::Transcription
         include XAI::Videos
+        include Protocols::XAI::Tokenization
+        include Protocols::Responses::Compaction
+        include Protocols::XAI::StreamingTranscription
 
         SERVER_TOOL_ALIASES = {
           web_search: { tool: { type: 'web_search' } },
@@ -21,7 +24,7 @@ module RubyLLM
           file_search: { tool: { type: 'file_search' } },
           collections_search: { tool: { type: 'file_search' } },
           image_generation: { tool: { type: 'image_generation' } },
-          mcp: { tool: { type: 'mcp' } }
+          mcp: Protocols::Responses::SERVER_TOOL_ALIASES.fetch(:mcp)
         }.freeze
 
         SERVER_TOOL_USAGE_COUNTERS = %w[num_sources_used num_server_side_tools_used].freeze

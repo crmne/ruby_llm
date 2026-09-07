@@ -72,13 +72,25 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect(transcription.segments).to eq(segments.map(&:segment))
     end
 
-    it 'raises for providers that do not stream transcriptions' do
-      [[:gemini, model_for(:gemini)], [:mistral, model_for(:mistral, :transcription)],
-       [:xai, model_for(:xai, :transcription)]].each do |provider, model|
-        expect do
-          RubyLLM.transcribe(audio_path, model: model, provider: provider) { |chunk| chunk }
-        end.to raise_error(RubyLLM::Error, /doesn't support streaming transcription/)
+    it 'streams Mistral transcriptions with speaker segments and usage' do
+      chunks = []
+
+      transcription = RubyLLM.transcribe(audio_path, model: model_for(:mistral, :transcription),
+                                                     provider: :mistral, speaker_names: ['Speaker']) do |chunk|
+        chunks << chunk
       end
+
+      expect(chunks.last).to be_done
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.segments.first).to have_key('speaker_id')
+      expect(transcription.tokens.input).to be_positive
+      expect(transcription.duration).to be_positive
+    end
+
+    it 'raises for providers that do not stream transcriptions' do
+      expect do
+        RubyLLM.transcribe(audio_path, model: model_for(:gemini), provider: :gemini) { |chunk| chunk }
+      end.to raise_error(RubyLLM::Error, /doesn't support streaming transcription/)
     end
 
     it 'validates model existence' do

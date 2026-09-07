@@ -17,7 +17,7 @@ module RubyLLM
   #   RubyLLM::Attachment.new(doc.download_path)
   #
   class Attachment
-    include Inspectable
+    include Support::Inspectable
 
     # The underlying source: a URI, Pathname, IO-like object, ActiveStorage
     # object, or UploadedFile.
@@ -50,7 +50,7 @@ module RubyLLM
       when nil then []
       when Hash then sources.values.flat_map { |group| wrap(group, config:) }
       else
-        Utils.to_safe_array(sources).filter_map do |source|
+        Support::Utils.to_safe_array(sources).filter_map do |source|
           next if source.nil? || (source.is_a?(String) && source.strip.empty?)
 
           source.is_a?(Attachment) ? source : new(source, config:)
@@ -158,17 +158,17 @@ module RubyLLM
 
     # Returns whether the attachment is an image.
     def image?
-      RubyLLM::MimeType.image? mime_type
+      RubyLLM::Files::MimeType.image? mime_type
     end
 
     # Returns whether the attachment is a video.
     def video?
-      RubyLLM::MimeType.video? mime_type
+      RubyLLM::Files::MimeType.video? mime_type
     end
 
     # Returns whether the attachment is audio.
     def audio?
-      RubyLLM::MimeType.audio? mime_type
+      RubyLLM::Files::MimeType.audio? mime_type
     end
 
     def format # :nodoc:
@@ -184,7 +184,7 @@ module RubyLLM
 
     # Returns whether the attachment is a PDF.
     def pdf?
-      RubyLLM::MimeType.pdf? mime_type
+      RubyLLM::Files::MimeType.pdf? mime_type
     end
 
     # Returns whether the attachment is a non-PDF, non-text document format
@@ -192,7 +192,7 @@ module RubyLLM
     def document?
       return false if pdf? || text?
 
-      RubyLLM::MimeType.document?(mime_type) || DOCUMENT_EXTENSIONS.include?(extension)
+      RubyLLM::Files::MimeType.document?(mime_type) || DOCUMENT_EXTENSIONS.include?(extension)
     end
 
     def extension # :nodoc:
@@ -202,7 +202,7 @@ module RubyLLM
 
     # Returns whether the attachment is textual, like source code or CSV.
     def text?
-      RubyLLM::MimeType.text? mime_type
+      RubyLLM::Files::MimeType.text? mime_type
     end
 
     def to_h # :nodoc:
@@ -274,13 +274,13 @@ module RubyLLM
       content_type = active_storage? ? active_storage_content_type : nil
       return @mime_type = content_type unless content_type.to_s.empty?
 
-      @mime_type = RubyLLM::MimeType.for(url? ? nil : @source, name: @filename)
-      @mime_type = RubyLLM::MimeType.for(content) if @mime_type == 'application/octet-stream'
+      @mime_type = RubyLLM::Files::MimeType.for(url? ? nil : @source, name: @filename)
+      @mime_type = RubyLLM::Files::MimeType.for(content) if @mime_type == 'application/octet-stream'
       @mime_type = 'audio/wav' if @mime_type == 'audio/x-wav'
     end
 
     def fetch_content
-      response = Connection.basic(config).get @source.to_s
+      response = Transport::Connection.basic(config).get @source.to_s
       @content = response.body
     end
 
@@ -340,7 +340,7 @@ module RubyLLM
     end
 
     def provider_file_mime_type
-      @source.mime_type || RubyLLM::MimeType.for(nil, name: @source.filename)
+      @source.mime_type || RubyLLM::Files::MimeType.for(nil, name: @source.filename)
     end
 
     def active_storage_blob
@@ -352,7 +352,7 @@ module RubyLLM
     end
 
     def source_is_a?(class_name)
-      klass = RubyLLM::Utils.safe_constantize(class_name)
+      klass = RubyLLM::Support::Utils.safe_constantize(class_name)
       klass ? @source.is_a?(klass) : false
     end
 

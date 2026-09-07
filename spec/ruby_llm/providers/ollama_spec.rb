@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::Providers::Ollama do
 
     it 'asks /api/show about every listed model' do
       provider = described_class.new(RubyLLM.config)
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(provider).to receive(:connection).and_return(connection)
       allow(connection).to receive(:get).with('models').and_return(response_for('llava:7b'))
       allow(connection).to receive(:post)
@@ -72,7 +72,7 @@ RSpec.describe RubyLLM::Providers::Ollama do
 
     it 'survives a server that does not answer /api/show' do
       provider = described_class.new(RubyLLM.config)
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(provider).to receive(:connection).and_return(connection)
       allow(connection).to receive(:get).with('models').and_return(response_for('llava:7b'))
       allow(connection).to receive(:post).and_raise(RubyLLM::BadRequestError.new(nil, response: nil))

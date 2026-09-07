@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # OpenAI API integration.
     class OpenAI < Provider
-      protocol :responses, Protocols::Responses, batches: Protocols::Responses::Batches
+      protocol :responses, OpenAI::Responses, batches: Protocols::Responses::Batches
       protocol :chat_completions, Protocols::ChatCompletions, batches: Protocols::ChatCompletions::Batches
       protocol :embeddings, Protocols::ChatCompletions,
                batches: Protocols::ChatCompletions::EmbeddingBatches

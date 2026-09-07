@@ -10,8 +10,8 @@ module RubyLLM
   #   image.save("sunset.png")
   #
   class Image
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # The URL of the hosted image, for providers that return one, or +nil+.
     attr_reader :url
@@ -89,7 +89,7 @@ module RubyLLM
 
       RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
         result = provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
-        images = Utils.to_safe_array(result)
+        images = Support::Utils.to_safe_array(result)
         event[:result] = result
         event[:response_model] = images.first&.model
         event[:tokens] = Tokens.aggregate(images.map(&:tokens))
@@ -132,7 +132,7 @@ module RubyLLM
       if base64?
         Base64.decode64 @data
       else
-        response = Connection.basic(config).get @url
+        response = Transport::Connection.basic(config).get @url
         response.body
       end
     end

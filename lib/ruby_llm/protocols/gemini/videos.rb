@@ -13,11 +13,9 @@ module RubyLLM
 
         def render_video_payload(prompt, model:, with: [], provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           instance = { prompt: prompt }
-          if (image = with.first)
-            instance[:image] = { inlineData: { mimeType: image.mime_type, data: image.encoded } }
-          end
+          instance[:image] = render_video_image(with.first) if with.first
 
-          Utils.deep_merge({ instances: [instance] }, provider_options)
+          Support::Utils.deep_merge({ instances: [instance] }, provider_options)
         end
 
         def parse_video_job(response, model:)
@@ -25,6 +23,11 @@ module RubyLLM
           raise Error.new('Gemini did not return a video generation operation', response:) unless name
 
           VideoJob.new(id: name, protocol: self, model: model, raw: response.body)
+        end
+
+        def render_video_extension_payload(prompt, extend:, provider_options: {}, **)
+          video = render_video_extension(extend)
+          Support::Utils.deep_merge({ instances: [{ prompt: prompt, video: video }] }, provider_options)
         end
 
         def video_job_url(job)
@@ -59,6 +62,22 @@ module RubyLLM
         end
 
         private
+
+        def render_video_extension(source)
+          if source.is_a?(Video) && source.raw && (video = generated_video(source.raw)) && video['uri']
+            return { uri: video['uri'] }
+          end
+
+          video = video_extension_attachment(source)
+          return { uri: video.source.to_s } if video.url?
+          return { uri: video.provider_file_uri } if video.provider_file?
+
+          raise ArgumentError, 'Gemini extends generated Veo videos; pass the returned Video or its URI'
+        end
+
+        def render_video_image(image)
+          { inlineData: { mimeType: image.mime_type, data: image.encoded } }
+        end
 
         def validate_animate_inputs!(with:)
           raise Error, 'Veo takes a single reference image' if with.size > 1

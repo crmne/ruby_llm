@@ -24,7 +24,7 @@ module RubyLLM
         url_context: { tool: { type: 'web_fetch_20260318', name: 'web_fetch', allowed_callers: ['direct'] } },
         code_execution: { tool: { type: 'code_execution_20260521', name: 'code_execution' } },
         mcp: lambda do |options|
-          options = Utils.deep_symbolize_keys(options)
+          options = Support::Utils.deep_symbolize_keys(options)
           name = options[:name] || 'mcp'
           server = { type: 'url', name: name }.merge(options.slice(:url, :authorization_token))
           {

@@ -90,7 +90,7 @@ jobs:
               "$schema" => "https://json-schema.org/draft/2020-12/schema",
               "type" => "array",
               "minItems" => 1,
-              "items" => RubyLLM::ModelSchema.json_schema
+              "items" => RubyLLM::Models::Schema.json_schema
             }
             errors = JSONSchemer.schema(registry_schema).validate(data).first(5).map do |error|
               "#{error["data_pointer"]}: #{error["error"]}"

@@ -30,7 +30,7 @@ module RubyLLM
       raise ArgumentError, 'a workflow block is required' unless block_given?
 
       link_parent
-      Instrumentation.with_workflow(workflow_context) do
+      Support::Instrumentation.with_workflow(workflow_context) do
         RubyLLM.instrument('workflow.ruby_llm', config: @config) { yield self }
       end
     end
@@ -49,7 +49,7 @@ module RubyLLM
       parent_id = current_step_id
       step_context[:workflow_step_parent_id] = parent_id if parent_id
 
-      Instrumentation.with_workflow(step_context.freeze) do
+      Support::Instrumentation.with_workflow(step_context.freeze) do
         RubyLLM.instrument('workflow_step.ruby_llm', config: @config) { block.call }
       end
     end
@@ -65,7 +65,7 @@ module RubyLLM
     end
 
     def link_parent
-      current = Instrumentation.current_workflow
+      current = Support::Instrumentation.current_workflow
       context = workflow_context.dup
       context.delete(:workflow_parent_id)
       context.delete(:workflow_parent_step_id)
@@ -77,7 +77,7 @@ module RubyLLM
     end
 
     def current_step_id
-      current = Instrumentation.current_workflow
+      current = Support::Instrumentation.current_workflow
       current[:workflow_step_id] if current && current[:workflow_id] == id
     end
 

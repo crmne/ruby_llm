@@ -23,7 +23,7 @@ module RubyLLM
                       render_imagen_payload(prompt, count:, size:)
                     end
 
-          Utils.deep_merge(payload, provider_options)
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def parse_image_response(response, model:)

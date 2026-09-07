@@ -1,0 +1,549 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Search Microsoft
+        documentation for Azure Blob Storage, then give one short sentence about it."}],"instructions":"Use
+        microsoft_docs_search exactly once when asked for documentation. Do not retry
+        a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '7838'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 07 Sep 2026 12:08:56 GMT
+      Server:
+      - istio-envoy
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249953'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 3cab794e-ccf3-4f38-96f1-f36ee5266762
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0353f838d7bfc19f016a9ea959140c8197b12219337fb96254",
+          "object": "response",
+          "created_at": 1788782937,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1788782940,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1308,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1097,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Use microsoft_docs_search exactly once when asked for documentation. Do not retry a denied call.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "mcpl_0353f838d7bfc19f016a9ea95934348197886c7107f257757b",
+              "type": "mcp_list_tools",
+              "server_label": "docs",
+              "tools": [
+                {
+                  "annotations": {
+                    "read_only": true
+                  },
+                  "description": "Search official Microsoft/Azure documentation to find the most relevant and trustworthy content for a user's query. This tool returns up to 10 high-quality content chunks (each max 500 tokens), extracted from Microsoft Learn and other official sources. Each result includes the article title, URL, and a self-contained content excerpt optimized for fast retrieval and reasoning. Always use this tool to quickly ground your answers in accurate, first-party Microsoft/Azure knowledge.\n\n## Follow-up Pattern\nTo ensure completeness, use microsoft_docs_fetch when high-value pages are identified by search. The fetch tool complements search by providing the full detail. This is a required step for comprehensive results.",
+                  "input_schema": {
+                    "type": "object",
+                    "properties": {
+                      "query": {
+                        "description": "a query or topic about Microsoft/Azure products, services, platforms, developer tools, frameworks, or APIs",
+                        "type": "string",
+                        "default": null
+                      }
+                    }
+                  },
+                  "name": "microsoft_docs_search"
+                }
+              ]
+            },
+            {
+              "id": "rs_0353f838d7bfc19f016a9ea95aeb408197bca079a83cec037e",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqnqlcnuwAAnjY0Xup0oX56hQp6N3ZCpnawDVb0r1V71pS15cJTVjVlH3F4Ki4FQ0xZ4qmI0KbGw7V29NT7EvVgMhFYojrzYTVFeHFBMsDXneuwOm2MKpfwfbiebliD2T3WViHNBZtgjN8x3x-dwFj7STwVTBdnqymxS5lnmn0d35gH-2gfOqFZgPmGwr3v39cmoC9pQYTjN35QbSLaW1h6ixwjfBjC9jNCai7b70I_6NuDl3KexFf4P32zH04xp_jNn6pX0wUJvYUH2e5hhIM-ZPvw6GRXozS-wbN8ZK0vV2dcCAw0PeGot2Yyqxg-BFVfPDETizTnFX54mpam3TWB3dfcwUmM9TMoZMslcta69wysCVFnmMbAYy3lEUB67ql7YUJzCacq_AujLnKQSt13vuB2DHI6rzk7Ylh5CCga_lnQ-I6dwskaF4ZNe_qRmm9pUjeo9yBn9xFq-kNgQd3b-RITwayZO_jMMGWBrxJKl-g4iU2ess5e5JnwckCUbgac6602vzBEbh0wjdvb_5gQPFlTWhp9D8HsAOSXQkQLAZsXZggjfIziRW33ig87NpcE8EtABBD6blx4-VfJjoD-pdPcp4-BBQN_9PM4RPSweZJUzy4z7rLT7MsqgFUllr3Cm-QQLfG8zm5l4s_YxxG11WU5PcOHEZZZKsHc2jEm8_EXRzxslc8Q5oWOhjkr9Bn3a6xjd_TpwjUKU0rp5bNX9xKIb_oBKChJ-eoMr8Rxyu49PyUXVMJJA9DlvObklntb7LCT1vLm-HDAuuJmUssUBQOrZO3UOD2WsTFmOBvIGDDJd6UBMTDF2z9xXAym5o62i9R4M0DwVkoh0ni_wmGYMs_724yy-ktlU2wXrUVMOxhWzfebiy9zQeWpje16AEIvBvOGGt6mlLFxdj0YtsWxNMqjpAWjoYoeND6obyDndN4pEKUir7oUIPjDJbHFpeUbBVwFWuoJTJavK2rFTrWxrDjnZLLCN7ApxBDb1-jY3K9usSXBf-69GSuLe4kl7GInKDtVpk0xm2zQ64_0db7D7vnuI9VePmSCbFSnYEaRo8i8CTq_BXk50o6wSxYGeIZpPRH-ZCzRWkIIG0Iq1iBV5P-zACTuOYZ379PGuT96suMoQzaUyIz_NfQpER4C36mk-ceHct36rxCGSaNAkZjOQ546YcNN5_-_02j9_iL0xYHQs2jgxMFH9TlrtHlpMlyly94T3XecGCR2bxMc_xwLhKQJ_CN1cEAjlzPa8tC8YLYNBr6jz8PBxUZiUwIY_2fiuRtIzHs5XQ-vE1oqpNdkklT59Dcdt8qejML9ONVkHJX6wGeC7NIhNkAl2PBFOYi5xXH0zGYuDuSD2EGCPikBLWfEnJ95JZX9mcO9cE-3IlVIgSfjPGo2V9J9bPAPnsvmYn_joV30vnJx9WhuxTHYoMaFG2aOA4FVzZkynwMLgznUtG_0zYvnpePik4r3q3PxbwGMizpYWZhzQ7ulnQjQEIroYAhkksVh2P2oN9SBHsBPrR8w7LL31sMoxt_Y8rxRVitHvhr6tQuucs3_-8Us_pzj5btfggvIHB2eFVpyIcwihnCysD_xwi9R71WcpkB6mPuDlrDrZmeeoDAdWRzYRE8Y7yJXXdsC6uc5M4WdDrX-FWJP5YlGsA-6gWR0t7GqrAmxDRdU67Nyqnm7FCajryFD2mUVTSgwem2nUfphhnLQkuZfnUWZAQFuXJ2_q0_bH73dFFOI6jjSh_MumZol5FZYs3xW6i5cSmfrVKuwi8p9LuPixQBEMYWVqDwqRegVBQl3JSrVmMYbP-LXTpTHCWhCi19PxaRiOwML-H9pXQuGKTAeWyooJI3YrC1i_6onMWeEop13qtrdDxrVutA2HvALnGX110DwfGH-hjSpdt-6pixZv-5Z04uPOhPOuylJ1kJ6HzQOoj0XoDcpUulyG29kqXexxBcZZhD-QlnRmRfRJXGRevptl--yhGKy_-vci0Y1sJhf_VnSrij_0uwx74qRnE5jrJ699SjA4J9cq4pfALlTTxg9LkkechuaCBQbs_kcA29gUle31uygOAemicnPf-4oD2axscTqtHuywfEQkOSOKqsEd4WaRgoM7MrtMpjlkQFv1sJfSjVUvRDH8ihL8zp5Nr2-YjXj6br_Cox8vcEeupMNwBFnZ-VWWh4vaeUNSc6lzgrckr7dA7bRLOqIHBP__F4w4IKX6KLhmJM33BJAY0NMP5DmJkllT4M_cim2ES6Z58RJhJEWvARO-g_5Zmnv9_mzq6H07cLZxoqWMUrakLtNVh943P9m32-milM6zNU9rq846GIQfI9Z_r4g2XaLWrN9_tuxDqG1lU6QO-hvqRZNUrE-7ecknE-h30npE3xi6ugFAhMKPXZ1rSBYg==",
+              "summary": []
+            },
+            {
+              "id": "mcpr_0353f838d7bfc19f016a9ea95c22a881978dbfbb1917922e08",
+              "type": "mcp_approval_request",
+              "arguments": "{\"query\":\"Azure Blob Storage\"}",
+              "name": "microsoft_docs_search",
+              "server_label": "docs"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "mcp",
+              "allowed_tools": [
+                "microsoft_docs_search"
+              ],
+              "headers": null,
+              "require_approval": "always",
+              "server_description": null,
+              "server_label": "docs",
+              "server_url": "https://learn.microsoft.com/api/mcp"
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 313,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 246,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 559
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 07 Sep 2026 12:09:00 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Search Microsoft
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0353f838d7bfc19f016a9ea95934348197886c7107f257757b","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        official Microsoft/Azure documentation to find the most relevant and trustworthy
+        content for a user''s query. This tool returns up to 10 high-quality content
+        chunks (each max 500 tokens), extracted from Microsoft Learn and other official
+        sources. Each result includes the article title, URL, and a self-contained
+        content excerpt optimized for fast retrieval and reasoning. Always use this
+        tool to quickly ground your answers in accurate, first-party Microsoft/Azure
+        knowledge.\n\n## Follow-up Pattern\nTo ensure completeness, use microsoft_docs_fetch
+        when high-value pages are identified by search. The fetch tool complements
+        search by providing the full detail. This is a required step for comprehensive
+        results.","input_schema":{"type":"object","properties":{"query":{"description":"a
+        query or topic about Microsoft/Azure products, services, platforms, developer
+        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"rs_0353f838d7bfc19f016a9ea95aeb408197bca079a83cec037e","type":"reasoning","content":[],"encrypted_content":"gAAAAABqnqlcnuwAAnjY0Xup0oX56hQp6N3ZCpnawDVb0r1V71pS15cJTVjVlH3F4Ki4FQ0xZ4qmI0KbGw7V29NT7EvVgMhFYojrzYTVFeHFBMsDXneuwOm2MKpfwfbiebliD2T3WViHNBZtgjN8x3x-dwFj7STwVTBdnqymxS5lnmn0d35gH-2gfOqFZgPmGwr3v39cmoC9pQYTjN35QbSLaW1h6ixwjfBjC9jNCai7b70I_6NuDl3KexFf4P32zH04xp_jNn6pX0wUJvYUH2e5hhIM-ZPvw6GRXozS-wbN8ZK0vV2dcCAw0PeGot2Yyqxg-BFVfPDETizTnFX54mpam3TWB3dfcwUmM9TMoZMslcta69wysCVFnmMbAYy3lEUB67ql7YUJzCacq_AujLnKQSt13vuB2DHI6rzk7Ylh5CCga_lnQ-I6dwskaF4ZNe_qRmm9pUjeo9yBn9xFq-kNgQd3b-RITwayZO_jMMGWBrxJKl-g4iU2ess5e5JnwckCUbgac6602vzBEbh0wjdvb_5gQPFlTWhp9D8HsAOSXQkQLAZsXZggjfIziRW33ig87NpcE8EtABBD6blx4-VfJjoD-pdPcp4-BBQN_9PM4RPSweZJUzy4z7rLT7MsqgFUllr3Cm-QQLfG8zm5l4s_YxxG11WU5PcOHEZZZKsHc2jEm8_EXRzxslc8Q5oWOhjkr9Bn3a6xjd_TpwjUKU0rp5bNX9xKIb_oBKChJ-eoMr8Rxyu49PyUXVMJJA9DlvObklntb7LCT1vLm-HDAuuJmUssUBQOrZO3UOD2WsTFmOBvIGDDJd6UBMTDF2z9xXAym5o62i9R4M0DwVkoh0ni_wmGYMs_724yy-ktlU2wXrUVMOxhWzfebiy9zQeWpje16AEIvBvOGGt6mlLFxdj0YtsWxNMqjpAWjoYoeND6obyDndN4pEKUir7oUIPjDJbHFpeUbBVwFWuoJTJavK2rFTrWxrDjnZLLCN7ApxBDb1-jY3K9usSXBf-69GSuLe4kl7GInKDtVpk0xm2zQ64_0db7D7vnuI9VePmSCbFSnYEaRo8i8CTq_BXk50o6wSxYGeIZpPRH-ZCzRWkIIG0Iq1iBV5P-zACTuOYZ379PGuT96suMoQzaUyIz_NfQpER4C36mk-ceHct36rxCGSaNAkZjOQ546YcNN5_-_02j9_iL0xYHQs2jgxMFH9TlrtHlpMlyly94T3XecGCR2bxMc_xwLhKQJ_CN1cEAjlzPa8tC8YLYNBr6jz8PBxUZiUwIY_2fiuRtIzHs5XQ-vE1oqpNdkklT59Dcdt8qejML9ONVkHJX6wGeC7NIhNkAl2PBFOYi5xXH0zGYuDuSD2EGCPikBLWfEnJ95JZX9mcO9cE-3IlVIgSfjPGo2V9J9bPAPnsvmYn_joV30vnJx9WhuxTHYoMaFG2aOA4FVzZkynwMLgznUtG_0zYvnpePik4r3q3PxbwGMizpYWZhzQ7ulnQjQEIroYAhkksVh2P2oN9SBHsBPrR8w7LL31sMoxt_Y8rxRVitHvhr6tQuucs3_-8Us_pzj5btfggvIHB2eFVpyIcwihnCysD_xwi9R71WcpkB6mPuDlrDrZmeeoDAdWRzYRE8Y7yJXXdsC6uc5M4WdDrX-FWJP5YlGsA-6gWR0t7GqrAmxDRdU67Nyqnm7FCajryFD2mUVTSgwem2nUfphhnLQkuZfnUWZAQFuXJ2_q0_bH73dFFOI6jjSh_MumZol5FZYs3xW6i5cSmfrVKuwi8p9LuPixQBEMYWVqDwqRegVBQl3JSrVmMYbP-LXTpTHCWhCi19PxaRiOwML-H9pXQuGKTAeWyooJI3YrC1i_6onMWeEop13qtrdDxrVutA2HvALnGX110DwfGH-hjSpdt-6pixZv-5Z04uPOhPOuylJ1kJ6HzQOoj0XoDcpUulyG29kqXexxBcZZhD-QlnRmRfRJXGRevptl--yhGKy_-vci0Y1sJhf_VnSrij_0uwx74qRnE5jrJ699SjA4J9cq4pfALlTTxg9LkkechuaCBQbs_kcA29gUle31uygOAemicnPf-4oD2axscTqtHuywfEQkOSOKqsEd4WaRgoM7MrtMpjlkQFv1sJfSjVUvRDH8ihL8zp5Nr2-YjXj6br_Cox8vcEeupMNwBFnZ-VWWh4vaeUNSc6lzgrckr7dA7bRLOqIHBP__F4w4IKX6KLhmJM33BJAY0NMP5DmJkllT4M_cim2ES6Z58RJhJEWvARO-g_5Zmnv9_mzq6H07cLZxoqWMUrakLtNVh943P9m32-milM6zNU9rq846GIQfI9Z_r4g2XaLWrN9_tuxDqG1lU6QO-hvqRZNUrE-7ecknE-h30npE3xi6ugFAhMKPXZ1rSBYg==","summary":[]},{"id":"mcpr_0353f838d7bfc19f016a9ea95c22a881978dbfbb1917922e08","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
+        Blob Storage\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0353f838d7bfc19f016a9ea95c22a881978dbfbb1917922e08","approve":false}],"instructions":"Use
+        microsoft_docs_search exactly once when asked for documentation. Do not retry
+        a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '9798'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 07 Sep 2026 12:09:00 GMT
+      Server:
+      - istio-envoy
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249660'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - '0381bf2c-c68e-4a9a-829b-df3079202e81'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0353f838d7bfc19f016a9ea95d569081979996d7fee2ff946f",
+          "object": "response",
+          "created_at": 1788782941,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1788782970,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 2534,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 3558,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Use microsoft_docs_search exactly once when asked for documentation. Do not retry a denied call.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0353f838d7bfc19f016a9ea96028d08197b2b994387a86600b",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqnql6wAy687GHFiOSGoPNQki5aLPLL29fSCkjg6LrFmk0SH5dYy4sRbO3sW56A-xHfuu31n_m-S9TWtK1WPLVTL8oRqoCcbvpqEZItYft4_ubVtYFhKkFEdHOqxip8T2XeYrD7xxT6uUb7xjA64dVOx8vbRzZPntl2BUD4BJ6u0tWO6xx_O0wKXsUxdZ0CC51J4w3UlBuqJyuTmclMya8DZ6GF2MRHQ9Y1ZrO5qvMK01UOvq8_bKePvSD2LUDgO6WwBZML3d8Uk0gBoShtI8ERYVw7xmcAMvbfIc1T8r68LK1LKwtdZycA1Gt4Wv_cgbP4v8jmEUthgYKYNsNVfiBBBp0f1UKvUt2ENJf1L_1vXg5IgzC1W3Nctg8htavMtpIbQefQFuUvAynBhakPOdmd4UP_m4rbAFVvz5aMSJTFUERwqRDSVWqgtvVAZeAXvzGOEiNtOF1QquHME4yJi2UMdYAY020xU5unQQ42givAQ8Bx-qk_KiO6l15OVmIhmkEmKci7Nqy4Q1WKgzkRJRkh1L7i4_W4bSu03h3znRQxk3_TZw_zOvafJ5P-pw95vhLBgeEYwi7FUm1YmCMlqFnEJ_-S6R7iGnSEzoA0iQyr137IHNtU-p4YcjeFHc7HnfmG9ohNjoQdBoT5h7QiwVHIIMhCrHrZP8UjTLt8XbFPTmTiKOsfTTB2wHjptODtRHA3VFPDvA6UKnCcLG9bXpJrsUAB-FTwT02m2qCycUESWEmrCfKXAwudh2nCN6YmWnK1m-k5j_0k_1JJsU8Cwezy-qs0nE4qZNPpYIb4AN33YouYxHuhkUnVN1Bbx75ZmF2iXXuu4vCVrn8iqzHyRLSfj6rxL38Jb2-QF8kMrIgVKDmDmZZk_00r2yKT1QKmdJVttKG8BsHSvyJttDQtA0UL8RNq67AJBSMTBkffvs2wBfpo_TtD0QsxjdqYJikRiqreIwY8KX1v9LJOzR5PcqVBtPuwJHUM8ev20z8OLpMM2y20tFPPQVXb6Kpm1HBVwcC4q-vXBYQVOW1eTmEk4pKM7M5QQRwSZm1vP1glCsrIrVDwsTmYRDa5VrprjRGOP18cWqmIa8zviILxD4GluJdNvXrDSKybK08CYRbK0q_SLFT2VvWMzPA7Ajj94jNNBiFVLfEywOX4v_AqB1O0OD3w1TEAR5cTgvJf_uOtSW0xpoZZ5-nK1pEOjuuNaT4yzLIEUAr9rHtflju_692xRmoMeCZ9k1PWsz8w6fRhipGexU7AIf2z5ZGiJ12ruSryc3Zocj0-XTuYFpOAM2iiq1WtqvMcxauRFeyIfPdA84_60Y464XAu-CdKfJRzYgBCc_OdyrYx1zI3ALrLNoEH1okjAisv-oo1Jyx9bGT5Rp3Tf6Qix4PfOWbr3k64FoLPVBmBJSlbnXGyB9yub9BdSg4odQGiRegkYJPmh-e_OdO8d8OmAWhb2amYvo8l0rt0cFXZQleeXspo5woe2ONKUC7dq9FM2aFfpUkcmuOsFhCdr4YqzOrXpWfxSE_P8LW8-V4H8xFBmt4nb74t1xXDuglgZ7dOi62QrJrbRk7GUmM2w05kNW2MJ_K8RIWkhz-Pnm1oLIK5_abRqR4cyHMvBGVmT0dSwaSYj0qIjQN22-lbh80AxBBcY2gcUBjcMN9_4p9u4iVMy7T972_5M5OO5sHnEDJ0sqjKaNdU8HM535cDAFZ_oRHao4eKP_LGqNx88Nhg1SGvmenHNDMQnWuYGanSzWH_wpnoyzL0bFuMowEqzm3_zTpKx1qCUfDV4wApBLsAZQ8K4euF32OO3vC2PA0arLv7TzQZzskNXtl_IdWHAw4DzpxWK09Jti9mcVoFRyjjNnwRA4swALnl_BHon0uH69zJmVy45sH_6ZYPSiJ-ZLC4aF9eZ4JJc8nywM_a5R67T8V60ZQ07elK1FpHeBHnqmEpWTjP0-MJQC5wyN6RvYan6hLm0kPdhn9ZCheu60sDhUZkvlU66fj6ZnC6mt0UDpQROEjX4mKuoOFwKUCo_AkroqsUpC8XS3HPbFUaQMh-vBwv5pLM8AFWKXhYb7409FLY-xvASZBnEPdOS9kcyiiEIDXKgfKkPVldBvhkjft8jv8hYhzIIKJLwTzWAYNTm3AyT_v-_qyvbCcbw2SOGfXm2NkN73U4pYzZU5Xdc5OF5ckJX49B9sS4j4FO2rigE7YgP3yLRJgEIpR3S1cOFXD7vgaEbbcGXKA2hWdj5ZmFuUPEg6OYGQtxuEf9S5jrRHXVPP7x0LCLmMk3QriHbK7sEVHgPntRPM4ixPVsGCvIqV1fQK0BRxH0bWjCnfMoIAhWwJ1IMyUYtT6xLQz2nA50Li759Bk35wzLipsFVuYIpAA5Jo2yVsmWTeT9JLgSYTnLLpk2ghYQvMmH8ScOFQH91NS5eXjEwC0m7Sh3yKqg-_YiRlCMp3d3jdsk3Q5rKYRsSQE4BHnl0LlR_LH1nDdmxtYPb6TonoNA6Wl225mpJauqHb816ig5sqexnpOygQuEE1TgtB_P1SM0-gYVNoUgWvLkQ32zCDw28Q_-tMfaTaZB0VE98t-ZxUmYropCpJSbo4AxItlAIpU-kZBDjO98wEM7aJuT9N6Eba2w8IhMKa3PfISmFjWVMF7wtrPykWa6R3rgOcJIhDdFNqZVpUFnhAuQUZWWpyc_ZzFW19bwTpjn38Pub6ExSDGHWsYP5nTeMBOgxT6GrQVw8Ek8puKYonwe_W8slI9FROzwmOeeMSuSCzWWHwk81bDDPh0shAU5dCx6Jk6rKJ5FWFXV_dDji6pv3JUD9QDqwzdXuV4uNnG3SXuDOYY7QDt1-Df9dtnAXEdHM7QY92a5w3nMJ5CTQ3iFZqaQ_Ongt3ayPglrUGFZGPeb8ZerLMxNcnSgzpE_PyhyCSUXGZsVyNate98o4DsVC0y1Jiko_Sl8Fg2nfu7xOSXy5zgoi0GFNff6lt4A0LS4DvnBcdJO4Tqq-v6C3Ij1MI-qyqKdRxuQALjRH09OVBByaFmN-IbCXEyU8xP-fJBSuyKpopGT7AzNabvRdv_U36E5_2Rz_jyWgDzlem3c3_xxdHhwrdSocX52LQ_XsvDHL7AMPFqXVRZyLEC9cNmDHW2BpJrt1lrA8OMfeNyRKnlaA9-JMJ50Sd1fKpILR63JFhx-u7PLO-3_WDvwWDE9OCln7AqEvaKI7MtoyBm3VJseLsQuAmLJqfYxI7wZoir-oONxXu7tN0p1r5zKDBJ0TAxmpUqHOImUsAIQM8zgDTd5OBmD9wtZXKbYxwyLg3aoOhtdVRUFdMiTGU9cxlkl2kD03E6Cq5Lolg1wGx_-W6jx_mLdCF2Q7w5XRvPwHO6DJn4yO9esQhffpMXS0Mw0NcznNg1CJaZrLnL3utU76XEpSuvPYsL1xbX3z3jBLtAFG2ZVbiSD6ogK1VWbUdVVg4LJhxxFMPXsRGH-hgSu58843tbsyHHJ5RT9c-NhsPi_R68txbkvYG4MZIvRoLbhhSkHR5dydwwJX-HUM5_AkfMwGb6dVrKyVYOElwqMCNE8zVZUVk-qg--psrnqi-p6BFExeFV31PzbeDmmmF05X7eEJ0iuQjRVzN8Wm23Qpwia-wjwoK5Ktn7fBtBv5_UKRISYahUonVcxftvGvVkLPqWVrpsVqX3G9UyZXCSzGjszdmFRK_c8aZud2Jm3tVJUMw6FhXcimkyX3QWChp4QeeOhJpkLzt58lTVF41P4YeKLaZxv96uKEoIlEWZVe2PTPK5hBD8H5YnqU13_vp3SPgDdX2sqarKsU5DQG1G6pA-u4jrHTebcPAM8ia5lcoO9cobQ8SbwWUvZf977AB44cc9bFRM9jwqvMSRotphbCKKCIeiL6B9Ph6bLefAR7deohQwRxYZpiaY20-z8NjG5Dt4cS90UkKI9u70eV5OKKJDfgtd84h8LNBGlHJkqFiSHDWYpE59MeC1hsrlMJ6zQ6p18qoUy7kMNrP3ujzTYSKa0NmF9Y_nv4_4h-pQtk3c3IdcIa-bGZTkVf8L5Yu-SLt-p6snQGt5yrheCbZmOG0d-num_ESu23rNp0FgAKNKNkPMl_STmDKAjYoOD-5PxuGelYX-pnfGGR7wZ4-uiVlI-dxPe-_YO6JWpjPSTa0Iedv1gP4UQg1KGK3MVmH6A8OsQb7EqKLU73fnQ7LnFhGtByBwJOg07sdcnmuhxoqFhgYKV-aTK-A0IgGFZdUEI2ZDSC3uKsvmfhyOqfEu9L2VVUcxygJzdlMLxxL3w9YDT2Gk_kFIBc9AxvPpZkqDXaqYzFnc9RT3JQDzvPsiqxjibONDcnz-WpdlvjikoQXd1HRcPujJ769rKuvlgi9a46nYu4XZtnguUDHWqW8tXR0U7-2el84wkXYEgWB3x9wW2n65DjEOu5GvTe5A6x52w3MnRIhLKTzyjl4ACXxFcIRKp3FHfOG3XbUiP-CjGI1f2XoOviatk5cM5QxHmbVnAoOR0IglGIaoto6P2t6e83vk28W9k1ZYLpNKKPNmWG7vroSuqnRStuU9dKdd_VBZ2ut610cu-q5VDYAK30aZIQvp6VSjYHtOEt2IvLkhsRvQf_1-yWQio85KdzwdKsRsj9lYZ9fwLCHTpVZYOZXUNm4AXEREKzc0R5mYfs_WPGENTMBzHotr8-42MaDoBrtKh11TRnAI53E5FkdJk2BHKUX_r22WRgpmcJ3Vufqjz2-tDUDoUvRJFzuXHXbs2YgEuLdEv1GT-YgLgvywH9hFPWtQKN_IX6AoBm7LpOdwGZE4CyB3HWwnoN13TeYU15SjF5bDN2JusTVrm_PUS-QEPaKLPP7gMii0jKOGM-5jMvYqj_E1HWLO_zNZwqG_hPCcAyofsrmMr4842c41r2IufacSNPufp23IhDNV8KHan2SkJ6xPujbeU6Gl4vA9gvJTohyH-RbhLtNxv5SrmOHveWLoMPnF3z5SKwMLL7KyN0YwBrQa8YeXsFZXoHJ-11omygNiyaNPbV567tU1dWw7jPiqDmTumDU7CnQ1gKFybMXwNfcgVvCUToGSbypLhyF_1zM7PRd9Q8zWWq6opTo0ZN6HqOYt6P44n6srFAPbwzu52nBHjmoFEMKSK2IyVGLRT6DyvNea6ZuaXkWWIbBkK5Qk_nbqeHW-W0dFJF5PMEfql9iACJJk1E_4ZD1N5Cesn8FPovrQdvAe2DcJptlYDRdnHgWHDBOHws6L-30abK1B0_mTSt-KKCW3ZfmGa5vZXyZMZVP_fq_mSbUN3cBoUJdvKqXa0Zu3VWXw-SqehId9T15m6aEp4F95AX-dZs0lFqjTJhdHyZ1nj_zE22Ev4fZ1k7LRhrKi14QEt46ceDhdBvSqU56dNpLiEsrxkXsNyOpIRGgI83i8gqtowumBT_gyUBZClA1o0xB4gSC5Q17cl_ENHxFMkNrbqGkC0mLIIL-1hQufQr4xXkAiof4Afa1cBh2IC_EeVrCfLuHHmAvvO_Hx01hY-ZXAtBapY2uUTDTt32umzkxpaAkr8Lrla-7ucmzCO42mGMUN2MDx-MM7jrDN2BGRRcuoGrpPq-_p",
+              "summary": []
+            },
+            {
+              "id": "msg_0353f838d7bfc19f016a9ea978d6748197907d30101b24e027",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Azure Blob Storage is Microsoft\u2019s object storage service for storing large amounts of unstructured data in the cloud."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "mcp",
+              "allowed_tools": [
+                "microsoft_docs_search"
+              ],
+              "headers": null,
+              "require_approval": "always",
+              "server_description": null,
+              "server_label": "docs",
+              "server_url": "https://learn.microsoft.com/api/mcp"
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 580,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 715,
+            "output_tokens_details": {
+              "reasoning_tokens": 640
+            },
+            "total_tokens": 1295
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 07 Sep 2026 12:09:30 GMT
+recorded_with: VCR 6.4.0

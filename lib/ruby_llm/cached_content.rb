@@ -14,7 +14,7 @@ module RubyLLM
   # Cache names are provider-owned. Persist #provider alongside #name and
   # pass it back when finding the cache later.
   class CachedContent
-    include Inspectable
+    include Support::Inspectable
 
     def inspect_attributes # :nodoc:
       { name: name, model: model, provider: provider, expires_at: expires_at }

@@ -81,6 +81,11 @@ RSpec.describe RubyLLM::Protocols::Cohere::Models do
       expect(protocol.send(:capabilities_from, ['transcriptions'], nil)).to eq(['transcription'])
     end
 
+    it 'classifies Parse as image OCR from its reported endpoint' do
+      expect(protocol.send(:modalities_from, ['parse'])).to eq(input: ['image'], output: ['text'])
+      expect(protocol.send(:capabilities_from, ['parse'], ['vision'])).to eq(['ocr'])
+    end
+
     it 'keeps the Cohere endpoint list in metadata' do
       expect(parse.first.metadata).to include(
         endpoints: ['chat'],

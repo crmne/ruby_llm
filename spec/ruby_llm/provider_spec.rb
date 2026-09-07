@@ -487,7 +487,8 @@ RSpec.describe RubyLLM::Provider do
         moderate: RubyLLM::Moderation.new(id: 'modr_1', model: routed_model.id, results: []),
         paint: RubyLLM::Image.new(model: routed_model.id),
         speak: RubyLLM::Speech.new(data: 'audio', model: routed_model.id),
-        transcribe: RubyLLM::Transcription.new(text: 'transcript', model: routed_model.id)
+        transcribe: RubyLLM::Transcription.new(text: 'transcript', model: routed_model.id),
+        render_transcription_options: {}
       )
 
       allow(RubyLLM::Protocols::ChatCompletions).to receive(:new)
@@ -571,7 +572,8 @@ RSpec.describe RubyLLM::Provider do
 
   describe 'files protocol registration' do
     it 'exposes provider-managed files only where implemented' do
-      file_providers = %i[anthropic azure bedrock gemini mistral openai openrouter vertexai xai]
+      file_providers = %i[anthropic azure bedrock cohere deepseek elevenlabs gemini mistral openai openrouter perplexity
+                          vertexai xai]
 
       described_class.providers.each do |slug, provider_class|
         provider = provider_class.new(config_for(slug))
@@ -618,7 +620,7 @@ RSpec.describe RubyLLM::Provider do
   end
 
   describe 'providers without file support' do
-    let(:provider) { RubyLLM::Providers::DeepSeek.new(config_for(:deepseek)) }
+    let(:provider) { RubyLLM::Providers::Ollama.new(config_for(:ollama)) }
 
     it 'refuses every file operation' do
       expect { provider.upload_file('file.txt') }.to raise_error(RubyLLM::Error, /doesn't support file uploads/)

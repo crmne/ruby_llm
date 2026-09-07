@@ -124,7 +124,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Models do
         },
         { 'publisherModels' => [{ 'name' => 'publishers/google/models/text-embedding-005' }] }
       ]
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(connection).to receive(:get) do |_url, &block|
         request = Struct.new(:headers, :params).new({}, {})
         block&.call(request)
@@ -139,7 +139,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Models do
     end
 
     it 'propagates a failed catalog request instead of reporting an empty catalog' do
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(connection).to receive(:get).and_raise(RubyLLM::UnauthorizedError, 'nope')
 
       expect { catalog.send(:catalog, 'google', connection) }.to raise_error(RubyLLM::UnauthorizedError)
@@ -236,8 +236,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::Models do
     subject(:models) { catalog.list_models }
 
     let(:provider) { RubyLLM::Providers::VertexAI.new(vertexai_config('global')) }
-    let(:global_connection) { instance_double(RubyLLM::Connection) }
-    let(:central_connection) { instance_double(RubyLLM::Connection) }
+    let(:global_connection) { instance_double(RubyLLM::Transport::Connection) }
+    let(:central_connection) { instance_double(RubyLLM::Transport::Connection) }
 
     before do
       allow(catalog).to receive_messages(

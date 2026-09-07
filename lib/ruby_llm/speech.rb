@@ -8,8 +8,8 @@ module RubyLLM
   #   speech.save "welcome.mp3"
   #
   class Speech
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # Maps audio format names to their MIME types.
     MIME_TYPES = {
@@ -37,12 +37,15 @@ module RubyLLM
     # The MIME type of the audio, such as <tt>"audio/mpeg"</tt>.
     attr_reader :mime_type
 
-    def initialize(data:, model:, voice: nil, format: 'mp3', mime_type: nil) # :nodoc:
+    def initialize(data:, model:, voice: nil, format: 'mp3', mime_type: nil, # :nodoc:
+                   input_tokens: nil, output_tokens: nil)
       @data = data
       @model = model
       @voice = voice
       @format = (format || 'mp3').to_s
       @mime_type = mime_type || MIME_TYPES.fetch(@format, "audio/#{@format}")
+      @input_tokens = input_tokens
+      @output_tokens = output_tokens
     end
 
     # Generates speech for +input+ and returns a Speech holding the audio.
@@ -60,7 +63,16 @@ module RubyLLM
     #   RubyLLM.speak "Say cheerfully: Have a wonderful day!",
     #                 model: "gemini-3.1-flash-tts-preview", provider: :gemini
     #
-    # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
+    # Given a block, yields SpeechChunk objects as audio arrives and still
+    # returns the complete Speech. Chunks contain consecutive bytes of the
+    # recording and are not separate audio files.
+    #
+    #   File.open("welcome.mp3", "wb") do |file|
+    #     RubyLLM.speak("Welcome back.") { |chunk| file.write(chunk.data) }
+    #   end
+    #
+    # Raises RubyLLM::Error when the selected protocol cannot stream speech,
+    # or RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
     def self.speak(input,
                    model: nil,
                    provider: nil,
@@ -69,7 +81,8 @@ module RubyLLM
                    format: nil,
                    context: nil,
                    provider_options: {},
-                   metadata: nil)
+                   metadata: nil,
+                   &block)
       config = context&.config || RubyLLM.config
       model ||= config.default_speech_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -86,12 +99,13 @@ module RubyLLM
         format: format,
         provider_options: provider_options,
         metadata: metadata,
+        streaming: !block.nil?,
         tokens: empty_tokens,
         cost: Cost.new(tokens: empty_tokens, model:, category: :audio_tokens)
       }
 
       RubyLLM.instrument('speech.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.speak(input, model:, voice:, format:, provider_options:)
+        result = provider_instance.speak(input, model:, voice:, format:, provider_options:, &block)
         event[:result] = result
         event[:response_model] = result.model
         event[:voice] = result.voice
@@ -111,12 +125,22 @@ module RubyLLM
     # Returns provider-reported usage across every attempt. Its fields are
     # +nil+ when the provider did not report any.
     def tokens
-      ruby_llm_usage_tokens
+      return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
+
+      Tokens.new(input: @input_tokens, output: @output_tokens)
     end
 
     # Returns the speech cost across every provider attempt.
     def cost
-      ruby_llm_usage_cost
+      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+
+      Cost.new(tokens:, model: model_info, category: :audio_tokens)
+    end
+
+    def model_info # :nodoc:
+      @model_info ||= RubyLLM.models.find(model)
+    rescue ModelNotFoundError
+      nil
     end
 
     # Writes the audio to +path+ in binary mode and returns +path+.

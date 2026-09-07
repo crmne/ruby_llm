@@ -27,120 +27,81 @@ Turn a recording into text:
 
 ```ruby
 transcription = RubyLLM.transcribe("meeting.wav")
-
 puts transcription.text
-# => "Welcome to today's meeting. Let's discuss..."
-
 ```
 
-Supports MP3, M4A, WAV, WebM, OGG, and more.
+Pass a local path, URL, IO object, or Active Storage attachment. Supported audio formats depend on the model.
 
 ## Choosing Models
 
-```ruby
-# GPT Transcribe (default)
-RubyLLM.transcribe("audio.mp3", model: "gpt-transcribe")
-
-# GPT-4o Transcribe
-RubyLLM.transcribe("audio.mp3", model: "gpt-4o-transcribe")
-
-# GPT-4o Mini Transcribe
-RubyLLM.transcribe("audio.mp3", model: "gpt-4o-mini-transcribe")
-
-# Diarization model (identifies speakers)
-RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize")
-
-# Gemini 2.5 Flash/Pro (Google's multimodal transcription)
-RubyLLM.transcribe(
-  "lecture.wav",
-  model: "gemini-2.5-flash",
-  prompt: "Return only the verbatim transcript."
-)
-
-# Scribe v2 (ElevenLabs, 90+ languages with word timestamps)
-RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs)
-
-# Nova-3 (Deepgram, fast batch transcription with diarization)
-RubyLLM.transcribe("interview.mp3", model: "nova-3", provider: :deepgram)
-```
-
-Deepgram also serves specialized Nova models such as `nova-3-medical` and `nova-2-phonecall`, and hosts Whisper as `whisper-tiny` through `whisper-large`. Its Flux generation is WebSocket only, on `/v2/listen`, so it is out of reach of `RubyLLM.transcribe`.
-
-Deepgram can fetch the audio itself. Pass a URL and RubyLLM sends the pointer instead of uploading the bytes:
+Pass `model:` to choose a transcription model:
 
 ```ruby
-RubyLLM.transcribe("https://dpgr.am/spacewalk.wav", model: "nova-3", provider: :deepgram)
+RubyLLM.transcribe("meeting.wav", model: "{{ site.models.transcription_elevenlabs }}")
 ```
 
-Configure the default globally:
+Set `default_transcription_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. Browse the [Models]({% link _reference/available-models.md %}) page for audio models. Pass `provider:` to select a hosted deployment explicitly.
 
-```ruby
-RubyLLM.configure do |config|
-  config.default_transcription_model = "gpt-transcribe"
-end
-```
+For Azure, pass your [deployment name]({% link _getting_started/configuration-providers.md %}#azure-deployments). A diarization deployment with a custom name also needs `format: "diarized_json"`.
 
-## Language Hints
+## Language and Vocabulary Hints
 
-Improve accuracy by specifying the language:
+Give the model the recording's language and unfamiliar terms:
 
 ```ruby
 RubyLLM.transcribe("entrevista.mp3", language: "es")
-RubyLLM.transcribe("conference.mp3", language: "fr")
+
+RubyLLM.transcribe(
+  "developer-talk.mp3",
+  prompt: "Discussion about Ruby, Rails, PostgreSQL, and Redis."
+)
 ```
 
-Use ISO 639-1 codes (en, es, fr, de, etc.).
+Use ISO 639-1 language codes such as `en`, `es`, and `fr`. Google's dedicated transcription models also accept BCP-47 hints such as `en-US`.
 
-`RubyLLM.transcribe` keeps the transcription vocabulary as keywords: `model:`, `language:`, `prompt:`, `temperature:`, `format:`, `speaker_names:`, and `speaker_references:`. Providers ignore the keywords they do not support. Everything specific to one provider goes in `provider_options:`, a hash of options in the provider's own request vocabulary that RubyLLM merges into the rendered request as-is.
-
-## Output Formats
-
-The `format:` keyword selects the shape of the transcript you get back, using the provider's own values.
-
-OpenAI accepts `json`, `text`, `srt`, `vtt`, `verbose_json`, and `diarized_json`:
+For provider-specific vocabulary and formatting controls, use `provider_options:`:
 
 ```ruby
-RubyLLM.transcribe("interview.mp3", model: "whisper-1", format: "srt")
+RubyLLM.transcribe(
+  "developer-talk.mp3",
+  model: "{{ site.models.transcription_elevenlabs }}",
+  provider_options: { keyterms: ["RubyLLM", "Zeitwerk"], tag_audio_events: true }
+)
 ```
-
-Gemini takes a MIME type:
-
-```ruby
-RubyLLM.transcribe("lecture.wav", model: "gemini-2.5-flash", format: "application/json")
-```
-
-ElevenLabs uses `format:` to choose the timestamp granularity, either `word` or `character`:
-
-```ruby
-RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs, format: "character")
-```
-
-When you omit `format:`, OpenAI's diarization models default to `diarized_json`, Gemini defaults to `text/plain`, and other OpenAI models use the API's default. Deepgram has no response format parameter and ignores `format:`.
 
 ## Speaker Diarization
 
-The diarization model identifies different speakers:
+Pass `speaker_names: []` to request speaker labels:
 
 ```ruby
 transcription = RubyLLM.transcribe(
-  "team-meeting.wav",
-  model: "gpt-4o-transcribe-diarize"
+  "meeting.wav",
+  model: "{{ site.models.transcription_gemini }}",
+  speaker_names: [],
+  timestamps: :word
 )
+
+transcription.words.each do |word|
+  puts "#{word['speaker']}: #{word['word']} (#{word['start']}s)"
+end
+```
+
+Speaker and timing fields retain the provider's names. Depending on the model, speaker labels appear on words or segments. OpenAI's diarization model returns segments:
+
+```ruby
+transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize")
 
 transcription.segments.each do |segment|
   puts "#{segment['speaker']}: #{segment['text']}"
-  puts "  (#{segment['start']}s - #{segment['end']}s)"
+  puts "#{segment['start']}s - #{segment['end']}s"
 end
-# Output:
-# A: Hi everyone.
-#   (0.5s - 1.2s)
-# B: Happy to be here.
-#   (2.8s - 3.5s)
 ```
+
+For Google's dedicated transcription model on Vertex AI, use `model: "{{ site.models.transcription_vertexai }}"`, `provider: :vertexai`, and set `vertexai_location` to `"global"` in [Configuration]({% link _getting_started/configuration-providers.md %}#vertex-ai-authentication-configuration).
 
 ### Identifying Known Speakers
 
-Map speakers to names with the `speaker_names:` and `speaker_references:` keywords. Provide 2-10 second reference clips:
+OpenAI's diarization models can match speakers against 2–10 second reference clips:
 
 ```ruby
 transcription = RubyLLM.transcribe(
@@ -149,55 +110,48 @@ transcription = RubyLLM.transcribe(
   speaker_names: ["Alice", "Bob"],
   speaker_references: ["alice-voice.wav", "bob-voice.wav"]
 )
-
-# Alice: Hi everyone.
-# Bob: Happy to be here.
 ```
 
-Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments. Only OpenAI's diarization models use the names and the reference clips themselves. Mistral, ElevenLabs, and Deepgram read `speaker_names:` as a request to diarize: Mistral turns on segment-level speaker ids, ElevenLabs turns on diarization and caps the speaker count at the number of names you gave, and Deepgram runs its current diarizer, which numbers each word and utterance.
+References accept file paths, URLs, IO objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities. ElevenLabs uses the number of supplied names as a speaker-count limit.
+
+## Segments and Timestamps
+
+Use `timestamps:` to request timing information:
 
 ```ruby
 transcription = RubyLLM.transcribe(
-  "team-meeting.wav",
-  model: "nova-3",
-  provider: :deepgram,
-  speaker_names: ["Alice", "Bob"]
+  "interview.mp3",
+  model: "{{ site.models.transcription_openai_timestamps }}",
+  timestamps: [:word, :segment]
 )
 
-transcription.segments.each do |utterance|
-  puts "#{utterance['speaker']}: #{utterance['transcript']}"
-end
-```
-
-```ruby
-transcription = RubyLLM.transcribe(
-  "team-meeting.wav",
-  model: "scribe_v2",
-  provider: :elevenlabs,
-  speaker_names: ["Alice", "Bob"]
-)
+puts "Duration: #{transcription.duration} seconds"
 
 transcription.words.each do |word|
-  puts "#{word['speaker_id']}: #{word['text']} (#{word['start']}s)"
+  puts "#{word['start']}s - #{word['end']}s: #{word['word']}"
 end
 ```
 
-OpenAI picks a chunking strategy for you. To choose one yourself, pass it in OpenAI's own request shape through `provider_options:`:
+Available granularities depend on the model. Whisper accepts word and segment timestamps without streaming; Mistral accepts segment timestamps, including streaming. Deepgram, xAI, and ElevenLabs return word timing by default. ElevenLabs also accepts `timestamps: :character`.
+
+## Output Formats
+
+For models that produce subtitles, pass `format:`:
 
 ```ruby
-RubyLLM.transcribe(
-  "team-meeting.wav",
-  model: "gpt-4o-transcribe-diarize",
-  provider_options: { chunking_strategy: { type: "server_vad", threshold: 0.5 } }
+transcription = RubyLLM.transcribe(
+  "interview.mp3",
+  model: "{{ site.models.transcription_openai_timestamps }}",
+  format: "srt"
 )
+File.write("interview.srt", transcription.text)
 ```
 
-> Gemini transcripts do not include segment metadata. The OpenAI, ElevenLabs, and Deepgram examples above show how to read speaker information.
-{: .note }
+Formats use the provider's names. Leave `format:` unset to get the model's default transcript.
 
 ## Streaming Transcripts
 
-Pass a block to stream the transcript as the model produces it. RubyLLM yields a `RubyLLM::TranscriptionChunk` for every event and still returns the completed `RubyLLM::Transcription`:
+Pass a block to receive text as it is transcribed. The call returns the completed `Transcription`:
 
 ```ruby
 transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe") do |chunk|
@@ -207,151 +161,59 @@ end
 puts transcription.text
 ```
 
-Each chunk reports its provider event `type`, and the predicates tell you which fields are filled in:
+| Predicate | What it carries |
+| :--- | :--- |
+| `chunk.partial?` | `chunk.text`, tentative text that replaces the previous partial |
+| `chunk.delta?` | `chunk.delta`, committed text to append |
+| `chunk.segment?` | `chunk.segment`, a Hash with speaker and timing fields |
+| `chunk.done?` | `chunk.text`, the complete transcript when supplied by the endpoint |
 
-| Type | Predicate | What it carries |
-| :--- | :--- | :--- |
-| `transcript.text.delta` | `chunk.delta?` | `chunk.delta`, the text just transcribed |
-| `transcript.text.segment` | `chunk.segment?` | `chunk.segment`, a Hash with `text`, `speaker`, `start`, and `end` |
-| `transcript.text.done` | `chunk.done?` | `chunk.text`, the complete transcript |
+Read the final transcript from `transcription.text`. `chunk.raw` holds the original event when you need additional fields.
 
-`chunk.raw` holds the parsed provider event when you need a field RubyLLM does not normalize.
-
-Diarization models stream segments instead of deltas, which is how you get speaker labels in real time:
+Diarization models can stream speaker segments:
 
 ```ruby
-transcription = RubyLLM.transcribe("team-meeting.wav", model: "gpt-4o-transcribe-diarize") do |chunk|
+RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe-diarize") do |chunk|
   next unless chunk.segment?
 
   puts "#{chunk.segment['speaker']}: #{chunk.segment['text']}"
 end
-
-transcription.segments.size
 ```
 
-Streaming is available on OpenAI's `gpt-4o-transcribe` family (and on Azure and OpenAI-compatible providers that proxy it). Whisper does not stream. Passing a block to a provider that does not stream transcriptions raises `RubyLLM::Error`.
+### WebSocket Transcription
 
-## Improving Accuracy with Prompts
+For Deepgram, ElevenLabs Scribe Realtime, xAI, and Google Live transcription, add the optional dependency:
 
-Guide the model with context about technical terms or domain-specific vocabulary:
+```ruby
+gem "websocket-driver"
+```
+
+Use the same block API with the appropriate streaming model:
 
 ```ruby
 RubyLLM.transcribe(
-  "developer-talk.mp3",
-  prompt: "Discussion about Ruby, Rails, PostgreSQL, and Redis."
-)
-
-RubyLLM.transcribe(
-  "product-demo.mp3",
-  prompt: "Product demo for ZyntriQix, Digique Plus, and CynapseFive."
-)
-```
-
-### Gemini prompt tips
-
-Gemini treats transcription requests like any other conversation. Use the `prompt:` argument to steer formatting (for example, "Respond with plain text only."), and combine it with `language:` when you want a specific locale in the final transcript. RubyLLM automatically adds the language hint to the Gemini request.
-
-Use `format:` to pick the response MIME type. Everything else goes through `provider_options:` in Gemini's own request shape:
-
-```ruby
-RubyLLM.transcribe(
-  "lecture.wav",
-  model: "gemini-2.5-flash",
-  provider_options: {
-    generationConfig: { maxOutputTokens: 2048 },
-    safetySettings: [
-      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" }
-    ]
-  }
-)
-```
-
-## Segments and Timestamps
-
-Access detailed timing information:
-
-```ruby
-transcription = RubyLLM.transcribe("interview.mp3", model: "whisper-1", format: "verbose_json")
-
-puts "Duration: #{transcription.duration} seconds"
-
-transcription.segments.each do |segment|
-  puts "#{segment['start']}s - #{segment['end']}s: #{segment['text']}"
-end
-```
-
-For OpenAI word-level timestamps, request the `verbose_json` format and word granularity:
-
-```ruby
-transcription = RubyLLM.transcribe(
-  "interview.mp3",
-  model: "whisper-1",
-  provider: :openai,
-  format: "verbose_json",
-  provider_options: { timestamp_granularities: ["word"] }
-)
-
-transcription.words.each do |word|
-  puts "#{word['start']}s - #{word['end']}s: #{word['word']}"
-end
-```
-
-ElevenLabs returns word timestamps on every transcription, along with the audio duration and the detected language:
-
-```ruby
-transcription = RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs)
-
-puts transcription.language  # => "en"
-puts transcription.duration  # => 10.5
-
-transcription.words.each do |word|
-  puts "#{word['start']}s - #{word['end']}s: #{word['text']} (#{word['type']})"
-end
-```
-
-Options ElevenLabs supports but RubyLLM has no keyword for, such as `keyterms`, `tag_audio_events`, and `entity_redaction`, go through `provider_options:`:
-
-```ruby
-RubyLLM.transcribe(
-  "developer-talk.mp3",
-  model: "scribe_v2",
+  "meeting.wav",
+  model: "{{ site.models.transcription_elevenlabs_realtime }}",
   provider: :elevenlabs,
-  provider_options: { keyterms: ["RubyLLM", "Zeitwerk"], tag_audio_events: true }
-)
-```
-
-Deepgram returns word timestamps and timed utterances on every transcription. RubyLLM asks for smart formatting and utterances by default, so the transcript comes back punctuated and split into segments:
-
-```ruby
-transcription = RubyLLM.transcribe("interview.mp3", model: "nova-3", provider: :deepgram)
-
-puts transcription.duration
-
-transcription.segments.each do |utterance|
-  puts "#{utterance['start']}s - #{utterance['end']}s: #{utterance['transcript']}"
-end
-
-transcription.words.each do |word|
-  puts "#{word['start']}s - #{word['end']}s: #{word['punctuated_word']}"
+  assume_model_exists: true
+) do |chunk|
+  print chunk.delta if chunk.delta?
 end
 ```
 
-Deepgram reports `transcription.language` only when you ask it to detect one. Every Deepgram option is a query parameter, and `provider_options:` joins the query, so this turns on language detection along with paragraph grouping and key terms:
+These models have different input requirements:
 
-```ruby
-RubyLLM.transcribe(
-  "developer-talk.mp3",
-  model: "nova-3",
-  provider: :deepgram,
-  provider_options: {
-    detect_language: true,
-    paragraphs: true,
-    keyterm: ["RubyLLM", "Zeitwerk"]
-  }
-)
-```
+| Provider | Model | Input |
+| --- | --- | --- |
+| Deepgram | `{{ site.models.transcription_deepgram }}` | Audio files, including MP3 and WAV |
+| ElevenLabs | `{{ site.models.transcription_elevenlabs_realtime }}` | Mono WAV: 16-bit PCM at 8, 16, 22.05, 24, 44.1, or 48 kHz, or 8 kHz mu-law |
+| xAI | `{{ site.models.transcription_xai }}` | WAV: 16-bit PCM or 8-bit G.711 |
+| Gemini | `{{ site.models.transcription_gemini_live }}` | Mono 16-bit PCM WAV |
+| Vertex AI | `{{ site.models.transcription_vertexai_live }}` | Mono 16-bit PCM WAV; `vertexai_location: "global"` |
 
-The same hash turns RubyLLM's defaults back off, with `smart_format: false` or `utterances: false`.
+Google Live returns text without speaker labels or word timestamps; use its dedicated file transcription model for those. Scribe Realtime returns word timing but does not diarize. These WebSocket connections do not support HTTP proxies.
+
+The block processes an existing recording.
 
 ## Turning a Recording into Meeting Notes
 
@@ -365,33 +227,12 @@ puts notes.content
 
 For fields your application can process, add a schema with [Structured Output]({% link _core_features/structured-output.md %}). To make an audio summary, pass the notes to `RubyLLM.speak` and save the result.
 
-## Handling Longer Files
+## Longer Recordings and Errors
 
-Choose a provider and format that accept your recording's size. Longer recordings may also need a longer timeout:
-
-```ruby
-RubyLLM.configure do |config|
-  config.request_timeout = 600
-end
-```
-
-## Error Handling
-
-```ruby
-begin
-  transcription = RubyLLM.transcribe("audio.mp3")
-  puts transcription.text
-rescue RubyLLM::BadRequestError => e
-  puts "Invalid request: #{e.message}"
-rescue Faraday::TimeoutError => e
-  puts "Transcription timed out: #{e.message}"
-rescue RubyLLM::Error => e
-  puts "Transcription failed: #{e.message}"
-end
-```
+Long recordings may need a longer [request timeout]({% link _getting_started/configuration-connection.md %}#connection-settings). See [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link _core_features/chat.md %}): Learn about conversational AI.
-*   [Text to Speech]({% link _core_features/text-to-speech.md %}) - turn a summary into audio.
-*   [Structured Output]({% link _core_features/structured-output.md %}) - extract decisions, speakers, and action items.
+* [Chat]({% link _core_features/chat.md %}) - ask questions about a transcript.
+* [Text to Speech]({% link _core_features/text-to-speech.md %}) - turn a summary into audio.
+* [Structured Output]({% link _core_features/structured-output.md %}) - extract decisions, speakers, and action items.

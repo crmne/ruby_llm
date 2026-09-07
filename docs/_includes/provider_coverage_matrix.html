@@ -1,0 +1,75 @@
+{% assign coverage = site.data.provider_coverage %}
+{% assign additional_count = coverage.features.size | minus: coverage.summary.feature_count %}
+{% capture coverage_method_url %}{% link _reference/provider-coverage.md %}#coverage-method{% endcapture %}
+<section class="coverage-explorer{% if include.compact %} coverage-compact{% endif %}" data-coverage-url="{{ '/provider-coverage.json' | relative_url }}" data-current="{% if include.current %}true{% else %}false{% endif %}" data-view="{% if include.current %}v2{% else %}compare{% endif %}" aria-label="Provider feature matrix">
+{% if include.additional %}
+<p class="coverage-scope">These {{ additional_count }} rows cover additional provider APIs and service boundaries. <a href="{% link _reference/provider-coverage.md %}#coverage-matrix-heading">View the {{ coverage.summary.feature_count }} shared features</a>.</p>
+{% else %}
+<p class="coverage-scope">The {{ coverage.summary.feature_count }} shared features appear below. <a href="{% link _reference/provider-api-extras.md %}">Additional provider APIs ({{ additional_count }} rows)</a> open on a separate page.</p>
+{% endif %}
+<div class="coverage-controls" hidden>
+  <label>View<select id="coverage-version">{% if include.current %}<option value="v2" selected>Current support</option>{% else %}<option value="compare">Changes in 2.0</option><option value="v1">1.16</option><option value="v2">2.0</option>{% endif %}<option value="offered">Provider offers</option></select></label>
+  <label>Provider<select id="coverage-provider"><option value="all">All providers</option>{% for provider in coverage.providers %}<option value="{{ provider.id }}">{{ provider.name }}</option>{% endfor %}</select></label>
+  <label>Feature group<select id="coverage-group">{% if include.additional %}<option value="extras" selected>Additional provider APIs ({{ additional_count }})</option>{% for group in coverage.groups %}{% unless group.summary %}<option value="{{ group.id }}">{{ group.name }}</option>{% endunless %}{% endfor %}<option value="all">All audited rows ({{ coverage.features.size }})</option>{% else %}<option value="shared" selected>Shared features ({{ coverage.summary.feature_count }})</option>{% for group in coverage.groups %}{% if group.summary %}<option value="{{ group.id }}">{{ group.name }}</option>{% endif %}{% endfor %}{% endif %}</select></label>
+  <label>Show<select id="coverage-filter"><option value="all">All statuses</option>{% unless include.current %}<option value="changed">Changed in 2.0</option>{% endunless %}<option value="missing">Missing{% unless include.current %} in 2.0{% endunless %}</option><option value="gaps">Missing or partial</option><option value="raw">Raw options</option><option value="unknown">Needs verification</option></select></label>
+</div>
+<ul class="coverage-legend" aria-label="Cell colors and patterns">
+  {% unless include.current %}<li data-legend="compare"><span class="coverage-swatch" data-status="added" aria-hidden="true"></span>New built-in support in 2.0</li>
+  <li data-legend="compare"><span class="coverage-swatch" data-status="existing" aria-hidden="true"></span>Already in 1.16</li>{% endunless %}
+  <li data-legend="version"{% unless include.current %} hidden{% endunless %}><span class="coverage-swatch" data-status="existing" aria-hidden="true"></span>Built in</li>
+  <li data-legend="offered" hidden><span class="coverage-swatch" data-status="offered" aria-hidden="true"></span>Verified provider offering</li>
+  <li data-legend="support"><span class="coverage-swatch" data-status="partial" aria-hidden="true"></span>Partial</li>
+  <li data-legend="support"><span class="coverage-swatch" data-status="passthrough" aria-hidden="true">{}</span>Raw options</li>
+  <li data-legend="support"><span class="coverage-swatch" data-status="missing" aria-hidden="true">×</span>Missing</li>
+  <li><span class="coverage-swatch" data-status="na" aria-hidden="true">–</span>Not in this API</li>
+  <li><span class="coverage-swatch" data-status="out_of_scope" aria-hidden="true">–</span>Outside scope</li>
+  <li><span class="coverage-swatch" data-status="unknown" aria-hidden="true">?</span>Unverified</li>
+</ul>
+<p class="coverage-results" role="status" aria-live="polite">{% if include.current %}Current support on documented models and endpoints.{% else %}Red cells mark built-in support added in 2.0, including features previously available through raw options or partial integration.{% endif %} Select a cell for evidence.</p>
+<noscript><p>Cell links open provider documentation. Download the audit data for implementation notes.</p></noscript>
+<div class="coverage-table-scroll" tabindex="0" role="region" aria-label="Provider feature comparison, scroll horizontally to see more providers">
+<table class="coverage-table">
+  <caption class="visually-hidden">Provider features. {% if include.current %}Solid red: built-in support.{% else %}Red: built-in support added in 2.0. Gray: already built in to 1.16.{% endif %} Lighter red with braces: usable through raw options. Outlined cross: missing. Red stripes: partial. Dash: not documented in this API. Question mark: unverified.</caption>
+  <thead><tr><th scope="col">Feature</th>{% for provider in coverage.providers %}<th scope="col" data-provider="{{ provider.id }}"><span>{{ provider.name }}</span></th>{% endfor %}</tr></thead>
+  {% for group in coverage.groups %}
+  <tbody data-group="{{ group.id }}"{% if include.additional %}{% if group.summary %} hidden{% endif %}{% else %}{% unless group.summary %} hidden{% endunless %}{% endif %}>
+    <tr class="coverage-group-row"><th colspan="{{ coverage.providers.size | plus: 1 }}" scope="rowgroup">{{ group.name }}</th></tr>
+    {% assign features = coverage.features | where: 'group', group.id %}
+    {% for feature in features %}
+    <tr data-feature="{{ feature.id }}">
+      <th scope="row">{{ feature.name }}</th>
+      {% for provider in coverage.providers %}
+      {% assign cell = provider.features[feature.id] %}
+      {% assign v1 = coverage.statuses[cell.v1] %}{% assign v2 = coverage.statuses[cell.v2] %}
+      {% assign source = coverage.sources[cell.sources.first] %}
+      {% assign state = cell.v2 | default: 'unknown' %}
+      {% if state == 'native' %}{% if include.current or cell.v1 == 'native' %}{% assign state = 'existing' %}{% else %}{% assign state = 'added' %}{% endif %}{% endif %}
+      {% capture cell_label %}{{ provider.name }}: {{ feature.name }}. {% if include.current %}{{ v2.label | default: 'Unverified' }}.{% else %}1.16: {{ v1.label | default: 'Unverified' }}. 2.0: {{ v2.label | default: 'Unverified' }}.{% endif %}{% endcapture %}
+      <td data-provider="{{ provider.id }}" data-v1="{{ cell.v1 | default: 'unknown' }}" data-v2="{{ cell.v2 | default: 'unknown' }}" data-offered="{% if cell.offered == true %}true{% elsif cell.offered == false %}false{% else %}unknown{% endif %}">
+        <a class="coverage-cell no-icon" data-status="{{ state }}" href="{{ source.url | default: coverage_method_url }}" data-provider="{{ provider.id }}" data-feature="{{ feature.id }}" aria-label="{{ cell_label }} View evidence." title="{{ cell_label }}">
+          <span aria-hidden="true">{% case state %}{% when 'na', 'deprecated', 'out_of_scope' %}–{% when 'unknown' %}?{% when 'passthrough' %}{}{% when 'missing' %}×{% endcase %}</span>
+        </a>
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endfor %}
+</table>
+</div>
+<p class="coverage-empty" hidden>No rows match these filters.</p>
+<dialog class="coverage-dialog" aria-labelledby="coverage-detail-title">
+  <form method="dialog"><button class="coverage-dialog-close" aria-label="Close feature details">Close</button></form>
+  <p class="coverage-detail-title" id="coverage-detail-title" role="heading" aria-level="2"></p>
+  <p class="coverage-detail-status"></p>
+  <p class="coverage-detail-notes"></p>
+  <p class="coverage-detail-heading" role="heading" aria-level="3">Provider Documentation</p><ul class="coverage-detail-sources"></ul>
+  <p class="coverage-detail-heading" role="heading" aria-level="3">Implementation Evidence</p>
+{% if coverage.working_tree %}<p>2.0 includes local changes. Source and test links show the base revision.</p>{% endif %}
+<ul class="coverage-detail-code"></ul>
+<section class="coverage-detail-validation" hidden>
+  <p class="coverage-detail-heading" role="heading" aria-level="3">Validation</p>
+  <ul class="coverage-detail-verification"></ul>
+</section>
+</dialog>
+</section>

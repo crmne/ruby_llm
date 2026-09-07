@@ -7,10 +7,6 @@ module RubyLLM
       class Files < Protocols::Files
         private
 
-        def download_file_url(file_id)
-          "#{file_info_url(file_id)}/download"
-        end
-
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                   display_name: nil, uri: nil, content_type: nil)

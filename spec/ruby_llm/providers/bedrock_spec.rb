@@ -139,7 +139,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         model = instance_double(RubyLLM::Model, id: id)
 
         expect(provider.protocol_for(model, operation: :embed))
-          .to eq(RubyLLM::Protocols::InvokeModel::TitanTextEmbeddings)
+          .to eq(described_class.protocols.fetch(:titan_text_embeddings))
       end
     end
 
@@ -147,7 +147,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       model = instance_double(RubyLLM::Model, id: 'amazon.titan-embed-image-v1')
 
       expect(provider.protocol_for(model, operation: :embed))
-        .to eq(RubyLLM::Protocols::InvokeModel::TitanMultimodalEmbeddings)
+        .to eq(described_class.protocols.fetch(:titan_multimodal_embeddings))
     end
 
     it 'routes Cohere embedding models to the Cohere embedding protocol' do
@@ -268,7 +268,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
     it 'signs a GET through a bare connection' do
       connection = instance_double(Faraday::Connection)
       allow(connection).to receive(:url_prefix=)
-      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
       headers = {}
       allow(connection).to receive(:get) do |url, _payload, &block|
         request = Struct.new(:headers).new(headers)
@@ -286,7 +286,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
     it 'signs a POST over the serialized payload' do
       connection = instance_double(Faraday::Connection)
       allow(connection).to receive(:url_prefix=)
-      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
       captured = {}
       allow(connection).to receive(:post) do |_url, payload, &block|
         request = Struct.new(:headers).new({})

@@ -27,7 +27,7 @@ module RubyLLM
 
           return definition if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(definition, tool.provider_options)
+          RubyLLM::Support::Utils.deep_merge(definition, tool.provider_options)
         end
 
         # Cohere takes plain JSON Schema here and controls strictness with the
@@ -37,7 +37,7 @@ module RubyLLM
                    RubyLLM::Tool::SchemaDefinition.from_parameters(tool.declared_parameters)&.json_schema
           return EMPTY_PARAMETERS_SCHEMA unless schema
 
-          schema = RubyLLM::Utils.deep_dup(schema)
+          schema = RubyLLM::Support::Utils.deep_dup(schema)
           schema.delete(:strict)
           schema.delete('strict')
           schema

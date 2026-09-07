@@ -11,6 +11,10 @@ module RubyLLM
           'audio/speech'
         end
 
+        def stream_speech(payload, model:, voice:, format:, &)
+          stream_speech_response(speech_url(model:), payload, model:, voice:, format:, &)
+        end
+
         def render_speech_payload(input, model:, voice:, format:, provider_options: {})
           {
             model: model,

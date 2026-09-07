@@ -69,7 +69,7 @@ module RubyLLM
         end
 
         def track_stream_block_start(data)
-          block = Utils.deep_dup(data['content_block'] || {})
+          block = Support::Utils.deep_dup(data['content_block'] || {})
           @stream_blocks ||= {}
           @stream_blocks[data['index']] = block
           @saw_server_block = true if server_tool_block?(block)

@@ -16,7 +16,6 @@ After reading this guide, you will know:
 * How to attach images, video, audio, text files, and PDFs to a message.
 * How to send local files and remote URLs through the `with:` parameter.
 * How RubyLLM detects file types automatically.
-* What provider-specific limits apply to each input type.
 * When to use in-prompt attachments versus provider-managed file IDs.
 
 ## Attaching Files
@@ -29,7 +28,7 @@ response = chat.ask "What happens in this video?", with: "demo.mp4"
 puts response.content
 ```
 
-Small attachments travel inline with the request. For large eligible local files, RubyLLM can upload through the provider's Files API and send a file ID or URI instead. To upload once and reuse the same provider-managed file across many requests, see [Files]({% link _core_features/files.md %}).
+RubyLLM can upload large local attachments automatically. To upload once and reuse a file across requests, see [Files]({% link _core_features/files.md %}).
 {: .note }
 
 ### Working with Images
@@ -49,8 +48,6 @@ response = chat.ask "Compare the user interfaces in these two screenshots.", wit
 puts response.content
 ```
 
-RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
-
 ### Working with Videos
 
 Ask a video-capable model about local videos or URLs:
@@ -67,16 +64,9 @@ response = chat.ask "Analyze these files for visual content.", with: ["diagram.p
 puts response.content
 ```
 
-Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
-
-Gemini, Vertex AI, and Bedrock Converse (Nova) models accept video input.
-
-Large video files may be uploaded through the provider Files API when the selected provider supports stored file references in chat.
-{: .note }
-
 ### Working with Audio
 
-Audio-capable models can transcribe speech and answer questions about a recording. Use `{{ site.models.openai_audio }}` or `{{ site.models.gemini_current }}`, for example:
+Audio-capable models can answer questions about a recording:
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}')
@@ -86,11 +76,9 @@ puts response.content
 
 response = chat.ask "What were the main action items discussed?"
 puts response.content
-
-gemini_chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
-response = gemini_chat.ask "Summarize this podcast.", with: "path/to/podcast.mp3"
-puts response.content
 ```
+
+For a transcript without a conversation, use [Audio Transcription]({% link _core_features/audio-transcription.md %}).
 
 ### Working with Text Files
 
@@ -123,12 +111,12 @@ response = chat.ask "Based on section 3 of this document, what is the warranty p
 puts response.content
 ```
 
-Be mindful of provider-specific limits. Large PDFs may be uploaded through the provider Files API when the selected provider supports stored file references in chat. The document still has to fit the model's context and modality limits.
+Documents still have to fit the model's context limit, even when uploaded separately.
 {: .note }
 
 ### Working with Office Documents
 
-Word documents, presentations, and spreadsheets attach the same way. Providers that read them natively (OpenAI on the Responses API, Bedrock, Mistral) extract the text themselves:
+Word documents, presentations, and spreadsheets attach the same way when the selected model and provider support them:
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_current }}')
@@ -145,7 +133,7 @@ Providers without native document support raise `RubyLLM::UnsupportedAttachmentE
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+chat = RubyLLM.chat(model: '{{ site.models.gemini_current }}')
 
 response = chat.ask "What's in this file?", with: "path/to/document.pdf"
 
@@ -156,12 +144,10 @@ response = chat.ask "Analyze these files", with: [
   "meeting_notes.txt",
   "recording.mp3"
 ]
-
-# Still works with the explicit hash format if needed
-response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
 ```
 
-**Supported file types:**
+**Recognized file types:**
+
 - **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
 - **Videos:** .mp4, .mov, .avi, .webm
 - **Audio:** .mp3, .wav, .m4a, .ogg, .flac
@@ -170,7 +156,7 @@ response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - the core conversation interface these attachments ride on.
+* [Chat]({% link _core_features/chat.md %}) - continue a conversation about your files.
 * [Files]({% link _core_features/files.md %}) - upload files once and reuse them by provider-managed ID.
-* [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - shape the request payload for provider-specific features.
-* [Audio Transcription]({% link _core_features/audio-transcription.md %}) - dedicated speech-to-text endpoints.
+* [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - control model requests.
+* [Audio Transcription]({% link _core_features/audio-transcription.md %}) - turn recordings into transcripts.

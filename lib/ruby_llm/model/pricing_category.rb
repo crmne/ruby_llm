@@ -99,7 +99,7 @@ module RubyLLM
       # <tt>[rates_hash, threshold]</tt>, or <tt>[nil, nil]</tt> when the
       # cost has no context tier.
       def self.long_context_from_cost(cost) # :nodoc:
-        cost = RubyLLM::Utils.deep_symbolize_keys(cost || {})
+        cost = RubyLLM::Support::Utils.deep_symbolize_keys(cost || {})
         return [nil, nil] if cost.empty?
 
         entry, threshold = context_cost(cost)

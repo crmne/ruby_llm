@@ -16,7 +16,7 @@ module RubyLLM
   #   batch.messages          # the responses, in submission order
   #
   class Batch
-    include Inspectable
+    include Support::Inspectable
 
     AWAITING_ROLES = %i[user tool].freeze # :nodoc:
 
@@ -123,7 +123,7 @@ module RubyLLM
         payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: requests.size }
         RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
           lines = requests.each_with_index.map do |request, index|
-            { custom_id: index.to_s, model: request.model.id, payload: request.render }
+            { custom_id: index.to_s, model: request.model.id, payload: request.render, text: request.text }
           end
           batch = new(provider:, requests:, store: provider.config.batch_store, **provider.create_batch(lines))
           event[:batch_id] = batch.id
@@ -132,6 +132,8 @@ module RubyLLM
       end
 
       def wrap_records(records)
+        return [records] if records.respond_to?(:to_llm)
+
         case records
         when Chat, EmbeddingRequest then [records]
         else Array(records)
@@ -181,7 +183,7 @@ module RubyLLM
       @provider.slug
     end
 
-    attr_reader :batch_protocol # :nodoc:
+    attr_reader :batch_protocol, :reported_cost # :nodoc:
 
     # Returns whether the batch has finished processing, as of the last
     # state fetched from the provider. Never contacts the provider; poll
@@ -250,8 +252,13 @@ module RubyLLM
       Tokens.aggregate(messages.compact.map(&:tokens))
     end
 
-    # Returns cost aggregated across the batch's collected responses.
+    # Returns a Cost for the batch. Uses the provider's reported total when
+    # available, otherwise aggregates collected response costs at batch rates.
+    # The total is +nil+ until the batch ends or when pricing is unknown.
     def cost
+      return Cost.aggregate([reported_cost], complete: complete?) if reported_cost
+      return Cost.aggregate([], complete: false) unless complete?
+
       Cost.aggregate(messages.compact.map(&:cost))
     end
 
@@ -268,6 +275,7 @@ module RubyLLM
       @completed = attributes.fetch(:completed)
       @request_counts = attributes[:request_counts]
       @request_count = attributes[:request_count]
+      @reported_cost = attributes[:reported_cost] if attributes[:reported_cost]
       @status = @provider.batch_status(@raw_status, completed: @completed, batch_protocol: @batch_protocol)
     end
 
@@ -349,7 +357,7 @@ module RubyLLM
       return unless result.ruby_llm_usage_entries.empty?
 
       model ||= RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
-      entry = Usage::Entry.new(
+      entry = Accounting::Usage::Entry.new(
         operation:,
         provider: @provider.slug,
         model: result.model || model.id,
@@ -359,7 +367,7 @@ module RubyLLM
         message: result.is_a?(Message) ? result : nil
       )
       result.ruby_llm_usage_entries = [entry]
-      Usage.instrument(entry, config: @provider.config) if instrument
+      Accounting::Usage.instrument(entry, config: @provider.config) if instrument
     end
 
     # A plain answer is the chat's last message once it arrives. A tool-call

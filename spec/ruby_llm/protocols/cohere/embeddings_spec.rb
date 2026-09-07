@@ -5,6 +5,8 @@ require 'spec_helper'
 # Fixtures follow the request and response examples published at
 # https://docs.cohere.com/reference/embed.
 RSpec.describe RubyLLM::Protocols::Cohere::Embeddings do
+  include_context 'with configured RubyLLM'
+
   let(:protocol) { Object.new.extend(described_class) }
   let(:image_path) { File.expand_path('../../../fixtures/ruby.png', __dir__) }
 
@@ -63,6 +65,53 @@ RSpec.describe RubyLLM::Protocols::Cohere::Embeddings do
   describe '#supports_embedding_media?' do
     it 'accepts attachments' do
       expect(protocol.send(:supports_embedding_media?)).to be(true)
+    end
+  end
+
+  it 'embeds an image with native Cohere Embed v3', :live do
+    skip_without_cassette_or_key('COHERE_API_KEY')
+    result = RubyLLM.embed(nil, model: 'embed-english-v3.0', provider: :cohere, with: image_path)
+
+    expect(result.vectors).not_to be_empty
+    expect(result.vectors).to all(be_a(Float))
+    expect(result.model).to eq('embed-english-v3.0')
+    expect(result.ruby_llm_usage_entries.map(&:status)).to eq([:succeeded])
+  end
+
+  %w[embed-english-v3.0 embed-multilingual-v3.0].each do |model|
+    context "with #{model}" do
+      it 'embeds one image through the native Cohere API with billed usage' do
+        request = stub_request(:post, 'https://api.cohere.com/v2/embed').with do |req|
+          payload = JSON.parse(req.body)
+          payload == {
+            'model' => model, 'input_type' => 'image', 'embedding_types' => ['float'],
+            'images' => ["data:image/png;base64,#{Base64.strict_encode64(File.binread(image_path))}"]
+          }
+        end.to_return_json(body: { embeddings: { float: [[0.1, 0.2]] },
+                                   meta: { billed_units: { input_tokens: 12 } } })
+
+        result = RubyLLM.embed(nil, model:, provider: :cohere, with: image_path)
+        expect(result.vectors).to eq([0.1, 0.2])
+        expect(result.tokens.input).to eq(12)
+        expect(request).to have_been_requested.once
+      end
+
+      it 'rejects mixed text, multiple images, and unsupported media before HTTP' do
+        expect { RubyLLM.embed('A ruby', model:, provider: :cohere, with: image_path) }
+          .to raise_error(ArgumentError, /not both/)
+        expect { RubyLLM.embed(nil, model:, provider: :cohere, with: [image_path, image_path]) }
+          .to raise_error(ArgumentError, /one image/)
+        audio = RubyLLM::Attachment.new(StringIO.new('audio'), filename: 'voice.wav')
+        expect { RubyLLM.embed(nil, model:, provider: :cohere, with: audio) }
+          .to raise_error(RubyLLM::UnsupportedAttachmentError)
+        expect(a_request(:post, 'https://api.cohere.com/v2/embed')).not_to have_been_made
+      end
+
+      it 'keeps text-only requests on the text input format' do
+        payload = protocol.send(:render_embedding_payload, 'Ruby', model:, dimensions: nil)
+        expect(payload).to include(texts: ['Ruby'], input_type: 'search_document')
+        expect(payload).not_to have_key(:images)
+      end
     end
   end
 

@@ -13,7 +13,7 @@ module RubyLLM
   #   response.tokens.cache_write # prompt cache writes
   #
   class Tokens
-    include Inspectable
+    include Support::Inspectable
 
     # The number of standard (non-cached) input tokens, or +nil+ if the
     # provider did not report it.

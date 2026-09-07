@@ -19,7 +19,7 @@ After reading this guide, you will know:
 * How to read input, output, cache, and thinking token counts from a response.
 * How to read per-turn and per-conversation costs.
 * How to count a request's tokens before you send it.
-* How RubyLLM normalizes token buckets across providers.
+* What each token bucket counts.
 * How the internal usage ledger accounts for retries, fallbacks, and cancellations.
 * How to price token usage yourself with `cost_for` and `Cost.aggregate`.
 * How costs are recorded in Rails and how to keep registry pricing fresh.
@@ -68,79 +68,33 @@ transcription.cost.total
 
 RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
 
-### Provider-Reported Costs
+When the provider reports a request's price, `cost.total` uses that amount instead of a registry estimate. Component costs such as `cost.input` still use registry pricing. The same rule applies to [batch costs]({% link _advanced/batches.md %}#cost-and-usage).
 
-Some providers report the exact amount a request cost. OpenRouter includes it on every chat, embedding, image, and transcription response. When a reported cost is present, `tokens.reported_cost` carries it and `cost.total` returns it instead of a registry-price estimate, so totals stay exact even for models the registry has no pricing for. Component costs such as `cost.input` are still estimated from registry pricing.
-
-```ruby
-chat = RubyLLM.chat(model: "claude-haiku-4-5", provider: :openrouter)
-response = chat.ask "Explain Ractors."
-
-response.tokens.reported_cost # exact request cost in USD, nil on providers that report none
-response.cost.total           # equals the reported cost when one is present
-```
+[Hosted research]({% link _advanced/hosted-research.md %}) is billed per task. Its cost stays unknown when the service supplies no price, even if it reports zero tokens.
 
 ## Counting Tokens Before You Send
 
-Everything above reports usage after a request ran. `chat.count_tokens` asks the provider how many input tokens the next request would carry before sending it, which is what you need to enforce a context budget or meter user input before submission:
+Use `RubyLLM.count_tokens` or `chat.count_tokens` to measure chat input before generation. See [Tokenization]({% link _core_features/tokenization.md %}#counting-a-chat-request) for examples and counting limits.
 
-```ruby
-chat = RubyLLM.chat(model: "claude-sonnet-5")
-           .with_instructions(system_prompt)
-           .with_tools(Weather)
+## Tokenizing Plain Text
 
-chat.count_tokens("Summarize the attached contract.") # => 9412
-```
+`RubyLLM.tokenize` returns a model's token IDs for a string. See the [Tokenization guide]({% link _core_features/tokenization.md %}) to inspect text and compare token counts.
 
-The count covers the whole request the chat would send as currently configured: instructions, tools, thinking configuration, and attachments, not only the message. Passing a message stages it for the count without adding it to the conversation, so the chat is unchanged afterwards:
+## Token Buckets
 
-```ruby
-chat.count_tokens("What's the weather in Berlin?")
-chat.messages.size # => 0
-```
+Token counts use the same meanings across providers:
 
-Call it with no argument to count the conversation as it stands:
+| Reader | What it counts |
+| --- | --- |
+| `tokens.input` | Standard input, excluding cache reads and writes. |
+| `tokens.output` | Billable output, including thinking when it is billed as output. |
+| `tokens.cache_read` | Input served from the prompt cache. |
+| `tokens.cache_write` | Input written to the prompt cache. |
+| `tokens.thinking` | Thinking tokens, when reported. |
 
-```ruby
-chat.ask "Tell me about Ruby's history."
-chat.count_tokens # => 1204, everything the next request would carry
-```
+To measure all input activity, add the standard input, cache reads, and cache writes. A missing count is `nil`, so check for it before calculating a total.
 
-When you want to measure a bare string rather than a configured chat, `RubyLLM.count_tokens` builds a throwaway chat for you:
-
-```ruby
-RubyLLM.count_tokens("What is the capital of France?", model: "claude-haiku-4-5") # => 14
-```
-
-This is the provider's own tokenizer over the real payload, not an estimate, which is why it needs a provider that offers a counting endpoint. Anthropic, Bedrock, Gemini, and Vertex AI do. The rest raise rather than guess:
-
-```ruby
-RubyLLM.chat(model: "deepseek-v4-flash").count_tokens("hi")
-# => RubyLLM::Error: DeepSeek doesn't support token counting
-```
-
-A guessed token count is worse than no count, because you would size a budget against it. Rescue `RubyLLM::Error` if your code runs across providers that differ here.
-{: .note }
-
-## How Providers Are Normalized
-
-RubyLLM handles provider token differences for you. `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
-
-| Provider | Raw provider usage | RubyLLM exposes |
-| --- | --- | --- |
-| OpenAI, Azure OpenAI, xAI, OpenAI-compatible | `prompt_tokens` can include `prompt_tokens_details.cached_tokens`; cache writes may appear as `cache_write_tokens`. | `tokens.input` excludes cache reads and writes. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
-| DeepSeek | `prompt_tokens` is split into `prompt_cache_hit_tokens` and `prompt_cache_miss_tokens`. | `tokens.input` is cache misses. `tokens.cache_read` is cache hits. |
-| OpenRouter | `prompt_tokens` can include cached tokens and cache-write tokens in `prompt_tokens_details`. | `tokens.input` excludes both cache buckets. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
-| Anthropic | `input_tokens` is already separate from `cache_read_input_tokens` and `cache_creation_input_tokens` or the `cache_creation` breakdown. | `tokens.input` passes through. Cache buckets map to `tokens.cache_read` and `tokens.cache_write`. |
-| Bedrock | `inputTokens` includes `cacheReadInputTokens` and `cacheWriteInputTokens`. | `tokens.input` excludes both cache buckets. Cache buckets are exposed separately. |
-| Gemini and Vertex AI | `promptTokenCount` includes `cachedContentTokenCount`. | `tokens.input` excludes cached content. `tokens.cache_read` receives cached content tokens. |
-| Providers without cache fields | Only standard input and output usage is reported. | Cache buckets stay `nil`; `tokens.input` stays as the provider input count. |
-
-This means the same RubyLLM code works across providers: `tokens.input` for standard input, `tokens.output` for output, `tokens.cache_read` for prompt cache reads, and `tokens.cache_write` for prompt cache writes. To display the full request-side input activity, add `tokens.input + tokens.cache_read + tokens.cache_write`.
-
-Thinking token usage is available via `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `tokens.output` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `tokens.output` includes the billable generated total.
-
-When a model has distinct reasoning-token pricing, `response.cost.thinking` prices that bucket separately. Otherwise, thinking tokens are treated as part of `response.cost.output` and `response.cost.thinking` stays `nil`.
+Thinking tokens can already be included in `tokens.output`; do not add them again. When a model has distinct thinking-token pricing, `cost.thinking` prices that bucket separately. Otherwise it is part of `cost.output`.
 
 ## The Usage Ledger
 

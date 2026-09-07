@@ -68,7 +68,10 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         expect(prepare).to include('move_table(:tool_calls, :ruby_llm_tool_calls)')
         expect(prepare).to include('disable_ddl_transaction!')
         expect(prepare).to include('create_table :ruby_llm_usages')
+        expect(prepare).to include('table.string :model, null: false')
         expect(prepare).to include('create_table :ruby_llm_batches')
+        expect(prepare).to include('table.json :reported_cost')
+        expect(prepare).to include('add_column :ruby_llm_batches, :reported_cost, :json')
         expect(backfill).to include('backfill_message_content')
         expect(backfill).to include('backfill_tool_results')
         expect(backfill).to include('backfill_usages')
@@ -247,6 +250,8 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
            tool_call['message_id'].to_i == 1 &&
            tool_call['result_type'] == 'Message' &&
            tool_call['result_id'].to_i == 2 &&
+           connection.columns(:ruby_llm_tool_calls).any? { |column| column.name == 'remote' && !column.null } &&
+           ActiveModel::Type::Boolean.new.cast(tool_call['remote']) == false &&
            usages.size == 2 &&
            usages.first['provider'] == 'openai' &&
            usages.first['model'] == 'gpt-4.1' &&

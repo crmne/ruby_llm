@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v1/tokenize
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","text":"Ruby makes AI useful."}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Api-Warning:
+      - 'unknown field: parameter ''model'' is not a valid field'
+      X-Debug-Trace-Id:
+      - 122f1d8c40d72ed2aadde65493c78aab
+      Date:
+      - Mon, 07 Sep 2026 12:13:04 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '12'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"tokens":[99506,6644,21024,12765,21],"token_strings":["Ruby"," makes","
+        AI"," useful","."],"meta":{"api_version":{"version":"1"}}}'
+  recorded_at: Mon, 07 Sep 2026 12:13:04 GMT
+recorded_with: VCR 6.4.0
