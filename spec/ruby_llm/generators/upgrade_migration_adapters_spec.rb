@@ -317,7 +317,9 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     usage = record_for(:ruby_llm_usages).create!(chat_type: 'Chat', chat_id: 1, operation: 'chat',
                                                  provider: 'openai', status: 'succeeded')
     error = migration_error { migrations.fetch(:prepare).new.migrate(:up) }
-    raise 'A NULL usage model did not stop the migration' unless error.is_a?(ActiveRecord::StatementInvalid)
+    unless error.is_a?(ActiveRecord::StatementInvalid)
+      raise "Expected a NULL usage model constraint failure, got #{error&.full_message || 'no error'}"
+    end
     raise 'The migration replaced the missing usage model' unless usage.reload.model.nil?
 
     usage.update!(model: 'gpt-4.1')

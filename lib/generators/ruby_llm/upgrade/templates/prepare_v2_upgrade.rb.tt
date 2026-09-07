@@ -289,7 +289,9 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def ensure_boolean_column(table, column)
     add_column table, column, :boolean unless column_exists?(table, column)
-    change_column_default table, column, false
+    return if ActiveRecord::Type::Boolean.new.cast(column_definition(table, column).default) == false
+
+    with_upgrade_safety { change_column_default table, column, false }
   end
 
   def move_tool_calls
@@ -314,7 +316,9 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     remove_matching_indexes(table, :message_id)
 
     if column_exists?(table, :message_type)
-      change_column_default table, :message_type, nil
+      unless column_definition(table, :message_type).default.nil?
+        with_upgrade_safety { change_column_default table, :message_type, nil }
+      end
     else
       add_column table, :message_type, :string
     end
