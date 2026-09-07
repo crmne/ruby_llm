@@ -149,6 +149,8 @@ RSpec.describe RubyLLM::Chat, :live do
         { budget: 1024 }
       when :gemini
         { effort: :low }
+      when :mistral
+        { effort: :high }
       when :gpustack, :ollama
         nil
       else

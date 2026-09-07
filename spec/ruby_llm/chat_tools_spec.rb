@@ -704,7 +704,9 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} reads PDFs returned from tools" do
         chat = RubyLLM.chat(model: model, provider: provider).with_tools(PdfFetchTool)
 
-        response = chat.ask('Use the pdf_fetch tool, then quote the first sentence of the returned PDF.')
+        response = chat.ask(
+          'Use the pdf_fetch tool, then quote the first sentence of the PDF body. Exclude the title and headings.'
+        )
 
         expect(response.content).to match(/simple PDF file|Lorem ipsum/i)
       end
@@ -822,7 +824,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'error handling' do
     it 'raises an error when tool execution fails' do
-      chat = RubyLLM.chat.with_tools(BrokenTool)
+      chat = RubyLLM.chat.with_tools(BrokenTool).with_tool_options(choice: :required)
 
       expect { chat.ask('What is the weather?') }.to raise_error(RuntimeError) do |error|
         expect(error.message).to include('This tool is broken')
