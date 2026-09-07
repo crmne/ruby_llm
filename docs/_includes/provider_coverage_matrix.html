@@ -22,14 +22,14 @@
   <li data-legend="support"><span class="coverage-swatch" data-status="passthrough" aria-hidden="true">{}</span>Raw options</li>
   <li data-legend="support"><span class="coverage-swatch" data-status="missing" aria-hidden="true">×</span>Missing</li>
   <li><span class="coverage-swatch" data-status="na" aria-hidden="true">–</span>Not in this API</li>
-  <li><span class="coverage-swatch" data-status="out_of_scope" aria-hidden="true">–</span>Outside scope</li>
+  <li><span class="coverage-swatch" data-status="out_of_scope" aria-hidden="true">╱</span>Outside scope</li>
   <li><span class="coverage-swatch" data-status="unknown" aria-hidden="true">?</span>Unverified</li>
 </ul>
 <p class="coverage-results" role="status" aria-live="polite">{% if include.current %}Current support on documented models and endpoints.{% else %}Red cells mark built-in support added in 2.0, including features previously available through raw options or partial integration.{% endif %} Select a cell for evidence.</p>
 <noscript><p>Cell links open provider documentation. Download the audit data for implementation notes.</p></noscript>
 <div class="coverage-table-scroll" tabindex="0" role="region" aria-label="Provider feature comparison, scroll horizontally to see more providers">
 <table class="coverage-table">
-  <caption class="visually-hidden">Provider features. {% if include.current %}Solid red: built-in support.{% else %}Red: built-in support added in 2.0. Gray: already built in to 1.16.{% endif %} Lighter red with braces: usable through raw options. Outlined cross: missing. Red stripes: partial. Dash: not documented in this API. Question mark: unverified.</caption>
+  <caption class="visually-hidden">Provider features. {% if include.current %}Solid red: built-in support.{% else %}Red: built-in support added in 2.0. Gray: already built in to 1.16.{% endif %} Lighter red with braces: usable through raw options. Outlined cross: missing. Red stripes: partial. Dash: not documented in this API. Diagonal stroke: outside scope. Question mark: unverified.</caption>
   <thead><tr><th scope="col">Feature</th>{% for provider in coverage.providers %}<th scope="col" data-provider="{{ provider.id }}"><span>{{ provider.name }}</span></th>{% endfor %}</tr></thead>
   {% for group in coverage.groups %}
   <tbody data-group="{{ group.id }}"{% if include.additional %}{% if group.summary %} hidden{% endif %}{% else %}{% unless group.summary %} hidden{% endunless %}{% endif %}>
@@ -47,7 +47,7 @@
       {% capture cell_label %}{{ provider.name }}: {{ feature.name }}. {% if include.current %}{{ v2.label | default: 'Unverified' }}.{% else %}1.16: {{ v1.label | default: 'Unverified' }}. 2.0: {{ v2.label | default: 'Unverified' }}.{% endif %}{% endcapture %}
       <td data-provider="{{ provider.id }}" data-v1="{{ cell.v1 | default: 'unknown' }}" data-v2="{{ cell.v2 | default: 'unknown' }}" data-offered="{% if cell.offered == true %}true{% elsif cell.offered == false %}false{% else %}unknown{% endif %}">
         <a class="coverage-cell no-icon" data-status="{{ state }}" href="{{ source.url | default: coverage_method_url }}" data-provider="{{ provider.id }}" data-feature="{{ feature.id }}" aria-label="{{ cell_label }} View evidence." title="{{ cell_label }}">
-          <span aria-hidden="true">{% case state %}{% when 'na', 'deprecated', 'out_of_scope' %}–{% when 'unknown' %}?{% when 'passthrough' %}{}{% when 'missing' %}×{% endcase %}</span>
+          <span aria-hidden="true">{% case state %}{% when 'na', 'deprecated' %}–{% when 'out_of_scope' %}╱{% when 'unknown' %}?{% when 'passthrough' %}{}{% when 'missing' %}×{% endcase %}</span>
         </a>
       </td>
       {% endfor %}
