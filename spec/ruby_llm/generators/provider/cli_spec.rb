@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'generators/ruby_llm/provider/cli'
 require 'open3'
 require 'rbconfig'
 require 'stringio'
 require 'tmpdir'
 
-RSpec.describe RubyLLM::ProviderGenerator::CLI do
+RSpec.describe RubyLLM::Generators::Provider::CLI do
   let(:dir) { File.realpath(Dir.mktmpdir('ruby_llm_provider_cli')) }
 
   after do
@@ -93,7 +94,7 @@ RSpec.describe RubyLLM::ProviderGenerator::CLI do
 
   describe 'repository executable' do
     it 'generates from outside the RubyLLM checkout' do
-      executable = File.expand_path('../../../exe/ruby_llm', __dir__)
+      executable = File.expand_path('../../../../exe/ruby_llm', __dir__)
       destination = File.join(dir, 'ruby_llm-providers-acme')
       stdout, stderr, status = Open3.capture3(
         RbConfig.ruby,

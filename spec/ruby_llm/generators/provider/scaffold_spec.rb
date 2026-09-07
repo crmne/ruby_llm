@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'generators/ruby_llm/provider/scaffold'
 require 'open3'
 require 'rbconfig'
 require 'tmpdir'
 
-RSpec.describe RubyLLM::ProviderGenerator::Scaffold do
+RSpec.describe RubyLLM::Generators::Provider::Scaffold do
   let(:dir) { File.realpath(Dir.mktmpdir('ruby_llm_provider_scaffold')) }
 
   after do
@@ -179,14 +180,16 @@ RSpec.describe RubyLLM::ProviderGenerator::Scaffold do
     FileUtils.mkdir_p(File.join(dir, 'lib/ruby_llm'))
     FileUtils.mkdir_p(File.join(dir, 'spec/support'))
 
-    FileUtils.cp(File.expand_path('../../../lib/ruby_llm.rb', __dir__), File.join(dir, 'lib/ruby_llm.rb'))
-    FileUtils.cp(File.expand_path('../../../lib/ruby_llm/models.rb', __dir__), File.join(dir, 'lib/ruby_llm/models.rb'))
+    FileUtils.cp(File.expand_path('../../../../lib/ruby_llm.rb', __dir__), File.join(dir, 'lib/ruby_llm.rb'))
     FileUtils.cp(
-      File.expand_path('../../support/rubyllm_configuration.rb', __dir__),
+      File.expand_path('../../../../lib/ruby_llm/models.rb', __dir__), File.join(dir, 'lib/ruby_llm/models.rb')
+    )
+    FileUtils.cp(
+      File.expand_path('../../../support/rubyllm_configuration.rb', __dir__),
       File.join(dir, 'spec/support/rubyllm_configuration.rb')
     )
     FileUtils.cp(
-      File.expand_path('../../support/vcr_configuration.rb', __dir__),
+      File.expand_path('../../../support/vcr_configuration.rb', __dir__),
       File.join(dir, 'spec/support/vcr_configuration.rb')
     )
     File.write(File.join(dir, '.env.example'), "OPENAI_API_KEY=test\n")
@@ -226,7 +229,7 @@ RSpec.describe RubyLLM::ProviderGenerator::Scaffold do
       "-I#{File.join(dir, 'lib')}",
       '-e',
       script,
-      chdir: File.expand_path('../../..', __dir__)
+      chdir: File.expand_path('../../../..', __dir__)
     )
   end
 

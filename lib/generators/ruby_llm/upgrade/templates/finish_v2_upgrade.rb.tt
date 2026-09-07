@@ -1,4 +1,8 @@
 # frozen_string_literal: true
+<% if copy_mode? -%>
+
+require 'generators/ruby_llm/upgrade/upgrade_migration'
+<% end -%>
 
 class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   disable_ddl_transaction!
@@ -7,6 +11,12 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
   BACKFILL_TASKS = %w[message_content tool_results usages].freeze
 
   def up
+<% if copy_mode? -%>
+    RubyLLM::Generators::UpgradeMigration.new.verify_settings(<%= copy_upgrade_settings.inspect %>)
+    RubyLLM::Generators::UpgradeMigration.new.backfill(force: false)
+<% else -%>
+    raise 'Generate this migration with --mode copy' if table_exists?(:ruby_llm_v2_upgrades)
+<% end -%>
     verify_completed_backfills
     verify_message_content
     verify_tool_results
@@ -14,6 +24,9 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
     enforce_required_defaults
     relax_legacy_message_constraints
     mark_finished
+<% if copy_mode? -%>
+    RubyLLM::Generators::UpgradeMigration.new.activate
+<% end -%>
   end
 
   def down
@@ -38,6 +51,9 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
   end
 
   def enforce_required_defaults
+<% if copy_mode? -%>
+    enforce_not_null(:<%= chat_table_name %>, :ruby_llm_model_id)
+<% end -%>
     enforce_not_null(:<%= chat_table_name %>, :cancelled)
     enforce_not_null(:<%= message_table_name %>, :cache_until_here)
     enforce_not_null(:ruby_llm_tool_calls, :message_type)
@@ -89,8 +105,16 @@ class <%= finish_migration_class_name %> < ActiveRecord::Migration<%= migration_
     missing = select_value(<<~SQL)
       SELECT legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}
         FROM #{quote_table(:<%= message_table_name %>)} legacy_messages
+<% if copy_mode? -%>
+        LEFT JOIN #{quote_table(:<%= v1_tool_call_table_name %>)} legacy_tool_calls
+          ON #{message_value(result_reference)} = legacy_tool_calls.#{quoted_primary_key(:<%= v1_tool_call_table_name %>)}
+        LEFT JOIN #{quote_table(:ruby_llm_tool_calls)} migrated_tool_calls
+          ON legacy_tool_calls.tool_call_id = migrated_tool_calls.tool_call_id
+         AND legacy_tool_calls.#{quote_column(:<%= message_foreign_key %>)} = migrated_tool_calls.message_id
+<% else -%>
         LEFT JOIN #{quote_table(:ruby_llm_tool_calls)} migrated_tool_calls
           ON #{message_value(result_reference)} = migrated_tool_calls.#{quoted_primary_key(:ruby_llm_tool_calls)}
+<% end -%>
          AND migrated_tool_calls.result_type = #{connection.quote('<%= message_model_name %>')}
          AND migrated_tool_calls.result_id = legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}
        WHERE #{message_value(result_reference)} IS NOT NULL

@@ -6,6 +6,14 @@ ignore 'lib/generators/ruby_llm/templates/**/*'
 # Public entrypoint. This is the only place that should wire concrete providers
 # into the top-level RubyLLM module.
 component :entrypoint, in: 'lib/ruby_llm.rb'
+component :runtime, in: %w[lib/ruby_llm.rb lib/ruby_llm/**/*.rb]
+
+component(:runtime_tooling,
+          in: %w[lib/ruby_llm/active_record/upgrade.rb lib/ruby_llm/provider_generator/**/*.rb],
+          constants: %w[RubyLLM::ActiveRecord::Upgrade RubyLLM::ProviderGenerator])
+  .must_be_empty(because: 'migration helpers and scaffolding belong under lib/generators')
+
+runtime.cannot_reference_constants 'RubyLLM::Generators', 'Rails::Generators'
 
 # User-facing objects and orchestration. These are nouns like Chat, Batch,
 # UploadedFile, Embedding, Image, Message, Tool, and Content.
@@ -173,11 +181,7 @@ component :rails_integration,
           ],
           namespace: 'RubyLLM::ActiveRecord'
 
-component :generators,
-          in: %w[
-            lib/generators/**/*.rb
-            lib/ruby_llm/provider_generator/**/*.rb
-          ]
+component :generators, in: 'lib/generators/**/*.rb'
 component :tasks, in: 'lib/tasks/**/*.rake'
 
 # OpenAI-specific shared wire mechanics, like the file-backed Batch API and the

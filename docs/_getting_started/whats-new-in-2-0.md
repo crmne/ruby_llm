@@ -328,6 +328,8 @@ The saved transcript records completed work. If a job stops before saving a resu
 
 RubyLLM now owns the model-registry, tool-call, usage, and batch tables. These records describe the framework's work, so RubyLLM can evolve their schema without asking every application to maintain its own supporting models. Your app owns its chats and messages.
 
+The upgrade runs in phases, with cleanup in a later deployment. Optional [copy mode]({% link _reference/upgrading.md %}#copy-mode) keeps a controlled route back to 1.16; conversations written by 2.0 remain hidden during that rollback.
+
 The Rails integration uses the same Ruby API with Active Record persistence, Active Storage attachments, and Hotwire streaming. The [generators]({% link _advanced/rails-generators.md %}) set up those pieces in conventional Rails directories.
 
 The [model registry]({% link _reference/models.md %}) uses the same `RubyLLM.models` API in plain Ruby and Rails, backed by a file cache or RubyLLM's database table. Browse [Models]({% link _reference/available-models.md %}) to compare providers, capabilities, and prices.

@@ -1,4 +1,8 @@
 # frozen_string_literal: true
+<% if copy_mode? -%>
+
+require 'generators/ruby_llm/upgrade/upgrade_migration'
+<% end -%>
 
 class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   disable_ddl_transaction!
@@ -7,12 +11,22 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
   PROGRESS_TABLE = :ruby_llm_v2_backfills
 
   def up
+<% if copy_mode? -%>
+    RubyLLM::Generators::UpgradeMigration.new.verify_settings(<%= copy_upgrade_settings.inspect %>)
+<% else -%>
+    raise 'Generate this migration with --mode copy' if table_exists?(:ruby_llm_v2_upgrades)
+<% end -%>
     verify_upgrade_in_progress
     create_progress_table
     backfill_required_defaults
+<% if copy_mode? -%>
+    RubyLLM::Generators::UpgradeMigration.new.backfill
+    %w[message_content tool_results usages].each { |task| mark_completed(task) }
+<% else -%>
     backfill_message_content
     backfill_tool_results
     backfill_usages
+<% end -%>
     verify_backfills
   end
 
@@ -198,8 +212,16 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
     missing = select_value(<<~SQL)
       SELECT legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}
         FROM #{messages} legacy_messages
+<% if copy_mode? -%>
+        LEFT JOIN #{quote_table(:<%= v1_tool_call_table_name %>)} legacy_tool_calls
+          ON #{message_value(result_reference)} = legacy_tool_calls.#{quoted_primary_key(:<%= v1_tool_call_table_name %>)}
+        LEFT JOIN #{tool_calls} migrated_tool_calls
+          ON legacy_tool_calls.tool_call_id = migrated_tool_calls.tool_call_id
+         AND legacy_tool_calls.#{quote_column(:<%= message_foreign_key %>)} = migrated_tool_calls.message_id
+<% else -%>
         LEFT JOIN #{tool_calls} migrated_tool_calls
           ON #{message_value(result_reference)} = migrated_tool_calls.#{quoted_primary_key(:ruby_llm_tool_calls)}
+<% end -%>
          AND migrated_tool_calls.result_type = #{connection.quote('<%= message_model_name %>')}
          AND migrated_tool_calls.result_id = legacy_messages.#{quoted_primary_key(:<%= message_table_name %>)}
        WHERE #{message_value(result_reference)} IS NOT NULL

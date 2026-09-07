@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 namespace :ruby_llm do
+  namespace :upgrade do
+    %i[rollback resume finalize].each do |action|
+      desc "#{action.to_s.capitalize} a copy-mode RubyLLM upgrade with affected processes stopped"
+      task action => :environment do
+        require 'generators/ruby_llm/upgrade/upgrade_migration'
+
+        RubyLLM::Generators::UpgradeMigration.new.public_send(action)
+        puts "RubyLLM copy upgrade: #{action} completed"
+      end
+    end
+  end
+
   desc 'Load the selected model registry into the database'
   task load_models: :environment do
     # Rails 8.1 loads ActiveRecord::Base lazily, so outside a runner or console

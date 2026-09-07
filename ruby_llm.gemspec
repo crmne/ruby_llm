@@ -40,9 +40,10 @@ Gem::Specification.new do |spec|
 
         https://rubyllm.com/next/upgrading/
 
-      The Rails upgrade separates preparation, backfill, and finish. Generate
-      legacy-column cleanup in a later deployment. The phases are irreversible;
-      rehearse the upgrade and recovery on a recent production snapshot.
+      The Rails upgrade uses forward-only preparation, backfill, and finish
+      phases, with cleanup later. Rename mode is the default; optional copy
+      mode supports a controlled return to 1.16. Read its requirements in the
+      upgrade guide and rehearse on a recent production snapshot.
 
       Agent skill: https://rubyllm.com/next/ai-coding-assistants/
   MESSAGE

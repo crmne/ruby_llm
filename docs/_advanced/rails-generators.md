@@ -93,6 +93,8 @@ bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 
 For an application on RubyLLM 1.16, use `ruby_llm:upgrade`. It generates preparation, backfill, and finish migrations. Generate one phase with `--phase prepare`, `--phase backfill`, or `--phase finish` when you need to schedule them separately. Generate `--phase cleanup` in a later deployment to remove legacy message columns.
 
+The default `--mode rename` renames the existing supporting tables. `--mode copy` retains them and generates compatibility files for a controlled return to 1.16. Use the same mode for every phase. Read the [copy-mode requirements and rollback limits]({% link _reference/upgrading.md %}#copy-mode) before choosing it.
+
 Keep affected activity paused until the upgrade and application-specific data conversion are complete. Review the [upgrade and recovery procedure]({% link _reference/upgrading.md %}#how-to-upgrade) before running these migrations.
 
 ## Conventional Directory Structure

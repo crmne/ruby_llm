@@ -1,0 +1,222 @@
+# frozen_string_literal: true
+
+module RubyLLMUpgrade # :nodoc: all
+  TABLE = 'ruby_llm_v2_upgrades'
+  VERSION_COLUMN = 'ruby_llm_version'
+  OPERATIONS = %i[ask say ask_later add_message generate compact step complete run_tools cancel resume
+                  approve deny with_model with_instructions cache_until_here reset_messages!].freeze
+  READ_OPERATIONS = %i[reload to_llm count_tokens].freeze
+
+  module Records
+    extend ActiveSupport::Concern
+
+    included do
+      class_attribute :ruby_llm_upgrade_kind, instance_writer: false
+      default_scope { RubyLLMUpgrade.visible(self) }
+      around_save :guard_ruby_llm_upgrade, prepend: true
+      around_destroy :guard_ruby_llm_upgrade, prepend: true
+      before_save { RubyLLMUpgrade.prepare_model(self) if ruby_llm_upgrade_kind == :chat }
+    end
+
+    private
+
+    def guard_ruby_llm_upgrade(&)
+      RubyLLMUpgrade.guard(self, &)
+    end
+  end
+
+  class << self
+    def install(chat:, message:, tool_call:)
+      { chat => :chat, message => :message, tool_call => :tool_call }.each do |model, kind|
+        next if model < Records
+
+        model.include Records
+        model.ruby_llm_upgrade_kind = kind
+        model.prepend guarded_operations(model, READ_OPERATIONS, claim: false)
+      end
+      return if chat.instance_variable_defined?(:@ruby_llm_upgrade_operations)
+
+      operations = guarded_operations(chat, OPERATIONS, claim: true)
+      if chat.private_method_defined?(:persist_usage_entry)
+        operations.define_method(:persist_usage_entry) do |entry|
+          RubyLLMUpgrade.guard(self) { super(entry) }
+        end
+        operations.send(:private, :persist_usage_entry)
+      end
+      chat.prepend operations
+      chat.instance_variable_set(:@ruby_llm_upgrade_operations, operations)
+    end
+
+    def visible(model)
+      return model.where(nil) unless available?
+
+      state = current_state
+      check_version(state)
+      return model.where(nil) if version == 2
+
+      settings = state.settings
+      return model.where(nil) unless ownership_column?(settings)
+
+      chats = records(settings.fetch('chat_table')).where(VERSION_COLUMN => 1)
+      case model.ruby_llm_upgrade_kind
+      when :chat
+        model.where(VERSION_COLUMN => 1)
+      when :message
+        model.where(settings.fetch('chat_foreign_key') => chats.select(chats.primary_key))
+      when :tool_call
+        messages = records(settings.fetch('message_table'))
+                   .where(settings.fetch('chat_foreign_key') => chats.select(chats.primary_key))
+        model.where(settings.fetch('message_foreign_key') => messages.select(messages.primary_key))
+      end
+    end
+
+    def prepare_model(chat)
+      return unless available?
+
+      settings = current_state.settings
+      if version == 1
+        return unless ActiveRecord::Base.connection.column_exists?(settings.fetch('chat_table'), :ruby_llm_model_id)
+        return unless ActiveRecord::Base.connection.table_exists?('ruby_llm_models')
+      end
+      ensure_model_reference(chat, settings)
+    end
+
+    def guard(record, claim: true)
+      return yield unless available?
+
+      states = records(TABLE)
+      states.uncached do
+        states.transaction do
+          state = states.lock.first!
+          check_version(state)
+          protect(record, state, claim: claim)
+          yield
+        end
+      end
+    end
+
+    private
+
+    def guarded_operations(model, names, claim:)
+      Module.new do
+        names.each do |name|
+          next unless model.method_defined?(name)
+
+          define_method(name) do |*args, **options, &block|
+            RubyLLMUpgrade.guard(self, claim: claim) { nil }
+            super(*args, **options, &block)
+          end
+        end
+      end
+    end
+
+    def protect(record, state, claim:)
+      return if state.status == 'finalized'
+
+      settings = state.settings
+      return if version == 1 && !ownership_column?(settings)
+
+      owners(record, settings).each { |chat| protect_owner(chat, claim: claim) }
+      return unless claim && version == 2 && record.class.ruby_llm_upgrade_kind == :chat
+
+      record[VERSION_COLUMN] = 2
+    end
+
+    def protect_owner(chat, claim:)
+      chat.lock!
+      if version == 1 && chat[VERSION_COLUMN] != 1
+        raise ActiveRecord::ReadOnlyRecord, 'This conversation contains RubyLLM 2.0 changes'
+      end
+
+      chat.update!(VERSION_COLUMN => 2) if claim && version == 2 && chat[VERSION_COLUMN] != 2
+    end
+
+    def version
+      Gem::Version.new(RubyLLM::VERSION).segments.first >= 2 ? 2 : 1
+    end
+
+    def available?
+      ActiveRecord::Base.connection.table_exists?(TABLE)
+    end
+
+    def records(table)
+      @records ||= {}
+      @records[table] ||= Class.new(ActiveRecord::Base) do
+        self.table_name = table
+        self.inheritance_column = :_type_disabled
+      end
+    end
+
+    def current_state
+      records(TABLE).uncached { records(TABLE).first! }
+    end
+
+    def ownership_column?(settings)
+      ActiveRecord::Base.connection.column_exists?(settings.fetch('chat_table'), VERSION_COLUMN)
+    end
+
+    def check_version(state)
+      return if state.active_version == version && %w[active finalized].include?(state.status)
+
+      raise ActiveRecord::ReadOnlyRecord,
+            "RubyLLM #{version} cannot access conversations while the copy upgrade is " \
+            "#{state.status} on #{state.active_version}"
+    end
+
+    def ensure_model_reference(chat, settings)
+      if version == 1
+        legacy_id = chat[settings.fetch('model_foreign_key')]
+        legacy_models = records(settings.fetch('model_table'))
+        legacy = legacy_models.find_by(legacy_models.primary_key => legacy_id)
+        unless legacy
+          chat.errors.add(:model, 'must identify an existing legacy model')
+          raise ActiveRecord::RecordInvalid, chat
+        end
+
+        target = records('ruby_llm_models')
+        model = target.find_by(provider: legacy.provider, model_id: legacy.model_id) ||
+                target.create!(legacy.attributes.slice(*target.column_names).except(target.primary_key))
+        chat[:ruby_llm_model_id] = model.id
+      end
+      return if chat[:ruby_llm_model_id]
+
+      chat.errors.add(:model, 'must exist before saving the conversation')
+      raise ActiveRecord::RecordInvalid, chat
+    end
+
+    def owners(record, settings)
+      chats = records(settings.fetch('chat_table'))
+      return chat_owner(record, chats) if record.class.ruby_llm_upgrade_kind == :chat
+
+      values = owner_attributes(record, settings)
+      ids = values.filter_map { |value| value[settings.fetch('chat_foreign_key')] }
+      raise ActiveRecord::ReadOnlyRecord, 'The conversation no longer exists' if ids.empty?
+
+      found = chats.where(chats.primary_key => ids).to_a
+      raise ActiveRecord::ReadOnlyRecord, 'The conversation no longer exists' unless found.length == ids.uniq.length
+
+      found
+    end
+
+    def chat_owner(record, chats)
+      found = chats.where(chats.primary_key => record.id).to_a
+      return found unless record.persisted? && found.empty?
+
+      raise ActiveRecord::ReadOnlyRecord, 'The conversation no longer exists'
+    end
+
+    def owner_attributes(record, settings)
+      values = [record.attributes]
+      if record.persisted?
+        stored = records(record.class.table_name).find(record.id)
+        values << stored.attributes
+      end
+      if record.class.ruby_llm_upgrade_kind == :tool_call
+        message_key = version == 1 ? settings.fetch('message_foreign_key') : 'message_id'
+        messages = records(settings.fetch('message_table'))
+        values = messages.where(messages.primary_key => values.map { |value| value[message_key] }).map(&:attributes)
+      end
+      values
+    end
+  end
+end

@@ -26,13 +26,14 @@ Keep public API objects directly under `lib/ruby_llm`. This includes objects app
 | `transport/` | HTTP, WebSockets, retry boundaries, and connection middleware |
 | `protocol/` | Shared streaming and response assembly |
 | `models/` | Model catalog schemas, reconciliation, and alias lookup |
-| `provider_generator/` | Standalone provider scaffolding and its command line |
 | `accounting/` | Usage entries and operation accounting |
 | `files/` | File handling internals such as MIME detection |
 | `tools/` | Shared tool selection and resolution |
 | `support/` | Cross-cutting primitives such as inspection, instrumentation, deprecation, and utility functions |
 
 Keep operation behavior with its owning domain or protocol; `support/` is not a place for provider logic or unrelated features. Preserve bundled JSON and generator-template locations when moving code that uses `__dir__`. Archspec enforces the boundaries independently of these organizational folders.
+
+Keep application generators, migration-only helpers, and provider scaffolding under `lib/generators/ruby_llm/`, outside the runtime tree. Rake tasks belong in `lib/tasks/` or the repository's `tasks/`. Load this tooling explicitly from its commands or generated migrations. `lib/ruby_llm/active_record/` contains the record behavior applications use, not upgrade tooling.
 
 ## What we are optimizing for
 
@@ -51,6 +52,7 @@ The pitch is the public API. Every change is judged against four things, in this
 - Keep diffs small and focused. No drive-by refactors, no style sweeps outside the lines you touch.
 - Plain commit messages that describe the change: a subject of at most 60 characters, a body wrapped at 72 that says why. No "Generated with" footers, no Co-Authored-By tags.
 - Never push and never post to GitHub on a maintainer's behalf. Commit locally and leave the rest to the maintainer.
+- Gem publication starts when a maintainer publishes a GitHub release. A branch or tag push does not publish the gem. Keep the release tag, gem version, and prerelease setting consistent; see CONTRIBUTING.md for the release commands.
 
 ## Setup
 
@@ -112,6 +114,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 - Persistence must survive other processes: cancellation, approvals, and the loop verbs read and write the database, and anything polled inside a job runs outside the query cache.
 - Generators write what a Rails scaffold would: omakase style, conventional paths, no starter prose, no TODO comments beyond the one place the developer has to type. An empty prompt file means no instructions.
 - Rails specs run against the dummy app in `spec/dummy`. Generator specs are tagged `:generator` and excluded from the pre-commit run because they are slow.
+- Upgrade compatibility is opt-in with `--mode copy`; rename remains the default. Preserve whole conversations changed by 2.0, require explicit version switches with affected activity paused, and retain required model references. Test rollback and resume against the actual 1.16 gem. Do not promise compatibility for writes that bypass the generated Active Record guards.
 
 ## Testing
 
@@ -137,6 +140,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 - Let working examples show what the framework can do. Start with the shortest useful public API call, then add options, integration examples, and provider details where readers need them. Keep guide openings consistent: title, description, and "After reading this guide, you will know". Explain concepts before summarizing them in a table.
 - Document the shared API once. Adding provider support usually updates an existing example or coverage entry, not a new section. Include provider-specific notes only when a difference changes what the reader must configure, call, or handle. Put setup requirements in provider configuration and link to them. Omit interchangeable examples, wire-format details RubyLLM handles, and accounts of implementation or live-test results from user guides.
 - Give each standalone AI operation a discoverable guide, and feature new operations in the release overview. Group closely related operations, such as file uploads and downloads, on one page. Do not bury an operation such as `RubyLLM.tokenize` inside a guide about another feature.
+- Keep the RubyLLM module overview current and inspect the rendered API method index. RDoc's coverage report does not detect methods it never discovers, including dynamic delegates and Rails macros. Link delegated methods to their shared contract instead of repeating the documentation.
 - Front-matter `title` and `description` feed llms.txt and the social-card images. Keep descriptions to one compelling sentence and never use `&`, `<`, or `>` in them.
 - Cross-link with `{% link _collection/page.md %}`, never hard-coded URLs. Use the `site.models.*` ids from `docs/_config.yml` in examples so model names stay current.
 - A public API change is not done until its docs page changes in the same commit, and `docs/_reference/upgrading.md` records anything that breaks.
