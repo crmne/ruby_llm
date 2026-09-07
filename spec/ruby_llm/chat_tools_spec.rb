@@ -647,7 +647,6 @@ RSpec.describe RubyLLM::Chat, :live do
     each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} returns text and attachments from tools" do
         skip_unless_supports_functions(provider, model)
-        skip 'DeepSeek rejects tool attachments (no vision support)' if provider == :deepseek
 
         chat = RubyLLM.chat(model: model, provider: provider).with_tools(FileFetchTool)
         chat.with_temperature(0) if RubyLLM::Provider.providers[provider]&.local?

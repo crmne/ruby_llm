@@ -1,0 +1,134 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Use
+        the file_fetch tool, then tell me exactly what the fetched file says."}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 22:03:12 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 7be25195173cefff52e32c80e660ab62
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 b4e6a1301a11439372334aa14fb7d310.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - gDnkhxS6A9hBU_inAa8JfRg0y-_zcMjDJ7zQpOq9RAWcsodxDbbX3A==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8c51758f-1c91-4790-aa2e-9f349ed9238d","object":"chat.completion","created":1788818592,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        fetch the file for you.","reasoning_content":"The user wants me to use the
+        file_fetch tool. But the file_fetch tool doesn''t require any parameters,
+        interestingly. It says \"Fetches the requested file\" but has no parameters
+        for specifying which file. Let me just call it.","tool_calls":[{"index":0,"id":"call_00_vsC4uOw2oHWzTyAlKSJk4073","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":368,"completion_tokens":88,"total_tokens":456,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":52},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":112},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 22:03:13 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Use
+        the file_fetch tool, then tell me exactly what the fetched file says."},{"role":"assistant","content":"I''ll
+        fetch the file for you.","tool_calls":[{"id":"call_00_vsC4uOw2oHWzTyAlKSJk4073","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the file_fetch tool. But the file_fetch tool doesn''t
+        require any parameters, interestingly. It says \"Fetches the requested file\"
+        but has no parameters for specifying which file. Let me just call it.","reasoning":"The
+        user wants me to use the file_fetch tool. But the file_fetch tool doesn''t
+        require any parameters, interestingly. It says \"Fetches the requested file\"
+        but has no parameters for specifying which file. Let me just call it."},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_00_vsC4uOw2oHWzTyAlKSJk4073"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_00_vsC4uOw2oHWzTyAlKSJk4073:"},{"type":"text","text":"<file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 22:03:14 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 24c3fa7ac3776af250a0b00e9952a3ff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 bc0033ca978d634b0b80a78a93b99fba.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - 92a1_o2ofsmjo5RuAFqA-2gV2QehcoU80cxvNlv7iXArP28CCJN0Iw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"06656128-3ce3-4338-b181-e75d323cb4f1","object":"chat.completion","created":1788818593,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        fetched file is named **ruby.txt**, and it contains exactly this text:\n\n>
+        **Ruby is the best.**\n\nThat''s the entire content of the file.","reasoning_content":"The
+        file_fetch tool returned a result that fetched the file, and the attachment
+        shows a file named ''ruby.txt'' containing \"Ruby is the best.\"\n\nLet me
+        tell the user exactly what the fetched file says."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":522,"completion_tokens":78,"total_tokens":600,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":44},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":138},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 22:03:15 GMT
+recorded_with: VCR 6.4.0
