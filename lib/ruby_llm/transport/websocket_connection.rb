@@ -209,7 +209,7 @@ module RubyLLM
       def wait_for_socket(method, deadline)
         remaining = deadline - monotonic_time
         raise Error, 'WebSocket operation timed out' unless remaining.positive?
-        raise Error, 'WebSocket operation timed out' unless @socket.public_send(method, remaining)
+        raise Error, 'WebSocket operation timed out' unless @socket.to_io.public_send(method, remaining)
       end
 
       def monotonic_time
