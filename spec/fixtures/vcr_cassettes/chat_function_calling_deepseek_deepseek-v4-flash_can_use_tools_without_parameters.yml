@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Sun, 06 Sep 2026 22:17:20 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - f0be7eaef781675884f7f93fee01b29f
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 634cb8ef257d85d9d03b5a4d492df944.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P1
+      X-Amz-Cf-Id:
+      - 2XozHYmAexBolfaoNygaB2WKN8bvk8OWJ0fX3C1KJ6OJJgTiAooG5w==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"7bbd6c74-be5d-43ae-94ed-77c485cbd681","object":"chat.completion","created":1788733040,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user is asking what the best language to learn is. I have a tool available
+        for this exact question. Let me call it.","tool_calls":[{"index":0,"id":"call_00_hozh0MaCp5bpFzZBU9mp3087","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":363,"completion_tokens":59,"total_tokens":422,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":27},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":363},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Sun, 06 Sep 2026 22:17:21 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_hozh0MaCp5bpFzZBU9mp3087","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user is asking what the best language to learn is. I have a tool available
+        for this exact question. Let me call it.","reasoning":"The user is asking
+        what the best language to learn is. I have a tool available for this exact
+        question. Let me call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_00_hozh0MaCp5bpFzZBU9mp3087"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Sun, 06 Sep 2026 22:17:21 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 2f4472764ff7da02c479595e4d017f6c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 5f2bb43f258333f4156847ce1f482ee6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - VHrLEQPEXSGMi-saDs5stOgjWRhslnkIOOElWnu7sEW9blgUpVT16g==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImE4ZDdlODdhLTIwY2QtNGQyNy1iYjUyLTEwMzQ2YmEyNDU0YSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg3MzMwNDEsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFjY29yZGluZyB0byBteSBzb3VyY2VzLCB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKiEg8J+OiVxuXG5SdWJ5IGlzIGEgZmFudGFzdGljIGNob2ljZSDigJQgaXQncyBrbm93biBmb3IgaXRzIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCB0aGF0IHJlYWRzIGFsbW9zdCBsaWtlIEVuZ2xpc2gsIG1ha2luZyBpdCB2ZXJ5IGJlZ2lubmVyLWZyaWVuZGx5LiBJdCBwb3dlcnMgdGhlIHBvcHVsYXIgUnVieSBvbiBSYWlscyB3ZWIgZnJhbWV3b3JrLCB3aGljaCBpcyBncmVhdCBmb3IgYnVpbGRpbmcgd2ViIGFwcGxpY2F0aW9ucyBxdWlja2x5LlxuXG5PZiBjb3Vyc2UsIFwiYmVzdFwiIGNhbiBkZXBlbmQgb24geW91ciBnb2Fsczpcbi0gKipXZWIgZGV2ZWxvcG1lbnQqKiDihpIgUnVieS9SYWlscywgSmF2YVNjcmlwdCwgb3IgUHl0aG9uXG4tICoqRGF0YSBzY2llbmNlL0FJKiog4oaSIFB5dGhvblxuLSAqKlN5c3RlbSBwcm9ncmFtbWluZyoqIOKGkiBSdXN0LCBDLCBvciBHb1xuLSAqKk1vYmlsZSBhcHBzKiog4oaSIFN3aWZ0IChpT1MpIG9yIEtvdGxpbiAoQW5kcm9pZClcblxuQnV0IGlmIHlvdSdyZSBsb29raW5nIGZvciBhIGdyZWF0IGFsbC1hcm91bmQgbGFuZ3VhZ2UgdG8gc3RhcnQgd2l0aCwgUnVieSBpcyBhIHdvbmRlcmZ1bCBwaWNrISDwn5iKIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdG9vbCByZXR1cm5lZCBcIlJ1YnlcIiBhcyB0aGUgYW5zd2VyLiBMZXQgbWUgc2hhcmUgdGhhdCB3aXRoIHRoZSB1c2VyLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzNSwiY29tcGxldGlvbl90b2tlbnMiOjE3MiwidG90YWxfdG9rZW5zIjo2MDcsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjozODR9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjE4fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjM4NCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo1MX0sInN5c3RlbV9maW5nZXJwcmludCI6ImEyNmE3OTU1OTQ0ZGM1YzYwNDQ1YmZmNzdmYWM5YzhlIn0=
+  recorded_at: Sun, 06 Sep 2026 22:17:23 GMT
+recorded_with: VCR 6.4.0

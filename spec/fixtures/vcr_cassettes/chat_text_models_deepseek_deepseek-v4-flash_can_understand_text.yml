@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Sun, 06 Sep 2026 22:17:16 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 9363f403264d0103b7d2b7a29dc74215
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 8e31977823347b5495bbc40c755fcc94.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P3
+      X-Amz-Cf-Id:
+      - n5yCAxZDRGNBqgnkdrX7_rd8EUQYee9cdd1-Ed9cvNbBpc6KHiZGTg==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"cd2ba390-192c-4df1-8a7e-86ba0895a655","object":"chat.completion","created":1788733036,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file contains the text:\n\n> Ruby is the best.","reasoning_content":"We need
+        answer user asks what''s in file. Need provide content. Need mention file
+        says \"Ruby is the best.\" Keep concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":112,"completion_tokens":40,"total_tokens":152,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":27},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":112},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Sun, 06 Sep 2026 22:17:17 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file contains the
+        text:\n\n> Ruby is the best.","reasoning_content":"We need answer user asks
+        what''s in file. Need provide content. Need mention file says \"Ruby is the
+        best.\" Keep concise.","reasoning":"We need answer user asks what''s in file.
+        Need provide content. Need mention file says \"Ruby is the best.\" Keep concise."},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Sun, 06 Sep 2026 22:17:17 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - b1932864521bd00bade1343363cb2f53
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 bb72e3b71c64099edd81bafe5ceefcf2.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - _2QmdJINxP03WLSNcsWjUOG8W5l59Kxqw77Dc9IIPnCcVrNtdtKKvA==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"e8b75898-a814-4097-92e2-f6b69d6cf7d6","object":"chat.completion","created":1788733037,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file contains XML:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nIt
+        expresses the same statement, but wrapped in a `<truism>` element.","reasoning_content":"We
+        need answer: mention content and XML. Need be concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":165,"completion_tokens":53,"total_tokens":218,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":13},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":165},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Sun, 06 Sep 2026 22:17:18 GMT
+recorded_with: VCR 6.4.0

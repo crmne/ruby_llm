@@ -40,7 +40,7 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
   end
 
   describe 'Rails-backed message records' do
-    let(:chat) { Chat.create!(model: 'gpt-4.1-nano') }
+    let(:chat) { Chat.create!(model: model_for(:openai, :temperature)) }
 
     def tool_call
       RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'lookup', arguments: {})
@@ -52,7 +52,8 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
         message: record, operation: 'chat', provider: 'openai', model: 'gpt-4.1', status: 'succeeded'
       )
       chat.ruby_llm_usages.create!(
-        message: record, operation: 'chat', provider: 'openai', model: 'gpt-4.1-nano', status: 'failed'
+        message: record, operation: 'chat', provider: 'openai', model: model_for(:openai,
+                                                                                 :temperature), status: 'failed'
       )
 
       expect(record.reload.model).to eq('gpt-4.1')

@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat, :live do
   describe '#with_thinking' do
     it 'uses the registered model controls without options' do
-      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+      payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
                        .with_thinking
                        .render
 
@@ -13,15 +13,15 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'uses the new model controls after switching models' do
-      chat = RubyLLM.chat(model: 'gpt-5.2', provider: :openai).with_thinking
+      chat = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai).with_thinking
 
-      payload = chat.with_model('claude-haiku-4-5', provider: :anthropic).render
+      payload = chat.with_model(model_for(:anthropic), provider: :anthropic).render
 
       expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 1024)
     end
 
     it 'uses a provider toggle before inventing a token budget' do
-      payload = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      payload = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                        .with_thinking
                        .render
 
@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'uses a provider toggle before choosing an effort' do
-      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+      payload = RubyLLM.chat(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
                        .with_thinking
                        .render
 
@@ -37,7 +37,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'sends the registered off control with false' do
-      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+      payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
                        .with_thinking(false)
                        .render
 
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'maps false to a zero budget when the model uses one as its off control' do
-      payload = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      payload = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                        .with_thinking(false)
                        .render
 
@@ -53,7 +53,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'maps false to a provider toggle when the model exposes one' do
-      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+      payload = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock)
                        .with_thinking(false)
                        .render
 
@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'does not add controls for an always-thinking model' do
-      payload = RubyLLM.chat(model: 'magistral-small', provider: :mistral)
+      payload = RubyLLM.chat(model: model_for(:mistral, :always_thinking), provider: :mistral)
                        .with_thinking
                        .render
 
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'raises when the registry has no off control for the model' do
-      chat = RubyLLM.chat(model: 'magistral-small', provider: :mistral).with_thinking(false)
+      chat = RubyLLM.chat(model: model_for(:mistral, :always_thinking), provider: :mistral).with_thinking(false)
 
       expect { chat.render }.to raise_error(ArgumentError, /does not know how to disable thinking/)
     end
@@ -96,7 +96,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'renders the display option inside the Anthropic thinking config' do
-      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+      payload = RubyLLM.chat(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
                        .with_thinking(effort: :high, display: :summarized)
                        .render
 
@@ -105,7 +105,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'renders display alone as adaptive thinking with the default effort' do
-      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+      payload = RubyLLM.chat(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
                        .with_thinking(display: :summarized)
                        .render
 
@@ -114,7 +114,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'passes provider-specific effort tiers through untouched' do
-      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+      payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
                        .with_thinking(effort: :xhigh)
                        .render
 
@@ -123,9 +123,9 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'thinking display' do
-    context 'with anthropic/claude-sonnet-5' do
+    context "with anthropic/#{model_for(:anthropic, :adaptive_thinking)}" do
       it 'returns readable thinking with display summarized' do
-        chat = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+        chat = RubyLLM.chat(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
                       .with_thinking(display: :summarized)
 
         response = chat.ask(
@@ -219,7 +219,7 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'Mistral hybrid reasoning' do
-    let(:chat) { RubyLLM.chat(model: 'mistral-small-latest', provider: :mistral).with_thinking(effort: :high) }
+    let(:chat) { RubyLLM.chat(model: model_for(:mistral), provider: :mistral).with_thinking(effort: :high) }
 
     it 'separates thinking from final content' do
       response = chat.ask('What is 12 * 12? Answer with just the number.')
@@ -255,7 +255,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'DeepSeek thinking control' do
     it 'disables thinking for effort none' do
-      chat = RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek).with_thinking(effort: :none)
+      chat = RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek).with_thinking(effort: :none)
 
       response = chat.ask('What is 2 + 2? Answer with just the number.')
 
@@ -264,7 +264,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'returns reasoning content for effort high' do
-      chat = RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek).with_thinking(effort: :high)
+      chat = RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek).with_thinking(effort: :high)
 
       response = chat.ask('What is 2 + 2? Answer with just the number.')
 
@@ -275,7 +275,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'Bedrock Nova 2 reasoning' do
     it 'renders reasoningConfig with the effort level' do
-      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+      payload = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock)
                        .with_thinking(effort: :medium)
                        .render
 
@@ -285,13 +285,13 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'refuses a token budget instead of dropping it' do
-      chat = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).with_thinking(budget: 2048)
+      chat = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_thinking(budget: 2048)
 
       expect { chat.render }.to raise_error(ArgumentError, /takes a reasoning effort, not a token budget/)
     end
 
     it 'keeps the Claude budget shape for Claude models' do
-      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock)
+      payload = RubyLLM.chat(model: model_for(:bedrock, :thinking), provider: :bedrock)
                        .with_thinking(budget: 2048)
                        .render
 
@@ -301,7 +301,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'returns reasoning content blocks' do
-      chat = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).with_thinking(effort: :low)
+      chat = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_thinking(effort: :low)
 
       response = chat.ask('What is 15 * 23? Answer with just the number.')
 
@@ -321,7 +321,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     let(:chat) do
-      RubyLLM.chat(model: 'claude-haiku-4-5', provider: :openrouter)
+      RubyLLM.chat(model: model_for(:openrouter), provider: :openrouter)
              .with_thinking(budget: 2000)
              .with_tools(ReasoningWeather)
     end
@@ -331,7 +331,7 @@ RSpec.describe RubyLLM::Chat, :live do
         { 'type' => 'reasoning.text', 'text' => 'Thinking about it.', 'signature' => 'sig',
           'format' => 'anthropic-claude-v1', 'index' => 0 }
       ]
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :openrouter)
+      chat = RubyLLM.chat(model: model_for(:openrouter), provider: :openrouter)
       chat.add_message(role: :user, content: 'Hi')
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: 'Hello!', raw_reasoning: details))
 
@@ -364,7 +364,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'Gemini token accounting' do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
       response = chat.ask('What is 2+2? Think step by step.')
 
       raw_body = response.raw.body

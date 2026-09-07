@@ -14,20 +14,20 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#with_compaction' do
     it 'returns self and remembers the options' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
 
       expect(chat.with_compaction(at: 50_000)).to be(chat)
       expect(chat.compaction).to eq(at: 50_000)
     end
 
     it 'enables the provider default when given no options' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_compaction
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_compaction
 
       expect(chat.compaction).to eq({})
     end
 
     it 'disables compaction with false' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_compaction(at: 50_000)
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_compaction(at: 50_000)
 
       expect(chat.with_compaction(false).compaction).to be(false)
     end
@@ -42,14 +42,14 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'names the portable options when given one it does not have' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
 
       expect { chat.with_compaction(compact_threshold: 50_000) }
         .to raise_error(ArgumentError, /:at, :instructions, :pause_after.*:compact_threshold/m)
     end
 
     it 'sends nothing when compaction is off' do
-      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).ask_later('Hello').render
+      payload = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).ask_later('Hello').render
 
       expect(payload).not_to have_key(:context_management)
     end
@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'provider mapping' do
     it 'maps to a context_management edit on Anthropic' do
-      payload = render_with_compaction(model: 'claude-haiku-4-5', provider: :anthropic, at: 50_000)
+      payload = render_with_compaction(model: model_for(:anthropic), provider: :anthropic, at: 50_000)
 
       expect(payload[:context_management]).to eq(
         edits: [{ type: 'compact_20260112', trigger: { type: 'input_tokens', value: 50_000 } }]
@@ -65,13 +65,13 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'leaves the Anthropic trigger to the API when no threshold is given' do
-      payload = render_with_compaction(model: 'claude-haiku-4-5', provider: :anthropic)
+      payload = render_with_compaction(model: model_for(:anthropic), provider: :anthropic)
 
       expect(payload.dig(:context_management, :edits)).to eq([{ type: 'compact_20260112' }])
     end
 
     it 'carries instructions and pause_after into the Anthropic edit' do
-      payload = render_with_compaction(model: 'claude-haiku-4-5', provider: :anthropic,
+      payload = render_with_compaction(model: model_for(:anthropic), provider: :anthropic,
                                        at: 50_000, instructions: 'Keep every decision.', pause_after: true)
 
       expect(payload.dig(:context_management, :edits, 0)).to include(
@@ -81,51 +81,52 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'maps to a compact_threshold entry on the OpenAI Responses API' do
-      payload = render_with_compaction(model: 'gpt-5-nano', provider: :openai, protocol: :responses, at: 200_000)
+      payload = render_with_compaction(model: model_for(:openai), provider: :openai, protocol: :responses, at: 200_000)
 
       expect(payload[:context_management]).to eq([{ type: 'compaction', compact_threshold: 200_000 }])
     end
 
     it 'omits the OpenAI threshold when no threshold is given' do
-      payload = render_with_compaction(model: 'gpt-5-nano', provider: :openai, protocol: :responses)
+      payload = render_with_compaction(model: model_for(:openai), provider: :openai, protocol: :responses)
 
       expect(payload[:context_management]).to eq([{ type: 'compaction' }])
     end
 
     it 'maps to a compact_threshold entry on Azure Responses' do
-      payload = render_with_compaction(model: 'gpt-5-nano', provider: :azure, protocol: :responses, at: 200_000)
+      payload = render_with_compaction(model: model_for(:azure, :thinking), provider: :azure, protocol: :responses,
+                                       at: 200_000)
 
       expect(payload[:context_management]).to eq([{ type: 'compaction', compact_threshold: 200_000 }])
     end
 
     it 'maps to the context-compression plugin on OpenRouter' do
-      payload = render_with_compaction(model: 'claude-haiku-4-5', provider: :openrouter)
+      payload = render_with_compaction(model: model_for(:openrouter), provider: :openrouter)
 
       expect(payload[:plugins]).to eq([{ id: 'context-compression' }])
     end
 
     it 'drops compaction for providers that manage context themselves' do
-      payload = render_with_compaction(model: 'gemini-2.5-flash', provider: :gemini, at: 50_000)
+      payload = render_with_compaction(model: model_for(:gemini), provider: :gemini, at: 50_000)
 
       expect(payload.to_s).not_to include('compact')
     end
 
     it 'drops compaction on Responses services that do not serve the parameter' do
-      payload = render_with_compaction(model: 'grok-4-1-fast-non-reasoning', provider: :xai,
+      payload = render_with_compaction(model: model_for(:xai), provider: :xai,
                                        protocol: :responses, at: 50_000)
 
       expect(payload).not_to have_key(:context_management)
     end
 
     it 'drops compaction on Chat Completions' do
-      payload = render_with_compaction(model: 'gpt-5-nano', provider: :openai,
+      payload = render_with_compaction(model: model_for(:openai), provider: :openai,
                                        protocol: :chat_completions, at: 50_000)
 
       expect(payload).not_to have_key(:context_management)
     end
 
     it 'lets provider options override the mapped value' do
-      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+      payload = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
                        .with_compaction(at: 50_000)
                        .with_provider_options(context_management: { edits: [] })
                        .ask_later('Hello')
@@ -135,13 +136,13 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe 'anthropic claude-sonnet-4-6', :live do
+  describe "anthropic #{model_for(:anthropic, :compaction)}", :live do
     # Compaction only runs on a conversation big enough to cross the
     # threshold, so the filler is generated rather than checked in.
     let(:notes) { 'The quick brown fox jumps over the lazy dog. ' * 9000 }
 
     it 'compacts a long conversation and bills the summarization pass' do
-      chat = RubyLLM.chat(model: 'claude-sonnet-4-6', provider: :anthropic).with_compaction(at: 50_000)
+      chat = RubyLLM.chat(model: model_for(:anthropic, :compaction), provider: :anthropic).with_compaction(at: 50_000)
 
       response = chat.ask("Here are my notes:\n#{notes}\nIn one sentence, which animal jumps in my notes?")
 

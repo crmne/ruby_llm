@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Video, :live do
 
     it 'raises a clear error for providers without video generation' do
       expect do
-        RubyLLM.animate_later('a cat', model: 'claude-haiku-4-5')
+        RubyLLM.animate_later('a cat', model: model_for(:anthropic))
       end.to raise_error(RubyLLM::Error, /Anthropic doesn't support video generation/)
     end
   end

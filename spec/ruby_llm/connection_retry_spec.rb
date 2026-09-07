@@ -132,7 +132,7 @@ RSpec.describe RubyLLM::Connection do
     end
 
     let(:provider) { RubyLLM::Providers::Anthropic.new(config) }
-    let(:requests) { [{ custom_id: 'ruby_llm_0', payload: { model: 'claude-haiku-4-5', messages: [] } }] }
+    let(:requests) { [{ custom_id: 'ruby_llm_0', payload: { model: model_for(:anthropic), messages: [] } }] }
     let(:created_batch) do
       { status: 200,
         headers: { 'Content-Type' => 'application/json' },

@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
   describe '#before_request' do
-    let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: 'anthropic') }
+    let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: 'anthropic') }
 
     it 'lets hooks mutate the rendered payload in place' do
       chat.before_request { |payload| payload[:metadata] = { user_id: 'u-1' } }

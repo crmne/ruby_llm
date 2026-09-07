@@ -24,19 +24,19 @@ RSpec.describe RubyLLM::UploadedFile, :live do
       end
     end
 
-    it 'openai/gpt-5-nano reuses an uploaded file in chat' do
+    it "openai/#{model_for(:openai)} reuses an uploaded file in chat" do
       file = RubyLLM.upload(pdf_path, provider: :openai, purpose: 'user_data')
 
-      response = RubyLLM.chat(model: 'gpt-5-nano', provider: :openai)
+      response = RubyLLM.chat(model: model_for(:openai), provider: :openai)
                         .ask('Summarize this document in one sentence.', with: file)
 
       expect(response.content).to match(/pdf|document|lorem|sample/i)
     end
 
-    it 'gemini/gemini-2.5-flash reuses an uploaded file in chat' do
+    it "gemini/#{model_for(:gemini)} reuses an uploaded file in chat" do
       file = RubyLLM.upload(pdf_path, provider: :gemini)
 
-      response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      response = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                         .ask('Summarize this document in one sentence.', with: file)
 
       expect(response.content).to match(/pdf|document|lorem|sample/i)
@@ -120,7 +120,7 @@ RSpec.describe RubyLLM::UploadedFile, :live do
   describe 'context shortcuts' do
     it 'uploads through the provider of the context default model' do
       config = RubyLLM::Configuration.new
-      config.default_model = 'claude-haiku-4-5'
+      config.default_model = model_for(:anthropic)
       context = RubyLLM::Context.new(config)
       provider = instance_double(RubyLLM::Providers::Anthropic)
 
@@ -132,7 +132,7 @@ RSpec.describe RubyLLM::UploadedFile, :live do
 
     it 'downloads through the provider of the context default model' do
       config = RubyLLM::Configuration.new
-      config.default_model = 'claude-haiku-4-5'
+      config.default_model = model_for(:anthropic)
       context = RubyLLM::Context.new(config)
       provider = instance_double(RubyLLM::Providers::Anthropic)
 

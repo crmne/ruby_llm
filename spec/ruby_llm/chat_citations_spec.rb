@@ -41,8 +41,8 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'citations' do
-    context 'with anthropic/claude-haiku-4-5' do
-      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_citations }
+    context "with anthropic/#{model_for(:anthropic)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_citations }
 
       it 'cites text documents in responses' do
         response = chat.ask('Who created Ruby and when? Use the document.', with: facts_path)
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Chat, :live do
       end
 
       it 'cites tool results returned as search results' do
-        chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_tools(KnowledgeBase)
+        chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_tools(KnowledgeBase)
 
         response = chat.ask('Who created Ruby? Search the knowledge base first and cite your sources.')
 
@@ -89,8 +89,8 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with bedrock/claude-haiku-4-5' do
-      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock).with_citations }
+    context "with bedrock/#{model_for(:bedrock, :structured_output)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:bedrock, :structured_output), provider: :bedrock).with_citations }
 
       it 'cites text documents in responses' do
         response = chat.ask('Who created Ruby and when? Use the document.', with: facts_path)
@@ -113,7 +113,8 @@ RSpec.describe RubyLLM::Chat, :live do
       end
 
       it 'cites tool results returned as search results' do
-        chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock).with_tools(KnowledgeBase)
+        chat = RubyLLM.chat(model: model_for(:bedrock, :structured_output),
+                            provider: :bedrock).with_tools(KnowledgeBase)
 
         response = chat.ask('Who created Ruby? Search the knowledge base first and cite your sources.')
 
@@ -137,9 +138,9 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with perplexity/sonar' do
+    context "with perplexity/#{model_for(:perplexity)}" do
       it 'returns search result citations' do
-        response = RubyLLM.chat(model: 'sonar', provider: :perplexity)
+        response = RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity)
                           .ask('What is the Ruby programming language?')
 
         expect(response.citations).not_to be_empty
@@ -148,7 +149,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it 'returns search result citations when streaming' do
         chunks = []
-        response = RubyLLM.chat(model: 'sonar', provider: :perplexity)
+        response = RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity)
                           .ask('What is the Ruby programming language?') do |chunk|
           chunks << chunk
         end
@@ -159,9 +160,9 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with gemini/gemini-2.5-flash' do
+    context "with gemini/#{model_for(:gemini)}" do
       it 'returns grounding citations when search is enabled' do
-        response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+        response = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                           .with_provider_options(tools: [{ google_search: {} }])
                           .ask('What is the latest stable version of Ruby?')
 
@@ -170,9 +171,9 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with vertexai/gemini-2.5-flash' do
+    context "with vertexai/#{model_for(:vertexai)}" do
       it 'returns grounding citations when search is enabled' do
-        response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :vertexai)
+        response = RubyLLM.chat(model: model_for(:vertexai), provider: :vertexai)
                           .with_provider_options(tools: [{ google_search: {} }])
                           .ask('What is the latest stable version of Ruby?')
 
@@ -181,9 +182,10 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with openrouter/perplexity/sonar' do
+    context "with openrouter/#{model_for(:openrouter, :citations)}" do
       it 'returns search result citations' do
-        response = RubyLLM.chat(model: 'perplexity/sonar', provider: :openrouter, assume_model_exists: true)
+        response = RubyLLM.chat(model: model_for(:openrouter, :citations), provider: :openrouter,
+                                assume_model_exists: true)
                           .ask('What is the Ruby programming language?')
 
         expect(response.citations).not_to be_empty
@@ -191,8 +193,8 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with cohere/command-a-plus-05-2026', if: provider_recorded?(:cohere) do
-      let(:chat) { RubyLLM.chat(model: 'command-a-plus-05-2026', provider: :cohere).with_citations }
+    context "with cohere/#{model_for(:cohere, :vision)}", if: provider_recorded?(:cohere) do
+      let(:chat) { RubyLLM.chat(model: model_for(:cohere, :vision), provider: :cohere).with_citations }
 
       it 'cites text documents in responses' do
         response = chat.ask('Who created Ruby and when? Use the document.', with: facts_path)
@@ -206,7 +208,7 @@ RSpec.describe RubyLLM::Chat, :live do
       end
 
       it 'cites tool results returned as search results' do
-        response = RubyLLM.chat(model: 'command-a-plus-05-2026', provider: :cohere)
+        response = RubyLLM.chat(model: model_for(:cohere, :vision), provider: :cohere)
                           .with_tools(KnowledgeBase)
                           .ask('Who created Ruby? Search the knowledge base first and cite your sources.')
 
@@ -229,16 +231,16 @@ RSpec.describe RubyLLM::Chat, :live do
       it 'warns when citations are requested' do
         allow(RubyLLM.logger).to receive(:warn).and_call_original
 
-        response = RubyLLM.chat(model: 'gpt-5-nano', provider: :openai).with_citations.ask('Say hi')
+        response = RubyLLM.chat(model: model_for(:openai), provider: :openai).with_citations.ask('Say hi')
 
         expect(response.citations).to be_empty
         expect(RubyLLM.logger).to have_received(:warn).with(/does not support citations/)
       end
     end
 
-    context 'with openai/gpt-4o-mini-search-preview' do
+    context "with openai/#{model_for(:openai, :search)}" do
       it 'returns url citations when web search is enabled' do
-        response = RubyLLM.chat(model: 'gpt-4o-mini-search-preview', provider: :openai)
+        response = RubyLLM.chat(model: model_for(:openai, :search), provider: :openai)
                           .with_provider_options(web_search_options: {})
                           .ask('What is the latest stable version of Ruby? Cite your sources.')
 

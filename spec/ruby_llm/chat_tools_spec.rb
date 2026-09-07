@@ -276,8 +276,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
     describe 'thought signatures' do
       signature_models = [
-        { provider: :gemini, model: 'gemini-3.1-pro-preview' },
-        { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
+        { provider: :gemini, model: model_for(:gemini, :thinking_signatures) },
+        { provider: :vertexai, model: model_for(:vertexai, :thinking_signatures) }
       ]
       each_model(signature_models) do |provider, model|
         it "#{provider}/#{model} includes thought signatures for tool calls" do
@@ -299,7 +299,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     each_model(CHAT_MODELS) do |provider, model|
       # haiku can't do parallel tool calls
-      parallel_model = provider == :bedrock ? 'claude-sonnet-4-5' : model
+      parallel_model = provider == :bedrock ? model_for(:bedrock, :vision) : model
       it "#{provider}/#{parallel_model} can use parallel tool calls" do
         skip_unless_supports_functions(provider, parallel_model)
         if provider == :gpustack && parallel_model == 'qwen3'
@@ -761,6 +761,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :required)
+        # DeepSeek only allows forced tool choices with thinking disabled.
+        chat.with_thinking(false) if provider == :deepseek
 
         tool_called = false
         chat.before_tool_call do |_tool_call|
@@ -781,6 +783,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :weather)
+        chat.with_thinking(false) if provider == :deepseek
 
         tool_called = false
         chat.before_tool_call do |_tool_call|

@@ -25,7 +25,7 @@ RSpec.describe RubyLLM::Chat, :live do
       end
 
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
-        model = 'gpt-4.1-nano' if provider == :openai # gpt-5 rejects the temperature this example sets
+        model = model_for(:openai, :temperature) if provider == :openai
         skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
         skip 'Azure reports different token counts for streaming vs non-streaming' if provider == :azure
         skip 'xAI reports different token counts for streaming vs non-streaming' if provider == :xai
@@ -34,6 +34,8 @@ RSpec.describe RubyLLM::Chat, :live do
         end
 
         chat = basic_chat(model: model, provider: provider, temperature: 0.0)
+        # DeepSeek ignores temperature while thinking is enabled.
+        chat.with_thinking(false) if provider == :deepseek
         chunks = []
 
         stream_message = chat.ask('Count from 1 to 3') do |chunk|
@@ -41,6 +43,7 @@ RSpec.describe RubyLLM::Chat, :live do
         end
 
         chat = basic_chat(model: model, provider: provider, temperature: 0.0)
+        chat.with_thinking(false) if provider == :deepseek
         sync_message = chat.ask('Count from 1 to 3')
 
         expect(sync_message.tokens.input).to be_within(1).of(stream_message.tokens.input)
@@ -97,7 +100,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'Gemini token accounting' do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount in streaming' do
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
 
       chunks = []
       response = chat.ask('What is 2+2? Think step by step.') do |chunk|

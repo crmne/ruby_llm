@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Inspectable do
     RubyLLM::Message.new(
       role: :assistant,
       content: 'word ' * 50,
-      model: 'gpt-4.1-nano',
+      model: model_for(:openai),
       input_tokens: 10,
       output_tokens: 20,
       raw: { 'body' => 'x' * 10_000 }
@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Inspectable do
 
   it 'keeps Message#inspect to one short line without the raw payload' do
     expect(message.inspect.length).to be < 200
-    expect(message.inspect).to include('role: :assistant', 'model: "gpt-4.1-nano"')
+    expect(message.inspect).to include('role: :assistant', "model: #{model_for(:openai).inspect}")
     expect(message.inspect).not_to include('xxx')
   end
 
@@ -36,25 +36,28 @@ RSpec.describe RubyLLM::Inspectable do
   end
 
   it 'summarizes a Chat without dumping the transcript' do
-    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat = RubyLLM.chat(model: model_for(:openai))
     chat.add_message(message)
 
-    expect(chat.inspect).to eq('#<RubyLLM::Chat model: "gpt-4.1-nano", provider: "openai", messages: 1>')
+    expect(chat.inspect).to eq(
+      "#<RubyLLM::Chat model: #{model_for(:openai).inspect}, provider: \"openai\", messages: 1>"
+    )
   end
 
   it 'summarizes an Embedding as dimensions, not floats' do
-    embedding = RubyLLM::Embedding.new(vectors: Array.new(1536) { 0.1 }, model: 'text-embedding-3-small')
+    embedding = RubyLLM::Embedding.new(vectors: Array.new(1536) { 0.1 }, model: model_for(:openai, :embedding))
 
-    expect(embedding.inspect).to eq('#<RubyLLM::Embedding model: "text-embedding-3-small", dimensions: 1536>')
+    expect(embedding.inspect).to eq("#<RubyLLM::Embedding model: #{model_for(:openai,
+                                                                             :embedding).inspect}, dimensions: 1536>")
   end
 
   it 'summarizes a Rerank as its model and result count' do
     rerank = RubyLLM::Rerank.new(
       results: [RubyLLM::Rerank::Result.new(index: 0, document: 'Ruby', score: 0.9)],
-      model: 'rerank-v3.5'
+      model: model_for(:cohere, :rerank)
     )
 
-    expect(rerank.inspect).to eq('#<RubyLLM::Rerank model: "rerank-v3.5", results: 1>')
+    expect(rerank.inspect).to eq("#<RubyLLM::Rerank model: #{model_for(:cohere, :rerank).inspect}, results: 1>")
   end
 
   it 'omits empty attributes' do

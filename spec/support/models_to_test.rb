@@ -47,7 +47,7 @@ chat_models = [
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
   { provider: :cohere, model: 'command-a-03-2025' },
-  { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :deepseek, model: 'deepseek-v4-flash' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3' },
   { provider: :mistral, model: 'mistral-small-latest' },
@@ -212,3 +212,62 @@ image_generation_models = [
   { provider: :xai, model: 'grok-imagine-image', supports_size: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
+
+# Keep individual examples on the same models as the live matrices. Named
+# alternatives cover features that need a different model from the default.
+# Use the unfiltered rows so unit specs also work with local providers disabled.
+TEST_MODELS = {
+  chat: chat_models,
+  structured_output: structured_output_models,
+  thinking: thinking_models,
+  vision: vision_models,
+  embedding: embedding_models,
+  speech: speech_models,
+  transcription: transcription_models,
+  image: image_generation_models,
+  video: VIDEO_GENERATION_MODELS,
+  temperature: [{ provider: :openai, model: 'gpt-4.1-nano' }],
+  alternate_chat: [{ provider: :openai, model: 'gpt-4.1-mini' }],
+  alternate_batch: [{ provider: :openai, model: 'gpt-5-mini' }],
+  alternate_embedding: [{ provider: :openai, model: 'text-embedding-3-large' }],
+  alternate_speech: [{ provider: :openai, model: 'tts-1' }],
+  reasoning_effort: [{ provider: :openai, model: 'gpt-5.2' }],
+  adaptive_thinking: [{ provider: :anthropic, model: 'claude-sonnet-5' }],
+  compaction: [{ provider: :anthropic, model: 'claude-sonnet-4-6' }],
+  citations: [{ provider: :openrouter, model: 'perplexity/sonar' }],
+  always_thinking: [{ provider: :mistral, model: 'magistral-small' }],
+  thinking_signatures: [
+    { provider: :gemini, model: 'gemini-3.1-pro-preview' },
+    { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
+  ],
+  multimodal_embedding: [
+    { provider: :gemini, model: 'gemini-embedding-2' },
+    { provider: :bedrock, model: 'us.cohere.embed-v4:0' }
+  ],
+  document_embedding: [{ provider: :bedrock, model: 'amazon.nova-2-multimodal-embeddings-v1:0' }],
+  passage_embedding: [{ provider: :perplexity, model: 'pplx-embed-v1-0.6b' }],
+  ocr: [{ provider: :mistral, model: 'mistral-ocr-latest' }],
+  rerank: [
+    { provider: :cohere, model: 'rerank-v3.5' },
+    { provider: :openrouter, model: 'voyageai/rerank-2.5-lite' }
+  ],
+  image_count: [{ provider: :openai, model: 'gpt-image-1.5' }],
+  image_quality: [
+    { provider: :openai, model: 'gpt-image-2' },
+    { provider: :xai, model: 'grok-imagine-image-quality' }
+  ],
+  streaming_transcription: [{ provider: :openai, model: 'gpt-4o-transcribe' }],
+  search: [{ provider: :openai, model: 'gpt-4o-mini-search-preview' }],
+  server_tools: [
+    { provider: :gemini, model: 'gemini-3.5-flash' },
+    { provider: :openrouter, model: 'openai/gpt-5.2' },
+    { provider: :xai, model: 'grok-4.3' }
+  ]
+}.freeze
+
+def model_for(provider, purpose = :chat)
+  row = TEST_MODELS.fetch(purpose).find { |model| model[:provider] == provider }
+  raise KeyError, "No #{purpose} test model for #{provider}" unless row
+
+  row.fetch(:model)
+end

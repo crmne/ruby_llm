@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
 
-  let(:model_id) { 'gpt-4.1-nano' }
+  let(:model_id) { model_for(:openai, :temperature) }
 
   def tool_call(id: "call_#{SecureRandom.hex(4)}", name: 'lookup', arguments: {})
     RubyLLM::ToolCall.new(id: id, name: name, arguments: arguments)
@@ -441,7 +441,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                  .with_compaction(at: 50_000)
                  .with_thinking(effort: :low)
                  .with_end_user('customer-42')
-                 .with_fallbacks('gpt-4.1-mini')
+                 .with_fallbacks(model_for(:openai, :alternate_chat))
                  .with_headers('X-Trace' => 'abc')
                  .with_provider_options(reasoning_effort: 'low')
 

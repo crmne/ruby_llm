@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Batch, :live do
-  let(:model) { 'claude-haiku-4-5' }
+  let(:model) { model_for(:anthropic) }
 
   def wait_for(batch)
     40.times do
@@ -27,7 +27,7 @@ RSpec.describe RubyLLM::Batch, :live do
     it 'rejects mixed providers' do
       chats = [
         RubyLLM.chat(model: model).ask_later('Hi'),
-        RubyLLM.chat(model: 'gpt-5-nano').ask_later('Hi')
+        RubyLLM.chat(model: model_for(:openai)).ask_later('Hi')
       ]
 
       expect { RubyLLM.batch(chats) }.to raise_error(ArgumentError, /one provider/)
@@ -35,8 +35,8 @@ RSpec.describe RubyLLM::Batch, :live do
 
     it 'rejects mixing chats with embedding requests' do
       items = [
-        RubyLLM.chat(model: 'gpt-5-nano').ask_later('Hi'),
-        RubyLLM.embed_later('Hi', model: 'text-embedding-3-small')
+        RubyLLM.chat(model: model_for(:openai)).ask_later('Hi'),
+        RubyLLM.embed_later('Hi', model: model_for(:openai, :embedding))
       ]
 
       expect { RubyLLM.batch(items) }.to raise_error(ArgumentError, /chats or embedding requests/)
@@ -44,15 +44,16 @@ RSpec.describe RubyLLM::Batch, :live do
 
     it 'rejects mixed models for model-scoped providers' do
       chats = [
-        RubyLLM.chat(model: 'gpt-5-nano').ask_later('Hi'),
-        RubyLLM.chat(model: 'gpt-5-mini').ask_later('Hi')
+        RubyLLM.chat(model: model_for(:openai)).ask_later('Hi'),
+        RubyLLM.chat(model: model_for(:openai, :alternate_batch)).ask_later('Hi')
       ]
 
       expect { RubyLLM.batch(chats) }.to raise_error(RubyLLM::Error, /one model/)
     end
 
     it 'rejects providers without batch support' do
-      chats = [RubyLLM.chat(model: 'deepseek-chat', provider: :deepseek, assume_model_exists: true).ask_later('Hi')]
+      chats = [RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek,
+                            assume_model_exists: true).ask_later('Hi')]
 
       expect { RubyLLM.batch(chats) }.to raise_error(RubyLLM::Error, /batch/)
     end
@@ -72,11 +73,11 @@ RSpec.describe RubyLLM::Batch, :live do
     end
 
     it 'passes rendered payloads and model ids to provider batch implementations' do
-      chat = RubyLLM.chat(model: 'mistral-small-latest').ask_later('Hi')
+      chat = RubyLLM.chat(model: model_for(:mistral)).ask_later('Hi')
       allow(chat.provider).to receive(:create_batch) do |requests|
         expect(requests.first).to include(
           custom_id: '0',
-          model: 'mistral-small-latest',
+          model: model_for(:mistral),
           payload: include(:model, :messages)
         )
         { id: 'batch_test', raw_status: 'RUNNING', completed: false }
@@ -224,11 +225,11 @@ RSpec.describe RubyLLM::Batch, :live do
   describe '#results' do
     it 'hydrates embeddings into their staged requests and leaves failed slots nil' do
       requests = [
-        RubyLLM.embed_later('This one fails', model: 'text-embedding-3-small'),
-        RubyLLM.embed_later('This one succeeds', model: 'text-embedding-3-small')
+        RubyLLM.embed_later('This one fails', model: model_for(:openai, :embedding)),
+        RubyLLM.embed_later('This one succeeds', model: model_for(:openai, :embedding))
       ]
       provider = requests.first.provider
-      embedding = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: 'text-embedding-3-small', input_tokens: 3)
+      embedding = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: model_for(:openai, :embedding), input_tokens: 3)
       standard_cost = embedding.cost.total
       allow(provider).to receive(:batch_results).and_return([[0, nil, :failed], [1, embedding]])
 
@@ -248,10 +249,10 @@ RSpec.describe RubyLLM::Batch, :live do
   # Not covered live: Azure batches need a Global-Batch deployment on the test
   # resource, and Bedrock/Vertex AI batches need real S3/GCS buckets and roles.
   [
-    { provider: :gemini, model: 'gemini-2.5-flash' },
-    { provider: :mistral, model: 'mistral-small-latest' },
-    { provider: :openai, model: 'gpt-5-nano' },
-    { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+    { provider: :gemini, model: model_for(:gemini) },
+    { provider: :mistral, model: model_for(:mistral) },
+    { provider: :openai, model: model_for(:openai) },
+    { provider: :xai, model: model_for(:xai) }
   ].each do |model_info|
     context "with #{model_info[:provider]}/#{model_info[:model]}" do
       it 'answers staged chats and appends the answers to their conversations' do
@@ -276,11 +277,11 @@ RSpec.describe RubyLLM::Batch, :live do
     end
   end
 
-  context 'with openai/text-embedding-3-small embeddings' do
+  context "with openai/#{model_for(:openai, :embedding)} embeddings" do
     it 'embeds staged texts and hydrates each request result' do
       requests = [
-        RubyLLM.embed_later('Ruby is a programmer best friend', model: 'text-embedding-3-small'),
-        RubyLLM.embed_later('Batches come back within a day', model: 'text-embedding-3-small', dimensions: 256)
+        RubyLLM.embed_later('Ruby is a programmer best friend', model: model_for(:openai, :embedding)),
+        RubyLLM.embed_later('Batches come back within a day', model: model_for(:openai, :embedding), dimensions: 256)
       ]
 
       batch = RubyLLM.batch(requests)
@@ -297,7 +298,7 @@ RSpec.describe RubyLLM::Batch, :live do
     end
   end
 
-  context 'with anthropic/claude-haiku-4-5' do
+  context "with anthropic/#{model_for(:anthropic)}" do
     it 'answers staged chats and appends the answers to their conversations' do
       chats = [
         RubyLLM.chat(model: model).with_instructions('Be terse.').ask_later('What is 2 + 2?'),

@@ -25,25 +25,25 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'keeps caching options when switching models on the same provider' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano').with_caching(retention: '24h')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature)).with_caching(retention: '24h')
 
-      chat.with_model('gpt-5-nano')
+      chat.with_model(model_for(:openai))
 
       expect(chat.caching).to eq(retention: '24h')
     end
 
     it 'keeps caching options when switching providers' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano').with_caching(retention: '24h')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature)).with_caching(retention: '24h')
 
-      chat.with_model('claude-haiku-4-5')
+      chat.with_model(model_for(:anthropic))
 
       expect(chat.caching).to eq(retention: '24h')
     end
 
     it 'lets the new provider reject incompatible caching options' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
                     .with_caching(retention: '24h')
-                    .with_model('claude-haiku-4-5')
+                    .with_model(model_for(:anthropic))
                     .ask_later('Hello')
 
       expect { chat.render }.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl/)
@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'omits RubyLLM cache controls and marked boundaries when disabled' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
       chat.with_instructions('Stable instructions').cache_until_here
       chat.ask_later('Hello').cache_until_here
       chat.with_caching(false)
@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'renders OpenAI prompt cache controls as request params' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
                     .with_caching(key: 'repo:ruby_llm', ttl: '30m', mode: 'implicit')
                     .ask_later('Hello')
 
@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Chat, :live do
     it 'translates deprecated retention: into prompt_cache_options' do
       allow(RubyLLM.logger).to receive(:warn)
 
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
                     .with_caching(key: 'repo:ruby_llm', retention: '24h')
                     .ask_later('Hello')
 
@@ -104,7 +104,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'rejects OpenAI caching options it cannot render' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
                     .with_caching(scope: 'user')
                     .ask_later('Hello')
 
@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'renders explicit breakpoints for OpenAI cache boundaries' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
       chat.ask_later('Long context').cache_until_here
 
       payload = chat.render
@@ -124,7 +124,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'sends cache-bounded instructions as input items on Responses' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
       chat.with_instructions('Stable instructions').cache_until_here
       chat.ask_later('Hello')
 
@@ -140,7 +140,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'Gemini explicit caching' do
     it 'renders cachedContent when caching carries an id' do
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                     .with_caching(id: 'cachedContents/abc123')
                     .ask_later('Hello')
 
@@ -148,7 +148,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'normalizes bare cache ids' do
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                     .with_caching(id: 'abc123')
                     .ask_later('Hello')
 
@@ -157,7 +157,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'accepts a CachedContent as the id' do
       cache = RubyLLM::CachedContent.new(name: 'cachedContents/abc123')
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                     .with_caching(id: cache)
                     .ask_later('Hello')
 
@@ -167,7 +167,7 @@ RSpec.describe RubyLLM::Chat, :live do
     it 'notes that Gemini caching is implicit when with_caching has no id' do
       allow(RubyLLM.logger).to receive(:debug)
 
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                     .with_caching(ttl: '1h')
                     .ask_later('Hello')
       payload = chat.render
@@ -179,7 +179,7 @@ RSpec.describe RubyLLM::Chat, :live do
     it 'notes that Gemini ignores explicit cache boundaries' do
       allow(RubyLLM.logger).to receive(:debug)
 
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
       chat.ask_later('Long context').cache_until_here
       chat.render
 
@@ -187,7 +187,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'rejects the id option on Anthropic' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
                     .with_caching(id: 'cachedContents/abc123')
                     .ask_later('Hello')
 
@@ -195,7 +195,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     it 'rejects the id option on OpenAI' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai)
                     .with_caching(id: 'cachedContents/abc123')
                     .ask_later('Hello')
 
@@ -236,8 +236,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'prompt cache round-trip' do
     cacheable_models = [
-      { provider: :anthropic, model: 'claude-haiku-4-5' },
-      { provider: :bedrock, model: 'claude-haiku-4-5' }
+      { provider: :anthropic, model: model_for(:anthropic) },
+      { provider: :bedrock, model: model_for(:bedrock, :thinking) }
     ]
     # Haiku models require at least 4096 tokens for a cacheable prefix.
     cacheable_instructions = <<~INSTRUCTIONS * 150
@@ -262,9 +262,10 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    it 'openai/gpt-5.2 reuses the prompt cache with a shared key' do
+    it "openai/#{model_for(:openai, :reasoning_effort)} reuses the prompt cache with a shared key" do
       ask_with_shared_key = lambda do
-        chat = RubyLLM.chat(model: 'gpt-5.2', provider: :openai).with_caching(key: 'rubyllm-test')
+        chat = RubyLLM.chat(model: model_for(:openai, :reasoning_effort),
+                            provider: :openai).with_caching(key: 'rubyllm-test')
         chat.with_instructions(cacheable_instructions)
         chat.ask('Reply with exactly: OK')
       end

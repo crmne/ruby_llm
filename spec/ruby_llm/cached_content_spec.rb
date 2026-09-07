@@ -11,21 +11,21 @@ RSpec.describe RubyLLM::CachedContent, :live do
   end
 
   describe 'explicit caching round-trip' do
-    it 'gemini/gemini-2.5-flash creates, uses, extends, and deletes a cache' do
+    it "gemini/#{model_for(:gemini)} creates, uses, extends, and deletes a cache" do
       cache = RubyLLM.cache(
         long_text,
-        model: 'gemini-2.5-flash',
+        model: model_for(:gemini),
         ttl: 300,
         instructions: 'You are a meticulous release engineer.'
       )
 
       expect(cache.name).to start_with('cachedContents/')
-      expect(cache.model).to eq('gemini-2.5-flash')
+      expect(cache.model).to eq(model_for(:gemini))
       expect(cache.provider).to eq('gemini')
       expect(cache.tokens).to be > 2_048
       expect(cache.expires_at).to be_a(Time)
 
-      response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      response = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
                         .with_caching(id: cache)
                         .ask('In one short sentence, what does the cached handbook describe?')
 
@@ -39,15 +39,15 @@ RSpec.describe RubyLLM::CachedContent, :live do
       expect(cache.delete).to eq(cache)
     end
 
-    it 'vertexai/gemini-2.5-flash creates, uses, and deletes a cache' do
-      cache = RubyLLM.cache(long_text, model: 'gemini-2.5-flash', provider: :vertexai, ttl: 300)
+    it "vertexai/#{model_for(:vertexai)} creates, uses, and deletes a cache" do
+      cache = RubyLLM.cache(long_text, model: model_for(:vertexai), provider: :vertexai, ttl: 300)
 
       expect(cache.name).to include('/cachedContents/')
-      expect(cache.model).to eq('gemini-2.5-flash')
+      expect(cache.model).to eq(model_for(:vertexai))
       expect(cache.provider).to eq('vertexai')
       expect(cache.tokens).to be > 2_048
 
-      response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :vertexai)
+      response = RubyLLM.chat(model: model_for(:vertexai), provider: :vertexai)
                         .with_caching(id: cache)
                         .ask('In one short sentence, what does the cached handbook describe?')
 
@@ -58,7 +58,7 @@ RSpec.describe RubyLLM::CachedContent, :live do
     end
 
     it 'finds an existing cache by name' do
-      created = RubyLLM.cache(long_text, model: 'gemini-2.5-flash', ttl: 300)
+      created = RubyLLM.cache(long_text, model: model_for(:gemini), ttl: 300)
 
       found = described_class.find(created.name, provider: :gemini)
 
@@ -72,16 +72,16 @@ RSpec.describe RubyLLM::CachedContent, :live do
   describe 'unsupported providers' do
     it 'raises a clear error for providers without explicit caching' do
       expect do
-        RubyLLM.cache('Some text', model: 'claude-haiku-4-5')
+        RubyLLM.cache('Some text', model: model_for(:anthropic))
       end.to raise_error(RubyLLM::Error, "Anthropic doesn't support explicit content caching")
     end
   end
 
   describe 'RubyLLM shortcuts' do
     it 'creates caches through RubyLLM.cache' do
-      allow(described_class).to receive(:create).with('text', model: 'gemini-2.5-flash').and_return(:cached)
+      allow(described_class).to receive(:create).with('text', model: model_for(:gemini)).and_return(:cached)
 
-      expect(RubyLLM.cache('text', model: 'gemini-2.5-flash')).to eq(:cached)
+      expect(RubyLLM.cache('text', model: model_for(:gemini))).to eq(:cached)
     end
   end
 end

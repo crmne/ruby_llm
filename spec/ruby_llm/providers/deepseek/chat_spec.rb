@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Chat do
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
     def render_payload(thinking: nil, schema: nil)
-      model = instance_double(RubyLLM::Model, id: 'deepseek-v4-flash')
+      model = instance_double(RubyLLM::Model, id: model_for(:deepseek))
 
       provider.send(
         :render_payload,

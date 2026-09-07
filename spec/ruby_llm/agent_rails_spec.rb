@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Agent do
 
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
     end
@@ -44,7 +44,7 @@ RSpec.describe RubyLLM::Agent do
 
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       instructions
     end
 
@@ -64,7 +64,7 @@ RSpec.describe RubyLLM::Agent do
 
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     stub_const('SpecImplicitRailsPromptAgent', agent_class)
@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::Agent do
   it 'does not add instructions when no instructions macro or conventional prompt exists' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     stub_const('SpecNoInstructionsAgent', agent_class)
@@ -90,7 +90,7 @@ RSpec.describe RubyLLM::Agent do
   it 'raises when an explicitly referenced prompt file is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       instructions { prompt('instructions') }
     end
 
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Agent do
   it 'exposes chat_model record as chat in execution context for .create! and .find' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       instructions { "chat-class: #{chat.class.name}" }
     end
 
@@ -118,13 +118,13 @@ RSpec.describe RubyLLM::Agent do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
       inputs :quality
-      model { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+      model { quality == :high ? model_for(:openai, :alternate_chat) : model_for(:openai, :temperature) }
     end
 
     stub_const('SpecDynamicModelAgent', agent_class)
 
-    expect(SpecDynamicModelAgent.create!(quality: :high).model_id).to eq('gpt-4.1-mini')
-    expect(SpecDynamicModelAgent.create!(quality: :low).model_id).to eq('gpt-4.1-nano')
+    expect(SpecDynamicModelAgent.create!(quality: :high).model_id).to eq(model_for(:openai, :alternate_chat))
+    expect(SpecDynamicModelAgent.create!(quality: :low).model_id).to eq(model_for(:openai, :temperature))
   end
 
   it 'finds a Rails chat and applies runtime instructions without persisting them' do
@@ -135,7 +135,7 @@ RSpec.describe RubyLLM::Agent do
 
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
     end
@@ -158,7 +158,7 @@ RSpec.describe RubyLLM::Agent do
   it 'combines persisted and unpersisted instruction declarations' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
 
       instructions 'Stable policy', cache_until_here: true
       instructions append: true, persist: false do
@@ -192,7 +192,7 @@ RSpec.describe RubyLLM::Agent do
   it 'syncs only persistent instruction declarations' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :version
 
       instructions { "Stable #{version}" }
@@ -217,7 +217,7 @@ RSpec.describe RubyLLM::Agent do
 
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
     end
@@ -241,7 +241,7 @@ RSpec.describe RubyLLM::Agent do
 
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :display_name
       instructions display_name: -> { display_name }
     end
@@ -265,7 +265,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'raises when .create! is used without chat_model' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     expect do
@@ -316,7 +316,7 @@ RSpec.describe RubyLLM::Agent do
   it 'forwards the protocol model option to created and found Rails chat records' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
-      model 'gpt-5-nano', protocol: :chat_completions
+      model model_for(:openai), protocol: :chat_completions
       instructions 'Hello'
     end
 
@@ -331,7 +331,7 @@ RSpec.describe RubyLLM::Agent do
 
   it 'raises when .sync_instructions is used without chat_model' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     expect do

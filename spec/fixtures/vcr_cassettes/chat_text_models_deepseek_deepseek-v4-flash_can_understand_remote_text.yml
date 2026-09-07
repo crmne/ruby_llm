@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Thu, 04 Jun 2026 23:49:36 GMT
+      - Wed, 02 Sep 2026 12:36:44 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6a220f10-9c6"
+      - W/"6a98185c-9c6"
       Expires:
-      - Mon, 08 Jun 2026 16:20:31 GMT
+      - Sun, 06 Sep 2026 22:27:18 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 8D16:192FC2:9BCB79:9D09A2:6A26E977
+      - DDA4:3BFB0C:3F8547F:4032791:6A9DE66E
+      X-Github-Edge-Region:
+      - fra
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Mon, 08 Jun 2026 18:45:57 GMT
+      - Sun, 06 Sep 2026 22:17:18 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '20'
       X-Served-By:
-      - cache-ber1080025-BER
+      - cache-ber1080028-BER
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1780944358.871191,VS0,VE1
+      - S1788733039.667892,VS0,VE158
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 9ac11dad49a56787f7c469fa7635fdff9b27a569
+      - cee6a4cb4cd3008aaebf6d00b1536403bfaa1930
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,13 +97,13 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 08 Jun 2026 18:45:57 GMT
+  recorded_at: Sun, 06 Sep 2026 22:17:18 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
@@ -140,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -161,7 +161,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 08 Jun 2026 18:45:58 GMT
+      - Sun, 06 Sep 2026 22:17:19 GMT
       Server:
       - elb
       Vary:
@@ -169,7 +169,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 1e178484eccbf003833889cadbcf3183
+      - 1348f29abee58f77ef626a4e7cbf58bf
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -177,44 +177,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 98b89ed6771805fd5b6d059738f20206.cloudfront.net (CloudFront)
+      - 1.1 0db2f5704ee77a4af66b0762f52fb9fa.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - o0m8rF4XGvwS4y_WTCT5EDXN1btJbt86AA3CJYA6d8Fy1-d0RvWsRg==
+      - RWxD8o-CXp2qoaC3NpxvehU0KJSsj_7ZkcYjSGD0CNbJHLieJHvymQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"05ec5758-e46d-4005-9d2f-4d526e464a9f","object":"chat.completion","created":1780944358,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        file contains the **Ruby software license**, specifically the terms under
-        which Ruby is distributed. It states that Ruby is copyrighted free software
-        by **Yukihiro Matsumoto** (often known as \"Matz\") and provides the legal
-        conditions for copying, modifying, and distributing the software.\n\nHere
-        is a summary of the key points from the file:\n\n1.  **Dual Licensing**: You
-        can redistribute and modify Ruby under the **2-clause BSDL** (a permissive
-        open-source license) **OR** under the conditions listed in this file (the
-        \"Ruby License\").\n\n2.  **Conditions for Copying (Source)**: You can make
-        verbatim copies of the source code as long as you duplicate all original copyright
-        notices and disclaimers.\n\n3.  **Conditions for Modification**: If you modify
-        the software, you must do at least **one** of the following:\n    *   Place
-        your modifications in the Public Domain or make them freely available.\n    *   Use
-        the modified software only within your corporation/organization.\n    *   Give
-        non-standard binaries non-standard names with instructions on where to get
-        the original.\n    *   Make other distribution arrangements with the author.\n\n4.  **Conditions
-        for Distribution (Binary/Object Code)**: You must do at least **one** of the
-        following:\n    *   Distribute binaries with instructions on where to get
-        the original source.\n    *   Accompany the distribution with the machine-readable
-        source code.\n    *   Give non-standard binaries non-standard names (similar
-        to above).\n    *   Make other arrangements with the author.\n\n5.  **Third-Party
-        Files**: Some files in the distribution are not written by the author (Yukihiro
-        Matsumoto) and are not under these terms (referenced in the `LEGAL` file).\n\n6.  **Output
-        and Scripts**: Scripts and library files generated by the software (input
-        or output) do not fall under the software''s copyright. They belong to the
-        person who generated them and can be sold commercially.\n\n7.  **Disclaimer**:
-        The software is provided \"AS IS\" without any express or implied warranties,
-        including merchantability or fitness for a particular purpose.\n\n**In short,
-        this is the legal document that governs how you can use, modify, and share
-        Ruby.** It is a custom, permissive license (often referred to as the \"Ruby
-        License\") that is similar to open-source licenses but includes specific obligations
-        regarding the distribution of modifications."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":503,"total_tokens":1047,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Mon, 08 Jun 2026 18:46:03 GMT
+      string: !binary |-
+        eyJpZCI6Ijk1YzI2NTcxLTQ2M2QtNGI4YS04YTc3LTA4ZjE0NTAwYjBlOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg3MzMwMzksIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoaXMgZmlsZSBjb250YWlucyB0aGUgbGljZW5zZSB0ZXJtcyBmb3IgUnVieSwgYSBwcm9ncmFtbWluZyBsYW5ndWFnZS4gSXQgc3RhdGVzIHRoYXQgUnVieSBpcyBjb3B5cmlnaHRlZCBmcmVlIHNvZnR3YXJlIGJ5IFl1a2loaXJvIE1hdHN1bW90byBhbmQgY2FuIGJlIHJlZGlzdHJpYnV0ZWQvbW9kaWZpZWQgdW5kZXIgZWl0aGVyIHRoZSAyLWNsYXVzZSBCU0QgbGljZW5zZSBvciB0aGUgYWRkaXRpb25hbCBjb25kaXRpb25zIGxpc3RlZCBpbiB0aGUgZmlsZS4gVGhlIGNvbmRpdGlvbnMgY292ZXI6XG5cbi0gTWFraW5nIGFuZCBkaXN0cmlidXRpbmcgdmVyYmF0aW0gY29waWVzLlxuLSBNb2RpZnlpbmcgdGhlIHNvZnR3YXJlLCB3aXRoIHNldmVyYWwgYWxsb3dlZCBvcHRpb25zIChlLmcuLCBwbGFjaW5nIG1vZGlmaWNhdGlvbnMgaW4gdGhlIHB1YmxpYyBkb21haW4sIHVzZSBvbmx5IHdpdGhpbiB5b3VyIG9yZ2FuaXphdGlvbiwgcmVuYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcywgZXRjLikuXG4tIERpc3RyaWJ1dGluZyBiaW5hcnkvb2JqZWN0IGNvZGUgdmVyc2lvbnMgdW5kZXIgY2VydGFpbiBjb25kaXRpb25zLlxuLSBDbGFyaWZ5aW5nIHRoYXQgc2NyaXB0cy9saWJyYXJ5IGZpbGVzIGdlbmVyYXRlZCBieSB0aGUgc29mdHdhcmUgYmVsb25nIHRvIHRoZWlyIGF1dGhvcnMgYW5kIG1heSBiZSBzb2xkL2FnZ3JlZ2F0ZWQuXG4tIE5vdGluZyB0aGF0IHNvbWUgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBtYXkgaGF2ZSBzZXBhcmF0ZSBjb3B5cmlnaHQgdGVybXMgKHNlZSB0aGUgTEVHQUwgZmlsZSkuXG4tIEluY2x1ZGluZyBhIHN0YW5kYXJkIOKAnEFTIElT4oCdIHdhcnJhbnR5IGRpc2NsYWltZXIuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJXZSBuZWVkIGFuc3dlciB1c2VyIGFza3MgXCJXaGF0J3MgaW4gdGhpcyBmaWxlP1wiIE5lZWQgZGVzY3JpYmUgY29udGVudC4gTmVlZCBzdW1tYXJpemUuIE5lZWQgYmUgY29uY2lzZS4gRmlsZSBsaWNlbnNlLnR4dCB0ZXh0IGlzIFJ1YnkgbGljZW5zZT8gQWN0dWFsbHkgYXBwZWFycyBSdWJ5J3MgbGljZW5zZSB0ZXJtcyAob2xkIFwiUnVieVwiIGxpY2Vuc2UpLiBOZWVkIG1lbnRpb24gaXQncyBsaWNlbnNlIGZpbGUgZm9yIFJ1Ynkgc29mdHdhcmUsIGNvcHlyaWdodCBZdWtpaGlybyBNYXRzdW1vdG8sIHBlcm1pdHMgcmVkaXN0cmlidXRpb24vbW9kaWZpY2F0aW9uIHVuZGVyIDItY2xhdXNlIEJTREwgb3IgY29uZGl0aW9ucyBsaXN0ZWQ6IHZlcmJhdGltIGNvcGllcywgbW9kaWZpY2F0aW9uIHdpdGggY29uZGl0aW9ucywgYmluYXJ5IGRpc3RyaWJ1dGlvbiBjb25kaXRpb25zLCBldGMuIFdhcnJhbnR5IGRpc2NsYWltZXIuIE5lZWQgbm90IG92ZXJkby4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2MjMsImNvbXBsZXRpb25fdG9rZW5zIjoyNjcsInRvdGFsX3Rva2VucyI6ODkwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTAwfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NjIzfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYTI2YTc5NTU5NDRkYzVjNjA0NDViZmY3N2ZhYzljOGUifQ==
+  recorded_at: Sun, 06 Sep 2026 22:17:21 GMT
 recorded_with: VCR 6.4.0

@@ -8,9 +8,9 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
   include_context 'with configured RubyLLM'
 
   let(:provider) { RubyLLM::Providers::Cohere.new(RubyLLM.config) }
-  let(:model) { RubyLLM.models.find('command-a-plus-05-2026') }
+  let(:model) { RubyLLM.models.find(model_for(:cohere, :vision)) }
   let(:protocol) { RubyLLM::Protocols::Cohere.new(provider, model) }
-  let(:reasoning_model) { RubyLLM.models.find('command-a-reasoning-08-2025') }
+  let(:reasoning_model) { RubyLLM.models.find(model_for(:cohere, :thinking)) }
 
   def render(messages, **options)
     protocol.send(
@@ -90,7 +90,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
     it 'sends thinking on models the registry does not list as reasoning models' do
       payload = protocol.send(
         :render_payload, [user('Hi')],
-        tools: {}, temperature: nil, model: RubyLLM.models.find('command-a-03-2025'),
+        tools: {}, temperature: nil, model: RubyLLM.models.find(model_for(:cohere)),
         thinking: RubyLLM::Thinking::Config.new(budget: 500)
       )
 

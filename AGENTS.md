@@ -96,6 +96,7 @@ When you find provider vocabulary in the wrong layer, move it and add the rule t
 - Re-record cassettes with `rake vcr:record[openai,anthropic]` or `rake vcr:record[all]` (needs real API keys in `.env`). Check cassettes for leaked keys before committing. `bin/gitleaks-staged` runs in the pre-commit hook and CI runs gitleaks again.
 - Protocol chat modules use `module_function`. To unit-test a render or parse method, extend the module (plus `Tools` and `Media` when the method needs them) onto a bare Object, the way the existing protocol specs do.
 - `spec/support/models_to_test.rb` defines the provider and model matrix the live specs iterate over.
+- Select models with `model_for(:openai)` or a named purpose such as `model_for(:openai, :temperature)` from that file. Keep literal IDs only when the exact name is the behavior under test, such as aliases, catalog matching, or wire fixtures.
 - Changed a wire request? Re-record the cassette. Changed a parsed value? Update the protocol spec, not the domain spec.
 
 ## Code style

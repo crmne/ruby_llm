@@ -83,9 +83,9 @@ RSpec.describe RubyLLM::Batch do
 
     describe '#single_batch_model!' do
       it 'returns the one model the requests share' do
-        requests = [{ model: 'claude-haiku-4-5' }, { model: 'claude-haiku-4-5' }]
+        requests = [{ model: model_for(:anthropic) }, { model: model_for(:anthropic) }]
 
-        expect(helpers.single_batch_model!(requests, 'anthropic')).to eq('claude-haiku-4-5')
+        expect(helpers.single_batch_model!(requests, 'anthropic')).to eq(model_for(:anthropic))
       end
 
       it 'refuses a batch that mixes models' do
@@ -165,7 +165,7 @@ RSpec.describe RubyLLM::Batch do
 
   describe '#messages' do
     it 'delivers an answer once even when the chat stages another question' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5').ask_later('First question')
+      chat = RubyLLM.chat(model: model_for(:anthropic)).ask_later('First question')
       provider = chat.provider
       answer = RubyLLM::Message.new(role: :assistant, content: 'First answer', input_tokens: 1, output_tokens: 1)
       allow(provider).to receive(:batch_results).and_return([[0, answer]])

@@ -13,8 +13,8 @@ end
 
 RSpec.describe RubyLLM::Chat, :live do
   describe '#count_tokens' do
-    context 'with anthropic/claude-haiku-4-5' do
-      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic) }
+    context "with anthropic/#{model_for(:anthropic)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic) }
 
       it 'counts a staged message without mutating the chat' do
         count = chat.count_tokens('What is the capital of France?')
@@ -40,8 +40,8 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with gemini/gemini-3.5-flash' do
-      let(:chat) { RubyLLM.chat(model: 'gemini-3.5-flash', provider: :gemini) }
+    context "with gemini/#{model_for(:gemini, :server_tools)}" do
+      let(:chat) { RubyLLM.chat(model: model_for(:gemini, :server_tools), provider: :gemini) }
 
       it 'counts a staged message without mutating the chat' do
         count = chat.count_tokens('What is the capital of France?')
@@ -61,9 +61,9 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context 'with vertexai/gemini-2.5-flash' do
+    context "with vertexai/#{model_for(:vertexai)}" do
       it 'counts a staged message' do
-        chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :vertexai)
+        chat = RubyLLM.chat(model: model_for(:vertexai), provider: :vertexai)
 
         expect(chat.count_tokens('What is the capital of France?')).to be_positive
       end
@@ -71,7 +71,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     context 'with a provider without token counting' do
       it 'raises a clear error' do
-        chat = RubyLLM.chat(model: 'gpt-5-nano', provider: :openai)
+        chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
 
         expect { chat.count_tokens('Hello') }
           .to raise_error(RubyLLM::Error, /doesn't support token counting/)
@@ -81,7 +81,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'RubyLLM.count_tokens' do
     it 'counts one user message' do
-      count = RubyLLM.count_tokens('What is the capital of France?', model: 'claude-haiku-4-5')
+      count = RubyLLM.count_tokens('What is the capital of France?', model: model_for(:anthropic))
 
       expect(count).to be_a(Integer)
       expect(count).to be_positive

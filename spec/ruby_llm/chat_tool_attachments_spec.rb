@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Chat do
   let(:tool_call) { RubyLLM::ToolCall.new(id: 'call_1', name: 'drive_search', arguments: {}) }
 
   describe 'tool results with attachments' do
-    let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: 'anthropic') }
+    let(:chat) { RubyLLM.chat(model: model_for(:anthropic), provider: 'anthropic') }
 
     def tool_message_for(result)
       chat.send(:add_tool_result_message, tool_call, result)
@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'renders Anthropic tool_result blocks with text and image' do
-      chat = chat_with_tool_attachment('claude-haiku-4-5', 'anthropic')
+      chat = chat_with_tool_attachment(model_for(:anthropic), 'anthropic')
 
       tool_result = chat.render[:messages].last[:content].first
       expect(tool_result[:type]).to eq('tool_result')
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'renders Converse toolResult blocks with text and image' do
-      chat = chat_with_tool_attachment('claude-haiku-4-5', 'bedrock')
+      chat = chat_with_tool_attachment(model_for(:bedrock, :structured_output), 'bedrock')
 
       tool_result = chat.render[:messages].last[:content].first[:toolResult]
       expect(tool_result[:content].first).to eq({ text: 'Found it' })
@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'renders Gemini media parts alongside the function response before Gemini 3' do
-      chat = chat_with_tool_attachment('gemini-2.5-flash', 'gemini')
+      chat = chat_with_tool_attachment(model_for(:gemini), 'gemini')
 
       parts = chat.render[:contents].last[:parts]
       expect(parts.first).to have_key(:functionResponse)
@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'renders Gemini 3 media inside functionResponse.parts' do
-      chat = chat_with_tool_attachment('gemini-3-flash-preview', 'gemini')
+      chat = chat_with_tool_attachment(model_for(:gemini, :structured_output), 'gemini')
 
       parts = chat.render[:contents].last[:parts]
       expect(parts.length).to eq(1)
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'splices a user item after Responses API tool results' do
-      chat = chat_with_tool_attachment('gpt-5-nano', 'openai')
+      chat = chat_with_tool_attachment(model_for(:openai), 'openai')
 
       input = chat.render[:input]
       followup = input[input.index { |item| item[:type] == 'function_call_output' } + 1]
@@ -110,7 +110,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'splices a user message after Chat Completions tool results' do
-      chat = chat_with_tool_attachment('gpt-5-nano', 'openai', protocol: :chat_completions)
+      chat = chat_with_tool_attachment(model_for(:openai), 'openai', protocol: :chat_completions)
 
       messages = chat.render[:messages]
       tool_message = messages.find { |message| message[:role] == 'tool' }
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'keeps parallel Chat Completions tool results consecutive' do
       second_call = RubyLLM::ToolCall.new(id: 'call_2', name: 'drive_search', arguments: {})
-      chat = chat_with_tool_attachment('gpt-5-nano', 'openai', protocol: :chat_completions)
+      chat = chat_with_tool_attachment(model_for(:openai), 'openai', protocol: :chat_completions)
       chat.messages[1] = RubyLLM::Message.new(role: :assistant, content: nil,
                                               tool_calls: { 'call_1' => tool_call, 'call_2' => second_call })
       chat.messages << RubyLLM::Message.new(role: :tool, content: 'Found it too', tool_call_id: 'call_2')
@@ -132,13 +132,13 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'raises for file types a provider cannot take' do
-      chat = chat_with_tool_attachment('deepseek-chat', 'deepseek')
+      chat = chat_with_tool_attachment(model_for(:deepseek), 'deepseek')
 
       expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
     it 'raises for tool PDFs on providers without document support' do
-      chat = chat_with_tool_attachment('grok-4-1-fast-non-reasoning', 'xai',
+      chat = chat_with_tool_attachment(model_for(:xai), 'xai',
                                        protocol: :chat_completions,
                                        attachment: File.expand_path('../fixtures/sample.pdf', __dir__))
 

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat do
-  subject(:chat) { RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai) }
+  subject(:chat) { RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai) }
 
   include_context 'with configured RubyLLM'
 

@@ -5,14 +5,14 @@ http_interactions:
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Call
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Call
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
         tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 08 Jun 2026 18:50:12 GMT
+      - Sun, 06 Sep 2026 22:17:32 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - ebc0e0fc4ca45c74860dd850dd4ba509
+      - f2f287be641348f5cbb8f6567521ee83
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,14 +49,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 a72eb0202062d45d797eac17e7ad6660.cloudfront.net (CloudFront)
+      - 1.1 9d82637a2d5a2030baf2d4c024ad4c56.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - aUUutqBgS7t2zx7G2ABdXhMrV4mxmfMgYMlLVLR0-slSW-_5siYKWg==
+      - eM2s6mM4IvLruAos-S4Cu1C4sHIM8ln3LdOVReTscWDHBeFGxzh1kQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3600263f-4059-476a-9988-f57d40c1e97d","object":"chat.completion","created":1780944612,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_qqFO2kPoRsCKj1gErJfK8460","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":321,"completion_tokens":48,"total_tokens":369,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":321},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Mon, 08 Jun 2026 18:50:13 GMT
+      string: '{"id":"3d2f20bc-62b0-4574-a241-79fb53bf437b","object":"chat.completion","created":1788733052,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the array_params tool with tags [\"red\",\"blue\"].
+        Let me do that.","tool_calls":[{"index":0,"id":"call_00_9V9HFgnCD17pgTRbxAov1633","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":395,"completion_tokens":71,"total_tokens":466,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":22},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":139},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Sun, 06 Sep 2026 22:17:33 GMT
 recorded_with: VCR 6.4.0

@@ -34,7 +34,7 @@ RSpec.describe RubyLLM::Image, :live do
   end
 
   def model
-    'gpt-image-1.5'
+    model_for(:openai, :image_count)
   end
 
   def invalid_content_type_url
@@ -111,8 +111,8 @@ RSpec.describe RubyLLM::Image, :live do
       end
     end
 
-    it 'openai/gpt-image-1.5 paints several images in one request' do
-      images = RubyLLM.paint('a siamese cat', model: 'gpt-image-1.5', provider: :openai, count: 2)
+    it "openai/#{model_for(:openai, :image_count)} paints several images in one request" do
+      images = RubyLLM.paint('a siamese cat', model: model_for(:openai, :image_count), provider: :openai, count: 2)
 
       expect(images.length).to eq(2)
       expect(images.map(&:mime_type)).to all(include('image'))
@@ -173,9 +173,9 @@ RSpec.describe RubyLLM::Image, :live do
     end
 
     context 'with openrouter reference images' do
-      it 'openrouter/google/gemini-3.1-flash-lite-image edits images passed via with:' do
+      it "openrouter/#{model_for(:openrouter, :image)} edits images passed via with:" do
         image = RubyLLM.paint(prompt, with: image_path,
-                                      model: 'google/gemini-3.1-flash-lite-image', provider: :openrouter)
+                                      model: model_for(:openrouter, :image), provider: :openrouter)
 
         expect(image.base64?).to be(true)
         expect(image.mime_type).to include('image')
@@ -205,33 +205,33 @@ RSpec.describe RubyLLM::Image, :live do
         image = RubyLLM.paint(
           prompt,
           with: image_path,
-          model: 'gpt-image-2',
+          model: model_for(:openai, :image_quality),
           size: '1536x864',
           provider_options: { quality: 'low' }
         )
 
         expect(image.base64?).to be(true)
         expect(image.mime_type).to eq('image/png')
-        expect(image.model).to eq('gpt-image-2')
+        expect(image.model).to eq(model_for(:openai, :image_quality))
         expect(image.to_blob.bytesize).to be_positive
       end
     end
 
     context 'with xAI reference images' do
-      it 'xai/grok-imagine-image-quality supports image edits with reference images' do
-        image = RubyLLM.paint(prompt, model: 'grok-imagine-image-quality', provider: :xai,
+      it "xai/#{model_for(:xai, :image_quality)} supports image edits with reference images" do
+        image = RubyLLM.paint(prompt, model: model_for(:xai, :image_quality), provider: :xai,
                                       with: [image_path, image_path])
 
         expect(image.url).to be_present
         expect(image.mime_type).to include('image')
-        expect(image.model).to eq('grok-imagine-image-quality')
+        expect(image.model).to eq(model_for(:xai, :image_quality))
 
         save_and_verify_image image
       end
 
-      it 'xai/grok-imagine-image-quality rejects masks' do
+      it "xai/#{model_for(:xai, :image_quality)} rejects masks" do
         expect do
-          RubyLLM.paint(prompt, model: 'grok-imagine-image-quality', provider: :xai,
+          RubyLLM.paint(prompt, model: model_for(:xai, :image_quality), provider: :xai,
                                 with: image_path, mask: image_path)
         end.to raise_error(RubyLLM::Error, /mask/)
       end

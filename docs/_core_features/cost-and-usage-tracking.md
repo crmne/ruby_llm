@@ -115,7 +115,7 @@ RubyLLM.count_tokens("What is the capital of France?", model: "claude-haiku-4-5"
 This is the provider's own tokenizer over the real payload, not an estimate, which is why it needs a provider that offers a counting endpoint. Anthropic, Bedrock, Gemini, and Vertex AI do. The rest raise rather than guess:
 
 ```ruby
-RubyLLM.chat(model: "deepseek-chat").count_tokens("hi")
+RubyLLM.chat(model: "deepseek-v4-flash").count_tokens("hi")
 # => RubyLLM::Error: DeepSeek doesn't support token counting
 ```
 

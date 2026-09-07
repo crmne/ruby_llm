@@ -5,15 +5,15 @@ http_interactions:
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Call
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Call
         the object params tool with window start 2025-01-01 and end 2025-01-02 and
         include the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
         params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
+        window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 08 Jun 2026 18:50:38 GMT
+      - Sun, 06 Sep 2026 22:17:34 GMT
       Server:
       - elb
       Vary:
@@ -42,7 +42,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - d2900c91ac1633e445af82e3106ccbce
+      - d9a3947f25d26db2fc2a258b5625fb03
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -50,14 +50,17 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 4786bcd6a5ee692459814ef0ab252684.cloudfront.net (CloudFront)
+      - 1.1 bb92de268faffca30736fdf13993c5e0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P4
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - doyttzhWL1sab6UB8gEFyjQi_sTwTEu9C-R39G0rS4ApUy4NqJQYIA==
+      - _E2I84TUTLayc-AquY70AMZjvRwtlTAaIfYVmFklmxOGBHdRdbm1Kw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"cdac517b-72a5-4677-b988-f93eacc20452","object":"chat.completion","created":1780944638,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_0z5IgAdXCHgofOH2YhkM4018","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":371,"completion_tokens":64,"total_tokens":435,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":371},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Mon, 08 Jun 2026 18:50:40 GMT
+      string: '{"id":"e0de4c26-2668-4e50-ac6c-b17046d64344","object":"chat.completion","created":1788733054,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the object params tool with the specified time window.","reasoning_content":"The
+        user wants me to call the object_params tool with a window object containing
+        start and end dates.","tool_calls":[{"index":0,"id":"call_00_O0FkX1Es0lRAiAbPd2gj5497","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":445,"completion_tokens":97,"total_tokens":542,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":20},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":189},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Sun, 06 Sep 2026 22:17:35 GMT
 recorded_with: VCR 6.4.0

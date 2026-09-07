@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Chat do
 
   it 'runs additive message callbacks in order' do
     calls = []
-    chat = described_class.new(model: 'gpt-4.1-nano')
+    chat = described_class.new(model: model_for(:openai, :temperature))
     stub_completion(chat, RubyLLM::Message.new(role: :assistant, content: 'done'))
 
     chat.before_message { calls << :before_one }
@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::Chat do
       tool_calls: { 'call_1' => tool_call }
     )
     final_message = RubyLLM::Message.new(role: :assistant, content: 'complete')
-    chat = described_class.new(model: 'gpt-4.1-nano').with_tools(CallbackProbeTool)
+    chat = described_class.new(model: model_for(:openai, :temperature)).with_tools(CallbackProbeTool)
     stub_completion(chat, tool_message, final_message)
 
     chat.before_tool_call { |call| calls << [:before_tool_call, call.name] }

@@ -44,14 +44,14 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
     tracker = RubyLLM.const_get(:Usage)::Tracker.new(
       operation: :chat,
       provider: provider,
-      model: RubyLLM.models.find('gpt-4.1-nano'),
+      model: RubyLLM.models.find(model_for(:openai, :temperature)),
       config: RubyLLM.config
     )
     refused = tracker.start
     response = Struct.new(:status, :body).new(429, '')
     tracker.fail_attempt(refused, RubyLLM::RateLimitError.new('rate limit exceeded', response: response))
     tracker.start
-    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: 'gpt-4.1-nano',
+    result = RubyLLM::Message.new(role: :assistant, content: 'hi', model: model_for(:openai, :temperature),
                                   input_tokens: 10, output_tokens: 4)
 
     tracker.succeed(result)
@@ -63,7 +63,7 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
     tracker = RubyLLM.const_get(:Usage)::Tracker.new(
       operation: :chat,
       provider: provider,
-      model: RubyLLM.models.find('gpt-4.1-nano'),
+      model: RubyLLM.models.find(model_for(:openai, :temperature)),
       config: RubyLLM.config
     )
     entry = tracker.start
@@ -95,7 +95,7 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
       cost: RubyLLM::Cost.from_h({ total: 0.0042 })
     )
     message = RubyLLM::Message.new(role: :assistant, content: 'hi', usage_entries: [entry])
-    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
     chat.usage_entries = [entry]
 
     expect(entry).to be_cost_available
@@ -117,7 +117,7 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
       model: 'test-model',
       status: :failed
     )
-    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
     chat.usage_entries = [known, unknown]
 
     expect(chat.cost.total).to be_nil
@@ -144,10 +144,12 @@ RSpec.describe 'RubyLLM::Usage::Tracker' do
   end
 
   it 'summarizes an entry for inspection' do
-    entry = RubyLLM.const_get(:Usage)::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-4.1-nano')
+    entry = RubyLLM.const_get(:Usage)::Entry.new(operation: :chat, provider: 'openai',
+                                                 model: model_for(:openai, :temperature))
 
-    expect(entry.inspect).to include('chat', 'openai', 'gpt-4.1-nano', 'pending')
-    expect(entry.to_h).to include(operation: :chat, provider: 'openai', model: 'gpt-4.1-nano', status: :pending)
+    expect(entry.inspect).to include('chat', 'openai', model_for(:openai, :temperature), 'pending')
+    expect(entry.to_h).to include(operation: :chat, provider: 'openai', model: model_for(:openai, :temperature),
+                                  status: :pending)
   end
 
   it 'records a cancelled attempt as cancelled' do

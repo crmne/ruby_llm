@@ -14,26 +14,26 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#with_end_user' do
     it 'returns self and remembers the identifier' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai)
 
       expect(chat.with_end_user('user-123')).to be(chat)
       expect(chat.end_user).to eq('user-123')
     end
 
     it 'aliases with_end_user' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).with_end_user('user-123')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai).with_end_user('user-123')
 
       expect(chat.end_user).to eq('user-123')
     end
 
     it 'clears the identifier when given nil' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).with_end_user('user-123')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai).with_end_user('user-123')
 
       expect(chat.with_end_user(nil).end_user).to be_nil
     end
 
     it 'sends nothing when no identifier is set' do
-      payload = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).ask_later('Hello').render
+      payload = RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai).ask_later('Hello').render
 
       expect(payload).not_to have_key(:safety_identifier)
     end
@@ -41,43 +41,44 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'provider mapping' do
     it 'maps to safety_identifier on the OpenAI Responses API' do
-      payload = render_with_identifier(model: 'gpt-4.1-nano', provider: :openai, protocol: :responses)
+      payload = render_with_identifier(model: model_for(:openai, :temperature), provider: :openai, protocol: :responses)
 
       expect(payload[:safety_identifier]).to eq('user-123')
     end
 
     it 'maps to safety_identifier on OpenAI Chat Completions' do
-      payload = render_with_identifier(model: 'gpt-4.1-nano', provider: :openai, protocol: :chat_completions)
+      payload = render_with_identifier(model: model_for(:openai, :temperature), provider: :openai,
+                                       protocol: :chat_completions)
 
       expect(payload[:safety_identifier]).to eq('user-123')
     end
 
     it 'maps to metadata.user_id on Anthropic' do
-      payload = render_with_identifier(model: 'claude-haiku-4-5', provider: :anthropic)
+      payload = render_with_identifier(model: model_for(:anthropic), provider: :anthropic)
 
       expect(payload.dig(:metadata, :user_id)).to eq('user-123')
     end
 
     it 'maps to user_id on DeepSeek' do
-      payload = render_with_identifier(model: 'deepseek-chat', provider: :deepseek)
+      payload = render_with_identifier(model: model_for(:deepseek), provider: :deepseek)
 
       expect(payload[:user_id]).to eq('user-123')
     end
 
     it 'maps to user on OpenRouter' do
-      payload = render_with_identifier(model: 'claude-haiku-4-5', provider: :openrouter)
+      payload = render_with_identifier(model: model_for(:openrouter), provider: :openrouter)
 
       expect(payload[:user]).to eq('user-123')
     end
 
     it 'drops the identifier for providers without an equivalent field' do
-      payload = render_with_identifier(model: 'gemini-2.5-flash', provider: :gemini)
+      payload = render_with_identifier(model: model_for(:gemini), provider: :gemini)
 
       expect(payload.to_s).not_to include('user-123')
     end
 
     it 'lets provider options override the mapped value' do
-      payload = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
+      payload = RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai)
                        .with_end_user('user-123')
                        .with_provider_options(safety_identifier: 'override')
                        .ask_later('Hello')

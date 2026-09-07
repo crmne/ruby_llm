@@ -90,7 +90,7 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'responses without a completion message' do
-    let(:chat) { RubyLLM.chat(model: 'deepseek-chat', provider: :deepseek) }
+    let(:chat) { RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek) }
 
     it 'raises a RubyLLM::Error instead of an obscure NoMethodError' do
       stub_request(:post, 'https://api.deepseek.com/chat/completions').to_return(
