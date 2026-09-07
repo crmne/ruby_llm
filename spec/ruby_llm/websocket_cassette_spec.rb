@@ -81,4 +81,15 @@ RSpec.describe WebsocketCassette do
       } }
     )
   end
+
+  it 'normalizes Google project names while preserving the requested location and model' do
+    model = model_for(:vertexai, :live_transcription)
+    resource = "projects/recording-project/locations/global/publishers/google/models/#{model}"
+    value = { 'setup' => { 'model' => resource }, 'model' => model }
+
+    expect(described_class.sanitize(value)).to eq(
+      'setup' => { 'model' => "projects/[FILTERED]/locations/global/publishers/google/models/#{model}" },
+      'model' => model
+    )
+  end
 end

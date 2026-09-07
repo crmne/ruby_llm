@@ -33,6 +33,8 @@ module RealtimeCredentials
     case key
     when CREDENTIAL then '[FILTERED]'
     when 'signed_url' then sanitize_url(value)
+    when 'model'
+      value.is_a?(String) ? value.sub(%r{\Aprojects/[^/]+/}, 'projects/[FILTERED]/') : value
     when 'audio_base_64', 'user_audio_chunk'
       redact_audio ? { 'sha256' => Digest::SHA256.hexdigest(Base64.strict_decode64(value)) } : value
     else sanitize(value, redact_audio:)

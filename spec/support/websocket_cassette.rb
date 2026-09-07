@@ -51,7 +51,7 @@ module WebsocketCassette
     path = File.expand_path("../fixtures/websocket_cassettes/#{name}.json", __dir__)
     recording = !File.exist?(path)
     ensure_websocket_recording_allowed(path, key) if recording
-    fixture = recording ? {} : JSON.parse(File.read(path))
+    fixture = recording ? {} : RealtimeCredentials.sanitize(JSON.parse(File.read(path)))
     stub_websocket_cassette(fixture, recording:)
 
     yield
