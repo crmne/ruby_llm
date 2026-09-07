@@ -111,7 +111,9 @@ RSpec.describe 'Release workflow', type: :task do
       'RELEASE_PRERELEASE' => prerelease.to_s,
       'GITHUB_OUTPUT' => File.join(directory, 'outputs')
     )
-    Open3.capture3(environment, 'bash', '-c', validation.fetch('run'), chdir: directory)
+    Bundler.with_unbundled_env do
+      Open3.capture3(environment, 'bash', '-c', validation.fetch('run'), chdir: directory)
+    end
   end
 
   def git(*arguments)
