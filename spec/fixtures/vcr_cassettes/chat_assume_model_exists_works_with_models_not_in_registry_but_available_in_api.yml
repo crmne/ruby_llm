@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What is
-        2 + 2?"}],"stream":false,"store":false}'
+        2 + 2?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:18:34 GMT
+      - Mon, 07 Sep 2026 21:04:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,9 +48,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '488'
+      - '875'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -75,15 +75,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03b50af921c6661e016a2b181a08e081a2b5f6a3c0f84ecae5",
+          "id": "resp_0d13aa8b171b6134016a9f26eea4f087d2918218a1229b9131",
           "object": "response",
-          "created_at": 1781209114,
+          "created_at": 1788815086,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781209114,
+          "completed_at": 1788815087,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -94,7 +94,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_03b50af921c6661e016a2b181a530c81a2b1e4fea0a4934598",
+              "id": "msg_0d13aa8b171b6134016a9f26ef690087d2ba53cec36ad523fe",
               "type": "message",
               "status": "completed",
               "content": [
@@ -129,6 +129,24 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [],
           "top_logprobs": 0,
           "top_p": 1.0,
@@ -136,6 +154,7 @@ http_interactions:
           "usage": {
             "input_tokens": 15,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
             "output_tokens": 9,
@@ -147,5 +166,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:18:34 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:47 GMT
 recorded_with: VCR 6.4.0

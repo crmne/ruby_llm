@@ -17,9 +17,11 @@ module RubyLLM
         @config.openai_api_base || 'https://api.openai.com/v1'
       end
 
-      # Audio, realtime, and search-preview models only exist on Chat Completions.
+      # Audio, realtime, and dedicated search models only exist on Chat Completions.
       def protocol_for(model, **)
-        model.id.match?(/audio|realtime|search-preview/) ? protocols[:chat_completions] : super
+        return protocols[:chat_completions] if Capabilities::SEARCH_MODELS.include?(model.id)
+
+        model.id.match?(/audio|realtime/) ? protocols[:chat_completions] : super
       end
 
       def headers

@@ -23,43 +23,82 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 21:00:04 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - 8841e922-e7a8-40b2-ba06-ff885020d355
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-6a0785edc4db04d3cf18584b9404821c-0f0677c60004db02-00
+      - 00-55138ed60ff8863d2c3f8e458d1578ef-ab711dd500224cc6-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - a307969c-ac6c-4bbd-aee4-2d3aa34b19d1
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49963'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - a307969c-ac6c-4bbd-aee4-2d3aa34b19d1
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:28 GMT
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjhjZjJiNDczLTAzZTMtNDNlMy05MmM0LTU2ZjI4Y2IyNWMyYiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKk1hdHp1ZGEgWXVraWhpcm8qKiAoY29tbW9ubHkga25vd24gYXMgKipNYXR6KiopIGlzIHRoZSBjcmVhdG9yIG9mIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLlxuXG5IZSBkZXNpZ25lZCBSdWJ5IGluIHRoZSBtaWQtMTk5MHMsIGZpcnN0IHJlbGVhc2luZyBpdCBpbiAxOTk1LiBZdWtpaGlybyBNYXRzdW1vdG8sIGEgSmFwYW5lc2UgcHJvZ3JhbW1lciwgYWltZWQgdG8gY3JlYXRlIGEgbGFuZ3VhZ2UgdGhhdCBiYWxhbmNlZCBwcm9ncmFtbWVyIGhhcHBpbmVzcyBhbmQgcHJvZHVjdGl2aXR5LCBlbXBoYXNpemluZyBzaW1wbGljaXR5IGFuZCBmdW7igJRwcmluY2lwbGVzIHJlZmxlY3RlZCBpbiBSdWJ5J3Mgc3ludGF4IGFuZCBwaGlsb3NvcGh5IChlLmcuLCBcIlJ1YnkgbWFrZXMgZGV2ZWxvcGVycyBoYXBweVwiKS5cblxuIyMjIEtleSBGYWN0czpcbi0gKipGaXJzdCBSZWxlYXNlKio6IERlY2VtYmVyIDIxLCAxOTk1LlxuLSAqKk1ham9yIEluZmx1ZW5jZSoqOiBJbnNwaXJlZCBieSBQZXJsLCBTbWFsbHRhbGssIEVpZmZlbCwgQWRhLCBhbmQgTGlzcC5cbi0gKipDdXJyZW50IFN0YXR1cyoqOiBSdWJ5IGlzIG1haW50YWluZWQgYnkgdGhlIFJ1YnkgY29yZSB0ZWFtIHVuZGVyIE1hdHoncyBsZWFkZXJzaGlwLCB3aXRoIHRoZSBsYXRlc3Qgc3RhYmxlIHZlcnNpb24gYmVpbmcgUnVieSAzLjEueCAoYXMgb2YgMjAyMykuIEl0J3Mgd2lkZWx5IHVzZWQgZm9yIHdlYiBkZXZlbG9wbWVudCAoZS5nLiwgdmlhIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrIGNyZWF0ZWQgYnkgRGF2aWQgSGVpbmVtZWllciBIYW5zc29uKS5cblxuTWF0eiByZW1haW5zIGFjdGl2ZWx5IGludm9sdmVkLCBhcyBzZWVuIGluIGhpcyBibG9nIGFuZCBjb25mZXJlbmNlIHRhbGtzLiBGb3IgbW9yZSwgY2hlY2sgdGhlIG9mZmljaWFsIFJ1Ynkgc2l0ZSAocnVieS1sYW5nLm9yZykuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMCwiY29tcGxldGlvbl90b2tlbnMiOjIxMywidG90YWxfdG9rZW5zIjoyMjMsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjEsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjEwLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODcxNTAwNjYsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
-  recorded_at: Wed, 19 Aug 2026 14:34:28 GMT
+      encoding: UTF-8
+      string: '{"id":"48f04976-8469-4f59-a113-b1b7d1907b68","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuda
+        Yukihiro** (commonly known as **Matz**) created the Ruby programming language.\n\nHe
+        designed it in 1993 in Japan, first releasing it in 1995, with the goal of
+        making programming more enjoyable and object-oriented. Ruby''s syntax draws
+        from Perl, Smalltalk, Eiffel, and Lisp, and it''s the foundation for frameworks
+        like Ruby on Rails. You can verify this on the official Ruby site (ruby-lang.org)
+        or historical sources like the language''s Wikipedia page."},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"completion_tokens":101,"total_tokens":111,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":10,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814804,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 07 Sep 2026 21:00:05 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -67,19 +106,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
         is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuda
-        Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
-        language.\n\nHe designed Ruby in the mid-1990s, first releasing it in 1995.
-        Yukihiro Matsumoto, a Japanese programmer, aimed to create a language that
-        balanced programmer happiness and productivity, emphasizing simplicity and
-        fun—principles reflected in Ruby''s syntax and philosophy (e.g., \"Ruby makes
-        developers happy\").\n\n### Key Facts:\n- **First Release**: December 21,
-        1995.\n- **Major Influence**: Inspired by Perl, Smalltalk, Eiffel, Ada, and
-        Lisp.\n- **Current Status**: Ruby is maintained by the Ruby core team under
-        Matz''s leadership, with the latest stable version being Ruby 3.1.x (as of
-        2023). It''s widely used for web development (e.g., via Ruby on Rails framework
-        created by David Heinemeier Hansson).\n\nMatz remains actively involved, as
-        seen in his blog and conference talks. For more, check the official Ruby site
-        (ruby-lang.org)."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+        Yukihiro** (commonly known as **Matz**) created the Ruby programming language.\n\nHe
+        designed it in 1993 in Japan, first releasing it in 1995, with the goal of
+        making programming more enjoyable and object-oriented. Ruby''s syntax draws
+        from Perl, Smalltalk, Eiffel, and Lisp, and it''s the foundation for frameworks
+        like Ruby on Rails. You can verify this on the official Ruby site (ruby-lang.org)
+        or historical sources like the language''s Wikipedia page."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -96,43 +129,75 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 21:00:06 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - cbd310cd-fbdd-411d-acf3-5b2c6c978155
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-b5ab239cf7387e84b7059e48c0788653-c990d761000309e1-00
+      - 00-87f86f7f9c987b9c49526cac38fe4a89-39481c5a00018e79-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 9915053a-6173-49fd-9b1c-5d6773a15f13
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49825'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 9915053a-6173-49fd-9b1c-5d6773a15f13
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:29 GMT
     body:
-      encoding: UTF-8
-      string: '{"id":"a459d65f-7b19-4fb3-9d71-5d1a758c71f4","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**1995**\n\nYukihiro
-        \"Matz\" Matsumoto created Ruby with its first public release on **December
-        21, 1995**. Development began earlier in the mid-1990s, but 1995 marks the
-        official debut of Ruby version 0.95."},"finish_reason":"stop"}],"usage":{"prompt_tokens":241,"completion_tokens":56,"total_tokens":297,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":178,"audio_tokens":0,"text_tokens":241,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150069,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:34:30 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjMyZDU0NWFjLTZiYTQtNDQ5ZS1iZWZjLTkwMTk4MmY2MjU1NCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKjE5OTMqKiDigJMgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KSBiZWdhbiBkZXZlbG9waW5nIFJ1YnkgaW4gMTk5Mywgd2l0aCB0aGUgZmlyc3QgcHVibGljIHJlbGVhc2Ugb2NjdXJyaW5nIG9uICoqRGVjZW1iZXIgMjEsIDE5OTUqKi5cblxuVGhpcyB0aW1lbGluZSBpcyBjb25maXJtZWQgaW4gTWF0eidzIG93biB3cml0aW5ncywgUnVieSdzIG9mZmljaWFsIGhpc3RvcnksIGFuZCBkb2N1bWVudGF0aW9uIGxpa2UgdGhlIFJ1YnkgMS4wIGFubm91bmNlbWVudC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEyOSwiY29tcGxldGlvbl90b2tlbnMiOjYzLCJ0b3RhbF90b2tlbnMiOjE5MiwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE3OCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MTI5LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODg4MTQ4MDYsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Mon, 07 Sep 2026 21:00:07 GMT
 recorded_with: VCR 6.4.0

@@ -29,32 +29,39 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '749'
+      - '704'
       Date:
-      - Thu, 13 Aug 2026 10:09:27 GMT
+      - Mon, 07 Sep 2026 20:52:58 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-ebf0b75109a6ea79445164ce70b00916-e7484d0abd3b5743-00
       X-Cloud-Trace-Context:
-      - ebf0b75109a6ea79445164ce70b00916/16665655129604314947
+      - 394c893e319d72bf1f43fe0995ee43a7/11397235123516124059
+      Traceparent:
+      - 00-394c893e319d72bf1f43fe0995ee43a7-9e2b1cf5aec8ab9b-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTI1MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODY2MTU3NjcsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgZmlsZSAqKnJ1YnkudHh0KiogKGEgcGxhaW7igJF0ZXh0IGZpbGUpIGNvbnRhaW5zIHRoZSBmb2xsb3dpbmcgbGluZTpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0LlxuYGBgIiwicmVhc29uaW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaGF0J3MgaW4gdGhpcyBmaWxlP1wiIGFuZCBpbmNsdWRlcyBhIGZpbGUgd2l0aCBuYW1lIHJ1YnkudHh0IGNvbnRlbnQgXCJSdWJ5IGlzIHRoZSBiZXN0LlwiXG5cbldlIG5lZWQgdG8gcmVzcG9uZCBzaG93aW5nIHRoZSBmaWxlIGNvbnRlbnQuIFByb2JhYmx5IGp1c3QgcXVvdGluZy4gQXMgd2UgY2Fubm90IG9wZW4gZmlsZXMgZGlyZWN0bHkgYnV0IHRoZSBjb250ZW50IGlzIHByb3ZpZGVkLiBTbyBhbnN3ZXI6IFRoZSBmaWxlIGNvbnRhaW5zIHRoZSB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdC5cIiBQb3NzaWJseSBtZW50aW9uIHRoZSBmaWxlIG5hbWUgYW5kIHR5cGUuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5MiwiY29tcGxldGlvbl90b2tlbnMiOjEwOCwidG90YWxfdG9rZW5zIjoyMDB9fQo=
-  recorded_at: Thu, 13 Aug 2026 10:09:27 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-352","object":"chat.completion","created":1788814378,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file **ruby.txt** contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
+        user provides a file \"ruby.txt\" with content \"Ruby is the best.\" Then
+        asks \"What''s in this file?\" We should output the contents of the file.
+        According to policy, we can provide the text. It''s okay. Provide the content.
+        Possibly also mention that the file contains \"Ruby is the best.\" Ensure
+        not to add extra."},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":99,"total_tokens":191}}
+
+        '
+  recorded_at: Mon, 07 Sep 2026 20:52:58 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -63,18 +70,18 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file **ruby.txt**
-        (a plain‑text file) contains the following line:\n\n```\nRuby is the best.\n```","reasoning":"The
-        user asks: \"What''s in this file?\" and includes a file with name ruby.txt
-        content \"Ruby is the best.\"\n\nWe need to respond showing the file content.
-        Probably just quoting. As we cannot open files directly but the content is
-        provided. So answer: The file contains the text \"Ruby is the best.\" Possibly
-        mention the file name and type.","reasoning_content":"The user asks: \"What''s
-        in this file?\" and includes a file with name ruby.txt content \"Ruby is the
-        best.\"\n\nWe need to respond showing the file content. Probably just quoting.
-        As we cannot open files directly but the content is provided. So answer: The
-        file contains the text \"Ruby is the best.\" Possibly mention the file name
-        and type."},{"role":"user","content":[{"type":"text","text":"and in this one?"},{"type":"text","text":"<file
-        name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby is the best</truism></file>"}]}],"stream":false}'
+        contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
+        user provides a file \"ruby.txt\" with content \"Ruby is the best.\" Then
+        asks \"What''s in this file?\" We should output the contents of the file.
+        According to policy, we can provide the text. It''s okay. Provide the content.
+        Possibly also mention that the file contains \"Ruby is the best.\" Ensure
+        not to add extra.","reasoning_content":"The user provides a file \"ruby.txt\"
+        with content \"Ruby is the best.\" Then asks \"What''s in this file?\" We
+        should output the contents of the file. According to policy, we can provide
+        the text. It''s okay. Provide the content. Possibly also mention that the
+        file contains \"Ruby is the best.\" Ensure not to add extra."},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -96,34 +103,35 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '473'
+      - '563'
       Date:
-      - Thu, 13 Aug 2026 10:09:29 GMT
+      - Mon, 07 Sep 2026 20:52:59 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-222f3840b3e8ab10dd4222db5b1f2c08-fe86f2dd84e1164c-00
+      - 00-096723921314e66200098700bb3fc163-c0fa1ec05006f615-00
       X-Cloud-Trace-Context:
-      - 222f3840b3e8ab10dd4222db5b1f2c08/18340613565743961676
+      - '096723921314e66200098700bb3fc163/13905460610785015317'
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-239","object":"chat.completion","created":1786615769,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file **ruby.xml** (an XML document) contains:\n\n```xml\n\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\n```","reasoning":"User asks what''s inside
-        the file. Provide content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":159,"completion_tokens":49,"total_tokens":208}}
+      string: '{"id":"chatcmpl-484","object":"chat.completion","created":1788814379,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        **ruby.xml** file contains this XML markup:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```","reasoning":"User asks what is in file
+        ruby.xml; content is an XML snippet: \u003ctruism\u003eRuby is the best\u003c/truism\u003e.
+        So respond with content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":152,"completion_tokens":69,"total_tokens":221}}
 
         '
-  recorded_at: Thu, 13 Aug 2026 10:09:29 GMT
+  recorded_at: Mon, 07 Sep 2026 20:52:59 GMT
 recorded_with: VCR 6.4.0

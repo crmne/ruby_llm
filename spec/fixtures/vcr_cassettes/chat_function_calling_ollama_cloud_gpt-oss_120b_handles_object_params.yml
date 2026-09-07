@@ -32,35 +32,36 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - dfd88388a9119aa961fcc4191eeda58e15bc9344
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-18T23:03:55-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '816'
+      - '852'
       Date:
-      - Wed, 19 Aug 2026 14:51:59 GMT
+      - Mon, 07 Sep 2026 20:59:08 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - e1dbac69c0db0316f28ed44c42d7b953/15961884126657180940
+      - e1ab54964ca434f41f234bd4dfc73763/7033746806786984128
       Traceparent:
-      - 00-e1dbac69c0db0316f28ed44c42d7b953-dd84010b2358f50c-00
+      - 00-e1ab54964ca434f41f234bd4dfc73763-619ce374529388c0-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-186","object":"chat.completion","created":1787151119,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to \"Call the object params tool with window start 2025-01-01 and
-        end 2025-01-02 and include the result.\"\n\nWe have a function \"object_params\"
-        that takes a window dict. We need to call it with window: {start: \"2025-01-01\",
-        end: \"2025-01-02\"}.\n\nWe then include the result. So need to call the function.","tool_calls":[{"id":"call_a2qehi7v","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":143,"total_tokens":302}}
+      string: '{"id":"chatcmpl-901","object":"chat.completion","created":1788814748,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to call the object_params tool with a window that has start and
+        end dates. The tool signature: functions.object_params takes an object with
+        property window: Record\u003cstring, any\u003e. So we need to call functions.object_params
+        with param window: { start: \"2025-01-01\", end: \"2025-01-02\" }. Then include
+        the result. We''ll call the function.","tool_calls":[{"id":"call_opnybfcd","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":134,"total_tokens":293}}
 
         '
-  recorded_at: Wed, 19 Aug 2026 14:51:59 GMT
+  recorded_at: Mon, 07 Sep 2026 20:59:08 GMT
 recorded_with: VCR 6.4.0

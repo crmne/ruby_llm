@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Call the array
         params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true},"strict":false}]}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 22:31:24 GMT
+      - Mon, 07 Sep 2026 21:01:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,8 +45,9 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=LG9uXV_KEha39hOwoZJc7H3Gu1wBrLy0i8Y_h7VTdzQ-1788814890.3588846-1.0.1.1-hosNz8KkRkI2LDZGIKfC1TKId5.SzWjcAACOmy0_E3TGPuut_yYcIqkRF8NDnEEI3v8WA3PgSZL0oXhfkO9fZXJGsMRtESltAuv8YrTFpLdgHUhzfm1WTtiPyzCtN.nqQCt3HsEBmQrhizKV_QRIz1V1Z5usSG1ukMWsxhb39wM;
+        report-to cf-csp-endpoint
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -54,29 +55,33 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '586.7'
-      X-Metrics-Mean-Itl-Ms:
-      - '9.9'
+      - '351.1'
       X-Metrics-E2e-Ms:
-      - '3912.4'
+      - '3422.5'
       Traceparent:
-      - 00-0accbcc42538dd3da6ee3611cebb37fe-1bd4996e0000371b-01
+      - 00-6aab21a8496ed1562cbd7188746564fa-f021a273000016da-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=LG9uXV_KEha39hOwoZJc7H3Gu1wBrLy0i8Y_h7VTdzQ-1788814890.3588846-1.0.1.1-hosNz8KkRkI2LDZGIKfC1TKId5.SzWjcAACOmy0_E3TGPuut_yYcIqkRF8NDnEEI3v8WA3PgSZL0oXhfkO9fZXJGsMRtESltAuv8YrTFpLdgHUhzfm1WTtiPyzCtN.nqQCt3HsEBmQrhizKV_QRIz1V1Z5usSG1ukMWsxhb39wM"}]}'
+      Reporting-Endpoints:
+      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=LG9uXV_KEha39hOwoZJc7H3Gu1wBrLy0i8Y_h7VTdzQ-1788814890.3588846-1.0.1.1-hosNz8KkRkI2LDZGIKfC1TKId5.SzWjcAACOmy0_E3TGPuut_yYcIqkRF8NDnEEI3v8WA3PgSZL0oXhfkO9fZXJGsMRtESltAuv8YrTFpLdgHUhzfm1WTtiPyzCtN.nqQCt3HsEBmQrhizKV_QRIz1V1Z5usSG1ukMWsxhb39wM"
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1786401080,"completed_at":1786401084,"id":"46989468-41b3-92ef-84a7-0350d355b90a","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_46989468-41b3-92ef-84a7-0350d355b90a","summary":[{"text":"The
+      string: '{"created_at":1788814893,"completed_at":1788814893,"id":"5f13c525-de31-91f7-90fe-65b79053f9e1","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_5f13c525-de31-91f7-90fe-65b79053f9e1","summary":[{"text":"The
         user says: \"Call the array params tool with tags [\"red\",\"blue\"] and tell
-        me the combined tags.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"CAbavtvUlh81jTSHDEb673Cz61osOcH46/zngXDz9cDuekcIB/OBG6ucKvyOz/EKvUT2X9fNGQGxOLpQ457IPwMZzucCpnC0FEbbjmO67LmAXjTPErnewdObegS/zHde/B3YesM1JbKe9uB6A71qp+7ZZOOi8cuWCewxGxfeYlqPRUH5Qh3lggKIio9neQoQnvxIVumlUbN9Km7TCh87KQ/TLKpRuzGTbfs1qtj4qWZQao03mcyuIUJicdwf9D2vL1OxZ0RB/iVWNWKK/B92iW/9KaCxXjV9yS6XNxIho/XAucBlWuFWlzw1gIsB5tnF7DfyWI7K1m8D8aU+/c4vkma9Irm7SwtEDUUHj60kTOOBPuKGFlhyZ7QYSoli0Dn1zDrbGi5YqALI38eI/QFUU0HWLkmY1KjE5pDSKDCb05qNdpoacbHKIwpR09TqJnNve8Onn9KFxMTjfAbpFvdaW7xbD5GTj438iD/DXfhfijn3Il3cjcgNdE24YejybTELUjZGYJlYEf6oPUGSqizhp8sM97wvqQZ3fLH7EhSYSdMb/SNALFWfC+6dVunaWcfnTMSGYJ+ON43t/L+e4Jm6rIqwF6gWcxWz+Eum+Lg7KjjzrdnPbviG+0QHW1fH4/d6CpEWIF59zaDp2U3Q8IMpMqdchQpMV1iC2JcrygROjHzEw07UwOUM7ak27uxxlK7PakiF1T+4JblPDcPQjW1RNG6dU35ExKqKyL1vie/BLUXBmoI0n30B2fvZJsAAK6MWkPD76o9gCMd7zGCsVeWu1Pb4WdkRo6JOk0mKEnG8XxUcE2vs4rfk9rL4hkTXtOiSoB6wuKw6ED3dN2aiLV12gnSR+vvCSuoWJeods0wZMjQIYwaFNKPCkamWsJ5JQeUidGAcHEMnMfiNwOmWO/ouMkJhjHLxpuezF2KfmRzVcXRivzItu0Enf77tCuXSNAmmahWq5dxn6cC/87egp1SGUkvaxzFzqndXFnlplz7ugme08GBSu4LOu8RjSGG0h39XyvykdsFZVjoF0dwCPu2imxeW+9g/RSUEHnUJmuAx/SsIGMi8ShHGNknaeCx8vOcYAKPPXSLpOnklBMsZdiC7QSbM34AuJ9AFpJkP9GK7m19wa/SNdJgociX1GAfjDrOwxLi86no+WX2Oa4syWWLpcOfP7zGz+OWq6PDNb+LQEM4LerDYMsddRMScNdVWho6WPu4qj/qaEkZOq2PNxefgJ1VW/uQ+zKYyaw9O/8vRQqWzC0S7rAQ6Y23UUHdnrLWp85OLuDF53PDT0x/9xzudiJpBbQBk8nihAcXLMkXmZ1QGnGyusRXdTddmPx43w49jbuZ28z65F3NRB+b4P8mSF8p79PPq21nDcHpHgbrTrD4n1CAcjlAp615evSfbt8+UdVwiDwbM6PPpeqp7N9UKwhvS9IdIEl+dBCBv/YW6Y0hFhHgPClL8OIWPmCSoHXTGbZ1KY2VRAbLs4Waa01OP8lc0vASNSme8SHfJyuv7IKGXLzjgHl7HMm9oqPjZtoU48oAC8XfeAwQioMbZ7We63n2qk5oVd9BIODQyu6uWSDYFJIeItrhBkR7r1ALiHJ0kratQ/152B1FeSdN2sQpt7TzunCPU7GT90y9kiHYaJdoA1r61HoHEy0zEXmv14mFPpLQuRPy/q6QU0zQWXIjYL87WrT323uUkrnzuiIXi69s9mDMZxjobbj3bXtvYA29PssCLorJK95KAOEXZy3IXOuuSQ0R25ka1masX+kngYoHv7pprNLOOThmOOSQV8umqdyT36QtmKxsXZG/OXwtLOTusQk2Y/nRnB3PAyIw33ejG7Jaq7oWcX0QyY2ELfT46Bx8il0dU3a4"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-eddfe0f3-f08e-4000-ba60-bddb5bce215d-0","name":"array_params","type":"function_call","id":"fc_46989468-41b3-92ef-84a7-0350d355b90a_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+        me the combined tags.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"3SvUge5/0yfn2fSse0mvdPVjzoVi4bAmIYePQo6IkOhK5Fd4CDd7767TsBdVGXz6jSY3EbOk+w2fsn2V8WgI0wAzcVtmJh650c8ACxjTyNe8FNuyjjcEK+LrgsbgckWrEacvMe8p32bqWH94GkCKOVOXfvRmmruxm2l581JMfFzC73Jsh1WCFeMscQ312do7Rp+zX5xnZ4p2glhTL9W6I1dkgIV3BQDK7PiRQHiKygvDmYq3rgTITEatHAAH3udLQYrWn5stT9Hj5re9h3tSDEjW94SyrUx+6+Rs2dJp1KlQglhJ8RNrc9eRF8nvolx2XLR3emdhlmxtj99BCdDaqeQJLC/KeGlciuVJRTH4iczzJoMYAGG+CuAs0aBDtcIjqFS1A8ZDu7KWlIPFnNtkXtSJCdSYeGNTsVz3FOiZ9BLsPHDQQBOX0q7aJEHLLZLkluX1rQNMnj5E/HmLIkYT18kIeCY98qXi5eRruOOUL9zejm7DeBWjveB3BSmc1sMevgXYvnfbhfMLuUM+WocxnBUmbUtVqqbkUnDJahA/5TOL070IAUbBpmgdSnr2OQf1+tgrx+sKzhNvxhKBl7OgZGVVfO/HUONdShdy+vhjXQNDxFZvxvsSjZjqE95c1omxhV56jcVpsjj2Om8Y6NBb2f14ftWcYg1wLv8lCRr9Vwbdc1m1vwSt7MNS7RQJGu9K0YGys+YKx1SCO18s8VWwposG3mDhDSDtB473DuI2NtXIRivSrdtfgUa0M8thwBafWXw043k7SONyJqj5Ska1qwduA4CZ4Z5J6bzWwYsVg9iKw9WqyyzWizRgVjArYEpdkK6YHoBf0wl0j6WA8lNJLN7qYMc2D+eIi1m54MSJUP+TFr24L23I9b2H4vBsJrHEUVpVW1VSHPKoPEO1u7y4FE/rAPDAgIlOtAmirUCP43XHcR9RMVAg2UYSVLQzOITRNfgxuVV43kut/2DfHL93RulS5PQfHHaOm9AGChMHTA1IQB675X+zXVUkBesv0llAcqO66CT9WW4xWM8cbgddOOrjrhBLtoCnXNIqNRBDfzufVwpvy+rgDu9TSi/80Nsq9aMfttPYqKdkXb7x9UeJJZZ2C6asMOsrHnrwoHwUSJUTPe/JzSP8TUB2oGllGStooa33I/owmVCdy7k1DVT9J91MTFQF6GFjybRiQhbyU2WWkouXCT1zN1nNyEG1y6cduTs/Ykv5BiQiIiAf8Zk47qe6mj+WHLKppRIyMlHJG8lfk/un7UP25ufHRM7FW0UtNClmWb2i7d8NnWKDcPh1q8S90I1Yp6ntqqZix9f9WLwzvy1cthyzpTBPDqIR+vZVuqdWFg4rXS1tIpkcq+LjCGHEXpswxB/V6BA3L6ARolPXlZuyhqaZ1OzOL27VitAP2Zl+U4kkjNuyvGr7Feg2R38zPMGf7lglevKNkzYPhTR0PdQQJXGXdwe65PuKitoDETR9nc+cyaqik09fQ1p+adATts8W3xJhGo4FP+rXyytV+fxi2UBGXytBItJMDjc0xZlDlgD5A2a35N0TCd6tx8ozPKcwhprCrCVczz67N1y+DW1IGvAQhrzOiIR3mEHoc1+MKn0TiPdeYX2v0zGbU2yl1yldfFz86bkXJJuinzg4OY64pnr4KpRvgmJHVHT92/BdBuLIn+ZVPIkaO5+lwB5IlUpKq6noMTqnK0pgsoZoiXz0O/LBY0enJ7JFWmka2qUjU9EK6FK4ybk0bfZty4GtU/FsoZKms9cYUF68NkG+c9C8hz9edcnOsPEAhFWJEdwR5b8X/lwakBWA7iFrNIydoAxO3PukD0PUWV/Rcj5pweBdOqQuPzdWPdKWmXzE/E/T1GqPZkRFyaQWHkW4w+DFO5rrzDj+yg5pB8kL3Ahq4F0zdruCxRa5U6auIMVxXQkhBx9IsTjg5ijHVx4qLqvpyBkiaw"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-73f9b981-27a8-4c6c-80b2-cf52327ab999-0","name":"array_params","type":"function_call","id":"fc_5f13c525-de31-91f7-90fe-65b79053f9e1_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL array support","name":"array_params","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":317,"input_tokens_details":{"cached_tokens":192},"output_tokens":325,"output_tokens_details":{"reasoning_tokens":311},"total_tokens":642,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10071500,"context_details":{"input_tokens":317,"output_tokens":325}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Mon, 10 Aug 2026 22:31:24 GMT
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":311,"input_tokens_details":{"cached_tokens":192},"output_tokens":349,"output_tokens_details":{"reasoning_tokens":346},"total_tokens":660,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10596500,"context_details":{"input_tokens":311,"output_tokens":350}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 07 Sep 2026 21:01:33 GMT
 recorded_with: VCR 6.4.0

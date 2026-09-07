@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:38:15 GMT
+      Access-Control-Allow-Origin:
+      - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Server:
+      - istio-envoy
+      Req-Cost-Time:
+      - '1096'
+      Req-Arrive-Time:
+      - '1788817096568'
+      Resp-Start-Time:
+      - '1788817097665'
+      X-Envoy-Upstream-Service-Time:
+      - '1093'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
+        the user wants me to roll the dice 3 times. Let me check the tools provided.
+        There''s a function called dice_roll that rolls a single six-sided die. The
+        parameters are empty, so I don''t need any arguments. Since they want it done
+        three times, I need to call this function exactly three times. I''ll make
+        sure each call is separate and in the correct JSON format. Let me start the
+        first roll.\n","tool_calls":[{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"F2cOk683y5J1PuQbthXdqs7AGH98KLkP"},{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"Ng9J1KOrQDsrVwFBpXgM5zkK0SnDUYu6"},{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"QNZztH5JGSayxjy6OrX8IMxdcCLxLs96"}]}}],"created":1788817097,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":141,"prompt_tokens":177,"total_tokens":318,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-EasKYR9JT2KTEPI8AZNb0erlKUI5G5uS","timings":{"cache_n":3,"prompt_n":174,"prompt_ms":42.943,"prompt_per_token_ms":0.24679885057471262,"prompt_per_second":4051.882728267704,"predicted_n":141,"predicted_ms":999.091,"predicted_per_token_ms":7.1363642857142855,"predicted_per_second":140.1273757845882}}'
+  recorded_at: Mon, 07 Sep 2026 21:38:17 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"F2cOk683y5J1PuQbthXdqs7AGH98KLkP","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"Ng9J1KOrQDsrVwFBpXgM5zkK0SnDUYu6","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"QNZztH5JGSayxjy6OrX8IMxdcCLxLs96","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants me to roll the dice 3 times. Let me check the tools provided.
+        There''s a function called dice_roll that rolls a single six-sided die. The
+        parameters are empty, so I don''t need any arguments. Since they want it done
+        three times, I need to call this function exactly three times. I''ll make
+        sure each call is separate and in the correct JSON format. Let me start the
+        first roll.\n","reasoning_content":"Okay, the user wants me to roll the dice
+        3 times. Let me check the tools provided. There''s a function called dice_roll
+        that rolls a single six-sided die. The parameters are empty, so I don''t need
+        any arguments. Since they want it done three times, I need to call this function
+        exactly three times. I''ll make sure each call is separate and in the correct
+        JSON format. Let me start the first roll.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"F2cOk683y5J1PuQbthXdqs7AGH98KLkP"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"Ng9J1KOrQDsrVwFBpXgM5zkK0SnDUYu6"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"QNZztH5JGSayxjy6OrX8IMxdcCLxLs96"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Resp-Start-Time:
+      - '1788817099161'
+      X-Envoy-Upstream-Service-Time:
+      - '1488'
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1491'
+      Date:
+      - Mon, 07 Sep 2026 21:38:16 GMT
+      Req-Arrive-Time:
+      - '1788817097669'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGRpY2Ugcm9sbHMgcmVzdWx0ZWQgaW46XG4xLiDwn46yIFJvbGwgMTogKioxKipcbjIuIPCfjrIgUm9sbCAyOiAqKjIqKlxuMy4g8J+OsiBSb2xsIDM6ICoqMyoqXG5cblRvdGFsIHN1bTogKio2Kiog8J+OryIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcywgYW5kIEkgY2FsbGVkIHRoZSBkaWNlX3JvbGwgZnVuY3Rpb24gdGhyZWUgdGltZXMuIEVhY2ggcmVzcG9uc2UgZnJvbSB0aGUgdG9vbCBnYXZlIGEgcm9sbCByZXN1bHQ6IDEsIDIsIGFuZCAzLiBOb3cgSSBuZWVkIHRvIGNvbXBpbGUgdGhlc2UgcmVzdWx0cyBpbnRvIGEgY29oZXJlbnQgYW5zd2VyLiBMZXQgbWUgbGlzdCBlYWNoIHJvbGwgaW4gb3JkZXIgYW5kIHRoZW4gc3VtbWFyaXplIHRoZSB0b3RhbC4gV2FpdCwgdGhlIHVzZXIgZGlkbid0IHNwZWNpZnkgaWYgdGhleSB3YW50IHRoZSBzdW0gb3IganVzdCB0aGUgaW5kaXZpZHVhbCByZXN1bHRzLiBTaW5jZSB0aGV5IHNhaWQgXCJyb2xsIHRoZSBkaWNlIDMgdGltZXMsXCIgbWF5YmUgdGhleSBqdXN0IHdhbnQgZWFjaCByZXN1bHQgbGlzdGVkLiBJJ2xsIHByZXNlbnQgZWFjaCByb2xsIGFuZCB0aGVuIG1lbnRpb24gdGhlIHRvdGFsLiBMZXQgbWUgY2hlY2sgdGhlIG51bWJlcnMgYWdhaW46IDEsIDIsIDMuIFRoZSBzdW0gaXMgNi4gVGhhdCdzIHN0cmFpZ2h0Zm9yd2FyZC4gSSdsbCBtYWtlIHN1cmUgdG8gZm9ybWF0IGl0IGNsZWFybHkuXG4ifX1dLCJjcmVhdGVkIjoxNzg4ODE3MDk5LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjEwODMwLTQ2NWU0OWI5YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyMDYsInByb21wdF90b2tlbnMiOjM1MywidG90YWxfdG9rZW5zIjo1NTksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjozMTd9fSwiaWQiOiJjaGF0Y21wbC1lZ1c0ZkpFblM2c24zanZ3dUs5dno5UU5qazhnSTlWdiIsInRpbWluZ3MiOnsiY2FjaGVfbiI6MzE3LCJwcm9tcHRfbiI6MzYsInByb21wdF9tcyI6MTcuNTIxLCJwcm9tcHRfcGVyX3Rva2VuX21zIjowLjQ4NjY5NDQ0NDQ0NDQ0NDUsInByb21wdF9wZXJfc2Vjb25kIjoyMDU0LjY3NzI0NDQ0OTUxNzcsInByZWRpY3RlZF9uIjoyMDYsInByZWRpY3RlZF9tcyI6MTQ2Mi41MDMsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuMTM0MTYwOTc1NjA5NzU2LCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTQwLjE3MDY1MjY0MTM5NjN9fQ==
+  recorded_at: Mon, 07 Sep 2026 21:38:19 GMT
+recorded_with: VCR 6.4.0

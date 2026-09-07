@@ -26,50 +26,84 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 20:55:58 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - b53d9bb1-3544-49e6-8e65-8670d1b24991
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-c3a6838a4929830d245da5fc99cbe168-75740d910004719b-00
+      - 00-a6cc1fc527a42c00fb3d1f5bd2ec04ad-edcabf7800037a02-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 740b1f07-2ad5-4ae0-a077-95d90460b378
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49870'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 740b1f07-2ad5-4ae0-a077-95d90460b378
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:15 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"e3969c26-d88a-46ba-af33-aea44de7a85d","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_28791505","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":249,"completion_tokens":40,"total_tokens":289,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":249,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150056,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:34:16 GMT
+      string: '{"id":"37b119fb-54a6-4209-938d-e796e6ef8781","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_57097839","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":249,"completion_tokens":40,"total_tokens":289,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":249,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814559,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 07 Sep 2026 20:55:59 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_28791505","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_28791505"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_57097839","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_57097839"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -89,41 +123,75 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 20:56:00 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - 525d85f7-4d34-4555-8a61-ccb7d3860ccd
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-87f4469bfe6274cd24c351c406e315d0-0f0677c60004daba-00
+      - 00-79e5c564000dc6884989beb889375015-617e5c4200022e42-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 9d631694-485e-4f43-886a-d460adad4531
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49794'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 9d631694-485e-4f43-886a-d460adad4531
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:16 GMT
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImY0YzJkODU1LWZjZDYtNDVkNC04N2Q1LThkMWY3MjE1MGU5NCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIHdpbmRzIGF0IDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMjUsImNvbXBsZXRpb25fdG9rZW5zIjoxNywidG90YWxfdG9rZW5zIjozNDIsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0MTcsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjMyNSwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzg3MTUwMDU2LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
-  recorded_at: Wed, 19 Aug 2026 14:34:17 GMT
+        eyJpZCI6ImY4MzBlNjY0LTI4ZDAtNGVlYy04MzdjLTcyY2Q0OTliM2MzMCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIHdpbmRzIGF0IDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMjUsImNvbXBsZXRpb25fdG9rZW5zIjoxNywidG90YWxfdG9rZW5zIjozNDIsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0MTcsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjMyNSwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzg4ODE0NTYwLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Mon, 07 Sep 2026 20:56:01 GMT
 recorded_with: VCR 6.4.0

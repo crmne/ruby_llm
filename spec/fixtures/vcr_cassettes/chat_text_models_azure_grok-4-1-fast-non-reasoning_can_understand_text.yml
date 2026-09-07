@@ -24,43 +24,77 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 20:52:14 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - 9a848e55-a592-426a-9e1d-f54a86b1ca9d
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-96c613645542a46fc33365423abccb08-75740d91000471d4-00
+      - 00-a876f4deee49bde76336e1abe6ebc8f4-46b71ed70028a005-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - bfbec4f2-3c40-450c-b709-72f0f426cc62
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49941'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - bfbec4f2-3c40-450c-b709-72f0f426cc62
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:18 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"5dabc62d-3899-479b-adf1-7dbcd664fca0","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file \"ruby.txt\" contains the text: \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":16,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":24,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150058,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:34:18 GMT
+      string: '{"id":"c84315c2-e7f0-4e55-b392-25c023ff3d48","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the text: \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":16,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":24,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814334,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 07 Sep 2026 20:52:15 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -68,7 +102,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
+        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
         contains the text: \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
@@ -88,41 +122,76 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 20:52:15 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - c68facd8-0bff-4131-b99f-481bbacc0ebb
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-6a223beb66e732a4d29ffa610658b8a9-f4b1e27400037f22-00
+      - 00-59d507e94eb2a8ee238703cd2a51e7e3-2f6c024d0001644d-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - b7361a4d-25bd-4220-9936-8980faee3962
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49871'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - b7361a4d-25bd-4220-9936-8980faee3962
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:18 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"86edd9dd-6ad1-44ee-86ce-0ec3ee0749eb","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file \"ruby.xml\" contains the XML: `<truism>Ruby is the best</truism>`"},"finish_reason":"stop"}],"usage":{"prompt_tokens":81,"completion_tokens":22,"total_tokens":103,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":192,"audio_tokens":0,"text_tokens":81,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150058,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:34:19 GMT
+      string: '{"id":"1f7a9214-20a9-4f38-bf02-2a7565bf7786","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```"},"finish_reason":"stop"}],"usage":{"prompt_tokens":81,"completion_tokens":28,"total_tokens":109,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":192,"audio_tokens":0,"text_tokens":81,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814336,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 07 Sep 2026 20:52:16 GMT
 recorded_with: VCR 6.4.0

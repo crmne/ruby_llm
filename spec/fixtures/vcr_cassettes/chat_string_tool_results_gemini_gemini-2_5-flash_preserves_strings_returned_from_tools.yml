@@ -7,8 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Process this query: test
         data"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"content_returning","description":"Returns
-        a processed string result","parameters":{"type":"OBJECT","properties":{"query":{"type":"STRING","description":"Query
-        to process"}},"required":["query"]}}]}]}'
+        a processed string result","parametersJsonSchema":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:40:59 GMT
+      - Mon, 07 Sep 2026 21:05:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=782
+      - gfet4t7; dur=835
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
                         "query": "test data"
                       }
                     },
-                    "thoughtSignature": "CsECARFNMg/+F/9xAagPAaJxIkkOF1vMZpPJKIHoasQhOQgiiq0z71sqGGzS/aCVULq6mFNb5YVoopNI5M8FiwDwIAtPjaRsj/XXBUG+laKtgnuNRYKJP6ZDrmP3Mg0RvJ82+dAfByrcZ67Jj7cUjwxfHjsf5OSfdpmReEvpU7t+DuWfcCMIkXjhQZAnYx5YAix6zRLlfGjAcKhucdYn+w+W/0i38rSP18/NeX8iqIBfFGm4+J0P/gbXRee+rBfLXW7ybE2HZTlx8F6DeBndLcdNvLklDAu6bnqDw//IA+2JL603qokVSMkJjX7A5bIRQcQB1vNpy2WMJTyORj0jmTEob5SOfD3tRJ/1extIruYGptr3oSD9TB31efhZcpB2CmyjqN2ddVx6CDeW7AMHTGgO4yM6WGKWLSu6xHohAHujP/nb"
+                    "thoughtSignature": "CpYCARFNMg+ExvuekTwRWBxvUGHVIUkued6QqC8UUQwYnS7Ot/30mPRSGO5rjjPhw+Wv/ELY+7K9xQsNL2PHoVp4turo93tUaSqXJff0D/J9ZD8nNNtm6myxUC122Ttf/7R+JqU6fMZICkk9faT6kfyRlqK67xi//RjFzbw/58Ywst/uj60f254PvLVmDjrGYMOa7eOI312NQlczgsuTJOXWJh3b1ETR6+DvoVNerlcOwoIi4Ox+468Y3YfUaK3upfQJ6hVo117cqAZlZ7VRMuGvz2lCPoEhZu8bOr+vszP6C9ZdR5ButYca/QkQS9Hpeb6kQ2pRZ37wCtwOMMKV1zJgpeUUOg9kT2tgoXKY8ojlrTQiGnQ0Uf8="
                   }
                 ],
                 "role": "model"
@@ -77,20 +77,20 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 46,
             "candidatesTokenCount": 16,
-            "totalTokenCount": 127,
+            "totalTokenCount": 115,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 46
               }
             ],
-            "thoughtsTokenCount": 65,
+            "thoughtsTokenCount": 53,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "esCFauCIG_fkxN8PgJPz8Qo"
+          "responseId": "GCefavLuB-mR3boPi9ajuQ0"
         }
-  recorded_at: Wed, 19 Aug 2026 14:40:59 GMT
+  recorded_at: Mon, 07 Sep 2026 21:05:28 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -98,10 +98,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Process this query: test
         data"}]},{"role":"model","parts":[{"functionCall":{"name":"content_returning","args":{"query":"test
-        data"}},"thoughtSignature":"CsECARFNMg/+F/9xAagPAaJxIkkOF1vMZpPJKIHoasQhOQgiiq0z71sqGGzS/aCVULq6mFNb5YVoopNI5M8FiwDwIAtPjaRsj/XXBUG+laKtgnuNRYKJP6ZDrmP3Mg0RvJ82+dAfByrcZ67Jj7cUjwxfHjsf5OSfdpmReEvpU7t+DuWfcCMIkXjhQZAnYx5YAix6zRLlfGjAcKhucdYn+w+W/0i38rSP18/NeX8iqIBfFGm4+J0P/gbXRee+rBfLXW7ybE2HZTlx8F6DeBndLcdNvLklDAu6bnqDw//IA+2JL603qokVSMkJjX7A5bIRQcQB1vNpy2WMJTyORj0jmTEob5SOfD3tRJ/1extIruYGptr3oSD9TB31efhZcpB2CmyjqN2ddVx6CDeW7AMHTGgO4yM6WGKWLSu6xHohAHujP/nb"}]},{"role":"user","parts":[{"functionResponse":{"name":"content_returning","response":{"name":"content_returning","content":[{"text":"Processed:
+        data"}},"thoughtSignature":"CpYCARFNMg+ExvuekTwRWBxvUGHVIUkued6QqC8UUQwYnS7Ot/30mPRSGO5rjjPhw+Wv/ELY+7K9xQsNL2PHoVp4turo93tUaSqXJff0D/J9ZD8nNNtm6myxUC122Ttf/7R+JqU6fMZICkk9faT6kfyRlqK67xi//RjFzbw/58Ywst/uj60f254PvLVmDjrGYMOa7eOI312NQlczgsuTJOXWJh3b1ETR6+DvoVNerlcOwoIi4Ox+468Y3YfUaK3upfQJ6hVo117cqAZlZ7VRMuGvz2lCPoEhZu8bOr+vszP6C9ZdR5ButYca/QkQS9Hpeb6kQ2pRZ37wCtwOMMKV1zJgpeUUOg9kT2tgoXKY8ojlrTQiGnQ0Uf8="}]},{"role":"user","parts":[{"functionResponse":{"name":"content_returning","response":{"name":"content_returning","content":[{"text":"Processed:
         test data"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"content_returning","description":"Returns
-        a processed string result","parameters":{"type":"OBJECT","properties":{"query":{"type":"STRING","description":"Query
-        to process"}},"required":["query"]}}]}]}'
+        a processed string result","parametersJsonSchema":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:40:59 GMT
+      - Mon, 07 Sep 2026 21:05:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=386
+      - gfet4t7; dur=601
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -151,7 +151,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The query \"test data\" has been processed."
+                    "text": "Processed: test data"
                   }
                 ],
                 "role": "model"
@@ -162,8 +162,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 92,
-            "candidatesTokenCount": 10,
-            "totalTokenCount": 102,
+            "candidatesTokenCount": 4,
+            "totalTokenCount": 96,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -173,7 +173,7 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "e8CFavXND664vdIP64CUqQY"
+          "responseId": "GSefauC6Aqrtxs0Poq3KmQY"
         }
-  recorded_at: Wed, 19 Aug 2026 14:40:59 GMT
+  recorded_at: Mon, 07 Sep 2026 21:05:29 GMT
 recorded_with: VCR 6.4.0

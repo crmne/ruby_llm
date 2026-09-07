@@ -18,9 +18,26 @@ RSpec.describe RubyLLM::Providers::OpenAI do
       faraday_adapter: :net_http,
       openai_api_key: 'test-key',
       openai_api_base: nil,
+      openai_protocol: nil,
       openai_organization_id: nil,
       openai_project_id: nil
     )
+  end
+
+  describe '#protocol_for' do
+    it 'routes search models and their snapshots to Chat Completions' do
+      %w[gpt-5-search-api gpt-5-search-api-2025-10-14].each do |id|
+        model = RubyLLM.models.find(id, provider: :openai)
+
+        expect(provider.protocol_for(model)).to equal(provider.protocols[:chat_completions])
+      end
+    end
+
+    it 'keeps ordinary chat models on Responses' do
+      model = RubyLLM.models.find(model_for(:openai), provider: :openai)
+
+      expect(provider.protocol_for(model)).to equal(provider.protocols[:responses])
+    end
   end
 
   describe '#retry_delay' do

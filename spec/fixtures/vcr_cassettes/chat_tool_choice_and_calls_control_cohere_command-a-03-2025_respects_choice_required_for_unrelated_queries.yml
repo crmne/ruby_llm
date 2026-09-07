@@ -45,31 +45,31 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 35277275b486a61d0b28f092a744865a
+      - dc792864a211834e5c6176ef35da90c8
       Date:
-      - Thu, 13 Aug 2026 11:17:28 GMT
+      - Mon, 07 Sep 2026 21:05:59 GMT
       X-Envoy-Upstream-Service-Time:
-      - '716'
+      - '814'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d737d4ec-bedd-4d1d-98c3-7228ab0809cb","message":{"role":"assistant","tool_plan":"I
-        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_z5jpj51d0fka","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":80,"output_tokens":36},"tokens":{"input_tokens":1508,"output_tokens":50},"cached_tokens":992}}'
-  recorded_at: Thu, 13 Aug 2026 11:17:28 GMT
+      string: '{"id":"fcb2eecc-8c00-4f24-a5e3-83067f0ada4b","message":{"role":"assistant","tool_plan":"I
+        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_2jfemcvxd1r7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":80,"output_tokens":36},"tokens":{"input_tokens":1508,"output_tokens":50},"cached_tokens":112}}'
+  recorded_at: Mon, 07 Sep 2026 21:05:59 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"When
-        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_z5jpj51d0fka","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","tool_call_id":"weather_z5jpj51d0fka","content":"Current
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_2jfemcvxd1r7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","tool_call_id":"weather_2jfemcvxd1r7","content":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -101,7 +101,7 @@ http_interactions:
       Num-Chars:
       - '7449'
       Num-Tokens:
-      - '160'
+      - '243'
       Pragma:
       - no-cache
       Vary:
@@ -109,11 +109,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 22cc54a18990e243835e3240e7e51d2b
+      - 97b72eaa055bbb0f1410368fb080940b
       Date:
-      - Thu, 13 Aug 2026 11:17:49 GMT
+      - Mon, 07 Sep 2026 21:06:01 GMT
       X-Envoy-Upstream-Service-Time:
-      - '20508'
+      - '2167'
       Server:
       - envoy
       Via:
@@ -125,6 +125,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjY0NjJkMmU3LTRiOGUtNDg3Mi05MTI4LTI1ZWUzNjZmNWFiYyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSBkb24ndCBoYXZlIHRoZSB0b29scyB0byBhbnN3ZXIgeW91ciBxdWVzdGlvbi5cblxuSSBjYW4gdGVsbCB5b3UgdGhhdCB0aGUgd2VhdGhlciBpbiBSb21lIGlzIGN1cnJlbnRseSAxNcKwQyB3aXRoIHdpbmRzIG9mIDEwIGttL2guIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0IjoxMTMsImVuZCI6MTQwLCJ0ZXh0IjoiMTXCsEMgd2l0aCB3aW5kcyBvZiAxMCBrbS9oLiIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyX3o1anBqNTFkMGZrYTowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA0MS45MDI4LCAxMi40OTY0OiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMTcsIm91dHB1dF90b2tlbnMiOjQzfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTYyNywib3V0cHV0X3Rva2VucyI6NTV9LCJjYWNoZWRfdG9rZW5zIjoxMTJ9fQ==
-  recorded_at: Thu, 13 Aug 2026 11:17:49 GMT
+        eyJpZCI6IjhlOTRiNjQ4LWY4ZWYtNDQ5Zi1hMzIwLWY3OGQ5YTNlYzc0OCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBmYWxsIG9mIFJvbWUgaXMgYSBjb21wbGV4IGhpc3RvcmljYWwgZXZlbnQgdGhhdCBvY2N1cnJlZCBvdmVyIGEgcGVyaW9kIG9mIHRpbWUsIHJhdGhlciB0aGFuIGEgc3BlY2lmaWMgZGF0ZS4gSG93ZXZlciwgYSBjb21tb25seSBjaXRlZCBkYXRlIGZvciB0aGUgZmFsbCBvZiBSb21lIGlzICoqU2VwdGVtYmVyIDQsIDQ3NiBBRCoqLCB3aGVuIHRoZSBHZXJtYW5pYyBraW5nIE9kb2FjZXIgZGVwb3NlZCB0aGUgbGFzdCBSb21hbiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMuXG5cbkl0IHNlZW1zIGxpa2UgeW91IGFyZSBpbnRlcmVzdGVkIGluIHRoZSB3ZWF0aGVyIGluIFJvbWUsIEl0YWx5LiBBY2NvcmRpbmcgdG8gdGhlIGN1cnJlbnQgd2VhdGhlciBkYXRhLCB0aGUgdGVtcGVyYXR1cmUgaW4gUm9tZSBpcyAqKjE1wrBDKiosIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTAga20vaCoqLiBQbGVhc2Ugbm90ZSB0aGF0IHRoaXMgaW5mb3JtYXRpb24gaXMgbm90IHJlbGF0ZWQgdG8gdGhlIGhpc3RvcmljYWwgZXZlbnQgb2YgdGhlIGZhbGwgb2YgUm9tZS4ifV0sImNpdGF0aW9ucyI6W3sic3RhcnQiOjQwOSwiZW5kIjo0MTMsInRleHQiOiIxNcKwQyIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyXzJqZmVtY3Z4ZDFyNzowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA0MS45MDI4LCAxMi40OTY0OiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifSx7InN0YXJ0Ijo0NDAsImVuZCI6NDQ3LCJ0ZXh0IjoiMTAga20vaCIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyXzJqZmVtY3Z4ZDFyNzowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA0MS45MDI4LCAxMi40OTY0OiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMTcsIm91dHB1dF90b2tlbnMiOjEyNn0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjE2MjcsIm91dHB1dF90b2tlbnMiOjE1MX0sImNhY2hlZF90b2tlbnMiOjE0NTZ9fQ==
+  recorded_at: Mon, 07 Sep 2026 21:06:01 GMT
 recorded_with: VCR 6.4.0

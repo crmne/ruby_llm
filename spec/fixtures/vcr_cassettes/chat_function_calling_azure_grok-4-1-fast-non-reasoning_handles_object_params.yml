@@ -27,40 +27,74 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 20:57:11 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - 5106850c-fcb8-49ec-938f-425af2c051f4
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-40aa6ecb28f1826f00478a9af5f00963-85727348000729d3-00
+      - 00-97d394eaae5512d44174d01ffca26387-ab711dd5002244e0-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 5e010849-9a24-485a-bf95-660e516accda
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '48'
+      X-Ratelimit-Reset-Requests:
+      - '2'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49840'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 5e010849-9a24-485a-bf95-660e516accda
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:51:50 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"0ac23342-b5f8-42b2-8c39-e1787fa55959","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_12047209","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":262,"completion_tokens":46,"total_tokens":308,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":262,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787151110,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:51:50 GMT
+      string: '{"id":"05c93093-2b31-4dd4-86f7-319ec8536251","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_87186853","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":262,"completion_tokens":46,"total_tokens":308,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":262,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814632,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 07 Sep 2026 20:57:12 GMT
 recorded_with: VCR 6.4.0

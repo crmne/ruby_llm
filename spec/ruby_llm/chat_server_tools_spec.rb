@@ -438,7 +438,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Use code execution to compute 123456789 * 987654321 and report the exact product.')
 
         expect(response.server_tool_calls).not_to be_empty
-        expect(response.content).to include('121932631112635269')
+        expect(response.content.delete(',')).to include('121932631112635269')
       end
     end
 
@@ -451,7 +451,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Use code execution to compute 123456789 * 987654321 and report the exact product.')
 
         expect(response.server_tool_calls.map(&:type)).to include('executable_code')
-        expect(response.content).to include('121932631112635269')
+        expect(response.content.delete(',')).to include('121932631112635269')
 
         followup = chat.ask('Thanks. Now just say OK.')
         expect(followup.content).to be_present

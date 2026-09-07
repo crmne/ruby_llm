@@ -22,37 +22,67 @@ http_interactions:
       code: 429
       message: Too Many Requests
     headers:
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json; charset=utf-8
+      Date:
+      - Mon, 07 Sep 2026 21:04:04 GMT
+      Server:
+      - istio-envoy
       Retry-After:
       - '1'
-      Apim-Request-Id:
-      - d3be1dcd-5e15-488e-b48f-a3066967d205
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-Ms-Error-Code:
+      - RateLimitReached
+      X-Ratelimit-Type:
+      - Tokens
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
-      X-Content-Type-Options:
-      - nosniff
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '0'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Retry-After-Ms:
+      - '0'
       Azureai-Fe-Is-Streaming:
       - 'False'
       Azureai-Fe-Offer-Type:
       - paygo
+      X-Ms-Fe-Rate-Limit-Status:
+      - '429'
+      Apim-Request-Id:
+      - '048e7cbb-76fe-4f9f-a4d4-0e386d242d0f'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       X-Ms-Region:
       - West Europe
-      Retry-After-Ms:
-      - '0'
-      Date:
-      - Wed, 19 Aug 2026 14:34:22 GMT
     body:
       encoding: UTF-8
       string: '{"error":{"code":"RateLimitReached","message":"Your requests to grok-4-1-fast-non-reasoning
         for grok-4-1-fast-non-reasoning in westeurope have exceeded rate limit.","details":"Your
         requests to grok-4-1-fast-non-reasoning for grok-4-1-fast-non-reasoning in
         westeurope have exceeded rate limit."}}'
-  recorded_at: Wed, 19 Aug 2026 14:34:22 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:04 GMT
 recorded_with: VCR 6.4.0

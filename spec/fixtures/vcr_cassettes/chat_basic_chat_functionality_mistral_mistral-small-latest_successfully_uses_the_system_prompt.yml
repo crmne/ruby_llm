@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":0.0}'
+        me about the weather."}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:35:15 GMT
+      - Mon, 07 Sep 2026 21:01:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a72-9f3e-791f-bcad-c7a8fe42fa49
+      - 01a07dad-473b-7277-949c-0dfbfbb4b552
       X-Kong-Request-Id:
-      - 01a01a72-9f3e-791f-bcad-c7a8fe42fa49
+      - 01a07dad-473b-7277-949c-0dfbfbb4b552
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97903'
+      - '99399'
       X-Ratelimit-Tokens-Query-Cost:
-      - '114'
+      - '117'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '814'
+      - '702'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '815'
+      - '703'
       X-Kong-Proxy-Latency:
-      - '21'
+      - '18'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,7 +72,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNhNWQxNzhmMGQyODRlOGI5ODBlMTM2ZjI2MjdjNWNhIiwiY3JlYXRlZCI6MTc4NzE1MDExNCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjExNCwiY29tcGxldGlvbl90b2tlbnMiOjcxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgd2VhdGhlciB0b2RheSBpcyBxdWl0ZSBwbGVhc2FudCwgd2l0aCBhIG1peCBvZiBzdW4gYW5kIGNsb3Vkcy4gVGhlIHRlbXBlcmF0dXJlIGlzIG1vZGVyYXRlLCBtYWtpbmcgaXQgaWRlYWwgZm9yIG91dGRvb3IgYWN0aXZpdGllcy4gSG93ZXZlciwgZG9uJ3QgZm9yZ2V0IHRvIGNoZWNrIHRoZSBsb2NhbCBmb3JlY2FzdCBmb3IgYW55IHN1ZGRlbiBjaGFuZ2VzLiBBcyBSYW5kYWxsIE11bnJvZSBmcm9tIFhLQ0Qgd291bGQgc2F5LCBcIlhLQ0Q3MzkyXCIg4oCTIGFsd2F5cyBiZSBwcmVwYXJlZCBmb3IgdGhlIHVuZXhwZWN0ZWQhIn19XX0=
-  recorded_at: Wed, 19 Aug 2026 14:35:15 GMT
+      string: '{"id":"390a846f7693457d8f87d8913102c53b","created":1788814903,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":117,"completion_tokens":74,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant, with a mix of sun and clouds. The temperature
+        is moderate, and there''s a gentle breeze. It''s the kind of day that makes
+        you want to go outside and enjoy nature. Speaking of which, have you seen
+        the latest comic about the weather? It''s a classic, just like XKCD7392."}}]}'
+  recorded_at: Mon, 07 Sep 2026 21:01:43 GMT
 recorded_with: VCR 6.4.0

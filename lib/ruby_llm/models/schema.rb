@@ -13,7 +13,7 @@ module RubyLLM
         structured_output predicted_outputs
         distillation fine_tuning batch realtime image_generation
         speech_generation transcription translation citations reasoning
-        caching moderation json_mode vision video
+        caching moderation json_mode vision video ocr
       ].freeze
 
       description 'A model entry in the RubyLLM model registry'

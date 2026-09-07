@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:14 GMT
+      - Mon, 07 Sep 2026 20:58:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,15 +35,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-86c0-7c11-a64f-cb23adf05ac1
+      - 01a07daa-6799-7ec2-bdbc-716113311883
       X-Kong-Request-Id:
-      - 01a01a73-86c0-7c11-a64f-cb23adf05ac1
+      - 01a07daa-6799-7ec2-bdbc-716113311883
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98761'
+      - '99199'
       X-Ratelimit-Tokens-Query-Cost:
       - '187'
       X-Ratelimit-Limit-Req-Minute:
@@ -51,15 +51,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '97'
       X-Envoy-Upstream-Service-Time:
-      - '300'
+      - '278'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '302'
+      - '280'
       X-Kong-Proxy-Latency:
-      - '19'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,17 +74,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"bd51960eb0da441d8a1e0ae176c94ec1","created":1787150173,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"Nr1uNItcS","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"bc31b8fcb6b54f99b4f54ba567962969","created":1788814714,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"BggzI5hVb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Wed, 19 Aug 2026 14:36:14 GMT
+  recorded_at: Mon, 07 Sep 2026 20:58:35 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"Nr1uNItcS","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"Nr1uNItcS"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"BggzI5hVb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"BggzI5hVb"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -105,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:15 GMT
+      - Mon, 07 Sep 2026 20:58:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,15 +113,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-883e-7131-a6c3-19f9672544d3
+      - 01a07daa-6917-7de9-86d0-1c16f0f92b6a
       X-Kong-Request-Id:
-      - 01a01a73-883e-7131-a6c3-19f9672544d3
+      - 01a07daa-6917-7de9-86d0-1c16f0f92b6a
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98500'
+      - '98934'
       X-Ratelimit-Tokens-Query-Cost:
       - '265'
       X-Ratelimit-Limit-Req-Minute:
@@ -129,15 +129,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '1165'
+      - '729'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1166'
+      - '730'
       X-Kong-Proxy-Latency:
-      - '22'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -153,17 +153,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImY4MTAzZTRlMTQ3ZDQwMWU5ZDcyODRkZmI0NDE2YmE0IiwiY3JlYXRlZCI6MTc4NzE1MDE3NCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNjUsImNvbXBsZXRpb25fdG9rZW5zIjo0MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gYXQgY29vcmRpbmF0ZXMgKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4ifX1dfQ==
-  recorded_at: Wed, 19 Aug 2026 14:36:15 GMT
+        eyJpZCI6IjVmOWIxNTMxZDEyODQzODY4MTQzYzBkOWYzY2NlZGI2IiwiY3JlYXRlZCI6MTc4ODgxNDcxNSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNjUsImNvbXBsZXRpb25fdG9rZW5zIjo0MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKGNvb3JkaW5hdGVzIDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4ifX1dfQ==
+  recorded_at: Mon, 07 Sep 2026 20:58:35 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"Nr1uNItcS","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"Nr1uNItcS"},{"role":"assistant","content":"The
-        current weather in Berlin at coordinates (52.5200, 13.4050) is **15°C** with
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"BggzI5hVb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"BggzI5hVb"},{"role":"assistant","content":"The
+        current weather in Berlin (coordinates 52.5200, 13.4050) is **15°C** with
         a wind speed of **10 km/h**."},{"role":"user","content":"What''s the weather
         in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -186,7 +186,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:16 GMT
+      - Mon, 07 Sep 2026 20:58:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -194,15 +194,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-8d13-7417-afa5-ff565264dd0d
+      - 01a07daa-6c42-7568-8b07-f4e8a4b5a96e
       X-Kong-Request-Id:
-      - 01a01a73-8d13-7417-afa5-ff565264dd0d
+      - 01a07daa-6c42-7568-8b07-f4e8a4b5a96e
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98193'
+      - '98616'
       X-Ratelimit-Tokens-Query-Cost:
       - '318'
       X-Ratelimit-Limit-Req-Minute:
@@ -210,15 +210,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '502'
+      - '389'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '503'
+      - '390'
       X-Kong-Proxy-Latency:
-      - '20'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -233,21 +233,21 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"26711d430603446691182767e13e3812","created":1787150175,"model":"mistral-small-latest","usage":{"prompt_tokens":291,"total_tokens":318,"completion_tokens":27,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"VTC750z6Q","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"ba46d70788aa4364bad814fc6a46cf93","created":1788814716,"model":"mistral-small-latest","usage":{"prompt_tokens":291,"total_tokens":318,"completion_tokens":27,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"M1OXNdsMP","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"48.8575\", \"longitude\": \"2.3514\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Wed, 19 Aug 2026 14:36:16 GMT
+  recorded_at: Mon, 07 Sep 2026 20:58:36 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"Nr1uNItcS","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"Nr1uNItcS"},{"role":"assistant","content":"The
-        current weather in Berlin at coordinates (52.5200, 13.4050) is **15°C** with
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"BggzI5hVb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"BggzI5hVb"},{"role":"assistant","content":"The
+        current weather in Berlin (coordinates 52.5200, 13.4050) is **15°C** with
         a wind speed of **10 km/h**."},{"role":"user","content":"What''s the weather
-        in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"VTC750z6Q","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"VTC750z6Q"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"M1OXNdsMP","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"M1OXNdsMP"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -268,7 +268,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:16 GMT
+      - Mon, 07 Sep 2026 20:58:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -276,31 +276,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-8f6f-735e-8865-20c609a4bd69
+      - 01a07daa-6e22-773e-8e6e-9372d15799d0
       X-Kong-Request-Id:
-      - 01a01a73-8f6f-735e-8865-20c609a4bd69
+      - 01a07daa-6e22-773e-8e6e-9372d15799d0
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97933'
+      - '98222'
       X-Ratelimit-Tokens-Query-Cost:
-      - '266'
+      - '394'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '94'
       X-Envoy-Upstream-Service-Time:
-      - '655'
+      - '426'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '656'
+      - '427'
       X-Kong-Proxy-Latency:
-      - '19'
+      - '15'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -316,6 +316,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImQyMWEzODZhNmY5NDQxY2RiMzFkMzBhMWNmNmE2ZGZkIiwiY3JlYXRlZCI6MTc4NzE1MDE3NiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM1MiwidG90YWxfdG9rZW5zIjozOTQsImNvbXBsZXRpb25fdG9rZW5zIjo0MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyOH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGF0IGNvb3JkaW5hdGVzICg0OC44NTc1LCAyLjM1MTQpIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4ifX1dfQ==
-  recorded_at: Wed, 19 Aug 2026 14:36:16 GMT
+        eyJpZCI6ImQ5YmE5ODNlYzVmMTRkMGNiNWE3Y2FjZDM4MDAxMDY0IiwiY3JlYXRlZCI6MTc4ODgxNDcxNiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM1MiwidG90YWxfdG9rZW5zIjozOTQsImNvbXBsZXRpb25fdG9rZW5zIjo0MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoY29vcmRpbmF0ZXMgNDguODU3NSwgMi4zNTE0KSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIn19XX0=
+  recorded_at: Mon, 07 Sep 2026 20:58:36 GMT
 recorded_with: VCR 6.4.0

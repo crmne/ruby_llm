@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:35:18 GMT
+      - Mon, 07 Sep 2026 21:06:09 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
@@ -52,10 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer"
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 19 Aug 2026 14:35:18 GMT
+  recorded_at: Mon, 07 Sep 2026 21:06:09 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -85,7 +86,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2026 14:35:38 GMT
+      - Mon, 07 Sep 2026 21:06:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -108,5 +109,5 @@ http_interactions:
             "status": "INVALID_ARGUMENT"
           }
         }
-  recorded_at: Wed, 19 Aug 2026 14:35:38 GMT
+  recorded_at: Mon, 07 Sep 2026 21:06:29 GMT
 recorded_with: VCR 6.4.0

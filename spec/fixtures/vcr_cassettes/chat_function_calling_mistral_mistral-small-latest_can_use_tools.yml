@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:22 GMT
+      - Mon, 07 Sep 2026 20:56:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,31 +35,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a71-cfae-7ede-a1cc-25f52956dbb0
+      - 01a07da8-2725-7918-bd43-a87788e2a404
       X-Kong-Request-Id:
-      - 01a01a71-cfae-7ede-a1cc-25f52956dbb0
+      - 01a07da8-2725-7918-bd43-a87788e2a404
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99692'
+      - '98776'
       X-Ratelimit-Tokens-Query-Cost:
       - '187'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '95'
+      - '99'
       X-Envoy-Upstream-Service-Time:
-      - '510'
+      - '413'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '511'
+      - '414'
       X-Kong-Proxy-Latency:
-      - '27'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,17 +74,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b1ee0303693e452d97446f47f1d5a685","created":1787150061,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"bAyGEuxg1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"33f5ca57cd9042a0a123d9267a06d0a0","created":1788814567,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"80UXr8qAk","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Wed, 19 Aug 2026 14:34:22 GMT
+  recorded_at: Mon, 07 Sep 2026 20:56:07 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"bAyGEuxg1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"bAyGEuxg1"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"80UXr8qAk","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"80UXr8qAk"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -105,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:22 GMT
+      - Mon, 07 Sep 2026 20:56:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,31 +113,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a71-d2fd-7b4c-8615-afb6570add56
+      - 01a07da8-294d-7ae8-b7ff-eeef9fddd352
       X-Kong-Request-Id:
-      - 01a01a71-d2fd-7b4c-8615-afb6570add56
+      - 01a07da8-294d-7ae8-b7ff-eeef9fddd352
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99447'
+      - '98524'
       X-Ratelimit-Tokens-Query-Cost:
-      - '245'
+      - '263'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '94'
+      - '98'
       X-Envoy-Upstream-Service-Time:
-      - '406'
+      - '403'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '407'
+      - '405'
       X-Kong-Proxy-Latency:
-      - '28'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -153,6 +153,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImRiOTY3ZDU4MjA5NjQ5ODc5YjIwODFkMDY1ZjBhYjc5IiwiY3JlYXRlZCI6MTc4NzE1MDA2MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNDUsImNvbXBsZXRpb25fdG9rZW5zIjoyMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgKioxNcKwQyoqIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTAga20vaCoqLiJ9fV19
-  recorded_at: Wed, 19 Aug 2026 14:34:22 GMT
+        eyJpZCI6IjhhNWZhZjk4NDYxMzRiZjY4OTVhYjg2MjQ3ZGNkMjdjIiwiY3JlYXRlZCI6MTc4ODgxNDU2NywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNjMsImNvbXBsZXRpb25fdG9rZW5zIjo0MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4ifX1dfQ==
+  recorded_at: Mon, 07 Sep 2026 20:56:08 GMT
 recorded_with: VCR 6.4.0

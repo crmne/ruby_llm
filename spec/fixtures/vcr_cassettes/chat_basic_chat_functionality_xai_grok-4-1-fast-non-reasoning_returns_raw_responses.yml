@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 22:29:52 GMT
+      - Mon, 07 Sep 2026 21:03:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,14 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9992090'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1788'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1800'
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=hcZAD4wtaYyrX0Bu5aCp2K6iV1zQOqKZx39JMcvhIfA-1788815019.3921282-1.0.1.1-MzEVybkD9Ky9x3RBtRv1pU3LU9KpZ53EmpFNHKEc4BClt2cbZ1tl70hDNhy8LQZpOqUG_qBDC.ENyy5Om9jr8R2UWYii4CQ1m.a_kFG1.ICBHiTZgZI8GQDCEHhfTUNCw0hOjeNmQmnpuobogyZq2PKGgOgt9pSUg3qurbOgMDw;
+        report-to cf-csp-endpoint
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -52,26 +53,33 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '230.3'
+      - '237.4'
       X-Metrics-Mean-Itl-Ms:
-      - '6.9'
+      - '9.8'
       X-Metrics-E2e-Ms:
-      - '1231.3'
+      - '1440.1'
       Traceparent:
-      - 00-21f8cdfa5b064681f16bce61d7e950ba-b72a70ac000017b1-01
+      - 00-12027a90a0bb0f9f62238cd40039cbc7-46d968400001dfc3-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=hcZAD4wtaYyrX0Bu5aCp2K6iV1zQOqKZx39JMcvhIfA-1788815019.3921282-1.0.1.1-MzEVybkD9Ky9x3RBtRv1pU3LU9KpZ53EmpFNHKEc4BClt2cbZ1tl70hDNhy8LQZpOqUG_qBDC.ENyy5Om9jr8R2UWYii4CQ1m.a_kFG1.ICBHiTZgZI8GQDCEHhfTUNCw0hOjeNmQmnpuobogyZq2PKGgOgt9pSUg3qurbOgMDw"}]}'
+      Reporting-Endpoints:
+      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=hcZAD4wtaYyrX0Bu5aCp2K6iV1zQOqKZx39JMcvhIfA-1788815019.3921282-1.0.1.1-MzEVybkD9Ky9x3RBtRv1pU3LU9KpZ53EmpFNHKEc4BClt2cbZ1tl70hDNhy8LQZpOqUG_qBDC.ENyy5Om9jr8R2UWYii4CQ1m.a_kFG1.ICBHiTZgZI8GQDCEHhfTUNCw0hOjeNmQmnpuobogyZq2PKGgOgt9pSUg3qurbOgMDw"
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1786400991,"completed_at":1786400992,"id":"1cd8b698-8c27-981b-b583-23f3829451f7","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_1cd8b698-8c27-981b-b583-23f3829451f7","summary":[{"text":"The
-        question is: \"What is the capital of France?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"kSPjPhPR+j2ra5/cFB8z7lXH6H75/10iRenSkd2tvZIu8NURMsNqV1sfTSziJLBdPPZNnx5AH0eSL6bepto+KkYmKW7fixDgU9O44G4tRNQHhdERBgL594rnYpPIjqpMaJTynH66jCwLpXTm3LSlrtgb9Ijl8ajFlkGYpqosSRqT/QiXu3dFyz8Jr7t452Np5TlWbVHrVgki5tzTsJXxR7aXW5rpVrdMqn3Vk3Ecjd5w0K4mxkYzd17W3ZpffR2QIxo6QLpmLchlKjX5o53FEjYf6keH7usven4CZ5+58Zgiksns6Fy6BH4dE94WtJGq3+jk3p5qU8W18VIdZtEl06ohnTDt/ICZaHF8EBIo2P76kTf4bY5plJuybvSsZE6CVLYz0xfcV0tsL5MMThRIyTLA6m8jFW4YSR5wwoDVZGfko9k+Nt8wWuw5F/wefzYo0BGJDi4xfErQXyytk625aEPXGvazdr/q4J1cKXlN7xhPyF6djDx7anmoYe0M220vq1Erkqd4KMIO77rPFAs2cZvS1xULyXwkiih8TZl7f3Lm4ym8SCiDoJR+W8Vpap9a/0mtokNEVj/EOjkgA2MQYUFaqC74Xy3JhT4xIXGSLvZv15YqLw9FCUVL9ukDRrSoL1NA2xq2fIic+lO8J7zhy5zWikbma7KE5JBfTUhKbLXoQtD2nT+7U7e3bTZj+NsA4whwvxHudTGOxi9E6TKbguzyUi9AGXN6MBDS0wW7NBMleUxzCYz7ezdGQyjOWKW1efzP4GnH5+w8QYfrT0I4IKW4uvr22zIc5N79Wz25pg1kUkXk8qaziBb2kxNZ"},{"content":[{"type":"output_text","text":"Paris.","logprobs":[],"annotations":[]}],"id":"msg_1cd8b698-8c27-981b-b583-23f3829451f7","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":192},"output_tokens":123,"output_tokens_details":{"reasoning_tokens":121},"total_tokens":322,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":3546500,"context_details":{"input_tokens":199,"output_tokens":123}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Mon, 10 Aug 2026 22:29:52 GMT
+      string: '{"created_at":1788815019,"completed_at":1788815020,"id":"2c696c20-0768-9e6f-943f-088f0d9d3664","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_2c696c20-0768-9e6f-943f-088f0d9d3664","summary":[{"text":"The
+        question is: \"What is the capital of France?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"efNDpnJIwYcBWIrReklLC601Bd3ojdDfyxs0hTdxtRUdRLFWYBIombMvlCIpYdnDHH92H6Xm4JaDKadByr5FxPT8LFtjjViehNMF7OYFKUD7+3K4+5XiCWzqSPfEDJzgWh+tshDwlw+urKZvX4Df3h5B+F1H6SdDaArBuzyslZ0uR3KB0DO16+PN9xy+cyko4G6UPHVBFYzzAZiUipVO96Vgw4Pld4SziY8pr/1J/yrPfVnKSATRwtPp1Pl/K6blZ/bQ8pJojsZN15jCOaCrAp2ODbTZL03wNuibazKRxKLjeuuoAHqTvRDcxlweIdGx+vf8EVVBv+1VmCxb/wMGFm0wCOHO+v9QaTOOnK1NieqFcmlTolMwqDuB9/XF5C0PbdiMzj9CRSvHcch8g35djTPb245MWtIEWZDlqHFXO/63AU8vbuGDrwiZU/6wFxspccF11fyT2uhZjjRp23x9JgjLFV6cof0lnvHa93bo19I7HzoPW5KgTS5AqfDS6Ewkh1TmgS7rcrSDx1tGQHKFt832ok0zxaiAHCKGxyHYVs1TEA78A3I94vfPh2pMjZPgNbK0jtQ2AbjdpROh0bvib0qBPjevmcKFA451fWKVZj4hmLKVDXwbhnpQo8Cbckvf4HL3MElt3GJZt1wUSECdVAm8MnYoEeG6pFcxVDEc5dA"},{"content":[{"type":"output_text","text":"The
+        capital of France is Paris.","logprobs":[],"annotations":[]}],"id":"msg_2c696c20-0768-9e6f-943f-088f0d9d3664","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":111,"output_tokens_details":{"reasoning_tokens":104},"total_tokens":310,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":3918500,"context_details":{"input_tokens":199,"output_tokens":111}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 07 Sep 2026 21:03:41 GMT
 recorded_with: VCR 6.4.0

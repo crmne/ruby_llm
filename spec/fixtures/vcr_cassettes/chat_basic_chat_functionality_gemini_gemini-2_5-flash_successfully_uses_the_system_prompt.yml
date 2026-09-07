@@ -5,7 +5,7 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{"temperature":0.0},"systemInstruction":{"parts":[{"text":"You
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}}'
     headers:
       User-Agent:
@@ -32,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:34:59 GMT
+      - Mon, 07 Sep 2026 21:01:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,44 +42,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=4793
+      - gfet4t7; dur=6649
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "Weather refers to the state of the atmosphere at a particular place and time, encompassing elements like temperature, humidity, precipitation, wind, atmospheric pressure, and cloud cover. It's a dynamic system driven primarily by solar energy, which heats the Earth unevenly, creating temperature differences that drive air and ocean currents.\n\nHere's a breakdown of the key components and what influences them:\n\n*   **Temperature:** This is a measure of how hot or cold the air is. It's influenced by the sun's angle, altitude, proximity to large bodies of water, and cloud cover.\n*   **Precipitation:** This includes any form of water that falls from the atmosphere to the Earth's surface, such as rain, snow, sleet, or hail. It occurs when water vapor in the atmosphere condenses and forms clouds, and the droplets or ice crystals grow large enough to fall.\n*   **Humidity:** This is the amount of water vapor in the air. High humidity can make the air feel muggy, while low humidity makes it feel dry. Relative humidity is the most common measure, indicating how much water vapor is present compared to the maximum the air can hold at that temperature.\n*   **Wind:** This is the movement of air, driven by differences in atmospheric pressure. Air flows from areas of high pressure to areas of low pressure. The Earth's rotation (Coriolis effect) also influences wind direction, creating <GOOGLE_CLOUD_LOCATION> wind patterns.\n*   **Atmospheric Pressure:** This is the force exerted by the weight of the air above a given point. High-pressure systems are generally associated with clear skies and stable weather, while low-pressure systems often bring clouds, precipitation, and unsettled weather.\n*   **Cloud Cover:** Clouds are visible masses of water droplets or ice crystals suspended in the atmosphere. They play a crucial role in regulating Earth's temperature by reflecting sunlight and trapping heat. Different types of clouds indicate different weather conditions.\n\n**What drives weather patterns?**\n\n1.  **The Sun:** The ultimate energy source, heating the Earth's surface and atmosphere.\n2.  **Earth's Rotation:** Creates the Coriolis effect, deflecting winds and ocean currents.\n3.  **Water Cycle:** Evaporation, condensation, precipitation, and runoff constantly move water through the atmosphere and across the Earth's surface.\n4.  **Atmospheric Circulation:** Large-scale patterns of air movement, like the Hadley, Ferrel, and Polar cells, distribute heat around the globe.\n5.  **Ocean Currents:** Like the atmosphere, oceans also circulate heat, influencing coastal climates.\n\n**How do we know the weather?**\n\nMeteorologists use a variety of tools, including satellites, radar, weather balloons, and ground-based sensors, to collect data. This data is then fed into complex computer models to predict future weather conditions.\n\nIf you're looking for a specific forecast, I recommend checking a local weather app or website, as I don't have real-time location data to give you an accurate, up-to-the-minute report. However, understanding these basic principles helps explain why the weather behaves the way it does. XKCD7392."
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 26,
-            "candidatesTokenCount": 663,
-            "totalTokenCount": 916,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 26
-              }
-            ],
-            "thoughtsTokenCount": 227,
-            "serviceTier": "standard"
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "D7-Fat6FAq2svdIPiOjGmQI"
-        }
-  recorded_at: Wed, 19 Aug 2026 14:34:59 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIHJlZmVycyB0byB0aGUgc3RhdGUgb2YgdGhlIGF0bW9zcGhlcmUgYXQgYSBwYXJ0aWN1bGFyIHBsYWNlIGFuZCB0aW1lLiBJdCdzIGEgZHluYW1pYyBhbmQgZXZlci1jaGFuZ2luZyBwaGVub21lbm9uLCBkcml2ZW4gcHJpbWFyaWx5IGJ5IHRoZSBzdW4ncyBlbmVyZ3ksIHdoaWNoIGhlYXRzIHRoZSBFYXJ0aCB1bmV2ZW5seS4gVGhpcyBkaWZmZXJlbnRpYWwgaGVhdGluZyBjcmVhdGVzIHByZXNzdXJlIGRpZmZlcmVuY2VzLCBsZWFkaW5nIHRvIGFpciBtb3ZlbWVudCAod2luZCkgYW5kIHRoZSBjb21wbGV4IHdhdGVyIGN5Y2xlLlxuXG5IZXJlIGFyZSB0aGUga2V5IGVsZW1lbnRzIHRoYXQgbWFrZSB1cCB3aGF0IHdlIGNhbGwgXCJ3ZWF0aGVyXCI6XG5cbjEuICAqKlRlbXBlcmF0dXJlOioqIEhvdyBob3Qgb3IgY29sZCB0aGUgYWlyIGlzLCB0eXBpY2FsbHkgbWVhc3VyZWQgaW4gZGVncmVlcyBDZWxzaXVzIG9yIEZhaHJlbmhlaXQuXG4yLiAgKipQcmVjaXBpdGF0aW9uOioqIEFueSBmb3JtIG9mIHdhdGVyIGZhbGxpbmcgZnJvbSB0aGUgYXRtb3NwaGVyZSwgaW5jbHVkaW5nIHJhaW4sIHNub3csIHNsZWV0LCBhbmQgaGFpbC5cbjMuICAqKldpbmQ6KiogVGhlIG1vdmVtZW50IG9mIGFpciwgZGVzY3JpYmVkIGJ5IGl0cyBzcGVlZCBhbmQgZGlyZWN0aW9uLlxuNC4gICoqSHVtaWRpdHk6KiogVGhlIGFtb3VudCBvZiB3YXRlciB2YXBvciBwcmVzZW50IGluIHRoZSBhaXIuIEhpZ2ggaHVtaWRpdHkgY2FuIG1ha2UgdGhlIGFpciBmZWVsIHN0aWNraWVyLlxuNS4gICoqQXRtb3NwaGVyaWMgUHJlc3N1cmU6KiogVGhlIHdlaWdodCBvZiB0aGUgYWlyIGFib3ZlIGEgZ2l2ZW4gcG9pbnQuIEhpZ2ggcHJlc3N1cmUgdXN1YWxseSBpbmRpY2F0ZXMgY2xlYXIsIHN0YWJsZSB3ZWF0aGVyLCB3aGlsZSBsb3cgcHJlc3N1cmUgb2Z0ZW4gYnJpbmdzIHN0b3Jtcy5cbjYuICAqKkNsb3VkIENvdmVyOioqIFRoZSBhbW91bnQgYW5kIHR5cGUgb2YgY2xvdWRzIHByZXNlbnQsIHdoaWNoIGFmZmVjdHMgc3VubGlnaHQgYW5kIHBvdGVudGlhbCBmb3IgcHJlY2lwaXRhdGlvbi5cblxuKipIb3cgaXQncyBTdHVkaWVkOioqXG5NZXRlb3JvbG9neSBpcyB0aGUgc2NpZW50aWZpYyBzdHVkeSBvZiB3ZWF0aGVyLiBNZXRlb3JvbG9naXN0cyB1c2UgYSB2YXJpZXR5IG9mIGluc3RydW1lbnRzIGFuZCB0ZWNobm9sb2dpZXMsIGluY2x1ZGluZyB0aGVybW9tZXRlcnMsIGJhcm9tZXRlcnMsIGFuZW1vbWV0ZXJzLCByYWluIGdhdWdlcywgcmFkYXIsIGFuZCBzYXRlbGxpdGVzLCB0byBjb2xsZWN0IGRhdGEgYW5kIGZvcmVjYXN0IGZ1dHVyZSBjb25kaXRpb25zLlxuXG4qKlR5cGVzIG9mIFdlYXRoZXIgUGhlbm9tZW5hOioqXG5XZWF0aGVyIGVuY29tcGFzc2VzIGV2ZXJ5dGhpbmcgZnJvbSBldmVyeWRheSBldmVudHMgbGlrZSBhIHN1bm55IGRheSwgYSBnZW50bGUgYnJlZXplLCBvciBhIGxpZ2h0IGRyaXp6bGUsIHRvIG1vcmUgZXh0cmVtZSBhbmQgaW1wYWN0ZnVsIHBoZW5vbWVuYSBzdWNoIGFzOlxuKiAgIFRodW5kZXJzdG9ybXNcbiogICBCbGl6emFyZHNcbiogICBIdXJyaWNhbmVzIChhbHNvIGtub3duIGFzIHR5cGhvb25zIG9yIHRyb3BpY2FsIGN5Y2xvbmVzKVxuKiAgIFRvcm5hZG9lc1xuKiAgIERyb3VnaHRzIGFuZCBmbG9vZHNcblxuKipXZWF0aGVyIHZzLiBDbGltYXRlOioqXG5JdCdzIGNydWNpYWwgdG8gZGlzdGluZ3Vpc2ggd2VhdGhlciBmcm9tIGNsaW1hdGUuIFdlYXRoZXIgaXMgd2hhdCB5b3UgZXhwZXJpZW5jZSBkYXktdG8tZGF54oCUYSBjb2xkIG1vcm5pbmcsIGEgcmFpbnkgYWZ0ZXJub29uLiBDbGltYXRlLCBvbiB0aGUgb3RoZXIgaGFuZCwgZGVzY3JpYmVzIHRoZSBhdmVyYWdlIHdlYXRoZXIgcGF0dGVybnMgYW5kIGNvbmRpdGlvbnMgb3ZlciBhIGxvbmcgcGVyaW9kICh0eXBpY2FsbHkgMzAgeWVhcnMgb3IgbW9yZSkgaW4gYSBzcGVjaWZpYyByZWdpb24uIEZvciBleGFtcGxlLCBhIHNpbmdsZSBjb2xkIHdpbnRlciBkYXkgaXMgd2VhdGhlcjsgdGhlIHR5cGljYWwgYXZlcmFnZSB0ZW1wZXJhdHVyZSBvZiBhbGwgd2ludGVyIGRheXMgaW4gYSByZWdpb24gaXMgY2xpbWF0ZS5cblxuVW5kZXJzdGFuZGluZyB0aGUgbnVhbmNlcyBvZiB3ZWF0aGVyIHBhdHRlcm5zLCBmcm9tIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHN5c3RlbXMgdG8gbG9jYWwgbWljcm9jbGltYXRlcywgaXMgYSB2YXN0IGFuZCBmYXNjaW5hdGluZyBmaWVsZCBvZiBzdHVkeSwgWEtDRDczOTIuIEl0IHByb2ZvdW5kbHkgaW1wYWN0cyBkYWlseSBsaWZlLCBhZ3JpY3VsdHVyZSwgdHJhbnNwb3J0YXRpb24sIGFuZCBuYXR1cmFsIGVjb3N5c3RlbXMuIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNiwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDUwNywKICAgICJ0b3RhbFRva2VuQ291bnQiOiAxMjI5LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDY5NiwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiSWlhZmFycjNBX214dmRJUDdabTQwUUkiCn0K
+  recorded_at: Mon, 07 Sep 2026 21:01:28 GMT
 recorded_with: VCR 6.4.0

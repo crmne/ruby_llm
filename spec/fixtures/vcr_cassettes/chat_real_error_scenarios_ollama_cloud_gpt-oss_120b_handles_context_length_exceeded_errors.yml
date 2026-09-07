@@ -19,40 +19,39 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 400
-      message: Bad Request
+      code: 500
+      message: Internal Server Error
     headers:
       Content-Type:
       - application/json
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '187'
+      - '134'
       Date:
-      - Thu, 13 Aug 2026 10:09:58 GMT
+      - Mon, 07 Sep 2026 21:05:23 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - f0b3c5c115a88518a50cc3756be79058/14344198065606550482
       Traceparent:
-      - 00-f0b3c5c115a88518a50cc3756be79058-c710d4245052e3d2-00
+      - 00-bf7e28ad583c6fc17b921a4730850727-62688a00e8428477-00
+      X-Cloud-Trace-Context:
+      - bf7e28ad583c6fc17b921a4730850727/7091069349796152439
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"prompt too long; exceeded max context length by
-        1119046 tokens (ref: 96164522-08b2-4cbf-886e-e5a38961a688)","type":"invalid_request_error","param":null,"code":null}}
+      string: '{"error":{"message":"Internal Server Error (ref: 87cb808e-a6bc-435d-b913-1d8f2b7d6755)","type":"api_error","param":null,"code":null}}
 
         '
-  recorded_at: Thu, 13 Aug 2026 10:09:58 GMT
+  recorded_at: Mon, 07 Sep 2026 21:05:23 GMT
 recorded_with: VCR 6.4.0

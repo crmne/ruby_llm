@@ -29,9 +29,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
     { 'custom_id' => id, 'error' => '', 'body' => body }
   end
 
-  before do |example|
-    next unless example.metadata[:live]
-
+  def configure_live_batch
     RubyLLM.config.max_retries = 2
     RubyLLM.config.request_timeout = 45
     allow(RubyLLM::Protocols::Cohere::Datasets).to receive(:new).and_wrap_original do |constructor, *args|
@@ -204,6 +202,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
   end
 
   it 'collects completed Cohere chat responses with returned IDs and token usage', :live do
+    configure_live_batch
     chats = %w[Ruby Rails].map do |word|
       RubyLLM.chat(model:, provider: :cohere).with_max_output_tokens(16).ask_later("Reply with #{word} only.")
     end
@@ -226,6 +225,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
   end
 
   it 'collects completed Cohere embedding batches with scalar and array results', :live do
+    configure_live_batch
     requests = ['Ruby makes AI useful.', ['Rails makes applications enjoyable.'], %w[Ruby Rails]].map do |text|
       RubyLLM.embed_later(text, model: embedding_model, provider: :cohere)
     end

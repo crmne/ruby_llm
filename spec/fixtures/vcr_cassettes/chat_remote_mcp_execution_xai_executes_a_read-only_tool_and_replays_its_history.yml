@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 12:18:27 GMT
+      - Mon, 07 Sep 2026 21:04:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,8 +45,9 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Cf-Cache-Status:
-      - DYNAMIC
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=b4XyFDGoUDBdNXyuB24ZeUKLAEmOf7NEqXtMzHh7LoU-1788815070.8379185-1.0.1.1-krNBwkx164M7zvXzy4RPDOtSJWy7hJzm_6HVoc84f6MXb6ovSzv5A4VzC3p48IPzphimwW2UzBeqUeEecgPABYDVMxDXO.pBhFfzDsFF8ESxnSrAI4869TKUllkaQuzfbd2WV2PUbCGA.Q8vbB5qbfHW7AtN0uAC8Si0kGBp16Y;
+        report-to cf-csp-endpoint
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Zero-Data-Retention:
@@ -54,26 +55,32 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '381.6'
+      - '680.5'
       X-Metrics-E2e-Ms:
-      - '4777.1'
+      - '6091.7'
       Traceparent:
-      - 00-8176dbe6c13bf5bf7c5ab67d8d99f477-377ad83b0003c99c-01
+      - 00-f1e8a1935018716f9a3764acb1ec5a3a-0775e5550002bc20-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=b4XyFDGoUDBdNXyuB24ZeUKLAEmOf7NEqXtMzHh7LoU-1788815070.8379185-1.0.1.1-krNBwkx164M7zvXzy4RPDOtSJWy7hJzm_6HVoc84f6MXb6ovSzv5A4VzC3p48IPzphimwW2UzBeqUeEecgPABYDVMxDXO.pBhFfzDsFF8ESxnSrAI4869TKUllkaQuzfbd2WV2PUbCGA.Q8vbB5qbfHW7AtN0uAC8Si0kGBp16Y"}]}'
+      Reporting-Endpoints:
+      - cf-csp-endpoint="https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=b4XyFDGoUDBdNXyuB24ZeUKLAEmOf7NEqXtMzHh7LoU-1788815070.8379185-1.0.1.1-krNBwkx164M7zvXzy4RPDOtSJWy7hJzm_6HVoc84f6MXb6ovSzv5A4VzC3p48IPzphimwW2UzBeqUeEecgPABYDVMxDXO.pBhFfzDsFF8ESxnSrAI4869TKUllkaQuzfbd2WV2PUbCGA.Q8vbB5qbfHW7AtN0uAC8Si0kGBp16Y"
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1788783507,"completed_at":1788783507,"id":"24fa2f19-5586-9ab3-8353-2dfb9785969b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_24fa2f19-5586-9ab3-8353-2dfb9785969b","summary":[{"text":"The
+      string: '{"created_at":1788815077,"completed_at":1788815077,"id":"a27968c4-11d3-979f-a45a-91e8675b03d7","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_a27968c4-11d3-979f-a45a-91e8675b03d7","summary":[{"text":"The
         user says: \"Search Microsoft documentation for Azure Blob Storage, then summarize
-        it in one sentence.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"+KUpM4nOqpPn97tQ0OSZDw3wcZY+cfc4wVqMOE0z7xwElnBjvVI7+ZYk/6mJtdOt2Aowpmy3acOJbjSa2hAzvlKZyNFy4dQppltJ4DCB6gJoGhh7dDtq7nCVDRKe8wmSiCsT8hWBPM0R67jBrkx4v4Dmb9gi8KzYsvjxHeb6BfllX8wfoam4929HxNJTn8RM3uLpEdTFP+hhPpVTEFQVIluegJEMzD0rpt3cRTrrH5A6FRD5qSfBOFbLlMO44M7GPRLCe7hiZUgaX5nWwAZpoJjCm8Kkqncy34IFfLk1yp1v/gUM+O4B2ECv7lMUsuImbfrq+AK5mgMP5U5J7pwILu/+YLwq8vk+MByJhMvLII8E0ijimlAS68JR/cQ0QyOXHq4+Rjxxm2lyI3vVwHcHnhX7xDfZ8OjLcyLcQpQ0hQwToKiZoWCv8Y005SrtgvtmWVXv4BHd8b/YZC/A4NwBnFowkNl/43clMPNLwbosXYdoVZKOjwZMbNU+vXAnpGFS195M0ERQs9hynS8QR6mqlmiS9fP4x+ejc8w3XelrhFbnFUQpOGLgDnIrp2QsSejZQ5f7UVBptbHZepQDL2JMPOR0UaoZvRMTM5nx8nFMSalzndG6KGl94unHpACQqaA9cBSKPcbXSFzAVRsJFjidiQomh9BNvogMmzUDXz9Q5vlm8gb+hUZ5SYQvqoKICMa3sOnf3qZI34TULYSAMGV7Pijox44Zf4oU3wCNIZEHAtyfU/ah/eeN1clGAC+zgyHfKIvkYzV4ZSf2c2EW2QHjcG0ddf76Ve+6cWwsJhCon27iAvQgFuBSb8h6s6dJ6HqhFJK8vJSTWI2QDuf0PL6iA0qi8kgPBRopBQI8FE0zHfhsRbxRjlOx9iAzZKkStJx6Vg0wwaJHZUzXGwQHZQwM64e2lZxOB8hD/+TQeZrtlNRqBB/3zOPRU3cjHoYyb7Bf/sJCsC5SBk8Vxe/aUD/7MwBPAiawZL1ivlRjdmk0lDl7NUnBsojT9Ki3hW4WnzNtoV/6HYjeN5qGdkBDkOYqNw5b+HF8ja2orD7jA86thwRfV8qeAhXAdjoNGfJOyP97WKrHRF95AffjWq5Km9gCDGkXWcuNw50k1iw4pe82r67tZP4kk43sLM0qYgQ4J9X1TbMHwwR9rCRKbRw/bX/YRtApnTeCVhzqKgJsy5HU309x/LgjE1vsCVYVrBMgMfNnvWvLSyWfRRSBSEqMgkYC+8b2SssZg9CBZLqknEaoF4lZE7zreZ1yxKiMh20uHQBVt6VoTcqHwEhv3q3Lt8e/nqivaUM7xfbf9tA7U2CZgdLzC5kBBOwIGhZTueF747wwjjo6Nls9U1UOaqThSCjzXs4kmd1M1dFSDWyaZy4mrsESaCxkV2l0QV2UMc69ZfC+arh59o/OxOex7OFryMOmGppVGvFoNDzM2g7MWH+dOIPGtKKoHkjArho8nZhn0nrS+I/CmBYHo+nTsKQmSV7drbCz+qIlx4IZTww1UPGQj3/KiEuAt4HD2q4SbGz0ma/LWF5BYhuiZdXJ5DS9JBojfSRaXZaWSs39+/LXw3tmDwKJn8lKbSdyLpJcH1mzhtQ2Ldyx/wWP/6OsFvc65LPmoYyf7H4c"},{"id":"mcp_24fa2f19-5586-9ab3-8353-2dfb9785969b_call-056ad04c-b954-45f6-a708-12710ea95130-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
+        it in one sentence.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YkWjAwDZNQY8Xk2eaXz56gDvUM/ZQXcDDHyNixHknbb3a4u9AGLUvC+ITY1H+TE6/2DfDFmRaBAFWg0y+fP69HFGN9SHKrScNnFcRN9NwaHlOd4NccBHxueXkZdWddcOwUJxN7t0C7sFhquGWC1Six095K0XzVrqQOwHjs+D0VTOSJCCGOF8b8b+opbsKUilGcD+Sw/dP6mdcoKHwNyy+ZIvQUxAOn4xjJvzk9jJqJbGG4lWEpDW/3TpfrlwP0FhnIW9hFSViSydTQ5fK6+kTZtXvbOSSaMGaBnYk8WgrQRQoY2D+lRrZ48I84KyIeScaAdU3+zbH83Fn2LqGaOxuPM+w+v0hScmoKQlBIrdYzHDtdmjaBZd++leadcbcKio+L4uCSYUfIbE1QT7NRqfSKGXtp1wAZwf7qx8VTs9nWkNMlV/qpB6ADgncj+WxclvGaIFc4RguBDipndlzcvw6TsQuM7fX+SU3Gq/3c3GEEb0kUt4iC6HZcojbdgwPPpDz9UDOblzXn9s8m3ndUs/YQXB+gPN3eL2B0hFT+lkWZiRp4ALeNzk6ZDwwLr562roJqADrZnb7iTWjtAWSWNd6/a5l/3XQm366mc3DTSL5AywIK7kG6tgzpQO3sEmCRLUaaX/FdzmzuXIP7KKTbXcgFTKqqGslt6ve4c7pJGu86635qK/mI+eHEqFED1M5l5ipjEIKkq/a970bY2Tdieg0MDqEa04ZCuI/P47LRN4IuxaaFR+JdqahuTpU4MOdp8n7H3paP5gASUCXLJoVQc4Cs1WY5jVYpDwYEAjQ5UhQGvmSgoWJI7UlS32c0ce6AvhTRnD9zJqCZNx5AEtCq0YQze6xl0aPvXyu6SvRAhrMGoCkjnbPoLc6/saBieotrIGIeDh2BGRtR4AaP9Py4Jhy5TOS+kY/NIqp3hYreSb6FQzjid25qrcNG/RWJATpb6LwdBSALTC8/6606vWMt71dmRpV4faGkJIlPGZ3/262lfNuQWGRUrZ3wniDzGH15HMNr9Bpt7yBzFTsOW/VLuXxQDrVU08hnHyNdDsPUgkfqlOVXMVqbpGPrKDk9PvdWVaAFzq8Ez3FLKlsXjJUjfDDksXFaYsZkiJcfck9UMqt0bfvcT1ja/+tjmHsFbb1AFQRwXMmJCU0/riFzHzT/lLPc+3n/7JU1QTMeRzF540OWkt7py2nl3NgcOTtR7EzRNPlb7KSe5CagRYOQZPpl+ARycbtv1wUrPjr+6UzLZiTnxn1hEOtw+52mblCi1qkc73b/1T/tcpWIKfmGyzuwH88eDgLtJtfk85i99pkBDpD6j7uA7QS+QWKA6HWlrSd2BB7ea+VA3drzYdnPvcKAOX4a2jFTEfrj6VR5YIfto1fK9y8Nm1vRiGKjDs"},{"id":"mcp_a27968c4-11d3-979f-a45a-91e8675b03d7_call-8ece3bb3-9978-4c98-a550-044398667db1-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
         Blob Storage\"}","output":"{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"What
         is Azure Blob storage?\\\",\\\"content\\\":\\\"# What is Azure Blob storage?\\\\nAzure
         Blob Storage is Microsoft\\\\u0027s object storage solution for the cloud.
@@ -186,7 +193,47 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Get
+        started with Azure Blob Storage and .NET\\\",\\\"content\\\":\\\"# Get started
+        with Azure Blob Storage and .NET\\\\n## Build your app\\\\nAs you build apps
+        to work with data resources in Azure Blob Storage, your code primarily interacts
+        with three resource types: storage accounts, containers, and blobs. To learn
+        more about these resource types, how they relate to one another, and how apps
+        interact with resources, see [Understand how apps interact with Blob Storage
+        data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\\\n| Guide | Description|
+        \\\\n|  --- | ---  |\\\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\\\n| [Delete and restore
+        blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\\\n| [Find
+        blobs using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\\\n| [Performance
+        tuning for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\\\n| [Set or change
+        a blob\\\\u0027s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\\\n\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\\\"},{\\\"title\\\":\\\"Introduction
         to Azure Blob Storage\\\",\\\"content\\\":\\\"# Introduction to Azure Blob
         Storage\\\\n## Move data to Blob Storage\\\\nA number of solutions exist for
         migrating existing data to Blob Storage:\\\\n1. **AzCopy** is an easy-to-use
@@ -327,49 +374,7 @@ http_interactions:
         a manifest file and an Azure Event Grid event for each inventory report. The
         article describes these items later.\\\\n## Enabling inventory reports\\\\nEnable
         blob inventory reports by adding a policy with one or more rules to your storage
-        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"},{\\\"title\\\":\\\"Configure
-        Azure Blob Storage - Training\\\",\\\"content\\\":\\\"# Configure Azure Blob
-        Storage\\\\r\\\\n\\\\r\\\\n- Module\\\\r\\\\n- 11 Units\\\\r\\\\n\\\\r\\\\n
-        Intermediate \\\\r\\\\n\\\\r\\\\n Administrator \\\\r\\\\n\\\\r\\\\n Azure
-        Blob Storage \\\\r\\\\n\\\\r\\\\nLearn how to configure Configure Azure Blob
-        Storage, including tiers and object replication.\\\\r\\\\n\\\\r\\\\n##  Learning
-        objectives \\\\r\\\\n\\\\r\\\\nIn this module, you learn how to:\\\\r\\\\n\\\\r\\\\n-
-        Understand the purpose and benefits of Azure Blob Storage.\\\\r\\\\n- Create
-        and configure Azure Blob Storage accounts.\\\\r\\\\n- Manage containers and
-        blobs within Azure Blob Storage.\\\\r\\\\n- Optimize blob storage performance
-        and scalability.\\\\r\\\\n- Implement lifecycle management policies to automate
-        data movement and deletion.\\\\r\\\\n- Determine the best pricing plans for
-        your Azure Blob Storage.\\\\r\\\\n\\\\r\\\\n## Prerequisites\\\\r\\\\n\\\\r\\\\n-
-        Basic understanding of cloud computing. Familiarity with cloud computing concepts,
-        such as virtualization, scalability, and pay-as-you-go pricing models, can
-        provide a foundation for understanding how Azure Blob Storage fits into the
-        broader cloud ecosystem.\\\\r\\\\n- Knowledge of Azure fundamentals. Having
-        a basic understanding of Microsoft Azure services and concepts, such as Azure
-        Resource Manager, Azure Storage Accounts, and Azure Virtual Networks, can
-        help you navigate and configure blob storage effectively.\\\\r\\\\n- Familiarity
-        with storage concepts like file systems, directories, files, and data replication.\\\\r\\\\n-
-        Experience with Azure portal or Azure CLI. Familiarity with the Azure portal
-        (web-based management interface) or Azure CLI (command-line interface) can
-        help you navigate and configure blob storage resources efficiently.\\\\r\\\\n-
-        Basic programming or scripting skills. While not always required, having some
-        knowledge of programming or scripting languages like Azure PowerShell can
-        be advantageous when automating blob storage configuration tasks.\\\\r\\\\n\\\\r\\\\nTake
-        the module assessment\\\\r\\\\n\\\\r\\\\n Module Assessment Results\\\\r\\\\n\\\\r\\\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\\\\r\\\\n\\\\r\\\\n- [Introduction](https://learn.microsoft.com/training/modules/configure-blob-storage/1-introduction)\\\\r\\\\n-
-        [Implement Azure Blob Storage](https://learn.microsoft.com/training/modules/configure-blob-storage/2-implement)\\\\r\\\\n-
-        [Create blob containers](https://learn.microsoft.com/training/modules/configure-blob-storage/3-create-blob-containers)\\\\r\\\\n-
-        [Assign blob access tiers](https://learn.microsoft.com/training/modules/configure-blob-storage/4-create-blob-access-tiers)\\\\r\\\\n-
-        [Add blob lifecycle management rules](https://learn.microsoft.com/training/modules/configure-blob-storage/5-add-blob-lifecycle-management-rules)\\\\r\\\\n-
-        [Determine blob object replication](https://learn.microsoft.com/training/modules/configure-blob-storage/6-determine-blob-object-replication)\\\\r\\\\n-
-        [Manage blobs](https://learn.microsoft.com/training/modules/configure-blob-storage/7-upload-blobs)\\\\r\\\\n-
-        [Determine Blob Storage pricing](https://learn.microsoft.com/training/modules/configure-blob-storage/8-determine-storage-pricing)\\\\r\\\\n-
-        [Exercise - Provide storage for the public website](https://learn.microsoft.com/training/modules/configure-blob-storage/9-simulation-blobs)\\\\r\\\\n-
-        [Module assessment](https://learn.microsoft.com/training/modules/configure-blob-storage/10-knowledge-check)\\\\r\\\\n-
-        [Summary and resources](https://learn.microsoft.com/training/modules/configure-blob-storage/11-summary-resources)\\\\r\\\\n\\\\r\\\\nTake
-        the module assessment\\\\r\\\\n\\\\r\\\\n Module Assessment Results\\\\r\\\\n\\\\r\\\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/training/modules/configure-blob-storage/\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
+        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft''s object storage solution for the cloud. Blob Storage
         is optimized for storing massive amounts of unstructured data. Unstructured
@@ -478,7 +483,45 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Get
+        started with Azure Blob Storage and .NET\",\"content\":\"# Get started with
+        Azure Blob Storage and .NET\\n## Build your app\\nAs you build apps to work
+        with data resources in Azure Blob Storage, your code primarily interacts with
+        three resource types: storage accounts, containers, and blobs. To learn more
+        about these resource types, how they relate to one another, and how apps interact
+        with resources, see [Understand how apps interact with Blob Storage data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\n| Guide | Description|
+        \\n|  --- | ---  |\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\n| [Delete and restore blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\n| [Find blobs
+        using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\n| [Performance tuning
+        for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\n| [Set or change
+        a blob''s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\n\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\"},{\"title\":\"Introduction
         to Azure Blob Storage\",\"content\":\"# Introduction to Azure Blob Storage\\n##
         Move data to Blob Storage\\nA number of solutions exist for migrating existing
         data to Blob Storage:\\n1. **AzCopy** is an easy-to-use command-line tool
@@ -617,61 +660,23 @@ http_interactions:
         Event Grid event for each inventory report. The article describes these items
         later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
         adding a policy with one or more rules to your storage account. For guidance,
-        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"},{\"title\":\"Configure
-        Azure Blob Storage - Training\",\"content\":\"# Configure Azure Blob Storage\\r\\n\\r\\n-
-        Module\\r\\n- 11 Units\\r\\n\\r\\n Intermediate \\r\\n\\r\\n Administrator
-        \\r\\n\\r\\n Azure Blob Storage \\r\\n\\r\\nLearn how to configure Configure
-        Azure Blob Storage, including tiers and object replication.\\r\\n\\r\\n##  Learning
-        objectives \\r\\n\\r\\nIn this module, you learn how to:\\r\\n\\r\\n- Understand
-        the purpose and benefits of Azure Blob Storage.\\r\\n- Create and configure
-        Azure Blob Storage accounts.\\r\\n- Manage containers and blobs within Azure
-        Blob Storage.\\r\\n- Optimize blob storage performance and scalability.\\r\\n-
-        Implement lifecycle management policies to automate data movement and deletion.\\r\\n-
-        Determine the best pricing plans for your Azure Blob Storage.\\r\\n\\r\\n##
-        Prerequisites\\r\\n\\r\\n- Basic understanding of cloud computing. Familiarity
-        with cloud computing concepts, such as virtualization, scalability, and pay-as-you-go
-        pricing models, can provide a foundation for understanding how Azure Blob
-        Storage fits into the broader cloud ecosystem.\\r\\n- Knowledge of Azure fundamentals.
-        Having a basic understanding of Microsoft Azure services and concepts, such
-        as Azure Resource Manager, Azure Storage Accounts, and Azure Virtual Networks,
-        can help you navigate and configure blob storage effectively.\\r\\n- Familiarity
-        with storage concepts like file systems, directories, files, and data replication.\\r\\n-
-        Experience with Azure portal or Azure CLI. Familiarity with the Azure portal
-        (web-based management interface) or Azure CLI (command-line interface) can
-        help you navigate and configure blob storage resources efficiently.\\r\\n-
-        Basic programming or scripting skills. While not always required, having some
-        knowledge of programming or scripting languages like Azure PowerShell can
-        be advantageous when automating blob storage configuration tasks.\\r\\n\\r\\nTake
-        the module assessment\\r\\n\\r\\n Module Assessment Results\\r\\n\\r\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\\r\\n\\r\\n- [Introduction](https://learn.microsoft.com/training/modules/configure-blob-storage/1-introduction)\\r\\n-
-        [Implement Azure Blob Storage](https://learn.microsoft.com/training/modules/configure-blob-storage/2-implement)\\r\\n-
-        [Create blob containers](https://learn.microsoft.com/training/modules/configure-blob-storage/3-create-blob-containers)\\r\\n-
-        [Assign blob access tiers](https://learn.microsoft.com/training/modules/configure-blob-storage/4-create-blob-access-tiers)\\r\\n-
-        [Add blob lifecycle management rules](https://learn.microsoft.com/training/modules/configure-blob-storage/5-add-blob-lifecycle-management-rules)\\r\\n-
-        [Determine blob object replication](https://learn.microsoft.com/training/modules/configure-blob-storage/6-determine-blob-object-replication)\\r\\n-
-        [Manage blobs](https://learn.microsoft.com/training/modules/configure-blob-storage/7-upload-blobs)\\r\\n-
-        [Determine Blob Storage pricing](https://learn.microsoft.com/training/modules/configure-blob-storage/8-determine-storage-pricing)\\r\\n-
-        [Exercise - Provide storage for the public website](https://learn.microsoft.com/training/modules/configure-blob-storage/9-simulation-blobs)\\r\\n-
-        [Module assessment](https://learn.microsoft.com/training/modules/configure-blob-storage/10-knowledge-check)\\r\\n-
-        [Summary and resources](https://learn.microsoft.com/training/modules/configure-blob-storage/11-summary-resources)\\r\\n\\r\\nTake
-        the module assessment\\r\\n\\r\\n Module Assessment Results\\r\\n\\r\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\",\"contentUrl\":\"https://learn.microsoft.com/training/modules/configure-blob-storage/\"}]}}"},{"id":"rs_24fa2f19-5586-9ab3-8353-2dfb9785969b","summary":[],"type":"reasoning","status":"completed","encrypted_content":"hbKCC7kDrdeOSFC811sdupq5UHTsVcoY3yKRUgfE5nMQD/WGpjiPNaJCITAa56mEDeGsl0ZzbuttrGYIvQEcz1wHlfTjp9j2EnbDxZnsF7p9mJm7CjdOAGU8nh+cVOsUviqkeMkqLS0u1rotFZvTv0sFJUVPYtPIzlTzL5Msf7q+UPo8K8T+ixreJfUrAv0da3VrVuMm1Zg+tphcqflZbP2rvbzwmmcWuUyN5OCOZtrJ2ojcfg/d6G1iZqis7R/Ukf0lVGboY5pJeD3X0y13oOE5qPLEPQEQY1tcRPSNkI61DTZWtvSAz8EQWAMqvjUTaLc9Hgualzlok6avGQF5S4sY5tWHoDh1QFll493GEecF1LuPczPxI6C4LjhUrGHJIPv1WE5JmMBPt0NwKXkD17dsYu9K4EcG5LKigRCrzYcqbN9AGoSgT2RLWwh925IeotclNr2K8rDwNRDoXN6uVf0DoxILw0QkdHEVzGm9Obdk88AcdI0dKFnDEmlm2cKVt0VpB/TQVdvRc0B3kE58VrO7k4H7yR1zyp15bXyU5uCKjlxVpnOfwLvrc8VUELxCEyetIawgGvETcryDNWhexdL3AuFWBl+tUZzKlI97XbmBf2X3UZCnz7wW5FDWDuSsvx6XtWh2Ixp/GkM5nSxvSQlVRo+rHXJNpvxJ7E/h3KYyuEhgAGyFnAKn1ci+VkIp3+YNPXc2+1y/DkxbrBV3YbK+7ISvHjo4cDVTJU4mMqRfBZeMdI7GcXzYA+lxCKOu3QASihWJuM0V9+FCWtHmOwjZ7LtpnctcDKnr9oo50p+Jw6lIqxlmLgeDA32xUJl42GM43tEFEdAW44PxZk5HDBUzmU1HEqowJ8ClyZue3YNFQnAUq20XmsSHcrdak7MXDD6hyIidRH/3UeD7AhGh5OIX4WIV/45OE5YGIGYJhSd6Lr60IO6cDygS6gLL5nNk3Y7zd/7Hm6VJbIzCxHnoWqxWtSoNSHzdZe2sad9i7/2DLQ/mOocimCO7yNDHtG58Kmzb/I3/gq4hzib4xyPt1UuzI1Dbkh3Pjo3vH9K1V/lKbKkWnSdY2dLMiZjFHxnw2+sDMnE0uwmZ+4pG46/gPGYXcnUmDP/p4qXLRRoLhoqgOT0Mp5X6cpMrI6aD2JAekAG52OiqGTIL4bdtx+e9IYuSxbTdHL57rTI2ymLvpKKV8yw9alww6kucjB364lNJ/gXOgUIR4qjAqQzVAbRrqYkDEVp7+ezBnWLsOHFcUD4lY0yWTUcCZn4"},{"content":[{"type":"output_text","text":"Azure
+        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}}"},{"id":"rs_a27968c4-11d3-979f-a45a-91e8675b03d7","summary":[],"type":"reasoning","status":"completed","encrypted_content":"k3yCWvDzgpHKw59aFPHzMJEsSxVnRrRLNLnd9PZ6wFUmn0BeBNBQvxU5clXDS95l/hydlNpiFZ6aJTP3ga8CNoJx79AGxrlHfh4c/b1YwfjaKCW+iFjrvvB83sduu2hrwtiaLM2WHwUhPVjidLSCdl/VBj2tJW8qQmVHjjDvdnvDctyW/fD7CGKzlQ/FsAevn/IgL/rS5grpq36m26hf+gEqzjarFP/DG7ihXPbbAmrldHhQDj/J8XDUyUvMpvkbmc6o20HhRLxINOOdDI+c8aCWzqMGjMhreBBHqodX/zpGSBkFVCS0uWeF0o0UifSK5aDZWvsoIxYOhp008vi3qDStmijtmM9G00wz9wpxjjLZArqqs8m5KhdavsK4lMmRioqkhGJtiv0XGE1ARbmmRFV7eYPdQ1nCOE9VbGkrAvbdcZdVAbgRWD8jUxKF2pZ7mOGtLCLZXaGIOsEdQ+XnpLrk7vuXIEXqKQc5oolG07kSw1/rZD0gDoq8XroAohUgt8Rk7oScV2wn1uEl9DVUZZHrHfl36Cu9g0ldtj03JaWAZ5d5QBNFWSPuuZ5P0y1WYevCmn8VpQF2CQ4wjVGxKrKT7s0PSXE+A9M4zeKqvI2fcwjzzTEhM2uGLGL4VltjFIEafz4QsQzS6zcSMiUB8uwjw5eyGuMvdos1Ry5FzE1Q225xYhzFY2VWkkCjp9S4XicsM8I7wOz+ILMJueoh9M5LTaOBNBQSkD7AVndcv/aymbgFk6HZwlIDAC/ToCQCZZ9S+RYWe4G+WoWc5uMhsJa/TLpR8EtB5LQpHW2SvXfRvyzrZKCdfNLaW5MZSzQjmI0SWoYGJ91pxHjWz6NjotWRT8K0lJwcTC5iz7K+22nIN3Avde5fy/NV2AG8TpqqPiwy65M+sp5j8zJyzPo/DQFaoBOfUucBHm1lCofG6/i0IE6u/YIhH+Y/oxvPzDU2TuemtuAewAJd4mRniHZpWJ/b4F38Fo8QtlUKpHAEcL+5s6Okw1dRTxyTvqe9CZ0id0GKgZ2G/qs41sdL8zfeUXKitXfzV22YjNQKxytshVuEk08UIdt6a5bATjlyiKz88UpM+t7idX3ZPH7I9furWCuobBwW55CiuJSVjx8/t2Mhe6yYeC+k0551ILDKHmhSEVM/bCk4f9BFD6SkB66hNalMnGUBCjuPtHStrJH95OR7ZV3DTbvnGpfcudGjNSDD7uPBRHNqKuyZnf1rHOrCFnP14uh5gyOx+9jU9ASJp3niy/As0G199kUSoFqrXItfXpL8ff1YGWK8GXwWEq1IiS2b4r0D53xVxfylE/uSp6DU4zJjKJxKktEguoXwrvoce5RQMQSNAfxJEoJrCstnRMoDxEX46Lhp+/5XLLDoShw9mMWdAEGCRwG0fe8a4uZFwOxF2GfyUWLFcujZU1CzF2JSOHMMz1amnSsfDA3lqWVZ6lfd52fynMIxDNCx/oMMIThOLVXdDAojdQSwBxuOqbSrg7pI+grsQfU1IPIkA1oQNntvF3E8oGiYcxW6G2/qTsCHoKawJd54gL0clhhTPG05n49xrkmCzAAvVvYlLJnZ1da3RYDrVcvuWaz/3NmMPbKR2mZSHdPNKOe9aOCjqnlcowyDeweOKv39g6+394SF8J44DMNQxSY/rVZkTllbnKqvwiyvyLfmUrEYJoSDc87cWd9NNRNA0RHDIHhqOq5Xpno1aauiuL/l8FnsZ/uqCnRMERePD9iO1VvkF4MNDHgqSEAZWVRCrqIQ4dfu/rEGCrQLX+nN1KJrj4Y7cXJNm4gtO4FVSLHTYswwgMx07+6dTg+IPSqUSxEYHeJLB6XcByJaMRRWkd6NMiD6wLUvggKFCD/wIb1AHkVmMJI1SJgwT486JgM9tB8X6RPbLJWLDPre0DUeKcfDbyuqWvmd/heYP07gUcj3OXc2/UTUey2aewi08FzObqCBT63JrvabY1A"},{"content":[{"type":"output_text","text":"Azure
         Blob Storage is Microsoft''s object storage solution for the cloud, optimized
-        for storing massive amounts of unstructured data such as text or binary data.","logprobs":[],"annotations":[]}],"id":"msg_24fa2f19-5586-9ab3-8353-2dfb9785969b","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12501,"input_tokens_details":{"cached_tokens":896},"output_tokens":477,"output_tokens_details":{"reasoning_tokens":446},"total_tokens":12978,"num_sources_used":0,"num_server_side_tools_used":1,"cost_in_usd_ticks":158779500,"server_side_tool_usage_details":{"web_search_calls":0,"x_search_calls":0,"code_interpreter_calls":0,"file_search_calls":0,"mcp_calls":1,"document_search_calls":0,"image_generation_calls":0},"context_details":{"input_tokens":11710,"output_tokens":210}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
+        for storing massive amounts of unstructured data such as text or binary files,
+        with support for serving content, streaming media, backups, and access via
+        HTTP/REST APIs or client libraries.","logprobs":[],"annotations":[]}],"id":"msg_a27968c4-11d3-979f-a45a-91e8675b03d7","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12581,"input_tokens_details":{"cached_tokens":896},"output_tokens":562,"output_tokens_details":{"reasoning_tokens":509},"total_tokens":13143,"num_sources_used":0,"num_server_side_tools_used":1,"cost_in_usd_ticks":161904500,"server_side_tool_usage_details":{"web_search_calls":0,"x_search_calls":0,"code_interpreter_calls":0,"file_search_calls":0,"mcp_calls":1,"document_search_calls":0,"image_generation_calls":0},"context_details":{"input_tokens":11790,"output_tokens":334}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}'
-  recorded_at: Mon, 07 Sep 2026 12:18:27 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:37 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then summarize it in one sentence."},{"id":"rs_24fa2f19-5586-9ab3-8353-2dfb9785969b","summary":[{"text":"The
+        documentation for Azure Blob Storage, then summarize it in one sentence."},{"id":"rs_a27968c4-11d3-979f-a45a-91e8675b03d7","summary":[{"text":"The
         user says: \"Search Microsoft documentation for Azure Blob Storage, then summarize
-        it in one sentence.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"+KUpM4nOqpPn97tQ0OSZDw3wcZY+cfc4wVqMOE0z7xwElnBjvVI7+ZYk/6mJtdOt2Aowpmy3acOJbjSa2hAzvlKZyNFy4dQppltJ4DCB6gJoGhh7dDtq7nCVDRKe8wmSiCsT8hWBPM0R67jBrkx4v4Dmb9gi8KzYsvjxHeb6BfllX8wfoam4929HxNJTn8RM3uLpEdTFP+hhPpVTEFQVIluegJEMzD0rpt3cRTrrH5A6FRD5qSfBOFbLlMO44M7GPRLCe7hiZUgaX5nWwAZpoJjCm8Kkqncy34IFfLk1yp1v/gUM+O4B2ECv7lMUsuImbfrq+AK5mgMP5U5J7pwILu/+YLwq8vk+MByJhMvLII8E0ijimlAS68JR/cQ0QyOXHq4+Rjxxm2lyI3vVwHcHnhX7xDfZ8OjLcyLcQpQ0hQwToKiZoWCv8Y005SrtgvtmWVXv4BHd8b/YZC/A4NwBnFowkNl/43clMPNLwbosXYdoVZKOjwZMbNU+vXAnpGFS195M0ERQs9hynS8QR6mqlmiS9fP4x+ejc8w3XelrhFbnFUQpOGLgDnIrp2QsSejZQ5f7UVBptbHZepQDL2JMPOR0UaoZvRMTM5nx8nFMSalzndG6KGl94unHpACQqaA9cBSKPcbXSFzAVRsJFjidiQomh9BNvogMmzUDXz9Q5vlm8gb+hUZ5SYQvqoKICMa3sOnf3qZI34TULYSAMGV7Pijox44Zf4oU3wCNIZEHAtyfU/ah/eeN1clGAC+zgyHfKIvkYzV4ZSf2c2EW2QHjcG0ddf76Ve+6cWwsJhCon27iAvQgFuBSb8h6s6dJ6HqhFJK8vJSTWI2QDuf0PL6iA0qi8kgPBRopBQI8FE0zHfhsRbxRjlOx9iAzZKkStJx6Vg0wwaJHZUzXGwQHZQwM64e2lZxOB8hD/+TQeZrtlNRqBB/3zOPRU3cjHoYyb7Bf/sJCsC5SBk8Vxe/aUD/7MwBPAiawZL1ivlRjdmk0lDl7NUnBsojT9Ki3hW4WnzNtoV/6HYjeN5qGdkBDkOYqNw5b+HF8ja2orD7jA86thwRfV8qeAhXAdjoNGfJOyP97WKrHRF95AffjWq5Km9gCDGkXWcuNw50k1iw4pe82r67tZP4kk43sLM0qYgQ4J9X1TbMHwwR9rCRKbRw/bX/YRtApnTeCVhzqKgJsy5HU309x/LgjE1vsCVYVrBMgMfNnvWvLSyWfRRSBSEqMgkYC+8b2SssZg9CBZLqknEaoF4lZE7zreZ1yxKiMh20uHQBVt6VoTcqHwEhv3q3Lt8e/nqivaUM7xfbf9tA7U2CZgdLzC5kBBOwIGhZTueF747wwjjo6Nls9U1UOaqThSCjzXs4kmd1M1dFSDWyaZy4mrsESaCxkV2l0QV2UMc69ZfC+arh59o/OxOex7OFryMOmGppVGvFoNDzM2g7MWH+dOIPGtKKoHkjArho8nZhn0nrS+I/CmBYHo+nTsKQmSV7drbCz+qIlx4IZTww1UPGQj3/KiEuAt4HD2q4SbGz0ma/LWF5BYhuiZdXJ5DS9JBojfSRaXZaWSs39+/LXw3tmDwKJn8lKbSdyLpJcH1mzhtQ2Ldyx/wWP/6OsFvc65LPmoYyf7H4c"},{"id":"mcp_24fa2f19-5586-9ab3-8353-2dfb9785969b_call-056ad04c-b954-45f6-a708-12710ea95130-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
+        it in one sentence.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"YkWjAwDZNQY8Xk2eaXz56gDvUM/ZQXcDDHyNixHknbb3a4u9AGLUvC+ITY1H+TE6/2DfDFmRaBAFWg0y+fP69HFGN9SHKrScNnFcRN9NwaHlOd4NccBHxueXkZdWddcOwUJxN7t0C7sFhquGWC1Six095K0XzVrqQOwHjs+D0VTOSJCCGOF8b8b+opbsKUilGcD+Sw/dP6mdcoKHwNyy+ZIvQUxAOn4xjJvzk9jJqJbGG4lWEpDW/3TpfrlwP0FhnIW9hFSViSydTQ5fK6+kTZtXvbOSSaMGaBnYk8WgrQRQoY2D+lRrZ48I84KyIeScaAdU3+zbH83Fn2LqGaOxuPM+w+v0hScmoKQlBIrdYzHDtdmjaBZd++leadcbcKio+L4uCSYUfIbE1QT7NRqfSKGXtp1wAZwf7qx8VTs9nWkNMlV/qpB6ADgncj+WxclvGaIFc4RguBDipndlzcvw6TsQuM7fX+SU3Gq/3c3GEEb0kUt4iC6HZcojbdgwPPpDz9UDOblzXn9s8m3ndUs/YQXB+gPN3eL2B0hFT+lkWZiRp4ALeNzk6ZDwwLr562roJqADrZnb7iTWjtAWSWNd6/a5l/3XQm366mc3DTSL5AywIK7kG6tgzpQO3sEmCRLUaaX/FdzmzuXIP7KKTbXcgFTKqqGslt6ve4c7pJGu86635qK/mI+eHEqFED1M5l5ipjEIKkq/a970bY2Tdieg0MDqEa04ZCuI/P47LRN4IuxaaFR+JdqahuTpU4MOdp8n7H3paP5gASUCXLJoVQc4Cs1WY5jVYpDwYEAjQ5UhQGvmSgoWJI7UlS32c0ce6AvhTRnD9zJqCZNx5AEtCq0YQze6xl0aPvXyu6SvRAhrMGoCkjnbPoLc6/saBieotrIGIeDh2BGRtR4AaP9Py4Jhy5TOS+kY/NIqp3hYreSb6FQzjid25qrcNG/RWJATpb6LwdBSALTC8/6606vWMt71dmRpV4faGkJIlPGZ3/262lfNuQWGRUrZ3wniDzGH15HMNr9Bpt7yBzFTsOW/VLuXxQDrVU08hnHyNdDsPUgkfqlOVXMVqbpGPrKDk9PvdWVaAFzq8Ez3FLKlsXjJUjfDDksXFaYsZkiJcfck9UMqt0bfvcT1ja/+tjmHsFbb1AFQRwXMmJCU0/riFzHzT/lLPc+3n/7JU1QTMeRzF540OWkt7py2nl3NgcOTtR7EzRNPlb7KSe5CagRYOQZPpl+ARycbtv1wUrPjr+6UzLZiTnxn1hEOtw+52mblCi1qkc73b/1T/tcpWIKfmGyzuwH88eDgLtJtfk85i99pkBDpD6j7uA7QS+QWKA6HWlrSd2BB7ea+VA3drzYdnPvcKAOX4a2jFTEfrj6VR5YIfto1fK9y8Nm1vRiGKjDs"},{"id":"mcp_a27968c4-11d3-979f-a45a-91e8675b03d7_call-8ece3bb3-9978-4c98-a550-044398667db1-0","type":"mcp_call","status":"completed","name":"microsoft_docs_search","server_label":"docs","error":"","arguments":"{\"query\":\"Azure
         Blob Storage\"}","output":"{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"results\\\":[{\\\"title\\\":\\\"What
         is Azure Blob storage?\\\",\\\"content\\\":\\\"# What is Azure Blob storage?\\\\nAzure
         Blob Storage is Microsoft\\\\u0027s object storage solution for the cloud.
@@ -784,7 +789,47 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\\\"},{\\\"title\\\":\\\"Get
+        started with Azure Blob Storage and .NET\\\",\\\"content\\\":\\\"# Get started
+        with Azure Blob Storage and .NET\\\\n## Build your app\\\\nAs you build apps
+        to work with data resources in Azure Blob Storage, your code primarily interacts
+        with three resource types: storage accounts, containers, and blobs. To learn
+        more about these resource types, how they relate to one another, and how apps
+        interact with resources, see [Understand how apps interact with Blob Storage
+        data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\\\n| Guide | Description|
+        \\\\n|  --- | ---  |\\\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\\\n| [Delete and restore
+        blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\\\n| [Find
+        blobs using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\\\n| [Performance
+        tuning for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\\\n| [Set or change
+        a blob\\\\u0027s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\\\n\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\\\"},{\\\"title\\\":\\\"Introduction
         to Azure Blob Storage\\\",\\\"content\\\":\\\"# Introduction to Azure Blob
         Storage\\\\n## Move data to Blob Storage\\\\nA number of solutions exist for
         migrating existing data to Blob Storage:\\\\n1. **AzCopy** is an easy-to-use
@@ -925,49 +970,7 @@ http_interactions:
         a manifest file and an Azure Event Grid event for each inventory report. The
         article describes these items later.\\\\n## Enabling inventory reports\\\\nEnable
         blob inventory reports by adding a policy with one or more rules to your storage
-        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"},{\\\"title\\\":\\\"Configure
-        Azure Blob Storage - Training\\\",\\\"content\\\":\\\"# Configure Azure Blob
-        Storage\\\\r\\\\n\\\\r\\\\n- Module\\\\r\\\\n- 11 Units\\\\r\\\\n\\\\r\\\\n
-        Intermediate \\\\r\\\\n\\\\r\\\\n Administrator \\\\r\\\\n\\\\r\\\\n Azure
-        Blob Storage \\\\r\\\\n\\\\r\\\\nLearn how to configure Configure Azure Blob
-        Storage, including tiers and object replication.\\\\r\\\\n\\\\r\\\\n##  Learning
-        objectives \\\\r\\\\n\\\\r\\\\nIn this module, you learn how to:\\\\r\\\\n\\\\r\\\\n-
-        Understand the purpose and benefits of Azure Blob Storage.\\\\r\\\\n- Create
-        and configure Azure Blob Storage accounts.\\\\r\\\\n- Manage containers and
-        blobs within Azure Blob Storage.\\\\r\\\\n- Optimize blob storage performance
-        and scalability.\\\\r\\\\n- Implement lifecycle management policies to automate
-        data movement and deletion.\\\\r\\\\n- Determine the best pricing plans for
-        your Azure Blob Storage.\\\\r\\\\n\\\\r\\\\n## Prerequisites\\\\r\\\\n\\\\r\\\\n-
-        Basic understanding of cloud computing. Familiarity with cloud computing concepts,
-        such as virtualization, scalability, and pay-as-you-go pricing models, can
-        provide a foundation for understanding how Azure Blob Storage fits into the
-        broader cloud ecosystem.\\\\r\\\\n- Knowledge of Azure fundamentals. Having
-        a basic understanding of Microsoft Azure services and concepts, such as Azure
-        Resource Manager, Azure Storage Accounts, and Azure Virtual Networks, can
-        help you navigate and configure blob storage effectively.\\\\r\\\\n- Familiarity
-        with storage concepts like file systems, directories, files, and data replication.\\\\r\\\\n-
-        Experience with Azure portal or Azure CLI. Familiarity with the Azure portal
-        (web-based management interface) or Azure CLI (command-line interface) can
-        help you navigate and configure blob storage resources efficiently.\\\\r\\\\n-
-        Basic programming or scripting skills. While not always required, having some
-        knowledge of programming or scripting languages like Azure PowerShell can
-        be advantageous when automating blob storage configuration tasks.\\\\r\\\\n\\\\r\\\\nTake
-        the module assessment\\\\r\\\\n\\\\r\\\\n Module Assessment Results\\\\r\\\\n\\\\r\\\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\\\\r\\\\n\\\\r\\\\n- [Introduction](https://learn.microsoft.com/training/modules/configure-blob-storage/1-introduction)\\\\r\\\\n-
-        [Implement Azure Blob Storage](https://learn.microsoft.com/training/modules/configure-blob-storage/2-implement)\\\\r\\\\n-
-        [Create blob containers](https://learn.microsoft.com/training/modules/configure-blob-storage/3-create-blob-containers)\\\\r\\\\n-
-        [Assign blob access tiers](https://learn.microsoft.com/training/modules/configure-blob-storage/4-create-blob-access-tiers)\\\\r\\\\n-
-        [Add blob lifecycle management rules](https://learn.microsoft.com/training/modules/configure-blob-storage/5-add-blob-lifecycle-management-rules)\\\\r\\\\n-
-        [Determine blob object replication](https://learn.microsoft.com/training/modules/configure-blob-storage/6-determine-blob-object-replication)\\\\r\\\\n-
-        [Manage blobs](https://learn.microsoft.com/training/modules/configure-blob-storage/7-upload-blobs)\\\\r\\\\n-
-        [Determine Blob Storage pricing](https://learn.microsoft.com/training/modules/configure-blob-storage/8-determine-storage-pricing)\\\\r\\\\n-
-        [Exercise - Provide storage for the public website](https://learn.microsoft.com/training/modules/configure-blob-storage/9-simulation-blobs)\\\\r\\\\n-
-        [Module assessment](https://learn.microsoft.com/training/modules/configure-blob-storage/10-knowledge-check)\\\\r\\\\n-
-        [Summary and resources](https://learn.microsoft.com/training/modules/configure-blob-storage/11-summary-resources)\\\\r\\\\n\\\\r\\\\nTake
-        the module assessment\\\\r\\\\n\\\\r\\\\n Module Assessment Results\\\\r\\\\n\\\\r\\\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/training/modules/configure-blob-storage/\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
+        account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\\\",\\\"contentUrl\\\":\\\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\\\"}]}\"}],\"structuredContent\":{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft''s object storage solution for the cloud. Blob Storage
         is optimized for storing massive amounts of unstructured data. Unstructured
@@ -1076,7 +1079,45 @@ http_interactions:
         can also securely connect to Blob Storage by using SSH File Transfer Protocol
         (SFTP) and mount Blob Storage containers by using the Network File System
         (NFS) 3.0 protocol.\\nFor more information about Blob Storage, see [Introduction
-        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Introduction
+        to Blob Storage](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/common/storage-introduction#blob-storage\"},{\"title\":\"Get
+        started with Azure Blob Storage and .NET\",\"content\":\"# Get started with
+        Azure Blob Storage and .NET\\n## Build your app\\nAs you build apps to work
+        with data resources in Azure Blob Storage, your code primarily interacts with
+        three resource types: storage accounts, containers, and blobs. To learn more
+        about these resource types, how they relate to one another, and how apps interact
+        with resources, see [Understand how apps interact with Blob Storage data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\nThe
+        following guides show you how to access data and perform specific actions
+        using the Azure Storage client library for .NET:\\n| Guide | Description|
+        \\n|  --- | ---  |\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append)
+        | Learn how to create an append blob and then append data to that blob. |\\n|
+        [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy)
+        | Implement retry policies for client operations. |\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy)
+        | Copy a blob from one location to another. |\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create)
+        | Create containers. |\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet)
+        | Create a user delegation SAS for a container or blob. |\\n| [Create and
+        manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease)
+        | Establish and manage a lock on a blob. |\\n| [Create and manage container
+        leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease)
+        | Establish and manage a lock on a container. |\\n| [Delete and restore blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete)
+        | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\n|
+        [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete)
+        | Delete containers, and if soft-delete is enabled, restore deleted containers.
+        |\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download)
+        | Download blobs by using strings, streams, and file paths. |\\n| [Find blobs
+        using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags)
+        | Set and retrieve tags, and use tags to find blobs. |\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list)
+        | List blobs in different ways. |\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list)
+        | List containers in an account and the various options available to customize
+        a listing. |\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata)
+        | Get and set properties and metadata for blobs. |\\n| [Manage properties
+        and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata)
+        | Get and set properties and metadata for containers. |\\n| [Performance tuning
+        for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download)
+        | Optimize performance for data transfer operations. |\\n| [Set or change
+        a blob''s access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet)
+        | Set or change the access tier for a block blob. |\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload)
+        | Learn how to upload blobs by using strings, streams, file paths, and other
+        methods. |\\n\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\"},{\"title\":\"Introduction
         to Azure Blob Storage\",\"content\":\"# Introduction to Azure Blob Storage\\n##
         Move data to Blob Storage\\nA number of solutions exist for migrating existing
         data to Blob Storage:\\n1. **AzCopy** is an easy-to-use command-line tool
@@ -1215,49 +1256,11 @@ http_interactions:
         Event Grid event for each inventory report. The article describes these items
         later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
         adding a policy with one or more rules to your storage account. For guidance,
-        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"},{\"title\":\"Configure
-        Azure Blob Storage - Training\",\"content\":\"# Configure Azure Blob Storage\\r\\n\\r\\n-
-        Module\\r\\n- 11 Units\\r\\n\\r\\n Intermediate \\r\\n\\r\\n Administrator
-        \\r\\n\\r\\n Azure Blob Storage \\r\\n\\r\\nLearn how to configure Configure
-        Azure Blob Storage, including tiers and object replication.\\r\\n\\r\\n##  Learning
-        objectives \\r\\n\\r\\nIn this module, you learn how to:\\r\\n\\r\\n- Understand
-        the purpose and benefits of Azure Blob Storage.\\r\\n- Create and configure
-        Azure Blob Storage accounts.\\r\\n- Manage containers and blobs within Azure
-        Blob Storage.\\r\\n- Optimize blob storage performance and scalability.\\r\\n-
-        Implement lifecycle management policies to automate data movement and deletion.\\r\\n-
-        Determine the best pricing plans for your Azure Blob Storage.\\r\\n\\r\\n##
-        Prerequisites\\r\\n\\r\\n- Basic understanding of cloud computing. Familiarity
-        with cloud computing concepts, such as virtualization, scalability, and pay-as-you-go
-        pricing models, can provide a foundation for understanding how Azure Blob
-        Storage fits into the broader cloud ecosystem.\\r\\n- Knowledge of Azure fundamentals.
-        Having a basic understanding of Microsoft Azure services and concepts, such
-        as Azure Resource Manager, Azure Storage Accounts, and Azure Virtual Networks,
-        can help you navigate and configure blob storage effectively.\\r\\n- Familiarity
-        with storage concepts like file systems, directories, files, and data replication.\\r\\n-
-        Experience with Azure portal or Azure CLI. Familiarity with the Azure portal
-        (web-based management interface) or Azure CLI (command-line interface) can
-        help you navigate and configure blob storage resources efficiently.\\r\\n-
-        Basic programming or scripting skills. While not always required, having some
-        knowledge of programming or scripting languages like Azure PowerShell can
-        be advantageous when automating blob storage configuration tasks.\\r\\n\\r\\nTake
-        the module assessment\\r\\n\\r\\n Module Assessment Results\\r\\n\\r\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\\r\\n\\r\\n- [Introduction](https://learn.microsoft.com/training/modules/configure-blob-storage/1-introduction)\\r\\n-
-        [Implement Azure Blob Storage](https://learn.microsoft.com/training/modules/configure-blob-storage/2-implement)\\r\\n-
-        [Create blob containers](https://learn.microsoft.com/training/modules/configure-blob-storage/3-create-blob-containers)\\r\\n-
-        [Assign blob access tiers](https://learn.microsoft.com/training/modules/configure-blob-storage/4-create-blob-access-tiers)\\r\\n-
-        [Add blob lifecycle management rules](https://learn.microsoft.com/training/modules/configure-blob-storage/5-add-blob-lifecycle-management-rules)\\r\\n-
-        [Determine blob object replication](https://learn.microsoft.com/training/modules/configure-blob-storage/6-determine-blob-object-replication)\\r\\n-
-        [Manage blobs](https://learn.microsoft.com/training/modules/configure-blob-storage/7-upload-blobs)\\r\\n-
-        [Determine Blob Storage pricing](https://learn.microsoft.com/training/modules/configure-blob-storage/8-determine-storage-pricing)\\r\\n-
-        [Exercise - Provide storage for the public website](https://learn.microsoft.com/training/modules/configure-blob-storage/9-simulation-blobs)\\r\\n-
-        [Module assessment](https://learn.microsoft.com/training/modules/configure-blob-storage/10-knowledge-check)\\r\\n-
-        [Summary and resources](https://learn.microsoft.com/training/modules/configure-blob-storage/11-summary-resources)\\r\\n\\r\\nTake
-        the module assessment\\r\\n\\r\\n Module Assessment Results\\r\\n\\r\\nAssess
-        your understanding of this module. Sign in and answer all questions correctly
-        to earn a pass designation on your profile.\",\"contentUrl\":\"https://learn.microsoft.com/training/modules/configure-blob-storage/\"}]}}"},{"id":"rs_24fa2f19-5586-9ab3-8353-2dfb9785969b","summary":[],"type":"reasoning","status":"completed","encrypted_content":"hbKCC7kDrdeOSFC811sdupq5UHTsVcoY3yKRUgfE5nMQD/WGpjiPNaJCITAa56mEDeGsl0ZzbuttrGYIvQEcz1wHlfTjp9j2EnbDxZnsF7p9mJm7CjdOAGU8nh+cVOsUviqkeMkqLS0u1rotFZvTv0sFJUVPYtPIzlTzL5Msf7q+UPo8K8T+ixreJfUrAv0da3VrVuMm1Zg+tphcqflZbP2rvbzwmmcWuUyN5OCOZtrJ2ojcfg/d6G1iZqis7R/Ukf0lVGboY5pJeD3X0y13oOE5qPLEPQEQY1tcRPSNkI61DTZWtvSAz8EQWAMqvjUTaLc9Hgualzlok6avGQF5S4sY5tWHoDh1QFll493GEecF1LuPczPxI6C4LjhUrGHJIPv1WE5JmMBPt0NwKXkD17dsYu9K4EcG5LKigRCrzYcqbN9AGoSgT2RLWwh925IeotclNr2K8rDwNRDoXN6uVf0DoxILw0QkdHEVzGm9Obdk88AcdI0dKFnDEmlm2cKVt0VpB/TQVdvRc0B3kE58VrO7k4H7yR1zyp15bXyU5uCKjlxVpnOfwLvrc8VUELxCEyetIawgGvETcryDNWhexdL3AuFWBl+tUZzKlI97XbmBf2X3UZCnz7wW5FDWDuSsvx6XtWh2Ixp/GkM5nSxvSQlVRo+rHXJNpvxJ7E/h3KYyuEhgAGyFnAKn1ci+VkIp3+YNPXc2+1y/DkxbrBV3YbK+7ISvHjo4cDVTJU4mMqRfBZeMdI7GcXzYA+lxCKOu3QASihWJuM0V9+FCWtHmOwjZ7LtpnctcDKnr9oo50p+Jw6lIqxlmLgeDA32xUJl42GM43tEFEdAW44PxZk5HDBUzmU1HEqowJ8ClyZue3YNFQnAUq20XmsSHcrdak7MXDD6hyIidRH/3UeD7AhGh5OIX4WIV/45OE5YGIGYJhSd6Lr60IO6cDygS6gLL5nNk3Y7zd/7Hm6VJbIzCxHnoWqxWtSoNSHzdZe2sad9i7/2DLQ/mOocimCO7yNDHtG58Kmzb/I3/gq4hzib4xyPt1UuzI1Dbkh3Pjo3vH9K1V/lKbKkWnSdY2dLMiZjFHxnw2+sDMnE0uwmZ+4pG46/gPGYXcnUmDP/p4qXLRRoLhoqgOT0Mp5X6cpMrI6aD2JAekAG52OiqGTIL4bdtx+e9IYuSxbTdHL57rTI2ymLvpKKV8yw9alww6kucjB364lNJ/gXOgUIR4qjAqQzVAbRrqYkDEVp7+ezBnWLsOHFcUD4lY0yWTUcCZn4"},{"content":[{"type":"output_text","text":"Azure
+        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}}"},{"id":"rs_a27968c4-11d3-979f-a45a-91e8675b03d7","summary":[],"type":"reasoning","status":"completed","encrypted_content":"k3yCWvDzgpHKw59aFPHzMJEsSxVnRrRLNLnd9PZ6wFUmn0BeBNBQvxU5clXDS95l/hydlNpiFZ6aJTP3ga8CNoJx79AGxrlHfh4c/b1YwfjaKCW+iFjrvvB83sduu2hrwtiaLM2WHwUhPVjidLSCdl/VBj2tJW8qQmVHjjDvdnvDctyW/fD7CGKzlQ/FsAevn/IgL/rS5grpq36m26hf+gEqzjarFP/DG7ihXPbbAmrldHhQDj/J8XDUyUvMpvkbmc6o20HhRLxINOOdDI+c8aCWzqMGjMhreBBHqodX/zpGSBkFVCS0uWeF0o0UifSK5aDZWvsoIxYOhp008vi3qDStmijtmM9G00wz9wpxjjLZArqqs8m5KhdavsK4lMmRioqkhGJtiv0XGE1ARbmmRFV7eYPdQ1nCOE9VbGkrAvbdcZdVAbgRWD8jUxKF2pZ7mOGtLCLZXaGIOsEdQ+XnpLrk7vuXIEXqKQc5oolG07kSw1/rZD0gDoq8XroAohUgt8Rk7oScV2wn1uEl9DVUZZHrHfl36Cu9g0ldtj03JaWAZ5d5QBNFWSPuuZ5P0y1WYevCmn8VpQF2CQ4wjVGxKrKT7s0PSXE+A9M4zeKqvI2fcwjzzTEhM2uGLGL4VltjFIEafz4QsQzS6zcSMiUB8uwjw5eyGuMvdos1Ry5FzE1Q225xYhzFY2VWkkCjp9S4XicsM8I7wOz+ILMJueoh9M5LTaOBNBQSkD7AVndcv/aymbgFk6HZwlIDAC/ToCQCZZ9S+RYWe4G+WoWc5uMhsJa/TLpR8EtB5LQpHW2SvXfRvyzrZKCdfNLaW5MZSzQjmI0SWoYGJ91pxHjWz6NjotWRT8K0lJwcTC5iz7K+22nIN3Avde5fy/NV2AG8TpqqPiwy65M+sp5j8zJyzPo/DQFaoBOfUucBHm1lCofG6/i0IE6u/YIhH+Y/oxvPzDU2TuemtuAewAJd4mRniHZpWJ/b4F38Fo8QtlUKpHAEcL+5s6Okw1dRTxyTvqe9CZ0id0GKgZ2G/qs41sdL8zfeUXKitXfzV22YjNQKxytshVuEk08UIdt6a5bATjlyiKz88UpM+t7idX3ZPH7I9furWCuobBwW55CiuJSVjx8/t2Mhe6yYeC+k0551ILDKHmhSEVM/bCk4f9BFD6SkB66hNalMnGUBCjuPtHStrJH95OR7ZV3DTbvnGpfcudGjNSDD7uPBRHNqKuyZnf1rHOrCFnP14uh5gyOx+9jU9ASJp3niy/As0G199kUSoFqrXItfXpL8ff1YGWK8GXwWEq1IiS2b4r0D53xVxfylE/uSp6DU4zJjKJxKktEguoXwrvoce5RQMQSNAfxJEoJrCstnRMoDxEX46Lhp+/5XLLDoShw9mMWdAEGCRwG0fe8a4uZFwOxF2GfyUWLFcujZU1CzF2JSOHMMz1amnSsfDA3lqWVZ6lfd52fynMIxDNCx/oMMIThOLVXdDAojdQSwBxuOqbSrg7pI+grsQfU1IPIkA1oQNntvF3E8oGiYcxW6G2/qTsCHoKawJd54gL0clhhTPG05n49xrkmCzAAvVvYlLJnZ1da3RYDrVcvuWaz/3NmMPbKR2mZSHdPNKOe9aOCjqnlcowyDeweOKv39g6+394SF8J44DMNQxSY/rVZkTllbnKqvwiyvyLfmUrEYJoSDc87cWd9NNRNA0RHDIHhqOq5Xpno1aauiuL/l8FnsZ/uqCnRMERePD9iO1VvkF4MNDHgqSEAZWVRCrqIQ4dfu/rEGCrQLX+nN1KJrj4Y7cXJNm4gtO4FVSLHTYswwgMx07+6dTg+IPSqUSxEYHeJLB6XcByJaMRRWkd6NMiD6wLUvggKFCD/wIb1AHkVmMJI1SJgwT486JgM9tB8X6RPbLJWLDPre0DUeKcfDbyuqWvmd/heYP07gUcj3OXc2/UTUey2aewi08FzObqCBT63JrvabY1A"},{"content":[{"type":"output_text","text":"Azure
         Blob Storage is Microsoft''s object storage solution for the cloud, optimized
-        for storing massive amounts of unstructured data such as text or binary data.","logprobs":[],"annotations":[]}],"id":"msg_24fa2f19-5586-9ab3-8353-2dfb9785969b","role":"assistant","type":"message","status":"completed"},{"role":"user","content":"Which
+        for storing massive amounts of unstructured data such as text or binary files,
+        with support for serving content, streaming media, backups, and access via
+        HTTP/REST APIs or client libraries.","logprobs":[],"annotations":[]}],"id":"msg_a27968c4-11d3-979f-a45a-91e8675b03d7","role":"assistant","type":"message","status":"completed"},{"role":"user","content":"Which
         cloud service did you just look up?"}],"instructions":"Call microsoft_docs_search
         once to answer the first question. For later questions use only those results.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
@@ -1277,7 +1280,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 12:18:29 GMT
+      - Mon, 07 Sep 2026 21:04:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1305,11 +1308,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '397.9'
+      - '327.7'
       X-Metrics-E2e-Ms:
-      - '1419.9'
+      - '1488.5'
       Traceparent:
-      - 00-de48020dda07c5ac897ffeb6160a5ceb-3d31a92f00029741-01
+      - 00-7655a56b204cf48919c91f6f950ef708-875274460002eb04-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -1322,10 +1325,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1788783509,"completed_at":1788783509,"id":"00be6335-f8b8-948a-a0c7-2c23eaf70761","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_00be6335-f8b8-948a-a0c7-2c23eaf70761","summary":[{"text":"The
-        user is asking: \"Which cloud service did you just look up?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"eBMBXCwtmKNGv1MT23fsM9LXYfG/+2XrGTSLc5qp1KEWXO8tkhHPs2WpCEjEugsYKzFUUkt2HLwdSfR2rCoU8YGndkCoofzyu37JImYz20xxbzIRErZ3z0x0lIq4ePvmqOLBn7yMs8yZvhwhQg7n+zMNqGMfDLiqVZvxCaidH+kkWm0QF9h4/cbOgdvydDX9iVU4MZECBY/xhsoTPu5H0WwVdGl9oesOUVXsj9CLNyf7jr1r8qKtaM+XSI+DsE8eBa3zv0gx9EBdZ/u6+g64yuab8ZBqNe7iRBJrKEG56pLnbdyrrCbeI3aLhm4A4Dpcv5A0NXXIIZQhkVHn1kuAtVy/N+BN2Kolb8Pd2hxr3woRCDlVe31mGN1QvakFTEiFJyKObK+Tf41jAyfefpEkXswa7iKJ9vMyzKmqGb5JZhRflRUkoJHqp6LXwonc2EeNutJ4HNd8r+aYjCxu6XKkcAs3Kl7t+0RqCRSMEos9dR29UNo0I9smjWiN/APFB2NhQuyKUUBMF4/a1tz6Eq1U83ev98Ji3ym/PXceROwXXJfx9psNm27l90Zz5/m7yABufk19JOeZqcSI06GfK6aiaQjF+RB83mWPwcKQaUlFdUCsasDbLJRFsFG6gP+/40CfZ8exXMrkzJatWVM"},{"content":[{"type":"output_text","text":"Azure
-        Blob Storage.","logprobs":[],"annotations":[]}],"id":"msg_00be6335-f8b8-948a-a0c7-2c23eaf70761","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12150,"input_tokens_details":{"cached_tokens":768},"output_tokens":105,"output_tokens_details":{"reasoning_tokens":97},"total_tokens":12255,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":146436000,"context_details":{"input_tokens":12150,"output_tokens":105}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
+      string: '{"created_at":1788815079,"completed_at":1788815079,"id":"cdf4727e-bb1b-980d-a734-ec5eb9fc2d2e","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_cdf4727e-bb1b-980d-a734-ec5eb9fc2d2e","summary":[{"text":"The
+        user is asking: \"Which cloud service did you just look up?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"I9T9BLdRT+OvuUuVbEn2zawLEMv/OAb1wer2DE5cZz5ovypE4i6lmc2zkB2Ka9IL1+pz8m5B6w138k5+zIi6wuRkxvnixH16Z+P3/aWpcv+gUjGltYvXcjzF2c2zgZyRQLh5aRQBkRQse8+DyzDSkDVCzqWxl5PPEvvujx+Y8RvHsS8YndAG85UxuQZsIRbX8HZjWC9qWOsZY5xLWMX2bTxoxA8AbU1aBjd3J15ZbO02GCJeyGEIpUf9mOBIJomTrWYOvm7+38InBrFGwrBZak7vVhynzBr6lDXQYEthw+d5B2F2p1s9ZcG8POwFICtN1+McldoN38UHk7EJUHeupOlRC9udIo2kfmX0v/9JViCOZ6wvSQrj5WPDV0oPD04X66iXDJlKCaGTP5NPwfXEkWqJBXsnzk4VBINmanha887iXk2uPp+XSX1Kv1rlqCjpX9F8PGdkHVp2rqNINytg0DA3rlnujXGsTsNGNpFVTZJJr4AhHi2LD/0rYrtrqxymNV1beSDSvfnG0dEIaGYmwg1BNBiLHrjYgG6WL8xY4Os2hEwW7RpZfue248KltDPL+F0A8uOZ+0MGDpjwskWveGijHEYTL0TYkX77u6pjl0e2aRPjQavkhRK5Qd/SggysP28FkVoNAY25caJ+eAlOVpOu45QfDTNJ5NNUuEm/7AsP5/wh4skJHXRuUYEalR0CrSY2z3ER64ipsx+EgIWC88ZrCIVInF5FGQ"},{"content":[{"type":"output_text","text":"Azure
+        Blob Storage.","logprobs":[],"annotations":[]}],"id":"msg_cdf4727e-bb1b-980d-a734-ec5eb9fc2d2e","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"mcp","server_label":"docs","server_url":"https://learn.microsoft.com/api/mcp","allowed_tools":["microsoft_docs_search"],"headers":{},"server_description":""}],"top_p":0.95,"usage":{"input_tokens":12297,"input_tokens_details":{"cached_tokens":768},"output_tokens":119,"output_tokens_details":{"reasoning_tokens":111},"total_tokens":12416,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":148623500,"context_details":{"input_tokens":12297,"output_tokens":120}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}'
-  recorded_at: Mon, 07 Sep 2026 12:18:29 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:39 GMT
 recorded_with: VCR 6.4.0

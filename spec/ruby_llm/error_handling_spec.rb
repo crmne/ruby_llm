@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Error do
-  it 'handles invalid API keys gracefully' do
+  it 'handles invalid API keys gracefully', :live do
     RubyLLM.configure do |config|
       config.openai_api_key = 'invalid-key'
     end

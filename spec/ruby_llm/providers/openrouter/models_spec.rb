@@ -148,6 +148,32 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       expect(parser.supported_parameters_to_capabilities(['tool_choice'])).to include('function_calling')
     end
 
+    it 'preserves explicit tool selection and parallel call controls' do
+      capabilities = parser.supported_parameters_to_capabilities(%w[tools tool_choice parallel_tool_calls])
+
+      expect(capabilities).to include('function_calling', 'tool_choice', 'parallel_tool_calls')
+    end
+
+    it 'does not infer parallel controls from tool selection' do
+      capabilities = parser.supported_parameters_to_capabilities(%w[tools tool_choice])
+
+      expect(capabilities).to include('tool_choice')
+      expect(capabilities).not_to include('parallel_tool_calls')
+    end
+
+    it 'recognizes explicit JSON schema support without a response format flag' do
+      expect(parser.supported_parameters_to_capabilities(['structured_outputs'])).to include('structured_output')
+    end
+
+    it 'accepts the parameter definitions returned by the image catalog' do
+      parameters = {
+        'aspect_ratio' => { 'type' => 'enum', 'values' => ['1:1', 'auto'] },
+        'n' => { 'type' => 'range', 'min' => 1, 'max' => 1 }
+      }
+
+      expect(parser.supported_parameters_to_capabilities(parameters)).to eq(['streaming'])
+    end
+
     it 'maps the remaining parameters onto capabilities' do
       capabilities = parser.supported_parameters_to_capabilities(
         %w[response_format batch logit_bias top_k]

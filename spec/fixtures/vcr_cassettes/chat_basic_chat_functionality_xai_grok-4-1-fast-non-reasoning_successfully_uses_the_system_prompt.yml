@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Tell me about
         the weather."}],"instructions":"You must include the exact phrase \"XKCD7392\"
-        somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"temperature":0.0}'
+        somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 22:30:01 GMT
+      - Mon, 07 Sep 2026 21:03:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,7 +43,7 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
+      - '1796'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
@@ -53,13 +53,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '278.3'
-      X-Metrics-Mean-Itl-Ms:
-      - '6.8'
+      - '218.7'
       X-Metrics-E2e-Ms:
-      - '3177.1'
+      - '2415.5'
       Traceparent:
-      - 00-d446b0092775c2296b7d777ad76bb76c-dbfa52960000ddde-01
+      - 00-63614ea84f7696a31f9747958f30d8ae-442d6d0f0000521e-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -72,10 +70,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1786400998,"completed_at":1786401001,"id":"604dab86-9e6e-91a4-80c2-8fcda5b1e487","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_604dab86-9e6e-91a4-80c2-8fcda5b1e487","summary":[{"text":"The
-        task is: \"Tell me about the weather.\" But there are specific instructions
-        I must follow.\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"content":[{"type":"output_text","text":"The
-        weather depends on your location, but it''s often unpredictable! \nXKCD7392","logprobs":[],"annotations":[]}],"id":"msg_604dab86-9e6e-91a4-80c2-8fcda5b1e487","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.0,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":218,"input_tokens_details":{"cached_tokens":192},"output_tokens":410,"output_tokens_details":{"reasoning_tokens":393},"total_tokens":628,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10959000,"context_details":{"input_tokens":218,"output_tokens":410}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."}'
-  recorded_at: Mon, 10 Aug 2026 22:30:01 GMT
+      string: !binary |-
+        eyJjcmVhdGVkX2F0IjoxNzg4ODE1MDI4LCJjb21wbGV0ZWRfYXQiOjE3ODg4MTUwMjgsImlkIjoiNGE3MWZhMGEtM2FjYS05YjA0LWFhZDEtYmZiOTAyY2Y3NmQ5IiwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1vZGVsIjoiZ3Jvay00LjMiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siaWQiOiJyc180YTcxZmEwYS0zYWNhLTliMDQtYWFkMS1iZmI5MDJjZjc2ZDkiLCJzdW1tYXJ5IjpbeyJ0ZXh0IjoiVGhlIHRhc2sgaXM6IFwiVGVsbCBtZSBhYm91dCB0aGUgd2VhdGhlci5cIiBCdXQgdGhlcmUgYXJlIHNwZWNpZmljIGluc3RydWN0aW9ucyBJIG11c3QgZm9sbG93LlxuIiwidHlwZSI6InN1bW1hcnlfdGV4dCJ9XSwidHlwZSI6InJlYXNvbmluZyIsInN0YXR1cyI6ImNvbXBsZXRlZCIsImVuY3J5cHRlZF9jb250ZW50IjoiVXYyVHlBT0VzYTc1eFY3ZG1JbE82Q0t6ZzdMUnVVZXF2MkZNN1FraVVTYVdJTmhTc0daVS9SRHN0aEZQQjl4ekJJNm1XdFBUdmJlTmVlU3dCWWhqU1pBS2s2TUx4dTQ5ZmtuV1dvUmp5VnFXTWx4SXlyUyt4UlZpNWx1WEtheG1wM1pTcjU0SkJZRnMzckRic1hzMHM5V2hkQnVpSmRxQXRXcFc5ZGJHOEFKbWlNeEFTTWpsbS81Y1ZUU2hRSW8rYWdTaUdtc1c0Y3VwTVlpdllIOEh4aW9SdXlCaFlVU2RlTE0wb1cvdnpscmVlVUhLaDVENUNnWWIyMnFiUGVaSEJQcUVOUGFmS3lRa3BaNlF2c2tudnVzNzY5WjdvTk52KzAvNGRZSDVEM1d0emppSTdtczk1S0MwNnhXT0RDdGxwUzdtdytqTFY2TUJldDJrZTcrelFHcDZUV1grWXM2cmFoWFFPU0QzenV3S3BJczkxL3ZUeCt6eFZ2cm5HcHk5cWd5UjVYdE9lWHFXL1NpZUxkNklmZVpOMDJpaTBrVHFGQ0hDdXhwT0FqdGpFTU9HdGZ2ZXNzQ3JnQXJ1eUtkUFNUdXVHYVkxYzBpeFA2QURyVVhWZjh4SFpGb3N0WVpQZnk3ZVpSMHNHeFRNb1hCa2xqdk9TR1U1WjdDSjU5MUlxTWNwMFpJMzdPYncxMXVUT1plbi9NQWErdkpsSDRNdEdOVklyZUhZWUNublJxOVFqQUJqS05aOHlBU3NZK2p6eFIzNnZLVU5nTGNzQjFkbVAyNnRNeUF1Z1IzRnpHS0Jiay8yRSt2QUJESGN3ZE1Sb1JwUlFDYmpaaFlXR21BdGtuZkhpK3JpOW9lZ2ltNDhOVDQwR3RQa3c4TWtTeHloc3JiU3g0UjdnbjV5YzB0My9UUlNWYkZMUFhxdnVQeUFGY3NmY2tDbnBObmdqcVZUMmsxQ3pFUVU4N1ViT01oeVRRckxOVm5kRHplU3NTeWdMd3g5aWZwQW1tQmJ2WnFJdldMVVBZUWpmWTRvc3hDa09VOGg3Sy9MODFpWEhzWEZMenVxVEgvRnY2eDZOT3BkQU5sSlh1Y3NHemRJYXFpSlJRb01pUVpIQ21JWUdscUNReWVoYnI4cDh5U1FiS0t4QkQzUzJBOURPV1JuS0hoOFRmRm53a0h4TU1zekx3bzZxNitzS0VtZGtVRFd3VEd2UjNNQkw1bmZDTmVBakpndy8zcTBwTmJtTWMvVW9RUDRqZmhVVCtyaGxHeUI2ZWQya3YrdmIyQ05XOEJxVnZnU2F5R1I3a2lQY1VkUzdxSWlpRlJ3NTFTa1A3d3lwMEpyMThTdngxK0lEZGZvYTZNTjZqYnplK01ndlVFbzk0N2ZjZ2lMV0VIc0xualdoTG5zN3B3Qm9aTlJMbDIwU3lRczdJM3dDYnNHbTNuWDcrd0k4Z00zMkxWNHVWL2crL0YydVVFYndkWnZYaDdwcGlDelQvamRQRWxITDhUWnV2UmpZUGZkdjRyb0NQdkRra3RWV0gyMklFMm1KSkovZlRLWVY0YjdWUGM1RGxudVFPRVNOU2FlbDBzL0ZvYzhtZWlrTTBadEpxVkt1WUV6d1Y4ckIvbGlrOTAwK1BjR1Q3bTdDcDZRSUFnR0pGTldXN2hWQURaalE2ODZzS3ZXVWlIRzY4N0IwTWloUnB3UEMxMHRMY2M4RDg0SmwzbGNEd2EraEw0WTAwakRJeHI2Yk4wZDVRU000a2VlRmx6bllycmpaOHdzNk9sNzArVVltQWVYdkxsZE1aTmxkUHcxWWJyQ2VQU2t6OURCRjRiejNNdlBIekFtZERUd2NwZ29EaC9HZEpsakRUSGk5ODErV0V3ajRuS2FRbURvaTBkWGlodk5GdjZ6ck4rblVRNGJHbGw0WU4waHZNTzdyR0htRjA4RDhhK2YwSEIydjdkdC8zaUFlR2ptZzBrTU5qNEw0UW1rR05TQ1RFZ1pFTDJNOHl1V01rV1gzSjlMajFuRHlWS1ZMM0o1OVBoSlo4ZTUxL1FzUThGSS8rZmgxSlpWeVlpN04ydCtVckdBNm9tYWJtWXF6bFNoTWF2UDlHQkNpbEpXQmlKQVByYktseWVDR0l3QkJPd1NudGtxT3VSejdhNHpJMkFoYlhYbDRuT1JOblAwVnhzOGtEdExQZ1ZlVC95SFM5UmtsdU9qUGlicU1zczVUNFpEcFZmdnNpWGl5MWhxS0hUN254T1JKMkJrZTk0RVgya2s4c283Q3ZSSWhOMG5Ocm1Vbm1qVTYwTUUyRGhvSld1SU5idDZ6ZURhR25TaVZ6Y2NIUSJ9LHsiY29udGVudCI6W3sidHlwZSI6Im91dHB1dF90ZXh0IiwidGV4dCI6IlRoZSB3ZWF0aGVyIHZhcmllcyBieSBsb2NhdGlvbiBhbmQgdGltZeKAlGNoZWNrIGEgbG9jYWwgZm9yZWNhc3QgZm9yIGRldGFpbHMhIFxuWEtDRDczOTIiLCJsb2dwcm9icyI6W10sImFubm90YXRpb25zIjpbXX1dLCJpZCI6Im1zZ180YTcxZmEwYS0zYWNhLTliMDQtYWFkMS1iZmI5MDJjZjc2ZDkiLCJyb2xlIjoiYXNzaXN0YW50IiwidHlwZSI6Im1lc3NhZ2UiLCJzdGF0dXMiOiJjb21wbGV0ZWQifV0sInBhcmFsbGVsX3Rvb2xfY2FsbHMiOnRydWUsInByZXZpb3VzX3Jlc3BvbnNlX2lkIjpudWxsLCJyZWFzb25pbmciOnsiZWZmb3J0IjoibG93Iiwic3VtbWFyeSI6ImRldGFpbGVkIn0sInRlbXBlcmF0dXJlIjowLjcsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In19LCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29scyI6W10sInRvcF9wIjowLjk1LCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjIxOCwiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTI4fSwib3V0cHV0X3Rva2VucyI6MzExLCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6Mjg3fSwidG90YWxfdG9rZW5zIjo1MjksIm51bV9zb3VyY2VzX3VzZWQiOjAsIm51bV9zZXJ2ZXJfc2lkZV90b29sc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6OTE1NjAwMCwiY29udGV4dF9kZXRhaWxzIjp7ImlucHV0X3Rva2VucyI6MjE4LCJvdXRwdXRfdG9rZW5zIjozMTJ9fSwidXNlciI6bnVsbCwiaW5jb21wbGV0ZV9kZXRhaWxzIjpudWxsLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJzdG9yZSI6ZmFsc2UsIm1ldGFkYXRhIjp7InN5c3RlbV9maW5nZXJwcmludCI6ImZwX2ViM2MwMDNmYzY2YzE0ZWQifSwiYmFja2dyb3VuZCI6ZmFsc2UsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJ0cnVuY2F0aW9uIjoiZGlzYWJsZWQiLCJ0b3BfbG9ncHJvYnMiOjAsInByZXNlbmNlX3BlbmFsdHkiOjAuMCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAuMCwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwibWF4X3Rvb2xfY2FsbHMiOm51bGwsInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJlcnJvciI6bnVsbCwiaW5zdHJ1Y3Rpb25zIjoiWW91IG11c3QgaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4geW91ciByZXNwb25zZS4ifQ==
+  recorded_at: Mon, 07 Sep 2026 21:03:48 GMT
 recorded_with: VCR 6.4.0

@@ -60,10 +60,6 @@ RSpec.describe RubyLLM::Chat, :live do
         end
         skip 'xAI may retain prior instruction artifacts from conversation history' if provider == :xai
 
-        if provider == :ollama && model == 'qwen3'
-          skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'
-        end
-
         chat = basic_chat(model: model, provider: provider)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
@@ -77,7 +73,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         response = chat.ask('What are some good books?')
         expect(response.content).not_to match(/XKCD7392/i)
-        expect(response.content).to match(/PURPLE-ELEPHANT-42/i)
+        expect(response.content).to match(/PURPLE\p{Pd}ELEPHANT\p{Pd}42/i)
       end
     end
   end

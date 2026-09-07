@@ -10,7 +10,7 @@ http_interactions:
         result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"object_params","description":"Uses
         params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true},"strict":false}]}'
+        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 22:31:30 GMT
+      - Mon, 07 Sep 2026 21:01:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9949981'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -56,13 +56,13 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '452.1'
+      - '699.5'
       X-Metrics-Mean-Itl-Ms:
       - '6.4'
       X-Metrics-E2e-Ms:
-      - '3959.0'
+      - '5020.4'
       Traceparent:
-      - 00-1be4ef48aaccb352a505cde151cee659-ddaca08700004ad0-01
+      - 00-f6061ea1ad87e8a2246defee90de69ee-66362faf0000292b-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -75,14 +75,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1786401087,"completed_at":1786401090,"id":"3838e9cc-09e9-9b2a-b5f9-41667c21450c","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_3838e9cc-09e9-9b2a-b5f9-41667c21450c","summary":[{"text":"The
+      string: '{"created_at":1788814897,"completed_at":1788814901,"id":"255aec0c-8517-9df5-b293-782660ae7b0f","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_255aec0c-8517-9df5-b293-782660ae7b0f","summary":[{"text":"The
         task is: \"Call the object params tool with window start 2025-01-01 and end
-        2025-01-02 and include the result.\"\nThe task is to call the object params
-        tool with window start 2025-01-01 and end 2025-01-02 and include the result.\n\nI
-        need to use the tool \"object_params\" with the window parameter as an object
-        with start and end.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call-cbf8bf3a-0762-4d37-9ab8-2fa7240be181-0","name":"object_params","type":"function_call","id":"fc_3838e9cc-09e9-9b2a-b5f9-41667c21450c_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+        2025-01-02 and include the result.\"\nI need to call the object_params tool
+        with the specified window parameters. Let me format the function call accordingly.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}","call_id":"call-fcb959e1-c03a-4947-b183-dd84bd884287-0","name":"object_params","type":"function_call","id":"fc_255aec0c-8517-9df5-b293-782660ae7b0f_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
         params DSL object support","name":"object_params","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":366,"input_tokens_details":{"cached_tokens":192},"output_tokens":521,"output_tokens_details":{"reasoning_tokens":490},"total_tokens":887,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":15584000,"context_details":{"input_tokens":366,"output_tokens":521}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
-  recorded_at: Mon, 10 Aug 2026 22:31:30 GMT
+        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}],"top_p":0.95,"usage":{"input_tokens":361,"input_tokens_details":{"cached_tokens":192},"output_tokens":655,"output_tokens_details":{"reasoning_tokens":624},"total_tokens":1016,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":18871500,"context_details":{"input_tokens":361,"output_tokens":655}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 07 Sep 2026 21:01:41 GMT
 recorded_with: VCR 6.4.0

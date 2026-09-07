@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
         best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,123 +24,71 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Cost-Time:
+      - '1383'
+      Req-Arrive-Time:
+      - '1788817080391'
+      X-Envoy-Upstream-Service-Time:
+      - '1380'
       Date:
-      - Mon, 08 Jun 2026 18:55:43 GMT
-      - Mon, 08 Jun 2026 18:55:43 GMT
+      - Mon, 07 Sep 2026 21:37:59 GMT
+      Resp-Start-Time:
+      - '1788817081775'
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '2920'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - istio-envoy
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
-        the user is asking, \"What''s the best language to learn?\" Let me think about
-        how to approach this.\n\nFirst, I need to consider the factors that determine
-        the best language. It depends on the learner''s goals. For example, if they''re
-        interested in business, English is crucial. For travel, maybe Spanish or French.
-        If they''re in a specific region, learning the local language makes sense.
-        Also, languages like Mandarin or Arabic might be recommended for cultural
-        or career reasons.\n\nBut the user hasn''t provided any context about their
-        interests, location, or goals. Without that, it''s hard to give a definitive
-        answer. The previous response mentioned \"best_language_to_learn\" as a tool,
-        but the function call example didn''t include parameters. Wait, the tool''s
-        parameters are empty, so maybe it''s designed to just return a general answer.
-        \n\nSince the user''s question is too broad, I should probably use the function
-        call to get a predefined answer. The tool might have a default response or
-        a list of top languages. Let me check the previous interaction. The assistant
-        used a tool call with an empty arguments object, so maybe that''s the way
-        to go. \n\nI should generate the function call without any arguments since
-        the parameters are required to be empty. Then, the response would be the answer
-        provided by the tool. The user might expect a list of top languages based
-        on various factors like demand, ease of learning, etc. \n\nAlternatively,
-        if I can answer directly using my knowledge, I could list languages like English,
-        Spanish, Mandarin, etc., but since the tool is available, maybe the system
-        prefers using it. However, the user might be testing if I can answer without
-        the tool. \n\nWait, the instructions say to reply with internal knowledge
-        directly if possible, otherwise use function calls. Since I can provide a
-        general answer, maybe I should do that. But the previous example used a tool
-        call. Hmm. \n\nThe user''s question is too vague, so the best approach is
-        to use the function call to get a structured answer. Let me proceed with the
-        tool call as per the example.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-Jv8HcaHnRYCdxjtkx2LAxRI8yvVdzFW2","type":"function"}]}}],"created":1780944952,"id":"chatcmpl-NtZqocDPULdrPQBYvC8s222q7wzwjkvp","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":450,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":431,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3994.953742640874,"time_per_output_token_ms":19.688824444444442,"time_to_first_token_ms":52.316,"tokens_per_second":50.790233963519746,"total_tokens":659}}'
-  recorded_at: Mon, 08 Jun 2026 18:55:52 GMT
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
+        to figure out what they mean by \"best.\" Are they looking for a programming
+        language, a spoken language, or something else? The question is a bit vague.
+        Let me check the tools provided. There''s a function called best_language_to_learn
+        with no parameters. Since there are no parameters, maybe the function just
+        returns a general answer. But wait, the user might need more context. However,
+        since the tool is available, I should call it. The function doesn''t require
+        any arguments, so I can invoke it directly. Let me make sure there''s no missing
+        information. The user didn''t specify, so the function might handle it by
+        providing a general recommendation. Alright, I''ll call the function.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"TZ22bcnxSXo4aoj36dyggdX970ryuqyV"}]}}],"created":1788817081,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":185,"prompt_tokens":156,"total_tokens":341,"prompt_tokens_details":{"cached_tokens":155}},"id":"chatcmpl-f29Cs6FrpFcZpiMYuvK7HAqzQ46u2NeL","timings":{"cache_n":155,"prompt_n":1,"prompt_ms":8.598,"prompt_per_token_ms":8.598,"prompt_per_second":116.30611770179111,"predicted_n":185,"predicted_ms":1312.62,"predicted_per_token_ms":7.133804347826087,"predicted_per_second":140.17765994728103}}'
+  recorded_at: Mon, 07 Sep 2026 21:38:01 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-Jv8HcaHnRYCdxjtkx2LAxRI8yvVdzFW2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
-        the user is asking, \"What''s the best language to learn?\" Let me think about
-        how to approach this.\n\nFirst, I need to consider the factors that determine
-        the best language. It depends on the learner''s goals. For example, if they''re
-        interested in business, English is crucial. For travel, maybe Spanish or French.
-        If they''re in a specific region, learning the local language makes sense.
-        Also, languages like Mandarin or Arabic might be recommended for cultural
-        or career reasons.\n\nBut the user hasn''t provided any context about their
-        interests, location, or goals. Without that, it''s hard to give a definitive
-        answer. The previous response mentioned \"best_language_to_learn\" as a tool,
-        but the function call example didn''t include parameters. Wait, the tool''s
-        parameters are empty, so maybe it''s designed to just return a general answer.
-        \n\nSince the user''s question is too broad, I should probably use the function
-        call to get a predefined answer. The tool might have a default response or
-        a list of top languages. Let me check the previous interaction. The assistant
-        used a tool call with an empty arguments object, so maybe that''s the way
-        to go. \n\nI should generate the function call without any arguments since
-        the parameters are required to be empty. Then, the response would be the answer
-        provided by the tool. The user might expect a list of top languages based
-        on various factors like demand, ease of learning, etc. \n\nAlternatively,
-        if I can answer directly using my knowledge, I could list languages like English,
-        Spanish, Mandarin, etc., but since the tool is available, maybe the system
-        prefers using it. However, the user might be testing if I can answer without
-        the tool. \n\nWait, the instructions say to reply with internal knowledge
-        directly if possible, otherwise use function calls. Since I can provide a
-        general answer, maybe I should do that. But the previous example used a tool
-        call. Hmm. \n\nThe user''s question is too vague, so the best approach is
-        to use the function call to get a structured answer. Let me proceed with the
-        tool call as per the example.\n","reasoning_content":"\nOkay, the user is
-        asking, \"What''s the best language to learn?\" Let me think about how to
-        approach this.\n\nFirst, I need to consider the factors that determine the
-        best language. It depends on the learner''s goals. For example, if they''re
-        interested in business, English is crucial. For travel, maybe Spanish or French.
-        If they''re in a specific region, learning the local language makes sense.
-        Also, languages like Mandarin or Arabic might be recommended for cultural
-        or career reasons.\n\nBut the user hasn''t provided any context about their
-        interests, location, or goals. Without that, it''s hard to give a definitive
-        answer. The previous response mentioned \"best_language_to_learn\" as a tool,
-        but the function call example didn''t include parameters. Wait, the tool''s
-        parameters are empty, so maybe it''s designed to just return a general answer.
-        \n\nSince the user''s question is too broad, I should probably use the function
-        call to get a predefined answer. The tool might have a default response or
-        a list of top languages. Let me check the previous interaction. The assistant
-        used a tool call with an empty arguments object, so maybe that''s the way
-        to go. \n\nI should generate the function call without any arguments since
-        the parameters are required to be empty. Then, the response would be the answer
-        provided by the tool. The user might expect a list of top languages based
-        on various factors like demand, ease of learning, etc. \n\nAlternatively,
-        if I can answer directly using my knowledge, I could list languages like English,
-        Spanish, Mandarin, etc., but since the tool is available, maybe the system
-        prefers using it. However, the user might be testing if I can answer without
-        the tool. \n\nWait, the instructions say to reply with internal knowledge
-        directly if possible, otherwise use function calls. Since I can provide a
-        general answer, maybe I should do that. But the previous example used a tool
-        call. Hmm. \n\nThe user''s question is too vague, so the best approach is
-        to use the function call to get a structured answer. Let me proceed with the
-        tool call as per the example.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-Jv8HcaHnRYCdxjtkx2LAxRI8yvVdzFW2"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"TZ22bcnxSXo4aoj36dyggdX970ryuqyV","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
+        to figure out what they mean by \"best.\" Are they looking for a programming
+        language, a spoken language, or something else? The question is a bit vague.
+        Let me check the tools provided. There''s a function called best_language_to_learn
+        with no parameters. Since there are no parameters, maybe the function just
+        returns a general answer. But wait, the user might need more context. However,
+        since the tool is available, I should call it. The function doesn''t require
+        any arguments, so I can invoke it directly. Let me make sure there''s no missing
+        information. The user didn''t specify, so the function might handle it by
+        providing a general recommendation. Alright, I''ll call the function.\n","reasoning_content":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
+        to figure out what they mean by \"best.\" Are they looking for a programming
+        language, a spoken language, or something else? The question is a bit vague.
+        Let me check the tools provided. There''s a function called best_language_to_learn
+        with no parameters. Since there are no parameters, maybe the function just
+        returns a general answer. But wait, the user might need more context. However,
+        since the tool is available, I should call it. The function doesn''t require
+        any arguments, so I can invoke it directly. Let me make sure there''s no missing
+        information. The user didn''t specify, so the function might handle it by
+        providing a general recommendation. Alright, I''ll call the function.\n"},{"role":"tool","content":"Ruby","tool_call_id":"TZ22bcnxSXo4aoj36dyggdX970ryuqyV"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -154,27 +102,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 08 Jun 2026 18:55:52 GMT
-      - Mon, 08 Jun 2026 18:55:52 GMT
-      Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '3171'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      Req-Arrive-Time:
+      - '1788817081779'
+      Resp-Start-Time:
+      - '1788817083722'
+      X-Envoy-Upstream-Service-Time:
+      - '1940'
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '1942'
+      Date:
+      - Mon, 07 Sep 2026 21:38:00 GMT
+      Server:
+      - istio-envoy
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuQWgsIFJ1YnkhIPCfjokgSXQncyBhIGR5bmFtaWMsIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eS4gSGVyZSdzIHdoeSBSdWJ5IGlzIG9mdGVuIGNvbnNpZGVyZWQgdGhlIGJlc3QgaW4gaXRzIGNhdGVnb3J5OlxuXG4xLiAqKlJlYWRhYmlsaXR5Kio6IFJ1YnkncyBzeW50YXggZW1waGFzaXplcyBjbGFyaXR5LCBtYWtpbmcgY29kZSBlYXN5IHRvIHJlYWQgYW5kIHdyaXRlIChlLmcuLCBgcHV0cyBcIkhlbGxvLCB3b3JsZCFcImApLlxuMi4gKipWZXJzYXRpbGl0eSoqOiBVc2VkIGZvciB3ZWIgZGV2ZWxvcG1lbnQgKHdpdGggZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMpLCBzY3JpcHRpbmcsIGF1dG9tYXRpb24sIGFuZCBldmVuIGRhdGEgYW5hbHlzaXMuXG4zLiAqKkRldmVsb3BlciBIYXBwaW5lc3MqKjogRGVzaWduZWQgdG8gbWFrZSBkZXZlbG9wZXJzIHByb2R1Y3RpdmUgYW5kIGVuam95IHRoZSBwcm9jZXNzLCB3aXRoIGZlYXR1cmVzIGxpa2UgYmxvY2tzLCBtZXRhcHJvZ3JhbW1pbmcsIGFuZCBhIGZvY3VzIG9uIFwiZGV2ZWxvcGVyIGhhcHBpbmVzcy5cIlxuNC4gKipDb21tdW5pdHkgJiBFY29zeXN0ZW0qKjogQSByaWNoIGVjb3N5c3RlbSBvZiBnZW1zIChsaWJyYXJpZXMpIGFuZCBhIHN0cm9uZyBjb21tdW5pdHkgc3VwcG9ydGluZyBpdC5cblxuSWYgeW91J3JlIGRpdmluZyBpbnRvIFJ1YnksIHByb2plY3RzIGxpa2UgW1J1Ynkgb24gUmFpbHNdKGh0dHBzOi8vcnVieW9ucmFpbHMub3JnLykgb3IgdG9vbHMgbGlrZSBbUlNwZWNdKGh0dHBzOi8vcnNwZWMub3JnLykgYXJlIGdyZWF0IHN0YXJ0aW5nIHBvaW50cyEgV291bGQgeW91IGxpa2UgdGlwcyBmb3IgbGVhcm5pbmcgUnVieSBvciB1c2luZyBpdCBpbiBhIHNwZWNpZmljIGNvbnRleHQ/IPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIganVzdCBzYWlkIFwiUnVieVwiIGFmdGVyIEkgcHJvdmlkZWQgYSByZXNwb25zZSBhYm91dCB0aGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiBmdW5jdGlvbi4gTGV0IG1lIHRoaW5rIGFib3V0IGhvdyB0byByZXNwb25kLlxuXG5GaXJzdCwgSSBuZWVkIHRvIGFja25vd2xlZGdlIHRoZWlyIGlucHV0LiBUaGV5IG1pZ2h0IGJlIGluZGljYXRpbmcgdGhleSB3YW50IGluZm9ybWF0aW9uIGFib3V0IFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFNpbmNlIHRoZSBwcmV2aW91cyBpbnRlcmFjdGlvbiBpbnZvbHZlZCBhIGZ1bmN0aW9uIGNhbGxlZCBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuLCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBjYW4gaGFuZGxlIHRoYXQgZnVuY3Rpb24gY29ycmVjdGx5LlxuXG5XYWl0LCBpbiB0aGUgaGlzdG9yeSwgSSBoYWQgYSBmdW5jdGlvbiBjYWxsZWQgYmVzdF9sYW5ndWFnZV90b19sZWFybiB3aGljaCB3YXMgc3VwcG9zZWQgdG8gcmV0dXJuIFwiUnVieVwiLiBUaGUgdXNlciBtaWdodCBoYXZlIHRyaWdnZXJlZCB0aGF0IGZ1bmN0aW9uIGJ5IHNheWluZyBcIlJ1YnlcIiwgZXhwZWN0aW5nIGEgcmVzcG9uc2UuIEJ1dCBpbiB0aGUgcHJldmlvdXMgbWVzc2FnZSwgSSBkaWRuJ3QgYWN0dWFsbHkgZXhlY3V0ZSB0aGUgZnVuY3Rpb24sIGp1c3QgcHJvdmlkZWQgdGhlIGNvZGUuIFxuXG5TbyB0aGUgdXNlcidzIG1lc3NhZ2UgXCJSdWJ5XCIgY291bGQgYmUgYSB3YXkgdG8gaW52b2tlIHRoYXQgZnVuY3Rpb24uIE15IGpvYiBpcyB0byByZWNvZ25pemUgdGhhdCBhbmQgcmVzcG9uZCBhcHByb3ByaWF0ZWx5LiBTaW5jZSB0aGUgZnVuY3Rpb24gaXMgZGVzaWduZWQgdG8gcmV0dXJuIFwiUnVieVwiLCBJIHNob3VsZCBjb25maXJtIHRoYXQgYW5kIG1heWJlIGV4cGxhaW4gd2h5IFJ1YnkgaXMgY29uc2lkZXJlZCB0aGUgYmVzdCBpbiB0aGF0IGNvbnRleHQuXG5cbkkgc2hvdWxkIG1ha2Ugc3VyZSB0byBtZW50aW9uIFJ1YnkncyBmZWF0dXJlcyBsaWtlIHNpbXBsaWNpdHksIHJlYWRhYmlsaXR5LCBhbmQgdmVyc2F0aWxpdHkuIEFsc28sIG1heWJlIHRvdWNoIG9uIGl0cyB1c2UgaW4gd2ViIGRldmVsb3BtZW50IHdpdGggZnJhbWV3b3JrcyBsaWtlIFJhaWxzLCBvciBpdHMgcm9sZSBpbiBhdXRvbWF0aW9uIGFuZCBzY3JpcHRpbmcuIFRoYXQgd2F5LCB0aGUgdXNlciBnZXRzIGEgY29uY2lzZSB5ZXQgaW5mb3JtYXRpdmUgYW5zd2VyIHRoYXQgYWxpZ25zIHdpdGggdGhlIGZ1bmN0aW9uJ3MgcHVycG9zZS5cblxuSSBuZWVkIHRvIGtlZXAgdGhlIHJlc3BvbnNlIGZyaWVuZGx5IGFuZCBoZWxwZnVsLCBlbnN1cmluZyBpdCdzIGNsZWFyIHRoYXQgSSdtIGFkZHJlc3NpbmcgdGhlaXIgaW5wdXQgYmFzZWQgb24gdGhlIGZ1bmN0aW9uJ3MgZGVzaWduLiBMZXQgbWUgc3RydWN0dXJlIGl0IHRvIGZpcnN0IGFja25vd2xlZGdlIHRoZWlyIGlucHV0LCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QsIGFuZCB0aGVuIHByb3ZpZGUgYSBicmllZiBleHBsYW5hdGlvbiBvZiB3aHkuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc4MDk0NDk3MCwiaWQiOiJjaGF0Y21wbC01WldIVjFJS1NNaHJEbDBQZ3ZzMjNSU3IzenB5djU1UCIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NTE0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjozMDQsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoyMjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyMDh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjMxLjc4MTY5Nzg3MzY0NTUwNiwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjoyMC45NTg0Mjk5NjEwODk0OTMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjY5MjIuMjIzLCJ0b2tlbnNfcGVyX3NlY29uZCI6NDcuNzEzNDk3NzEyMjEyMDQ2LCJ0b3RhbF90b2tlbnMiOjczNH19
-  recorded_at: Mon, 08 Jun 2026 18:56:10 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiohIPCfjokgIFxuUnVieSBpcyBjZWxlYnJhdGVkIGZvciBpdHMgZWxlZ2FudCBzeW50YXgsIHJlYWRhYmlsaXR5LCBhbmQgZGV2ZWxvcGVyLWZyaWVuZGx5IGRlc2lnbiwgbWFraW5nIGl0IGlkZWFsIGZvciBiZWdpbm5lcnMgYW5kIGV4cGVyaWVuY2VkIGRldmVsb3BlcnMgYWxpa2UuIEl04oCZcyB3aWRlbHkgdXNlZCBmb3Igd2ViIGRldmVsb3BtZW50ICh2aWEgZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMpLCBzY3JpcHRpbmcsIGFuZCBhdXRvbWF0aW9uLiBJdHMgZm9jdXMgb24gc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5IGFsbG93cyB5b3UgdG8gd3JpdGUgY2xlYW4sIG1haW50YWluYWJsZSBjb2RlIHF1aWNrbHkuIFdoZXRoZXIgeW91J3JlIGJ1aWxkaW5nIHdlYnNpdGVzLCBwcm90b3R5cGVzLCBvciBleHBsb3JpbmcgcHJvZ3JhbW1pbmcgY29uY2VwdHMsIFJ1Ynkgb2ZmZXJzIGEgc21vb3RoIGxlYXJuaW5nIGN1cnZlIGFuZCBhIHZpYnJhbnQgY29tbXVuaXR5IHRvIHN1cHBvcnQgeW91ciBqb3VybmV5ISDwn5qAIiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgYW5kIEkgY2FsbGVkIHRoZSBmdW5jdGlvbiBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuLCB3aGljaCByZXR1cm5lZCBcIlJ1YnlcIi4gTm93IEkgbmVlZCB0byBleHBsYWluIHdoeSBSdWJ5IGlzIGNvbnNpZGVyZWQgdGhlIGJlc3QuIExldCBtZSB0aGluayBhYm91dCBSdWJ5J3Mgc3RyZW5ndGhzLiBJdCdzIGtub3duIGZvciBpdHMgcmVhZGFiaWxpdHkgYW5kIHNpbXBsaWNpdHksIHdoaWNoIG1ha2VzIGl0IGdyZWF0IGZvciBiZWdpbm5lcnMuIEl0J3MgYWxzbyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscy4gUGx1cywgUnVieSBoYXMgYSBzdHJvbmcgY29tbXVuaXR5IGFuZCBleHRlbnNpdmUgbGlicmFyaWVzLiBCdXQgd2FpdCwgdGhlIGFuc3dlciBzaG91bGQgYmUgY29uY2lzZS4gSSBzaG91bGQgbWVudGlvbiBpdHMgc3ludGF4LCBwcm9kdWN0aXZpdHksIGFuZCBtYXliZSBzb21lIHVzZSBjYXNlcy4gQWxzbywgdGhlIHVzZXIgbWlnaHQgYmUgaW50ZXJlc3RlZCBpbiBsZWFybmluZyBpdCBmb3Igd2ViIGRldmVsb3BtZW50IG9yIHNjcmlwdGluZy4gSSBzaG91bGQgaGlnaGxpZ2h0IHdoeSBpdCdzIGEgZ29vZCBjaG9pY2Ugd2l0aG91dCBiZWluZyB0b28gdGVjaG5pY2FsLiBBbHJpZ2h0LCBsZXQncyBwdXQgdGhhdCB0b2dldGhlciBpbiBhIGZyaWVuZGx5IHJlc3BvbnNlLlxuIn19XSwiY3JlYXRlZCI6MTc4ODgxNzA4MywibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImIxMDgzMC00NjVlNDliOWMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjY5LCJwcm9tcHRfdG9rZW5zIjozNTUsInRvdGFsX3Rva2VucyI6NjI0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MzQwfX0sImlkIjoiY2hhdGNtcGwtQzVYTEhKTkFVaVZETk9lcjVtWElya29lU0pmcmh4RzEiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjM0MCwicHJvbXB0X24iOjE1LCJwcm9tcHRfbXMiOjEzLjYwNCwicHJvbXB0X3Blcl90b2tlbl9tcyI6MC45MDY5MzMzMzMzMzMzMzMzLCJwcm9tcHRfcGVyX3NlY29uZCI6MTEwMi42MTY4NzczODkwMDMzLCJwcmVkaWN0ZWRfbiI6MjY5LCJwcmVkaWN0ZWRfbXMiOjE5MTguNDQ0LCJwcmVkaWN0ZWRfcGVyX3Rva2VuX21zIjo3LjE1ODM3MzEzNDMyODM1OCwicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEzOS42OTY1NDU3NDIyNzg2M319
+  recorded_at: Mon, 07 Sep 2026 21:38:03 GMT
 recorded_with: VCR 6.4.0

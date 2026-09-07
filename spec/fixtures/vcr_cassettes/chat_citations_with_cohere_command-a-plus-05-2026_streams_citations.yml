@@ -42,24 +42,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d4c663ab3b0c86bd19c7a45e13b37dff
+      - 8c327aa4865a764733ba940d3f76584c
       Date:
-      - Thu, 13 Aug 2026 11:14:57 GMT
+      - Mon, 07 Sep 2026 21:04:50 GMT
       X-Envoy-Upstream-Service-Time:
-      - '21'
+      - '14'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"dd27c8d3-34cf-419f-8d3a-0d1247feafc3","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"cfb475ed-139b-4eba-876b-2e3a4445d79d","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
@@ -80,7 +80,16 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
 
         event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" programming"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" was"}}}}
@@ -113,16 +122,13 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" This"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" directly"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answer"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answers"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
@@ -132,15 +138,6 @@ http_interactions:
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" question"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" information"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
@@ -167,7 +164,16 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
 
         event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programming"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" was"}}}}
@@ -194,7 +200,7 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Matsumoto"}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":49,"end":67,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":74,"end":92,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":0}
@@ -218,7 +224,7 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":73,"end":78,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":98,"end":103,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":1}
@@ -251,7 +257,10 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" make"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" "}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"make"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programmers"}}}}
@@ -268,14 +277,20 @@ http_interactions:
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
 
+        event: citation-start
+        data: {"type":"citation-start","index":2,"delta":{"message":{"citations":{"start":157,"end":195,"text":"make programmers happy and productive.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":2}
+
         event: content-end
         data: {"type":"content-end","index":1}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":63},"tokens":{"input_tokens":508,"output_tokens":86,"reasoning_tokens":28},"cached_tokens":144}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":65},"tokens":{"input_tokens":508,"output_tokens":98,"reasoning_tokens":27},"cached_tokens":144}}}
 
         data: [DONE]
 
-  recorded_at: Thu, 13 Aug 2026 11:14:58 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:50 GMT
 recorded_with: VCR 6.4.0
 ...

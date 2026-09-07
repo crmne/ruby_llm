@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gemini-3.8-flash","input":[{"type":"user_input","content":[{"type":"text","text":"Use
-        multiply to calculate 13 times 7 and return the answer."}]}],"stream":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
-        two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}],"response_format":{"type":"text","mime_type":"application/json","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"]}},"store":false}'
+        multiply to calculate 13 times 7 and return the answer."}]}],"stream":false,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
+        two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}],"response_format":{"type":"text","mime_type":"application/json","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"]}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 13:47:44 GMT
+      - Mon, 07 Sep 2026 20:55:14 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,23 +41,23 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1280
+      - gfet4t7; dur=972
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"requires_action","usage":{"total_tokens":136,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":52,"raw_prompt_token":156,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":52}]}]},"created":"2026-09-07T13:47:44Z","updated":"2026-09-07T13:47:44Z","service_tier":"standard","steps":[{"signature":"ErYCCrMCARFNMg+Ofz9VfYxDDFrDW8jdq/XLgviF7CTrOe4kVO3IoFYKF5ZJ9yy89U+UF5Z22RMGmV1RVc6WHWWWXvwt0jw7zuhUtzCl9yPpGyyME7qABBYg1JSuabQHpre1qJQAGB6bbMECchFcrH/ig+CGswqAqnD6aSoNNELPexBw5wtzA9XZfaPOuHNw4VDHRO8aE792o4lg9//xpV4zfPwY+ySxCWCUmLxbugkKcByd+0m3b/uWcA5IFIp4K9WVj890I6GbUEzRs8LbIhTubTp7I23JvfBqeNNqjKBTzZE7JoByLn7skEmPvJTtA28//twhZTJQBNt8tQ/y4ylwTic1dSfuFiNcC6E868kx7TwSE4DVEX13vdca0GBfoRldC09xWNmAYiCBTFeK56q7pivlNixLyw==","type":"thought"},{"id":"call_1745649","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}}],"object":"interaction","model":"gemini-3.8-flash"}'
-  recorded_at: Mon, 07 Sep 2026 13:47:44 GMT
+      string: '{"status":"requires_action","usage":{"total_tokens":133,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":49,"raw_prompt_token":156,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":49}]}]},"created":"2026-09-07T20:55:14Z","updated":"2026-09-07T20:55:14Z","service_tier":"standard","steps":[{"signature":"ErICCq8CARFNMg/JRYy5q8Po6wEdP/fPh0nyM8LKiZEGPpw3tWnFGrIhvvcouue8GyMG5x0zLw3IphFx4NJS9kr6rzi2MlbVgcp0GgU0yrwpgRr7h61OPpTgu0La8qP7OuJS7IQMbl/+II4ynlUggPQvwDvuenINZ+5I1LTjf4fqDIGBjx9LLCpMUf1gPyf+SosHel5oIIWeO/VBgTPpVrl1KscdczWmcdkxVKxU6de+LdGXEdBKBDVEKkyKhyYjFi7Vl/k1XT39/HHy6cU2oQOybk47YAkzUStfUxGHQPknWWYTU6FjF7f9ACHB8rqSZHIwkGFs4CivOX+gOvql3iRMM1PyMnK3JC3HLzXFwXnq3+uAMBNsoCq1NnFJ++Ex2cFtqVsSED27KVeaSYqj3yNpwD2F","type":"thought"},{"id":"call_336848","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}}],"object":"interaction","model":"gemini-3.8-flash"}'
+  recorded_at: Mon, 07 Sep 2026 20:55:14 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/interactions
     body:
       encoding: UTF-8
       string: '{"model":"gemini-3.8-flash","input":[{"type":"user_input","content":[{"type":"text","text":"Use
-        multiply to calculate 13 times 7 and return the answer."}]},{"signature":"ErYCCrMCARFNMg+Ofz9VfYxDDFrDW8jdq/XLgviF7CTrOe4kVO3IoFYKF5ZJ9yy89U+UF5Z22RMGmV1RVc6WHWWWXvwt0jw7zuhUtzCl9yPpGyyME7qABBYg1JSuabQHpre1qJQAGB6bbMECchFcrH/ig+CGswqAqnD6aSoNNELPexBw5wtzA9XZfaPOuHNw4VDHRO8aE792o4lg9//xpV4zfPwY+ySxCWCUmLxbugkKcByd+0m3b/uWcA5IFIp4K9WVj890I6GbUEzRs8LbIhTubTp7I23JvfBqeNNqjKBTzZE7JoByLn7skEmPvJTtA28//twhZTJQBNt8tQ/y4ylwTic1dSfuFiNcC6E868kx7TwSE4DVEX13vdca0GBfoRldC09xWNmAYiCBTFeK56q7pivlNixLyw==","type":"thought"},{"id":"call_1745649","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}},{"type":"function_result","call_id":"call_1745649","name":"multiply","result":[{"type":"text","text":"91"}]}],"stream":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
-        two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}],"response_format":{"type":"text","mime_type":"application/json","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"]}},"store":false}'
+        multiply to calculate 13 times 7 and return the answer."}]},{"signature":"ErICCq8CARFNMg/JRYy5q8Po6wEdP/fPh0nyM8LKiZEGPpw3tWnFGrIhvvcouue8GyMG5x0zLw3IphFx4NJS9kr6rzi2MlbVgcp0GgU0yrwpgRr7h61OPpTgu0La8qP7OuJS7IQMbl/+II4ynlUggPQvwDvuenINZ+5I1LTjf4fqDIGBjx9LLCpMUf1gPyf+SosHel5oIIWeO/VBgTPpVrl1KscdczWmcdkxVKxU6de+LdGXEdBKBDVEKkyKhyYjFi7Vl/k1XT39/HHy6cU2oQOybk47YAkzUStfUxGHQPknWWYTU6FjF7f9ACHB8rqSZHIwkGFs4CivOX+gOvql3iRMM1PyMnK3JC3HLzXFwXnq3+uAMBNsoCq1NnFJ++Ex2cFtqVsSED27KVeaSYqj3yNpwD2F","type":"thought"},{"id":"call_336848","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}},{"type":"function_result","call_id":"call_336848","name":"multiply","result":[{"type":"text","text":"91"}]}],"stream":false,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
+        two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}],"response_format":{"type":"text","mime_type":"application/json","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"]}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -81,7 +81,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 13:47:49 GMT
+      - Mon, 07 Sep 2026 20:55:16 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -91,14 +91,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=4654
+      - gfet4t7; dur=1247
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"completed","usage":{"total_tokens":181,"total_input_tokens":144,"input_tokens_by_modality":[{"modality":"text","tokens":144}],"total_cached_tokens":0,"total_output_tokens":11,"total_tool_use_tokens":0,"total_thought_tokens":26,"raw_prompt_token":246,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":246}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":26}]}]},"created":"2026-09-07T13:47:49Z","updated":"2026-09-07T13:47:49Z","service_tier":"standard","steps":[{"signature":"EsMBCsABARFNMg9faGdiIdMFWg5VUhWyMp3cHd0+2qN0uoiRLUJx7JZWljYS2hSQwFGDUHsm80uvdc83REoCKR/ylQvaEiz+I2nyv50ABxbQoqwWRjcHpQMb87mlfLaPpbR3OkhUC9lokyyxqyztM43XqnMmUpq4rdhxFbrkmKnkvtyY80rRdVyavtYFzv6w8mvds2a7jl/leoDKJzRrDxzMQmvBzd0j3xSu8bIiaFDErsXoZF6eTNNri/JuM/QvFRSsKEpN","type":"thought"},{"content":[{"text":"{\n  \"answer\":
+      string: '{"status":"completed","usage":{"total_tokens":186,"total_input_tokens":141,"input_tokens_by_modality":[{"modality":"text","tokens":141}],"total_cached_tokens":0,"total_output_tokens":10,"total_tool_use_tokens":0,"total_thought_tokens":35,"raw_prompt_token":243,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":243}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":35}]}]},"created":"2026-09-07T20:55:16Z","updated":"2026-09-07T20:55:16Z","service_tier":"standard","steps":[{"signature":"EuABCt0BARFNMg8utdtKkQzwXdjHdSUO1mvd57ft833uEfhf5r5lSiTEeei1R9p7weNb9oI6kuaYetc9wFxT2w/AXBSG5ZROf3nW0L0eTSLYmJAN+hzyR2Qats8Xrfe6AZhA6AeKrmOFNMP6T8oorflZSmoRI7tjsNhLcrHXChFqkhNCCMkIT4105fNW/cYyFDja6aSz0FZW5MMpBisg2DkMnRENdlQsGInPwUJ47KDYLAOpnaD19XJLlahuh3FmOfjJRPQml6Yfl2621b8HDscrcbQ71JeHeZPNklKKJ/NaJHM=","type":"thought"},{"content":[{"text":"{\n  \"answer\":
         91\n}","type":"text"}],"type":"model_output"}],"object":"interaction","model":"gemini-3.8-flash"}'
-  recorded_at: Mon, 07 Sep 2026 13:47:49 GMT
+  recorded_at: Mon, 07 Sep 2026 20:55:16 GMT
 recorded_with: VCR 6.4.0

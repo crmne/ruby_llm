@@ -33,10 +33,12 @@ RSpec.describe RubyLLM::Chat, :live do
         end
 
         it 'raises appropriate auth error' do
-          skip('Only valid for remote providers') if RubyLLM::Provider.providers[provider].local?
+          skip('Ollama does not require an API key') if provider == :ollama
+          RubyLLM.config.gpustack_api_key = 'invalid-key' if provider == :gpustack
           skip('Vertex AI uses OAuth, not API keys') if provider == :vertexai
           expect { chat.ask('Hello') }.to raise_error do |error|
             expect(error).to be_a(RubyLLM::Error)
+            expect(error).to be_a(RubyLLM::UnauthorizedError) if provider == :gpustack
             expect(error.class.ancestors).to include(RubyLLM::Error)
             expect(error.response).to be_present
             expect(error.message).to be_present

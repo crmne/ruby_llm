@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:13 GMT
+      - Mon, 07 Sep 2026 20:55:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,25 +41,27 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-08-19T14:34:12Z'
+      - '2026-09-07T20:55:56Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-08-19T14:34:12Z'
+      - '2026-09-07T20:55:56Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-08-19T14:34:11Z'
+      - '2026-09-07T20:55:55Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-08-19T14:34:12Z'
+      - '2026-09-07T20:55:56Z'
+      Server:
+      - cloudflare
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -69,9 +71,7 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-7c32353650f87fc5df74acb7b4b06bc2-bc488261cab84eae-01
-      Server:
-      - cloudflare
+      - 00-7487ca2846aa283f929a34d630ca8b87-8193d7dcc1cb7c62-01
       Vary:
       - Accept-Encoding
       Content-Security-Policy:
@@ -84,15 +84,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CeCGmCbAyQmGiHPwNrvsc","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Ay5KzhmQYMK53svGLaAxfc","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":75,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Wed, 19 Aug 2026 14:34:13 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CepkEvvAQVzr3bwWGsktW","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01My86yfDXX4JZEEYvSRaDhz","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":75,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Mon, 07 Sep 2026 20:55:56 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01Ay5KzhmQYMK53svGLaAxfc","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Ay5KzhmQYMK53svGLaAxfc","content":[{"type":"text","text":"Current
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01My86yfDXX4JZEEYvSRaDhz","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01My86yfDXX4JZEEYvSRaDhz","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -116,7 +116,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:14 GMT
+      - Mon, 07 Sep 2026 20:55:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -126,27 +126,27 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '10000000'
+      - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-08-19T14:34:13Z'
+      - '2026-09-07T20:55:57Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-08-19T14:34:14Z'
+      - '2026-09-07T20:55:57Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-08-19T14:34:13Z'
+      - '2026-09-07T20:55:56Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '12000000'
+      - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-08-19T14:34:13Z'
+      - '2026-09-07T20:55:57Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -156,7 +156,7 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-b5974f66f618d7a86a040fd0a9ba6677-ec0de1605b0cc7d7-01
+      - 00-c076bc4adf0e73efc97d376b63a5f852-f91a295682f127bb-01
       Server:
       - cloudflare
       Vary:
@@ -172,6 +172,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZUNHbUp5ZXF0UFZ4Tk1OQlR1WFIiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5OlxuLSAqKlRlbXBlcmF0dXJlKio6IDE1wrBDXG4tICoqV2luZCoqOiAxMCBrbS9oXG5cbkl0J3MgYSByZWxhdGl2ZWx5IGNvb2wgZGF5IHdpdGggbGlnaHQgd2luZHMuIFlvdSBtaWdodCB3YW50IHRvIGJyaW5nIGEgbGlnaHQgamFja2V0IGlmIHlvdSdyZSBoZWFkaW5nIG91dCEifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NzQ4LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NTUsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUifX0=
-  recorded_at: Wed, 19 Aug 2026 14:34:14 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZXBrRjJuOFhVYlJiQ3BFUjJ5eWgiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5OlxuLSAqKlRlbXBlcmF0dXJlKio6IDE1wrBDICg1OcKwRilcbi0gKipXaW5kKio6IDEwIGttL2ggKDYgbXBoKVxuXG5JdCdzIGEgbWlsZCBkYXkgd2l0aCBhIGdlbnRsZSBicmVlemUuIFlvdSBtaWdodCB3YW50IHRvIGJyaW5nIGEgbGlnaHQgamFja2V0ISJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo3NDgsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjo2MSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9fQ==
+  recorded_at: Mon, 07 Sep 2026 20:55:57 GMT
 recorded_with: VCR 6.4.0

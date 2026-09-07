@@ -5,14 +5,14 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What''s the weather
+      string: '{"model":"gpt-5.6","input":[{"role":"user","content":"What''s the weather
         in Berlin? (52.5200, 13.4050)"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:17:01 GMT
+      - Mon, 07 Sep 2026 21:02:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,9 +51,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '641'
+      - '852'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -78,30 +78,30 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0a0fbff8226c73b3016a2b17bd0d7481a380976a17fa2c67bd",
+          "id": "resp_05dc05ac57ffcf0d016a9f264aa14087d2bb35d762c9a3385b",
           "object": "response",
-          "created_at": 1781209021,
+          "created_at": 1788814922,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781209021,
+          "completed_at": 1788814923,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.4-2026-03-05",
+          "model": "gpt-5.6-sol",
           "moderation": null,
           "output": [
             {
-              "id": "fc_0a0fbff8226c73b3016a2b17bd7b2c81a3a272bfbeee2be5ba",
+              "id": "fc_05dc05ac57ffcf0d016a9f264b414087d2b714ceec62288cd6",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_DGCCT2GG3FDOmu4Of644hX1p",
+              "call_id": "call_ozVtfokUuAQwPxcmlGMZapVV",
               "name": "weather"
             }
           ],
@@ -111,8 +111,9 @@ http_interactions:
           "prompt_cache_key": null,
           "prompt_cache_retention": "24h",
           "reasoning": {
-            "context": "current_turn",
-            "effort": "none",
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -126,11 +127,30 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [
             {
               "type": "function",
               "description": "Gets current weather for a location",
               "name": "weather",
+              "output_schema": null,
               "parameters": {
                 "type": "object",
                 "properties": {
@@ -150,7 +170,7 @@ http_interactions:
                 "additionalProperties": false,
                 "strict": true
               },
-              "strict": true
+              "strict": false
             }
           ],
           "top_logprobs": 0,
@@ -159,6 +179,7 @@ http_interactions:
           "usage": {
             "input_tokens": 87,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
             "output_tokens": 27,
@@ -170,21 +191,21 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:17:01 GMT
+  recorded_at: Mon, 07 Sep 2026 21:02:03 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_DGCCT2GG3FDOmu4Of644hX1p","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_DGCCT2GG3FDOmu4Of644hX1p","output":"Current
+      string: '{"model":"gpt-5.6","input":[{"role":"user","content":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_ozVtfokUuAQwPxcmlGMZapVV","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_ozVtfokUuAQwPxcmlGMZapVV","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -199,7 +220,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:17:04 GMT
+      - Mon, 07 Sep 2026 21:02:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -223,9 +244,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2271'
+      - '1117'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -250,26 +271,26 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0ff726ddcf567054016a2b17bde6b081928a75ff444e44d22c",
+          "id": "resp_0ead8abe346d30e7016a9f264bb6bc87d28ac3387ebd06fbe1",
           "object": "response",
-          "created_at": 1781209021,
+          "created_at": 1788814923,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781209024,
+          "completed_at": 1788814924,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.4-2026-03-05",
+          "model": "gpt-5.6-sol",
           "moderation": null,
           "output": [
             {
-              "id": "msg_0ff726ddcf567054016a2b17be6b208192b9e03d7e66e37ec2",
+              "id": "msg_0ead8abe346d30e7016a9f264c730887d29a08eec090279527",
               "type": "message",
               "status": "completed",
               "content": [
@@ -277,7 +298,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Berlin: 15\u00b0C, wind 10 km/h."
+                  "text": "Berlin is currently **15\u00b0C** with winds around **10 km/h**."
                 }
               ],
               "phase": "final_answer",
@@ -290,8 +311,9 @@ http_interactions:
           "prompt_cache_key": null,
           "prompt_cache_retention": "24h",
           "reasoning": {
-            "context": "current_turn",
-            "effort": "none",
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -305,11 +327,30 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [
             {
               "type": "function",
               "description": "Gets current weather for a location",
               "name": "weather",
+              "output_schema": null,
               "parameters": {
                 "type": "object",
                 "properties": {
@@ -329,7 +370,7 @@ http_interactions:
                 "additionalProperties": false,
                 "strict": true
               },
-              "strict": true
+              "strict": false
             }
           ],
           "top_logprobs": 0,
@@ -338,16 +379,17 @@ http_interactions:
           "usage": {
             "input_tokens": 149,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 16,
+            "output_tokens": 20,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 165
+            "total_tokens": 169
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:17:04 GMT
+  recorded_at: Mon, 07 Sep 2026 21:02:04 GMT
 recorded_with: VCR 6.4.0

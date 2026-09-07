@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
         best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,86 +25,64 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 08 Jun 2026 18:47:31 GMT
+      - Mon, 07 Sep 2026 21:38:33 GMT
       Content-Length:
-      - '1958'
+      - '1419'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-128","object":"chat.completion","created":1780944451,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-997","object":"chat.completion","created":1788817113,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking, \"What''s the best language to learn?\" Hmm, first I need
         to figure out what they mean by \"best.\" Are they asking about programming
-        languages, spoken languages, or something else? The question is a bit ambiguous.
-        \n\nLooking at the tools provided, there''s a function called best_language_to_learn.
-        The description says it gets the best language to learn, but the object is
-        nil. Wait, maybe the function is designed to handle different types of languages
-        based on context? Or perhaps it''s a placeholder that needs more parameters.\n\nSince
-        the user didn''t specify, maybe I should call the function without arguments
-        and let it handle the ambiguity. Alternatively, maybe the function expects
-        certain parameters like type (programming, spoken, etc.) but the tool definition
-        doesn''t show any arguments. The function''s arguments are listed as \u003cnil\u003e
-        \u003cnil\u003e [] {}, which might mean no parameters are required. \n\nI
-        should check the tool''s function definition again. The function is best_language_to_learn,
-        and the arguments are empty. So, I can call it directly without any parameters.
-        The function might internally determine the context or default to a general
-        answer. \n\nAlternatively, maybe the function is supposed to take parameters
-        but the tool definition is incomplete. But given the information, the safest
-        approach is to invoke the provided function as is, since the user''s question
-        aligns with the function''s purpose. So, I''ll call best_language_to_learn
-        with no arguments.\n","tool_calls":[{"id":"call_yqkd2m3c","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":319,"total_tokens":451}}
+        languages, or maybe a natural language like English or Spanish? The question
+        is a bit vague.\n\nLooking at the tools provided, there''s a function called
+        best_language_to_learn. The description says it gets the best language to
+        learn, but the parameters are empty. So maybe the function doesn''t require
+        any arguments and can determine the context on its own. \n\nWait, but the
+        user didn''t specify if they mean a programming language or a human language.
+        The function might have a default or maybe it''s designed to handle both.
+        Since the function exists, I should call it to get the answer. The user probably
+        expects a direct answer, so using the tool makes sense here. I don''t have
+        any other information to base my answer on, so the best approach is to invoke
+        the provided function.\n","tool_calls":[{"id":"call_3q46jzx5","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":217,"total_tokens":349}}
 
         '
-  recorded_at: Mon, 08 Jun 2026 18:47:31 GMT
+  recorded_at: Mon, 07 Sep 2026 21:38:33 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_yqkd2m3c","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3q46jzx5","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
         the user is asking, \"What''s the best language to learn?\" Hmm, first I need
         to figure out what they mean by \"best.\" Are they asking about programming
-        languages, spoken languages, or something else? The question is a bit ambiguous.
-        \n\nLooking at the tools provided, there''s a function called best_language_to_learn.
-        The description says it gets the best language to learn, but the object is
-        nil. Wait, maybe the function is designed to handle different types of languages
-        based on context? Or perhaps it''s a placeholder that needs more parameters.\n\nSince
-        the user didn''t specify, maybe I should call the function without arguments
-        and let it handle the ambiguity. Alternatively, maybe the function expects
-        certain parameters like type (programming, spoken, etc.) but the tool definition
-        doesn''t show any arguments. The function''s arguments are listed as <nil>
-        <nil> [] {}, which might mean no parameters are required. \n\nI should check
-        the tool''s function definition again. The function is best_language_to_learn,
-        and the arguments are empty. So, I can call it directly without any parameters.
-        The function might internally determine the context or default to a general
-        answer. \n\nAlternatively, maybe the function is supposed to take parameters
-        but the tool definition is incomplete. But given the information, the safest
-        approach is to invoke the provided function as is, since the user''s question
-        aligns with the function''s purpose. So, I''ll call best_language_to_learn
-        with no arguments.\n","reasoning_content":"Okay, the user is asking, \"What''s
+        languages, or maybe a natural language like English or Spanish? The question
+        is a bit vague.\n\nLooking at the tools provided, there''s a function called
+        best_language_to_learn. The description says it gets the best language to
+        learn, but the parameters are empty. So maybe the function doesn''t require
+        any arguments and can determine the context on its own. \n\nWait, but the
+        user didn''t specify if they mean a programming language or a human language.
+        The function might have a default or maybe it''s designed to handle both.
+        Since the function exists, I should call it to get the answer. The user probably
+        expects a direct answer, so using the tool makes sense here. I don''t have
+        any other information to base my answer on, so the best approach is to invoke
+        the provided function.\n","reasoning_content":"Okay, the user is asking, \"What''s
         the best language to learn?\" Hmm, first I need to figure out what they mean
-        by \"best.\" Are they asking about programming languages, spoken languages,
-        or something else? The question is a bit ambiguous. \n\nLooking at the tools
-        provided, there''s a function called best_language_to_learn. The description
-        says it gets the best language to learn, but the object is nil. Wait, maybe
-        the function is designed to handle different types of languages based on context?
-        Or perhaps it''s a placeholder that needs more parameters.\n\nSince the user
-        didn''t specify, maybe I should call the function without arguments and let
-        it handle the ambiguity. Alternatively, maybe the function expects certain
-        parameters like type (programming, spoken, etc.) but the tool definition doesn''t
-        show any arguments. The function''s arguments are listed as <nil> <nil> []
-        {}, which might mean no parameters are required. \n\nI should check the tool''s
-        function definition again. The function is best_language_to_learn, and the
-        arguments are empty. So, I can call it directly without any parameters. The
-        function might internally determine the context or default to a general answer.
-        \n\nAlternatively, maybe the function is supposed to take parameters but the
-        tool definition is incomplete. But given the information, the safest approach
-        is to invoke the provided function as is, since the user''s question aligns
-        with the function''s purpose. So, I''ll call best_language_to_learn with no
-        arguments.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_yqkd2m3c"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+        by \"best.\" Are they asking about programming languages, or maybe a natural
+        language like English or Spanish? The question is a bit vague.\n\nLooking
+        at the tools provided, there''s a function called best_language_to_learn.
+        The description says it gets the best language to learn, but the parameters
+        are empty. So maybe the function doesn''t require any arguments and can determine
+        the context on its own. \n\nWait, but the user didn''t specify if they mean
+        a programming language or a human language. The function might have a default
+        or maybe it''s designed to handle both. Since the function exists, I should
+        call it to get the answer. The user probably expects a direct answer, so using
+        the tool makes sense here. I don''t have any other information to base my
+        answer on, so the best approach is to invoke the provided function.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_3q46jzx5"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -119,12 +97,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 08 Jun 2026 18:47:34 GMT
+      - Mon, 07 Sep 2026 21:38:35 GMT
       Content-Length:
-      - '1768'
+      - '1611'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTE5NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5NDQ0NTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkJhc2VkIG9uIHRoZSBhbmFseXNpcywgKipSdWJ5KiogaXMgcmVjb21tZW5kZWQgYXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIEl04oCZcyBjZWxlYnJhdGVkIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBpZGVhbCBmb3IgYmVnaW5uZXJzIGFuZCBlZmZpY2llbnQgZm9yIGJ1aWxkaW5nIHdlYiBhcHBsaWNhdGlvbnMgKGUuZy4sIHdpdGggUmFpbHMpLiBIb3dldmVyLCB0aGUgXCJiZXN0XCIgbGFuZ3VhZ2UgZGVwZW5kcyBvbiB5b3VyIGdvYWxzOiAgXG4tICoqV2ViIGRldioqOiBSdWJ5IChvciBKYXZhU2NyaXB0L1B5dGhvbikgIFxuLSAqKkRhdGEgc2NpZW5jZSoqOiBQeXRob24gIFxuLSAqKk1vYmlsZSBhcHBzKio6IFN3aWZ0L0tvdGxpbiAgXG4tICoqR2VuZXJhbC1wdXJwb3NlKio6IFB5dGhvbi9SdWJ5ICBcblxuTGV0IG1lIGtub3cgeW91ciBpbnRlcmVzdHMgZm9yIGEgdGFpbG9yZWQgc3VnZ2VzdGlvbiEg8J+YiiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBhbmQgSSBjYWxsZWQgdGhlIGZ1bmN0aW9uIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4uIFRoZSByZXNwb25zZSBmcm9tIHRoZSB0b29sIHdhcyBcIlJ1YnkuXCIgTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuXG5cbkZpcnN0LCBJIHNob3VsZCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4sIGJ1dCBtYXliZSBhZGQgc29tZSBjb250ZXh0LiBXaHkgUnVieT8gSXQncyBrbm93biBmb3IgYmVpbmcgYmVnaW5uZXItZnJpZW5kbHkgd2l0aCBhIHNpbXBsZSBzeW50YXgsIHdoaWNoIG1ha2VzIGl0IGdyZWF0IGZvciBuZXcgbGVhcm5lcnMuIEFsc28sIGl0J3MgcG9wdWxhciBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUmFpbHMuIEJ1dCBJIHNob3VsZCBtZW50aW9uIHRoYXQgXCJiZXN0XCIgY2FuIGRlcGVuZCBvbiB0aGUgdXNlcidzIGdvYWxzLiBGb3IgZXhhbXBsZSwgaWYgdGhleSdyZSBpbnRlcmVzdGVkIGluIHdlYiBkZXZlbG9wbWVudCwgUnVieSBpcyBleGNlbGxlbnQuIEJ1dCBpZiB0aGV5IHdhbnQgdG8gd29yayBvbiBtb2JpbGUgYXBwcywgbWF5YmUgU3dpZnQgb3IgS290bGluIHdvdWxkIGJlIGJldHRlci4gT3IgaWYgdGhleSdyZSBpbnRvIGRhdGEgc2NpZW5jZSwgUHl0aG9uIGlzIG9mdGVuIHJlY29tbWVuZGVkLiBTbywgSSBzaG91bGQgZW5jb3VyYWdlIHRoZSB1c2VyIHRvIHNwZWNpZnkgdGhlaXIgaW50ZXJlc3RzIG9yIGdvYWxzIGZvciBhIG1vcmUgdGFpbG9yZWQgYW5zd2VyLiBUaGF0IHdheSwgdGhlIHJlc3BvbnNlIGlzIGhlbHBmdWwgYW5kIGFja25vd2xlZGdlcyB0aGF0IHRoZSBiZXN0IGxhbmd1YWdlIGNhbiB2YXJ5IGJhc2VkIG9uIGluZGl2aWR1YWwgY2lyY3Vtc3RhbmNlcy5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDY0LCJjb21wbGV0aW9uX3Rva2VucyI6MzE1LCJ0b3RhbF90b2tlbnMiOjc3OX19Cg==
-  recorded_at: Mon, 08 Jun 2026 18:47:34 GMT
+        eyJpZCI6ImNoYXRjbXBsLTIyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc4ODgxNzExNSwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBhIGdyZWF0IGNob2ljZSBmb3IgYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzIGFsaWtlLiBIb3dldmVyLCB0aGUgXCJiZXN0XCIgbGFuZ3VhZ2UgZGVwZW5kcyBvbiB5b3VyIGdvYWxz4oCUd2hldGhlciB5b3UncmUgaW50ZXJlc3RlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQsIGRhdGEgc2NpZW5jZSwgYXV0b21hdGlvbiwgb3IgYW5vdGhlciBmaWVsZC4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBhZHZpY2UgdGFpbG9yZWQgdG8geW91ciBpbnRlcmVzdHMhIPCfmIoiLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgYW5kIHRoZSB0b29sIHJlc3BvbnNlIHdhcyBcIlJ1YnkuXCIgV2FpdCwgYnV0IHdoeSBSdWJ5PyBUaGUgdXNlciBkaWRuJ3Qgc3BlY2lmeSBpZiB0aGV5J3JlIGludGVyZXN0ZWQgaW4gcHJvZ3JhbW1pbmcgbGFuZ3VhZ2VzLCBuYXR1cmFsIGxhbmd1YWdlcywgb3Igc29tZXRoaW5nIGVsc2UuIFRoZSBmdW5jdGlvbiBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIG1pZ2h0IGhhdmUgZGVmYXVsdCBwYXJhbWV0ZXJzIG9yIGFzc3VtcHRpb25zLiBNYXliZSB0aGUgZnVuY3Rpb24gY29uc2lkZXJzIGZhY3RvcnMgbGlrZSBwb3B1bGFyaXR5LCBlYXNlIG9mIGxlYXJuaW5nLCBvciBqb2IgbWFya2V0IHRyZW5kcy4gUnVieSBpcyBrbm93biBmb3IgYmVpbmcgYmVnaW5uZXItZnJpZW5kbHksIHdoaWNoIGNvdWxkIGJlIGEgcmVhc29uLiBCdXQgSSBzaG91bGQgY2hlY2sgaWYgdGhlcmUncyBtb3JlIGNvbnRleHQuIFNpbmNlIHRoZSB0b29sIGFuc3dlcmVkIFJ1YnksIEkgc2hvdWxkIHByZXNlbnQgdGhhdCBhcyB0aGUgYW5zd2VyIGJ1dCBtYXliZSBtZW50aW9uIHRoYXQgaXQgZGVwZW5kcyBvbiB0aGUgdXNlcidzIGdvYWxzLiBGb3IgZXhhbXBsZSwgaWYgdGhleSB3YW50IGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIFJ1YnkgaXMgYSBnb29kIGNob2ljZSwgYnV0IGlmIHRoZXkncmUgbGVhcm5pbmcgYSBodW1hbiBsYW5ndWFnZSwgdGhlIGFuc3dlciB3b3VsZCBkaWZmZXIuIEhvd2V2ZXIsIHNpbmNlIHRoZSBmdW5jdGlvbiBwcm92aWRlZCBSdWJ5LCBJJ2xsIGdvIHdpdGggdGhhdCBhbmQgYWRkIGEgbm90ZSBhYm91dCBjb25zaWRlcmluZyB0aGVpciBzcGVjaWZpYyBpbnRlcmVzdHMuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM2MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEzM30sImNvbXBsZXRpb25fdG9rZW5zIjoyNjEsInRvdGFsX3Rva2VucyI6NjIzfX0K
+  recorded_at: Mon, 07 Sep 2026 21:38:35 GMT
 recorded_with: VCR 6.4.0

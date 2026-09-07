@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
     end
     let(:provider) { RubyLLM::Providers::Perplexity.new(config) }
 
-    it 'lists the models endpoint catalog with the search and embedding models added' do
+    it 'lists the models endpoint catalog with the search and embedding models added', :live do
       models = provider.list_models
 
       ids = models.map(&:id)

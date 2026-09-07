@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:18 GMT
+      - Mon, 07 Sep 2026 20:58:38 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -35,21 +35,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-9727-72c4-aa1d-83eccb11655f
+      - 01a07daa-737c-7b29-bdfe-2e0c03644a17
       X-Kong-Request-Id:
-      - 01a01a73-9727-72c4-aa1d-83eccb11655f
+      - 01a07daa-737c-7b29-bdfe-2e0c03644a17
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Envoy-Upstream-Service-Time:
-      - '461'
+      - '330'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '462'
+      - '331'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -65,21 +65,21 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"95e349e3e7c04cc6b2c1700095d121f7","object":"chat.completion.chunk","created":1787150178,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"5b7265ee7a2e48658801546d53d4082b","object":"chat.completion.chunk","created":1788814717,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"95e349e3e7c04cc6b2c1700095d121f7","object":"chat.completion.chunk","created":1787150178,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"g6fVbXS8K","type":"function","function":{"name":"weather","arguments":"{\"latitude\": \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":128},"service_tier":"standard"},"p":"a"}
+        data: {"id":"5b7265ee7a2e48658801546d53d4082b","object":"chat.completion.chunk","created":1788814717,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"9uN5MuRoA","type":"function","function":{"name":"weather","arguments":"{\"latitude\": \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmno"}
 
         data: [DONE]
 
-  recorded_at: Wed, 19 Aug 2026 14:36:18 GMT
+  recorded_at: Mon, 07 Sep 2026 20:58:38 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"g6fVbXS8K","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"g6fVbXS8K"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"9uN5MuRoA","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"9uN5MuRoA"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -100,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:18 GMT
+      - Mon, 07 Sep 2026 20:58:38 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -108,21 +108,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-9949-7146-aa86-660b9395a7b0
+      - 01a07daa-7517-71d0-8ffb-654067d6b588
       X-Kong-Request-Id:
-      - 01a01a73-9949-7146-aa86-660b9395a7b0
+      - 01a07daa-7517-71d0-8ffb-654067d6b588
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Envoy-Upstream-Service-Time:
-      - '318'
+      - '185'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '320'
+      - '187'
       X-Kong-Proxy-Latency:
-      - '32'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -138,19 +138,19 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6IjNhMjY2ZTc2MzFiNDRkNmE4OWY2NWE1ODM5YTU4NWU0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE3OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiM2EyNjZlNzYzMWI0NGQ2YTg5ZjY1YTU4MzlhNTg1ZTQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTc4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiJUaGUifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1In0KCmRhdGE6IHsiaWQiOiIzYTI2NmU3NjMxYjQ0ZDZhODlmNjVhNTgzOWE1ODVlNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxNzgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxIn0KCmRhdGE6IHsiaWQiOiIzYTI2NmU3NjMxYjQ0ZDZhODlmNjVhNTgzOWE1ODVlNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxNzgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBhdCBjb29yZGluYXRlcyJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2In0KCmRhdGE6IHsiaWQiOiIzYTI2NmU3NjMxYjQ0ZDZhODlmNjVhNTgzOWE1ODVlNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxNzgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAoNTIuIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWoifQoKZGF0YTogeyJpZCI6IjNhMjY2ZTc2MzFiNDRkNmE4OWY2NWE1ODM5YTU4NWU0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE3OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiNTIwMCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAifQoKZGF0YTogeyJpZCI6IjNhMjY2ZTc2MzFiNDRkNmE4OWY2NWE1ODM5YTU4NWU0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE3OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLCAxMyJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NTY3ODkifQoKZGF0YTogeyJpZCI6IjNhMjY2ZTc2MzFiNDRkNmE4OWY2NWE1ODM5YTU4NWU0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE3OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLjQwNSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbiJ9CgpkYXRhOiB7ImlkIjoiM2EyNjZlNzYzMWI0NGQ2YTg5ZjY1YTU4MzlhNTg1ZTQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTc4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIwKSBpcyAqKiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkIn0KCmRhdGE6IHsiaWQiOiIzYTI2NmU3NjMxYjQ0ZDZhODlmNjVhNTgzOWE1ODVlNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxNzgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjE1wrBDKioifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpamsifQoKZGF0YTogeyJpZCI6IjNhMjY2ZTc2MzFiNDRkNmE4OWY2NWE1ODM5YTU4NWU0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE3OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdpdGggYSB3aW5kIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6MDEyMzQ1NjcifQoKZGF0YTogeyJpZCI6IjNhMjY2ZTc2MzFiNDRkNmE4OWY2NWE1ODM5YTU4NWU0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE3OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHNwZWVkIG9mICoqMSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnIn0KCmRhdGE6IHsiaWQiOiIzYTI2NmU3NjMxYjQ0ZDZhODlmNjVhNTgzOWE1ODVlNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxNzgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjAga20vaCoqLiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NTY3OCJ9CgpkYXRhOiB7ImlkIjoiM2EyNjZlNzYzMWI0NGQ2YTg5ZjY1YTU4MzlhNTg1ZTQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTc4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNjUsImNvbXBsZXRpb25fdG9rZW5zIjo0MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE5Mn0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wIn0KCmRhdGE6IFtET05FXQoK
-  recorded_at: Wed, 19 Aug 2026 14:36:19 GMT
+        ZGF0YTogeyJpZCI6IjM2OTViMTMwNDNmNTQ3ODQ5YTY3ZWJkYjYzNWFiYzk5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiMzY5NWIxMzA0M2Y1NDc4NDlhNjdlYmRiNjM1YWJjOTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiJUaGUifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYSJ9CgpkYXRhOiB7ImlkIjoiMzY5NWIxMzA0M2Y1NDc4NDlhNjdlYmRiNjM1YWJjOTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxIn0KCmRhdGE6IHsiaWQiOiIzNjk1YjEzMDQzZjU0Nzg0OWE2N2ViZGI2MzVhYmM5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ3MTgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAoIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWoifQoKZGF0YTogeyJpZCI6IjM2OTViMTMwNDNmNTQ3ODQ5YTY3ZWJkYjYzNWFiYzk5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiNTIuNSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcSJ9CgpkYXRhOiB7ImlkIjoiMzY5NWIxMzA0M2Y1NDc4NDlhNjdlYmRiNjM1YWJjOTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIyMDAsIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eCJ9CgpkYXRhOiB7ImlkIjoiMzY5NWIxMzA0M2Y1NDc4NDlhNjdlYmRiNjM1YWJjOTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgMTMuIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6MDEyMyJ9CgpkYXRhOiB7ImlkIjoiMzY5NWIxMzA0M2Y1NDc4NDlhNjdlYmRiNjM1YWJjOTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiI0MDUwIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprIn0KCmRhdGE6IHsiaWQiOiIzNjk1YjEzMDQzZjU0Nzg0OWE2N2ViZGI2MzVhYmM5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ3MTgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IikgaXMgKioxIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6In0KCmRhdGE6IHsiaWQiOiIzNjk1YjEzMDQzZjU0Nzg0OWE2N2ViZGI2MzVhYmM5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ3MTgsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjXCsEMqKiB3aXRoIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxciJ9CgpkYXRhOiB7ImlkIjoiMzY5NWIxMzA0M2Y1NDc4NDlhNjdlYmRiNjM1YWJjOTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE4LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgYSB3aW5kIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImEifQoKZGF0YTogeyJpZCI6IjM2OTViMTMwNDNmNTQ3ODQ5YTY3ZWJkYjYzNWFiYzk5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHNwZWVkIG9mICoqMSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGkifQoKZGF0YTogeyJpZCI6IjM2OTViMTMwNDNmNTQ3ODQ5YTY3ZWJkYjYzNWFiYzk5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiMCBrbS9oKiouIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWoifQoKZGF0YTogeyJpZCI6IjM2OTViMTMwNDNmNTQ3ODQ5YTY3ZWJkYjYzNWFiYzk5Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMjIsInRvdGFsX3Rva2VucyI6MjYzLCJjb21wbGV0aW9uX3Rva2VucyI6NDEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3In0KCmRhdGE6IFtET05FXQoK
+  recorded_at: Mon, 07 Sep 2026 20:58:38 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"g6fVbXS8K","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"g6fVbXS8K"},{"role":"assistant","content":"The
-        current weather in Berlin at coordinates (52.5200, 13.4050) is **15°C** with
-        a wind speed of **10 km/h**."},{"role":"user","content":"What''s the weather
-        in Paris? (48.8575, 2.3514)"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"9uN5MuRoA","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"9uN5MuRoA"},{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is **15°C** with a wind speed
+        of **10 km/h**."},{"role":"user","content":"What''s the weather in Paris?
+        (48.8575, 2.3514)"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -171,7 +171,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:19 GMT
+      - Mon, 07 Sep 2026 20:58:39 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -179,21 +179,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-9bb4-7bd3-abbf-3d0c31002272
+      - 01a07daa-7701-7bc7-946c-2e3b3d64f70e
       X-Kong-Request-Id:
-      - 01a01a73-9bb4-7bd3-abbf-3d0c31002272
+      - 01a07daa-7701-7bc7-946c-2e3b3d64f70e
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Envoy-Upstream-Service-Time:
-      - '485'
+      - '367'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '487'
+      - '368'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -209,25 +209,25 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"3b8cea9c89c349f1b556e370e20cb68c","object":"chat.completion.chunk","created":1787150179,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"9e7ed1253a4143dc8079ea0bb1c7bb47","object":"chat.completion.chunk","created":1788814718,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"3b8cea9c89c349f1b556e370e20cb68c","object":"chat.completion.chunk","created":1787150179,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"VzeppoSaq","type":"function","function":{"name":"weather","arguments":"{\"latitude\": \"48.8575\", \"longitude\": \"2.3514\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":291,"total_tokens":318,"completion_tokens":27,"prompt_tokens_details":{"cached_tokens":192},"service_tier":"standard"},"p":"abcdefghijklmnopqrstuvwxyz0123"}
+        data: {"id":"9e7ed1253a4143dc8079ea0bb1c7bb47","object":"chat.completion.chunk","created":1788814718,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"NbxBEH2Ra","type":"function","function":{"name":"weather","arguments":"{\"latitude\": \"48.8575\", \"longitude\": \"2.3514\"}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":289,"total_tokens":316,"completion_tokens":27,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrstu"}
 
         data: [DONE]
 
-  recorded_at: Wed, 19 Aug 2026 14:36:19 GMT
+  recorded_at: Mon, 07 Sep 2026 20:58:39 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"g6fVbXS8K","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"g6fVbXS8K"},{"role":"assistant","content":"The
-        current weather in Berlin at coordinates (52.5200, 13.4050) is **15°C** with
-        a wind speed of **10 km/h**."},{"role":"user","content":"What''s the weather
-        in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"VzeppoSaq","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"VzeppoSaq"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"9uN5MuRoA","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"9uN5MuRoA"},{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is **15°C** with a wind speed
+        of **10 km/h**."},{"role":"user","content":"What''s the weather in Paris?
+        (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"NbxBEH2Ra","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"NbxBEH2Ra"}],"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -248,7 +248,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:36:21 GMT
+      - Mon, 07 Sep 2026 20:58:39 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -256,21 +256,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a73-9e0b-7820-90f9-b7688697824f
+      - 01a07daa-78de-7e16-926d-0feb29b16002
       X-Kong-Request-Id:
-      - 01a01a73-9e0b-7820-90f9-b7688697824f
+      - 01a07daa-78de-7e16-926d-0feb29b16002
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Envoy-Upstream-Service-Time:
-      - '1331'
+      - '723'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1331'
+      - '725'
       X-Kong-Proxy-Latency:
-      - '20'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -286,6 +286,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6IjIwMTRmYThkODBhYzQ3ZTM5ZDViZmIwZTNjZTUxMGJiIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE4MCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiMjAxNGZhOGQ4MGFjNDdlMzlkNWJmYjBlM2NlNTEwYmIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTgwLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiJUaGUifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpamtsbW5vIn0KCmRhdGE6IHsiaWQiOiIyMDE0ZmE4ZDgwYWM0N2UzOWQ1YmZiMGUzY2U1MTBiYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxODAsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXMifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZyJ9CgpkYXRhOiB7ImlkIjoiMjAxNGZhOGQ4MGFjNDdlMzlkNWJmYjBlM2NlNTEwYmIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTgwLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgYXQgY29vcmRpbmF0ZXMgKDQifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMTIzNDU2NyJ9CgpkYXRhOiB7ImlkIjoiMjAxNGZhOGQ4MGFjNDdlMzlkNWJmYjBlM2NlNTEwYmIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTgwLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiI4Ljg1In0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprIn0KCmRhdGE6IHsiaWQiOiIyMDE0ZmE4ZDgwYWM0N2UzOWQ1YmZiMGUzY2U1MTBiYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxODAsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ijc1LCAifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMSJ9CgpkYXRhOiB7ImlkIjoiMjAxNGZhOGQ4MGFjNDdlMzlkNWJmYjBlM2NlNTEwYmIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTgwLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIyLjM1In0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiYyJ9CgpkYXRhOiB7ImlkIjoiMjAxNGZhOGQ4MGFjNDdlMzlkNWJmYjBlM2NlNTEwYmIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg3MTUwMTgwLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIxNCkgaXMifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpIn0KCmRhdGE6IHsiaWQiOiIyMDE0ZmE4ZDgwYWM0N2UzOWQ1YmZiMGUzY2U1MTBiYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxODAsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAqKjE1wrBDIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6MDEyMzQ1Njc4In0KCmRhdGE6IHsiaWQiOiIyMDE0ZmE4ZDgwYWM0N2UzOWQ1YmZiMGUzY2U1MTBiYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxODAsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IioqIHdpdGggYSB3aW5kIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprIn0KCmRhdGE6IHsiaWQiOiIyMDE0ZmE4ZDgwYWM0N2UzOWQ1YmZiMGUzY2U1MTBiYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODcxNTAxODAsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBzcGVlZCBvZiAqKjEifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMTIifQoKZGF0YTogeyJpZCI6IjIwMTRmYThkODBhYzQ3ZTM5ZDViZmIwZTNjZTUxMGJiIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE4MCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiMCBrbS9oKiouIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG0ifQoKZGF0YTogeyJpZCI6IjIwMTRmYThkODBhYzQ3ZTM5ZDViZmIwZTNjZTUxMGJiIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4NzE1MDE4MCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNTIsInRvdGFsX3Rva2VucyI6Mzk0LCJjb21wbGV0aW9uX3Rva2VucyI6NDIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjozMjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4In0KCmRhdGE6IFtET05FXQoK
-  recorded_at: Wed, 19 Aug 2026 14:36:21 GMT
+        ZGF0YTogeyJpZCI6IjI0NzZjMTVjMTE5ODQ2Y2FhZmRhYjMzMzgwNGExNzA2Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiMjQ3NmMxNWMxMTk4NDZjYWFmZGFiMzMzODA0YTE3MDYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE5LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiJUaGUifSwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJwIjoiYWJjZGVmZyJ9CgpkYXRhOiB7ImlkIjoiMjQ3NmMxNWMxMTk4NDZjYWFmZGFiMzMzODA0YTE3MDYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE5LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlIn0KCmRhdGE6IHsiaWQiOiIyNDc2YzE1YzExOTg0NmNhYWZkYWIzMzM4MDRhMTcwNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ3MTksIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAoNDguIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmcifQoKZGF0YTogeyJpZCI6IjI0NzZjMTVjMTE5ODQ2Y2FhZmRhYjMzMzgwNGExNzA2Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiODU3NSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMiJ9CgpkYXRhOiB7ImlkIjoiMjQ3NmMxNWMxMTk4NDZjYWFmZGFiMzMzODA0YTE3MDYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE5LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIsIDIuIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2QifQoKZGF0YTogeyJpZCI6IjI0NzZjMTVjMTE5ODQ2Y2FhZmRhYjMzMzgwNGExNzA2Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiMzUxNCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqayJ9CgpkYXRhOiB7ImlkIjoiMjQ3NmMxNWMxMTk4NDZjYWFmZGFiMzMzODA0YTE3MDYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE5LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIpIGlzICoqMSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NSJ9CgpkYXRhOiB7ImlkIjoiMjQ3NmMxNWMxMTk4NDZjYWFmZGFiMzMzODA0YTE3MDYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NzE5LCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiI1wrBDKiogd2l0aCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhYmNkZWYifQoKZGF0YTogeyJpZCI6IjI0NzZjMTVjMTE5ODQ2Y2FhZmRhYjMzMzgwNGExNzA2Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDcxOSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGEgd2luZCBzcGVlZCBvZiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInAiOiJhIn0KCmRhdGE6IHsiaWQiOiIyNDc2YzE1YzExOTg0NmNhYWZkYWIzMzM4MDRhMTcwNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ3MTksIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAqKjEwIGttIn0sImZpbmlzaF9yZWFzb24iOm51bGx9XSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3In0KCmRhdGE6IHsiaWQiOiIyNDc2YzE1YzExOTg0NmNhYWZkYWIzMzM4MDRhMTcwNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ3MTksIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii9oKiouIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNTAsInRvdGFsX3Rva2VucyI6MzkwLCJjb21wbGV0aW9uX3Rva2VucyI6NDAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyMDh9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJwIjoiYWJjZGVmZ2hpamtsbSJ9CgpkYXRhOiBbRE9ORV0KCg==
+  recorded_at: Mon, 07 Sep 2026 20:58:40 GMT
 recorded_with: VCR 6.4.0

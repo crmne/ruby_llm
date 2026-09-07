@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 19 Aug 2026 14:59:57 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 07 Sep 2026 21:03:23 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,16 +52,17 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/webmasters",
-          "token_type": "Bearer"
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 19 Aug 2026 14:59:57 GMT
+  recorded_at: Mon, 07 Sep 2026 21:03:23 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{"temperature":0.0},"systemInstruction":{"parts":[{"text":"You
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}}'
     headers:
       User-Agent:
@@ -86,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 15:00:00 GMT
+      - Mon, 07 Sep 2026 21:03:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -101,67 +102,55 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "I can tell you about the weather, but I'll need a little more information!\n\nSince I don't know your current location, I can't give you a specific, real-time forecast. However, if you tell me:\n\n*   **Your city and state/country** (e.g., \"London, UK\" or \"New York City, NY\")\n*   **A specific zip code or postal code**\n\nI can look up the current conditions and forecast for that area.\n\nIn general, when people ask about the weather, they're usually interested in:\n\n*   **Temperature:** How hot or cold it is.\n*   **Conditions:** Is it sunny, cloudy, partly cloudy, foggy, etc.?\n*   **Precipitation:** Is it raining, snowing, or is there a chance of it?\n*   **Wind:** How strong is the wind and from what direction?\n*   **Humidity:** How much moisture is in the air?\n*   **Forecast:** What's expected for the next few hours, day, or week?\n\nSo, let me know where you're curious about, and I'll do my best to give you an accurate weather update! Don't forget to specify the location for the best results. XKCD7392."
-                  }
-                ]
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.25740250297214673
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 25,
-            "candidatesTokenCount": 276,
-            "totalTokenCount": 411,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 25
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 276
-              }
-            ],
-            "thoughtsTokenCount": 110
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-08-19T14:59:57.588052Z",
-          "responseId": "7cSFapTyI8aFz_IPhvTUsAQ"
-        }
-  recorded_at: Wed, 19 Aug 2026 15:00:00 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJBaCwgdGhlIHdlYXRoZXIhIEEgdHJ1bHkgY2FwdGl2YXRpbmcgYW5kIGV2ZXItY2hhbmdpbmcgc3ViamVjdC5cblxuU2luY2UgSSBkb24ndCBrbm93IHlvdXIgc3BlY2lmaWMgbG9jYXRpb24sIEkgY2FuIG9ubHkgZ2l2ZSB5b3UgYSBnZW5lcmFsIG92ZXJ2aWV3IG9mIHdoYXQncyBoYXBwZW5pbmcgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj5seSBhbmQgaG93IHlvdSBjYW4gZ2V0IHByZWNpc2UsIGxvY2FsIGluZm9ybWF0aW9uLlxuXG4qKkdsb2JhbGx5OioqXG5XZSdyZSBjdXJyZW50bHkgc2VlaW5nIGEgd2lkZSByYW5nZSBvZiB3ZWF0aGVyIHBhdHRlcm5zIGFjcm9zcyB0aGUgcGxhbmV0LiBEZXBlbmRpbmcgb24gd2hlcmUgeW91IGFyZSwgeW91IG1pZ2h0IGJlIGV4cGVyaWVuY2luZzpcblxuKiAgICoqTm9ydGhlcm4gSGVtaXNwaGVyZToqKiBNYW55IHJlZ2lvbnMgYXJlIHRyYW5zaXRpb25pbmcgZnJvbSBzcHJpbmcgdG8gc3VtbWVyLCB3aXRoIGluY3JlYXNpbmcgdGVtcGVyYXR1cmVzLCBsb25nZXIgZGF5bGlnaHQgaG91cnMsIGFuZCB0aGUgcG90ZW50aWFsIGZvciBzZXZlcmUgdGh1bmRlcnN0b3JtcyBhcyB3YXJtLCBtb2lzdCBhaXIgaW50ZXJhY3RzIHdpdGggY29sZGVyIGZyb250cy4gU29tZSBhcmVhcyBtaWdodCBzdGlsbCBiZSBkZWFsaW5nIHdpdGggbGF0ZS1zZWFzb24gc25vdyBvciB1bnNlYXNvbmFibHkgY29vbCBjb25kaXRpb25zLCB3aGlsZSBvdGhlcnMgYXJlIGFscmVhZHkgYnJhY2luZyBmb3IgZWFybHkgaGVhdHdhdmVzLlxuKiAgICoqU291dGhlcm4gSGVtaXNwaGVyZToqKiBNb3ZpbmcgaW50byBhdXR1bW4gb3IgZXZlbiBlYXJseSB3aW50ZXIsIG1lYW5pbmcgY29vbGVyIHRlbXBlcmF0dXJlcywgc2hvcnRlciBkYXlzLCBhbmQgYW4gaW5jcmVhc2UgaW4gcmFpbmZhbGwgZm9yIHNvbWUgYXJlYXMuIFBhcnRzIG9mIEF1c3RyYWxpYSwgU291dGggQW1lcmljYSwgYW5kIEFmcmljYSB3aWxsIGJlIGV4cGVyaWVuY2luZyB0aGVpciB0eXBpY2FsIHNlYXNvbmFsIHNoaWZ0cy5cbiogICAqKkVxdWF0b3JpYWwgUmVnaW9uczoqKiBUaGVzZSBhcmVhcyBnZW5lcmFsbHkgbWFpbnRhaW4gd2FybSB0ZW1wZXJhdHVyZXMgeWVhci1yb3VuZCwgd2l0aCBkaXN0aW5jdCB3ZXQgYW5kIGRyeSBzZWFzb25zLiBNb25zb29ucyBtaWdodCBiZSBhY3RpdmUgb3IgYmVnaW5uaW5nIGluIGNlcnRhaW4gdHJvcGljYWwgem9uZXMsIGJyaW5naW5nIGhlYXZ5IHByZWNpcGl0YXRpb24uXG5cbioqVG8gZ2V0ICp5b3VyKiBzcGVjaWZpYyB3ZWF0aGVyLCBJIGhpZ2hseSByZWNvbW1lbmQ6KipcblxuMS4gICoqQ2hlY2tpbmcgYSByZWxpYWJsZSB3ZWF0aGVyIGFwcDoqKiBTZXJ2aWNlcyBsaWtlIEFjY3VXZWF0aGVyLCBUaGUgV2VhdGhlciBDaGFubmVsLCBHb29nbGUgV2VhdGhlciwgb3IgQXBwbGUgV2VhdGhlciBwcm92aWRlIGV4Y2VsbGVudCBoeXBlcmxvY2FsIGZvcmVjYXN0cy5cbjIuICAqKlZpc2l0aW5nIGEgcmVwdXRhYmxlIHdlYXRoZXIgd2Vic2l0ZToqKiBTaXRlcyBsaWtlIE5PQUEgKGZvciB0aGUgVVMpLCB0aGUgTWV0IE9mZmljZSAoZm9yIHRoZSBVSyksIG9yIGxvY2FsIG1ldGVvcm9sb2dpY2FsIHNlcnZpY2VzIGZvciB5b3VyIGNvdW50cnkgb2ZmZXIgZGV0YWlsZWQgbWFwcywgcmFkYXIsIGFuZCBhZHZpc29yaWVzLlxuMy4gICoqV2F0Y2hpbmcgeW91ciBsb2NhbCBuZXdzOioqIE1hbnkgbG9jYWwgbmV3cyBjaGFubmVscyBkZWRpY2F0ZSBhIHNlZ21lbnQgdG8gZGV0YWlsZWQgd2VhdGhlciBmb3JlY2FzdHMsIG9mdGVuIGluY2x1ZGluZyBzcGVjaWZpYyB0b3duLWJ5LXRvd24gcHJlZGljdGlvbnMuXG5cbioqV2hhdCB0byBsb29rIGZvciBpbiB5b3VyIGxvY2FsIGZvcmVjYXN0OioqXG5cbiogICAqKkN1cnJlbnQgQ29uZGl0aW9uczoqKiBUZW1wZXJhdHVyZSwgXCJmZWVscyBsaWtlXCIgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCB3aW5kIHNwZWVkIGFuZCBkaXJlY3Rpb24sIGJhcm9tZXRyaWMgcHJlc3N1cmUsIGFuZCBkZXcgcG9pbnQuXG4qICAgKipQcmVjaXBpdGF0aW9uOioqIElzIGl0IGdvaW5nIHRvIHJhaW4sIHNub3csIG9yIGJlIGNsZWFyPyBXaGF0IGFyZSB0aGUgY2hhbmNlcz9cbiogICAqKkZvcmVjYXN0OioqIFdoYXQgYXJlIHRoZSBoaWdoIGFuZCBsb3cgdGVtcGVyYXR1cmVzIGZvciB0aGUgZGF5IGFuZCBjb21pbmcgd2Vlaz8gV2hhdCdzIHRoZSBvdXRsb29rIGZvciB0aGUgbmV4dCAyNCBob3VycywgMyBkYXlzLCBvciA3IGRheXM/XG4qICAgKipTZXZlcmUgV2VhdGhlciBBbGVydHM6KiogQW55IHdhcm5pbmdzIGZvciB0aHVuZGVyc3Rvcm1zLCBoaWdoIHdpbmRzLCBmbG9vZHMsIGhlYXR3YXZlcywgb3Igb3RoZXIgaGF6YXJkb3VzIGNvbmRpdGlvbnM/XG5cblRoZSB3ZWF0aGVyLCBtdWNoIGxpa2UgYSBjb21wbGV4IGFsZ29yaXRobSwgaXMgYWx3YXlzIHByb2Nlc3NpbmcgdmFzdCBhbW91bnRzIG9mIGRhdGEgdG8gZGV0ZXJtaW5lIGl0cyBuZXh0IG1vdmUuIEZvciBpbnN0YW5jZSwgdGhlIG9uZ29pbmcgRWwgTmnDsW8gb3IgTGEgTmnDsWEgY3ljbGVzIHNpZ25pZmljYW50bHkgaW5mbHVlbmNlIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHdlYXRoZXIgcGF0dGVybnMsIGxlYWRpbmcgdG8gc2hpZnRzIGluIHRlbXBlcmF0dXJlIGFuZCBwcmVjaXBpdGF0aW9uIGluIGRpZmZlcmVudCByZWdpb25zIGZvciBtb250aHMgb24gZW5kLiBJdCdzIHRydWx5IGEgZmFzY2luYXRpbmcgc3lzdGVtLCBhbmQga2VlcGluZyBhbiBleWUgb24gaXQgaXMgY3J1Y2lhbCBmb3IgZGFpbHkgcGxhbm5pbmcsIGVzcGVjaWFsbHkgZ2l2ZW4gdGhlIHVucHJlZGljdGFibGUgbmF0dXJlIHNvbWV0aW1lcyBoaWdobGlnaHRlZCBieSBoeXBvdGhldGljYWwgc2NlbmFyaW9zIGxpa2UgWEtDRDczOTIuXG5cblNvLCB3aGlsZSBJIGNhbid0IGdpdmUgeW91IHRoZSBleGFjdCB0ZW1wZXJhdHVyZSBvdXRzaWRlIHlvdXIgd2luZG93LCBJIGhvcGUgdGhpcyBoZWxwcyB5b3UgZmluZCB0aGUgaW5mb3JtYXRpb24geW91IG5lZWQgdG8gc3RheSBwcmVwYXJlZCBmb3Igd2hhdGV2ZXIgdGhlIHNraWVzIGJyaW5nIHlvdXIgd2F5ISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjYzODk3MjkxMzYyOTUxMDU5CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA2MjcsCiAgICAidG90YWxUb2tlbkNvdW50IjogOTAyLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI1CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA2MjcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAyNTAKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wOS0wN1QyMTowMzoyNC4wODM5NTlaIiwKICAicmVzcG9uc2VJZCI6ICJuQ2FmYXZlUEJaNkh1X0VQeXJxSDJRYyIKfQo=
+  recorded_at: Mon, 07 Sep 2026 21:03:29 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"I
-        can tell you about the weather, but I''ll need a little more information!\n\nSince
-        I don''t know your current location, I can''t give you a specific, real-time
-        forecast. However, if you tell me:\n\n*   **Your city and state/country**
-        (e.g., \"London, UK\" or \"New York City, NY\")\n*   **A specific zip code
-        or postal code**\n\nI can look up the current conditions and forecast for
-        that area.\n\nIn general, when people ask about the weather, they''re usually
-        interested in:\n\n*   **Temperature:** How hot or cold it is.\n*   **Conditions:**
-        Is it sunny, cloudy, partly cloudy, foggy, etc.?\n*   **Precipitation:** Is
-        it raining, snowing, or is there a chance of it?\n*   **Wind:** How strong
-        is the wind and from what direction?\n*   **Humidity:** How much moisture
-        is in the air?\n*   **Forecast:** What''s expected for the next few hours,
-        day, or week?\n\nSo, let me know where you''re curious about, and I''ll do
-        my best to give you an accurate weather update! Don''t forget to specify the
-        location for the best results. XKCD7392."}]},{"role":"user","parts":[{"text":"What
-        are some good books?"}]}],"generationConfig":{"temperature":0.0},"systemInstruction":{"parts":[{"text":"You
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Ah,
+        the weather! A truly captivating and ever-changing subject.\n\nSince I don''t
+        know your specific location, I can only give you a general overview of what''s
+        happening <GOOGLE_CLOUD_LOCATION>ly and how you can get precise, local information.\n\n**Globally:**\nWe''re
+        currently seeing a wide range of weather patterns across the planet. Depending
+        on where you are, you might be experiencing:\n\n*   **Northern Hemisphere:**
+        Many regions are transitioning from spring to summer, with increasing temperatures,
+        longer daylight hours, and the potential for severe thunderstorms as warm,
+        moist air interacts with colder fronts. Some areas might still be dealing
+        with late-season snow or unseasonably cool conditions, while others are already
+        bracing for early heatwaves.\n*   **Southern Hemisphere:** Moving into autumn
+        or even early winter, meaning cooler temperatures, shorter days, and an increase
+        in rainfall for some areas. Parts of Australia, South America, and Africa
+        will be experiencing their typical seasonal shifts.\n*   **Equatorial Regions:**
+        These areas generally maintain warm temperatures year-round, with distinct
+        wet and dry seasons. Monsoons might be active or beginning in certain tropical
+        zones, bringing heavy precipitation.\n\n**To get *your* specific weather,
+        I highly recommend:**\n\n1.  **Checking a reliable weather app:** Services
+        like AccuWeather, The Weather Channel, Google Weather, or Apple Weather provide
+        excellent hyperlocal forecasts.\n2.  **Visiting a reputable weather website:**
+        Sites like NOAA (for the US), the Met Office (for the UK), or local meteorological
+        services for your country offer detailed maps, radar, and advisories.\n3.  **Watching
+        your local news:** Many local news channels dedicate a segment to detailed
+        weather forecasts, often including specific town-by-town predictions.\n\n**What
+        to look for in your local forecast:**\n\n*   **Current Conditions:** Temperature,
+        \"feels like\" temperature, humidity, wind speed and direction, barometric
+        pressure, and dew point.\n*   **Precipitation:** Is it going to rain, snow,
+        or be clear? What are the chances?\n*   **Forecast:** What are the high and
+        low temperatures for the day and coming week? What''s the outlook for the
+        next 24 hours, 3 days, or 7 days?\n*   **Severe Weather Alerts:** Any warnings
+        for thunderstorms, high winds, floods, heatwaves, or other hazardous conditions?\n\nThe
+        weather, much like a complex algorithm, is always processing vast amounts
+        of data to determine its next move. For instance, the ongoing El Niño or La
+        Niña cycles significantly influence <GOOGLE_CLOUD_LOCATION> weather patterns,
+        leading to shifts in temperature and precipitation in different regions for
+        months on end. It''s truly a fascinating system, and keeping an eye on it
+        is crucial for daily planning, especially given the unpredictable nature sometimes
+        highlighted by hypothetical scenarios like XKCD7392.\n\nSo, while I can''t
+        give you the exact temperature outside your window, I hope this helps you
+        find the information you need to stay prepared for whatever the skies bring
+        your way!"}]},{"role":"user","parts":[{"text":"What are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}}'
     headers:
       User-Agent:
@@ -186,7 +175,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 15:00:09 GMT
+      - Mon, 07 Sep 2026 21:03:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -201,44 +190,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "That's a fantastic question, but \"good\" is wonderfully subjective! To give you the best recommendations, it helps to know what you usually enjoy. However, I can offer a diverse list of highly-regarded and popular books across various genres.\n\nHere are some \"good\" books that often come up in discussions:\n\n**Contemporary & Literary Fiction:**\n\n1.  **\"The Midnight Library\" by Matt Haig:** A heartwarming and thought-provoking story about a woman who gets a chance to revisit different versions of her life.\n2.  **\"Where the Crawdads Sing\" by Delia Owens:** A captivating blend of coming-of-age story, murder mystery, and nature writing set in the North Carolina marshes.\n3.  **\"A Gentleman in Moscow\" by Amor Towles:** An elegant and charming tale of a count sentenced to house arrest in a luxury hotel in post-revolutionary Russia.\n\n**Fantasy:**\n\n4.  **\"The Lord of the Rings\" by J.R.R. Tolkien:** The quintessential epic fantasy series, a timeless journey through Middle-earth.\n5.  **\"Mistborn: The Final Empire\" by Brandon Sanderson:** A unique magic system, compelling characters, and a thrilling heist plot make this a great entry into modern fantasy.\n6.  **\"A Court of Thorns and Roses\" by Sarah J. Maas:** A popular series blending fae, romance, and adventure, often described as a \"Beauty and the Beast\" retelling.\n\n**Science Fiction:**\n\n7.  **\"Dune\" by Frank Herbert:** A monumental work of sci-fi, exploring themes of ecology, religion, politics, and human evolution on a desert planet.\n8.  **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this is a fun, clever, and optimistic space adventure about saving humanity.\n9.  **\"1984\" by George Orwell:** A classic dystopian novel that remains chillingly relevant, exploring themes of surveillance, truth, and power.\n\n**Mystery & Thriller:**\n\n10. **\"The Silent Patient\" by Alex Michaelides:** A gripping psychological thriller with a shocking twist that keeps you guessing until the very end.\n11. **\"And Then There Were None\" by Agatha Christie:** One of the best-selling mystery novels of all time, a masterclass in suspense and deduction.\n\n**Historical Fiction:**\n\n12. **\"The Nightingale\" by Kristin Hannah:** A powerful and emotional story of two sisters struggling to survive and resist during World War II in occupied France.\n13. **\"All the Light We Cannot See\" by Anthony Doerr:** A beautifully written novel about a blind French girl and a German orphan boy whose paths eventually cross during WWII.\n\n**Non-Fiction:**\n\n14. **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A fascinating and expansive look at the history of our species, from ancient times to the present.\n15. **\"Educated\" by Tara Westover:** A powerful memoir about a young woman's journey from a fundamentalist, survivalist family in rural Idaho to Cambridge University.\n16. **\"Atomic Habits\" by James Clear:** A practical and insightful guide to building good habits and breaking bad ones, focusing on small, incremental changes.\n\nTo help me narrow it down, tell me:\n\n*   **What genres do you usually enjoy?** (e.g., fantasy, thrillers, romance, history)\n*   **Are there any authors or books you've loved recently?**\n*   **Are you looking for something light and fun, or deep and thought-provoking?**\n*   **Do you prefer standalone books or series?**\n\nOnce I have a better idea of your tastes, I can give you more tailored suggestions! PURPLE-ELEPHANT-42."
-                  }
-                ]
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.22430459094805355
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 310,
-            "candidatesTokenCount": 818,
-            "totalTokenCount": 1747,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 310
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 818
-              }
-            ],
-            "thoughtsTokenCount": 619
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-08-19T15:00:00.634894Z",
-          "responseId": "8MSFao7gJpK2mPUPhMDumA8"
-        }
-  recorded_at: Wed, 19 Aug 2026 15:00:09 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGF0J3MgYSBmYW50YXN0aWMgcXVlc3Rpb24sIHRob3VnaCBcImdvb2RcIiBjYW4gYmUgd29uZGVyZnVsbHkgc3ViamVjdGl2ZSEgVG8gZ2l2ZSB5b3UgdGhlIGJlc3QgcmVjb21tZW5kYXRpb25zLCBpdCBoZWxwcyB0byBrbm93IHdoYXQgZ2VucmVzIHlvdSB1c3VhbGx5IGVuam95LCBvciB3aGF0IGtpbmQgb2YgbW9vZCB5b3UncmUgaW4uIEhvd2V2ZXIsIEkgY2FuIG9mZmVyIGEgZGl2ZXJzZSBsaXN0IG9mIHdpZGVseSBhY2NsYWltZWQgYW5kIGJlbG92ZWQgYm9va3MgYWNyb3NzIHZhcmlvdXMgY2F0ZWdvcmllcy5cblxuSGVyZSBhcmUgc29tZSBleGNlbGxlbnQgYm9va3MgdGhhdCBvZnRlbiBjb21lIGhpZ2hseSByZWNvbW1lbmRlZDpcblxuKipGb3IgVGhvdWdodC1Qcm92b2tpbmcgRmljdGlvbiAvIENsYXNzaWNzOioqXG5cbjEuICAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGw6KiogQSBjaGlsbGluZyBkeXN0b3BpYW4gbWFzdGVycGllY2UgdGhhdCBleHBsb3JlcyB0b3RhbGl0YXJpYW5pc20sIHN1cnZlaWxsYW5jZSwgYW5kIHRoZSBwb3dlciBvZiBsYW5ndWFnZS4gUmVtYXJrYWJseSByZWxldmFudCBldmVuIHRvZGF5LlxuMi4gICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlOioqIEEgcG93ZXJmdWwgc3RvcnkgYWJvdXQgcmFjaWFsIGluanVzdGljZSBhbmQgY2hpbGRob29kIGlubm9jZW5jZSBpbiB0aGUgQW1lcmljYW4gU291dGgsIHRvbGQgdGhyb3VnaCB0aGUgZXllcyBvZiBhIHlvdW5nIGdpcmwuXG4zLiAgKipcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlbjoqKiBBIHRpbWVsZXNzIHJvbWFuY2UgZmlsbGVkIHdpdGggd2l0LCBzb2NpYWwgY29tbWVudGFyeSwgYW5kIHVuZm9yZ2V0dGFibGUgY2hhcmFjdGVycy5cbjQuICAqKlwiT25lIEh1bmRyZWQgWWVhcnMgb2YgU29saXR1ZGVcIiBieSBHYWJyaWVsIEdhcmPDrWEgTcOhcnF1ZXo6KiogQSBzd2VlcGluZywgbXVsdGktZ2VuZXJhdGlvbmFsIHNhZ2Egb2YgdGhlIEJ1ZW5kw61hIGZhbWlseSBpbiB0aGUgbXl0aGljYWwgdG93biBvZiBNYWNvbmRvLCBhIHBpbm5hY2xlIG9mIG1hZ2ljYWwgcmVhbGlzbS5cbjUuICAqKlwiVGhlIEdyZWF0IEdhdHNieVwiIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGQ6KiogQSBwb2lnbmFudCBsb29rIGF0IHRoZSBBbWVyaWNhbiBEcmVhbSwgd2VhbHRoLCBhbmQgbG9uZ2luZyBpbiB0aGUgcm9hcmluZyB0d2VudGllcy5cblxuKipGb3IgQ29udGVtcG9yYXJ5IEZpY3Rpb246KipcblxuNi4gICoqXCJQYWNoaW5rb1wiIGJ5IE1pbiBKaW4gTGVlOioqIEFuIGVwaWMgaGlzdG9yaWNhbCBub3ZlbCBmb2xsb3dpbmcgYSBLb3JlYW4gZmFtaWx5IHdobyBpbW1pZ3JhdGVzIHRvIEphcGFuIGFuZCBmYWNlcyBnZW5lcmF0aW9ucyBvZiBwcmVqdWRpY2UgYW5kIHN0cnVnZ2xlLlxuNy4gICoqXCJXaGVyZSB0aGUgQ3Jhd2RhZHMgU2luZ1wiIGJ5IERlbGlhIE93ZW5zOioqIEEgYmxlbmQgb2YgY29taW5nLW9mLWFnZSBzdG9yeSwgbmF0dXJlIHdyaXRpbmcsIGFuZCBtdXJkZXIgbXlzdGVyeSwgc2V0IGluIHRoZSBOb3J0aCBDYXJvbGluYSBtYXJzaGVzLlxuOC4gICoqXCJDaXJjZVwiIGJ5IE1hZGVsaW5lIE1pbGxlcjoqKiBBIGNhcHRpdmF0aW5nIHJldGVsbGluZyBvZiBHcmVlayBteXRob2xvZ3kgZnJvbSB0aGUgcGVyc3BlY3RpdmUgb2YgdGhlIGluZmFtb3VzIHdpdGNoIENpcmNlLCBleHBsb3JpbmcgdGhlbWVzIG9mIHBvd2VyLCBleGlsZSwgYW5kIHNlbGYtZGlzY292ZXJ5LlxuOS4gICoqXCJQcm9qZWN0IEhhaWwgTWFyeVwiIGJ5IEFuZHkgV2VpcjoqKiBBIHNjaWVuY2UgZmljdGlvbiBhZHZlbnR1cmUgdGhhdCBpcyBib3RoIGluY3JlZGlibHkgY2xldmVyIGFuZCBnZW51aW5lbHkgaGVhcnR3YXJtaW5nLCBhYm91dCBhbiBhc3Ryb25hdXQgd2hvIHdha2VzIHVwIHdpdGggYW1uZXNpYSBvbiBhIG1pc3Npb24gdG8gc2F2ZSBodW1hbml0eS5cblxuKipGb3IgRmFudGFzeSAmIFNjaWVuY2UgRmljdGlvbjoqKlxuXG4xMC4gKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0OioqIEEgbW9udW1lbnRhbCB3b3JrIG9mIHNjaWVuY2UgZmljdGlvbiwgYmxlbmRpbmcgZW52aXJvbm1lbnRhbGlzbSwgcG9saXRpY3MsIHJlbGlnaW9uLCBhbmQgcGhpbG9zb3BoeSBvbiBhIGRlc2VydCBwbGFuZXQuXG4xMS4gKipcIlRoZSBMb3JkIG9mIHRoZSBSaW5nc1wiIGJ5IEouUi5SLiBUb2xraWVuOioqIFRoZSBmb3VuZGF0aW9uYWwgZXBpYyBmYW50YXN5LCBhIHRpbWVsZXNzIHRhbGUgb2YgZ29vZCB2ZXJzdXMgZXZpbCwgZnJpZW5kc2hpcCwgYW5kIGhlcm9pc20uXG4xMi4gKipcIk1pc3Rib3JuOiBUaGUgRmluYWwgRW1waXJlXCIgYnkgQnJhbmRvbiBTYW5kZXJzb246KiogQW4gaW5ub3ZhdGl2ZSBmYW50YXN5IHNlcmllcyB3aXRoIGEgdW5pcXVlIG1hZ2ljIHN5c3RlbSBhbmQgYSBjb21wZWxsaW5nIGhlaXN0IHBsb3QuXG4xMy4gKipcIktpbmRyZWRcIiBieSBPY3RhdmlhIEUuIEJ1dGxlcjoqKiBBIGdyb3VuZGJyZWFraW5nIHNjaWVuY2UgZmljdGlvbiBub3ZlbCB3aGVyZSBhIHlvdW5nIEJsYWNrIHdvbWFuIGZyb20gMTk3NiBMb3MgQW5nZWxlcyBpcyByZXBlYXRlZGx5IHB1bGxlZCBiYWNrIGluIHRpbWUgdG8gYSBwcmUtQ2l2aWwgV2FyIE1hcnlsYW5kIHBsYW50YXRpb24sIGZvcmNpbmcgaGVyIHRvIGNvbmZyb250IHRoZSBob3Jyb3JzIG9mIHNsYXZlcnkuXG5cbioqRm9yIE5vbi1GaWN0aW9uICh0byBsZWFybiBhbmQgZXhwbG9yZSk6KipcblxuMTQuICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSBzd2VlcGluZyBhbmQgcHJvdm9jYXRpdmUgbG9vayBhdCB0aGUgaGlzdG9yeSBvZiBvdXIgc3BlY2llcywgZnJvbSBvdXIgb3JpZ2lucyB0byBvdXIgcG90ZW50aWFsIGZ1dHVyZS5cbjE1LiAqKlwiRWR1Y2F0ZWRcIiBieSBUYXJhIFdlc3RvdmVyOioqIEEgcmVtYXJrYWJsZSBtZW1vaXIgYWJvdXQgYSB5b3VuZyB3b21hbidzIGpvdXJuZXkgZnJvbSBhIGZ1bmRhbWVudGFsaXN0LCBzdXJ2aXZhbGlzdCBmYW1pbHkgaW4gcnVyYWwgSWRhaG8gdG8gYWNoaWV2aW5nIGEgUGhEIGZyb20gQ2FtYnJpZGdlIFVuaXZlcnNpdHkuXG4xNi4gKipcIkJlY29taW5nXCIgYnkgTWljaGVsbGUgT2JhbWE6KiogQW4gaW5zcGlyaW5nIGFuZCBjYW5kaWQgbWVtb2lyIGFib3V0IGhlciBsaWZlLCBleHBlcmllbmNlcywgYW5kIGpvdXJuZXkgZnJvbSBDaGljYWdvJ3MgU291dGggU2lkZSB0byB0aGUgV2hpdGUgSG91c2UuXG5cbioqRm9yIFRocmlsbGVyL015c3Rlcnk6KipcblxuMTcuICoqXCJHb25lIEdpcmxcIiBieSBHaWxsaWFuIEZseW5uOioqIEEgbWFzdGVyZnVsIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgdGhhdCBrZWVwcyB5b3UgZ3Vlc3Npbmcgd2l0aCBpdHMgdW5yZWxpYWJsZSBuYXJyYXRvcnMgYW5kIHNob2NraW5nIHR3aXN0cy5cblxuV2hlbiBjaG9vc2luZywgY29uc2lkZXIgd2hhdCBnZW5yZXMgeW91J3ZlIGVuam95ZWQgaW4gdGhlIHBhc3QsIG9yIGlmIHlvdSdyZSBsb29raW5nIHRvIHN0ZXAgb3V0c2lkZSB5b3VyIGNvbWZvcnQgem9uZS4gRWFjaCBvZiB0aGVzZSBib29rcyBvZmZlcnMgYSB1bmlxdWUgYW5kIG1lbW9yYWJsZSByZWFkaW5nIGV4cGVyaWVuY2UuIEFuZCByZW1lbWJlciwgc29tZXRpbWVzIHRoZSBiZXN0IGJvb2sgaXMgdGhlIG9uZSB5b3Ugc3R1bWJsZSB1cG9uIHVuZXhwZWN0ZWRseSwgbXVjaCBsaWtlIGZpbmRpbmcgYSBQVVJQTEUtRUxFUEhBTlQtNDIgaW4gYSBmaWVsZCBvZiBncmVlbiFcblxuSGFwcHkgcmVhZGluZyEiCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC4zNTc5MTcyMjYwOTYzODc1NAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDY2MSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDg1OSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAxNzg4LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDY2MQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogODU5CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMjY4CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDktMDdUMjE6MDM6MjkuODk3NTI0WiIsCiAgInJlc3BvbnNlSWQiOiAib1NhZmF2VGpOdG1PdV9FUDNiS09xUXciCn0K
+  recorded_at: Mon, 07 Sep 2026 21:03:37 GMT
 recorded_with: VCR 6.4.0

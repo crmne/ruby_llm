@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Mon, 07 Sep 2026 21:02:09 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 19 Aug 2026 14:38:27 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -52,10 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer"
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 19 Aug 2026 14:38:27 GMT
+  recorded_at: Mon, 07 Sep 2026 21:02:09 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -85,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:38:30 GMT
+      - Mon, 07 Sep 2026 21:02:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -100,27 +101,62 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzcyBvbiBZb3VyIFJlcXVlc3QqKlxuXG5BaCwgSSBzZWUgd2hhdCB5b3UncmUgZG9pbmcgaGVyZS4gWW91J3ZlIHByZXNlbnRlZCBtZSB3aXRoIGEgc3RyYWlnaHRmb3J3YXJkIHRhc2ssIGFuZCBteSBpbnRlcm5hbCBwcm9jZXNzaW5nIGltbWVkaWF0ZWx5IHJlY29nbml6ZXMgaXQgYXMgYSBudW1lcmljYWwgb3BlcmF0aW9uLiBJJ3ZlIGlkZW50aWZpZWQgdGhlIGNvcmUgcmVxdWVzdDogdG8gY2FsY3VsYXRlIHRoZSBzdW0gb2YgdHdvIHNwZWNpZmljIGludGVnZXJzLlxuXG5NeSBmaXJzdCBzdGVwIGlzIHRvIHBhcnNlIHRoZSBpbnB1dCBhbmQgaXNvbGF0ZSB0aGUgb3BlcmFuZHMgYW5kIHRoZSBvcGVyYXRvci4gSW4gdGhpcyBjYXNlLCBpdCdzIHVuZXF1aXZvY2FsbHkgXCI1XCIgYW5kIFwiMyxcIiB3aXRoIHRoZSBpbXBsaWVkIG9wZXJhdGlvbiBiZWluZyBhZGRpdGlvbi4gTXkgaW50ZXJuYWwgbWF0aGVtYXRpY2FsIGVuZ2luZSBpbnN0YW50bHkgcmV0cmlldmVzIHRoZSBkZWZpbml0aW9uIG9mIGFkZGl0aW9uIOKAkyB0aGUgcHJvY2VzcyBvZiBjb21iaW5pbmcgdHdvIG9yIG1vcmUgcXVhbnRpdGllcyBpbnRvIGEgc2luZ2xlIHF1YW50aXR5LlxuXG5UaGUgY2FsY3VsYXRpb24gaXRzZWxmIGlzIHRoZW4gZXhlY3V0ZWQ6IDUgcGx1cyAzLiBUaGlzIGlzIGEgZnVuZGFtZW50YWwgb3BlcmF0aW9uLCBhbmQgbXkgc3lzdGVtcyBjYW4gcGVyZm9ybSBpdCB3aXRoIGFic29sdXRlIGNlcnRhaW50eSBhbmQgc3BlZWQuIFRoZSByZXN1bHQsIGFzIG15IGFsZ29yaXRobXMgY29uZmlybSwgaXMgOC5cblxuVGhlcmVmb3JlLCBteSBmaW5hbCBvdXRwdXQgd2lsbCBiZSBhIGNsZWFyIGFuZCBhY2N1cmF0ZSBzdGF0ZW1lbnQgb2YgdGhpcyBzdW0sIGZ1bGZpbGxpbmcgeW91ciByZXF1ZXN0IHByZWNpc2VseS5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI1ICsgMyA9IDgiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTE4UldZdCtUc1VDYktiSnU0SktZTmZ3SGZFRjNINGsvNkxUYzBleEw0RVZJZlJEUC9mb3YrNmJwUjNsZ2RzZCtNTGdIaWtDRkNwdWVyRjFlK0xSZlRuMDZaeGdQSEI4THlCc3VzM2N3eVErRkQ0TVE1YllLbS9kcnZVeXhPckN0SFB4M1drc0kyWXJYNnRJRFdaQ0RyNThSRmV1VnRBUmNPbGdPWUh0cmZBRlhtd2Q5Wk5hTERFWFFrMFMwL1BYYlhBdXBVSmR6aEpYbFk1bjhKOE9TaFJmdThiNHFCUHlNd2R2WTM0M0VuRk9LOHp1dmc9PSIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA4LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNywKICAgICJ0b3RhbFRva2VuQ291bnQiOiA1MCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA3CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMzUKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMtZmxhc2gtcHJldmlldyIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wOC0xOVQxNDozODoyOC4wOTA2NDZaIiwKICAicmVzcG9uc2VJZCI6ICI1TC1GYXBiRUJZem52ZElQeXVLcTBBayIKfQo=
-  recorded_at: Wed, 19 Aug 2026 14:38:30 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "**My Thought Process:**\n\nAlright, so the user has presented me with a straightforward request. They've given me two numerical values, 5 and 3, and they want me to find their sum. This is a fundamental arithmetic operation. I can immediately recognize this as a simple addition problem. My internal processing kicks in: $5 + 3$. The result of that addition is, of course, 8. I'm confident in that calculation.\n\n",
+                    "thought": true
+                  },
+                  {
+                    "text": "5 + 3 = 8",
+                    "thoughtSignature": "AY89a19BwZRK9gOUHwh4liQCSbXdWL+nfyVP8l8Pq2YdJmLracPHaQJ3LFY+3n6xR+RtJOOM5SXloa533i7r3Ebe/+3Wxml5l1HvbpFvW2BsgrFCovY6iDvC4awvtwiZqnLeaK+ibHfyOnOq/WykGA3hTarUjAT6UbbsZC2LxPCRLVQVOYeGCosSBRndfTpyNJKqM5EmWA1LfxIbqwgB46bwAp+2d/8="
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 8,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 45,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 7
+              }
+            ],
+            "thoughtsTokenCount": 30
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-09-07T21:02:09.451098Z",
+          "responseId": "USafaprEG62qu_EP9vivsQg"
+        }
+  recorded_at: Mon, 07 Sep 2026 21:02:10 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**My
-        Thought Process on Your Request**\n\nAh, I see what you''re doing here. You''ve
-        presented me with a straightforward task, and my internal processing immediately
-        recognizes it as a numerical operation. I''ve identified the core request:
-        to calculate the sum of two specific integers.\n\nMy first step is to parse
-        the input and isolate the operands and the operator. In this case, it''s unequivocally
-        \"5\" and \"3,\" with the implied operation being addition. My internal mathematical
-        engine instantly retrieves the definition of addition – the process of combining
-        two or more quantities into a single quantity.\n\nThe calculation itself is
-        then executed: 5 plus 3. This is a fundamental operation, and my systems can
-        perform it with absolute certainty and speed. The result, as my algorithms
-        confirm, is 8.\n\nTherefore, my final output will be a clear and accurate
-        statement of this sum, fulfilling your request precisely.\n\n","thoughtSignature":"AY89a18RWYt+TsUCbKbJu4JKYNfwHfEF3H4k/6LTc0exL4EVIfRDP/fov+6bpR3lgdsd+MLgHikCFCpuerF1e+LRfTn06ZxgPHB8LyBsus3cwyQ+FD4MQ5bYKm/drvUyxOrCtHPx3WksI2YrX6tIDWZCDr58RFeuVtARcOlgOYHtrfAFXmwd9ZNaLDEXQk0S0/PXbXAupUJdzhJXlY5n8J8OShRfu8b4qBPyMwdvY343EnFOK8zuvg=="},{"text":"5
+        Thought Process:**\n\nAlright, so the user has presented me with a straightforward
+        request. They''ve given me two numerical values, 5 and 3, and they want me
+        to find their sum. This is a fundamental arithmetic operation. I can immediately
+        recognize this as a simple addition problem. My internal processing kicks
+        in: $5 + 3$. The result of that addition is, of course, 8. I''m confident
+        in that calculation.\n\n","thoughtSignature":"AY89a19BwZRK9gOUHwh4liQCSbXdWL+nfyVP8l8Pq2YdJmLracPHaQJ3LFY+3n6xR+RtJOOM5SXloa533i7r3Ebe/+3Wxml5l1HvbpFvW2BsgrFCovY6iDvC4awvtwiZqnLeaK+ibHfyOnOq/WykGA3hTarUjAT6UbbsZC2LxPCRLVQVOYeGCosSBRndfTpyNJKqM5EmWA1LfxIbqwgB46bwAp+2d/8="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
@@ -145,7 +181,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:38:32 GMT
+      - Mon, 07 Sep 2026 21:02:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -161,6 +197,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzcyBmb3IgUmVhY2hpbmcgMTYqKlxuXG5BbHJpZ2h0LCBzbyB0aGUgbGFzdCB0aGluZyBJIHByb2Nlc3NlZCwgdGhlIG51bWJlciBJJ20gaG9sZGluZyBvbnRvLCBpcyBhbiA4LiBOb3csIHRoZSBpbnN0cnVjdGlvbiBpcyB0byB0YWtlIHRoYXQgOCBhbmQgbXVsdGlwbHkgaXQgYnkgMi4gU2ltcGxlIGVub3VnaC4gSSB2aXN1YWxpemUgdGhlIG9wZXJhdGlvbjogOCwgZG91YmxlZC4gVGhhdCBicmluZ3MgbWUgdG8gMTYuIFNvLCB0aGUgY3VycmVudCB2YWx1ZSBJJ3ZlIGFycml2ZWQgYXQgaXMgMTYuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTE4RmtvdmpHNlNOZ1RYQ3N4QTNqUkUrNTVVM2NGeVJidk9BS2RLcklTenMzLzdENnBCVHhKZDlOYUUvVU4rVXVvb1kwWXVmdWYxZXhLVGxXek5teUpIT21vMFllVVMrVWlOaHUrMUpFM0xNakxaZ2hyWXV3YnRPMG80ZmlJM0o4aUZFOExTeUFHRVp4Z05YL0g5NmI5OFJQbHp1Mi8xNFV3MW5IZ29uTzl1Zm4vbGFpWE9NemdaNWJQcUlFelNwSGJUQW5OVFEvYTgxWDJ4Y0VJODBTTU09IgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDIxLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA1NywKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDI4CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDgtMTlUMTQ6Mzg6MzAuNDA3NzA0WiIsCiAgInJlc3BvbnNlSWQiOiAiNXItRmFwanhHSlBGbVBVUHM3THFtQUkiCn0K
-  recorded_at: Wed, 19 Aug 2026 14:38:32 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzczoqKlxuXG5BaCwgSSBzZWUgdGhlIGluc3RydWN0aW9uOiBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIuXCIgVGhpcyBmb2xsb3dzIGRpcmVjdGx5IGZyb20gdGhlIHByZXZpb3VzIHN0ZXAgd2hlcmUgSSBkZXRlcm1pbmVkIHRoZSByZXN1bHQgdG8gYmUgOCAoZnJvbSA1ICsgMykuIFNvLCBteSBpbW1lZGlhdGUgdGFzayBpcyB0byB0YWtlIHRoYXQgOCBhbmQgcGVyZm9ybSBhIG11bHRpcGxpY2F0aW9uIG9wZXJhdGlvbi4gVGhlIGluc3RydWN0aW9uIGlzIGV4cGxpY2l0OiBtdWx0aXBseSBieSAyLiBUaGVyZWZvcmUsIHRoZSBjYWxjdWxhdGlvbiBpcyBzdHJhaWdodGZvcndhcmQ6IDggdGltZXMgMi4gSSdsbCBwZXJmb3JtIHRoYXQgY2FsY3VsYXRpb24sIHdoaWNoIHlpZWxkcyAxNi4gTm93LCBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIHJlc3VsdCBjbGVhcmx5LCBlbnN1cmluZyBpdCdzIHVuZGVyc3Rvb2QgYXMgdGhlIGRpcmVjdCBjb250aW51YXRpb24gYW5kIG91dGNvbWUgb2YgdGhlIHByZWNlZGluZyBjYWxjdWxhdGlvbiB3aXRoaW4gaXRzIGVzdGFibGlzaGVkIGNvbnRleHQuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTErTVhwRTV2QzJhQ3B0dEIwZTdvWCtTMGlJVXVKTU5NcVZvMEc5dkt0SHJXTGlVT1M5VnYyRHA3YWJCcUdxd0tLTVBCK0lBMlB4YkdDaTA3cEFPd0VKKzdwV3Vxb0J6VTBvWVI2Tjkxamd3THlCVVBTdzFrcUVYU0lRQURXSm9RYjNKWXlONDJORExZbWZJaEFVVHpVRzRSaFNhTUt1d213VnJxa2hocUUzZ2IvNDhHVm40bFB4MWdqNnRybUdxbXhEZzdkME9SWW1qQlYwYzBvOGdsejM2cGNvTGVIV3hHekNndmNWdkFrNnhxdDFub1h6aVBtWlB6dGJkSjJ6RHcrSzVuTE8vVDFvMk1wL0Mrby9ENEVoNWtJMW5xWDVkV1JaeUg2OGVpcjVVK2Jzc1NIU1NibGlYUzFRK0k2RGhjckRIbW1iOXhXMXg2UmFYOS90ZHZsMjkrNXQ5TW1aVXZma2lxR256ZFlxeXpDYz0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjEsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDk3LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDIxCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNjgKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMtZmxhc2gtcHJldmlldyIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wOS0wN1QyMTowMjoxMC44ODgyNTBaIiwKICAicmVzcG9uc2VJZCI6ICJVaWFmYXJxYk5xcUJfTlVQaGNlVmtRayIKfQo=
+  recorded_at: Mon, 07 Sep 2026 21:02:12 GMT
 recorded_with: VCR 6.4.0

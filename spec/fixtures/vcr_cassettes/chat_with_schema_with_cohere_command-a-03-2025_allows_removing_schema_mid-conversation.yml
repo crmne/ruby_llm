@@ -42,23 +42,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 83dfafa8a6493000c0a06bdfae417b29
+      - ce328bff8e9afa77ca88c50e176904e7
       Date:
-      - Thu, 13 Aug 2026 11:16:23 GMT
+      - Mon, 07 Sep 2026 21:02:13 GMT
       X-Envoy-Upstream-Service-Time:
-      - '487'
+      - '400'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"816428ae-7cac-4906-853a-7904a31eb9fc","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":10},"tokens":{"input_tokens":607,"output_tokens":13},"cached_tokens":480}}'
-  recorded_at: Thu, 13 Aug 2026 11:16:23 GMT
+      string: '{"id":"4a987bc7-85f2-44ec-a8f1-dbdaa1ce755c","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":10},"tokens":{"input_tokens":607,"output_tokens":13},"cached_tokens":480}}'
+  recorded_at: Mon, 07 Sep 2026 21:02:13 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -94,7 +94,7 @@ http_interactions:
       Num-Chars:
       - '2808'
       Num-Tokens:
-      - '428'
+      - '474'
       Pragma:
       - no-cache
       Vary:
@@ -102,47 +102,51 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - ba25409b6e245f8f8ffb6cc1b3383319
+      - a1d6288a738b970e3789a9430ea2f8ad
       Date:
-      - Thu, 13 Aug 2026 11:16:33 GMT
+      - Mon, 07 Sep 2026 21:02:20 GMT
       X-Envoy-Upstream-Service-Time:
-      - '9297'
+      - '6385'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0c6faf7b-219c-4e26-8545-fe59c1b1e207","message":{"role":"assistant","content":[{"type":"text","text":"**Ruby**
+      string: '{"id":"5aad0012-47f7-4fb3-b43c-9e30deb7f76e","message":{"role":"assistant","content":[{"type":"text","text":"**Ruby**
         is a dynamic, open-source programming language known for its simplicity and
         productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
-        was designed with the philosophy of making programming fun and efficient.
-        Here are some key features and aspects of Ruby:\n\n1. **Syntax**: Ruby has
-        a clean and readable syntax, often described as \"intuitive\" and \"natural.\"
-        It emphasizes developer happiness and reduces the need for boilerplate code.\n\n2.
-        **Dynamic Typing**: Ruby is dynamically typed, meaning you don''t need to
-        declare variable types explicitly. This allows for more flexibility in coding.\n\n3.
+        was designed with the philosophy of making programming enjoyable and efficient.
+        Here are some key features and aspects of Ruby:\n\n1. **Syntax**: Ruby''s
+        syntax is clean, intuitive, and easy to read, often described as \"optimized
+        for programmer happiness.\" It emphasizes natural language-like constructs,
+        reducing the need for boilerplate code.\n\n2. **Dynamic Typing**: Ruby is
+        dynamically typed, meaning you don''t need to declare variable types explicitly.
+        This flexibility allows for faster development and easier experimentation.\n\n3.
         **Object-Oriented**: Everything in Ruby is an object, including primitive
-        data types like integers and booleans. This makes it a pure object-oriented
-        language.\n\n4. **Mixins and Modules**: Ruby supports mixins through modules,
-        allowing you to include reusable code across classes without using inheritance.\n\n5.
-        **Ruby on Rails**: Ruby gained widespread popularity due to the **Ruby on
-        Rails** framework, a web development framework that simplifies database interactions,
-        routing, and web page generation.\n\n6. **Community and Ecosystem**: Ruby
-        has a vibrant community and a rich ecosystem of libraries (gems) available
-        via RubyGems, making it easy to add functionality to your projects.\n\n7.
-        **Metaprogramming**: Ruby supports metaprogramming, allowing developers to
-        write code that writes or manipulates other code at runtime, enabling powerful
-        and flexible solutions.\n\n8. **Cross-Platform**: Ruby runs on multiple platforms,
-        including Windows, macOS, and Linux, making it versatile for different environments.\n\n9.
-        **Philosophy**: Ruby''s motto, \"Matz is nice and so we are nice,\" reflects
-        its community-driven and developer-friendly ethos.\n\nRuby is widely used
-        for web development, scripting, automation, and building command-line tools.
-        Its focus on developer happiness and productivity continues to make it a beloved
-        language in the programming world."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":21,"output_tokens":407},"tokens":{"input_tokens":524,"output_tokens":410},"cached_tokens":448}}'
-  recorded_at: Thu, 13 Aug 2026 11:16:33 GMT
+        data types like integers and strings. This makes it a pure object-oriented
+        language, promoting modular and reusable code.\n\n4. **Mixins and Modules**:
+        Ruby supports mixins through modules, allowing you to include reusable methods
+        in multiple classes without using inheritance.\n\n5. **Ruby on Rails**: Ruby
+        gained widespread popularity due to the **Ruby on Rails** framework, a web
+        development framework that simplifies database interactions, routing, and
+        templating. Rails follows the \"Convention over Configuration\" philosophy,
+        reducing the need for manual setup.\n\n6. **Community and Ecosystem**: Ruby
+        has a vibrant community and a rich ecosystem of libraries (called \"gems\")
+        available via the **RubyGems** package manager. Popular gems include `bundler`
+        for dependency management and `rspec` for testing.\n\n7. **Metaprogramming**:
+        Ruby supports metaprogramming, allowing developers to write code that generates
+        or modifies other code at runtime. This feature is often used in frameworks
+        like Rails.\n\n8. **Cross-Platform**: Ruby is cross-platform and runs on Windows,
+        macOS, Linux, and other operating systems.\n\n9. **Philosophy**: Ruby''s design
+        is guided by the principle of \"Least Astonishment,\" meaning the language
+        should behave in ways that are intuitive and predictable to the programmer.\n\nRuby
+        is widely used for web development, scripting, automation, and building command-line
+        tools. Its focus on developer happiness and productivity has made it a favorite
+        among programmers worldwide."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":21,"output_tokens":453},"tokens":{"input_tokens":524,"output_tokens":456},"cached_tokens":448}}'
+  recorded_at: Mon, 07 Sep 2026 21:02:20 GMT
 recorded_with: VCR 6.4.0

@@ -23,40 +23,75 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 21:00:02 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - bdc32788-50cc-4d07-a81b-54b5160b7b3a
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-ba85ac1c1eee3377523f58a68e235972-6098349c00033dd5-00
+      - 00-750ce1c6f575a73c5d1bbccb23d34dc8-18c8d4b20001f3e3-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 8d38bc50-6337-4ec6-b017-709a3ac79e17
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49969'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 8d38bc50-6337-4ec6-b017-709a3ac79e17
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:25 GMT
     body:
-      encoding: UTF-8
-      string: '{"id":"8e99c5c3-11c1-47b2-bb95-dec88a0fc0ab","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris"},"finish_reason":"stop"}],"usage":{"prompt_tokens":7,"completion_tokens":1,"total_tokens":8,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":7,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150065,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:34:25 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImVkMmZhZjI3LTkyNzItNGUwOS1iNDdkLTUxNTQ2ZWNjNzYyNiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKlBhcmlzKiogaXMgdGhlIGNhcGl0YWwgb2YgRnJhbmNlLiBcblxuVGhpcyBpcyBhIHdlbGwtZXN0YWJsaXNoZWQgZmFjdDogUGFyaXMgaGFzIGJlZW4gdGhlIHBvbGl0aWNhbCwgY3VsdHVyYWwsIGFuZCBlY29ub21pYyBjZW50ZXIgb2YgRnJhbmNlIHNpbmNlIHRoZSAxMHRoIGNlbnR1cnksIHNlcnZpbmcgYXMgdGhlIHNlYXQgb2YgdGhlIEZyZW5jaCBnb3Zlcm5tZW50IChpbmNsdWRpbmcgdGhlIMOJbHlzw6llIFBhbGFjZSBhbmQgTmF0aW9uYWwgQXNzZW1ibHkpIGFuZCBob21lIHRvIGFib3V0IDIuMSBtaWxsaW9uIHJlc2lkZW50cyBpbiB0aGUgY2l0eSBwcm9wZXIsIHdpdGggb3ZlciAxMiBtaWxsaW9uIGluIHRoZSBncmVhdGVyIG1ldHJvcG9saXRhbiBhcmVhLiBZb3UgY2FuIHZlcmlmeSB0aGlzIG9uIG9mZmljaWFsIHNvdXJjZXMgbGlrZSB0aGUgRnJlbmNoIGdvdmVybm1lbnQncyB3ZWJzaXRlIChnb3V2ZXJuZW1lbnQuZnIpIG9yIGVuY3ljbG9wZWRpYXMgbGlrZSBCcml0YW5uaWNhLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NywiY29tcGxldGlvbl90b2tlbnMiOjEwNywidG90YWxfdG9rZW5zIjoxMTQsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjEsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjcsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc4ODgxNDgwMiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Mon, 07 Sep 2026 21:00:04 GMT
 recorded_with: VCR 6.4.0

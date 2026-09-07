@@ -7,9 +7,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
         Berlin? (52.5200, 13.4050)"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"none"}}}'
+        current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"none"}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -35,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:41:26 GMT
+      - Mon, 07 Sep 2026 21:06:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -45,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=5259
+      - gfet4t7; dur=9408
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,6 +53,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiAoYXQgNTIuNTIwMCwgMTMuNDA1MCkgaXMgY3VycmVudGx5ICoqMjDCsEMgKDY4wrBGKSoqIHdpdGggKipjbGVhciBza3kqKi5cblxuSGVyZSBhcmUgc29tZSBtb3JlIGRldGFpbHM6XG4qICAgKipGZWVscyBsaWtlOioqIDIwwrBDICg2OMKwRilcbiogICAqKkh1bWlkaXR5OioqIDU4JVxuKiAgICoqV2luZDoqKiAxMyBrbS9oICg4IG1waCkgZnJvbSB0aGUgV2VzdC1Tb3V0aHdlc3QiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDEwMywKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDk5LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDExMjgsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDEwMwogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDkyNiwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAia2NDRmF2V19CSl82eHMwUHZzWDg2QWsiCn0K
-  recorded_at: Wed, 19 Aug 2026 14:41:26 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIk9rYXksIGxldCBtZSBjaGVjayB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBmb3IgeW91LCB1c2luZyB0aGUgY29vcmRpbmF0ZXMgNTIuNTIwMCwgMTMuNDA1MC5cblxuVGhlIHdlYXRoZXIgaW4gQmVybGluIHJpZ2h0IG5vdyBpczpcblxuKiAgICoqVGVtcGVyYXR1cmU6KiogMTfCsENcbiogICAqKkNvbmRpdGlvbnM6KiogTGlnaHQgcmFpblxuKiAgICoqRmVlbHMgbGlrZToqKiAxN8KwQ1xuKiAgICoqSHVtaWRpdHk6KiogOTUlXG4qICAgKipXaW5kOioqIDQga20vaCBmcm9tIHRoZSBXZXN0LU5vcnRod2VzdFxuKiAgICoqUHJlY2lwaXRhdGlvbjoqKiAwLjM4IG1tL2hyXG4qICAgKipQcmVzc3VyZToqKiAxMDExIGhQYVxuKiAgICoqVmlzaWJpbGl0eToqKiAxMCBrbVxuXG5TbywgZXhwZWN0IGxpZ2h0IHJhaW4gYW5kIGNvb2wsIGh1bWlkIGNvbmRpdGlvbnMuIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxMDMsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAxNTIsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTg1NiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTAzCiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTYwMSwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiUVNlZmFyYldPNTdjMjhvUHNxSEU0UVkiCn0K
+  recorded_at: Mon, 07 Sep 2026 21:06:19 GMT
 recorded_with: VCR 6.4.0

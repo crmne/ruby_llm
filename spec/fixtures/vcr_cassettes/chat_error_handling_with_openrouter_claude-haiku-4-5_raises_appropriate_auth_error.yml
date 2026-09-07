@@ -8,9 +8,13 @@ http_interactions:
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,7 +27,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:36 GMT
+      - Mon, 07 Sep 2026 21:03:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,7 +37,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
-      - X-Generation-Id,cf-ray
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -48,5 +54,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Missing Authentication header","code":401}}'
-  recorded_at: Mon, 08 Jun 2026 18:45:36 GMT
+  recorded_at: Mon, 07 Sep 2026 21:03:55 GMT
 recorded_with: VCR 6.4.0

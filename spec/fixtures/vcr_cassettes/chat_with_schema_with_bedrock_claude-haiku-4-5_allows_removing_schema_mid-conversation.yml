@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.3
       X-Amz-Date:
-      - 20260819T143427Z
+      - 20260907T210203Z
       X-Amz-Content-Sha256:
       - af62f0aa22d1ee9e206e655ec402d6baf3a7468f410418a88a9815c11975716d
       Authorization:
@@ -29,34 +29,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:29 GMT
+      - Mon, 07 Sep 2026 21:02:05 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '344'
+      - '347'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 67f106a5-167a-4429-87aa-16c6a09771c1
+      - 8366190e-bdf9-4578-b75b-4093d5ea0376
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1656},"output":{"message":{"content":[{"text":"{\"name\":\"Bob\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":174,"outputTokens":12,"serverToolUsage":{},"totalTokens":186}}'
-  recorded_at: Wed, 19 Aug 2026 14:34:29 GMT
+      string: '{"metrics":{"latencyMs":1405},"output":{"message":{"content":[{"text":"{\"name\":
+        \"Bob\", \"age\": 30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":174,"outputTokens":15,"serverToolUsage":{},"totalTokens":189}}'
+  recorded_at: Mon, 07 Sep 2026 21:02:05 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Generate a person named
-        Bob"}]},{"role":"assistant","content":[{"text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":[{"text":"Now
-        just tell me about Ruby"}]}],"inferenceConfig":{}}'
+        Bob"}]},{"role":"assistant","content":[{"text":"{\"name\": \"Bob\", \"age\":
+        30}"}]},{"role":"user","content":[{"text":"Now just tell me about Ruby"}]}],"inferenceConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
       X-Amz-Date:
-      - 20260819T143429Z
+      - 20260907T210205Z
       X-Amz-Content-Sha256:
-      - 4192f814dde366ba7862dfc154dbdb0ec0f4807aca4d4fb3ea390a961942545a
+      - ffd2d1ccc307624b8956ff5429d858bd55a26bda523a38bc73f66438960910c2
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -72,29 +73,31 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:32 GMT
+      - Mon, 07 Sep 2026 21:02:08 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1225'
+      - '1324'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 15f878ef-8175-4402-b7e3-639b59ed1989
+      - 21ca829e-fc5e-4777-9199-9cbd4ab203a5
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2411},"output":{"message":{"content":[{"text":"#
-        Ruby\n\nRuby is a dynamic, open-source programming language known for being:\n\n-
-        **Developer-friendly**: Clean, readable syntax that''s often called \"beautiful
-        code\"\n- **Flexible**: Supports multiple programming paradigms (object-oriented,
-        functional, imperative)\n- **Productive**: Allows developers to write powerful
-        applications quickly\n- **Web-focused**: Home to the popular Rails framework
-        for web development\n- **Community-driven**: Active open-source community
-        with extensive libraries (gems)\n\n**Common uses:**\n- Web applications (especially
-        with Ruby on Rails)\n- Scripting and automation\n- Data analysis\n- System
-        administration tools\n\n**Key features:**\n- Everything is an object\n- Blocks
-        and iterators make code expressive\n- Dynamic typing\n- Built-in testing frameworks\n\nRuby
-        is popular among startups and companies valuing developer productivity, like
-        GitHub, Airbnb, and Shopify."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":33,"outputTokens":201,"serverToolUsage":{},"totalTokens":234}}'
-  recorded_at: Wed, 19 Aug 2026 14:34:32 GMT
+      string: '{"metrics":{"latencyMs":2311},"output":{"message":{"content":[{"text":"#
+        Ruby\n\nRuby is a dynamic, open-source programming language known for being
+        elegant and developer-friendly. Here are some key points:\n\n**Key Features:**\n-
+        **Readable Syntax** - Ruby prioritizes clean, intuitive code that''s easy
+        to read and write\n- **Object-Oriented** - Everything in Ruby is an object\n-
+        **Dynamic Typing** - Variable types are determined at runtime\n- **Interpreted
+        Language** - Code is executed directly without compilation\n\n**Common Uses:**\n-
+        Web development (especially with Ruby on Rails framework)\n- Scripting and
+        automation\n- Data analysis\n- Building tools and utilities\n\n**Strengths:**\n-
+        Fast development cycle\n- Large ecosystem of libraries (gems)\n- Strong community
+        support\n- Great for rapid prototyping\n\n**Notable Framework:**\n- **Ruby
+        on Rails** - A popular web development framework that emphasizes convention
+        over configuration\n\n**Learning Curve:**\nRuby is generally considered beginner-friendly
+        and a good language to learn programming concepts, while still being powerful
+        enough for professional development."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"inputTokens":36,"outputTokens":227,"serverToolUsage":{},"totalTokens":263}}'
+  recorded_at: Mon, 07 Sep 2026 21:02:08 GMT
 recorded_with: VCR 6.4.0

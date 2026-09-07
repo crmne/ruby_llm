@@ -7,9 +7,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call the object params
         tool with window start 2025-01-01 and end 2025-01-02 and include the result."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"object_params","description":"Uses
-        params DSL object support","parameters":{"type":"OBJECT","properties":{"window":{"type":"OBJECT","description":"Time
-        window to schedule","properties":{"start":{"type":"STRING","description":"ISO
-        start"},"end":{"type":"STRING","description":"ISO end"}},"required":["start","end"]}},"required":["window"]}}]}]}'
+        params DSL object support","parametersJsonSchema":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}]}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -35,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:36:12 GMT
+      - Mon, 07 Sep 2026 20:58:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -45,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1420
+      - gfet4t7; dur=1123
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -68,7 +68,7 @@ http_interactions:
                         }
                       }
                     },
-                    "thoughtSignature": "CsMDARFNMg9rV4KpnRhn+GDr1jhF6w3Z09XipVwbFryUJWnMpuF7Yt3h/iJhRz5WQVfNlAgDTGwPGVlFcLT+takV+H3+MWIhx+7qOFUTSmkJhA/3PgKLkwiZGubb+qXBieERTQehMqDGuJSZo2s+YNnTPn8lBoDo/jdi+3kOR33ukNVb8ubbSd0OZlbaxqqtq8bjgwCBiO/mbUM9wY+RVON5xrCmdPBjNWCwnyJWhbYCzJr+xexiJ0Xherw0FyEc4L82xmJRlUYjRb/+bXJSfm3Y4eHnw9hO4vjTa9sGep+Fe/oFu5Y72+4XYZkyOuh7LVS5UHSTxQ9AWt5k+qNUQmpO1I/dVnGKmIoj1wnzLD+HneChB6AIPKRvQrD0sn2NEVzk+wxWGSnKE7v1/bKaCDo3F4w403to21nkFvW1lXI+zfiOvuOr3qp4RCN5uipSSbSk/XaJ72zUI3qycqNJvRdR8XvDUnAmy9D9Dgu6+vdSqU9vjhhIu+3M1axkMIzZy2HLq1p7sRkkvrXaIoHcMSCS/6O+T5/4IH0VZJyo1ubLUemAMgYG+333Ch/+oWibIYM4nDKLH+Y32rnKtarjNb/ymotPRw=="
+                    "thoughtSignature": "CrkDARFNMg+WfJDcPMHO4V6OnAWiH86t6pTbs/8huOpMfaYqbHPn3zxcVjcKHu5oZY/Um/I7iqDjDwSftLcxAXUFBdquPtYqFJPNRlkTURhoE5Y29N7i5ROyDiesoq2wKZ3RlhiQWkfHMh3kJR7OLsgNUfTp+ME4ON7Z/fwCB/KvkTLHpsttMKICDj6MhC7qrZgWLuMvqaTRkdJbPnYMiwOQfhNu83d14U+E0Xvox1bQnUNVNWTwATuty3kaDEUAzVCnHIuOEal2NfOajYHY/aTVzKbZBAcAai7qG4SelisT+8xPSqfGpE//sk67zvnEVC39wO7zPO+GF5Zr4ae2KdwnJ8q3vJtvcolNbz9WQbiQaA/GR1BnBXCqfa6ql9LBCUq6Vkpohqc2STd/19ppvWbgI/4m3KvEaXwSUAT4Fz2iC9lbcaEL2HywIs3Q6KpKgIZdFSosL14vIZ2JSnS/uWfA6t7NKB0ziBKTm//3pYprI9rAxaHGhNqTww6FSlSKJTP1kpp6+ERrgTCsrLWFnJURPLaizSphZ2KlhpqfBeZwKVzx1Mxf/KIpAV0r6YXq0lOgVBAW45bTLnIN"
                   }
                 ],
                 "role": "model"
@@ -81,18 +81,18 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 136,
             "candidatesTokenCount": 43,
-            "totalTokenCount": 326,
+            "totalTokenCount": 302,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 136
               }
             ],
-            "thoughtsTokenCount": 147,
+            "thoughtsTokenCount": 123,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "Wr-FauDxNdHEsgL8vM64CA"
+          "responseId": "eCWfaou7JfKe3boPg87lgAw"
         }
-  recorded_at: Wed, 19 Aug 2026 14:36:12 GMT
+  recorded_at: Mon, 07 Sep 2026 20:58:33 GMT
 recorded_with: VCR 6.4.0
