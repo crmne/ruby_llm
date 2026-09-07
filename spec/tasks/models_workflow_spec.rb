@@ -51,6 +51,8 @@ RSpec.describe 'Published model registry workflow', type: :task do
       'RUBYLIB' => File.expand_path('../../lib', __dir__),
       'RUNNER_TEMP' => tmpdir,
       'GITHUB_OUTPUT' => File.join(tmpdir, 'outputs'),
+      'BUNDLE_PATH' => Bundler.bundle_path.to_s,
+      'BUNDLE_DISABLE_SHARED_GEMS' => 'true',
       'REFRESH_MODEL_REGISTRY' => refresh.to_s,
       'PUBLISHED_REGISTRY' => File.join(tmpdir, 'published.json'),
       'REFRESHED_REGISTRY' => File.join(tmpdir, 'refreshed.json'),
