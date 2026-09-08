@@ -47,11 +47,21 @@ Use the [API changes](#api-changes) below to update your calls, then run your te
 
 ### 1. Generate the Rails Migrations
 
+Choose how you want to recover if you need more time to test 2.0. The default `rename` mode moves the existing model and tool-call tables into RubyLLM's ownership. The optional `copy` mode retains those tables so you can try 2.0, return to a prepared 1.16 build if needed, and resume the upgrade later.
+
+| | Rename, the default | Copy, with `--mode copy` |
+| --- | --- | --- |
+| Existing model and tool-call tables | Renamed for 2.0. | Copied into the 2.0 tables; originals retained. |
+| Return to 1.16 | Restore the database backup and matching application together. | Run the rollback task and deploy the prepared 1.16 build. Conversations changed by 2.0 stay protected. |
+| Extra work | Rehearse migration and backup recovery. | Also prepare the compatibility files, rehearse version switches, and allow storage and time for the copies. |
+
+Generate the default rename migration:
+
 ```bash
 bin/rails generate ruby_llm:upgrade
 ```
 
-The default `rename` mode moves the existing model and tool-call tables into RubyLLM's ownership. To keep those tables for a possible return to 1.16, choose `copy` mode instead:
+Or choose copy mode:
 
 ```bash
 bin/rails generate ruby_llm:upgrade --mode copy
@@ -65,10 +75,10 @@ The generator creates three migrations. Cleanup is a separate migration you gene
 | --- | --- | --- |
 | Prepare | Renames or copies the model and tool-call tables, updates references, and adds the 2.0 tables, columns, and indexes. | Keeps the records. Copy mode also keeps the original tables and chat model reference. |
 | Backfill | Copies message content, tool-result links, and historical usage into the 2.0 format. | Keeps the legacy message columns. |
-| Finish | Checks the backfill and completes the database constraints. | Keeps the legacy message columns. |
+| Finish | Checks the backfill, completes the database constraints, and activates 2.0 in copy mode. | Keeps the legacy message columns. |
 | Cleanup, later | Drops the legacy columns and progress table. In copy mode, also drops the original model and tool-call tables. | Removes the old copies after you have checked the upgrade. |
 
-**Keep affected requests and jobs paused until preparation, backfill, and finish have all completed.** Both modes preserve historical data. Only copy mode supports returning to 1.16 without restoring a backup, with the restrictions described below. Rename mode changes the schema that 1.16 needs.
+**The generated migrations require affected requests and jobs to remain paused through preparation, backfill, and finish in both modes.** Both preserve historical records, but rename mode changes the schema that 1.16 needs. Copy mode provides the fallback described below; it does not make the generated migrations run online.
 {: .important }
 
 The generator expects the schema produced by 1.16. If your models have different names, pass their mappings:
@@ -177,7 +187,9 @@ To abandon a rename-mode upgrade, restore the pre-upgrade database and the match
 
 ### Copy Mode
 
-Copy mode keeps the old model and tool-call tables and the chat's old model reference alongside their 2.0 replacements. It needs extra storage and time to copy those records. It does not write every change into both formats.
+Use copy mode when you want to test 2.0 in your application while keeping an option to return to 1.16. You can resume 2.0 after addressing a problem, then remove the retained data once you are ready to stay on 2.0. Rehearse this with your application's writes before relying on it.
+
+Copy mode keeps the old model and tool-call tables and the chat's old model reference alongside their 2.0 replacements. It needs extra storage and time to copy those records. New writes are not copied into both formats.
 
 The generator adds `app/models/concerns/ruby_llm_upgrade.rb` and `config/initializers/ruby_llm_upgrade.rb`. The initializer installs the compatibility behavior automatically. Include both files in the 2.0 application and the 1.16 build you would deploy for rollback. Keep the original 1.16 model classes and declarations in that build.
 
@@ -193,7 +205,7 @@ Before switching versions, finish pending tool calls and approvals, and finish o
 bin/rails ruby_llm:upgrade:rollback
 ```
 
-Deploy the prepared 1.16 build before restarting traffic and workers. Do not run both versions against the database at once.
+Deploy the prepared 1.16 build before restarting traffic and workers. The compatibility state selects one active version for the database. Running 2.0 for a percentage of customers while 1.16 serves the rest would need a separate deployment and data-isolation design outside this migration's scope.
 
 To return to 2.0, stop affected traffic and workers again and run this command from the 2.0 application:
 
@@ -201,7 +213,7 @@ To return to 2.0, stop affected traffic and workers again and run this command f
 bin/rails ruby_llm:upgrade:resume
 ```
 
-Resume reconciles conversations used by 1.16 and their derived records before enabling 2.0 writes. Restart traffic only after it succeeds. These tasks do not restart provider jobs or undo external actions already performed by tools.
+Resume copies the changes made while 1.16 was active into the 2.0 format and restores access to the protected conversations. You do not rerun the initial migrations. Restart traffic only after the task succeeds. These tasks do not restart provider jobs or undo external actions already performed by tools.
 
 Once you decide to stay on 2.0, finalize the upgrade and run [cleanup](#5-clean-up-in-a-later-deployment). Finalization closes the rollback window.
 
