@@ -57,7 +57,6 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
 
       gemspec = File.read(File.join(dir, 'ruby_llm-providers-acme-cloud.gemspec'))
       expect(gemspec).to include("spec.version = '0.1.0'")
-      expect(gemspec).to include("spec.add_dependency 'ruby_llm', '>= 2.0'")
       expect(gemspec).to include("Dir.glob('models.json')")
       expect(gemspec).not_to include('Appraisals')
 
@@ -101,6 +100,29 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       expect(File.read(File.join(dir, '.gitignore'))).not_to include('coverage')
 
       assert_generated_gem_boots
+    end
+
+    it 'accepts RubyLLM 2.0 prereleases and final releases' do
+      described_class.new('Acme', mode: :gem, destination: dir).generate
+      gemspec = Gem::Specification.load(File.join(dir, 'ruby_llm-providers-acme.gemspec'))
+      requirement = gemspec.dependencies.find { |dependency| dependency.name == 'ruby_llm' }.requirement
+
+      expect(requirement.satisfied_by?(Gem::Version.new('2.0.0.rc1'))).to be(true)
+      expect(requirement.satisfied_by?(Gem::Version.new('2.0.0'))).to be(true)
+      expect(requirement.satisfied_by?(Gem::Version.new('1.16.0'))).to be(false)
+    end
+
+    it 'uses the latest RubyGems Archspec release' do
+      described_class.new('Acme', mode: :gem, destination: dir).generate
+      definition = Bundler::Dsl.evaluate(File.join(dir, 'Gemfile'), nil, {})
+      dependency = definition.dependencies.find { |entry| entry.name == 'archspec' }
+
+      if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
+        expect(dependency.requirement).to eq(Gem::Requirement.default)
+        expect(dependency.source).to be_nil
+      else
+        expect(dependency).to be_nil
+      end
     end
 
     it 'generates a first-party core provider and updates core wiring' do

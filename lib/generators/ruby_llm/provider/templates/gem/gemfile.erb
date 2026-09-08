@@ -5,9 +5,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
-    gem 'archspec', github: 'crmne/archspec', tag: 'v1.1.0.rc1'
-  end
+  gem 'archspec' if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
   gem 'bundler', '>= 2.0'
   gem 'dotenv'
   gem 'flay'
