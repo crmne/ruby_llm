@@ -93,9 +93,25 @@ chat.ask "Hello!"
       <a href="{% link _reference/available-models.md %}">Browse models and pricing</a>
       &middot;
       <a href="{% link _core_features/cost-and-usage-tracking.md %}">Track usage and costs</a>
-      &middot;
-      <a href="{% link _reference/custom-providers.md %}#generate-the-starting-point">Generate a provider gem</a>
     </p>
+
+    <div class="home-provider-gem home-step">
+      <div>
+        <h3 class="home-step-title">Build a gem for your AI service</h3>
+        <p class="home-step-desc">Bring your models to Ruby and Rails. Generate a provider gem with configuration, tests, and release setup, then adapt it to your API.</p>
+        <a class="home-step-link" href="{% link _reference/custom-providers.md %}#generate-the-starting-point">Provider gem guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```sh
+gem install ruby_llm --pre
+ruby_llm provider-gem Acme \
+  --api-base https://api.acme.example/v1
+```
+{: .home-code-card }
+
+</div>
+    </div>
   </div>
 </section>
 
