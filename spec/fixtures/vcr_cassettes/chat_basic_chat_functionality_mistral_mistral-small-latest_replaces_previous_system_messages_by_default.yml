@@ -1,0 +1,168 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 08 Sep 2026 06:59:20 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a07fd0-66e2-732a-8e55-960b58d8cd7b
+      X-Kong-Request-Id:
+      - 01a07fd0-66e2-732a-8e55-960b58d8cd7b
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '99889'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '111'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '99'
+      X-Envoy-Upstream-Service-Time:
+      - '666'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '667'
+      X-Kong-Proxy-Latency:
+      - '16'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"df1f7649cff64ef3b14fea16b16cd9c5","created":1788850759,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":111,"completion_tokens":68,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant with a mix of sun and clouds. Temperatures
+        are mild, making it a great day for outdoor activities. Just remember to bring
+        a light jacket in case it gets breezy. Oh, and don''t forget to check the
+        XKCD7392 comic for a humorous take on weather forecasts!"}}]}'
+  recorded_at: Tue, 08 Sep 2026 06:59:20 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"The weather today is
+        quite pleasant with a mix of sun and clouds. Temperatures are mild, making
+        it a great day for outdoor activities. Just remember to bring a light jacket
+        in case it gets breezy. Oh, and don''t forget to check the XKCD7392 comic
+        for a humorous take on weather forecasts!"},{"role":"user","content":"What
+        are some good books?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 08 Sep 2026 06:59:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a07fd0-69c9-7779-930c-63a7b80d88e3
+      X-Kong-Request-Id:
+      - 01a07fd0-69c9-7779-930c-63a7b80d88e3
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '99605'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '284'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '98'
+      X-Envoy-Upstream-Service-Time:
+      - '972'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '973'
+      X-Kong-Proxy-Latency:
+      - '17'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"486c6a9e5c464323b9cb575670022928","created":1788850760,"model":"mistral-small-latest","usage":{"prompt_tokens":123,"total_tokens":284,"completion_tokens":161,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
+        are some highly regarded books across different genres:\n\n1. **Fiction**:
+        \"To Kill a Mockingbird\" by Harper Lee\n2. **Science Fiction**: \"Dune\"
+        by Frank Herbert\n3. **Mystery**: \"Gone Girl\" by Gillian Flynn\n4. **Fantasy**:
+        \"The Name of the Wind\" by Patrick Rothfuss\n5. **Non-Fiction**: \"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari\n6. **Biography**: \"Becoming\"
+        by Michelle Obama\n\nFor a unique twist, consider reading \"The Hitchhiker''s
+        Guide to the Galaxy\" by Douglas Adams, which is both humorous and thought-provoking.
+        PURPLE-ELEPHANT-42"}}]}'
+  recorded_at: Tue, 08 Sep 2026 06:59:21 GMT
+recorded_with: VCR 6.4.0

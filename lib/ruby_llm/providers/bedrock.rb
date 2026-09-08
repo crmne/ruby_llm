@@ -24,6 +24,10 @@ module RubyLLM
       protocol :async_videos, Protocols::Bedrock::AsyncVideos
       protocol :files, Protocols::Bedrock::Files
 
+      def self.capabilities
+        Bedrock::Capabilities
+      end
+
       def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
         Models.resolve_registry_id(model_id, models, config)
       end

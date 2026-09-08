@@ -229,8 +229,6 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} can use tools" do
         skip_unless_supports_functions(provider, model)
 
-        skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
-
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather)
 
@@ -319,8 +317,6 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
         skip_unless_supports_functions(provider, model)
 
-        skip 'Flaky test for deepseek' if provider == :deepseek
-
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather)
 
@@ -344,8 +340,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
         skip_unless_supports_functions(provider, model)
-
-        skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(BestLanguageToLearn)
@@ -371,9 +365,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         skip_unless_supports_functions(provider, model)
-        if provider == :azure
-          skip 'Azure rate-limits this multi-turn streaming tool scenario under the parallel live suite'
-        end
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather)
@@ -735,6 +726,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :required)
+                      .with_instructions('Your location is Berlin, at latitude 52.5200 and longitude 13.4050.')
         # DeepSeek only allows forced tool choices with thinking disabled.
         chat.with_thinking(false) if provider == :deepseek
 
