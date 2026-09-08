@@ -771,10 +771,6 @@ RSpec.describe RubyLLM::Chat, :live do
           skip 'The configured llama.cpp Qwen3 backend ignores parallel_tool_calls: false'
         end
 
-        if provider == :azure
-          skip 'Azure rate-limits this multi-turn tool-control scenario under the parallel live suite'
-        end
-
         skip_unless_capable(provider, model, :parallel_tool_calls, "#{provider} doesn't support tool parallel control")
 
         chat = RubyLLM.chat(model: model, provider: provider)
