@@ -168,6 +168,26 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::ContextLengthExceededError)
     end
 
+    it 'maps an exceeded available context size to ContextLengthExceededError' do
+      msg = 'request (10015 tokens) exceeds the available context size (8192 tokens), try increasing it'
+      response = Faraday::Env.from(status: 400)
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::ContextLengthExceededError, msg)
+    end
+
+    it 'keeps an invalid context-size setting as BadRequestError' do
+      msg = 'Invalid context size: must be a positive integer'
+      response = Faraday::Env.from(status: 400)
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::BadRequestError, msg)
+    end
+
     it "maps Anthropic's 'prompt is too long' 400 error to ContextLengthExceededError" do
       msg = 'prompt is too long: 209025 tokens > 200000 maximum'
       response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))

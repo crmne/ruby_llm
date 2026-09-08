@@ -54,6 +54,7 @@ module RubyLLM
         CONTEXT_LENGTH_PATTERNS = [
           /context length/i,
           /context window/i,
+          /exceeds?.*context size/i,
           /maximum context/i,
           /request too large/i,
           /too many tokens/i,

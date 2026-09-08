@@ -213,7 +213,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
     end
   end
 
-  describe 'chat', skip: 'Claude on the mantle endpoint requires an AWS Sales agreement for this account' do
+  describe 'chat', :live, skip: 'Claude on the mantle endpoint requires an AWS Sales agreement for this account' do
     it 'chats with the newest Claude generation' do
       chat = RubyLLM.chat(model: 'anthropic.claude-sonnet-5', provider: :bedrock, assume_model_exists: true)
       response = chat.ask('Say OK and nothing else.')

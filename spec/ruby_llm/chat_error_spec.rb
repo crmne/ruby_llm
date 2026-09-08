@@ -58,9 +58,7 @@ RSpec.describe RubyLLM::Chat, :live do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
         it 'handles context length exceeded errors' do
-          if RubyLLM::Provider.providers[provider]&.local?
-            skip('Local providers do not throw an error for context length exceeded')
-          end
+          skip('Ollama truncates conversation history to fit its context window') if provider == :ollama
           skip('xAI models do not reliably error on context length exceeded') if provider == :xai
           if provider == :mistral
             skip('Mistral currently returns generic 429 rate_limited instead of deterministic context-length errors')
@@ -69,19 +67,26 @@ RSpec.describe RubyLLM::Chat, :live do
             skip('Azure/Kimi-K2.5 context-length exceeded test is too slow for regular runs')
           end
 
-          # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)
-          Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)
+          if provider == :gpustack
+            RubyLLM.config.request_timeout = 30
+            chat.with_max_output_tokens(1)
+            chat.add_message(role: :user, content: 'context ' * 10_000)
+          else
+            # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)
+            Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)
 
-          # Create a huge conversation (matching <MASSIVE_TEXT> in spec_helper)
-          massive_text = 'a' * 1_000_000
+            # Create a huge conversation (matching <MASSIVE_TEXT> in spec_helper)
+            massive_text = 'a' * 1_000_000
 
-          # Create a few copies in the conversation
-          5.times do
-            chat.add_message(role: :user, content: massive_text)
-            chat.add_message(role: :assistant, content: massive_text)
+            # Create a few copies in the conversation
+            5.times do
+              chat.add_message(role: :user, content: massive_text)
+              chat.add_message(role: :assistant, content: massive_text)
+            end
           end
 
-          expect { chat.ask('Hi') }.to raise_error(RubyLLM::Error) do |e|
+          error_class = provider == :gpustack ? RubyLLM::ContextLengthExceededError : RubyLLM::Error
+          expect { chat.ask('Hi') }.to raise_error(error_class) do |e|
             # Basic error format checks
             expect(e.message).not_to look_like_json
             expect(e.message).to match(/^[A-Za-z]/)
