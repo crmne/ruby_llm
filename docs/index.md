@@ -97,7 +97,7 @@ chat.ask "Hello!"
 
     <div class="home-provider-gem home-step">
       <div>
-        <h3 class="home-step-title">Build a gem for your AI service</h3>
+        <h3 class="home-step-title">Missing a provider?</h3>
         <p class="home-step-desc">Bring your models to Ruby and Rails. Generate a provider gem with configuration, tests, and release setup, then adapt it to your API.</p>
         <a class="home-step-link" href="{% link _reference/custom-providers.md %}#generate-the-starting-point">Provider gem guide</a>
       </div>
