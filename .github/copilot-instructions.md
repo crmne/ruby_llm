@@ -30,6 +30,16 @@ Record persistence, Active Storage attachments, Hotwire streaming, jobs, and
 generators. Preserve that native Rails experience without introducing Rails
 dependencies into the plain-Ruby library. See `AGENTS.md` for the boundaries.
 
+## Provider documentation
+
+Apply the provider acceptance policy to documentation-only requests too.
+Flag provider listings, promotional links, and dedicated setup sections for
+third-party services that only change an existing provider's API base URL or
+API key as out of scope. Point contributors to documenting RubyLLM integration
+in their service's own documentation. Keep generic endpoint configuration in
+the shared guide; provider-specific additions must support an approved core
+integration or explain a distinct RubyLLM requirement.
+
 ## Reviewing a pull request
 
 Read the linked issue first. A feature without an approved issue is closed

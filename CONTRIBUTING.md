@@ -40,6 +40,8 @@ Working with a coding agent? [AGENTS.md](AGENTS.md) has the commands, architectu
 * **Core providers have a high acceptance bar.**
 * **For smaller or emerging providers, the preferred path is a community gem** rather than RubyLLM core.
 * Start a community integration with `bundle exec ruby_llm provider-gem NAME`. See the [Custom Providers and Protocols](https://rubyllm.com/custom-providers/) guide.
+* **Documentation must teach RubyLLM.** We do not accept provider listings, promotional links, or dedicated setup sections for third-party services that work by changing an existing provider's API base URL or API key. Document how to use RubyLLM in that service's own documentation.
+* Keep generic endpoint configuration in the shared provider guide. Provider-specific documentation in this repository must support an approved core integration or explain a distinct RubyLLM requirement; a documentation-only PR does not bypass the provider acceptance policy.
 * After a core provider has been discussed and approved, use `script/generate-provider NAME` to create the standard files and wiring.
 * Generated code is a starting point. A core provider PR must use the real API, replace example capabilities, cover normal and streaming chat with sanitized VCR cassettes, document its configuration, and identify its model-catalog source.
 
