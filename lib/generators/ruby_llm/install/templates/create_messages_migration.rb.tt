@@ -21,7 +21,5 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.string :finish_reason
       t.timestamps
     end
-
-    add_index :<%= message_table_name %>, :role
   end
 end

@@ -104,6 +104,17 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'indexes messages by chat without a standalone role index' do
+      within_test_app(app_path) do
+        success, output = run_rails_runner(<<~RUBY)
+          indexes = ActiveRecord::Base.connection.indexes(:messages).map(&:columns)
+          abort indexes.inspect unless indexes.include?(['chat_id']) && !indexes.include?(['role'])
+        RUBY
+
+        expect(success).to be(true), output
+      end
+    end
+
     it 'adds cache_until_here to message storage' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_messages.rb').first
