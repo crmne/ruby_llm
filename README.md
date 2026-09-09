@@ -38,7 +38,7 @@ In Rails, the API works on your own Chat and Message records, with Active Storag
 
 ## Show me the code
 
-These examples use **2.0.0.rc1**. Follow [Getting Started](https://rubyllm.com/next/getting-started/) to install it and configure the providers you want to try.
+These examples use **2.0.0.rc2**. Follow [Getting Started](https://rubyllm.com/next/getting-started/) to install it and configure the providers you want to try.
 
 ```ruby
 # Just ask questions
@@ -195,7 +195,7 @@ response.parsed
 Install the 2.0 release candidate:
 
 ```bash
-bundle add ruby_llm --version 2.0.0.rc1
+bundle add ruby_llm --version 2.0.0.rc2
 ```
 
 Configure a provider in your script, or in `config/initializers/ruby_llm.rb` in Rails:

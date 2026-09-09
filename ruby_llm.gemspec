@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    RubyLLM 2.0 release candidate 1
+    RubyLLM #{RubyLLM::VERSION}
 
       2.0 renames several APIs and changes what message content returns. Coming
       from 1.x? Read the upgrade guide before you boot:

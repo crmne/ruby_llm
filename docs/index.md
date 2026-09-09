@@ -27,7 +27,7 @@ hero:
     <div class="home-hero-install home-code-grid home-code-grid--bare" markdown="1">
 
 ```sh
-bundle add ruby_llm --version 2.0.0.rc1
+bundle add ruby_llm --version 2.0.0.rc2
 ```
 {: .home-code-card }
 
@@ -358,7 +358,7 @@ RubyLLM.moderate("Some user-generated content").flagged?
     </p>
 
     <div class="home-demo-frame home-rails-demo-frame" data-demo-video>
-      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> bundle add ruby_llm --version 2.0.0.rc1
+      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> bundle add ruby_llm --version 2.0.0.rc2
 <span class="term-green">$</span> bin/rails generate ruby_llm:install
 <span class="term-green">$</span> bin/rails db:migrate
 <span class="term-green">$</span> bin/rails generate ruby_llm:chat_ui

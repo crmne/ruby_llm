@@ -20,7 +20,7 @@ After reading this guide, you will know:
 * What each phase preserves and what cleanup removes.
 * How to recover if you need to abandon the upgrade.
 
-This guide covers **1.16 to 2.0.0.rc1**. Coming from an earlier release? Follow the [1.16 upgrade guide](https://rubyllm.com/upgrading/) first.
+This guide covers **1.16 to 2.0.0.rc2**. Coming from an earlier release? Follow the [1.16 upgrade guide](https://rubyllm.com/upgrading/) first.
 
 For a tour of the new features with examples, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
 
@@ -40,7 +40,7 @@ The usage ledger records tokens and costs for each provider attempt, including r
 Update the gem in your development branch:
 
 ```bash
-bundle add ruby_llm --version 2.0.0.rc1
+bundle add ruby_llm --version 2.0.0.rc2
 ```
 
 Use the [API changes](#api-changes) below to update your calls, then run your tests. If you use Rails persistence, follow the steps below before deploying.

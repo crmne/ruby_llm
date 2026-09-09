@@ -30,7 +30,7 @@ Each example shows one feature. Try the ones your application needs, then follow
 Add the RubyLLM 2.0 release candidate with Bundler:
 
 ```sh
-bundle add ruby_llm --version 2.0.0.rc1
+bundle add ruby_llm --version 2.0.0.rc2
 ```
 
 ## Minimal Configuration
