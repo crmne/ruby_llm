@@ -19,6 +19,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'flay'
   gem 'image_processing', '~> 1.2'
   gem 'irb'
+  gem 'json', '< 3'
   gem 'json_schemer'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
