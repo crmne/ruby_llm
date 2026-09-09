@@ -31,7 +31,9 @@ module RubyLLM
         end
 
         def parse_interaction_arguments(arguments)
-          arguments.is_a?(String) ? JSON.parse(arguments) : arguments || {}
+          return {} if arguments.nil? || (arguments.is_a?(String) && arguments.empty?)
+
+          arguments.is_a?(String) ? JSON.parse(arguments) : arguments
         rescue JSON::ParserError => e
           raise ToolCallParseError.new(finish_reason: :tool_calls), cause: e
         end
