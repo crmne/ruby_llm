@@ -96,9 +96,15 @@ module RubyLLM
 
       def attachment_sources
         change = pending_attachment_change
-        return attachments.map { |attachment| [attachment, nil] } unless pending_attachment_change?(change)
+        return attachments_with_blobs.map { |attachment| [attachment, nil] } unless pending_attachment_change?(change)
 
         change.attachments.zip(change.attachables)
+      end
+
+      def attachments_with_blobs
+        records = attachments.to_a
+        ::ActiveRecord::Associations::Preloader.new(records: records, associations: :blob).call
+        records
       end
 
       def pending_attachment_change
