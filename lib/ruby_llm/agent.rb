@@ -575,12 +575,13 @@ module RubyLLM
         [input_values, chat_options]
       end
 
+      # :nodoc:
       def apply_configuration(
         chat,
         input_values:,
         persist_instructions:,
         resolved_context: UNRESOLVED_CONTEXT
-      ) # :nodoc:
+      )
         runtime = runtime_context(chat:, inputs: input_values)
         apply_chat_options(chat)
         apply_context(chat, runtime, resolved_context:)
