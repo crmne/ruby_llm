@@ -36,7 +36,7 @@ http_interactions:
       Num-Chars:
       - '1264'
       Num-Tokens:
-      - '99'
+      - '98'
       Pragma:
       - no-cache
       Vary:
@@ -44,11 +44,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 267f14f08ba5024cbdf52920765d8344
+      - bb5eba3a76ec959bc39da22bb0f8daf2
       Date:
-      - Mon, 07 Sep 2026 21:04:48 GMT
+      - Wed, 09 Sep 2026 12:10:58 GMT
       X-Envoy-Upstream-Service-Time:
-      - '275'
+      - '335'
       Server:
       - envoy
       Via:
@@ -59,20 +59,20 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2ffeca4c-3f5b-4818-8d74-b8a737ee9147","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+      string: '{"id":"3c4bfc14-dcbf-40f7-bc22-e39e217f4676","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
         user is asking who created Ruby and wants me to search the knowledge base
-        first and cite my sources. I need to use the knowledge_base function to search
-        for information about Ruby''s creator."}],"tool_calls":[{"id":"knowledge_base_rdgqb732t05c","type":"function","function":{"name":"knowledge_base","arguments":"{\"query\":\"Ruby
-        programming language creator\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":51,"output_tokens":48},"tokens":{"input_tokens":267,"output_tokens":73,"reasoning_tokens":38},"cached_tokens":144}}'
-  recorded_at: Mon, 07 Sep 2026 21:04:49 GMT
+        first and cite sources. I need to use the knowledge_base function to search
+        for information about Ruby''s creator."}],"tool_calls":[{"id":"knowledge_base_28ys8s8x4bhm","type":"function","function":{"name":"knowledge_base","arguments":"{\"query\":\"Ruby
+        programming language creator\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":51,"output_tokens":47},"tokens":{"input_tokens":267,"output_tokens":72,"reasoning_tokens":37},"cached_tokens":144}}'
+  recorded_at: Wed, 09 Sep 2026 12:10:58 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Who
-        created Ruby? Search the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"knowledge_base_rdgqb732t05c","type":"function","function":{"name":"knowledge_base","arguments":"{\"query\":\"Ruby
-        programming language creator\"}"}}]},{"role":"tool","tool_call_id":"knowledge_base_rdgqb732t05c","content":[{"type":"document","document":{"id":"https://example.com/ruby-facts","data":{"title":"Ruby
+        created Ruby? Search the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"knowledge_base_28ys8s8x4bhm","type":"function","function":{"name":"knowledge_base","arguments":"{\"query\":\"Ruby
+        programming language creator\"}"}}]},{"role":"tool","tool_call_id":"knowledge_base_28ys8s8x4bhm","content":[{"type":"document","document":{"id":"https://example.com/ruby-facts","data":{"title":"Ruby
         Facts","text":"The Ruby programming language was created by Yukihiro Matsumoto
         in 1993.","url":"https://example.com/ruby-facts"}}}]}],"stream":false,"tools":[{"type":"function","function":{"name":"knowledge_base","description":"Searches
         the company knowledge base","parameters":{"type":"object","properties":{"query":{"type":"string","description":"What
@@ -104,7 +104,7 @@ http_interactions:
       Num-Chars:
       - '1878'
       Num-Tokens:
-      - '248'
+      - '220'
       Pragma:
       - no-cache
       Vary:
@@ -112,42 +112,38 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 9ebb4bf6aa27a14192c7767f3ad328c7
+      - 05d2e5964de85171aff6246584eecf92
       Date:
-      - Mon, 07 Sep 2026 21:04:49 GMT
+      - Wed, 09 Sep 2026 12:10:59 GMT
       X-Envoy-Upstream-Service-Time:
-      - '813'
+      - '795'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"01a51e09-5f63-4a56-99b7-bdc5e181ca8f","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Great!
-        I found the answer in the knowledge base. The search returned a result that
-        states: \"The Ruby programming language was created by Yukihiro Matsumoto
-        in 1993.\" This is from a source titled \"Ruby Facts\" with a URL. I should
-        cite this source in my response."},{"type":"text","text":"According to the
-        knowledge base search, the Ruby programming language was created by Yukihiro
+      string: '{"id":"6873b466-093e-4f36-8851-1b3d6a8f9ac4","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Great!
+        The knowledge base search found the answer. The Ruby programming language
+        was created by Yukihiro Matsumoto in 1993. The source is from \"Ruby Facts\"
+        with a URL provided. I should cite this source in my response."},{"type":"text","text":"According
+        to the knowledge base, the Ruby programming language was created by Yukihiro
         Matsumoto in 1993.\n\n**Source:** Ruby Facts (https://example.com/ruby-facts)\n\nYukihiro
-        Matsumoto, often known as \"Matz,\" is the Japanese computer scientist who
-        designed and developed Ruby as an object-oriented scripting language. He created
-        it in 1993 with the goal of making a language that was both object-oriented
-        and had a syntax that was easy to read and write, similar to Python, but with
-        more power and flexibility."}],"citations":[{"start":85,"end":103,"text":"Yukihiro
-        Matsumoto","sources":[{"type":"tool","id":"https://example.com/ruby-facts","tool_output":{"text":"The
+        Matsumoto, often known as \"Matz,\" is the chief designer of Ruby and released
+        the first version in 1993 while working at a Japanese software company. He
+        designed Ruby to be a language that makes programmers happy, with a focus
+        on simplicity and productivity."}],"citations":[{"start":67,"end":105,"text":"created
+        by Yukihiro Matsumoto in 1993.","sources":[{"type":"tool","id":"https://example.com/ruby-facts","tool_output":{"text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993.","title":"Ruby
-        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1},{"start":107,"end":112,"text":"1993.","sources":[{"type":"tool","id":"https://example.com/ruby-facts","tool_output":{"text":"The
-        Ruby programming language was created by Yukihiro Matsumoto in 1993.","title":"Ruby
-        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1},{"start":126,"end":136,"text":"Ruby
+        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1},{"start":119,"end":129,"text":"Ruby
         Facts","sources":[{"type":"tool","id":"https://example.com/ruby-facts","tool_output":{"text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993.","title":"Ruby
-        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1},{"start":137,"end":169,"text":"(https://example.com/ruby-facts)","sources":[{"type":"tool","id":"https://example.com/ruby-facts","tool_output":{"text":"The
+        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1},{"start":130,"end":162,"text":"(https://example.com/ruby-facts)","sources":[{"type":"tool","id":"https://example.com/ruby-facts","tool_output":{"text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993.","title":"Ruby
-        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":83,"output_tokens":165},"tokens":{"input_tokens":381,"output_tokens":211,"reasoning_tokens":58},"cached_tokens":224}}'
-  recorded_at: Mon, 07 Sep 2026 21:04:50 GMT
+        Facts","url":"https://example.com/ruby-facts"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":83,"output_tokens":137},"tokens":{"input_tokens":381,"output_tokens":173,"reasoning_tokens":47},"cached_tokens":224}}'
+  recorded_at: Wed, 09 Sep 2026 12:10:59 GMT
 recorded_with: VCR 6.4.0

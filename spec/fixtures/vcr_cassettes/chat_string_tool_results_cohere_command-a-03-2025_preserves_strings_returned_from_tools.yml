@@ -44,11 +44,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 24c211989cc32a50100d77a48f6ed43c
+      - 1ae22b505ab98b1bad85e2221eb1921f
       Date:
-      - Mon, 07 Sep 2026 21:05:24 GMT
+      - Wed, 09 Sep 2026 12:16:25 GMT
       X-Envoy-Upstream-Service-Time:
-      - '718'
+      - '566'
       Server:
       - envoy
       Via:
@@ -59,18 +59,18 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7cf55718-93a5-4448-a4c7-5e67b41f7ca2","message":{"role":"assistant","tool_plan":"I
-        will process the query ''test data'' using the content_returning tool.","tool_calls":[{"id":"content_returning_fse6yz76e5y5","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":43,"output_tokens":25},"tokens":{"input_tokens":1446,"output_tokens":55},"cached_tokens":112}}'
-  recorded_at: Mon, 07 Sep 2026 21:05:25 GMT
+      string: '{"id":"f4335545-4f0f-4cd5-ad2b-dfa8813f32f5","message":{"role":"assistant","tool_plan":"I
+        will process the query ''test data'' using the content_returning tool.","tool_calls":[{"id":"content_returning_0vpkfmx4bew0","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":43,"output_tokens":25},"tokens":{"input_tokens":1446,"output_tokens":55},"cached_tokens":992}}'
+  recorded_at: Wed, 09 Sep 2026 12:16:25 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Process
-        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"content_returning_fse6yz76e5y5","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},{"role":"tool","tool_call_id":"content_returning_fse6yz76e5y5","content":"Processed:
+        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"content_returning_0vpkfmx4bew0","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","tool_call_id":"content_returning_0vpkfmx4bew0","content":"Processed:
         test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false}}}]}'
@@ -109,23 +109,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 5ffde77ea26d31f806f3609a1338cf97
+      - a27d80e4dd09a55ded2b086631abf535
       Date:
-      - Mon, 07 Sep 2026 21:05:25 GMT
+      - Wed, 09 Sep 2026 12:16:26 GMT
       X-Envoy-Upstream-Service-Time:
-      - '394'
+      - '417'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4d14f45e-5fee-4d7f-aad3-46fba4437a9a","message":{"role":"assistant","content":[{"type":"text","text":"Processed:
-        test data"}],"citations":[{"start":0,"end":20,"text":"Processed: test data","sources":[{"type":"tool","id":"content_returning_fse6yz76e5y5:0","tool_output":{"content":"Processed:
+      string: '{"id":"8447fcab-ce47-46e2-84db-a655a4dace34","message":{"role":"assistant","content":[{"type":"text","text":"Processed:
+        test data"}],"citations":[{"start":0,"end":20,"text":"Processed: test data","sources":[{"type":"tool","id":"content_returning_0vpkfmx4bew0:0","tool_output":{"content":"Processed:
         test data"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":50,"output_tokens":4},"tokens":{"input_tokens":1537,"output_tokens":18},"cached_tokens":112}}'
-  recorded_at: Mon, 07 Sep 2026 21:05:25 GMT
+  recorded_at: Wed, 09 Sep 2026 12:16:26 GMT
 recorded_with: VCR 6.4.0

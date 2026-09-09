@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:45:10 GMT
+      - Wed, 09 Sep 2026 12:19:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1788817509-CEH0QggRXMC3Fg0jTGpE
+      - gen-1788956379-FaK9kO1DcrxD9Cam1ayW
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -59,18 +59,18 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1788817509-CEH0QggRXMC3Fg0jTGpE\",\"object\":\"chat.completion\",\"created\":1788817509,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01D9umc5D6LAuvdd9tBSWuLk\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1788956379-FaK9kO1DcrxD9Cam1ayW\",\"object\":\"chat.completion\",\"created\":1788956379,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01JQAZ5PZXmBYzHFqw1M4uZR\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":716,\"completion_tokens\":56,\"total_tokens\":772,\"cost\":0.000996,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000996,\"upstream_inference_prompt_cost\":0.000716,\"upstream_inference_completions_cost\":0.00028},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 07 Sep 2026 21:45:10 GMT
+  recorded_at: Wed, 09 Sep 2026 12:19:40 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01D9umc5D6LAuvdd9tBSWuLk","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01D9umc5D6LAuvdd9tBSWuLk"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01JQAZ5PZXmBYzHFqw1M4uZR","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01JQAZ5PZXmBYzHFqw1M4uZR"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -95,7 +95,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:45:11 GMT
+      - Wed, 09 Sep 2026 12:19:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -105,7 +105,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1788817510-BSehM0vfxl9rBvexi9P6
+      - gen-1788956380-CG3jEJSqum9wD2YSVn8G
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -123,27 +123,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-1788817510-BSehM0vfxl9rBvexi9P6\",\"object\":\"chat.completion\",\"created\":1788817510,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
-        apologize for that accidental weather check! Let me give you a proper historical
-        answer about the Fall of Rome.\\n\\n**The Fall of Rome** refers to the decline
-        and collapse of the Roman Empire, particularly the Western Roman Empire. Here
-        are the key points:\\n\\n## When Did It Happen?\\n- The decline occurred over
-        several centuries, roughly from the 3rd century CE onward\\n- The \\\"fall\\\"
-        is traditionally dated to **476 CE**, when the last Western Roman Emperor,
-        Romulus Augustulus, was deposed\\n- The Eastern Roman Empire (Byzantine Empire)
-        continued until 1453 CE\\n\\n## Major Causes:\\n\\n1. **Economic Problems**:
-        Currency devaluation, inflation, and declining trade\\n2. **Military Decline**:
-        The army became overstretched and depleted\\n3. **Political Instability**:
-        Numerous civil wars and weak leadership\\n4. **Barbarian Invasions**: Migrations
-        and invasions by Germanic tribes (Visigoths, Vandals, Goths, etc.)\\n5. **Administrative
-        Challenges**: The empire was too large to govern effectively\\n6. **Social
-        Decay**: Loss of civic virtue and military discipline\\n7. **Rise of Christianity**:
-        Some argue it shifted focus from civic duty to spiritual matters\\n\\n## What
-        Happened:\\n- The Western Empire fragmented into various Germanic kingdoms\\n-
-        Rome was sacked multiple times (410 CE by Visigoths, 455 CE by Vandals)\\n-
-        Central authority collapsed, leading to the medieval period in Europe\\n\\nThe
-        fall of Rome is one of history's most significant events, ending the Classical
-        era and ushering in the Middle Ages.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":361,\"total_tokens\":1097,\"cost\":0.002541,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002541,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.001805},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 07 Sep 2026 21:45:14 GMT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc4ODk1NjM4MC1DRzNqRUpTcXVtOXdEMllTVm44RyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg5NTYzODAsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS00LjUiLCJwcm92aWRlciI6IkFtYXpvbiBCZWRyb2NrIiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoiZW5kX3R1cm4iLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBhcG9sb2dpemUgZm9yIHRoZSBjb25mdXNpb27igJRJIG1pc3Rha2VubHkgY2FsbGVkIGEgd2VhdGhlciBmdW5jdGlvbiEgTGV0IG1lIGFuc3dlciB5b3VyIHF1ZXN0aW9uIGFib3V0IHRoZSBGYWxsIG9mIFJvbWUgcHJvcGVybHkuXG5cbiMjIFRoZSBGYWxsIG9mIFJvbWVcblxuVGhlICoqRmFsbCBvZiBSb21lKiogcmVmZXJzIHRvIHRoZSBjb2xsYXBzZSBvZiB0aGUgKipSb21hbiBFbXBpcmUqKiwgcGFydGljdWxhcmx5IHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSwgd2hpY2ggb2NjdXJyZWQgaW4gdGhlIGxhdGUgNXRoIGNlbnR1cnkgQ0UgKGFyb3VuZCA0NzYgQ0UgaXMgb2Z0ZW4gY2l0ZWQgYXMgdGhlIHRyYWRpdGlvbmFsIGVuZCBkYXRlKS5cblxuIyMjIEtleSBmYWN0b3JzIHRoYXQgY29udHJpYnV0ZWQgdG8gUm9tZSdzIGZhbGw6XG5cbioqUG9saXRpY2FsIEluc3RhYmlsaXR5Kipcbi0gQ2l2aWwgd2FycyBhbmQgc3VjY2Vzc2lvbiBkaXNwdXRlc1xuLSBXZWFrIGVtcGVyb3JzIGluIHRoZSBsYXRlciBwZXJpb2Rcbi0gR292ZXJubWVudCBjb3JydXB0aW9uIGFuZCBpbmVmZmljaWVuY3lcblxuKipFY29ub21pYyBQcm9ibGVtcyoqXG4tIEluZmxhdGlvbiBhbmQgY3VycmVuY3kgZGV2YWx1YXRpb25cbi0gSGlnaCBtaWxpdGFyeSBleHBlbnNlc1xuLSBUcmFkZSBkaXNydXB0aW9uc1xuLSBIZWF2eSB0YXhhdGlvblxuXG4qKk1pbGl0YXJ5IENoYWxsZW5nZXMqKlxuLSBQcmVzc3VyZSBmcm9tIEdlcm1hbmljIHRyaWJlcyBhbmQgb3RoZXIgXCJiYXJiYXJpYW5cIiBncm91cHNcbi0gT3ZlcnN0cmV0Y2hlZCBib3JkZXJzIHRoYXQgd2VyZSBkaWZmaWN1bHQgdG8gZGVmZW5kXG4tIE1pbGl0YXJ5IGV4cGVuc2VzIHRoYXQgZHJhaW5lZCB0aGUgdHJlYXN1cnlcbi0gUmVjcnVpdG1lbnQgZGlmZmljdWx0aWVzXG5cbioqU29jaWFsIERlY2xpbmUqKlxuLSBQb3B1bGF0aW9uIGRlY2xpbmUgZHVlIHRvIHBsYWd1ZSBhbmQgZGlzZWFzZVxuLSBVcmJhbiBkZWNheSBpbiBtYW55IGNpdGllc1xuLSBMb3NzIG9mIGNpdmljIGluZnJhc3RydWN0dXJlXG5cbioqQmFyYmFyaWFuIEludmFzaW9ucyoqXG4tIEdlcm1hbmljIHRyaWJlcyAoVmlzaWdvdGhzLCBWYW5kYWxzLCBPc3Ryb2dvdGhzLCBldGMuKSBtaWdyYXRlZCBpbnRvIFJvbWFuIHRlcnJpdG9yeVxuLSBJbiA0MTAgQ0UsIFZpc2lnb3RocyBzYWNrZWQgUm9tZSB1bmRlciBBbGFyaWNcbi0gSW4gNDU1IENFLCBWYW5kYWxzIHNhY2tlZCBSb21lXG4tIEJ5IDQ3NiBDRSwgdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yIChSb211bHVzIEF1Z3VzdHVsdXMpIHdhcyBkZXBvc2VkXG5cbiMjIyBJbXBvcnRhbnQgbm90ZTpcblRoZSAqKkVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSoqIGNvbnRpbnVlZCBmb3IgYW5vdGhlciAxLDAwMCB5ZWFycyB1bnRpbCAxNDUzIENFLCBzbyB0aGUgXCJmYWxsIG9mIFJvbWVcIiBzcGVjaWZpY2FsbHkgcmVmZXJzIHRvIHRoZSBXZXN0ZXJuIEVtcGlyZSdzIGNvbGxhcHNlLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzM2LCJjb21wbGV0aW9uX3Rva2VucyI6MzczLCJ0b3RhbF90b2tlbnMiOjExMDksImNvc3QiOjAuMDAyNjAxLCJpc19ieW9rIjpmYWxzZSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNhY2hlX3dyaXRlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ2aWRlb190b2tlbnMiOjB9LCJjb3N0X2RldGFpbHMiOnsidXBzdHJlYW1faW5mZXJlbmNlX2Nvc3QiOjAuMDAyNjAxLCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwNzM2LCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDE4NjV9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Wed, 09 Sep 2026 12:19:43 GMT
 recorded_with: VCR 6.4.0

@@ -23,22 +23,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Arrive-Time:
-      - '1788816133662'
       Date:
-      - Mon, 07 Sep 2026 21:22:13 GMT
+      - Wed, 09 Sep 2026 12:07:21 GMT
       Server:
       - istio-envoy
+      Content-Type:
+      - application/json; charset=utf-8
+      Resp-Start-Time:
+      - '1788955649119'
       Access-Control-Allow-Origin:
       - ''
       Req-Cost-Time:
-      - '1340'
-      Resp-Start-Time:
-      - '1788816135003'
+      - '7303'
+      Req-Arrive-Time:
+      - '1788955641815'
       X-Envoy-Upstream-Service-Time:
-      - '1336'
-      Content-Type:
-      - application/json; charset=utf-8
+      - '7291'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -46,43 +46,64 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        sum of 5 and 3 is **8**. \n\n$5 + 3 = 8$","reasoning_content":"Okay, the user
-        is asking \"What is 5 + 3?\" That''s a basic arithmetic question. Let me think.
-        Adding 5 and 3. I remember that addition is combining two numbers. So 5 plus
-        3 would be 8. Wait, is there any chance they might be asking about something
-        else? Like maybe in a different context? But the question seems straightforward.
-        Maybe they''re testing if I can handle simple math. Let me double-check. 5
-        plus 3... yes, 5 + 3 equals 8. I should make sure to present the answer clearly.
-        Maybe they just want the answer, but sometimes people might have follow-up
-        questions. But since the question is simple, the answer is 8. I''ll go with
-        that.\n"}}],"created":1788816135,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":186,"prompt_tokens":16,"total_tokens":202,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-8LxD2ioMLRmJu7RGtiGZHARsRRb6UGKO","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":13.068,"prompt_per_token_ms":2.6136,"prompt_per_second":382.6140189776554,"predicted_n":186,"predicted_ms":1309.885,"predicted_per_token_ms":7.080459459459459,"predicted_per_second":141.2337724304042}}'
-  recorded_at: Mon, 07 Sep 2026 21:22:15 GMT
+        sum of 5 and 3 is calculated by adding the two numbers together. \n\n**Step-by-Step
+        Explanation:**\n1. Start with the number 5.\n2. Add 3 to it: $5 + 3$.\n3.
+        Counting sequentially: 5, 6, 7, 8.\n4. The total is **8**.\n\n**Answer:**  \n$5
+        + 3 = \\boxed{8}$","reasoning_content":"Okay, let''s see. The user is asking
+        what 5 plus 3 is. Hmm, that seems straightforward. I remember from basic math
+        that addition is combining two numbers to get their total. So, 5 and 3. Let
+        me count. If I have 5 apples and add 3 more, how many do I have in total?
+        Let''s count them one by one. 1, 2, 3, 4, 5... that''s five. Then adding three
+        more: 6, 7, 8. So that''s 8. Wait, is there another way to check this? Maybe
+        using a number line. Starting at 5 and moving 3 steps to the right: 5 to 6
+        is one, 6 to 7 is two, 7 to 8 is three. Yep, that''s 8. Or maybe using fingers?
+        If I hold up five fingers and then add three more, I can count them all. 1,
+        2, 3, 4, 5, 6, 7, 8. Still 8. I think that''s right. But wait, could there
+        be a trick here? The question is so simple, maybe it''s a test to see if I''m
+        paying attention. But no, I don''t think so. The answer should definitely
+        be 8. Let me just verify once more. 5 + 3 is the same as 3 + 5 because of
+        the commutative property. 3 + 5 is 8. Yep, same result. Okay, I''m confident
+        the answer is 8.\n"}}],"created":1788955649,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":433,"prompt_tokens":16,"total_tokens":449,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-lPxmxpP4E9JplvMbGpt7xIVUxekiBgsq","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":41.273,"prompt_per_token_ms":8.2546,"prompt_per_second":121.14457393453347,"predicted_n":433,"predicted_ms":7237.093,"predicted_per_token_ms":16.752530092592593,"predicted_per_second":59.69247597066944}}'
+  recorded_at: Wed, 09 Sep 2026 12:07:29 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"The sum of 5 and 3 is **8**. \n\n$5 +
-        3 = 8$","reasoning":"Okay, the user is asking \"What is 5 + 3?\" That''s a
-        basic arithmetic question. Let me think. Adding 5 and 3. I remember that addition
-        is combining two numbers. So 5 plus 3 would be 8. Wait, is there any chance
-        they might be asking about something else? Like maybe in a different context?
-        But the question seems straightforward. Maybe they''re testing if I can handle
-        simple math. Let me double-check. 5 plus 3... yes, 5 + 3 equals 8. I should
-        make sure to present the answer clearly. Maybe they just want the answer,
-        but sometimes people might have follow-up questions. But since the question
-        is simple, the answer is 8. I''ll go with that.\n","reasoning_content":"Okay,
-        the user is asking \"What is 5 + 3?\" That''s a basic arithmetic question.
-        Let me think. Adding 5 and 3. I remember that addition is combining two numbers.
-        So 5 plus 3 would be 8. Wait, is there any chance they might be asking about
-        something else? Like maybe in a different context? But the question seems
-        straightforward. Maybe they''re testing if I can handle simple math. Let me
-        double-check. 5 plus 3... yes, 5 + 3 equals 8. I should make sure to present
-        the answer clearly. Maybe they just want the answer, but sometimes people
-        might have follow-up questions. But since the question is simple, the answer
-        is 8. I''ll go with that.\n"},{"role":"user","content":"Now multiply that
-        by 2"}],"stream":false}'
+        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by adding
+        the two numbers together. \n\n**Step-by-Step Explanation:**\n1. Start with
+        the number 5.\n2. Add 3 to it: $5 + 3$.\n3. Counting sequentially: 5, 6, 7,
+        8.\n4. The total is **8**.\n\n**Answer:**  \n$5 + 3 = \\boxed{8}$","reasoning":"Okay,
+        let''s see. The user is asking what 5 plus 3 is. Hmm, that seems straightforward.
+        I remember from basic math that addition is combining two numbers to get their
+        total. So, 5 and 3. Let me count. If I have 5 apples and add 3 more, how many
+        do I have in total? Let''s count them one by one. 1, 2, 3, 4, 5... that''s
+        five. Then adding three more: 6, 7, 8. So that''s 8. Wait, is there another
+        way to check this? Maybe using a number line. Starting at 5 and moving 3 steps
+        to the right: 5 to 6 is one, 6 to 7 is two, 7 to 8 is three. Yep, that''s
+        8. Or maybe using fingers? If I hold up five fingers and then add three more,
+        I can count them all. 1, 2, 3, 4, 5, 6, 7, 8. Still 8. I think that''s right.
+        But wait, could there be a trick here? The question is so simple, maybe it''s
+        a test to see if I''m paying attention. But no, I don''t think so. The answer
+        should definitely be 8. Let me just verify once more. 5 + 3 is the same as
+        3 + 5 because of the commutative property. 3 + 5 is 8. Yep, same result. Okay,
+        I''m confident the answer is 8.\n","reasoning_content":"Okay, let''s see.
+        The user is asking what 5 plus 3 is. Hmm, that seems straightforward. I remember
+        from basic math that addition is combining two numbers to get their total.
+        So, 5 and 3. Let me count. If I have 5 apples and add 3 more, how many do
+        I have in total? Let''s count them one by one. 1, 2, 3, 4, 5... that''s five.
+        Then adding three more: 6, 7, 8. So that''s 8. Wait, is there another way
+        to check this? Maybe using a number line. Starting at 5 and moving 3 steps
+        to the right: 5 to 6 is one, 6 to 7 is two, 7 to 8 is three. Yep, that''s
+        8. Or maybe using fingers? If I hold up five fingers and then add three more,
+        I can count them all. 1, 2, 3, 4, 5, 6, 7, 8. Still 8. I think that''s right.
+        But wait, could there be a trick here? The question is so simple, maybe it''s
+        a test to see if I''m paying attention. But no, I don''t think so. The answer
+        should definitely be 8. Let me just verify once more. 5 + 3 is the same as
+        3 + 5 because of the commutative property. 3 + 5 is 8. Yep, same result. Okay,
+        I''m confident the answer is 8.\n"},{"role":"user","content":"Now multiply
+        that by 2"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -99,40 +120,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 09 Sep 2026 12:07:28 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      X-Envoy-Upstream-Service-Time:
-      - '1640'
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1643'
-      Req-Arrive-Time:
-      - '1788816135009'
       Resp-Start-Time:
-      - '1788816136652'
-      Date:
-      - Mon, 07 Sep 2026 21:22:14 GMT
+      - '1788955657555'
+      X-Envoy-Upstream-Service-Time:
+      - '8417'
+      Req-Cost-Time:
+      - '8429'
+      Req-Arrive-Time:
+      - '1788955649125'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        result of multiplying 8 by 2 is **16**. \n\n$8 \\times 2 = 16$","reasoning_content":"Okay,
-        the user just asked to multiply the previous result by 2. Let me check the
-        history.\n\nEarlier, they asked \"What is 5 + 3?\" and I answered 8. Now they
-        want to multiply that by 2. So 8 times 2 is 16. Let me make sure I''m following
-        the steps correctly. \n\nWait, do I need to confirm if they''re referring
-        to the last answer? Yes, since the previous answer was 8, multiplying by 2
-        should be straightforward. Let me calculate 8 * 2. That''s 16. \n\nI should
-        present the answer clearly, maybe using the same format as before. Let me
-        write it out step by step to avoid confusion. \n\nAlso, the user might be
-        testing if I can follow sequential operations, so it''s important to be precise.
-        No need for extra explanations unless they ask for more details. Just the
-        result in a box as before.\n"}}],"created":1788816136,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":226,"prompt_tokens":55,"total_tokens":281,"prompt_tokens_details":{"cached_tokens":16}},"id":"chatcmpl-AmYwqnH3kZRdUU7hN2pqQorEH44LOtkd","timings":{"cache_n":16,"prompt_n":39,"prompt_ms":16.369,"prompt_per_token_ms":0.4197179487179487,"prompt_per_second":2382.55238560694,"predicted_n":226,"predicted_ms":1604.779,"predicted_per_token_ms":7.132351111111111,"predicted_per_second":140.20622154203164}}'
-  recorded_at: Mon, 07 Sep 2026 21:22:16 GMT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVG8gc29sdmUgdGhpcywgd2UgdGFrZSB0aGUgcHJldmlvdXMgcmVzdWx0LCB3aGljaCB3YXM6XG5cbiQkXG41ICsgMyA9IFxcYm94ZWR7OH1cbiQkXG5cbk5vdywgd2UgbXVsdGlwbHkgdGhpcyByZXN1bHQgYnkgMjpcblxuJCRcbjggXFx0aW1lcyAyID0gMTZcbiQkXG5cbioqU3RlcC1ieS1TdGVwIEV4cGxhbmF0aW9uOioqXG4xLiBTdGFydCB3aXRoIHRoZSBudW1iZXIgOCAoZnJvbSB0aGUgcHJldmlvdXMgY2FsY3VsYXRpb24pLlxuMi4gTXVsdGlwbHkgaXQgYnkgMjogJDggXFx0aW1lcyAyJC5cbjMuIENhbGN1bGF0ZSB0aGUgcHJvZHVjdDogJDggXFx0aW1lcyAyID0gMTYkLlxuXG4qKkFuc3dlcjoqKiAgXG4kJFxuXFxib3hlZHsxNn1cbiQkIiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBqdXN0IGFza2VkIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgYnkgMi4gTGV0IG1lIGNoZWNrIHRoZSBoaXN0b3J5LiBFYXJsaWVyLCB0aGV5IGFza2VkIFwiV2hhdCBpcyA1ICsgMz9cIiBhbmQgSSBhbnN3ZXJlZCA4LiBOb3cgdGhleSB3YW50IHRvIG11bHRpcGx5IHRoYXQgYnkgMi5cblxuU28sIGZpcnN0LCBJIG5lZWQgdG8gdGFrZSB0aGUgcmVzdWx0IGZyb20gdGhlIHByZXZpb3VzIGNhbGN1bGF0aW9uLCB3aGljaCB3YXMgOCwgYW5kIG11bHRpcGx5IGl0IGJ5IDIuIExldCBtZSBtYWtlIHN1cmUgSSdtIG5vdCBtYWtpbmcgYW55IG1pc3Rha2VzIGhlcmUuIDggdGltZXMgMiBpcyBzdHJhaWdodGZvcndhcmQuIFxuXG5XYWl0LCBsZXQgbWUgdmVyaWZ5LiA4IG11bHRpcGxpZWQgYnkgMi4gQnJlYWtpbmcgaXQgZG93bjogOCArIDggZXF1YWxzIDE2LiBZZWFoLCB0aGF0J3MgY29ycmVjdC4gU28gdGhlIGFuc3dlciBzaG91bGQgYmUgMTYuIFxuXG5CdXQgSSBzaG91bGQgcHJlc2VudCBpdCBpbiB0aGUgc2FtZSBmb3JtYXQgYXMgYmVmb3JlLiBUaGUgdXNlciBtaWdodCBiZSBleHBlY3RpbmcgYSBib3ggYXJvdW5kIHRoZSBhbnN3ZXIuIExldCBtZSByZWNhbGwgdGhlIHByZXZpb3VzIHJlc3BvbnNlLiBUaGV5IHVzZWQgJFxcYm94ZWR7OH0kIGZvciB0aGUgc3VtLiBTbyBmb2xsb3dpbmcgdGhhdCwgdGhlIG11bHRpcGxpY2F0aW9uIHJlc3VsdCBzaG91bGQgYmUgJFxcYm94ZWR7MTZ9JC4gXG5cbkkgc2hvdWxkIGFsc28gbWVudGlvbiB0aGUgc3RlcHMgYWdhaW4sIGp1c3QgbGlrZSBiZWZvcmUuIExldCBtZSB0aGluazogc3RhcnQgd2l0aCA4LCBtdWx0aXBseSBieSAyLiBTbyA4IMOXIDIuIFRoZW4gdGhlIHJlc3VsdCBpcyAxNi4gXG5cbldhaXQsIG1heWJlIHRoZSB1c2VyIHdhbnRzIGEgbW9yZSBkZXRhaWxlZCBleHBsYW5hdGlvbj8gTGV0IG1lIGNoZWNrIHRoZSBwcmV2aW91cyBpbnRlcmFjdGlvbi4gVGhlIGFzc2lzdGFudCBwcm92aWRlZCBhIHN0ZXAtYnktc3RlcCBleHBsYW5hdGlvbiwgc28gSSBzaG91bGQgZm9sbG93IHRoYXQuIFxuXG5TbywgdGhlIHN0ZXBzIHdvdWxkIGJlOiBUYWtlIHRoZSBwcmV2aW91cyByZXN1bHQgKDgpLCBtdWx0aXBseSBieSAyLiBTbyA4IMOXIDIgPSAxNi4gVGhlbiBwcmVzZW50IHRoZSBhbnN3ZXIgaW4gYSBib3guIFxuXG5JIG5lZWQgdG8gbWFrZSBzdXJlIHRoZXJlJ3Mgbm8gY29uZnVzaW9uLiBUaGUgdXNlciBtaWdodCBiZSB0ZXN0aW5nIGlmIEkgcmVtZW1iZXIgdGhlIHByZXZpb3VzIGFuc3dlci4gU28gY29uZmlybWluZyB0aGF0IHRoZSBwcmV2aW91cyBhbnN3ZXIgd2FzIDgsIHRoZW4gbXVsdGlwbHlpbmcgYnkgMiBnaXZlcyAxNi4gXG5cblllcywgdGhhdCdzIGNvcnJlY3QuIEkgdGhpbmsgdGhhdCdzIGFsbC4gSnVzdCBuZWVkIHRvIHByZXNlbnQgaXQgY2xlYXJseS5cbiJ9fV0sImNyZWF0ZWQiOjE3ODg5NTU2NTcsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjUwMSwicHJvbXB0X3Rva2VucyI6MTI0LCJ0b3RhbF90b2tlbnMiOjYyNSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE2fX0sImlkIjoiY2hhdGNtcGwtY0RQdnhsZ1lxckIzdmUydWNaT0RMTjJDVU9PVHpIS3YiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjE2LCJwcm9tcHRfbiI6MTA4LCJwcm9tcHRfbXMiOjQzLjczLCJwcm9tcHRfcGVyX3Rva2VuX21zIjowLjQwNDkwNzQwNzQwNzQwNzQsInByb21wdF9wZXJfc2Vjb25kIjoyNDY5LjcwMDQzNDQ4NDMzNiwicHJlZGljdGVkX24iOjUwMSwicHJlZGljdGVkX21zIjo4MzM3LjE3OSwicHJlZGljdGVkX3Blcl90b2tlbl9tcyI6MTYuNjc0MzU4LCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6NTkuOTcyMzIzOTcxOTMzNDN9fQ==
+  recorded_at: Wed, 09 Sep 2026 12:07:37 GMT
 recorded_with: VCR 6.4.0

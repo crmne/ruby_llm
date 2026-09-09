@@ -27,38 +27,30 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:38:55 GMT
-      Transfer-Encoding:
-      - chunked
+      - Wed, 09 Sep 2026 12:10:00 GMT
+      Content-Length:
+      - '1743'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-96","object":"chat.completion","created":1788817135,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let me tackle this user query. The user wants me to call the any-of params
-        tool for the task \"Review PR\" with status \"pending\" and report the result.\n\nFirst,
-        I need to understand the tool''s structure. The function provided has parameters
-        where the status can be either a string from the enum [\"pending\", \"done\"]
-        or null. The task is a required string. Since the user specified \"pending\",
-        which is in the enum, that''s valid. \n\nSo, I should construct the function
-        call with the task as \"Review PR\" and status as \"pending\". The tool''s
-        anyOf allows either the status string or null. Since the user provided \"pending\",
-        I use that. \n\nI need to make sure the JSON is correctly formatted. The arguments
-        should include both task and status. Let me double-check the function''s parameters:
-        task is a string, status is an object that can be a string or null. Wait,
-        looking back, the status is part of an object. Wait, the function''s parameters
-        are a bit confusing. Let me parse the tool definition again.\n\nThe tool''s
-        function has any_of_params, which uses the params DSL. The parameters are
-        an object with status and task. The status has anyOf: either a string with
-        enum [\"pending\", \"done\"] or null. The task is a string. So the arguments
-        should be an object with status and task. \n\nSo the correct JSON would be
-        {\"task\": \"Review PR\", \"status\": \"pending\"}. That should be passed
-        as the arguments. I need to make sure that the status is a string here, which
-        is allowed. \n\nTherefore, the tool call should be named \"any_of_params\"
-        with those arguments. The user wants the result reported, so after calling,
-        I''ll present the outcome. But since this is a tool call, the actual result
-        depends on the function''s implementation. But the user just wants the call
-        made. \n\nI think that''s all. Let me format the tool_call accordingly.\n","tool_calls":[{"id":"call_4e8k6kxu","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":441,"total_tokens":627}}
+      string: '{"id":"chatcmpl-836","object":"chat.completion","created":1788955800,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let me try to figure out how to handle this user query. The user wants me
+        to call the any-of params tool for the task \"Review PR\" with status \"pending\"
+        and report the result.\n\nFirst, I need to look at the tools provided. The
+        function given is under the \"any_of_params\" type. The parameters for this
+        function include \"status\" and \"task\". The \"status\" field uses the anyOf
+        DSL, which means it can be either a string from the enum [\"pending\", \"done\"]
+        or null. The \"task\" is a string description.\n\nThe user specified the task
+        as \"Review PR\" and the status as \"pending\". Since \"pending\" is one of
+        the allowed values in the enum for status, that''s valid. So I need to construct
+        the function call with these parameters.\n\nI should structure the JSON object
+        with the function name \"any_of_params\" and include both \"task\" and \"status\"
+        arguments. The task is \"Review PR\", and the status is \"pending\". Since
+        the status is a string in the enum, it should be correctly formatted.\n\nI
+        need to make sure that the JSON is properly formatted, with the arguments
+        as a JSON object. The tool_call should enclose this JSON. Let me double-check
+        the syntax to avoid any errors. Alright, that should do it.\n","tool_calls":[{"id":"call_uaephv2s","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":305,"total_tokens":491}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 21:38:55 GMT
+  recorded_at: Wed, 09 Sep 2026 12:10:00 GMT
 recorded_with: VCR 6.4.0

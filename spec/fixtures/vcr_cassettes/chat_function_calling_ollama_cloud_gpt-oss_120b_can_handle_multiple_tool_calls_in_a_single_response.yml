@@ -30,36 +30,35 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a7413d4e73407989987adf5f0bbacc8d71858e4d
+      - 8bbfc54fe6b9f83c353638274218dc75a0607b2d
       X-Build-Time:
-      - '2026-09-06T10:42:07-07:00'
+      - '2026-09-08T18:19:14-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '630'
+      - '562'
       Date:
-      - Mon, 07 Sep 2026 20:59:03 GMT
+      - Wed, 09 Sep 2026 12:10:20 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 757ebdc53f66de488d383e91392c5c11/11525476375792874928
       Traceparent:
-      - 00-757ebdc53f66de488d383e91392c5c11-9ff2b7b2fe4a75b0-00
+      - 00-723cbd0336a0bf473d1d87a854e6a760-3c14dc54418f5455-00
+      X-Cloud-Trace-Context:
+      - 723cbd0336a0bf473d1d87a854e6a760/4329327396245165141
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-647","object":"chat.completion","created":1788814743,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call.","tool_calls":[{"id":"call_e29089x4","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":66,"total_tokens":213}}
+      string: '{"id":"chatcmpl-14","object":"chat.completion","created":1788955820,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times.","tool_calls":[{"id":"call_qkxh62os","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":54,"total_tokens":201}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 20:59:04 GMT
+  recorded_at: Wed, 09 Sep 2026 12:10:20 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -67,13 +66,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_e29089x4","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call.","reasoning_content":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_e29089x4"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_qkxh62os","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times.","reasoning_content":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_qkxh62os"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -96,33 +93,34 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a7413d4e73407989987adf5f0bbacc8d71858e4d
+      - 8bbfc54fe6b9f83c353638274218dc75a0607b2d
       X-Build-Time:
-      - '2026-09-06T10:42:07-07:00'
+      - '2026-09-08T18:19:14-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '410'
+      - '437'
       Date:
-      - Mon, 07 Sep 2026 20:59:04 GMT
+      - Wed, 09 Sep 2026 12:10:20 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 2ab5fa8dfb0833ee7a0004547123deca/8926604216329615950
+      - 7069757cf7a50611a58e03ec5b351bc8/8240761331337199548
       Traceparent:
-      - 00-2ab5fa8dfb0833ee7a0004547123deca-7be1ab3d54d4ba4e-00
+      - 00-7069757cf7a50611a58e03ec5b351bc8-725d10c4f920ffbc-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-952","object":"chat.completion","created":1788814744,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_n34rq11x","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":230,"completion_tokens":15,"total_tokens":245}}
+      string: '{"id":"chatcmpl-664","object":"chat.completion","created":1788955820,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Call
+        second.","tool_calls":[{"id":"call_w36oxgom","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":218,"completion_tokens":24,"total_tokens":242}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 20:59:04 GMT
+  recorded_at: Wed, 09 Sep 2026 12:10:20 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -130,13 +128,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_e29089x4","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call.","reasoning_content":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_e29089x4"},{"role":"assistant","content":"","tool_calls":[{"id":"call_n34rq11x","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_n34rq11x"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_qkxh62os","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times.","reasoning_content":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_qkxh62os"},{"role":"assistant","content":"","tool_calls":[{"id":"call_w36oxgom","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Call
+        second.","reasoning_content":"Call second."},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_w36oxgom"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -159,33 +156,34 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a7413d4e73407989987adf5f0bbacc8d71858e4d
+      - 8bbfc54fe6b9f83c353638274218dc75a0607b2d
       X-Build-Time:
-      - '2026-09-06T10:42:07-07:00'
+      - '2026-09-08T18:19:14-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '410'
+      - '435'
       Date:
-      - Mon, 07 Sep 2026 20:59:05 GMT
+      - Wed, 09 Sep 2026 12:10:21 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 176ff68c7ae8ca5ffcb89154e17702d9/16685046948371350735
       Traceparent:
-      - 00-176ff68c7ae8ca5ffcb89154e17702d9-e78d31cc6263c4cf-00
+      - 00-fc0147fbc89bf886624d623576f3fb56-125c0f27ed160827-00
+      X-Cloud-Trace-Context:
+      - fc0147fbc89bf886624d623576f3fb56/1322949054695868455
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-550","object":"chat.completion","created":1788814745,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_uqu4xs2m","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":262,"completion_tokens":15,"total_tokens":277}}
+      string: '{"id":"chatcmpl-38","object":"chat.completion","created":1788955821,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Call
+        third.","tool_calls":[{"id":"call_bqapvujq","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":259,"completion_tokens":24,"total_tokens":283}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 20:59:05 GMT
+  recorded_at: Wed, 09 Sep 2026 12:10:21 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -193,13 +191,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_e29089x4","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call.","reasoning_content":"The
-        user says \"Roll the dice 3 times\". According to instructions, we must call
-        the dice_roll tool exactly 3 times. Need to call the function three times.
-        Then respond with results. Use the function call."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_e29089x4"},{"role":"assistant","content":"","tool_calls":[{"id":"call_n34rq11x","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_n34rq11x"},{"role":"assistant","content":"","tool_calls":[{"id":"call_uqu4xs2m","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_uqu4xs2m"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_qkxh62os","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times.","reasoning_content":"The
+        user wants to roll the dice 3 times. We must call dice_roll tool exactly 3
+        times and provide results. We''ll call the function 3 times."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_qkxh62os"},{"role":"assistant","content":"","tool_calls":[{"id":"call_w36oxgom","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Call
+        second.","reasoning_content":"Call second."},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_w36oxgom"},{"role":"assistant","content":"","tool_calls":[{"id":"call_bqapvujq","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Call
+        third.","reasoning_content":"Call third."},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_bqapvujq"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -222,33 +220,30 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a7413d4e73407989987adf5f0bbacc8d71858e4d
+      - 8bbfc54fe6b9f83c353638274218dc75a0607b2d
       X-Build-Time:
-      - '2026-09-06T10:42:07-07:00'
+      - '2026-09-08T18:19:14-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '379'
+      - '400'
       Date:
-      - Mon, 07 Sep 2026 20:59:05 GMT
+      - Wed, 09 Sep 2026 12:10:21 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 8a4df47866b65fb2bfbd67b480bc2211/5967199702210189279
+      - 119844993b0059bf0bf7c7d0141afe03/14191903568752400244
       Traceparent:
-      - 00-8a4df47866b65fb2bfbd67b480bc2211-52cfc0837a0e17df-00
+      - 00-119844993b0059bf0bf7c7d0141afe03-c4f3c51a9615d774-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-777","object":"chat.completion","created":1788814745,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Here
-        are the three dice rolls:\n\n1. Roll 1: **1**  \n2. Roll 2: **2**  \n3. Roll
-        3: **3**"},"finish_reason":"stop"}],"usage":{"prompt_tokens":294,"completion_tokens":40,"total_tokens":334}}
-
-        '
-  recorded_at: Mon, 07 Sep 2026 20:59:05 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTc1OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg5NTU4MjEsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJlIGFyZSB0aGUgcmVzdWx0cyBvZiB0aGUgdGhyZWUgZGljZSByb2xsczpcblxuMS4gUm9sbOKArzE6ICoqMSoqICBcbjIuIFJvbGzigK8yOiAqKjIqKiAgXG4zLiBSb2xs4oCvMzogKiozKioifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwMCwiY29tcGxldGlvbl90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjM0M319Cg==
+  recorded_at: Wed, 09 Sep 2026 12:10:21 GMT
 recorded_with: VCR 6.4.0

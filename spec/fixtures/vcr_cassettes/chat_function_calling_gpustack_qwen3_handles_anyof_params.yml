@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 09 Sep 2026 12:08:29 GMT
       Server:
       - istio-envoy
-      X-Envoy-Upstream-Service-Time:
-      - '1268'
-      Date:
-      - Mon, 07 Sep 2026 21:38:19 GMT
       Access-Control-Allow-Origin:
       - ''
+      Req-Arrive-Time:
+      - '1788955710302'
+      Resp-Start-Time:
+      - '1788955712531'
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '1271'
-      Req-Arrive-Time:
-      - '1788817100371'
-      Resp-Start-Time:
-      - '1788817101642'
+      - '2229'
+      X-Envoy-Upstream-Service-Time:
+      - '2226'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -49,15 +49,20 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the any_of_params function for a task called \"Review
-        PR\" with status \"pending\". Let me check the function''s parameters. The
-        function requires \"task\" and \"status\". The status can be either \"pending\",
-        \"done\", or null. Since the user specified \"pending\", that''s valid. I
-        need to structure the JSON arguments correctly. The task is \"Review PR\",
-        status is \"pending\". So the tool call should include these parameters. Let
-        me make sure there are no additional properties allowed. The function''s additionalProperties
-        is set to false, so only task and status are allowed. Everything looks good.
-        I''ll format the tool call accordingly.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"},"id":"Zjut7mRJAiiB8q8Dt45innoI3umQRpsX"}]}}],"created":1788817101,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":172,"prompt_tokens":223,"total_tokens":395,"prompt_tokens_details":{"cached_tokens":222}},"id":"chatcmpl-YPDvAZZTOcJfIz9HtuLXPDqBvaZp5XFt","timings":{"cache_n":222,"prompt_n":1,"prompt_ms":8.599,"prompt_per_token_ms":8.599,"prompt_per_second":116.29259216187928,"predicted_n":172,"predicted_ms":1223.656,"predicted_per_token_ms":7.155883040935672,"predicted_per_second":139.74515713566558}}'
-  recorded_at: Mon, 07 Sep 2026 21:38:21 GMT
+        let''s see. The user wants me to call the any_of_params function for a task
+        called \"Review PR\" with status \"pending\" and then report the result.\n\nFirst,
+        I need to check the function''s parameters. The function requires \"task\"
+        and \"status\". The task is given as \"Review PR\". The status can be either
+        \"pending\", \"done\", or null. The user specified \"pending\", which is valid.\n\nSo
+        I should structure the arguments as JSON with task: \"Review PR\" and status:
+        \"pending\". Since the status is provided, I don''t need to use null here.
+        The anyOf in the parameters allows either a string from the enum or null.
+        Since \"pending\" is in the enum, it''s acceptable.\n\nI need to make sure
+        the JSON is correctly formatted. The function name is any_of_params. So the
+        tool_call should have the name and the arguments. No additional properties
+        are allowed, so I''ll stick to the required fields.\n\nDouble-checking the
+        required parameters: task and status are both required. The user provided
+        both, so that''s good. Alright, I''ll generate the tool_call with these arguments.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"},"id":"V25MVwLvLxkGpINp57z0GJXhjErBUnWD"}]}}],"created":1788955712,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":269,"prompt_tokens":223,"total_tokens":492,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-qx7LxBYcQ6wisSNTB1Tu7RDNKiIfEgoH","timings":{"cache_n":51,"prompt_n":172,"prompt_ms":47.733,"prompt_per_token_ms":0.2775174418604651,"prompt_per_second":3603.377118555298,"predicted_n":269,"predicted_ms":2151.667,"predicted_per_token_ms":8.028608208955223,"predicted_per_second":124.554589534533}}'
+  recorded_at: Wed, 09 Sep 2026 12:08:32 GMT
 recorded_with: VCR 6.4.0

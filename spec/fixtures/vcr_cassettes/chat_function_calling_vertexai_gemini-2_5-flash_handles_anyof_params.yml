@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 09 Sep 2026 12:12:35 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Date:
-      - Mon, 07 Sep 2026 21:00:55 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 07 Sep 2026 21:00:55 GMT
+  recorded_at: Wed, 09 Sep 2026 12:12:35 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:00:56 GMT
+      - Wed, 09 Sep 2026 12:12:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "any_of_params",
                       "args": {
-                        "task": "Review PR",
-                        "status": "pending"
+                        "status": "pending",
+                        "task": "Review PR"
                       }
                     },
-                    "thoughtSignature": "CvoBAY89a190rFGMmZ2vEvltvyAP50rQbh34TrqhkPFsH2XxA6KMfcQZS/tSXqikkODZhJXmvkZDa8O9cBFXLYtOAGrYC4tL07YMqogEW5chCxiQAWnxETs8fMguE0ER6C8rmtNZMy4+im4BtZ2Zzwbiu7r4RNLKjdYifz816TGyjMqB056WtEIj0TckPKcqM22iVCOFsiGbF9nbOmrv8NLtm1b3/2xXRlg7WU8r7C5lKlVb9HscnmNlD8n2VAp2NgeUZcUxb2p4Lqar2wjQ0rBK/Z2aw+iPCLGZwv4nvKv9HaZ0Eu1poTAYuOnbLl7PDKJWe0uzpiifvnsdHw=="
+                    "thoughtSignature": "CpcCAY89a19XHhAG1mIUifLw5vL4fwjBgb2v6p+9sZ6aHzb3bmNd5MDEJ34txBzlEXjLJCHeaZB+llEIM90Tw18qBm88foz9j0tS/mMy3SCldderGpX8y3dHtjD83bXuGAJVaD4pZr/7KSwu24elKLPP0Gfph1Ao8WbEFR9OeWV4MdXVriA9UtoAMPqdniaDX7tvLCEiFZ4815h0v3MFfGPBZfWEXV1tXYCSbx8ioyISvgORuflbL6vX/YKWKBFBKhK8J9FEXZAJ3DP9tsWYEXu2lJoz5a2eK6zcDvf6IEZqPPGFCscKg/Pgf5lRw+0c68qR5+SWl6NJsKi+GyDAGDvA2JeDaquaqGZ1H31bMIQZE7FCj/pD5LEP"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.94687013626098637
+              "avgLogprobs": -0.87865114212036133
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 35,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 106,
+            "totalTokenCount": 110,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -144,11 +144,11 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 61
+            "thoughtsTokenCount": 65
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-07T21:00:55.903457Z",
-          "responseId": "ByafaqGSN7iCu_EPioGq6Qk"
+          "createTime": "2026-09-09T12:12:35.795825Z",
+          "responseId": "M02harHJMKG4-eQP3f698QY"
         }
-  recorded_at: Mon, 07 Sep 2026 21:00:56 GMT
+  recorded_at: Wed, 09 Sep 2026 12:12:37 GMT
 recorded_with: VCR 6.4.0

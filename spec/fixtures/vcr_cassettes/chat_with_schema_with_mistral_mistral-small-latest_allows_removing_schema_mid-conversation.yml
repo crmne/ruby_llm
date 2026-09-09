@@ -24,56 +24,56 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:02:34 GMT
+      - Wed, 09 Sep 2026 12:09:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a07dae-0f40-7582-b848-ff459ec31eb1
+      - 01a08612-fffa-71ff-a4eb-0bc4cfef3e4b
       X-Kong-Request-Id:
-      - 01a07dae-0f40-7582-b848-ff459ec31eb1
+      - 01a08612-fffa-71ff-a4eb-0bc4cfef3e4b
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99469'
+      - '97935'
       X-Ratelimit-Tokens-Query-Cost:
       - '22'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '97'
+      - '98'
       X-Envoy-Upstream-Service-Time:
-      - '286'
+      - '250'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '287'
+      - '251'
       X-Kong-Proxy-Latency:
-      - '13'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '239'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a56f8b37397a43b5ad4bd22f2fdd484d","created":1788814954,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"4129abaddc324728b2a5a91be617e9ea","created":1788955787,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"Bob\", \"age\": 30}"}}]}'
-  recorded_at: Mon, 07 Sep 2026 21:02:34 GMT
+  recorded_at: Wed, 09 Sep 2026 12:09:47 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:02:36 GMT
+      - Wed, 09 Sep 2026 12:09:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -107,31 +107,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07dae-10c3-7104-aecb-27c47405c431
+      - 01a08613-0225-77a4-9ac0-8bbe46372e81
       X-Kong-Request-Id:
-      - 01a07dae-10c3-7104-aecb-27c47405c431
+      - 01a08613-0225-77a4-9ac0-8bbe46372e81
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99264'
+      - '97790'
       X-Ratelimit-Tokens-Query-Cost:
-      - '209'
+      - '217'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '96'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '1346'
+      - '1352'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1348'
+      - '1352'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '128'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -146,16 +146,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4b6fb9b3db114a009eb12b41799c99e3","created":1788814954,"model":"mistral-small-latest","usage":{"prompt_tokens":42,"total_tokens":209,"completion_tokens":167,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
+      string: '{"id":"2e32673a0a7b4498aa4d249c36769d4d","created":1788955787,"model":"mistral-small-latest","usage":{"prompt_tokens":42,"total_tokens":217,"completion_tokens":175,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
         is a dynamic, open-source programming language known for its simplicity and
         productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
-        emphasizes developer happiness and elegant syntax. It follows the principle
+        emphasizes developer happiness and elegant code. It follows the principle
         of \"least surprise,\" meaning it behaves in a way that feels natural to programmers.\n\nKey
         features of Ruby include:\n- **Object-oriented**: Everything is an object,
-        even primitive types.\n- **Flexible syntax**: Supports multiple ways to solve
-        a problem.\n- **Metaprogramming**: Allows code to modify itself at runtime.\n-
-        **Strong community**: Powers the popular Ruby on Rails web framework.\n\nRuby
-        is often used for web development, scripting, and automation. Its clean, readable
-        code makes it a favorite among developers who value maintainability and expressiveness."}}]}'
-  recorded_at: Mon, 07 Sep 2026 21:02:36 GMT
+        even primitive types.\n- **Flexible syntax**: Supports multiple programming
+        paradigms (procedural, functional, OOP).\n- **Metaprogramming**: Allows code
+        to modify itself at runtime.\n- **Strong community**: Powers the Ruby on Rails
+        framework, widely used for web development.\n\nRuby is often praised for its
+        readability and concise syntax, making it a favorite for rapid development.
+        Would you like details on a specific aspect of Ruby?"}}]}'
+  recorded_at: Wed, 09 Sep 2026 12:09:49 GMT
 recorded_with: VCR 6.4.0

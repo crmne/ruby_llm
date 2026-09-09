@@ -24,25 +24,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 20:56:06 GMT
+      - Wed, 09 Sep 2026 12:10:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a07da8-211b-7d88-b2f9-dd67fc2e7646
+      - 01a08613-686d-7074-9314-3628d4591985
       X-Kong-Request-Id:
-      - 01a07da8-211b-7d88-b2f9-dd67fc2e7646
+      - 01a08613-686d-7074-9314-3628d4591985
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '200000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '199900'
+      - '199917'
       X-Ratelimit-Tokens-Query-Cost:
-      - '100'
+      - '83'
       X-Ratelimit-Limit-Audio-Seconds-Minute:
       - '2000'
       X-Ratelimit-Remaining-Audio-Seconds-Minute:
@@ -54,36 +56,33 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '359'
       X-Envoy-Upstream-Service-Time:
-      - '920'
+      - '792'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '952'
+      - '803'
       X-Kong-Proxy-Latency:
-      - '14'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '53'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3884a7f0bb3c491a82fe8a1d71864851","created":1788814565,"model":"voxtral-small-latest","usage":{"prompt_audio_seconds":3,"prompt_tokens":9,"total_tokens":475,"completion_tokens":91,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":375},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"13e3d786b239400081a0fcf3990926b8","created":1788955814,"model":"voxtral-small-latest","usage":{"prompt_audio_seconds":3,"prompt_tokens":9,"total_tokens":458,"completion_tokens":74,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":375},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         statement \"Ruby is a programming language designed for developer happiness\"
-        is expressing that Ruby, a programming language, is created with the goal
-        of making developers happy and satisfied while using it. This could mean that
-        Ruby is designed to be easy to learn, use, and enjoy, with features that enhance
-        productivity and reduce frustration. The phrase \"designed for developer happiness\"
-        is a way to highlight the user-friendly and enjoyable aspects of the Ruby
-        programming language."}}]}'
-  recorded_at: Mon, 07 Sep 2026 20:56:06 GMT
+        is expressing that Ruby, a programming language, was created with the goal
+        of making developers happy and satisfied while they write code. This could
+        mean that Ruby is designed to be easy to learn, use, and understand, and that
+        it provides features and tools that make the development process more enjoyable
+        and efficient."}}]}'
+  recorded_at: Wed, 09 Sep 2026 12:10:14 GMT
 recorded_with: VCR 6.4.0

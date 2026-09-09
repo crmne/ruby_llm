@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 20:58:58 GMT
+      - Wed, 09 Sep 2026 12:07:16 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1657
+      - gfet4t7; dur=1424
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,12 +55,12 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "**My Simple Calculation**\n\nOkay, so the user wants the sum of 5 and 3. Straightforward enough, this is basic arithmetic. Let me just process that... 5 plus 3 equals 8. Simple, elegant, and definitive. I can confidently and concisely present that result.\n\n\n",
+                    "text": "**Calculating a Simple Sum**\n\nOkay, so I see a straightforward request here: the user wants the sum of 5 and 3. Nothing too complex, just basic arithmetic. The operation is clearly addition. I quickly recall the fundamental rules of addition. 5 plus 3, using my knowledge of basic math, equates to 8. Therefore, the answer is 8.\n\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "Ep0BCpoBARFNMg+zo7WijnYOsIJ60WLVYVcReOBdva3eZNVy9j593o4QM0+j+Pd3acGi/mo2z6iJ62tSASCatYNia0l6B2nbg0HZTW4Mdr3dEI+Xca/cE/oDbnjgWi+GptOHZfQOvbzH0uUwYbzXnOhJrocvjadNWsrwYR6GscB6SCaRuM6kFE5nc+211uY9tzYWz8xt7jW+0Jo0xDDViQ=="
+                    "thoughtSignature": "ErgBCrUBARFNMg8t/nEkVKlNzJLMVd7YsbIa0REdMiv3G4b1oxbKMZMDlgUZMxYg0RkZWXYTKbLDOTwfzx1U3fVky7hNclL+nfpFtKXcZLlKjnFA8xDdQzYA5mG/xg8ONXFiG44MAlPSGi/Zg4y36fVLWWzF97LIsPHgLxYpOtY2366zCiUQsILBmbC3XbzeX6UC3V5EBLPOUOZMWa0/6+7vVFtKBa9hSGyKGoHwJ619mYPOlhPpTcsuDQ=="
                   }
                 ],
                 "role": "model"
@@ -72,30 +72,31 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 9,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 40,
+            "totalTokenCount": 46,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 9
               }
             ],
-            "thoughtsTokenCount": 24,
+            "thoughtsTokenCount": 30,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-3-flash-preview",
-          "responseId": "kCWfapPaJOvMvdIPr9vn2AI"
+          "responseId": "80uhavPrF5i6kdUPotyU8AQ"
         }
-  recorded_at: Mon, 07 Sep 2026 20:58:58 GMT
+  recorded_at: Wed, 09 Sep 2026 12:07:16 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**My
-        Simple Calculation**\n\nOkay, so the user wants the sum of 5 and 3. Straightforward
-        enough, this is basic arithmetic. Let me just process that... 5 plus 3 equals
-        8. Simple, elegant, and definitive. I can confidently and concisely present
-        that result.\n\n\n","thoughtSignature":"Ep0BCpoBARFNMg+zo7WijnYOsIJ60WLVYVcReOBdva3eZNVy9j593o4QM0+j+Pd3acGi/mo2z6iJ62tSASCatYNia0l6B2nbg0HZTW4Mdr3dEI+Xca/cE/oDbnjgWi+GptOHZfQOvbzH0uUwYbzXnOhJrocvjadNWsrwYR6GscB6SCaRuM6kFE5nc+211uY9tzYWz8xt7jW+0Jo0xDDViQ=="},{"text":"5
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Calculating
+        a Simple Sum**\n\nOkay, so I see a straightforward request here: the user
+        wants the sum of 5 and 3. Nothing too complex, just basic arithmetic. The
+        operation is clearly addition. I quickly recall the fundamental rules of addition.
+        5 plus 3, using my knowledge of basic math, equates to 8. Therefore, the answer
+        is 8.\n\n\n","thoughtSignature":"ErgBCrUBARFNMg8t/nEkVKlNzJLMVd7YsbIa0REdMiv3G4b1oxbKMZMDlgUZMxYg0RkZWXYTKbLDOTwfzx1U3fVky7hNclL+nfpFtKXcZLlKjnFA8xDdQzYA5mG/xg8ONXFiG44MAlPSGi/Zg4y36fVLWWzF97LIsPHgLxYpOtY2366zCiUQsILBmbC3XbzeX6UC3V5EBLPOUOZMWa0/6+7vVFtKBa9hSGyKGoHwJ619mYPOlhPpTcsuDQ=="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
@@ -122,7 +123,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 20:58:59 GMT
+      - Wed, 09 Sep 2026 12:07:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -132,7 +133,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1529
+      - gfet4t7; dur=800
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -140,6 +141,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqTXkgU2ltcGxlIENhbGN1bGF0aW9uKipcblxuT2theSwgc28gSSBoYXZlIGEgcHJldmlvdXMgcmVzdWx0IGhlcmUsIHdoaWNoIGlzIDguIE5vdywgdGhlIHRhc2sgaXMgc3RyYWlnaHRmb3J3YXJkOyBJIG5lZWQgdG8gbXVsdGlwbHkgdGhhdCB2YWx1ZSBieSAyLiBJdCdzIGEgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb24sIG5vdGhpbmcgY29tcGxleC4gTGV0J3MgZG8gdGhpczogOCBtdWx0aXBsaWVkIGJ5IDIuIFRoYXQgZ2l2ZXMgbWUgMTYuIFNpbXBsZSBhcyB0aGF0IVxuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJFc2dCQ3NVQkFSRk5NZzhFaFlhaEVXWG1LbEp0eUFWYTQ1WmpWc2ZzTCtBTkFEd2R2bmN1ZjBVNXpiSnhpMWpzZXZtTE1GeDJwNE9pL3pjR0VsZkw0V3RteEdXK0VrYVgxZ2FZbkxsbWhWcGpiR29WemtrR0VjYmZFb1RjYzFYd1FPUWIrdkUwbHdFN0VqNmxYL0Z5b0FlU0FmSDhKd3BJcVhqWmRZS2ViQXhWZHhTZ01HK0Y3dGEyMllrMmxwd2V4VTlibEhVd1FBN1dHdFFrNitHRWF1TU5lL3VRSEpMRXhoOW5DYTVUMWJUUCtlVnhWY3p3bURPS0pGdlBaenlBa3pBT1JOQk5ZQW9NTFlFPSIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogODYsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDEyNiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogODYKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAzMiwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMtZmxhc2gtcHJldmlldyIsCiAgInJlc3BvbnNlSWQiOiAia2lXZmF1elpFSWlVM2JvUGw2MmR3QVEiCn0K
-  recorded_at: Mon, 07 Sep 2026 20:58:59 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRW1VS1l3RVJUVElQa3RublRhalZPV1JPUG1FZGZBU2VOWDVkdVp4djJ1d292TjNOL2VUTzh0NE0rT2V0UTlQMTZLeG5JQ2g4SkkwUmVTZUV2bEEyQWtlRmJQeWlEdnhYZzNwOTVjKzh6Tmh0ekF6MHVoS0h2NjJMSm04aVppczZSdjk4VDdQa1lnPT0iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDEwMywKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTExLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxMDMKICAgICAgfQogICAgXSwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMtZmxhc2gtcHJldmlldyIsCiAgInJlc3BvbnNlSWQiOiAiOUV1aGFyR1BOY3FjM2JvUG5MeVh3UW8iCn0K
+  recorded_at: Wed, 09 Sep 2026 12:07:17 GMT
 recorded_with: VCR 6.4.0

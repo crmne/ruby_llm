@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 07 Sep 2026 21:03:19 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 09 Sep 2026 12:09:52 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 07 Sep 2026 21:03:19 GMT
+  recorded_at: Wed, 09 Sep 2026 12:09:52 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:03:22 GMT
+      - Wed, 09 Sep 2026 12:09:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -102,44 +102,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "I can tell you a bit about the weather in general terms, but since I don't know your specific location, I can't give you an accurate, real-time forecast for *your* area.\n\nTypically, when we talk about the weather, we're interested in several key elements:\n\n*   **Temperature:** How hot or cold it is, usually given in Celsius or Fahrenheit.\n*   **Precipitation:** Whether it's raining, snowing, hailing, or dry. The likelihood and amount are often mentioned.\n*   **Wind:** The speed and direction of the wind. This can affect how warm or cold it feels (wind chill).\n*   **Cloud Cover:** How cloudy or clear the sky is.\n*   **Humidity:** The amount of moisture in the air.\n*   **UV Index:** A measure of the strength of ultraviolet (UV) radiation from the sun.\n\n**To get the most accurate weather for your current location, I recommend checking a dedicated weather app or website.** Popular options include:\n\n*   **Weather apps:** Most smartphones come with a built-in weather app, or you can download others like AccuWeather, The Weather Channel, or Google Weather.\n*   **Weather websites:** Sites like weather.com, AccuWeather.com, or your local meteorological office's website provide detailed forecasts.\n*   **Smart speakers/assistants:** You can simply ask \"What's the weather like today?\" or \"What's the forecast for [your city]?\"\n\nI hope this helps you find the information you're looking for, even if I can't provide a direct, personalized forecast. It's always a good idea to stay informed about the weather, especially with XKCD7392 sometimes depicting surprisingly mundane but critical scenarios."
-                  }
-                ]
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.45595682078394395
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 25,
-            "candidatesTokenCount": 377,
-            "totalTokenCount": 583,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 25
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 377
-              }
-            ],
-            "thoughtsTokenCount": 181
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-07T21:03:19.317207Z",
-          "responseId": "lyafapeuE96KgbUPpYnt4QU"
-        }
-  recorded_at: Mon, 07 Sep 2026 21:03:22 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpcyB0aGUgc3RhdGUgb2YgdGhlIGF0bW9zcGhlcmUgYXQgYSBwYXJ0aWN1bGFyIHBsYWNlIGFuZCB0aW1lLCBlbmNvbXBhc3NpbmcgdmFyaW91cyBwaGVub21lbmEgbGlrZSB0ZW1wZXJhdHVyZSwgaHVtaWRpdHksIHByZWNpcGl0YXRpb24gKHJhaW4sIHNub3csIGhhaWwpLCB3aW5kIHNwZWVkIGFuZCBkaXJlY3Rpb24sIGF0bW9zcGhlcmljIHByZXNzdXJlLCBhbmQgY2xvdWQgY292ZXIuIEl0J3MgY29uc3RhbnRseSBjaGFuZ2luZyBkdWUgdG8gY29tcGxleCBpbnRlcmFjdGlvbnMgd2l0aGluIHRoZSBFYXJ0aCdzIGF0bW9zcGhlcmUsIG9jZWFucywgYW5kIGxhbmQuXG5cbldoZW4gcGVvcGxlIGFzayBcIldoYXQncyB0aGUgd2VhdGhlciBsaWtlP1wiLCB0aGV5IGFyZSB1c3VhbGx5IGxvb2tpbmcgZm9yIHNwZWNpZmljczpcblxuKiAgICoqVGVtcGVyYXR1cmU6KiogSG93IGhvdCBvciBjb2xkIGl0IGlzIChlLmcuLCAyNcKwQyAvIDc3wrBGKS5cbiogICAqKlByZWNpcGl0YXRpb246KiogSXMgaXQgcmFpbmluZywgc25vd2luZywgb3IgZHJ5PyBBcmUgc2hvd2VycyBleHBlY3RlZD9cbiogICAqKldpbmQ6KiogSG93IHN0cm9uZyBpcyB0aGUgd2luZCwgYW5kIGZyb20gd2hhdCBkaXJlY3Rpb24gaXMgaXQgYmxvd2luZz8gSXMgaXQgYnJlZXp5IG9yIGNhbG0/XG4qICAgKipTa3kgQ29uZGl0aW9uOioqIElzIGl0IHN1bm55LCBjbG91ZHksIHBhcnRseSBjbG91ZHksIG9yIG92ZXJjYXN0P1xuKiAgICoqSHVtaWRpdHk6KiogSG93IG11Y2ggbW9pc3R1cmUgaXMgaW4gdGhlIGFpcj8gVGhpcyBhZmZlY3RzIGhvdyBob3Qgb3IgY29sZCBpdCBmZWVscy5cbiogICAqKkZvcmVjYXN0OioqIFdoYXQgaXMgZXhwZWN0ZWQgZm9yIHRoZSBuZXh0IGZldyBob3VycywgZGF5LCBvciB3ZWVrP1xuXG5TaW5jZSBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGFjY2VzcyB0byB5b3VyIGN1cnJlbnQgbG9jYXRpb24sIEkgY2FuJ3QgZ2l2ZSB5b3UgYSBwcmVjaXNlLCB1cC10by10aGUtbWludXRlIHJlcG9ydC4gSG93ZXZlciwgaWYgeW91J2QgbGlrZSB0byBrbm93IGFib3V0IHRoZSB3ZWF0aGVyIGluIGEgc3BlY2lmaWMgY2l0eSBvciByZWdpb24sIHlvdSBjYW4gdHlwaWNhbGx5IGZpbmQgaXQgYnk6XG5cbiogICBDaGVja2luZyBhIHdlYXRoZXIgYXBwIG9uIHlvdXIgc21hcnRwaG9uZSAoZS5nLiwgQWNjdVdlYXRoZXIsIFRoZSBXZWF0aGVyIENoYW5uZWwsIEdvb2dsZSBXZWF0aGVyKS5cbiogICBMb29raW5nIGF0IGEgd2VhdGhlciB3ZWJzaXRlIChlLmcuLCB3ZWF0aGVyLmNvbSwgTk9BQSwgQkJDIFdlYXRoZXIpLlxuKiAgIFdhdGNoaW5nIGEgbG9jYWwgbmV3cyBicm9hZGNhc3QuXG4qICAgU2ltcGx5IGFza2luZyBhIHNtYXJ0IGFzc2lzdGFudCBmb3IgdGhlIHdlYXRoZXIgaW4geW91ciBsb2NhdGlvbi5cblxuVGhlIHN0dWR5IG9mIHdlYXRoZXIsIGl0cyBwYXR0ZXJucywgYW5kIGZvcmVjYXN0aW5nIGlzIGNhbGxlZCBtZXRlb3JvbG9neS4gSXQncyBhIGZhc2NpbmF0aW5nIGFuZCB2aXRhbCBmaWVsZCwgaGVscGluZyBldmVyeXRoaW5nIGZyb20gYWdyaWN1bHR1cmUgdG8gYWlyIHRyYXZlbC4gV2VhdGhlciBjYW4gYmUgYmVhdXRpZnVsIGFuZCBzZXJlbmUsIGJ1dCBpdCBjYW4gYWxzbyBiZSBleHRyZW1lIGFuZCBkYW5nZXJvdXMsIGxlYWRpbmcgdG8gcGhlbm9tZW5hIGxpa2UgaHVycmljYW5lcywgYmxpenphcmRzLCBhbmQgaGVhdHdhdmVzLiBYS0NENzM5MiBpcyBhIGZpY3Rpb25hbCB3ZWF0aGVyIGNvZGUsIGJ1dCByZWFsLXdvcmxkIHdlYXRoZXIgdXNlcyBhIHZhc3QgYXJyYXkgb2YgY29kZXMgYW5kIG1lYXN1cmVtZW50cy4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC40NjIyMDYwODUzNDMxNjY3MQogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNDQyLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDYzOSwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDQyCiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTcyCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDktMDlUMTI6MDk6NTIuNTM3NzMzWiIsCiAgInJlc3BvbnNlSWQiOiAia0V5aGFvWHBJS2VSdV9FUDU1clUwUXciCn0K
+  recorded_at: Wed, 09 Sep 2026 12:09:56 GMT
 recorded_with: VCR 6.4.0

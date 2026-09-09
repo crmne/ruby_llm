@@ -29,7 +29,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 20:56:53 GMT
+      - Wed, 09 Sep 2026 12:05:55 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -45,15 +45,17 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-ee76264e56ec082d162112c51caf5e77-73babbf10004c1ac-00
+      - 00-9eeea692fe7ecd829ba7009b5d4affb4-002681fc0009563e-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - d929a945-af08-43a4-a03f-296a35980709
+      - 178428ee-2629-47b2-82c7-efc31cf43f73
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -85,7 +87,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - d929a945-af08-43a4-a03f-296a35980709
+      - 178428ee-2629-47b2-82c7-efc31cf43f73
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -94,16 +96,16 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"eedfac6d-d578-4176-99d4-e7331e10d4e5","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_63150142","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":249,"completion_tokens":40,"total_tokens":289,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":416,"audio_tokens":0,"text_tokens":249,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814614,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 07 Sep 2026 20:56:54 GMT
+      string: '{"id":"dc769447-46e6-4612-b643-6c8a3acf31c7","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_24680607","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":249,"completion_tokens":40,"total_tokens":289,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":416,"audio_tokens":0,"text_tokens":249,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788955556,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 09 Sep 2026 12:05:56 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_63150142","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_63150142"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_24680607","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_24680607"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -126,7 +128,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 20:56:54 GMT
+      - Wed, 09 Sep 2026 12:05:56 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -142,15 +144,17 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-2333dde27c20a940924505dc7d11fb0f-62c9df8c00023e54-00
+      - 00-958f9ffe6a8e03f30d6ea2ca74b76797-134677ee002b7245-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 9befd48f-7b43-4089-941f-d09e157c6139
+      - 10ddf31e-5932-489e-ae18-6d1647d7e00b
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -182,7 +186,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 9befd48f-7b43-4089-941f-d09e157c6139
+      - 10ddf31e-5932-489e-ae18-6d1647d7e00b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -192,17 +196,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjY3OTEzYTFlLTY3NTEtNGE4NC1hN2JlLTY2ZTBkNTI4ODg5YyIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzI1LCJjb21wbGV0aW9uX3Rva2VucyI6MjksInRvdGFsX3Rva2VucyI6MzU0LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDkyLCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjozMjUsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc4ODgxNDYxNCwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
-  recorded_at: Mon, 07 Sep 2026 20:56:55 GMT
+        eyJpZCI6IjVhYmFmMThiLTgzMmYtNGIzYy1iMDhlLWY5YjBjZGJmY2Y5NCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIHdpbmRzIGF0IDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMjUsImNvbXBsZXRpb25fdG9rZW5zIjoxNywidG90YWxfdG9rZW5zIjozNDIsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0OTIsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjMyNSwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzg4OTU1NTU3LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Wed, 09 Sep 2026 12:05:57 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_63150142","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_63150142"},{"role":"assistant","content":"The
-        current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_24680607","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_24680607"},{"role":"assistant","content":"The
+        current weather in Berlin is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -226,7 +230,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 20:56:55 GMT
+      - Wed, 09 Sep 2026 12:05:57 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -242,15 +246,17 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-c5e069c6f7eaa2518e42bc25505c4396-c990d761000b166e-00
+      - 00-80b7423e3d66c299946a92e907122f6d-4c7de6990010f7d0-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 71a2c1e0-4d67-40e9-adbc-ed2829bc8472
+      - 42d4d80a-9e72-470b-b75f-327c26cc94aa
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -260,7 +266,7 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '48'
+      - '49'
       X-Ratelimit-Reset-Requests:
       - '1'
       X-Ratelimit-Limit-Requests:
@@ -270,7 +276,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49747'
+      - '49752'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -282,7 +288,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 71a2c1e0-4d67-40e9-adbc-ed2829bc8472
+      - 42d4d80a-9e72-470b-b75f-327c26cc94aa
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -291,32 +297,19 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"4d4b9393-b493-465e-afb3-c6d4fe3605bb","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"
-        No, longitude missing.\n\nFinal correct one:\n\n","tool_calls":[{"id":"call_13392072","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514</>\\n</xai:function_call
-        >```json\\n{\\n  \\\"name\\\": \\\"weather\\\",\\n  \\\"parameters\\\": {\\n    \\\"latitude\\\":
-        \\\"48.8575\\\",\\n    \\\"longitude\\\": \\\"2.3514\\\"\\n  }\\n}\\n``` Wait,
-        no, that''s not right. Let me correct the format.\\n\\n<xai:function_call
-        name=\\\"weather\\\">\\n<parameter name=\\\"latitude\\\">48.8575\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":383,"completion_tokens":130,"total_tokens":513,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":493,"audio_tokens":0,"text_tokens":383,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814617,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 07 Sep 2026 20:56:57 GMT
+      string: '{"id":"d73bccce-6c5f-442a-9e3f-f6ebf7d3946f","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_43749263","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":371,"completion_tokens":40,"total_tokens":411,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":493,"audio_tokens":0,"text_tokens":371,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788955558,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 09 Sep 2026 12:05:58 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_63150142","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_63150142"},{"role":"assistant","content":"The
-        current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"
-        No, longitude missing.\n\nFinal correct one:\n\n","tool_calls":[{"id":"call_13392072","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514</>\\n</xai:function_call
-        >```json\\n{\\n  \\\"name\\\": \\\"weather\\\",\\n  \\\"parameters\\\": {\\n    \\\"latitude\\\":
-        \\\"48.8575\\\",\\n    \\\"longitude\\\": \\\"2.3514\\\"\\n  }\\n}\\n``` Wait,
-        no, that''s not right. Let me correct the format.\\n\\n<xai:function_call
-        name=\\\"weather\\\">\\n<parameter name=\\\"latitude\\\">48.8575\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514</>\n</xai:function_call >```json\n{\n  \"name\":
-        \"weather\",\n  \"parameters\": {\n    \"latitude\": \"48.8575\",\n    \"longitude\":
-        \"2.3514\"\n  }\n}\n``` Wait, no, that''s not right. Let me correct the format.\n\n<xai:function_call
-        name=\"weather\">\n<parameter name=\"latitude\">48.8575: 15°C, Wind: 10 km/h","tool_call_id":"call_13392072"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_24680607","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_24680607"},{"role":"assistant","content":"The
+        current weather in Berlin is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_43749263","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_43749263"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -339,7 +332,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 20:56:57 GMT
+      - Wed, 09 Sep 2026 12:05:58 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -355,13 +348,13 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-be6ffc1ce323ace9a5a0d880344001fc-ba9eef91001121e7-00
+      - 00-a889ccb96e9432d7fd14e76d7cbd10d8-134677ee002b725d-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 5bb86a04-4d8d-485b-9888-af43c271e00a
+      - 0041db7f-f99f-4e91-91a7-b6306fcbdccd
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
       Azureai-Requested-Tier:
@@ -383,7 +376,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49501'
+      - '49676'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -395,116 +388,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 5bb86a04-4d8d-485b-9888-af43c271e00a
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Ms-Region:
-      - West Europe
-    body:
-      encoding: UTF-8
-      string: '{"id":"898c72e3-9c74-4aa8-b85c-6795aebe29d6","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_31953462","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":628,"completion_tokens":40,"total_tokens":668,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":551,"audio_tokens":0,"text_tokens":628,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814619,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 07 Sep 2026 20:56:59 GMT
-- request:
-    method: post
-    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
-    body:
-      encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_63150142","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_63150142"},{"role":"assistant","content":"The
-        current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"
-        No, longitude missing.\n\nFinal correct one:\n\n","tool_calls":[{"id":"call_13392072","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514</>\\n</xai:function_call
-        >```json\\n{\\n  \\\"name\\\": \\\"weather\\\",\\n  \\\"parameters\\\": {\\n    \\\"latitude\\\":
-        \\\"48.8575\\\",\\n    \\\"longitude\\\": \\\"2.3514\\\"\\n  }\\n}\\n``` Wait,
-        no, that''s not right. Let me correct the format.\\n\\n<xai:function_call
-        name=\\\"weather\\\">\\n<parameter name=\\\"latitude\\\">48.8575\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514</>\n</xai:function_call >```json\n{\n  \"name\":
-        \"weather\",\n  \"parameters\": {\n    \"latitude\": \"48.8575\",\n    \"longitude\":
-        \"2.3514\"\n  }\n}\n``` Wait, no, that''s not right. Let me correct the format.\n\n<xai:function_call
-        name=\"weather\">\n<parameter name=\"latitude\">48.8575: 15°C, Wind: 10 km/h","tool_call_id":"call_13392072"},{"role":"assistant","content":"","tool_calls":[{"id":"call_31953462","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_31953462"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Api-Key:
-      - "<AZURE_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 07 Sep 2026 20:56:59 GMT
-      Server:
-      - istio-envoy
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - access-control-request-headers
-      X-Ms-Rai-Invoked:
-      - 'true'
-      Traceparent:
-      - 00-f220923bfa40c4308d5a6ab61f505d0b-8dc788d3002e47f8-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 127bcb06-b8be-444b-a1dc-3ea456a680e6
-      Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49426'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Apim-Request-Id:
-      - 127bcb06-b8be-444b-a1dc-3ea456a680e6
+      - 0041db7f-f99f-4e91-91a7-b6306fcbdccd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -514,6 +398,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjdlYTgwYjMzLWM4NTQtNGE0YS04NjA3LTRhNzc5YTUxNjc5YSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpIGlzIDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjcwNCwiY29tcGxldGlvbl90b2tlbnMiOjI5LCJ0b3RhbF90b2tlbnMiOjczMywiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjc5NiwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6NzA0LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODg4MTQ2MTksIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
-  recorded_at: Mon, 07 Sep 2026 20:57:00 GMT
+        eyJpZCI6IjhjY2RiNDVjLTViMjktNDUwMi1iZjcyLWM1ZDBmNTk2ZjJjNCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzIDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ0NywiY29tcGxldGlvbl90b2tlbnMiOjE3LCJ0b3RhbF90b2tlbnMiOjQ2NCwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjUzOSwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6NDQ3LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODg5NTU1NTgsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Wed, 09 Sep 2026 12:05:59 GMT
 recorded_with: VCR 6.4.0

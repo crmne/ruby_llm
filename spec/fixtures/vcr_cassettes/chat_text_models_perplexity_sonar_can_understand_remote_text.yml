@@ -29,41 +29,41 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Mon, 07 Sep 2026 11:47:10 GMT
+      - Tue, 08 Sep 2026 03:44:55 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6a9ea43e-9c6"
+      - W/"6a9f84b7-9c6"
       Expires:
-      - Mon, 07 Sep 2026 21:02:09 GMT
+      - Wed, 09 Sep 2026 12:14:51 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 816C:15AB:43E3D27:4495830:6A9F23F9
+      - 87C6:464DE:E0647A:E2BECB:6AA14B62
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
-      Age:
-      - '539'
       Date:
-      - Mon, 07 Sep 2026 21:29:50 GMT
+      - Wed, 09 Sep 2026 12:06:48 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '87'
       X-Served-By:
-      - cache-ber1080027-BER
+      - cache-ber1080043-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1788816591.592761,VS0,VE1
+      - S1788955609.701906,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 92d9874aa0d73ff4f96da9afa2059fc139fb2c57
+      - 23fd9dd89f471cf3f092d0e3131d3fe682031543
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 07 Sep 2026 21:29:50 GMT
+  recorded_at: Wed, 09 Sep 2026 12:06:48 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -157,16 +157,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:29:54 GMT
+      - Wed, 09 Sep 2026 12:06:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -174,20 +171,23 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1788816595'
+      - '1788955613'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJkZWx0YSI6eyJjb250ZW50IjoiIiwicm9sZSI6ImFzc2lzdGFudCJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGlzIGZpbGUgaXMgdGhlIFJ1YnkgbGljZW5zZS4gSXQgc2F5cyBSdWJ5IGlzIGZyZWUgc29mdHdhcmUgY29weXJpZ2h0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIGFuZCBjYW4gYmUgdXNlZCwgY29waWVkLCBtb2RpZmllZCwgYW5kIGRpc3RyaWJ1dGVkIHVuZGVyIGVpdGhlciB0aGUgMi1jbGF1c2UgQlNEIGxpY2Vuc2Ugb3IgdGhlIGNvbmRpdGlvbnMgbGlzdGVkIGluIHRoZSBmaWxlLlxuXG5LZXkgcG9pbnRzOlxuLSBZb3UgbWF5IGNvcHkgdGhlIHNvdXJjZSBmcmVlbHkgaWYgeW91IGtlZXAgdGhlIGNvcHlyaWdodCBub3RpY2VzIGFuZCBkaXNjbGFpbWVycy5cbi0gWW91IG1heSBtb2RpZnkgaXQsIGJ1dCB5b3UgbXVzdCBtZWV0IG9uZSBvZiBzZXZlcmFsIGRpc3RyaWJ1dGlvbiBvciBzaGFyaW5nIGNvbmRpdGlvbnMuXG4tIFlvdSBtYXkgZGlzdHJpYnV0ZSBiaW5hcmllcyBpZiB5b3UgYWxzbyBwcm92aWRlIHNvdXJjZSwgaW5zdHJ1Y3Rpb25zLCBvciBvdGhlciBzcGVjaWZpZWQgYXJyYW5nZW1lbnRzLlxuLSBTb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gbWF5IGhhdmUgZGlmZmVyZW50IHRlcm1zLCByZWZlcmVuY2VkIGluIGBMRUdBTGAuXG4tIEl0IGluY2x1ZGVzIGFuIOKAnEFTIElT4oCdIHdhcnJhbnR5IGRpc2NsYWltZXIuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3ODg4MTY1OTQsImlkIjoiODhlMmEwZTEtNGYxYi00Mzk5LWI5MTYtYTEzNDAxNDFjZmViIiwibW9kZWwiOiJzb25hciIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxMzMsImNvc3QiOnsiaW5wdXRfdG9rZW5zX2Nvc3QiOjAuMDAwNTQsIm91dHB1dF90b2tlbnNfY29zdCI6MC4wMDAxMywicmVxdWVzdF9jb3N0IjowLjAwNSwidG90YWxfY29zdCI6MC4wMDU2N30sInByb21wdF90b2tlbnMiOjUzNSwic2VhcmNoX2NvbnRleHRfc2l6ZSI6ImxvdyIsInRvdGFsX3Rva2VucyI6NjY4fX0K
-  recorded_at: Mon, 07 Sep 2026 21:29:54 GMT
+        eyJjaG9pY2VzIjpbeyJkZWx0YSI6eyJjb250ZW50IjoiIiwicm9sZSI6ImFzc2lzdGFudCJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGlzIGZpbGUgaXMgYSBzb2Z0d2FyZSBsaWNlbnNlIGZvciBSdWJ5LCB3cml0dGVuIGJ5IFl1a2loaXJvIE1hdHN1bW90byAo4oCcbWF0euKAnSkuIEl0IGxldHMgeW91IGNvcHksIG1vZGlmeSwgYW5kIHJlZGlzdHJpYnV0ZSB0aGUgc29mdHdhcmUgdW5kZXIgY2VydGFpbiBjb25kaXRpb25zLCBhbmQgaXQgaW5jbHVkZXMgYW4g4oCcYXMgaXPigJ0gd2FycmFudHkgZGlzY2xhaW1lci5cblxuS2V5IHBvaW50czpcbi0gWW91IGNhbiByZWRpc3RyaWJ1dGUgdGhlIHNvdXJjZSBpZiB5b3Uga2VlcCB0aGUgY29weXJpZ2h0IG5vdGljZXMgYW5kIGRpc2NsYWltZXJzLlxuLSBNb2RpZmljYXRpb25zIGFyZSBhbGxvd2VkIGlmIHlvdSBtZWV0IG9uZSBvZiBzZXZlcmFsIGNvbmRpdGlvbnMsIHN1Y2ggYXMgbWFraW5nIHRoZW0gcHVibGljLCB1c2luZyB0aGVtIG9ubHkgaW50ZXJuYWxseSwgb3IgZGlzdHJpYnV0aW5nIHRoZW0gdW5kZXIgZGlmZmVyZW50IG5hbWVzLlxuLSBCaW5hcnkgZGlzdHJpYnV0aW9uIGlzIGFsbG93ZWQgaWYgeW91IGFsc28gcHJvdmlkZSBzb3VyY2UsIGluc3RydWN0aW9ucywgb3Igb3RoZXIgYXBwcm92ZWQgYXJyYW5nZW1lbnRzLlxuLSBTb21lIGZpbGVzIG1heSBoYXZlIGRpZmZlcmVudCB0ZXJtczsgdGhvc2UgYXJlIGxpc3RlZCBpbiBhIHNlcGFyYXRlIGBMRUdBTGAgZmlsZS5cbi0gT3V0cHV0IHNjcmlwdHMgYW5kIGxpYnJhcnkgZmlsZXMgYmVsb25nIHRvIHdob2V2ZXIgY3JlYXRlZCB0aGVtLCBub3QgYXV0b21hdGljYWxseSB0byBSdWJ5LlxuLSBUaGUgc29mdHdhcmUgY29tZXMgd2l0aCBubyB3YXJyYW50eSwgaW5jbHVkaW5nIG5vIGltcGxpZWQgbWVyY2hhbnRhYmlsaXR5IG9yIGZpdG5lc3MgZ3VhcmFudGVlcy4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc4ODk1NTYxMiwiaWQiOiJiMTY5MTVjMy02NmEzLTRhZTctYTZmOS1lNjI5YmU2NjlkNjYiLCJtb2RlbCI6InNvbmFyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE2OSwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wMDA1NCwib3V0cHV0X3Rva2Vuc19jb3N0IjowLjAwMDE3LCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNTd9LCJwcm9tcHRfdG9rZW5zIjo1MzUsInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJ0b3RhbF90b2tlbnMiOjcwNH19Cg==
+  recorded_at: Wed, 09 Sep 2026 12:06:52 GMT
 recorded_with: VCR 6.4.0

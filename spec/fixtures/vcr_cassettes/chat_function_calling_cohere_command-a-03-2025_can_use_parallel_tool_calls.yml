@@ -47,11 +47,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d80dc39d25281a571011462998965aba
+      - aac94e0f29f1ffa6fc7b6d2d603efab3
       Date:
-      - Mon, 07 Sep 2026 20:57:42 GMT
+      - Wed, 09 Sep 2026 12:06:47 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1115'
+      - '1189'
       Server:
       - envoy
       Via:
@@ -62,10 +62,10 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"184b2275-88cc-4249-991b-c96d074c3f13","message":{"role":"assistant","tool_plan":"I
+      string: '{"id":"79dabe43-f298-493a-901d-32bd3d967ce2","message":{"role":"assistant","tool_plan":"I
         will use the weather tool to find the weather in Berlin and the best_language_to_learn
-        tool to find the best language to learn.","tool_calls":[{"id":"weather_cpeq2y8qvemh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_k101snzsdvng","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":135,"output_tokens":60},"tokens":{"input_tokens":1568,"output_tokens":114},"cached_tokens":1088}}'
-  recorded_at: Mon, 07 Sep 2026 20:57:42 GMT
+        tool to find the best language to learn.","tool_calls":[{"id":"weather_p0j77taeapvx","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_ddvsj2zespcm","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":135,"output_tokens":60},"tokens":{"input_tokens":1568,"output_tokens":114},"cached_tokens":992}}'
+  recorded_at: Wed, 09 Sep 2026 12:06:47 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -73,8 +73,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_cpeq2y8qvemh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_k101snzsdvng","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"weather_cpeq2y8qvemh","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"role":"tool","tool_call_id":"best_language_to_learn_k101snzsdvng","content":"Ruby"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_p0j77taeapvx","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"best_language_to_learn_ddvsj2zespcm","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"weather_p0j77taeapvx","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"role":"tool","tool_call_id":"best_language_to_learn_ddvsj2zespcm","content":"Ruby"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -106,7 +106,7 @@ http_interactions:
       Num-Chars:
       - '7937'
       Num-Tokens:
-      - '204'
+      - '208'
       Pragma:
       - no-cache
       Vary:
@@ -114,22 +114,22 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - d991805a8d73646153ea27c276a18f7f
+      - b23cd10783c46232b56baa2ce30a40e8
       Date:
-      - Mon, 07 Sep 2026 20:57:43 GMT
+      - Wed, 09 Sep 2026 12:06:48 GMT
       X-Envoy-Upstream-Service-Time:
-      - '736'
+      - '666'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA1YmY5OTE0LWQyM2QtNDVjMi04MmQ3LTRlMGMzYzQ0NDdlOSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggd2luZHMgb2YgMTAga20vaC4gVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgUnVieS4ifV0sImNpdGF0aW9ucyI6W3sic3RhcnQiOjMzLCJlbmQiOjYwLCJ0ZXh0IjoiMTXCsEMgd2l0aCB3aW5kcyBvZiAxMCBrbS9oLiIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyX2NwZXEyeThxdmVtaDowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA1Mi41MjAwLCAxMy40MDUwOiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifSx7InN0YXJ0Ijo5MSwiZW5kIjo5NiwidGV4dCI6IlJ1YnkuIiwic291cmNlcyI6W3sidHlwZSI6InRvb2wiLCJpZCI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm5fazEwMXNuenNkdm5nOjAiLCJ0b29sX291dHB1dCI6eyJjb250ZW50IjoiUnVieSJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxNzUsIm91dHB1dF90b2tlbnMiOjI5fSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTc3NCwib3V0cHV0X3Rva2VucyI6NTF9LCJjYWNoZWRfdG9rZW5zIjoxMTJ9fQ==
-  recorded_at: Mon, 07 Sep 2026 20:57:43 GMT
+        eyJpZCI6IjNkNjBjMjYxLTQ5N2YtNDNhMC1iY2RlLTllYTVjMjQ0NTJkZSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0IjozMywiZW5kIjo2NywidGV4dCI6IjE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwic291cmNlcyI6W3sidHlwZSI6InRvb2wiLCJpZCI6IndlYXRoZXJfcDBqNzd0YWVhcHZ4OjAiLCJ0b29sX291dHB1dCI6eyJjb250ZW50IjoiQ3VycmVudCB3ZWF0aGVyIGF0IDUyLjUyMDAsIDEzLjQwNTA6IDE1wrBDLCBXaW5kOiAxMCBrbS9oIn19XSwidHlwZSI6IlRFWFRfQ09OVEVOVCJ9LHsic3RhcnQiOjk5LCJlbmQiOjEwNCwidGV4dCI6IlJ1YnkuIiwic291cmNlcyI6W3sidHlwZSI6InRvb2wiLCJpZCI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm5fZGR2c2oyemVzcGNtOjAiLCJ0b29sX291dHB1dCI6eyJjb250ZW50IjoiUnVieSJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxNzUsIm91dHB1dF90b2tlbnMiOjMzfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTc3NCwib3V0cHV0X3Rva2VucyI6NTV9LCJjYWNoZWRfdG9rZW5zIjoxMDg4fX0=
+  recorded_at: Wed, 09 Sep 2026 12:06:48 GMT
 recorded_with: VCR 6.4.0

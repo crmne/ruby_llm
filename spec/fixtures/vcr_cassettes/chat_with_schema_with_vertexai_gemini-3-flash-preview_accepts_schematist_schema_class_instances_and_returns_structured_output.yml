@@ -21,11 +21,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:03:44 GMT
-      Pragma:
-      - no-cache
+      - Wed, 09 Sep 2026 12:12:15 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 07 Sep 2026 21:03:44 GMT
+  recorded_at: Wed, 09 Sep 2026 12:12:15 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:03:52 GMT
+      - Wed, 09 Sep 2026 12:12:44 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,8 +110,8 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "{\"name\": \"Alice\", \"age\": 28}",
-                    "thoughtSignature": "AY89a1/XqrlZmOFPQiDw5nCyi3UmWcT5u8bqIw+/KBj9UuRD4MI80Y5Gdtn3+bcA6V3ye1+bJDigjKjmBYDxX2/uRgSN0fmG1KlkZu7W9mWn2MA7AYpOit5MLI4XBcU2TANCxtFXB+GNgUaFTy9C77eDnGw02zEIoMS+Nz+I4nR37IJqXHshmpLHBXtHOIGSkjoTEISPZCQSceRN7xDNdYWIkBVLzuAvdmgJqJ4UuKisBba55/I7Cto/8iE6nRGFm0TGDJfm249ho/ECAeZ32cOLkXDN0SaKhKgsTc1t4LlvkKb9Yx6YNN4iRH8jhna1W0NjmPqcIMugbo9b3+upUgoikvmQ1qOzZZTRxVvNRFSfQjZqwseXe/gcL9L+NB8mAqRHWQRRicUFa8lXOfWDsLqS6tbuC+PupulXG19xnY7C+utWdXdd+n+nVdoSb2j/+QqQ4DGRK7zRMAvAnCWHA2H4lvMI2aPv+uAtTlefTF5DnZXdbWhVBeR38Iea7TH8ulJ0kmDfhGKuTHl954C2EDWXGL7f3HEuSyLmyGGT4H32/hXxy9x5+3Mj097OANR0g7+Xj5oN1QhwaZjrCVO4hPIfPVCtCSp+WM8wYO4OXZh8hSwg5qVW0Em+7ncl9D4LKI618SjWK6cw+xsofKb6jng3p3yZau79qxVbICCr0KhcCM/Vmke6pRk8Z+ZhSxw5fwpFm9etr/SFbl05Hyms3gr9x26H6iqA5L8tHNG9uj/9EM5Z450yxFYrHdVG/Z6Q8PrOiiFwb9126L4FVoL2BNf3RWDx63Qo+jbm+2VV1rciXL/gauz2C1fiOk9Mhzyk9BsgQagjbviRg4jwJ1usvP3tEX7F/8+ZCtt1Sz7H8MSCnaMnxNjCdfRU+7lFnioD6eDfxTDNwrWP4VaztBxP2o+vtejaC7yKp54XVMTrcGVDUgS4yXbooadLpa+2/88ldKx+yTELo8HQKuE7L+bZ5kgRk/5zO+rpnG65u5sBx9iS+Y9J/t04El1XZtyP6eyEalNlEstAx93qUYwoujRDeo4dV7IpoKDETKXPdxjiruTFxIQfOWA+kS2Dmwk93K20ViUYoaB2HDCTR+WeNxS1iLN24jKQHEs3wtiWkXGIYK5lgXE81wjtz4/TPrukBwDsG6srWgdFFbKvHkHENrS0RTGwYwKRWy8WmbFfIEYiQHQIhxJSkCu1h7Wv+6KLoadbog=="
+                    "text": "{\"name\":\"Alice\",\"age\":28}",
+                    "thoughtSignature": "AY89a1+FTCr+oZhqwQNY3pIoTbU2VVs3t3bg0RNNCweNad7H3DIe+WapSLEw1WxiXNJ8euIWEb1mvpinYjDCKUqopE1jtGNecLwglNP/D7IMt2kWoxiET/586Baj+dJ8ipHuWjhGhU3F1iOWwaz5aQ05VnJeVH8lKf2FpBUVNYUl6RxKxkwkHWcjIc3KBFgi42TuExrCp//g8/ZdwGfaeu/z0NPy7FmLWMm1v/JByiqnEweYjtdYKKyBslJCmY+MRNPXpIkaJXd6bNBwfG7r9SLE89CVPwdXqZakhI9vXvakQRYjL6WQd6papGy0/6tJ+Uf51etaz7991ty/k7o1GVPn5KJovyb46guDlCXqbXCYDkWFas5/2SsjZ3MMG0gUveXPMOoxyTQl9HxWont0cA2TqhIMGdeOQBpnlZSJj01VW53dAEjKOBJkxKHy3n3/kTuDxGS/5gL9L8w9bmpmf+okYrPSi5TujTbvI4F/UtD8aCSK6P/No+dB+5KVYUS99UHfjZY/hc1QxLLzrCkPHunnv3Yyz37vJf56dOn5vIZWyPhqA+LtdE98gob3+UoDT6YNZkG1IeLM497gFr2gwSFjD3qttyjdpX2BJBTgZg3HDTjZAVlBk64/bZcxmszvHJ9LgETXkk7h1A6IUWWuCpFSp+hKh6/mE6aYwvSi0d6kuPXA6SpGi08l2ouZJ+MyR8GowvL6EGWfLKC9cyh2ss74JNxXNgZcWy+LD3rsnFVq9QsIbE/zMeFZMpiFLxfDamCGi2/YMkhJ4Uc1DptiL7GkgEiMvpf12OSUpf/GJbJ4+ui5MGZpxbenVesdfgqB7HixcPNDCUCFnbTUCrBqLWYu1YLCPUu5MAlKtA0jwAZdStpQxuS0wJaEaJI3mSWQ02qeg2lC0O+C4P3DyJ9V50O84GKIpRXd4G2VeSOpyf/C2lk0KMyTiDXlzwXwQD61I8ojZAaFFhrGlk9CZtX4OJueGPgAtSaKZJrGeDrOgcfcbYERmxWFlz++WdMiDEde33atNqVn5XxeuzkhSRQK2njZMO4e/uvTdhfPudJzkr6LacfUxUDzC9KRF0WK8ZHxKmta4TELIgBdH7lWE2//0Cka6oTDPnC86wknbrj7Dwwt8wFIt54dD8u787dsiNwVAXZP/KJls5idjgacKzkvUntgE3+lvsSmgFkLRXPn4Fv9tLAIsYERUcofiAhHin4FqUA+xWQHNc8JQhXqW2B+1OKJCDZkgFNoxXMX9X1XwM5Jy9P510SNiqtKmWnP+dGLluYCcbN+FxWYJR9fEe2CxqJapz8GDA09iinaqHDgtKHAI8Bz/9LCuxizfgTSB17W321i8FTW12OYsEhvSwzUFCTLjRJQV2Am9WsotI00ojV7IemjytxS/jjpEkp7LX23lBh8WJMEJTMsgP0XUyWttfNDSdtOdHZDH5LsH1/0jW931+7e0N4uujvxb0rV4+5wEsve"
                   }
                 ]
               },
@@ -120,8 +120,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 77,
-            "candidatesTokenCount": 13,
-            "totalTokenCount": 345,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 383,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -132,14 +132,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 13
+                "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 255
+            "thoughtsTokenCount": 296
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-09-07T21:03:45.054870Z",
-          "responseId": "sSafatasA6eRu_EP55rU0Qw"
+          "createTime": "2026-09-09T12:12:15.543527Z",
+          "responseId": "H02haqeWIain1PIPw7T20Ag"
         }
-  recorded_at: Mon, 07 Sep 2026 21:03:52 GMT
+  recorded_at: Wed, 09 Sep 2026 12:12:44 GMT
 recorded_with: VCR 6.4.0

@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:06:31 GMT
+      - Wed, 09 Sep 2026 12:07:39 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -33,358 +33,43 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07db1-ac46-7e4f-b8bb-86e152eed4d6
+      - 01a08611-0ba2-7e00-b08f-59c5601e1495
       X-Kong-Request-Id:
-      - 01a07db1-ac46-7e4f-b8bb-86e152eed4d6
+      - 01a08611-0ba2-7e00-b08f-59c5601e1495
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '589'
+      - '746'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '592'
-      X-Kong-Proxy-Latency:
-      - '17'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 0, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": null, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:06:31 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:06:31 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db1-aef9-7dba-a472-f7356f875937
-      X-Kong-Request-Id:
-      - 01a07db1-aef9-7dba-a472-f7356f875937
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '49'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '51'
-      X-Kong-Proxy-Latency:
-      - '19'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": null, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:06:31 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:06:47 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db1-ea6c-7eec-a73c-68a7f6bd6cb8
-      X-Kong-Request-Id:
-      - 01a07db1-ea6c-7eec-a73c-68a7f6bd6cb8
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '55'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '56'
-      X-Kong-Proxy-Latency:
-      - '18'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:06:47 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:07:02 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db2-25d0-73ac-9740-539a4c473415
-      X-Kong-Request-Id:
-      - 01a07db2-25d0-73ac-9740-539a4c473415
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '47'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '49'
-      X-Kong-Proxy-Latency:
-      - '15'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:07:02 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:07:17 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db2-6108-71e9-8d7c-67e7b5172846
-      X-Kong-Request-Id:
-      - 01a07db2-6108-71e9-8d7c-67e7b5172846
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '46'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '48'
-      X-Kong-Proxy-Latency:
-      - '31'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:07:17 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:07:32 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db2-9c42-7269-b0d5-68939e8567e6
-      X-Kong-Request-Id:
-      - 01a07db2-9c42-7269-b0d5-68939e8567e6
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '39'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '41'
+      - '748'
       X-Kong-Proxy-Latency:
       - '12'
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
         "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:07:32 GMT
+        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788955659,
+        "total_requests": 0, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
+        0, "started_at": null, "completed_at": null}'
+  recorded_at: Wed, 09 Sep 2026 12:07:39 GMT
 - request:
     method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
+    uri: https://api.mistral.ai/v1/batch/jobs/070bd7e8-5f4c-4989-9e55-950350feb3e2
     body:
       encoding: US-ASCII
       string: ''
@@ -403,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:07:47 GMT
+      - Wed, 09 Sep 2026 12:07:40 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -411,43 +96,43 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07db2-d74b-7656-8736-e5be4ef79130
+      - 01a08611-0ee8-762b-8058-fb53ad1f5d2c
       X-Kong-Request-Id:
-      - 01a07db2-d74b-7656-8736-e5be4ef79130
+      - 01a08611-0ee8-762b-8058-fb53ad1f5d2c
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '35'
+      - '85'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '37'
+      - '87'
       X-Kong-Proxy-Latency:
-      - '13'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '19'
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
         "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
+        null, "errors": [], "outputs": null, "status": "RUNNING", "created_at": 1788955659,
         "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:07:47 GMT
+        0, "started_at": 1788955659, "completed_at": null}'
+  recorded_at: Wed, 09 Sep 2026 12:07:40 GMT
 - request:
     method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
+    uri: https://api.mistral.ai/v1/batch/jobs/070bd7e8-5f4c-4989-9e55-950350feb3e2
     body:
       encoding: US-ASCII
       string: ''
@@ -466,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:08:02 GMT
+      - Wed, 09 Sep 2026 12:07:55 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -474,43 +159,43 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07db3-1260-7513-920f-c0969380b880
+      - 01a08611-4a37-7ab3-a23e-1d1445f1285e
       X-Kong-Request-Id:
-      - 01a07db3-1260-7513-920f-c0969380b880
+      - 01a08611-4a37-7ab3-a23e-1d1445f1285e
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '43'
+      - '134'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '45'
+      - '136'
       X-Kong-Proxy-Latency:
       - '14'
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
         "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
+        null, "errors": [], "outputs": null, "status": "RUNNING", "created_at": 1788955659,
         "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:08:02 GMT
+        0, "started_at": 1788955659, "completed_at": null}'
+  recorded_at: Wed, 09 Sep 2026 12:07:55 GMT
 - request:
     method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
+    uri: https://api.mistral.ai/v1/batch/jobs/070bd7e8-5f4c-4989-9e55-950350feb3e2
     body:
       encoding: US-ASCII
       string: ''
@@ -529,7 +214,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:08:18 GMT
+      - Wed, 09 Sep 2026 12:08:10 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -537,198 +222,9 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07db3-4d8c-7499-a8a8-665cbb3f1373
+      - 01a08611-85b5-7f7c-ac08-6a6c506143b4
       X-Kong-Request-Id:
-      - 01a07db3-4d8c-7499-a8a8-665cbb3f1373
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '57'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '59'
-      X-Kong-Proxy-Latency:
-      - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:08:18 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:08:33 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db3-88b3-7539-925e-516eb8e66d72
-      X-Kong-Request-Id:
-      - 01a07db3-88b3-7539-925e-516eb8e66d72
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '41'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '42'
-      X-Kong-Proxy-Latency:
-      - '18'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:08:33 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:08:48 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db3-c3e3-7aca-98a3-147c1b3830f1
-      X-Kong-Request-Id:
-      - 01a07db3-c3e3-7aca-98a3-147c1b3830f1
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '39'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '41'
-      X-Kong-Proxy-Latency:
-      - '16'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "QUEUED", "created_at": 1788815191,
-        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:08:48 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:09:03 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db3-ff45-732e-bb2c-6bfad92d2e06
-      X-Kong-Request-Id:
-      - 01a07db3-ff45-732e-bb2c-6bfad92d2e06
+      - 01a08611-85b5-7f7c-ac08-6a6c506143b4
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
@@ -736,33 +232,33 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '40'
+      - '41'
       X-Kong-Proxy-Latency:
-      - '19'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '66'
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
         "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
-        null, "errors": [], "outputs": null, "status": "RUNNING", "created_at": 1788815191,
+        null, "errors": [], "outputs": null, "status": "RUNNING", "created_at": 1788955659,
         "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
-        0, "started_at": 1788815191, "completed_at": null}'
-  recorded_at: Mon, 07 Sep 2026 21:09:03 GMT
+        0, "started_at": 1788955659, "completed_at": null}'
+  recorded_at: Wed, 09 Sep 2026 12:08:10 GMT
 - request:
     method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4
+    uri: https://api.mistral.ai/v1/batch/jobs/070bd7e8-5f4c-4989-9e55-950350feb3e2
     body:
       encoding: US-ASCII
       string: ''
@@ -781,7 +277,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:09:18 GMT
+      - Wed, 09 Sep 2026 12:08:25 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -789,137 +285,200 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07db4-3aaf-7aa0-90e1-fdf5421f676b
+      - 01a08611-c100-7fa7-9bcc-732f94d9a91f
       X-Kong-Request-Id:
-      - 01a07db4-3aaf-7aa0-90e1-fdf5421f676b
+      - 01a08611-c100-7fa7-9bcc-732f94d9a91f
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '116'
+      - '37'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '118'
-      X-Kong-Proxy-Latency:
-      - '14'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": "2f29b8fb-da96-4c69-a0c4-8fa894a67fa7",
-        "error_file": null, "errors": [], "outputs": [{"id": "batch-65cb7a97-fd1e5592-0",
-        "custom_id": "0", "response": {"status_code": 200, "body": {"id": "6676aa2b43334559b94f71b805ce5400",
-        "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens":
-        27, "completion_tokens": 2, "total_tokens": 29, "prompt_audio_seconds": null,
-        "prompt_token_details": null, "request_count": 0, "prompt_tokens_details":
-        {"messages": [], "cached_tokens": 0, "audio_tokens": 0}, "completion_tokens_details":
-        null, "service_tier": null}, "created": 1788815336, "choices": [{"index":
-        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "4",
-        "tool_calls": null, "tool_call_id": null, "index": null, "metadata": null}}]}},
-        "error": null}, {"id": "batch-65cb7a97-fd1e5592-146", "custom_id": "1", "response":
-        {"status_code": 200, "body": {"id": "e4e338132e614a23af0e96eaf823cbd9", "object":
-        "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens":
-        27, "completion_tokens": 3, "total_tokens": 30, "prompt_audio_seconds": null,
-        "prompt_token_details": null, "request_count": 0, "prompt_tokens_details":
-        {"messages": [], "cached_tokens": 0, "audio_tokens": 0}, "completion_tokens_details":
-        null, "service_tier": null}, "created": 1788815335, "choices": [{"index":
-        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "Jupiter",
-        "tool_calls": null, "tool_call_id": null, "index": null, "metadata": null}}]}},
-        "error": null}], "status": "SUCCESS", "created_at": 1788815191, "total_requests":
-        2, "completed_requests": 2, "succeeded_requests": 2, "failed_requests": 0,
-        "started_at": 1788815191, "completed_at": 1788815356}'
-  recorded_at: Mon, 07 Sep 2026 21:09:18 GMT
-- request:
-    method: get
-    uri: https://api.mistral.ai/v1/batch/jobs/65cb7a97-1676-45b6-a118-1f56dfc234f4?inline=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 07 Sep 2026 21:09:19 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - 01a07db4-3be3-7159-acb2-21a8b4afa5d6
-      X-Kong-Request-Id:
-      - 01a07db4-3be3-7159-acb2-21a8b4afa5d6
-      Server:
-      - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '135'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '136'
+      - '38'
       X-Kong-Proxy-Latency:
       - '16'
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "65cb7a97-1676-45b6-a118-1f56dfc234f4", "object": "batch", "input_files":
-        ["fd1e5592-80e4-40cf-9ecf-60c2aef700b2"], "metadata": null, "endpoint": "/v1/chat/completions",
-        "model": "mistral-small-latest", "agent_id": null, "output_file": "2f29b8fb-da96-4c69-a0c4-8fa894a67fa7",
-        "error_file": null, "errors": [], "outputs": [{"id": "batch-65cb7a97-fd1e5592-0",
-        "custom_id": "0", "response": {"status_code": 200, "body": {"id": "6676aa2b43334559b94f71b805ce5400",
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
+        "model": "mistral-small-latest", "agent_id": null, "output_file": null, "error_file":
+        null, "errors": [], "outputs": null, "status": "RUNNING", "created_at": 1788955659,
+        "total_requests": 2, "completed_requests": 0, "succeeded_requests": 0, "failed_requests":
+        0, "started_at": 1788955659, "completed_at": null}'
+  recorded_at: Wed, 09 Sep 2026 12:08:25 GMT
+- request:
+    method: get
+    uri: https://api.mistral.ai/v1/batch/jobs/070bd7e8-5f4c-4989-9e55-950350feb3e2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 09 Sep 2026 12:08:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a08611-fc1a-7d4f-80e8-5ff292c901d4
+      X-Kong-Request-Id:
+      - 01a08611-fc1a-7d4f-80e8-5ff292c901d4
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '206'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '208'
+      X-Kong-Proxy-Latency:
+      - '35'
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
+        "model": "mistral-small-latest", "agent_id": null, "output_file": "c6089df8-b823-444b-af94-1438187cc7a9",
+        "error_file": null, "errors": [], "outputs": [{"id": "batch-070bd7e8-04cd9280-0",
+        "custom_id": "0", "response": {"status_code": 200, "body": {"id": "023b33959bf94358a479f990f89cf424",
         "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens":
         27, "completion_tokens": 2, "total_tokens": 29, "prompt_audio_seconds": null,
         "prompt_token_details": null, "request_count": 0, "prompt_tokens_details":
         {"messages": [], "cached_tokens": 0, "audio_tokens": 0}, "completion_tokens_details":
-        null, "service_tier": null}, "created": 1788815336, "choices": [{"index":
+        null, "service_tier": null}, "created": 1788955660, "choices": [{"index":
         0, "finish_reason": "stop", "message": {"role": "assistant", "content": "4",
         "tool_calls": null, "tool_call_id": null, "index": null, "metadata": null}}]}},
-        "error": null}, {"id": "batch-65cb7a97-fd1e5592-146", "custom_id": "1", "response":
-        {"status_code": 200, "body": {"id": "e4e338132e614a23af0e96eaf823cbd9", "object":
+        "error": null}, {"id": "batch-070bd7e8-04cd9280-146", "custom_id": "1", "response":
+        {"status_code": 200, "body": {"id": "7cd54b2002ec449ab6d066cb7247140b", "object":
         "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens":
         27, "completion_tokens": 3, "total_tokens": 30, "prompt_audio_seconds": null,
         "prompt_token_details": null, "request_count": 0, "prompt_tokens_details":
         {"messages": [], "cached_tokens": 0, "audio_tokens": 0}, "completion_tokens_details":
-        null, "service_tier": null}, "created": 1788815335, "choices": [{"index":
+        null, "service_tier": null}, "created": 1788955660, "choices": [{"index":
         0, "finish_reason": "stop", "message": {"role": "assistant", "content": "Jupiter",
         "tool_calls": null, "tool_call_id": null, "index": null, "metadata": null}}]}},
-        "error": null}], "status": "SUCCESS", "created_at": 1788815191, "total_requests":
+        "error": null}], "status": "SUCCESS", "created_at": 1788955659, "total_requests":
         2, "completed_requests": 2, "succeeded_requests": 2, "failed_requests": 0,
-        "started_at": 1788815191, "completed_at": 1788815356}'
-  recorded_at: Mon, 07 Sep 2026 21:09:19 GMT
+        "started_at": 1788955659, "completed_at": 1788955707}'
+  recorded_at: Wed, 09 Sep 2026 12:08:40 GMT
+- request:
+    method: get
+    uri: https://api.mistral.ai/v1/batch/jobs/070bd7e8-5f4c-4989-9e55-950350feb3e2?inline=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 09 Sep 2026 12:08:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a08611-fd4f-797f-9094-ef3dedf38fad
+      X-Kong-Request-Id:
+      - 01a08611-fd4f-797f-9094-ef3dedf38fad
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '109'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '111'
+      X-Kong-Proxy-Latency:
+      - '15'
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "070bd7e8-5f4c-4989-9e55-950350feb3e2", "object": "batch", "input_files":
+        ["04cd9280-17bf-4e38-9e8b-4f9c098137b5"], "metadata": null, "endpoint": "/v1/chat/completions",
+        "model": "mistral-small-latest", "agent_id": null, "output_file": "c6089df8-b823-444b-af94-1438187cc7a9",
+        "error_file": null, "errors": [], "outputs": [{"id": "batch-070bd7e8-04cd9280-0",
+        "custom_id": "0", "response": {"status_code": 200, "body": {"id": "023b33959bf94358a479f990f89cf424",
+        "object": "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens":
+        27, "completion_tokens": 2, "total_tokens": 29, "prompt_audio_seconds": null,
+        "prompt_token_details": null, "request_count": 0, "prompt_tokens_details":
+        {"messages": [], "cached_tokens": 0, "audio_tokens": 0}, "completion_tokens_details":
+        null, "service_tier": null}, "created": 1788955660, "choices": [{"index":
+        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "4",
+        "tool_calls": null, "tool_call_id": null, "index": null, "metadata": null}}]}},
+        "error": null}, {"id": "batch-070bd7e8-04cd9280-146", "custom_id": "1", "response":
+        {"status_code": 200, "body": {"id": "7cd54b2002ec449ab6d066cb7247140b", "object":
+        "chat.completion", "model": "mistral-small-latest", "usage": {"prompt_tokens":
+        27, "completion_tokens": 3, "total_tokens": 30, "prompt_audio_seconds": null,
+        "prompt_token_details": null, "request_count": 0, "prompt_tokens_details":
+        {"messages": [], "cached_tokens": 0, "audio_tokens": 0}, "completion_tokens_details":
+        null, "service_tier": null}, "created": 1788955660, "choices": [{"index":
+        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "Jupiter",
+        "tool_calls": null, "tool_call_id": null, "index": null, "metadata": null}}]}},
+        "error": null}], "status": "SUCCESS", "created_at": 1788955659, "total_requests":
+        2, "completed_requests": 2, "succeeded_requests": 2, "failed_requests": 0,
+        "started_at": 1788955659, "completed_at": 1788955707}'
+  recorded_at: Wed, 09 Sep 2026 12:08:41 GMT
 recorded_with: VCR 6.4.0

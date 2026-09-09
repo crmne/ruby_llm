@@ -35,7 +35,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 07 Sep 2026 20:57:59 GMT
+      - Wed, 09 Sep 2026 12:07:07 GMT
       Server:
       - elb
       Vary:
@@ -43,7 +43,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 0d83786b42118e59e698aa2a92a22f39
+      - 9279cefd13422d2a63b2a77685b3e282
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,19 +51,19 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 bdbe839f5dd01bab617336740c740d78.cloudfront.net (CloudFront)
+      - 1.1 f1db5e6f1988a99f7e893e57b76aecb8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P2
       X-Amz-Cf-Id:
-      - E_5sm9YQUZ_qrn-telUwzky1dm3oKHyAX7Vfdy-BQscb0rkUZUKiVw==
+      - 0m40DLQQxhnXQr0MtKysdP8klbg1_FaALtVMRty5-MRcLKALackpTQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"db39a57d-770b-4ce4-a269-b043e67d4079","object":"chat.completion","created":1788814679,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        look up both pieces of information for you.","reasoning_content":"The user
-        asks about weather in Berlin and best language to learn. Two independent tool
-        calls. Make both simultaneously.","tool_calls":[{"index":0,"id":"call_00_172zAVugXDTJmQkSmM6v8361","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_d33YtJA7iQINsh7P1TGP5319","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":486,"completion_tokens":116,"total_tokens":602,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":22},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":102},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
-  recorded_at: Mon, 07 Sep 2026 20:58:00 GMT
+      string: '{"id":"c3fc0e32-90ba-4e92-a41d-e0f78a3258ad","object":"chat.completion","created":1788955627,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        fetch both pieces of information for you.","reasoning_content":"The user wants
+        the weather in Berlin and the best language to learn. I have two tools that
+        can be called in parallel.","tool_calls":[{"index":0,"id":"call_00_9ky2bYsSlaEiGCJJRtfm8098","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_TjVOr3B82WHastZicySx5879","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":486,"completion_tokens":118,"total_tokens":604,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":25},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":102},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Wed, 09 Sep 2026 12:07:08 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -71,13 +71,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"I''ll look up both pieces of information
-        for you.","tool_calls":[{"id":"call_00_172zAVugXDTJmQkSmM6v8361","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_d33YtJA7iQINsh7P1TGP5319","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
-        user asks about weather in Berlin and best language to learn. Two independent
-        tool calls. Make both simultaneously.","reasoning":"The user asks about weather
-        in Berlin and best language to learn. Two independent tool calls. Make both
-        simultaneously."},{"role":"tool","content":"Current weather at 52.5200, 13.4050:
-        15°C, Wind: 10 km/h","tool_call_id":"call_00_172zAVugXDTJmQkSmM6v8361"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_d33YtJA7iQINsh7P1TGP5319"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"I''ll fetch both pieces of information
+        for you.","tool_calls":[{"id":"call_00_9ky2bYsSlaEiGCJJRtfm8098","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_TjVOr3B82WHastZicySx5879","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants the weather in Berlin and the best language to learn. I have two
+        tools that can be called in parallel.","reasoning":"The user wants the weather
+        in Berlin and the best language to learn. I have two tools that can be called
+        in parallel."},{"role":"tool","content":"Current weather at 52.5200, 13.4050:
+        15°C, Wind: 10 km/h","tool_call_id":"call_00_9ky2bYsSlaEiGCJJRtfm8098"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_TjVOr3B82WHastZicySx5879"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -105,7 +105,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 07 Sep 2026 20:58:00 GMT
+      - Wed, 09 Sep 2026 12:07:08 GMT
       Server:
       - elb
       Vary:
@@ -113,7 +113,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c240db9c6370654ba22430f60d50214c
+      - 1e1b3d62df8c132abd3aa0a2f371aeac
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -121,14 +121,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 64effe17e30169a2d4da2d11e4e0ebda.cloudfront.net (CloudFront)
+      - 1.1 edd1b5bc7d0087f00636fe3b7878b848.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 4pFqCFLSYOAGXWjHwD7XYtYIcY4drKE6-M5pMz3AQDfg08tH7moHTQ==
+      - RhtAMmANGo-ti2rsX4Q986gYaHv3DYB8JyE4_7AmHMlx5G4U5r8Okw==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImVkZGRiOGU2LTFiYTEtNDJiOC04NTc2LWIzZjEwMDcwYmQzNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ2ODAsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB3aGF0IEkgZm91bmQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW4qKiDwn4yk77iPXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cbioqQmVzdCBsYW5ndWFnZSB0byBsZWFybioqIPCfko5cbi0gUnVieVxuXG5Ib3BlIHRoYXQgaGVscHMhIExldCBtZSBrbm93IGlmIHlvdSBuZWVkIGFueXRoaW5nIGVsc2UuIiwicmVhc29uaW5nX2NvbnRlbnQiOiIifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2NDksImNvbXBsZXRpb25fdG9rZW5zIjo1NywidG90YWxfdG9rZW5zIjo3MDYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo1MTJ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NTEyLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEzN30sInN5c3RlbV9maW5nZXJwcmludCI6ImEyNmE3OTU1OTQ0ZGM1YzYwNDQ1YmZmNzdmYWM5YzhlIn0=
-  recorded_at: Mon, 07 Sep 2026 20:58:01 GMT
+        eyJpZCI6ImQ5MWYwMmVmLWUxMWQtNDAyYi04ODYxLTRhOTk1YjY3NjljNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg5NTU2MjgsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB3aGF0IEkgZm91bmQ6XG5cbioq8J+MpO+4jyBXZWF0aGVyIGluIEJlcmxpbjoqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKvCfk5ogQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKlxuLSBSdWJ5XG5cbkVuam95IHlvdXIgZGF5IGluIEJlcmxpbiEiLCJyZWFzb25pbmdfY29udGVudCI6IiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjY1MSwiY29tcGxldGlvbl90b2tlbnMiOjUwLCJ0b3RhbF90b2tlbnMiOjcwMSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjUxMn0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjo1MTIsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTM5fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYTI2YTc5NTU5NDRkYzVjNjA0NDViZmY3N2ZhYzljOGUifQ==
+  recorded_at: Wed, 09 Sep 2026 12:07:09 GMT
 recorded_with: VCR 6.4.0

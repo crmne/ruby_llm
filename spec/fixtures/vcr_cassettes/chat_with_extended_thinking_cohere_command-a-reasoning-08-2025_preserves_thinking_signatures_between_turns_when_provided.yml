@@ -42,11 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 2cae227e44748e15e2483d86b8189930
+      - 456cd62f092e22999d8c22d1496d3335
       Date:
-      - Mon, 07 Sep 2026 20:58:36 GMT
+      - Wed, 09 Sep 2026 12:06:52 GMT
       X-Envoy-Upstream-Service-Time:
-      - '427'
+      - '410'
       Server:
       - envoy
       Via:
@@ -57,11 +57,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"fd7ca914-6846-487f-90de-ffe19f8fd246","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+      string: '{"id":"7d731b16-02d7-4ade-82f6-7ac11071780c","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
         user is asking for the sum of 5 and 3. Since this is a straightforward arithmetic
         problem, I don''t need to use any tools. I can calculate the result directly."},{"type":"text","text":"The
         sum of 5 and 3 is 8."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":50},"tokens":{"input_tokens":1394,"output_tokens":55,"reasoning_tokens":38},"cached_tokens":1344}}'
-  recorded_at: Mon, 07 Sep 2026 20:58:36 GMT
+  recorded_at: Wed, 09 Sep 2026 12:06:52 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -98,7 +98,7 @@ http_interactions:
       Num-Chars:
       - '6876'
       Num-Tokens:
-      - '74'
+      - '192'
       Pragma:
       - no-cache
       Vary:
@@ -106,11 +106,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f21d8e765f23efe7511e81dc4a174079
+      - 130142450eff0aad93acf83cd3aa5264
       Date:
-      - Mon, 07 Sep 2026 20:58:36 GMT
+      - Wed, 09 Sep 2026 12:06:53 GMT
       X-Envoy-Upstream-Service-Time:
-      - '405'
+      - '1322'
       Server:
       - envoy
       Via:
@@ -121,9 +121,15 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"22823ce6-1ba9-4571-bbe7-0fd8a3c21843","message":{"role":"assistant","content":[{"type":"thinking","thinking":"I
-        need to multiply the previous result, which was 8, by 2.\n\nCalculating 8
-        multiplied by 2 gives 16."},{"type":"text","text":"Sure! The result of multiplying
-        8 by 2 is 16."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":48},"tokens":{"input_tokens":1431,"output_tokens":53,"reasoning_tokens":32},"cached_tokens":1344}}'
-  recorded_at: Mon, 07 Sep 2026 20:58:36 GMT
+      string: '{"id":"c50e375c-3783-47fc-b6f0-ab00a86dbac4","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
+        the user first asked, \"What is 5 + 3?\" and I responded with the sum, which
+        is 8. Now they''re asking to multiply that result by 2. So the next step is
+        to take 8 and multiply by 2. Let me verify the previous answer to make sure
+        it''s correct. 5 plus 3 is indeed 8. Then multiplying 8 by 2 gives 16. I should
+        check if there''s any possible misunderstanding here. The user says \"that,\"
+        referring to the previous result, so there''s no ambiguity. The calculation
+        is straightforward. No tools are needed here since it''s a simple arithmetic
+        operation. I can directly provide the answer."},{"type":"text","text":"The
+        result of multiplying 8 (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":166},"tokens":{"input_tokens":1431,"output_tokens":171,"reasoning_tokens":144},"cached_tokens":1344}}'
+  recorded_at: Wed, 09 Sep 2026 12:06:53 GMT
 recorded_with: VCR 6.4.0

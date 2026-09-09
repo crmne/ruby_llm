@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Tue, 08 Sep 2026 06:59:22 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 09 Sep 2026 12:20:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 08 Sep 2026 06:59:22 GMT
+  recorded_at: Wed, 09 Sep 2026 12:20:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 08 Sep 2026 06:59:23 GMT
+      - Wed, 09 Sep 2026 12:20:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "41.9028",
-                        "longitude": "12.4964"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CqcCAY89a1/zJOJGzXAZA8faQbQyYITYJfjPCTi5+WOueC8L7xN1hGZ0xiHKzGPHxJEDkvfj/lzwzVmOOHhnsyOf+IUQsKTA9ZV+waZ0dZSYU35WkLTt3IXu+HUo0hfQ1ZfRNESj33hF9Tjv1yjTsfwpo4GElixaV0CmRahPj1KlatEEjTAdLc35Z8D6QEa8wsMan9xBG0O67EdCj6AZ8WcHzeLx5gjNwhRY5md8kAX1rp4qe2noz6V2t6fCBtmZqA6VMh6oxvPOT8fM5McNK1zURjEjfPNQHBX2rqqA8lzNo6TJ5rfTGbGcLQjgTHrivoEShU9TlQrc7fzJMRs3nbNZg+l2uOj9dKdMqHLC9NaPtUsAv6eRpK14ayZ7rDblAVVwquOcPX3YHQ=="
+                    "thoughtSignature": "Cs8CAY89a19O7N2kPv1nGS2BeMryhHz1eTqmLgcSJhCAMfT8e+NRq/iq6Xy0AZxZkM6nSYbY7qJ4H/oqsx4zjuj9KF818O7e4Q1p2q5pSj0YXQwsCy2RxNhyQR6VBLz7zDDAzC7QsxWwN8d1th3nEXxF1wcQbHKFk/T7WF6SIjOV+6N3b3C66eDo4WBgCCW42gBCczPNcsON5wZvd66nohad1GmxgsgZIVXKNuMvcdAVMh7Mbvy/DsERTKMJH4eJcHkNvJkXRa3bvciEUOfAGswIrKChTckfkOJTtNh39URfW00vMcqBHR+VWgL/D5iDu1RRI5Zh2yHwmYEWN3DyUtmkqaexUv/PpcAjG5lKwXsdJgbkr0oDgjfIIQl0gF02CCwU5Mh/fsbiPnQ5Z10lLiHE/4KS4m+dVfOjezwjXjbxO5nKwAVrgW8GMWaAP77Ck+U="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.69291586034438191
+              "avgLogprobs": -0.74487069073845358
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 15,
             "candidatesTokenCount": 17,
-            "totalTokenCount": 80,
+            "totalTokenCount": 90,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -144,20 +144,20 @@ http_interactions:
                 "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 48
+            "thoughtsTokenCount": 58
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-08T06:59:22.838736Z",
-          "responseId": "SrKfatCYM56FgbUPoIGZ-QU"
+          "createTime": "2026-09-09T12:20:01.046888Z",
+          "responseId": "8U6haqjuAuz53PQPmIWuiAY"
         }
-  recorded_at: Tue, 08 Sep 2026 06:59:23 GMT
+  recorded_at: Wed, 09 Sep 2026 12:20:01 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CqcCAY89a1/zJOJGzXAZA8faQbQyYITYJfjPCTi5+WOueC8L7xN1hGZ0xiHKzGPHxJEDkvfj/lzwzVmOOHhnsyOf+IUQsKTA9ZV+waZ0dZSYU35WkLTt3IXu+HUo0hfQ1ZfRNESj33hF9Tjv1yjTsfwpo4GElixaV0CmRahPj1KlatEEjTAdLc35Z8D6QEa8wsMan9xBG0O67EdCj6AZ8WcHzeLx5gjNwhRY5md8kAX1rp4qe2noz6V2t6fCBtmZqA6VMh6oxvPOT8fM5McNK1zURjEjfPNQHBX2rqqA8lzNo6TJ5rfTGbGcLQjgTHrivoEShU9TlQrc7fzJMRs3nbNZg+l2uOj9dKdMqHLC9NaPtUsAv6eRpK14ayZ7rDblAVVwquOcPX3YHQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"Cs8CAY89a19O7N2kPv1nGS2BeMryhHz1eTqmLgcSJhCAMfT8e+NRq/iq6Xy0AZxZkM6nSYbY7qJ4H/oqsx4zjuj9KF818O7e4Q1p2q5pSj0YXQwsCy2RxNhyQR6VBLz7zDDAzC7QsxWwN8d1th3nEXxF1wcQbHKFk/T7WF6SIjOV+6N3b3C66eDo4WBgCCW42gBCczPNcsON5wZvd66nohad1GmxgsgZIVXKNuMvcdAVMh7Mbvy/DsERTKMJH4eJcHkNvJkXRa3bvciEUOfAGswIrKChTckfkOJTtNh39URfW00vMcqBHR+VWgL/D5iDu1RRI5Zh2yHwmYEWN3DyUtmkqaexUv/PpcAjG5lKwXsdJgbkr0oDgjfIIQl0gF02CCwU5Mh/fsbiPnQ5Z10lLiHE/4KS4m+dVfOjezwjXjbxO5nKwAVrgW8GMWaAP77Ck+U="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
@@ -184,7 +184,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 08 Sep 2026 06:59:24 GMT
+      - Wed, 09 Sep 2026 12:20:02 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -207,35 +207,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I am unable to provide information about historical events like the fall of Rome. My capabilities are limited to calling tools to get real-time data, like weather information.\n"
+                    "text": "I cannot answer historical questions like the fall of Rome. My capabilities are limited to providing information using the tools I have, such as current weather.\n"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.746856689453125
+              "avgLogprobs": -0.52265946070353186
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 120,
-            "candidatesTokenCount": 34,
-            "totalTokenCount": 154,
+            "promptTokenCount": 130,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 160,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 120
+                "tokenCount": 130
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 34
+                "tokenCount": 30
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-08T06:59:23.859604Z",
-          "responseId": "S7KfatS7NNjPmNAPsvaE6A8"
+          "createTime": "2026-09-09T12:20:02.030800Z",
+          "responseId": "8k6hatDwAbKlstMPlJy_2Ak"
         }
-  recorded_at: Tue, 08 Sep 2026 06:59:24 GMT
+  recorded_at: Wed, 09 Sep 2026 12:20:02 GMT
 recorded_with: VCR 6.4.0

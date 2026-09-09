@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.3
       X-Amz-Date:
-      - 20260907T210024Z
+      - 20260909T120542Z
       X-Amz-Content-Sha256:
       - 547cc625ca3c17150bece07f85b14fe7c22bea8feb53a244490c47cc4811082e
       Authorization:
@@ -29,47 +29,46 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:00:25 GMT
+      - Wed, 09 Sep 2026 12:05:43 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1134'
+      - '645'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - a382eb30-eb3a-4007-b5c6-959d11b1a236
+      - 77b6d434-6daa-47ed-abd7-d8f2ff0e55c5
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTM1M30sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBjYW4gdmFyeSB3aWRlbHkgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGN1cnJlbnQgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gVG8gZ2V0IGFjY3VyYXRlIGFuZCByZWxldmFudCBpbmZvcm1hdGlvbiBhYm91dCB0aGUgd2VhdGhlciAqKnRvZGF5KiosIEkgcmVjb21tZW5kIGNoZWNraW5nIGEgcmVsaWFibGUgd2VhdGhlciBzZXJ2aWNlIG9yIGFwcCwgc3VjaCBhcyBXZWF0aGVyLmNvbSwgQWNjdVdlYXRoZXIsIG9yIHlvdXIgZGV2aWNl4oCZcyBidWlsdC1pbiB3ZWF0aGVyIGZ1bmN0aW9uYWxpdHkuIFRoZXNlIHBsYXRmb3JtcyBwcm92aWRlIHJlYWwtdGltZSB1cGRhdGVzIG9uIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uLCB3aW5kIHNwZWVkLCBodW1pZGl0eSwgYW5kIGZvcmVjYXN0IHRyZW5kcy5cblxuRm9yIGEgbW9yZSBzY2llbnRpZmljIHBlcnNwZWN0aXZlLCB3ZWF0aGVyIGlzIGluZmx1ZW5jZWQgYnkgZmFjdG9ycyBsaWtlIHNvbGFyIHJhZGlhdGlvbiwgYXRtb3NwaGVyaWMgcHJlc3N1cmUgc3lzdGVtcywgb2NlYW4gY3VycmVudHMsIGFuZCB0b3BvZ3JhcGh5LiBVbmRlcnN0YW5kaW5nIHRoZXNlIGVsZW1lbnRzIGhlbHBzIG1ldGVvcm9sb2dpc3RzIHByZWRpY3QgcGF0dGVybnMgcmFuZ2luZyBmcm9tIGRhaWx5IGNoYW5nZXMgdG8gbG9uZy10ZXJtIGNsaW1hdGUgdHJlbmRzLlxuXG5JZiB5b3UncmUgZXZlciBjdXJpb3VzIGFib3V0IGhvdyB3ZWF0aGVyIGRhdGEgaXMgdmlzdWFsaXplZCBpbiBhIGh1bW9yb3VzIHlldCBpbnNpZ2h0ZnVsIHdheSwgdGhlIHdlYmNvbWljICoqWEtDRDczOTIqKiBvZnRlbiBzaW1wbGlmaWVzIGNvbXBsZXggdG9waWNz4oCUaW5jbHVkaW5nIHdlYXRoZXIgbW9kZWxz4oCUaW50byBlYXN5LXRvLWRpZ2VzdCBpbGx1c3RyYXRpb25zLiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjY5LCJvdXRwdXRUb2tlbnMiOjE2Niwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjIzNX19
-  recorded_at: Mon, 07 Sep 2026 21:00:25 GMT
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":980},"output":{"message":{"content":[{"text":"The
+        weather can vary dramatically depending on your location, time of year, and
+        current atmospheric conditions. To get accurate and localized weather information,
+        it''s best to check a reliable weather service or app for real-time updates
+        on temperature, precipitation, wind, and more. For a humorous yet insightful
+        take on how weather predictions sometimes work, remember the iconic **XKCD7392**
+        comic that pokes fun at meteorological models!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":69,"outputTokens":83,"serverToolUsage":{},"totalTokens":152}}'
+  recorded_at: Wed, 09 Sep 2026 12:05:44 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"The
-        weather can vary widely depending on your location, time of year, and current
-        atmospheric conditions. To get accurate and relevant information about the
-        weather **today**, I recommend checking a reliable weather service or app,
-        such as Weather.com, AccuWeather, or your device’s built-in weather functionality.
-        These platforms provide real-time updates on temperature, precipitation, wind
-        speed, humidity, and forecast trends.\n\nFor a more scientific perspective,
-        weather is influenced by factors like solar radiation, atmospheric pressure
-        systems, ocean currents, and topography. Understanding these elements helps
-        meteorologists predict patterns ranging from daily changes to long-term climate
-        trends.\n\nIf you''re ever curious about how weather data is visualized in
-        a humorous yet insightful way, the webcomic **XKCD7392** often simplifies
-        complex topics—including weather models—into easy-to-digest illustrations."}]},{"role":"user","content":[{"text":"What
+        weather can vary dramatically depending on your location, time of year, and
+        current atmospheric conditions. To get accurate and localized weather information,
+        it''s best to check a reliable weather service or app for real-time updates
+        on temperature, precipitation, wind, and more. For a humorous yet insightful
+        take on how weather predictions sometimes work, remember the iconic **XKCD7392**
+        comic that pokes fun at meteorological models!"}]},{"role":"user","content":[{"text":"What
         are some good books?"}]}],"system":[{"text":"You must include the exact phrase
         \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
       X-Amz-Date:
-      - 20260907T210025Z
+      - 20260909T120544Z
       X-Amz-Content-Sha256:
-      - ab0c782100c1911ca99bd494824c9960115cc8847a75759a428d206b9e93c1b8
+      - a81e8be6dc79a08240ad1ea2e5f98893b00423cae67d675b3a61164820cbc410
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -85,18 +84,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:00:29 GMT
+      - Wed, 09 Sep 2026 12:05:45 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1890'
+      - '709'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - '0936db5a-9e1b-49a6-aa10-7134b11d4684'
+      - 8182e753-80bd-4def-af32-8ad64782a972
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MjY3NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiIjIyMgUmVjb21tZW5kZWQgQm9va3MgQWNyb3NzIEdlbnJlcyAgXG5cbioqQ2xhc3NpYyBMaXRlcmF0dXJlKiogIFxuLSAqKlwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuKio6IEEgdGltZWxlc3MgZXhwbG9yYXRpb24gb2YgbG92ZSwgY2xhc3MsIGFuZCBzb2NpZXRhbCBleHBlY3RhdGlvbnMgaW4gUmVnZW5jeSBFbmdsYW5kLiAgXG4tICoqXCIxOTg0XCIgYnkgR2VvcmdlIE9yd2VsbCoqOiBBIGR5c3RvcGlhbiBtYXN0ZXJwaWVjZSB0aGF0IGV4YW1pbmVzIHRvdGFsaXRhcmlhbmlzbSwgc3VydmVpbGxhbmNlLCBhbmQgaW5kaXZpZHVhbGl0eS4gIFxuXG4qKk1vZGVybiBGaWN0aW9uKiogIFxuLSAqKlwiVGhlIE5pZ2h0IENpcmN1c1wiIGJ5IEVyaW4gTW9yZ2Vuc3Rlcm4qKjogQSBseXJpY2FsLCBtYWdpY2FsIHRhbGUgc2V0IGluIGEgbXlzdGVyaW91cyB0cmF2ZWxpbmcgY2lyY3VzLiAgXG4tICoqXCJXaGVyZSB0aGUgQ3Jhd2RhZHMgU2luZ1wiIGJ5IERlbGlhIE93ZW5zKio6IEEgZHVhbCBuYXJyYXRpdmUgYmxlbmRpbmcgbXlzdGVyeSwgY29taW5nLW9mLWFnZSB0aGVtZXMsIGFuZCBuYXR1cmUgd3JpdGluZy4gIFxuXG4qKk5vbi1GaWN0aW9uKiogIFxuLSAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKio6IEEgc3dlZXBpbmcgb3ZlcnZpZXcgb2YgaHVtYW4gaGlzdG9yeSBmcm9tIGNvZ25pdGl2ZSByZXZvbHV0aW9ucyB0byBtb2Rlcm4gZGlsZW1tYXMuICBcbi0gKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcioqOiBBIG1lbW9pciBhYm91dCBlc2NhcGluZyBpc29sYXRpb24gYW5kIGdhaW5pbmcgYW4gZWR1Y2F0aW9uIGFtaWQgZmFtaWx5IHR1cm1vaWwuICBcblxuKipTY2llbmNlIEZpY3Rpb24gJiBGYW50YXN5KiogIFxuLSAqKlwiRHVuZVwiIGJ5IEZyYW5rIEhlcmJlcnQqKjogQSBjb21wbGV4IGVwaWMgYWJvdXQgcG9saXRpY3MsIGVjb2xvZ3ksIGFuZCBkZXN0aW55IG9uIGEgZGVzZXJ0IHBsYW5ldC4gIFxuLSAqKlwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzKio6IEEgYmVhdXRpZnVsbHkgd3JpdHRlbiBmYW50YXN5IGFib3V0IGEgZ2lmdGVkIG1hZ2ljaWFuIHJlY291bnRpbmcgaGlzIGxpZmUuICBcblxuKipNeXN0ZXJ5L1RocmlsbGVyKiogIFxuLSAqKlwiR29uZSBHaXJsXCIgYnkgR2lsbGlhbiBGbHlubioqOiBBIHR3aXN0eSBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIGV4cGxvcmluZyBtZWRpYSwgbWFycmlhZ2UsIGFuZCBkZWNlcHRpb24uICBcbi0gKipcIlRoZSBTaWxlbnQgUGF0aWVudFwiIGJ5IEFsZXggTWljaGFlbGlkZXMqKjogQSBncmlwcGluZyBwc3ljaG9sb2dpY2FsIG15c3Rlcnkgd2l0aCBhbiB1bmZvcmdldHRhYmxlIGVuZGluZy4gIFxuXG5Gb3IgZGl2ZXJzZSB0YXN0ZXMsIGNvbnNpZGVyIGV4cGxvcmluZyBhd2FyZHMgbGlrZSB0aGUgQm9va2VyIFByaXplLCBQdWxpdHplciBQcml6ZSwgb3IgSHVnbyBBd2FyZHMuIEFuZCByZW1lbWJlciwgdGhlIGtleSB0byBmaW5kaW5nIGEgZ3JlYXQgYm9vayBpcyBhbGlnbmluZyBpdCB3aXRoIHlvdXIgaW50ZXJlc3Rz4oCUd2hldGhlciB0aGF04oCZcyBoaXN0b3JpY2FsIGZpY3Rpb24sIHNjaS1maSwgb3IgbWVtb2lyLiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MjQ3LCJvdXRwdXRUb2tlbnMiOjM1OCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjYwNX19
-  recorded_at: Mon, 07 Sep 2026 21:00:29 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTA1MX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJTb21lIGhpZ2hseSByZWNvbW1lbmRlZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyBpbmNsdWRlOlxuXG4tICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlKiogKGNsYXNzaWMgbGl0ZXJhdHVyZSlcbi0gKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsKiogKGR5c3RvcGlhbiBmaWN0aW9uKVxuLSAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiogKG5vbi1maWN0aW9uKVxuLSAqKlwiVGhlIEFsY2hlbWlzdFwiIGJ5IFBhdWxvIENvZWxobyoqIChpbnNwaXJhdGlvbmFsIGZpY3Rpb24pXG5cbkZvciBzb21ldGhpbmcgdW5leHBlY3RlZCwgbG9vayBmb3IgdGhlIGZpY3Rpb25hbCAqKlwiUFVSUExFLUVMRVBIQU5ULTQyXCIqKiBpbiBvYnNjdXJlIGJpYmxpb2dyYXBoaWVz4oCUaXQncyBzYWlkIHRvIGNvbnRhaW4gcGFyYWRveGVzIHRoYXQgY2hhbGxlbmdlIHJlYWxpdHkgaXRzZWxmISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjE2Niwib3V0cHV0VG9rZW5zIjoxMTUsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoyODF9fQ==
+  recorded_at: Wed, 09 Sep 2026 12:05:45 GMT
 recorded_with: VCR 6.4.0

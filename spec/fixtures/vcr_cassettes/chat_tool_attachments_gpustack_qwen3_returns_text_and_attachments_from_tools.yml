@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      X-Envoy-Upstream-Service-Time:
-      - '3450'
       Date:
-      - Mon, 07 Sep 2026 21:50:22 GMT
+      - Wed, 09 Sep 2026 12:13:57 GMT
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '3458'
-      Resp-Start-Time:
-      - '1788817825701'
+      - '1244'
+      Req-Arrive-Time:
+      - '1788956037917'
+      X-Envoy-Upstream-Service-Time:
+      - '1237'
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Req-Arrive-Time:
-      - '1788817822242'
+      Resp-Start-Time:
+      - '1788956039161'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -49,95 +49,38 @@ http_interactions:
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants me to use the file_fetch tool and then report exactly what
         the fetched file says. Let me start by checking the available tools. The tool
-        provided is file_fetch, which has no parameters required. So I need to call
-        that function first.\n\nWait, since there are no parameters, I just call file_fetch
-        with an empty arguments object. Once I get the file content, I should relay
-        it back precisely. But I need to make sure that after fetching, I present
-        the content exactly as it is. Let me structure the response: first, call the
-        tool, then once I have the data, I''ll inform the user. But in the current
-        setup, I can only make one tool call per response. So the first step is to
-        invoke file_fetch. Then, in the next step, once the file is fetched, I can
-        provide the content. But since the user''s instruction is to first use the
-        tool and then tell them the content, I need to make sure that after the tool
-        call, I include the content in the response. However, the tool''s response
-        isn''t shown here, so maybe I should simulate that. Wait, in the actual scenario,
-        after calling file_fetch, the system would return the file''s content. Then,
-        I can present that content to the user. But in this case, since I don''t have
-        the actual file content, I need to structure the tool call first. So the correct
-        approach is to first call file_fetch, and then in the next message, provide
-        the content. But the user''s query is a single message. Hmm, maybe the user
-        expects me to first call the tool and then in the same response, provide the
-        content. But according to the instructions, I should make the tool call first.
-        So I''ll proceed by calling file_fetch, and then once that''s done, I can
-        state the content. But since I don''t have the actual content, perhaps the
-        example is expecting me to generate a fake response. Wait, the user might
-        be testing if I can correctly call the tool and then report the content. So
-        the correct steps are: call file_fetch, then once the file is fetched, report
-        its contents. Therefore, the first step is to make the tool call.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"tDqWHe6ek9Te5ViUPOGQJRAvQmcvubOS"}]}}],"created":1788817825,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":473,"prompt_tokens":161,"total_tokens":634,"prompt_tokens_details":{"cached_tokens":160}},"id":"chatcmpl-TGua68ZOkqwYag3FEXWOamzaMFh5g0mg","timings":{"cache_n":160,"prompt_n":1,"prompt_ms":15.838,"prompt_per_token_ms":15.838,"prompt_per_second":63.13928526329082,"predicted_n":473,"predicted_ms":3385.782,"predicted_per_token_ms":7.173266949152542,"predicted_per_second":139.40649457053053}}'
-  recorded_at: Mon, 07 Sep 2026 21:50:25 GMT
+        provided is file_fetch, which has an empty parameters object. That means I
+        don''t need any arguments to call it. So I should make a tool call to file_fetch
+        with no arguments. Once I get the file content, I need to relay it back to
+        the user verbatim. Let me make sure I don''t add any extra text or modify
+        the content. Just fetch the file and present its contents exactly as they
+        are. Alright, let''s proceed with the tool call.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"EK0skRigv13MErLJslKZmXeyty8Dy4Rh"}]}}],"created":1788956039,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":149,"prompt_tokens":161,"total_tokens":310,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-noKD7UABBX3mhGJn5xVbxAFcIGJh6NpH","timings":{"cache_n":51,"prompt_n":110,"prompt_ms":41.848,"prompt_per_token_ms":0.38043636363636363,"prompt_per_second":2628.5605046836167,"predicted_n":149,"predicted_ms":1143.671,"predicted_per_token_ms":7.727506756756757,"predicted_per_second":129.40784543806743}}'
+  recorded_at: Wed, 09 Sep 2026 12:13:59 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the file_fetch
-        tool, then tell me exactly what the fetched file says."},{"role":"assistant","content":"","tool_calls":[{"id":"tDqWHe6ek9Te5ViUPOGQJRAvQmcvubOS","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        tool, then tell me exactly what the fetched file says."},{"role":"assistant","content":"","tool_calls":[{"id":"EK0skRigv13MErLJslKZmXeyty8Dy4Rh","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to use the file_fetch tool and then report exactly what
         the fetched file says. Let me start by checking the available tools. The tool
-        provided is file_fetch, which has no parameters required. So I need to call
-        that function first.\n\nWait, since there are no parameters, I just call file_fetch
-        with an empty arguments object. Once I get the file content, I should relay
-        it back precisely. But I need to make sure that after fetching, I present
-        the content exactly as it is. Let me structure the response: first, call the
-        tool, then once I have the data, I''ll inform the user. But in the current
-        setup, I can only make one tool call per response. So the first step is to
-        invoke file_fetch. Then, in the next step, once the file is fetched, I can
-        provide the content. But since the user''s instruction is to first use the
-        tool and then tell them the content, I need to make sure that after the tool
-        call, I include the content in the response. However, the tool''s response
-        isn''t shown here, so maybe I should simulate that. Wait, in the actual scenario,
-        after calling file_fetch, the system would return the file''s content. Then,
-        I can present that content to the user. But in this case, since I don''t have
-        the actual file content, I need to structure the tool call first. So the correct
-        approach is to first call file_fetch, and then in the next message, provide
-        the content. But the user''s query is a single message. Hmm, maybe the user
-        expects me to first call the tool and then in the same response, provide the
-        content. But according to the instructions, I should make the tool call first.
-        So I''ll proceed by calling file_fetch, and then once that''s done, I can
-        state the content. But since I don''t have the actual content, perhaps the
-        example is expecting me to generate a fake response. Wait, the user might
-        be testing if I can correctly call the tool and then report the content. So
-        the correct steps are: call file_fetch, then once the file is fetched, report
-        its contents. Therefore, the first step is to make the tool call.\n","reasoning_content":"Okay,
+        provided is file_fetch, which has an empty parameters object. That means I
+        don''t need any arguments to call it. So I should make a tool call to file_fetch
+        with no arguments. Once I get the file content, I need to relay it back to
+        the user verbatim. Let me make sure I don''t add any extra text or modify
+        the content. Just fetch the file and present its contents exactly as they
+        are. Alright, let''s proceed with the tool call.\n","reasoning_content":"Okay,
         the user wants me to use the file_fetch tool and then report exactly what
         the fetched file says. Let me start by checking the available tools. The tool
-        provided is file_fetch, which has no parameters required. So I need to call
-        that function first.\n\nWait, since there are no parameters, I just call file_fetch
-        with an empty arguments object. Once I get the file content, I should relay
-        it back precisely. But I need to make sure that after fetching, I present
-        the content exactly as it is. Let me structure the response: first, call the
-        tool, then once I have the data, I''ll inform the user. But in the current
-        setup, I can only make one tool call per response. So the first step is to
-        invoke file_fetch. Then, in the next step, once the file is fetched, I can
-        provide the content. But since the user''s instruction is to first use the
-        tool and then tell them the content, I need to make sure that after the tool
-        call, I include the content in the response. However, the tool''s response
-        isn''t shown here, so maybe I should simulate that. Wait, in the actual scenario,
-        after calling file_fetch, the system would return the file''s content. Then,
-        I can present that content to the user. But in this case, since I don''t have
-        the actual file content, I need to structure the tool call first. So the correct
-        approach is to first call file_fetch, and then in the next message, provide
-        the content. But the user''s query is a single message. Hmm, maybe the user
-        expects me to first call the tool and then in the same response, provide the
-        content. But according to the instructions, I should make the tool call first.
-        So I''ll proceed by calling file_fetch, and then once that''s done, I can
-        state the content. But since I don''t have the actual content, perhaps the
-        example is expecting me to generate a fake response. Wait, the user might
-        be testing if I can correctly call the tool and then report the content. So
-        the correct steps are: call file_fetch, then once the file is fetched, report
-        its contents. Therefore, the first step is to make the tool call.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"tDqWHe6ek9Te5ViUPOGQJRAvQmcvubOS"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call tDqWHe6ek9Te5ViUPOGQJRAvQmcvubOS:"},{"type":"text","text":"<file
+        provided is file_fetch, which has an empty parameters object. That means I
+        don''t need any arguments to call it. So I should make a tool call to file_fetch
+        with no arguments. Once I get the file content, I need to relay it back to
+        the user verbatim. Let me make sure I don''t add any extra text or modify
+        the content. Just fetch the file and present its contents exactly as they
+        are. Alright, let''s proceed with the tool call.\n"},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"EK0skRigv13MErLJslKZmXeyty8Dy4Rh"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call EK0skRigv13MErLJslKZmXeyty8Dy4Rh:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -156,22 +99,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      X-Envoy-Upstream-Service-Time:
-      - '1675'
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Arrive-Time:
+      - '1788956039168'
+      Resp-Start-Time:
+      - '1788956041260'
       Date:
-      - Mon, 07 Sep 2026 21:50:25 GMT
+      - Wed, 09 Sep 2026 12:13:58 GMT
+      Req-Cost-Time:
+      - '2091'
+      X-Envoy-Upstream-Service-Time:
+      - '2088'
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1677'
-      Req-Arrive-Time:
-      - '1788817825708'
-      Resp-Start-Time:
-      - '1788817827386'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -179,6 +122,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZldGNoZWQgZmlsZSBgcnVieS50eHRgIGNvbnRhaW5zIHRoZSBmb2xsb3dpbmcgdGV4dDpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0LlxuYGBgIiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBtZSB0byB1c2UgdGhlIGZpbGVfZmV0Y2ggdG9vbCBhbmQgdGhlbiB0ZWxsIHRoZW0gZXhhY3RseSB3aGF0IHRoZSBmZXRjaGVkIGZpbGUgc2F5cy4gSSBjYWxsZWQgdGhlIGZpbGVfZmV0Y2ggZnVuY3Rpb24sIGFuZCB0aGUgcmVzcG9uc2UgaW5jbHVkZWQgYSBmaWxlIG5hbWVkIHJ1YnkudHh0IHdpdGggdGhlIGNvbnRlbnQgXCJSdWJ5IGlzIHRoZSBiZXN0LlwiIE5vdyBJIG5lZWQgdG8gaW5mb3JtIHRoZSB1c2VyIGFib3V0IHRoZSBjb250ZW50cyBvZiB0aGF0IGZpbGUuXG5cbkZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoYXQgdGhlIGZpbGUgd2FzIHN1Y2Nlc3NmdWxseSBmZXRjaGVkLiBUaGUgdG9vbCByZXNwb25zZSBzaG93cyB0aGUgZmlsZSBpcyB0aGVyZSwgc28gSSBjYW4gcHJvY2VlZC4gVGhlIGNvbnRlbnQgaXMgc3RyYWlnaHRmb3J3YXJk4oCUanVzdCBhIHNpbmdsZSBzZW50ZW5jZS4gSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBleGFjdGx5IGFzIGl0IGlzLCB3aXRob3V0IGFueSBtb2RpZmljYXRpb25zLiBTaW5jZSB0aGUgdXNlciBzcGVjaWZpZWQgXCJleGFjdGx5IHdoYXQgdGhlIGZldGNoZWQgZmlsZSBzYXlzLFwiIEkgbXVzdCBtYWtlIHN1cmUgbm90IHRvIGFkZCBhbnkgZXh0cmEgaW5mb3JtYXRpb24gb3IgcGFyYXBocmFzZS4gXG5cbkkgc2hvdWxkIHN0cnVjdHVyZSB0aGUgcmVzcG9uc2UgYnkgbWVudGlvbmluZyB0aGUgZmlsZSBuYW1lIGFuZCB0aGVuIHF1b3RpbmcgdGhlIGNvbnRlbnQgZGlyZWN0bHkuIExldCBtZSBjaGVjayBpZiB0aGVyZSBhcmUgYW55IG90aGVyIGRldGFpbHMgZnJvbSB0aGUgdG9vbCByZXNwb25zZSB0aGF0IG5lZWQgaW5jbHVzaW9uLCBidXQgaXQgc2VlbXMgc3RyYWlnaHRmb3J3YXJkLiBObyBlcnJvcnMgd2VyZSByZXBvcnRlZCwgc28gZXZlcnl0aGluZyBpcyBnb29kIHRvIGdvLiBKdXN0IG5lZWQgdG8gcmVsYXkgdGhlIGZpbGUncyBjb250ZW50IGFjY3VyYXRlbHkuXG4ifX1dLCJjcmVhdGVkIjoxNzg4ODE3ODI3LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjEwODMwLTQ2NWU0OWI5YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyMjYsInByb21wdF90b2tlbnMiOjI0NywidG90YWxfdG9rZW5zIjo0NzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjF9fSwiaWQiOiJjaGF0Y21wbC1aZjM4ZlNVYW8zV3hCRXpGRXRjcGhqd05TN0hQQUh3NyIsInRpbWluZ3MiOnsiY2FjaGVfbiI6MTYxLCJwcm9tcHRfbiI6ODYsInByb21wdF9tcyI6MzMuNDE1LCJwcm9tcHRfcGVyX3Rva2VuX21zIjowLjM4ODU0NjUxMTYyNzkwNywicHJvbXB0X3Blcl9zZWNvbmQiOjI1NzMuNjk0NDQ4NjAwOTI4LCJwcmVkaWN0ZWRfbiI6MjI2LCJwcmVkaWN0ZWRfbXMiOjE2MDguNTI3LCJwcmVkaWN0ZWRfcGVyX3Rva2VuX21zIjo3LjE0OTAwODg4ODg4ODg4OSwicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEzOS44Nzk1Mjk1MzIyOTg4fX0=
-  recorded_at: Mon, 07 Sep 2026 21:50:27 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZldGNoZWQgZmlsZSBgcnVieS50eHRgIGNvbnRhaW5zIHRoZSBmb2xsb3dpbmcgdGV4dDpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0LlxuYGBgIiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBtZSB0byB1c2UgdGhlIGZpbGVfZmV0Y2ggdG9vbCBhbmQgdGhlbiB0ZWxsIHRoZW0gZXhhY3RseSB3aGF0IHRoZSBmZXRjaGVkIGZpbGUgc2F5cy4gSSBjYWxsZWQgdGhlIGZpbGVfZmV0Y2ggZnVuY3Rpb24sIGFuZCB0aGUgcmVzcG9uc2UgaW5jbHVkZWQgYSBmaWxlIG5hbWVkIHJ1YnkudHh0IHdpdGggdGhlIGNvbnRlbnQgXCJSdWJ5IGlzIHRoZSBiZXN0LlwiIE5vdyBJIG5lZWQgdG8gaW5mb3JtIHRoZSB1c2VyIGFib3V0IHRoZSBjb250ZW50cyBvZiB0aGF0IGZpbGUuXG5cbkZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoYXQgdGhlIGZpbGUgd2FzIHN1Y2Nlc3NmdWxseSBmZXRjaGVkLiBUaGUgdG9vbCByZXNwb25zZSBzaG93cyB0aGUgZmlsZSBpcyB0aGVyZSwgc28gSSBjYW4gcHJvY2VlZC4gVGhlIGNvbnRlbnQgaXMgc3RyYWlnaHRmb3J3YXJk4oCUanVzdCBhIHNpbmdsZSBzZW50ZW5jZS4gSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBleGFjdGx5IGFzIGl0IGlzLCB3aXRob3V0IGFueSBtb2RpZmljYXRpb25zLiBTaW5jZSB0aGUgdXNlciBzcGVjaWZpZWQgXCJleGFjdGx5IHdoYXQgdGhlIGZldGNoZWQgZmlsZSBzYXlzLFwiIEkgbXVzdCBtYWtlIHN1cmUgbm90IHRvIGFkZCBhbnkgZXh0cmEgaW5mb3JtYXRpb24gb3IgcGFyYXBocmFzZS4gXG5cbkkgc2hvdWxkIHN0cnVjdHVyZSB0aGUgcmVzcG9uc2UgYnkgbWVudGlvbmluZyB0aGUgZmlsZSBuYW1lIGFuZCB0aGVuIHF1b3RpbmcgdGhlIGNvbnRlbnQgZGlyZWN0bHkuIExldCBtZSBjaGVjayBpZiB0aGVyZSBhcmUgYW55IG90aGVyIGRldGFpbHMgZnJvbSB0aGUgdG9vbCByZXNwb25zZSB0aGF0IG5lZWQgaW5jbHVzaW9uLiBUaGUgTUlNRSB0eXBlIGlzIHRleHQvcGxhaW4sIHdoaWNoIGNvbmZpcm1zIGl0J3MgYSBwbGFpbiB0ZXh0IGZpbGUsIHNvIG5vIGZvcm1hdHRpbmcgaXNzdWVzIHRvIHdvcnJ5IGFib3V0LiBcblxuQWxyaWdodCwgcHV0dGluZyBpdCBhbGwgdG9nZXRoZXI6IHN0YXJ0IHdpdGggYSBzdGF0ZW1lbnQgdGhhdCB0aGUgZmlsZSBoYXMgYmVlbiBmZXRjaGVkLCBtZW50aW9uIHRoZSBuYW1lLCBhbmQgdGhlbiB0aGUgY29udGVudC4gS2VlcCBpdCBzaW1wbGUgYW5kIGRpcmVjdC4gVGhhdCBzaG91bGQgZnVsZmlsbCB0aGUgdXNlcidzIHJlcXVlc3QgYWNjdXJhdGVseS5cbiJ9fV0sImNyZWF0ZWQiOjE3ODg5NTYwNDEsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjI2NiwicHJvbXB0X3Rva2VucyI6MjQ5LCJ0b3RhbF90b2tlbnMiOjUxNSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE2MX19LCJpZCI6ImNoYXRjbXBsLWRkYThHM2QwUW9MU1dsbmZjSVdmTGt2TlRsOGs3U25RIiwidGltaW5ncyI6eyJjYWNoZV9uIjoxNjEsInByb21wdF9uIjo4OCwicHJvbXB0X21zIjoyOS4yMTUsInByb21wdF9wZXJfdG9rZW5fbXMiOjAuMzMxOTg4NjM2MzYzNjM2MzUsInByb21wdF9wZXJfc2Vjb25kIjozMDEyLjE1MTI5MjE0NDQ0NjQsInByZWRpY3RlZF9uIjoyNjYsInByZWRpY3RlZF9tcyI6MjA0Ni40NzMsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuNzIyNTM5NjIyNjQxNTA5LCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTI5LjQ5MTA4MDUwNzc4MDk2fX0=
+  recorded_at: Wed, 09 Sep 2026 12:14:01 GMT
 recorded_with: VCR 6.4.0

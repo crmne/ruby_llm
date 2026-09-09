@@ -27,7 +27,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:00:10 GMT
+      - Wed, 09 Sep 2026 12:05:30 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -43,15 +43,17 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-e3dee7b1136c10c961ba142ea15206cf-6ef243b3001bcca6-00
+      - 00-a1c934425e50135a9621e1caecd559bf-4c7de6990010f689-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 7b2c3e34-0308-4915-bef4-0b5503ccbaee
+      - 88c865a8-e252-437c-b1fc-0f71775277a6
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -83,7 +85,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 7b2c3e34-0308-4915-bef4-0b5503ccbaee
+      - 88c865a8-e252-437c-b1fc-0f71775277a6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -92,11 +94,12 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"7c08fb6d-51fb-41cf-a4fa-0b0b0c0761bf","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I
-        can''t access real-time weather data right now, but if you tell me your location,
-        I can give you a general overview based on typical patterns or recent trends.
-        For example, what''s it like where you are? XKCD7392"},"finish_reason":"stop"}],"usage":{"prompt_tokens":23,"completion_tokens":47,"total_tokens":70,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":190,"audio_tokens":0,"text_tokens":23,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814810,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 07 Sep 2026 21:00:11 GMT
+      string: '{"id":"cfcc7208-01fe-473d-98c0-01c9619b4720","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
+        afraid I don''t have real-time access to weather data, but if you tell me
+        your location, I can give you a general overview based on typical patterns
+        or recent trends! For example, right now in many parts of the US, it''s mild
+        with some scattered showers. XKCD7392"},"finish_reason":"stop"}],"usage":{"prompt_tokens":23,"completion_tokens":58,"total_tokens":81,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":190,"audio_tokens":0,"text_tokens":23,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788955530,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 09 Sep 2026 12:05:31 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -104,11 +107,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"I can''t access real-time
-        weather data right now, but if you tell me your location, I can give you a
-        general overview based on typical patterns or recent trends. For example,
-        what''s it like where you are? XKCD7392"},{"role":"user","content":"What are
-        some good books?"}],"stream":false}'
+        me about the weather."},{"role":"assistant","content":"I''m afraid I don''t
+        have real-time access to weather data, but if you tell me your location, I
+        can give you a general overview based on typical patterns or recent trends!
+        For example, right now in many parts of the US, it''s mild with some scattered
+        showers. XKCD7392"},{"role":"user","content":"What are some good books?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -128,7 +131,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:00:11 GMT
+      - Wed, 09 Sep 2026 12:05:31 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -144,15 +147,17 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-f5d9ed11ec04e0906de3463c55d59afa-12145f0b000a60ca-00
+      - 00-0da6f1315b94f6d795c23f3a4fcde662-eb876675000641f9-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 643a5f57-85bc-4afe-a37d-63212ad8f55b
+      - c4f39887-7a9f-4563-b17e-c357d910031a
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -172,7 +177,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49866'
+      - '49853'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -184,7 +189,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 643a5f57-85bc-4afe-a37d-63212ad8f55b
+      - c4f39887-7a9f-4563-b17e-c357d910031a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -194,6 +199,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImQyN2QwYjYzLTYxMzQtNDMyYi05ZTA5LTcwYjMxMWYxY2RlNCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJHb29kIGJvb2tzIGRlcGVuZCBvbiB5b3VyIHRhc3RlcywgYnV0IGhlcmUgYXJlIHNvbWUgdGltZWxlc3MgcmVjb21tZW5kYXRpb25zIGFjcm9zcyBnZW5yZXMsIHdpdGggcXVpY2sgcmVhc29ucyB3aHkgdGhleSdyZSBncmVhdDpcblxuIyMjIEZpY3Rpb24gQ2xhc3NpY3Ncbi0gKipUbyBLaWxsIGEgTW9ja2luZ2JpcmQqKiBieSBIYXJwZXIgTGVlOiBBIHBvd2VyZnVsIHN0b3J5IG9uIGp1c3RpY2UsIHJhY2lzbSwgYW5kIGNoaWxkaG9vZCBpbm5vY2VuY2UuIFBlcmZlY3QgZm9yIGhlYXJ0ZmVsdCBkcmFtYS5cbi0gKioxOTg0KiogYnkgR2VvcmdlIE9yd2VsbDogRHlzdG9waWFuIHdhcm5pbmcgYWJvdXQgc3VydmVpbGxhbmNlIGFuZCB0b3RhbGl0YXJpYW5pc23igJR0aW1lbHkgYW5kIGNoaWxsaW5nLlxuLSAqKlByaWRlIGFuZCBQcmVqdWRpY2UqKiBieSBKYW5lIEF1c3RlbjogV2l0dHkgcm9tYW5jZSB3aXRoIHNoYXJwIHNvY2lhbCBjb21tZW50YXJ5LlxuXG4jIyMgRmFudGFzeS9TY2ktRmlcbi0gKipUaGUgTmFtZSBvZiB0aGUgV2luZCoqIGJ5IFBhdHJpY2sgUm90aGZ1c3M6IEVwaWMgc3Rvcnl0ZWxsaW5nLCBtYWdpYywgYW5kIGEgY2FwdGl2YXRpbmcgcHJvdGFnb25pc3QncyBsaWZlIHN0b3J5LlxuLSAqKkR1bmUqKiBieSBGcmFuayBIZXJiZXJ0OiBDb21wbGV4IHdvcmxkLWJ1aWxkaW5nLCBwb2xpdGljcywgYW5kIGVjb2xvZ3kgaW4gYSBkZXNlcnQgc2NpLWZpIG1hc3RlcnBpZWNlLlxuXG4jIyMgTm9uLUZpY3Rpb25cbi0gKipTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiogYnkgWXV2YWwgTm9haCBIYXJhcmk6IE1pbmQtZXhwYW5kaW5nIGxvb2sgYXQgaHVtYW4gaGlzdG9yeSBmcm9tIGV2b2x1dGlvbiB0byBBSS5cbi0gKipBdG9taWMgSGFiaXRzKiogYnkgSmFtZXMgQ2xlYXI6IFByYWN0aWNhbCwgc2NpZW5jZS1iYWNrZWQgZ3VpZGUgdG8gYnVpbGRpbmcgYmV0dGVyIGhhYml0cy5cblxuIyMjIFJlY2VudCBGYXZvcml0ZXNcbi0gKipUb21vcnJvdywgYW5kIFRvbW9ycm93LCBhbmQgVG9tb3Jyb3cqKiBieSBHYWJyaWVsbGUgWmV2aW46IEhlYXJ0d2FybWluZyB0YWxlIG9mIGZyaWVuZHNoaXAgYW5kIHZpZGVvIGdhbWUgZGVzaWduLlxuLSAqKkxlc3NvbnMgaW4gQ2hlbWlzdHJ5KiogYnkgQm9ubmllIEdhcm11czogRnVubnksIGZlbWluaXN0IHN0b3J5IG9mIGEgMTk2MHMgY2hlbWlzdCBmaWdodGluZyB0aGUgcGF0cmlhcmNoeS5cblxuV2hhdCBnZW5yZXMgb3IgdG9waWNzIGludGVyZXN0IHlvdSBtb3N0PyBJIGNhbiB0YWlsb3IgbW9yZSBzdWdnZXN0aW9ucy4gUFVSUExFLUVMRVBIQU5ULTQyIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5MSwiY29tcGxldGlvbl90b2tlbnMiOjI5MCwidG90YWxfdG9rZW5zIjozODEsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjQsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjkxLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODg4MTQ4MTEsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
-  recorded_at: Mon, 07 Sep 2026 21:00:15 GMT
+        eyJpZCI6ImY4MzllZWM3LTY0MGMtNDk0MS1hMTNmLTM5ZjA3MTVhODRhMyIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJlIGFyZSBhIGZldyB0aW1lbGVzcyByZWNvbW1lbmRhdGlvbnMgYWNyb3NzIGdlbnJlcywgd2l0aCBxdWljayByZWFzb25zIHdoeSB0aGV5J3JlIGdyZWF0OlxuXG4tICoqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiogYnkgSGFycGVyIExlZTogQSBwcm9mb3VuZCBleHBsb3JhdGlvbiBvZiBqdXN0aWNlLCByYWNpc20sIGFuZCBjaGlsZGhvb2QgaW5ub2NlbmNlIGluIHRoZSBBbWVyaWNhbiBTb3V0aC5cbi0gKioxOTg0KiogYnkgR2VvcmdlIE9yd2VsbDogQSBjaGlsbGluZyBkeXN0b3BpYW4gd2FybmluZyBhYm91dCBzdXJ2ZWlsbGFuY2UsIHRydXRoLCBhbmQgYXV0aG9yaXRhcmlhbmlzbeKAlG1vcmUgcmVsZXZhbnQgdGhhbiBldmVyLlxuLSAqKlRoZSBIaXRjaGhpa2VyJ3MgR3VpZGUgdG8gdGhlIEdhbGF4eSoqIGJ5IERvdWdsYXMgQWRhbXM6IEhpbGFyaW91cyBzY2ktZmkgc2F0aXJlIG9uIGxpZmUsIHRoZSB1bml2ZXJzZSwgYW5kIGV2ZXJ5dGhpbmcgKGRvbid0IHBhbmljISkuXG4tICoqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCoqIGJ5IFl1dmFsIE5vYWggSGFyYXJpOiBGYXNjaW5hdGluZyBub24tZmljdGlvbiBvbiBob3cgaHVtYW5zIHNoYXBlZCBoaXN0b3J5IHRocm91Z2ggbXl0aHMgYW5kIGNvb3BlcmF0aW9uLlxuLSAqKlByaWRlIGFuZCBQcmVqdWRpY2UqKiBieSBKYW5lIEF1c3RlbjogV2l0dHkgcm9tYW5jZSBhbmQgc29jaWFsIGNvbW1lbnRhcnkgdGhhdCdzIGVuZGxlc3NseSByZS1yZWFkYWJsZS5cblxuV2hhdCBnZW5yZXMgb3IgYXV0aG9ycyBkbyB5b3UgbGlrZT8gSSBjYW4gdGFpbG9yIG1vcmUgc3VnZ2VzdGlvbnMuIFBVUlBMRS1FTEVQSEFOVC00MiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTAyLCJjb21wbGV0aW9uX3Rva2VucyI6MTgyLCJ0b3RhbF90b2tlbnMiOjI4NCwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE2NCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MTAyLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODg5NTU1MzEsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Wed, 09 Sep 2026 12:05:33 GMT
 recorded_with: VCR 6.4.0

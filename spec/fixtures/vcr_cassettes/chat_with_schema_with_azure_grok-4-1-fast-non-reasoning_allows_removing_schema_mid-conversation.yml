@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:02:00 GMT
+      - Wed, 09 Sep 2026 12:09:15 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -42,13 +42,13 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-9cce9b02584898b37461c3d4549345c6-08b55392000f31f2-00
+      - 00-00c156e72949c26363fc13cdf8d2cdd7-a53dc50900059c2e-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 4bc081de-ea39-40a4-90c5-954579502172
+      - 55057e1e-c138-48c3-a890-8a62db0790ea
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
       Azureai-Requested-Tier:
@@ -82,7 +82,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 4bc081de-ea39-40a4-90c5-954579502172
+      - 55057e1e-c138-48c3-a890-8a62db0790ea
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -91,16 +91,17 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"d9f5d0ce-4cb6-4801-8e34-eebe39432818","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":78,"completion_tokens":9,"total_tokens":87,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":163,"audio_tokens":0,"text_tokens":78,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814920,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 07 Sep 2026 21:02:00 GMT
+      string: '{"id":"ba75f348-2d31-4422-9969-d4baffcd569e","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":
+        \"Bob\", \"age\": 30}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":78,"completion_tokens":12,"total_tokens":90,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":78,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788955755,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 09 Sep 2026 12:09:16 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
-        just tell me about Ruby"}],"stream":false}'
+        a person named Bob"},{"role":"assistant","content":"{\"name\": \"Bob\", \"age\":
+        30}"},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -120,7 +121,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:02:00 GMT
+      - Wed, 09 Sep 2026 12:09:16 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -136,13 +137,13 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-ec95f0a9efb4c35667af897d3a66f237-5a87133b0029fac1-00
+      - 00-1bf9d6767de362b3bf49742b7c5f8998-a53dc50900059c3a-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - b86ed924-3dc8-4c47-8f02-84b4eb49a438
+      - 6b476b8a-595a-4627-a153-054d0547b734
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
       Azureai-Requested-Tier:
@@ -164,7 +165,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49940'
+      - '49939'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -176,7 +177,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - b86ed924-3dc8-4c47-8f02-84b4eb49a438
+      - 6b476b8a-595a-4627-a153-054d0547b734
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -185,8 +186,7 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"a2a360a5-895f-472e-a57b-5e8adc1607f5","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":25,\"occupation\":\"Software
-        Developer\",\"hobbies\":[\"Coding\",\"Hiking\",\"Reading Sci-Fi\"],\"personality\":\"Adventurous
-        and witty, with a passion for open-source projects and weekend getaways.\"}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"completion_tokens":48,"total_tokens":79,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":31,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814920,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 07 Sep 2026 21:02:01 GMT
+      string: '{"id":"cac00e2f-54af-43f3-a05a-f7898ec3341b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":
+        \"Ruby\", \"age\": 28}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":34,"completion_tokens":12,"total_tokens":46,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":163,"audio_tokens":0,"text_tokens":34,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788955756,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 09 Sep 2026 12:09:17 GMT
 recorded_with: VCR 6.4.0

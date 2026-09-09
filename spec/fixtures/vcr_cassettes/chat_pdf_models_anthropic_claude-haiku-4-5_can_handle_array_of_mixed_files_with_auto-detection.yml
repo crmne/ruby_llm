@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:29:59 GMT
+      - Wed, 09 Sep 2026 12:10:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,27 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9998000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-07T21:29:55Z'
+      - '2026-09-09T12:10:33Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-07T21:29:59Z'
+      - '2026-09-09T12:10:37Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-07T21:29:55Z'
+      - '2026-09-09T12:10:32Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11998000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-07T21:29:55Z'
+      - '2026-09-09T12:10:33Z'
+      Server:
+      - cloudflare
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -66,9 +68,7 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-376b5c8d63a3ba9e4e56267ba1827d64-9b7f925f87554b8c-01
-      Server:
-      - cloudflare
+      - 00-9ae283684227dc7fe9c9ae1236f111ce-0f54cc6276b2fd11-01
       Vary:
       - Accept-Encoding
       Content-Security-Policy:
@@ -81,7 +81,24 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZXBucUh5c0VIb050QndXY0tWdnciLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiIjIEltYWdlIERlc2NyaXB0aW9uXG5cblRoZSBpbWFnZSBzaG93cyBhICoqcmVkIDNEIGdlb21ldHJpYyBsb2dvKiogZmVhdHVyaW5nIGFuIGFic3RyYWN0IGRpYW1vbmQgb3IgZ2VtLWxpa2Ugc2hhcGUuIFRoZSBkZXNpZ24gY29uc2lzdHMgb2YgYW5ndWxhciwgZmFjZXRlZCBzdXJmYWNlcyBpbiB2YXJ5aW5nIHNoYWRlcyBvZiByZWQgYW5kIGJ1cmd1bmR5LCBjcmVhdGluZyBhIG1vZGVybiwgcG9saXNoZWQgYXBwZWFyYW5jZSB3aXRoIGhpZ2hsaWdodHMgdGhhdCBnaXZlIGl0IGRlcHRoIGFuZCBkaW1lbnNpb24uIFRoaXMgc3R5bGUgaXMgdHlwaWNhbCBvZiBjb3Jwb3JhdGUgYnJhbmRpbmcgb3Igc29mdHdhcmUgYXBwbGljYXRpb24gaWNvbnMsIHN1Z2dlc3Rpbmcgc29waGlzdGljYXRpb24gYW5kIGNvbnRlbXBvcmFyeSBkZXNpZ24uXG5cbi0tLVxuXG4jIFBERiBTdW1tYXJ5XG5cblRoZSBQREYgaXMgdGl0bGVkICoqXCJTYW1wbGUgUERGXCIqKiBhbmQgY29udGFpbnMgcGxhY2Vob2xkZXIgdGV4dCBjb250ZW50LiBIZXJlIGFyZSB0aGUga2V5IHBvaW50czpcblxuLSAqKkhlYWRlcioqOiBcIlNhbXBsZSBQREZcIiB3aXRoIHRoZSBzdWJ0aXRsZSBcIlRoaXMgaXMgYSBzaW1wbGUgUERGIGZpbGUuIEZ1biBmdW4gZnVuLlwiXG4tICoqQ29udGVudCoqOiBUaGUgZG9jdW1lbnQgaXMgZmlsbGVkIHdpdGggTG9yZW0gSXBzdW0gZHVtbXkgdGV4dOKAlHN0YW5kYXJkIHBsYWNlaG9sZGVyIGNvbnRlbnQgdXNlZCBpbiBkZXNpZ24gYW5kIHB1Ymxpc2hpbmdcbi0gKipTdHJ1Y3R1cmUqKjogTXVsdGlwbGUgcGFyYWdyYXBocyBvZiBMYXRpbi1kZXJpdmVkIGZpbGxlciB0ZXh0IGRpc2N1c3NpbmcgdmFyaW91cyBmaWN0aW9uYWwgdG9waWNzIGluIGEgcmFtYmxpbmcgbWFubmVyXG4tICoqUHVycG9zZSoqOiBUaGlzIGFwcGVhcnMgdG8gYmUgYSB0ZW1wbGF0ZSBvciBleGFtcGxlIGRvY3VtZW50IHVzZWQgZm9yIHRlc3RpbmcgUERGIGZvcm1hdHRpbmcsIGxheW91dCwgb3IgZGlzdHJpYnV0aW9uIHB1cnBvc2VzXG4tICoqTmF0dXJlKio6IEl0IGNvbnRhaW5zIG5vIG1lYW5pbmdmdWwgaW5mb3JtYXRpb247IGl0J3MgcHVyZWx5IGRlbW9uc3RyYXRpdmUgY29udGVudCBtZWFudCB0byBzaG93Y2FzZSBob3cgdGV4dCBkaXNwbGF5cyBpbiBQREYgZm9ybWF0XG5cblRoZSBkb2N1bWVudCBzZXJ2ZXMgYXMgYSBiYXNpYyBleGFtcGxlIGZpbGUgd2l0aCBubyBzdWJzdGFudGlhbCBpbmZvcm1hdGlvbmFsIHZhbHVlIGJleW9uZCBkZW1vbnN0cmF0aW5nIFBERiBzdHJ1Y3R1cmUgYW5kIHRleHQgcmVuZGVyaW5nLiJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoyNzE4LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MjYxLCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCIsImluZmVyZW5jZV9nZW8iOiJub3RfYXZhaWxhYmxlIn19
-  recorded_at: Mon, 07 Sep 2026 21:29:59 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cesqo6HTwnaKEtXNMzvSs","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Image Description\n\nThe image shows a **red 3D gem or crystal icon**. It
+        features a stylized, faceted design with multiple angular surfaces rendered
+        in varying shades of red, from deep crimson to bright scarlet. The geometric
+        shape resembles a cut gemstone or diamond, with sharp edges and reflective
+        highlights that give it dimension and depth. The icon appears to be a logo
+        or application symbol, commonly used to represent design software, graphics
+        programs, or similar creative tools.\n\n---\n\n# PDF Summary\n\nThe PDF is
+        titled **\"Sample PDF\"** and contains placeholder text. Here are the key
+        points:\n\n- **Header**: \"Sample PDF\" with the subtitle \"This is a simple
+        PDF file. Fun fun fun.\"\n- **Content**: The document is filled with Lorem
+        Ipsum dummy text, which is standard placeholder content used in design and
+        publishing\n- **Purpose**: This is clearly a sample or template document with
+        no substantive information\n- **Structure**: The text is organized into multiple
+        paragraphs of Latin-based filler content, typical of design mockups or testing
+        documents\n- **Length**: The document spans multiple sections of continuous
+        Lorem Ipsum text used for layout and formatting demonstrations\n\nThis is
+        a generic sample file with no real informational value, designed only to demonstrate
+        PDF formatting and structure."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":2718,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":275,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Wed, 09 Sep 2026 12:10:37 GMT
 recorded_with: VCR 6.4.0

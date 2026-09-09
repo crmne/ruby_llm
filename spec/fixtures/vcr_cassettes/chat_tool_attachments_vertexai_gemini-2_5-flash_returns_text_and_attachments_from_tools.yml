@@ -23,11 +23,11 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Mon, 07 Sep 2026 21:02:29 GMT
-      Pragma:
-      - no-cache
+      - Wed, 09 Sep 2026 12:14:19 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 07 Sep 2026 21:02:29 GMT
+  recorded_at: Wed, 09 Sep 2026 12:14:19 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:02:30 GMT
+      - Wed, 09 Sep 2026 12:14:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,18 +115,18 @@ http_interactions:
                       "name": "file_fetch",
                       "args": {}
                     },
-                    "thoughtSignature": "CtUCAY89a1/r1fv+fMWhW0Lq7B44aCrJU+a1ex/46s2mmfdtqj/aDMuIEj4ksiHewFi2snTE2fY6BjXX9/seM/pM6EzCcuNrCxSGAJ0y10535OGlICASGr6Q1myCfb7zgd3ba6FBV1VpVPdp4kvl8RjEqY62tF5c7HPfZKH4GUiyQ5/HKy9bq9kV9+68OD1BlkYGUsm1F1lgKJVllU+TZlNOC18cYtphIEJyFPfSqz+3xtc5wWa8WxlabQoFgoPCeE9cIB3F3/10Wt2p3CCBi0fH2Oa6ukR9UvYGCZzszqJAaoCZghbWgu9B2u+hO5a3gxZBbx18EeuFnKXyF7cwyjKp9PsitnhSUqQxD3MEwNDZyPlvesDJGfxiVQVO8B7sSTMoKSXGx2t7DI7xk7jVBe9bczgF/cC2YtScQ0PpYNna9i400kTDs3zqibetFeJyQbJ+kQrQNww="
+                    "thoughtSignature": "CpwDAY89a1/s/lySpwOop/6oizNawv3Tytvfil8CsPVIs3YbxLmQNoCYCu31Maf9y+4wm6Xiy4vyE5bZFk6KFn3Lgp8Cw6c8p1bOVYWjRTlDivqlrLL9VX5r22Q+KKjMVemILXlbqbfCKCJx2PWw+genJjiXLCRz+yr1eb63xSGyTKvuVLVBEFf+nyoGed6J4PVu8ZkYaAxpp9/WF0V56M9+pQL7jKRxMFEfpN2PwAGKzp112u6rZsBqalmiu+GW/1AzQHqHKQQt/CwuY6sEqFYQhnZ1NXXeuADL5a6DS3AfGCmdRggI0cZLTkX/CNFVweEIwoUVDVpo4Xv3fGtn/o07Djep8HCdWOK0hvSuMx6rsBH+20CU2F0Wi1EYhuviXG04Gkur+hGAWUkJ4BgO8WbzxDPxxgHitc0WHbiLxSTzz89XFYEJuC9IPKRj8CZNUu5ALL0HyjjlvLnuAz/M1UCKc0Rvo/f9g2DLmP2nQY2hoZatYXrNBNxURblyWnOUmME9WudnRAslrXFUKfd4N8q7i2bnQsmPO4L8VNPdOQ=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -8.0807323455810547
+              "avgLogprobs": -8.0218048095703125
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 104,
+            "totalTokenCount": 128,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,20 +140,20 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 76
+            "thoughtsTokenCount": 100
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-07T21:02:29.736949Z",
-          "responseId": "ZSafarX9LP_d1PIP7v7AsAw"
+          "createTime": "2026-09-09T12:14:19.507399Z",
+          "responseId": "m02haof8Hu2K_NUPkomX2Qw"
         }
-  recorded_at: Mon, 07 Sep 2026 21:02:30 GMT
+  recorded_at: Wed, 09 Sep 2026 12:14:20 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Use the file_fetch tool,
-        then tell me exactly what the fetched file says."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"CtUCAY89a1/r1fv+fMWhW0Lq7B44aCrJU+a1ex/46s2mmfdtqj/aDMuIEj4ksiHewFi2snTE2fY6BjXX9/seM/pM6EzCcuNrCxSGAJ0y10535OGlICASGr6Q1myCfb7zgd3ba6FBV1VpVPdp4kvl8RjEqY62tF5c7HPfZKH4GUiyQ5/HKy9bq9kV9+68OD1BlkYGUsm1F1lgKJVllU+TZlNOC18cYtphIEJyFPfSqz+3xtc5wWa8WxlabQoFgoPCeE9cIB3F3/10Wt2p3CCBi0fH2Oa6ukR9UvYGCZzszqJAaoCZghbWgu9B2u+hO5a3gxZBbx18EeuFnKXyF7cwyjKp9PsitnhSUqQxD3MEwNDZyPlvesDJGfxiVQVO8B7sSTMoKSXGx2t7DI7xk7jVBe9bczgF/cC2YtScQ0PpYNna9i400kTDs3zqibetFeJyQbJ+kQrQNww="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
+        then tell me exactly what the fetched file says."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"CpwDAY89a1/s/lySpwOop/6oizNawv3Tytvfil8CsPVIs3YbxLmQNoCYCu31Maf9y+4wm6Xiy4vyE5bZFk6KFn3Lgp8Cw6c8p1bOVYWjRTlDivqlrLL9VX5r22Q+KKjMVemILXlbqbfCKCJx2PWw+genJjiXLCRz+yr1eb63xSGyTKvuVLVBEFf+nyoGed6J4PVu8ZkYaAxpp9/WF0V56M9+pQL7jKRxMFEfpN2PwAGKzp112u6rZsBqalmiu+GW/1AzQHqHKQQt/CwuY6sEqFYQhnZ1NXXeuADL5a6DS3AfGCmdRggI0cZLTkX/CNFVweEIwoUVDVpo4Xv3fGtn/o07Djep8HCdWOK0hvSuMx6rsBH+20CU2F0Wi1EYhuviXG04Gkur+hGAWUkJ4BgO8WbzxDPxxgHitc0WHbiLxSTzz89XFYEJuC9IPKRj8CZNUu5ALL0HyjjlvLnuAz/M1UCKc0Rvo/f9g2DLmP2nQY2hoZatYXrNBNxURblyWnOUmME9WudnRAslrXFUKfd4N8q7i2bnQsmPO4L8VNPdOQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
         the file."}]}}},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
         the requested file","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
@@ -180,7 +180,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:02:31 GMT
+      - Wed, 09 Sep 2026 12:14:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -203,35 +203,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "\nI have fetched the file. It says: \"Ruby is the best.\"\n"
+                    "text": "\nThe fetched file says: \"Ruby is the best.\""
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.29581782397101908
+              "avgLogprobs": -0.0913331111272176
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 140,
-            "candidatesTokenCount": 17,
-            "totalTokenCount": 157,
+            "promptTokenCount": 164,
+            "candidatesTokenCount": 12,
+            "totalTokenCount": 176,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 140
+                "tokenCount": 164
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 17
+                "tokenCount": 12
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-07T21:02:30.756672Z",
-          "responseId": "ZiafasCXLvHI1PIPx4yToA0"
+          "createTime": "2026-09-09T12:14:20.805019Z",
+          "responseId": "nE2hapuRMeHR7bQP6bHysAY"
         }
-  recorded_at: Mon, 07 Sep 2026 21:02:31 GMT
+  recorded_at: Wed, 09 Sep 2026 12:14:21 GMT
 recorded_with: VCR 6.4.0

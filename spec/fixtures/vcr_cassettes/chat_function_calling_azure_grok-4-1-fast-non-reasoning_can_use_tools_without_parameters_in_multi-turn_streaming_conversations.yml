@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Mon, 07 Sep 2026 20:57:02 GMT
+      - Wed, 09 Sep 2026 12:06:01 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -44,402 +44,13 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-0cbc08ba6e675c47b2a35bcb0ad96e8e-617e5c4200022f80-00
+      - 00-69761737c8d59e91564f5e03e80b80d7-a756758a00196a23-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 9eb08085-7653-414b-a70d-442371b6994b
-      Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49884'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Apim-Request-Id:
-      - 9eb08085-7653-414b-a70d-442371b6994b
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Ms-Region:
-      - West Europe
-    body:
-      encoding: UTF-8
-      string: |+
-        data: {"id":"cf4b402a-ce57-40bf-ac68-4f55011bd6d8","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_41041835","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"cf4b402a-ce57-40bf-ac68-4f55011bd6d8","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id": "cf4b402a-ce57-40bf-ac68-4f55011bd6d8", "object": "chat.completion.chunk", "created": 1788814623, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 205, "completion_tokens": 18, "total_tokens": 223, "prompt_tokens_details": {"text_tokens": 205, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 158}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
-
-        data: [DONE]
-
-  recorded_at: Mon, 07 Sep 2026 20:57:03 GMT
-- request:
-    method: post
-    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
-    body:
-      encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
-        must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_41041835","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_41041835"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Api-Key:
-      - "<AZURE_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Mon, 07 Sep 2026 20:57:03 GMT
-      Server:
-      - istio-envoy
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - access-control-request-headers
-      X-Ms-Rai-Invoked:
-      - 'true'
-      Traceparent:
-      - 00-4805bedb817fb8ca5f2bd6fa005401d2-03fd39f600345086-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 9113b30f-e970-42be-8be8-00b9736e64f1
-      Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49830'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Apim-Request-Id:
-      - 9113b30f-e970-42be-8be8-00b9736e64f1
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Ms-Region:
-      - West Europe
-    body:
-      encoding: UTF-8
-      string: |+
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"**","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"Ruby"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"**"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" is"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" the"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" best"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" language"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" to"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" learn"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814623,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"!"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" It's"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" elegant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" beginner"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"-friendly"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" and"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" powers"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" fun"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" web"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" apps"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" like"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" those"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" built"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" with"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" Rails"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" Great"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" for"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" quick"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" prototyping"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" and"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" has"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" a"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" vibrant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" community"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"f00e4e23-1486-42da-819b-a96a71b60b00","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id": "f00e4e23-1486-42da-819b-a96a71b60b00", "object": "chat.completion.chunk", "created": 1788814624, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 235, "completion_tokens": 37, "total_tokens": 272, "prompt_tokens_details": {"text_tokens": 235, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 373}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
-
-        data: [DONE]
-
-  recorded_at: Mon, 07 Sep 2026 20:57:04 GMT
-- request:
-    method: post
-    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
-    body:
-      encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
-        must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_41041835","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_41041835"},{"role":"assistant","content":"**Ruby**
-        is the best language to learn! It''s elegant, beginner-friendly, and powers
-        fun web apps like those built with Rails. Great for quick prototyping and
-        has a vibrant community."},{"role":"user","content":"Tell me again: what''s
-        the best language to learn?"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Api-Key:
-      - "<AZURE_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Mon, 07 Sep 2026 20:57:04 GMT
-      Server:
-      - istio-envoy
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - access-control-request-headers
-      X-Ms-Rai-Invoked:
-      - 'true'
-      Traceparent:
-      - 00-9a5cf716771eb8c04baa3c258f120020-18c8d4b20001edce-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - e80f6a4a-2e57-4b1a-a16d-a014c9966edc
-      Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '48'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49757'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Apim-Request-Id:
-      - e80f6a4a-2e57-4b1a-a16d-a014c9966edc
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Ms-Region:
-      - West Europe
-    body:
-      encoding: UTF-8
-      string: |+
-        data: {"id":"fc897761-3c78-4040-8a81-ca985077d3b8","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_97695437","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id":"fc897761-3c78-4040-8a81-ca985077d3b8","object":"chat.completion.chunk","created":1788814624,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
-
-        data: {"id": "fc897761-3c78-4040-8a81-ca985077d3b8", "object": "chat.completion.chunk", "created": 1788814624, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 294, "completion_tokens": 18, "total_tokens": 312, "prompt_tokens_details": {"text_tokens": 294, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 403}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
-
-        data: [DONE]
-
-  recorded_at: Mon, 07 Sep 2026 20:57:05 GMT
-- request:
-    method: post
-    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
-    body:
-      encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
-        must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_41041835","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_41041835"},{"role":"assistant","content":"**Ruby**
-        is the best language to learn! It''s elegant, beginner-friendly, and powers
-        fun web apps like those built with Rails. Great for quick prototyping and
-        has a vibrant community."},{"role":"user","content":"Tell me again: what''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_97695437","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_97695437"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Api-Key:
-      - "<AZURE_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Mon, 07 Sep 2026 20:57:05 GMT
-      Server:
-      - istio-envoy
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
-      Vary:
-      - access-control-request-headers
-      X-Ms-Rai-Invoked:
-      - 'true'
-      Traceparent:
-      - 00-938367bdbdb272bb1ab45d7e883761ee-302967e70034e6a8-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - b740a323-cbb5-4a90-9a1b-d97d4edbe2bf
+      - 4331fd59-d049-4795-b42a-a5fa88e05fd4
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
       Azureai-Requested-Tier:
@@ -461,7 +72,7 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49703'
+      - '49884'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
@@ -473,7 +84,396 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - b740a323-cbb5-4a90-9a1b-d97d4edbe2bf
+      - 4331fd59-d049-4795-b42a-a5fa88e05fd4
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"c4c9e95a-0dd9-40ac-9671-53d82e5771f2","object":"chat.completion.chunk","created":1788955561,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_59393449","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"c4c9e95a-0dd9-40ac-9671-53d82e5771f2","object":"chat.completion.chunk","created":1788955561,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id": "c4c9e95a-0dd9-40ac-9671-53d82e5771f2", "object": "chat.completion.chunk", "created": 1788955561, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 205, "completion_tokens": 18, "total_tokens": 223, "prompt_tokens_details": {"text_tokens": 205, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 159}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+
+        data: [DONE]
+
+  recorded_at: Wed, 09 Sep 2026 12:06:01 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_59393449","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_59393449"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Date:
+      - Wed, 09 Sep 2026 12:06:02 GMT
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - access-control-request-headers
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Traceparent:
+      - 00-c40ce0d3f207a7ec86c6d213eb11b717-a53dc5090005971b-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 60e09671-195c-4a8b-90a9-1e37e9800c4e
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '47'
+      X-Ratelimit-Reset-Requests:
+      - '3'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49830'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 60e09671-195c-4a8b-90a9-1e37e9800c4e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"**","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"Ruby"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"**"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" is"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" the"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" best"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" language"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" to"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" learn"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"!"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" It's"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" elegant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" beginner"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"-friendly"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" and"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" powers"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" cool"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" web"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" apps"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" like"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" those"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" built"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" with"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" Rails"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" Start"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" with"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" it"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" for"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" quick"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" fun"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" results"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"5c1ef527-a545-443e-83a5-536e8a8f121d","object":"chat.completion.chunk","created":1788955562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id": "5c1ef527-a545-443e-83a5-536e8a8f121d", "object": "chat.completion.chunk", "created": 1788955562, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 235, "completion_tokens": 36, "total_tokens": 271, "prompt_tokens_details": {"text_tokens": 235, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 373}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+
+        data: [DONE]
+
+  recorded_at: Wed, 09 Sep 2026 12:06:02 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_59393449","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_59393449"},{"role":"assistant","content":"**Ruby**
+        is the best language to learn! It''s elegant, beginner-friendly, and powers
+        cool web apps like those built with Rails. Start with it for quick, fun results."},{"role":"user","content":"Tell
+        me again: what''s the best language to learn?"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Date:
+      - Wed, 09 Sep 2026 12:06:03 GMT
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - access-control-request-headers
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Traceparent:
+      - 00-f52e3f20611feebef0b9f7bccf1e770e-5b05015a000b34ba-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 17e1a35f-6ee9-4b0c-8d2b-f8fa54958fb8
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '47'
+      X-Ratelimit-Reset-Requests:
+      - '3'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49761'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 17e1a35f-6ee9-4b0c-8d2b-f8fa54958fb8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"d87e9c4b-c02a-41fc-84fc-b9cc3b7e306e","object":"chat.completion.chunk","created":1788955563,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_93630641","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"d87e9c4b-c02a-41fc-84fc-b9cc3b7e306e","object":"chat.completion.chunk","created":1788955563,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id": "d87e9c4b-c02a-41fc-84fc-b9cc3b7e306e", "object": "chat.completion.chunk", "created": 1788955563, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 293, "completion_tokens": 18, "total_tokens": 311, "prompt_tokens_details": {"text_tokens": 293, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 403}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+
+        data: [DONE]
+
+  recorded_at: Wed, 09 Sep 2026 12:06:04 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_59393449","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_59393449"},{"role":"assistant","content":"**Ruby**
+        is the best language to learn! It''s elegant, beginner-friendly, and powers
+        cool web apps like those built with Rails. Start with it for quick, fun results."},{"role":"user","content":"Tell
+        me again: what''s the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_93630641","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_93630641"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Date:
+      - Wed, 09 Sep 2026 12:06:04 GMT
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - access-control-request-headers
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Traceparent:
+      - 00-75e276b607ee4a847cd00b6d51db4031-d6a67d51002def03-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 9c7a0b0c-165f-498f-a172-0f5d6a4cfb27
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '47'
+      X-Ratelimit-Reset-Requests:
+      - '3'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49707'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 9c7a0b0c-165f-498f-a172-0f5d6a4cfb27
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -483,6 +483,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIqKiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IlJ1YnkifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IioqIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiLigJQifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6InN0aWxsIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgdGhlIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgdG9wIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgcGljayJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiISJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIEl0cyJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHJlYWRhYmxlIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgc3ludGF4In19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgZmVlbHMifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBsaWtlIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd3JpdGluZyJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIEVuZ2xpc2gifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiwifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBtYWtpbmcifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpdCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHBlcmZlY3QifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBmb3IifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBuZXdjb21lcnMifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3aGlsZSJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGJlaW5nIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgcG93ZXJmdWwifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBmb3IifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiByZWFsIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6IjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg4MTQ2MjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiItd29ybGQifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBwcm9qZWN0cyJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLiJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIERpdmUifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiNDRmNTE4M2UtZGY5MC00YjNkLThlZjYtZWZhMjdlMjdjMTAxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODgxNDYyNSwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpbiJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiISJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiICJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50Ijoi8J+agCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiI0NGY1MTgzZS1kZjkwLTRiM2QtOGVmNi1lZmEyN2UyN2MxMDEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4ODE0NjI1LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6e30sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjogIjQ0ZjUxODNlLWRmOTAtNGIzZC04ZWY2LWVmYTI3ZTI3YzEwMSIsICJvYmplY3QiOiAiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwgImNyZWF0ZWQiOiAxNzg4ODE0NjI1LCAibW9kZWwiOiAiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwgImNob2ljZXMiOiBbXSwgInVzYWdlIjogeyJwcm9tcHRfdG9rZW5zIjogMzI0LCAiY29tcGxldGlvbl90b2tlbnMiOiAzNSwgInRvdGFsX3Rva2VucyI6IDM1OSwgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsidGV4dF90b2tlbnMiOiAzMjQsICJhdWRpb190b2tlbnMiOiAwLCAiaW1hZ2VfdG9rZW5zIjogMCwgImNhY2hlZF90b2tlbnMiOiA0NjJ9LCAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsicmVhc29uaW5nX3Rva2VucyI6IDAsICJhdWRpb190b2tlbnMiOiAwLCAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLCAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwfSwgIm51bV9zb3VyY2VzX3VzZWQiOiAwLCAiY29zdF9pbl91c2RfdGlja3MiOiAwfSwgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF80OWM1ajBhMzIzIiwgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0In0KCmRhdGE6IFtET05FXQoK
-  recorded_at: Mon, 07 Sep 2026 20:57:06 GMT
+        ZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIqKiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IlJ1YnkifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IioqIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgaXMifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBzdGlsbCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHRoZSJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGJlc3QifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBsYW5ndWFnZSJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHRvIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgbGVhcm4ifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiEifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBJdCdzIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgZ290In19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgdGhhdCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHN3ZWV0In19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgc3ludGF4In19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgYW5kIn19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ImJkNzlkMjMxLWYzNTEtNDU1ZC05M2ZlLTUxZDk5ZWYwZWFlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3ODg5NTU1NjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgZ3JlYXQifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBmb3IifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3ZWIifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBkZXYifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IuKAlCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoicGVyZmVjdCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGZvciJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHBpY2tpbmcifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB1cCJ9fV0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ5YzVqMGEzMjMiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0KCmRhdGE6IHsiaWQiOiJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzg4OTU1NTY0LCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGZhc3QifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii4ifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IvCfmoAifX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80OWM1ajBhMzIzIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9CgpkYXRhOiB7ImlkIjoiYmQ3OWQyMzEtZjM1MS00NTVkLTkzZmUtNTFkOTllZjBlYWVlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc4ODk1NTU2NCwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnt9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDljNWowYTMyMyIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQoKZGF0YTogeyJpZCI6ICJiZDc5ZDIzMS1mMzUxLTQ1NWQtOTNmZS01MWQ5OWVmMGVhZWUiLCAib2JqZWN0IjogImNoYXQuY29tcGxldGlvbi5jaHVuayIsICJjcmVhdGVkIjogMTc4ODk1NTU2NCwgIm1vZGVsIjogImdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsICJjaG9pY2VzIjogW10sICJ1c2FnZSI6IHsicHJvbXB0X3Rva2VucyI6IDMyMywgImNvbXBsZXRpb25fdG9rZW5zIjogMzAsICJ0b3RhbF90b2tlbnMiOiAzNTMsICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7InRleHRfdG9rZW5zIjogMzIzLCAiYXVkaW9fdG9rZW5zIjogMCwgImltYWdlX3Rva2VucyI6IDAsICJjYWNoZWRfdG9rZW5zIjogNDYxfSwgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7InJlYXNvbmluZ190b2tlbnMiOiAwLCAiYXVkaW9fdG9rZW5zIjogMCwgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMH0sICJudW1fc291cmNlc191c2VkIjogMCwgImNvc3RfaW5fdXNkX3RpY2tzIjogMH0sICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfNDljNWowYTMyMyIsICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCJ9CgpkYXRhOiBbRE9ORV0KCg==
+  recorded_at: Wed, 09 Sep 2026 12:06:05 GMT
 recorded_with: VCR 6.4.0

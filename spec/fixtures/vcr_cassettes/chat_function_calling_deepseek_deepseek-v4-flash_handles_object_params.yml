@@ -34,7 +34,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 07 Sep 2026 20:58:14 GMT
+      - Wed, 09 Sep 2026 12:07:32 GMT
       Server:
       - elb
       Vary:
@@ -42,7 +42,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a3df7e2f9896f45fe3824ab0b3b453cd
+      - c4c68743b931ad379c5059bf298c64d7
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -50,16 +50,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 caf908c8115c6f7c9e78ce96ceb41e5a.cloudfront.net (CloudFront)
+      - 1.1 44d7974f4be0fa8ffcd7f3159495b12a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P4
       X-Amz-Cf-Id:
-      - v7SEDzo_2NAIpQOsFzmNbNMissPkkvs3B3cntHsd9EL7Sxu0rB4FBg==
+      - 7FQBNokDmWNKkylmkzs3iQlmRx8s4plG4JMqEfYY55vC7jzlJpf3Xg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"708b2099-fcab-4d28-9c66-0fb86940eafb","object":"chat.completion","created":1788814694,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        user wants me to call the tool `object_params` with a window of start 2025-01-01
-        and end 2025-01-02.","tool_calls":[{"index":0,"id":"call_00_ZnNcC3jBvEsDr7YPCDg70356","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":445,"completion_tokens":99,"total_tokens":544,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":34},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":61},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
-  recorded_at: Mon, 07 Sep 2026 20:58:16 GMT
+      string: '{"id":"d7ba17c8-5e27-4998-80c2-7c36a675c057","object":"chat.completion","created":1788955652,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the object_params tool with a window start and end,
+        then include the result.","tool_calls":[{"index":0,"id":"call_00_mCJzSv5h3vcwY5cPP7ja8660","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":445,"completion_tokens":87,"total_tokens":532,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":22},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":61},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Wed, 09 Sep 2026 12:07:33 GMT
 recorded_with: VCR 6.4.0

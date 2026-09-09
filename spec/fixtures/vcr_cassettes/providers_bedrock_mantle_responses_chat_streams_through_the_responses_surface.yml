@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 5."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       X-Amz-Date:
-      - 20260907T205345Z
+      - 20260909T121635Z
       X-Amz-Content-Sha256:
       - cbf3696d10214f5c50a9bca4dcc815b609f32c3d2122a8724949d2e40ceee1fc
       Authorization:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 20:53:45 GMT
+      - Wed, 09 Sep 2026 12:16:36 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -51,36 +51,40 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"response":{"background":false,"created_at":1788814425.0,"error":null,"id":"resp_i6qu4hy7v2g7cvowsf463av5fimosuo4waiapilkjzv4afvucrsa","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+        data: {"response":{"background":false,"created_at":1788956196.0,"error":null,"id":"resp_ld7kybrs3wchsgz7syhacwziyt4jxlcnweoouonypeuzrezt3rxq","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
 
-        data: {"response":{"background":false,"created_at":1788814425.0,"error":null,"id":"resp_i6qu4hy7v2g7cvowsf463av5fimosuo4waiapilkjzv4afvucrsa","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+        data: {"response":{"background":false,"created_at":1788956196.0,"error":null,"id":"resp_ld7kybrs3wchsgz7syhacwziyt4jxlcnweoouonypeuzrezt3rxq","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
 
-        data: {"item":{"id":"msg_b670c33c50baaccc","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+        data: {"item":{"id":"msg_bd31ab7a191e5796","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
 
-        data: {"content_index":0,"item_id":"msg_b670c33c50baaccc","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
+        data: {"content_index":0,"item_id":"msg_bd31ab7a191e5796","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
 
-        data: {"content_index":0,"delta":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","item_id":"msg_b670c33c50baaccc","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
+        data: {"content_index":0,"delta":"We need to respond counting 1 to 5. Likely just output \"1 2","item_id":"msg_bd31ab7a191e5796","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_b670c33c50baaccc","output_index":0,"sequence_number":5,"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"response.reasoning_text.done"}
+        data: {"content_index":0,"delta":" 3 4 5\" line or each on separate lines.","item_id":"msg_bd31ab7a191e5796","output_index":0,"sequence_number":5,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_b670c33c50baaccc","output_index":0,"part":{"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"reasoning_text"},"sequence_number":6,"type":"response.reasoning_part.done"}
+        data: {"content_index":0,"delta":" Probably simple.","item_id":"msg_bd31ab7a191e5796","output_index":0,"sequence_number":6,"type":"response.reasoning_text.delta"}
 
-        data: {"item":{"content":[{"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"reasoning_text"}],"id":"msg_b670c33c50baaccc","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":7,"type":"response.output_item.done"}
+        data: {"content_index":0,"item_id":"msg_bd31ab7a191e5796","output_index":0,"sequence_number":7,"text":"We need to respond counting 1 to 5. Likely just output \"1 2 3 4 5\" line or each on separate lines. Probably simple.","type":"response.reasoning_text.done"}
 
-        data: {"item":{"content":[],"id":"msg_a7557ed9ba6e5d20","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":8,"type":"response.output_item.added"}
+        data: {"content_index":0,"item_id":"msg_bd31ab7a191e5796","output_index":0,"part":{"text":"We need to respond counting 1 to 5. Likely just output \"1 2 3 4 5\" line or each on separate lines. Probably simple.","type":"reasoning_text"},"sequence_number":8,"type":"response.reasoning_part.done"}
 
-        data: {"content_index":1,"item_id":"msg_a7557ed9ba6e5d20","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":9,"type":"response.content_part.added"}
+        data: {"item":{"content":[{"text":"We need to respond counting 1 to 5. Likely just output \"1 2 3 4 5\" line or each on separate lines. Probably simple.","type":"reasoning_text"}],"id":"msg_bd31ab7a191e5796","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":9,"type":"response.output_item.done"}
 
-        data: {"content_index":1,"delta":"1 2 3 4 5","item_id":"msg_a7557ed9ba6e5d20","logprobs":[],"output_index":1,"sequence_number":10,"type":"response.output_text.delta"}
+        data: {"item":{"content":[],"id":"msg_9d45eca35ced3246","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":10,"type":"response.output_item.added"}
 
-        data: {"content_index":1,"item_id":"msg_a7557ed9ba6e5d20","logprobs":[],"output_index":1,"sequence_number":11,"text":"1 2 3 4 5","type":"response.output_text.done"}
+        data: {"content_index":1,"item_id":"msg_9d45eca35ced3246","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":11,"type":"response.content_part.added"}
 
-        data: {"content_index":1,"item_id":"msg_a7557ed9ba6e5d20","output_index":1,"part":{"annotations":[],"text":"1 2 3 4 5","type":"output_text"},"sequence_number":12,"type":"response.content_part.done"}
+        data: {"content_index":1,"delta":"1  \n2  \n3  \n4  \n5","item_id":"msg_9d45eca35ced3246","logprobs":[],"output_index":1,"sequence_number":12,"type":"response.output_text.delta"}
 
-        data: {"item":{"content":[{"annotations":[],"text":"1 2 3 4 5","type":"output_text"}],"id":"msg_a7557ed9ba6e5d20","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":13,"type":"response.output_item.done"}
+        data: {"content_index":1,"item_id":"msg_9d45eca35ced3246","logprobs":[],"output_index":1,"sequence_number":13,"text":"1  \n2  \n3  \n4  \n5","type":"response.output_text.done"}
 
-        data: {"response":{"background":false,"created_at":1788814425.0,"error":null,"id":"resp_i6qu4hy7v2g7cvowsf463av5fimosuo4waiapilkjzv4afvucrsa","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"reasoning_text"}],"id":"msg_b670c33c50baaccc","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1 2 3 4 5","type":"output_text"}],"id":"msg_a7557ed9ba6e5d20","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":68,"output_tokens_details":{"reasoning_tokens":50},"total_tokens":143}},"sequence_number":14,"type":"response.completed"}
+        data: {"content_index":1,"item_id":"msg_9d45eca35ced3246","output_index":1,"part":{"annotations":[],"text":"1  \n2  \n3  \n4  \n5","type":"output_text"},"sequence_number":14,"type":"response.content_part.done"}
 
-  recorded_at: Mon, 07 Sep 2026 20:53:46 GMT
+        data: {"item":{"content":[{"annotations":[],"text":"1  \n2  \n3  \n4  \n5","type":"output_text"}],"id":"msg_9d45eca35ced3246","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":15,"type":"response.output_item.done"}
+
+        data: {"response":{"background":false,"created_at":1788956196.0,"error":null,"id":"resp_ld7kybrs3wchsgz7syhacwziyt4jxlcnweoouonypeuzrezt3rxq","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"We need to respond counting 1 to 5. Likely just output \"1 2 3 4 5\" line or each on separate lines. Probably simple.","type":"reasoning_text"}],"id":"msg_bd31ab7a191e5796","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1  \n2  \n3  \n4  \n5","type":"output_text"}],"id":"msg_9d45eca35ced3246","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":55,"output_tokens_details":{"reasoning_tokens":37},"total_tokens":130}},"sequence_number":16,"type":"response.completed"}
+
+  recorded_at: Wed, 09 Sep 2026 12:16:37 GMT
 recorded_with: VCR 6.4.0
 ...

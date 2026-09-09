@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 20:56:34 GMT
+      - Wed, 09 Sep 2026 12:05:36 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -42,27 +42,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-07T20:56:33Z'
+      - '2026-09-09T12:05:35Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-07T20:56:33Z'
+      - '2026-09-09T12:05:35Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-07T20:56:33Z'
+      - '2026-09-09T12:05:36Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-07T20:56:33Z'
-      Server:
-      - cloudflare
+      - '2026-09-09T12:05:35Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -72,7 +70,9 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-95d89f8f1b3f65bbde2f97183dcd6d0f-e90fa5f8b7236f3a-01
+      - 00-b63f74251676cea6e5faff711b38180c-6102dfd174a2d71d-01
+      Server:
+      - cloudflare
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Vary:
@@ -87,34 +87,34 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CepkHkRDvAbjxEmzPsvUa","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":579,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":26,"service_tier":"standard","inference_geo":"not_available"}}}
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CesqRD6csFNDUz1RXmztJ","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":579,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":26,"service_tier":"standard","inference_geo":"not_available"}}               }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01KAZGaEmG1KePz6tip6X7a6","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}          }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}      }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}  }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}}
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0        }
+        data: {"type":"content_block_stop","index":0    }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null},"usage":{"input_tokens":579,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}           }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":579,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}              }
 
         event: message_stop
-        data: {"type":"message_stop" }
+        data: {"type":"message_stop"               }
 
-  recorded_at: Mon, 07 Sep 2026 20:56:34 GMT
+  recorded_at: Wed, 09 Sep 2026 12:05:36 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01KAZGaEmG1KePz6tip6X7a6","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KAZGaEmG1KePz6tip6X7a6","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
     headers:
@@ -136,7 +136,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 20:56:35 GMT
+      - Wed, 09 Sep 2026 12:05:37 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -150,25 +150,27 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-07T20:56:34Z'
+      - '2026-09-09T12:05:37Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-07T20:56:34Z'
+      - '2026-09-09T12:05:37Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-07T20:56:34Z'
+      - '2026-09-09T12:05:37Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-07T20:56:34Z'
+      - '2026-09-09T12:05:37Z'
+      Server:
+      - cloudflare
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -178,9 +180,7 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-eb45468c943898b88a5ab68c598613ed-2c78c1f51d5e8abc-01
-      Server:
-      - cloudflare
+      - 00-9c504b3366abc34a56e28155da440ec5-0b9a12bb39c99179-01
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Vary:
@@ -195,62 +195,224 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CepkHpiBd4xLNqLWUnw3X","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available"}}}
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CesqRK9WK8Zmgxxu3DxNc","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available"}} }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}   }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}      }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"According"}           }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"According"} }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to the tool, **Ruby** is the best language to learn!\n\nRuby is an excellent choice for several reasons:\n\n- **Beg"}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to the"}        }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"inner-friendly**: Ruby has clean, readable syntax that's easy to learn, making it great for beginners\n- **Productive**: You"} }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" tool"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" can build applications quickly with less code\n- **Web development**: Ruby on Rails is a powerful framework for building web applications\n- **Community"}    }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":", **Ruby**"}        }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"**: Ruby has a vibrant and supportive community with lots of resources and gems (libraries)\n- **Versat"}           }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" is the best language"}  }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"ile**: While famous for web development, Ruby can be used for automation, scripting, data analysis, and more\n\nIf you're interested in"}        }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to learn!"}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" learning to code or adding a new language to your skillset, Ruby is definitely worth considering!"}        }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\nRuby"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" is an"}     }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" excellent"}     }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" choice for several"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" reasons:"}          }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\n1. **"}             }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Beg"}          }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"inner-"}       }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Friendly**: It has"}     }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" elegant"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":","}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" readable syntax that"} }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'s close"}    }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to natural"}         }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" English,"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" making it great"}    }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" for learning programming"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" concepts\n2."}          }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" **Productivity"}   }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"**: Ruby"}       }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" allows"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you to write powerful"}           }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" code with fewer lines"}    }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":","}     }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" boo"}            }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"sting your productivity"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n3. **Ruby"}     }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" on Rails**: The"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" popular"}          }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Rails"}       }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" framework makes web"}   }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" development fast"}              }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" and intu"}            }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"itive\n4."}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" **Active"}  }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Community**: There"}     }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'s a large,"}        }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" supportive community with"}  }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" plenty"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" of learning"}    }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" resources\n5."}  }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" **Job"}           }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Market**: There"}   }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'s solid"}        }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" demand for Ruby developers"}   }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":", especially in start"} }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"ups and tech companies"}               }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n\nWhether"}           }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you're just"}        }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" starting out or looking"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to expand your programming"}          }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" skills, Ruby is"}             }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a"}}
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" fantastic"}      }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" choice!"}      }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0           }
+        data: {"type":"content_block_stop","index":0     }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null},"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":162}       }
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":163}       }
 
         event: message_stop
-        data: {"type":"message_stop"  }
+        data: {"type":"message_stop"           }
 
-  recorded_at: Mon, 07 Sep 2026 20:56:37 GMT
+  recorded_at: Wed, 09 Sep 2026 12:05:39 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01KAZGaEmG1KePz6tip6X7a6","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KAZGaEmG1KePz6tip6X7a6","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"According
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"According
         to the tool, **Ruby** is the best language to learn!\n\nRuby is an excellent
-        choice for several reasons:\n\n- **Beginner-friendly**: Ruby has clean, readable
-        syntax that''s easy to learn, making it great for beginners\n- **Productive**:
-        You can build applications quickly with less code\n- **Web development**:
-        Ruby on Rails is a powerful framework for building web applications\n- **Community**:
-        Ruby has a vibrant and supportive community with lots of resources and gems
-        (libraries)\n- **Versatile**: While famous for web development, Ruby can be
-        used for automation, scripting, data analysis, and more\n\nIf you''re interested
-        in learning to code or adding a new language to your skillset, Ruby is definitely
-        worth considering!"}]},{"role":"user","content":[{"type":"text","text":"Tell
+        choice for several reasons:\n\n1. **Beginner-Friendly**: It has elegant, readable
+        syntax that''s close to natural English, making it great for learning programming
+        concepts\n2. **Productivity**: Ruby allows you to write powerful code with
+        fewer lines, boosting your productivity\n3. **Ruby on Rails**: The popular
+        Rails framework makes web development fast and intuitive\n4. **Active Community**:
+        There''s a large, supportive community with plenty of learning resources\n5.
+        **Job Market**: There''s solid demand for Ruby developers, especially in startups
+        and tech companies\n\nWhether you''re just starting out or looking to expand
+        your programming skills, Ruby is a fantastic choice!"}]},{"role":"user","content":[{"type":"text","text":"Tell
         me again: what''s the best language to learn?"}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
@@ -273,7 +435,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 20:56:38 GMT
+      - Wed, 09 Sep 2026 12:05:40 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -287,25 +449,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-07T20:56:37Z'
+      - '2026-09-09T12:05:39Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-07T20:56:37Z'
+      - '2026-09-09T12:05:39Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-07T20:56:37Z'
+      - '2026-09-09T12:05:39Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-07T20:56:37Z'
+      - '2026-09-09T12:05:39Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -315,7 +477,7 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-b27b99b4e068496cf24fe94d2c6855fa-b2abb9716b2f8cbf-01
+      - 00-0ec7272089829f062f96d33af931b1fa-e6ad15683f500f01-01
       Server:
       - cloudflare
       Content-Security-Policy:
@@ -332,45 +494,45 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CepkJ1bGycnvpZrSQsHD3","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":810,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":25,"service_tier":"standard","inference_geo":"not_available"}}     }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CesqRVA1W6H3oQy4VS31k","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":811,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":25,"service_tier":"standard","inference_geo":"not_available"}}             }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01CVP2id4v5C9kBkekCRyGKi","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}}
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_013k88643e6qMC8FVBvwQ8vA","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}} }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}       }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}         }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0             }
+        data: {"type":"content_block_stop","index":0          }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null},"usage":{"input_tokens":810,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}           }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":811,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}      }
 
         event: message_stop
-        data: {"type":"message_stop"           }
+        data: {"type":"message_stop"              }
 
-  recorded_at: Mon, 07 Sep 2026 20:56:38 GMT
+  recorded_at: Wed, 09 Sep 2026 12:05:40 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01KAZGaEmG1KePz6tip6X7a6","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KAZGaEmG1KePz6tip6X7a6","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"According
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01SaoHttUN2KH1MUPCC4xW2h","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"According
         to the tool, **Ruby** is the best language to learn!\n\nRuby is an excellent
-        choice for several reasons:\n\n- **Beginner-friendly**: Ruby has clean, readable
-        syntax that''s easy to learn, making it great for beginners\n- **Productive**:
-        You can build applications quickly with less code\n- **Web development**:
-        Ruby on Rails is a powerful framework for building web applications\n- **Community**:
-        Ruby has a vibrant and supportive community with lots of resources and gems
-        (libraries)\n- **Versatile**: While famous for web development, Ruby can be
-        used for automation, scripting, data analysis, and more\n\nIf you''re interested
-        in learning to code or adding a new language to your skillset, Ruby is definitely
-        worth considering!"}]},{"role":"user","content":[{"type":"text","text":"Tell
-        me again: what''s the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01CVP2id4v5C9kBkekCRyGKi","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01CVP2id4v5C9kBkekCRyGKi","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
+        choice for several reasons:\n\n1. **Beginner-Friendly**: It has elegant, readable
+        syntax that''s close to natural English, making it great for learning programming
+        concepts\n2. **Productivity**: Ruby allows you to write powerful code with
+        fewer lines, boosting your productivity\n3. **Ruby on Rails**: The popular
+        Rails framework makes web development fast and intuitive\n4. **Active Community**:
+        There''s a large, supportive community with plenty of learning resources\n5.
+        **Job Market**: There''s solid demand for Ruby developers, especially in startups
+        and tech companies\n\nWhether you''re just starting out or looking to expand
+        your programming skills, Ruby is a fantastic choice!"}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_013k88643e6qMC8FVBvwQ8vA","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_013k88643e6qMC8FVBvwQ8vA","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
     headers:
@@ -392,7 +554,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 20:56:38 GMT
+      - Wed, 09 Sep 2026 12:05:41 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -406,25 +568,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-07T20:56:38Z'
+      - '2026-09-09T12:05:40Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-07T20:56:38Z'
+      - '2026-09-09T12:05:40Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-07T20:56:38Z'
+      - '2026-09-09T12:05:40Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-07T20:56:38Z'
+      - '2026-09-09T12:05:40Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -434,7 +596,7 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-40984c88f40bb388f93e51bf204a7c37-85bead7b78700811-01
+      - 00-cf2ba8469413b2bb897c32a02377739b-0977f71f6ee0daf1-01
       Server:
       - cloudflare
       Content-Security-Policy:
@@ -451,38 +613,38 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CepkJ6tGz7qYW9DpZrrqF","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":864,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available"}}     }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CesqRZLXxx6hJPoV2HdFq","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":865,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":4,"service_tier":"standard","inference_geo":"not_available"}}        }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}   }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}       }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The"}           }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The best language to"}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" best language to learn is **Ruby**!\n\nIt's consistently recommended as an excellent programming language, particularly if you're:"}          }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" learn is **Ruby**!\n\nThe tool confirms the same result. Ruby remains an excellent programming language to learn due"}      }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"\n- Just starting your coding journey\n- Interested in web development with frameworks like Ruby on Rails\n- Looking for a language"}        }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to its:\n\n- **Clean, readable syntax** that's easy to understand\n- **Rapid development capabilities** with frameworks like Ruby on Rails\n-"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" with elegant, readable syntax\n- Wanting to be part of an active developer community\n\nRuby's philosophy emphasizes programmer"}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" **Strong community support** and extensive documentation\n- **Versatility** for web development, scripting, automation, and more\n- **Good career"}          }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" happiness and productivity, making it a great choice for beginners and experienced developers alike."}         }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" prospects** in the job market\n\nIf you're looking to get started with programming or add a new language to your skillset, Ruby is definitely a solid choice!"}         }
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":0      }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null},"usage":{"input_tokens":864,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":96}}
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":865,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":126}              }
 
         event: message_stop
-        data: {"type":"message_stop"     }
+        data: {"type":"message_stop"   }
 
-  recorded_at: Mon, 07 Sep 2026 20:56:40 GMT
+  recorded_at: Wed, 09 Sep 2026 12:05:42 GMT
 recorded_with: VCR 6.4.0
 ...

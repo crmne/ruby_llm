@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 07 Sep 2026 21:00:55 GMT
+      - Wed, 09 Sep 2026 12:06:01 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e9c838763d90a82d35f26688e6b1c2ee
+      - b4b42ab6b6270b41cb03252a781b825e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,26 +46,29 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b05025fc5f1bc05aefc9059eac2b55ea.cloudfront.net (CloudFront)
+      - 1.1 992996e4e91d1a0396e009259f402180.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - z0dmcpK9NLIZSJsk--TO_mMnEP0DQelBx486PaH03KOuHb0mr482Wg==
+      - uL5zBh1viwlvDG9uNSti4kOaGWQgqeUrf9cEn5x5BuMGTuHnsmRoWw==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImFiYTZjYTY4LThhZGMtNGQ1OS05ODAzLTNlZjJhOWU1MmYxMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ4NTUsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ill1a2loaXJvIE1hdHN1bW90byAob2Z0ZW4ga25vd24gYXMg4oCcTWF0euKAnSkgaXMgdGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1YnkuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJXZSBuZWVkIGFuc3dlci4gUnVieSBjcmVhdG9yIFl1a2loaXJvIE1hdHN1bW90byAoTWF0eikuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OTMsImNvbXBsZXRpb25fdG9rZW5zIjo0MSwidG90YWxfdG9rZW5zIjoxMzQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjkzfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYTI2YTc5NTU5NDRkYzVjNjA0NDViZmY3N2ZhYzljOGUifQ==
-  recorded_at: Mon, 07 Sep 2026 21:00:56 GMT
+      string: '{"id":"0147bf24-5e23-4f22-a720-87808f08dacd","object":"chat.completion","created":1788955561,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        creator of the programming language Ruby is **Yukihiro Matsumoto**, often
+        known by his handle **Matz**. He released the first version of Ruby in 1995.","reasoning_content":"We
+        need answer. Ruby creator Yukihiro Matsumoto, aka Matz."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":93,"completion_tokens":56,"total_tokens":149,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":17},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":93},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Wed, 09 Sep 2026 12:06:02 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"Yukihiro
-        Matsumoto (often known as “Matz”) is the creator of the programming language
-        Ruby.","reasoning_content":"We need answer. Ruby creator Yukihiro Matsumoto
-        (Matz).","reasoning":"We need answer. Ruby creator Yukihiro Matsumoto (Matz)."},{"role":"user","content":"What
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of the programming language Ruby is **Yukihiro Matsumoto**, often
+        known by his handle **Matz**. He released the first version of Ruby in 1995.","reasoning_content":"We
+        need answer. Ruby creator Yukihiro Matsumoto, aka Matz.","reasoning":"We need
+        answer. Ruby creator Yukihiro Matsumoto, aka Matz."},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
@@ -90,7 +93,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 07 Sep 2026 21:00:56 GMT
+      - Wed, 09 Sep 2026 12:06:02 GMT
       Server:
       - elb
       Vary:
@@ -98,7 +101,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - be0932d103cc576433267c254af7ea40
+      - b6d90077f99a166299006f6452ce14ca
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -106,27 +109,30 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 26491f5aa9545235b1f81bab4c2b6706.cloudfront.net (CloudFront)
+      - 1.1 4842376441adfff51e41110458fe337a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL50-P4
       X-Amz-Cf-Id:
-      - dro84fvWJRq1qIRgp1D2aYo80MtkR22Ucw-C6bTk0d_4v6FefMvhlA==
+      - ZkXVZiaETSk3dkT6aAEk-y2iaV0j7qmplcp3MwYhGExh-SkVTOHW9g==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b5d37d67-a56a-4fa1-ae29-44f6a88f7638","object":"chat.completion","created":1788814856,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        Matsumoto began creating Ruby in **1993**. He first released it to the public
-        in **1995** (version 0.95). So, while the foundational work started in 1993,
-        it became publicly available two years later.","reasoning_content":"1.  **Analyze
-        the User''s Request**:\n    *   Previous turn: Asked who created Ruby. Answer:
-        Yukihiro Matsumoto (\"Matz\").\n    *   Current turn: \"What year did he create
-        Ruby?\"\n    *   Goal: Provide the year Ruby was created.\n\n2.  **Retrieve
-        Knowledge**:\n    *   Yukihiro Matsumoto started developing Ruby in 1993.\n    *   It
-        was first released to the public (version 0.95) in 1995.\n    *   The question
-        asks \"what year did he *create* Ruby\". Most sources cite 1993 as the year
-        he began working on it / created it. Some might say 1995 for its public release.
-        I should clarify both to be safe, but state the primary answer (1993) clearly.\n\n3.  **Formulate
-        the Response**:\n    *   Direct answer: 1993.\n    *   Add nuance: He started
-        developing the language in 1993, and it was first publicly released in 1995.\n    *   Keep
-        it concise and accurate."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":128,"completion_tokens":285,"total_tokens":413,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":230},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":128},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
-  recorded_at: Mon, 07 Sep 2026 21:00:58 GMT
+      string: '{"id":"22683532-de89-4a68-8043-33bdf07d0d6f","object":"chat.completion","created":1788955562,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"To
+        clarify, while the first public release of Ruby was in **1995**, Yukihiro
+        Matsumoto actually **began creating Ruby in 1993**. He started writing the
+        language in February 1993 and released it to the public two years later, in
+        1995.","reasoning_content":"1.  **Analyze the User''s Query**:\n    *   Previous
+        turn: User asked who created Ruby. Assistant answered Yukihiro Matsumoto (Matz),
+        released first version in 1995.\n    *   Current turn: User asks \"What year
+        did he create Ruby?\".\n    *   *Self-correction/Context*: The assistant *already*
+        stated the year in the previous response (\"released the first version of
+        Ruby in 1995\"). The user might be asking for a specific year of *creation/start
+        of development* vs *release*.\n    *   Historical fact: Matsumoto began working
+        on Ruby in 1993. He released it to the public in 1995.\n    *   Need to address
+        the nuance: He *started* creating it in 1993, and publicly released the first
+        version in 1995. Since I previously said 1995 was the release, I should clarify
+        both dates to be accurate and helpful.\n\n2.  **Formulate the response**:\n    *   Acknowledge
+        the previous answer mentioned 1995 (release).\n    *   Clarify that he *began*
+        working on Ruby in **1993**.\n    *   Mention the first public release was
+        in **1995** (as previously noted).\n    *   Keep it concise and precise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":142,"completion_tokens":335,"total_tokens":477,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":276},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":142},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Wed, 09 Sep 2026 12:06:05 GMT
 recorded_with: VCR 6.4.0

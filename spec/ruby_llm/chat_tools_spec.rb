@@ -334,7 +334,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(BestLanguageToLearn)
-        response = chat.ask("What's the best language to learn?")
+        response = chat.ask('Use the best_language_to_learn tool to tell me which language to learn.')
+
+        expect(assistant_tool_call_messages(chat)).not_to be_empty
         expect(response.content).to include('Ruby')
       end
 
@@ -726,6 +728,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :required)
+                      .with_max_output_tokens(4096)
                       .with_instructions('Your location is Berlin, at latitude 52.5200 and longitude 13.4050.')
         # DeepSeek only allows forced tool choices with thinking disabled.
         chat.with_thinking(false) if provider == :deepseek

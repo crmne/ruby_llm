@@ -26,46 +26,42 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:39:03 GMT
+      - Wed, 09 Sep 2026 12:16:33 GMT
       Content-Length:
-      - '1035'
+      - '943'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-824","object":"chat.completion","created":1788817143,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-951","object":"chat.completion","created":1788956193,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to process the query \"test data\". Let me check the tools
         available. There''s a function called content_returning that takes a query
         as a string. The description says it processes the query and returns a result.
         Since the user provided the query \"test data\", I should call this function
         with that exact string. I need to make sure the arguments are correctly formatted
-        as JSON. Let me structure the tool call with the name \"content_returning\"
-        and the arguments as {\"query\": \"test data\"}. That should do it.\n","tool_calls":[{"id":"call_w3vk8hml","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":139,"total_tokens":281}}
+        as JSON. Let me structure the tool call accordingly.\n","tool_calls":[{"id":"call_o16s30ep","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":1},"completion_tokens":116,"total_tokens":258}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 21:39:03 GMT
+  recorded_at: Wed, 09 Sep 2026 12:16:33 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Process this
-        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_w3vk8hml","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_o16s30ep","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
         data\"}"}}],"reasoning":"Okay, the user wants me to process the query \"test
         data\". Let me check the tools available. There''s a function called content_returning
         that takes a query as a string. The description says it processes the query
         and returns a result. Since the user provided the query \"test data\", I should
         call this function with that exact string. I need to make sure the arguments
-        are correctly formatted as JSON. Let me structure the tool call with the name
-        \"content_returning\" and the arguments as {\"query\": \"test data\"}. That
-        should do it.\n","reasoning_content":"Okay, the user wants me to process the
-        query \"test data\". Let me check the tools available. There''s a function
-        called content_returning that takes a query as a string. The description says
-        it processes the query and returns a result. Since the user provided the query
-        \"test data\", I should call this function with that exact string. I need
-        to make sure the arguments are correctly formatted as JSON. Let me structure
-        the tool call with the name \"content_returning\" and the arguments as {\"query\":
-        \"test data\"}. That should do it.\n"},{"role":"tool","content":"Processed:
-        test data","tool_call_id":"call_w3vk8hml"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        are correctly formatted as JSON. Let me structure the tool call accordingly.\n","reasoning_content":"Okay,
+        the user wants me to process the query \"test data\". Let me check the tools
+        available. There''s a function called content_returning that takes a query
+        as a string. The description says it processes the query and returns a result.
+        Since the user provided the query \"test data\", I should call this function
+        with that exact string. I need to make sure the arguments are correctly formatted
+        as JSON. Let me structure the tool call accordingly.\n"},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_o16s30ep"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -85,21 +81,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:39:04 GMT
+      - Wed, 09 Sep 2026 12:16:34 GMT
       Content-Length:
-      - '910'
+      - '1019'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-804","object":"chat.completion","created":1788817144,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        processed result of the query \"test data\" is:  \n**Processed: test data**","reasoning":"Okay,
-        the user asked to process the query \"test data\". I called the content_returning
-        function with that query, and the response was \"Processed: test data\". Now
-        I need to present this result to the user. Since the function processed it,
-        maybe the user wants confirmation or the result. The response is straightforward,
-        so I''ll just relay the processed result clearly. Let me make sure there''s
-        no additional steps needed. No, the task seems complete. Just show the processed
-        string.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":296,"prompt_tokens_details":{"cached_tokens":143},"completion_tokens":123,"total_tokens":419}}
+      string: '{"id":"chatcmpl-855","object":"chat.completion","created":1788956194,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        processed result for the query \"test data\" is:  \n**Processed: test data**  \n\nLet
+        me know if you need further assistance!","reasoning":"Okay, the user asked
+        to process the query \"test data\". I called the content_returning function
+        with that query, and the response was \"Processed: test data\". Now I need
+        to present this result to the user. Since the processing seems straightforward,
+        I''ll just relay the result in a clear manner. Maybe add a simple confirmation
+        that the data was processed successfully. Let me check if there''s anything
+        else needed, but I think that''s all. The user might be testing if the system
+        can handle basic queries, so a direct response should suffice.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":273,"prompt_tokens_details":{"cached_tokens":143},"completion_tokens":145,"total_tokens":418}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 21:39:04 GMT
+  recorded_at: Wed, 09 Sep 2026 12:16:34 GMT
 recorded_with: VCR 6.4.0

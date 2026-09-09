@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Batch, :live do
   let(:model) { model_for(:anthropic) }
 
   def wait_for(batch)
-    40.times do
+    120.times do
       break if batch.refresh.complete?
 
       sleep 15 if VCR.current_cassette.recording?

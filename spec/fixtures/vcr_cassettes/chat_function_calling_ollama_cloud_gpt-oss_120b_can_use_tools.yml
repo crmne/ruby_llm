@@ -31,44 +31,44 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a7413d4e73407989987adf5f0bbacc8d71858e4d
+      - 8bbfc54fe6b9f83c353638274218dc75a0607b2d
       X-Build-Time:
-      - '2026-09-06T10:42:07-07:00'
+      - '2026-09-08T18:19:14-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '540'
+      - '545'
       Date:
-      - Mon, 07 Sep 2026 20:56:08 GMT
+      - Wed, 09 Sep 2026 12:05:07 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - '074820bad4dd31a4de400f16828e3280/2010412462056358611'
+      - 69b53ce937b6a8f06d50fcfe10d378b6/3292513881947319529
       Traceparent:
-      - 00-074820bad4dd31a4de400f16828e3280-1be66b7b8ce342d3-00
+      - 00-69b53ce937b6a8f06d50fcfe10d378b6-2db15bee5f832ce9-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-127","object":"chat.completion","created":1788814568,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
-        wants weather in Berlin, coordinates given. Use function call.","tool_calls":[{"id":"call_l32witab","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":169,"completion_tokens":53,"total_tokens":222}}
+      string: '{"id":"chatcmpl-227","object":"chat.completion","created":1788955507,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to get weather via function. Use latitude and longitude strings.","tool_calls":[{"id":"call_t4nfvpec","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":169,"completion_tokens":54,"total_tokens":223}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 20:56:08 GMT
+  recorded_at: Wed, 09 Sep 2026 12:05:07 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_l32witab","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"User
-        wants weather in Berlin, coordinates given. Use function call.","reasoning_content":"User
-        wants weather in Berlin, coordinates given. Use function call."},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_l32witab"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_t4nfvpec","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"We
+        need to get weather via function. Use latitude and longitude strings.","reasoning_content":"We
+        need to get weather via function. Use latitude and longitude strings."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_t4nfvpec"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -93,9 +93,9 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a7413d4e73407989987adf5f0bbacc8d71858e4d
+      - 8bbfc54fe6b9f83c353638274218dc75a0607b2d
       X-Build-Time:
-      - '2026-09-06T10:42:07-07:00'
+      - '2026-09-08T18:19:14-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
@@ -103,13 +103,13 @@ http_interactions:
       Content-Length:
       - '404'
       Date:
-      - Mon, 07 Sep 2026 20:56:09 GMT
+      - Wed, 09 Sep 2026 12:05:08 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - c525feb5b8f453d899e1fbe4454f2fb9/11089752438973239337
+      - 5c77a6b1e656502275de4af2d0fbd3c7/13130369112090994181
       Traceparent:
-      - 00-c525feb5b8f453d899e1fbe4454f2fb9-99e6b71654059029-00
+      - 00-5c77a6b1e656502275de4af2d0fbd3c7-b6387123c7f1e605-00
       Via:
       - 1.1 google
       Alt-Svc:
@@ -117,6 +117,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY0NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ1NjksIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoYXTigK81Mi41MjAw4oCvTizigK8xMy40MDUw4oCvRSkgaXMgKioxNeKAr8KwQyoqIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTDigK9rbS9oKiouIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNTAsImNvbXBsZXRpb25fdG9rZW5zIjo0NSwidG90YWxfdG9rZW5zIjoyOTV9fQo=
-  recorded_at: Mon, 07 Sep 2026 20:56:09 GMT
+        eyJpZCI6ImNoYXRjbXBsLTI5MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg5NTU1MDgsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoYXTigK81Mi41MjAw4oCvTizigK8xMy40MDUw4oCvRSkgaXMgKioxNeKAr8KwQyoqIHdpdGggYSB3aW5kIHNwZWVkIG9mICoqMTDigK9rbS9oKiouIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNTEsImNvbXBsZXRpb25fdG9rZW5zIjo0NSwidG90YWxfdG9rZW5zIjoyOTZ9fQo=
+  recorded_at: Wed, 09 Sep 2026 12:05:08 GMT
 recorded_with: VCR 6.4.0

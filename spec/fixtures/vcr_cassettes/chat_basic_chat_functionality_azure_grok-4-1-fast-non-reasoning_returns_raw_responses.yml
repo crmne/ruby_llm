@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:00:02 GMT
+      - Wed, 09 Sep 2026 12:05:23 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -42,15 +42,17 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-750ce1c6f575a73c5d1bbccb23d34dc8-18c8d4b20001f3e3-00
+      - 00-64a12dbba6ba01860400f4029d054edb-56249d0900114c52-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 8d38bc50-6337-4ec6-b017-709a3ac79e17
+      - a5b36093-f696-41a1-8c58-0cf7ab4431e4
       Azureml-Model-Session:
       - d20260810234415-1ce5aa48
+      X-Ms-Inference-Retry-History:
+      - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -82,7 +84,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 8d38bc50-6337-4ec6-b017-709a3ac79e17
+      - a5b36093-f696-41a1-8c58-0cf7ab4431e4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -90,8 +92,13 @@ http_interactions:
       X-Ms-Region:
       - West Europe
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImVkMmZhZjI3LTkyNzItNGUwOS1iNDdkLTUxNTQ2ZWNjNzYyNiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKlBhcmlzKiogaXMgdGhlIGNhcGl0YWwgb2YgRnJhbmNlLiBcblxuVGhpcyBpcyBhIHdlbGwtZXN0YWJsaXNoZWQgZmFjdDogUGFyaXMgaGFzIGJlZW4gdGhlIHBvbGl0aWNhbCwgY3VsdHVyYWwsIGFuZCBlY29ub21pYyBjZW50ZXIgb2YgRnJhbmNlIHNpbmNlIHRoZSAxMHRoIGNlbnR1cnksIHNlcnZpbmcgYXMgdGhlIHNlYXQgb2YgdGhlIEZyZW5jaCBnb3Zlcm5tZW50IChpbmNsdWRpbmcgdGhlIMOJbHlzw6llIFBhbGFjZSBhbmQgTmF0aW9uYWwgQXNzZW1ibHkpIGFuZCBob21lIHRvIGFib3V0IDIuMSBtaWxsaW9uIHJlc2lkZW50cyBpbiB0aGUgY2l0eSBwcm9wZXIsIHdpdGggb3ZlciAxMiBtaWxsaW9uIGluIHRoZSBncmVhdGVyIG1ldHJvcG9saXRhbiBhcmVhLiBZb3UgY2FuIHZlcmlmeSB0aGlzIG9uIG9mZmljaWFsIHNvdXJjZXMgbGlrZSB0aGUgRnJlbmNoIGdvdmVybm1lbnQncyB3ZWJzaXRlIChnb3V2ZXJuZW1lbnQuZnIpIG9yIGVuY3ljbG9wZWRpYXMgbGlrZSBCcml0YW5uaWNhLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NywiY29tcGxldGlvbl90b2tlbnMiOjEwNywidG90YWxfdG9rZW5zIjoxMTQsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjEsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjcsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc4ODgxNDgwMiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
-  recorded_at: Mon, 07 Sep 2026 21:00:04 GMT
+      encoding: UTF-8
+      string: '{"id":"b8399c5b-81a1-4e27-864a-755bd98e18e3","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Paris**
+        is the capital of France. \n\nThis has been the case since 987 AD, when Hugh
+        Capet established the Capetian dynasty, and it''s confirmed by official sources
+        like the French government''s website (gouvernement.fr) and international
+        bodies like the UN. Paris serves as the political, cultural, and economic
+        center, home to the Eiffel Tower, Louvre, and the seat of the French National
+        Assembly."},"finish_reason":"stop"}],"usage":{"prompt_tokens":7,"completion_tokens":83,"total_tokens":90,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":174,"audio_tokens":0,"text_tokens":7,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788955523,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 09 Sep 2026 12:05:25 GMT
 recorded_with: VCR 6.4.0

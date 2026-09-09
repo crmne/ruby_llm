@@ -21,13 +21,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:02:09 GMT
+      - Wed, 09 Sep 2026 12:12:22 GMT
       Pragma:
       - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 07 Sep 2026 21:02:09 GMT
+  recorded_at: Wed, 09 Sep 2026 12:12:22 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:02:10 GMT
+      - Wed, 09 Sep 2026 12:12:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -101,62 +101,23 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "**My Thought Process:**\n\nAlright, so the user has presented me with a straightforward request. They've given me two numerical values, 5 and 3, and they want me to find their sum. This is a fundamental arithmetic operation. I can immediately recognize this as a simple addition problem. My internal processing kicks in: $5 + 3$. The result of that addition is, of course, 8. I'm confident in that calculation.\n\n",
-                    "thought": true
-                  },
-                  {
-                    "text": "5 + 3 = 8",
-                    "thoughtSignature": "AY89a19BwZRK9gOUHwh4liQCSbXdWL+nfyVP8l8Pq2YdJmLracPHaQJ3LFY+3n6xR+RtJOOM5SXloa533i7r3Ebe/+3Wxml5l1HvbpFvW2BsgrFCovY6iDvC4awvtwiZqnLeaK+ibHfyOnOq/WykGA3hTarUjAT6UbbsZC2LxPCRLVQVOYeGCosSBRndfTpyNJKqM5EmWA1LfxIbqwgB46bwAp+2d/8="
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 8,
-            "candidatesTokenCount": 7,
-            "totalTokenCount": 45,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 8
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 7
-              }
-            ],
-            "thoughtsTokenCount": 30
-          },
-          "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-09-07T21:02:09.451098Z",
-          "responseId": "USafaprEG62qu_EP9vivsQg"
-        }
-  recorded_at: Mon, 07 Sep 2026 21:02:10 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzcyBvbiBZb3VyIFJlcXVlc3QqKlxuXG5BaCwgSSBzZWUgeW91J3ZlIHByZXNlbnRlZCBtZSB3aXRoIGEgc3RyYWlnaHRmb3J3YXJkIHRhc2sg4oCTIHRvIGRldGVybWluZSB0aGUgc3VtIG9mIHR3byBudW1lcmljYWwgdmFsdWVzLiBNeSBpbml0aWFsIGFzc2Vzc21lbnQgaW1tZWRpYXRlbHkgaWRlbnRpZmllcyB0aGUgY29yZSBvcGVyYXRpb24gcmVxdWlyZWQ6IGFkZGl0aW9uLiBUaGUgc3BlY2lmaWMgb3BlcmFuZHMgYXJlIDUgYW5kIDMuXG5cbk15IGludGVybmFsIHByb2Nlc3NpbmcsIGFzIGFuIGV4cGVydCBpbiBudW1lcmljYWwgY29tcHV0YXRpb24sIHN3aWZ0bHkgZXhlY3V0ZXMgdGhlIGFyaXRobWV0aWMuIFRoZSBjYWxjdWxhdGlvbiBpcyBhIHNpbXBsZSBhbmQgdW5hbWJpZ3VvdXMgb25lOiA1IHBsdXMgMy5cblxuVGhlIHJlc3VsdCBvZiB0aGlzIG9wZXJhdGlvbiBpcywgdW5lcXVpdm9jYWxseSwgOC4gVGhlcmVmb3JlLCBteSBjb25jbHVzaW9uIGlzIHRoYXQgdGhlIGFuc3dlciB0byB5b3VyIHJlcXVlc3QgaXMgOC5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI1ICsgMyA9IDgiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTE5NU15OC9BcUg5dGhBcVhORHRpSW95R1o2dGZBc2VGclBKMVN1cm40L0xuVXFPek5waW5CRG1NYkRLSU1sbFFhNTQ1cWQwb3QrSGZVL2szTjJzTW95dU5MbW5oQVBmcnFQRENWSXMyR0w5YkxHNkZXT1QyNUpsUHN2S203Y1dVWDNaYVhJczNRbnZrRWxxWXo5YmExbzZDK3JvYklack44S0ZRQW9MYzRXazMxeWtjT2NZTllpNlJFUWZYSWRJRDVXOUp6d3d1SEhML2tPTHFvOUkzZ0hRYjJLaDIxZDlsZk4vIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDgsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDUwLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAzNQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTA5LTA5VDEyOjEyOjIyLjY4ODU5M1oiLAogICJyZXNwb25zZUlkIjogIkprMmhhdEdES3ZldGt1d1B1cnVXOFF3Igp9Cg==
+  recorded_at: Wed, 09 Sep 2026 12:12:26 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**My
-        Thought Process:**\n\nAlright, so the user has presented me with a straightforward
-        request. They''ve given me two numerical values, 5 and 3, and they want me
-        to find their sum. This is a fundamental arithmetic operation. I can immediately
-        recognize this as a simple addition problem. My internal processing kicks
-        in: $5 + 3$. The result of that addition is, of course, 8. I''m confident
-        in that calculation.\n\n","thoughtSignature":"AY89a19BwZRK9gOUHwh4liQCSbXdWL+nfyVP8l8Pq2YdJmLracPHaQJ3LFY+3n6xR+RtJOOM5SXloa533i7r3Ebe/+3Wxml5l1HvbpFvW2BsgrFCovY6iDvC4awvtwiZqnLeaK+ibHfyOnOq/WykGA3hTarUjAT6UbbsZC2LxPCRLVQVOYeGCosSBRndfTpyNJKqM5EmWA1LfxIbqwgB46bwAp+2d/8="},{"text":"5
+        Thought Process on Your Request**\n\nAh, I see you''ve presented me with a
+        straightforward task – to determine the sum of two numerical values. My initial
+        assessment immediately identifies the core operation required: addition. The
+        specific operands are 5 and 3.\n\nMy internal processing, as an expert in
+        numerical computation, swiftly executes the arithmetic. The calculation is
+        a simple and unambiguous one: 5 plus 3.\n\nThe result of this operation is,
+        unequivocally, 8. Therefore, my conclusion is that the answer to your request
+        is 8.\n\n","thoughtSignature":"AY89a195My8/AqH9thAqXNDtiIoyGZ6tfAseFrPJ1Surn4/LnUqOzNpinBDmMbDKIMllQa545qd0ot+HfU/k3N2sMoyuNLmnhAPfrqPDCVIs2GL9bLG6FWOT25JlPsvKm7cWUX3ZaXIs3QnvkElqYz9ba1o6C+robIZrN8KFQAoLc4Wk31ykcOcYNYi6REQfXIdID5W9JzwwuHHL/kOLqo9I3gHQb2Kh21d9lfN/"},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
@@ -181,7 +142,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:02:12 GMT
+      - Wed, 09 Sep 2026 12:12:36 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -196,7 +157,48 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKk15IFRob3VnaHQgUHJvY2VzczoqKlxuXG5BaCwgSSBzZWUgdGhlIGluc3RydWN0aW9uOiBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIuXCIgVGhpcyBmb2xsb3dzIGRpcmVjdGx5IGZyb20gdGhlIHByZXZpb3VzIHN0ZXAgd2hlcmUgSSBkZXRlcm1pbmVkIHRoZSByZXN1bHQgdG8gYmUgOCAoZnJvbSA1ICsgMykuIFNvLCBteSBpbW1lZGlhdGUgdGFzayBpcyB0byB0YWtlIHRoYXQgOCBhbmQgcGVyZm9ybSBhIG11bHRpcGxpY2F0aW9uIG9wZXJhdGlvbi4gVGhlIGluc3RydWN0aW9uIGlzIGV4cGxpY2l0OiBtdWx0aXBseSBieSAyLiBUaGVyZWZvcmUsIHRoZSBjYWxjdWxhdGlvbiBpcyBzdHJhaWdodGZvcndhcmQ6IDggdGltZXMgMi4gSSdsbCBwZXJmb3JtIHRoYXQgY2FsY3VsYXRpb24sIHdoaWNoIHlpZWxkcyAxNi4gTm93LCBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIHJlc3VsdCBjbGVhcmx5LCBlbnN1cmluZyBpdCdzIHVuZGVyc3Rvb2QgYXMgdGhlIGRpcmVjdCBjb250aW51YXRpb24gYW5kIG91dGNvbWUgb2YgdGhlIHByZWNlZGluZyBjYWxjdWxhdGlvbiB3aXRoaW4gaXRzIGVzdGFibGlzaGVkIGNvbnRleHQuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJBWTg5YTErTVhwRTV2QzJhQ3B0dEIwZTdvWCtTMGlJVXVKTU5NcVZvMEc5dkt0SHJXTGlVT1M5VnYyRHA3YWJCcUdxd0tLTVBCK0lBMlB4YkdDaTA3cEFPd0VKKzdwV3Vxb0J6VTBvWVI2Tjkxamd3THlCVVBTdzFrcUVYU0lRQURXSm9RYjNKWXlONDJORExZbWZJaEFVVHpVRzRSaFNhTUt1d213VnJxa2hocUUzZ2IvNDhHVm40bFB4MWdqNnRybUdxbXhEZzdkME9SWW1qQlYwYzBvOGdsejM2cGNvTGVIV3hHekNndmNWdkFrNnhxdDFub1h6aVBtWlB6dGJkSjJ6RHcrSzVuTE8vVDFvMk1wL0Mrby9ENEVoNWtJMW5xWDVkV1JaeUg2OGVpcjVVK2Jzc1NIU1NibGlYUzFRK0k2RGhjckRIbW1iOXhXMXg2UmFYOS90ZHZsMjkrNXQ5TW1aVXZma2lxR256ZFlxeXpDYz0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjEsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDk3LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDIxCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNjgKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMtZmxhc2gtcHJldmlldyIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wOS0wN1QyMTowMjoxMC44ODgyNTBaIiwKICAicmVzcG9uc2VJZCI6ICJVaWFmYXJxYk5xcUJfTlVQaGNlVmtRayIKfQo=
-  recorded_at: Mon, 07 Sep 2026 21:02:12 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "**My Thought Process for Reaching 16**\n\nAlright, so the instruction is clear: take the last number I computed, which was 8, and then multiply it by 2. This is a straightforward arithmetic operation. I'm essentially looking to double the previous outcome. The calculation itself is simple: 8 multiplied by 2 yields 16. So, the next value in our sequence, or the result of this particular operation, is 16.\n\n",
+                    "thought": true
+                  },
+                  {
+                    "text": "8 * 2 = 16",
+                    "thoughtSignature": "AY89a19snsBVvdNBLRr6v7zU2DdTPEuquaZLgxubOrkZMnzV5EhslfWG+r07H0k/2G3U1IU9uHHz0rvmTG9PnhRTMoKvdpK2/sNVRkrkbuPuScC3lT4c7JY3Sz9ojYcvYRuR2vqBEI84h70oldVYj6jAYt7nMXJ6WWyILFFKYdNpuC65VIea2xjVztwY+zU51tXPQZxz7JqHTB4QMOBB0LS/QA=="
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 21,
+            "candidatesTokenCount": 8,
+            "totalTokenCount": 56,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 21
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
+              }
+            ],
+            "thoughtsTokenCount": 27
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-09-09T12:12:26.143679Z",
+          "responseId": "Kk2har_iCJC5-eQPzNvHwQU"
+        }
+  recorded_at: Wed, 09 Sep 2026 12:12:36 GMT
 recorded_with: VCR 6.4.0

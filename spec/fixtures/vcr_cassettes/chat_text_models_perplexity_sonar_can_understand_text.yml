@@ -25,16 +25,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:35:54 GMT
+      - Wed, 09 Sep 2026 12:33:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -42,22 +39,25 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1788816955'
+      - '1788957186'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJkZWx0YSI6eyJjb250ZW50IjoiIiwicm9sZSI6ImFzc2lzdGFudCJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgZmlsZSBjb250YWlucyBvbmUgc2VudGVuY2U6IOKAnFJ1YnkgaXMgdGhlIGJlc3Qu4oCdIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3ODg4MTY5NTQsImlkIjoiYmZhYzQ1YTItYWZmYi00MWU1LWE2NGEtMTY2OGIwZDJlYWFhIiwibW9kZWwiOiJzb25hciIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxMiwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wMDAwMywib3V0cHV0X3Rva2Vuc19jb3N0IjowLjAwMDAxLCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNTA0fSwicHJvbXB0X3Rva2VucyI6MjUsInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJ0b3RhbF90b2tlbnMiOjM3fX0K
-  recorded_at: Mon, 07 Sep 2026 21:35:54 GMT
+        eyJjaG9pY2VzIjpbeyJkZWx0YSI6eyJjb250ZW50IjoiIiwicm9sZSI6ImFzc2lzdGFudCJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgZmlsZSBgcnVieS50eHRgIGNvbnRhaW5zIGEgc2luZ2xlIHNlbnRlbmNlOiDigJxSdWJ5IGlzIHRoZSBiZXN0LuKAnSIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzg4OTU3MTg1LCJpZCI6IjViMDdjYjUyLWRkYjUtNGEwNi1hYmFhLTA2NzVmYmJmNWMxYyIsIm1vZGVsIjoic29uYXIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTcsImNvc3QiOnsiaW5wdXRfdG9rZW5zX2Nvc3QiOjAuMDAwMDMsIm91dHB1dF90b2tlbnNfY29zdCI6MC4wMDAwMiwicmVxdWVzdF9jb3N0IjowLjAwNSwidG90YWxfY29zdCI6MC4wMDUwNH0sInByb21wdF90b2tlbnMiOjI1LCJzZWFyY2hfY29udGV4dF9zaXplIjoibG93IiwidG90YWxfdG9rZW5zIjo0Mn19Cg==
+  recorded_at: Wed, 09 Sep 2026 12:33:05 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -65,8 +65,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file contains one
-        sentence: “Ruby is the best.”"},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        contains a single sentence: “Ruby is the best.”"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -86,16 +86,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:36:24 GMT
+      - Wed, 09 Sep 2026 12:33:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -103,22 +100,25 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1788816985'
+      - '1788957187'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"delta":{"content":"","role":"assistant"},"finish_reason":"stop","index":0,"message":{"content":"The
-        file contains a single XML element: `\u003ctruism\u003eRuby is the best\u003c/truism\u003e`.","role":"assistant"}}],"created":1788816984,"id":"bebf3e87-f4dc-4bb3-b175-bedeb13db928","model":"sonar","object":"chat.completion","usage":{"completion_tokens":22,"cost":{"input_tokens_cost":0.00007,"output_tokens_cost":0.00002,"request_cost":0.005,"total_cost":0.00509},"prompt_tokens":67,"search_context_size":"low","total_tokens":89}}
+        file `ruby.xml` contains one XML element: `\u003ctruism\u003eRuby is the best\u003c/truism\u003e`.","role":"assistant"}}],"created":1788957186,"id":"825c81f0-c95c-42a7-a1aa-daa0d2d89cc8","model":"sonar","object":"chat.completion","usage":{"completion_tokens":25,"cost":{"input_tokens_cost":0.00007,"output_tokens_cost":0.00003,"request_cost":0.005,"total_cost":0.0051},"prompt_tokens":72,"search_context_size":"low","total_tokens":97}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 21:36:24 GMT
+  recorded_at: Wed, 09 Sep 2026 12:33:06 GMT
 recorded_with: VCR 6.4.0

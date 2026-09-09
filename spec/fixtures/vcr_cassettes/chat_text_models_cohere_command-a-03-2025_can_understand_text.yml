@@ -43,11 +43,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 8f8bf88eb69cfcd3ae58cdc064c809af
+      - cae04e84a22f31348449624ac717aa56
       Date:
-      - Mon, 07 Sep 2026 20:52:30 GMT
+      - Wed, 09 Sep 2026 12:05:10 GMT
       X-Envoy-Upstream-Service-Time:
-      - '784'
+      - '820'
       Server:
       - envoy
       Via:
@@ -58,12 +58,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7ad3ff7a-7777-4a0e-a2ee-ebb056bc29a0","message":{"role":"assistant","content":[{"type":"text","text":"The
+      string: '{"id":"9d002358-909c-4532-bf9d-9766bd49a4ef","message":{"role":"assistant","content":[{"type":"text","text":"The
         file `ruby.txt` contains the following plain text:\n\n**\"Ruby is the best.\"**\n\nIt
         appears to be a simple statement expressing admiration or preference for Ruby,
         which could refer to the programming language Ruby or something else named
         Ruby, depending on the context."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":30,"output_tokens":58},"tokens":{"input_tokens":525,"output_tokens":61},"cached_tokens":448}}'
-  recorded_at: Mon, 07 Sep 2026 20:52:30 GMT
+  recorded_at: Wed, 09 Sep 2026 12:05:10 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -105,7 +105,7 @@ http_interactions:
       Num-Chars:
       - '3197'
       Num-Tokens:
-      - '261'
+      - '279'
       Pragma:
       - no-cache
       Vary:
@@ -113,29 +113,30 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 5872f7aea607fe5f34fc9a2c23d65f9a
+      - 1eb366492236a836c05216893dcd3578
       Date:
-      - Mon, 07 Sep 2026 20:52:31 GMT
+      - Wed, 09 Sep 2026 12:05:12 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1752'
+      - '1866'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8379d14a-dc51-4eee-bc49-257d7ead491b","message":{"role":"assistant","content":[{"type":"text","text":"The
+      string: '{"id":"ce5b0701-17fd-466f-aa69-1471a8b955b8","message":{"role":"assistant","content":[{"type":"text","text":"The
         file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby
         is the best\u003c/truism\u003e\n```\n\nHere''s a breakdown:\n\n* **`\u003ctruism\u003e`**:
         This is a custom XML tag. It doesn''t have a predefined meaning in standard
-        XML, so its interpretation depends on the context or schema used for this
-        specific XML file. It likely represents a statement considered to be a truism
-        (a statement generally accepted as true).\n\n* **`Ruby is the best`**: This
-        is the text content enclosed within the `\u003ctruism\u003e` tag, expressing
-        the same sentiment as the `ruby.txt` file."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":123,"output_tokens":138},"tokens":{"input_tokens":626,"output_tokens":142},"cached_tokens":448}}'
-  recorded_at: Mon, 07 Sep 2026 20:52:32 GMT
+        XML, so its interpretation depends on the context in which this file is used.
+        It seems to be used here to mark the contained text as a statement of truth
+        or a widely accepted fact.\n * **\"Ruby is the best\"**: This is the text
+        content enclosed within the `\u003ctruism\u003e` tag, expressing the same
+        sentiment as the `ruby.txt` file. \n\n\nLet me know if you have any other
+        files you''d like me to analyze!"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":123,"output_tokens":156},"tokens":{"input_tokens":626,"output_tokens":160},"cached_tokens":544}}'
+  recorded_at: Wed, 09 Sep 2026 12:05:12 GMT
 recorded_with: VCR 6.4.0

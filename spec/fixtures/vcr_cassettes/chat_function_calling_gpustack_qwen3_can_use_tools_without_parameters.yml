@@ -5,8 +5,8 @@ http_interactions:
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
+        tool to tell me which language to learn."}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -25,17 +25,17 @@ http_interactions:
       message: OK
     headers:
       Req-Cost-Time:
-      - '1383'
-      Req-Arrive-Time:
-      - '1788817080391'
-      X-Envoy-Upstream-Service-Time:
-      - '1380'
-      Date:
-      - Mon, 07 Sep 2026 21:37:59 GMT
+      - '1266'
       Resp-Start-Time:
-      - '1788817081775'
+      - '1788957285281'
       Server:
       - istio-envoy
+      Req-Arrive-Time:
+      - '1788957284015'
+      X-Envoy-Upstream-Service-Time:
+      - '1256'
+      Date:
+      - Wed, 09 Sep 2026 12:34:43 GMT
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
@@ -47,44 +47,38 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
-        to figure out what they mean by \"best.\" Are they looking for a programming
-        language, a spoken language, or something else? The question is a bit vague.
-        Let me check the tools provided. There''s a function called best_language_to_learn
-        with no parameters. Since there are no parameters, maybe the function just
-        returns a general answer. But wait, the user might need more context. However,
-        since the tool is available, I should call it. The function doesn''t require
-        any arguments, so I can invoke it directly. Let me make sure there''s no missing
-        information. The user didn''t specify, so the function might handle it by
-        providing a general recommendation. Alright, I''ll call the function.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"TZ22bcnxSXo4aoj36dyggdX970ryuqyV"}]}}],"created":1788817081,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":185,"prompt_tokens":156,"total_tokens":341,"prompt_tokens_details":{"cached_tokens":155}},"id":"chatcmpl-f29Cs6FrpFcZpiMYuvK7HAqzQ46u2NeL","timings":{"cache_n":155,"prompt_n":1,"prompt_ms":8.598,"prompt_per_token_ms":8.598,"prompt_per_second":116.30611770179111,"predicted_n":185,"predicted_ms":1312.62,"predicted_per_token_ms":7.133804347826087,"predicted_per_second":140.17765994728103}}'
-  recorded_at: Mon, 07 Sep 2026 21:38:01 GMT
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the tools provided. The function is called best_language_to_learn,
+        and it doesn''t require any parameters. So I just need to call that function
+        without any arguments. The description says it gets the best language to learn,
+        so the tool will handle the logic. I should structure the tool call correctly.
+        Since there are no parameters, the arguments object is empty. Let me make
+        sure the JSON is properly formatted with the function name and empty arguments.
+        That''s all there is to it.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"KUY8Dnehq8MEqsJH6mM1wbHdrCvYUV09"}]}}],"created":1788957285,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":141,"prompt_tokens":163,"total_tokens":304,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-J5ZECCiigBaTEh0tHGVZMzvoIFIJuHVw","timings":{"cache_n":51,"prompt_n":112,"prompt_ms":60.205,"prompt_per_token_ms":0.5375446428571429,"prompt_per_second":1860.3106054314428,"predicted_n":141,"predicted_ms":1167.868,"predicted_per_token_ms":8.341914285714285,"predicted_per_second":119.87656139221214}}'
+  recorded_at: Wed, 09 Sep 2026 12:34:45 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"TZ22bcnxSXo4aoj36dyggdX970ryuqyV","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
-        to figure out what they mean by \"best.\" Are they looking for a programming
-        language, a spoken language, or something else? The question is a bit vague.
-        Let me check the tools provided. There''s a function called best_language_to_learn
-        with no parameters. Since there are no parameters, maybe the function just
-        returns a general answer. But wait, the user might need more context. However,
-        since the tool is available, I should call it. The function doesn''t require
-        any arguments, so I can invoke it directly. Let me make sure there''s no missing
-        information. The user didn''t specify, so the function might handle it by
-        providing a general recommendation. Alright, I''ll call the function.\n","reasoning_content":"Okay,
-        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
-        to figure out what they mean by \"best.\" Are they looking for a programming
-        language, a spoken language, or something else? The question is a bit vague.
-        Let me check the tools provided. There''s a function called best_language_to_learn
-        with no parameters. Since there are no parameters, maybe the function just
-        returns a general answer. But wait, the user might need more context. However,
-        since the tool is available, I should call it. The function doesn''t require
-        any arguments, so I can invoke it directly. Let me make sure there''s no missing
-        information. The user didn''t specify, so the function might handle it by
-        providing a general recommendation. Alright, I''ll call the function.\n"},{"role":"tool","content":"Ruby","tool_call_id":"TZ22bcnxSXo4aoj36dyggdX970ryuqyV"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"KUY8Dnehq8MEqsJH6mM1wbHdrCvYUV09","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the tools provided. The function is called best_language_to_learn,
+        and it doesn''t require any parameters. So I just need to call that function
+        without any arguments. The description says it gets the best language to learn,
+        so the tool will handle the logic. I should structure the tool call correctly.
+        Since there are no parameters, the arguments object is empty. Let me make
+        sure the JSON is properly formatted with the function name and empty arguments.
+        That''s all there is to it.\n","reasoning_content":"Okay, the user wants to
+        know which language to learn using the best_language_to_learn tool. Let me
+        check the tools provided. The function is called best_language_to_learn, and
+        it doesn''t require any parameters. So I just need to call that function without
+        any arguments. The description says it gets the best language to learn, so
+        the tool will handle the logic. I should structure the tool call correctly.
+        Since there are no parameters, the arguments object is empty. Let me make
+        sure the JSON is properly formatted with the function name and empty arguments.
+        That''s all there is to it.\n"},{"role":"tool","content":"Ruby","tool_call_id":"KUY8Dnehq8MEqsJH6mM1wbHdrCvYUV09"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -102,22 +96,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Arrive-Time:
-      - '1788817081779'
-      Resp-Start-Time:
-      - '1788817083722'
-      X-Envoy-Upstream-Service-Time:
-      - '1940'
-      Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '1942'
-      Date:
-      - Mon, 07 Sep 2026 21:38:00 GMT
       Server:
       - istio-envoy
+      Req-Cost-Time:
+      - '1691'
+      X-Envoy-Upstream-Service-Time:
+      - '1688'
+      Date:
+      - Wed, 09 Sep 2026 12:34:44 GMT
+      Access-Control-Allow-Origin:
+      - ''
       Content-Type:
       - application/json; charset=utf-8
+      Req-Arrive-Time:
+      - '1788957285285'
+      Resp-Start-Time:
+      - '1788957286977'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -125,6 +119,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiohIPCfjokgIFxuUnVieSBpcyBjZWxlYnJhdGVkIGZvciBpdHMgZWxlZ2FudCBzeW50YXgsIHJlYWRhYmlsaXR5LCBhbmQgZGV2ZWxvcGVyLWZyaWVuZGx5IGRlc2lnbiwgbWFraW5nIGl0IGlkZWFsIGZvciBiZWdpbm5lcnMgYW5kIGV4cGVyaWVuY2VkIGRldmVsb3BlcnMgYWxpa2UuIEl04oCZcyB3aWRlbHkgdXNlZCBmb3Igd2ViIGRldmVsb3BtZW50ICh2aWEgZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMpLCBzY3JpcHRpbmcsIGFuZCBhdXRvbWF0aW9uLiBJdHMgZm9jdXMgb24gc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5IGFsbG93cyB5b3UgdG8gd3JpdGUgY2xlYW4sIG1haW50YWluYWJsZSBjb2RlIHF1aWNrbHkuIFdoZXRoZXIgeW91J3JlIGJ1aWxkaW5nIHdlYnNpdGVzLCBwcm90b3R5cGVzLCBvciBleHBsb3JpbmcgcHJvZ3JhbW1pbmcgY29uY2VwdHMsIFJ1Ynkgb2ZmZXJzIGEgc21vb3RoIGxlYXJuaW5nIGN1cnZlIGFuZCBhIHZpYnJhbnQgY29tbXVuaXR5IHRvIHN1cHBvcnQgeW91ciBqb3VybmV5ISDwn5qAIiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgYW5kIEkgY2FsbGVkIHRoZSBmdW5jdGlvbiBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuLCB3aGljaCByZXR1cm5lZCBcIlJ1YnlcIi4gTm93IEkgbmVlZCB0byBleHBsYWluIHdoeSBSdWJ5IGlzIGNvbnNpZGVyZWQgdGhlIGJlc3QuIExldCBtZSB0aGluayBhYm91dCBSdWJ5J3Mgc3RyZW5ndGhzLiBJdCdzIGtub3duIGZvciBpdHMgcmVhZGFiaWxpdHkgYW5kIHNpbXBsaWNpdHksIHdoaWNoIG1ha2VzIGl0IGdyZWF0IGZvciBiZWdpbm5lcnMuIEl0J3MgYWxzbyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscy4gUGx1cywgUnVieSBoYXMgYSBzdHJvbmcgY29tbXVuaXR5IGFuZCBleHRlbnNpdmUgbGlicmFyaWVzLiBCdXQgd2FpdCwgdGhlIGFuc3dlciBzaG91bGQgYmUgY29uY2lzZS4gSSBzaG91bGQgbWVudGlvbiBpdHMgc3ludGF4LCBwcm9kdWN0aXZpdHksIGFuZCBtYXliZSBzb21lIHVzZSBjYXNlcy4gQWxzbywgdGhlIHVzZXIgbWlnaHQgYmUgaW50ZXJlc3RlZCBpbiBsZWFybmluZyBpdCBmb3Igd2ViIGRldmVsb3BtZW50IG9yIHNjcmlwdGluZy4gSSBzaG91bGQgaGlnaGxpZ2h0IHdoeSBpdCdzIGEgZ29vZCBjaG9pY2Ugd2l0aG91dCBiZWluZyB0b28gdGVjaG5pY2FsLiBBbHJpZ2h0LCBsZXQncyBwdXQgdGhhdCB0b2dldGhlciBpbiBhIGZyaWVuZGx5IHJlc3BvbnNlLlxuIn19XSwiY3JlYXRlZCI6MTc4ODgxNzA4MywibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImIxMDgzMC00NjVlNDliOWMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjY5LCJwcm9tcHRfdG9rZW5zIjozNTUsInRvdGFsX3Rva2VucyI6NjI0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MzQwfX0sImlkIjoiY2hhdGNtcGwtQzVYTEhKTkFVaVZETk9lcjVtWElya29lU0pmcmh4RzEiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjM0MCwicHJvbXB0X24iOjE1LCJwcm9tcHRfbXMiOjEzLjYwNCwicHJvbXB0X3Blcl90b2tlbl9tcyI6MC45MDY5MzMzMzMzMzMzMzMzLCJwcm9tcHRfcGVyX3NlY29uZCI6MTEwMi42MTY4NzczODkwMDMzLCJwcmVkaWN0ZWRfbiI6MjY5LCJwcmVkaWN0ZWRfbXMiOjE5MTguNDQ0LCJwcmVkaWN0ZWRfcGVyX3Rva2VuX21zIjo3LjE1ODM3MzEzNDMyODM1OCwicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEzOS42OTY1NDU3NDIyNzg2M319
-  recorded_at: Mon, 07 Sep 2026 21:38:03 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiohIPCfjolcblxuUnVieSBpcyBjZWxlYnJhdGVkIGZvciBpdHMgZWxlZ2FudCBzeW50YXgsIHJlYWRhYmlsaXR5LCBhbmQgZGV2ZWxvcGVyLWZyaWVuZGx5IGRlc2lnbiwgbWFraW5nIGl0IGFuIGV4Y2VsbGVudCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4gSXTigJlzIHdpZGVseSB1c2VkIGluIHdlYiBkZXZlbG9wbWVudCAoZS5nLiwgd2l0aCAqKlJ1Ynkgb24gUmFpbHMqKiksIGF1dG9tYXRpb24sIGFuZCBzY3JpcHRpbmcuIEl0cyBzaW1wbGljaXR5IGFuZCBmbGV4aWJpbGl0eSBhbGxvdyB5b3UgdG8gYnVpbGQgcm9idXN0IGFwcGxpY2F0aW9ucyBlZmZpY2llbnRseS4gUmVhZHkgdG8gZGl2ZSBpbnRvIFJ1Ynk/IPCfmoAiLCJyZWFzb25pbmdfY29udGVudCI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIHdoaWNoIGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgUnVieS4gSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBhbnN3ZXIgY2xlYXJseS4gTGV0IG1lIHRoaW5rIGFib3V0IHdoeSBSdWJ5IG1pZ2h0IGJlIHRoZSBiZXN0IGNob2ljZS4gUnVieSBpcyBrbm93biBmb3IgaXRzIHJlYWRhYmlsaXR5IGFuZCBzaW1wbGljaXR5LCB3aGljaCBtYWtlcyBpdCBncmVhdCBmb3IgYmVnaW5uZXJzLiBJdCdzIGFsc28gd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IHdpdGggZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMuIFBsdXMsIGl0cyBzeW50YXggaXMgY29uY2lzZSwgd2hpY2ggY2FuIGJvb3N0IHByb2R1Y3Rpdml0eS4gSSBzaG91bGQgbWVudGlvbiB0aGVzZSBwb2ludHMgdG8gZXhwbGFpbiB3aHkgUnVieSBpcyByZWNvbW1lbmRlZC4gTWF5YmUgYWxzbyBub3RlIHRoYXQgaXQncyB2ZXJzYXRpbGUgZm9yIGRpZmZlcmVudCBhcHBsaWNhdGlvbnMuIEFscmlnaHQsIHRpbWUgdG8gcHV0IHRoaXMgaW50byBhIGZyaWVuZGx5IHJlc3BvbnNlLlxuIn19XSwiY3JlYXRlZCI6MTc4ODk1NzI4NiwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImIxMDgzMC00NjVlNDliOWMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjAzLCJwcm9tcHRfdG9rZW5zIjozMTgsInRvdGFsX3Rva2VucyI6NTIxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MzAzfX0sImlkIjoiY2hhdGNtcGwtWUdGRXlmb1pqODgzZTV4c0ZZTkpNYUhxckhpV3RtVFkiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjMwMywicHJvbXB0X24iOjE1LCJwcm9tcHRfbXMiOjIzLjMzMiwicHJvbXB0X3Blcl90b2tlbl9tcyI6MS41NTU0NjY2NjY2NjY2NjY4LCJwcm9tcHRfcGVyX3NlY29uZCI6NjQyLjg5Mzg3OTY1MDI2NTcsInByZWRpY3RlZF9uIjoyMDMsInByZWRpY3RlZF9tcyI6MTY1NC40NCwicHJlZGljdGVkX3Blcl90b2tlbl9tcyI6OC4xOTAyOTcwMjk3MDI5NywicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEyMi4wOTU2OTQwMTEyNjY2NH19
+  recorded_at: Wed, 09 Sep 2026 12:34:46 GMT
 recorded_with: VCR 6.4.0

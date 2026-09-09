@@ -24,23 +24,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:45:14 GMT
+      - Wed, 09 Sep 2026 12:09:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a07dd5-1f92-747d-a3de-a9f70ac764d1
+      - 01a08612-fe73-72c5-a10a-abf0f012cbc3
       X-Kong-Request-Id:
-      - 01a07dd5-1f92-747d-a3de-a9f70ac764d1
+      - 01a08612-fe73-72c5-a10a-abf0f012cbc3
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99971'
+      - '97858'
       X-Ratelimit-Tokens-Query-Cost:
       - '29'
       X-Ratelimit-Limit-Req-Minute:
@@ -54,24 +56,22 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '292'
+      - '293'
       X-Kong-Proxy-Latency:
       - '12'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"70c7f4a4d6fb468eaa72cc6c1664c4d2","created":1788817514,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":29,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"7a9cc634a6804ad193b665fa0065d61e","created":1788955786,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":29,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"John\", \"age\": 30}"}}]}'
-  recorded_at: Mon, 07 Sep 2026 21:45:14 GMT
+  recorded_at: Wed, 09 Sep 2026 12:09:47 GMT
 recorded_with: VCR 6.4.0

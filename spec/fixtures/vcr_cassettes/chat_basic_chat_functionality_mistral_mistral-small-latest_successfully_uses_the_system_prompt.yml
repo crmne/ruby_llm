@@ -25,57 +25,57 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:01:43 GMT
+      - Wed, 09 Sep 2026 12:07:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a07dad-473b-7277-949c-0dfbfbb4b552
+      - 01a08610-864e-7ead-aa6a-bb87688c1b67
       X-Kong-Request-Id:
-      - 01a07dad-473b-7277-949c-0dfbfbb4b552
+      - 01a08610-864e-7ead-aa6a-bb87688c1b67
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99399'
+      - '99365'
       X-Ratelimit-Tokens-Query-Cost:
-      - '117'
+      - '110'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '702'
+      - '674'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '703'
+      - '675'
       X-Kong-Proxy-Latency:
-      - '18'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '20'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"390a846f7693457d8f87d8913102c53b","created":1788814903,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":117,"completion_tokens":74,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather today is quite pleasant, with a mix of sun and clouds. The temperature
-        is moderate, and there''s a gentle breeze. It''s the kind of day that makes
-        you want to go outside and enjoy nature. Speaking of which, have you seen
-        the latest comic about the weather? It''s a classic, just like XKCD7392."}}]}'
-  recorded_at: Mon, 07 Sep 2026 21:01:43 GMT
+      string: '{"id":"2dadd23b04ca48e78609dec092f0525e","created":1788955625,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":110,"completion_tokens":67,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant with a mix of sun and clouds. Temperatures
+        are moderate, making it ideal for outdoor activities. However, always remember
+        to check the forecast for any sudden changes. As Randall Munroe would say,
+        \"Weather is what you expect, climate is what you get.\" XKCD7392"}}]}'
+  recorded_at: Wed, 09 Sep 2026 12:07:05 GMT
 recorded_with: VCR 6.4.0

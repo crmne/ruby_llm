@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 09 Sep 2026 12:09:57 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Mon, 07 Sep 2026 21:03:23 GMT
       Pragma:
       - no-cache
       Cache-Control:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 07 Sep 2026 21:03:23 GMT
+  recorded_at: Wed, 09 Sep 2026 12:09:57 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:03:29 GMT
+      - Wed, 09 Sep 2026 12:10:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -103,54 +103,30 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJBaCwgdGhlIHdlYXRoZXIhIEEgdHJ1bHkgY2FwdGl2YXRpbmcgYW5kIGV2ZXItY2hhbmdpbmcgc3ViamVjdC5cblxuU2luY2UgSSBkb24ndCBrbm93IHlvdXIgc3BlY2lmaWMgbG9jYXRpb24sIEkgY2FuIG9ubHkgZ2l2ZSB5b3UgYSBnZW5lcmFsIG92ZXJ2aWV3IG9mIHdoYXQncyBoYXBwZW5pbmcgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj5seSBhbmQgaG93IHlvdSBjYW4gZ2V0IHByZWNpc2UsIGxvY2FsIGluZm9ybWF0aW9uLlxuXG4qKkdsb2JhbGx5OioqXG5XZSdyZSBjdXJyZW50bHkgc2VlaW5nIGEgd2lkZSByYW5nZSBvZiB3ZWF0aGVyIHBhdHRlcm5zIGFjcm9zcyB0aGUgcGxhbmV0LiBEZXBlbmRpbmcgb24gd2hlcmUgeW91IGFyZSwgeW91IG1pZ2h0IGJlIGV4cGVyaWVuY2luZzpcblxuKiAgICoqTm9ydGhlcm4gSGVtaXNwaGVyZToqKiBNYW55IHJlZ2lvbnMgYXJlIHRyYW5zaXRpb25pbmcgZnJvbSBzcHJpbmcgdG8gc3VtbWVyLCB3aXRoIGluY3JlYXNpbmcgdGVtcGVyYXR1cmVzLCBsb25nZXIgZGF5bGlnaHQgaG91cnMsIGFuZCB0aGUgcG90ZW50aWFsIGZvciBzZXZlcmUgdGh1bmRlcnN0b3JtcyBhcyB3YXJtLCBtb2lzdCBhaXIgaW50ZXJhY3RzIHdpdGggY29sZGVyIGZyb250cy4gU29tZSBhcmVhcyBtaWdodCBzdGlsbCBiZSBkZWFsaW5nIHdpdGggbGF0ZS1zZWFzb24gc25vdyBvciB1bnNlYXNvbmFibHkgY29vbCBjb25kaXRpb25zLCB3aGlsZSBvdGhlcnMgYXJlIGFscmVhZHkgYnJhY2luZyBmb3IgZWFybHkgaGVhdHdhdmVzLlxuKiAgICoqU291dGhlcm4gSGVtaXNwaGVyZToqKiBNb3ZpbmcgaW50byBhdXR1bW4gb3IgZXZlbiBlYXJseSB3aW50ZXIsIG1lYW5pbmcgY29vbGVyIHRlbXBlcmF0dXJlcywgc2hvcnRlciBkYXlzLCBhbmQgYW4gaW5jcmVhc2UgaW4gcmFpbmZhbGwgZm9yIHNvbWUgYXJlYXMuIFBhcnRzIG9mIEF1c3RyYWxpYSwgU291dGggQW1lcmljYSwgYW5kIEFmcmljYSB3aWxsIGJlIGV4cGVyaWVuY2luZyB0aGVpciB0eXBpY2FsIHNlYXNvbmFsIHNoaWZ0cy5cbiogICAqKkVxdWF0b3JpYWwgUmVnaW9uczoqKiBUaGVzZSBhcmVhcyBnZW5lcmFsbHkgbWFpbnRhaW4gd2FybSB0ZW1wZXJhdHVyZXMgeWVhci1yb3VuZCwgd2l0aCBkaXN0aW5jdCB3ZXQgYW5kIGRyeSBzZWFzb25zLiBNb25zb29ucyBtaWdodCBiZSBhY3RpdmUgb3IgYmVnaW5uaW5nIGluIGNlcnRhaW4gdHJvcGljYWwgem9uZXMsIGJyaW5naW5nIGhlYXZ5IHByZWNpcGl0YXRpb24uXG5cbioqVG8gZ2V0ICp5b3VyKiBzcGVjaWZpYyB3ZWF0aGVyLCBJIGhpZ2hseSByZWNvbW1lbmQ6KipcblxuMS4gICoqQ2hlY2tpbmcgYSByZWxpYWJsZSB3ZWF0aGVyIGFwcDoqKiBTZXJ2aWNlcyBsaWtlIEFjY3VXZWF0aGVyLCBUaGUgV2VhdGhlciBDaGFubmVsLCBHb29nbGUgV2VhdGhlciwgb3IgQXBwbGUgV2VhdGhlciBwcm92aWRlIGV4Y2VsbGVudCBoeXBlcmxvY2FsIGZvcmVjYXN0cy5cbjIuICAqKlZpc2l0aW5nIGEgcmVwdXRhYmxlIHdlYXRoZXIgd2Vic2l0ZToqKiBTaXRlcyBsaWtlIE5PQUEgKGZvciB0aGUgVVMpLCB0aGUgTWV0IE9mZmljZSAoZm9yIHRoZSBVSyksIG9yIGxvY2FsIG1ldGVvcm9sb2dpY2FsIHNlcnZpY2VzIGZvciB5b3VyIGNvdW50cnkgb2ZmZXIgZGV0YWlsZWQgbWFwcywgcmFkYXIsIGFuZCBhZHZpc29yaWVzLlxuMy4gICoqV2F0Y2hpbmcgeW91ciBsb2NhbCBuZXdzOioqIE1hbnkgbG9jYWwgbmV3cyBjaGFubmVscyBkZWRpY2F0ZSBhIHNlZ21lbnQgdG8gZGV0YWlsZWQgd2VhdGhlciBmb3JlY2FzdHMsIG9mdGVuIGluY2x1ZGluZyBzcGVjaWZpYyB0b3duLWJ5LXRvd24gcHJlZGljdGlvbnMuXG5cbioqV2hhdCB0byBsb29rIGZvciBpbiB5b3VyIGxvY2FsIGZvcmVjYXN0OioqXG5cbiogICAqKkN1cnJlbnQgQ29uZGl0aW9uczoqKiBUZW1wZXJhdHVyZSwgXCJmZWVscyBsaWtlXCIgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCB3aW5kIHNwZWVkIGFuZCBkaXJlY3Rpb24sIGJhcm9tZXRyaWMgcHJlc3N1cmUsIGFuZCBkZXcgcG9pbnQuXG4qICAgKipQcmVjaXBpdGF0aW9uOioqIElzIGl0IGdvaW5nIHRvIHJhaW4sIHNub3csIG9yIGJlIGNsZWFyPyBXaGF0IGFyZSB0aGUgY2hhbmNlcz9cbiogICAqKkZvcmVjYXN0OioqIFdoYXQgYXJlIHRoZSBoaWdoIGFuZCBsb3cgdGVtcGVyYXR1cmVzIGZvciB0aGUgZGF5IGFuZCBjb21pbmcgd2Vlaz8gV2hhdCdzIHRoZSBvdXRsb29rIGZvciB0aGUgbmV4dCAyNCBob3VycywgMyBkYXlzLCBvciA3IGRheXM/XG4qICAgKipTZXZlcmUgV2VhdGhlciBBbGVydHM6KiogQW55IHdhcm5pbmdzIGZvciB0aHVuZGVyc3Rvcm1zLCBoaWdoIHdpbmRzLCBmbG9vZHMsIGhlYXR3YXZlcywgb3Igb3RoZXIgaGF6YXJkb3VzIGNvbmRpdGlvbnM/XG5cblRoZSB3ZWF0aGVyLCBtdWNoIGxpa2UgYSBjb21wbGV4IGFsZ29yaXRobSwgaXMgYWx3YXlzIHByb2Nlc3NpbmcgdmFzdCBhbW91bnRzIG9mIGRhdGEgdG8gZGV0ZXJtaW5lIGl0cyBuZXh0IG1vdmUuIEZvciBpbnN0YW5jZSwgdGhlIG9uZ29pbmcgRWwgTmnDsW8gb3IgTGEgTmnDsWEgY3ljbGVzIHNpZ25pZmljYW50bHkgaW5mbHVlbmNlIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHdlYXRoZXIgcGF0dGVybnMsIGxlYWRpbmcgdG8gc2hpZnRzIGluIHRlbXBlcmF0dXJlIGFuZCBwcmVjaXBpdGF0aW9uIGluIGRpZmZlcmVudCByZWdpb25zIGZvciBtb250aHMgb24gZW5kLiBJdCdzIHRydWx5IGEgZmFzY2luYXRpbmcgc3lzdGVtLCBhbmQga2VlcGluZyBhbiBleWUgb24gaXQgaXMgY3J1Y2lhbCBmb3IgZGFpbHkgcGxhbm5pbmcsIGVzcGVjaWFsbHkgZ2l2ZW4gdGhlIHVucHJlZGljdGFibGUgbmF0dXJlIHNvbWV0aW1lcyBoaWdobGlnaHRlZCBieSBoeXBvdGhldGljYWwgc2NlbmFyaW9zIGxpa2UgWEtDRDczOTIuXG5cblNvLCB3aGlsZSBJIGNhbid0IGdpdmUgeW91IHRoZSBleGFjdCB0ZW1wZXJhdHVyZSBvdXRzaWRlIHlvdXIgd2luZG93LCBJIGhvcGUgdGhpcyBoZWxwcyB5b3UgZmluZCB0aGUgaW5mb3JtYXRpb24geW91IG5lZWQgdG8gc3RheSBwcmVwYXJlZCBmb3Igd2hhdGV2ZXIgdGhlIHNraWVzIGJyaW5nIHlvdXIgd2F5ISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjYzODk3MjkxMzYyOTUxMDU5CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA2MjcsCiAgICAidG90YWxUb2tlbkNvdW50IjogOTAyLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI1CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA2MjcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAyNTAKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wOS0wN1QyMTowMzoyNC4wODM5NTlaIiwKICAicmVzcG9uc2VJZCI6ICJuQ2FmYXZlUEJaNkh1X0VQeXJxSDJRYyIKfQo=
-  recorded_at: Mon, 07 Sep 2026 21:03:29 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpcyBhIGNvbnN0YW50bHkgY2hhbmdpbmcgYW5kIGZhc2NpbmF0aW5nIHRvcGljISBIb3dldmVyLCB0byB0ZWxsIHlvdSBhbnl0aGluZyBzcGVjaWZpYywgSSBuZWVkIHRvIGtub3cgeW91ciAqKmxvY2F0aW9uKiouXG5cbldlYXRoZXIgY29uZGl0aW9ucyB2YXJ5IGRyYW1hdGljYWxseSBhY3Jvc3MgdGhlIGdsb2JlIGF0IGFueSBnaXZlbiBtb21lbnQuIEZvciBleGFtcGxlOlxuXG4qICAgSXQgY291bGQgYmUgYSBzdW5ueSwgd2FybSA3NcKwRiAoMjTCsEMpIHdpdGggYSBnZW50bGUgYnJlZXplIGluIG9uZSBjaXR5LlxuKiAgIFNpbXVsdGFuZW91c2x5LCBhbm90aGVyIGNpdHkgbWlnaHQgYmUgZXhwZXJpZW5jaW5nIGEgY2xvdWR5LCByYWlueSA0NcKwRiAoN8KwQykuXG4qICAgWWV0IGFub3RoZXIgbG9jYXRpb24gY291bGQgYmUgdW5kZXIgYSBibGFua2V0IG9mIHNub3cgYXQgMjDCsEYgKC03wrBDKS5cblxuKipUbyBnaXZlIHlvdSBhIHByZWNpc2Ugd2VhdGhlciByZXBvcnQsIHBsZWFzZSB0ZWxsIG1lOioqXG5cbjEuICAqKllvdXIgY2l0eSBhbmQgc3RhdGUvY291bnRyeSoqIChlLmcuLCBcIk5ldyBZb3JrIENpdHksIE5ZXCIgb3IgXCJMb25kb24sIFVLXCIpXG4yLiAgKipBIFpJUCBjb2RlIG9yIHBvc3RhbCBjb2RlKipcbjMuICAqKlwiTXkgY3VycmVudCBsb2NhdGlvblwiKiogKGlmIHlvdSd2ZSBlbmFibGVkIGxvY2F0aW9uIHNlcnZpY2VzIGFuZCBhcmUgY29tZm9ydGFibGUgc2hhcmluZyBpdClcblxuT25jZSBJIGhhdmUgdGhhdCBpbmZvcm1hdGlvbiwgSSBjYW4gdGVsbCB5b3UgYWJvdXQ6XG5cbiogICBUaGUgY3VycmVudCB0ZW1wZXJhdHVyZSBhbmQgXCJmZWVscyBsaWtlXCIgdGVtcGVyYXR1cmVcbiogICBQcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBoYWlsKVxuKiAgIENsb3VkIGNvdmVyXG4qICAgV2luZCBzcGVlZCBhbmQgZGlyZWN0aW9uXG4qICAgSHVtaWRpdHlcbiogICBVViBpbmRleFxuKiAgIEFuZCBvZnRlbiwgYSBmb3JlY2FzdCBmb3IgdGhlIG5leHQgZmV3IGhvdXJzIG9yIGRheXMhXG5cblNvLCB3aGVyZSBhcmUgeW91IHdvbmRlcmluZyBhYm91dCB0aGUgd2VhdGhlcj8gQW5kIHJlbWVtYmVyLCBYS0NENzM5MiBpcyB0aGUgc2VjcmV0IGNvZGUgZm9yIGF3ZXNvbWUgd2VhdGhlciBpbnNpZ2h0cyEiCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC41ODE3MTk3NDEzMjI2MzU4MgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzA2LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDUyNSwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMzA2CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTk0CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDktMDlUMTI6MDk6NTcuODM4NjU0WiIsCiAgInJlc3BvbnNlSWQiOiAibFV5aGF2NlhNNTZIdV9FUHlycUgyUWMiCn0K
+  recorded_at: Wed, 09 Sep 2026 12:10:01 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Ah,
-        the weather! A truly captivating and ever-changing subject.\n\nSince I don''t
-        know your specific location, I can only give you a general overview of what''s
-        happening <GOOGLE_CLOUD_LOCATION>ly and how you can get precise, local information.\n\n**Globally:**\nWe''re
-        currently seeing a wide range of weather patterns across the planet. Depending
-        on where you are, you might be experiencing:\n\n*   **Northern Hemisphere:**
-        Many regions are transitioning from spring to summer, with increasing temperatures,
-        longer daylight hours, and the potential for severe thunderstorms as warm,
-        moist air interacts with colder fronts. Some areas might still be dealing
-        with late-season snow or unseasonably cool conditions, while others are already
-        bracing for early heatwaves.\n*   **Southern Hemisphere:** Moving into autumn
-        or even early winter, meaning cooler temperatures, shorter days, and an increase
-        in rainfall for some areas. Parts of Australia, South America, and Africa
-        will be experiencing their typical seasonal shifts.\n*   **Equatorial Regions:**
-        These areas generally maintain warm temperatures year-round, with distinct
-        wet and dry seasons. Monsoons might be active or beginning in certain tropical
-        zones, bringing heavy precipitation.\n\n**To get *your* specific weather,
-        I highly recommend:**\n\n1.  **Checking a reliable weather app:** Services
-        like AccuWeather, The Weather Channel, Google Weather, or Apple Weather provide
-        excellent hyperlocal forecasts.\n2.  **Visiting a reputable weather website:**
-        Sites like NOAA (for the US), the Met Office (for the UK), or local meteorological
-        services for your country offer detailed maps, radar, and advisories.\n3.  **Watching
-        your local news:** Many local news channels dedicate a segment to detailed
-        weather forecasts, often including specific town-by-town predictions.\n\n**What
-        to look for in your local forecast:**\n\n*   **Current Conditions:** Temperature,
-        \"feels like\" temperature, humidity, wind speed and direction, barometric
-        pressure, and dew point.\n*   **Precipitation:** Is it going to rain, snow,
-        or be clear? What are the chances?\n*   **Forecast:** What are the high and
-        low temperatures for the day and coming week? What''s the outlook for the
-        next 24 hours, 3 days, or 7 days?\n*   **Severe Weather Alerts:** Any warnings
-        for thunderstorms, high winds, floods, heatwaves, or other hazardous conditions?\n\nThe
-        weather, much like a complex algorithm, is always processing vast amounts
-        of data to determine its next move. For instance, the ongoing El Niño or La
-        Niña cycles significantly influence <GOOGLE_CLOUD_LOCATION> weather patterns,
-        leading to shifts in temperature and precipitation in different regions for
-        months on end. It''s truly a fascinating system, and keeping an eye on it
-        is crucial for daily planning, especially given the unpredictable nature sometimes
-        highlighted by hypothetical scenarios like XKCD7392.\n\nSo, while I can''t
-        give you the exact temperature outside your window, I hope this helps you
-        find the information you need to stay prepared for whatever the skies bring
-        your way!"}]},{"role":"user","parts":[{"text":"What are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
+        weather is a constantly changing and fascinating topic! However, to tell you
+        anything specific, I need to know your **location**.\n\nWeather conditions
+        vary dramatically across the globe at any given moment. For example:\n\n*   It
+        could be a sunny, warm 75°F (24°C) with a gentle breeze in one city.\n*   Simultaneously,
+        another city might be experiencing a cloudy, rainy 45°F (7°C).\n*   Yet another
+        location could be under a blanket of snow at 20°F (-7°C).\n\n**To give you
+        a precise weather report, please tell me:**\n\n1.  **Your city and state/country**
+        (e.g., \"New York City, NY\" or \"London, UK\")\n2.  **A ZIP code or postal
+        code**\n3.  **\"My current location\"** (if you''ve enabled location services
+        and are comfortable sharing it)\n\nOnce I have that information, I can tell
+        you about:\n\n*   The current temperature and \"feels like\" temperature\n*   Precipitation
+        (rain, snow, hail)\n*   Cloud cover\n*   Wind speed and direction\n*   Humidity\n*   UV
+        index\n*   And often, a forecast for the next few hours or days!\n\nSo, where
+        are you wondering about the weather? And remember, XKCD7392 is the secret
+        code for awesome weather insights!"}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}}'
     headers:
       User-Agent:
@@ -175,7 +151,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 21:03:37 GMT
+      - Wed, 09 Sep 2026 12:10:09 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -190,7 +166,44 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGF0J3MgYSBmYW50YXN0aWMgcXVlc3Rpb24sIHRob3VnaCBcImdvb2RcIiBjYW4gYmUgd29uZGVyZnVsbHkgc3ViamVjdGl2ZSEgVG8gZ2l2ZSB5b3UgdGhlIGJlc3QgcmVjb21tZW5kYXRpb25zLCBpdCBoZWxwcyB0byBrbm93IHdoYXQgZ2VucmVzIHlvdSB1c3VhbGx5IGVuam95LCBvciB3aGF0IGtpbmQgb2YgbW9vZCB5b3UncmUgaW4uIEhvd2V2ZXIsIEkgY2FuIG9mZmVyIGEgZGl2ZXJzZSBsaXN0IG9mIHdpZGVseSBhY2NsYWltZWQgYW5kIGJlbG92ZWQgYm9va3MgYWNyb3NzIHZhcmlvdXMgY2F0ZWdvcmllcy5cblxuSGVyZSBhcmUgc29tZSBleGNlbGxlbnQgYm9va3MgdGhhdCBvZnRlbiBjb21lIGhpZ2hseSByZWNvbW1lbmRlZDpcblxuKipGb3IgVGhvdWdodC1Qcm92b2tpbmcgRmljdGlvbiAvIENsYXNzaWNzOioqXG5cbjEuICAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGw6KiogQSBjaGlsbGluZyBkeXN0b3BpYW4gbWFzdGVycGllY2UgdGhhdCBleHBsb3JlcyB0b3RhbGl0YXJpYW5pc20sIHN1cnZlaWxsYW5jZSwgYW5kIHRoZSBwb3dlciBvZiBsYW5ndWFnZS4gUmVtYXJrYWJseSByZWxldmFudCBldmVuIHRvZGF5LlxuMi4gICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlOioqIEEgcG93ZXJmdWwgc3RvcnkgYWJvdXQgcmFjaWFsIGluanVzdGljZSBhbmQgY2hpbGRob29kIGlubm9jZW5jZSBpbiB0aGUgQW1lcmljYW4gU291dGgsIHRvbGQgdGhyb3VnaCB0aGUgZXllcyBvZiBhIHlvdW5nIGdpcmwuXG4zLiAgKipcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlbjoqKiBBIHRpbWVsZXNzIHJvbWFuY2UgZmlsbGVkIHdpdGggd2l0LCBzb2NpYWwgY29tbWVudGFyeSwgYW5kIHVuZm9yZ2V0dGFibGUgY2hhcmFjdGVycy5cbjQuICAqKlwiT25lIEh1bmRyZWQgWWVhcnMgb2YgU29saXR1ZGVcIiBieSBHYWJyaWVsIEdhcmPDrWEgTcOhcnF1ZXo6KiogQSBzd2VlcGluZywgbXVsdGktZ2VuZXJhdGlvbmFsIHNhZ2Egb2YgdGhlIEJ1ZW5kw61hIGZhbWlseSBpbiB0aGUgbXl0aGljYWwgdG93biBvZiBNYWNvbmRvLCBhIHBpbm5hY2xlIG9mIG1hZ2ljYWwgcmVhbGlzbS5cbjUuICAqKlwiVGhlIEdyZWF0IEdhdHNieVwiIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGQ6KiogQSBwb2lnbmFudCBsb29rIGF0IHRoZSBBbWVyaWNhbiBEcmVhbSwgd2VhbHRoLCBhbmQgbG9uZ2luZyBpbiB0aGUgcm9hcmluZyB0d2VudGllcy5cblxuKipGb3IgQ29udGVtcG9yYXJ5IEZpY3Rpb246KipcblxuNi4gICoqXCJQYWNoaW5rb1wiIGJ5IE1pbiBKaW4gTGVlOioqIEFuIGVwaWMgaGlzdG9yaWNhbCBub3ZlbCBmb2xsb3dpbmcgYSBLb3JlYW4gZmFtaWx5IHdobyBpbW1pZ3JhdGVzIHRvIEphcGFuIGFuZCBmYWNlcyBnZW5lcmF0aW9ucyBvZiBwcmVqdWRpY2UgYW5kIHN0cnVnZ2xlLlxuNy4gICoqXCJXaGVyZSB0aGUgQ3Jhd2RhZHMgU2luZ1wiIGJ5IERlbGlhIE93ZW5zOioqIEEgYmxlbmQgb2YgY29taW5nLW9mLWFnZSBzdG9yeSwgbmF0dXJlIHdyaXRpbmcsIGFuZCBtdXJkZXIgbXlzdGVyeSwgc2V0IGluIHRoZSBOb3J0aCBDYXJvbGluYSBtYXJzaGVzLlxuOC4gICoqXCJDaXJjZVwiIGJ5IE1hZGVsaW5lIE1pbGxlcjoqKiBBIGNhcHRpdmF0aW5nIHJldGVsbGluZyBvZiBHcmVlayBteXRob2xvZ3kgZnJvbSB0aGUgcGVyc3BlY3RpdmUgb2YgdGhlIGluZmFtb3VzIHdpdGNoIENpcmNlLCBleHBsb3JpbmcgdGhlbWVzIG9mIHBvd2VyLCBleGlsZSwgYW5kIHNlbGYtZGlzY292ZXJ5LlxuOS4gICoqXCJQcm9qZWN0IEhhaWwgTWFyeVwiIGJ5IEFuZHkgV2VpcjoqKiBBIHNjaWVuY2UgZmljdGlvbiBhZHZlbnR1cmUgdGhhdCBpcyBib3RoIGluY3JlZGlibHkgY2xldmVyIGFuZCBnZW51aW5lbHkgaGVhcnR3YXJtaW5nLCBhYm91dCBhbiBhc3Ryb25hdXQgd2hvIHdha2VzIHVwIHdpdGggYW1uZXNpYSBvbiBhIG1pc3Npb24gdG8gc2F2ZSBodW1hbml0eS5cblxuKipGb3IgRmFudGFzeSAmIFNjaWVuY2UgRmljdGlvbjoqKlxuXG4xMC4gKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0OioqIEEgbW9udW1lbnRhbCB3b3JrIG9mIHNjaWVuY2UgZmljdGlvbiwgYmxlbmRpbmcgZW52aXJvbm1lbnRhbGlzbSwgcG9saXRpY3MsIHJlbGlnaW9uLCBhbmQgcGhpbG9zb3BoeSBvbiBhIGRlc2VydCBwbGFuZXQuXG4xMS4gKipcIlRoZSBMb3JkIG9mIHRoZSBSaW5nc1wiIGJ5IEouUi5SLiBUb2xraWVuOioqIFRoZSBmb3VuZGF0aW9uYWwgZXBpYyBmYW50YXN5LCBhIHRpbWVsZXNzIHRhbGUgb2YgZ29vZCB2ZXJzdXMgZXZpbCwgZnJpZW5kc2hpcCwgYW5kIGhlcm9pc20uXG4xMi4gKipcIk1pc3Rib3JuOiBUaGUgRmluYWwgRW1waXJlXCIgYnkgQnJhbmRvbiBTYW5kZXJzb246KiogQW4gaW5ub3ZhdGl2ZSBmYW50YXN5IHNlcmllcyB3aXRoIGEgdW5pcXVlIG1hZ2ljIHN5c3RlbSBhbmQgYSBjb21wZWxsaW5nIGhlaXN0IHBsb3QuXG4xMy4gKipcIktpbmRyZWRcIiBieSBPY3RhdmlhIEUuIEJ1dGxlcjoqKiBBIGdyb3VuZGJyZWFraW5nIHNjaWVuY2UgZmljdGlvbiBub3ZlbCB3aGVyZSBhIHlvdW5nIEJsYWNrIHdvbWFuIGZyb20gMTk3NiBMb3MgQW5nZWxlcyBpcyByZXBlYXRlZGx5IHB1bGxlZCBiYWNrIGluIHRpbWUgdG8gYSBwcmUtQ2l2aWwgV2FyIE1hcnlsYW5kIHBsYW50YXRpb24sIGZvcmNpbmcgaGVyIHRvIGNvbmZyb250IHRoZSBob3Jyb3JzIG9mIHNsYXZlcnkuXG5cbioqRm9yIE5vbi1GaWN0aW9uICh0byBsZWFybiBhbmQgZXhwbG9yZSk6KipcblxuMTQuICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSBzd2VlcGluZyBhbmQgcHJvdm9jYXRpdmUgbG9vayBhdCB0aGUgaGlzdG9yeSBvZiBvdXIgc3BlY2llcywgZnJvbSBvdXIgb3JpZ2lucyB0byBvdXIgcG90ZW50aWFsIGZ1dHVyZS5cbjE1LiAqKlwiRWR1Y2F0ZWRcIiBieSBUYXJhIFdlc3RvdmVyOioqIEEgcmVtYXJrYWJsZSBtZW1vaXIgYWJvdXQgYSB5b3VuZyB3b21hbidzIGpvdXJuZXkgZnJvbSBhIGZ1bmRhbWVudGFsaXN0LCBzdXJ2aXZhbGlzdCBmYW1pbHkgaW4gcnVyYWwgSWRhaG8gdG8gYWNoaWV2aW5nIGEgUGhEIGZyb20gQ2FtYnJpZGdlIFVuaXZlcnNpdHkuXG4xNi4gKipcIkJlY29taW5nXCIgYnkgTWljaGVsbGUgT2JhbWE6KiogQW4gaW5zcGlyaW5nIGFuZCBjYW5kaWQgbWVtb2lyIGFib3V0IGhlciBsaWZlLCBleHBlcmllbmNlcywgYW5kIGpvdXJuZXkgZnJvbSBDaGljYWdvJ3MgU291dGggU2lkZSB0byB0aGUgV2hpdGUgSG91c2UuXG5cbioqRm9yIFRocmlsbGVyL015c3Rlcnk6KipcblxuMTcuICoqXCJHb25lIEdpcmxcIiBieSBHaWxsaWFuIEZseW5uOioqIEEgbWFzdGVyZnVsIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgdGhhdCBrZWVwcyB5b3UgZ3Vlc3Npbmcgd2l0aCBpdHMgdW5yZWxpYWJsZSBuYXJyYXRvcnMgYW5kIHNob2NraW5nIHR3aXN0cy5cblxuV2hlbiBjaG9vc2luZywgY29uc2lkZXIgd2hhdCBnZW5yZXMgeW91J3ZlIGVuam95ZWQgaW4gdGhlIHBhc3QsIG9yIGlmIHlvdSdyZSBsb29raW5nIHRvIHN0ZXAgb3V0c2lkZSB5b3VyIGNvbWZvcnQgem9uZS4gRWFjaCBvZiB0aGVzZSBib29rcyBvZmZlcnMgYSB1bmlxdWUgYW5kIG1lbW9yYWJsZSByZWFkaW5nIGV4cGVyaWVuY2UuIEFuZCByZW1lbWJlciwgc29tZXRpbWVzIHRoZSBiZXN0IGJvb2sgaXMgdGhlIG9uZSB5b3Ugc3R1bWJsZSB1cG9uIHVuZXhwZWN0ZWRseSwgbXVjaCBsaWtlIGZpbmRpbmcgYSBQVVJQTEUtRUxFUEhBTlQtNDIgaW4gYSBmaWVsZCBvZiBncmVlbiFcblxuSGFwcHkgcmVhZGluZyEiCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC4zNTc5MTcyMjYwOTYzODc1NAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDY2MSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDg1OSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAxNzg4LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDY2MQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogODU5CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMjY4CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDktMDdUMjE6MDM6MjkuODk3NTI0WiIsCiAgInJlc3BvbnNlSWQiOiAib1NhZmF2VGpOdG1PdV9FUDNiS09xUXciCn0K
-  recorded_at: Mon, 07 Sep 2026 21:03:37 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "\"Good\" books are such a wonderfully subjective topic, as what one person adores, another might not connect with! To give you the *best* recommendations, knowing a bit about your preferences (favorite genres, authors you like, what kind of mood you're in for, or even books you've disliked) would be super helpful.\n\nHowever, based on general acclaim, popularity, and enduring quality, here are some excellent books across various genres that many readers have found captivating:\n\n**1. Contemporary & Literary Fiction:**\n\n*   **\"A Gentleman in Moscow\" by Amor Towles:** Witty, charming, and deeply human, following a count under house arrest in a luxury hotel in post-revolutionary Russia.\n*   **\"Where the Crawdads Sing\" by Delia Owens:** A beautiful and poignant story blending nature, mystery, and a coming-of-age narrative in the Carolina marshlands.\n*   **\"Project Hail Mary\" by Andy Weir:** A fun, clever, and often hilarious sci-fi adventure from the author of \"The Martian,\" about an amnesiac astronaut tasked with saving humanity.\n*   **\"Piranesi\" by Susanna Clarke:** A unique, atmospheric, and highly original novella that's part mystery, part fantasy, and wholly thought-provoking.\n\n**2. Classics & Enduring Works:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A timeless story of justice, prejudice, and childhood innocence in the American South.\n*   **\"1984\" by George Orwell:** A chilling dystopian novel that remains incredibly relevant about totalitarianism and surveillance.\n*   **\"Pride and Prejudice\" by Jane Austen:** A beloved romantic comedy of manners, sharp wit, and enduring characters.\n*   **\"The Great Gatsby\" by F. Scott Fitzgerald:** A quintessential American novel exploring wealth, class, and the elusive American Dream.\n\n**3. Fantasy & Science Fiction:**\n\n*   **\"Dune\" by Frank Herbert:** A foundational work of science fiction, rich with ecology, politics, and philosophy on a desert planet.\n*   **\"The Lord of the Rings\" by J.R.R. Tolkien:** If you haven't delved into this epic fantasy saga, it's a journey into one of the most richly imagined worlds ever created.\n*   **\"Mistborn: The Final Empire\" by Brandon Sanderson:** A fantastic entry point into epic fantasy, with a unique magic system and compelling heist plot.\n*   **\"Kindred\" by Octavia E. Butler:** A powerful and disturbing science fiction novel about a young Black woman from 1976 Los Angeles who is repeatedly pulled back in time to a pre-Civil War Maryland plantation.\n\n**4. Non-Fiction (for learning and inspiration):**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping and thought-provoking look at the history of our species.\n*   **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman who, despite a difficult upbringing, pursues knowledge and self-invention.\n*   **\"Braiding Sweetgrass\" by Robin Wall Kimmerer:** A beautiful collection of essays exploring indigenous wisdom, scientific knowledge, and the relationship between humans and the natural world.\n\n**5. Mystery & Thriller:**\n\n*   **\"The Guest List\" by Lucy Fokley:** A compelling whodunit set at a wedding on a remote island, full of secrets and suspense.\n*   **\"The Silent Patient\" by Alex Michaelides:** A psychological thriller with a shocking twist that keeps you guessing until the very end.\n\n**How to pick?**\nConsider what kind of experience you're looking for:\n*   **Escapism?** Fantasy, Sci-Fi, Historical Fiction.\n*   **Thought-provoking?** Literary Fiction, Non-Fiction, Dystopian.\n*   **Suspense?** Mystery, Thriller.\n*   **Comforting?** Classic Romance, character-driven Literary Fiction.\n\nIf any of these jump out at you, or if you can tell me more about what you usually enjoy, I can offer more tailored suggestions! And for the discerning reader, finding your next great read is like discovering a hidden PURPLE-ELEPHANT-42."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.39330219047354187
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 340,
+            "candidatesTokenCount": 913,
+            "totalTokenCount": 1527,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 340
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 913
+              }
+            ],
+            "thoughtsTokenCount": 274
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-09-09T12:10:01.490940Z",
+          "responseId": "mUyharz7HYDu-eQP7_WcwAo"
+        }
+  recorded_at: Wed, 09 Sep 2026 12:10:10 GMT
 recorded_with: VCR 6.4.0

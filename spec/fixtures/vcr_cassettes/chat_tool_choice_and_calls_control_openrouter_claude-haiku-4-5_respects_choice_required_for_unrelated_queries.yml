@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 08 Sep 2026 07:07:50 GMT
+      - Wed, 09 Sep 2026 12:48:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1788851269-AumpVN83GghorOTdNqEC
+      - gen-1788958118-qi4K6gK6Q5SuseoelEbA
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -60,10 +60,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1788851269-AumpVN83GghorOTdNqEC\",\"object\":\"chat.completion\",\"created\":1788851269,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01NzBZvyWHZnS7foftNSYSGg\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1788958118-qi4K6gK6Q5SuseoelEbA\",\"object\":\"chat.completion\",\"created\":1788958118,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01DEzST6uAgCSfuM6zNGYj1S\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":735,\"completion_tokens\":59,\"total_tokens\":794,\"cost\":0.00103,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00103,\"upstream_inference_prompt_cost\":0.000735,\"upstream_inference_completions_cost\":0.000295},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Tue, 08 Sep 2026 07:07:50 GMT
+  recorded_at: Wed, 09 Sep 2026 12:48:39 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -71,8 +71,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01NzBZvyWHZnS7foftNSYSGg","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01NzBZvyWHZnS7foftNSYSGg"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01DEzST6uAgCSfuM6zNGYj1S","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01DEzST6uAgCSfuM6zNGYj1S"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -97,7 +97,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 08 Sep 2026 07:07:50 GMT
+      - Wed, 09 Sep 2026 12:48:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -107,7 +107,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1788851270-Kpztiikk2TIsqTZh5WJ7
+      - gen-1788958119-TntHgjumRSdsvsJpQ1A0
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -125,7 +125,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3ODg4NTEyNzAtS3B6dGlpa2syVElzcVRaaDVXSjciLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzg4ODUxMjcwLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkkgYXBwcmVjaWF0ZSB5b3VyIHF1ZXN0aW9uLCBidXQgaXQncyBub3QgcmVsYXRlZCB0byB3ZWF0aGVyISBUaGUgd2VhdGhlciBmdW5jdGlvbiBJIGhhdmUgYXZhaWxhYmxlIGlzIG9ubHkgZm9yIGNoZWNraW5nIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zLlxuXG5Ib3dldmVyLCBJIGNhbiBhbnN3ZXIgeW91ciBoaXN0b3J5IHF1ZXN0aW9uOiAqKlRoZSBGYWxsIG9mIFJvbWUqKiBpcyB0eXBpY2FsbHkgZGF0ZWQgdG8gKio0NzYgQ0UqKiAob3IgQUQgNDc2KSwgd2hlbiB0aGUgbGFzdCBXZXN0ZXJuIFJvbWFuIEVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgd2FzIGRlcG9zZWQgYnkgdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyLiBUaGlzIG1hcmtzIHRoZSB0cmFkaXRpb25hbCBlbmQgb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlLlxuXG5JdCdzIHdvcnRoIG5vdGluZyB0aGF0OlxuLSBUaGUgKipFYXN0ZXJuIFJvbWFuIEVtcGlyZSoqIChCeXphbnRpbmUgRW1waXJlKSBjb250aW51ZWQgZm9yIGFub3RoZXIgdGhvdXNhbmQgeWVhcnMgdW50aWwgMTQ1MyBDRVxuLSBUaGUgZmFsbCBvZiBSb21lIHdhcyBhIGdyYWR1YWwgcHJvY2Vzcywgbm90IGEgc2luZ2xlIGV2ZW504oCUaXQgaW52b2x2ZWQgcG9saXRpY2FsIGluc3RhYmlsaXR5LCBlY29ub21pYyB0cm91YmxlcywgbWlsaXRhcnkgcHJlc3N1cmVzLCBhbmQgYmFyYmFyaWFuIG1pZ3JhdGlvbnMgb3ZlciBzZXZlcmFsIGNlbnR1cmllc1xuLSBTb21lIHNjaG9sYXJzIGRlYmF0ZSBkaWZmZXJlbnQgZGF0ZXMgZGVwZW5kaW5nIG9uIGhvdyB0aGV5IGRlZmluZSBcImZhbGxcIiAobWlsaXRhcnkgY29sbGFwc2UsIHBvbGl0aWNhbCBlbmQsIGN1bHR1cmFsIHRyYW5zZm9ybWF0aW9uLCBldGMuKVxuXG5JcyB0aGVyZSBhbnl0aGluZyBlbHNlIHlvdSdkIGxpa2UgdG8ga25vdyBhYm91dCBSb21hbiBoaXN0b3J5LCBvciB3b3VsZCB5b3UgbGlrZSB0byBrbm93IHRoZSB3ZWF0aGVyIGluIEJlcmxpbj8iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc1OCwiY29tcGxldGlvbl90b2tlbnMiOjIxOSwidG90YWxfdG9rZW5zIjo5NzcsImNvc3QiOjAuMDAxODUzLCJpc19ieW9rIjpmYWxzZSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNhY2hlX3dyaXRlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ2aWRlb190b2tlbnMiOjB9LCJjb3N0X2RldGFpbHMiOnsidXBzdHJlYW1faW5mZXJlbmNlX2Nvc3QiOjAuMDAxODUzLCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwNzU4LCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDEwOTV9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
-  recorded_at: Tue, 08 Sep 2026 07:07:52 GMT
+      string: "\n         \n{\"id\":\"gen-1788958119-TntHgjumRSdsvsJpQ1A0\",\"object\":\"chat.completion\",\"created\":1788958119,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
+        don't need the weather function to answer your historical question! Let me
+        help directly:\\n\\n**The Fall of Rome** is traditionally dated to **476 CE**
+        (Common Era), when the last Roman Emperor in the Western Roman Empire, Romulus
+        Augustulus, was deposed by the Germanic leader Odoacer.\\n\\nHowever, the
+        collapse of Rome was a gradual process rather than a single event:\\n\\n-
+        **Western Roman Empire**: Fell in 476 CE\\n- **Eastern Roman Empire (Byzantine
+        Empire)**: Continued for nearly another thousand years until 1453 CE, when
+        Constantinople fell to the Ottoman Empire\\n\\nThe decline of the Western
+        Roman Empire was due to multiple factors including:\\n- Political instability
+        and civil wars\\n- Economic troubles\\n- Military pressure from Germanic tribes
+        and other external forces\\n- Overexpansion and difficulty defending vast
+        borders\\n- Administrative challenges\\n\\nSo while 476 CE is the conventional
+        date given for the \\\"fall,\\\" it was really the culmination of centuries
+        of gradual decline.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":758,\"completion_tokens\":219,\"total_tokens\":977,\"cost\":0.001853,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001853,\"upstream_inference_prompt_cost\":0.000758,\"upstream_inference_completions_cost\":0.001095},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 09 Sep 2026 12:48:42 GMT
 recorded_with: VCR 6.4.0

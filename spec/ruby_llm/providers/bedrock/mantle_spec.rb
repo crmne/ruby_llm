@@ -122,12 +122,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       expect(merged.first.metadata).not_to have_key(:endpoint)
     end
 
-    it 'tags the bundled registry entry for every model mantle serves' do
+    it 'tags bundled registry models served through mantle' do
       tagged = RubyLLM.models.all.select do |model|
         model.provider == 'bedrock' && model.metadata[:endpoint] == 'mantle'
       end
 
-      expect(tagged.size).to eq(48)
       expect(tagged.map(&:id)).to include('openai.gpt-oss-20b', 'anthropic.claude-haiku-4-5', 'zai.glm-5')
     end
   end

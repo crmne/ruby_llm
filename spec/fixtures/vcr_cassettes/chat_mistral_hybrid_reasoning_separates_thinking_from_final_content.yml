@@ -24,23 +24,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 07 Sep 2026 21:03:06 GMT
+      - Wed, 09 Sep 2026 12:13:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a07dae-8a4b-70fb-852e-470c2c4794d4
+      - 01a08616-86b8-711f-a116-83f0a6236f6b
       X-Kong-Request-Id:
-      - 01a07dae-8a4b-70fb-852e-470c2c4794d4
+      - 01a08616-86b8-711f-a116-83f0a6236f6b
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99467'
+      - '81270'
       X-Ratelimit-Tokens-Query-Cost:
       - '97'
       X-Ratelimit-Limit-Req-Minute:
@@ -48,32 +50,30 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '448'
+      - '542'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '450'
+      - '543'
       X-Kong-Proxy-Latency:
-      - '13'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '14'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3c78a42f610b4ed999375e49d2cdbf28","created":1788814985,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+      string: '{"id":"ad257cd6981f4012baa508bd9eec7a97","created":1788956018,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
         user is asking for the product of 12 multiplied by 12. I know that 12 times
         12 is a basic multiplication fact. Let me calculate it:\n\n12 * 12 = 144\n\nSo,
         the answer is 144."}],"closed":true},{"type":"text","text":"144"}]}}]}'
-  recorded_at: Mon, 07 Sep 2026 21:03:06 GMT
+  recorded_at: Wed, 09 Sep 2026 12:13:38 GMT
 recorded_with: VCR 6.4.0

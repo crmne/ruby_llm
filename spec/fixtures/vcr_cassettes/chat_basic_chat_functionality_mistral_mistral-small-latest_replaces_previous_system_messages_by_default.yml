@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 08 Sep 2026 06:59:20 GMT
+      - Wed, 09 Sep 2026 12:07:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a07fd0-66e2-732a-8e55-960b58d8cd7b
+      - 01a08610-895e-71ad-ad69-27137ccd3f14
       X-Kong-Request-Id:
-      - 01a07fd0-66e2-732a-8e55-960b58d8cd7b
+      - 01a08610-895e-71ad-ad69-27137ccd3f14
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99889'
+      - '99251'
       X-Ratelimit-Tokens-Query-Cost:
-      - '111'
+      - '114'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '99'
+      - '94'
       X-Envoy-Upstream-Service-Time:
-      - '666'
+      - '831'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '667'
+      - '833'
       X-Kong-Proxy-Latency:
-      - '16'
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,12 +72,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"df1f7649cff64ef3b14fea16b16cd9c5","created":1788850759,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":111,"completion_tokens":68,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"c2395d5cef2a434ebf60b1c2f777a330","created":1788955625,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":114,"completion_tokens":71,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         weather today is quite pleasant with a mix of sun and clouds. Temperatures
-        are mild, making it a great day for outdoor activities. Just remember to bring
-        a light jacket in case it gets breezy. Oh, and don''t forget to check the
-        XKCD7392 comic for a humorous take on weather forecasts!"}}]}'
-  recorded_at: Tue, 08 Sep 2026 06:59:20 GMT
+        are moderate, making it ideal for outdoor activities. However, remember to
+        check for any sudden changes as weather can be unpredictable. As Randall Munroe
+        would say in XKCD7392, \"Weather is the atmosphere''s way of keeping us on
+        our toes.\""}}]}'
+  recorded_at: Wed, 09 Sep 2026 12:07:06 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -86,10 +87,10 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather today is
-        quite pleasant with a mix of sun and clouds. Temperatures are mild, making
-        it a great day for outdoor activities. Just remember to bring a light jacket
-        in case it gets breezy. Oh, and don''t forget to check the XKCD7392 comic
-        for a humorous take on weather forecasts!"},{"role":"user","content":"What
+        quite pleasant with a mix of sun and clouds. Temperatures are moderate, making
+        it ideal for outdoor activities. However, remember to check for any sudden
+        changes as weather can be unpredictable. As Randall Munroe would say in XKCD7392,
+        \"Weather is the atmosphere''s way of keeping us on our toes.\""},{"role":"user","content":"What
         are some good books?"}],"stream":false}'
     headers:
       User-Agent:
@@ -108,61 +109,61 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 08 Sep 2026 06:59:21 GMT
+      - Wed, 09 Sep 2026 12:07:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - 01a07fd0-69c9-7779-930c-63a7b80d88e3
+      - 01a08610-8cf2-7b99-b7d8-c68ea25a1500
       X-Kong-Request-Id:
-      - 01a07fd0-69c9-7779-930c-63a7b80d88e3
+      - 01a08610-8cf2-7b99-b7d8-c68ea25a1500
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99605'
+      - '98969'
       X-Ratelimit-Tokens-Query-Cost:
-      - '284'
+      - '282'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '98'
+      - '93'
       X-Envoy-Upstream-Service-Time:
-      - '972'
+      - '1060'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '973'
+      - '1061'
       X-Kong-Proxy-Latency:
-      - '17'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
+      - '19'
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"486c6a9e5c464323b9cb575670022928","created":1788850760,"model":"mistral-small-latest","usage":{"prompt_tokens":123,"total_tokens":284,"completion_tokens":161,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
+      string: '{"id":"f4b56b99808f40ee9f1215df43d34d7e","created":1788955626,"model":"mistral-small-latest","usage":{"prompt_tokens":126,"total_tokens":282,"completion_tokens":156,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
         are some highly regarded books across different genres:\n\n1. **Fiction**:
         \"To Kill a Mockingbird\" by Harper Lee\n2. **Science Fiction**: \"Dune\"
-        by Frank Herbert\n3. **Mystery**: \"Gone Girl\" by Gillian Flynn\n4. **Fantasy**:
-        \"The Name of the Wind\" by Patrick Rothfuss\n5. **Non-Fiction**: \"Sapiens:
-        A Brief History of Humankind\" by Yuval Noah Harari\n6. **Biography**: \"Becoming\"
-        by Michelle Obama\n\nFor a unique twist, consider reading \"The Hitchhiker''s
-        Guide to the Galaxy\" by Douglas Adams, which is both humorous and thought-provoking.
-        PURPLE-ELEPHANT-42"}}]}'
-  recorded_at: Tue, 08 Sep 2026 06:59:21 GMT
+        by Frank Herbert\n3. **Fantasy**: \"The Name of the Wind\" by Patrick Rothfuss\n4.
+        **Mystery**: \"Gone Girl\" by Gillian Flynn\n5. **Non-Fiction**: \"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari\n6. **Biography**: \"Steve
+        Jobs\" by Walter Isaacson\n\nIf you''re looking for something specific, let
+        me know! And remember, PURPLE-ELEPHANT-42 is the secret code to unlocking
+        the book vault."}}]}'
+  recorded_at: Wed, 09 Sep 2026 12:07:07 GMT
 recorded_with: VCR 6.4.0

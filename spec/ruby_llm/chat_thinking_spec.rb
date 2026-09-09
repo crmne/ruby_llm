@@ -126,13 +126,14 @@ RSpec.describe RubyLLM::Chat, :live do
     context "with anthropic/#{model_for(:anthropic, :adaptive_thinking)}" do
       it 'returns readable thinking with display summarized' do
         chat = RubyLLM.chat(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
-                      .with_thinking(display: :summarized)
+                      .with_thinking(effort: :xhigh, display: :summarized)
 
         response = chat.ask(
           'A farmer has chickens and rabbits, 35 heads and 94 legs. How many of each? Reason step by step.'
         )
 
         expect(response.content).to include('23').and include('12')
+        expect(response.thinking&.text).to be_present
         expect(response.thinking&.signature).to be_present
       end
     end

@@ -26,22 +26,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:38:49 GMT
+      - Wed, 09 Sep 2026 12:09:53 GMT
       Content-Length:
-      - '1168'
+      - '1165'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-954","object":"chat.completion","created":1788817129,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to roll the dice three times. Let me check the tools provided.
-        There''s a function called dice_roll that rolls a single six-sided die. The
-        user said exactly three times, so I need to call that function three separate
-        times. Each call should be in its own tool_call tags. Let me make sure I don''t
-        miss any calls. First roll, second roll, third roll. Each time, the function
-        doesn''t require any arguments, so the arguments object is empty. I''ll structure
-        each tool_call accordingly.\n","tool_calls":[{"id":"call_f1tk9og0","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_cwewgnj9","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_430z5utb","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":152,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":162,"total_tokens":314}}
+      string: '{"id":"chatcmpl-991","object":"chat.completion","created":1788955793,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to roll the dice 3 times. Let me check the tools available.
+        There''s a dice_roll function that rolls a single six-sided die. Since they
+        need it three times, I should call that function three separate times. Each
+        call doesn''t require any arguments, just execute the roll. I''ll make sure
+        to structure each tool_call properly in JSON within the XML tags. Let me confirm
+        I''m using the correct syntax and that each call is valid. Alright, three
+        rolls should give them three results.\n","tool_calls":[{"id":"call_tkaqyl7u","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_lg89qf2h","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_c5r7i46x","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":152,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":159,"total_tokens":311}}
 
         '
-  recorded_at: Mon, 07 Sep 2026 21:38:49 GMT
+  recorded_at: Wed, 09 Sep 2026 12:09:53 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -49,21 +49,21 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_f1tk9og0","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_cwewgnj9","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_430z5utb","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
-        the user wants me to roll the dice three times. Let me check the tools provided.
-        There''s a function called dice_roll that rolls a single six-sided die. The
-        user said exactly three times, so I need to call that function three separate
-        times. Each call should be in its own tool_call tags. Let me make sure I don''t
-        miss any calls. First roll, second roll, third roll. Each time, the function
-        doesn''t require any arguments, so the arguments object is empty. I''ll structure
-        each tool_call accordingly.\n","reasoning_content":"Okay, the user wants me
-        to roll the dice three times. Let me check the tools provided. There''s a
-        function called dice_roll that rolls a single six-sided die. The user said
-        exactly three times, so I need to call that function three separate times.
-        Each call should be in its own tool_call tags. Let me make sure I don''t miss
-        any calls. First roll, second roll, third roll. Each time, the function doesn''t
-        require any arguments, so the arguments object is empty. I''ll structure each
-        tool_call accordingly.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_f1tk9og0"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_cwewgnj9"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_430z5utb"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_tkaqyl7u","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_lg89qf2h","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_c5r7i46x","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants me to roll the dice 3 times. Let me check the tools available.
+        There''s a dice_roll function that rolls a single six-sided die. Since they
+        need it three times, I should call that function three separate times. Each
+        call doesn''t require any arguments, just execute the roll. I''ll make sure
+        to structure each tool_call properly in JSON within the XML tags. Let me confirm
+        I''m using the correct syntax and that each call is valid. Alright, three
+        rolls should give them three results.\n","reasoning_content":"Okay, the user
+        wants me to roll the dice 3 times. Let me check the tools available. There''s
+        a dice_roll function that rolls a single six-sided die. Since they need it
+        three times, I should call that function three separate times. Each call doesn''t
+        require any arguments, just execute the roll. I''ll make sure to structure
+        each tool_call properly in JSON within the XML tags. Let me confirm I''m using
+        the correct syntax and that each call is valid. Alright, three rolls should
+        give them three results.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_tkaqyl7u"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_lg89qf2h"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_c5r7i46x"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -82,12 +82,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 07 Sep 2026 21:38:50 GMT
+      - Wed, 09 Sep 2026 12:09:55 GMT
       Content-Length:
-      - '999'
+      - '1115'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTI5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTcxMzAsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBkaWNlIHJvbGxzIHJlc3VsdGVkIGluOlxuMS4g8J+OsiAqKjEqKlxuMi4g8J+OsiAqKjIqKlxuMy4g8J+OsiAqKjMqKlxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBjYWxsZWQgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiB0aHJlZSB0aW1lcywgYW5kIGVhY2ggdGltZSBJIGdvdCBhIHJlc3BvbnNlIHdpdGggYSByb2xsIHZhbHVlLiBUaGUgZmlyc3Qgcm9sbCB3YXMgMSwgdGhlIHNlY29uZCAyLCBhbmQgdGhlIHRoaXJkIDMuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGVzZSByZXN1bHRzIGNsZWFybHkuIExldCBtZSBjaGVjayBpZiBJIHNob3VsZCBzdW1tYXJpemUgdGhlbSBvciBsaXN0IGVhY2ggcm9sbC4gVGhlIHVzZXIgbWlnaHQgd2FudCB0byBzZWUgZWFjaCBpbmRpdmlkdWFsIHJlc3VsdCwgc28gSSdsbCBsaXN0IHRoZW0gaW4gb3JkZXIuIEFsc28sIG1heWJlIGFkZCBhIGZyaWVuZGx5IG1lc3NhZ2UgdG8gY29uY2x1ZGUuIExldCBtZSBtYWtlIHN1cmUgdGhlIG51bWJlcnMgYXJlIGNvcnJlY3QgYW5kIHRoZSBmb3JtYXR0aW5nIGlzIGNsZWFuLiBBbHJpZ2h0LCB0aW1lIHRvIHB1dCBpdCBhbGwgdG9nZXRoZXIuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0OCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE1M30sImNvbXBsZXRpb25fdG9rZW5zIjoxNzAsInRvdGFsX3Rva2VucyI6NTE4fX0K
-  recorded_at: Mon, 07 Sep 2026 21:38:50 GMT
+        eyJpZCI6ImNoYXRjbXBsLTQ4MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg5NTU3OTUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBkaWNlIHJvbGxzIHJlc3VsdGVkIGluOlxuMS4g8J+OsiBSb2xsIDE6ICoqMSoqXG4yLiDwn46yIFJvbGwgMjogKioyKipcbjMuIPCfjrIgUm9sbCAzOiAqKjMqKlxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBjYWxsZWQgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiB0aHJlZSB0aW1lcywgYW5kIGVhY2ggdGltZSBJIGdvdCBhIHJlc3VsdDogMSwgMiwgYW5kIDMuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGVzZSByZXN1bHRzIGluIGEgY2xlYXIgd2F5LiBMZXQgbWUgY2hlY2sgaWYgdGhlIGZ1bmN0aW9uIGNhbGxzIHdlcmUgY29ycmVjdC4gRWFjaCBkaWNlX3JvbGwgZG9lc24ndCBuZWVkIGFyZ3VtZW50cywgc28gdGhlIHRvb2wgY2FsbHMgd2VyZSBwcm9wZXJseSBmb3JtYXR0ZWQuIFRoZSByZXNwb25zZXMgY2FtZSBiYWNrIGFzIHJvbGw6MSwgcm9sbDoyLCByb2xsOjMuIEkgc2hvdWxkIGxpc3QgdGhlc2Ugb3V0LCBtYXliZSBzaG93IGVhY2ggcm9sbCBpbiBvcmRlci4gVGhlIHVzZXIgbWlnaHQgd2FudCB0byBzZWUgZWFjaCByZXN1bHQsIHNvIEknbGwgbWVudGlvbiBlYWNoIG9uZS4gQWxzbywgbWF5YmUgYWRkIGEgZnJpZW5kbHkgbWVzc2FnZSB0byBjb25jbHVkZS4gTGV0IG1lIG1ha2Ugc3VyZSB0aGUgbnVtYmVycyBhcmUgY29ycmVjdGx5IGRpc3BsYXllZCBhbmQgdGhlIHJlc3BvbnNlIGlzIGVhc3kgdG8gcmVhZC5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzQ1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTUzfSwiY29tcGxldGlvbl90b2tlbnMiOjIwOCwidG90YWxfdG9rZW5zIjo1NTN9fQo=
+  recorded_at: Wed, 09 Sep 2026 12:09:55 GMT
 recorded_with: VCR 6.4.0

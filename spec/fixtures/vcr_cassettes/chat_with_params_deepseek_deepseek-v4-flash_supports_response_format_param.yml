@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 07 Sep 2026 20:52:08 GMT
+      - Wed, 09 Sep 2026 12:15:33 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8797c6e6ec08ab2402c4fe1c93f7dd31
+      - 1341da9254407d16496e448e030b26d2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,16 +46,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 eeeb5087a36839b2299b9c53f96feb8e.cloudfront.net (CloudFront)
+      - 1.1 192214f2b714ecde75ddd74c51389aaa.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 7fHwiu6LpZuR5kERMb-M-031_bhUjg2SLYTfGGiyZuGjN83ySMNrfA==
+      - cwCG6PHDrMNzNql_Q8Oq23KEL_fI6JSxP9hmdrMzEQTfWdoIqvUs6w==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2f580bb8-0be2-4d84-8d22-66010b370673","object":"chat.completion","created":1788814328,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
-        8}","reasoning_content":"We need to answer: \"What is the square root of 64?\"
-        The square root of 64 is 8. We need to output JSON with key \"result\". So
-        {\"result\": 8}. Ensure it''s valid JSON."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":123,"completion_tokens":55,"total_tokens":178,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":48},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":123},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
-  recorded_at: Mon, 07 Sep 2026 20:52:09 GMT
+      string: '{"id":"bc872a9e-5482-45aa-9198-482e02bf9af3","object":"chat.completion","created":1788956133,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+        8}","reasoning_content":"We need to answer the question: \"What is the square
+        root of 64?\" with a JSON object with key \"result\". The square root of 64
+        is 8. So output {\"result\": 8}. Ensure valid JSON."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":123,"completion_tokens":55,"total_tokens":178,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":48},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":123},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Wed, 09 Sep 2026 12:15:34 GMT
 recorded_with: VCR 6.4.0

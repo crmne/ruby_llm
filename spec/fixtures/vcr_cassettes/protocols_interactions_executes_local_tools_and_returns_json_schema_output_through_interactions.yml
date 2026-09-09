@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 20:55:14 GMT
+      - Wed, 09 Sep 2026 12:16:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,22 +41,22 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=972
+      - gfet4t7; dur=2102
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"requires_action","usage":{"total_tokens":133,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":49,"raw_prompt_token":156,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":49}]}]},"created":"2026-09-07T20:55:14Z","updated":"2026-09-07T20:55:14Z","service_tier":"standard","steps":[{"signature":"ErICCq8CARFNMg/JRYy5q8Po6wEdP/fPh0nyM8LKiZEGPpw3tWnFGrIhvvcouue8GyMG5x0zLw3IphFx4NJS9kr6rzi2MlbVgcp0GgU0yrwpgRr7h61OPpTgu0La8qP7OuJS7IQMbl/+II4ynlUggPQvwDvuenINZ+5I1LTjf4fqDIGBjx9LLCpMUf1gPyf+SosHel5oIIWeO/VBgTPpVrl1KscdczWmcdkxVKxU6de+LdGXEdBKBDVEKkyKhyYjFi7Vl/k1XT39/HHy6cU2oQOybk47YAkzUStfUxGHQPknWWYTU6FjF7f9ACHB8rqSZHIwkGFs4CivOX+gOvql3iRMM1PyMnK3JC3HLzXFwXnq3+uAMBNsoCq1NnFJ++Ex2cFtqVsSED27KVeaSYqj3yNpwD2F","type":"thought"},{"id":"call_336848","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}}],"object":"interaction","model":"gemini-3.8-flash"}'
-  recorded_at: Mon, 07 Sep 2026 20:55:14 GMT
+      string: '{"status":"requires_action","usage":{"total_tokens":119,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":35,"raw_prompt_token":156,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":35}]}]},"created":"2026-09-09T12:16:46Z","updated":"2026-09-09T12:16:46Z","service_tier":"standard","steps":[{"signature":"Ev0BCvoBARFNMg+YzCc7of6RInfEtHzftXJkOJosVWdGCL+m10jZHQjX1BWQiVdWeUJfML9mKjRIT+Pw5HauTlPGXHYrLPU6hVh1zMUGObDvsGMJ1ogqr5STOMMuE/wiTxceqc7uyXo0e8i45kSW+5N62xQ4DYQoLqCQhHslT5JZYN8mBcL22RShbD4xSqDOlQTZyUjNzt21rUkfCrcRlSOldtJWztIyKwfB9qv4WJiAIK3eO9gDq0TItdNLBrya2jb6kDMIIxo9t4S9TppXbUqknDwRAYTPy5BDsLL8yQ0QGKHGgkRppdY2cHEuBqBZFvYF46HLncJtH3qOuG3PRg==","type":"thought"},{"id":"call_1216875","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}}],"object":"interaction","model":"gemini-3.8-flash"}'
+  recorded_at: Wed, 09 Sep 2026 12:16:46 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/interactions
     body:
       encoding: UTF-8
       string: '{"model":"gemini-3.8-flash","input":[{"type":"user_input","content":[{"type":"text","text":"Use
-        multiply to calculate 13 times 7 and return the answer."}]},{"signature":"ErICCq8CARFNMg/JRYy5q8Po6wEdP/fPh0nyM8LKiZEGPpw3tWnFGrIhvvcouue8GyMG5x0zLw3IphFx4NJS9kr6rzi2MlbVgcp0GgU0yrwpgRr7h61OPpTgu0La8qP7OuJS7IQMbl/+II4ynlUggPQvwDvuenINZ+5I1LTjf4fqDIGBjx9LLCpMUf1gPyf+SosHel5oIIWeO/VBgTPpVrl1KscdczWmcdkxVKxU6de+LdGXEdBKBDVEKkyKhyYjFi7Vl/k1XT39/HHy6cU2oQOybk47YAkzUStfUxGHQPknWWYTU6FjF7f9ACHB8rqSZHIwkGFs4CivOX+gOvql3iRMM1PyMnK3JC3HLzXFwXnq3+uAMBNsoCq1NnFJ++Ex2cFtqVsSED27KVeaSYqj3yNpwD2F","type":"thought"},{"id":"call_336848","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}},{"type":"function_result","call_id":"call_336848","name":"multiply","result":[{"type":"text","text":"91"}]}],"stream":false,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
+        multiply to calculate 13 times 7 and return the answer."}]},{"signature":"Ev0BCvoBARFNMg+YzCc7of6RInfEtHzftXJkOJosVWdGCL+m10jZHQjX1BWQiVdWeUJfML9mKjRIT+Pw5HauTlPGXHYrLPU6hVh1zMUGObDvsGMJ1ogqr5STOMMuE/wiTxceqc7uyXo0e8i45kSW+5N62xQ4DYQoLqCQhHslT5JZYN8mBcL22RShbD4xSqDOlQTZyUjNzt21rUkfCrcRlSOldtJWztIyKwfB9qv4WJiAIK3eO9gDq0TItdNLBrya2jb6kDMIIxo9t4S9TppXbUqknDwRAYTPy5BDsLL8yQ0QGKHGgkRppdY2cHEuBqBZFvYF46HLncJtH3qOuG3PRg==","type":"thought"},{"id":"call_1216875","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}},{"type":"function_result","call_id":"call_1216875","name":"multiply","result":[{"type":"text","text":"91"}]}],"stream":false,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
         two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}],"response_format":{"type":"text","mime_type":"application/json","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"]}}}'
     headers:
       User-Agent:
@@ -81,7 +81,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 07 Sep 2026 20:55:16 GMT
+      - Wed, 09 Sep 2026 12:16:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -91,14 +91,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1247
+      - gfet4t7; dur=1386
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"completed","usage":{"total_tokens":186,"total_input_tokens":141,"input_tokens_by_modality":[{"modality":"text","tokens":141}],"total_cached_tokens":0,"total_output_tokens":10,"total_tool_use_tokens":0,"total_thought_tokens":35,"raw_prompt_token":243,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":243}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":35}]}]},"created":"2026-09-07T20:55:16Z","updated":"2026-09-07T20:55:16Z","service_tier":"standard","steps":[{"signature":"EuABCt0BARFNMg8utdtKkQzwXdjHdSUO1mvd57ft833uEfhf5r5lSiTEeei1R9p7weNb9oI6kuaYetc9wFxT2w/AXBSG5ZROf3nW0L0eTSLYmJAN+hzyR2Qats8Xrfe6AZhA6AeKrmOFNMP6T8oorflZSmoRI7tjsNhLcrHXChFqkhNCCMkIT4105fNW/cYyFDja6aSz0FZW5MMpBisg2DkMnRENdlQsGInPwUJ47KDYLAOpnaD19XJLlahuh3FmOfjJRPQml6Yfl2621b8HDscrcbQ71JeHeZPNklKKJ/NaJHM=","type":"thought"},{"content":[{"text":"{\n  \"answer\":
+      string: '{"status":"completed","usage":{"total_tokens":164,"total_input_tokens":127,"input_tokens_by_modality":[{"modality":"text","tokens":127}],"total_cached_tokens":0,"total_output_tokens":10,"total_tool_use_tokens":0,"total_thought_tokens":27,"raw_prompt_token":229,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":229}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":27}]}]},"created":"2026-09-09T12:16:47Z","updated":"2026-09-09T12:16:47Z","service_tier":"standard","steps":[{"signature":"Es0BCsoBARFNMg8VShVRHEcdtZYZKkB5252h9O0lPRqlhJLpyE+Ri05Jp4zK4j41JsxSBJcuEVnDtZYCdVa9rpRKqItWzMu7WpY3W3mSKPGbFrMAeFxcXhko3wr/xkfYfMnEMl6Ya5g912MOp+3SID0BqjDaBnTd+nlsGg/2CUyjf7k7oEH4/9/G+NYgkrlstyi383GkXv49xXHB0c9odzgLtuo5STUxUY2VEFy/ttmWpeQAaEjpcauqD1x95e11S7b4LinfOD1lDt1xzEGVkg==","type":"thought"},{"content":[{"text":"{\n  \"answer\":
         91\n}","type":"text"}],"type":"model_output"}],"object":"interaction","model":"gemini-3.8-flash"}'
-  recorded_at: Mon, 07 Sep 2026 20:55:16 GMT
+  recorded_at: Wed, 09 Sep 2026 12:16:47 GMT
 recorded_with: VCR 6.4.0
