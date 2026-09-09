@@ -309,6 +309,15 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
   end
 
   describe '#format_thinking' do
+    it 'ignores native replay data from another protocol' do
+      message = RubyLLM::Message.new(
+        role: :assistant, content: 'done',
+        raw_reasoning: { 'anthropic' => [{ 'type' => 'redacted_thinking', 'data' => 'encrypted' }] }
+      )
+
+      expect(provider.send(:format_thinking, message)).to eq({})
+    end
+
     it 'is empty for a user message or one without thinking' do
       expect(provider.send(:format_thinking, RubyLLM::Message.new(role: :user, content: 'hi'))).to eq({})
       expect(provider.send(:format_thinking, RubyLLM::Message.new(role: :assistant, content: 'hi'))).to eq({})

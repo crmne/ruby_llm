@@ -108,12 +108,13 @@ module RubyLLM
         end
 
         def stream_end_fields(data)
-          return {} unless data['type'] == 'message_stop' && @saw_server_block
+          return {} unless data['type'] == 'message_stop'
 
-          blocks = @stream_blocks.sort.map { |_index, block| block }
+          blocks = (@stream_blocks || {}).sort.map { |_index, block| block }
           {
             server_tool_calls: extract_server_tool_calls(blocks),
-            raw_content: blocks
+            raw_content: @saw_server_block ? blocks : nil,
+            raw_reasoning: parse_thinking_blocks(blocks)
           }
         end
 

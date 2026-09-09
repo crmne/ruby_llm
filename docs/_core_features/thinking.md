@@ -50,6 +50,8 @@ response.thinking&.signature
 response.content
 ```
 
+`response.thinking.text` combines the visible thinking text. RubyLLM also keeps the individual signed and encrypted blocks for later turns. When you restore a conversation, keep the complete messages instead of rebuilding thinking from `text` and `signature` alone.
+
 Pass `effort`, `budget`, or both:
 
 ```ruby
@@ -115,6 +117,8 @@ response.tokens.thinking
 `tokens.thinking` reports reasoning work separately. `tokens.output` is already the billable output bucket, so do not add `tokens.thinking` to it when calculating costs. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
 
 Apps upgrading from 1.16 get the thinking columns from `bin/rails generate ruby_llm:upgrade`. See [Upgrading]({% link _reference/upgrading.md %}).
+
+The generated schema also preserves the complete thinking blocks when you reload a conversation. Upgrading cannot recover blocks that an older version already discarded.
 
 ## Provider Notes
 

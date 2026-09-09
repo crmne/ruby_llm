@@ -21,6 +21,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
                       attachments: attachments,
                       cache_until_here?: false,
                       thinking: nil,
+                      raw_reasoning: nil,
                       tool_calls: {
                         'tool_123' => instance_double(RubyLLM::ToolCall,
                                                       id: 'tool_123',

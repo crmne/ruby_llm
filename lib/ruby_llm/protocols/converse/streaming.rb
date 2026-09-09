@@ -18,6 +18,7 @@ module RubyLLM
         end
 
         def stream_response(payload, additional_headers = {}, &block)
+          @thinking_stream = ThinkingStream.new
           accumulator = RubyLLM::Protocol::StreamAccumulator.new
           decoder = event_stream_decoder
           body = JSON.generate(payload)
@@ -195,6 +196,7 @@ module RubyLLM
               text: extract_thinking_delta(event),
               signature: extract_thinking_signature(event)
             ),
+            raw_reasoning: streamed_thinking_blocks(event),
             tool_calls: extract_tool_calls(event),
             server_tool_calls: extract_server_tool_call_events(event),
             input_tokens: extract_input_tokens(metadata_usage, usage),
@@ -204,6 +206,12 @@ module RubyLLM
             thinking_tokens: extract_reasoning_tokens(metadata_usage, usage),
             finish_reason: extract_finish_reason(event)
           )
+        end
+
+        def streamed_thinking_blocks(event)
+          @thinking_stream ||= ThinkingStream.new
+          @thinking_stream.add(event)
+          @thinking_stream.raw_reasoning if event.key?('messageStop') || event.key?('stopReason')
         end
 
         def extract_finish_reason(event)

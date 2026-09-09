@@ -605,7 +605,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
-  describe '.prepend_thinking_block' do
+  describe '.prepend_thinking_blocks' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 
     it 'puts the stored thinking block first' do
@@ -613,7 +613,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       message = RubyLLM::Message.new(role: :assistant, content: 'hi',
                                      thinking: RubyLLM::Thinking.new(text: 'why'))
 
-      result = protocol.send(:prepend_thinking_block, blocks, message)
+      result = protocol.send(:prepend_thinking_blocks, blocks, message)
 
       expect(result.first[:type]).to eq('thinking')
     end
@@ -622,7 +622,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       blocks = [{ type: 'text', text: 'hi' }]
       message = RubyLLM::Message.new(role: :assistant, content: 'hi')
 
-      expect(protocol.send(:prepend_thinking_block, blocks, message)).to eq(blocks)
+      expect(protocol.send(:prepend_thinking_blocks, blocks, message)).to eq(blocks)
     end
   end
 

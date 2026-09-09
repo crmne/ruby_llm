@@ -80,7 +80,7 @@ module RubyLLM
 
         def format_thinking(msg)
           return {} unless msg.role == :assistant
-          return { reasoning_details: msg.raw_reasoning } if msg.raw_reasoning
+          return { reasoning_details: msg.raw_reasoning } if msg.raw_reasoning.is_a?(Array)
 
           thinking = msg.thinking
           return {} unless thinking

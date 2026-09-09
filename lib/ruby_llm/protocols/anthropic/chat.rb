@@ -18,6 +18,7 @@ module RubyLLM
         COMPACTION_BETA = 'compact-2026-01-12'
         COMPACTION_EDIT_TYPE = 'compact_20260112'
         COUNT_TOKENS_KEYS = %i[model messages system tools tool_choice thinking].freeze
+        THINKING_BLOCK_TYPES = %w[thinking redacted_thinking].freeze
 
         module_function
 
@@ -303,6 +304,11 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
+        def parse_thinking_blocks(blocks)
+          thinking = blocks.select { |block| THINKING_BLOCK_TYPES.include?(block['type']) }
+          { 'anthropic' => thinking } unless thinking.empty?
+        end
+
         def build_message(data, content:, citations:, thinking:, thinking_signature:, tool_use_blocks:, raw:,
                           server_tool_calls: [], raw_content: nil)
           usage = aggregate_usage(data['usage'])
@@ -316,6 +322,7 @@ module RubyLLM
             content: content,
             citations: citations,
             thinking: Thinking.build(text: thinking, signature: thinking_signature),
+            raw_reasoning: parse_thinking_blocks(data['content'] || []),
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             server_tool_calls: server_tool_calls,
             raw_content: raw_content,
@@ -357,12 +364,7 @@ module RubyLLM
         end
 
         def format_basic_message_with_thinking(msg, citations: false, caching: nil)
-          content_blocks = []
-
-          if msg.role == :assistant
-            thinking_block = build_thinking_block(msg.thinking)
-            content_blocks << thinking_block if thinking_block
-          end
+          content_blocks = msg.role == :assistant ? format_thinking_blocks(msg) : []
 
           append_formatted_content(content_blocks, msg, citations: citations)
           inject_cache_control(content_blocks, caching:) if cache_boundary?(msg, caching:)
@@ -374,7 +376,7 @@ module RubyLLM
         end
 
         def format_tool_call_with_thinking(msg, caching: nil)
-          content_blocks = prepend_thinking_block([], msg)
+          content_blocks = prepend_thinking_blocks([], msg)
           append_formatted_content(content_blocks, msg) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
@@ -393,11 +395,17 @@ module RubyLLM
           }
         end
 
-        def prepend_thinking_block(content_blocks, msg)
-          thinking_block = build_thinking_block(msg.thinking)
-          content_blocks.unshift(thinking_block) if thinking_block
+        def prepend_thinking_blocks(content_blocks, msg)
+          content_blocks.unshift(*format_thinking_blocks(msg))
 
           content_blocks
+        end
+
+        def format_thinking_blocks(msg)
+          blocks = msg.raw_reasoning['anthropic'] if msg.raw_reasoning.is_a?(Hash)
+          return Support::Utils.deep_dup(blocks) if blocks
+
+          [build_thinking_block(msg.thinking)].compact
         end
 
         def build_thinking_block(thinking)

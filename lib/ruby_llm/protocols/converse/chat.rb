@@ -117,6 +117,7 @@ module RubyLLM
             content: text_content,
             citations: citations,
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
+            raw_reasoning: parse_thinking_blocks(content_blocks),
             tool_calls: parse_tool_calls(content_blocks),
             server_tool_calls: extract_server_tool_calls(content_blocks),
             input_tokens: input_tokens(usage),
@@ -195,16 +196,20 @@ module RubyLLM
         end
 
         def format_structured_message_content(msg, citations: false)
-          blocks = []
-
-          thinking_block = format_thinking_block(msg.thinking)
-          blocks << thinking_block if msg.role == :assistant && thinking_block
+          blocks = msg.role == :assistant ? format_thinking_blocks(msg) : []
 
           blocks.concat(
             Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names, citations:)
           )
 
           blocks
+        end
+
+        def format_thinking_blocks(msg)
+          blocks = msg.raw_reasoning['converse'] if msg.raw_reasoning.is_a?(Hash)
+          return Support::Utils.deep_dup(blocks) if blocks
+
+          [format_thinking_block(msg.thinking)].compact
         end
 
         def format_tool_result_block(msg)
@@ -612,6 +617,11 @@ module RubyLLM
           end
 
           [text, signature]
+        end
+
+        def parse_thinking_blocks(content_blocks)
+          blocks = content_blocks.select { |block| block['reasoningContent'].is_a?(Hash) }
+          { 'converse' => blocks } unless blocks.empty?
         end
 
         def parse_reasoning_content_block(block)
