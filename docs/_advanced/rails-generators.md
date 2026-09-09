@@ -19,7 +19,7 @@ After reading this guide, you will know:
 *   How the generated chat UI renders messages, tool calls, and tool results.
 *   How to customize model names and set up ActiveStorage.
 
-RubyLLM's Rails generators take you from an empty app to a working chat in two commands. They write migrations, models, controllers, jobs, views, and a conventional directory layout so your team starts from one shared structure. This guide walks through each generator and the conventions the generated code relies on.
+RubyLLM's generators write models, migrations, controllers, jobs, and views into your application. Start with persistence, then add the chat UI or generate individual agents, tools, and schemas as you need them.
 
 ## Quick Setup with Generator
 
@@ -35,7 +35,7 @@ The generator:
 - Creates one migration for RubyLLM's internal model, tool-call, usage, and batch tables
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs ActiveStorage for file attachments
-- Creates an initializer with sensible defaults
+- Creates an initializer for provider configuration
 - Creates conventional AI app directories
 
 After running the generator:
@@ -45,7 +45,7 @@ bin/rails db:migrate
 bin/rails ruby_llm:load_models
 ```
 
-Your Rails app is now AI-ready!
+You can now create a persisted chat with `Chat.create!` and send a message with `chat.ask`.
 
 ### Install Generator Options
 
@@ -68,25 +68,34 @@ For most apps, keep the default behavior (install ActiveStorage) so file attachm
 
 ## Adding a Chat UI
 
-Want a ready-to-use chat interface? Run the chat UI generator:
+Run the chat UI generator to add controllers, views, and a background job:
 
 ```bash
 bin/rails generate ruby_llm:chat_ui
 ```
 
-This creates a complete chat interface with:
-- **Controllers**: Handles chat and message creation with background processing
-- **Views**: Modern UI with Turbo Streams for real-time updates
-- **Jobs**: Background job for processing AI responses without blocking
+The generator creates:
+
+- **Controllers**: Create chats and enqueue message processing
+- **Views**: Render messages and update them with Turbo Streams
+- **Jobs**: Request AI responses in the background
 - **Routes**: RESTful routes for chats and messages
 
-After running the generator, start your server and visit `http://localhost:3000/chats` to begin chatting!
+Start your server and visit `http://localhost:3000/chats`.
 
 The UI generator also supports custom model names:
 
 ```bash
 bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 ```
+
+## Upgrading an Existing Integration
+
+For an application on RubyLLM 1.16, use `ruby_llm:upgrade`. It generates preparation, backfill, and finish migrations. Generate one phase with `--phase prepare`, `--phase backfill`, or `--phase finish` when you need to schedule them separately. Generate `--phase cleanup` in a later deployment to remove legacy message columns.
+
+The default `--mode rename` renames the existing supporting tables. `--mode copy` retains them and generates compatibility files for a controlled return to 1.16. Use the same mode for every phase. Read the [copy-mode requirements and rollback limits]({% link _reference/upgrading.md %}#copy-mode) before choosing it.
+
+Keep affected activity paused until the upgrade and application-specific data conversion are complete. Review the [upgrade and recovery procedure]({% link _reference/upgrading.md %}#how-to-upgrade) before running these migrations.
 
 ## Conventional Directory Structure
 

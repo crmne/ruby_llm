@@ -29,55 +29,57 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '802'
+      - '1140'
       Date:
-      - Thu, 13 Aug 2026 10:11:37 GMT
+      - Mon, 07 Sep 2026 20:58:48 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-87724ecfe869772cda1450261abbb17c-46671f86b31af3e4-00
       X-Cloud-Trace-Context:
-      - 87724ecfe869772cda1450261abbb17c/5073058168647119844
+      - f22d58b3ed1f18afb9bdf6469aeb6c87/12842687849597923835
+      Traceparent:
+      - 00-f22d58b3ed1f18afb9bdf6469aeb6c87-b23a648e448271fb-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-934","object":"chat.completion","created":1786615897,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
-        asks \"What''s the best language to learn?\" This could be ambiguous: programming
-        language or spoken language. Likely they ask about programming language. Could
-        be ambiguous. The developer has provided a function best_language_to_learn
-        (no parameters) that gets the best language to learn. Likely they intend us
-        to call it. Use function best_language_to_learn.","tool_calls":[{"id":"call_jkt8yf4l","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":123,"completion_tokens":96,"total_tokens":219}}
-
-        '
-  recorded_at: Thu, 13 Aug 2026 10:11:37 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTQ2MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ3MjgsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIiLCJyZWFzb25pbmciOiJXZSBoYXZlIGEgdXNlciBhc2tpbmcgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgTGlrZWx5IHRoZXkgbWVhbiBwcm9ncmFtbWluZyBsYW5ndWFnZS4gQ291bGQgYmUgYW1iaWd1b3VzIOKAkyBjb3VsZCBiZSBzcG9rZW4gbGFuZ3VhZ2UuIFdlIG5lZWQgdG8gYXNrIGNsYXJpZnlpbmc/IFRoZSBxdWVzdGlvbiBpcyBhbWJpZ3VvdXMsIGJ1dCBvZnRlbiBjb250ZXh0OiBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBDb3VsZCBiZSBhIHByb2dyYW1taW5nIGxhbmd1YWdlLCBidXQgdXNlciBoYXNuJ3Qgc3BlY2lmaWVkLiBXZSBjb3VsZCBhc2sgY2xhcmlmeWluZzogQXJlIHlvdSBhc2tpbmcgYWJvdXQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugb3Igc3Bva2VuIGxhbmd1YWdlPyBUaGVuIGdpdmUgcmF0aW9uYWxlLlxuXG5CdXQgbWF5YmUgdGhlIHRvb2wgZnVuY3Rpb24gXCJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuXCIgcHJlc3VtYWJseSByZXR1cm5zIHNvbWV0aGluZy4gVXNlIHRoYXQgdG8gZmV0Y2ggdGhlIGJlc3QgbGFuZ3VhZ2U/IEl0J3MgZGVmaW5lZCBidXQgdW5rbm93biB3aGF0IHJldHVybnMuIE1heWJlIGl0J3MgYSBmdW5jdGlvbiB0byBnZXQgYmVzdCBsYW5ndWFnZS4gV2UgY2FuIGNhbGwgaXQuIFByb2JhYmx5IHJldHVybnMgc29tZSBzdWdnZXN0aW9uLiBMZXQncyBjYWxsIGl0LiIsInRvb2xfY2FsbHMiOlt7ImlkIjoiY2FsbF9heHlvcjlueCIsImluZGV4IjowLCJ0eXBlIjoiZnVuY3Rpb24iLCJmdW5jdGlvbiI6eyJuYW1lIjoiYmVzdF9sYW5ndWFnZV90b19sZWFybiIsImFyZ3VtZW50cyI6Int9In19XX0sImZpbmlzaF9yZWFzb24iOiJ0b29sX2NhbGxzIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMjMsImNvbXBsZXRpb25fdG9rZW5zIjoxNjEsInRvdGFsX3Rva2VucyI6Mjg0fX0K
+  recorded_at: Mon, 07 Sep 2026 20:58:48 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_jkt8yf4l","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"User
-        asks \"What''s the best language to learn?\" This could be ambiguous: programming
-        language or spoken language. Likely they ask about programming language. Could
-        be ambiguous. The developer has provided a function best_language_to_learn
-        (no parameters) that gets the best language to learn. Likely they intend us
-        to call it. Use function best_language_to_learn.","reasoning_content":"User
-        asks \"What''s the best language to learn?\" This could be ambiguous: programming
-        language or spoken language. Likely they ask about programming language. Could
-        be ambiguous. The developer has provided a function best_language_to_learn
-        (no parameters) that gets the best language to learn. Likely they intend us
-        to call it. Use function best_language_to_learn."},{"role":"tool","content":"Ruby","tool_call_id":"call_jkt8yf4l"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_axyor9nx","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"We
+        have a user asking \"What''s the best language to learn?\" Likely they mean
+        programming language. Could be ambiguous – could be spoken language. We need
+        to ask clarifying? The question is ambiguous, but often context: \"What''s
+        the best language to learn?\" Could be a programming language, but user hasn''t
+        specified. We could ask clarifying: Are you asking about programming language
+        or spoken language? Then give rationale.\n\nBut maybe the tool function \"best_language_to_learn\"
+        presumably returns something. Use that to fetch the best language? It''s defined
+        but unknown what returns. Maybe it''s a function to get best language. We
+        can call it. Probably returns some suggestion. Let''s call it.","reasoning_content":"We
+        have a user asking \"What''s the best language to learn?\" Likely they mean
+        programming language. Could be ambiguous – could be spoken language. We need
+        to ask clarifying? The question is ambiguous, but often context: \"What''s
+        the best language to learn?\" Could be a programming language, but user hasn''t
+        specified. We could ask clarifying: Are you asking about programming language
+        or spoken language? Then give rationale.\n\nBut maybe the tool function \"best_language_to_learn\"
+        presumably returns something. Use that to fetch the best language? It''s defined
+        but unknown what returns. Maybe it''s a function to get best language. We
+        can call it. Probably returns some suggestion. Let''s call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_axyor9nx"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -100,23 +102,23 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '602'
+      - '3277'
       Date:
-      - Thu, 13 Aug 2026 10:11:38 GMT
+      - Mon, 07 Sep 2026 20:58:51 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 3f546f1e4de29b812a7a6e851e57cf02/16494543695616689115
       Traceparent:
-      - 00-3f546f1e4de29b812a7a6e851e57cf02-e4e864196d6443db-00
+      - 00-12b6c2957e55e90c3f1c9c8babf10f35-6fd68e75865012d0-00
+      X-Cloud-Trace-Context:
+      - 12b6c2957e55e90c3f1c9c8babf10f35/8058785218641793744
       Via:
       - 1.1 google
       Alt-Svc:
@@ -124,6 +126,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg4Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc4NjYxNTg5OCwibW9kZWwiOiJncHQtb3NzOjEyMGIiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjb25zZW5zdXMgYW1vbmcgZGV2ZWxvcGVycyByaWdodCBub3cgcG9pbnRzIHRvICoqUnVieSoqIGFzIHRoZSB0b3AgY2hvaWNlLiBJdCBjb21iaW5lcyBhbiBlbGVnYW50LCBodW1hbuKAkXJlYWRhYmxlIHN5bnRheCB3aXRoIGEgcG93ZXJmdWwgZWNvc3lzdGVtIChlc3BlY2lhbGx5IFJhaWxzIGZvciB3ZWIgZGV2ZWxvcG1lbnQpLCBtYWtpbmcgaXQgZXNwZWNpYWxseSBhdHRyYWN0aXZlIGZvciBib3RoIGJlZ2lubmVycyBhbmQgc2Vhc29uZWQgcHJvZ3JhbW1lcnMgbG9va2luZyB0byBidWlsZCByb2J1c3QgYXBwbGljYXRpb25zIHF1aWNrbHkuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMzQsImNvbXBsZXRpb25fdG9rZW5zIjo1OCwidG90YWxfdG9rZW5zIjoyOTJ9fQo=
-  recorded_at: Thu, 13 Aug 2026 10:11:38 GMT
+        eyJpZCI6ImNoYXRjbXBsLTQ5OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ3MzEsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUg4oCcYmVzdOKAnSBsYW5ndWFnZSB0byBsZWFybiBkZXBlbmRzIG9uIHdoYXQgeW91IHdhbnQgdG8gZG8gd2l0aCBpdC4gSGVyZeKAmXMgYSBxdWljayBndWlkZSB0byBoZWxwIHlvdSBkZWNpZGU6XG5cbnwgR29hbCB8IFJlY29tbWVuZGVkIExhbmd1YWdlKHMpIHwgV2h5IEl04oCZcyBhIEdvb2QgRml0IHxcbnwtLS0tLS18LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfC0tLS0tLS0tLS0tLS0tLS0tLS0tLXxcbnwgKipXZWIgZGV2ZWxvcG1lbnQgKGZyb250ZW5kKSoqIHwgKipKYXZhU2NyaXB0KiogKG9yIFR5cGVTY3JpcHQpIHwgUnVucyBpbiBldmVyeSBicm93c2VyLCBodWdlIGVjb3N5c3RlbSwgZXNzZW50aWFsIGZvciBpbnRlcmFjdGl2ZSBVSS4gfFxufCAqKldlYiBkZXZlbG9wbWVudCAoYmFja2VuZCkqKiB8ICoqSmF2YVNjcmlwdC9Ob2RlLmpzKiosICoqUHl0aG9uKiosICoqUnVieSoqLCAqKkdvKiosICoqSmF2YSoqLCAqKkMjKiogfCBBbGwgaGF2ZSBzb2xpZCBmcmFtZXdvcmtzIChFeHByZXNzLCBEamFuZ28vRmxhc2ssIFJhaWxzLCBHaW4sIFNwcmluZywgQVNQLk5FVCkgYW5kIHN0cm9uZyBjb21tdW5pdHkgc3VwcG9ydC4gfFxufCAqKkRhdGEgc2NpZW5jZSAvIE1hY2hpbmUgbGVhcm5pbmcqKiB8ICoqUHl0aG9uKiogKG9yICoqUioqKSB8IFJpY2ggbGlicmFyaWVzIChwYW5kYXMsIE51bVB5LCBzY2lraXTigJFsZWFybiwgVGVuc29yRmxvdywgUHlUb3JjaCkgYW5kIGV4Y2VsbGVudCB0b29saW5nLiB8XG58ICoqTW9iaWxlIGFwcCBkZXZlbG9wbWVudCoqIHwgKipLb3RsaW4qKiAoQW5kcm9pZCksICoqU3dpZnQqKiAoaU9TKSwgKipGbHV0dGVyIChEYXJ0KSoqLCAqKlJlYWN0IE5hdGl2ZSAoSmF2YVNjcmlwdCkqKiB8IE5hdGl2ZSBwZXJmb3JtYW5jZSBhbmQgcGxhdGZvcm3igJFzcGVjaWZpYyBmZWF0dXJlcy4gfFxufCAqKlN5c3RlbXMgcHJvZ3JhbW1pbmcgLyBwZXJmb3JtYW5jZeKAkWNyaXRpY2FsIGFwcHMqKiB8ICoqUnVzdCoqIG9yICoqQysrKiogfCBNZW1vcnkgc2FmZXR5IChSdXN0KSBvciByYXcgc3BlZWQvY29udHJvbCAoQysrKS4gfFxufCAqKkdhbWUgZGV2ZWxvcG1lbnQqKiB8ICoqQyMqKiAoVW5pdHkpLCAqKkMrKyoqIChVbnJlYWwpLCAqKkdvZG90IChHRFNjcmlwdCkqKiB8IEluZHVzdHJ54oCRc3RhbmRhcmQgZW5naW5lcyBhbmQgdG9vbHMuIHxcbnwgKipBdXRvbWF0aW9uIFx1MDAyNiBzY3JpcHRpbmcqKiB8ICoqUHl0aG9uKiosICoqQmFzaCoqLCAqKlBvd2VyU2hlbGwqKiwgKipQZXJsKiogfCBRdWljayB0byB3cml0ZSwgZ3JlYXQgZm9yIGdsdWUgY29kZSBhbmQgRGV2T3BzIHRhc2tzLiB8XG58ICoqRW50ZXJwcmlzZSAvIGxhcmdl4oCRc2NhbGUgYXBwbGljYXRpb25zKiogfCAqKkphdmEqKiwgKipDIyoqLCAqKkdvKiogfCBNYXR1cmUgZWNvc3lzdGVtcywgc3Ryb25nIHR5cGluZywgYW5kIHJvYnVzdCB0b29saW5nLiB8XG58ICoqRnVuY3Rpb25hbCBwcm9ncmFtbWluZyBcdTAwMjYgY29uY3VycmVuY3kqKiB8ICoqRWxpeGlyKiosICoqQ2xvanVyZSoqLCAqKkhhc2tlbGwqKiwgKipTY2FsYSoqLCAqKkYjKiogfCBFbXBoYXNpemVzIGltbXV0YWJsZSBkYXRhIGFuZCBjb25jdXJyZW50IGRlc2lnbi4gfFxufCAqKkxlYXJuaW5nIGZ1bmRhbWVudGFscyAvIGZpcnN0IGxhbmd1YWdlKiogfCAqKlB5dGhvbioqIG9yICoqSmF2YVNjcmlwdCoqIHwgVmVyeSByZWFkYWJsZSBzeW50YXgsIG1hc3NpdmUgcmVzb3VyY2VzIGZvciBiZWdpbm5lcnMuIHxcblxuIyMjIEhvdyB0byBDaG9vc2VcblxuMS4gKipJZGVudGlmeSB5b3VyIHByaW1hcnkgZ29hbCoqIChlLmcuLCBidWlsZGluZyB3ZWJzaXRlcywgYW5hbHl6aW5nIGRhdGEsIGNyZWF0aW5nIGdhbWVzKS5cbjIuICoqQ29uc2lkZXIgam9iIG1hcmtldCBkZW1hbmQqKiBpbiB5b3VyIHJlZ2lvbiBvciB0aGUgZmllbGQgeW91IHdhbnQgdG8gZW50ZXIuICBcbiAgIC0gKlB5dGhvbiogYW5kICpKYXZhU2NyaXB0KiBjb25zaXN0ZW50bHkgcmFuayBoaWdoIHdvcmxkd2lkZS4gIFxuICAgLSAqUnVzdCogYW5kICpHbyogYXJlIGhvdCBpbiBjbG91ZCBpbmZyYXN0cnVjdHVyZSBhbmQgc3lzdGVtcyB3b3JrLiAgXG4gICAtICpLb3RsaW4qIGFuZCAqU3dpZnQqIGRvbWluYXRlIG1vYmlsZSBkZXZlbG9wbWVudC5cbjMuICoqVGhpbmsgYWJvdXQgY29tbXVuaXR5IGFuZCByZXNvdXJjZXMqKiDigJMgbGFuZ3VhZ2VzIHdpdGggbGFyZ2UsIGFjdGl2ZSBjb21tdW5pdGllcyBtYWtlIGl0IGVhc2llciB0byBmaW5kIHR1dG9yaWFscywgbGlicmFyaWVzLCBhbmQgaGVscCB3aGVuIHlvdeKAmXJlIHN0dWNrLlxuNC4gKipDaGVjayB0b29saW5nIGFuZCBlY29zeXN0ZW0qKiDigJMgZ29vZCBJREUgc3VwcG9ydCwgcGFja2FnZSBtYW5hZ2VycywgYW5kIGZyYW1ld29ya3MgY2FuIHNwZWVkIHVwIHByb2R1Y3Rpdml0eS5cbjUuICoqRnV0dXJl4oCRcHJvb2ZpbmcqKiDigJMgbGFuZ3VhZ2VzIHRoYXQgZW1waGFzaXplIHNhZmV0eSwgY29uY3VycmVuY3ksIGFuZCBzY2FsYWJpbGl0eSAoZS5nLiwgUnVzdCwgR28sIEtvdGxpbikgYXJlIGdhaW5pbmcgdHJhY3Rpb24gZm9yIHRoZSBuZXh0IGdlbmVyYXRpb24gb2Ygc29mdHdhcmUuXG5cbiMjIyBRdWljayBSZWNvbW1lbmRhdGlvblxuXG5JZiB5b3XigJlyZSBsb29raW5nIGZvciBhICoqdmVyc2F0aWxlLCBiZWdpbm5lcuKAkWZyaWVuZGx5IGxhbmd1YWdlIHRoYXQgb3BlbnMgbWFueSBkb29ycyoqLCAqKlB5dGhvbioqIGlzIG9mdGVuIHRoZSB0b3AgcGljay4gIFxuSWYgeW91ciBtYWluIGludGVyZXN0IGlzICoqYnVpbGRpbmcgaW50ZXJhY3RpdmUgd2ViIGV4cGVyaWVuY2VzKiosIHN0YXJ0IHdpdGggKipKYXZhU2NyaXB0L1R5cGVTY3JpcHQqKi4gIFxuXG5GZWVsIGZyZWUgdG8gc2hhcmUgbW9yZSBhYm91dCB3aGF0IHlvdSB3YW50IHRvIGFjaGlldmUsIGFuZCBJIGNhbiBuYXJyb3cgdGhlIGxpc3QgZG93biBldmVuIGZ1cnRoZXIhIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyOTksImNvbXBsZXRpb25fdG9rZW5zIjo3MDcsInRvdGFsX3Rva2VucyI6MTAwNn19Cg==
+  recorded_at: Mon, 07 Sep 2026 20:58:51 GMT
 recorded_with: VCR 6.4.0

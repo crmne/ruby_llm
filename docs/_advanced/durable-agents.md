@@ -22,9 +22,16 @@ After reading this guide, you will know:
 
 ## The Transcript Is the State
 
-Frameworks that suspend an agent usually hand you a run state to keep: a serialized blob you must store, present back, and never lose. RubyLLM has no such object. Every loop verb decides its next move by reading the persisted messages, and `run_tools` skips tool calls that already have results. The database you already have is the checkpoint format.
+A persisted conversation records which model responses and tool results have completed. Load it through the agent class in another process and continue:
 
-That is the whole trick. A [chat persisted with `acts_as_chat`]({% link _advanced/rails-persistence.md %}) can be loaded in another process, on another machine, after a crash or a deploy, and `complete` picks up exactly where the transcript says the conversation is. If a process dies after running one tool call of three, the next `complete` executes only the two remaining.
+```ruby
+chat = SupportAgent.find(chat_id)
+chat.complete
+```
+
+Each loop method reads the saved transcript to choose its next action. Tool calls with saved results are skipped. If a process stops before saving a result, that work may run again; see [At-Least-Once, Not Exactly-Once](#at-least-once-not-exactly-once).
+
+This guide assumes `SupportAgent` uses a chat model with [Rails persistence]({% link _advanced/rails-persistence.md %}).
 
 ## One Turn per Job
 
@@ -35,12 +42,12 @@ class AgentTurnJob < ApplicationJob
   def perform(chat_id)
     chat = SupportAgent.find(chat_id)
     chat.step
-    AgentTurnJob.perform_later(chat_id) unless chat.complete?
+    AgentTurnJob.perform_later(chat_id) unless chat.complete? || chat.awaiting_approval?
   end
 end
 ```
 
-Every job picks up the persisted transcript, makes one move, and re-enqueues. Nothing holds a connection across turns, a wall-clock budget is one counter away, and any worker can take the next move.
+Each job makes one move and enqueues the next unless the conversation is complete or waiting for approval. Any worker can load the saved transcript.
 
 ## Surviving Deploys with ActiveJob Continuations
 
@@ -53,7 +60,7 @@ class AgentRunJob < ApplicationJob
   def perform(chat_id)
     step :agent_loop do |job_step|
       chat = SupportAgent.find(chat_id)
-      until chat.complete?
+      until chat.complete? || chat.awaiting_approval?
         chat.step
         job_step.checkpoint!
       end
@@ -66,7 +73,7 @@ ActiveJob's `step` and the chat's `step` are unrelated methods. The job step wra
 
 ## Parking for a Human Decision
 
-A tool declared with [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval) parks the loop until someone decides, and durability is what makes that practical: the pending tool call is a row, not a suspended process. `complete` returns cleanly, the job finishes, and nothing waits in memory.
+A tool declared with [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval) pauses the loop until someone decides. The pending call is saved in the database, and `complete` returns so the job can finish.
 
 ```ruby
 class CompleteJob < ApplicationJob
@@ -84,7 +91,7 @@ class ApprovalsController < ApplicationController
 end
 ```
 
-The decision persists on the tool call record, so the next `complete` reads it from any process. A worker restart while the approval is pending finds the same undecided call and stays parked: one approval card, not two, even if the wait is measured in days. `chat.pending_approvals` returns the records to render as cards.
+The decision persists on the tool call. The next job reads it and continues the conversation. Use `chat.pending_approvals` to render the calls awaiting a decision, and authorize that decision through your application's permissions.
 
 ## Stopping from Anywhere
 

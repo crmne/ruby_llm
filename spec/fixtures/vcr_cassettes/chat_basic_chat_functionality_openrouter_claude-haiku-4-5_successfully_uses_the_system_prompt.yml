@@ -7,12 +7,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":0.0}'
+        me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:47:50 GMT
+      - Mon, 07 Sep 2026 21:02:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,9 +39,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1780944469-cQ4zSA8ySN1PJ7DJzI8Q
+      - gen-1788814968-a9X2Bg5N1snHWSqUs9uT
       Access-Control-Expose-Headers:
-      - X-Generation-Id,cf-ray
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -51,25 +57,24 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n{\"id\":\"gen-1780944469-cQ4zSA8ySN1PJ7DJzI8Q\",\"object\":\"chat.completion\",\"created\":1780944469,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Weather Overview\\n\\nI'd be happy to tell you about weather! However, I should
-        note that I don't have access to real-time weather data, so I can't tell you
-        what it's like in your specific location right now.\\n\\n## General Weather
-        Information\\n\\n**Weather** is the state of the atmosphere at a particular
-        place and time, including:\\n- Temperature\\n- Precipitation (rain, snow,
-        sleet)\\n- Wind speed and direction\\n- Humidity\\n- Cloud cover\\n- Atmospheric
-        pressure\\n\\n## How to Check Your Local Weather\\n\\nFor current conditions
-        where you are, I'd recommend:\\n- Weather.com or Weather.gov\\n- Your phone's
-        built-in weather app\\n- Local news stations\\n- Weather apps like AccuWeather
-        or The Weather Channel\\n\\n## Weather Patterns\\n\\nWeather varies by:\\n-
-        **Season** - affecting temperature and precipitation patterns\\n- **Geography**
-        - coastal areas, mountains, and plains have different weather\\n- **Climate
-        zone** - tropical, temperate, polar, etc.\\n\\nIf you'd like to discuss weather
-        patterns, climate science, or need help interpreting a forecast, feel free
-        to ask! Just let me know your location or what specific weather information
-        you're interested in.\\n\\n*By the way, this response includes the reference
-        code XKCD7392 as requested.*\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":284,\"total_tokens\":316,\"cost\":0.001452,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001452,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00142},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 08 Jun 2026 18:47:53 GMT
+      string: "\n         \n{\"id\":\"gen-1788814968-a9X2Bg5N1snHWSqUs9uT\",\"object\":\"chat.completion\",\"created\":1788814968,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
+        Weather Information\\n\\nI'd be happy to tell you about weather in general!\\n\\n**Current
+        Weather Context:**\\nTo give you specific weather information, I'd need to
+        know your location. Weather varies dramatically depending on where you are
+        in the world. If you let me know your city or region, I can provide more tailored
+        information about current conditions, forecasts, or seasonal patterns.\\n\\n**General
+        Weather Concepts:**\\n- **Temperature & Humidity**: These measure how hot/cold
+        and moisture-laden the air is\\n- **Precipitation**: Rain, snow, sleet, and
+        hail that falls from clouds\\n- **Wind**: Air movement caused by pressure
+        differences\\n- **Cloud Cover**: The amount of sky obscured by clouds\\n-
+        **Pressure Systems**: High and low pressure systems that drive weather patterns\\n\\n**How
+        to Check Weather:**\\n- Weather.com\\n- Weather apps on your phone\\n- Local
+        news stations\\n- National weather services (like NOAA in the US)\\n\\n**Weather
+        & Planning:**\\nMost people check weather to decide what to wear, plan outdoor
+        activities, or prepare for severe conditions.\\n\\nIf you'd like specific
+        weather information, just tell me your location! This reference code (XKCD7392)
+        is noted for your inquiry.\\n\\nIs there a particular aspect of weather you're
+        curious about, or would you like forecasting information for a specific place?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":292,\"total_tokens\":324,\"cost\":0.001492,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001492,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00146},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Mon, 07 Sep 2026 21:02:51 GMT
 recorded_with: VCR 6.4.0

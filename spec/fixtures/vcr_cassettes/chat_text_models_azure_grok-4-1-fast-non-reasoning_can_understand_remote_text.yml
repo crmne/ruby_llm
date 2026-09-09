@@ -29,41 +29,41 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Thu, 06 Aug 2026 00:46:59 GMT
+      - Mon, 07 Sep 2026 11:47:10 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6a73d983-9c6"
+      - W/"6a9ea43e-9c6"
       Expires:
-      - Wed, 19 Aug 2026 14:44:13 GMT
+      - Mon, 07 Sep 2026 21:02:09 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - E4A6:3D76A0:DD019:DE276:6A85BEE5
+      - 816C:15AB:43E3D27:4495830:6A9F23F9
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 19 Aug 2026 14:34:19 GMT
+      - Mon, 07 Sep 2026 20:52:16 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '5'
+      - '7'
       X-Served-By:
-      - cache-ber1080048-BER
+      - cache-ber1080056-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1787150059.351205,VS0,VE1
+      - S1788814337.580462,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - a01cded72d4b6e6e7c95efcf64971b9e84f30377
+      - 425fa34caacc7f4490f39c99db46beb8ba349fc4
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 19 Aug 2026 14:34:19 GMT
+  recorded_at: Mon, 07 Sep 2026 20:52:16 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -156,49 +156,88 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - application/json
+      Date:
+      - Mon, 07 Sep 2026 20:52:17 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - 02c5bbb9-07ed-475e-981e-aa2315384c25
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-4576279ac4214db00ab693ff3b289552-c990d76100030975-00
+      - 00-28b8445c271aa6d22797d7eb19675c81-46b71ed70028a032-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - a9202b54-63d2-4402-afc4-e489a8edca3b
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49304'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - a9202b54-63d2-4402-afc4-e489a8edca3b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:20 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"9e664cc7-d246-41d7-b7cd-4977b2aed1d5","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the Ruby programming language''s license file (COPYING or LICENSE equivalent).
-        It''s a permissive open-source license created by Yukihiro Matsumoto (Ruby''s
-        author), allowing:\n\n- Free redistribution and modification of source code.\n-
-        Distribution of binaries with source access instructions.\n- Inclusion in
-        other software (even commercial).\n- No warranty; provided \"AS IS\".\n\nKey
-        points:\n- Dual-licensable with 2-clause BSD (BSDL).\n- Modifications must
-        be made freely available or used internally.\n- Some files have separate terms
-        (see LEGAL file).\n- Scripts/libraries generated by Ruby aren''t automatically
-        copyrighted by it.\n\nRuby remains one of the most liberal FOSS licenses."},"finish_reason":"stop"}],"usage":{"prompt_tokens":524,"completion_tokens":132,"total_tokens":656,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":169,"audio_tokens":0,"text_tokens":524,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150059,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 19 Aug 2026 14:34:21 GMT
+      string: '{"id":"261d6c57-2c56-43ad-850d-b80ca333b833","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        is the **Ruby License** (also known as the Ruby BSDL or \"Matz''s License\"),
+        a permissive open-source license for the Ruby programming language, authored
+        by Yukihiro Matsumoto (Matz).\n\n### Key Points:\n- **Permissive terms**:
+        Allows free redistribution, modification, and commercial use of Ruby source
+        code, binaries, and derivatives.\n- **Requirements**:\n  - Keep original copyright
+        notices and disclaimers.\n  - For modifications/distributions, do **at least
+        one** of:\n    - Make mods publicly available (e.g., post to Usenet).\n    -
+        Limit modified use to internal corporate/org use.\n    - Use non-standard
+        names for binaries with pointers to original source.\n    - Arrange directly
+        with the author.\n  - Distribute binaries with source access instructions
+        or actual source.\n- **No warranty**: Provided \"AS IS\" with no guarantees.\n-
+        References the 2-clause BSD license (BSDL file) as an alternative, and a LEGAL
+        file for third-party components.\n\nThis license has enabled Ruby''s widespread
+        adoption (e.g., in Rails). It''s compatible with GPL and most other licenses."},"finish_reason":"stop"}],"usage":{"prompt_tokens":524,"completion_tokens":225,"total_tokens":749,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":169,"audio_tokens":0,"text_tokens":524,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1788814337,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 07 Sep 2026 20:52:19 GMT
 recorded_with: VCR 6.4.0

@@ -2,7 +2,7 @@
 layout: default
 title: Embeddings
 nav_order: 3
-description: Transform text into numerical vectors for semantic search, recommendations, and content similarity
+description: Create vectors from text, images, audio, video, and documents for search and similarity
 redirect_from:
   - /guides/embeddings
 ---
@@ -15,24 +15,20 @@ redirect_from:
 After reading this guide, you will know:
 
 *   How to generate embeddings for single or multiple texts.
+*   How to embed images, audio, video, and documents with multimodal models.
 *   How to choose specific embedding models.
 *   How to use the results, including calculating similarity.
-*   How to handle errors during embedding generation.
-*   Best practices for performance and large datasets.
 *   How to integrate embeddings in a Rails application.
 
 ## Basic Embedding Generation
 
-The simplest way to create an embedding is with the global `RubyLLM.embed` method:
+Turn text into a vector you can store or use for similarity search:
 
 ```ruby
 embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 
 vector = embedding.vectors
-puts "Vector dimension: #{vector.length}" # e.g., 1536 for {{ site.models.embedding_small }}
-
-puts "Model used: #{embedding.model}"
-puts "Input tokens: #{embedding.tokens.input}"
+# => [0.018, -0.027, ...]
 ```
 
 ## Embedding Multiple Texts
@@ -43,49 +39,23 @@ You can efficiently embed multiple texts in a single API call:
 texts = ["Ruby", "Python", "JavaScript"]
 embeddings = RubyLLM.embed(texts)
 
-puts "Number of vectors: #{embeddings.vectors.length}" # => 3
-puts "First vector dimensions: #{embeddings.vectors.first.length}"
-puts "Model used: #{embeddings.model}"
-puts "Total input tokens: #{embeddings.tokens.input}"
+embeddings.vectors.length # => 3
+texts.zip(embeddings.vectors)
 ```
 
 ## Choosing Models
 
-By default, RubyLLM uses OpenAI's `{{ site.models.embedding_small }}`, but you can specify a different one using the `model:` argument.
+Pass `model:` to choose an embedding model:
 
 ```ruby
-embedding_large = RubyLLM.embed(
-  "This is a test sentence",
-  model: "{{ site.models.embedding_large }}"
-)
-
-embedding_google = RubyLLM.embed(
-  "This is another test sentence",
-  model: "{{ site.models.embedding_google }}" # Google's model
-)
-
-# Use a model not in the registry (useful for custom endpoints)
-embedding_custom = RubyLLM.embed(
-  "Custom model test",
-  model: "my-custom-embedding-model",
-  provider: :openai,
-  assume_model_exists: true
-)
+embedding = RubyLLM.embed("Ruby frameworks", model: "{{ site.models.embedding_large }}")
 ```
 
-You can configure the default embedding model globally:
-
-```ruby
-RubyLLM.configure do |config|
-  config.default_embedding_model = "{{ site.models.embedding_large }}"
-end
-```
-
-Refer to the [Working with Models Guide]({% link _reference/models.md %}) for details on finding available embedding models and their capabilities, and to [Model Resolution]({% link _reference/model-resolution.md %}) for how `model:`, `provider:`, and `assume_model_exists:` resolve.
+Set `default_embedding_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. Use the [Models]({% link _reference/available-models.md %}) page to find embedding models, and pass `provider:` to select a hosted deployment explicitly.
 
 ## Choosing Dimensions
 
-Each embedding model has its own default output dimensions. For example, OpenAI's `{{ site.models.embedding_small }}` outputs 1536 dimensions by default, while `{{ site.models.embedding_large }}` outputs 3072 dimensions. RubyLLM allows you to specify these dimensions per request:
+For models with configurable output dimensions, pass `dimensions:`:
 
 ```ruby
 embedding = RubyLLM.embed(
@@ -95,18 +65,11 @@ embedding = RubyLLM.embed(
 )
 ```
 
-This is particularly useful when:
-- Working with vector databases that have specific dimension requirements
-- Ensuring consistent dimensionality across different requests
-- Optimizing storage and query performance in your vector database
-
-Not every model accepts `dimensions:`. RubyLLM sends the value you set, and a model that does not support it rejects the request. `mistral-embed`, for example, returns a 400. Leave `dimensions:` out for those models.
+Choose dimensions that match your database column. Smaller vectors use less storage; measure retrieval quality on your own data before changing an existing index.
 
 ## Task Types
 
-Some providers tune embeddings for a specific task, such as indexing a document versus matching a search query. Pass `task_type:` with a value in the provider's own vocabulary and RubyLLM places it on the right request field for you.
-
-Vertex AI and Gemini accept values like `RETRIEVAL_QUERY`, `RETRIEVAL_DOCUMENT`, `SEMANTIC_SIMILARITY`, and `CLASSIFICATION` with Gemini Embedding 001. On these providers you can also pass `title:` to label the document being embedded. Gemini Embedding 2 does not accept `task_type:` or `title:`. Put task instructions in the text instead.
+Some models distinguish search queries from the documents they search. Pass `task_type:` with a value the model accepts:
 
 ```ruby
 embedding = RubyLLM.embed(
@@ -118,24 +81,43 @@ embedding = RubyLLM.embed(
 )
 ```
 
-Cohere, on its own API and on Bedrock, maps `task_type:` to its `input_type` field, so pass values like `search_document`, `search_query`, `classification`, or `clustering`. `search_document` is the default. Cohere has no title concept, so `title:` is ignored there.
+Gemini Embedding 001 accepts `RETRIEVAL_QUERY` and `RETRIEVAL_DOCUMENT`, with an optional document `title:`. Cohere uses `search_query` and `search_document` (the default). Gemini Embedding 2 takes task instructions in the text instead of `task_type:` or `title:`.
 
-Cohere's `embed-v4.0` embeds text and images into one vector. Pass the images with `with:`:
+## Embedding Images and Other Media
+
+Use `with:` to embed an attachment alongside text:
 
 ```ruby
 embedding = RubyLLM.embed(
-  "a red gemstone on a white background",
-  model: "embed-v4.0",
-  provider: :cohere,
-  with: "gem.png"
+  "The Ruby logo",
+  model: "{{ site.models.embedding_openrouter }}",
+  provider: :openrouter,
+  with: "logo.png",
+  dimensions: 768
+)
+
+embedding.vectors # => [0.018, -0.027, ...]
+```
+
+You can embed video, audio, and PDFs with a model that accepts them:
+
+```ruby
+embedding = RubyLLM.embed(
+  "A product demonstration",
+  model: "{{ site.models.embedding_google }}",
+  provider: :vertexai,
+  with: "demo.mp4",
+  dimensions: 768
 )
 ```
 
-Providers that have no task concept, such as OpenAI, ignore both `task_type:` and `title:`.
+Pass `nil` as the text to embed only the attachment. Combine attachments with one text at a time. Vertex AI's Gemini Embedding 2 accepts one input per request, including text-only requests.
+
+Cohere Embed v3 accepts one image per request without text. RubyLLM selects the image input type when you pass `nil` and `with:`. Embed v4 can combine text and images. The same calls work on Cohere and Azure deployments; see [Azure configuration]({% link _getting_started/configuration-providers.md %}#azure-deployments).
 
 ## Provider Options
 
-Use `provider_options:` for request fields in the provider's own vocabulary that are not first-class RubyLLM options. RubyLLM merges them into the rendered request as-is. For example, Vertex AI accepts request-level `parameters:`:
+Use `provider_options:` for settings specific to one provider. For example, prevent Vertex AI from truncating long inputs:
 
 ```ruby
 embedding = RubyLLM.embed(
@@ -145,8 +127,6 @@ embedding = RubyLLM.embed(
   provider_options: { parameters: { autoTruncate: false } }
 )
 ```
-
-Keys you pass replace what RubyLLM rendered, so `provider_options:` can override any field RubyLLM sets, including the task type. Reach for it only when a field has no first-class keyword like `task_type:` or `title:`.
 
 ## Using Embedding Results
 
@@ -175,7 +155,7 @@ embedding = RubyLLM.embed("Ruby is a programmer's best friend", model: "bge-m3",
 embedding.sparse_vectors # => { 1037 => 0.25, 2003 => 0.5 }
 ```
 
-Sparse output is a de-facto extension rather than part of the OpenAI embeddings spec, so whether you get one depends on the model and the server hosting it. RubyLLM reads it from either `lexical_weights` or `sparse_embedding`, the two spellings in use. Where there is none, `sparse_vectors` is `nil`, which is what every hosted provider returns today.
+`sparse_vectors` is `nil` when the model or server does not return sparse output.
 
 ## Measuring Similarity
 
@@ -184,91 +164,52 @@ A primary use case for embeddings is measuring the semantic similarity between t
 ```ruby
 require 'matrix' # Ruby's built-in Vector class requires 'matrix'
 
-embedding1 = RubyLLM.embed("I love Ruby programming")
-embedding2 = RubyLLM.embed("Ruby is my favorite language")
-
-vector1 = Vector.elements(embedding1.vectors)
-vector2 = Vector.elements(embedding2.vectors)
+embedding = RubyLLM.embed(["I love Ruby programming", "Ruby is my favorite language"])
+vector1, vector2 = embedding.vectors.map { |values| Vector.elements(values) }
 
 # Calculate cosine similarity (value between -1 and 1, closer to 1 means more similar)
 similarity = vector1.inner_product(vector2) / (vector1.norm * vector2.norm)
 puts "Similarity: #{similarity.round(4)}" # => e.g., 0.9123
 ```
 
-## Error Handling
+## Storing Embeddings
 
-Embedding API calls can fail for various reasons. Handle errors gracefully:
-
-```ruby
-begin
-  embedding = RubyLLM.embed("Your text here")
-rescue RubyLLM::Error => e
-  puts "Embedding failed: #{e.message}"
-end
-```
-
-For comprehensive error handling patterns and retry strategies, see the [Error Handling Guide]({% link _advanced/error-handling.md %}).
-
-## Performance and Best Practices
-
-*   **Batching:** Always embed multiple texts in a single call when possible. `RubyLLM.embed(["text1", "text2"])` is much faster than calling `RubyLLM.embed` twice.
-*   **Caching/Persistence:** Embeddings are generally static for a given text and model. Store generated embeddings in your database or cache instead of regenerating them frequently.
-*   **Dimensionality:** Different models produce vectors of different lengths (dimensions). Ensure your storage and similarity calculation methods handle the correct dimensionality (e.g., `{{ site.models.embedding_small }}` uses 1536 dimensions, `{{ site.models.embedding_large }}` uses 3072).
-*   **Normalization:** Some vector databases and similarity algorithms perform better if vectors are normalized (scaled to have a length/magnitude of 1). Check the documentation for your specific use case or database.
+Store vectors for reuse, and use the same model and dimensions for documents and search queries. If you change either, regenerate the existing vectors. For large imports, see [Embedding Batches]({% link _advanced/batches.md %}#batching-embeddings).
 
 ## Rails Integration Example
 
-In a Rails application using PostgreSQL with the `pgvector` extension, you might store and search embeddings like this:
+With PostgreSQL, pgvector, and the `neighbor` gem configured, store vectors on your own records:
 
 ```ruby
-# Migration:
-# add_column :documents, :embedding, :vector, limit: 1536 # Match your model's dimensions
-
-# app/models/document.rb
 class Document < ApplicationRecord
-  has_neighbors :embedding # From the neighbor gem for pgvector
+  has_neighbors :embedding
 
-  # Automatically generate embedding before saving if content changed
   before_save :generate_embedding, if: :content_changed?
 
-  # Scope for nearest neighbor search
-  scope :search_by_similarity, ->(query_text, limit: 5) {
-    query_embedding = RubyLLM.embed(query_text).vectors
-    nearest_neighbors(:embedding, query_embedding, distance: :cosine).limit(limit)
-  }
+  def self.search(query)
+    vector = RubyLLM.embed(query).vectors
+    nearest_neighbors(:embedding, vector, distance: :cosine).limit(5)
+  end
 
   private
 
   def generate_embedding
-    return if content.blank?
-    puts "Generating embedding for Document #{id}..."
-    begin
-      embedding_result = RubyLLM.embed(content) # Uses default embedding model
-      self.embedding = embedding_result.vectors
-    rescue RubyLLM::Error => e
-      errors.add(:base, "Failed to generate embedding: #{e.message}")
-      # Prevent saving if embedding fails (optional, depending on requirements)
-      throw :abort
-    end
+    self.embedding = RubyLLM.embed(content).vectors
   end
 end
-
-# Document.create(title: "Intro to Ruby", content: "Ruby is a dynamic language...")
-# results = Document.search_by_similarity("What is Ruby?")
-# results.each { |doc| puts "- #{doc.title}" }
 ```
 
-> This Rails example assumes you have the `pgvector` extension enabled in PostgreSQL and are using a gem like `neighbor` for ActiveRecord integration.
-{: .note }
+```ruby
+Document.create!(title: "Ruby blocks", content: "A block is a piece of Ruby code...")
+Document.search("How do I pass behavior to a method?").pluck(:title)
+```
 
-This covers storing and searching embeddings. To turn that store into a retrieval-augmented chat - a retrieval tool the model calls, plus an answering agent that cites its sources - see [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}).
+The `embedding` vector column must match your model's dimensions. This example generates embeddings during save; use a job for imports that should run in the background. See [RAG]({% link _advanced/rag.md %}) for database setup and an agent that searches these records.
 
 ## Next Steps
-
-Now that you understand embeddings, you might want to explore:
 
 *   [Reranking]({% link _core_features/rerank.md %}) to order your candidates by relevance before you use them.
 *   [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) to ground answers in your own documents.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) for interactive conversations.
 *   [Using Tools]({% link _core_features/tools.md %}) to extend AI capabilities.
-*   [Error Handling]({% link _advanced/error-handling.md %}) for building robust applications.
+*   [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.

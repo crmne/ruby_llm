@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Mon, 07 Sep 2026 20:53:00 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 19 Aug 2026 14:34:34 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,10 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer"
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 19 Aug 2026 14:34:34 GMT
+  recorded_at: Mon, 07 Sep 2026 20:53:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:34:36 GMT
+      - Mon, 07 Sep 2026 20:53:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -114,7 +115,7 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.46163611412048339
+              "avgLogprobs": -0.37735509872436523
             }
           ],
           "usageMetadata": {
@@ -124,12 +125,12 @@ http_interactions:
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 19
-              },
-              {
                 "modality": "AUDIO",
                 "tokenCount": 100
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 19
               }
             ],
             "candidatesTokensDetails": [
@@ -141,8 +142,8 @@ http_interactions:
             "thoughtsTokenCount": 23
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-08-19T14:34:35.160860Z",
-          "responseId": "-76FatzoCcPs2fMPwdmR-A0"
+          "createTime": "2026-09-07T20:53:00.358559Z",
+          "responseId": "LCSfap_xFey7x_AP5eH0mAQ"
         }
-  recorded_at: Wed, 19 Aug 2026 14:34:36 GMT
+  recorded_at: Mon, 07 Sep 2026 20:53:01 GMT
 recorded_with: VCR 6.4.0

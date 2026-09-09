@@ -1,110 +1,140 @@
 name: Release
 
 on:
-  workflow_call:
+  release:
+    types: [published]
 
 permissions:
   contents: read
-  packages: write
+
+concurrency:
+  group: release-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
 
 jobs:
-  publish:
-    name: Build + Publish
+  validate:
+    name: Validate release
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      commit: ${{ steps.version.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+
+      - name: Verify release tag and version
+        id: version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(ruby -r ./lib/ruby_llm/version -e 'puts RubyLLM::VERSION')
+          if [ "$RELEASE_TAG" != "v$version" ]; then
+            echo "Release tag $RELEASE_TAG does not match gem version $version." >&2
+            exit 1
+          fi
+
+          commit=$(git rev-parse HEAD)
+          tag_commit=$(git rev-parse --verify "refs/tags/$RELEASE_TAG^{commit}")
+          if [ "$tag_commit" != "$commit" ]; then
+            echo "The release tag moved after this workflow was triggered." >&2
+            exit 1
+          fi
+          git merge-base --is-ancestor "$commit" origin/main
+
+          prerelease=$(ruby -rrubygems/version -e 'puts Gem::Version.new(ARGV.fetch(0)).prerelease?' "$version")
+          if [ "$prerelease" != "$RELEASE_PRERELEASE" ]; then
+            echo "The GitHub prerelease setting does not match gem version $version." >&2
+            exit 1
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+
+  gitleaks:
+    needs: [validate]
+    uses: ./.github/workflows/_gitleaks.yml
+
+  lint:
+    needs: [validate]
+    uses: ./.github/workflows/_lint.yml
+    with:
+      ruby-version: "4.0"
+      bundler-cache: true
+
+  test:
+    needs: [validate, gitleaks, lint]
+    uses: ./.github/workflows/_test-matrix.yml
+    with:
+      bundler-cache: true
+    secrets: inherit
+
+  publish:
+    name: Build and publish
+    needs: [validate, test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_DISABLE_SHARED_GEMS: "true"
-
+      GEM_VERSION: ${{ needs.validate.outputs.version }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.validate.outputs.commit }}
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0"
           bundler-cache: true
 
-      - name: Check if version needs publishing
-        id: check_version
-        run: |
-          VERSION_FILE="./lib/ruby_llm/version.rb"
-          VERSION=$(ruby -r $VERSION_FILE -e "puts RubyLLM::VERSION" 2>/dev/null)
-
-          if [ -z "$VERSION" ]; then
-            echo "Error: Could not extract VERSION from $VERSION_FILE" >&2
-            exit 1
-          fi
-          echo "Local version: $VERSION"
-
-          GEM_NAME="ruby_llm"
-          echo "Fetching published versions for '$GEM_NAME'..."
-
-          ALL_PUBLISHED_VERSIONS=$(( \
-            gem list ^${GEM_NAME}$ -r --all 2>/dev/null || true; \
-            gem list ^${GEM_NAME}$ -r --prerelease 2>/dev/null || true; \
-          ) | sed -n 's/.*(\(.*\)).*/\1/p' \
-            | tr ',' '\n' \
-            | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' \
-            | grep . \
-            | sort -u )
-
-          echo "Checking against published versions:"
-          if [ -n "$ALL_PUBLISHED_VERSIONS" ]; then
-              echo "$ALL_PUBLISHED_VERSIONS" | sed 's/^/  /'
-          else
-              echo "  (none found)"
-          fi
-
-          if echo "$ALL_PUBLISHED_VERSIONS" | grep -Fxq "$VERSION"; then
-            echo "Verdict: Version $VERSION already published."
-            echo "version_changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "Verdict: Version $VERSION is new."
-            echo "version_changed=true" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
-
       - name: Verify cassettes are fresh
-        if: steps.check_version.outputs.version_changed == 'true'
         run: bundle exec rake release:verify_cassettes
 
-      - name: Publish to GPR
-        if: steps.check_version.outputs.version_changed == 'true'
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:github: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
-          gem build *.gemspec
-          output=$(gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem 2>&1) || {
-            echo "$output"
-            if echo "$output" | grep -q "already been pushed"; then
-              echo "Version already exists, skipping"
-              exit 0
-            else
-              exit 1
-            fi
-          }
+      - name: Build gem
+        run: gem build ruby_llm.gemspec --output "ruby_llm-${GEM_VERSION}.gem"
+
+      - name: Publish to GitHub Packages
         env:
           GEM_HOST_API_KEY: "Bearer ${{ secrets.GITHUB_TOKEN }}"
           OWNER: ${{ github.repository_owner }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          output=$(gem push --host "https://rubygems.pkg.github.com/${OWNER}" "ruby_llm-${GEM_VERSION}.gem" 2>&1) || {
+            echo "$output"
+            if echo "$output" | grep -qi "already been pushed"; then
+              exit 0
+            fi
+            exit 1
+          }
+          echo "$output"
 
       - name: Publish to RubyGems
-        if: steps.check_version.outputs.version_changed == 'true'
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
-          gem build *.gemspec
-          output=$(gem push *.gem 2>&1) || {
-            echo "$output"
-            if echo "$output" | grep -q "Repushing of gem versions is not allowed"; then
-              echo "Version already exists, skipping"
-              exit 0
-            else
-              exit 1
-            fi
-          }
         env:
-          GEM_HOST_API_KEY: "${{ secrets.RUBYGEMS_AUTH_TOKEN }}"
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$GEM_HOST_API_KEY" ]; then
+            echo "RUBYGEMS_AUTH_TOKEN is not configured." >&2
+            exit 1
+          fi
+          output=$(gem push --host https://rubygems.org "ruby_llm-${GEM_VERSION}.gem" 2>&1) || {
+            echo "$output"
+            if echo "$output" | grep -qi "Repushing of gem versions is not allowed"; then
+              exit 0
+            fi
+            exit 1
+          }
+          echo "$output"

@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:38:35 GMT
+      - Mon, 07 Sep 2026 21:03:07 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -32,21 +32,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a75-add1-7609-95af-60e27421e7c1
+      - 01a07dae-916d-796e-9fbf-91b4c9085a66
       X-Kong-Request-Id:
-      - 01a01a75-add1-7609-95af-60e27421e7c1
+      - 01a07dae-916d-796e-9fbf-91b4c9085a66
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Envoy-Upstream-Service-Time:
-      - '173'
+      - '165'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '174'
+      - '166'
       X-Kong-Proxy-Latency:
-      - '28'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -62,50 +62,50 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"The"}]}]},"finish_reason":null}],"p":"abcdefghijklmno"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"The"}]}]},"finish_reason":null}],"p":"abcde"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" user is asking for"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrst"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" user is asking for"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrst"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" the product"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwx"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" the product"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghij"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" of 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" of 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" multiplied by 1"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmn"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" multiplied by 1"}],"closed":true}]},"finish_reason":null}],"p":"a"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"2. I know"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"2. I know"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" that 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" that 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmno"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" times 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" times 12"}],"closed":true}]},"finish_reason":null}],"p":"abc"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" is a basic"}],"closed":true}]},"finish_reason":null}],"p":"abcdefgh"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" is a basic"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234567"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" multiplication fact. Let"}],"closed":true}]},"finish_reason":null}],"p":"abcdef"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" multiplication fact. Let"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" me calculate it"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrst"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" me calculate it"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnop"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":":\n\n12 *"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":":\n\n12 *"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmn"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" 12"}],"closed":true}]},"finish_reason":null}],"p":"ab"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" = "}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" = "}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijk"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"144\n\n"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklm"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"144\n\n"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"So, the answer"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"So, the answer"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" is 14"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" is 14"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"4."}],"closed":true},{"type":"text","text":"1"}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuv"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"4."}],"closed":true},{"type":"text","text":"1"}]},"finish_reason":null}],"p":"abcdefghijklmnop"}
 
-        data: {"id":"7bfa9194c90e44c5a0efa6c6efa474cd","object":"chat.completion.chunk","created":1787150315,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"44"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"p":"abcdefghijklmnopqrs"}
+        data: {"id":"658947f17eff46178f42f4c28a97b539","object":"chat.completion.chunk","created":1788814987,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"44"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"p":"abcde"}
 
         data: [DONE]
 
-  recorded_at: Wed, 19 Aug 2026 14:38:35 GMT
+  recorded_at: Mon, 07 Sep 2026 21:03:08 GMT
 recorded_with: VCR 6.4.0
 ...

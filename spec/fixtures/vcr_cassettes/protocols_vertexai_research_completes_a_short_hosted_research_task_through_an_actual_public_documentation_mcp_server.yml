@@ -1,0 +1,572 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Mon, 07 Sep 2026 20:54:02 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 07 Sep 2026 20:54:02 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions
+    body:
+      encoding: UTF-8
+      string: '{"agent":"deep-research-preview-04-2026","input":[{"type":"text","text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions."}],"background":true,"stream":false,"tools":[{"type":"mcp_server","name":"microsoft_learn","url":"https://learn.microsoft.com/api/mcp","allowed_tools":[{"tools":["microsoft_docs_search"],"mode":"auto"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:03 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:03 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:03 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:03 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:07 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:07 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:10 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:10 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:14 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:14 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:18 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:18 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:21 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:21 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:25 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:25 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:28 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:28 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:32 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:32 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 07 Sep 2026 20:54:37 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChBhOGY1OTI3MWQ3ZmM1MDhiEAgaATAqBG1haW4","status":"completed","usage":{"total_tokens":40122,"total_input_tokens":38002,"input_tokens_by_modality":[{"modality":"text","tokens":38002}],"total_output_tokens":177,"output_tokens_by_modality":[{"modality":"text","tokens":177}],"total_thought_tokens":1943},"service_tier":"standard","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]},{"content":[{"text":"Azure
+        Functions is a serverless compute solution that allows you to build and run
+        event-driven blocks of code without explicitly provisioning or managing infrastructure
+        [cite: 1].","annotations":[{"start_index":169,"end_index":178,"title":"microsoft_docs_search
+        result","type":"url_citation"}],"type":"text"}],"type":"model_output"}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Mon, 07 Sep 2026 20:54:37 GMT
+recorded_with: VCR 6.4.0

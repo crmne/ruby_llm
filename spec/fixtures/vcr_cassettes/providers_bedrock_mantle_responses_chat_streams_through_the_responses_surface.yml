@@ -6,12 +6,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"openai.gpt-oss-20b","input":[{"role":"user","content":"Count
-        from 1 to 5."}],"stream":true,"store":false}'
+        from 1 to 5."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       X-Amz-Date:
-      - 20260819T143414Z
+      - 20260907T205345Z
       X-Amz-Content-Sha256:
-      - a64a008718243bad47a3a9e35e07c4ff88ee5c80f9e123ad1aa200754831d7fc
+      - cbf3696d10214f5c50a9bca4dcc815b609f32c3d2122a8724949d2e40ceee1fc
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:15 GMT
+      - Mon, 07 Sep 2026 20:53:45 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -49,8 +49,38 @@ http_interactions:
       Access-Control-Expose-Headers:
       - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        ZGF0YTogeyJyZXNwb25zZSI6eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY3JlYXRlZF9hdCI6MTc4NzE1MDA1NS4wLCJlcnJvciI6bnVsbCwiaWQiOiJyZXNwX3k1Zzdudzc3c3RibDNwdjNiZmx0cDdzZ25qYWY2dWZ1cDU1aXZsbTdvNGdscmU0N3U1amEiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWV0YWRhdGEiOm51bGwsIm1vZGVsIjoib3BlbmFpLmdwdC1vc3MtMjBiIiwib2JqZWN0IjoicmVzcG9uc2UiLCJvdXRwdXQiOltdLCJwYXJhbGxlbF90b29sX2NhbGxzIjp0cnVlLCJzZXJ2aWNlX3RpZXIiOiJhdXRvIiwic3RhdHVzIjoiaW5fcHJvZ3Jlc3MiLCJ0ZW1wZXJhdHVyZSI6MS4wLCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29scyI6W10sInRvcF9wIjoxLjAsInRydW5jYXRpb24iOiJkaXNhYmxlZCJ9LCJzZXF1ZW5jZV9udW1iZXIiOjAsInR5cGUiOiJyZXNwb25zZS5jcmVhdGVkIn0KCmRhdGE6IHsicmVzcG9uc2UiOnsiYmFja2dyb3VuZCI6ZmFsc2UsImNyZWF0ZWRfYXQiOjE3ODcxNTAwNTUuMCwiZXJyb3IiOm51bGwsImlkIjoicmVzcF95NWc3bnc3N3N0YmwzcHYzYmZsdHA3c2duamFmNnVmdXA1NWl2bG03bzRnbHJlNDd1NWphIiwiaW5jb21wbGV0ZV9kZXRhaWxzIjpudWxsLCJpbnN0cnVjdGlvbnMiOm51bGwsIm1ldGFkYXRhIjpudWxsLCJtb2RlbCI6Im9wZW5haS5ncHQtb3NzLTIwYiIsIm9iamVjdCI6InJlc3BvbnNlIiwib3V0cHV0IjpbXSwicGFyYWxsZWxfdG9vbF9jYWxscyI6dHJ1ZSwic2VydmljZV90aWVyIjoiYXV0byIsInN0YXR1cyI6ImluX3Byb2dyZXNzIiwidGVtcGVyYXR1cmUiOjEuMCwidG9vbF9jaG9pY2UiOiJhdXRvIiwidG9vbHMiOltdLCJ0b3BfcCI6MS4wLCJ0cnVuY2F0aW9uIjoiZGlzYWJsZWQifSwic2VxdWVuY2VfbnVtYmVyIjoxLCJ0eXBlIjoicmVzcG9uc2UuaW5fcHJvZ3Jlc3MifQoKZGF0YTogeyJpdGVtIjp7ImlkIjoibXNnX2JjZDUzZTg5ZDIyZWJjNzUiLCJzdGF0dXMiOiJpbl9wcm9ncmVzcyIsInN1bW1hcnkiOltdLCJ0eXBlIjoicmVhc29uaW5nIn0sIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjoyLCJ0eXBlIjoicmVzcG9uc2Uub3V0cHV0X2l0ZW0uYWRkZWQifQoKZGF0YTogeyJjb250ZW50X2luZGV4IjowLCJpdGVtX2lkIjoibXNnX2JjZDUzZTg5ZDIyZWJjNzUiLCJvdXRwdXRfaW5kZXgiOjAsInBhcnQiOnsidGV4dCI6IiIsInR5cGUiOiJyZWFzb25pbmdfdGV4dCJ9LCJzZXF1ZW5jZV9udW1iZXIiOjMsInR5cGUiOiJyZXNwb25zZS5yZWFzb25pbmdfcGFydC5hZGRlZCJ9CgpkYXRhOiB7ImNvbnRlbnRfaW5kZXgiOjAsImRlbHRhIjoiV2Ugc2ltcGx5IGNvdW50OiAxLCAyLCAzLCA0LCA1LiIsIml0ZW1faWQiOiJtc2dfYmNkNTNlODlkMjJlYmM3NSIsIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjo0LCJ0eXBlIjoicmVzcG9uc2UucmVhc29uaW5nX3RleHQuZGVsdGEifQoKZGF0YTogeyJjb250ZW50X2luZGV4IjowLCJpdGVtX2lkIjoibXNnX2JjZDUzZTg5ZDIyZWJjNzUiLCJvdXRwdXRfaW5kZXgiOjAsInNlcXVlbmNlX251bWJlciI6NSwidGV4dCI6IldlIHNpbXBseSBjb3VudDogMSwgMiwgMywgNCwgNS4iLCJ0eXBlIjoicmVzcG9uc2UucmVhc29uaW5nX3RleHQuZG9uZSJ9CgpkYXRhOiB7ImNvbnRlbnRfaW5kZXgiOjAsIml0ZW1faWQiOiJtc2dfYmNkNTNlODlkMjJlYmM3NSIsIm91dHB1dF9pbmRleCI6MCwicGFydCI6eyJ0ZXh0IjoiV2Ugc2ltcGx5IGNvdW50OiAxLCAyLCAzLCA0LCA1LiIsInR5cGUiOiJyZWFzb25pbmdfdGV4dCJ9LCJzZXF1ZW5jZV9udW1iZXIiOjYsInR5cGUiOiJyZXNwb25zZS5yZWFzb25pbmdfcGFydC5kb25lIn0KCmRhdGE6IHsiaXRlbSI6eyJjb250ZW50IjpbeyJ0ZXh0IjoiV2Ugc2ltcGx5IGNvdW50OiAxLCAyLCAzLCA0LCA1LiIsInR5cGUiOiJyZWFzb25pbmdfdGV4dCJ9XSwiaWQiOiJtc2dfYmNkNTNlODlkMjJlYmM3NSIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInN1bW1hcnkiOltdLCJ0eXBlIjoicmVhc29uaW5nIn0sIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjo3LCJ0eXBlIjoicmVzcG9uc2Uub3V0cHV0X2l0ZW0uZG9uZSJ9CgpkYXRhOiB7Iml0ZW0iOnsiY29udGVudCI6W10sImlkIjoibXNnX2JlNGUzNDExYTAyODU1YjgiLCJyb2xlIjoiYXNzaXN0YW50Iiwic3RhdHVzIjoiaW5fcHJvZ3Jlc3MiLCJ0eXBlIjoibWVzc2FnZSJ9LCJvdXRwdXRfaW5kZXgiOjEsInNlcXVlbmNlX251bWJlciI6OCwidHlwZSI6InJlc3BvbnNlLm91dHB1dF9pdGVtLmFkZGVkIn0KCmRhdGE6IHsiY29udGVudF9pbmRleCI6MSwiaXRlbV9pZCI6Im1zZ19iZTRlMzQxMWEwMjg1NWI4Iiwib3V0cHV0X2luZGV4IjoxLCJwYXJ0Ijp7ImFubm90YXRpb25zIjpbXSwibG9ncHJvYnMiOltdLCJ0ZXh0IjoiIiwidHlwZSI6Im91dHB1dF90ZXh0In0sInNlcXVlbmNlX251bWJlciI6OSwidHlwZSI6InJlc3BvbnNlLmNvbnRlbnRfcGFydC5hZGRlZCJ9CgpkYXRhOiB7ImNvbnRlbnRfaW5kZXgiOjEsImRlbHRhIjoiU3VyZSEgSGVyZeKAmXMgYSBxdWljayBjb3VudDpcblxuMSAgXG4yICBcbjMgIFxuNCAgXG41IiwiaXRlbV9pZCI6Im1zZ19iZTRlMzQxMWEwMjg1NWI4IiwibG9ncHJvYnMiOltdLCJvdXRwdXRfaW5kZXgiOjEsInNlcXVlbmNlX251bWJlciI6MTAsInR5cGUiOiJyZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YSJ9CgpkYXRhOiB7ImNvbnRlbnRfaW5kZXgiOjEsIml0ZW1faWQiOiJtc2dfYmU0ZTM0MTFhMDI4NTViOCIsImxvZ3Byb2JzIjpbXSwib3V0cHV0X2luZGV4IjoxLCJzZXF1ZW5jZV9udW1iZXIiOjExLCJ0ZXh0IjoiU3VyZSEgSGVyZeKAmXMgYSBxdWljayBjb3VudDpcblxuMSAgXG4yICBcbjMgIFxuNCAgXG41IiwidHlwZSI6InJlc3BvbnNlLm91dHB1dF90ZXh0LmRvbmUifQoKZGF0YTogeyJjb250ZW50X2luZGV4IjoxLCJpdGVtX2lkIjoibXNnX2JlNGUzNDExYTAyODU1YjgiLCJvdXRwdXRfaW5kZXgiOjEsInBhcnQiOnsiYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiU3VyZSEgSGVyZeKAmXMgYSBxdWljayBjb3VudDpcblxuMSAgXG4yICBcbjMgIFxuNCAgXG41IiwidHlwZSI6Im91dHB1dF90ZXh0In0sInNlcXVlbmNlX251bWJlciI6MTIsInR5cGUiOiJyZXNwb25zZS5jb250ZW50X3BhcnQuZG9uZSJ9CgpkYXRhOiB7Iml0ZW0iOnsiY29udGVudCI6W3siYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiU3VyZSEgSGVyZeKAmXMgYSBxdWljayBjb3VudDpcblxuMSAgXG4yICBcbjMgIFxuNCAgXG41IiwidHlwZSI6Im91dHB1dF90ZXh0In1dLCJpZCI6Im1zZ19iZTRlMzQxMWEwMjg1NWI4Iiwicm9sZSI6ImFzc2lzdGFudCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInR5cGUiOiJtZXNzYWdlIn0sIm91dHB1dF9pbmRleCI6MSwic2VxdWVuY2VfbnVtYmVyIjoxMywidHlwZSI6InJlc3BvbnNlLm91dHB1dF9pdGVtLmRvbmUifQoKZGF0YTogeyJyZXNwb25zZSI6eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY3JlYXRlZF9hdCI6MTc4NzE1MDA1NS4wLCJlcnJvciI6bnVsbCwiaWQiOiJyZXNwX3k1Zzdudzc3c3RibDNwdjNiZmx0cDdzZ25qYWY2dWZ1cDU1aXZsbTdvNGdscmU0N3U1amEiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWV0YWRhdGEiOm51bGwsIm1vZGVsIjoib3BlbmFpLmdwdC1vc3MtMjBiIiwib2JqZWN0IjoicmVzcG9uc2UiLCJvdXRwdXQiOlt7ImNvbnRlbnQiOlt7InRleHQiOiJXZSBzaW1wbHkgY291bnQ6IDEsIDIsIDMsIDQsIDUuIiwidHlwZSI6InJlYXNvbmluZ190ZXh0In1dLCJpZCI6Im1zZ19iY2Q1M2U4OWQyMmViYzc1Iiwic3RhdHVzIjoiY29tcGxldGVkIiwic3VtbWFyeSI6W10sInR5cGUiOiJyZWFzb25pbmcifSx7ImNvbnRlbnQiOlt7ImFubm90YXRpb25zIjpbXSwidGV4dCI6IlN1cmUhIEhlcmXigJlzIGEgcXVpY2sgY291bnQ6XG5cbjEgIFxuMiAgXG4zICBcbjQgIFxuNSIsInR5cGUiOiJvdXRwdXRfdGV4dCJ9XSwiaWQiOiJtc2dfYmU0ZTM0MTFhMDI4NTViOCIsInJvbGUiOiJhc3Npc3RhbnQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJ0eXBlIjoibWVzc2FnZSJ9XSwicGFyYWxsZWxfdG9vbF9jYWxscyI6dHJ1ZSwic2VydmljZV90aWVyIjoiYXV0byIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInRlbXBlcmF0dXJlIjoxLjAsInRvb2xfY2hvaWNlIjoiYXV0byIsInRvb2xzIjpbXSwidG9wX3AiOjEuMCwidHJ1bmNhdGlvbiI6ImRpc2FibGVkIiwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo3NSwiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjQ2LCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjB9LCJ0b3RhbF90b2tlbnMiOjEyMX19LCJzZXF1ZW5jZV9udW1iZXIiOjE0LCJ0eXBlIjoicmVzcG9uc2UuY29tcGxldGVkIn0KCg==
-  recorded_at: Wed, 19 Aug 2026 14:34:15 GMT
+      encoding: UTF-8
+      string: |+
+        data: {"response":{"background":false,"created_at":1788814425.0,"error":null,"id":"resp_i6qu4hy7v2g7cvowsf463av5fimosuo4waiapilkjzv4afvucrsa","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+
+        data: {"response":{"background":false,"created_at":1788814425.0,"error":null,"id":"resp_i6qu4hy7v2g7cvowsf463av5fimosuo4waiapilkjzv4afvucrsa","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+
+        data: {"item":{"id":"msg_b670c33c50baaccc","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+
+        data: {"content_index":0,"item_id":"msg_b670c33c50baaccc","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
+
+        data: {"content_index":0,"delta":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","item_id":"msg_b670c33c50baaccc","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
+
+        data: {"content_index":0,"item_id":"msg_b670c33c50baaccc","output_index":0,"sequence_number":5,"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"response.reasoning_text.done"}
+
+        data: {"content_index":0,"item_id":"msg_b670c33c50baaccc","output_index":0,"part":{"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"reasoning_text"},"sequence_number":6,"type":"response.reasoning_part.done"}
+
+        data: {"item":{"content":[{"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"reasoning_text"}],"id":"msg_b670c33c50baaccc","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":7,"type":"response.output_item.done"}
+
+        data: {"item":{"content":[],"id":"msg_a7557ed9ba6e5d20","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":8,"type":"response.output_item.added"}
+
+        data: {"content_index":1,"item_id":"msg_a7557ed9ba6e5d20","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":9,"type":"response.content_part.added"}
+
+        data: {"content_index":1,"delta":"1 2 3 4 5","item_id":"msg_a7557ed9ba6e5d20","logprobs":[],"output_index":1,"sequence_number":10,"type":"response.output_text.delta"}
+
+        data: {"content_index":1,"item_id":"msg_a7557ed9ba6e5d20","logprobs":[],"output_index":1,"sequence_number":11,"text":"1 2 3 4 5","type":"response.output_text.done"}
+
+        data: {"content_index":1,"item_id":"msg_a7557ed9ba6e5d20","output_index":1,"part":{"annotations":[],"text":"1 2 3 4 5","type":"output_text"},"sequence_number":12,"type":"response.content_part.done"}
+
+        data: {"item":{"content":[{"annotations":[],"text":"1 2 3 4 5","type":"output_text"}],"id":"msg_a7557ed9ba6e5d20","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":13,"type":"response.output_item.done"}
+
+        data: {"response":{"background":false,"created_at":1788814425.0,"error":null,"id":"resp_i6qu4hy7v2g7cvowsf463av5fimosuo4waiapilkjzv4afvucrsa","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"We need to respond with count from 1 to 5. Should list numbers, maybe separated by spaces or commas. Probably just output: 1 2 3 4 5. Ensure not contravening policies. It's fine.","type":"reasoning_text"}],"id":"msg_b670c33c50baaccc","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1 2 3 4 5","type":"output_text"}],"id":"msg_a7557ed9ba6e5d20","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":68,"output_tokens_details":{"reasoning_tokens":50},"total_tokens":143}},"sequence_number":14,"type":"response.completed"}
+
+  recorded_at: Mon, 07 Sep 2026 20:53:46 GMT
 recorded_with: VCR 6.4.0
+...

@@ -10,7 +10,8 @@ module RubyLLM
         module_function
 
         TRANSCRIPTION_MODELS = {
-          'scribe_v2' => 'Scribe v2'
+          'scribe_v2' => 'Scribe v2',
+          'scribe_v2_realtime' => 'Scribe v2 Realtime'
         }.freeze
 
         def models_url

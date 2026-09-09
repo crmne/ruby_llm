@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Agent, :live do
     end
 
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :display_name
       instructions { "Hello #{display_name}" }
       tools { [tool_class.new] }
@@ -42,7 +42,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'applies max_output_tokens from the DSL macro' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       max_output_tokens 1000
     end
 
@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Agent, :live do
     end
 
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       tools tool_class.new
       tool_options choice: :required, calls: :one, concurrency: :fibers
     end
@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'forwards the protocol model option to new chats' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-5-nano', protocol: :chat_completions
+      model model_for(:openai), protocol: :chat_completions
     end
 
     expect(agent_class.chat.instance_variable_get(:@protocol)).to eq(:chat_completions)
@@ -82,7 +82,7 @@ RSpec.describe RubyLLM::Agent, :live do
     end
 
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       tools tool_class.new
       tool_options { { calls: :one } }
     end
@@ -92,15 +92,15 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'returns the configured model keywords from the bare model reader' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano', provider: :openai
+      model model_for(:openai, :temperature), provider: :openai
     end
 
-    expect(agent_class.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
+    expect(agent_class.model).to eq(model: model_for(:openai, :temperature), provider: :openai)
   end
 
   it 'exposes RubyLLM::Chat as chat in execution context for .chat' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       instructions { chat.class.name }
     end
 
@@ -108,9 +108,20 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(chat.messages.first.content).to eq('RubyLLM::Chat')
   end
 
+  it 'accepts the same thinking and caching option hashes as Chat' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model model_for(:openai, :temperature)
+      thinking({ 'effort' => :high })
+      caching({ 'ttl' => '1h' })
+    end
+
+    expect(agent_class.chat.thinking).to eq(effort: :high)
+    expect(agent_class.chat.caching).to eq(ttl: '1h')
+  end
+
   it 'lets agents enable provider-default prompt caching' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       caching
     end
 
@@ -119,7 +130,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'does not enable prompt caching unless configured' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     expect(agent_class.chat.caching).to be_nil
@@ -127,7 +138,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'lets agent instances disable prompt caching' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       caching { { retention: '24h' } }
     end
     agent = agent_class.new
@@ -138,7 +149,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'exposes resolved thinking on agent instances' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       thinking effort: :low
     end
 
@@ -147,7 +158,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'starts without instructions when the default prompt is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     expect(agent_class.chat.messages).to be_empty
@@ -155,7 +166,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'raises when an explicitly referenced prompt is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       instructions { prompt('instructions') }
     end
 
@@ -169,7 +180,7 @@ RSpec.describe RubyLLM::Agent, :live do
       path.write('Hello from <%= chat.class.name %>')
 
       agent_class = Class.new(RubyLLM::Agent) do
-        model 'gpt-4.1-nano'
+        model model_for(:openai, :temperature)
       end
       stub_const('SpecImplicitPromptAgent', agent_class)
 
@@ -190,7 +201,7 @@ RSpec.describe RubyLLM::Agent, :live do
       RubyLLM::Prompt.roots << engine_root
 
       agent_class = Class.new(RubyLLM::Agent) do
-        model 'gpt-4.1-nano'
+        model model_for(:openai, :temperature)
       end
       stub_const('SpecEnginePromptAgent', agent_class)
 
@@ -211,7 +222,7 @@ RSpec.describe RubyLLM::Agent, :live do
       path.write('Anonymous prompt')
 
       agent_class = Class.new(RubyLLM::Agent) do
-        model 'gpt-4.1-nano'
+        model model_for(:openai, :temperature)
       end
 
       expect(agent_class.chat.messages).to be_empty
@@ -220,7 +231,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'supports inline schema DSL via schema do ... end' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       schema do
         string :verdict, enum: %w[pass revise]
         string :feedback
@@ -238,7 +249,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'supports lambda schemas without DSL fallback' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       inputs :strict
 
       schema lambda {
@@ -277,7 +288,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'delegates add_message to the underlying chat interface' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     agent = agent_class.new
@@ -290,7 +301,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'exposes messages like RubyLLM::Chat' do
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
 
     agent = agent_class.new
@@ -318,7 +329,7 @@ RSpec.describe RubyLLM::Agent, :live do
     allow(RubyLLM.models).to receive(:find).with('priced-model').and_return(model)
 
     agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
     end
     agent = agent_class.new
 
@@ -465,9 +476,9 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'applies class-configured fallbacks to new chats' do
     agent_class = Class.new(described_class) do
-      model 'gpt-4.1-nano'
-      fallbacks 'gpt-4.1-mini',
-                RubyLLM.models.find('claude-haiku-4-5', provider: :anthropic),
+      model model_for(:openai, :temperature)
+      fallbacks model_for(:openai, :alternate_chat),
+                RubyLLM.models.find(model_for(:anthropic), provider: :anthropic),
                 on: RubyLLM::RateLimitError
     end
 
@@ -480,20 +491,20 @@ RSpec.describe RubyLLM::Agent, :live do
 
   it 'inherits fallback config to subclasses' do
     parent_class = Class.new(described_class) do
-      model 'gpt-4.1-nano'
-      fallbacks 'gpt-4.1-mini', on: RubyLLM::ServiceUnavailableError
+      model model_for(:openai, :temperature)
+      fallbacks model_for(:openai, :alternate_chat), on: RubyLLM::ServiceUnavailableError
     end
 
     child_class = Class.new(parent_class)
 
-    expect(child_class.chat.fallbacks.map(&:id)).to eq(['gpt-4.1-mini'])
+    expect(child_class.chat.fallbacks.map(&:id)).to eq([model_for(:openai, :alternate_chat)])
     expect(child_class.chat.fallback_errors).to eq([RubyLLM::ServiceUnavailableError])
   end
 
   it 'raises when fallback options are set without any fallback models' do
     expect do
       Class.new(described_class) do
-        model 'gpt-4.1-nano'
+        model model_for(:openai, :temperature)
         fallbacks on: RubyLLM::RateLimitError
       end
     end.to raise_error(ArgumentError, /fallback model/)

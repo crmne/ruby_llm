@@ -27,6 +27,14 @@ module RubyLLM
           'image' => 'image_generation'
         }.freeze
 
+        CAPABILITY_PARAMETERS = {
+          'function_calling' => %w[tools tool_choice],
+          'tool_choice' => %w[tool_choice],
+          'parallel_tool_calls' => %w[parallel_tool_calls],
+          'structured_output' => %w[response_format structured_outputs],
+          'batch' => %w[batch]
+        }.freeze
+
         def list_models
           CATALOG_URLS.flat_map do |url|
             parse_list_models_response @connection.get(url), @provider.slug
@@ -92,11 +100,9 @@ module RubyLLM
         def supported_parameters_to_capabilities(params)
           return [] unless params
 
-          capabilities = []
-          capabilities << 'streaming'
-          capabilities << 'function_calling' if params.include?('tools') || params.include?('tool_choice')
-          capabilities << 'structured_output' if params.include?('response_format')
-          capabilities << 'batch' if params.include?('batch')
+          capabilities = ['streaming'] + CAPABILITY_PARAMETERS.filter_map do |capability, parameters|
+            capability if parameters.any? { |parameter| params.include?(parameter) }
+          end
           capabilities << 'predicted_outputs' if params.include?('logit_bias') && params.include?('top_k')
           capabilities
         end

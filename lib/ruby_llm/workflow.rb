@@ -13,7 +13,11 @@ module RubyLLM
   #   end
   #
   class Workflow
-    attr_reader :id, :name
+    # Returns the workflow identifier shared by its instrumentation events.
+    attr_reader :id
+
+    # Returns the workflow name.
+    attr_reader :name
 
     def initialize(name, id: nil, metadata: nil, config: RubyLLM.config) # :nodoc:
       @name = normalize(name, 'name')
@@ -22,11 +26,11 @@ module RubyLLM
       @config = config
     end
 
-    def run
+    def run # :nodoc:
       raise ArgumentError, 'a workflow block is required' unless block_given?
 
       link_parent
-      Instrumentation.with_workflow(workflow_context) do
+      Support::Instrumentation.with_workflow(workflow_context) do
         RubyLLM.instrument('workflow.ruby_llm', config: @config) { yield self }
       end
     end
@@ -34,6 +38,7 @@ module RubyLLM
     # Runs a named section of Ruby code and adds its identity to every RubyLLM
     # event emitted by the block. An ID is generated when one is not supplied.
     # Steps can contain regular Ruby control flow and may be nested.
+    # Returns the block's result.
     def step(name, id: nil, &block)
       raise ArgumentError, 'a workflow step block is required' unless block
 
@@ -44,7 +49,7 @@ module RubyLLM
       parent_id = current_step_id
       step_context[:workflow_step_parent_id] = parent_id if parent_id
 
-      Instrumentation.with_workflow(step_context.freeze) do
+      Support::Instrumentation.with_workflow(step_context.freeze) do
         RubyLLM.instrument('workflow_step.ruby_llm', config: @config) { block.call }
       end
     end
@@ -60,7 +65,7 @@ module RubyLLM
     end
 
     def link_parent
-      current = Instrumentation.current_workflow
+      current = Support::Instrumentation.current_workflow
       context = workflow_context.dup
       context.delete(:workflow_parent_id)
       context.delete(:workflow_parent_step_id)
@@ -72,7 +77,7 @@ module RubyLLM
     end
 
     def current_step_id
-      current = Instrumentation.current_workflow
+      current = Support::Instrumentation.current_workflow
       current[:workflow_step_id] if current && current[:workflow_id] == id
     end
 

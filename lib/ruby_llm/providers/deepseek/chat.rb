@@ -40,8 +40,8 @@ module RubyLLM
 
         def degrade_schema_payload(payload)
           RubyLLM.logger.warn(
-            'DeepSeek does not support json_schema response formats. ' \
-            'Falling back to json_object mode; the schema will not be enforced.'
+            'DeepSeek Chat Completions does not support json_schema response formats. ' \
+            'Use protocol: :responses to enforce the schema. Falling back to json_object mode.'
           )
           payload[:response_format] = { type: 'json_object' }
         end

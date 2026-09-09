@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
   end
 
   def message_with_attachments(count)
-    chat = Chat.create!(model: 'gpt-4.1-nano')
+    chat = Chat.create!(model: model_for(:openai))
     message = chat.messages.create!(role: 'user', content: 'see attached')
     message.attachments.attach(Array.new(count) { |index| stored_blob("file#{index}.txt") })
     message
@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
     end
 
     it 'reads a pending attachment without querying for its blob' do
-      chat = Chat.create!(model: 'gpt-4.1-nano')
+      chat = Chat.create!(model: model_for(:openai))
       message = chat.messages.build(role: 'user', content: 'see attached')
       message.attachments.attach([stored_blob('pending.txt')])
 

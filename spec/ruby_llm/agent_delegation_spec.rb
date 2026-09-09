@@ -6,11 +6,11 @@ RSpec.describe RubyLLM::Agent do
   include_context 'with configured RubyLLM'
 
   it 'delegates Chat state and cache boundaries to the underlying chat' do
-    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
                   .with_server_tools(:web_search)
                   .with_tool_options(concurrency: :fibers)
                   .with_end_user('customer-42')
-                  .with_fallbacks('gpt-4.1-mini')
+                  .with_fallbacks(model_for(:openai, :alternate_chat))
     chat.add_message(role: :user, content: 'Hello')
     agent = Class.new(described_class).new(chat:)
 

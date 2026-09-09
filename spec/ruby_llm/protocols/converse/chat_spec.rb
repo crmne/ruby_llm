@@ -253,7 +253,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'uses schema name and inner schema' do
-        custom_schema = RubyLLM::Utils.deep_dup(schema)
+        custom_schema = RubyLLM::Support::Utils.deep_dup(schema)
         custom_schema[:name] = 'PersonSchema'
 
         payload = render_payload(schema: custom_schema)
@@ -269,7 +269,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'does not mutate the original schema' do
-        original = RubyLLM::Utils.deep_dup(schema)
+        original = RubyLLM::Support::Utils.deep_dup(schema)
         render_payload(schema: schema)
         expect(schema).to eq(original)
       end

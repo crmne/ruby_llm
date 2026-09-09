@@ -11,7 +11,7 @@ module RubyLLM
   #   response.thinking&.signature
   #
   class Thinking
-    include Inspectable
+    include Support::Inspectable
 
     # The reasoning text the provider returned, or +nil+.
     attr_reader :text

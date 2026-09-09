@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is the weather?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"broken","description":"Gets
-        current weather","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+      string: '{"model":"gpt-5.6","input":[{"role":"user","content":"What is the weather?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"broken","description":"Gets
+        current weather","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:17:11 GMT
+      - Mon, 07 Sep 2026 21:16:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,9 +48,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '717'
+      - '854'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -75,30 +75,30 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_052ab48e9a576b6c016a2b17c71a7c81a2a1771e839bfa5589",
+          "id": "resp_0157fb3a26f75f1f016a9f29ae946887d29f36997a624d67b6",
           "object": "response",
-          "created_at": 1781209031,
+          "created_at": 1788815790,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781209031,
+          "completed_at": 1788815791,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5.4-2026-03-05",
+          "model": "gpt-5.6-sol",
           "moderation": null,
           "output": [
             {
-              "id": "fc_052ab48e9a576b6c016a2b17c7a15481a2a676936be1d93311",
+              "id": "fc_0157fb3a26f75f1f016a9f29af52b087d2a29b096f4da262df",
               "type": "function_call",
               "status": "completed",
               "arguments": "{}",
-              "call_id": "call_83R3GJkc2IZRlo0dHCIDphPy",
+              "call_id": "call_XARw8PZ31jvBrCWJMfM1XnLi",
               "name": "broken"
             }
           ],
@@ -108,8 +108,9 @@ http_interactions:
           "prompt_cache_key": null,
           "prompt_cache_retention": "24h",
           "reasoning": {
-            "context": "current_turn",
-            "effort": "none",
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -122,12 +123,31 @@ http_interactions:
             },
             "verbosity": "medium"
           },
-          "tool_choice": "auto",
+          "tool_choice": "required",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [
             {
               "type": "function",
               "description": "Gets current weather",
               "name": "broken",
+              "output_schema": null,
               "parameters": {
                 "type": "object",
                 "properties": {},
@@ -135,7 +155,7 @@ http_interactions:
                 "additionalProperties": false,
                 "strict": true
               },
-              "strict": true
+              "strict": false
             }
           ],
           "top_logprobs": 0,
@@ -144,6 +164,7 @@ http_interactions:
           "usage": {
             "input_tokens": 38,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
             "output_tokens": 14,
@@ -155,5 +176,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:17:11 GMT
+  recorded_at: Mon, 07 Sep 2026 21:16:31 GMT
 recorded_with: VCR 6.4.0

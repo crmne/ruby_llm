@@ -1,0 +1,560 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Search Microsoft
+        documentation for Azure Blob Storage, then give one short sentence about it."}],"instructions":"Use
+        microsoft_docs_search exactly once when asked for documentation. Do not retry
+        a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '9246'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 07 Sep 2026 21:03:45 GMT
+      Server:
+      - istio-envoy
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249953'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - dbf99747-3399-42f5-a4af-0ce380d48a72
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0ec441ee79425778016a9f26b24ea88196ba0658ed4f4ba3ba",
+          "object": "response",
+          "created_at": 1788815026,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1788815030,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1308,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 2132,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Use microsoft_docs_search exactly once when asked for documentation. Do not retry a denied call.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "mcpl_0ec441ee79425778016a9f26b276b88196b561428bcff587c1",
+              "type": "mcp_list_tools",
+              "server_label": "docs",
+              "tools": [
+                {
+                  "annotations": {
+                    "read_only": true
+                  },
+                  "description": "Search official Microsoft/Azure documentation to find the most relevant and trustworthy content for a user's query. This tool returns up to 10 high-quality content chunks (each max 500 tokens), extracted from Microsoft Learn and other official sources. Each result includes the article title, URL, and a self-contained content excerpt optimized for fast retrieval and reasoning. Always use this tool to quickly ground your answers in accurate, first-party Microsoft/Azure knowledge.\n\n## Follow-up Pattern\nTo ensure completeness, use microsoft_docs_fetch when high-value pages are identified by search. The fetch tool complements search by providing the full detail. This is a required step for comprehensive results.",
+                  "input_schema": {
+                    "type": "object",
+                    "properties": {
+                      "query": {
+                        "description": "a query or topic about Microsoft/Azure products, services, platforms, developer tools, frameworks, or APIs",
+                        "type": "string",
+                        "default": null
+                      }
+                    }
+                  },
+                  "name": "microsoft_docs_search"
+                }
+              ]
+            },
+            {
+              "id": "rs_0ec441ee79425778016a9f26b4068481969cb43447ab737ba5",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqnya2X1nwTuGeYyFMwiHP17qwSqmEF30T1gGKjow4pI50mE-XzKz9QVdQEQ_QGeMyM3Hz-3mTuU2KTX9oJamFApJTotenW2mV_eYgjmQ3aiCVT7wbSTFzcOlkXf3Kl57UttBzpUNT-eFROXrbdlOSBTgdz9jpQgZLJTpjgcxJqQuGTBkcTLyqrOg6YS7NYQn6ic0mkgW8wXa8tPbZ-T0VDULYb_z1J5A_No1qaSL8uuEFPHzOMCp60uOxcbunopu295NiJMO7AdJNMkW4abHHjZj3Dzm4MsHi64r4bGpfNrkDMiPeefvwa1_9jiju52yRNv7wS30mR6Y9_lzZf0ZqFBziNyunYwf29L-XCd2-NcV6kWjPP5IKfqBwIXpjH8klbV62hZQ-aAg8GgkjRQAI6PO9GUeuICzDTrK4BqhECIcNEvRLJJXZugwgTt_Tg4BCXfg9MhVBhIm_IycTAuBwr2G660t8wMZgdjBkBKSOtTBCZ03AcqgU9AaLYLQ9Y5ubKn-qzHUMYwl-nmFMm6nzvQta0HGJaiSjATi6yS7Hmb8toEVLXjeSicUzLlU0GlkJ-iv63llYK_e3lENTon0gNeDh6c6RZJf5Nli9QSLzwG7PuqxPWM-CpXGgYjazWz_CgSdN5AdLX4-wB-pgQYRXYFPyvFOdcWBjfBoROpjuFopYXgbZU2c0cF27GB3teH7Rndc7eKmISLtJk6pOVSwL_6fPPFQawSc0dRwpNsk19vtMDzQ3mfdka0cjTd_VjHbDz8E5Qnu9xygAQjGshdXRAZTH7VR2UCcECXrQgFtZA5jCYlDyicBW4liYEeoZcutwA3ixKGljU3foEyYZLQESPf0fN5xxe_homCU-RT3P64cuqnqM3wHPSSudp4oF8C_57TstuiNuB1mjbAwWTNMw3YwMpg8vVxe4AINhWYrET-ginVLSXdfL7hUtsxaxrzPKvXLLwIL0cDwOnqN22vFDV1mF1hMpm8ulS-uFNyNCzZ149MGs4eLOpz9x31PHH2t4n8MBvY3mFkC40Z0aE0Bzhx28z2jJZ1VenLy9Qg9zmc_ZaWdksb0O3Bh2Dna2G8Vh-_zCTORlV4ixuDokk3PEyQxuAIRSzNtu9LEPYIcDdBnCDNY04UC6dj3fNK2LxNLfkfYAIWCz8dxw6wp1MODfHX9U5MJtFjRTmeMqKlCXJwFV08XQZXDdzhrYEcFzyfXI83eK3uhWL8at8UAmKVuMmVfxg3aCaA_fYP7V-kyIl3712TxcyK8cYUoeoDKftOxEIDv3AUlmHI-llpyD-mLsk84uI6zRpg1EXcdHjHhhwua6SEL7W5-1oM7AQ2ON1TpyQk5kuBuRkXvXYiH7XVxrffrI15-Lztqvxd2K5uDJV50MfnNrGd7N8NDccbLg-PmMGOn8s3140KAO-aNL677gDI0U-s6_ViwSimvE4AyQ2-y6WfxZ-C-W04aMISSrs-CF2SR-6tukeqQhhYCKNLeJ2QfQaL2gAk2UM9FjG6KRGXTu5YMvnHniH-nJ3DKUVTDuNPKD5C8dMh0F5fCf375dQCpQRMC2a14i71_7DRQUDZ1IrOWOpO6yObz4hglZJOjUIv8zFvPJTmF3Obs5o_iwr5SXiOwPhj2B8i1OiZCVgtM5hFygU7tRVmMiuLy2ftRQJnrpkDZc7BQeVINV9Z1w-MJqpi4KqAz4S-W1r7YOzPEpWhfCkb0eTXOJ0dsi7Oe-CNQWxG2myYoWaWvPEf-EaMYRJxtGZkkIUliYHLHhDMaAce5z19IFIVI_juUlEMGTHoVwIPGQN9dwNj8HI_xIcei9sKW4yxS2NEryScS7xQmmqHBEQZ8ZnOzJOsxFXOOPliLMZagFbwZzh-I_B8gqjQkeKiJq05cgAEzdNDOvA_nulPXy8teKe57NJdeRWfBzyZ2ri-AgzqgER_XiT0qaby8tU5nFT-tNDkUK7KoDMVyqD6QvIZYqK9Nwkw3wiXQeZlTRzm10mlUAKa6OL8OFFnQBQTnrOJYeX1S5nBeTyRpgVdra_pQve3QukrXz4Z0ZYfhyZW2U6O2i5PpPZB5HeXBOpDOPBGD6YhmvJjuk0KvfHUA3k8IFsQ0R3cAvrT2FMgQxhfjaQbZmPDhTk4apUTHE2X1xp5O0lPjyaDKpraJOCa1-ffB_zVQXd66J3hCD7ptKBKHf0MoR0q_cSMKn1CqxukGJ4U6myP8g436qXL2q6jc5VQva6JcfPD4iPNbfOg_DwZ2PEcjcH0iMe6XDDLt77b98mTpBc7RYraxWTggwqSzX2kHMV8kwG75MvJVBS4N8LzlymRjxmcyZzqaJqdkxMeCWHoQQF7jPyxaKoG4ZAwI433WfTYn1WP7tiKuJDmwM2YLxIdTa9bgJeyERyxzmuKXs_TbYHIz0JS4H0KAWCo-ZxrDhPUzSi_E_E2vcxMpWmjj4q3WgHXAuXkrTImuaQSHfCIgE4yFR_19_Q1F9bqnYjCf1IgfDz-4OQRDfU-_nEr3o3iSSv-g97tJ47mXchGBDpJIjSPdhyzvsOH59KV_ht0-EktPD6yY86GhNUdhY-8puZ8QBx8YgZ2JiM8Q__Gx2vHPEyAWSvLlv8Upn4_eTkIkP1UQdRZWTzWVufbhJeybGUddgAddfuZETBXHJaAG07gjwHSRQlE0QeJBYjLDKIPc6BbEYyqFe8yGkDjaVvhOwXozE7pQMYnI12nd6CRvPNwzkSOteHGPVugWSA_C294Y1xQPkQ_sgQIlsvSHPFs_v-ddmyXUxjtz1BXNYxjPcopRiC63A5SsrlgBkCn4PlFFwQSP3vf11AmEavzoRGTgRuJDPpY4yva_tBr20HG69OYX3zDfejeAV6NscbhVl6Q1oUUQOfl-jBFHJirfzeME70U6SkJhiehKOOyPLuIADCfntI-6TYRzfdHCUBIE-zqXcPh5MQmiVsvmJK0Vhh059xDPLHxiZ6noZaJt95wMdKUl1Pd_8MDSj6t4NQPBtsCpp49Ib1YZI9pleJHWhd8O8ai0UzKhlQ5ccFiYm3emALYdsXVWKaIfrtYsVjc1dUkbjYpX6uud2sfvJFf7PMBTMsOsSznQt9zelg-1qgD9Lj8FVWW7893suEYXquhzrk-gxMtMB80lc8uzLVwCxEt84cbG8a_B7HYjscFR38VBDpSnlnDzXQxZz582zAR4xszH3DoUMFtctLlJnolHcoaVvBdWOxLS4jAlUea1bzGR5PXE8De6etSO-B0AY0Q5N57tdJ0h7o3KzNRPsiNtJbaAELHGUCPdg_JtQ8Vv2rG6mXOMcsplMgBYVnMyd22hk6JwQAO9pAXSL2q6Xu2mkbthn9pOsWreRGzF5k-9qAlAmPO2ZhH_YCOUMoAc92pdHf1Grs-RbAlUL8PsGUze0S3tz9695COT4uOHj4L2-m8vJGvkH4eK_et6FifJRxapCpNmTMKLCIG9a_jHhfko1LPozWfXyjUY8rKbKkLK6CjHdkrb9EKktarYlIWClZULGW1y2xqY-3vBREkWoiw2RugTpYiDkrDxZpjt5xmcn2sqRv-jSN0tlq3NtLyBWLUvKj5dpQQ-os5R5ggGh5VMCmGU8QiC9gKig3lD8PbefjpuTP37Bd_jbIYABjGX155q39wgQuEnRXFtsDm6XDHTH9cqKsOh7NhlH2E2Rm7Obg8yhtuxIHpAOgB3v8Cnje-bagzkd0P0KQRwTNsmlM9ZukaVpgNjeTHv8qJnXzCmscCaT7PRlpqMjEslXh4ZMtkvm43iQRUEWXFaQCq8xz8j2TvwtLA3WqBcAfUmzEOSDfw==",
+              "summary": []
+            },
+            {
+              "id": "mcpr_0ec441ee79425778016a9f26b6a3e08196bf3271a5069934e4",
+              "type": "mcp_approval_request",
+              "arguments": "{\"query\":\"Azure Blob Storage\"}",
+              "name": "microsoft_docs_search",
+              "server_label": "docs"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "mcp",
+              "allowed_tools": [
+                "microsoft_docs_search"
+              ],
+              "headers": null,
+              "require_approval": "always",
+              "server_description": null,
+              "server_label": "docs",
+              "server_url": "https://learn.microsoft.com/api/mcp"
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 313,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 448,
+            "output_tokens_details": {
+              "reasoning_tokens": 384
+            },
+            "total_tokens": 761
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 07 Sep 2026 21:03:50 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Search Microsoft
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_0ec441ee79425778016a9f26b276b88196b561428bcff587c1","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        official Microsoft/Azure documentation to find the most relevant and trustworthy
+        content for a user''s query. This tool returns up to 10 high-quality content
+        chunks (each max 500 tokens), extracted from Microsoft Learn and other official
+        sources. Each result includes the article title, URL, and a self-contained
+        content excerpt optimized for fast retrieval and reasoning. Always use this
+        tool to quickly ground your answers in accurate, first-party Microsoft/Azure
+        knowledge.\n\n## Follow-up Pattern\nTo ensure completeness, use microsoft_docs_fetch
+        when high-value pages are identified by search. The fetch tool complements
+        search by providing the full detail. This is a required step for comprehensive
+        results.","input_schema":{"type":"object","properties":{"query":{"description":"a
+        query or topic about Microsoft/Azure products, services, platforms, developer
+        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"rs_0ec441ee79425778016a9f26b4068481969cb43447ab737ba5","type":"reasoning","content":[],"encrypted_content":"gAAAAABqnya2X1nwTuGeYyFMwiHP17qwSqmEF30T1gGKjow4pI50mE-XzKz9QVdQEQ_QGeMyM3Hz-3mTuU2KTX9oJamFApJTotenW2mV_eYgjmQ3aiCVT7wbSTFzcOlkXf3Kl57UttBzpUNT-eFROXrbdlOSBTgdz9jpQgZLJTpjgcxJqQuGTBkcTLyqrOg6YS7NYQn6ic0mkgW8wXa8tPbZ-T0VDULYb_z1J5A_No1qaSL8uuEFPHzOMCp60uOxcbunopu295NiJMO7AdJNMkW4abHHjZj3Dzm4MsHi64r4bGpfNrkDMiPeefvwa1_9jiju52yRNv7wS30mR6Y9_lzZf0ZqFBziNyunYwf29L-XCd2-NcV6kWjPP5IKfqBwIXpjH8klbV62hZQ-aAg8GgkjRQAI6PO9GUeuICzDTrK4BqhECIcNEvRLJJXZugwgTt_Tg4BCXfg9MhVBhIm_IycTAuBwr2G660t8wMZgdjBkBKSOtTBCZ03AcqgU9AaLYLQ9Y5ubKn-qzHUMYwl-nmFMm6nzvQta0HGJaiSjATi6yS7Hmb8toEVLXjeSicUzLlU0GlkJ-iv63llYK_e3lENTon0gNeDh6c6RZJf5Nli9QSLzwG7PuqxPWM-CpXGgYjazWz_CgSdN5AdLX4-wB-pgQYRXYFPyvFOdcWBjfBoROpjuFopYXgbZU2c0cF27GB3teH7Rndc7eKmISLtJk6pOVSwL_6fPPFQawSc0dRwpNsk19vtMDzQ3mfdka0cjTd_VjHbDz8E5Qnu9xygAQjGshdXRAZTH7VR2UCcECXrQgFtZA5jCYlDyicBW4liYEeoZcutwA3ixKGljU3foEyYZLQESPf0fN5xxe_homCU-RT3P64cuqnqM3wHPSSudp4oF8C_57TstuiNuB1mjbAwWTNMw3YwMpg8vVxe4AINhWYrET-ginVLSXdfL7hUtsxaxrzPKvXLLwIL0cDwOnqN22vFDV1mF1hMpm8ulS-uFNyNCzZ149MGs4eLOpz9x31PHH2t4n8MBvY3mFkC40Z0aE0Bzhx28z2jJZ1VenLy9Qg9zmc_ZaWdksb0O3Bh2Dna2G8Vh-_zCTORlV4ixuDokk3PEyQxuAIRSzNtu9LEPYIcDdBnCDNY04UC6dj3fNK2LxNLfkfYAIWCz8dxw6wp1MODfHX9U5MJtFjRTmeMqKlCXJwFV08XQZXDdzhrYEcFzyfXI83eK3uhWL8at8UAmKVuMmVfxg3aCaA_fYP7V-kyIl3712TxcyK8cYUoeoDKftOxEIDv3AUlmHI-llpyD-mLsk84uI6zRpg1EXcdHjHhhwua6SEL7W5-1oM7AQ2ON1TpyQk5kuBuRkXvXYiH7XVxrffrI15-Lztqvxd2K5uDJV50MfnNrGd7N8NDccbLg-PmMGOn8s3140KAO-aNL677gDI0U-s6_ViwSimvE4AyQ2-y6WfxZ-C-W04aMISSrs-CF2SR-6tukeqQhhYCKNLeJ2QfQaL2gAk2UM9FjG6KRGXTu5YMvnHniH-nJ3DKUVTDuNPKD5C8dMh0F5fCf375dQCpQRMC2a14i71_7DRQUDZ1IrOWOpO6yObz4hglZJOjUIv8zFvPJTmF3Obs5o_iwr5SXiOwPhj2B8i1OiZCVgtM5hFygU7tRVmMiuLy2ftRQJnrpkDZc7BQeVINV9Z1w-MJqpi4KqAz4S-W1r7YOzPEpWhfCkb0eTXOJ0dsi7Oe-CNQWxG2myYoWaWvPEf-EaMYRJxtGZkkIUliYHLHhDMaAce5z19IFIVI_juUlEMGTHoVwIPGQN9dwNj8HI_xIcei9sKW4yxS2NEryScS7xQmmqHBEQZ8ZnOzJOsxFXOOPliLMZagFbwZzh-I_B8gqjQkeKiJq05cgAEzdNDOvA_nulPXy8teKe57NJdeRWfBzyZ2ri-AgzqgER_XiT0qaby8tU5nFT-tNDkUK7KoDMVyqD6QvIZYqK9Nwkw3wiXQeZlTRzm10mlUAKa6OL8OFFnQBQTnrOJYeX1S5nBeTyRpgVdra_pQve3QukrXz4Z0ZYfhyZW2U6O2i5PpPZB5HeXBOpDOPBGD6YhmvJjuk0KvfHUA3k8IFsQ0R3cAvrT2FMgQxhfjaQbZmPDhTk4apUTHE2X1xp5O0lPjyaDKpraJOCa1-ffB_zVQXd66J3hCD7ptKBKHf0MoR0q_cSMKn1CqxukGJ4U6myP8g436qXL2q6jc5VQva6JcfPD4iPNbfOg_DwZ2PEcjcH0iMe6XDDLt77b98mTpBc7RYraxWTggwqSzX2kHMV8kwG75MvJVBS4N8LzlymRjxmcyZzqaJqdkxMeCWHoQQF7jPyxaKoG4ZAwI433WfTYn1WP7tiKuJDmwM2YLxIdTa9bgJeyERyxzmuKXs_TbYHIz0JS4H0KAWCo-ZxrDhPUzSi_E_E2vcxMpWmjj4q3WgHXAuXkrTImuaQSHfCIgE4yFR_19_Q1F9bqnYjCf1IgfDz-4OQRDfU-_nEr3o3iSSv-g97tJ47mXchGBDpJIjSPdhyzvsOH59KV_ht0-EktPD6yY86GhNUdhY-8puZ8QBx8YgZ2JiM8Q__Gx2vHPEyAWSvLlv8Upn4_eTkIkP1UQdRZWTzWVufbhJeybGUddgAddfuZETBXHJaAG07gjwHSRQlE0QeJBYjLDKIPc6BbEYyqFe8yGkDjaVvhOwXozE7pQMYnI12nd6CRvPNwzkSOteHGPVugWSA_C294Y1xQPkQ_sgQIlsvSHPFs_v-ddmyXUxjtz1BXNYxjPcopRiC63A5SsrlgBkCn4PlFFwQSP3vf11AmEavzoRGTgRuJDPpY4yva_tBr20HG69OYX3zDfejeAV6NscbhVl6Q1oUUQOfl-jBFHJirfzeME70U6SkJhiehKOOyPLuIADCfntI-6TYRzfdHCUBIE-zqXcPh5MQmiVsvmJK0Vhh059xDPLHxiZ6noZaJt95wMdKUl1Pd_8MDSj6t4NQPBtsCpp49Ib1YZI9pleJHWhd8O8ai0UzKhlQ5ccFiYm3emALYdsXVWKaIfrtYsVjc1dUkbjYpX6uud2sfvJFf7PMBTMsOsSznQt9zelg-1qgD9Lj8FVWW7893suEYXquhzrk-gxMtMB80lc8uzLVwCxEt84cbG8a_B7HYjscFR38VBDpSnlnDzXQxZz582zAR4xszH3DoUMFtctLlJnolHcoaVvBdWOxLS4jAlUea1bzGR5PXE8De6etSO-B0AY0Q5N57tdJ0h7o3KzNRPsiNtJbaAELHGUCPdg_JtQ8Vv2rG6mXOMcsplMgBYVnMyd22hk6JwQAO9pAXSL2q6Xu2mkbthn9pOsWreRGzF5k-9qAlAmPO2ZhH_YCOUMoAc92pdHf1Grs-RbAlUL8PsGUze0S3tz9695COT4uOHj4L2-m8vJGvkH4eK_et6FifJRxapCpNmTMKLCIG9a_jHhfko1LPozWfXyjUY8rKbKkLK6CjHdkrb9EKktarYlIWClZULGW1y2xqY-3vBREkWoiw2RugTpYiDkrDxZpjt5xmcn2sqRv-jSN0tlq3NtLyBWLUvKj5dpQQ-os5R5ggGh5VMCmGU8QiC9gKig3lD8PbefjpuTP37Bd_jbIYABjGX155q39wgQuEnRXFtsDm6XDHTH9cqKsOh7NhlH2E2Rm7Obg8yhtuxIHpAOgB3v8Cnje-bagzkd0P0KQRwTNsmlM9ZukaVpgNjeTHv8qJnXzCmscCaT7PRlpqMjEslXh4ZMtkvm43iQRUEWXFaQCq8xz8j2TvwtLA3WqBcAfUmzEOSDfw==","summary":[]},{"id":"mcpr_0ec441ee79425778016a9f26b6a3e08196bf3271a5069934e4","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
+        Blob Storage\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_0ec441ee79425778016a9f26b6a3e08196bf3271a5069934e4","approve":true}],"instructions":"Use
+        microsoft_docs_search exactly once when asked for documentation. Do not retry
+        a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '34748'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 07 Sep 2026 21:03:50 GMT
+      Server:
+      - istio-envoy
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249413'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 539212b8-a4ae-4d32-8c59-205c51c3a16c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0ec441ee79425778016a9f26b708a481969838c22bab44a906",
+          "object": "response",
+          "created_at": 1788815031,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1788815035,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 2318,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1984,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Use microsoft_docs_search exactly once when asked for documentation. Do not retry a denied call.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "mcp_0ec441ee79425778016a9f26b83878819688f5af70b57fec46",
+              "type": "mcp_call",
+              "status": "completed",
+              "approval_request_id": "mcpr_0ec441ee79425778016a9f26b6a3e08196bf3271a5069934e4",
+              "arguments": "{\"query\":\"Azure Blob Storage\"}",
+              "error": null,
+              "name": "microsoft_docs_search",
+              "output": "{\"results\": [{\"title\": \"What is Azure Blob storage?\", \"content\": \"# What is Azure Blob storage?\\nAzure Blob Storage is Microsoft's object storage solution for the cloud. Blob Storage is optimized for storing massive amounts of unstructured data. Unstructured data is data that doesn't adhere to a particular data model or definition, such as text or binary data.\\n## About Blob Storage\\nBlob Storage is designed for:\\n1. Serving images or documents directly to a browser.\\n2. Storing files for distributed access.\\n3. Streaming video and audio.\\n4. Writing to log files.\\n5. Storing data for backup and restore, disaster recovery, and archiving.\\n6. Storing data for analysis by an on-premises or Azure-hosted service.\\nUsers or client applications can access objects in Blob Storage via HTTP or HTTPS from anywhere in the world. You can access objects in Blob Storage through the [Azure Storage REST API](https://learn.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api), [Azure PowerShell](https://learn.microsoft.com/en-us/powershell/module/az.storage), [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/storage), or an Azure Storage client library. Client libraries are available for different languages, including:\\n1. [.NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/storage)\\n2. [Java](https://learn.microsoft.com/en-us/java/api/overview/azure/storage)\\n3. [Node.js](https://github.com/Azure/azure-sdk-for-js/tree/master/sdk/storage)\\n4. [Python](https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-python)\\n5. [Go](https://github.com/Azure/azure-sdk-for-go/tree/main/sdk/storage/azblob)\\nClients can also securely connect to Blob Storage by using SSH File Transfer Protocol (SFTP) and mount Blob Storage containers by using the Network File System (NFS) 3.0 protocol.\\n## About Azure Data Lake Storage\\nBlob Storage supports Azure Data Lake Storage, Microsoft's enterprise big data analytics solution for the cloud. Azure Data Lake Storage offers a hierarchical file system as well as the advantages of Blob Storage, including:\\n1. Low-cost, tiered storage\\n2. High availability\\n3. Strong consistency\\n4. Disaster recovery capabilities\\nFor more information about Data Lake Storage, see [Introduction to Azure Data Lake Storage](https://learn.microsoft.com/azure/storage/blobs/data-lake-storage-introduction).\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-overview\"}, {\"title\": \"Introduction to Azure Blob Storage\", \"content\": \"# Introduction to Azure Blob Storage\\nAzure Blob Storage is Microsoft's object storage solution for the cloud. Blob Storage is optimized for storing massive amounts of unstructured data. Unstructured data is data that doesn't adhere to a particular data model or definition, such as text or binary data.\\n## About Blob Storage\\nBlob Storage is designed for:\\n1. Serving images or documents directly to a browser.\\n2. Storing files for distributed access.\\n3. Streaming video and audio.\\n4. Writing to log files.\\n5. Storing data for backup and restore, disaster recovery, and archiving.\\n6. Storing data for analysis by an on-premises or Azure-hosted service.\\nUsers or client applications can access objects in Blob Storage via HTTP or HTTPS from anywhere in the world. You can access objects in Blob Storage through the [Azure Storage REST API](https://learn.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api), [Azure PowerShell](https://learn.microsoft.com/en-us/powershell/module/az.storage), [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/storage), or an Azure Storage client library. Client libraries are available for different languages, including:\\n1. [.NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/storage)\\n2. [Java](https://learn.microsoft.com/en-us/java/api/overview/azure/storage)\\n3. [Node.js](https://github.com/Azure/azure-sdk-for-js/tree/master/sdk/storage)\\n4. [Python](https://learn.microsoft.com/azure/storage/blobs/storage-quickstart-blobs-python)\\n5. [Go](https://github.com/Azure/azure-sdk-for-go/tree/main/sdk/storage/azblob)\\nClients can also securely connect to Blob Storage by using SSH File Transfer Protocol (SFTP) and mount Blob Storage containers by using the Network File System (NFS) 3.0 protocol.\\n## About Azure Data Lake Storage\\nBlob Storage supports Azure Data Lake Storage, Microsoft's enterprise big data analytics solution for the cloud. Azure Data Lake Storage offers a hierarchical file system as well as the advantages of Blob Storage, including:\\n1. Low-cost, tiered storage\\n2. High availability\\n3. Strong consistency\\n4. Disaster recovery capabilities\\nFor more information about Data Lake Storage, see [Introduction to Azure Data Lake Storage](https://learn.microsoft.com/azure/storage/blobs/data-lake-storage-introduction).\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction\"}, {\"title\": \"Introduction to Azure Blob Storage\", \"content\": \"# Introduction to Azure Blob Storage\\n## Blob Storage resources\\nBlob Storage offers three types of resources:\\n1. The **storage account**\\n2. A **container** in the storage account\\n3. A **blob** in a container\\nThe following diagram shows the relationship between these resources.\\n![Screenshot of the relationship between an Azure Blob Storage account, containers, and blobs.](https://learn.microsoft.com/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)\\n### Storage accounts\\nA storage account provides a unique namespace in Azure for your data. Every object that you store in Azure Storage has an address that includes your unique account name. The combination of the account name and the Blob Storage endpoint forms the base address for the objects in your storage account.\\nFor example, if your storage account is named *mystorageaccount*, the default endpoint for Blob Storage is:\\n```\\nhttp://mystorageaccount.blob.core.windows.net\\n```\\nThe following table describes the different types of storage accounts that support Blob Storage:\\n| Type of storage account | Performance tier | Usage| \\n|  --- | --- | ---  |\\n| General-purpose v2 | Standard | Standard storage account type for blobs, file shares, queues, and tables. Recommended for most scenarios that use Blob Storage or one of the other Azure Storage services. |\\n| Block blob | Premium | Premium storage account type for block blobs and append blobs. Recommended for scenarios with high transaction rates or that use smaller objects or require consistently low storage latency. [Learn more about workloads for premium block blob accounts...](https://learn.microsoft.com/azure/storage/blobs/storage-blob-block-blob-premium) |\\n| Page blob | Premium | Premium storage account type for page blobs only. [Learn more about workloads for premium page blob accounts...](https://learn.microsoft.com/azure/storage/blobs/storage-blob-pageblob-overview) |\\n\\nTo learn more about types of storage accounts, see [Azure storage account overview](https://learn.microsoft.com/azure/storage/common/storage-account-overview?toc=/azure/storage/blobs/toc.json). For information about legacy storage account types, see [Legacy storage account types](https://learn.microsoft.com/azure/storage/common/storage-account-overview#legacy-storage-account-types).\\nTo learn how to create a storage account, see [Create a storage account](https://learn.microsoft.com/azure/storage/common/storage-account-create).\\n### Containers\\nA container organizes a set of blobs, similar to a directory in a file system. A storage account can include an unlimited number of containers, and a container can store an unlimited number of blobs.\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\"}, {\"title\": \"Get started with Azure Blob Storage and .NET\", \"content\": \"# Get started with Azure Blob Storage and .NET\\n## Build your app\\nAs you build apps to work with data resources in Azure Blob Storage, your code primarily interacts with three resource types: storage accounts, containers, and blobs. To learn more about these resource types, how they relate to one another, and how apps interact with resources, see [Understand how apps interact with Blob Storage data resources](https://learn.microsoft.com/azure/storage/blobs/storage-blob-object-model).\\nThe following guides show you how to access data and perform specific actions using the Azure Storage client library for .NET:\\n| Guide | Description| \\n|  --- | ---  |\\n| [Append data to blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-append) | Learn how to create an append blob and then append data to that blob. |\\n| [Configure a retry policy](https://learn.microsoft.com/azure/storage/blobs/storage-retry-policy) | Implement retry policies for client operations. |\\n| [Copy blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-copy) | Copy a blob from one location to another. |\\n| [Create a container](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-create) | Create containers. |\\n| [Create a user delegation SAS](https://learn.microsoft.com/azure/storage/blobs/storage-blob-user-delegation-sas-create-dotnet) | Create a user delegation SAS for a container or blob. |\\n| [Create and manage blob leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-lease) | Establish and manage a lock on a blob. |\\n| [Create and manage container leases](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-lease) | Establish and manage a lock on a container. |\\n| [Delete and restore blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-delete) | Delete blobs, and if soft-delete is enabled, restore deleted blobs. |\\n| [Delete and restore containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-delete) | Delete containers, and if soft-delete is enabled, restore deleted containers. |\\n| [Download blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-download) | Download blobs by using strings, streams, and file paths. |\\n| [Find blobs using tags](https://learn.microsoft.com/azure/storage/blobs/storage-blob-tags) | Set and retrieve tags, and use tags to find blobs. |\\n| [List blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-list) | List blobs in different ways. |\\n| [List containers](https://learn.microsoft.com/azure/storage/blobs/storage-blob-containers-list) | List containers in an account and the various options available to customize a listing. |\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-properties-metadata) | Get and set properties and metadata for blobs. |\\n| [Manage properties and metadata](https://learn.microsoft.com/azure/storage/blobs/storage-blob-container-properties-metadata) | Get and set properties and metadata for containers. |\\n| [Performance tuning for data transfers](https://learn.microsoft.com/azure/storage/blobs/storage-blobs-tune-upload-download) | Optimize performance for data transfer operations. |\\n| [Set or change a blob's access tier](https://learn.microsoft.com/azure/storage/blobs/storage-blob-use-access-tier-dotnet) | Set or change the access tier for a block blob. |\\n| [Upload blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-upload) | Learn how to upload blobs by using strings, streams, file paths, and other methods. |\\n\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/storage-blob-dotnet-get-started#build-your-app\"}, {\"title\": \"Introduction to Azure Blob Storage\", \"content\": \"# Introduction to Azure Blob Storage\\n## Move data to Blob Storage\\nA number of solutions exist for migrating existing data to Blob Storage:\\n1. **AzCopy** is an easy-to-use command-line tool for Windows and Linux that copies data to and from Blob Storage, across containers, or across storage accounts. For more information about AzCopy, see [Transfer data with the AzCopy v10](https://learn.microsoft.com/azure/storage/common/storage-use-azcopy-v10).\\n2. The **Azure Storage Data Movement library** is a .NET library for moving data between Azure Storage services. The AzCopy utility is built with the Data Movement library. For more information, see the [reference documentation](https://learn.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.datamovement) for the Data Movement library.\\n3. **Azure Data Factory** supports copying data to and from Blob Storage by using the account key, a shared access signature, a service principal, or managed identities for Azure resources. For more information, see [Copy data to or from Azure Blob Storage by using Azure Data Factory](https://learn.microsoft.com/azure/data-factory/connector-azure-blob-storage?toc=/azure/storage/blobs/toc.json).\\n4. **Blobfuse** is a virtual file system driver for Azure Blob Storage. You can use BlobFuse to access your existing block blob data in your Storage account through the Linux file system. For more information, see [What is BlobFuse? - BlobFuse2 (preview)](https://learn.microsoft.com/azure/storage/blobs/blobfuse2-what-is).\\n5. **Azure Data Box** service is available to transfer on-premises data to Blob Storage when large datasets or network constraints make uploading data over the wire unrealistic. Depending on your data size, you can request [Azure Data Box Disk](https://learn.microsoft.com/azure/databox/data-box-disk-overview), [Azure Data Box](https://learn.microsoft.com/azure/databox/data-box-overview), or [Azure Data Box Heavy](https://learn.microsoft.com/azure/databox/data-box-heavy-overview) devices from Microsoft. You can then copy your data to those devices and ship them back to Microsoft to be uploaded into Blob Storage.\\n6. The **Azure Import/Export service** provides a way to import or export large amounts of data to and from your storage account by using hard drives that you provide. For more information, see [What is Azure Import/Export service?](https://learn.microsoft.com/azure/import-export/storage-import-export-service)\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#move-data-to-blob-storage\"}, {\"title\": \"Introduction to Azure Blob Storage\", \"content\": \"# Introduction to Azure Blob Storage\\n## Blob Storage resources\\nA container name must be a valid DNS name, as it forms part of the unique URI (Uniform resource identifier) used to address the container or its blobs. Follow these rules when naming a container:\\n1. Container names can be between 3 and 63 characters long.\\n2. Container names must start with a letter or number, and can contain only lowercase letters, numbers, and the dash (-) character.\\n3. Two or more consecutive dash characters aren't permitted in container names.\\nThe URI for a container is similar to:\\n`https://myaccount.blob.core.windows.net/mycontainer`\\nFor more information about naming containers, see [Naming and Referencing Containers, Blobs, and Metadata](https://learn.microsoft.com/en-us/rest/api/storageservices/Naming-and-Referencing-Containers--Blobs--and-Metadata).\\n### Blobs\\nAzure Storage supports three types of blobs:\\n1. **Block blobs** store text and binary data. Block blobs are made up of blocks of data that can be managed individually. Block blobs can store up to about 190.7 TiB.\\n2. **Append blobs** are made up of blocks like block blobs, but they're optimized for append operations. Append blobs are ideal for scenarios such as logging data from virtual machines.\\n3. **Page blobs** store random access files up to 8 TiB in size. Page blobs store virtual hard drive (VHD) files and serve as disks for Azure virtual machines. For more information about page blobs, see [Overview of Azure page blobs](https://learn.microsoft.com/azure/storage/blobs/storage-blob-pageblob-overview).\\nFor more information about the different types of blobs, see [Understanding Block Blobs, Append Blobs, and Page Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs).\\nThe URI for a blob is similar to:\\n`https://myaccount.blob.core.windows.net/mycontainer/myblob`\\nor\\n`https://myaccount.blob.core.windows.net/mycontainer/myvirtualdirectory/myblob`\\nFollow these rules when naming a blob:\\n1. A blob name can contain any combination of characters.\\n2. A blob name must be at least one character long and can't be more than 1,024 characters long, for blobs in Azure Storage.\\n3. Blob names are case-sensitive.\\n4. Reserved URL characters must be properly escaped.\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#blob-storage-resources\"}, {\"title\": \"Reliability in Azure Blob Storage\", \"content\": \"# Reliability in Azure Blob Storage\\n[Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview) is an object storage solution for the cloud from Microsoft. It's designed to store massive amounts of unstructured data such as text, binary data, documents, media files, and application backups. As a foundational Azure storage service, Blob Storage provides multiple reliability features to ensure that your data remains available and durable during both planned and unplanned events.\\nWhen you use Azure, [reliability is a shared responsibility](https://learn.microsoft.com/en-us/azure/reliability/concept-shared-responsibility). Microsoft provides a range of capabilities to support resiliency and recovery. You're responsible for understanding how those capabilities work within all of the services you use, and selecting the capabilities you need to meet your business objectives and uptime goals.\\nThis article describes how to make Blob Storage resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Blob Storage service level agreement (SLA).\\nNote\\nBlob Storage is part of the Azure Storage platform. Some of the capabilities of Blob Storage are common across many Azure Storage services. In this article, we use *Azure Storage* to refer to these features.\\n## Production deployment recommendations\\nTo learn about how to deploy Blob Storage to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Blob Storage](https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-blob-storage) in the Azure Well-Architected Framework.\", \"contentUrl\": \"https://learn.microsoft.com/azure/reliability/reliability-storage-blob\"}, {\"title\": \"Azure Blob Storage REST API\", \"content\": \"# Azure Blob Storage REST API\\nAzure Blob Storage stores text and binary data as objects in the cloud. Blob Storage offers the following resources: the storage account, containers, and blobs. Within your storage account, containers provide a way to organize sets of blobs.\\nYou can store text and binary data in one of the following types of blobs:\\n1. Block blobs, which are optimized for streaming.\\n2. Append blobs, which are optimized for append operations.\\n3. Page blobs, which are optimized for random read/write operations, and which provide the ability to write to a range of bytes in a blob.\\nFor more information, see [Understanding block blobs, append blobs, and page blobs](https://learn.microsoft.com/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs).\\nThe REST API for Blob Storage defines HTTP operations against the storage account, containers, and blobs. The API includes the operations listed in the following table.\\n| Operation | Resource type | Description| \\n|  --- | --- | ---  |\\n| [List Containers](https://learn.microsoft.com/rest/api/storageservices/list-containers2) | Account | Lists all of the containers in a storage account. |\\n| [Set Blob Storage Properties](https://learn.microsoft.com/rest/api/storageservices/set-blob-service-properties) | Account | Sets the properties of Blob Storage, including logging and metrics settings, and the default service version. |\\n| [Get Blob Storage Properties](https://learn.microsoft.com/rest/api/storageservices/get-blob-service-properties) | Account | Gets the properties Blob Storage, including logging and metrics settings, and the default service version. |\\n| [Preflight Blob Request](https://learn.microsoft.com/rest/api/storageservices/preflight-blob-request) | Account | Queries the Cross-Origin Resource Sharing (CORS) rules for Blob Storage, prior to sending the actual request. |\\n| [Get Blob Storage Stats](https://learn.microsoft.com/rest/api/storageservices/get-blob-service-stats) | Account | Retrieves statistics related to replication for Blob Storage. This operation is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account. |\\n| [Get Account Information](https://learn.microsoft.com/rest/api/storageservices/get-account-information) | Account | Returns the SKU name and account kind for the specified account. |\\n| [Get User Delegation Key](https://learn.microsoft.com/rest/api/storageservices/get-user-delegation-key) | Account | Gets a key that can be used to sign a user delegation shared access signature. This signature grants access to resources in Blob Storage by using Microsoft Entra credentials. |\", \"contentUrl\": \"https://learn.microsoft.com/rest/api/storageservices/blob-service-rest-api\"}, {\"title\": \"Get started with Azure Blob Storage using F\", \"content\": \"# Get started with Azure Blob Storage using F\\nAzure Blob Storage is a service that stores unstructured data in the cloud as objects/blobs. Blob storage can store any type of text or binary data, such as a document, media file, or application installer. Blob storage is also referred to as object storage.\\nThis article shows you how to perform common tasks using Blob storage. The samples are written using F# with the `Azure.Storage.Blobs` package. The tasks covered include how to upload, list, download, and delete blobs.\\nFor a conceptual overview of blob storage, see [the .NET guide for blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet). For ease, these tutorials use [connection strings](https://learn.microsoft.com/en-us/azure/storage/storage-configure-connection-string) to authenticate with Azure. For production applications, you should use Microsoft Entra ID with [managed identities](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/) or the [Azure.Identity library](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme) for enhanced security.\\nImportant\\nThis article uses the modern `Azure.Storage.Blobs` package. If you're updating from older code that used the deprecated `WindowsAzure.Storage` or `Microsoft.Azure.Storage.Blob` packages, you need to update your package references and namespace declarations. For migration guidance, see [Migrate to Azure.Storage.Blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet).\\nNote\\nF# developers might consider the [FSharp.Azure.Blob](https://github.com/random82/FSharp.Azure.Blob) library, which provides a more idiomatic F# API for working with Azure Blob Storage. This community library offers idiomatic F# functions and patterns that make blob operations more natural in F#.\\n## Prerequisites\\nTo use this guide, you must first [create an Azure storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create). You also need your storage access key for this account.\", \"contentUrl\": \"https://learn.microsoft.com/dotnet/fsharp/using-fsharp-on-azure/blob-storage\"}, {\"title\": \"Azure Storage blob inventory\", \"content\": \"# Azure Storage blob inventory\\nAzure Storage blob inventory lists the containers, blobs, blob versions, snapshots, and associated properties in your storage account. The service generates reports daily or weekly in comma-separated values (CSV) or Apache Parquet format.\\nUse inventory reports to audit the retention, legal hold, or encryption status of your storage account contents. You can also analyze the total size, age, tier distribution, and other attributes of your data.\\nBlob inventory can simplify business workflows and speed up data processing jobs. It provides scheduled automation of the [List Containers](https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2) and [List Blobs](https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs) APIs. Inventory rules filter report contents by blob type, prefix, or selected blob properties.\\nAzure Storage blob inventory is available for the following types of storage accounts:\\n1. Standard general-purpose v2\\n2. Premium block blob storage\\n3. Blob storage\\n## Inventory features\\nAzure Storage blob inventory supports the following features and capabilities.\\n1. **Inventory reports for blobs and containers**\\n  You can generate inventory reports for blobs and containers. A report for blobs can contain base blobs, snapshots, content length, blob versions, and their associated properties such as creation time and last modified time. The report doesn't list empty containers. A report for containers describes containers and their associated properties such as immutability policy status and legal hold status.\\n2. **Custom schema**\\n  You can choose which fields appear in reports. Choose from a list of supported fields. That list appears later in this article.\\n3. **CSV and Apache Parquet output format**\\n  You can generate an inventory report in either CSV or Apache Parquet output format.\\n4. **Manifest file and Azure Event Grid event per inventory report**\\n  The service generates a manifest file and an Azure Event Grid event for each inventory report. The article describes these items later.\\n## Enabling inventory reports\\nEnable blob inventory reports by adding a policy with one or more rules to your storage account. For guidance, see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\", \"contentUrl\": \"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}",
+              "server_label": "docs"
+            },
+            {
+              "id": "rs_0ec441ee79425778016a9f26ba19f481969f219b61ae46bc76",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqnya8DoNxa28yOVrgq2UJdn1FJXxaTPSb-6_yhjqlFQVVLVNFtUU-JsdYFVQ66QZK0piL-1aCA92487d5iX27q1zaLbBQ07-yztVCP6eFYbBc4Lp38QROhT9E5I6GrpOpP-15Gkg0GGQmevmaNu-lGRAJruvXXCGfUwbPn7R0J5-4UglG1Vhfo1g32EWIGa777rCE5BVlUqgRMzEG_lrYPceruK7RR49l-Ss6tCeF0Mwlq2h84CmeuYSjnpr6duq3chPloNUrrrTMoDGSyFbEODYHsw52bTQnzNLhamNtEtT3QpfUdfy6q9cb-WpJW9q-gjAe1RUGQ9QGBlL6zHz1pButZZkTJgRIfJnmnlCXhcMD_C6fOD736qUWEwjh5CVGu_-5PNdkzDdm3aT4_OgwYuetS55jST7df2t7uHIESXcRy5Ww7la60xm5vrDMufqqxn6nBa8Fg3byuUL1D846kf4t8_r6c_jMyrICSaHYAQCOnB6yaKNWTxgQrIfVgONBFsI1VgIP-dBIkuhn5vQcY7MEbSNnlYE6404zCi6Z6JHGJfCagnjB-MGGAcSZ4yTXi6txDKCJIwXJkJAsJ6sdbD0lBj0cZl-T-E4gRFnE6ggaWzIhgWIi73k0Cv-MUbtOZ__fQZ_cjv4vVKloHLbsMH53t5OapEfnJ0DQ4wJ6REM8_Ip8IEfdAhFMbZx-nAZCzh7zK4NWHunVuRSKF0X79jhR6ynKU5Jb4OtdMKLBDcjAvK6mT09j4UO8B1tQJPrBmua77row5q2plObQ7hqcukFaHxelQPRxbPCXoG_UUfqA5-c3aCj5f1XN_xD6dEMUoszr_puiq1_YIqxYwoyd-xOYwphCmYcUiBDKnXykzI9qkfML_J1DojNAf2eobiGIHgQnUb3wgAhxBHdLsS8ZQxwr_y9wxVKUehz6siM_HtT0DtlYLG1atAjuV8he0nK0NbmWTvgxqMf3FP6vVlgw4Rgm--gSIuaDM48JsZonreWRr_CUiC3IIojdxnLdgIaxFdOdqvOKjP43Pua_hMR0c0Q4Eq_0s0pN0sbMKGR9qzspmYL2pcw3bZ4U8tGCIrCxuji4RE8Z4XlMWgvhSGNttXaRmEIWIueUCYrUyD-1oPg1-va4OO2sYsevrBoKA17njrqf2nf5tgtjQ_uyS-FDxQr3-JpFzCrNf3xaDSKcOPHVDWRt6g5pVhFBtf6b_Y0SIigPrP79ur2WW7o92y-tNHUPsyATUsPzuTjsnMsRpRJ7HzFqOSStUMf6Cb6TAySQSuBC2QwpbKsSDhw7B0WV01DpSxK7cogtK_EANd_SYvaPG9GJLNpUKiYfoPz2kPbGtqlYDmdHacKkKHmLPXUhFhwvsXe4Ul5iJSXDiTTcFPYUU3FsEUxt9cSzwHh6mrLIKbS2J_UZC6SyRui_0SFB3xbgIhEiMzPRL3CrXIye0-hJCPzwo8hdgkG3W_E62pW_6jGx6zPer4JP7-AMqjPdiul5kZy5uLL-fvsD9pp-b2Cg_-hp8ejhI8RTBsZPiTIgkyTGr4YKvX_7ZBpsRMtQHUJ855emXdrmorbxelNrJ5yBy61lKjO-puR9Cvpszmb1x6whEDdK46wdyGmpeFbNMfMtey1xTNN2o7D8IEteKFockd-AIq367v2gnp3Vef1iuVR_3ZQ5n36q1FxIr7wAnwG0-AXBkTZSvTMB9Y23LhXqssNDr2KC7Ac5l79_3K6ocwIiiA9PgaSP0wjeVL6BsMkWJrML17JXnYRqty1TnoeKOrfgBHS0VnFMcn8jfpdzZ0iVwmDNFqvpIXj26xP7KsIaI20ms1R8pmoPuYPflXv1dqWcRfJSI8Muled2M8yMg3GjV6hLr7XxKqpxWr9pRisUOIiazjvhUj7aOMmjqiqMdxfYheJNKyAaGUkAZf5JE6Yvt6pTbtKa7KW0zOb8BGksUSl5KcDNBYohPMcjViA4nktkLQ2gPWfPoyXV7LTzQ-vYTR6sGcB7JwY4JoDt_22UC-NUxV2qN3M9VBh94VzHKzHA482KMFPPYmlD1Pzx7Y3XBaM7Kxod2NnbWMdve10cO5ITv-PKjGca_jcST-gh3hsTuo0N-7J01QIgZ1Fvgp_BMjXE-FHocI3YBTO1XsjI6oxc9zGDsAgmKG6ubEZaGyr3qN5Ta7xXF-QE3wKzq3oXBQjw0ptX1WvY1l-CsGISuW0npwfiqMaGZENTAFALjaBLiccyQ4K2bhFSNvBRqWXA_eo1qwgE1TWBJUq_9GbWl0FL33KvI9QC3BsjOD-9UR0FobxVlj4QYU9xJvluHvmLXTwdGHCK_L5YX_IY_gQfA9qir6dvz6sp8kUjgi79mJN1eGRcV1FgtN4xwrtNnJetql5TJA034byYcVpLMSMXt_1uescINcYB33xd3GPDjQy_ZsRKnGZsY7oo-2ts4UVFYP1Y6IquYrdtDwyEUwqCwuC4zZBGp2lpLnKVb2AHBvjsrxW3OWUO0SuqL0Ed3GC9N8XW65EDAmzgS_lv7dkbEtln0xNOYL96ZSb2Vo9-2WXyQzI9ilyHOhU1TzrsYTpPEXP6ugRcNSPxE7PJz_5WhIceg30m9UXE20Mqc34e0RwMsJnBR-1szqtOzfSnaVyZHyzsHsHSMdKdYVjcSSK94y_ZJqIn4pVHIHY81md8-Nvz0EAz3H4nZIG9mOJnrroEEiW7AL-xcWus97y_UkT_GIo-95V7qmn2MJK6H5-aH1MuFSKaV0XIJZYCHJ7xChmVA8S7RvnB_sN0ctfIVDreZySZgEcpY1B_2HjU2jKBDGwRlOYd_2xQXkCIyZSCeXPbKMc5bvpi_jCRtAegl3WAlKP_qHTLOiB7DZ0wrO7D4Kfp2OKVaAtRKIcODTZanS_Gh0pq0z54w61FqH9MctpCyo-IQKwt4iUOm3BgGNf6SmzEQI0Dtw2x_73gkOcuqz5U26AfGItJpSxsRqHgijZA9WCTEBGqHn9nGfe1PzXAu2Hd4w7A6msv-VuNyvVWjyUhRHWZOLK7oExqE-elovZTYLCp7xkZJo7B8aePDQaaoyV0IwbX9aYvwBBCqgUmrZHKfRq4yEGGP8aTyYyBNwulvUplUZ7fOCAW9Qvrr_xzizGKk119QJMAxOoGVgkU5w9Hf6XeOt4fj_MA44vC942uyzDbGSc1-hFwPWf_BHONxiK1gMmqL9U98pQHsSEr-_n1bXARvonHz8ntZ6Fp9Ng_EcdNWky_SY9l0lLO_f0hY4B0Ef4JNk2UF9sn0ZpLxI1Z6chftLenF1JcxD8Im7ZeQb2ZNR1m-bEw67Kn-NN3LdGN8f2ZGNYx3K-zb4mJBhZwktVeYZSsyEIOtwTazp6hgQV9d1v6et1eLab0qQSmUp0IzEa4NXN6UjThneR-sBODqIlWFaDofFT_AEqUvRaWeQ==",
+              "summary": []
+            },
+            {
+              "id": "msg_0ec441ee79425778016a9f26bbb9508196a1facae676986dd7",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Azure Blob Storage is Microsoft's cloud-based object storage service designed to store massive amounts of unstructured data."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "mcp",
+              "allowed_tools": [
+                "microsoft_docs_search"
+              ],
+              "headers": null,
+              "require_approval": "always",
+              "server_description": null,
+              "server_label": "docs",
+              "server_url": "https://learn.microsoft.com/api/mcp"
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 6429,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 376,
+            "output_tokens_details": {
+              "reasoning_tokens": 320
+            },
+            "total_tokens": 6805
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 07 Sep 2026 21:03:56 GMT
+recorded_with: VCR 6.4.0

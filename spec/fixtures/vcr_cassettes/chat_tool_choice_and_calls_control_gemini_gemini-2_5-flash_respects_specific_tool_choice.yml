@@ -6,9 +6,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
+        current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:41:28 GMT
+      - Mon, 07 Sep 2026 21:06:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=828
+      - gfet4t7; dur=1077
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -61,11 +61,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "123",
-                        "longitude": "123"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CqwCARFNMg/RTDz9qMyaKI2n2AWxYmZeqHya0sofDuoaHeGJU1XXkGS4ERykJErKQERZwu53UNc9bE3QTHJcpSkpp5FjOyZDr70ylweO6yjhoKu72kTXcKeJfvvpSWp9LscDjAeTlj6EwnFZnRVSWfplDg5pH7gV9uXyAWOj7vy3X9IDOFUqgdrClIj028t8N1q00+l4n4qwYY6h6ZZ45b1elrWiPM3OiNMiS4nh9xac/Wtg/D6epMZZKqWYfJEZ/8rVcynpdkSLe5yGW+YgeaYgTd6P/IrVSYfjpUlfiduCMP/N85r1e7JKEkkJlSZsp4YCTgI7Pp4vxxYr7LfKN+TLImcJWyLZgKq42gamTMXAwWV0+o4uesIAUWNKme59QtKzAt7cJPWj8Z5ljwnC"
+                    "thoughtSignature": "CocDARFNMg+ZrSAjTGMEYHEOIHBaGmdjZU6iMQ64uxbMtDZkaCsThu55GDbsBKZzcHvsjE8F9ueHD7MLD7lRymM+RGKIX4DQ86VmZ9OleHFmVJArV4HAKM2ywdpodK+G0259ned2cnq74FKgDGtcsXD1jf0xhPj0yowJm6Pi7egzCUsVFOrYZkQcE8Rd+0EDfrPQ6qdrRQw/dQb8F32Lilep1KmDfMUpEDMAB5kYRRxVUlLgALHQYTUVFEQmKs/QzQ/+mrMcOyfBudgY8eXaGsYHAxX8YVhVz27DrCon5Qf0xqn3ulGpzQd9dwzvik9GC48/AMsRykwtiYo22QyNO580s484wuddpwZBxGK58A/hmLuJjabB9NbpP/sCMWR4hTSvzFYoSgdRHo2sjUK0e/z9iLw59E/v3pZ2psROAu2JWngGrFt+UhvXF49yHjNyCffCMn3O9srz30EhYIFd1l7LlCTGpqIc6CPcFD0SvLOBl8rCP3ZATwqsYaqb/aTG/SePWVbP2cMXzQ=="
                   }
                 ],
                 "role": "model"
@@ -77,31 +77,31 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 85,
-            "candidatesTokenCount": 22,
-            "totalTokenCount": 157,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 185,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 85
               }
             ],
-            "thoughtsTokenCount": 50,
+            "thoughtsTokenCount": 70,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "mMCFakLb-cTfD7bF8-kO"
+          "responseId": "TCefauuRObTsxs0Pn5XW2QI"
         }
-  recorded_at: Wed, 19 Aug 2026 14:41:28 GMT
+  recorded_at: Mon, 07 Sep 2026 21:06:21 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"123","longitude":"123"}},"thoughtSignature":"CqwCARFNMg/RTDz9qMyaKI2n2AWxYmZeqHya0sofDuoaHeGJU1XXkGS4ERykJErKQERZwu53UNc9bE3QTHJcpSkpp5FjOyZDr70ylweO6yjhoKu72kTXcKeJfvvpSWp9LscDjAeTlj6EwnFZnRVSWfplDg5pH7gV9uXyAWOj7vy3X9IDOFUqgdrClIj028t8N1q00+l4n4qwYY6h6ZZ45b1elrWiPM3OiNMiS4nh9xac/Wtg/D6epMZZKqWYfJEZ/8rVcynpdkSLe5yGW+YgeaYgTd6P/IrVSYfjpUlfiduCMP/N85r1e7JKEkkJlSZsp4YCTgI7Pp4vxxYr7LfKN+TLImcJWyLZgKq42gamTMXAwWV0+o4uesIAUWNKme59QtKzAt7cJPWj8Z5ljwnC"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 123, 123: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CocDARFNMg+ZrSAjTGMEYHEOIHBaGmdjZU6iMQ64uxbMtDZkaCsThu55GDbsBKZzcHvsjE8F9ueHD7MLD7lRymM+RGKIX4DQ86VmZ9OleHFmVJArV4HAKM2ywdpodK+G0259ned2cnq74FKgDGtcsXD1jf0xhPj0yowJm6Pi7egzCUsVFOrYZkQcE8Rd+0EDfrPQ6qdrRQw/dQb8F32Lilep1KmDfMUpEDMAB5kYRRxVUlLgALHQYTUVFEQmKs/QzQ/+mrMcOyfBudgY8eXaGsYHAxX8YVhVz27DrCon5Qf0xqn3ulGpzQd9dwzvik9GC48/AMsRykwtiYo22QyNO580s484wuddpwZBxGK58A/hmLuJjabB9NbpP/sCMWR4hTSvzFYoSgdRHo2sjUK0e/z9iLw59E/v3pZ2psROAu2JWngGrFt+UhvXF49yHjNyCffCMn3O9srz30EhYIFd1l7LlCTGpqIc6CPcFD0SvLOBl8rCP3ZATwqsYaqb/aTG/SePWVbP2cMXzQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:41:29 GMT
+      - Mon, 07 Sep 2026 21:06:24 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=547
+      - gfet4t7; dur=2020
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -151,7 +151,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I cannot answer historical questions about the fall of Rome. My current capabilities are limited to providing weather information."
+                    "text": "The Fall of Rome is a complex historical event with many contributing factors, and historians often debate its exact causes and timeline. There isn't one single \"fall\" but rather a gradual decline and transformation of the Western Roman Empire that occurred over several centuries.\n\nSome of the key factors that contributed to its decline include:\n\n*   **Economic Problems:** Inflation, heavy taxation, and a decline in trade weakened the Roman economy.\n*   **Political Instability:** Frequent changes in emperors, corruption, and internal power struggles led to a lack of strong leadership.\n*   **Military Overstretch and Invasions:** The vast borders of the empire were difficult to defend, and constant pressure from Germanic tribes and other groups led to costly wars and territorial losses.\n*   **Social and Moral Decay:** Some historians argue that a decline in civic virtue, a widening gap between rich and poor, and a reliance on slave labor contributed to the empire's weakening.\n*   **Division of the Empire:** The empire was eventually divided into Western and Eastern halves, with the Western Roman Empire being more vulnerable.\n\nThe traditional date for the \"fall\" of the Western Roman Empire is often cited as 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the Eastern Roman Empire (also known as the Byzantine Empire) continued to thrive for another thousand years.\n\nIs there a particular aspect of the Fall of Rome you'd like to know more about?\n"
                   }
                 ],
                 "role": "model"
@@ -161,19 +161,19 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 156,
-            "candidatesTokenCount": 21,
-            "totalTokenCount": 177,
+            "promptTokenCount": 172,
+            "candidatesTokenCount": 311,
+            "totalTokenCount": 483,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 156
+                "tokenCount": 172
               }
             ],
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "mMCFaoWbOZv4xs0PrKznuQ4"
+          "responseId": "Tiefao-zBOCS3boPhaPR2AY"
         }
-  recorded_at: Wed, 19 Aug 2026 14:41:29 GMT
+  recorded_at: Mon, 07 Sep 2026 21:06:24 GMT
 recorded_with: VCR 6.4.0

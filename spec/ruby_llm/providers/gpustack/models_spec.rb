@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Providers::GPUStack::Models do
   subject(:protocol) { RubyLLM::Providers::GPUStack::ChatCompletions.new(provider) }
 
   let(:config) { RubyLLM::Configuration.new }
-  let(:connection) { instance_double(RubyLLM::Connection) }
+  let(:connection) { instance_double(RubyLLM::Transport::Connection) }
   let(:provider) do
     instance_double(RubyLLM::Providers::GPUStack, config: config, connection: connection, slug: 'gpustack')
   end

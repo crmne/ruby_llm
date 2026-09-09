@@ -3,6 +3,6 @@
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
-require 'ruby_llm/provider_generator_cli'
+require 'generators/ruby_llm/provider/cli'
 
-exit RubyLLM::ProviderGeneratorCLI.run(ARGV)
+exit RubyLLM::Generators::Provider::CLI.run(ARGV)

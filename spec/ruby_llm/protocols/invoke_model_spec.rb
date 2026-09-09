@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::InvokeModel do
   let(:config) { RubyLLM::Configuration.new }
-  let(:connection) { instance_double(RubyLLM::Connection) }
+  let(:connection) { instance_double(RubyLLM::Transport::Connection) }
   let(:provider) do
     instance_double(
       RubyLLM::Providers::Bedrock,

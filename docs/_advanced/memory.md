@@ -21,9 +21,9 @@ After reading this guide, you will know:
 
 ## Short-Term Memory Is the Transcript
 
-Within a conversation, memory needs no machinery: the chat sends its whole message history with every request, and with [`acts_as_chat`]({% link _advanced/rails-persistence.md %}) that history is rows in your database. An agent reloaded tomorrow remembers everything it was told today.
+A chat includes its message history in each request. With [`acts_as_chat`]({% link _advanced/rails-persistence.md %}), that history is stored in your database and available when the agent is loaded again.
 
-When the transcript grows past what you want to send, compact it with [transcript replacement]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript): summarize the old turns, keep the recent ones verbatim, and show the model the compacted version while your users keep the full history. Memory of the conversation is a view of the conversation, not a second store.
+When the transcript grows past what you want to send, compact it with [transcript replacement]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript): summarize the old turns, keep the recent ones verbatim, and show the model the compacted version while your users keep the full history. Your application keeps the original messages.
 
 ## A Memories Table
 
@@ -80,7 +80,7 @@ class Remember < RubyLLM::Tool
 end
 ```
 
-`find_or_create_by!` keeps the tool idempotent, so a [resumed job]({% link _advanced/durable-agents.md %}) that runs it twice stores one memory.
+`find_or_create_by!` reuses an existing memory when a [resumed job]({% link _advanced/durable-agents.md %}) runs again. If several jobs can write the same memory concurrently, enforce uniqueness in the database too.
 
 ## Recalling
 
@@ -120,13 +120,13 @@ end
 
 A few recent memories in the instructions cover the common case cheaply; the `Recall` tool covers the long tail by meaning. Forgetting is `memory.destroy`.
 
-## Keep It Honest
+## Managing Memories
 
-There is no memory framework here, and that is the point: two tools, one table, and the database features you already run. Scoping is your ordinary Rails scoping (`user.memories`, never a global store), review UIs are ordinary CRUD, and retention policy is a `where` clause. When a framework offers you "semantic memory" as an abstraction, this is what is inside it.
+Memories are your application records. Scope access through `user.memories`, let users review or delete them through ordinary Rails actions, and apply your retention policy in the database.
 
 ## Next Steps
 
 * [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) - The same embeddings pattern over imported documents.
-* [Agents]({% link _advanced/agents.md %}) - The `inputs` and instructions machinery used above.
+* [Agents]({% link _advanced/agents.md %}) - The runtime inputs and instructions used above.
 * [Chat]({% link _core_features/chat.md %}) - Transcript replacement for compaction.
 * [Embeddings]({% link _core_features/embeddings.md %}) - Turning text into vectors.

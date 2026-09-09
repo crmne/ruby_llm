@@ -185,10 +185,12 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
 
       it "#{provider}/#{model} can handle array of mixed files with auto-detection" do
         chat = RubyLLM.chat(model: model, provider: provider)
-        response = chat.ask('Analyze these files', with: [image_path, pdf_path])
+        prompt = 'Describe the image, then summarize the PDF. Cover both files separately.'
+        response = chat.ask(prompt, with: [image_path, pdf_path])
 
         expect(response.content).to match(/ruby|gem|logo/i)
-        expect(chat.messages.first.content).to eq('Analyze these files')
+        expect(response.content).to match(/pdf|document|lorem|sample/i)
+        expect(chat.messages.first.content).to eq(prompt)
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.png')
         expect(chat.messages.first.attachments.first.mime_type).to eq('image/png')
         expect(chat.messages.first.attachments.second.filename).to eq('sample.pdf')

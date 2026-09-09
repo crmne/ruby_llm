@@ -11,6 +11,7 @@ module RubyLLM
       protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
       protocol :responses, Azure::Responses
       protocol :files, Protocols::Azure::Files
+      protocol :cohere, Azure::Cohere
 
       def api_base
         @config.azure_api_base
@@ -20,12 +21,20 @@ module RubyLLM
       # tool use, so they route there automatically. Deployment names often
       # differ from model ids, so the routing stays conservative; an explicit
       # protocol: or the azure_protocol configuration option overrides it.
-      def protocol_for(model, **)
+      def protocol_for(model, operation: nil, **)
+        return protocols[:cohere] if operation == :rerank
+        if operation == :embed &&
+           %w[Cohere-embed-v3-english Cohere-embed-v3-multilingual embed-v-4-0].include?(model.id)
+          return protocols[:cohere]
+        end
+
         model.id.match?(/gpt-5\.[4-9]|gpt-5\d/) ? protocols[:responses] : super
       end
 
       def headers
-        if @config.azure_api_key
+        if @config.azure_api_key && URI.parse(api_base).host&.end_with?('.models.ai.azure.com')
+          { 'Authorization' => "Bearer #{@config.azure_api_key}" }
+        elsif @config.azure_api_key
           { 'api-key' => @config.azure_api_key }
         else
           { 'Authorization' => "Bearer #{@config.azure_ai_auth_token}" }
@@ -34,6 +43,18 @@ module RubyLLM
 
       def batch_cost_multiplier(**) = 0.5
 
+      def azure_cohere_url(operation) # :nodoc:
+        base = azure_base_parts[:path_base]
+        base = if base.include?('/providers/cohere')
+                 base.sub(%r{/providers/cohere.*\z}, '/providers/cohere')
+               elsif URI.parse(base).host&.end_with?('.models.ai.azure.com')
+                 base.sub(%r{/v2(?:/.*)?\z}, '')
+               else
+                 "#{azure_base_parts[:root]}/providers/cohere"
+               end
+        "#{base}/v2/#{operation}"
+      end
+
       def azure_openai_v1_base
         parts = azure_base_parts
         if parts[:mode] == :openai_v1_base
@@ -41,6 +62,19 @@ module RubyLLM
         else
           "#{parts[:root]}/openai/v1"
         end
+      end
+
+      def azure_media_url(path) # :nodoc:
+        parts = azure_base_parts
+        if parts[:path_base].include?('/openai/deployments/')
+          base = parts[:path_base].sub(%r{/chat/completions/?\z}, '')
+          version = parts[:version] || '2025-04-01-preview'
+        else
+          base = azure_openai_v1_base
+          version = (parts[:version] if parts[:mode] == :openai_v1_base) || 'preview'
+        end
+
+        "#{base.sub(%r{/+\z}, '')}/#{path}?api-version=#{version}"
       end
 
       def azure_base_parts
@@ -69,6 +103,10 @@ module RubyLLM
       end
 
       class << self
+        def capabilities
+          Azure::Capabilities
+        end
+
         def configuration_options
           %i[azure_api_base azure_api_key azure_ai_auth_token]
         end

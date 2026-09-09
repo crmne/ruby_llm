@@ -5,19 +5,19 @@ http_interactions:
     uri: https://api.openai.com/v1/files
     body:
       encoding: UTF-8
-      string: "-------------RubyMultipartPost-810e8740356594ea6c1d2134607af5e0\r\nContent-Disposition:
+      string: "-------------RubyMultipartPost-896ea884bfe10a5bbd8ce893476ef4a4\r\nContent-Disposition:
         form-data; name=\"file\"; filename=\"ruby_llm_batch.jsonl\"\r\nContent-Length:
         446\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"custom_id\":\"0\",\"method\":\"POST\",\"url\":\"/v1/responses\",\"body\":{\"model\":\"gpt-5-nano\",\"input\":[{\"role\":\"user\",\"content\":\"What
         is 2 + 2? Just the number.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\n{\"custom_id\":\"1\",\"method\":\"POST\",\"url\":\"/v1/responses\",\"body\":{\"model\":\"gpt-5-nano\",\"input\":[{\"role\":\"user\",\"content\":\"Name
-        the largest planet in our solar system. One word.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\r\n-------------RubyMultipartPost-810e8740356594ea6c1d2134607af5e0\r\nContent-Disposition:
-        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-810e8740356594ea6c1d2134607af5e0--\r\n"
+        the largest planet in our solar system. One word.\"}],\"store\":false,\"include\":[\"reasoning.encrypted_content\"]}}\r\n-------------RubyMultipartPost-896ea884bfe10a5bbd8ce893476ef4a4\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-896ea884bfe10a5bbd8ce893476ef4a4--\r\n"
     headers:
       User-Agent:
       - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
-      - multipart/form-data; boundary=-----------RubyMultipartPost-810e8740356594ea6c1d2134607af5e0
+      - multipart/form-data; boundary=-----------RubyMultipartPost-896ea884bfe10a5bbd8ce893476ef4a4
       Content-Length:
       - '871'
       Accept-Encoding:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:41:14 GMT
+      - Mon, 07 Sep 2026 21:09:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '426'
+      - '318'
       Openai-Version:
       - '2020-10-01'
       Openai-Organization:
@@ -72,22 +72,22 @@ http_interactions:
       string: |
         {
           "object": "file",
-          "id": "file-5dskxx7B6SVyAyRgAHzTJ2",
+          "id": "file-KDJ712m5SeTYf6VVK5Zdnd",
           "purpose": "batch",
           "filename": "ruby_llm_batch.jsonl",
           "bytes": 446,
-          "created_at": 1787150473,
-          "expires_at": 1789742473,
+          "created_at": 1788815359,
+          "expires_at": 1791407359,
           "status": "processed",
           "status_details": null
         }
-  recorded_at: Wed, 19 Aug 2026 14:41:14 GMT
+  recorded_at: Mon, 07 Sep 2026 21:09:19 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/batches
     body:
       encoding: UTF-8
-      string: '{"input_file_id":"file-5dskxx7B6SVyAyRgAHzTJ2","endpoint":"/v1/responses","completion_window":"24h"}'
+      string: '{"input_file_id":"file-KDJ712m5SeTYf6VVK5Zdnd","endpoint":"/v1/responses","completion_window":"24h"}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -105,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:41:14 GMT
+      - Mon, 07 Sep 2026 21:09:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -123,7 +123,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '282'
+      - '173'
       X-Openai-Proxy-Wasm:
       - v0.1
       Access-Control-Expose-Headers:
@@ -145,19 +145,19 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
           "object": "batch",
           "endpoint": "/v1/responses",
           "model": null,
           "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
           "completion_window": "24h",
           "status": "validating",
           "output_file_id": null,
           "error_file_id": null,
-          "created_at": 1787150474,
+          "created_at": 1788815359,
           "in_progress_at": null,
-          "expires_at": 1787236874,
+          "expires_at": 1788901759,
           "finalizing_at": null,
           "completed_at": null,
           "failed_at": null,
@@ -182,10 +182,10 @@ http_interactions:
           },
           "metadata": null
         }
-  recorded_at: Wed, 19 Aug 2026 14:41:14 GMT
+  recorded_at: Mon, 07 Sep 2026 21:09:20 GMT
 - request:
     method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
     body:
       encoding: US-ASCII
       string: ''
@@ -204,997 +204,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:41:14 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '15'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": null,
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "validating",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": null,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 0,
-            "completed": 0,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:41:14 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:41:30 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '34'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": null,
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "validating",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": null,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 0,
-            "completed": 0,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:41:30 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:41:45 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '15'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": null,
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "validating",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": null,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 0,
-            "completed": 0,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:41:45 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:42:00 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '15'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": null,
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "validating",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": null,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 0,
-            "completed": 0,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:42:00 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:42:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '15'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": null,
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "validating",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": null,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 0,
-            "completed": 0,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:42:15 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:42:31 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '18'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": "gpt-5-nano-2025-08-07",
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "in_progress",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": 1787150537,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 2,
-            "completed": 0,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:42:31 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:42:46 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '17'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": "gpt-5-nano-2025-08-07",
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "in_progress",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": 1787150537,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 2,
-            "completed": 1,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:42:46 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:43:01 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '15'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": "gpt-5-nano-2025-08-07",
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "in_progress",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": 1787150537,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 2,
-            "completed": 1,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:43:01 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:43:16 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '17'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": "gpt-5-nano-2025-08-07",
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "in_progress",
-          "output_file_id": null,
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": 1787150537,
-          "expires_at": 1787236874,
-          "finalizing_at": null,
-          "completed_at": null,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 2,
-            "completed": 1,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "total_tokens": 0,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:43:16 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:43:32 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Server:
-      - cloudflare
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '34'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      Access-Control-Expose-Headers:
-      - CF-Ray
-      - X-Request-ID
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
-          "object": "batch",
-          "endpoint": "/v1/responses",
-          "model": "gpt-5-nano-2025-08-07",
-          "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
-          "completion_window": "24h",
-          "status": "completed",
-          "output_file_id": "file-4SnbT9qu8ShH2A1wCvTHNp",
-          "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": 1787150537,
-          "expires_at": 1787236874,
-          "finalizing_at": 1787150606,
-          "completed_at": 1787150607,
-          "failed_at": null,
-          "expired_at": null,
-          "cancelling_at": null,
-          "cancelled_at": null,
-          "request_counts": {
-            "total": 2,
-            "completed": 2,
-            "failed": 0
-          },
-          "usage": {
-            "input_tokens": 36,
-            "output_tokens": 224,
-            "total_tokens": 260,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens_details": {
-              "reasoning_tokens": 128
-            }
-          },
-          "metadata": null
-        }
-  recorded_at: Wed, 19 Aug 2026 14:43:32 GMT
-- request:
-    method: get
-    uri: https://api.openai.com/v1/batches/batch_6a85c08a63188190982c56b42faa4ff5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 19 Aug 2026 14:43:32 GMT
+      - Mon, 07 Sep 2026 21:09:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1234,21 +244,1011 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "batch_6a85c08a63188190982c56b42faa4ff5",
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": null,
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": null,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:09:20 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:09:35 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '20'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
           "object": "batch",
           "endpoint": "/v1/responses",
           "model": "gpt-5-nano-2025-08-07",
           "errors": null,
-          "input_file_id": "file-5dskxx7B6SVyAyRgAHzTJ2",
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:09:35 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:09:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '22'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:09:50 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:10:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '19'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:10:06 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:10:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '18'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:10:21 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:10:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '16'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 1,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:10:36 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:10:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '25'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 1,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:10:52 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:11:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '17'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 1,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:11:07 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:11:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '15'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 1,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:11:22 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:11:37 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '21'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "in_progress",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 1,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:11:37 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:11:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '23'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
           "completion_window": "24h",
           "status": "completed",
-          "output_file_id": "file-4SnbT9qu8ShH2A1wCvTHNp",
+          "output_file_id": "file-M2Rf658VjCiPMY2JrsAw5Y",
           "error_file_id": null,
-          "created_at": 1787150474,
-          "in_progress_at": 1787150537,
-          "expires_at": 1787236874,
-          "finalizing_at": 1787150606,
-          "completed_at": 1787150607,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": 1788815507,
+          "completed_at": 1788815508,
           "failed_at": null,
           "expired_at": null,
           "cancelling_at": null,
@@ -1260,8 +1260,8 @@ http_interactions:
           },
           "usage": {
             "input_tokens": 36,
-            "output_tokens": 224,
-            "total_tokens": 260,
+            "output_tokens": 182,
+            "total_tokens": 218,
             "input_tokens_details": {
               "cached_tokens": 0
             },
@@ -1271,10 +1271,109 @@ http_interactions:
           },
           "metadata": null
         }
-  recorded_at: Wed, 19 Aug 2026 14:43:32 GMT
+  recorded_at: Mon, 07 Sep 2026 21:11:53 GMT
 - request:
     method: get
-    uri: https://api.openai.com/v1/files/file-4SnbT9qu8ShH2A1wCvTHNp/content
+    uri: https://api.openai.com/v1/batches/batch_6a9f27ffffdc8190b1af6b96276564b4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 21:11:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '16'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a9f27ffffdc8190b1af6b96276564b4",
+          "object": "batch",
+          "endpoint": "/v1/responses",
+          "model": "gpt-5-nano-2025-08-07",
+          "errors": null,
+          "input_file_id": "file-KDJ712m5SeTYf6VVK5Zdnd",
+          "completion_window": "24h",
+          "status": "completed",
+          "output_file_id": "file-M2Rf658VjCiPMY2JrsAw5Y",
+          "error_file_id": null,
+          "created_at": 1788815359,
+          "in_progress_at": 1788815362,
+          "expires_at": 1788901759,
+          "finalizing_at": 1788815507,
+          "completed_at": 1788815508,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 2,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 36,
+            "output_tokens": 182,
+            "total_tokens": 218,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Mon, 07 Sep 2026 21:11:53 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/files/file-M2Rf658VjCiPMY2JrsAw5Y/content
     body:
       encoding: US-ASCII
       string: ''
@@ -1293,21 +1392,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:43:32 GMT
+      - Mon, 07 Sep 2026 21:11:54 GMT
       Content-Type:
       - application/octet-stream
       Content-Length:
-      - '7452'
+      - '7194'
       Connection:
       - keep-alive
       Server:
       - cloudflare
       Content-Disposition:
-      - attachment; filename="batch_6a85c08a63188190982c56b42faa4ff5_output.jsonl"
+      - attachment; filename="batch_6a9f27ffffdc8190b1af6b96276564b4_output.jsonl"
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '102'
+      - '428'
       Openai-Version:
       - '2020-10-01'
       Openai-Organization:
@@ -1335,7 +1434,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"id": "batch_req_6a85c10ebfa08190b20a29426c204c42", "custom_id": "0", "response": {"status_code": 200, "request_id": "792c1a99-eabf-4ce2-82bf-f0256f7de7f1", "body": {"id": "resp_034690d6c7279fd5016a85c10a8ae487d2a188d8842f0dba32", "object": "response", "created_at": 1787150602, "status": "completed", "background": false, "billing": {"payer": "developer"}, "completed_at": 1787150605, "error": null, "frequency_penalty": 0.0, "incomplete_details": null, "instructions": null, "max_output_tokens": null, "max_tool_calls": null, "model": "gpt-5-nano-2025-08-07", "moderation": null, "output": [{"id": "rs_034690d6c7279fd5016a85c10c9c9087d29bcad43603fc0cc0", "type": "reasoning", "content": [], "encrypted_content": "gAAAAABqhcENslaOC5iNpgFzMyWE2vsjf9KesZgk9v5BXel5_4-N3X4vCPo6ogIIBWMsYTm2nCxtAkqB13B41rtC2u3M7Sna_8WBKvn6iHXclFcMn_Hkmt9hNswfG4LJGF04acamBMQLlKONS75pLYm2UjRzXN9s9C_-h2KRd-DLmWjJUdeV4vQXBv-Q9Eo_NbyHTuRTMyoPUfT6ORbHos8A_JFeTGJwNPYeRu2qc3gJVibTt4IgJZtSiCuzcDi-Fzs85m0QhgRp3APzFKYv6Evriwl92cZTVvq2xN1DpHDScKmS2JS1vZw3SdDQxcTvrGeJhikXZkkb87S7U1i7DkzrHb2UDBwhaZRjKEwqTfI-W5i6y7f8YfeQJc9sEc7PY7yWJ4EfBHxd80_csaOrlQe4Ll5XqrqCxD0tikso3g848EXXMmuqxn9LsMV03PKUJ_EF0LUvRLtBcnAiSG8jqfOIMG8Yf3RPkvg73DmEUnV6s9d6xYFYK1TY9hoCo2qs71_5qoRs5Hf9IrRpdsrYvncALiIIIDZb4eQHi-dwD22vmCMSRqlcDzXmNz9Krv5SfWz7MVHOf7nN5M1Rf2XyRjRFd7pXz3h1v4gDDrj3EMsmOuCjhISJMIWxtbLP-aqOJaRIpeRd9dHd4LL0KOWFXc_PCbsuxOMeeJraCVttTAi4ojRshknlJbx7hKiTM2F2TcWUjDNkwDdmM6p7zsMBHmkS0S-bAUnZfb372nyVgJV11XDdjfJU2BLKxmL7LGZqUBc1v5Od4nIffQKWWvoH2HoPx3sWDXoEemX5112xUsLnfW_FH1LspPuHHpQA_1ci6Iiji9ndz_xxqi3QLxG56w3yuWg64xfckS24FMWzk2eOl7K213-9vb5qyc5B80icDKshzp9z3TBWH94erpM3XQ6IXnab-AKDNVGeDDm9qnO0-f7VzfeodRT78G5RYdAdKdYokOq2ZFVKzc1MysI2j7rLqV19wHdBLSwrjVu7aahkGkJVW9Je5pKpM2Imz_cyd3NUw9aVIax31a0o0cXbIrgV-wojRHiHfdiHEJUWFmj393Io345-SsVCsYN-3JLdN6yEWOgdKuZv3YPt1Ht2bcs379dYmpOO7scj23GQAhykBeUv8RyceA4FY51ZqJzcO_z_Z1nkFrYwtPhwVlGqUWJk155vzTkXGA0ITN4sqVcpz44Ce2O77HjfwQRIu5KR7xIYNqD3K3T-42gVY5iMMvhbkfVSLlK9aG-z5khDdg1LKgZ4rwbISzc7sfCYczgtLHI-tR54e1djkV2zbfBYjOqoZFsi_M_G9VaTBW4mzOtSr1N7EuNAzKblrqZAXr324QoW25xCRjEfcz-51hhi9m1b33pnIZOMe5xrlz_6y-3JtqZ9X15PC3xH9M78AywS3SsOPqty22aSrE1IuZCVW4ph9fP9Fkn8RuQ5DVRUwE7MQ4xjqmd3MPmCZR_JMgAkrYQdtKZ7CorxCbZhy2ZyBFVFnhCh4IPMbDmws8wpx97DaJyy9YiiViWCbcJYQmGFQXVO-hQHCHCpTpp33xC3sC6GXiRyUcDZvqnbVwVTQk7sqp9Z6Gg9A61Yc2jaCAQ5K5o0BBvgjkXfQgnftuMNgzxmhg6CSHzu8zPfEcZXs4_kMnVUAHqWkCy08EyQ1MtiQQGd2bt-gnz2cUuJ5Bu1T_ScVFgb4ivfAqvd3d6SY7ArsgsKqFtWAqXL_U18IzgHk5C6Iu4ojJOn", "summary": []}, {"id": "msg_034690d6c7279fd5016a85c10d1dc887d29f92f45f4147faaa", "type": "message", "status": "completed", "content": [{"type": "output_text", "annotations": [], "logprobs": [], "text": "4"}], "role": "assistant"}], "parallel_tool_calls": true, "presence_penalty": 0.0, "previous_response_id": null, "prompt_cache_key": null, "prompt_cache_retention": "in_memory", "reasoning": {"context": "current_turn", "effort": "medium", "mode": "standard", "summary": null}, "safety_identifier": null, "service_tier": "default", "store": false, "temperature": 1.0, "text": {"format": {"type": "text"}, "verbosity": "medium"}, "tool_choice": "auto", "tool_usage": {"image_gen": {"input_tokens": 0, "input_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "output_tokens": 0, "output_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "total_tokens": 0}, "web_search": {"num_requests": 0}}, "tools": [], "top_logprobs": 0, "top_p": 1.0, "truncation": "disabled", "usage": {"input_tokens": 18, "input_tokens_details": {"cache_write_tokens": 0, "cached_tokens": 0}, "output_tokens": 109, "output_tokens_details": {"reasoning_tokens": 64}, "total_tokens": 127}, "user": null, "metadata": {}}}, "error": null}
-        {"id": "batch_req_6a85c10eda9c8190842f9d64467e7ff0", "custom_id": "1", "response": {"status_code": 200, "request_id": "0b5f7bda-4a5a-40d1-9c9a-e940ca5a6cf0", "body": {"id": "resp_0071839b503dc1a2016a85c0cd3c9881a2a6cb566a28f223f1", "object": "response", "created_at": 1787150541, "status": "completed", "background": false, "billing": {"payer": "developer"}, "completed_at": 1787150542, "error": null, "frequency_penalty": 0.0, "incomplete_details": null, "instructions": null, "max_output_tokens": null, "max_tool_calls": null, "model": "gpt-5-nano-2025-08-07", "moderation": null, "output": [{"id": "rs_0071839b503dc1a2016a85c0cd95b881a2a94329f427012268", "type": "reasoning", "content": [], "encrypted_content": "gAAAAABqhcDO40ws3xmg1w_drZLDsfmJHkqAYiMfxmPtoJAo8GDR1NiTmQAkWQSFLBT_Us5VkFpmYEV171cvu--OzMfVvus699WxeSp1mLPPSPe0p7sx-KMbvg0OVpund2AtrYbFaVV1WA7fCKjaIxgeapJn-4FEwGjT0PvjO4AI6XIwf8ZaxpjRNcykNqrf-K5NR7pQhW-ccYU3uhaMQwmQ07wZ-Tlo3meCtF-8UOVciAHktQe3bElGbske-vbMbNp7HTN4B04Ui3K8S-I9SLLaOj9C0WxEbYphUdQV0bp0fazxK8VZSOz0KfTlnrQu5AiFiCxYYpbnyLPqsOR7AUTwo314s2_H1KoLt8wuefvlxV1vmHrPQkiDCvisRm6BeYVHtEpXUt2TA2SAQn_vSr-QI8dWxpqwPgUZVaXwzwQW7g4MK6rSav1VslliYbNPubtLd5gaovgl43Ki8bV9V-LH0UzQQcdud2TjYp7jHlMuSM5Ydi1CJNGTZvGeafcN2e5DpNhfiHO3V1AhkZ194YLJyBJO3o7b_7ju2pzyqpZlgm6xmHG1kAA13-vkBdi1ZS9jCph-HI2mB2tF6vnlz4YxpK9Lom5E7wqtQs8tQzgzO-EJEo8EV-PdbNL3FsLx4Gjccd8FpfRMsJvVJ2ReEgJnvMYXAFOxbvgNxsm9usQm1smyyK-mYnEa5spTI02NmQo3m34sAesOfijJqQ3tGhN954BDSxAgrm610vwKo_1jlUUqOWHOPyINA5ji0raKtY2pa61Ors6iggJrDbakARvhCxO4pFDgx4i5kMRqqYtPtzjfMxbLUzjEpw8ZrxhM3cBfXZgJWP5OLThApBf3PlcQdn51Z8sEdgAMFaRKp3woh7ktWloaJFXdU_JkPYN72S0VO1eL1mkRF7fWHzTQCf4iPWjDHse0WRShXcHN__anPZz1UZaHsISgeBA8NUe17hFZGTTPv3xWgFenND8Zf8qp-SX0vfTcSVIE7vXxy31HbeIyxmlfKLtHOaXyoaDnK0yLtq-IQ1S3BeWGNnCcjaUMjix8EQnBO0aL6MXK6CWoCGcEHYFL7-EYwU-vXDOI_-hu8mVNhWXSTJlvhZ8Yz9tyRhwaLo-C9PVyJtTdGZv1_dYcTJSHf-cRNevMuNV-HCwhg1ArOcnJI6wxyYNlR9fbgelOBJMIFvCXfe9r8lr-yloQElQm3B6wiBoMiznhKyvtymIe7ihJhWG1c_WqYdQE4dmO7rV5ypCizT6Rbh5WonHdA4Tsx3RcLEJoXVTv2qQOdVvHvNhZDapCwzvcgkJ8iqEg_DLr7TkwJci1u90VUEvo6PYfM8oTpE_LyxTJVrZnrbEjs1YlcmH2ehSkN6Xj3i3Uc-ZZx_SqjG9NTViTNPLa9JcjmCGbwu3kTxNvyqIRLcpE2jyIzEb1tSqSPf60CfvadXoq58Zmnuyu-vdxma7qpdgy5J0KfDabWRwzHx1qT6dqCqr6N9rai0_1QczzsY_J-Qpupm1xThje7KtATEQENlaNK3eMA4RumtpUl7UEwV0RvktF_3wq_K6ZCYm327wlk5qKR3gbpCu5zSI0jbEh7Q3Plha87w_xBsSuE_wGNo2mBVSbHfkX-uCt5vAMGEp4vt59mD8vu6sslKWgLYY9SykRksC8KDNnJ53vE2jgow8zmP93mUhTThje52Kk2dHmP6TxqETN0-6g5SX_OKxVzZWOOhqiyVa15dEh5qL6EJaHA-zhxs1THsVNSmb3-FCTxuO2zmxNhA7y51pnfyb3OJFcyxVJY9g1sUJQjF_BAp2OPys7TDsvJFzECzWAlx8x-KlSvg==", "summary": []}, {"id": "msg_0071839b503dc1a2016a85c0ce4a1481a28e0324c8b2d8897c", "type": "message", "status": "completed", "content": [{"type": "output_text", "annotations": [], "logprobs": [], "text": "Jupiter"}], "role": "assistant"}], "parallel_tool_calls": true, "presence_penalty": 0.0, "previous_response_id": null, "prompt_cache_key": null, "prompt_cache_retention": "in_memory", "reasoning": {"context": "current_turn", "effort": "medium", "mode": "standard", "summary": null}, "safety_identifier": null, "service_tier": "default", "store": false, "temperature": 1.0, "text": {"format": {"type": "text"}, "verbosity": "medium"}, "tool_choice": "auto", "tool_usage": {"image_gen": {"input_tokens": 0, "input_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "output_tokens": 0, "output_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "total_tokens": 0}, "web_search": {"num_requests": 0}}, "tools": [], "top_logprobs": 0, "top_p": 1.0, "truncation": "disabled", "usage": {"input_tokens": 18, "input_tokens_details": {"cache_write_tokens": 0, "cached_tokens": 0}, "output_tokens": 115, "output_tokens_details": {"reasoning_tokens": 64}, "total_tokens": 133}, "user": null, "metadata": {}}}, "error": null}
-  recorded_at: Wed, 19 Aug 2026 14:43:32 GMT
+        {"id": "batch_req_6a9f2894158c81908cbfa0b7649addde", "custom_id": "0", "response": {"status_code": 200, "request_id": "3792d4bc-f610-4a90-8897-aab213930b62", "body": {"id": "resp_0fb16df815af8208016a9f2863cd3087d2ad5f922b3259b7bd", "object": "response", "created_at": 1788815459, "status": "completed", "background": false, "billing": {"payer": "developer"}, "completed_at": 1788815460, "error": null, "frequency_penalty": 0.0, "incomplete_details": null, "instructions": null, "max_output_tokens": null, "max_tool_calls": null, "model": "gpt-5-nano-2025-08-07", "moderation": null, "output": [{"id": "rs_0fb16df815af8208016a9f28640e0c87d295f05600ebb08496", "type": "reasoning", "content": [], "encrypted_content": "gAAAAABqnyhks4aJ0cfMaJNSglpLQStosPmO3pkugQ0YPA0E5K8rckTFUnQeG9QvCaACLWnN70Kndt7onKiaBCwAm_ArPnApcmLEUZv7l8sS4eMrm-EdshUlIeFNSP6iakWJH5Ah8yDFmn1VPZHI1c7RbRPAdVVx7IglLKybCOibvBRNv3DXNQSytOCCXnuPR_qDQLi0LIvhcBsYXQv894moAPHevXXlzFiIAEF-WIUcrnNUuzbwMJmGFcncyHh2-3P6jiRdTdx4984qgV03-FU18oPun23R8VLifp27Ip9_FxXArkTp3kBatK1Tr_Sf09SlhmTyt89r28Qd4vzlfAH6Ji1gh2TPwuUy9HiWy6_3JSdhRTZyC_Cm8VKPCCUxeY4JXfhaI57suD7bVaPD8o9X95gzypw_ubRNqNS0ng3C5r-xqxu2xU7idTYwxz9y5BVxITkhGjWaSgG9pRr65N50AaFdZ1RyJTN4Xj_kSa9_VPqVXP8T6TbUsbM-zrZonMLrQAQAhdfdcayWcPCglFiF1mXiiFt-wWETuThhm7MUTRgdo4Gzzbn-73jbgkrNqO9TFD_SBc7EUw0F5fCTj-ysyJxnmdNskG7XMiKBQXZ6e23kNnCW8eFhF5mOijPFfUM_YavfzA-QiMWCNZD_9zAYyDzO4Vucnw_h7rlJ2-VPtQfdOiajJJXgnX_5KnVvEC02K6QecClQXuuSrSSg6QOJEaEop1p5PwysovYiki-rNxYlYpM5T-jkF-YU_EAzD32h1RccxXl5f19L7IzekvLSmwzCk4SUujrA16r8qYwMubpTlbpFFBW9TMaSSAaMsh-pdWR52EMBkHrpLNEjY9Q2v-bjSoq9YeiO1dalxOoDewreY7zSANnb3ipJz-B03vVZ_TS9iEaWA9GVvZpJEDnpNnBuqi-miduaezxviEZ9dPxujum3PiIh4UEiM3k3JLpcsbSOqlGVS6GS4Wq940pmO2SD8wz5im6Hw-TpVOVwDxpzc3E4vzeuUPu1hDaU_R7W3_7T-qsTLJpYbdkeUO5XDioRzilW5QsAiVgdDl0IUlBaMbhWN8Q16lWMHvZHfTFp3_KHXdN75WBEeXn2xKXLLC-ENBvYD2qZ2NxdNZ0wmaURnaB2o-O2WzDLRBZvq7NtZyaNUl8HHNRvkQOP2QPznidgvo8msA9Y2CCpGZ5QYMW6jLhb02gXTzoQi4Tbe0Jgfz1IPLSTxTBauBAwJK8qyKsrftEhY7Up4W-MvTsmmLjG7S-1tTri0hLUtbB5SHt0MrlQo9CibHlxumGxL-LXfuNtF_SPU9On9TXa0b1zpgQa46XxzcdlG5l0fdCL74y6Fd7eGGx__w1d3pKLW8ZQcuyfgBsaPcsk_Ccn3VZJTYBQ28syG3cjYIYiVM4cH47W5Yn8bxScdQRUCIYkc4UsKW1VtQV-yh8mKyr6G4zoTIoPbJUmr2Q43S2oH7OGXhdMkZahjKxP6CSY4XusiDH0zx4bTQDPQ8cDK2WZDBCECnG5GDuV3DLAJds2UIhuV0sfc-VvY4racEXoFK2X7VcsEUc2qz68T2-qep4TO73L5EOHydY-3iqGX4--fNFPs-fNHwJZqqTUjvauZRRr59BJuF_5oDhMKg==", "summary": []}, {"id": "msg_0fb16df815af8208016a9f286458d487d295d507c6f69487dd", "type": "message", "status": "completed", "content": [{"type": "output_text", "annotations": [], "logprobs": [], "text": "4"}], "role": "assistant"}], "parallel_tool_calls": true, "presence_penalty": 0.0, "previous_response_id": null, "prompt_cache_key": null, "prompt_cache_retention": "in_memory", "reasoning": {"context": "current_turn", "effort": "medium", "mode": "standard", "summary": null}, "safety_identifier": null, "service_tier": "default", "store": false, "temperature": 1.0, "text": {"format": {"type": "text"}, "verbosity": "medium"}, "tool_choice": "auto", "tool_usage": {"image_gen": {"input_tokens": 0, "input_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "output_tokens": 0, "output_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "total_tokens": 0}, "web_search": {"num_requests": 0}}, "tools": [], "top_logprobs": 0, "top_p": 1.0, "truncation": "disabled", "usage": {"input_tokens": 18, "input_tokens_details": {"cache_write_tokens": 0, "cached_tokens": 0}, "output_tokens": 95, "output_tokens_details": {"reasoning_tokens": 64}, "total_tokens": 113}, "user": null, "metadata": {}}}, "error": null}
+        {"id": "batch_req_6a9f28940b188190a0b1a34091a329ae", "custom_id": "1", "response": {"status_code": 200, "request_id": "495522ce-fef3-4b84-8dfa-3c6d5a4ec4db", "body": {"id": "resp_0f1227e55c7e64f2016a9f2817278087d28a469fdec5fe5650", "object": "response", "created_at": 1788815383, "status": "completed", "background": false, "billing": {"payer": "developer"}, "completed_at": 1788815384, "error": null, "frequency_penalty": 0.0, "incomplete_details": null, "instructions": null, "max_output_tokens": null, "max_tool_calls": null, "model": "gpt-5-nano-2025-08-07", "moderation": null, "output": [{"id": "rs_0f1227e55c7e64f2016a9f2817d8cc87d29838ba7de0097b17", "type": "reasoning", "content": [], "encrypted_content": "gAAAAABqnygYwsiTOtb8oucFWaCldCxS71b_261YZnl0HbK5qmDd2zGKViGhLOBzEF_NgweGh0aD8jtIUJ-zj_-fVlGJ97ANMDac-SIHp2xtbqmOOblbF-oxda-8Rd1dL8URy7wU8WDaVMwsxkMR4Gwov3vgJ6HOTGYCSMaJzcUwqJma1ks8LFxgzZGPKOTMDLP1IylMmTZhVarHmvuKPWArdAoTnv4qm4QAMqZZdOw_Io_C7u9jpBtq7vA-iefYbZ_QpwQruy-PmLSisCIRbqX-wzIXtD60MzgqLdFQT_Ihuid7u6dI18MHqfQn1hUpmCwVpj89G3zqTnMEjRPVOX2v6OJUACKopnUhZe4MfO9GnQADwd_IjX_13gU9aJ9TYEVef5DoMVHrjo2W6awzRxUP0WxW0JDxzeNdTV1HrYlfNAaWMhNqo3mvG_HqmqTYOGlaAgO65taCmQfXsw300CSCCWdJaXBd3mRzIAsSYNknOa6z7IGyJxRDWrJ39UXfkd7U6bFs6Lrv015alr0kfL8Ld8tltffmJK24JFYW_fFzAaNWHfhUp7e89aEAXMbM45J-FiPFBNxOJoAvYhzTRsj2Omc9OMLObSiqimm2mmHxqt6xrb2Mn8StHqjhNLhdvVJAEKA2nKLkWRRW99J2Cgro4iD8uD2ZSLajMGAbOyYV_oWdO4LqhoFb6xTufECVfiOjbTrgrO-ODIC4t8ekaGIxU7CpmIpWcxNyavwQQqK29T0mzXNa_yk4GFrfn5dNszaOQppkgs5LvZ7AzQkVQNK8PPoXBrt4aBSSSdWiVF9JpqAgK6rCtt5-_7FoemwNCE7SrG_qqpcgdNDwueQlJJ92Vdm7S9hamEW7u85CrTozk253eUS4P-3jv0mWvN7KKz2_kpR2Ok2SO78I_-QwCygLVIFEKrIyIwfv8uSau4BSYIXhrkzR25JbtwRt-XgmM9ckiy8iDzsSc3Ifh3_7j8g4vfbIPhmz-fMsOMzff2FHG3NrSDaqiSy4BOYAvgrJUI2TjwbBVHHb6itbXE8e504K97PQ_6rctQTT6LMqkBvli4xWAM95jUEsw8brwe2HnaCDBkQVadKE0IEKvFgAWZO16EEeQuHpPV6JnrzDPPIzx1VBskHR8O5b7Mw9Nl1M8tbS2NkdrHxR1vSgVuwn4KR-cy5PdyC6cstMJh3y-uq0LEGu2uI0FkiQBfOwa3toaz79TqNqZsUk8omE0ps8e3fpCVPpTKG7e6hfYeX_5Ia8dr3MLOQqOHztjxm0BYhoKlVnT3CSB_Gor7dsm4-p9P0ac4iA43ENfQyd7mlVXUT93-7VZSSahliD6iyG0slR8gBwZGsuVRvgutFP3jEps0V-bdnRfqEbuZBTO22NsDP5Fo8hl8eKwCXdYQZSbcX23fbPFItx2HAxsfQ_RlvRIFKhLO1Ox7tXZxXW3fbriyNIPB-RUHc9rBFpJMa93R3h8zlU8VqDaa6qs-IqFd50Ey1joR91IMgWxZ-EgRgr0BbtGE7z7KTnOSmrcjFjjhMkQnR1l4Jm7T9px05nkI76vpNMtAC4KuJnGyFxcOwVlAv09iys3P3w9bQNhJtT20ciRpLu6CMFMyX2a5lgq4Uw9Mb1GbNDEHz60SB4tl6bf6gqjNbBQyPirzFFI2KwqBRx_gjPwAteZi5o", "summary": []}, {"id": "msg_0f1227e55c7e64f2016a9f281889ec87d28ab45436d30df3e6", "type": "message", "status": "completed", "content": [{"type": "output_text", "annotations": [], "logprobs": [], "text": "Jupiter"}], "role": "assistant"}], "parallel_tool_calls": true, "presence_penalty": 0.0, "previous_response_id": null, "prompt_cache_key": null, "prompt_cache_retention": "in_memory", "reasoning": {"context": "current_turn", "effort": "medium", "mode": "standard", "summary": null}, "safety_identifier": null, "service_tier": "default", "store": false, "temperature": 1.0, "text": {"format": {"type": "text"}, "verbosity": "medium"}, "tool_choice": "auto", "tool_usage": {"image_gen": {"input_tokens": 0, "input_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "output_tokens": 0, "output_tokens_details": {"image_tokens": 0, "text_tokens": 0}, "total_tokens": 0}, "web_search": {"num_requests": 0}}, "tools": [], "top_logprobs": 0, "top_p": 1.0, "truncation": "disabled", "usage": {"input_tokens": 18, "input_tokens_details": {"cache_write_tokens": 0, "cached_tokens": 0}, "output_tokens": 87, "output_tokens_details": {"reasoning_tokens": 64}, "total_tokens": 105}, "user": null, "metadata": {}}}, "error": null}
+  recorded_at: Mon, 07 Sep 2026 21:11:54 GMT
 recorded_with: VCR 6.4.0

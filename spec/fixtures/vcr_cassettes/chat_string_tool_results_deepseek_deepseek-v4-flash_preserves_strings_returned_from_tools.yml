@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Process
+        this query: test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:05:25 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 468e07ba9b37b0adfe260ed87ddfb7bf
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 2491b6822c8b67ab71408f2502e68b7e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - LK2HzbuaMpf22s3zp_XsI6gYdpM_S_Pn7emtNL_c143oyPMAU674jQ==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"093ddae3-74d5-4d61-b445-6c9aa4c3b60a","object":"chat.completion","created":1788815125,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        process that query using the available tool.","reasoning_content":"The user
+        says \"Process this query: test data\". This seems like a generic request.
+        I have a content_returning tool available. Let me invoke it with the query.\n\nActually,
+        let me think about what they want. They just say \"Process this query: test
+        data\". The simplest interpretation is to use the tool to process \"test data\".","tool_calls":[{"index":0,"id":"call_00_bE3aDUFoKrKPNM6DxTa08709","type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":375,"completion_tokens":125,"total_tokens":500,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":70},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":119},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 21:05:26 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Process
+        this query: test data"},{"role":"assistant","content":"I''ll process that
+        query using the available tool.","tool_calls":[{"id":"call_00_bE3aDUFoKrKPNM6DxTa08709","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user says \"Process this query: test
+        data\". This seems like a generic request. I have a content_returning tool
+        available. Let me invoke it with the query.\n\nActually, let me think about
+        what they want. They just say \"Process this query: test data\". The simplest
+        interpretation is to use the tool to process \"test data\".","reasoning":"The
+        user says \"Process this query: test data\". This seems like a generic request.
+        I have a content_returning tool available. Let me invoke it with the query.\n\nActually,
+        let me think about what they want. They just say \"Process this query: test
+        data\". The simplest interpretation is to use the tool to process \"test data\"."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_00_bE3aDUFoKrKPNM6DxTa08709"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:05:27 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - ff342851432ed432834ff37aade31727
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 c8ee4ae446730c2bdc2c0e71085ce05a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - v8aS7pSEcy6q1I-tiSCQKcLgL46nh5WxboE6TP8UrIBmXr9jOr_9aw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"46599a7c-8d71-4178-b81b-5ffefbfa2bd9","object":"chat.completion","created":1788815127,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        query has been processed successfully.\n\n**Result:** `Processed: test data`\n\nThe
+        tool received the query \"test data\" and returned the confirmation that it
+        was processed. If you have a more specific query or task you''d like me to
+        handle, feel free to provide additional details!","reasoning_content":"The
+        tool returned \"Processed: test data\". Let me report this to the user."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":517,"completion_tokens":77,"total_tokens":594,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":18},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":133},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 21:05:27 GMT
+recorded_with: VCR 6.4.0

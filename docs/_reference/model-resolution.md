@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Model Resolution
-parent: "Working with Models"
+parent: "Model Registry"
 nav_order: 1
 description: How RubyLLM turns a model name into a concrete model and provider, step by step, covering aliases, the registry, provider preference, and unlisted models.
 ---
@@ -146,7 +146,7 @@ New releases, custom fine-tunes, and private deployments won't be in the registr
 
 ```ruby
 chat = RubyLLM.chat(
-  model: "my-custom-deployment",
+  model: ENV.fetch("CUSTOM_CHAT_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )
@@ -169,8 +169,8 @@ You are responsible for using only the features the model actually supports. The
 If nothing matches and you didn't assume existence, RubyLLM raises `RubyLLM::ModelNotFoundError` with guidance to refresh the registry:
 
 ```ruby
-RubyLLM.chat(model: "gpt-7-ultra")
-# => RubyLLM::ModelNotFoundError: Unknown model: "gpt-7-ultra".
+RubyLLM.chat(model: unknown_model_id)
+# => RubyLLM::ModelNotFoundError: Unknown model: ...
 #    If the model exists at the provider, refresh the registry with
 #    `RubyLLM.models.refresh`.
 ```
@@ -181,10 +181,10 @@ A real but newly released model usually means your registry is stale. Refresh it
 RubyLLM.models.refresh
 ```
 
-See [Working with Models]({% link _reference/models.md %}#refreshing-the-registry) for refreshing in applications and Rails. If the model genuinely isn't in any catalog, use `assume_model_exists: true` instead.
+See [Model Registry]({% link _reference/models.md %}#refreshing-the-registry) for refreshing in applications and Rails. If the model genuinely isn't in any catalog, use `assume_model_exists: true` instead.
 
 ## Next Steps
 
-* [Working with Models]({% link _reference/models.md %}) - explore, filter, and inspect the registry.
+* [Model Registry]({% link _reference/models.md %}) - explore, filter, and inspect the registry.
 * [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) - point a provider at a custom host and use unlisted models.
 * [Custom Providers and Protocols]({% link _reference/custom-providers.md %}) - teach RubyLLM about a service it doesn't know.

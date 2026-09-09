@@ -68,6 +68,19 @@ RSpec.describe RubyLLM::Message do
   end
 
   describe '.new from #to_h attributes' do
+    it 'preserves a remote approval through JSON serialization' do
+      call = RubyLLM::ToolCall.new(id: 'approval_1', name: 'search', arguments: { 'query' => 'Ruby' },
+                                   remote: true)
+      original = described_class.new(role: :assistant, content: '', tool_calls: { call.id => call })
+
+      attributes = JSON.parse(JSON.generate(original.to_h)).transform_keys(&:to_sym)
+      rebuilt = described_class.new(attributes)
+
+      expect(rebuilt.tool_calls.fetch(call.id))
+        .to have_attributes(id: 'approval_1', remote?: true, arguments: { 'query' => 'Ruby' })
+      expect(rebuilt.to_h).to eq(original.to_h)
+    end
+
     it 'rebuilds tool calls, thinking, and citations as value objects' do
       original = described_class.new(
         role: :assistant,
@@ -138,11 +151,43 @@ RSpec.describe RubyLLM::Message do
   end
 
   describe '#cost' do
+    it 'preserves an explicitly unknown cost with zero usage through serialization' do
+      message = described_class.new(role: :assistant, content: 'Report', input_tokens: 0, output_tokens: 0,
+                                    cost: RubyLLM::Cost.from_h({}))
+
+      expect(message.cost.total).to be_nil
+      expect(message.to_h[:cost]).to eq({})
+      expect(described_class.new(message.to_h).cost.total).to be_nil
+    end
+
+    it 'preserves a supplied cost while allowing explicit model repricing' do
+      message = described_class.new(role: :assistant, content: 'Report', input_tokens: 1_000, output_tokens: 2_000,
+                                    cost: RubyLLM::Cost.from_h({ total: 0.02 }))
+
+      expect(message.cost.total).to eq(0.02)
+      expect(described_class.new(message.to_h).cost.total).to eq(0.02)
+      expect(message.cost(model: model).total).to eq(0.005)
+    end
+
+    it 'uses actual attempt accounting before a supplied cost' do
+      entry = RubyLLM::Accounting::Usage::Entry.new(
+        operation: :chat, provider: model.provider, model: model.id,
+        status: :succeeded, tokens: RubyLLM::Tokens.new(input: 1_000, output: 2_000),
+        cost: RubyLLM::Cost.from_h({ total: 0.03 })
+      )
+      message = described_class.new(role: :assistant, content: 'Report', cost: { total: 0.02 }, usage_entries: [entry])
+
+      expect(message.cost.total).to eq(0.03)
+      expect(described_class.new(message.to_h).cost.total).to eq(0.03)
+      expect(message.cost(model: model).total).to eq(0.005)
+    end
+
     it 'calculates cost from the supplied model' do
       message = described_class.new(role: :assistant, content: 'Hello', input_tokens: 1_000, output_tokens: 2_000)
 
       expect(message.cost(model: model).total).to eq(0.005)
       expect(message.cost(model: model).to_h).to include(input: 0.001, output: 0.004, total: 0.005)
+      expect(message.to_h).not_to have_key(:cost)
     end
 
     it 'uses the message model for cost lookup' do

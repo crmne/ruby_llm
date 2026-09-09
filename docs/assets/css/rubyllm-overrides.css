@@ -61,6 +61,21 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   padding-right: 0;
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  .VPNavBarMenu,
+  .VPNavBarExtra {
+    display: none;
+  }
+
+  .VPNavBarHamburger {
+    display: flex;
+  }
+
+  .VPNavScreen:not([hidden]) {
+    display: block;
+  }
+}
+
 .VPHome *,
 .VPHome *::before,
 .VPHome *::after {
@@ -104,7 +119,7 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
 }
 
 .VPFooter {
-  display: none;
+  background-color: var(--home-band-bg);
 }
 
 .VPNavBar.home:not(.has-sidebar):not(.top) {
@@ -806,6 +821,21 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   line-height: 1.22;
 }
 
+.home-company-logos.home-sponsor-logos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 530px;
+}
+
+.home-sponsor-logos .home-company-logo img {
+  max-width: min(250px, 100%);
+  max-height: 44px;
+}
+
+.home-sponsor-logos a:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 8px;
+}
+
 .home-companies-section {
   padding-top: 112px;
   padding-bottom: 130px;
@@ -1329,6 +1359,12 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   max-width: 760px;
 }
 
+.home-provider-gem {
+  margin: 52px auto 0;
+  padding-top: 44px;
+  border-top: 1px solid var(--home-line);
+}
+
 .home-model-switcher {
   width: min(760px, 100%);
   margin: 48px auto 0;
@@ -1738,80 +1774,6 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   padding-left: 30px;
 }
 
-.home-footer {
-  display: grid;
-  place-items: center;
-  width: 100vw;
-  min-height: 132px;
-  margin-right: calc(50% - 50vw);
-  margin-left: calc(50% - 50vw);
-  padding: 34px 40px;
-  border-top: 1px solid var(--home-line);
-}
-
-.home-footer-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: min(1360px, 100%);
-  margin: 0 auto;
-}
-
-.home-footer .home-footer-credit {
-  margin: 0;
-  color: var(--home-muted);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.home-footer-credit a {
-  font-weight: 700;
-}
-
-.home-footer-chat-with-work {
-  display: inline-flex;
-  align-items: center;
-  width: 148px;
-  height: 28px;
-  vertical-align: -9px;
-  line-height: 0;
-}
-
-/* Scoped to beat `.home-footer-chat-with-work img`, which sets display: block
-   below and would otherwise leave both logo variants visible in light mode. */
-.home-footer-chat-with-work .home-footer-chat-with-work-logo-dark {
-  display: none;
-}
-
-.home-footer-chat-with-work img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.dark .home-footer-chat-with-work-logo-light {
-  display: none;
-}
-
-.dark .home-footer-chat-with-work-logo-dark {
-  display: block;
-}
-
-.home-footer-credit small {
-  display: inline;
-  margin-left: 7px;
-  color: var(--home-muted);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.3;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
 .dark {
   --home-bg: #1B1B1A;
   --home-band-bg: #181817;
@@ -1835,7 +1797,7 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   --home-line: #30302F;
   --home-grid-line: #242423;
   --home-band-tint: rgba(22, 22, 21, 0.6);
-  --home-red: #FF433D;
+  --home-red: #ED3434;
   --home-red-dark: #D52E2A;
   --home-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
   --home-shadow-soft: 0 20px 56px rgba(0, 0, 0, 0.26);
@@ -1850,8 +1812,8 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
 .dark .home-button--solid,
 .dark .home-run-button,
 .dark .home-play-button {
-  border-color: #FF433D;
-  background: #FF433D;
+  border-color: var(--home-red);
+  background: var(--home-red);
   color: #fff !important;
 }
 
@@ -1860,8 +1822,8 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
 .dark .home-button--ghost,
 .dark .home-button--outline,
 .dark .home-copy-button {
-  border-color: #FF433D;
-  color: #FF433D !important;
+  border-color: var(--home-red);
+  color: var(--home-red) !important;
 }
 
 .dark .home-love-card::after {
@@ -2108,160 +2070,6 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
 
 }
 
-/* Guide chrome stays stock; custom model tables use the VitePress theme tokens. */
-
-.models-outline-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-.models-showcase {
-  margin-top: 2rem;
-}
-
-.models-section + .models-section {
-  margin-top: 2.5rem;
-}
-
-.models-filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-
-.models-chip {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  padding: 0.4em 0.7em;
-  background: var(--vp-c-bg-elv);
-  color: var(--vp-c-text-2);
-  font: inherit;
-  font-weight: 700;
-}
-
-.models-chip.is-active {
-  border-color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-1);
-  color: #fff;
-}
-
-.models-chip--more {
-  color: var(--vp-c-brand-1);
-}
-
-.models-table-scroll {
-  width: 100%;
-  overflow-x: auto;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-elv);
-}
-
-.models-table {
-  width: 100%;
-  min-width: 760px;
-  margin: 0;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-
-.models-col-model {
-  width: 28%;
-}
-
-.models-col-provider {
-  width: 17%;
-}
-
-.models-col-io {
-  width: 27%;
-}
-
-.models-col-capabilities {
-  width: 28%;
-}
-
-.vp-doc .models-table th,
-.vp-doc .models-table td {
-  border-color: var(--vp-c-divider);
-  padding: 0.75em;
-  vertical-align: top;
-}
-
-.vp-doc .models-table th {
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-2);
-  font-weight: 800;
-}
-
-.vp-doc .models-table td {
-  background: var(--vp-c-bg);
-}
-
-.vp-doc .models-table td:first-child {
-  background: var(--vp-c-bg-alt);
-  color: var(--vp-c-text-2);
-}
-
-.models-sort {
-  display: inline-block;
-  width: 0.55em;
-  height: 0.85em;
-  margin-left: 0.3em;
-  background: currentColor;
-  vertical-align: -0.1em;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0 7.2 4H.8L4 0Zm0 13 .8-4h6.4L4 13Z'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0 7.2 4H.8L4 0Zm0 13 .8-4h6.4L4 13Z'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.models-pagination {
-  display: flex;
-  justify-content: center;
-  gap: 0.35rem;
-  margin-top: 1rem;
-}
-
-.models-page {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2rem;
-  min-height: 2rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-elv);
-  color: var(--vp-c-text-2);
-  font: inherit;
-  font-weight: 800;
-}
-
-.models-page.is-current,
-.models-page--arrow {
-  border-color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-1);
-  color: #fff;
-}
-
-.models-page--muted {
-  border-color: var(--vp-c-divider);
-  background: var(--vp-c-divider);
-  color: var(--vp-c-text-3);
-}
-
-.models-page--ellipsis {
-  border-color: transparent;
-  background: transparent;
-  color: var(--vp-c-text-2);
-}
-
 @media (max-width: 760px) {
   .VPHome .VPHero {
     padding-top: 54px;
@@ -2444,20 +2252,7 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
     margin-top: 30px;
   }
 
-  .home-footer {
-    min-height: 168px;
-    padding: 42px 18px 34px;
-  }
 
-  .home-footer-inner {
-    display: flex;
-  }
-
-  .home-footer .home-footer-credit {
-    max-width: 340px;
-    font-size: 14px;
-    line-height: 1.45;
-  }
 }
 
 @media (min-width: 1101px) {

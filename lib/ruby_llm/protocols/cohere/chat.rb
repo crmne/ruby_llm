@@ -65,7 +65,7 @@ module RubyLLM
         # Cohere takes a bare JSON Schema under json_schema, with no name or
         # strict wrapper.
         def build_response_format(schema)
-          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
+          normalized = RubyLLM::Support::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
 

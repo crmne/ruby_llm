@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Attachment do
 
   it 'does not fetch URL content to determine byte size' do
     attachment = described_class.new('https://example.com/report.pdf')
-    allow(RubyLLM::Connection).to receive(:basic).and_raise('unexpected network request')
+    allow(RubyLLM::Transport::Connection).to receive(:basic).and_raise('unexpected network request')
 
     expect(attachment.byte_size).to be_nil
   end

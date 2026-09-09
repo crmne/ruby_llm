@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What
+        is the capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:00:55 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 84fa87cd331aa88381e09758e0385704
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 826a57ac22bb182622bb767d7ed86c26.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P4
+      X-Amz-Cf-Id:
+      - V1IT25IUjIR5YmssF95BeM4viFGVQ0bOxHKcF3_FUmyFPXUMkaRQ_Q==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"68e4e085-c9d0-44ff-bbe6-36456087e306","object":"chat.completion","created":1788814854,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Paris","reasoning_content":"We
+        need answer capital of France."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":90,"completion_tokens":9,"total_tokens":99,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":7},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":90},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 21:00:55 GMT
+recorded_with: VCR 6.4.0

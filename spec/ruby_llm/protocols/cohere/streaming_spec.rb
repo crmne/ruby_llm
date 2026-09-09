@@ -7,7 +7,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
   include_context 'with configured RubyLLM'
 
-  let(:model) { RubyLLM.models.find('command-a-plus-05-2026') }
+  let(:model) { RubyLLM.models.find(model_for(:cohere, :vision)) }
   let(:protocol) { RubyLLM::Protocols::Cohere.new(RubyLLM::Providers::Cohere.new(RubyLLM.config), model) }
 
   def build_chunk(json)

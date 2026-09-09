@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'json_schemer'
 
 # Fixtures follow the response example published at
 # https://docs.cohere.com/reference/list-models.
@@ -79,6 +80,21 @@ RSpec.describe RubyLLM::Protocols::Cohere::Models do
       expect(protocol.send(:modalities_from, ['embed_image'])).to eq(input: ['image'], output: ['embeddings'])
       expect(protocol.send(:modalities_from, ['transcriptions'])).to eq(input: ['audio'], output: ['text'])
       expect(protocol.send(:capabilities_from, ['transcriptions'], nil)).to eq(['transcription'])
+    end
+
+    it 'classifies Parse as image OCR from its reported endpoint' do
+      expect(protocol.send(:modalities_from, ['parse'])).to eq(input: ['image'], output: ['text'])
+      expect(protocol.send(:capabilities_from, ['parse'], ['vision'])).to eq(['ocr'])
+    end
+
+    it 'produces OCR metadata accepted by the registry schema' do
+      response = instance_double(Faraday::Response, body: {
+                                   'models' => [{ 'name' => model_for(:cohere, :ocr), 'endpoints' => ['parse'] }]
+                                 })
+      models = protocol.send(:parse_list_models_response, response, 'cohere')
+      data = JSON.parse(RubyLLM::Models::Registry.pretty_json(models)).first
+
+      expect(JSONSchemer.schema(RubyLLM::Models::Schema.json_schema).validate(data).to_a).to be_empty
     end
 
     it 'keeps the Cohere endpoint list in metadata' do

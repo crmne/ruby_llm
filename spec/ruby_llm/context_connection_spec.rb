@@ -15,11 +15,11 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
   let(:model) { instance_double(RubyLLM::Model, id: 'test-model') }
 
   def proxy_and_timeout(config)
-    connection = RubyLLM::Connection.basic(config)
+    connection = RubyLLM::Transport::Connection.basic(config)
     [connection.proxy&.uri&.to_s, connection.options.timeout]
   end
 
-  describe RubyLLM::Connection do
+  describe RubyLLM::Transport::Connection do
     it 'builds a basic connection from the configuration it is given' do
       expect(proxy_and_timeout(context.config)).to eq(['http://proxy.example:8080', 7])
     end
@@ -51,14 +51,14 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
 
   describe RubyLLM::Chat do
     it 'gives a URL attachment the configuration of the context it was built from' do
-      chat = context.chat(model: 'gpt-4.1-nano')
+      chat = context.chat(model: model_for(:openai, :temperature))
       chat.ask_later('What is this?', with: text_url)
 
       expect(proxy_and_timeout(chat.messages.last.attachments.first.config)).to eq(['http://proxy.example:8080', 7])
     end
 
     it 'leaves a chat without a context on the global configuration' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat = RubyLLM.chat(model: model_for(:openai, :temperature))
       chat.ask_later('What is this?', with: text_url)
 
       expect(chat.messages.last.attachments.first.config).to be(RubyLLM.config)
@@ -72,7 +72,7 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
       response = instance_double(Faraday::Response,
                                  body: { 'data' => [{ 'url' => 'https://cdn.example.test/out.png' }] })
       allow(protocol.connection).to receive(:post).and_return(response)
-      protocol.paint('a small watercolor robot', model: 'gpt-image-1', size: '1024x1024')
+      protocol.paint('a small watercolor robot', model: model_for(:openai, :image), size: '1024x1024')
     end
 
     it 'downloads a hosted image through the configuration that generated it' do

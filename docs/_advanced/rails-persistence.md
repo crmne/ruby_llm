@@ -69,6 +69,15 @@ chat.messages.count       # => 2
 
 The flow saves the user message, creates an assistant message, performs the provider operation, and fills the assistant message on success. If the operation fails before producing a useful message, RubyLLM removes the empty assistant record. Usage already incurred by a retry or cancellation remains in the usage ledger.
 
+Use `add_message` to append an existing message without making a provider request. It accepts an attributes Hash, a `RubyLLM::Message`, or a persisted message record and returns a new record in this chat:
+
+```ruby
+chat.add_message(role: :user, content: "Keep this context for the next request.")
+chat.add_message(previous_chat.messages.first)
+```
+
+The original record remains in its conversation. Copying transcript content does not create a new provider usage entry.
+
 System instructions are messages too:
 
 ```ruby
@@ -108,6 +117,21 @@ RubyLLM.models.refresh
 ```
 
 There is no application-owned `Model` class or configurable registry model class. `acts_as_chat` defines the `model` association against RubyLLM's private record, preserving referential integrity without putting provider metadata in your application models.
+
+On a message, `model` returns the ID from the last successful provider attempt. `model_info` looks up that ID in the registry:
+
+```ruby
+response.model           # => "{{ site.models.openai_standard }}"
+response.model_info.name
+```
+
+Both readers return `nil` when the message has no recorded model. `model_info` also returns `nil` if the model is no longer in the registry.
+
+If your message table has a `finish_reason` column, the record also exposes `stopped?`, `max_tokens?`, `tool_call_stop?`, and `content_filtered?`, with the same meanings as a plain message:
+
+```ruby
+response.reload.max_tokens? # => true if a token limit stopped the response
+```
 
 ## Cost and Usage Tracking
 
@@ -287,4 +311,4 @@ Keep transcript content and application relationships in these models. Observe p
 * [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - understand attempts, retries, cancellations, and incomplete totals.
 * [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - broadcast persisted responses in real time.
 * [Generators and App Conventions]({% link _advanced/rails-generators.md %}) - see exactly what installation creates.
-* [Working with Models]({% link _reference/models.md %}) - inspect and refresh the internal registry through the public API.
+* [Model Registry]({% link _reference/models.md %}) - inspect and refresh the internal registry through the public API.

@@ -7,7 +7,7 @@ require 'stringio'
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
 
-  let(:model_id) { 'gpt-4.1-nano' }
+  let(:model_id) { model_for(:openai, :temperature) }
 
   def tool_call(id: "call_#{SecureRandom.hex(4)}", name: 'lookup', arguments: {})
     RubyLLM::ToolCall.new(id: id, name: name, arguments: arguments)
@@ -316,6 +316,22 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe '#add_message' do
+    it 'copies an existing message record into the conversation' do
+      source = Chat.create!(model: model_id)
+      original = source.add_message(role: :user, content: 'Keep this context')
+      destination = Chat.create!(model: model_id)
+      destination.to_llm
+
+      copied = destination.add_message(original)
+
+      expect(copied).to be_persisted
+      expect(copied.id).not_to eq(original.id)
+      expect(copied.content).to eq(original.content)
+      expect(original.reload.chat).to eq(source)
+      expect(destination.to_llm.messages.map(&:content)).to eq(['Keep this context'])
+      expect(destination.reload.messages.pluck(:content)).to eq(['Keep this context'])
+    end
+
     it 'links a tool result to the tool call that produced it' do
       call = tool_call
       chat = Chat.create!(model: model_id)
@@ -427,7 +443,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                  .with_compaction(at: 50_000)
                  .with_thinking(effort: :low)
                  .with_end_user('customer-42')
-                 .with_fallbacks('gpt-4.1-mini')
+                 .with_fallbacks(model_for(:openai, :alternate_chat))
                  .with_headers('X-Trace' => 'abc')
                  .with_provider_options(reasoning_effort: 'low')
 
@@ -624,7 +640,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         RubyLLM::Message.new(
           role: :tool, content: 'done', tool_call_id: call.id,
           thinking: RubyLLM::Thinking.new(text: '', signature: 'sig'),
-          citations: [RubyLLM::Citation.new(url: 'https://example.test')],
+          citations: [RubyLLM::Citation.new(url: 'https://example.test', source_id: 'file_facts')],
           finish_reason: 'stop'
         )
       )
@@ -635,6 +651,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(record.thinking_signature).to eq('sig')
       expect(record.finish_reason).to eq(:stop)
       expect(record.citations.first.url).to eq('https://example.test')
+      expect(record.to_llm.citations.first.source_id).to eq('file_facts')
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result).to eq(record)
     end
 
@@ -668,7 +685,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       record = chat.instance_variable_get(:@message)
       restored = record.to_llm
       expect(restored.server_tool_calls.first.type).to eq('server_tool_use')
-      expect(restored.server_tool_calls.first.raw).to eq(RubyLLM::Utils.deep_symbolize_keys(raw_block))
+      expect(restored.server_tool_calls.first.raw).to eq(RubyLLM::Support::Utils.deep_symbolize_keys(raw_block))
       expect(restored.raw_content.length).to eq(2)
     end
   end

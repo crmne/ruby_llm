@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Agent do
 
   def agent_raising(error, on: :ask, &)
     agent_class = Class.new(described_class) do
-      model 'gpt-4.1-nano'
+      model model_for(:openai, :temperature)
       class_eval(&) if block_given?
     end
     agent = agent_class.new
@@ -193,7 +193,7 @@ RSpec.describe RubyLLM::Agent do
   describe 'inheritance' do
     it 'inherits handlers declared on the parent' do
       parent = Class.new(described_class) do
-        model 'gpt-4.1-nano'
+        model model_for(:openai, :temperature)
         rescue_from RubyLLM::RateLimitError, with: :handle
 
         private
@@ -208,7 +208,7 @@ RSpec.describe RubyLLM::Agent do
     end
 
     it 'keeps subclass handlers out of the parent' do
-      parent = Class.new(described_class) { model 'gpt-4.1-nano' }
+      parent = Class.new(described_class) { model model_for(:openai, :temperature) }
       child = Class.new(parent) do
         rescue_from RubyLLM::RateLimitError, with: :handle
 
@@ -228,7 +228,7 @@ RSpec.describe RubyLLM::Agent do
 
     it 'lets a subclass override an inherited handler' do
       parent = Class.new(described_class) do
-        model 'gpt-4.1-nano'
+        model model_for(:openai, :temperature)
         rescue_from RubyLLM::Error, with: :handle
 
         private

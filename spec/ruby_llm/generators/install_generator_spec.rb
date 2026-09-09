@@ -71,13 +71,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
-    it 'uses text for tool call thought signatures' do
+    it 'stores tool call thought signatures and defaults calls to local execution' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_ruby_llm_records.rb').first
         expect(migration).to be_present
 
         content = File.read(migration)
         expect(content).to include('t.text :thought_signature')
+        expect(content).to include('t.boolean :remote, default: false, null: false')
+        expect(content).to include('t.json :reported_cost')
       end
     end
 
@@ -86,8 +88,9 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         content = File.read(Dir.glob('db/migrate/*create_ruby_llm_records.rb').first)
 
         expect(content).to include('create_table :ruby_llm_usages')
-        RubyLLM::Usage::Entry::OPERATIONS.each { |operation| expect(content).to include("'#{operation}'") }
-        RubyLLM::Usage::Entry::STATUSES.each { |status| expect(content).to include("'#{status}'") }
+        expect(content).to include('t.string :model, null: false')
+        RubyLLM::Accounting::Usage::Entry::OPERATIONS.each { |operation| expect(content).to include("'#{operation}'") }
+        RubyLLM::Accounting::Usage::Entry::STATUSES.each { |status| expect(content).to include("'#{status}'") }
       end
     end
 

@@ -20,7 +20,8 @@ module RubyLLM
           id: tool_call_id,
           name: name,
           arguments: arguments || {},
-          thought_signature: thought_signature
+          thought_signature: thought_signature,
+          remote: self[:remote]
         )
       end
 

@@ -77,7 +77,7 @@ module RubyLLM
         def connection_for(location)
           return @connection if location == configured_location
 
-          Connection.new(@provider, @config, api_base: @provider.api_base_for(location))
+          Transport::Connection.new(@provider, @config, api_base: @provider.api_base_for(location))
         end
 
         def log_catalog(counts, models)

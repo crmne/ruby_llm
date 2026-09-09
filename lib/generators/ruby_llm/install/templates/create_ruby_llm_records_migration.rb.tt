@@ -44,6 +44,7 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
       t.string :name, null: false
       t.text :thought_signature
       t.string :approval
+      t.boolean :remote, default: false, null: false
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
 <% elsif mysql? %>
@@ -97,12 +98,15 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
 <% if postgresql? %>
       t.jsonb :chat_ids, default: []
       t.jsonb :request_counts
+      t.jsonb :reported_cost
 <% elsif mysql? %>
       t.json :chat_ids
       t.json :request_counts
+      t.json :reported_cost
 <% else %>
       t.json :chat_ids, default: []
       t.json :request_counts
+      t.json :reported_cost
 <% end %>
       t.timestamps
 

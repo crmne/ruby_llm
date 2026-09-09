@@ -58,34 +58,20 @@ Key attributes of a `Chunk`:
 
 ## Accumulated Response
 
-Even when you provide a block for streaming, the `ask` method *still* returns the complete, final `RubyLLM::Message` object once the entire response (including any tool interactions) is finished.
+`ask` returns the completed message after streaming, including any tool interactions:
 
 ```ruby
-chat = RubyLLM.chat
-final_message = nil
-
-puts "Assistant:"
-final_message = chat.ask "Write a short haiku about programming." do |chunk|
+response = chat.ask "Write a short haiku about programming." do |chunk|
   print chunk.content
 end
 
-puts "\n--- Final Message ---"
-puts final_message.content
-# => Code flows like water,
-# => Logic builds a new world now,
-# => Bugs swim in the stream.
-
-total_tokens =
-  final_message.tokens.input.to_i +
-  final_message.tokens.output.to_i +
-  final_message.tokens.cache_read.to_i +
-  final_message.tokens.cache_write.to_i
-
-puts "Total Tokens: #{total_tokens}"
-puts "Finish Reason: #{final_message.finish_reason}"
+response.content
+response.tokens.output
+response.cost.total
+response.finish_reason
 ```
 
-This allows you to easily get the final result for storage or further processing, even after handling the stream for UI purposes.
+Use the chunks for live display and the returned message for the final text and usage.
 
 ## Web Application Integration
 
@@ -93,50 +79,13 @@ Streaming is particularly useful in web applications for providing immediate fee
 
 ### Rails with Turbo Streams
 
-In a Rails application using Hotwire/Turbo, you can broadcast stream updates from a background job.
+With Rails persistence installed, generate a streaming chat UI:
 
-```ruby
-# app/jobs/chat_stream_job.rb
-class ChatStreamJob < ApplicationJob
-  queue_as :default
-
-  def perform(chat_id, user_message, stream_target_id)
-    chat = Chat.find(chat_id) # Assuming acts_as_chat model
-    full_response = ""
-
-    Turbo::StreamsChannel.broadcast_replace_to(
-      "chat_#{chat.id}",
-      target: stream_target_id,
-      partial: "messages/streaming_message",
-      locals: { content: "Thinking..." }
-    )
-
-    chat.ask(user_message) do |chunk|
-      full_response << (chunk.content || "")
-      Turbo::StreamsChannel.broadcast_replace_to(
-        "chat_#{chat.id}",
-        target: stream_target_id,
-        partial: "messages/streaming_message",
-        locals: { content: full_response } # Send accumulated content
-      )
-    end
-
-    # Optionally broadcast a final state or confirmation
-  end
-end
-
-# app/views/messages/_streaming_message.html.erb
-# <div id="<%= stream_target_id %>">
-#   <%= simple_format(content) %>
-# </div>
-
-# In your controller:
-# target_id = "stream_#{SecureRandom.uuid}"
-# Render initial UI with <div id="<%= target_id %>"></div>
-# ChatStreamJob.perform_later(chat.id, params[:message], target_id)
+```bash
+bin/rails generate ruby_llm:chat_ui
 ```
 
-See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) for more detailed examples.
+The generator writes a controller, an Active Job, and Turbo Stream views into your application. [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) shows the complete implementation, including broadcasting chunks to persisted messages.
 
 ### Sinatra with Server-Sent Events (SSE)
 
@@ -223,33 +172,18 @@ Refer to the [Error Handling Guide]({% link _advanced/error-handling.md %}) for 
 
 ## Streaming with Tools
 
-When a chat interaction involves [Tools]({% link _core_features/tools.md %}), the streaming behavior has distinct phases:
-
-1.  **Initial Response Stream:** Chunks are yielded as the model generates text *up to* the point where it decides to call a tool.
-2.  **Tool Call Chunk(s):** One or more chunks containing `chunk.tool_calls` information are yielded. The arguments might be streamed incrementally depending on the provider.
-3.  **Pause:** Streaming pauses while RubyLLM executes your tool's `execute` method.
-4.  **Resumed Response Stream:** After the tool result is sent back to the model, streaming resumes, yielding chunks containing the model's final response incorporating the tool's output.
+Your streaming block can keep displaying text while RubyLLM runs tools between model responses. Use a callback to show tool activity:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tools(Weather) # Assumes Weather tool is defined
+chat = RubyLLM.chat.with_tools(Weather)
+chat.before_tool_call { |call| puts "\nCalling #{call.name}..." }
 
-puts "Assistant:"
-chat.ask("What's the weather in Berlin (52.52, 13.40)?") do |chunk|
-  if chunk.tool_calls
-    puts "\n[TOOL CALL DETECTED: #{chunk.tool_calls.values.first.name}]"
-    # Arguments might be partial here: chunk.tool_calls.values.first.arguments
-  elsif chunk.content
-    print chunk.content
-  end
+chat.ask "What's the weather in Berlin? Latitude 52.52, longitude 13.40." do |chunk|
+  print chunk.content
 end
-# Output might look like:
-# Assistant:
-# Okay, let me check the weather for Berlin.
-# [TOOL CALL DETECTED: weather] # Pause while tool executes
-# The current weather in Berlin (52.52, 13.4) is 15°C with wind at 10 km/h.
 ```
 
-Your streaming block needs to be prepared to handle chunks that contain text content, tool call information, or potentially just metadata.
+`Weather` is defined in the [Tools guide]({% link _core_features/tools.md %}#creating-a-tool). Tool-call arguments can arrive in partial chunks, so use callbacks when you need the complete call. See [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}).
 
 ## Next Steps
 

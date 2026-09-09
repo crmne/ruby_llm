@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 07 Sep 2026 21:52:42 GMT
+      Req-Arrive-Time:
+      - '1788817962381'
+      Req-Cost-Time:
+      - '25'
+      Resp-Start-Time:
+      - '1788817962406'
+      Server:
+      - istio-envoy
+      X-Envoy-Upstream-Service-Time:
+      - '24'
+    body:
+      encoding: UTF-8
+      string: '{"code":401,"reason":"Unauthorized","message":"Invalid authentication
+        credentials"}'
+  recorded_at: Mon, 07 Sep 2026 21:52:42 GMT
+recorded_with: VCR 6.4.0

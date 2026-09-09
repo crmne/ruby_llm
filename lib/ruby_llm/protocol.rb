@@ -36,6 +36,7 @@ module RubyLLM
   # themselves.
   class Protocol
     include Streaming
+    include BinaryStreaming
 
     # The Provider this protocol talks through.
     attr_reader :provider
@@ -65,6 +66,7 @@ module RubyLLM
     end
 
     abstract :render_payload, :completion_url, :parse_completion_body
+    abstract :render_tool_approval_response
     abstract :models_url, :parse_list_models_response
     abstract :render_embedding_payload, :embedding_url, :parse_embedding_response
     abstract :render_moderation_payload, :moderation_url, :parse_moderation_response
@@ -76,6 +78,8 @@ module RubyLLM
     abstract :render_ocr_payload, :ocr_url, :parse_ocr_response
     abstract :render_rerank_payload, :rerank_url, :parse_rerank_response
     abstract :render_count_tokens_payload, :count_tokens_url, :parse_count_tokens_response
+    abstract :render_tokenization_payload, :tokenization_url, :parse_tokenization_response
+    abstract :render_compaction_payload, :compaction_url, :parse_compaction_response
     abstract :render_cache_payload, :render_cache_update_payload, :caches_url, :cache_url, :parse_cache_response
 
     def initialize(provider, model = nil)
@@ -83,6 +87,11 @@ module RubyLLM
       @config = provider.config
       @connection = provider.connection
       @model = model
+    end
+
+    def tool_approval_response(tool_call, approved:)
+      Message.new(role: :tool, content: approved ? 'Approved' : 'Denied', tool_call_id: tool_call.id,
+                  raw_content: render_tool_approval_response(tool_call, approved:))
     end
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
@@ -129,7 +138,7 @@ module RubyLLM
       )
       payload = apply_end_user(payload, end_user) if end_user
       payload = apply_compaction(payload, compaction) if compaction
-      payload = Utils.deep_merge(payload, provider_options)
+      payload = Support::Utils.deep_merge(payload, provider_options)
       payload = apply_server_tools(payload, server_tools)
       apply_before_request_hooks(payload, before_request)
     rescue NotImplementedError
@@ -206,6 +215,26 @@ module RubyLLM
       parse_list_models_response response, @provider.slug
     end
 
+    def tokenize(text, model:)
+      payload = render_tokenization_payload(text, model:)
+      response = @connection.post tokenization_url, payload
+      parse_tokenization_response(response, model:)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support text tokenization"
+    end
+
+    def compact(messages, headers: {}, before_request: [], usage_recorder: nil)
+      payload = apply_before_request_hooks(render_compaction_payload(messages), before_request)
+      track_usage(:chat, on_finish: usage_recorder) do
+        response = @connection.post compaction_url, payload, usage: @usage_tracker do |request|
+          request.headers = headers.merge(request.headers) unless headers.empty?
+        end
+        parse_compaction_response(response)
+      end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support manual compaction"
+    end
+
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
       attachments = Attachment.wrap(with, config: @config)
       raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any? && !supports_embedding_media?
@@ -243,13 +272,17 @@ module RubyLLM
       track_usage(:image) do
         validate_paint_inputs!(with:, mask:)
         payload = render_image_payload(prompt, model:, size:, count:, with:, mask:, provider_options:)
-        response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
+        response = post_image(payload, with:, mask:)
         images = parse_image_responses(response, model:)
         images.each { |image| image.config = @config }
         images.size <= 1 ? images.first : images
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support image generation"
+    end
+
+    def post_image(payload, with:, mask:)
+      @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
     end
 
     # Returns every Image in an image generation response, as an Array. The
@@ -264,28 +297,88 @@ module RubyLLM
     # Video generation is asynchronous on every provider: this submits the
     # job and returns a VideoJob, whose #refresh and #video poll and
     # download through this protocol instance.
-    def animate_later(prompt, model:, with: nil, provider_options: {})
-      attachments = Attachment.wrap(with, config: @config)
-      validate_animate_inputs!(with: attachments)
-      payload = render_video_payload(prompt, model:, with: attachments, provider_options:)
-      response = @connection.post video_url, payload, idempotent: false
+    def animate_later(prompt, model:, with: nil, extend: nil, provider_options: {})
+      raise ArgumentError, 'with: and extend: cannot be combined' if with && extend
+
+      if extend
+        payload = render_video_extension_payload(prompt, model:, extend:, provider_options:)
+        url = video_extension_url
+      else
+        attachments = Attachment.wrap(with, config: @config)
+        validate_animate_inputs!(with: attachments)
+        payload = render_video_payload(prompt, model:, with: attachments, provider_options:)
+        url = video_request_url(payload)
+      end
+      response = post_video(url, payload)
       parse_video_job(response, model:)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support video generation"
+    end
+
+    def post_video(url, payload)
+      @connection.post url, payload, idempotent: false
+    end
+
+    def video_request_url(_payload)
+      video_url
+    end
+
+    def video_extension_url
+      video_url
+    end
+
+    def render_video_extension_payload(*)
+      raise Error, "#{@provider.name} doesn't support video extension"
+    end
+
+    def video_extension_attachment(source)
+      source = source.url || StringIO.new(source.to_blob) if source.is_a?(Video)
+      attachments = if source.respond_to?(:read)
+                      [Attachment.new(source, filename: 'video.mp4', config: @config)]
+                    else
+                      Attachment.wrap(source, config: @config)
+                    end
+      raise ArgumentError, 'extend: takes exactly one video' unless attachments.one?
+
+      attachment = attachments.first
+      raise UnsupportedAttachmentError, attachment.mime_type unless attachment.video?
+
+      attachment
     end
 
     def refresh_video_job(job)
       parse_video_job_status @connection.get(video_job_url(job)), job: job
     end
 
-    def speak(input, model:, voice:, format:, provider_options: {})
+    def speak(input, model:, voice:, format:, provider_options: {}, &block)
       track_usage(:speech) do
         payload = render_speech_payload(input, model:, voice:, format:, provider_options:)
+        next stream_speech(payload, model:, voice:, format:, &block) if block
+
         response = @connection.post speech_url(model:), payload, usage: @usage_tracker
         parse_speech_response(response, model:, voice:, format:)
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support speech generation"
+    end
+
+    def stream_speech(*, **, &)
+      raise Error, "#{@provider.name} doesn't support streaming speech with this protocol"
+    end
+
+    def stream_speech_response(url, payload, model:, voice:, format:)
+      empty_response = Faraday::Response.new(body: '')
+      audio = parse_speech_response(empty_response, model:, voice:, format:)
+      response = stream_binary(url, payload) do |data|
+        yield SpeechChunk.new(data:, format: audio.format, mime_type: audio.mime_type)
+      end
+      parse_speech_response(response, model:, voice:, format:)
+    end
+
+    def render_transcription_options(timestamps:, **)
+      return {} if timestamps.nil?
+
+      raise ArgumentError, 'This transcription protocol does not support timestamps'
     end
 
     def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
@@ -400,14 +493,14 @@ module RubyLLM
               'Request options in the provider vocabulary can be set with with_provider_options.'
       end
 
-      ServerTools.resolve(entries, aliases: aliases, owner: @provider.name)
+      RubyLLM::Tools::ServerTools.resolve(entries, aliases: aliases, owner: @provider.name)
     end
 
     def apply_server_tools(payload, entries)
       resolution = resolve_server_tools_for_request(entries)
       return payload unless resolution
 
-      payload = Utils.deep_merge(payload, resolution.payload) unless resolution.payload.empty?
+      payload = Support::Utils.deep_merge(payload, resolution.payload) unless resolution.payload.empty?
       merge_server_tool_entries(payload, resolution.tools) if resolution.tools.any?
       payload
     end
@@ -419,7 +512,7 @@ module RubyLLM
     end
 
     def track_usage(operation, on_finish: nil)
-      @usage_tracker = Usage::Tracker.new(
+      @usage_tracker = Accounting::Usage::Tracker.new(
         operation:,
         provider: @provider,
         model: @model,

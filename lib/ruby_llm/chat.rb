@@ -15,14 +15,15 @@ module RubyLLM
   #   chat = RubyLLM.chat(model: 'claude-sonnet-5')
   #   chat.with_instructions("Be terse.").with_tools(Weather)
   #
-  # #ask runs the agentic loop to completion, executing tool calls until the
-  # model produces a final answer. #ask_later, #generate, #run_tools, and
-  # #step expose the individual moves of that loop.
+  # #ask runs the conversation loop, executing tools until the model answers
+  # or a call needs approval. #ask_later, #generate, #run_tools, and #step
+  # expose individual operations. Resume an approval pause with #approve
+  # or #deny followed by #complete.
   #
   # A Chat is Enumerable over its messages.
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
-    include Inspectable
+    include Support::Inspectable
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
@@ -138,9 +139,10 @@ module RubyLLM
       @approval_checker = nil
     end
 
-    # Adds +message+ to the conversation as a user message and runs the
-    # agentic loop to completion, executing tool calls along the way.
-    # Returns the final assistant Message. Attach files with +with:+.
+    # Adds +message+ as a user message and runs the conversation loop,
+    # executing tools until the model answers or a call needs approval.
+    # Returns the latest assistant Message; check #awaiting_approval? before
+    # treating it as a final answer. Attach files with +with:+.
     # A given block receives streamed Chunk objects as they arrive.
     #
     #   chat.ask "What's the best way to learn Ruby?"
@@ -217,21 +219,20 @@ module RubyLLM
       messages.last if messages.length > before
     end
 
-    # Runs the agentic loop until #complete? is +true+ and returns the last
-    # non-system Message. Used after #ask_later; #ask stages a message and
-    # calls #complete for you.
+    # Runs the conversation loop until #complete? or #awaiting_approval?
+    # is +true+. Returns the last conversation Message, or +nil+ for an
+    # empty chat. Used after #ask_later; #ask calls #complete for you.
     #
     # When a pending tool call requires approval and no decision has been
-    # recorded, the loop parks instead of finishing: #complete returns
-    # cleanly with #awaiting_approval? true, and calling it again after
-    # #approve or #deny picks up exactly where it stopped.
+    # recorded, the loop pauses. Record #approve or #deny decisions, then
+    # call #complete again to continue.
     def complete(&)
       step(&) until complete? || awaiting_approval?
       last_non_system_message || messages.last
     end
 
-    # Returns whether the model owes this chat nothing more: nothing is
-    # staged, or the model answered without calling a tool.
+    # Returns whether the chat has no pending response or tool execution:
+    # nothing is staged, or the model answered without requesting tools.
     def complete?
       last = last_non_system_message
       case last&.role
@@ -242,7 +243,8 @@ module RubyLLM
     end
 
     # Records approval for +tool_call+, a ToolCall or its id, so the next
-    # #complete or #run_tools executes it. Returns +self+.
+    # #complete or #run_tools executes a local tool or records permission for
+    # the provider to execute a remote tool on the next request. Returns +self+.
     #
     #   chat.approve(tool_call)
     #   chat.complete
@@ -253,7 +255,8 @@ module RubyLLM
 
     # Records denial for +tool_call+, a ToolCall or its id. The next
     # #complete or #run_tools appends a structured denial result instead
-    # of executing the tool, and the model continues from there. Returns
+    # of executing a local tool, or sends a refusal for a remote tool on the
+    # next request. The model continues from there. Returns
     # +self+.
     def deny(tool_call)
       record_tool_call_decision(tool_call, false)
@@ -264,7 +267,7 @@ module RubyLLM
     # approval and has none recorded. While +true+, #complete returns
     # without executing them; record decisions with #approve or #deny,
     # then call #complete again. Tool calls that need no approval still
-    # execute before the loop parks.
+    # execute before the loop pauses.
     #
     # Consults each pending tool's approval resolver when one is declared,
     # so resolvers must be idempotent reads.
@@ -278,7 +281,7 @@ module RubyLLM
 
     # Returns the tool calls from the latest response that require approval
     # and have no recorded decision, as an array of ToolCall objects. Pairs
-    # with #approve and #deny.
+    # with #approve and #deny. ToolCall#remote? identifies provider-executed calls.
     #
     #   chat.pending_approvals.each { |tool_call| puts tool_call.name }
     #   chat.approve(chat.pending_approvals.first)
@@ -365,7 +368,7 @@ module RubyLLM
         return self
       end
 
-      @server_tools += ServerTools.normalize(tools, tools_with_options)
+      @server_tools += RubyLLM::Tools::ServerTools.normalize(tools, tools_with_options)
       self
     end
 
@@ -444,9 +447,8 @@ module RubyLLM
       self
     end
 
-    # Caps the number of tokens the model may generate, mapping to each
-    # provider's request field (+max_tokens+, +max_output_tokens+,
-    # +maxOutputTokens+, and so on). Pass +nil+ to remove the limit.
+    # Caps the number of tokens the model may generate.
+    # Pass +nil+ to remove the limit.
     # Returns +self+.
     #
     #   chat.with_max_output_tokens(1000)
@@ -463,15 +465,18 @@ module RubyLLM
     # provider-specific tier such as +:minimal+, +:xhigh+, or +:max+,
     # passed through as-is), +budget:+ (a token count), and +display:+
     # (+:summarized+ or +:omitted+, controlling whether providers that
-    # support it return readable thinking text). Returns +self+.
+    # support it return readable thinking text). Accepts keywords or an options
+    # Hash. Passing +nil+ raises ArgumentError. Returns +self+.
     #
     #   chat.with_thinking
     #   chat.with_thinking(false)
-    #   chat.with_thinking(effort: :high, budget: 8000)
+    #   chat.with_thinking(effort: :high)
     #   chat.with_thinking(budget: 10_000)
     #   chat.with_thinking(display: :summarized)
     #
-    def with_thinking(enabled = true, **options) # rubocop:disable Metrics/PerceivedComplexity, Style/OptionalBooleanParameter
+    def with_thinking(enabled = true, **options) # rubocop:disable Metrics/PerceivedComplexity
+      return with_thinking(**enabled.transform_keys(&:to_sym), **options) if enabled.is_a?(Hash)
+
       raise ArgumentError, 'with_thinking accepts false or thinking options' unless [true, false].include?(enabled)
       raise ArgumentError, 'with_thinking(false) does not accept options' if !enabled && options.any?
       raise ArgumentError, 'thinking options cannot be nil; pass false to disable' if options.value?(nil)
@@ -504,7 +509,8 @@ module RubyLLM
     end
 
     # Enables document citations, so the model backs its claims with quotes
-    # from attached files. Pass +false+ to disable. Returns +self+.
+    # from attached files. Pass +false+ to disable. Passing +nil+ raises
+    # ArgumentError. Returns +self+.
     #
     #   chat.with_citations
     #   response = chat.ask "Who created Ruby?", with: "facts.txt"
@@ -518,12 +524,13 @@ module RubyLLM
     end
 
     # Enables provider prompt caching. With no arguments the provider's
-    # default behavior applies; options such as +ttl:+ are passed through
-    # to providers that support them. On Gemini, pass +id:+ with a
-    # CachedContent (or its name) from RubyLLM.cache to attach an explicit
+    # default behavior applies; options such as +ttl:+ apply where
+    # supported. Pass +id:+ with a CachedContent (or its name) from
+    # RubyLLM.cache to attach an explicit
     # content cache. Pass +false+ to stop RubyLLM from sending cache
     # controls or rendering explicit cache boundaries. A provider may still
-    # cache prompts implicitly. Returns +self+.
+    # cache prompts implicitly. Passing +nil+ raises ArgumentError.
+    # Returns +self+.
     #
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
@@ -551,9 +558,9 @@ module RubyLLM
     # +pause_after+:: end the turn once compaction runs, instead of
     #                 continuing straight into the answer.
     #
-    # Each provider maps what it supports and drops the rest with a debug
-    # log, so the same call works everywhere. Pass +false+ to disable.
-    # Returns +self+.
+    # Each provider applies the options it supports. Unsupported options
+    # are ignored with a debug log. Pass +false+ to disable; passing +nil+
+    # raises ArgumentError. Returns +self+.
     #
     #   chat.with_compaction
     #   chat.with_compaction(at: 50_000)
@@ -575,10 +582,8 @@ module RubyLLM
     end
 
     # Identifies the end user behind the conversation for the provider's
-    # abuse tooling, mapping to each provider's own field
-    # (+safety_identifier+ on OpenAI, <tt>metadata.user_id</tt> on
-    # Anthropic, +user_id+ on DeepSeek, +user+ on OpenRouter). Providers
-    # without an equivalent field omit it. Pass +nil+ to remove it.
+    # abuse monitoring. Providers without an equivalent field omit it.
+    # Pass +nil+ to remove it.
     # Returns +self+.
     #
     #   chat.with_end_user("user-123").ask "Hello"
@@ -604,7 +609,7 @@ module RubyLLM
     # request payload as-is and overriding RubyLLM's defaults. Replaces any
     # previously set provider options; +nil+ clears them. Returns +self+.
     #
-    #   chat.with_provider_options(max_output_tokens: 200)
+    #   chat.with_provider_options(service_tier: "flex")
     #
     def with_provider_options(provider_options)
       @provider_options = provider_options.to_h
@@ -662,7 +667,7 @@ module RubyLLM
       add_callback(:after_message, &)
     end
 
-    # Registers a callback that receives each ToolCall before the tool
+    # Registers a callback that receives each local ToolCall before the tool
     # executes. Returns +self+.
     #
     #   chat.before_tool_call { |tool_call| puts tool_call.name }
@@ -671,7 +676,7 @@ module RubyLLM
       add_callback(:before_tool_call, &)
     end
 
-    # Registers a callback that receives each tool's result after
+    # Registers a callback that receives each local tool's result after
     # execution. Returns +self+.
     def after_tool_result(&)
       add_callback(:after_tool_result, &)
@@ -725,15 +730,17 @@ module RubyLLM
       Cost.aggregate(usage_entries.map(&:cost), complete: usage_entries.all?(&:cost_available?))
     end
 
-    # Counts the tokens the chat's next request would consume as currently
-    # configured, including instructions, tools, thinking, and attachments.
+    # Counts input tokens for the conversation, including instructions,
+    # function tools, structured output, thinking, and attachments.
     # Pass +message+ to include it as a staged user message without
     # mutating the chat. Returns an Integer.
     #
     #   chat.with_instructions("Be terse.").with_tools(Weather)
     #   chat.count_tokens("What's the weather in Berlin?")
     #
-    # Raises Error when the provider has no token counting endpoint.
+    # Server tools, provider_options, compaction, and before_request hooks
+    # are not included. Raises Error when the provider has no token counting
+    # endpoint.
     def count_tokens(message = nil)
       request_messages = messages.dup
       request_messages << coerce_message(role: :user, content: message) unless message.nil?
@@ -748,6 +755,33 @@ module RubyLLM
         caching: @caching,
         protocol: @protocol
       )
+    end
+
+    # Compacts the conversation's model context and returns an assistant
+    # Message. The message can have empty text and carries the provider's
+    # compacted context internally. Every earlier message remains in
+    # #messages, including on persisted Rails chats.
+    #
+    #   chat.ask "Remember these project requirements..."
+    #   chat.compact
+    #   chat.ask "Which requirement should we implement first?"
+    #
+    # Uses the current instructions, headers, and request hooks. Records
+    # reported usage and runs the normal message callbacks. Raises Error
+    # when the provider has no manual compaction endpoint, and
+    # PendingToolCallsError until pending tool calls have been answered.
+    def compact
+      raise_if_cancelled!
+      raise_if_pending_tool_calls!
+      usage_start = usage_entries.length
+      payload = instrumentation_payload(streaming: false)
+      RubyLLM.instrument('compaction.ruby_llm', payload, config: @config) do |event|
+        result = provider_compaction
+        record_out_of_band_usage(result) if usage_entries.length == usage_start
+        record_generated_message(result, usage_start)
+        record_completion_event(event, result)
+        result
+      end
     end
 
     # Replaces the conversation with +new_messages+, coercing each element
@@ -816,7 +850,7 @@ module RubyLLM
         temperature: @temperature,
         max_output_tokens: @max_output_tokens,
         model: @model,
-        provider_options: Utils.deep_dup(@provider_options),
+        provider_options: Support::Utils.deep_dup(@provider_options),
         schema: @schema,
         thinking: resolved_thinking,
         citations: @citations,
@@ -890,15 +924,15 @@ module RubyLLM
       return nil if raw_schema.nil?
       return raw_schema unless raw_schema.is_a?(Hash)
 
-      schema = RubyLLM::Utils.deep_symbolize_keys(raw_schema)
+      schema = RubyLLM::Support::Utils.deep_symbolize_keys(raw_schema)
       schema_def = extract_schema_definition(schema)
       strict = extract_schema_strict(schema, schema_def)
       build_schema_payload(schema, schema_def, strict)
     end
 
     def extract_schema_definition(schema)
-      definition = RubyLLM::Utils.deep_dup(schema[:schema] || schema)
-      RubyLLM::Utils.strip_schema_metadata(definition)
+      definition = RubyLLM::Support::Utils.deep_dup(schema[:schema] || schema)
+      RubyLLM::Support::Utils.strip_schema_metadata(definition)
     end
 
     def extract_schema_strict(schema, schema_def)
@@ -946,14 +980,18 @@ module RubyLLM
       RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
         result = provider_completion(usage_recorder: method(:record_usage_entry), stream_tracker:, &block)
         record_out_of_band_usage(result) if usage_entries.length == entries_before
-        raise_if_cancelled!
-        link_completion_usage(result, usage_start)
-        run_callbacks(:before_message) unless block_given?
-        add_message result
-        run_callbacks(:after_message, result)
+        record_generated_message(result, usage_start, streaming: block_given?)
         record_completion_event(event, result)
       end
       result
+    end
+
+    def record_generated_message(result, usage_start, streaming: false)
+      raise_if_cancelled!
+      link_completion_usage(result, usage_start)
+      run_callbacks(:before_message) unless streaming
+      add_message result
+      run_callbacks(:after_message, result)
     end
 
     def instrumentation_payload(streaming:)
@@ -1110,7 +1148,7 @@ module RubyLLM
         temperature: @temperature,
         max_output_tokens: @max_output_tokens,
         model: @model,
-        provider_options: Utils.deep_dup(@provider_options),
+        provider_options: Support::Utils.deep_dup(@provider_options),
         headers: @headers,
         schema: @schema,
         thinking: resolved_thinking,
@@ -1125,6 +1163,14 @@ module RubyLLM
       )
     end
 
+    def provider_compaction
+      @provider.compact(
+        preprocessed_messages, model: @model, protocol: @protocol,
+                               headers: @headers, before_request: @callbacks[:before_request],
+                               usage_recorder: method(:record_usage_entry)
+      )
+    end
+
     def record_usage_entry(entry)
       usage_entries << entry
       @usage_recorder&.call(entry)
@@ -1136,7 +1182,7 @@ module RubyLLM
     end
 
     def record_out_of_band_usage(response)
-      entry = Usage::Entry.new(
+      entry = Accounting::Usage::Entry.new(
         operation: :chat,
         provider: @provider.slug,
         model: response.model || @model.id,
@@ -1146,7 +1192,7 @@ module RubyLLM
         message: response
       )
       response.ruby_llm_usage_entries = [entry]
-      Usage.instrument(entry, config: @config)
+      Accounting::Usage.instrument(entry, config: @config)
       record_usage_entry(entry)
     end
 
@@ -1170,7 +1216,9 @@ module RubyLLM
     def execute_pending_tool_calls(response)
       raise_if_cancelled!
 
-      executable, denied = partition_pending_tool_calls(pending_tool_calls(response))
+      server_calls, local_calls = pending_tool_calls(response).partition { |_, call| call.remote? }.map(&:to_h)
+      respond_to_tool_approvals(server_calls)
+      executable, denied = partition_pending_tool_calls(local_calls)
       deny_tool_calls(denied)
       if concurrency
         handle_concurrent_tool_calls(executable)
@@ -1179,6 +1227,19 @@ module RubyLLM
       end
 
       @tool_prefs[:choice] = nil if forced_tool_choice?
+    end
+
+    def respond_to_tool_approvals(tool_calls)
+      tool_calls.each_value do |tool_call|
+        decision = tool_call_approval(nil, tool_call)
+        next if decision.nil?
+
+        raise_if_cancelled!
+        run_callbacks(:before_message)
+        response = @provider.tool_approval_response(tool_call, approved: decision, model: @model, protocol: @protocol)
+        message = add_message(response)
+        run_callbacks(:after_message, message)
+      end
     end
 
     def partition_pending_tool_calls(pending)
@@ -1215,6 +1276,8 @@ module RubyLLM
     end
 
     def approval_pending?(tool_call)
+      return tool_call_approval(nil, tool_call).nil? if tool_call.remote?
+
       tool = tools[tool_call.name.to_sym]
       return false unless tool&.requires_approval?
 
@@ -1222,7 +1285,7 @@ module RubyLLM
     end
 
     def tool_call_approval(tool, tool_call)
-      return tool.approval_resolver.call(tool_call) if tool.approval_resolver
+      return tool.approval_resolver.call(tool_call) if tool&.approval_resolver
       return @tool_call_decisions[tool_call.id] if @tool_call_decisions.key?(tool_call.id)
 
       @approval_checker&.call(tool_call)

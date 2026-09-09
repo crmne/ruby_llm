@@ -60,17 +60,38 @@ RSpec.describe RubyLLM::Embedding, :live do
   describe 'multimodal embeddings' do
     let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
 
-    it 'gemini/gemini-embedding-2 embeds text with custom dimensions' do
-      embedding = RubyLLM.embed(test_text, model: 'gemini-embedding-2', provider: :gemini,
+    it "openrouter/#{model_for(:openrouter, :multimodal_embedding)} embeds an image alongside text" do
+      embedding = RubyLLM.embed('The Ruby logo', model: model_for(:openrouter, :multimodal_embedding),
+                                                 provider: :openrouter, with: image_path, dimensions: test_dimensions)
+
+      expect(embedding.vectors.length).to eq(test_dimensions)
+      expect(embedding.vectors).to all(be_a(Float))
+      expect(embedding.tokens.input).to be_positive
+    end
+
+    %w[sample.pdf ruby.wav ruby.mp4].each do |filename|
+      it "openrouter/#{model_for(:openrouter, :multimodal_embedding)} embeds #{filename}" do
+        path = File.expand_path("../fixtures/#{filename}", __dir__)
+        embedding = RubyLLM.embed(nil, model: model_for(:openrouter, :multimodal_embedding),
+                                       provider: :openrouter, with: path, dimensions: test_dimensions)
+
+        expect(embedding.vectors.length).to eq(test_dimensions)
+        expect(embedding.vectors).to all(be_a(Float))
+        expect(embedding.tokens.input).to be_positive
+      end
+    end
+
+    it "gemini/#{model_for(:gemini, :multimodal_embedding)} embeds text with custom dimensions" do
+      embedding = RubyLLM.embed(test_text, model: model_for(:gemini, :multimodal_embedding), provider: :gemini,
                                            dimensions: test_dimensions)
       expect(embedding.vectors).to be_an(Array)
       expect(embedding.vectors.length).to eq(test_dimensions)
       expect(embedding.vectors.first).to be_a(Float)
-      expect(embedding.model).to eq('gemini-embedding-2')
+      expect(embedding.model).to eq(model_for(:gemini, :multimodal_embedding))
     end
 
-    it 'gemini/gemini-embedding-2 embeds an image alongside text' do
-      embedding = RubyLLM.embed('The Ruby logo', model: 'gemini-embedding-2', provider: :gemini,
+    it "gemini/#{model_for(:gemini, :multimodal_embedding)} embeds an image alongside text" do
+      embedding = RubyLLM.embed('The Ruby logo', model: model_for(:gemini, :multimodal_embedding), provider: :gemini,
                                                  with: image_path, dimensions: test_dimensions)
       expect(embedding.vectors).to be_an(Array)
       expect(embedding.vectors.length).to eq(test_dimensions)
@@ -79,28 +100,29 @@ RSpec.describe RubyLLM::Embedding, :live do
 
     it 'raises UnsupportedAttachmentError on providers without multimodal embeddings' do
       expect do
-        RubyLLM.embed(test_text, model: 'text-embedding-3-small', provider: :openai, with: image_path)
+        RubyLLM.embed(test_text, model: model_for(:openai, :embedding), provider: :openai, with: image_path)
       end.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
     it 'rejects attachments alongside multiple texts' do
       expect do
-        RubyLLM.embed(test_texts, model: 'gemini-embedding-2', provider: :gemini, with: image_path)
+        RubyLLM.embed(test_texts, model: model_for(:gemini, :multimodal_embedding), provider: :gemini, with: image_path)
       end.to raise_error(ArgumentError, /one text at a time/)
     end
   end
 
   describe 'Bedrock embedding dialects' do
-    it 'bedrock/us.cohere.embed-v4:0 embeds a single text' do
-      embedding = RubyLLM.embed(test_text, model: 'us.cohere.embed-v4:0', provider: :bedrock)
+    it "bedrock/#{model_for(:bedrock, :multimodal_embedding)} embeds a single text" do
+      embedding = RubyLLM.embed(test_text, model: model_for(:bedrock, :multimodal_embedding), provider: :bedrock)
 
       expect(embedding.vectors).to be_an(Array)
       expect(embedding.vectors.first).to be_a(Float)
-      expect(embedding.model).to eq('us.cohere.embed-v4:0')
+      expect(embedding.model).to eq(model_for(:bedrock, :multimodal_embedding))
     end
 
-    it 'bedrock/us.cohere.embed-v4:0 embeds multiple texts with custom dimensions' do
-      embeddings = RubyLLM.embed(test_texts, model: 'us.cohere.embed-v4:0', provider: :bedrock, dimensions: 512)
+    it "bedrock/#{model_for(:bedrock, :multimodal_embedding)} embeds multiple texts with custom dimensions" do
+      embeddings = RubyLLM.embed(test_texts, model: model_for(:bedrock, :multimodal_embedding), provider: :bedrock,
+                                             dimensions: 512)
 
       expect(embeddings.vectors.size).to eq(3)
       embeddings.vectors.each do |vector|
@@ -109,30 +131,31 @@ RSpec.describe RubyLLM::Embedding, :live do
     end
 
     # Nova multimodal embeddings are not served in us-west-2 yet.
-    it 'bedrock/amazon.nova-2-multimodal-embeddings-v1:0 embeds a single text' do
+    it "bedrock/#{model_for(:bedrock, :document_embedding)} embeds a single text" do
       context = RubyLLM.context { |config| config.bedrock_region = 'us-east-1' }
-      embedding = context.embed(test_text, model: 'amazon.nova-2-multimodal-embeddings-v1:0',
+      embedding = context.embed(test_text, model: model_for(:bedrock, :document_embedding),
                                            provider: :bedrock, assume_model_exists: true, dimensions: 256)
 
       expect(embedding.vectors).to be_an(Array)
       expect(embedding.vectors.length).to eq(256)
-      expect(embedding.model).to eq('amazon.nova-2-multimodal-embeddings-v1:0')
+      expect(embedding.model).to eq(model_for(:bedrock, :document_embedding))
     end
   end
 
   describe 'Perplexity int8 embeddings' do
-    it 'perplexity/pplx-embed-v1-0.6b decodes a single text into int8 vectors' do
-      embedding = RubyLLM.embed(test_text, model: 'pplx-embed-v1-0.6b', provider: :perplexity)
+    it "perplexity/#{model_for(:perplexity, :passage_embedding)} decodes a single text into int8 vectors" do
+      embedding = RubyLLM.embed(test_text, model: model_for(:perplexity, :passage_embedding), provider: :perplexity)
       expect(embedding.vectors).to be_an(Array)
       expect(embedding.vectors.length).to eq(1024)
       expect(embedding.vectors.first).to be_an(Integer)
       expect(embedding.vectors).to all(be_between(-128, 127))
-      expect(embedding.model).to eq('pplx-embed-v1-0.6b')
+      expect(embedding.model).to eq(model_for(:perplexity, :passage_embedding))
       expect(embedding.tokens.input.to_i).to be > 0
     end
 
-    it 'perplexity/pplx-embed-v1-0.6b handles multiple texts with custom dimensions' do
-      embeddings = RubyLLM.embed(test_texts, model: 'pplx-embed-v1-0.6b', provider: :perplexity, dimensions: 256)
+    it "perplexity/#{model_for(:perplexity, :passage_embedding)} handles multiple texts with custom dimensions" do
+      embeddings = RubyLLM.embed(test_texts, model: model_for(:perplexity, :passage_embedding), provider: :perplexity,
+                                             dimensions: 256)
       expect(embeddings.vectors.size).to eq(3)
       embeddings.vectors.each do |vector|
         expect(vector.length).to eq(256)
@@ -141,8 +164,8 @@ RSpec.describe RubyLLM::Embedding, :live do
   end
 
   describe 'provider-reported cost' do
-    it 'openrouter/openai/text-embedding-3-small returns the exact cost the provider reported' do
-      embedding = RubyLLM.embed(test_text, model: 'openai/text-embedding-3-small', provider: :openrouter)
+    it "openrouter/#{model_for(:openrouter, :embedding)} returns the exact cost the provider reported" do
+      embedding = RubyLLM.embed(test_text, model: model_for(:openrouter, :embedding), provider: :openrouter)
 
       expect(embedding.tokens.reported_cost).to be_positive
       expect(embedding.cost.total).to eq(embedding.tokens.reported_cost)

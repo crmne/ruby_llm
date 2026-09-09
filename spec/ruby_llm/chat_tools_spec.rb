@@ -11,6 +11,8 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   def skip_unless_capable(provider, model, capability, message)
+    return if provider == :gpustack
+
     model_info = RubyLLM.models.find(model, provider: provider)
     skip message unless model_info&.supports?(capability)
   rescue RubyLLM::ModelNotFoundError
@@ -227,12 +229,8 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} can use tools" do
         skip_unless_supports_functions(provider, model)
 
-        skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
-
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather)
-        # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
@@ -276,8 +274,8 @@ RSpec.describe RubyLLM::Chat, :live do
 
     describe 'thought signatures' do
       signature_models = [
-        { provider: :gemini, model: 'gemini-3.1-pro-preview' },
-        { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
+        { provider: :gemini, model: model_for(:gemini, :thinking_signatures) },
+        { provider: :vertexai, model: model_for(:vertexai, :thinking_signatures) }
       ]
       each_model(signature_models) do |provider, model|
         it "#{provider}/#{model} includes thought signatures for tool calls" do
@@ -299,17 +297,12 @@ RSpec.describe RubyLLM::Chat, :live do
 
     each_model(CHAT_MODELS) do |provider, model|
       # haiku can't do parallel tool calls
-      parallel_model = provider == :bedrock ? 'claude-sonnet-4-5' : model
+      parallel_model = provider == :bedrock ? model_for(:bedrock, :vision) : model
       it "#{provider}/#{parallel_model} can use parallel tool calls" do
         skip_unless_supports_functions(provider, parallel_model)
-        if provider == :gpustack && parallel_model == 'qwen3'
-          skip 'gpustack/qwen3 does not support parallel tool calls properly'
-        end
 
         chat = RubyLLM.chat(model: parallel_model, provider: provider)
                       .with_tools(Weather, BestLanguageToLearn)
-        # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if parallel_model == 'qwen3'
 
         response = chat.ask("What's the weather in Berlin (52.5200, 13.4050) and what's the best language to learn?")
         expect(response.content).to include('15')
@@ -324,12 +317,8 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
         skip_unless_supports_functions(provider, model)
 
-        skip 'Flaky test for deepseek' if provider == :deepseek
-
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather)
-        # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
@@ -345,25 +334,16 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(BestLanguageToLearn)
-        # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
         response = chat.ask("What's the best language to learn?")
         expect(response.content).to include('Ruby')
       end
 
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
         skip_unless_supports_functions(provider, model)
-        if provider == :gpustack && model == 'qwen3'
-          skip 'gpustack/qwen3 does not support streaming tool calls properly'
-        end
-
-        skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
-        # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
         chunks = []
 
         response = chat.ask("What's the best language to learn?") do |chunk|
@@ -385,18 +365,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         skip_unless_supports_functions(provider, model)
-        if provider == :azure
-          skip 'Azure rate-limits this multi-turn streaming tool scenario under the parallel live suite'
-        end
-
-        if provider == :gpustack && model == 'qwen3'
-          skip 'gpustack/qwen3 does not support streaming tool calls properly'
-        end
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather)
-        # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
         chunks = []
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)") do |chunk|
@@ -420,8 +391,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
         skip_unless_supports_functions(provider, model)
-
-        skip 'Flaky test for gpustack/qwen3' if provider == :gpustack && model == 'qwen3'
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(DiceRoll)
@@ -485,7 +454,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(ArrayParamsTool)
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
 
         chat.ask_later(
           'Call the array params tool with tags ["red","blue"] and tell me the combined tags.'
@@ -504,7 +472,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(AnyOfParamsTool)
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
 
         chat.ask_later(
           'Call the any-of params tool for task "Review PR" with status "pending" and report the result.'
@@ -524,7 +491,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(ObjectParamsTool)
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
 
         chat.ask_later(
           'Call the object params tool with window start 2025-01-01 and end 2025-01-02 and include the result.'
@@ -672,16 +638,14 @@ RSpec.describe RubyLLM::Chat, :live do
     each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} returns text and attachments from tools" do
         skip_unless_supports_functions(provider, model)
-        skip 'DeepSeek rejects tool attachments (no vision support)' if provider == :deepseek
-
-        # No cassettes yet: local server was not running at recording time
-        skip "#{provider} has no cassette for this example" if provider.in?(%i[gpustack ollama])
 
         chat = RubyLLM.chat(model: model, provider: provider).with_tools(FileFetchTool)
+        chat.with_temperature(0) if RubyLLM::Provider.providers[provider]&.local?
 
         response = chat.ask('Use the file_fetch tool, then tell me exactly what the fetched file says.')
 
         tool_message = chat.messages.find(&:tool_result?)
+        expect(tool_message).not_to be_nil
         expect(tool_message.content).to eq('Fetched the file.')
         expect(tool_message.attachments.first.filename).to eq('ruby.txt')
         expect(response.content).to include('Ruby is the best')
@@ -704,7 +668,9 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} reads PDFs returned from tools" do
         chat = RubyLLM.chat(model: model, provider: provider).with_tools(PdfFetchTool)
 
-        response = chat.ask('Use the pdf_fetch tool, then quote the first sentence of the returned PDF.')
+        response = chat.ask(
+          'Use the pdf_fetch tool, then quote the first sentence of the PDF body. Exclude the title and headings.'
+        )
 
         expect(response.content).to match(/simple PDF file|Lorem ipsum/i)
       end
@@ -715,8 +681,6 @@ RSpec.describe RubyLLM::Chat, :live do
     each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} preserves strings returned from tools" do
         skip_unless_supports_functions(provider, model)
-
-        skip "#{provider} has no cassette for this example" if provider == :gpustack
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(ContentReturningTool)
@@ -732,7 +696,7 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'tool choice and calls control' do
-    each_model(CHAT_MODELS) do |provider, model|
+    each_model(CHAT_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} respects choice: :none" do
         skip_unless_supports_functions(provider, model)
 
@@ -756,11 +720,15 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it "#{provider}/#{model} respects choice: :required for unrelated queries" do
         skip_unless_supports_functions(provider, model)
+        skip 'The configured llama.cpp Qwen3 backend ignores forced tool choices' if model_info[:backend] == :llama_cpp
 
         skip_unless_capable(provider, model, :tool_choice, "#{provider} doesn't support tool choice")
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :required)
+                      .with_instructions('Your location is Berlin, at latitude 52.5200 and longitude 13.4050.')
+        # DeepSeek only allows forced tool choices with thinking disabled.
+        chat.with_thinking(false) if provider == :deepseek
 
         tool_called = false
         chat.before_tool_call do |_tool_call|
@@ -775,12 +743,14 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it "#{provider}/#{model} respects specific tool choice" do
         skip_unless_supports_functions(provider, model)
+        skip 'The configured llama.cpp Qwen3 backend ignores forced tool choices' if model_info[:backend] == :llama_cpp
 
         skip_unless_capable(provider, model, :tool_choice, "#{provider} doesn't support tool choice")
         skip 'Cohere tool choice selects a mode, not a tool' if provider == :cohere
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :weather)
+        chat.with_thinking(false) if provider == :deepseek
 
         tool_called = false
         chat.before_tool_call do |_tool_call|
@@ -793,11 +763,12 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(tool_called).to be(true)
       end
 
-      it "#{provider}/#{model} respects calls: :one for sequential execution" do
+      parallel_model = provider == :openrouter ? model_for(:openrouter, :parallel_tools) : model
+      it "#{provider}/#{parallel_model} respects calls: :one for sequential execution" do
+        model = parallel_model
         skip_unless_supports_functions(provider, model)
-
-        if provider == :azure
-          skip 'Azure rate-limits this multi-turn tool-control scenario under the parallel live suite'
+        if model_info[:backend] == :llama_cpp
+          skip 'The configured llama.cpp Qwen3 backend ignores parallel_tool_calls: false'
         end
 
         skip_unless_capable(provider, model, :parallel_tool_calls, "#{provider} doesn't support tool parallel control")
@@ -819,7 +790,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'error handling' do
     it 'raises an error when tool execution fails' do
-      chat = RubyLLM.chat.with_tools(BrokenTool)
+      chat = RubyLLM.chat.with_tools(BrokenTool).with_tool_options(choice: :required)
 
       expect { chat.ask('What is the weather?') }.to raise_error(RuntimeError) do |error|
         expect(error.message).to include('This tool is broken')

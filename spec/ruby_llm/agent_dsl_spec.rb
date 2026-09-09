@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Agent do
   describe 'configuration readers' do
     let(:agent_class) do
       Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
         temperature 0.4
         max_output_tokens 128
         thinking effort: :low
@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Agent do
     end
 
     it 'returns what each macro was given' do
-      expect(agent_class.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
+      expect(agent_class.model).to eq(model: model_for(:openai, :temperature), provider: :openai)
       expect(agent_class.temperature).to eq(0.4)
       expect(agent_class.max_output_tokens).to eq(128)
       expect(agent_class.provider_options).to eq(top_p: 0.9)
@@ -66,7 +66,7 @@ RSpec.describe RubyLLM::Agent do
 
     it 'enables provider-default caching without options' do
       agent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
         caching
       end
 
@@ -75,7 +75,7 @@ RSpec.describe RubyLLM::Agent do
 
     it 'enables feature defaults without options' do
       agent = Class.new(described_class) do
-        model 'claude-sonnet-5', provider: :anthropic
+        model model_for(:anthropic, :adaptive_thinking), provider: :anthropic
         thinking
         citations
         compaction
@@ -90,7 +90,7 @@ RSpec.describe RubyLLM::Agent do
 
     it 'disables features with false' do
       agent = Class.new(described_class) do
-        model 'claude-sonnet-5', provider: :anthropic
+        model model_for(:anthropic, :adaptive_thinking), provider: :anthropic
         thinking false
         caching false
         compaction false
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Agent do
     it 'binds a configured context to the chat it builds' do
       context = RubyLLM.context { |config| config.request_timeout = 42 }
       agent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
       end
       agent.context(context)
 
@@ -134,7 +134,7 @@ RSpec.describe RubyLLM::Agent do
   describe 'deferred configuration blocks' do
     it 'evaluates caching, provider options and headers when the chat is built' do
       agent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
         inputs :tenant
 
         caching { { ttl: tenant } }
@@ -153,39 +153,41 @@ RSpec.describe RubyLLM::Agent do
       agent = Class.new(described_class) do
         inputs :quality
 
-        model { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+        model { quality == :high ? model_for(:openai, :alternate_chat) : model_for(:openai, :temperature) }
       end
 
-      expect(agent.chat(quality: :high).model.id).to eq('gpt-4.1-mini')
-      expect(agent.chat(quality: :low).model.id).to eq('gpt-4.1-nano')
+      expect(agent.chat(quality: :high).model.id).to eq(model_for(:openai, :alternate_chat))
+      expect(agent.chat(quality: :low).model.id).to eq(model_for(:openai, :temperature))
     end
 
     it 'keeps the model options alongside a model block' do
       agent = Class.new(described_class) do
         inputs :quality
 
-        model(provider: :openai) { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+        model(provider: :openai) do
+          quality == :high ? model_for(:openai, :alternate_chat) : model_for(:openai, :temperature)
+        end
       end
 
       expect(agent.model[:provider]).to eq(:openai)
       expect(agent.model[:model]).to be_a(Proc)
-      expect(agent.chat(quality: :high).model.id).to eq('gpt-4.1-mini')
+      expect(agent.chat(quality: :high).model.id).to eq(model_for(:openai, :alternate_chat))
     end
 
     it 'picks the model for agent instances too' do
       agent = Class.new(described_class) do
         inputs :quality
 
-        model { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+        model { quality == :high ? model_for(:openai, :alternate_chat) : model_for(:openai, :temperature) }
       end
 
-      expect(agent.new(quality: :high).model.id).to eq('gpt-4.1-mini')
-      expect(agent.new(inputs: { quality: :low }).model.id).to eq('gpt-4.1-nano')
+      expect(agent.new(quality: :high).model.id).to eq(model_for(:openai, :alternate_chat))
+      expect(agent.new(inputs: { quality: :low }).model.id).to eq(model_for(:openai, :temperature))
     end
 
     it 'resolves the safety identifier from the agent inputs' do
       agent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
         inputs :tenant
 
         end_user { "tenant-#{tenant}" }
@@ -196,7 +198,7 @@ RSpec.describe RubyLLM::Agent do
 
     it 'leaves the chat alone when a block returns nothing' do
       agent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
 
         caching { nil }
         provider_options { {} }
@@ -214,7 +216,7 @@ RSpec.describe RubyLLM::Agent do
   describe 'inputs' do
     it 'separates declared inputs from chat options' do
       agent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
         inputs :tenant
       end
 
@@ -266,7 +268,7 @@ RSpec.describe RubyLLM::Agent do
   describe 'inheritance' do
     it 'copies configuration that cannot be duplicated' do
       parent = Class.new(described_class) do
-        model 'gpt-4.1-nano', provider: :openai
+        model model_for(:openai, :temperature), provider: :openai
         temperature 0.2
         citations
       end
@@ -275,7 +277,7 @@ RSpec.describe RubyLLM::Agent do
 
       expect(child.temperature).to eq(0.2)
       expect(child.chat.instance_variable_get(:@citations)).to be(true)
-      expect(child.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
+      expect(child.model).to eq(model: model_for(:openai, :temperature), provider: :openai)
       expect(child.model).not_to equal(parent.model)
     end
   end

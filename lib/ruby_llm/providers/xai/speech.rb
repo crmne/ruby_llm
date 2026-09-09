@@ -20,7 +20,7 @@ module RubyLLM
             language: 'auto'
           }.compact
           payload[:output_format] = { codec: format.to_s } if format
-          Utils.deep_merge(payload, provider_options)
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def parse_speech_response(response, model:, voice:, format:)
@@ -30,6 +30,14 @@ module RubyLLM
             voice: voice || 'eve',
             format: (format || 'mp3').to_s
           )
+        end
+
+        def stream_speech(payload, model:, voice:, format:, &)
+          if payload[:with_timestamps] || payload['with_timestamps']
+            raise ArgumentError, 'xAI streaming speech does not accept with_timestamps'
+          end
+
+          stream_speech_response(speech_url(model:), payload, model:, voice:, format:, &)
         end
       end
     end

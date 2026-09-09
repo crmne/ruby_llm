@@ -69,7 +69,7 @@ module RubyLLM
               text: parse_reasoning_summary(output),
               signature: parse_reasoning_signature(output)
             ),
-            tool_calls: parse_function_calls(output, response: raw, finish_reason: finish_reason),
+            tool_calls: parse_pending_tool_calls(output, response: raw, finish_reason: finish_reason),
             server_tool_calls: server_tool_calls,
             raw_content: server_tool_calls.any? ? output : nil,
             model: data['model'],
@@ -139,17 +139,55 @@ module RubyLLM
         end
 
         def parse_output_citations(output, content)
-          annotations = output.select { |item| item['type'] == 'message' }.flat_map do |message|
-            Array(message['content']).flat_map { |part| Array(part['annotations']) }
-          end
+          offset = 0
+          output.select { |item| item['type'] == 'message' }.flat_map do |message|
+            Array(message['content']).flat_map do |part|
+              key = MESSAGE_TEXT_KEYS[part['type']]
+              next [] unless key
 
-          parse_annotations(annotations, content)
+              citations = offset_citations(parse_annotations(part['annotations'], nil), offset, content)
+              offset += part[key].to_s.length
+              citations
+            end
+          end
         end
 
-        # Responses annotations carry url_citation fields inline rather than
-        # nested under a url_citation key like Chat Completions.
         def parse_annotations(annotations, content)
-          super(Array(annotations).map { |annotation| normalize_annotation(annotation) }, content)
+          Array(annotations).filter_map do |annotation|
+            case annotation['type']
+            when 'file_citation', 'container_file_citation'
+              parse_file_citation(annotation, content)
+            else
+              super([normalize_annotation(annotation)], content).first
+            end
+          end
+        end
+
+        def parse_file_citation(annotation, content)
+          start_index = annotation['start_index']
+          end_index = annotation['end_index']
+
+          Citation.new(
+            source_id: annotation['file_id'],
+            title: annotation['filename'],
+            source_index: annotation['index'],
+            text: annotated_text(content, start_index, end_index),
+            start_index: start_index,
+            end_index: end_index
+          )
+        end
+
+        def offset_citations(citations, offset, content)
+          citations.map do |citation|
+            start_index = citation.start_index && (citation.start_index + offset)
+            end_index = citation.end_index && (citation.end_index + offset)
+
+            Citation.new(citation.to_h.merge(
+                           start_index: start_index,
+                           end_index: end_index,
+                           text: annotated_text(content, start_index, end_index)
+                         ))
+          end
         end
 
         def normalize_annotation(annotation)
@@ -243,8 +281,19 @@ module RubyLLM
         end
 
         def format_input(messages, caching: nil)
-          messages.reject { |msg| msg.role == :system && !system_input_item?(msg, caching:) }
-                  .flat_map { |msg| format_item(msg, caching:) }
+          system_items = []
+          messages.each_with_object([]) do |message, input|
+            next if message.role == :system && !system_input_item?(message, caching:)
+
+            raw = message.raw_content
+            if raw.is_a?(Hash) && raw['object'] == 'response.compaction'
+              input.replace(system_items + raw.fetch('output'))
+            else
+              items = [format_item(message, caching:)].flatten(1)
+              system_items.concat(items) if message.role == :system
+              input.concat(items)
+            end
+          end
         end
 
         def system_input_item?(msg, caching: nil)
@@ -284,6 +333,8 @@ module RubyLLM
         # Function call outputs are text-only on the wire, so tool attachments
         # ride a user item spliced in right after the result.
         def format_tool_items(msg)
+          return msg.raw_content if msg.raw_content
+
           items = [{
             type: 'function_call_output',
             call_id: msg.tool_call_id,

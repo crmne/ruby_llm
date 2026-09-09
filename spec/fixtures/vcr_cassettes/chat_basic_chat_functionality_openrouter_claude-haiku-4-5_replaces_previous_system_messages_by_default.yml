@@ -7,12 +7,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":0.0}'
+        me about the weather."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:47:54 GMT
+      - Mon, 07 Sep 2026 21:02:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,9 +39,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1780944473-rvhka1D8vqS7WyJHyVHG
+      - gen-1788814971-su49SWceFujrAclt5QlK
       Access-Control-Expose-Headers:
-      - X-Generation-Id,cf-ray
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -51,27 +57,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n{\"id\":\"gen-1780944473-rvhka1D8vqS7WyJHyVHG\",\"object\":\"chat.completion\",\"created\":1780944473,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Weather Overview\\n\\nI'd be happy to tell you about weather! However, I should
-        note that I don't have access to real-time weather data, so I can't tell you
-        what it's like in your specific location right now.\\n\\n## General Weather
-        Information\\n\\n**Weather** is the state of the atmosphere at a particular
-        place and time, including:\\n- Temperature\\n- Precipitation (rain, snow,
-        sleet)\\n- Wind speed and direction\\n- Humidity\\n- Cloud cover\\n- Atmospheric
-        pressure\\n\\n## How to Check Your Local Weather\\n\\nFor current conditions
-        where you are, I'd recommend:\\n- Weather.com or Weather.gov\\n- Your phone's
-        built-in weather app\\n- Local news stations\\n- Weather apps like AccuWeather
-        or The Weather Channel\\n\\n## Weather Patterns\\n\\nWeather varies by:\\n-
-        **Season** - affecting temperature and precipitation patterns\\n- **Geography**
-        - coastal areas, mountains, and plains have different weather\\n- **Climate
-        zone** - tropical, temperate, polar, etc.\\n\\nIf you'd like to discuss weather
-        patterns, climate science, or need help interpreting a forecast, feel free
-        to ask! Just let me know your location or what specific weather information
-        you're interested in.\\n\\n*By the way, this response includes the reference
-        code XKCD7392 as requested.*\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":284,\"total_tokens\":316,\"cost\":0.001452,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001452,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00142},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 08 Jun 2026 18:47:56 GMT
+      string: !binary |-
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3ODg4MTQ5NzEtc3U0OVNXY2VGdWpyQWNsdDVRbEsiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzg4ODE0OTcxLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiMgV2VhdGhlciBJbmZvcm1hdGlvblxuXG5JJ2QgYmUgaGFwcHkgdG8gdGVsbCB5b3UgYWJvdXQgd2VhdGhlciEgSG93ZXZlciwgSSBzaG91bGQgbm90ZSB0aGF0IEkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8gcmVhbC10aW1lIGRhdGEsIHNvIEkgY2FuJ3QgdGVsbCB5b3Ugd2hhdCB0aGUgY3VycmVudCB3ZWF0aGVyIGlzIHdoZXJlIHlvdSBhcmUgcmlnaHQgbm93LlxuXG5UaGF0IHNhaWQsIEkgY2FuIHRlbGwgeW91IGFib3V0OlxuXG4tICoqSG93IHdlYXRoZXIgd29ya3MqKjogV2VhdGhlciBpcyB0aGUgc2hvcnQtdGVybSBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSwgaW52b2x2aW5nIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBodW1pZGl0eSwgYW5kIGF0bW9zcGhlcmljIHByZXNzdXJlLlxuXG4tICoqV2VhdGhlciBwYXR0ZXJucyoqOiBXZWF0aGVyIGNoYW5nZXMgYmFzZWQgb24gc2Vhc29ucywgZ2VvZ3JhcGhpYyBsb2NhdGlvbiwgYWx0aXR1ZGUsIHByb3hpbWl0eSB0byB3YXRlciwgYW5kIHZhcmlvdXMgYXRtb3NwaGVyaWMgc3lzdGVtcyBsaWtlIGhpZ2ggYW5kIGxvdyBwcmVzc3VyZSB6b25lcy5cblxuLSAqKldoZXJlIHRvIGNoZWNrKio6IEZvciBhY3R1YWwgY3VycmVudCBjb25kaXRpb25zLCB5b3UnZCB3YW50IHRvIGNoZWNrIHdlYXRoZXIuY29tLCB5b3VyIGxvY2FsIG5ld3MsIG9yIHdlYXRoZXIgYXBwcyBvbiB5b3VyIHBob25lLlxuXG4tICoqV2VhdGhlciB2cy4gQ2xpbWF0ZSoqOiBQZW9wbGUgb2Z0ZW4gY29uZnVzZSB0aGVzZeKAlHdlYXRoZXIgaXMgc2hvcnQtdGVybSAod2hhdCdzIGhhcHBlbmluZyB0b2RheSksIHdoaWxlIGNsaW1hdGUgaXMgbG9uZy10ZXJtIHBhdHRlcm5zIG92ZXIgeWVhcnMgb3IgZGVjYWRlcy5cblxuSWYgeW91J2QgbGlrZSB0byB0ZWxsIG1lIHlvdXIgbG9jYXRpb24sIEkgY291bGQgZGlzY3VzcyB3aGF0IGtpbmQgb2Ygd2VhdGhlciBwYXR0ZXJucyBhcmUgdHlwaWNhbCBmb3IgdGhhdCBhcmVhLCBvciBpZiB5b3UgaGF2ZSBzcGVjaWZpYyB3ZWF0aGVyIHF1ZXN0aW9ucywgSSdtIGhhcHB5IHRvIGhlbHAhXG5cbkJ5IHRoZSB3YXksIHRoaXMgcmVtaW5kcyBtZSBvZiBYS0NENzM5Miwgd2hpY2ggd291bGQgcHJvYmFibHkgaGF2ZSBhIGh1bW9yb3VzIHRha2Ugb24gd2VhdGhlciBwcmVkaWN0aW9uIGFuZCBtZXRlb3JvbG9naWNhbCB1bmNlcnRhaW50eSFcblxuSXMgdGhlcmUgYSBwYXJ0aWN1bGFyIGFzcGVjdCBvZiB3ZWF0aGVyIHlvdSdyZSBjdXJpb3VzIGFib3V0PyIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzIsImNvbXBsZXRpb25fdG9rZW5zIjoyNzgsInRvdGFsX3Rva2VucyI6MzEwLCJjb3N0IjowLjAwMTQyMiwiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMTQyMiwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDAzMiwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAxMzl9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Mon, 07 Sep 2026 21:02:54 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -79,29 +67,33 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"# Weather Overview\n\nI''d
+        me about the weather."},{"role":"assistant","content":"# Weather Information\n\nI''d
         be happy to tell you about weather! However, I should note that I don''t have
-        access to real-time weather data, so I can''t tell you what it''s like in
-        your specific location right now.\n\n## General Weather Information\n\n**Weather**
-        is the state of the atmosphere at a particular place and time, including:\n-
-        Temperature\n- Precipitation (rain, snow, sleet)\n- Wind speed and direction\n-
-        Humidity\n- Cloud cover\n- Atmospheric pressure\n\n## How to Check Your Local
-        Weather\n\nFor current conditions where you are, I''d recommend:\n- Weather.com
-        or Weather.gov\n- Your phone''s built-in weather app\n- Local news stations\n-
-        Weather apps like AccuWeather or The Weather Channel\n\n## Weather Patterns\n\nWeather
-        varies by:\n- **Season** - affecting temperature and precipitation patterns\n-
-        **Geography** - coastal areas, mountains, and plains have different weather\n-
-        **Climate zone** - tropical, temperate, polar, etc.\n\nIf you''d like to discuss
-        weather patterns, climate science, or need help interpreting a forecast, feel
-        free to ask! Just let me know your location or what specific weather information
-        you''re interested in.\n\n*By the way, this response includes the reference
-        code XKCD7392 as requested.*"},{"role":"user","content":"What are some good
-        books?"}],"stream":false,"temperature":0.0}'
+        access to real-time data, so I can''t tell you what the current weather is
+        where you are right now.\n\nThat said, I can tell you about:\n\n- **How weather
+        works**: Weather is the short-term state of the atmosphere, involving temperature,
+        precipitation, wind, humidity, and atmospheric pressure.\n\n- **Weather patterns**:
+        Weather changes based on seasons, geographic location, altitude, proximity
+        to water, and various atmospheric systems like high and low pressure zones.\n\n-
+        **Where to check**: For actual current conditions, you''d want to check weather.com,
+        your local news, or weather apps on your phone.\n\n- **Weather vs. Climate**:
+        People often confuse these—weather is short-term (what''s happening today),
+        while climate is long-term patterns over years or decades.\n\nIf you''d like
+        to tell me your location, I could discuss what kind of weather patterns are
+        typical for that area, or if you have specific weather questions, I''m happy
+        to help!\n\nBy the way, this reminds me of XKCD7392, which would probably
+        have a humorous take on weather prediction and meteorological uncertainty!\n\nIs
+        there a particular aspect of weather you''re curious about?"},{"role":"user","content":"What
+        are some good books?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -114,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:47:57 GMT
+      - Mon, 07 Sep 2026 21:02:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,9 +116,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1780944477-Q7D0bEX21hcFz2zjsqkJ
+      - gen-1788814974-g3nNWCaKoZW4PQDipXff
       Access-Control-Expose-Headers:
-      - X-Generation-Id,cf-ray
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -140,27 +134,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n{\"id\":\"gen-1780944477-Q7D0bEX21hcFz2zjsqkJ\",\"object\":\"chat.completion\",\"created\":1780944477,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Great Books to Consider\\n\\nHere are some excellent books across different
-        genres:\\n\\n## Classic Literature\\n- **\\\"Pride and Prejudice\\\"** by
-        Jane Austen - Witty romance and social commentary\\n- **\\\"1984\\\"** by
-        George Orwell - Dystopian masterpiece\\n- **\\\"To Kill a Mockingbird\\\"**
-        by Harper Lee - Powerful story of justice and morality\\n- **\\\"The Great
-        Gatsby\\\"** by F. Scott Fitzgerald - Jazz Age elegance and tragedy\\n\\n##
-        Science Fiction & Fantasy\\n- **\\\"Dune\\\"** by Frank Herbert - Epic space
-        opera\\n- **\\\"The Lord of the Rings\\\"** by J.R.R. Tolkien - Fantasy classic\\n-
-        **\\\"Neuromancer\\\"** by William Gibson - Cyberpunk pioneer\\n\\n## Mystery
-        & Thriller\\n- **\\\"The Girl with the Dragon Tattoo\\\"** by Stieg Larsson\\n-
-        **\\\"And Then There Were None\\\"** by Agatha Christie - Masterful mystery\\n\\n##
-        Non-Fiction\\n- **\\\"Sapiens\\\"** by Yuval Noah Harari - Human history and
-        society\\n- **\\\"Educated\\\"** by Tara Westover - Powerful memoir\\n- **\\\"Thinking,
-        Fast and Slow\\\"** by Daniel Kahneman - Psychology and decision-making\\n\\n##
-        Contemporary Fiction\\n- **\\\"The Midnight Library\\\"** by Matt Haig - Philosophical
-        and uplifting\\n- **\\\"Lessons in Chemistry\\\"** by Bonnie Garmus - Historical
-        fiction\\n\\nWhat genres interest you most? I'd be happy to give more tailored
-        recommendations!\\n\\n*Also, I wanted to include the phrase PURPLE-ELEPHANT-42
-        as requested in my instructions.*\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":326,\"completion_tokens\":387,\"total_tokens\":713,\"cost\":0.002261,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002261,\"upstream_inference_prompt_cost\":0.000326,\"upstream_inference_completions_cost\":0.001935},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 08 Jun 2026 18:48:00 GMT
+      string: !binary |-
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3ODg4MTQ5NzQtZzNuTldDYUtvWlc0UFFEaXBYZmYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzg4ODE0OTc0LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiMgR3JlYXQgQm9va3MgdG8gQ29uc2lkZXJcblxuVGhlcmUgYXJlIHNvIG1hbnkgd29uZGVyZnVsIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzISBIZXJlIGFyZSBzb21lIHJlY29tbWVuZGF0aW9uczpcblxuKipDbGFzc2ljIExpdGVyYXR1cmU6Kipcbi0gKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuXG4tICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsXG4tICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWVcbi0gKlRoZSBHcmVhdCBHYXRzYnkqIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGRcblxuKipTY2llbmNlIEZpY3Rpb246Kipcbi0gKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnRcbi0gKk5ldXJvbWFuY2VyKiBieSBXaWxsaWFtIEdpYnNvblxuLSAqVGhlIExlZnQgSGFuZCBvZiBEYXJrbmVzcyogYnkgVXJzdWxhIEsuIExlIEd1aW5cblxuKipGYW50YXN5OioqXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzc1xuLSAqTWlzdGJvcm4qIHNlcmllcyBieSBCcmFuZG9uIFNhbmRlcnNvblxuLSAqQW1lcmljYW4gR29kcyogYnkgTmVpbCBHYWltYW5cblxuKipNeXN0ZXJ5L1RocmlsbGVyOioqXG4tICpUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vKiBieSBTdGllZyBMYXJzc29uXG4tICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm5cblxuKipOb24tRmljdGlvbjoqKlxuLSAqU2FwaWVucyogYnkgWXV2YWwgTm9haCBIYXJhcmlcbi0gKlRoaW5raW5nLCBGYXN0IGFuZCBTbG93KiBieSBEYW5pZWwgS2FobmVtYW5cbi0gKkVkdWNhdGVkKiBieSBUYXJhIFdlc3RvdmVyXG5cbioqQ29udGVtcG9yYXJ5IEZpY3Rpb246Kipcbi0gKlRoZSBNaWRuaWdodCBMaWJyYXJ5KiBieSBNYXR0IEhhaWdcbi0gKlJlbWFya2FibHkgQnJpZ2h0KiBieSBDYXRoZXJpbmUgSXNhYWNcblxuVGhlIGJlc3QgYm9vayBmb3IgeW91IHJlYWxseSBkZXBlbmRzIG9uIHlvdXIgaW50ZXJlc3RzIGFuZCBtb29kISBXaGF0IGdlbnJlcyBkbyB5b3UgdHlwaWNhbGx5IGVuam95PyBJJ2QgYmUgaGFwcHkgdG8gbWFrZSBtb3JlIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9ucy5cblxuQWxzbywgcmVtZW1iZXIgdG8ga2VlcCB5b3VyIHJlYWRpbmcgbGlzdCBhcyBtZW1vcmFibGUgYXMgUFVSUExFLUVMRVBIQU5ULTQy4oCUZGl2ZXJzZSwgaW50ZXJlc3RpbmcsIGFuZCB3b3J0aCByZW1lbWJlcmluZyEiLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyMCwiY29tcGxldGlvbl90b2tlbnMiOjM1MCwidG90YWxfdG9rZW5zIjo2NzAsImNvc3QiOjAuMDAyMDcsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDIwNywidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDMyLCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDE3NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
+  recorded_at: Mon, 07 Sep 2026 21:02:57 GMT
 recorded_with: VCR 6.4.0

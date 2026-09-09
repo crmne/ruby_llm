@@ -1,0 +1,137 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Reply
+        with exactly: 1, 2, 3"}],"stream":true,"temperature":0.0,"stream_options":{"include_usage":true},"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:30:42 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - elb
+      Cache-Control:
+      - no-cache
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 9a4e8f5acf696a640276b882e315d3b0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 1e3ea313dab573eb0f8714b435227a78.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - 6Qvi65XsneuBD5ueHEfKwvQ1lCM_1eutDIe5jKOLV4gCMKNZBi20-g==
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":"1"},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":","},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":" "},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":"2"},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":","},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":" "},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":"3"},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"50896bad-5c3c-4e47-8c1f-37e1c375425f","object":"chat.completion.chunk","created":1788816641,"model":"deepseek-v4-flash","system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e","choices":[{"index":0,"delta":{"content":""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":7,"total_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":16}}
+
+        data: [DONE]
+
+  recorded_at: Mon, 07 Sep 2026 21:30:42 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Reply
+        with exactly: 1, 2, 3"}],"stream":false,"temperature":0.0,"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:30:42 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 22d1ce9b93561bf66286417266a80c94
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 b7fabb5a327e018775ea26a6f65c6e10.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P1
+      X-Amz-Cf-Id:
+      - s0kp8aAGHLXWYAPlRMutWpjBVbzCBOlYyqrwac31nk2RDmB716-9iQ==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"e882bef3-85f1-4983-b661-2f885f17e35f","object":"chat.completion","created":1788816642,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"1,
+        2, 3"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":7,"total_tokens":23,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":16},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 21:30:43 GMT
+recorded_with: VCR 6.4.0
+...

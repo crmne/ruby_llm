@@ -47,9 +47,9 @@ chat_models = [
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
   { provider: :cohere, model: 'command-a-03-2025' },
-  { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :deepseek, model: 'deepseek-v4-flash' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
-  { provider: :gpustack, model: 'qwen3' },
+  { provider: :gpustack, model: 'qwen3', backend: :llama_cpp },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :ollama_cloud, model: 'gpt-oss:120b' },
@@ -134,7 +134,7 @@ vision_models = [
   { provider: :cohere, model: 'command-a-plus-05-2026' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'pixtral-12b' },
-  { provider: :ollama, model: 'granite3.2-vision' },
+  { provider: :ollama, model: 'gemma4' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
@@ -212,3 +212,118 @@ image_generation_models = [
   { provider: :xai, model: 'grok-imagine-image', supports_size: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
+
+# Keep individual examples on the same models as the live matrices. Named
+# alternatives cover features that need a different model from the default.
+# Use the unfiltered rows so unit specs also work with local providers disabled.
+TEST_MODELS = {
+  azure_cohere_embedding: [{ provider: :azure, model: 'embed-v-4-0' }],
+  azure_cohere_rerank: [{ provider: :azure, model: 'Cohere-rerank-v4.0-fast' }],
+  titan_multimodal_embedding: [{ provider: :bedrock, model: 'amazon.titan-embed-image-v1' }],
+  bedrock_rerank: [{ provider: :bedrock, model: 'amazon.rerank-v1:0' }],
+  bedrock_video: [{ provider: :bedrock, model: 'luma.ray-v2:0' }],
+  vertexai_rerank: [{ provider: :vertexai, model: 'semantic-ranker-default-004', assume_model_exists: true }],
+  chat: chat_models,
+  structured_output: structured_output_models,
+  thinking: thinking_models,
+  vision: vision_models,
+  embedding: embedding_models,
+  speech: speech_models,
+  transcription: transcription_models,
+  diarization: [{ provider: :openrouter, model: 'microsoft/mai-transcribe-2' }],
+  image: image_generation_models,
+  video: VIDEO_GENERATION_MODELS,
+  video_extension: [
+    { provider: :xai, model: 'grok-imagine-video' },
+    { provider: :gemini, model: 'veo-3.1-fast-generate-preview' }
+  ],
+  elevenlabs_image: [{ provider: :elevenlabs, model: 'gemini-3.1-flash-lite-image', assume_model_exists: true }],
+  elevenlabs_video: [{ provider: :elevenlabs, model: 'veo-3.1-fast-generate-001', assume_model_exists: true }],
+  vertexai_video: [{ provider: :vertexai, model: 'veo-3.1-fast-generate-001' }],
+  azure_image: [{ provider: :azure, model: 'gpt-image-1-mini' }],
+  bedrock_image: [{ provider: :bedrock, model: 'stability.sd3-5-large-v1:0' }],
+  bedrock_image_edit: [{ provider: :bedrock, model: 'us.stability.stable-image-inpaint-v1:0' }],
+  bedrock_transcription: [{ provider: :bedrock, model: 'mistral.voxtral-small-24b-2507' }],
+  azure_speech: [{ provider: :azure, model: 'gpt-4o-mini-tts' }],
+  azure_transcription: [{ provider: :azure, model: 'gpt-4o-mini-transcribe' }],
+  parallel_tools: [{ provider: :openrouter, model: 'upstage/solar-pro4' }],
+  temperature: [{ provider: :openai, model: 'gpt-4.1-nano' }],
+  alternate_chat: [{ provider: :openai, model: 'gpt-4.1-mini' }],
+  alternate_batch: [{ provider: :openai, model: 'gpt-5-mini' }],
+  alternate_embedding: [{ provider: :openai, model: 'text-embedding-3-large' }],
+  alternate_speech: [{ provider: :openai, model: 'tts-1' }],
+  reasoning_effort: [{ provider: :openai, model: 'gpt-5.2' }],
+  adaptive_thinking: [{ provider: :anthropic, model: 'claude-sonnet-5' }],
+  compaction: [{ provider: :anthropic, model: 'claude-sonnet-4-6' }],
+  citations: [{ provider: :openrouter, model: 'perplexity/sonar' }],
+  router: [{ provider: :perplexity, model: 'perplexity/kimi-k3' }],
+  mcp: [
+    { provider: :openai, model: 'gpt-5-nano', protocol: :responses, approval: true },
+    { provider: :azure, model: 'gpt-5-nano', protocol: :responses, approval: true },
+    { provider: :gemini, model: 'gemini-3.8-flash', protocol: :interactions, approval: false }
+  ],
+  always_thinking: [{ provider: :mistral, model: 'magistral-small' }],
+  thinking_signatures: [
+    { provider: :gemini, model: 'gemini-3.1-pro-preview' },
+    { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
+  ],
+  multimodal_embedding: [
+    { provider: :gemini, model: 'gemini-embedding-2' },
+    { provider: :vertexai, model: 'gemini-embedding-2' },
+    { provider: :openrouter, model: 'google/gemini-embedding-2' },
+    { provider: :bedrock, model: 'us.cohere.embed-v4:0' }
+  ],
+  document_embedding: [{ provider: :bedrock, model: 'amazon.nova-2-multimodal-embeddings-v1:0' }],
+  passage_embedding: [{ provider: :perplexity, model: 'pplx-embed-v1-0.6b' }],
+  ocr: [
+    { provider: :mistral, model: 'mistral-ocr-latest' },
+    { provider: :cohere, model: 'parse-v5.0' }
+  ],
+  rerank: [
+    { provider: :cohere, model: 'rerank-v3.5' },
+    { provider: :openrouter, model: 'voyageai/rerank-2.5-lite' }
+  ],
+  image_count: [{ provider: :openai, model: 'gpt-image-1.5' }],
+  image_quality: [
+    { provider: :openai, model: 'gpt-image-2' },
+    { provider: :xai, model: 'grok-imagine-image-quality' }
+  ],
+  streaming_transcription: [{ provider: :openai, model: 'gpt-4o-transcribe' }],
+  dedicated_transcription: [
+    { provider: :gemini, model: 'gemini-3.5-transcribe' },
+    { provider: :vertexai, model: 'gemini-3.5-transcribe-preview' }
+  ],
+  timestamp_transcription: [
+    { provider: :openai, model: 'whisper-1' },
+    { provider: :elevenlabs, model: 'scribe_v2' }
+  ],
+  live_transcription: [
+    { provider: :gemini, model: 'gemini-3.5-transcribe-live' },
+    { provider: :vertexai, model: 'gemini-3.5-transcribe-live-preview' }
+  ],
+  websocket_transcription: [
+    { provider: :deepgram, model: 'nova-3-general' },
+    { provider: :elevenlabs, model: 'scribe_v2_realtime', assume_model_exists: true }
+  ],
+  streaming_speech: [
+    { provider: :deepgram, model: 'aura-2-thalia-en' },
+    { provider: :elevenlabs, model: 'eleven_flash_v2_5' },
+    { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
+    { provider: :openai, model: 'gpt-4o-mini-tts' },
+    { provider: :openrouter, model: 'hexgrad/kokoro-82m', voice: 'af_bella' },
+    { provider: :xai, model: 'grok-tts' }
+  ],
+  search: [{ provider: :openai, model: 'gpt-5-search-api' }],
+  server_tools: [
+    { provider: :gemini, model: 'gemini-3.5-flash' },
+    { provider: :openrouter, model: 'openai/gpt-5.2' },
+    { provider: :xai, model: 'grok-4.3' }
+  ]
+}.freeze
+
+def model_for(provider, purpose = :chat)
+  row = TEST_MODELS.fetch(purpose).find { |model| model[:provider] == provider }
+  raise KeyError, "No #{purpose} test model for #{provider}" unless row
+
+  row.fetch(:model)
+end

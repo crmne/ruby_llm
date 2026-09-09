@@ -18,7 +18,7 @@ module RubyLLM
   #     puts "Fallback #{fallback.succeeded? ? 'succeeded' : 'failed'}"
   #   end
   class Fallback
-    include Inspectable
+    include Support::Inspectable
 
     # The error classes that trigger a fallback when Chat#with_fallbacks is
     # called without +on:+.

@@ -6,12 +6,12 @@ module RubyLLM
       class Gemini
         # Vertex AI Gemini batch prediction rows.
         module Batches
-          include VertexAI::BatchPrediction
+          include Protocols::VertexAI::BatchPrediction
 
           private
 
           def vertex_batch_request(request)
-            payload = RubyLLM::Utils.deep_stringify_keys(batch_payload(request))
+            payload = RubyLLM::Support::Utils.deep_stringify_keys(batch_payload(request))
             labels = payload.fetch('labels', {}).merge('ruby_llm_batch_id' => request[:custom_id])
             { request: payload.merge('labels' => labels) }
           end

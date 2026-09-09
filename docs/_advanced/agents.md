@@ -3,7 +3,7 @@ layout: default
 title: Agents
 nav_order: 2
 has_children: true
-description: Define reusable AI assistants with class-based configuration, runtime context, and prompt conventions
+description: Give agents instructions, tools, and schemas in a Ruby class, then use them in scripts, services, and Rails jobs.
 ---
 
 # {{ page.title }}
@@ -456,7 +456,7 @@ WorkAssistant.new.ask("Help me find docs about callbacks.")
 ## Next Steps
 
 * Compose agents with [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
-* Run them as jobs that survive anything with [Durable Agents]({% link _advanced/durable-agents.md %})
+* Resume them across jobs and deploys with [Durable Agents]({% link _advanced/durable-agents.md %})
 * Give them [Memory]({% link _advanced/memory.md %}) across conversations
 * Ground them in your documents with [RAG]({% link _advanced/rag.md %})
 * Learn about [Chat Basics]({% link _core_features/chat.md %})

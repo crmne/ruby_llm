@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   describe '.parse_completion_body' do
     it 'captures cached token information when present' do
       response_body = {
-        'model' => 'gpt-4.1-nano',
+        'model' => model_for(:openai, :temperature),
         'choices' => [
           {
             'message' => {
@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
     it 'normalizes finish reasons' do
       response_body = {
-        'model' => 'gpt-4.1-nano',
+        'model' => model_for(:openai, :temperature),
         'choices' => [
           {
             'finish_reason' => 'tool_calls',
@@ -93,7 +93,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
     it 'normalizes DeepSeek cache hit and miss usage fields' do
       response_body = {
-        'model' => 'deepseek-chat',
+        'model' => model_for(:deepseek),
         'choices' => [
           {
             'message' => {
@@ -603,7 +603,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     it 'warns when citations are asked of a model without them' do
       allow(RubyLLM.logger).to receive(:warn)
       allow(described_class).to receive(:format_messages).and_return([])
-      model = instance_double(RubyLLM::Model, id: 'gpt-4.1-nano', supports?: false)
+      model = instance_double(RubyLLM::Model, id: model_for(:openai, :temperature), supports?: false)
 
       described_class.render_payload(
         [RubyLLM::Message.new(role: :user, content: 'Hi')],
@@ -639,8 +639,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     end
 
     it 'sends max_tokens to every other service on this wire format' do
-      expect(rendered_field('deepseek', 'deepseek-chat')).to eq(:max_tokens)
-      expect(rendered_field('perplexity', 'sonar')).to eq(:max_tokens)
+      expect(rendered_field('deepseek', model_for(:deepseek))).to eq(:max_tokens)
+      expect(rendered_field('perplexity', model_for(:perplexity))).to eq(:max_tokens)
     end
   end
 
@@ -650,7 +650,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       protocol.extend(RubyLLM::Protocols::ChatCompletions::Tools)
       protocol.extend(RubyLLM::Protocols::ChatCompletions::Media)
       protocol.extend(described_class)
-      model = instance_double(RubyLLM::Model, id: 'gpt-4.1-nano', supports?: true)
+      model = instance_double(RubyLLM::Model, id: model_for(:openai, :temperature), supports?: true)
       tool = instance_double(
         RubyLLM::Tool, name: 'lookup', description: 'Looks up', parameters_schema: nil,
                        declared_parameters: {}, provider_options: {}
@@ -670,7 +670,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   end
 
   describe '.render_payload with a schema' do
-    let(:model) { instance_double(RubyLLM::Model, id: 'gpt-4.1-nano', supports?: true) }
+    let(:model) { instance_double(RubyLLM::Model, id: model_for(:openai, :temperature), supports?: true) }
     let(:protocol) do
       Object.new.tap do |object|
         object.extend(RubyLLM::Protocols::ChatCompletions::Tools)

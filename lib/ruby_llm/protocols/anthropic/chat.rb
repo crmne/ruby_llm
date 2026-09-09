@@ -145,7 +145,7 @@ module RubyLLM
         end
 
         def apply_end_user(payload, identifier)
-          Utils.deep_merge(payload, { metadata: { user_id: identifier } })
+          Support::Utils.deep_merge(payload, { metadata: { user_id: identifier } })
         end
 
         # Anthropic compacts through a context_management edit. Omitting the
@@ -153,7 +153,7 @@ module RubyLLM
         # rejects an explicit one below its minimum, so RubyLLM passes the
         # value through rather than second-guessing it.
         def apply_compaction(payload, compaction)
-          Utils.deep_merge(payload, { context_management: { edits: [compaction_edit(compaction)] } })
+          Support::Utils.deep_merge(payload, { context_management: { edits: [compaction_edit(compaction)] } })
         end
 
         def compaction_edit(compaction)
@@ -205,7 +205,7 @@ module RubyLLM
         end
 
         def build_output_config(schema)
-          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
+          normalized = RubyLLM::Support::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
           { format: { type: 'json_schema', schema: normalized } }

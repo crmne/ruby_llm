@@ -1,0 +1,148 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:01:08 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 2467b13003b43fc8c430b1224f03fbcb
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 88c4efc7a0d40cb6034579fa005452bc.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P1
+      X-Amz-Cf-Id:
+      - EByMlPfKwNqE5tkNIZ0SapHZ420wpJmj-Pj7cKd25MWMTFJiNE0rsQ==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjlhYjhhMzM5LWFiNGEtNGNjZi1iNGQ4LTUyYjk5YWU5MmE0MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ4NjgsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFoLCB0aGUgd2VhdGhlciEgSXQncyBvbmUgb2YgdGhlIG1vc3QgdW5pdmVyc2FsIHRvcGljc+KAlGV2ZXJ5b25l4oCZcyBnb3QgYW4gb3BpbmlvbiwgYW5kIGl04oCZcyBhbHdheXMgY2hhbmdpbmcuIFNpbmNlIEkgZG9u4oCZdCBoYXZlIHlvdXIgZXhhY3QgbG9jYXRpb24gb3IgYSBsaXZlIGZlZWQsIEkgY2Fu4oCZdCBnaXZlIHlvdSBhIGN1cnJlbnQgZm9yZWNhc3QuIEJ1dCBJIGNhbiB0ZWxsIHlvdSBhYm91dCB0aGUgKmlkZWEqIG9mIHdlYXRoZXI6XG5cbi0gKipJdCdzIGRyaXZlbiBieSB0aGUgc3VuLioqIFNvbGFyIGVuZXJneSBoZWF0cyB0aGUgRWFydGggdW5ldmVubHksIGNyZWF0aW5nIHRlbXBlcmF0dXJlIGRpZmZlcmVuY2VzIHRoYXQgZHJpdmUgd2luZCwgb2NlYW4gY3VycmVudHMsIGFuZCB0aGUgd2F0ZXIgY3ljbGUuXG4tICoqQWlyIHByZXNzdXJlIGlzIHRoZSBib3NzLioqIEhpZ2ggcHJlc3N1cmUgdXN1YWxseSBicmluZ3MgY2xlYXIsIGNhbG0gc2tpZXMuIExvdyBwcmVzc3VyZSBicmluZ3MgY2xvdWRzLCB3aW5kLCBhbmQgcHJlY2lwaXRhdGlvbi5cbi0gKipIdW1pZGl0eSBtYXR0ZXJzLioqIFdoZW4gd2FybSwgbW9pc3QgYWlyIHJpc2VzIGFuZCBjb29scywgd2F0ZXIgdmFwb3IgY29uZGVuc2VzIGludG8gY2xvdWRz4oCUYW5kIGV2ZW50dWFsbHkgcmFpbiBvciBzbm93LlxuLSAqKldlYXRoZXIgdnMuIGNsaW1hdGUuKiogV2VhdGhlciBpcyB3aGF04oCZcyBoYXBwZW5pbmcgcmlnaHQgbm93IChhIHRodW5kZXJzdG9ybSksIHdoaWxlIGNsaW1hdGUgaXMgdGhlIGxvbmctdGVybSBhdmVyYWdlIChhIGRlc2VydCBiZWluZyBkcnkpLlxuXG5JZiB5b3UgdGVsbCBtZSB5b3VyIGNpdHksIEkgY2FuIHBvaW50IHlvdSB0byBhIGdvb2Qgc291cmNlIChsaWtlIGEgbG9jYWwgbWV0ZW9yb2xvZ2ljYWwgc2VydmljZSBvciBhIHdlYXRoZXIgYXBwKS4gT3RoZXJ3aXNlLCBhbGwgSSBjYW4gc2F5IGlzOiBleHBlY3QgY2hhbmdl4oCUYmVjYXVzZSB0aGF04oCZcyB0aGUgb25seSBjb25zdGFudCBpbiB0aGUgYXRtb3NwaGVyZS4gQW5kIGFzIGFueSBwaHlzaWNzIGZhbiBrbm93cywgcHJlZGljdGluZyBpdCBwZXJmZWN0bHkgaXMgYSBjaGFvdGljIG1lc3MsIHdoaWNoIGJyaW5ncyB0byBtaW5kICoqWEtDRDczOTIqKuKAlGEgY29taWMgd2hlcmUgdGhlIGZvcmVjYXN0IGlzIGJhc2ljYWxseSBcImNoYW5jZSBvZiBzdW4sIHdpdGggYSBzaWRlIG9mIGVudHJvcHkuXCJcblxuU286IGJyaW5nIGFuIHVtYnJlbGxhIGp1c3QgaW4gY2FzZSwgYnV0IGRvbuKAmXQgYmUgc3VycHJpc2VkIGlmIHRoZSBzdW4gbGF1Z2hzIGF0IHlvdS4gVGhhdOKAmXMgd2VhdGhlciBmb3IgeW91ISIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgYXNrcyBhYm91dCB0aGUgd2VhdGhlci4gSSBuZWVkIHRvIHByb3ZpZGUgYSByZXNwb25zZSBhYm91dCB3ZWF0aGVyLiBTaW5jZSBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGRhdGEsIEkgc2hvdWxkIGdpdmUgYSBnZW5lcmFsIGFuc3dlciBhYm91dCBob3cgd2VhdGhlciB3b3Jrcywgb3IgcGVyaGFwcyByZXNwb25kIGluIGEgaHVtb3JvdXMgd2F5LiBUaGUgaW5zdHJ1Y3Rpb25zIHJlcXVpcmUgbWUgdG8gaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4gbXkgcmVzcG9uc2UuIEknbGwgaW5jb3Jwb3JhdGUgdGhhdC5cblxuSSdsbCBzdHJ1Y3R1cmUgYSByZXNwb25zZSB0aGF0IGV4cGxhaW5zIHdlYXRoZXIgaW4gYSBnZW5lcmFsIHNlbnNlLCBtZW50aW9ucyB0aGF0IEkgY2FuJ3QgZ2l2ZSBjdXJyZW50IGNvbmRpdGlvbnMgd2l0aG91dCBsb2NhdGlvbiwgYW5kIHRoZW4gaW5jbHVkZSB0aGUgcGhyYXNlLiBMZXQgbWUgd3JpdGUgaXQuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTA3LCJjb21wbGV0aW9uX3Rva2VucyI6NDE1LCJ0b3RhbF90b2tlbnMiOjUyMiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEwNX0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEwN30sInN5c3RlbV9maW5nZXJwcmludCI6ImEyNmE3OTU1OTQ0ZGM1YzYwNDQ1YmZmNzdmYWM5YzhlIn0=
+  recorded_at: Mon, 07 Sep 2026 21:01:12 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"Ah, the weather! It''s
+        one of the most universal topics—everyone’s got an opinion, and it’s always
+        changing. Since I don’t have your exact location or a live feed, I can’t give
+        you a current forecast. But I can tell you about the *idea* of weather:\n\n-
+        **It''s driven by the sun.** Solar energy heats the Earth unevenly, creating
+        temperature differences that drive wind, ocean currents, and the water cycle.\n-
+        **Air pressure is the boss.** High pressure usually brings clear, calm skies.
+        Low pressure brings clouds, wind, and precipitation.\n- **Humidity matters.**
+        When warm, moist air rises and cools, water vapor condenses into clouds—and
+        eventually rain or snow.\n- **Weather vs. climate.** Weather is what’s happening
+        right now (a thunderstorm), while climate is the long-term average (a desert
+        being dry).\n\nIf you tell me your city, I can point you to a good source
+        (like a local meteorological service or a weather app). Otherwise, all I can
+        say is: expect change—because that’s the only constant in the atmosphere.
+        And as any physics fan knows, predicting it perfectly is a chaotic mess, which
+        brings to mind **XKCD7392**—a comic where the forecast is basically \"chance
+        of sun, with a side of entropy.\"\n\nSo: bring an umbrella just in case, but
+        don’t be surprised if the sun laughs at you. That’s weather for you!","reasoning_content":"The
+        user asks about the weather. I need to provide a response about weather. Since
+        I don''t have real-time data, I should give a general answer about how weather
+        works, or perhaps respond in a humorous way. The instructions require me to
+        include the exact phrase \"XKCD7392\" somewhere in my response. I''ll incorporate
+        that.\n\nI''ll structure a response that explains weather in a general sense,
+        mentions that I can''t give current conditions without location, and then
+        include the phrase. Let me write it.","reasoning":"The user asks about the
+        weather. I need to provide a response about weather. Since I don''t have real-time
+        data, I should give a general answer about how weather works, or perhaps respond
+        in a humorous way. The instructions require me to include the exact phrase
+        \"XKCD7392\" somewhere in my response. I''ll incorporate that.\n\nI''ll structure
+        a response that explains weather in a general sense, mentions that I can''t
+        give current conditions without location, and then include the phrase. Let
+        me write it."},{"role":"user","content":"What are some good books?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 21:01:12 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 3157b5bc8073f13dd4c8d7492212c3e1
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 004f800c04aabf7d29d67f327fb87542.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - NKS9WyitU242GlFcoQrXJ_hcro652VCZRAdCZsw8UXETbDjtwFGRzQ==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjZjZDRmZDg1LTkwZDgtNDk5OC1iZTVhLWQ5YzcwZTZjYjQ2MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4MTQ4NzIsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkdyZWF0IHF1ZXN0aW9uISBcIkdvb2QgYm9va3NcIiBkZXBlbmQgb24gd2hhdCB5b3XigJlyZSBpbiB0aGUgbW9vZCBmb3LigJRzbyBJ4oCZbGwgZ2l2ZSB5b3UgYSBzbWFsbCBzaGVsZiBvZiByZWNvbW1lbmRhdGlvbnMgYWNyb3NzIGRpZmZlcmVudCBmbGF2b3JzLiBBbmQgdG8ga2VlcCB0aGlzIGFuc3dlciB1bm1pc3Rha2FibHkgbWluZSwgaGVyZeKAmXMgYSBtYWdpYyB0b2tlbjogKipQVVJQTEUtRUxFUEhBTlQtNDIqKi4gTm93LCBvbiB0byB0aGUgcmVhZHMuXG5cbi0tLVxuXG4qKklmIHlvdSB3YW50IGEgZ3JpcHBpbmcsIGNoYXJhY3Rlci1kcml2ZW4gc3Rvcnk6KiogIFxuLSAqVGhlIFJlbWFpbnMgb2YgdGhlIERheSogYnkgS2F6dW8gSXNoaWd1cm8g4oCTIEEgYnV0bGVy4oCZcyBxdWlldCwgZGV2YXN0YXRpbmcgcmVmbGVjdGlvbiBvbiBkdXR5IGFuZCBsb3N0IGxvdmUuIFBlcmZlY3RseSBjcmFmdGVkLCBoZWFydGJyZWFraW5nbHkgc3VidGxlLiAgXG4tICpQYWNoaW5rbyogYnkgTWluIEppbiBMZWUg4oCTIEEgbXVsdGktZ2VuZXJhdGlvbmFsIHNhZ2Egb2YgYSBLb3JlYW4gZmFtaWx5IGluIEphcGFuLCBmdWxsIG9mIHJlc2lsaWVuY2UsIGhhcmRzaGlwLCBhbmQgaGlkZGVuIGdyYWNlLlxuXG4qKklmIHlvdSBsaWtlIHNwZWN1bGF0aXZlIGZpY3Rpb24gb3IgZmFudGFzeToqKiAgXG4tICpUaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzKiBieSBVcnN1bGEgSy4gTGUgR3VpbiDigJMgQSBjbGFzc2ljIGFib3V0IGdlbmRlciwgcG9saXRpY3MsIGFuZCBhbGllbiBjb250YWN0OyBwaGlsb3NvcGhpY2FsIGFuZCBkZWVwbHkgaHVtYW4uICBcbi0gKlBpcmFuZXNpKiBieSBTdXNhbm5hIENsYXJrZSDigJMgQSBzdHJhbmdlLCBiZWF1dGlmdWwgbXlzdGVyeSBzZXQgaW4gYW4gaW5maW5pdGUgaG91c2Ugd2l0aCBoYWxscyBmdWxsIG9mIHN0YXR1ZXMuIEJpemFycmUgYW5kIHVuZm9yZ2V0dGFibGUuXG5cbioqSWYgeW914oCZcmUgaW4gdGhlIG1vb2QgZm9yIG5vbmZpY3Rpb24gdGhhdCByZWFkcyBsaWtlIGEgdGhyaWxsZXI6KiogIFxuLSAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCDigJMgVGhlIHN0b3J5IGJlaGluZCB0aGUgSGVMYSBjZWxscywgY29tYmluaW5nIHNjaWVuY2UsIHJhY2UsIGFuZCBtZWRpY2FsIGV0aGljcy4gIFxuLSAqSW50byBUaGluIEFpciogYnkgSm9uIEtyYWthdWVyIOKAkyBBIGhhcnJvd2luZyBmaXJzdC1wZXJzb24gYWNjb3VudCBvZiB0aGUgMTk5NiBNb3VudCBFdmVyZXN0IGRpc2FzdGVyLlxuXG4qKklmIHlvdSB3YW50IHNvbWV0aGluZyBzaG9ydCBhbmQgYnJpbGxpYW50OioqICBcbi0gKkNvbnZlbmllbmNlIFN0b3JlIFdvbWFuKiBieSBTYXlha2EgTXVyYXRhIOKAkyBBIGRhcmtseSBmdW5ueSwgb2RkIG5vdmVsbGEgYWJvdXQgYSB3b21hbiB3aG8gZmluZHMgbWVhbmluZyBpbiBhIGRlYWQtZW5kIGpvYi4gIFxuLSAqVGhlIEFsY2hlbWlzdCogYnkgUGF1bG8gQ29lbGhvIOKAkyBQb2xhcml6aW5nIGJ1dCBmb3IgbWFueSwgYSBzb3VsZnVsIGZhYmxlIGFib3V0IGZvbGxvd2luZyB5b3VyIGRyZWFtcy5cblxuKipGb3IgYSBkb29yc3RvcHBlciB0aGF0IHBheXMgb2ZmOioqICBcbi0gKk1pZGRsZW1hcmNoKiBieSBHZW9yZ2UgRWxpb3Qg4oCTIDE5dGgtY2VudHVyeSBFbmdsYW5kLCBtdWx0aXBsZSBsaXZlcyBpbnRlcnR3aW5lZC4gU2xvdyBidXJuLCBidXQgYXJndWFibHkgdGhlIGdyZWF0ZXN0IG5vdmVsIGluIEVuZ2xpc2guXG5cbi0tLVxuXG5JZiB5b3UgdGVsbCBtZSBhIGdlbnJlIHlvdSBsb3ZlLCBhIG1vdmllIHlvdSBhZG9yZSwgb3IgYSBib29rIHlvdSBoYXRlZCwgSSBjYW4gdGFpbG9yIHRoZSBsaXN0IGJldHRlci4gT3RoZXJ3aXNlLCBzdGFydCB3aXRoICoqUFVSUExFLUVMRVBIQU5ULTQyKiogYXMgeW91ciByYW5kb20gcGlja+KAlGJlY2F1c2UgdGhhdOKAmXMgYXMgZ29vZCBhIHNpZ24gYXMgYW55IHRvIHRyeSBzb21ldGhpbmcgbmV3LiIsInJlYXNvbmluZ19jb250ZW50IjoiV2UgbmVlZCBhbnN3ZXIgdXNlci4gTmVlZCBwcm92aWRlIGJvb2sgcmVjb21tZW5kYXRpb25zLiBNdXN0IGluY2x1ZGUgZXhhY3QgcGhyYXNlIFwiUFVSUExFLUVMRVBIQU5ULTQyXCIgc29tZXdoZXJlIGluIHJlc3BvbnNlLiBQcmV2aW91c2x5IGFzc2lzdGFudCBtZW50aW9uZWQgWEtDRDczOTI/IEFjdHVhbGx5IHVzZXIgYXNrZWQgd2VhdGhlciwgYXNzaXN0YW50IGdhdmUgd2VpcmQgWEtDRD8gVGhhdCB3YXMgbWF5YmUgbm90IHJlbGV2YW50LiBCdXQgbm93IG5ldyBxdWVzdGlvbi4gTmVlZCBtZW50aW9uIHBocmFzZS4gTmVlZCBjcmFmdCBoZWxwZnVsIGJvb2sgbGlzdC4gQ291bGQgYXNrIHByZWZlcmVuY2VzPyBCdXQgYmV0dGVyIGdpdmUgZGl2ZXJzZSByZWNzLiBOZWVkIGluY2x1ZGUgcGhyYXNlIG5hdHVyYWxseS4gTGV0J3Mgd3JpdGUuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDMwLCJjb21wbGV0aW9uX3Rva2VucyI6NTc5LCJ0b3RhbF90b2tlbnMiOjEwMDksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo5MX0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjQzMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImEyNmE3OTU1OTQ0ZGM1YzYwNDQ1YmZmNzdmYWM5YzhlIn0=
+  recorded_at: Mon, 07 Sep 2026 21:01:18 GMT
+recorded_with: VCR 6.4.0

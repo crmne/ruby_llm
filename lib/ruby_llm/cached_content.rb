@@ -4,7 +4,8 @@ module RubyLLM
   # A CachedContent is a provider-side prompt cache resource. Create one
   # with ::create from a long, stable prompt prefix, then attach it to a
   # chat so later requests read the cached tokens instead of resending
-  # them. Gemini is the only provider with this resource lifecycle today.
+  # them. This lifecycle requires a provider with managed cache resources;
+  # automatic prompt caching is configured with Chat#with_caching.
   #
   #   cache = RubyLLM.cache(big_document, model: 'gemini-3.7-flash', ttl: 3600)
   #   chat = RubyLLM.chat(model: 'gemini-3.7-flash').with_caching(id: cache)
@@ -14,7 +15,7 @@ module RubyLLM
   # Cache names are provider-owned. Persist #provider alongside #name and
   # pass it back when finding the cache later.
   class CachedContent
-    include Inspectable
+    include Support::Inspectable
 
     def inspect_attributes # :nodoc:
       { name: name, model: model, provider: provider, expires_at: expires_at }

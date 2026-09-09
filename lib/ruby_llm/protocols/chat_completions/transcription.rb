@@ -11,6 +11,20 @@ module RubyLLM
           'audio/transcriptions'
         end
 
+        def render_transcription_options(timestamps:, format:, streaming:)
+          return {} if timestamps.nil?
+
+          values = Array(timestamps).map(&:to_s)
+          unless values.any? && (values - %w[word segment]).empty?
+            raise ArgumentError, 'Transcription timestamps must be word or segment'
+          end
+          if streaming || (format && format != 'verbose_json')
+            raise ArgumentError, 'Transcription timestamps require a non-streaming verbose_json response'
+          end
+
+          { response_format: 'verbose_json', timestamp_granularities: values }
+        end
+
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
@@ -75,17 +89,15 @@ module RubyLLM
           final = chunks.reverse.find(&:done?)
           data = final&.raw || {}
           usage = data['usage'] || {}
-          segments = chunks.filter_map(&:segment)
 
           RubyLLM::Transcription.new(
             text: final&.text || streamed_transcript_text(chunks),
             model: model,
             language: data['language'],
-            duration: usage['seconds'],
-            segments: segments.empty? ? nil : segments,
-            input_tokens: usage['input_tokens'],
-            output_tokens: usage['output_tokens'],
-            reported_cost: reported_cost(usage)
+            duration: transcription_duration(usage),
+            segments: streamed_transcription_segments(chunks, data),
+            reported_cost: reported_cost(usage),
+            **transcription_tokens(usage)
           )
         end
 
@@ -96,6 +108,11 @@ module RubyLLM
           return deltas.join if deltas.any?
 
           chunks.filter_map { |chunk| chunk.segment&.fetch('text', nil) }.join(' ')
+        end
+
+        def streamed_transcription_segments(chunks, data)
+          segments = data['segments'] || chunks.filter_map(&:segment)
+          segments.empty? ? nil : segments
         end
 
         def parse_transcription_response(response, model:)
@@ -109,13 +126,23 @@ module RubyLLM
             text: data['text'],
             model: model,
             language: data['language'],
-            duration: data['duration'] || usage['seconds'],
+            duration: data['duration'] || transcription_duration(usage),
             segments: data['segments'],
             words: data['words'],
-            input_tokens: usage['input_tokens'] || usage['prompt_tokens'],
-            output_tokens: usage['output_tokens'] || usage['completion_tokens'],
-            reported_cost: reported_cost(usage)
+            reported_cost: reported_cost(usage),
+            **transcription_tokens(usage)
           )
+        end
+
+        def transcription_tokens(usage)
+          {
+            input_tokens: usage['input_tokens'] || usage['prompt_tokens'],
+            output_tokens: usage['output_tokens'] || usage['completion_tokens']
+          }
+        end
+
+        def transcription_duration(usage)
+          usage['seconds']
         end
       end
     end

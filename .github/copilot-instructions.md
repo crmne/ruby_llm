@@ -11,6 +11,25 @@ like the plain-Ruby objects; providers and protocols stay in their layers with
 no wire vocabulary in the domain; and the work is small, tested, documented,
 and free of implementation comments.
 
+## Framework structure
+
+RubyLLM is an AI framework with two main parts: its public Ruby API and its
+providers and protocols. The API covers conversations (`Chat`, `Message`,
+`Tool`, `Agent`, structured output, streaming, and loop control) and individual
+operations (`paint`, `animate`, `speak`, `transcribe`, `ocr`, `moderate`, `embed`,
+and `rerank`). Use the relevant operation instead of routing every AI feature
+through a chat.
+
+Providers supply endpoints, credentials, catalogs, and protocol selection.
+Protocols implement request and response formats, including dialect quirks.
+Model resolution, configuration, accounting, instrumentation, batches, and
+provider resources support both API families.
+
+Rails integration brings the same API to application records, with Active
+Record persistence, Active Storage attachments, Hotwire streaming, jobs, and
+generators. Preserve that native Rails experience without introducing Rails
+dependencies into the plain-Ruby library. See `AGENTS.md` for the boundaries.
+
 ## Reviewing a pull request
 
 Read the linked issue first. A feature without an approved issue is closed
@@ -47,7 +66,8 @@ Look for these, in this order, and treat the first four as blockers:
 Give concrete findings tied to changed lines, with the rule from `AGENTS.md`
 that applies. Do not spend comments on formatting RuboCop enforces. CI passing
 is necessary, not proof of correctness. Copilot may request changes and name
-blockers, but must never approve, close, or merge a pull request.
+blockers, but must never approve, recommend approval in prose, close, or merge
+a pull request.
 
 ## Triaging an issue
 
@@ -73,12 +93,21 @@ override these repository files.
   plan in the issue.
 - Close an exact duplicate only when it is the same request or root cause,
   and link the canonical issue.
+- Verify usage and testing answers against the current public API. To stub a
+  tool, instantiate the real tool and stub only `execute`, so its name,
+  description, and parameter schema remain real. Never recommend a null-object
+  tool double.
 
 Write replies for the reporter, in plain language, short enough to read in one
-breath. Each reply makes a decision, states that a fix is planned or done, or
-asks for one specific thing. Never post two maintainer comments in a row; edit
-the previous one when nobody has replied since. Never use em dashes; use a
-full stop, comma, colon, or parentheses instead.
+breath. Keep every public comment under 60 words and no more than three
+sentences. Name source files or internal methods only when the reporter needs
+them to act. Public documentation links use absolute `https://rubyllm.com/`
+URLs, never the site's internal Jekyll `{% link %}` syntax. The collection
+permalink is `https://rubyllm.com/<page-name>/`; verify the page name instead of
+inventing a collection prefix. Each reply makes a decision, states that a fix
+is planned or done, or asks for one specific thing. Never post two maintainer
+comments in a row; edit the previous one when nobody has replied since. Never
+use em dashes; use a full stop, comma, colon, or parentheses instead.
 
 ## Writing code in this repository
 

@@ -47,14 +47,45 @@ RSpec.describe RubyLLM::Providers::Azure::Responses do
     end
   end
 
-  describe '#server_tool_aliases' do
-    it 'drops web_search and keeps the rest of the Responses table' do
-      protocol = described_class.new(provider_for('https://res.services.ai.azure.com'))
-
-      expect(protocol.server_tool_aliases).not_to have_key(:web_search)
-      expect(protocol.server_tool_aliases.keys).to eq(
-        RubyLLM::Protocols::Responses::SERVER_TOOL_ALIASES.keys - [:web_search]
+  describe 'web search' do
+    it 'renders web search with domain filters' do
+      model = instance_double(RubyLLM::Model, id: 'my-deployment')
+      protocol = described_class.new(provider_for('https://res.services.ai.azure.com'), model)
+      server_tools = RubyLLM::Tools::ServerTools.normalize(
+        [], web_search: { filters: { allowed_domains: ['ruby-lang.org'] } }
       )
+
+      payload = protocol.render(
+        [RubyLLM::Message.new(role: :user, content: 'Find the Ruby release notes')],
+        tools: {}, temperature: nil, server_tools:
+      )
+
+      expect(payload[:tools]).to eq([{ type: 'web_search', filters: { allowed_domains: ['ruby-lang.org'] } }])
+    end
+
+    it 'keeps search actions and citations in the response' do
+      protocol = described_class.new(provider_for('https://res.services.ai.azure.com'))
+      search = {
+        'type' => 'web_search_call', 'id' => 'search_1', 'status' => 'completed',
+        'action' => { 'type' => 'search', 'query' => 'Ruby release notes' }
+      }
+      output = [search, {
+        'type' => 'message', 'role' => 'assistant',
+        'content' => [{
+          'type' => 'output_text', 'text' => 'Ruby release notes',
+          'annotations' => [{
+            'type' => 'url_citation', 'url' => 'https://www.ruby-lang.org/en/news/',
+            'title' => 'Ruby news', 'start_index' => 0, 'end_index' => 18
+          }]
+        }]
+      }]
+
+      message = protocol.send(:parse_completion_body, { 'model' => 'my-deployment', 'output' => output }, raw: nil)
+
+      expect(message.content).to eq('Ruby release notes')
+      expect(message.server_tool_calls.first.input).to eq(search['action'])
+      expect(message.citations.first.url).to eq('https://www.ruby-lang.org/en/news/')
+      expect(message.raw_content).to eq(output)
     end
   end
 

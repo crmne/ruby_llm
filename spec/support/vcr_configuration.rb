@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'uri'
+require_relative 'realtime_credentials'
+require_relative 'signed_media_urls'
+require_relative 'cohere_vcr_configuration'
 
 def googleapis_host?(uri)
   host = URI.parse(uri).host.to_s.downcase
@@ -45,6 +48,9 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GPUSTACK_API_KEY>') { ENV.fetch('GPUSTACK_API_KEY', nil) }
   config.filter_sensitive_data('<MISTRAL_API_KEY>') { ENV.fetch('MISTRAL_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
+  config.filter_sensitive_data('<OLLAMA_API_ORIGIN>') do
+    URI.join(ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1'), '/').to_s.delete_suffix('/')
+  end
   config.filter_sensitive_data('<OLLAMA_CLOUD_API_KEY>') { ENV.fetch('OLLAMA_CLOUD_API_KEY', nil) }
   config.filter_sensitive_data('<OPENAI_API_KEY>') { ENV.fetch('OPENAI_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
@@ -108,6 +114,9 @@ VCR.configure do |config|
 
   # Filter cookies
   config.before_record do |interaction|
+    RealtimeCredentials.filter_elevenlabs(interaction)
+    SignedMediaUrls.filter(interaction)
+
     # Remove auth headers that may include provider secrets or signed credentials
     if interaction.request.headers['Authorization']
       interaction.request.headers['Authorization'] =

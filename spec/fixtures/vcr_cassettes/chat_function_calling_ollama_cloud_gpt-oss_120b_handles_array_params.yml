@@ -31,35 +31,34 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - dfd88388a9119aa961fcc4191eeda58e15bc9344
+      - a7413d4e73407989987adf5f0bbacc8d71858e4d
       X-Build-Time:
-      - '2026-08-18T23:03:55-07:00'
+      - '2026-09-06T10:42:07-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '771'
+      - '620'
       Date:
-      - Wed, 19 Aug 2026 14:51:58 GMT
+      - Mon, 07 Sep 2026 20:59:06 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - e494d35c427096c6aeebf7907ef374b6/7292925060181917654
+      - d93b70c7e5450ca7f97c5cec2266f01b/9814643272121007519
       Traceparent:
-      - 00-e494d35c427096c6aeebf7907ef374b6-6535acb3e1afffd6-00
+      - 00-d93b70c7e5450ca7f97c5cec2266f01b-88349e0e47f33d9f-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-150","object":"chat.completion","created":1787151118,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to use the function \"array_params\" in the functions namespace. We have
-        to call with tags [\"red\",\"blue\"] and return combined tags. Likely the
-        tool will combine into a single array? The problem says \"tell me the combined
-        tags\". Probably the tool returns combined tags. So we need to call the function.","tool_calls":[{"id":"call_vdgq5cma","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":103,"total_tokens":250}}
+      string: '{"id":"chatcmpl-457","object":"chat.completion","created":1788814746,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to call the tool functions.array_params with tags [\"red\",\"blue\"]
+        then respond with combined tags. Likely the tool concatenates? Not defined,
+        but we call.","tool_calls":[{"id":"call_d0hjeklu","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":72,"total_tokens":219}}
 
         '
-  recorded_at: Wed, 19 Aug 2026 14:51:58 GMT
+  recorded_at: Mon, 07 Sep 2026 20:59:06 GMT
 recorded_with: VCR 6.4.0

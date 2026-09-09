@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/providers/cohere/v2/rerank
+    body:
+      encoding: UTF-8
+      string: '{"model":"Cohere-rerank-v4.0-fast","query":"Ruby programming","documents":["Bananas
+        are fruit.","Ruby is a programming language."],"top_n":1}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 07 Sep 2026 20:53:55 GMT
+      Server:
+      - istio-envoy
+      Transfer-Encoding:
+      - chunked
+      X-Ms-Error-Code:
+      - DeploymentNotFound
+      Azureml-Served-By-Cluster:
+      - hyena-westeurope-01
+      Apim-Request-Id:
+      - bffcb146-6a67-4f50-9ce4-d9c9a2f93dc9
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: '{"error":{"code":"DeploymentNotFound","message":"The API deployment
+        cohere-rerank-v4.0-fast does not exist. If you created the deployment within
+        the last 5 minutes, please wait a moment and try again.","details":"The API
+        deployment cohere-rerank-v4.0-fast does not exist. If you created the deployment
+        within the last 5 minutes, please wait a moment and try again."}}'
+  recorded_at: Mon, 07 Sep 2026 20:53:56 GMT
+recorded_with: VCR 6.4.0

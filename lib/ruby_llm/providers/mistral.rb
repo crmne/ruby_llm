@@ -5,7 +5,14 @@ module RubyLLM
     # Mistral API integration.
     class Mistral < Provider
       protocol :chat_completions, ChatCompletions, batches: Mistral::ChatCompletions::Batches
+      protocol :conversations, Conversations
       protocol :files, Protocols::Mistral::Files
+
+      def protocol_for(model, operation: nil, **)
+        return Conversations if operation == :paint
+
+        super
+      end
 
       def api_base
         @config.mistral_api_base || 'https://api.mistral.ai/v1'

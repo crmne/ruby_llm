@@ -7,6 +7,7 @@ module RubyLLM
     # stateless (store: false) and replays encrypted reasoning so multi-turn
     # tool calls work without server-side state.
     class Responses < ChatCompletions
+      include Responses::Approvals
       include Responses::Chat
       include Responses::Media
       include Responses::Streaming
@@ -18,7 +19,12 @@ module RubyLLM
         code_execution: { tool: { type: 'code_interpreter', container: { type: 'auto' } } },
         code_interpreter: { tool: { type: 'code_interpreter', container: { type: 'auto' } } },
         image_generation: { tool: { type: 'image_generation' } },
-        mcp: { tool: { type: 'mcp' } }
+        mcp: lambda do |options|
+          options = Support::Utils.deep_symbolize_keys(options)
+          options[:server_url] = options.delete(:url) if options.key?(:url)
+          options[:server_label] = options.delete(:name) if options.key?(:name)
+          { tool: { type: 'mcp' }.merge(options) }
+        end
       }.freeze
 
       def server_tool_aliases

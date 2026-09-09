@@ -5,13 +5,18 @@ module RubyLLM
   # RubyLLM.embed returns one:
   #
   #   embedding = RubyLLM.embed("Ruby is a programmer's best friend")
-  #   embedding.vectors.length  # => 1536
-  #   embedding.model           # => "text-embedding-3-small"
-  #   embedding.tokens.input    # => 8
+  #   embedding.vectors # => [0.018, -0.027, ...]
+  #
+  # Pass an array to embed several texts in one call on supported models:
+  #
+  #   RubyLLM.embed(["Ruby", "Rails"]).vectors # => [[...], [...]]
+  #
+  # Store the vectors for similarity search. #tokens and #cost report
+  # usage when the provider supplies it.
   #
   class Embedding
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # The embedding vectors. A flat array of floats when a single text
     # was embedded, an array of such arrays when an array of texts was
@@ -56,8 +61,8 @@ module RubyLLM
     end
 
     # Generates embeddings for +text+ and returns an Embedding. +text+
-    # may be a single string or an array of strings; an array produces
-    # one vector per string in a single API call.
+    # may be a single string or, on supported models, an array of strings.
+    # An array produces one vector per string in a single API call.
     #
     #   RubyLLM.embed "Ruby is a programmer's best friend"
     #   RubyLLM.embed ["Ruby", "Python", "JavaScript"]

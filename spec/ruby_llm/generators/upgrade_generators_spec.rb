@@ -29,6 +29,23 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
     end
   end
 
+  describe 'individual phases' do
+    %w[prepare backfill finish cleanup].each do |phase|
+      it "generates only the #{phase} migration" do
+        Dir.mktmpdir do |destination|
+          generator = RubyLLM::Generators::UpgradeGenerator.new([], { phase: phase }, destination_root: destination)
+          allow(generator).to receive_messages(postgresql?: false, mysql?: false, migration_version: '[8.1]')
+          allow(generator).to receive(:say_status)
+          generator.create_migration_files
+
+          files = Dir.glob(File.join(destination, 'db/migrate/*.rb'))
+          expect(files.length).to eq(1)
+          expect(File.basename(files.first)).to include("_#{phase}_ruby_llm_v2_")
+        end
+      end
+    end
+  end
+
   describe 'with default model names' do
     let(:app_name) { 'test_upgrade_generator_default' }
     let(:app_path) { File.join(Dir.tmpdir, app_name) }
@@ -51,14 +68,19 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         expect(prepare).to include('move_table(:tool_calls, :ruby_llm_tool_calls)')
         expect(prepare).to include('disable_ddl_transaction!')
         expect(prepare).to include('create_table :ruby_llm_usages')
+        expect(prepare).to include('table.string :model, null: false')
         expect(prepare).to include('create_table :ruby_llm_batches')
+        expect(prepare).to include('table.json :reported_cost')
+        expect(prepare).to include('add_column :ruby_llm_batches, :reported_cost, :json')
         expect(backfill).to include('backfill_message_content')
         expect(backfill).to include('backfill_tool_results')
         expect(backfill).to include('backfill_usages')
         expect(backfill).to include('PROGRESS_TABLE = :ruby_llm_v2_backfills')
         expect(backfill).to include('with_upgrade_safety { yield range }')
         expect(finish).to include('verify_completed_backfills')
-        expect(finish).to include('content_raw input_tokens output_tokens')
+        expect(finish).to include('mark_finished')
+        expect(finish).not_to include('remove_columns')
+        expect(Dir.glob('db/migrate/*_cleanup_ruby_llm_v2_upgrade.rb')).to be_empty
       end
     end
 
@@ -66,6 +88,11 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
       within_test_app(app_path) do
         success, output = run_rails_runner(v1_schema_and_records)
         expect(success).to be(true), output
+
+        output, status = GeneratorTestHelpers.run_command(
+          rails_env, %w[bundle exec rails generate ruby_llm:upgrade --phase cleanup], chdir: Dir.pwd
+        )
+        expect(status.success?).to be(true), output
 
         output, status = GeneratorTestHelpers.run_command(rails_env, %w[bundle exec rails db:migrate], chdir: Dir.pwd)
         expect(status.success?).to be(true), output
@@ -190,7 +217,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
       message = Class.new(ActiveRecord::Base) { self.table_name = 'messages' }
       tool_call = Class.new(ActiveRecord::Base) { self.table_name = 'tool_calls' }
 
-      model.create!(id: 1, model_id: 'gpt-1.16', name: 'GPT 1.16', provider: 'openai',
+      model.create!(id: 1, model_id: 'gpt-4.1', name: 'GPT-4.1', provider: 'openai',
                     modalities: {}, capabilities: [], pricing: {}, metadata: {}, created_at: now, updated_at: now)
       chat.create!(id: 1, model_id: 1, created_at: now, updated_at: now)
       message.create!(id: 1, chat_id: 1, model_id: 1, role: 'assistant', content_raw: {answer: 42},
@@ -215,7 +242,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
       usages = connection.select_all('SELECT * FROM ruby_llm_usages ORDER BY message_id').to_a
       columns = connection.columns(:messages).map(&:name)
 
-      ok = model['model_id'] == 'gpt-1.16' &&
+      ok = model['model_id'] == 'gpt-4.1' &&
            chat['ruby_llm_model_id'].to_i == 1 &&
            JSON.parse(message['content']) == {'answer' => 42} &&
            JSON.parse(message['raw_content']) == {'answer' => 42} &&
@@ -223,9 +250,11 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
            tool_call['message_id'].to_i == 1 &&
            tool_call['result_type'] == 'Message' &&
            tool_call['result_id'].to_i == 2 &&
+           connection.columns(:ruby_llm_tool_calls).any? { |column| column.name == 'remote' && !column.null } &&
+           ActiveModel::Type::Boolean.new.cast(tool_call['remote']) == false &&
            usages.size == 2 &&
            usages.first['provider'] == 'openai' &&
-           usages.first['model'] == 'gpt-1.16' &&
+           usages.first['model'] == 'gpt-4.1' &&
            usages.first['cache_read_tokens'].to_i == 4 &&
            usages.first['cache_write_tokens'].to_i == 2 &&
            usages.last['message_id'].to_i == 3 &&

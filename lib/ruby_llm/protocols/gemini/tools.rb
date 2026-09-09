@@ -130,7 +130,7 @@ module RubyLLM
 
           return declaration if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(declaration, tool.provider_options)
+          RubyLLM::Support::Utils.deep_merge(declaration, tool.provider_options)
         end
 
         def build_tool_config(tool_choice)

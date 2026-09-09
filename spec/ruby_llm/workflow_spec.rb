@@ -11,7 +11,7 @@ RSpec.describe RubyLLM::Workflow do
   it 'adds workflow and step identity to every nested instrumentation event' do
     result = context.workflow('Write article', id: 'article-42') do |workflow|
       workflow.step('Research', id: 'research-1') do
-        RubyLLM::Instrumentation.instrument('example.ruby_llm', config: context.config) { :notes }
+        RubyLLM::Support::Instrumentation.instrument('example.ruby_llm', config: context.config) { :notes }
       end
     end
 
@@ -39,7 +39,8 @@ RSpec.describe RubyLLM::Workflow do
   it 'attaches workflow metadata as workflow_metadata alongside per-call metadata' do
     context.workflow('With metadata', id: 'meta-1', metadata: { account_id: 7 }) do |workflow|
       workflow.step('Only step') do
-        RubyLLM::Instrumentation.instrument('example.ruby_llm', metadata: { request: 'r-1' }, config: context.config)
+        RubyLLM::Support::Instrumentation.instrument('example.ruby_llm', metadata: { request: 'r-1' },
+                                                                         config: context.config)
       end
     end
 
@@ -85,10 +86,10 @@ RSpec.describe RubyLLM::Workflow do
       outer.step('Compose', id: 'compose-1') do
         context.workflow('Inner', id: 'inner-wf') do |inner|
           inner.step('Summarize', id: 'inner-step-1') do
-            RubyLLM::Instrumentation.instrument('example.ruby_llm', config: context.config)
+            RubyLLM::Support::Instrumentation.instrument('example.ruby_llm', config: context.config)
           end
         end
-        RubyLLM::Instrumentation.instrument('resumed.ruby_llm', config: context.config)
+        RubyLLM::Support::Instrumentation.instrument('resumed.ruby_llm', config: context.config)
       end
     end
 
@@ -127,7 +128,7 @@ RSpec.describe RubyLLM::Workflow do
       end
     end.to raise_error(RuntimeError, 'boom')
 
-    RubyLLM::Instrumentation.instrument('after.ruby_llm', config: context.config)
+    RubyLLM::Support::Instrumentation.instrument('after.ruby_llm', config: context.config)
 
     expect(event_payload('after.ruby_llm')).not_to have_key(:workflow_id)
   end

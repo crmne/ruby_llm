@@ -17,19 +17,13 @@ After reading this guide, you will know:
 * How to define a schema with `Schematist::Schema`.
 * How to provide a manual JSON Schema and name it.
 * How to build complex nested object and array schemas.
-* Which providers support structured output and how to add or remove a schema mid-conversation.
+* How to check model support and change schemas during a conversation.
 
 ## Getting Structured Output
 
-When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
-
-JSON mode (using `with_provider_options(text: { format: { type: 'json_object' } })` on OpenAI's default Responses protocol) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
-{: .note }
+Describe the data your application needs with `with_schema`, then read it through `response.parsed`:
 
 ```ruby
-chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
-response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
-
 class LanguagesSchema < Schematist::Schema
   array :languages do
     object do
@@ -39,14 +33,17 @@ class LanguagesSchema < Schematist::Schema
   end
 end
 
-chat = RubyLLM.chat.with_schema(LanguagesSchema)
-response = chat.ask("List 3 programming languages with their year created")
-# Always returns: {"languages" => [{"name" => "...", "year" => ...}, ...]}
+response = RubyLLM.chat.with_schema(LanguagesSchema)
+                  .ask("List 3 programming languages with their year created.")
+response.parsed["languages"]
+# => [{"name" => "Ruby", "year" => 1995}, ...]
 ```
 
-### Using Schematist (Recommended)
+RubyLLM sends the schema in the format the provider expects. `response.content` contains the JSON text; `response.parsed` gives you Ruby Hashes and Arrays.
 
-The easiest way to define schemas is with [Schematist](https://github.com/crmne/schematist), formerly known as `RubyLLM::Schema`. It ships with RubyLLM as a dependency, so there is nothing to add to your Gemfile:
+### Using Schematist
+
+[Schematist](https://github.com/crmne/schematist) ships with RubyLLM. Add descriptions and optional fields as your schema grows:
 
 ```ruby
 class PersonSchema < Schematist::Schema
@@ -61,9 +58,6 @@ response = chat.with_schema(PersonSchema).ask("Generate a person named Alice who
 puts response.parsed # => {"name" => "Alice", "age" => 30}
 puts response.content # => '{"name":"Alice","age":30}'
 ```
-
-Schematist schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
-{: .note }
 
 OpenAI's strict mode needs every property in `required`. RubyLLM sends `strict: true` when your schema qualifies and `strict: false` when it has optional properties like `city` above. To keep strict validation with an optional field, make the field required and let its type include `null`.
 {: .note }
@@ -94,8 +88,7 @@ puts response.parsed
 # => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
 ```
 
-**OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. Schematist handles this automatically.
-{: .warning }
+Schematist sets `additionalProperties: false` for you. Include it on each object in a manual schema when using OpenAI.
 
 #### Custom Schema Names
 
@@ -158,19 +151,16 @@ RubyLLM.models.find('{{ site.models.default_chat }}').supports?(:structured_outp
 RubyLLM.models.chat_models.select { |model| model.supports?(:structured_output) }
 ```
 
-Current OpenAI, Anthropic, and Gemini chat models support it; Ollama Cloud does not.
+Support varies by model and deployment. A provider can reject a schema or an unsupported JSON Schema keyword. Anthropic document citations cannot be combined with structured output.
 
-Gemini takes your schema as JSON Schema, so keywords such as `anyOf`, `pattern`, `minLength`, `const`, `oneOf`, `$ref` and `additionalProperties` reach the model as you wrote them.
-{: .note }
-
-Models that don't support structured output:
+DeepSeek requires `protocol: :responses` to enforce a schema:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_legacy }}')
-chat.with_schema(schema)
-response = chat.ask('Generate a person')
-# Provider will return an error if unsupported
+chat = RubyLLM.chat(model: "{{ site.models.deepseek_chat }}", provider: :deepseek, protocol: :responses)
+response = chat.with_schema(PersonSchema).ask("Alice is 30 and lives in Rome.")
 ```
+
+Its default Chat Completions protocol falls back to JSON mode, which does not enforce the fields or types.
 
 ### Multi-turn Conversations with Schemas
 
@@ -194,10 +184,22 @@ end
 chat.with_schema(CareerPlanSchema)
 career = chat.ask("Now structure a career plan")
 
-puts person.content
-puts analysis.content
-puts career.content
+person.parsed
+analysis.content
+career.parsed
 ```
+
+## JSON Mode
+
+Use JSON mode when you need valid JSON without a particular schema. This OpenAI example uses the default Responses protocol:
+
+```ruby
+chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
+response = chat.ask "List three programming languages. Return JSON."
+response.parsed
+```
+
+JSON mode does not enforce fields or types. Use `with_schema` when your application depends on a particular structure.
 
 ## Next Steps
 

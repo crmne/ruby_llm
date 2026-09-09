@@ -27,12 +27,17 @@ module RubyLLM
           'wav' => { encoding: 'linear16', container: 'wav' }
         }.freeze
 
-        def speak(input, model:, voice:, format:, provider_options: {})
+        def speak(input, model:, voice:, format:, provider_options: {}, &block)
           track_usage(:speech) do
             spoken_model = speech_model_for(model, voice)
             payload = render_speech_payload(input, model: spoken_model, voice:, format:)
-            response = @connection.post speech_url(model: spoken_model, format:, provider_options:), payload,
-                                        usage: @usage_tracker
+            url = speech_url(model: spoken_model, format:, provider_options:)
+            if block
+              next stream_speech_response(url, payload, model: spoken_model, voice: voice_for(spoken_model),
+                                                        format:, &block)
+            end
+
+            response = @connection.post url, payload, usage: @usage_tracker
             parse_speech_response(response, model: spoken_model, voice: voice_for(spoken_model), format:)
           end
         end

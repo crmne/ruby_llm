@@ -54,6 +54,41 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
     end
   end
 
+  describe '#render_video_extension_payload' do
+    it 'rejects local videos without a generated Veo URI' do
+      source = RubyLLM::Video.new(data: 'mp4 bytes', mime_type: 'video/mp4')
+      expect { protocol.render_video_extension_payload('Continue the scene', extend: source) }
+        .to raise_error(ArgumentError, /generated Veo videos/)
+    end
+
+    it 'preserves the original Veo video URI instead of downloading and reuploading it' do
+      uri = 'https://generativelanguage.googleapis.com/v1beta/files/clip:download?alt=media'
+      source = RubyLLM::Video.new(raw: { 'response' => { 'generateVideoResponse' => {
+                                    'generatedSamples' => [{ 'video' => { 'uri' => uri } }]
+                                  } } })
+
+      payload = protocol.render_video_extension_payload('Continue', extend: source)
+
+      expect(payload[:instances].first[:video]).to eq(uri:)
+    end
+  end
+
+  it 'extends a freshly generated Veo video through the public API', :live do
+    context = RubyLLM.context do |config|
+      config.video_generation_poll_interval = VCR.current_cassette&.recording? ? 5 : 0
+    end
+    model = model_for(:gemini, :video_extension)
+    original = context.animate('A calm ocean wave at sunset', model:, provider: :gemini,
+                                                              provider_options: { parameters: { durationSeconds: 4 } })
+    job = context.animate_later('The wave gently reaches the sandy shore', model:, provider: :gemini,
+                                                                           extend: original)
+
+    expect(job.wait(timeout: 240)).to be_completed
+    expect(job.video.mime_type).to eq('video/mp4')
+    expect(job.video.to_blob.bytesize).to be > 1000
+    expect(job.video.raw['done']).to be(true)
+  end
+
   describe '#parse_video_job_status' do
     let(:job) { RubyLLM::VideoJob.new(id: 'models/veo/operations/abc123', protocol: protocol) }
 

@@ -11,6 +11,8 @@ module RubyLLM
         include XAI::Models
         include XAI::Speech
         include XAI::Transcription
+        include Protocols::XAI::Tokenization
+        include Protocols::XAI::StreamingTranscription
       end
     end
   end

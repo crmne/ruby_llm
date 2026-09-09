@@ -3,7 +3,7 @@ layout: default
 title: Agentic Workflows
 parent: "Agents"
 nav_order: 1
-description: Build workflow-oriented AI systems with plain Ruby orchestration, from routing and handoffs to parallelization
+description: Compose agents and AI operations with ordinary Ruby methods, from sequential steps to routing and parallel work.
 redirect_from:
   - /agent-handoffs/
 ---
@@ -40,21 +40,21 @@ So the agentic loop is `step` until `complete?`:
 ```ruby
 chat = RubyLLM.chat.with_tools(Weather).ask_later("What's the weather in Paris?")
 
-chat.step until chat.complete?  # generate, run_tools, generate
+chat.step until chat.complete? || chat.awaiting_approval?
 chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
 ```
 
 `ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
 
-It is safe to interrupt the loop between moves. Each verb decides what to do next by reading the persisted messages, and `run_tools` skips tool calls that already have results. If a process dies after running one tool call of three, reloading the chat and calling `step` executes only the two remaining tool calls.
+With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Work interrupted before its result is saved may run again. See [Durable Agents]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
 
-That property is what makes agents durable: run every turn as a background job, survive deploys with ActiveJob Continuations, and park for days on a human approval. [Durable Agents]({% link _advanced/durable-agents.md %}) is the guide for all of it.
+Stop scheduling work while `awaiting_approval?` is true. Record an approval or denial, then resume the loop.
 
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 
 ## Workflow Patterns
 
-With the loop in hand, you can compose agents into larger systems. Each pattern below is a small, plain Ruby class - no framework, only orchestration.
+With the loop in hand, you can compose agents into larger systems. Each pattern below uses ordinary Ruby methods to coordinate RubyLLM agents.
 
 ### Sequential Workflow
 
@@ -185,7 +185,7 @@ until agent.complete?
 end
 ```
 
-The handoff tool only returns the name; the orchestrator owns the routing, watching each tool result and swapping agents when one names a specialist. Because the routing lives in the loop and not in any agent, this extends to a multi-router for free: give the specialists the same `Handoff` tool and they can route onward, with every hop handled the same way.
+The tool returns the specialist name, and the loop switches agents. Give specialists the same `Handoff` tool if they should be able to pass the conversation onward.
 
 (A tool cannot reconfigure the chat it runs inside, since its `execute` never receives the chat, so the switch belongs in the loop, not in the tool.)
 
@@ -323,13 +323,31 @@ workflow = EvaluatorOptimizerWorkflow.new
 final = workflow.call("Write a concise onboarding email for a new API customer")
 ```
 
+## Combining Conversations with Other Operations
+
+Workflows can include any RubyLLM operation. This one turns a recording into a spoken summary:
+
+```ruby
+RubyLLM.workflow("Summarize recording") do |workflow|
+  transcript = workflow.step("Transcribe") { RubyLLM.transcribe("meeting.wav") }
+  summary = workflow.step("Summarize") do
+    RubyLLM.chat.ask "Summarize the main decisions:\n#{transcript.text}"
+  end
+  workflow.step("Narrate") do
+    RubyLLM.speak(summary.content).save("summary.mp3")
+  end
+end
+```
+
+Each step returns its block's value. `RubyLLM.workflow` adds correlation to the [instrumentation events]({% link _advanced/instrumentation.md %}#workflows-and-steps), so you can follow the three calls as one operation.
+
 ## Retrieval-Augmented Generation
 
-RAG is often a single step in a larger workflow: retrieve relevant context, then answer with that context. See [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) for the full pattern.
+Retrieve relevant documents and pass them to an answering agent. See [RAG]({% link _advanced/rag.md %}) for a retrieval tool, and [Reranking]({% link _core_features/rerank.md %}) for ordering candidate documents before the model reads them.
 
 ## Error Handling
 
-For robust error handling in workflow code, use the patterns from the Tools guide:
+Handle failures at the step that can recover from them:
 
 * Return `{ error: "description" }` for recoverable errors the LLM might fix
 * Raise exceptions for unrecoverable errors (missing config, service down)

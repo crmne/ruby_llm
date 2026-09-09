@@ -63,8 +63,8 @@ module RubyLLM
       def model_resource_name = table_name_for(model_model_name)
       def model_variable_name = variable_name_for(model_model_name)
 
-      def usage_operations_sql = sql_string_list(::RubyLLM::Usage::Entry::OPERATIONS)
-      def usage_statuses_sql = sql_string_list(::RubyLLM::Usage::Entry::STATUSES)
+      def usage_operations_sql = sql_string_list(::RubyLLM::Accounting::Usage::Entry::OPERATIONS)
+      def usage_statuses_sql = sql_string_list(::RubyLLM::Accounting::Usage::Entry::STATUSES)
       def tool_call_variable_name = 'tool_call'
 
       def chat_controller_class_name

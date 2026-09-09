@@ -7,8 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call the any-of params
         tool for task \"Review PR\" with status \"pending\" and report the result."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"any_of_params","description":"Uses
-        params DSL any_of support","parameters":{"type":"OBJECT","properties":{"task":{"type":"STRING","description":"Task
-        description"},"status":{"type":"STRING","description":"Optional task status","enum":["pending","done"],"nullable":true}},"required":["task","status"]}}]}]}'
+        params DSL any_of support","parametersJsonSchema":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}]}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:36:10 GMT
+      - Mon, 07 Sep 2026 20:58:32 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=730
+      - gfet4t7; dur=869
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -65,7 +65,7 @@ http_interactions:
                         "task": "Review PR"
                       }
                     },
-                    "thoughtSignature": "CpQCARFNMg/vuDVZVhjiiSA1Yg8+CsFl1TUE+mtqSEl+CdAapgj0VCDv4CIPkTmUyzBdPPerUdBFDMXAM2PFvgnZCMU2rGoUTZ5mGTDl+9foaNmiWLp5NegUYptsyBjpI1EKsyUv+5CdBNHlXh3oq16npHeTVGRkd3GgzE28XsM4DYh53p7MrBrMLW7wsIwzOKy/OPmRuUJg8jNo0INhs2GHe++Ltic7LMkj6365A6IuSuvX3QCu+XGn4TTW8NxEFwD3c2R6mUXl9EgCne9/XjHzybPnRe/3ModS14530fyvRmVOWGlO7pedD0mFpiwjTf0BWFKJPIIjOBcmDL/a/DFsN2oy/z1x5R6cyEywUOUinzCuW4CS"
+                    "thoughtSignature": "CosCARFNMg9sM1YxNQx1Ljt5wkD9PAiLbMItff+ej7OkCKsAX1QHrgWO1tNtzPvtJi/YmnWxb08sjChpj6RBP/XX5hngyk6QRZ5fPGivaEvyJ98Q2WBV/BM5QakK3Jn4IZJydpCuYAxc4l5mtRYwWy9lQt8jPDC7YlFF57GcL5lwG5IzB2OVgfb+4TUG/18NLXoAn4OH1ZTojaKX4uwnJ8O14iN1iRjN3dvaelkloOiCRxiKE/5iGOiPDvRzh/WdPTz0cif/23HY8VlNqe62Ycgv1MABQlxlt/h4QKTGae5Azbo1Gzyq49AyZHBT4Dg7MnLt0euKGYfVKGIvrCum++FLXIkrA486XArFa8nv"
                   }
                 ],
                 "role": "model"
@@ -76,20 +76,20 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 84,
+            "promptTokenCount": 87,
             "candidatesTokenCount": 23,
-            "totalTokenCount": 172,
+            "totalTokenCount": 174,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 84
+                "tokenCount": 87
               }
             ],
-            "thoughtsTokenCount": 65,
+            "thoughtsTokenCount": 64,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "Wr-FatDcBuygnsEPjrvQiAk"
+          "responseId": "dyWfarD1JceV3boPksHc2As"
         }
-  recorded_at: Wed, 19 Aug 2026 14:36:10 GMT
+  recorded_at: Mon, 07 Sep 2026 20:58:32 GMT
 recorded_with: VCR 6.4.0

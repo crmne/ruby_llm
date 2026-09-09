@@ -6,11 +6,11 @@ module RubyLLM
   # clip with #video. RubyLLM.animate runs the same job through #wait.
   #
   #   job = RubyLLM.animate_later("a paper boat sailing down a gutter")
-  #   job.refresh until job.done?
+  #   job.wait
   #   job.video.save("boat.mp4")
   #
   class VideoJob
-    include Inspectable
+    include Support::Inspectable
 
     # The provider's id for the job.
     attr_reader :id
@@ -35,12 +35,13 @@ module RubyLLM
     #   job.id      # => "0eb6910f-a353-4699-9d1e-6a4f7a5b39e2"
     #   job.done?   # => false
     #
-    def self.animate_later(prompt,
+    def self.animate_later(prompt = nil,
                            model: nil,
                            provider: nil,
                            assume_model_exists: false,
                            context: nil,
                            with: nil,
+                           extend: nil,
                            provider_options: {},
                            metadata: nil)
       config = context&.config || RubyLLM.config
@@ -58,7 +59,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('video_job.ruby_llm', payload, config: config) do |event|
-        job = provider_instance.animate_later(prompt, model:, with:, provider_options:)
+        job = provider_instance.animate_later(prompt, model:, with:, extend:, provider_options:)
         event[:job_id] = job.id
         job
       end

@@ -48,7 +48,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
         headers: { 'Content-Type' => 'text/event-stream' }
       )
 
-    chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+    chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
     chat.ask('hi') { |_chunk| nil }
 
     expect(captured).to eq('identity')

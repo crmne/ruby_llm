@@ -2,9 +2,8 @@
 
 module RubyLLM
   # A SearchResults wraps documents a Tool returns so the model can cite
-  # them. It serializes to the search-results convention: a tool message
-  # whose content is <tt>{"search_results": [...]}</tt> renders as citable
-  # blocks on providers with citation support.
+  # each source. RubyLLM renders them in the selected provider's citation
+  # format; cited passages appear on Message#citations.
   #
   #   def execute(query:)
   #     docs = MyVectorStore.search(query)
@@ -60,7 +59,7 @@ module RubyLLM
     private
 
     def normalize(entry)
-      entry = Utils.deep_symbolize_keys(entry.to_h)
+      entry = Support::Utils.deep_symbolize_keys(entry.to_h)
       raise ArgumentError, 'Search results require :title and :text' unless entry[:title] && entry[:text]
 
       entry.slice(:title, :url, :text)

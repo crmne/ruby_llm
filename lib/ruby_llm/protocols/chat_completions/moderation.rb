@@ -27,7 +27,8 @@ module RubyLLM
           RubyLLM::Moderation.new(
             id: data['id'],
             model: model,
-            results: Array(data['results']).map { |result| RubyLLM::Moderation::Result.from_h(result) }
+            results: Array(data['results']).map { |result| RubyLLM::Moderation::Result.from_h(result) },
+            raw: data
           )
         end
 

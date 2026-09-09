@@ -202,6 +202,52 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.model).to eq('gpt-5-nano')
     end
 
+    it 'preserves web, file-search and container-file citations' do
+      response = response_with([
+                                 { 'type' => 'message', 'content' => [{
+                                   'type' => 'output_text', 'text' => 'Ruby facts', 'annotations' => [
+                                     { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
+                                       'title' => 'Ruby', 'start_index' => 0, 'end_index' => 4 },
+                                     { 'type' => 'file_citation', 'file_id' => 'file_facts',
+                                       'filename' => 'facts.pdf', 'index' => 0 },
+                                     { 'type' => 'container_file_citation', 'container_id' => 'container_1',
+                                       'file_id' => 'file_report', 'filename' => 'report.txt',
+                                       'start_index' => 5, 'end_index' => 10 },
+                                     { 'type' => 'file_path', 'file_id' => 'file_download', 'index' => 1 }
+                                   ]
+                                 }] }
+                               ])
+
+      citations = protocol.send(:parse_completion_response, response).citations
+
+      expect(citations.length).to eq(3)
+      expect(citations[0]).to have_attributes(url: 'https://ruby-lang.org', text: 'Ruby', source_id: nil)
+      expect(citations[1]).to have_attributes(
+        source_id: 'file_facts', title: 'facts.pdf', source_index: 0, start_index: nil, end_index: nil, url: nil
+      )
+      expect(citations[2]).to have_attributes(source_id: 'file_report', title: 'report.txt', text: 'facts')
+    end
+
+    it 'places citation spans against all preceding response text' do
+      response = response_with([
+                                 { 'type' => 'message',
+                                   'content' => [{ 'type' => 'output_text', 'text' => 'Café. ' }] },
+                                 { 'type' => 'message', 'content' => [
+                                   { 'type' => 'output_text', 'text' => 'Read ' },
+                                   { 'type' => 'output_text', 'text' => 'Ruby', 'annotations' => [
+                                     { 'type' => 'url_citation', 'url' => 'https://ruby-lang.org',
+                                       'start_index' => 0, 'end_index' => 4 }
+                                   ] }
+                                 ] }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+      citation = message.citations.first
+
+      expect(citation).to have_attributes(start_index: 11, end_index: 15, text: 'Ruby')
+      expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
+    end
+
     it 'surfaces refusal parts as content' do
       response = response_with([
                                  { 'type' => 'message',

@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:34:13 GMT
+      - Mon, 07 Sep 2026 21:04:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=83
+      - gfet4t7; dur=92
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -57,7 +57,7 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Wed, 19 Aug 2026 14:34:13 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:12 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:countTokens
@@ -65,8 +65,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"generateContentRequest":{"contents":[{"role":"user","parts":[{"text":"What
         is the capital of France?"}]}],"systemInstruction":{"parts":[{"text":"Be terse."}]},"tools":[{"functionDeclarations":[{"name":"counting_weather","description":"Gets
-        current weather for a city","parameters":{"type":"OBJECT","properties":{"city":{"type":"STRING","description":"City
-        name"}},"required":["city"]}}]}],"model":"models/gemini-3.5-flash"}}'
+        current weather for a city","parametersJsonSchema":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true}}]}],"model":"models/gemini-3.5-flash"}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:34:13 GMT
+      - Mon, 07 Sep 2026 21:04:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -100,7 +100,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=50
+      - gfet4t7; dur=70
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -117,5 +117,5 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Wed, 19 Aug 2026 14:34:13 GMT
+  recorded_at: Mon, 07 Sep 2026 21:04:12 GMT
 recorded_with: VCR 6.4.0

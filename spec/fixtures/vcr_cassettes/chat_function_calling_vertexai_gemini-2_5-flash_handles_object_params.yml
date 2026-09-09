@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Wed, 19 Aug 2026 14:38:35 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 07 Sep 2026 21:00:57 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,10 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/webmasters",
-          "token_type": "Bearer"
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 19 Aug 2026 14:38:35 GMT
+  recorded_at: Mon, 07 Sep 2026 21:00:57 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -63,9 +64,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call the object params
         tool with window start 2025-01-01 and end 2025-01-02 and include the result."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"object_params","description":"Uses
-        params DSL object support","parameters":{"type":"OBJECT","properties":{"window":{"type":"OBJECT","description":"Time
-        window to schedule","properties":{"start":{"type":"STRING","description":"ISO
-        start"},"end":{"type":"STRING","description":"ISO end"}},"required":["start","end"]}},"required":["window"]}}]}]}'
+        params DSL object support","parametersJsonSchema":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}]}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -89,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:38:36 GMT
+      - Mon, 07 Sep 2026 21:00:58 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,28 +117,28 @@ http_interactions:
                       "name": "object_params",
                       "args": {
                         "window": {
-                          "start": "2025-01-01",
-                          "end": "2025-01-02"
+                          "end": "2025-01-02",
+                          "start": "2025-01-01"
                         }
                       }
                     },
-                    "thoughtSignature": "CqgDAY89a1+7QJoFCp44k6IhwcDuBBPuDFXHpc8XTG4z6aL1TXkRcnGI/ypPMQxKv6FCG88dsRd9laesGFA+pvEntKVWlHKnEihbYzwQhhTQEspdBvDY6NL2KRo8ZtNZ0HVPk/u+mVvdh8BA5iVWhxjf6iPujaZugqgUEC4QrBtYEWkmVv99eu9zkyi8aviu43ppd7kDPyBJT9luQC/NjJsr0KZuiakf6rP+MIO12TBmR/UXvYc0SlR+J9oGxorF9gsH76hPoMZXmmWqA9T+sQ87es8ZKSwEdP3iPn9G4NreaQhmFG2fyELfsIDF9ivOtpUwMbEMgOwN1Y4paqNfbwvTt2zr30dANo3UbqU8YkJrind+qi/N4OD3PY+KpW+P0JJFBs7lpg7Sy4JV82CYZBv4d7pdOs8lM1O9mZ0ZJCWrkRTQeljBEIKYcg93eqHwnKpfz6v8V+3XOf8xSoJ2yVBDp88mtB6SJhEGKnaTYiCqmZ2gRbPnp08028mY3Lps8PTaQndrdGlOnf9yvnhxKw3zwvjugwi+uXkPPpMP+F6CFdcVJsBx9VOn1g=="
+                    "thoughtSignature": "CpEDAY89a18H/RUL4xoHXRkk/7/M7KIMVH3nOtbLO+vEEz5K5e4F2KMFi6LO5Kg5p/EJpMI6K/brYLLeEYDflvI/MGu103647wRu7CHPdri3EhLM35bX6mKESOT8KZL4Ggte2PjQZyLi7hd2tnH+R1ZkNdK2qLi5KOsNE7mNb5zmLv50qM9gEkQF9qu2/nEAR0ZCRNh4AAYQldiZq+tLStPL3eLN3dSSE/jQPFFp8K84THISXldfVDW3njR49FKRJNSf6at3KeZxxyuZwtPERJaXghnIcQXoDrgN8JheAWVVSsN6yJeOe0skTUvRpVUbVAKRs0P7A8izmpUK57ZaKfAtskbBYPfUMmcKX2wyKfdVSYW3li6in+D9Fhoxn3+577EJAg2nQa50aGPLG9Oy632cyDRV77KR99Hzl31bMhgJzV6LtVDhirxh9dl5Cgsnz/j4ApH9Mqp2TRaovfLVQKY2tikXXLRHUBut3OhWKCK8oUw1fi908vaxgbehC5ZwG8xUPdtFmrAq/YUjQrcUQfYnyg8="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.27583461541395921
+              "avgLogprobs": -0.32207731100229114
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 63,
+            "promptTokenCount": 45,
             "candidatesTokenCount": 26,
-            "totalTokenCount": 206,
+            "totalTokenCount": 183,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 63
+                "tokenCount": 45
               }
             ],
             "candidatesTokensDetails": [
@@ -146,11 +147,11 @@ http_interactions:
                 "tokenCount": 26
               }
             ],
-            "thoughtsTokenCount": 117
+            "thoughtsTokenCount": 112
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-08-19T14:38:35.150469Z",
-          "responseId": "67-FasWXCdKPxN8P19vR2AE"
+          "createTime": "2026-09-07T21:00:57.738002Z",
+          "responseId": "CSafatKFLeiqw-AP2KCjmAE"
         }
-  recorded_at: Wed, 19 Aug 2026 14:38:36 GMT
+  recorded_at: Mon, 07 Sep 2026 21:00:58 GMT
 recorded_with: VCR 6.4.0

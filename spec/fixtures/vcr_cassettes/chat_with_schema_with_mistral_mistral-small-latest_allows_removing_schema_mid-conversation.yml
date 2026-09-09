@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:52 GMT
+      - Mon, 07 Sep 2026 21:02:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a72-45b1-7738-920c-e4e8540d3140
+      - 01a07dae-0f40-7582-b848-ff459ec31eb1
       X-Kong-Request-Id:
-      - 01a01a72-45b1-7738-920c-e4e8540d3140
+      - 01a07dae-0f40-7582-b848-ff459ec31eb1
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98260'
+      - '99469'
       X-Ratelimit-Tokens-Query-Cost:
       - '22'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '90'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '384'
+      - '286'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '385'
+      - '287'
       X-Kong-Proxy-Latency:
-      - '30'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,9 +71,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"30a11e732c494a72b510c2bd3b25548b","created":1787150091,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"a56f8b37397a43b5ad4bd22f2fdd484d","created":1788814954,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"Bob\", \"age\": 30}"}}]}'
-  recorded_at: Wed, 19 Aug 2026 14:34:52 GMT
+  recorded_at: Mon, 07 Sep 2026 21:02:34 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:54 GMT
+      - Mon, 07 Sep 2026 21:02:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -107,31 +107,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a72-478b-74fa-8cac-486d12e1b36d
+      - 01a07dae-10c3-7104-aecb-27c47405c431
       X-Kong-Request-Id:
-      - 01a01a72-478b-74fa-8cac-486d12e1b36d
+      - 01a07dae-10c3-7104-aecb-27c47405c431
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97976'
+      - '99264'
       X-Ratelimit-Tokens-Query-Cost:
-      - '284'
+      - '209'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '89'
+      - '96'
       X-Envoy-Upstream-Service-Time:
-      - '1862'
+      - '1346'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1863'
+      - '1348'
       X-Kong-Proxy-Latency:
-      - '20'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -146,7 +146,16 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjViNDZiNzc4ZmMyOTQ5ZGZiOWRhMzBiNzZiNzEyMDI3IiwiY3JlYXRlZCI6MTc4NzE1MDA5MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQyLCJ0b3RhbF90b2tlbnMiOjI4NCwiY29tcGxldGlvbl90b2tlbnMiOjI0MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9wZW4tc291cmNlIHByb2dyYW1taW5nIGxhbmd1YWdlIGZvY3VzZWQgb24gc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5LiBJdCB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gdGhlIG1pZC0xOTkwcyBhbmQgaGFzIHNpbmNlIGdhaW5lZCBwb3B1bGFyaXR5IGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIGVhc2Ugb2YgdXNlLlxuXG4jIyMgKipLZXkgRmVhdHVyZXMgb2YgUnVieToqKlxuMS4gKipSZWFkYWJsZSBTeW50YXgqKiDigJMgUnVieeKAmXMgc3ludGF4IGlzIGRlc2lnbmVkIHRvIGJlIG5hdHVyYWwgYW5kIGludHVpdGl2ZSwgbWFraW5nIGl0IGJlZ2lubmVyLWZyaWVuZGx5LlxuMi4gKipPYmplY3QtT3JpZW50ZWQqKiDigJMgRXZlcnl0aGluZyBpbiBSdWJ5IGlzIGFuIG9iamVjdCwgaW5jbHVkaW5nIHByaW1pdGl2ZSB0eXBlcy5cbjMuICoqRmxleGlibGUgJiBEeW5hbWljKiog4oCTIFN1cHBvcnRzIG1ldGFwcm9ncmFtbWluZywgYWxsb3dpbmcgY29kZSB0byBtb2RpZnkgaXRzZWxmIGF0IHJ1bnRpbWUuXG40LiAqKlJpY2ggU3RhbmRhcmQgTGlicmFyeSoqIOKAkyBDb21lcyB3aXRoIG1hbnkgYnVpbHQtaW4gZnVuY3Rpb25zIGZvciB0YXNrcyBsaWtlIGZpbGUgaGFuZGxpbmcsIG5ldHdvcmtpbmcsIGFuZCBtb3JlLlxuNS4gKipDb21tdW5pdHkgJiBFY29zeXN0ZW0qKiDigJMgUG93ZXJzIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yaywgd2lkZWx5IHVzZWQgZm9yIHdlYiBkZXZlbG9wbWVudC5cblxuIyMjICoqRXhhbXBsZSBDb2RlOioqXG5gYGBydWJ5XG4jIEEgc2ltcGxlIFJ1YnkgcHJvZ3JhbVxucHV0cyBcIkhlbGxvLCBSdWJ5IVwiXG5cbiMgRGVmaW5lIGEgbWV0aG9kXG5kZWYgZ3JlZXQobmFtZSlcbiAgcHV0cyBcIkhlbGxvLCAje25hbWV9IVwiXG5lbmRcblxuZ3JlZXQoXCJBbGljZVwiKSAgIyBPdXRwdXQ6IEhlbGxvLCBBbGljZSFcbmBgYFxuXG5Xb3VsZCB5b3UgbGlrZSBkZXRhaWxzIG9uIFJ1Ynkgb24gUmFpbHMgb3Igc3BlY2lmaWMgUnVieSBjb25jZXB0cz8ifX1dfQ==
-  recorded_at: Wed, 19 Aug 2026 14:34:54 GMT
+      string: '{"id":"4b6fb9b3db114a009eb12b41799c99e3","created":1788814954,"model":"mistral-small-latest","usage":{"prompt_tokens":42,"total_tokens":209,"completion_tokens":167,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
+        is a dynamic, open-source programming language known for its simplicity and
+        productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
+        emphasizes developer happiness and elegant syntax. It follows the principle
+        of \"least surprise,\" meaning it behaves in a way that feels natural to programmers.\n\nKey
+        features of Ruby include:\n- **Object-oriented**: Everything is an object,
+        even primitive types.\n- **Flexible syntax**: Supports multiple ways to solve
+        a problem.\n- **Metaprogramming**: Allows code to modify itself at runtime.\n-
+        **Strong community**: Powers the popular Ruby on Rails web framework.\n\nRuby
+        is often used for web development, scripting, and automation. Its clean, readable
+        code makes it a favorite among developers who value maintainability and expressiveness."}}]}'
+  recorded_at: Mon, 07 Sep 2026 21:02:36 GMT
 recorded_with: VCR 6.4.0

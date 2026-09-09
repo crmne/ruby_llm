@@ -2,7 +2,7 @@
 layout: default
 title: Image Generation
 nav_order: 5
-description: Generate and edit images from text prompts with GPT Image, Gemini, and Grok
+description: Generate and edit images from text prompts, reference images, and masks
 redirect_from:
   - /guides/image-generation
 ---
@@ -20,54 +20,35 @@ After reading this guide, you will know:
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to inspect token usage and calculate image costs.
-*   How to access and save generated image data (URL or Base64), including with Rails Active Storage.
+*   How to save images to disk or attach them with Rails Active Storage.
 *   How to handle errors during image generation.
 
 ## Basic Image Generation
 
-The simplest way to generate an image is using the global `RubyLLM.paint` method:
+Describe the image you want, then save it:
 
 ```ruby
-image = RubyLLM.paint("A photorealistic image of a red panda coding Ruby on a laptop")
-
-# For models returning a URL:
-if image.url
-  puts "Image URL: #{image.url}"
-  # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
-end
-
-# For models returning Base64 data:
-if image.base64?
-  puts "MIME Type: #{image.mime_type}" # => "image/png" or similar
-  puts "Data size: ~#{image.data.length} bytes"
-end
-
-# Some models revise the prompt for better results
-if image.revised_prompt
-  puts "Revised Prompt: #{image.revised_prompt}"
-  # => "A photorealistic depiction of a red panda intently coding Ruby..."
-end
-
-puts "Model Used: #{image.model}"
+image = RubyLLM.paint "A red panda coding Ruby on a laptop, watercolor"
+image.save "red_panda.png"
 ```
 
-The `paint` method abstracts the differences between provider APIs.
+`save` handles both hosted URLs and inline image data.
 
 ## Generating Several Images at Once
 
-Pass `count:` to get several images from one request, which is cheaper and faster than repeating the call. RubyLLM returns an array when the request comes back with several images, and a single image otherwise:
+Pass `count:` to request several images in one call. RubyLLM returns an array when the request comes back with several images, and a single image otherwise:
 
 ```ruby
-images = RubyLLM.paint("a siamese cat", model: "gpt-image-2", count: 4)
+images = RubyLLM.paint("a siamese cat", model: "{{ site.models.image_openai }}", count: 4)
 
 images.each_with_index do |image, index|
   image.save("cat-#{index}.png")
 end
 ```
 
-`count:` maps to each provider's own parameter: `n` on OpenAI and xAI, and `candidateCount` on Gemini image models. Providers that generate one image per request, such as OpenRouter, ignore it and return a single image.
+Some models generate one image per request regardless of `count:`.
 
-The call is billed once, and the usage lands on the first image, so `images.sum { |image| image.cost.total }` is the cost of the request.
+Usage for the request lives on the first image. Read `images.first.cost.total`; it is `nil` when pricing or usage is unavailable.
 {: .note }
 
 ## Token Usage and Costs
@@ -75,7 +56,7 @@ The call is billed once, and the usage lands on the first image, so `images.sum 
 When providers return image token usage, images expose the same cost shape as chats and messages:
 
 ```ruby
-image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-2")
+image = RubyLLM.paint("A small watercolor robot", model: "{{ site.models.image_openai }}")
 
 image.tokens.input
 image.tokens.output
@@ -85,7 +66,7 @@ image.cost.output
 image.cost.total
 ```
 
-Image costs use provider usage data plus pricing from the model registry. For models that report separate text and image input token details, RubyLLM applies the right pricing bucket to each part and returns the combined value as `image.cost.input`.
+See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) for usage accounting.
 
 ## Editing Existing Images
 
@@ -94,7 +75,7 @@ Some models, such as OpenAI's GPT Image models, can edit an existing image inste
 ```ruby
 image = RubyLLM.paint(
   "Turn the logo green and keep the background transparent",
-  model: "gpt-image-2",
+  model: "{{ site.models.image_openai }}",
   with: "logo.png"
 )
 ```
@@ -106,7 +87,7 @@ image = RubyLLM.paint(
 ```ruby
 image = RubyLLM.paint(
   "Combine these references into a postcard illustration",
-  model: "gpt-image-2",
+  model: "{{ site.models.image_openai }}",
   with: ["person.png", "style-reference.png"]
 )
 ```
@@ -116,219 +97,125 @@ image = RubyLLM.paint(
 ```ruby
 image = RubyLLM.paint(
   "Replace only the background with a sunset sky",
-  model: "gpt-image-2",
+  model: "{{ site.models.image_openai }}",
   with: "portrait.png",
   mask: "portrait-mask.png",
-  provider_options: { size: "1024x1024" }
+  size: "1024x1024"
 )
 ```
 
 ## Choosing Models
 
-By default, RubyLLM uses the model specified in `config.default_image_model`, but you can specify a different one.
+Pass `model:` to choose an image model:
 
 ```ruby
-image_openai = RubyLLM.paint(
-  "Impressionist painting of a Parisian cafe",
-  model: "{{ site.models.image_openai }}"
-)
-
-image_google = RubyLLM.paint(
-  "Cyberpunk city street at night, raining, neon signs",
-  model: "{{ site.models.image_google }}"
-)
-
-# Use a model not in the registry (useful for custom endpoints)
-image_custom = RubyLLM.paint(
-  "A sunset over mountains",
-  model: "my-custom-image-model",
-  provider: :openai,
-  assume_model_exists: true
-)
+RubyLLM.paint("A mountain village at sunrise", model: "{{ site.models.image_google }}")
 ```
 
-You can configure the default model globally:
+Set `default_image_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. Find image models on the [Models]({% link _reference/available-models.md %}) page. For hosted deployments, pass `provider:` explicitly; see [Model Resolution]({% link _reference/model-resolution.md %}).
+
+Mistral accepts a chat model for image generation:
 
 ```ruby
-RubyLLM.configure do |config|
-  config.default_image_model = "{{ site.models.default_image }}" # Or another available image model ID
-end
+RubyLLM.paint("A red panda drawing a Ruby logo",
+              model: "{{ site.models.mistral_server_tools }}")
 ```
 
-Refer to the [Working with Models Guide]({% link _reference/models.md %}) and the [Available Models Guide]({% link _reference/available-models.md %}) to find image models. See [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve, including unlisted models.
+ElevenLabs does not list image models through its model-listing endpoint. Pass a documented image model with `assume_model_exists: true`:
+
+```ruby
+RubyLLM.paint("A small red ruby on a white background",
+              model: "{{ site.models.image_elevenlabs }}",
+              provider: :elevenlabs, assume_model_exists: true)
+```
+
+Configure the required [Image & Video plan and permissions]({% link _getting_started/configuration-providers.md %}#media-generation). You can reuse [uploaded media assets]({% link _core_features/files.md %}#elevenlabs-media-assets) as inputs.
 
 ## Image Sizes
 
-Ask for the dimensions you want with the `size:` argument. Every provider that can size an image gets the value you pass. Leave it unset and RubyLLM sends no size at all, so the model returns whatever shape it prefers.
-
-```ruby
-# Standard square
-image_square = RubyLLM.paint(
-  "a fluffy white cat",
-  model: "{{ site.models.image_dalle }}",
-  size: "1024x1024"
-)
-
-# Wide landscape
-image_landscape = RubyLLM.paint(
-  "a panoramic mountain landscape at dawn",
-  model: "{{ site.models.image_dalle }}",
-  size: "1536x1024"
-)
-
-# Tall portrait
-image_portrait = RubyLLM.paint(
-  "a knight standing before a castle gate",
-  model: "{{ site.models.image_dalle }}",
-  size: "1024x1536"
-)
-```
-
-Gemini sizes an image by aspect ratio and resolution tier rather than by pixel dimensions, so RubyLLM reduces the size you pass to the ratio it represents: `"1024x1024"` becomes `1:1`, `"1536x1024"` becomes `3:2`. You can also pass the ratio directly as `"16:9"`, or a resolution as `"1K"`, `"2K"` or `"4K"`. A size Gemini has no field for, such as `"large"`, raises `ArgumentError`. To let Gemini pick the shape itself, pass `size: nil`.
+Pass `size:` to choose dimensions supported by your model:
 
 ```ruby
 image = RubyLLM.paint(
-  "a red ruby gemstone on white",
-  model: "gemini-3-pro-image",
+  "A panoramic mountain landscape at dawn",
+  model: "{{ site.models.image_openai }}",
+  size: "1536x1024"
+)
+```
+
+For Gemini, you can specify an aspect ratio or resolution tier:
+
+```ruby
+image = RubyLLM.paint(
+  "A red ruby gemstone on white",
+  model: "{{ site.models.image_google }}",
   size: "16:9"
 )
 ```
 
-> Not every model accepts every size. The provider rejects a size it does not support, so check its documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for what each one takes. Pass `size: nil` to let the model choose its own shape.
-{: .note }
+Gemini also accepts `"1K"`, `"2K"`, and `"4K"`. Gemini, ElevenLabs, and Stable Diffusion on Bedrock interpret pixel dimensions as an aspect ratio; the model may return different dimensions. Bedrock image editing controls its own output size, so leave `size:` unset when editing. Omit `size:` to let a model choose.
 
 ## Working with Generated Images
 
-The `RubyLLM::Image` object provides access to the generated image data and metadata.
-
-### Accessing Image Data
-
-*   `image.url`: Returns the URL for providers like OpenAI. `nil` otherwise.
-*   `image.data`: Returns the Base64-encoded image data string for providers like Google. `nil` otherwise.
-*   `image.mime_type`: Returns the MIME type (e.g., `"image/png"`, `"image/jpeg"`).
-*   `image.base64?`: Returns `true` if the image data is Base64-encoded, `false` otherwise.
-
 ### Saving Images Locally
 
-The `save` method works regardless of whether the image was delivered via URL or Base64. It fetches the data if necessary and writes it to the specified file path.
-
 ```ruby
-image = RubyLLM.paint("A steampunk mechanical owl")
-
-begin
-  saved_path = image.save("steampunk_owl.png")
-  puts "Image saved to #{saved_path}"
-rescue => e
-  puts "Failed to save image: #{e.message}"
-end
+image.save "illustration.png"
 ```
+
+`save` returns the path you passed. Keep the extension consistent with `image.mime_type`, and save hosted images before their URLs expire.
 
 ### Getting Raw Image Blob
 
-The `to_blob` method returns the raw binary image data (decoded from Base64 or downloaded from URL). This is useful for integration with other libraries or frameworks.
+Use `to_blob` when another library or storage service needs the image bytes:
 
 ```ruby
-image = RubyLLM.paint("Abstract geometric patterns in pastel colors")
-image_blob = image.to_blob
-
-# Now you can use image_blob, e.g., upload to S3, process with MiniMagick, etc.
-puts "Image blob size: #{image_blob.bytesize} bytes"
+image_bytes = image.to_blob
 ```
 
 ### Rails Active Storage Integration
 
-Use `to_blob` to easily attach generated images to Active Storage attributes.
+Attach a generated image to your own model:
 
 ```ruby
-# In a Rails model or job
 class Product < ApplicationRecord
-  has_one_attached :generated_image
+  has_one_attached :illustration
 end
-
-def generate_and_attach_image(product, prompt)
-  puts "Generating image for Product #{product.id}..."
-  image = RubyLLM.paint(prompt) # Or another model
-
-  filename = "#{product.slug}-#{Time.current.to_i}.png"
-
-  # Use StringIO to provide an IO object to Active Storage
-  image_io = StringIO.new(image.to_blob)
-
-  product.generated_image.attach(
-    io: image_io,
-    filename: filename,
-    content_type: image.mime_type || 'image/png' # Use detected MIME type or default
-  )
-
-  puts "Image attached successfully."
-
-  product.update(
-    image_prompt: prompt,
-    image_revised_prompt: image.revised_prompt,
-    image_model: image.model
-  )
-rescue RubyLLM::Error => e
-  puts "Image generation failed: #{e.message}"
-rescue => e
-  puts "Failed to attach image: #{e.message}"
-end
-
-# product = Product.find(1)
-# generate_and_attach_image(product, "A sleek, modern logo for 'RubyLLM'")
 ```
 
-## Prompt Engineering for Images
-
-Crafting effective prompts is key to getting the desired image. Be descriptive!
-
 ```ruby
-# Simple prompt - often yields generic results
-image1 = RubyLLM.paint("dog")
+image = RubyLLM.paint "A hand-drawn illustration of #{product.name}"
 
-# Detailed prompt - better results
-image2 = RubyLLM.paint(
-  "A photorealistic image of a golden retriever puppy playing fetch " \
-  "in a sunny park, shallow depth of field, captured with a DSLR camera."
-)
-
-# Specify style
-image3 = RubyLLM.paint(
-  "A majestic mountain range, oil painting in the style of Bob Ross"
+product.illustration.attach(
+  io: StringIO.new(image.to_blob),
+  filename: "illustration.png",
+  content_type: image.mime_type
 )
 ```
 
-## Error Handling
+Here `product` is an existing `Product` record. Run generation in a background job when a web request should return immediately.
 
-Image generation can fail due to content policy violations, rate limits, or API issues:
+### Image Metadata
 
-```ruby
-begin
-  image = RubyLLM.paint("Your prompt here")
-  puts "Image URL: #{image.url}"
-rescue RubyLLM::BadRequestError => e
-  # Often indicates a content policy violation
-  puts "Generation failed: #{e.message}"
-rescue RubyLLM::Error => e
-  puts "Error: #{e.message}"
-end
-```
+| Reader | Value |
+| --- | --- |
+| `image.model` | The model that generated the image. |
+| `image.mime_type` | The image's MIME type, such as `"image/png"`. |
+| `image.revised_prompt` | The provider's rewritten prompt, when reported. |
+| `image.url` | A hosted image URL, when returned. |
+| `image.data` | Base64-encoded image data, when returned inline. |
+| `image.base64?` | Whether inline data is available. |
 
-See the [Error Handling Guide]({% link _advanced/error-handling.md %}) for comprehensive error handling strategies.
+Use `save` or `to_blob` to read the image without branching on its delivery format.
 
-## Content Safety
+## Errors and Background Work
 
-AI image generation services have content safety filters. Prompts requesting harmful, explicit, or copyrighted content usually raise a `BadRequestError`.
+Generation and downloads can fail, so let your job or request handle the error where it can retry or report the failure. RubyLLM raises `RubyLLM::BadRequestError` for rejected requests and other `RubyLLM::Error` subclasses for provider failures. See [Error Handling]({% link _advanced/error-handling.md %}) for retries and specific exceptions.
 
-## Performance Considerations
-
-Image generation can take several seconds (typically 5-20 seconds depending on the model and load).
-
-*   **Use Background Jobs:** In web applications, always perform image generation in a background job (like Sidekiq or GoodJob) to avoid blocking web requests.
-*   **Timeouts:** Configure appropriate network timeouts in RubyLLM (see [Configuration Guide]({% link _getting_started/configuration.md %})).
-*   **Caching:** Store generated images (e.g., using Active Storage, cloud storage) rather than regenerating them frequently if the prompt is the same.
+Store generated images for reuse. For jobs that need a longer request timeout, see [Connection Settings]({% link _getting_started/configuration-connection.md %}#connection-settings).
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link _core_features/chat.md %}): Learn about conversational AI.
-*   [Embeddings]({% link _core_features/embeddings.md %}): Explore text vector representations.
-*   [Error Handling]({% link _advanced/error-handling.md %}): Master handling API errors.
+*   [Video Generation]({% link _core_features/video-generation.md %}) - animate an image you have generated.
+*   [Attachments]({% link _core_features/attachments.md %}) - ask a model about an image.
+*   [Rails Integration]({% link _advanced/rails.md %}) - use media generation in your application jobs.

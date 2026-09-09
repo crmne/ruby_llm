@@ -14,16 +14,21 @@ module RubyLLM
 
         module_function
 
+        def stream_response(...)
+          @citation_content_lengths = Hash.new(0)
+          super
+        end
+
         def build_chunk(data)
           case data['type']
           when 'response.output_text.delta', 'response.refusal.delta'
-            chunk content: data['delta']
+            build_text_chunk(data)
           when 'response.reasoning_summary_text.delta'
             chunk thinking: Thinking.build(text: data['delta'])
           when 'response.reasoning_summary_part.added'
             build_reasoning_summary_part_chunk(data)
           when 'response.output_text.annotation.added'
-            chunk citations: parse_annotations([data['annotation']], nil)
+            build_annotation_chunk(data)
           when 'response.output_item.added'
             build_item_added_chunk(data)
           when 'response.function_call_arguments.delta'
@@ -37,6 +42,25 @@ module RubyLLM
           else
             chunk
           end
+        end
+
+        def build_text_chunk(data)
+          @citation_content_lengths ||= Hash.new(0)
+          @citation_content_lengths[citation_content_position(data)] += data['delta'].to_s.length
+          chunk content: data['delta']
+        end
+
+        def build_annotation_chunk(data)
+          position = citation_content_position(data)
+          offset = (@citation_content_lengths || {}).sum do |key, length|
+            (key <=> position).negative? ? length : 0
+          end
+
+          chunk citations: offset_citations(parse_annotations([data['annotation']], nil), offset, nil)
+        end
+
+        def citation_content_position(data)
+          [data.fetch('output_index', 0), data.fetch('content_index', 0)]
         end
 
         def build_reasoning_summary_part_chunk(data)
@@ -67,7 +91,9 @@ module RubyLLM
           server_tool_calls = parse_server_tool_items(output)
 
           chunk model: response['model'],
+                tool_calls: parse_tool_approvals(output, finish_reason: parse_finish_reason(response)),
                 finish_reason: parse_finish_reason(response),
+                citations: parse_citations(response, output, nil),
                 server_tool_calls: server_tool_calls,
                 raw_content: server_tool_calls.any? ? output : nil,
                 **parse_usage(response['usage'] || {})

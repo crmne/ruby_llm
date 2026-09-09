@@ -15,7 +15,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.3
       X-Amz-Date:
-      - 20260819T143522Z
+      - 20260907T205712Z
       X-Amz-Content-Sha256:
       - ad7b8f69936d024afea8b77e86e1ce7d0877e695f4bfac28fa2a959d630f33bd
       Authorization:
@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:35:26 GMT
+      - Mon, 07 Sep 2026 20:57:14 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,19 +41,19 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 87be3d05-4dbf-4cd2-8c54-337d3fab5b54
+      - c8e910fe-e67d-4f6f-8f13-3bc71d391ed3
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2724},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_cqjo6jvCBSr6SGuk4qYWVG","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_IvALtxXMVmFaVpJ2Quvdww","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
-  recorded_at: Wed, 19 Aug 2026 14:35:26 GMT
+      string: '{"metrics":{"latencyMs":1774},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_et8q4cNMjFgoDoUaYIe2Pd","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_u3HNyMkj022MUEED7xkD3z","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
+  recorded_at: Mon, 07 Sep 2026 20:57:14 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_cqjo6jvCBSr6SGuk4qYWVG","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_IvALtxXMVmFaVpJ2Quvdww","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_cqjo6jvCBSr6SGuk4qYWVG","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_IvALtxXMVmFaVpJ2Quvdww","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_et8q4cNMjFgoDoUaYIe2Pd","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_u3HNyMkj022MUEED7xkD3z","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_et8q4cNMjFgoDoUaYIe2Pd","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_u3HNyMkj022MUEED7xkD3z","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}},{"toolSpec":{"name":"best_language_to_learn","description":"Gets
@@ -62,9 +62,9 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.3
       X-Amz-Date:
-      - 20260819T143526Z
+      - 20260907T205714Z
       X-Amz-Content-Sha256:
-      - 4916ff6199bdda479d6933da83909ab308a126ac7c9320d693b0d7a73585302c
+      - 451683cfde70a8dec65ccf45c0ff87d3c665a134cca459bf4901c232c6bbf678
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -80,18 +80,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:35:29 GMT
+      - Mon, 07 Sep 2026 20:57:17 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '464'
+      - '453'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 789f7aaa-7d7c-4539-8fe0-ded650c62e02
+      - 5bcb25a0-4bc4-4d8e-9a39-d23a777673a0
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Mjk1Nn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgKioxNcKwQyoqIHdpdGggd2luZCBhdCAqKjEwIGttL2gqKi5cblxuQXMgZm9yIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLCB0aGUgYW5zd2VyIGlzICoqUnVieSoqISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6ODkzLCJvdXRwdXRUb2tlbnMiOjUyLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6OTQ1fX0=
-  recorded_at: Wed, 19 Aug 2026 14:35:29 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTc2NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKjE1wrBDKiogd2l0aCB3aW5kIGF0ICoqMTAga20vaCoqLlxuXG5BcyBmb3IgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4sIHRoZSByZWNvbW1lbmRhdGlvbiBpcyAqKlJ1YnkqKiEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImNhY2hlUmVhZElucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVSZWFkSW5wdXRUb2tlbnMiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VucyI6MCwiaW5wdXRUb2tlbnMiOjg5Mywib3V0cHV0VG9rZW5zIjo0MCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjkzM319
+  recorded_at: Mon, 07 Sep 2026 20:57:17 GMT
 recorded_with: VCR 6.4.0

@@ -12,9 +12,15 @@ module RubyLLM
       end
 
       protocol :chat_completions, ChatCompletions
+      protocol :router_chat_completions, Protocols::Perplexity::Router
+      protocol :files, Protocols::Perplexity::Files
 
       def api_base
         @config.perplexity_api_base || 'https://api.perplexity.ai'
+      end
+
+      def router_url(operation) # :nodoc:
+        "#{api_base.delete_suffix('/').delete_suffix('/router/v1')}/router/v1/#{operation}"
       end
 
       def headers

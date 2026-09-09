@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Call
+        the any-of params tool for task \"Review PR\" with status \"pending\" and
+        report the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 20:58:13 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - a823979464baefa4271a9d2021d753c4
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 4b91a22b9a9bf030c7f53f4c5ac8b36c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - oUZbaR1GTMgrk9hWfiKYdJsIHO_EB-Tvn4tcsXRtGn69tLnWOSGqPA==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"c7ef5d41-e909-4540-a0a9-b29995cd8d41","object":"chat.completion","created":1788814693,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the tool with the specified parameters.","reasoning_content":"The user
+        wants me to call the any_of_params tool with task \"Review PR\" and status
+        \"pending\", then report the result.\n\nLet me call the tool.","tool_calls":[{"index":0,"id":"call_00_sO8JMaJLciKE68WVqejV5984","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":429,"completion_tokens":104,"total_tokens":533,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":33},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":45},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 20:58:14 GMT
+recorded_with: VCR 6.4.0

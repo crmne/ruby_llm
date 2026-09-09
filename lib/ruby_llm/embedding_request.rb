@@ -13,7 +13,7 @@ module RubyLLM
   #   requests.first.result.vectors
   #
   class EmbeddingRequest
-    include Inspectable
+    include Support::Inspectable
 
     # The text staged for embedding.
     attr_reader :text

@@ -20,63 +20,53 @@ After reading this guide, you will know:
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
 
-You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
+Use callbacks to update a UI, log tool activity, or observe model fallbacks. They use the same `before_` and `after_` naming as Rails callbacks.
 
-## Available Event Handlers
-
-Callbacks are Rails-style and additive: register as many blocks as you like for the same event and they all run, alongside RubyLLM's own bookkeeping such as the Rails persistence callbacks.
+## Message Events
 
 ```ruby
 chat = RubyLLM.chat
+chat.before_message { print "Assistant > " }
+chat.after_message { |message| puts message.content }
 
-# Called before each assistant response or tool result is appended
-chat.before_message do
-  print "Assistant > "
-end
-
-# Called after each assistant response or tool result message is appended
-chat.after_message do |message|
-  puts "Response complete!"
-  if message.tokens.output
-    tokens =
-      message.tokens.input.to_i +
-      message.tokens.output.to_i +
-      message.tokens.cache_read.to_i +
-      message.tokens.cache_write.to_i
-
-    puts "Used #{tokens} tokens"
-  end
-end
-
-# Called when the AI decides to use a tool
-chat.before_tool_call do |tool_call|
-  puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
-end
-
-# Called after a tool returns its result
-chat.after_tool_result do |result|
-  puts "Tool returned: #{result}"
-end
-
-# Called before RubyLLM tries a fallback model
-chat.before_fallback do |fallback|
-  puts "Falling back from #{fallback.from.id} to #{fallback.to.id}"
-end
-
-# Called after a fallback model succeeds or fails
-chat.after_fallback do |fallback|
-  puts "Fallback #{fallback.succeeded? ? 'succeeded' : 'failed'}"
-end
-
-# Message callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
 
-Fallback callbacks run around each fallback attempt. `before_fallback` fires after the current model fails and before RubyLLM tries the fallback model. `after_fallback` fires when that fallback attempt succeeds or fails. The callback receives a `RubyLLM::Fallback` with `from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`.
+Message callbacks run for assistant responses and tool results, with or without streaming. They are additive: registering a second block keeps the first, along with RubyLLM's own persistence callbacks.
 
-`after_message` observes transcript changes. It cannot observe a cancelled attempt that produces no message. Subscribe to `usage.ruby_llm` when you need cost and usage events; it fires once per physical provider attempt, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
+## Tool Events
 
-The 1.x handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`), which replaced each other on re-registration, were removed in 2.0.
+Show which tools the model calls and what they return:
+
+```ruby
+chat.before_tool_call do |call|
+  puts "Calling #{call.name} with #{call.arguments}"
+end
+
+chat.after_tool_result do |result|
+  puts "Tool returned: #{result}"
+end
+```
+
+## Fallback Events
+
+```ruby
+chat.before_fallback do |fallback|
+  puts "Trying #{fallback.to.id} after #{fallback.from.id} failed"
+end
+
+chat.after_fallback do |fallback|
+  puts "#{fallback.to.id}: #{fallback.succeeded? ? 'succeeded' : 'failed'}"
+end
+```
+
+`before_fallback` runs before each fallback attempt; `after_fallback` runs after it succeeds or fails. Both receive a `RubyLLM::Fallback` with `from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`.
+
+## Usage Events
+
+`after_message` observes transcript changes. A cancelled request may produce no message, so use `usage.ruby_llm` for accounting across provider attempts, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) and [Instrumentation]({% link _advanced/instrumentation.md %}).
+
+The 1.x `on_*` handlers were replaced in 2.0. See [Upgrading]({% link _reference/upgrading.md %}#chat-callbacks) for the name changes.
 
 ## Next Steps
 

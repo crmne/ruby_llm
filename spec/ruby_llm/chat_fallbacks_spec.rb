@@ -113,7 +113,7 @@ RSpec.describe RubyLLM::Chat do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     error = RubyLLM::ServiceUnavailableError.new('primary down')
     allow(primary_provider).to receive(:complete) do |_messages, usage_recorder:, **|
-      tracker = RubyLLM.const_get(:Usage)::Tracker.new(
+      tracker = RubyLLM::Accounting::Usage::Tracker.new(
         operation: :chat,
         provider: primary_provider,
         model: primary_model,

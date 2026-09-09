@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
   let(:model) { 'gpt-4.1-nano' }
 
   def usage_tracker(provider, recorder, config: RubyLLM.config)
-    RubyLLM.const_get(:Usage)::Tracker.new(
+    RubyLLM::Accounting::Usage::Tracker.new(
       operation: :chat,
       provider: provider,
       model: RubyLLM.models.find(model),
@@ -50,6 +50,22 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
   end
 
   describe 'usage persistence' do
+    it 'requires a model when persisting a usage entry', live: false do
+      chat = Chat.create!(model: model_for(:openai))
+      record = chat.ruby_llm_usages.build(operation: 'chat', provider: 'openai', status: 'succeeded')
+
+      expect(record).not_to be_valid
+      expect(record.errors[:model]).to include("can't be blank")
+      expect { record.save! }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it 'enforces the usage model constraint when validations are bypassed', live: false do
+      chat = Chat.create!(model: model_for(:openai))
+      record = chat.ruby_llm_usages.build(operation: 'chat', provider: 'openai', status: 'succeeded')
+
+      expect { record.save!(validate: false) }.to raise_error(ActiveRecord::NotNullViolation)
+    end
+
     it 'persists attempts independently and links them to the resulting message' do
       chat = Chat.create!(model: model)
       provider = chat.to_llm.provider

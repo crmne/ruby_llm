@@ -47,8 +47,11 @@ RSpec.describe RubyLLM::Providers::Cohere do
       expect(RubyLLM::Provider.resolve(:cohere)).to eq(described_class)
     end
 
-    it 'speaks the Cohere protocol' do
-      expect(described_class.protocols).to eq(cohere: RubyLLM::Protocols::Cohere)
+    it 'registers Cohere inference and dataset protocols' do
+      expect(described_class.protocols).to eq(cohere: RubyLLM::Protocols::Cohere,
+                                              files: RubyLLM::Protocols::Cohere::Datasets)
+      expect(provider).to be_files
+      expect(provider).to be_batches
     end
 
     it 'requires an API key' do

@@ -16,7 +16,7 @@ module RubyLLM
       end
 
       def prepare_for_active_storage(attachments)
-        Utils.to_safe_array(attachments).filter_map do |attachment|
+        Support::Utils.to_safe_array(attachments).filter_map do |attachment|
           case attachment
           when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
             attachment
@@ -76,7 +76,7 @@ module RubyLLM
         source = active_storage_blobs(attachable)
         source ||= attachable.blob if attachable.respond_to?(:blob)
 
-        Utils.to_safe_array(source)
+        Support::Utils.to_safe_array(source)
       end
 
       def content_attachments?(action_text_attachments)

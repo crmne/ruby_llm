@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+require 'active_record/base'
+require Rails.root.join('app/models/concerns/ruby_llm_upgrade')
+
+Rails.application.config.to_prepare do
+  tool_call = if Gem::Version.new(RubyLLM::VERSION).segments.first >= 2
+                RubyLLM::ActiveRecord::ToolCall
+              else
+                <%= v1_model_name(:tool_call) %>
+              end
+  RubyLLMUpgrade.install(chat: <%= chat_model_name %>, message: <%= message_model_name %>, tool_call: tool_call)
+end

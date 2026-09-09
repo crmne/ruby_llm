@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Models do
     registry_schema = {
       '$schema' => 'https://json-schema.org/draft/2020-12/schema',
       'type' => 'array',
-      'items' => RubyLLM::ModelSchema.json_schema
+      'items' => RubyLLM::Models::Schema.json_schema
     }
     registry = JSONSchemer.schema(registry_schema)
     validation_errors = registry.validate(models_data).map { |error| "#{error['data_pointer']}: #{error['error']}" }

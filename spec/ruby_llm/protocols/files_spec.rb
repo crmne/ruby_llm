@@ -223,7 +223,7 @@ RSpec.describe RubyLLM::Protocols::Files do
 
     it 'uploads in two steps and returns the stored file' do
       connection = instance_double(Faraday::Connection)
-      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
       allow(connection).to receive(:url_prefix=)
       allow(connection).to receive(:post) do |url, &block|
         request = Struct.new(:headers, :body, keyword_init: false).new({}, nil)
@@ -243,7 +243,7 @@ RSpec.describe RubyLLM::Protocols::Files do
 
     it 'raises when Gemini does not hand back an upload URL' do
       connection = instance_double(Faraday::Connection)
-      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
       allow(connection).to receive(:url_prefix=)
       allow(connection).to receive(:post) do |_url, &block|
         block.call(Struct.new(:headers, :body).new({}, nil))
@@ -268,7 +268,7 @@ RSpec.describe RubyLLM::Protocols::Files do
         )
       )
       connection = instance_double(Faraday::Connection)
-      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
       allow(connection).to receive(:url_prefix=)
       allow(connection).to receive(:get) do |_url, &block|
         block.call(Struct.new(:headers).new({}))
@@ -382,7 +382,7 @@ RSpec.describe RubyLLM::Protocols::Files do
       RubyLLM::Providers::OpenAI.new(RubyLLM::Configuration.new.tap { |config| config.openai_api_key = 'test' })
     end
     let(:protocol) { RubyLLM::Protocols::OpenAI::Files.new(provider) }
-    let(:connection) { instance_double(RubyLLM::Connection) }
+    let(:connection) { instance_double(RubyLLM::Transport::Connection) }
 
     before { protocol.instance_variable_set(:@connection, connection) }
 

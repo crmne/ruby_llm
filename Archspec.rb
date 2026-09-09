@@ -6,6 +6,14 @@ ignore 'lib/generators/ruby_llm/templates/**/*'
 # Public entrypoint. This is the only place that should wire concrete providers
 # into the top-level RubyLLM module.
 component :entrypoint, in: 'lib/ruby_llm.rb'
+component :runtime, in: %w[lib/ruby_llm.rb lib/ruby_llm/**/*.rb]
+
+component(:runtime_tooling,
+          in: %w[lib/ruby_llm/active_record/upgrade.rb lib/ruby_llm/provider_generator/**/*.rb],
+          constants: %w[RubyLLM::ActiveRecord::Upgrade RubyLLM::ProviderGenerator])
+  .must_be_empty(because: 'migration helpers and scaffolding belong under lib/generators')
+
+runtime.cannot_reference_constants 'RubyLLM::Generators', 'Rails::Generators'
 
 # User-facing objects and orchestration. These are nouns like Chat, Batch,
 # UploadedFile, Embedding, Image, Message, Tool, and Content.
@@ -13,28 +21,38 @@ component :domain, in: %w[
   lib/ruby_llm/agent.rb
   lib/ruby_llm/attachment.rb
   lib/ruby_llm/batch.rb
+  lib/ruby_llm/cached_content.rb
   lib/ruby_llm/chat.rb
+  lib/ruby_llm/chat/**/*.rb
   lib/ruby_llm/chunk.rb
   lib/ruby_llm/citation.rb
   lib/ruby_llm/context.rb
   lib/ruby_llm/cost.rb
   lib/ruby_llm/embedding.rb
+  lib/ruby_llm/embedding_request.rb
   lib/ruby_llm/image.rb
+  lib/ruby_llm/fallback.rb
+  lib/ruby_llm/downloaded_file.rb
   lib/ruby_llm/message.rb
   lib/ruby_llm/moderation.rb
+  lib/ruby_llm/ocr.rb
+  lib/ruby_llm/rerank.rb
+  lib/ruby_llm/research_job.rb
   lib/ruby_llm/search_results.rb
-  lib/ruby_llm/stream_accumulator.rb
-  lib/ruby_llm/streaming.rb
+  lib/ruby_llm/server_tool_call.rb
+  lib/ruby_llm/speech.rb
+  lib/ruby_llm/speech_chunk.rb
+  lib/ruby_llm/protocol/**/*.rb
   lib/ruby_llm/thinking.rb
   lib/ruby_llm/tokens.rb
+  lib/ruby_llm/tokenization.rb
   lib/ruby_llm/tool.rb
   lib/ruby_llm/tool_call.rb
-  lib/ruby_llm/tool_concurrency.rb
+  lib/ruby_llm/tools/**/*.rb
   lib/ruby_llm/transcription.rb
   lib/ruby_llm/transcription_chunk.rb
-  lib/ruby_llm/usage.rb
+  lib/ruby_llm/accounting/**/*.rb
   lib/ruby_llm/uploaded_file.rb
-  lib/ruby_llm/uploaded_file/**/*.rb
   lib/ruby_llm/video.rb
   lib/ruby_llm/video_job.rb
   lib/ruby_llm/workflow.rb
@@ -44,26 +62,58 @@ component :domain, in: %w[
 # Agent is a declarative wrapper over Chat.
 component :chat, constants: 'RubyLLM::Chat'
 component :agent, constants: 'RubyLLM::Agent'
+component :context, constants: 'RubyLLM::Context'
+
+component(:unowned_runtime_helpers,
+          in: %w[
+            lib/ruby_llm/binary_streaming.rb
+            lib/ruby_llm/tool_concurrency.rb
+            lib/ruby_llm/wav_audio.rb
+            lib/ruby_llm/aliases.rb
+            lib/ruby_llm/connection.rb
+            lib/ruby_llm/deprecator.rb
+            lib/ruby_llm/error_middleware.rb
+            lib/ruby_llm/inspectable.rb
+            lib/ruby_llm/instrumentation.rb
+            lib/ruby_llm/mime_type.rb
+            lib/ruby_llm/model_registry.rb
+            lib/ruby_llm/model_schema.rb
+            lib/ruby_llm/provider_generator_cli.rb
+            lib/ruby_llm/provider_scaffold.rb
+            lib/ruby_llm/server_tools.rb
+            lib/ruby_llm/stream_accumulator.rb
+            lib/ruby_llm/streaming.rb
+            lib/ruby_llm/usage.rb
+            lib/ruby_llm/usage_middleware.rb
+            lib/ruby_llm/utils.rb
+            lib/ruby_llm/websocket_connection.rb
+          ],
+          constants: %w[
+            RubyLLM::BinaryStreaming RubyLLM::ToolConcurrency RubyLLM::WavAudio
+            RubyLLM::Streaming RubyLLM::StreamAccumulator
+            RubyLLM::Aliases RubyLLM::ModelRegistry RubyLLM::ModelSchema
+            RubyLLM::Connection RubyLLM::WebsocketConnection
+            RubyLLM::ErrorMiddleware RubyLLM::UsageMiddleware
+            RubyLLM::Deprecator RubyLLM::Inspectable RubyLLM::Instrumentation RubyLLM::Utils
+            RubyLLM::MimeType RubyLLM::ServerTools RubyLLM::Usage
+            RubyLLM::ProviderGeneratorCLI RubyLLM::ProviderScaffold
+          ])
+  .must_be_empty(because: 'implementation helpers and subordinate results belong in focused directories')
 
 # Shared implementation support. This layer may support model lookup, transport,
 # errors, configuration, and instrumentation, but it should not grow product
 # concepts that belong in the domain layer.
 component :support, in: %w[
-  lib/ruby_llm/aliases.rb
   lib/ruby_llm/configuration.rb
-  lib/ruby_llm/connection.rb
-  lib/ruby_llm/deprecator.rb
+  lib/ruby_llm/transport/**/*.rb
+  lib/ruby_llm/transcription/wav_audio.rb
   lib/ruby_llm/error.rb
-  lib/ruby_llm/error_middleware.rb
-  lib/ruby_llm/instrumentation.rb
-  lib/ruby_llm/usage_middleware.rb
-  lib/ruby_llm/mime_type.rb
+  lib/ruby_llm/files/mime_type.rb
   lib/ruby_llm/model.rb
   lib/ruby_llm/model/**/*.rb
-  lib/ruby_llm/model_registry.rb
+  lib/ruby_llm/models/**/*.rb
   lib/ruby_llm/models.rb
-  lib/ruby_llm/inspectable.rb
-  lib/ruby_llm/utils.rb
+  lib/ruby_llm/support/**/*.rb
   lib/ruby_llm/version.rb
 ]
 
@@ -92,11 +142,14 @@ component :file_protocols, in: %w[
 # embeddings, implement their own seams and are listed out. Add a new chat
 # family here so the build holds it to the contract.
 component :chat_protocol_families, in: %w[
+  lib/ruby_llm/protocols/mistral/conversations.rb
+  lib/ruby_llm/protocols/perplexity/router.rb
   lib/ruby_llm/protocols/anthropic.rb
   lib/ruby_llm/protocols/chat_completions.rb
   lib/ruby_llm/protocols/cohere.rb
   lib/ruby_llm/protocols/converse.rb
   lib/ruby_llm/protocols/gemini.rb
+  lib/ruby_llm/protocols/interactions.rb
   lib/ruby_llm/protocols/responses.rb
 ]
 
@@ -111,6 +164,8 @@ component :providers,
 
 component(:provider_file_protocols, in: 'lib/ruby_llm/providers/*/files.rb')
   .must_be_empty(because: 'file wire formats belong under RubyLLM::Protocols')
+component(:provider_batch_prediction, in: 'lib/ruby_llm/providers/*/batch_prediction.rb')
+  .must_be_empty(because: 'batch prediction wire formats belong under RubyLLM::Protocols')
 component(:domain_file_protocol, constants: 'RubyLLM::UploadedFile::Protocol')
   .must_be_empty(because: 'protocol implementations do not belong inside domain objects')
 
@@ -126,12 +181,7 @@ component :rails_integration,
           ],
           namespace: 'RubyLLM::ActiveRecord'
 
-component :generators,
-          in: %w[
-            lib/generators/**/*.rb
-            lib/ruby_llm/provider_generator_cli.rb
-            lib/ruby_llm/provider_scaffold.rb
-          ]
+component :generators, in: 'lib/generators/**/*.rb'
 component :tasks, in: 'lib/tasks/**/*.rake'
 
 # OpenAI-specific shared wire mechanics, like the file-backed Batch API and the
@@ -219,6 +269,17 @@ provider_capabilities.must_implement :augment, scope: :class
 # static analysis cannot see.
 chat.method_names.matching(/\Awith_(?<option>.+)/)
     .requires('%<option>s', on: agent, scope: :class, except: %i[with_temperature with_max_output_tokens])
+
+entrypoint.method_names(scope: :class).matching(/\Arealtime\z/)
+          .forbidden(because: 'RubyLLM 2.0 exposes individual audio operations, not a realtime session API')
+context.method_names.matching(/\Arealtime\z/)
+       .forbidden(because: 'contexts expose the same individual operations as RubyLLM')
+chat.method_names.matching(/\A(?:with_storage|storage)\z/)
+    .forbidden(because: 'chat requests use local history instead of provider-stored conversation state')
+agent.method_names(scope: :class).matching(/\Astorage\z/)
+     .forbidden(because: 'agents do not configure provider conversation storage')
+agent.method_names.matching(/\A(?:with_storage|storage)\z/)
+     .forbidden(because: 'agents expose the same conversation API as Chat')
 
 # Provider and protocol vocabulary stays in providers and protocols. A domain
 # object or the Rails integration never names a provider or a wire format in a

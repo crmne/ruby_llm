@@ -350,10 +350,10 @@ module RubyLLM
         end
 
         def build_json_schema(schema)
-          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
+          normalized = RubyLLM::Support::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
-          RubyLLM::Utils.deep_stringify_keys(normalized)
+          RubyLLM::Support::Utils.deep_stringify_keys(normalized)
         end
 
         def structured_output_config(schema)

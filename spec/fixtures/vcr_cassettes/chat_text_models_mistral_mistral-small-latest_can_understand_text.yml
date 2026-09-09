@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:44 GMT
+      - Mon, 07 Sep 2026 20:52:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,29 +33,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a72-288b-77e8-9fb2-8bfed7231e05
+      - 01a07da5-39a6-7825-b2a3-47e8f0b8f5d0
       X-Kong-Request-Id:
-      - 01a01a72-288b-77e8-9fb2-8bfed7231e05
+      - 01a07da5-39a6-7825-b2a3-47e8f0b8f5d0
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99387'
+      - '99908'
       X-Ratelimit-Tokens-Query-Cost:
-      - '60'
+      - '61'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '93'
+      - '98'
       X-Envoy-Upstream-Service-Time:
-      - '438'
+      - '251'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '438'
+      - '252'
       X-Kong-Proxy-Latency:
       - '20'
       Cf-Cache-Status:
@@ -72,9 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ef62d5edabe04298a8b1199e6b29de62","created":1787150084,"model":"mistral-small-latest","usage":{"prompt_tokens":41,"total_tokens":60,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        file `ruby.txt` contains the plain text:\n\n```\nRuby is the best.\n```"}}]}'
-  recorded_at: Wed, 19 Aug 2026 14:34:44 GMT
+      string: '{"id":"6c56ab74832c4f9dad2787fba2547afc","created":1788814375,"model":"mistral-small-latest","usage":{"prompt_tokens":41,"total_tokens":61,"completion_tokens":20,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        file `ruby.txt` contains the following plain text:\n\n```\nRuby is the best.\n```"}}]}'
+  recorded_at: Mon, 07 Sep 2026 20:52:55 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -83,7 +83,7 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the plain text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
+        contains the following plain text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:34:45 GMT
+      - Mon, 07 Sep 2026 20:52:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,29 +111,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a01a72-2aaf-74c9-9c4e-8b02e37537d1
+      - 01a07da5-3b06-7c6e-9aa0-c3c5eb5f257a
       X-Kong-Request-Id:
-      - 01a01a72-2aaf-74c9-9c4e-8b02e37537d1
+      - 01a07da5-3b06-7c6e-9aa0-c3c5eb5f257a
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99281'
+      - '99785'
       X-Ratelimit-Tokens-Query-Cost:
-      - '106'
+      - '123'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '92'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '568'
+      - '328'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '569'
+      - '329'
       X-Kong-Proxy-Latency:
       - '13'
       Cf-Cache-Status:
@@ -150,8 +150,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"247387bf39844c299e0e6f0e05604556","created":1787150084,"model":"mistral-small-latest","usage":{"prompt_tokens":93,"total_tokens":122,"completion_tokens":29,"prompt_tokens_details":{"cached_tokens":16},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"c8abe4d1715249c8876bfc900c920c4e","created":1788814375,"model":"mistral-small-latest","usage":{"prompt_tokens":94,"total_tokens":123,"completion_tokens":29,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
         is the best</truism>\n```"}}]}'
-  recorded_at: Wed, 19 Aug 2026 14:34:45 GMT
+  recorded_at: Mon, 07 Sep 2026 20:52:56 GMT
 recorded_with: VCR 6.4.0

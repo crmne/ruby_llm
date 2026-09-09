@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"}],"stream":false,"reasoning_effort":"medium"}'
+        3?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,113 +23,69 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Arrive-Time:
+      - '1788816133662'
       Date:
-      - Mon, 08 Jun 2026 18:56:10 GMT
-      - Mon, 08 Jun 2026 18:56:10 GMT
+      - Mon, 07 Sep 2026 21:22:13 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '2599'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - istio-envoy
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '1340'
+      Resp-Start-Time:
+      - '1788816135003'
+      X-Envoy-Upstream-Service-Time:
+      - '1336'
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        sum of 5 and 3 is calculated by combining the quantities:  \n**5 + 3 = 8**.  \n\nThis
-        is a basic arithmetic operation where adding 5 and 3 results in 8. The answer
-        is straightforward and does not require complex steps.","reasoning_content":"\nOkay,
-        let''s see. The user is asking \"What is 5 + 3?\" Hmm, that seems straightforward.
-        But maybe they want a detailed explanation? Let me think. Addition is one
-        of the basic arithmetic operations. So, adding 5 and 3 together.\n\nFirst,
-        I know that 5 plus 3 means combining the quantities of 5 and 3. Let me visualize
-        it. If I have 5 apples and then add 3 more apples, how many do I have in total?
-        Well, 5 plus 3 is 8. Wait, is that right? Let me check again. 5 + 3... Yeah,
-        5 + 2 is 7, so adding one more makes it 8. \n\nBut maybe I should break it
-        down step by step. Starting with 5, then adding 3. So, 5 + 1 is 6, then +1
-        is 7, then +1 is 8. Yep, that''s three steps. Alternatively, I can think of
-        it as 3 + 5, which is the same due to the commutative property. So, 3 + 5
-        is also 8. \n\nWait, could there be any other way to approach this? Maybe
-        using number lines? Starting at 5 and moving 3 units to the right. So, 5 to
-        6 is one, 6 to 7 is two, 7 to 8 is three. That lands me at 8. \n\nOr using
-        fingers? If I hold up 5 fingers and then add 3 more, I count them all. 1,
-        2, 3, 4, 5, 6, 7, 8. There we go. \n\nIs there any chance the question is
-        a trick question? Like, maybe in a different base or something? The user didn''t
-        specify, so I should assume base 10. If it were another base, they would probably
-        mention it. \n\nAlso, maybe the user is testing if I can recognize simple
-        addition. But since they asked for the answer, I should provide it clearly.
-        \n\nWait, the user might be a student learning addition, so explaining the
-        process could be helpful. But the question is straightforward. Let me make
-        sure I didn''t make a mistake. 5 + 3 equals 8. Yes, that''s correct. \n\nI
-        think that''s it. The answer is 8.\n","role":"assistant"}}],"created":1780944977,"id":"chatcmpl-myhnSdlDDpxrl4uwCZ8Rv89zX8BoDCG4","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":564,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":505,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":472.352611224279,"time_per_output_token_ms":11.388,"time_to_first_token_ms":33.873,"tokens_per_second":87.81173164734808,"total_tokens":580}}'
-  recorded_at: Mon, 08 Jun 2026 18:56:17 GMT
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        sum of 5 and 3 is **8**. \n\n$5 + 3 = 8$","reasoning_content":"Okay, the user
+        is asking \"What is 5 + 3?\" That''s a basic arithmetic question. Let me think.
+        Adding 5 and 3. I remember that addition is combining two numbers. So 5 plus
+        3 would be 8. Wait, is there any chance they might be asking about something
+        else? Like maybe in a different context? But the question seems straightforward.
+        Maybe they''re testing if I can handle simple math. Let me double-check. 5
+        plus 3... yes, 5 + 3 equals 8. I should make sure to present the answer clearly.
+        Maybe they just want the answer, but sometimes people might have follow-up
+        questions. But since the question is simple, the answer is 8. I''ll go with
+        that.\n"}}],"created":1788816135,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":186,"prompt_tokens":16,"total_tokens":202,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-8LxD2ioMLRmJu7RGtiGZHARsRRb6UGKO","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":13.068,"prompt_per_token_ms":2.6136,"prompt_per_second":382.6140189776554,"predicted_n":186,"predicted_ms":1309.885,"predicted_per_token_ms":7.080459459459459,"predicted_per_second":141.2337724304042}}'
+  recorded_at: Mon, 07 Sep 2026 21:22:15 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"\n\nThe sum of 5 and 3 is calculated by
-        combining the quantities:  \n**5 + 3 = 8**.  \n\nThis is a basic arithmetic
-        operation where adding 5 and 3 results in 8. The answer is straightforward
-        and does not require complex steps.","reasoning":"\nOkay, let''s see. The
-        user is asking \"What is 5 + 3?\" Hmm, that seems straightforward. But maybe
-        they want a detailed explanation? Let me think. Addition is one of the basic
-        arithmetic operations. So, adding 5 and 3 together.\n\nFirst, I know that
-        5 plus 3 means combining the quantities of 5 and 3. Let me visualize it. If
-        I have 5 apples and then add 3 more apples, how many do I have in total? Well,
-        5 plus 3 is 8. Wait, is that right? Let me check again. 5 + 3... Yeah, 5 +
-        2 is 7, so adding one more makes it 8. \n\nBut maybe I should break it down
-        step by step. Starting with 5, then adding 3. So, 5 + 1 is 6, then +1 is 7,
-        then +1 is 8. Yep, that''s three steps. Alternatively, I can think of it as
-        3 + 5, which is the same due to the commutative property. So, 3 + 5 is also
-        8. \n\nWait, could there be any other way to approach this? Maybe using number
-        lines? Starting at 5 and moving 3 units to the right. So, 5 to 6 is one, 6
-        to 7 is two, 7 to 8 is three. That lands me at 8. \n\nOr using fingers? If
-        I hold up 5 fingers and then add 3 more, I count them all. 1, 2, 3, 4, 5,
-        6, 7, 8. There we go. \n\nIs there any chance the question is a trick question?
-        Like, maybe in a different base or something? The user didn''t specify, so
-        I should assume base 10. If it were another base, they would probably mention
-        it. \n\nAlso, maybe the user is testing if I can recognize simple addition.
-        But since they asked for the answer, I should provide it clearly. \n\nWait,
-        the user might be a student learning addition, so explaining the process could
-        be helpful. But the question is straightforward. Let me make sure I didn''t
-        make a mistake. 5 + 3 equals 8. Yes, that''s correct. \n\nI think that''s
-        it. The answer is 8.\n","reasoning_content":"\nOkay, let''s see. The user
-        is asking \"What is 5 + 3?\" Hmm, that seems straightforward. But maybe they
-        want a detailed explanation? Let me think. Addition is one of the basic arithmetic
-        operations. So, adding 5 and 3 together.\n\nFirst, I know that 5 plus 3 means
-        combining the quantities of 5 and 3. Let me visualize it. If I have 5 apples
-        and then add 3 more apples, how many do I have in total? Well, 5 plus 3 is
-        8. Wait, is that right? Let me check again. 5 + 3... Yeah, 5 + 2 is 7, so
-        adding one more makes it 8. \n\nBut maybe I should break it down step by step.
-        Starting with 5, then adding 3. So, 5 + 1 is 6, then +1 is 7, then +1 is 8.
-        Yep, that''s three steps. Alternatively, I can think of it as 3 + 5, which
-        is the same due to the commutative property. So, 3 + 5 is also 8. \n\nWait,
-        could there be any other way to approach this? Maybe using number lines? Starting
-        at 5 and moving 3 units to the right. So, 5 to 6 is one, 6 to 7 is two, 7
-        to 8 is three. That lands me at 8. \n\nOr using fingers? If I hold up 5 fingers
-        and then add 3 more, I count them all. 1, 2, 3, 4, 5, 6, 7, 8. There we go.
-        \n\nIs there any chance the question is a trick question? Like, maybe in a
-        different base or something? The user didn''t specify, so I should assume
-        base 10. If it were another base, they would probably mention it. \n\nAlso,
-        maybe the user is testing if I can recognize simple addition. But since they
-        asked for the answer, I should provide it clearly. \n\nWait, the user might
-        be a student learning addition, so explaining the process could be helpful.
-        But the question is straightforward. Let me make sure I didn''t make a mistake.
-        5 + 3 equals 8. Yes, that''s correct. \n\nI think that''s it. The answer is
-        8.\n"},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+        3?"},{"role":"assistant","content":"The sum of 5 and 3 is **8**. \n\n$5 +
+        3 = 8$","reasoning":"Okay, the user is asking \"What is 5 + 3?\" That''s a
+        basic arithmetic question. Let me think. Adding 5 and 3. I remember that addition
+        is combining two numbers. So 5 plus 3 would be 8. Wait, is there any chance
+        they might be asking about something else? Like maybe in a different context?
+        But the question seems straightforward. Maybe they''re testing if I can handle
+        simple math. Let me double-check. 5 plus 3... yes, 5 + 3 equals 8. I should
+        make sure to present the answer clearly. Maybe they just want the answer,
+        but sometimes people might have follow-up questions. But since the question
+        is simple, the answer is 8. I''ll go with that.\n","reasoning_content":"Okay,
+        the user is asking \"What is 5 + 3?\" That''s a basic arithmetic question.
+        Let me think. Adding 5 and 3. I remember that addition is combining two numbers.
+        So 5 plus 3 would be 8. Wait, is there any chance they might be asking about
+        something else? Like maybe in a different context? But the question seems
+        straightforward. Maybe they''re testing if I can handle simple math. Let me
+        double-check. 5 plus 3... yes, 5 + 3 equals 8. I should make sure to present
+        the answer clearly. Maybe they just want the answer, but sometimes people
+        might have follow-up questions. But since the question is simple, the answer
+        is 8. I''ll go with that.\n"},{"role":"user","content":"Now multiply that
+        by 2"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -143,27 +99,40 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 08 Jun 2026 18:56:17 GMT
-      - Mon, 08 Jun 2026 18:56:17 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1227'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - istio-envoy
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      X-Envoy-Upstream-Service-Time:
+      - '1640'
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1643'
+      Req-Arrive-Time:
+      - '1788816135009'
+      Resp-Start-Time:
+      - '1788816136652'
+      Date:
+      - Mon, 07 Sep 2026 21:22:14 GMT
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHByZXZpb3VzIHJlc3VsdCB3YXMgKio4KiouIE11bHRpcGx5aW5nIHRoYXQgYnkgMiBnaXZlczogIFxuKio4IMOXIDIgPSAxNioqLiAgXG5cblNvIHRoZSBmaW5hbCBhbnN3ZXIgaXMgKioxNioqLiIsInJlYXNvbmluZ19jb250ZW50IjoiXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0IGJ5IDIuIExldCBtZSBjaGVjayB0aGUgaGlzdG9yeS5cblxuRWFybGllciwgdGhleSBhc2tlZCBcIldoYXQgaXMgNSArIDM/XCIgYW5kIEkgYW5zd2VyZWQgOC4gTm93IHRoZXkgd2FudCB0byBtdWx0aXBseSB0aGF0IGJ5IDIuIFNvIDggdGltZXMgMiBpcyAxNi4gSSBzaG91bGQgbWFrZSBzdXJlIEknbSB1c2luZyB0aGUgY29ycmVjdCBudW1iZXIgZnJvbSB0aGUgcHJldmlvdXMgYW5zd2VyLiBMZXQgbWUgY29uZmlybSBhZ2FpbjogNSArIDMgaXMgaW5kZWVkIDgsIHRoZW4gOCBtdWx0aXBsaWVkIGJ5IDIgZXF1YWxzIDE2LiBObyBzdGVwcyBtaXNzZWQgaGVyZS4gSnVzdCBhIHNpbXBsZSBtdWx0aXBsaWNhdGlvbi4gSSdsbCBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseS5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzgwOTQ0OTc5LCJpZCI6ImNoYXRjbXBsLTVadXAzVVBoVm1yZk1zQmZER0pkWVRjMmQ5ckFmT3ZwIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNjMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjEyMSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjg4LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTR9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjIyMzcuODc2MDUyMTgzMjAwNSwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjoxMS40Mzk4ODk1NzA1NTIxNDcsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjM5LjMyMywidG9rZW5zX3Blcl9zZWNvbmQiOjg3LjQxMzQzMTIwNzc3NDc2LCJ0b3RhbF90b2tlbnMiOjI1MX19
-  recorded_at: Mon, 08 Jun 2026 18:56:19 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        result of multiplying 8 by 2 is **16**. \n\n$8 \\times 2 = 16$","reasoning_content":"Okay,
+        the user just asked to multiply the previous result by 2. Let me check the
+        history.\n\nEarlier, they asked \"What is 5 + 3?\" and I answered 8. Now they
+        want to multiply that by 2. So 8 times 2 is 16. Let me make sure I''m following
+        the steps correctly. \n\nWait, do I need to confirm if they''re referring
+        to the last answer? Yes, since the previous answer was 8, multiplying by 2
+        should be straightforward. Let me calculate 8 * 2. That''s 16. \n\nI should
+        present the answer clearly, maybe using the same format as before. Let me
+        write it out step by step to avoid confusion. \n\nAlso, the user might be
+        testing if I can follow sequential operations, so it''s important to be precise.
+        No need for extra explanations unless they ask for more details. Just the
+        result in a box as before.\n"}}],"created":1788816136,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":226,"prompt_tokens":55,"total_tokens":281,"prompt_tokens_details":{"cached_tokens":16}},"id":"chatcmpl-AmYwqnH3kZRdUU7hN2pqQorEH44LOtkd","timings":{"cache_n":16,"prompt_n":39,"prompt_ms":16.369,"prompt_per_token_ms":0.4197179487179487,"prompt_per_second":2382.55238560694,"predicted_n":226,"predicted_ms":1604.779,"predicted_per_token_ms":7.132351111111111,"predicted_per_second":140.20622154203164}}'
+  recorded_at: Mon, 07 Sep 2026 21:22:16 GMT
 recorded_with: VCR 6.4.0

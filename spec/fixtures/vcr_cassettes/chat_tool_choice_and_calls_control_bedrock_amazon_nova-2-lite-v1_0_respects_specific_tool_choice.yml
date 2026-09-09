@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the fall of
+        Rome?"}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}],"toolChoice":{"tool":{"name":"weather"}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Amz-Date:
+      - 20260908T065909Z
+      X-Amz-Content-Sha256:
+      - 47ae638a575679bdb20b5bdecae55de311ec5e2a98b80ec2db370fb0d436a0f7
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 08 Sep 2026 06:59:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '322'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 93fd513e-407e-4470-b02a-fdcd6b83f432
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":534},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"41.8902","longitude":"12.4922"},"name":"weather","toolUseId":"tooluse_dhAs6ilSETYAapPRfHCGJ8"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":974,"outputTokens":42,"serverToolUsage":{},"totalTokens":1016}}'
+  recorded_at: Tue, 08 Sep 2026 06:59:10 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the fall of
+        Rome?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_dhAs6ilSETYAapPRfHCGJ8","name":"weather","input":{"latitude":"41.8902","longitude":"12.4922"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_dhAs6ilSETYAapPRfHCGJ8","content":[{"text":"Current
+        weather at 41.8902, 12.4922: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Amz-Date:
+      - 20260908T065910Z
+      X-Amz-Content-Sha256:
+      - 8a41295b3a8e9ea95e0c20be1610c5bb7aa9284d1c7df1cec336d3dadebf6c77
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 08 Sep 2026 06:59:12 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '913'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 79f036b4-1441-473e-812d-8f5488e18982
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1274},"output":{"message":{"content":[{"text":"I
+        understand you''re asking about the fall of Rome, but I need to clarify: are
+        you referring to:\n\n1. **The fall of the Western Roman Empire** (which traditionally
+        occurred in 476 CE when Romulus Augustulus was deposed by Odoacer), or  \n2.
+        **The fall of the Eastern Roman Empire (Byzantine Empire)** (which ended in
+        1453 CE when Constantinople fell to the Ottoman Turks under Mehmed II)?\n\nBoth
+        events mark significant ends to Roman imperial rule, but they occurred nearly
+        a millennium apart and had very different historical contexts. Could you specify
+        which period you''re interested in? I can then provide a detailed explanation
+        of the causes, key events, and consequences of that particular \"fall.\""}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":1066,"outputTokens":146,"serverToolUsage":{},"totalTokens":1212}}'
+  recorded_at: Tue, 08 Sep 2026 06:59:12 GMT
+recorded_with: VCR 6.4.0

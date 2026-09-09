@@ -5,6 +5,17 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat, :live do
   include StreamingErrorHelpers
 
+  def prompt_token_count(message)
+    tokens = message.tokens
+    tokens.input.to_i + tokens.cache_read.to_i + tokens.cache_write.to_i
+  end
+
+  def visible_output_token_count(message)
+    return if message.thinking && message.tokens.thinking.nil?
+
+    message.tokens.output - message.tokens.thinking.to_i
+  end
+
   describe 'streaming responses' do
     each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} supports streaming responses" do
@@ -24,27 +35,40 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.raw.env.request_body).to be_present
       end
 
-      it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
-        model = 'gpt-4.1-nano' if provider == :openai # gpt-5 rejects the temperature this example sets
-        skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
-        skip 'Azure reports different token counts for streaming vs non-streaming' if provider == :azure
-        skip 'xAI reports different token counts for streaming vs non-streaming' if provider == :xai
-        if provider == :gpustack && model == 'qwen3'
-          skip 'GPUStack/Qwen3 reports different token counts for streaming vs non-streaming'
-        end
+      token_model = provider == :openai ? model_for(:openai, :temperature) : model
+      it "#{provider}/#{token_model} reports token usage with and without streaming" do
+        model = token_model
 
         chat = basic_chat(model: model, provider: provider, temperature: 0.0)
+        # DeepSeek ignores temperature while thinking is enabled.
+        chat.with_thinking(false) if provider == :deepseek
         chunks = []
+        prompt = 'Reply with exactly: 1, 2, 3'
 
-        stream_message = chat.ask('Count from 1 to 3') do |chunk|
+        stream_message = chat.ask(prompt) do |chunk|
           chunks << chunk
         end
 
         chat = basic_chat(model: model, provider: provider, temperature: 0.0)
-        sync_message = chat.ask('Count from 1 to 3')
+        chat.with_thinking(false) if provider == :deepseek
+        sync_message = chat.ask(prompt)
 
-        expect(sync_message.tokens.input).to be_within(1).of(stream_message.tokens.input)
-        expect(sync_message.tokens.output).to be_within(2).of(stream_message.tokens.output)
+        expect(stream_message.content.strip).to eq('1, 2, 3')
+        expect(sync_message.content.strip).to eq(stream_message.content.strip)
+        [stream_message, sync_message].each do |message|
+          %i[input cache_read cache_write thinking].each do |component|
+            count = message.tokens.public_send(component)
+            expect(count).to be_a(Integer).and be >= 0 unless count.nil?
+          end
+          expect(prompt_token_count(message)).to be > 0
+          expect(message.tokens.output).to be_a(Integer).and be > 0
+          expect(message.tokens.output).to be >= message.tokens.thinking.to_i
+        end
+        expect(stream_message.tokens.to_h).to eq(chunks.reduce({}) { |usage, chunk| usage.merge(chunk.tokens.to_h) })
+
+        stream_output = visible_output_token_count(stream_message)
+        sync_output = visible_output_token_count(sync_message)
+        expect(sync_output).to be_within(2).of(stream_output) if sync_output && stream_output
       end
     end
   end
@@ -97,7 +121,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
   describe 'Gemini token accounting' do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount in streaming' do
-      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
 
       chunks = []
       response = chat.ask('What is 2+2? Think step by step.') do |chunk|

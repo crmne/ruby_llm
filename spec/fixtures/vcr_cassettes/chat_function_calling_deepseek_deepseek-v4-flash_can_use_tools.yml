@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 08 Sep 2026 07:00:01 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - fbab28241b417e79ef9ca6ec7828c8dc
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 bb92de268faffca30736fdf13993c5e0.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - Bpaat37u1QY_oTXEAGtEVkcjE-k60O4gmcCnZDtiKc4FtEHMPeVSrQ==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"48814099-ee7e-4862-962c-2f5d8267286e","object":"chat.completion","created":1788850801,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user is asking about the weather in Berlin with coordinates provided. Let
+        me call the weather tool.","tool_calls":[{"index":0,"id":"call_00_4XfIxQ3RHy7l6IKopBjR7216","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":427,"completion_tokens":86,"total_tokens":513,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":20},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":43},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Tue, 08 Sep 2026 07:00:02 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_4XfIxQ3RHy7l6IKopBjR7216","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking about the weather in Berlin with coordinates provided. Let
+        me call the weather tool.","reasoning":"The user is asking about the weather
+        in Berlin with coordinates provided. Let me call the weather tool."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_4XfIxQ3RHy7l6IKopBjR7216"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 08 Sep 2026 07:00:02 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - fe00b12349865fd91e25806f1cdeb9fa
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 15481055cb1364f3b30d596d04a295f6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - 6x4FdNhD_YCk079o6LY9mh3TOGgLtdYn-ydE1oI5GnU8vZs6s9JtLQ==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjkyOGRlMmNiLWMzOTktNGYxNC1hMjRkLWVmMWMyN2FjYzAxMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODg4NTA4MDIsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgY3VycmVudGx5ICoqMTXCsEMqKiB3aXRoIHdpbmRzIG9mICoqMTAga20vaCoqLiIsInJlYXNvbmluZ19jb250ZW50IjoiIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTUxLCJjb21wbGV0aW9uX3Rva2VucyI6MzIsInRvdGFsX3Rva2VucyI6NTgzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NTEyfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjUxMiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjozOX0sInN5c3RlbV9maW5nZXJwcmludCI6ImEyNmE3OTU1OTQ0ZGM1YzYwNDQ1YmZmNzdmYWM5YzhlIn0=
+  recorded_at: Tue, 08 Sep 2026 07:00:03 GMT
+recorded_with: VCR 6.4.0

@@ -9,7 +9,8 @@ http_interactions:
         was the fall of Rome?"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}],"tool_choice":{"type":"any"}}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}],"tool_choice":{"type":"any"},"system":[{"type":"text","text":"Your
+        location is Berlin, at latitude 52.5200 and longitude 13.4050."}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -29,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:41:09 GMT
+      - Tue, 08 Sep 2026 07:07:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,25 +42,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-08-19T14:41:09Z'
+      - '2026-09-08T07:07:22Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-08-19T14:41:09Z'
+      - '2026-09-08T07:07:22Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-08-19T14:41:08Z'
+      - '2026-09-08T07:07:21Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-08-19T14:41:09Z'
+      - '2026-09-08T07:07:22Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -69,34 +70,35 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-4db05de0a271ebc3499ddcb326a8a50e-a8d71a3f41f40de0-01
+      - 00-69832fb5825c0f08b15a6688970dd022-9c30c6ef2662742c-01
       Server:
       - cloudflare
       Vary:
       - Accept-Encoding
+      X-Robots-Tag:
+      - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Cf-Cache-Status:
       - DYNAMIC
-      X-Robots-Tag:
-      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CeCHHxPX4uTt6U24ejfJh","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01VH6Z9xaR3t75nDcstVGXEF","name":"weather","input":{"latitude":"<UNKNOWN>","longitude":"<UNKNOWN>"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":713,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":55,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Wed, 19 Aug 2026 14:41:09 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CeqYsDvTprqK7ZH42ZjvJ","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01DXfi9ZM86kNQSEow1Qdppe","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":735,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Tue, 08 Sep 2026 07:07:22 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"When
-        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01VH6Z9xaR3t75nDcstVGXEF","name":"weather","input":{"latitude":"<UNKNOWN>","longitude":"<UNKNOWN>"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01VH6Z9xaR3t75nDcstVGXEF","content":[{"type":"text","text":"Current
-        weather at <UNKNOWN>, <UNKNOWN>: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01DXfi9ZM86kNQSEow1Qdppe","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01DXfi9ZM86kNQSEow1Qdppe","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"Your
+        location is Berlin, at latitude 52.5200 and longitude 13.4050."}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -116,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 19 Aug 2026 14:41:12 GMT
+      - Tue, 08 Sep 2026 07:07:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -126,27 +128,29 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '10000000'
+      - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-08-19T14:41:10Z'
+      - '2026-09-08T07:07:23Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-08-19T14:41:12Z'
+      - '2026-09-08T07:07:25Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-08-19T14:41:09Z'
+      - '2026-09-08T07:07:22Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '12000000'
+      - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-08-19T14:41:10Z'
+      - '2026-09-08T07:07:23Z'
+      Server:
+      - cloudflare
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -156,38 +160,32 @@ http_interactions:
       Anthropic-Workspace-Id:
       - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-be2889272c1332c8cf745bdb5345ec82-5baafcede61cef67-01
-      Server:
-      - cloudflare
+      - 00-e4f0d38879e2787c8187683af6db65ca-bab595058d35cb53-01
       Vary:
       - Accept-Encoding
+      X-Robots-Tag:
+      - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Cf-Cache-Status:
       - DYNAMIC
-      X-Robots-Tag:
-      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CeCHJ25GerSuvZz8EUGna","type":"message","role":"assistant","content":[{"type":"text","text":"I
-        apologize - I don''t have a weather tool that''s relevant to your question.
-        Let me answer your historical question directly:\n\n**The Fall of Rome** is
-        typically dated to **476 CE (AD)**, when the last Western Roman Emperor, Romulus
-        Augustulus, was deposed by the Germanic chieftain Odoacer. This marks the
-        conventional end of the Western Roman Empire.\n\nHowever, the \"fall\" of
-        Rome was actually a complex process rather than a single event:\n\n- **Gradual
-        decline**: The Western Roman Empire experienced political instability, military
-        problems, and economic difficulties throughout the 3rd, 4th, and 5th centuries.\n\n-
-        **Division of the Empire**: In 285 CE, Emperor Diocletian divided the empire
-        for administrative purposes, creating the Eastern and Western Roman Empires.\n\n-
-        **Eastern Roman Empire**: The Eastern Roman Empire (later called the Byzantine
-        Empire) continued to exist until 1453 CE when Constantinople fell to the Ottoman
-        Turks.\n\n- **Multiple factors**: The collapse involved invasions by Germanic
-        tribes, internal political corruption, military overextension, economic problems,
-        and the spread of Christianity, among other factors.\n\nSo while 476 CE is
-        the official date marking the end of the Western Roman Empire, Rome''s decline
-        was a centuries-long process rather than a single dramatic event."}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":729,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":292,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Wed, 19 Aug 2026 14:41:12 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CeqYsJxq2wJhPJQkReK6S","type":"message","role":"assistant","content":[{"type":"text","text":"The
+        fall of Rome is typically dated to **476 AD**, when the last Roman Emperor
+        of the Western Roman Empire, Romulus Augustulus, was deposed by the Germanic
+        general Odoacer. This event is often used as the symbolic end of the Western
+        Roman Empire and marks the beginning of the Early Middle Ages in Europe.\n\nHowever,
+        it''s important to note that:\n\n- The **Eastern Roman Empire** (Byzantine
+        Empire) continued for another thousand years until 1453 AD\n- The decline
+        of Rome was a gradual process that took place over several centuries, not
+        a sudden collapse\n- Some historians point to earlier events like the sack
+        of Rome by Visigoths in 410 AD as significant markers of decline\n- The fall
+        was due to multiple factors including political instability, military pressure
+        from Germanic tribes, economic troubles, and the division of the empire\n\nSo
+        while 476 AD is the conventional date, the \"fall of Rome\" was actually a
+        complex process that unfolded over centuries."}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":758,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":216,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Tue, 08 Sep 2026 07:07:25 GMT
 recorded_with: VCR 6.4.0

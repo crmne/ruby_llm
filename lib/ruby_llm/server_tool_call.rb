@@ -14,7 +14,7 @@ module RubyLLM
   # provider's block exactly as received, and is what RubyLLM replays to the
   # provider in subsequent turns when the wire format requires it.
   class ServerToolCall
-    include Inspectable
+    include Support::Inspectable
 
     # The provider's block or item type, such as <tt>"server_tool_use"</tt>,
     # <tt>"web_search_tool_result"</tt>, or <tt>"web_search_call"</tt>.
@@ -40,7 +40,7 @@ module RubyLLM
     attr_reader :raw
 
     def self.from_h(data) # :nodoc:
-      data = Utils.deep_symbolize_keys(data)
+      data = Support::Utils.deep_symbolize_keys(data)
       new(type: data[:type], name: data[:name], id: data[:id], input: data[:input],
           result: data[:result], raw: data[:raw])
     end

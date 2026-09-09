@@ -109,6 +109,7 @@ module RubyLLM
         end
       end
 
+      # Returns this registry record as a RubyLLM::Model.
       def to_llm
         RubyLLM::Model.new(
           id: model_id,

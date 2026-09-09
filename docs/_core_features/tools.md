@@ -24,31 +24,39 @@ After reading this guide, you will know:
 
 ## What Are Tools?
 
-Tools bridge the gap between the AI model's conversational abilities and the real world. They allow the model to delegate tasks it cannot perform itself to your application code.
-
-Common use cases:
-
-*   **Fetching Real-time Data:** Get current stock prices, weather forecasts, news headlines, or sports scores.
-*   **Database Interaction:** Look up customer information, product details, or order statuses.
-*   **Calculations:** Perform precise mathematical operations or complex financial modeling.
-*   **External APIs:** Interact with third-party services (e.g., send an email, book a meeting, control smart home devices).
-*   **Executing Code:** Run specific business logic or algorithms within your application.
+A tool lets the model call your Ruby code to look up a record, fetch data, or carry out an action. You write the method; RubyLLM handles passing arguments and returning the result to the model.
 
 ## Creating a Tool
 
-Define a tool by creating a class that inherits from `RubyLLM::Tool`.
+Start with a tool that needs no external service:
+
+```ruby
+class CurrentTime < RubyLLM::Tool
+  description "Returns the current date, time, and time zone"
+
+  def execute
+    Time.now.to_s
+  end
+end
+
+chat = RubyLLM.chat.with_tools(CurrentTime)
+response = chat.ask "What day is it?"
+puts response.content
+```
+
+Tools can also call services your application uses. This one gets weather data from Open-Meteo:
 
 ```ruby
 class Weather < RubyLLM::Tool
   description "Gets current weather for a location"
 
   def execute(latitude:, longitude:)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
-
-    response = Faraday.get(url)
+    response = Faraday.get("https://api.open-meteo.com/v1/forecast",
+                           latitude: latitude, longitude: longitude,
+                           current: "temperature_2m,wind_speed_10m")
     JSON.parse(response.body)
-  rescue => e
-    { error: e.message }
+  rescue Faraday::ConnectionFailed
+    { error: "The weather service is unavailable. Try again later." }
   end
 end
 ```
@@ -56,7 +64,7 @@ end
 ### Tool Components
 
 1.  **Inheritance:** Must inherit from `RubyLLM::Tool`.
-2.  **`description`:** A class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
+2.  **`description`:** Tells the model what the tool does and when to call it.
 3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM infers simple keyword parameters from this signature when no explicit parameter schema is declared.
 4.  **Parameter declarations:** Optional. Use `parameter` for simple descriptions and types, or `parameters` for nested objects, arrays, enums, and full JSON Schema control.
 
@@ -73,14 +81,7 @@ end
 > `WeatherLookup.tool_name` reads the model-facing name without instantiating the tool, which is useful when you select tool classes by name before building them. The instance method `#name` delegates to it, so overriding `name` on the instance still works.
 {: .note }
 
-> If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
->
-> 1. Returning an error message to the model indicating which tool it tried to call
-> 2. Listing the actually available tools
-> 3. Allowing the conversation to continue so the model can correct itself
->
-> This prevents crashes and gives the model a chance to use the correct tool or respond appropriately.
-{: .note }
+If the model requests an unavailable tool, RubyLLM returns an error listing the available tools and lets the conversation continue.
 
 ## Declaring Parameters
 
@@ -102,44 +103,36 @@ Ruby method signatures do not expose reliable JSON Schema types or descriptions,
 
 ## Using Tools in Chat
 
-Attach tools to a `Chat` instance using `with_tools`.
+Pass tool classes directly when they need no constructor arguments:
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}') # Use a model that supports tools
-
-# Instantiate your tool if it requires arguments, otherwise use the class
-weather_tool = Weather.new
-
-chat.with_tools(weather_tool)
-# Or add multiple: chat.with_tools(WeatherLookup, AnotherTool.new)
-
-# Replace all tools with new ones
-chat.with_tools(nil).with_tools(NewTool, AnotherTool)
-
-# Clear all tools
-chat.with_tools(nil)
-
-response = chat.ask "What's the current weather like in Berlin? (Lat: 52.52, Long: 13.40)"
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tools(Weather)
+response = chat.ask "What's the weather in Berlin? Latitude 52.52, longitude 13.40."
 puts response.content
-# => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
+
+Pass an instance when a tool needs application context, such as the current user. See [Custom Initialization]({% link _core_features/tool-parameters.md %}#custom-initialization).
+
+You can add, replace, or clear the available tools:
+
+```ruby
+chat.with_tools(CurrentTime)
+chat.with_tools(nil).with_tools(CurrentTime)
+chat.with_tools(nil)
+```
+
+The first call adds `CurrentTime` to the existing tools. The second replaces the set; the third clears it.
 
 For controlling which tools the model may use, how many calls it can make in one turn, concurrent execution, model compatibility, and callbacks, see [Controlling Tool Execution]({% link _core_features/tool-execution.md %}).
 
 ## The Tool Execution Flow
 
-When you `ask` a question that the model determines requires a tool:
+One `ask` call handles the conversation loop:
 
-1.  **User Query:** Your message is sent to the model.
-2.  **Model Decision:** The model analyzes the query and its available tools (based on their descriptions). It decides the `Weather` tool is needed and extracts the latitude and longitude.
-3.  **Tool Call Request:** The model responds *not* with text, but with a special message indicating a tool call, including the tool name (`weather`) and arguments (`{ latitude: 52.52, longitude: 13.40 }`).
-4.  **RubyLLM Execution:** RubyLLM receives this tool call request. It finds the registered `Weather` tool and calls its `execute(latitude: 52.52, longitude: 13.40)` method.
-5.  **Tool Result:** Your `execute` method runs (calling the weather API) and returns its result.
-6.  **Result Sent Back:** RubyLLM sends this result back to the AI model in a new message with the `:tool` role.
-7.  **Final Response Generation:** The model receives the tool result and uses it to generate a natural language response to your original query.
-8.  **Final Response Returned:** RubyLLM returns the final `RubyLLM::Message` object containing the text generated in step 7.
-
-This entire multi-step process happens behind the scenes within a single `chat.ask` call when a tool is invoked.
+1. The model receives your question and the available tool descriptions.
+2. If it requests a tool, RubyLLM calls `execute` with the model's arguments.
+3. The result becomes a tool message, and RubyLLM asks the model to continue.
+4. When the model answers without requesting more tools, `ask` returns its message.
 
 For full control over this loop (running each turn as its own job, setting an iteration budget, or stopping and resuming elsewhere), see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
@@ -173,7 +166,7 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#handling-e
 
 ## Model Context Protocol (MCP) Support
 
-For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
+Use built-in [Server Tools]({% link _core_features/server-tools.md %}#mcp-servers) when the provider should connect to a remote MCP server. For an MCP client running in your Ruby application, see the community [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
 
 ## Debugging Tools
 
@@ -184,12 +177,6 @@ export RUBYLLM_DEBUG=true
 # Run your script
 ```
 
-You'll see log lines similar to:
-
-```
-D, [timestamp] -- RubyLLM: Tool weather_lookup called with: {:latitude=>52.52, :longitude=>13.4}
-D, [timestamp] -- RubyLLM: Tool weather_lookup returned: "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
-```
 See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging) for more on debugging.
 
 ## Next Steps

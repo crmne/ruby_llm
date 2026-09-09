@@ -7,12 +7,14 @@ module RubyLLM
       # OpenRouter's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include OpenRouter::Chat
+        include OpenRouter::Embeddings
         include OpenRouter::Images
         include OpenRouter::Models
         include OpenRouter::Speech
         include OpenRouter::Streaming
         include Protocols::ChatCompletions::Rerank
         include OpenRouter::Videos
+        include Protocols::OpenRouter::Transcription
 
         # OpenRouter runs its server tools transparently: results surface as
         # citations and usage counters rather than discrete content blocks.
@@ -28,11 +30,22 @@ module RubyLLM
         end
       end
 
-      protocol :chat_completions, ChatCompletions
+      protocol :chat_completions, ChatCompletions, batches: Protocols::OpenRouter::Batches
+      protocol :responses, Protocols::OpenRouter::Responses
       protocol :files, Protocols::OpenRouter::Files
+
+      def resolve_protocol(name, model, **request)
+        return fetch_protocol(:chat_completions) if !name && request[:operation]
+
+        super
+      end
 
       def api_base
         @config.openrouter_api_base || 'https://openrouter.ai/api/v1'
+      end
+
+      def batch_api_base
+        "#{api_base.sub(%r{/v1/?\z}, '')}/beta/batches"
       end
 
       def headers

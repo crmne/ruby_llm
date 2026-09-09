@@ -9,7 +9,7 @@ http_interactions:
         3? Think briefly before answering."}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,36 +23,35 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Arrive-Time:
+      - '1788816130749'
+      X-Envoy-Upstream-Service-Time:
+      - '1278'
       Date:
-      - Mon, 08 Jun 2026 19:08:48 GMT
-      - Mon, 08 Jun 2026 19:08:48 GMT
+      - Mon, 07 Sep 2026 21:22:10 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1346'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - istio-envoy
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1283'
+      Resp-Start-Time:
+      - '1788816132033'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n5
-        + 3 = 8.","reasoning_content":"\nOkay, let''s see. The user is asking what
-        5 plus 3 is. Hmm, that''s a basic arithmetic problem. I need to make sure
-        I answer it correctly. Let me think... 5 plus 3. So, adding 5 and 3 together.
-        Let me count: 5, 6, 7, 8. Wait, no, that''s not right. Wait, 5 plus 3 is 8?
-        Wait, 5 plus 2 is 7, so adding another 1 makes it 8. Yeah, that''s correct.
-        But wait, maybe I should double-check. Let me count on my fingers. 5 fingers,
-        then add 3 more. 5, 6, 7, 8. Yes, that''s 8. So the answer should be 8. But
-        the user said to think briefly before answering. So I need to make sure I
-        don''t overcomplicate it. It''s a straightforward addition. 5 + 3 equals 8.
-        I think that''s it.\n","role":"assistant"}}],"created":1780945733,"id":"chatcmpl-MIqYIvimkQZPzETv2zIM7OG2YQzPRhzt","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":231,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":220,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":21,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":777.9794761604861,"time_per_output_token_ms":17.709939393939393,"time_to_first_token_ms":26.993,"tokens_per_second":56.46546708918806,"total_tokens":252}}'
-  recorded_at: Mon, 08 Jun 2026 19:08:53 GMT
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"5
+        + 3 = 8.","reasoning_content":"Okay, let''s see. The user is asking what 5
+        plus 3 is. That''s a basic arithmetic problem. I need to make sure I add them
+        correctly. 5 plus 3... Let me count. 5, 6, 7, 8. Wait, no. Wait, 5 plus 3.
+        Starting from 5, adding 1 makes 6, then 7, then 8. So that''s 8. Yeah, 5 +
+        3 equals 8. I should double-check to avoid mistakes. Maybe using another method.
+        3 plus 5 is the same as 5 plus 3, so it''s commutative. 3 + 5 is 8. Yep, that''s
+        right. So the answer is 8.\n"}}],"created":1788816132,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":176,"prompt_tokens":21,"total_tokens":197,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-xDKJZF7HbvxS38ZymSwNLixCCCv8Jyf9","timings":{"cache_n":3,"prompt_n":18,"prompt_ms":13.151,"prompt_per_token_ms":0.7306111111111111,"prompt_per_second":1368.717207816896,"predicted_n":176,"predicted_ms":1241.082,"predicted_per_token_ms":7.091897142857143,"predicted_per_second":141.00599315758345}}'
+  recorded_at: Mon, 07 Sep 2026 21:22:12 GMT
 recorded_with: VCR 6.4.0

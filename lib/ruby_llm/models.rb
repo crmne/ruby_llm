@@ -116,7 +116,7 @@ module RubyLLM
       def models_from_file(file) # :nodoc:
         return unless file
 
-        models = ModelRegistry.read(file)
+        models = Registry.read(file)
         models unless models.nil? || models.empty?
       rescue ModelRegistryError => e
         RubyLLM.logger.warn("Ignoring invalid model registry file #{file}: #{e.message}")
@@ -124,7 +124,7 @@ module RubyLLM
       end
 
       def models_from_bundle # :nodoc:
-        ModelRegistry.read(bundled_registry_file) || begin
+        Registry.read(bundled_registry_file) || begin
           RubyLLM.logger.warn(
             "Bundled model registry is missing: #{bundled_registry_file}. " \
             'Refresh the registry to rebuild it.'
@@ -134,7 +134,7 @@ module RubyLLM
       end
 
       def fetch_published_registry(etag: nil) # :nodoc:
-        ModelRegistry::PublishedSource.new.fetch(etag:)
+        Registry::PublishedSource.new.fetch(etag:)
       end
 
       # Refreshes the global model registry from the published catalog and
@@ -193,9 +193,16 @@ module RubyLLM
         result
       end
 
-      def resolve(model_id, provider: nil, assume_model_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
+      def resolve(model_id, provider: nil, assume_model_exists: false, config: nil,
+                  operation: nil, default_model: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
+        if operation && provider_class && !provider_class.model_required?(operation:)
+          raise ArgumentError, "#{operation} does not accept a model" unless model_id.nil?
+
+          return [nil, provider_class.new(config)]
+        end
+        model_id ||= default_model
         assume_model_exists = true if provider_class&.local? || provider_class&.assume_models_exist?
 
         if assume_model_exists
@@ -220,7 +227,7 @@ module RubyLLM
       def fetch_models_dev_models(existing_models) # :nodoc:
         RubyLLM.logger.info 'Fetching models from models.dev API...'
 
-        connection = Connection.basic do |f|
+        connection = Transport::Connection.basic do |f|
           f.request :json
           f.response :json, parser_options: { symbolize_names: true }
         end
@@ -351,7 +358,7 @@ module RubyLLM
         if models_dev_model.type == :chat && provider_model.type != :chat
           data[:modalities] = provider_model.modalities.to_h
         end
-        data[:pricing] = Utils.deep_merge(provider_model.pricing.to_h, data[:pricing].to_h)
+        data[:pricing] = Support::Utils.deep_merge(provider_model.pricing.to_h, data[:pricing].to_h)
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
         data[:capabilities] = merge_capabilities(models_dev_model, provider_model, data[:modalities])
         normalize_embedding_modalities(data)
@@ -424,7 +431,7 @@ module RubyLLM
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: Utils.iso_date_prefix_to_utc_midnight_string(created_date),
+          created_at: Support::Utils.iso_date_prefix_to_utc_midnight_string(created_date),
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
@@ -562,7 +569,7 @@ module RubyLLM
     #   RubyLLM.models.save_to_json('/tmp/models.json')
     #
     def save_to_json(file = RubyLLM.config.model_registry_file)
-      ModelRegistry::FileStore.new(file).write(all)
+      Registry::FileStore.new(file).write(all)
       self
     end
 
@@ -605,7 +612,7 @@ module RubyLLM
     # RubyLLM::ModelNotFoundError if no model matches.
     #
     #   RubyLLM.models.find 'gpt-5.6'
-    #   RubyLLM.models.find 'claude-sonnet-5', :bedrock
+    #   RubyLLM.models.find 'claude-sonnet-5', provider: :bedrock
     #
     def find(model_id, provider: nil, config: nil)
       if provider
@@ -700,14 +707,14 @@ module RubyLLM
       return if RubyLLM.config.model_registry_store
       return unless RubyLLM.config.model_registry_file
 
-      ModelRegistry::FileStore.new(RubyLLM.config.model_registry_file)
+      Registry::FileStore.new(RubyLLM.config.model_registry_file)
     end
 
     # The ETag identifies the published catalog, not the merged registry, so
     # it may only be sent while the catalog it stands for is still on disk.
     def published_store
       file = file_store
-      ModelRegistry::FileStore.new("#{file.path}.published.json") if file
+      Registry::FileStore.new("#{file.path}.published.json") if file
     end
 
     def fetch_published_models

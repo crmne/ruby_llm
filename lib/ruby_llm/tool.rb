@@ -76,7 +76,7 @@ module RubyLLM
       def tool_name
         normalized = name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
         ascii_name = normalized.encode('ASCII', replace: '').gsub(/[^a-zA-Z0-9_-]/, '-')
-        Utils.underscore(ascii_name).delete_suffix('_tool')
+        Support::Utils.underscore(ascii_name).delete_suffix('_tool')
       end
 
       # :call-seq:
@@ -142,7 +142,7 @@ module RubyLLM
       end
 
       # Declares that this tool must be approved before it executes. The
-      # agentic loop parks the tool call until a decision is recorded with
+      # conversation loop pauses the tool call until a decision is recorded with
       # Chat#approve or Chat#deny, so Chat#complete returns cleanly and
       # can be called again once the decision exists. In Rails the decision
       # persists on the tool call record and survives process restarts.
@@ -406,8 +406,8 @@ module RubyLLM
       end
 
       def json_schema
-        @json_schema ||= RubyLLM::Utils.strip_schema_metadata(
-          RubyLLM::Utils.deep_stringify_keys(resolve_schema)
+        @json_schema ||= RubyLLM::Support::Utils.strip_schema_metadata(
+          RubyLLM::Support::Utils.deep_stringify_keys(resolve_schema)
         )
       end
 
@@ -422,7 +422,7 @@ module RubyLLM
 
       def resolve_direct_schema(schema)
         return extract_schema(schema.to_json_schema) if schema.respond_to?(:to_json_schema)
-        return RubyLLM::Utils.deep_dup(schema) if schema.is_a?(Hash)
+        return RubyLLM::Support::Utils.deep_dup(schema) if schema.is_a?(Hash)
         if schema.is_a?(Class) && schema.method_defined?(:to_json_schema)
           return extract_schema(schema.new.to_json_schema)
         end
@@ -439,7 +439,7 @@ module RubyLLM
         return nil unless schema_hash.is_a?(Hash)
 
         schema = schema_hash[:schema] || schema_hash['schema'] || schema_hash
-        RubyLLM::Utils.deep_dup(schema)
+        RubyLLM::Support::Utils.deep_dup(schema)
       end
     end
   end

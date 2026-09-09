@@ -46,6 +46,70 @@ RSpec.describe RubyLLM::Batch do
     end
   end
 
+  describe '#cost' do
+    let(:provider) { RubyLLM::Providers::OpenAI.new(RubyLLM.config) }
+
+    it 'preserves a zero invoice, waits for completion, and retains it across missing metadata' do
+      zero = RubyLLM::Cost.from_h({ total: 0 })
+      batch = described_class.new(provider:, id: 'batch_cost', raw_status: 'in_progress', completed: false,
+                                  reported_cost: zero)
+      expect(batch.reported_cost.total).to eq(0)
+      expect(batch.cost.total).to be_nil
+      allow(provider).to receive(:find_batch)
+        .and_return({ id: batch.id, raw_status: 'completed', completed: true, reported_cost: nil })
+
+      batch.refresh
+      expect(batch.cost.total).to eq(0)
+      expect(batch.reported_cost).to equal(zero)
+      expect(batch.cost.input).to be_nil
+    end
+
+    it 'keeps the existing result aggregation when no invoice was reported' do
+      batch = described_class.new(provider:, id: 'batch_cost', raw_status: 'completed', completed: true)
+      message = RubyLLM::Message.new(role: :assistant, content: 'Ruby', reported_cost: 0.02)
+      allow(batch).to receive(:messages).and_return([message])
+
+      expect(batch.reported_cost).to be_nil
+      expect(batch.cost.total).to eq(0.02)
+    end
+
+    it 'keeps the total unknown until all processing ends when results arrive early' do
+      batch = described_class.new(provider:, id: 'batch_cost', raw_status: 'in_progress', completed: false)
+      first = RubyLLM::Message.new(role: :assistant, content: 'Ruby', reported_cost: 0.02)
+      last = RubyLLM::Message.new(role: :assistant, content: 'Rails', reported_cost: 0.03)
+      allow(batch).to receive(:messages).and_return([first, nil])
+      allow(provider).to receive(:find_batch)
+        .and_return({ id: batch.id, raw_status: 'completed', completed: true })
+
+      expect(batch.cost).to be_a(RubyLLM::Cost)
+      expect(batch.cost.total).to be_nil
+
+      batch.refresh
+      allow(batch).to receive(:messages).and_return([first, last])
+      expect(batch.cost.total).to eq(0.05)
+    end
+
+    it 'returns an unknown cost without requesting unavailable results while pending' do
+      provider = RubyLLM::Providers::Anthropic.new(RubyLLM.config)
+      batch = described_class.new(provider:, id: 'batch_pending', raw_status: 'in_progress', completed: false)
+      allow(provider).to receive(:batch_results).and_return([])
+
+      expect(batch.cost).to be_a(RubyLLM::Cost)
+      expect(batch.cost.total).to be_nil
+      expect(provider).not_to have_received(:batch_results)
+    end
+
+    it 'is empty for a batch that collected nothing' do
+      batch = described_class.new(
+        provider: RubyLLM::Providers::Anthropic.new(RubyLLM.config),
+        chats: [], id: 'msgbatch_123', raw_status: 'ended', completed: true
+      )
+      allow(batch).to receive(:messages).and_return([nil])
+
+      expect(batch.cost.total).to be_nil
+    end
+  end
+
   describe RubyLLM::Batch::Helpers do
     subject(:helpers) do
       Class.new do
@@ -83,9 +147,9 @@ RSpec.describe RubyLLM::Batch do
 
     describe '#single_batch_model!' do
       it 'returns the one model the requests share' do
-        requests = [{ model: 'claude-haiku-4-5' }, { model: 'claude-haiku-4-5' }]
+        requests = [{ model: model_for(:anthropic) }, { model: model_for(:anthropic) }]
 
-        expect(helpers.single_batch_model!(requests, 'anthropic')).to eq('claude-haiku-4-5')
+        expect(helpers.single_batch_model!(requests, 'anthropic')).to eq(model_for(:anthropic))
       end
 
       it 'refuses a batch that mixes models' do
@@ -165,7 +229,7 @@ RSpec.describe RubyLLM::Batch do
 
   describe '#messages' do
     it 'delivers an answer once even when the chat stages another question' do
-      chat = RubyLLM.chat(model: 'claude-haiku-4-5').ask_later('First question')
+      chat = RubyLLM.chat(model: model_for(:anthropic)).ask_later('First question')
       provider = chat.provider
       answer = RubyLLM::Message.new(role: :assistant, content: 'First answer', input_tokens: 1, output_tokens: 1)
       allow(provider).to receive(:batch_results).and_return([[0, answer]])
@@ -221,18 +285,6 @@ RSpec.describe RubyLLM::Batch do
       )
 
       expect(batch.inspect).to include('msgbatch_123', 'pending', 'in_progress')
-    end
-  end
-
-  describe '#cost' do
-    it 'is empty for a batch that collected nothing' do
-      batch = described_class.new(
-        provider: RubyLLM::Providers::Anthropic.new(RubyLLM.config),
-        chats: [], id: 'msgbatch_123', raw_status: 'ended', completed: true
-      )
-      allow(batch).to receive(:messages).and_return([nil])
-
-      expect(batch.cost.total).to be_nil
     end
   end
 end

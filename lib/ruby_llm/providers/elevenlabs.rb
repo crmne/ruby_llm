@@ -2,12 +2,16 @@
 
 module RubyLLM
   module Providers
-    # ElevenLabs API integration. ElevenLabs is a speech company, so this
-    # provider covers text to speech and speech to text only. Chat,
-    # embeddings, and image generation have no ElevenLabs endpoint and
-    # raise NotImplementedError.
+    # Integrates ElevenLabs speech, transcription, ElevenAgents, and Image & Video APIs.
     class ElevenLabs < Provider
       protocol :elevenlabs, Protocols::ElevenLabs
+      protocol :flows, Protocols::ElevenLabs::Flows
+      protocol :files, Protocols::ElevenLabs::Assets
+
+      def resolve_protocol(name, model, operation: nil, **options)
+        name ||= :flows if %i[paint animate].include?(operation)
+        super
+      end
 
       def api_base
         @config.elevenlabs_api_base || 'https://api.elevenlabs.io'

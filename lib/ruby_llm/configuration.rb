@@ -17,7 +17,8 @@ module RubyLLM
   # overrides.
   #
   # Provider credentials such as +openai_api_key+ are declared by each
-  # provider. See the configuration guides for the full list.
+  # provider. See https://rubyllm.com/next/configuration-providers/ for
+  # provider credentials and endpoint settings.
   #
   # Assigning an empty or whitespace-only string to any option stores
   # +nil+, so unset environment variables behave as if the option was
@@ -136,7 +137,7 @@ module RubyLLM
     # Path of the writable JSON cache holding the model registry. Defaults
     # to the operating system's user cache directory. The copy bundled with
     # the gem is used until this file exists.
-    option :model_registry_file, -> { ModelRegistry.cache_path }
+    option :model_registry_file, -> { Models::Registry.cache_path }
 
     ##
     # :attr_accessor: model_registry_store

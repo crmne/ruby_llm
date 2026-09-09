@@ -7,10 +7,10 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#with_tools' do
     it 'adds a single tool regardless of model capabilities' do
-      model = RubyLLM.models.find('gpt-4.1-nano')
+      model = RubyLLM.models.find(model_for(:openai, :temperature))
       allow(model).to receive(:supports_functions?).and_return(false)
 
-      chat = described_class.new(model: 'gpt-4.1-nano')
+      chat = described_class.new(model: model_for(:openai, :temperature))
       chat.instance_variable_set(:@model, model)
 
       expect do
@@ -225,15 +225,15 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#with_model' do
     it 'changes the model and returns self' do
-      chat = described_class.new(model: 'gpt-4.1-nano')
-      result = chat.with_model('claude-haiku-4-5')
+      chat = described_class.new(model: model_for(:openai, :temperature))
+      result = chat.with_model(model_for(:anthropic))
 
-      expect(chat.model.id).to eq('claude-haiku-4-5')
+      expect(chat.model.id).to eq(model_for(:anthropic))
       expect(result).to eq(chat) # Should return self for chaining
     end
 
     it 'resets to the configured default model with nil' do
-      chat = described_class.new(model: 'claude-haiku-4-5')
+      chat = described_class.new(model: model_for(:anthropic))
 
       chat.with_model(nil)
 
@@ -318,13 +318,14 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'omits temperature when you never set one' do
-      payload = described_class.new(model: 'gpt-4.1-nano', provider: :openai).render
+      payload = described_class.new(model: model_for(:openai, :temperature), provider: :openai).render
 
       expect(payload).not_to have_key(:temperature)
     end
 
     it 'sends the temperature you set to Chat Completions untouched' do
-      payload = described_class.new(model: 'gpt-5.4', provider: :openai, protocol: :chat_completions)
+      payload = described_class.new(model: model_for(:openai, :thinking), provider: :openai,
+                                    protocol: :chat_completions)
                                .with_temperature(0.2)
                                .render
 
@@ -332,7 +333,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'sends the temperature you set to the Responses API untouched' do
-      payload = described_class.new(model: 'gpt-5.4', provider: :openai)
+      payload = described_class.new(model: model_for(:openai, :thinking), provider: :openai)
                                .with_temperature(0.2)
                                .render
 
@@ -341,10 +342,10 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'sends the temperature you set even when the registry marks the model as rejecting it' do
-      model = RubyLLM.models.find('claude-sonnet-5', provider: :anthropic)
+      model = RubyLLM.models.find(model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
       expect(model.metadata[:temperature]).to be(false)
 
-      payload = described_class.new(model: 'claude-sonnet-5', provider: :anthropic)
+      payload = described_class.new(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
                                .with_temperature(0.5)
                                .render
 
@@ -352,7 +353,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'sends the temperature you set to search models' do
-      payload = described_class.new(model: 'gpt-4o-search-preview', provider: :openai,
+      payload = described_class.new(model: model_for(:openai, :search), provider: :openai,
                                     protocol: :chat_completions)
                                .with_temperature(0.7)
                                .render
@@ -363,23 +364,23 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'protocol override' do
     it 'sets @protocol from RubyLLM.chat(protocol:)' do
-      chat = described_class.new(model: 'gpt-4.1-nano', protocol: :chat_completions)
+      chat = described_class.new(model: model_for(:openai, :temperature), protocol: :chat_completions)
 
       expect(chat.instance_variable_get(:@protocol)).to eq(:chat_completions)
     end
 
     it 'sets @protocol from with_model(id, protocol:)' do
-      chat = described_class.new(model: 'gpt-4.1-nano')
+      chat = described_class.new(model: model_for(:openai, :temperature))
 
-      chat.with_model('gpt-4.1-nano', protocol: :chat_completions)
+      chat.with_model(model_for(:openai, :temperature), protocol: :chat_completions)
 
       expect(chat.instance_variable_get(:@protocol)).to eq(:chat_completions)
     end
 
     it 'resets @protocol to nil when with_model is called without a protocol' do
-      chat = described_class.new(model: 'gpt-4.1-nano', protocol: :chat_completions)
+      chat = described_class.new(model: model_for(:openai, :temperature), protocol: :chat_completions)
 
-      chat.with_model('gpt-4.1-nano')
+      chat.with_model(model_for(:openai, :temperature))
 
       expect(chat.instance_variable_get(:@protocol)).to be_nil
     end

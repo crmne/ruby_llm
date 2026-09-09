@@ -14,247 +14,133 @@ redirect_from:
 
 After reading this guide, you will know:
 
-*   How to moderate text content for harmful material.
-*   How to interpret moderation results and category scores.
-*   How to use moderation as a safety layer before LLM requests.
-*   How to configure moderation models and providers.
-*   How to integrate moderation into your application workflows.
-*   Best practices for content safety and user experience.
+* How to screen text and images.
+* How to read flagged categories and scores.
+* How to check several inputs in one call.
+* How to use moderation in your application's review process.
+* How to choose and configure a moderation provider.
 
 ## Basic Content Moderation
 
-The simplest way to moderate content is using the global `RubyLLM.moderate` method:
+Pass the content you want to check:
 
 ```ruby
-result = RubyLLM.moderate("This is a safe message about Ruby programming")
-
-puts result.flagged?  # => false
-
-puts "Moderation ID: #{result.id}"     # => "modr-ABC123..."
-puts "Model used: #{result.model}"     # => "omni-moderation-latest"
+result = RubyLLM.moderate "I love programming in Ruby."
+result.flagged? # => false
 ```
 
-The `moderate` method returns a `RubyLLM::Moderation` object. Its `results` method holds one `RubyLLM::Moderation::Result` per moderated input, each with `flagged?`, `categories` (the flagged category names), and `category_scores`:
-
-```ruby
-verdict = result.results.first
-verdict.flagged?         # => false
-verdict.categories       # => []
-verdict.category_scores  # => {"harassment" => 1.19e-05, "violence" => 0.0004, ...}
-```
+`flagged?` reports the provider's decision. Your application decides whether to publish the content, reject it, or send it for review.
 
 ## Understanding Moderation Results
 
-Moderation results include categories and confidence scores for different types of potentially harmful content:
+Read the categories the model flagged and its scores:
 
 ```ruby
-result = RubyLLM.moderate("Some user input text")
+result = RubyLLM.moderate(user_input)
+result.flagged_categories
+result.category_scores
+```
 
-if result.flagged?
-  puts "Content was flagged for: #{result.flagged_categories.join(', ')}"
-else
-  puts "Content appears safe"
+Categories depend on the provider and model. Common categories include harassment, hate, violence, sexual content, and self-harm. Scores are model outputs you can use in a review policy; tune any thresholds against examples from your own application.
+
+`category_scores` is empty when the provider does not return probability scores. Read `result.raw` for the original response, including provider-specific assessments.
+
+### Checking Several Inputs
+
+Send an array of texts to get a verdict for each one:
+
+```ruby
+comments = ["Great explanation!", "Can you add a Rails example?"]
+moderation = RubyLLM.moderate(comments)
+
+comments.zip(moderation.results).each do |text, verdict|
+  puts "#{text}: #{verdict.flagged?}"
 end
-
-# Examine category scores (0.0 to 1.0, higher = more likely)
-scores = result.category_scores
-puts "Sexual content score: #{scores['sexual']}"
-puts "Harassment score: #{scores['harassment']}"
-puts "Violence score: #{scores['violence']}"
-
-puts "Contains hate speech: #{result.flagged_categories.include?('hate')}"
-puts "Contains self-harm content: #{result.flagged_categories.include?('self-harm')}"
 ```
 
-`flagged?`, `flagged_categories`, and `category_scores` aggregate across all results: `flagged?` is true if any input was flagged, `flagged_categories` is the union of flagged category names, and `category_scores` keeps the highest score per category.
+Each `RubyLLM::Moderation::Result` has `flagged?`, `categories`, and `category_scores`. The outer result aggregates them: `flagged?` is true if any input was flagged, `flagged_categories` combines their category names, and `category_scores` keeps the highest score per category.
 
-### Moderation Categories
+## Moderating Images
 
-Current moderation models typically check for these categories:
-
-- **Sexual**: Sexually explicit or suggestive content
-- **Hate**: Content that promotes hate based on identity
-- **Harassment**: Content intended to harass, threaten, or bully
-- **Self-harm**: Content promoting self-harm or suicide
-- **Sexual/minors**: Sexual content involving minors
-- **Hate/threatening**: Hateful content that includes threats
-- **Violence**: Content promoting or glorifying violence
-- **Violence/graphic**: Graphic violent content
-- **Self-harm/intent**: Content expressing intent to self-harm
-- **Self-harm/instructions**: Instructions for self-harm
-- **Harassment/threatening**: Harassing content that includes threats
-
-## Alternative Calling Methods
-
-You can also use the class method directly:
+Use `with:` for images, with or without a caption:
 
 ```ruby
-result = RubyLLM::Moderation.moderate("Your content here")
-
-result = RubyLLM.moderate(
-  "User message",
-  model: "omni-moderation-latest",
-  provider: :openai
-)
-
-# Using assume_model_exists for custom models
-result = RubyLLM.moderate(
-  "Content to check",
-  model: "my-moderation-model",
-  provider: :openai,
-  assume_model_exists: true
-)
-
-# Moderating an image with models that support image moderation
-result = RubyLLM.moderate(
-  "Check this image and caption",
-  with: "https://example.com/image.png",
-  model: "omni-moderation-latest",
-  provider: :openai
-)
-
-result = RubyLLM.moderate(
-  with: ["screenshot.png", "another-image.png"],
-  model: "omni-moderation-latest",
-  provider: :openai
-)
+result = RubyLLM.moderate("Photo for my profile", with: "profile.png")
+result.flagged?
 ```
 
-Image moderation accepts image attachments. Other file types raise
-`RubyLLM::UnsupportedAttachmentError`.
+```ruby
+result = RubyLLM.moderate(with: ["screenshot.png", "cover.png"])
+result.flagged_categories
+```
+
+Choose a model that supports image moderation. Other attachment types raise `RubyLLM::UnsupportedAttachmentError`.
 
 ## Choosing Models
 
-By default, RubyLLM uses OpenAI's `omni-moderation-latest`, but moderation is not OpenAI-only. Any provider that ships a moderation model works the same way - for example, Mistral's `mistral-moderation-2603`:
+The default model is OpenAI's `{{ site.models.default_moderation }}`. Pass `model:` to use another moderation model:
 
 ```ruby
-result = RubyLLM.moderate(
-  "Content to moderate",
-  model: "omni-moderation-latest"
-)
-result = RubyLLM.moderate(
-  "Content to moderate",
-  model: "mistral-moderation-2603"
-)
-
-RubyLLM.configure do |config|
-  config.default_moderation_model = "omni-moderation-latest"
-end
+RubyLLM.moderate(user_input, model: "{{ site.models.moderation_mistral }}")
 ```
 
-Refer to the [Available Models Reference]({% link _reference/available-models.md %}) for details on moderation models and their capabilities.
+Set `default_moderation_model` in [Configuration]({% link _getting_started/configuration.md %}#default-models) to change the default. Browse the [Models]({% link _reference/available-models.md %}) page for moderation models.
+
+## Bedrock Guardrails
+
+Apply a [configured Bedrock guardrail]({% link _getting_started/configuration-providers.md %}#guardrails) without selecting a model:
+
+```ruby
+result = RubyLLM.moderate(user_input, provider: :bedrock)
+result.flagged?
+result.raw['outputs']
+```
+
+`flagged?` includes sensitive-information masking. Read replacement text and policy assessments from `raw`; `category_scores` is empty because Bedrock does not return numeric scores.
+
+To check generated output instead of user input:
+
+```ruby
+RubyLLM.moderate(answer, provider: :bedrock, provider_options: { source: 'OUTPUT' })
+```
 
 ## Integration Patterns
 
 ### Pre-Chat Moderation
 
-Use moderation as a safety layer before sending user input to LLMs:
+Check input before asking the chat to answer:
 
 ```ruby
-def safe_chat_response(user_input)
-  moderation = RubyLLM.moderate(user_input)
+def reply_to(text)
+  moderation = RubyLLM.moderate(text)
+  return "Please revise your message." if moderation.flagged?
 
-  if moderation.flagged?
-    flagged_categories = moderation.flagged_categories.join(', ')
-    return {
-      error: "Content flagged for: #{flagged_categories}",
-      safe: false
-    }
-  end
-
-  response = RubyLLM.chat.ask(user_input)
-  {
-    content: response.content,
-    safe: true
-  }
+  RubyLLM.chat.ask(text).content
 end
 ```
 
-### Custom Threshold Handling
+### Reviewing Uploaded Images in Rails
 
-You might want to implement custom logic based on category scores:
+Pass an Active Storage attachment directly, just as you pass a local file:
 
 ```ruby
-def assess_content_risk(text)
-  result = RubyLLM.moderate(text)
-  scores = result.category_scores
-
-  high_risk = scores.any? { |_, score| score > 0.8 }
-  medium_risk = scores.any? { |_, score| score > 0.5 }
-
-  case
-  when high_risk
-    { risk: :high, action: :block, message: "Content blocked" }
-  when medium_risk
-    { risk: :medium, action: :review, message: "Content flagged for review" }
-  else
-    { risk: :low, action: :allow, message: "Content approved" }
+class ReviewPhotoJob < ApplicationJob
+  def perform(photo_id)
+    photo = Photo.find(photo_id)
+    result = RubyLLM.moderate(with: photo.image)
+    photo.update!(needs_review: result.flagged?)
   end
 end
-
-assessment = assess_content_risk("Some user input")
-puts "Risk level: #{assessment[:risk]}"
-puts "Action: #{assessment[:action]}"
 ```
+
+This example assumes your `Photo` model has an `image` attachment and a `needs_review` boolean. The job records the decision without downloading or encoding the file in application code.
 
 ## Error Handling
 
-Handle moderation errors gracefully:
-
-```ruby
-content = "User content"
-
-begin
-  result = RubyLLM.moderate(content)
-
-  if result.flagged?
-    handle_unsafe_content(result)
-  else
-    process_safe_content(content)
-  end
-rescue RubyLLM::ConfigurationError => e
-  # Handle missing API key or configuration
-  logger.error "Moderation not configured: #{e.message}"
-  # Fallback: proceed with caution or block all content
-rescue RubyLLM::RateLimitError => e
-  # Handle rate limits
-  logger.warn "Moderation rate limited: #{e.message}"
-  # Fallback: temporary approval or queue for later
-rescue RubyLLM::Error => e
-  # Handle other API errors
-  logger.error "Moderation failed: #{e.message}"
-  # Fallback: proceed with caution
-end
-```
-
-## Configuration Requirements
-
-Moderation requires an API key for a provider that offers a moderation model. RubyLLM defaults to OpenAI's `omni-moderation-latest`, so configuring an OpenAI key is enough to get started:
-
-```ruby
-RubyLLM.configure do |config|
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-
-  # Optional: set default moderation model
-  config.default_moderation_model = "omni-moderation-latest"
-end
-```
-
-To moderate through Mistral instead, configure its key and set the default model to `mistral-moderation-2603`:
-
-```ruby
-RubyLLM.configure do |config|
-  config.mistral_api_key = ENV['MISTRAL_API_KEY']
-  config.default_moderation_model = "mistral-moderation-2603"
-end
-```
-
-For more details about OpenAI's moderation capabilities and policies, see the [OpenAI Moderation Guide](https://platform.openai.com/docs/guides/moderation).
-
-> Moderation API calls are typically less expensive than chat completions and have generous rate limits, making them suitable for screening all user inputs.
-{: .note }
+A failed request gives you no moderation decision. Let the error reach your job's retry handler, or rescue it where your application can keep the content pending and report the problem. See [Error Handling]({% link _advanced/error-handling.md %}) for automatic retries and specific exceptions.
 
 ## Next Steps
 
-* [Chat]({% link _core_features/chat.md %}) - moderate user input before sending it to a model.
-* [Error Handling]({% link _advanced/error-handling.md %}) - handle moderation failures gracefully.
+* [Chat]({% link _core_features/chat.md %}) - check user input before starting a conversation.
+* [Rails Integration]({% link _advanced/rails.md %}) - work with application records and attachments.
+* [Image Generation]({% link _core_features/image-generation.md %}) - generate and edit images through the same framework.

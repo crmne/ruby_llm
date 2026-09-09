@@ -4,8 +4,8 @@ require 'bundler/setup'
 require 'bundler/gem_tasks'
 require 'rake/clean'
 
-Dir.glob('tasks/**/*.rake').each { |task_file| load task_file }
-load 'lib/tasks/ruby_llm.rake'
+Dir.glob(File.join(__dir__, 'tasks/**/*.rake')).each { |task_file| load task_file }
+load File.join(__dir__, 'lib/tasks/ruby_llm.rake')
 
 def run_test_queue_rspec
   workers = ENV.fetch('RSPEC_WORKERS', nil)

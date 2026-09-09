@@ -16,19 +16,32 @@ module RubyLLM
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, with: [],
                                      provider_options: {})
+          image_only = with.any? && separate_image_embeddings?(model)
           payload = {
             model: model,
-            input_type: task_type || DEFAULT_INPUT_TYPE,
+            input_type: task_type || (image_only ? 'image' : DEFAULT_INPUT_TYPE),
             embedding_types: ['float'],
             output_dimension: dimensions
           }.compact
 
-          payload.merge!(embedding_inputs(text, with))
-          Utils.deep_merge(payload, provider_options)
+          payload.merge!(image_only ? image_embedding_inputs(text, with) : embedding_inputs(text, with))
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def supports_embedding_media?
           true
+        end
+
+        def separate_image_embeddings?(model) # :nodoc:
+          %w[embed-english-v3.0 embed-multilingual-v3.0].include?(model)
+        end
+
+        def image_embedding_inputs(text, attachments) # :nodoc:
+          raise ArgumentError, 'Cohere Embed v3 accepts text or an image, not both' unless text.nil? || text == ''
+          raise ArgumentError, 'Cohere Embed v3 accepts one image per request' unless attachments.one?
+          raise UnsupportedAttachmentError, attachments.first.mime_type unless attachments.first.image?
+
+          { images: ["data:#{attachments.first.mime_type};base64,#{attachments.first.encoded}"] }
         end
 
         def parse_embedding_response(response, model:, text:)
@@ -43,7 +56,7 @@ module RubyLLM
         # embed-v4 takes mixed text and images as `inputs`; text-only requests
         # keep using the simpler `texts` array every Embed model accepts.
         def embedding_inputs(text, attachments)
-          return { texts: Utils.to_safe_array(text).map(&:to_s) } if attachments.empty?
+          return { texts: Support::Utils.to_safe_array(text).map(&:to_s) } if attachments.empty?
 
           raise ArgumentError, 'embed one text at a time when embedding attachments' if text.is_a?(Array)
 

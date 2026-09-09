@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'RubyLLM is the Ruby-native AI framework. One beautiful, consistent API across every provider, from a one-line chat call to tools, agents, RAG, and Rails apps.'
+description: 'Build AI features in Ruby and Rails with chats, tools, agents, structured output, images, audio, and video across 17 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -14,7 +14,7 @@ hero:
     width: 320
     height: 110
   text: 'Build AI features <span class="home-hero-highlight">the Ruby way</span>'
-  tagline: 'RubyLLM is the <em class="home-hero-tagline-highlight">Ruby-native AI framework</em>. One beautiful, consistent API across every provider, from your first line to production.'
+  tagline: 'RubyLLM is the <em class="home-hero-tagline-highlight">Ruby-native AI framework</em>. Work with models, tools, and agents through one consistent API, in plain Ruby or Rails.'
   actions:
     - theme: brand
       class: home-button--guides
@@ -27,7 +27,7 @@ hero:
     <div class="home-hero-install home-code-grid home-code-grid--bare" markdown="1">
 
 ```sh
-bundle add ruby_llm
+bundle add ruby_llm --version 2.0.0.rc1
 ```
 {: .home-code-card }
 
@@ -52,10 +52,21 @@ bundle add ruby_llm
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">17 providers built in. Add your own.</h2>
+    <h2 class="home-heading">17 providers. One Ruby API.</h2>
     <p class="home-lead">
-      Move between hosted and local models without rewriting your application. Connect an OpenAI-compatible endpoint directly, or scaffold a complete provider gem with specs and CI.
+      Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
     </p>
+
+    <div class="home-code-grid home-model-switcher" data-model-switcher aria-label="Same RubyLLM API across providers">
+{% capture model_switcher_code %}
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}")
+chat.ask "Hello!"
+```
+{: .home-code-card .home-model-switcher-code data-title="Anthropic" data-model-switcher-code="true" }
+{% endcapture %}
+{{ model_switcher_code | markdownify }}
+    </div>
 
     <div class="provider-icons" aria-label="Supported AI providers">
       <a href="https://anthropic.com" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/anthropic-text.svg' | relative_url }}" alt="Anthropic" class="logo-wide"></a>
@@ -77,41 +88,43 @@ bundle add ruby_llm
       <a href="https://x.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/xai.svg' | relative_url }}" alt="xAI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/xai-text.svg' | relative_url }}" alt="" class="logo-text"></a>
     </div>
 
-    <div class="home-code-grid home-model-switcher" data-model-switcher aria-label="Same RubyLLM API across providers">
-{% capture model_switcher_code %}
-```ruby
-chat = RubyLLM.chat(model: "claude-opus-5")
-chat.ask "Hello!"
-```
-{: .home-code-card .home-model-switcher-code data-title="Anthropic" data-model-switcher-code="true" }
-{% endcapture %}
-{{ model_switcher_code | markdownify }}
-    </div>
 
     <p class="home-small-note home-models-note">
-      Browse a refreshable registry of more than 1,400
-      <a href="{{ '/available-models/' | relative_url }}">models</a>,
-      <a href="{% link _core_features/cost-and-usage-tracking.md %}">track usage and costs</a>,
-      or
-      <a href="{% link _reference/custom-providers.md %}#generate-the-starting-point">generate a provider gem</a>
-      for the service you need next.
+      <a href="{% link _reference/available-models.md %}">Browse models and pricing</a>
+      &middot;
+      <a href="{% link _core_features/cost-and-usage-tracking.md %}">Track usage and costs</a>
     </p>
+
+    <div class="home-provider-gem home-step">
+      <div>
+        <h3 class="home-step-title">Missing a provider?</h3>
+        <p class="home-step-desc">Connect another AI service to Ruby and Rails. Generate a provider gem with configuration, tests, and release setup, then adapt it to the service's API.</p>
+        <a class="home-step-link" href="{% link _reference/custom-providers.md %}#generate-the-starting-point">Provider gem guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```sh
+gem install ruby_llm --pre
+ruby_llm provider-gem Acme \
+  --api-base https://api.acme.example/v1
+```
+{: .home-code-card }
+
+</div>
+    </div>
   </div>
 </section>
 
 <section id="code-examples" class="home-section home-code-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">Start with one line. Keep the same API as you grow.</h2>
-    <p class="home-lead">
-      Every capability is a small step from the previous one, and nothing gets rewritten in between.
-    </p>
+    <h2 class="home-heading">Start with one line.<br>Add files, tools, and agents</h2>
   </div>
 
   <div class="home-steps">
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Just ask</h3>
-        <p class="home-step-desc">One method call, a plain answer back. No client objects, no configuration ceremony, no response envelope to unwrap.</p>
+        <p class="home-step-desc">Ask a question. The chat keeps the conversation history, so you can follow up.</p>
         <a class="home-step-link" href="{% link _core_features/chat.md %}">Chat guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
@@ -126,14 +139,14 @@ RubyLLM.chat.ask "What's the best way to learn Ruby?"
 
     <div class="home-step">
       <div class="home-step-text">
-        <h3 class="home-step-title">Attach anything</h3>
-        <p class="home-step-desc">Pass a file with <code>with:</code> and RubyLLM works out types, encoding, and provider formats. Images, audio, video, PDFs, even code.</p>
+        <h3 class="home-step-title">Send files</h3>
+        <p class="home-step-desc">Ask about an image, a recording, or a PDF. Pass your files with <code>with:</code> and RubyLLM prepares them for the model.</p>
         <a class="home-step-link" href="{% link _core_features/attachments.md %}">Attachments guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
-chat = RubyLLM.chat
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
@@ -146,7 +159,7 @@ chat.ask "Summarize this document", with: "contract.pdf"
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Stream responses</h3>
-        <p class="home-step-desc">Add a block and chunks arrive as the model generates them. The same block drives a terminal script or a Turbo Stream.</p>
+        <p class="home-step-desc">Pass a block to display the response as it arrives, in your terminal or a Rails view.</p>
         <a class="home-step-link" href="{% link _core_features/streaming.md %}">Streaming guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
@@ -164,7 +177,7 @@ end
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Give the model tools</h3>
-        <p class="home-step-desc">A tool is a plain Ruby class: describe it, implement <code>execute</code>, and the model calls your code when it needs to. The agentic loop is handled for you.</p>
+        <p class="home-step-desc">Describe a tool in a Ruby class and implement <code>execute</code>. RubyLLM runs the tool calls and sends the results back to the model.</p>
         <a class="home-step-link" href="{% link _core_features/tools.md %}">Tools guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
@@ -189,7 +202,7 @@ chat.with_tools(Weather).ask "What's the weather in Berlin?"
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Get structured output</h3>
-        <p class="home-step-desc">Declare the shape as a Ruby schema and responses come back as validated data, not prose you have to parse.</p>
+        <p class="home-step-desc">Define the fields you want in a Ruby schema. Read the result as a Hash with <code>response.parsed</code>.</p>
         <a class="home-step-link" href="{% link _core_features/structured-output.md %}">Structured output guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
@@ -212,15 +225,15 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 
     <div class="home-step">
       <div class="home-step-text">
-        <h3 class="home-step-title">Compose agents</h3>
-        <p class="home-step-desc">Bundle model, instructions, and tools into a class you can instantiate, test, and reuse anywhere in your app.</p>
+        <h3 class="home-step-title">Define an agent</h3>
+        <p class="home-step-desc">Give an agent its model, instructions, and tools in a Ruby class. Create an instance whenever you need it.</p>
         <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
 class WeatherAssistant < RubyLLM::Agent
-  model "gpt-5-nano"
+  model "{{ site.models.default_chat }}"
   instructions "Be concise and always use tools for weather."
   tools Weather
 end
@@ -236,9 +249,9 @@ WeatherAssistant.new.ask "What's the weather in Berlin?"
 
 <section id="complete" class="home-section home-band home-complete-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">Everything you'd expect from a complete framework</h2>
+    <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      The capabilities Rubyists asked for, built in and documented.
+      Agents, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
     </p>
   </div>
 
@@ -256,7 +269,7 @@ end
 
 ```ruby
 chats = documents.map do |doc|
-  RubyLLM.chat(model: "claude-haiku-4-5")
+  RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
     .with_instructions("Summarize in one paragraph.")
     .ask_later(doc.text)
 end
@@ -284,9 +297,9 @@ response.citations
 ```ruby
 documents = ["Ruby is expressive", "Python uses indentation"]
 embeddings = RubyLLM.embed(documents)
-ranked = RubyLLM.rerank("Ruby language", documents, model: "rerank-v3.5")
+ranked = RubyLLM.rerank("Ruby language", documents, model: "{{ site.models.rerank_cohere }}")
 ```
-{: .home-code-card data-title="Build RAG and retrieval pipelines" data-href="{% link _advanced/rag.md %}" data-doc-title="RAG" }
+{: .home-code-card data-title="Embed and rank your documents" data-href="{% link _advanced/rag.md %}" data-doc-title="RAG" }
 
 ```ruby
 response = chat.ask "Explain embeddings"
@@ -297,9 +310,9 @@ response.cost.total
 
 ```ruby
 transcript = RubyLLM.transcribe "meeting.wav"
-RubyLLM.speak(transcript.text).save "summary.mp3"
+RubyLLM.speak(transcript.text).save "transcript.mp3"
 ```
-{: .home-code-card data-title="Understand and generate speech" data-href="{% link _core_features/text-to-speech.md %}" data-doc-title="Text to speech" }
+{: .home-code-card data-title="Transcribe audio and generate speech" data-href="{% link _core_features/text-to-speech.md %}" data-doc-title="Text to speech" }
 
 ```ruby
 document = RubyLLM.ocr "scanned-contract.pdf"
@@ -321,15 +334,15 @@ RubyLLM.moderate("Some user-generated content").flagged?
   </div>
 
   <div class="home-code-cta">
-    <p>Then take it to production with
-      <a href="{% link _advanced/agentic-workflows.md %}">agentic workflows</a>,
-      <a href="{% link _advanced/durable-agents.md %}">durable agents</a>,
-      <a href="{% link _advanced/memory.md %}">memory</a>,
-      <a href="{% link _reference/ecosystem.md %}#rubyllmmcp">MCP</a>,
-      <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">multi-tenant contexts</a>,
-      <a href="{% link _reference/ecosystem.md %}#rubyllminstrumentation">instrumentation</a>,
-      <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring</a>, and
-      <a href="{% link _advanced/error-handling.md %}">predictable error handling</a>.
+    <p>Coordinate agents with
+      <a href="{% link _advanced/agentic-workflows.md %}">workflows</a>,
+      give them <a href="{% link _advanced/memory.md %}">memory</a>,
+      and <a href="{% link _advanced/durable-agents.md %}">resume their work across jobs and deploys</a>.
+      Use <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">separate configurations for each tenant</a>
+      and <a href="{% link _advanced/error-handling.md %}">retries and fallbacks</a> when requests fail.
+      Follow requests with <a href="{% link _advanced/instrumentation.md %}">instrumentation</a>,
+      or explore community gems for <a href="{% link _reference/ecosystem.md %}#rubyllmmcp">MCP</a>
+      and <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring dashboards</a>.
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--guides" href="{% link _getting_started/getting-started.md %}">Build your first feature</a>
@@ -341,11 +354,11 @@ RubyLLM.moderate("Some user-generated content").flagged?
   <div class="home-section-inner">
     <h2 class="home-heading">Feels at home in Rails</h2>
     <p class="home-lead">
-      Persist complete conversations with Active Record, stream through Hotwire, and generate a working chat UI without introducing a second application architecture. Watch a complete AI chat go up in two minutes.
+      Save conversations with Active Record and stream replies with Hotwire. The generators give you a working chat UI. Watch the two-minute demo.
     </p>
 
     <div class="home-demo-frame home-rails-demo-frame" data-demo-video>
-      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> bundle add ruby_llm
+      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> bundle add ruby_llm --version 2.0.0.rc1
 <span class="term-green">$</span> bin/rails generate ruby_llm:install
 <span class="term-green">$</span> bin/rails db:migrate
 <span class="term-green">$</span> bin/rails generate ruby_llm:chat_ui
@@ -373,10 +386,10 @@ RubyLLM.moderate("Some user-generated content").flagged?
   <div class="home-code-grid home-code-grid--columns home-rails-code-grid" markdown="1">
 
 ```ruby
-chat = Chat.create! model: "claude-opus-5"
+chat = Chat.create! model: "{{ site.models.anthropic_opus }}"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
-{: .home-code-card data-title="Persist chats with Active Record" data-href="{% link _advanced/rails-persistence.md %}#two-application-models" data-doc-title="Core Models and acts_as Methods" }
+{: .home-code-card data-title="Save chats with Active Record" data-href="{% link _advanced/rails-persistence.md %}#two-application-models" data-doc-title="Rails persistence" }
 
 ```sh
 bin/rails generate ruby_llm:agent Support
@@ -388,12 +401,12 @@ bin/rails generate ruby_llm:schema Product
   </div>
 
   <div class="home-code-cta">
-    <p>RubyLLM follows Rails conventions with
-      <a href="{% link _advanced/rails-generators.md %}#conventional-directory-structure">conventional directory structures</a>,
-      <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage attachments</a>,
-      <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Hotwire and Turbo streaming</a>,
-      <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB prompt templates</a>, and
-      <a href="{% link _advanced/durable-agents.md %}">durable execution across jobs and deploys</a>.
+    <p>Keep your agents, tools, and schemas in
+      <a href="{% link _advanced/rails-generators.md %}#conventional-directory-structure">app/</a>.
+      Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage</a>
+      and write your prompts in <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
+      Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies
+      and <a href="{% link _advanced/durable-agents.md %}">Active Job</a> to run agents in the background.
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--rails" href="{% link _advanced/rails.md %}">Read the Rails guide</a>
@@ -405,7 +418,7 @@ bin/rails generate ruby_llm:schema Product
   <div class="home-section-inner">
     <h2 class="home-heading">Built with RubyLLM</h2>
     <p class="home-lead">
-      From independent products to established Rails teams, RubyLLM is already shipping in production.
+      Used in production by the teams behind these products.
     </p>
 
     <div class="home-company-logos" aria-label="Companies using RubyLLM">
@@ -440,12 +453,27 @@ bin/rails generate ruby_llm:schema Product
       Using RubyLLM?
       <a href="https://tally.so/r/3Na02p" target="_blank" rel="noreferrer">Get featured</a>
       or
-      <a href="https://github.com/sponsors/crmne" target="_blank" rel="noreferrer">sponsor us</a>
+      <a href="https://github.com/sponsors/crmne" target="_blank" rel="noreferrer">Sponsor us</a>
     </p>
   </div>
 </section>
 
-<section class="home-section home-love-section" data-love-carousel>
+<section class="home-section home-companies-section home-sponsors-section" aria-labelledby="sponsors">
+  <div class="home-section-inner">
+    <h2 id="sponsors" class="home-heading">Gold sponsors</h2>
+    <p class="home-lead">Their support helps fund RubyLLM's development. Thank you for investing in AI for Ruby.</p>
+    <div class="home-company-logos home-sponsor-logos" aria-label="RubyLLM gold sponsors">
+      {% for sponsor in site.data.sponsors %}
+      <a class="home-company-logo" data-company="{{ sponsor.name | slugify }}" href="{{ sponsor.url }}" target="_blank" rel="sponsored noopener noreferrer">
+        <img src="{{ sponsor.logo | relative_url }}" alt="{{ sponsor.name }}" loading="lazy">
+      </a>
+      {% endfor %}
+    </div>
+    <p class="home-small-note"><a href="https://github.com/sponsors/crmne">Become a sponsor</a></p>
+  </div>
+</section>
+
+<section class="home-section home-band home-love-section" data-love-carousel>
   <div class="home-section-inner">
     <h2 class="home-heading">Why Rubyists choose RubyLLM</h2>
   </div>
@@ -561,7 +589,7 @@ bin/rails generate ruby_llm:schema Product
       <p>I’m kinda fitting RubyLLM into all of my projects.</p>
     </article>
     </div>
-    <nav class="home-love-controls" aria-label="Wall of Love quotes">
+    <nav class="home-love-controls" aria-label="User testimonials">
       <button class="home-love-nav home-love-nav--prev" type="button" data-love-prev aria-label="Previous quotes"><span aria-hidden="true"></span></button>
       <button class="home-love-nav home-love-nav--next" type="button" data-love-next aria-label="Next quotes"><span aria-hidden="true"></span></button>
     </nav>
@@ -569,14 +597,14 @@ bin/rails generate ruby_llm:schema Product
 
   <p class="home-small-note">
     Using RubyLLM?
-    <a href="https://tally.so/r/3Na02p" target="_blank" rel="noreferrer">Share your story!</a>
+    <a href="https://tally.so/r/3Na02p" target="_blank" rel="noreferrer">Share your story</a>!
     Takes 5 minutes.
   </p>
 </section>
 
-<section class="home-section home-band home-ready-section">
+<section class="home-section home-ready-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">Start with one line of Ruby</h2>
+    <h2 class="home-heading">Give it a try</h2>
 
     <div class="home-code-grid home-code-grid--bare home-ready-code" markdown="1">
 
@@ -588,7 +616,7 @@ RubyLLM.chat.ask "Hello, Ruby!"
 </div>
 
     <div class="home-ready-actions">
-      <a class="home-button home-button--solid home-button--gem" href="{{ '/getting-started/' | relative_url }}#installation">Install the gem</a>
+      <a class="home-button home-button--solid home-button--gem" href="{% link _getting_started/getting-started.md %}#installation">Install the gem</a>
       <a class="VPButton medium alt home-hero-metric-button" href="https://github.com/crmne/ruby_llm" aria-label="View RubyLLM source on GitHub" target="_blank" rel="noreferrer noopener">
         <span class="vpi-social-github" aria-hidden="true"></span>
         <span>View source</span>
@@ -596,18 +624,3 @@ RubyLLM.chat.ask "Hello, Ruby!"
     </div>
   </div>
 </section>
-
-<footer class="home-footer">
-  <div class="home-footer-inner">
-    <p class="home-footer-credit">
-      Brought to you by <a href="https://paolino.me" target="_blank" rel="noreferrer">Carmine Paolino</a><br>
-      maker of
-      <a class="home-footer-chat-with-work" href="https://chatwithwork.com" target="_blank" rel="noreferrer" aria-label="Chat with Work">
-        <img class="home-footer-chat-with-work-logo-light" src="https://chatwithwork.com/logotype.svg" alt="Chat with Work">
-        <img class="home-footer-chat-with-work-logo-dark" src="https://chatwithwork.com/logotype-dark.svg" alt="Chat with Work">
-      </a>
-      <small>Fully private work AI</small>
-    </p>
-    <p class="home-footer-credit">Docs built with <a href="https://jekyll-vitepress.dev">Jekyll Vitepress</a></p>
-  </div>
-</footer>

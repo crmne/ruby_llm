@@ -3,16 +3,15 @@
 require 'base64'
 
 module RubyLLM
-  # An Image is the result of an image generation request. It holds either
-  # a hosted URL or inline Base64 data, depending on the provider, along
-  # with the model id and token usage of the call.
+  # An Image is a generated or edited image. Save it to a file with #save
+  # or read its bytes with #to_blob. Both handle hosted URLs and inline data.
   #
   #   image = RubyLLM.paint("a sunset over mountains in watercolor style")
   #   image.save("sunset.png")
   #
   class Image
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # The URL of the hosted image, for providers that return one, or +nil+.
     attr_reader :url
@@ -90,7 +89,7 @@ module RubyLLM
 
       RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
         result = provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
-        images = Utils.to_safe_array(result)
+        images = Support::Utils.to_safe_array(result)
         event[:result] = result
         event[:response_model] = images.first&.model
         event[:tokens] = Tokens.aggregate(images.map(&:tokens))
@@ -127,13 +126,13 @@ module RubyLLM
     # Returns the raw binary image bytes, decoding #data when present or
     # downloading from #url otherwise.
     #
-    #   File.binwrite("image.png", image.to_blob)
+    #   image_bytes = image.to_blob
     #
     def to_blob
       if base64?
         Base64.decode64 @data
       else
-        response = Connection.basic(config).get @url
+        response = Transport::Connection.basic(config).get @url
         response.body
       end
     end
@@ -148,8 +147,8 @@ module RubyLLM
       path
     end
 
-    # Returns a Tokens with the input and output token counts reported
-    # by the provider. Its fields are +nil+ when none were reported.
+    # Returns a Tokens with usage across every provider attempt.
+    # Its fields are +nil+ when none were reported.
     #
     #   image.tokens.input
     #   image.tokens.output
@@ -164,7 +163,8 @@ module RubyLLM
       )
     end
 
-    # Returns a Cost for the generation, priced from the model registry.
+    # Returns a Cost across every provider attempt, using reported prices
+    # when available and registry pricing otherwise.
     #
     #   image.cost.total
     #

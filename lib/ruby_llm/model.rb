@@ -12,7 +12,7 @@ module RubyLLM
   #   model.supports?(:vision) # => true
   #
   class Model
-    include Inspectable
+    include Support::Inspectable
 
     # The provider's identifier for the model, e.g. <tt>"gpt-5.6"</tt>.
     attr_reader :id
@@ -78,14 +78,14 @@ module RubyLLM
       @name = data[:name]
       @provider = data[:provider]
       @family = data[:family]
-      @created_at = Utils.to_time(data[:created_at])&.utc
+      @created_at = Support::Utils.to_time(data[:created_at])&.utc
       @context_window = data[:context_window]
       @max_output_tokens = data[:max_output_tokens]
-      @knowledge_cutoff = Utils.to_date(data[:knowledge_cutoff])
+      @knowledge_cutoff = Support::Utils.to_date(data[:knowledge_cutoff])
       @modalities = Modalities.new(data[:modalities] || {})
       @capabilities = data[:capabilities] || []
       @metadata = data[:metadata]&.dup || {}
-      @unlisted_at = Utils.to_time(data[:unlisted_at])&.utc
+      @unlisted_at = Support::Utils.to_time(data[:unlisted_at])&.utc
       @pricing = Pricing.new(pricing_data_with_long_context(data[:pricing] || {}))
       @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
       store_reasoning_options_metadata
@@ -207,7 +207,7 @@ module RubyLLM
     private
 
     def pricing_data_with_long_context(pricing)
-      pricing = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(pricing))
+      pricing = RubyLLM::Support::Utils.deep_symbolize_keys(RubyLLM::Support::Utils.deep_dup(pricing))
       text = pricing[:text_tokens] || {}
       return pricing if text[:long_context]
 

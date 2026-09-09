@@ -1,9 +1,18 @@
 # frozen_string_literal: true
+<% if copy_mode? -%>
+
+require 'generators/ruby_llm/upgrade/upgrade_migration'
+<% end -%>
 
 class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   disable_ddl_transaction!
 
   def up
+<% if copy_mode? -%>
+    RubyLLM::Generators::UpgradeMigration.new.prepare(<%= copy_upgrade_settings.inspect %>)
+<% else -%>
+    raise 'This database uses --mode copy' if table_exists?(:ruby_llm_v2_upgrades)
+<% end -%>
     validate_upgrade
     move_models
     add_chat_and_message_columns
@@ -37,6 +46,9 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     raise 'Expected the RubyLLM 1.16 tool-call table to exist' unless tool_calls
 
     validate_table_shape(tool_calls, %i[tool_call_id name arguments created_at updated_at], 'tool-call')
+<% if copy_mode? -%>
+    validate_unique_values(tool_calls, %i[tool_call_id])
+<% end -%>
     unless column_exists?(tool_calls, :<%= message_foreign_key %>) || column_exists?(tool_calls, :message_id)
       raise "#{tool_calls} does not have a message foreign key"
     end
@@ -69,6 +81,11 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   # A schema the finish migration already cleaned has none of these columns;
   # running the backfill again there would invent usage rows.
   def validate_legacy_message_columns
+    if table_exists?(:ruby_llm_v2_backfills) &&
+       migration_record(:ruby_llm_v2_backfills).where(task: 'finished', completed: true).exists?
+      raise 'The RubyLLM 2.0 upgrade is already finished. Generate --phase cleanup to remove the legacy columns.'
+    end
+
     legacy_columns = %i[content_raw input_tokens output_tokens <%= v1_model_foreign_key %> <%= v1_tool_call_foreign_key %>]
     return if legacy_columns.any? { |column| column_exists?(:<%= message_table_name %>, column) }
     return unless table_exists?(:ruby_llm_usages)
@@ -78,9 +95,14 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   end
 
   def validate_table_move(source, target)
+<% if copy_mode? -%>
+    raise 'Copy mode needs distinct legacy and RubyLLM table names' if source == target
+    raise "Expected legacy table #{source}" unless table_exists?(source)
+<% else -%>
     return if source == target || !table_exists?(source) || !table_exists?(target)
 
     raise "Both #{source} and #{target} exist. Merge or remove one before running this migration."
+<% end -%>
   end
 
   def existing_table(source, target)
@@ -221,7 +243,15 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     return unless column
 
     ensure_reference_types_match(table, column, :ruby_llm_models)
+<% if copy_mode? -%>
+    unless column_exists?(table, :ruby_llm_model_id)
+      add_column table, :ruby_llm_model_id, reference_type_for(:ruby_llm_models)
+    end
+    RubyLLM::Generators::UpgradeMigration.new.copy_model_references
+    with_upgrade_safety { change_column_null table, column, true } unless column_definition(table, column).null
+<% else -%>
     with_upgrade_safety { rename_column table, column, :ruby_llm_model_id } if column != :ruby_llm_model_id
+<% end -%>
     add_upgrade_index(table, :ruby_llm_model_id) unless valid_index_exists?(table, :ruby_llm_model_id)
     return if foreign_key_exists?(table, :ruby_llm_models, column: :ruby_llm_model_id)
 
@@ -229,6 +259,11 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   end
 
   def add_chat_and_message_columns
+<% if copy_mode? -%>
+    unless column_exists?(:<%= chat_table_name %>, :ruby_llm_version)
+      add_column :<%= chat_table_name %>, :ruby_llm_version, :integer, null: false, default: 1
+    end
+<% end -%>
     ensure_boolean_column(:<%= chat_table_name %>, :cancelled)
     ensure_boolean_column(:<%= message_table_name %>, :cache_until_here)
     with_upgrade_safety do
@@ -254,11 +289,16 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def ensure_boolean_column(table, column)
     add_column table, column, :boolean unless column_exists?(table, column)
-    change_column_default table, column, false
+    return if ActiveRecord::Type::Boolean.new.cast(column_definition(table, column).default) == false
+
+    with_upgrade_safety { change_column_default table, column, false }
   end
 
   def move_tool_calls
     move_table(:<%= v1_tool_call_table_name %>, :ruby_llm_tool_calls)
+<% if copy_mode? -%>
+    remove_column_foreign_keys(:<%= v1_tool_call_table_name %>, :<%= message_foreign_key %>)
+<% end -%>
     table = :ruby_llm_tool_calls
 <% if postgresql? -%>
     normalize_postgresql_json_columns(table, %i[arguments])
@@ -276,7 +316,9 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     remove_matching_indexes(table, :message_id)
 
     if column_exists?(table, :message_type)
-      change_column_default table, :message_type, nil
+      unless column_definition(table, :message_type).default.nil?
+        with_upgrade_safety { change_column_default table, :message_type, nil }
+      end
     else
       add_column table, :message_type, :string
     end
@@ -286,6 +328,7 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
         definition.column :result_id, reference_type_for(:<%= message_table_name %>) unless column_exists?(table, :result_id)
         definition.text :thought_signature unless column_exists?(table, :thought_signature)
         definition.string :approval unless column_exists?(table, :approval)
+        definition.boolean :remote, default: false, null: false unless column_exists?(table, :remote)
       end
     end
     if column_exists?(table, :thought_signature, :string)
@@ -362,6 +405,8 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
         table.check_constraint "status IN (<%= usage_statuses_sql %>)"
       end
     end
+    model_column = connection.columns(:ruby_llm_usages).find { |column| column.name == 'model' }
+    with_upgrade_safety { change_column_null :ruby_llm_usages, :model, false } if model_column.null
     indexes = [%i[chat_type chat_id], %i[message_type message_id], :status]
     missing = indexes.reject { |columns| valid_index_exists?(:ruby_llm_usages, columns) }
                      .map { |columns| [columns, {}] }
@@ -381,12 +426,15 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 <% if postgresql? -%>
         table.jsonb :chat_ids, default: []
         table.jsonb :request_counts
+        table.jsonb :reported_cost
 <% elsif mysql? -%>
         table.json :chat_ids
         table.json :request_counts
+        table.json :reported_cost
 <% else -%>
         table.json :chat_ids, default: []
         table.json :request_counts
+        table.json :reported_cost
 <% end -%>
         table.timestamps
       end
@@ -396,9 +444,11 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     add_column :ruby_llm_batches, :batch_protocol, :string unless column_exists?(:ruby_llm_batches, :batch_protocol)
 <% if postgresql? -%>
     add_column :ruby_llm_batches, :request_counts, :jsonb unless column_exists?(:ruby_llm_batches, :request_counts)
-    normalize_postgresql_json_columns(:ruby_llm_batches, %i[chat_ids request_counts])
+    add_column :ruby_llm_batches, :reported_cost, :jsonb unless column_exists?(:ruby_llm_batches, :reported_cost)
+    normalize_postgresql_json_columns(:ruby_llm_batches, %i[chat_ids request_counts reported_cost])
 <% else -%>
     add_column :ruby_llm_batches, :request_counts, :json unless column_exists?(:ruby_llm_batches, :request_counts)
+    add_column :ruby_llm_batches, :reported_cost, :json unless column_exists?(:ruby_llm_batches, :reported_cost)
 <% end -%>
 <% unless mysql? -%>
     normalize_json_defaults(:ruby_llm_batches, chat_ids: [])
@@ -473,11 +523,15 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   end
 
   def move_table(source, target)
+<% if copy_mode? -%>
+    with_upgrade_safety { RubyLLM::Generators::UpgradeMigration.new.copy_table(source, target) }
+<% else -%>
     return if source == target || !table_exists?(source)
 
     raise "Both #{source} and #{target} exist. Merge or remove one before retrying." if table_exists?(target)
 
     with_upgrade_safety { rename_table source, target }
+<% end -%>
   end
 
 <% if postgresql? -%>

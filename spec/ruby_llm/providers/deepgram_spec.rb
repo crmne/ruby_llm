@@ -129,12 +129,23 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     it 'has no chat model to fall back on' do
       expect { RubyLLM.chat(provider: :deepgram) }.to raise_error(RubyLLM::ModelNotFoundError)
     end
+  end
 
-    it 'refuses to stream a transcription' do
-      expect do
-        RubyLLM.transcribe('spec/fixtures/ruby.wav', model: 'nova-3', provider: :deepgram) { |chunk| chunk }
-      end.to raise_error(RubyLLM::Error, "Deepgram doesn't support streaming transcription")
-    end
+  it 'routes streaming transcription through the authenticated WebSocket endpoint' do
+    socket = instance_double(RubyLLM::Transport::WebsocketConnection)
+    allow(RubyLLM::Transport::WebsocketConnection).to receive(:open).and_yield(socket)
+    allow(socket).to receive(:each_message).and_yield(JSON.generate(type: 'Metadata', duration: 3.7))
+    model = model_for(:deepgram, :websocket_transcription)
+    chunks = []
+
+    result = RubyLLM.transcribe('spec/fixtures/ruby.wav', model:, provider: :deepgram) { |chunk| chunks << chunk }
+
+    expect(RubyLLM::Transport::WebsocketConnection).to have_received(:open).with(
+      "wss://api.deepgram.com/v1/listen?model=#{model}&smart_format=true&interim_results=true",
+      headers: hash_including('Authorization' => a_string_starting_with('Token ')), config: RubyLLM.config
+    )
+    expect(result.duration).to eq(3.7)
+    expect(chunks.map(&:type)).to eq([RubyLLM::TranscriptionChunk::DONE])
   end
 
   describe 'audio', :live do

@@ -7,6 +7,17 @@ module RubyLLM
       class Gemini < Protocols::Gemini
         include VertexAI::Embeddings
         include VertexAI::Models
+        include VertexAI::Videos
+
+        SERVER_TOOL_ALIASES = Protocols::Gemini::SERVER_TOOL_ALIASES.merge(
+          file_search: lambda { |options|
+            { tool: { retrieval: { vertexAiSearch: Support::Utils.deep_symbolize_keys(options) } } }
+          }
+        ).freeze
+
+        def server_tool_aliases
+          SERVER_TOOL_ALIASES
+        end
 
         def completion_url
           "#{@provider.model_path(@model.id)}:generateContent"

@@ -1,0 +1,325 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/conversations
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","inputs":[{"type":"message.input","role":"user","content":"Find
+        the official Ruby 3.4.0 release announcement. Give its date and a citation."}],"instructions":"Search
+        once for the first request. Answer subsequent requests from the existing results.","completion_args":{},"tools":[{"type":"web_search"}],"store":false,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 20:54:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a07da6-f9ab-7d8f-97fe-5e6dc81ca0c7
+      X-Kong-Request-Id:
+      - 01a07da6-f9ab-7d8f-97fe-5e6dc81ca0c7
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '90272'
+      X-Ratelimit-Limit-Web-Search-Minute:
+      - '30'
+      X-Ratelimit-Remaining-Web-Search-Minute:
+      - '29'
+      X-Ratelimit-Limit-Web-Search-Day:
+      - '10000'
+      X-Ratelimit-Remaining-Web-Search-Day:
+      - '9992'
+      X-Envoy-Upstream-Service-Time:
+      - '2861'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '2862'
+      X-Kong-Proxy-Latency:
+      - '11'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJvYmplY3QiOiJjb252ZXJzYXRpb24ucmVzcG9uc2UiLCJjb252ZXJzYXRpb25faWQiOiJjb252XzAxYTA3ZGE2ZjlkMDcyMjlhZTAxMDZkYzZkZTQzY2JiIiwib3V0cHV0cyI6W3sib2JqZWN0IjoiZW50cnkiLCJ0eXBlIjoidG9vbC5leGVjdXRpb24iLCJjcmVhdGVkX2F0IjoiMjAyNi0wOS0wN1QyMDo1NDo1MC42ODA4MzFaIiwiY29tcGxldGVkX2F0IjoiMjAyNi0wOS0wN1QyMDo1NDo1Mi4yMTIzNDZaIiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImlkIjoidG9vbF9leGVjXzAxYTA3ZGE2ZmMzODc1OTY4YzViOWMzY2Q5NWYzNmFjIiwibmFtZSI6IndlYl9zZWFyY2giLCJhcmd1bWVudHMiOiJ7XCJxdWVyeVwiOiBcIlJ1YnkgMy40LjAgb2ZmaWNpYWwgcmVsZWFzZSBhbm5vdW5jZW1lbnQgZGF0ZVwifSIsImZ1bmN0aW9uIjoid2ViX3NlYXJjaCIsImluZm8iOnsicmVzdWx0Ijoie1wiOHpPOUk3WjFcIjoge1widXJsXCI6IFwiaHR0cHM6Ly93d3cuZmFzdHJ1YnkuaW8vYmxvZy9ydWJ5LTMtNC0wLXJlbGVhc2VkLmh0bWxcIiwgXCJ0aXRsZVwiOiBcIlJ1YnkgMy40LjAgUmVsZWFzZWQ6IFdoYXTigJlzIE5ldywgSW1wcm92ZWQsIGFuZCBCcmVha2luZyAtIEZhc3RSdWJ5LmlvIHwgUmFpbHMgVXBncmFkZSBTZXJ2aWNlXCIsIFwiZGVzY3JpcHRpb25cIjogXCJSdWJ5IDMuNC4wIHdhcyByZWxlYXNlZCBvbiA8c3Ryb25nPkRlY2VtYmVyIDI1LCAyMDI0PC9zdHJvbmc+LCBicmluZ2luZyBleGNpdGluZyBuZXcgZmVhdHVyZXMsIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50cywgYW5kIHNvbWUgYnJlYWtpbmcgY2hhbmdlcy5cIiwgXCJzbmlwcGV0c1wiOiBbXCJSdWJ5IDMuNC4wIHdhcyByZWxlYXNlZCBvbiA8c3Ryb25nPkRlY2VtYmVyIDI1LCAyMDI0PC9zdHJvbmc+LCBicmluZ2luZyBleGNpdGluZyBuZXcgZmVhdHVyZXMsIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50cywgYW5kIHNvbWUgYnJlYWtpbmcgY2hhbmdlcy5cIiwgXCJXYW50IHRvIGtub3cgd2hhdOKAmXMgbmV4dCBmb3IgUnVieT8gQ2hlY2sgb3V0IHRoZSBvZmZpY2lhbCBSdWJ5IHJvYWRtYXAgb3BlbnMgYSBuZXcgd2luZG93IC4gUnVieSAzLjQuMCBSZWxlYXNlIEFubm91bmNlbWVudCBvcGVucyBhIG5ldyB3aW5kb3dcIiwgXCJSdWJ5IDMuNC4wIHdhcyByZWxlYXNlZCBvbiBEZWNlbWJlciAyNSwgMjAyNCwgYnJpbmdpbmcgZXhjaXRpbmcgbmV3IGZlYXR1cmVzLCBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudHMsIGFuZCBzb21lIGJyZWFraW5nIGNoYW5nZXMuXCIsIFwiU3RyaW5nIGxpdGVyYWxzOiBNdXRhdGluZyBzdHJpbmcgbGl0ZXJhbHMgd2l0aG91dCBhIGZyb3plbl9zdHJpbmdfbGl0ZXJhbCBjb21tZW50IG5vdyB0cmlnZ2VycyBhIGRlcHJlY2F0aW9uIHdhcm5pbmcuIFRoaXMgY2hhbmdlIGlzIHBhcnQgb2YgUnVieeKAmXMgb25nb2luZyBlZmZvcnQgdG8gbWFrZSBmcm96ZW4gc3RyaW5nIGxpdGVyYWxzIHRoZSBkZWZhdWx0IGluIGZ1dHVyZSB2ZXJzaW9ucy5cIiwgXCJTdGFuZGFyZCBsaWJyYXJ5IHVwZGF0ZXM6IFJ1YnlHZW1zLCBCdW5kbGVyLCBKU09OLCBUZW1wZmlsZSwgYW5kIG1vcmUgZ2V0IHVzZWZ1bCB1cGRhdGVzLlwiXSwgXCJkYXRlXCI6IG51bGwsIFwicmFua1wiOiAwLCBcInNvdXJjZVwiOiBcImJyYXZlXCIsIFwibWV0YWRhdGFcIjoge1wibGFuZ1wiOiBcImVuXCIsIFwidGh1bWJuYWlsXCI6IFwiaHR0cHM6Ly93d3cuZmFzdHJ1YnkuaW8vYmxvZy9hc3NldHMvaW1hZ2VzL2hlYWRlci9ydWJ5LTMtNC0wLmpwZ1wiLCBcImZhdmljb25cIjogXCJodHRwczovL2ltZ3Muc2VhcmNoLmJyYXZlLmNvbS9RQjZzQTZRMEttX1BZUE9MaFVxN0pMQ0xLNjl6RUlNdENTa0JZVV9aTHhzL3JzOmZpdDozMjozMjoxOjAvZzpjZS9hSFIwY0RvdkwyWmhkbWxqL2IyNXpMbk5sWVhKamFDNWkvY21GMlpTNWpiMjB2YVdOdi9ibk12WkRjek9HTXpORFZtL056VTBORGRrTmpWak1XSmovTVdGaU5EQTRNamMyTjJFeC9Zemt5WWpCa1kySTNNVGN4L1ptUXpNakJpTlRNd05UVXcvTlRFMk1EQTRaQzkzZDNjdS9abUZ6ZEhKMVlua3VhVzh2XCIsIFwic291cmNlXCI6IFwiYnJhdmVcIn0sIFwiY2FuX29wZW5cIjogdHJ1ZX0sIFwibk5HdUpHUFBcIjoge1widXJsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjQvMTIvMjUvcnVieS0zLTQtMC1yZWxlYXNlZC9cIiwgXCJ0aXRsZVwiOiBcIlJ1YnkgMy40LjAgUmVsZWFzZWQgfCBSdWJ5XCIsIFwiZGVzY3JpcHRpb25cIjogXCJXZSBhcmUgcGxlYXNlZCB0byBhbm5vdW5jZSB0aGUgcmVsZWFzZSBvZiBSdWJ5IDMuNC4wLiBSdWJ5IDMuNCBhZGRzIGl0IGJsb2NrIHBhcmFtZXRlciByZWZlcmVuY2UsY2hhbmdlcyBQcmlzbSBhcyBkZWZhdWx0IHBhcnNlciwgYWRkcyBIYXBweSBFeWViYWxscyBWZXJzaW9uLi4uXCIsIFwic25pcHBldHNcIjogW1wiV2UgYXJlIHBsZWFzZWQgdG8gYW5ub3VuY2UgdGhlIHJlbGVhc2Ugb2YgUnVieSAzLjQuMC4gUnVieSAzLjQgYWRkcyBpdCBibG9jayBwYXJhbWV0ZXIgcmVmZXJlbmNlLGNoYW5nZXMgUHJpc20gYXMgZGVmYXVsdCBwYXJzZXIsIGFkZHMgSGFwcHkgRXllYmFsbHMgVmVyc2lvbi4uLlwiLCBcIlJ1YnkgMy4zLjEyIGhhcyBiZWVuIHJlbGVhc2VkLiAuLi4gUnVieSA0LjAuNiBoYXMgYmVlbiByZWxlYXNlZC5cIiwgXCJSdWJ5IDMuNC4xMCBoYXMgYmVlbiByZWxlYXNlZC4gLi4uIFJ1YnkgNC4wLjUgaGFzIGJlZW4gcmVsZWFzZWQuXCIsIFwiV2l0aCB0aG9zZSBjaGFuZ2VzLCA0OTQyIGZpbGVzIGNoYW5nZWQsIDIwMjI0NCBpbnNlcnRpb25zKCspLCAyNTU1MjggZGVsZXRpb25zKC0pIHNpbmNlIFJ1YnkgMy4zLjAhIE1lcnJ5IENocmlzdG1hcywgSGFwcHkgSG9saWRheXMsIGFuZCBlbmpveSBwcm9ncmFtbWluZyB3aXRoIFJ1YnkgMy40IVwiLCBcIlNJWkU6IDIzMTUzMDIyIFNIQTE6IDhjY2I1NjE4NDhhN2M0NjBhZTA4ZTFhMTIwYTQ3YzRhODhhNzkzMzUgU0hBMjU2OiAwNjhjODUyMzQ0MjE3NGJkMzQwMGU3ODZmNGE2OTUyMzUyYzgyYjFiOWY2MjEwZmQxN2ZiNDgyMzA4NmQzMzc5IFNIQTUxMjogYmM3MGVjYmEyN2QxY2RlYTAwODc5ZjAzNDg3Y2FkMTM3YTdkOWFiMmFkMzc2Y2ZiN2E2NTc4MGFkMTRkYTYzN2ZhMzk0NGVlZWVkZTJjMDRhYjMxZWVhZmI5NzBjNjRjY2ZlZWI4NTRjOTljMTA5MzkzN2VjYzExNjU3MzE1NjIgwrcgaHR0cHM6Ly9jYWNoZS5ydWJ5LWxhbmcub3JnL3B1Yi9ydWJ5LzMuNC9ydWJ5LTMuNC4wLnRhci54elwiXSwgXCJkYXRlXCI6IG51bGwsIFwicmFua1wiOiAxLCBcInNvdXJjZVwiOiBcImJyYXZlXCIsIFwibWV0YWRhdGFcIjoge1wibGFuZ1wiOiBcImVuXCIsIFwidGh1bWJuYWlsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9pbWFnZXMvb2ctaW1hZ2UucG5nXCIsIFwiZmF2aWNvblwiOiBcImh0dHBzOi8vaW1ncy5zZWFyY2guYnJhdmUuY29tL2lYNkdfRzlOX04zUHJ3amtaaUtVMkt6dUVfUjk1azlmR25XTjJJMUltMVEvcnM6Zml0OjMyOjMyOjE6MC9nOmNlL2FIUjBjRG92TDJaaGRtbGovYjI1ekxuTmxZWEpqYUM1aS9jbUYyWlM1amIyMHZhV052L2JuTXZOelpsT0RsbU1UVmwvTlRZNE5UazBaVFF4WVRrNS9ORGN4WVRsa05UVTFaREU0L1ltVTNaV0U1WXpSa05tSTAvWkdFMFl6Rm1ZVE5pTURRMi9PVGszT1RCbE5DOTNkM2N1L2NuVmllUzFzWVc1bkxtOXkvWnk4XCIsIFwic291cmNlXCI6IFwiYnJhdmVcIn0sIFwiY2FuX29wZW5cIjogdHJ1ZX0sIFwicFVsY1BWTmZcIjoge1widXJsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9kb3dubG9hZHMvcmVsZWFzZXMvXCIsIFwidGl0bGVcIjogXCJSdWJ5IFJlbGVhc2VzIHwgUnVieVwiLCBcImRlc2NyaXB0aW9uXCI6IFwiVGhpcyBpcyBhIGxpc3Qgb2YgUnVieSByZWxlYXNlcy4gVGhlIHNob3duIGRhdGVzIGNvcnJlc3BvbmQgdG8gdGhlIHB1YmxpY2F0aW9uIGRhdGVzIG9mIHRoZSBFbmdsaXNoIHZlcnNpb25zIG9mIHJlbGVhc2UgcG9zdHMgYW5kIG1heSBkaWZmZXIgZnJvbSB0aGUgYWN0dWFsIGNyZWF0aW9uIGRhdGVzIG9mIHRoZSBzb3VyY2UgdGFyYmFsbHMuXCIsIFwic25pcHBldHNcIjogW1wiVGhpcyBpcyBhIGxpc3Qgb2YgUnVieSByZWxlYXNlcy4gVGhlIHNob3duIGRhdGVzIGNvcnJlc3BvbmQgdG8gdGhlIHB1YmxpY2F0aW9uIGRhdGVzIG9mIHRoZSBFbmdsaXNoIHZlcnNpb25zIG9mIHJlbGVhc2UgcG9zdHMgYW5kIG1heSBkaWZmZXIgZnJvbSB0aGUgYWN0dWFsIGNyZWF0aW9uIGRhdGVzIG9mIHRoZSBzb3VyY2UgdGFyYmFsbHMuXCIsIFwiVGhpcyBwYWdlIGxpc3RzIGluZGl2aWR1YWwgUnVieSByZWxlYXNlcy57OiAuc3VtbWFyeX1Gb3IgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGN1cnJlbnQgbWFpbnRlbmFuY2Ugc3RhdHVzIG9mIHRoZSB2YXJpb3VzUnVieSBicmFuY2hlcyBzZWUgdGhlW0JyYW5jaGVzIHBhZ2VdKC4uLlwiLCBcIlRoaXMgaXMgYSBsaXN0IG9mIFJ1YnkgcmVsZWFzZXMuIFRoZSBzaG93biBkYXRlcyBjb3JyZXNwb25kIHRvIHRoZSBwdWJsaWNhdGlvbiBkYXRlcyBvZiB0aGUgRW5nbGlzaCB2ZXJzaW9ucyBvZiByZWxlYXNlIHBvc3RzIGFuZCBtYXkgZGlmZmVyIGZyb20gdGhlIGFjdHVhbCBjcmVhdGlvbiBkYXRlcyBvZiB0aGUgc291cmNlIHRhcmJhbGxzLlwiXSwgXCJkYXRlXCI6IG51bGwsIFwicmFua1wiOiAyLCBcInNvdXJjZVwiOiBcImJyYXZlXCIsIFwibWV0YWRhdGFcIjoge1wibGFuZ1wiOiBcImVuXCIsIFwidGh1bWJuYWlsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9pbWFnZXMvb2ctaW1hZ2UucG5nXCIsIFwiZmF2aWNvblwiOiBcImh0dHBzOi8vaW1ncy5zZWFyY2guYnJhdmUuY29tL2lYNkdfRzlOX04zUHJ3amtaaUtVMkt6dUVfUjk1azlmR25XTjJJMUltMVEvcnM6Zml0OjMyOjMyOjE6MC9nOmNlL2FIUjBjRG92TDJaaGRtbGovYjI1ekxuTmxZWEpqYUM1aS9jbUYyWlM1amIyMHZhV052L2JuTXZOelpsT0RsbU1UVmwvTlRZNE5UazBaVFF4WVRrNS9ORGN4WVRsa05UVTFaREU0L1ltVTNaV0U1WXpSa05tSTAvWkdFMFl6Rm1ZVE5pTURRMi9PVGszT1RCbE5DOTNkM2N1L2NuVmllUzFzWVc1bkxtOXkvWnk4XCIsIFwic291cmNlXCI6IFwiYnJhdmVcIn0sIFwiY2FuX29wZW5cIjogdHJ1ZX0sIFwiVnBjdWRGdzFcIjoge1widXJsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjQvMDUvMTYvcnVieS0zLTQtMC1wcmV2aWV3MS1yZWxlYXNlZC9cIiwgXCJ0aXRsZVwiOiBcIlJ1YnkgMy40LjAgcHJldmlldzEgUmVsZWFzZWQgfCBSdWJ5XCIsIFwiZGVzY3JpcHRpb25cIjogXCJXZSBhcmUgcGxlYXNlZCB0byBhbm5vdW5jZSB0aGUgcmVsZWFzZSBvZiBSdWJ5IDMuNC4wLXByZXZpZXcxLlwiLCBcInNuaXBwZXRzXCI6IFtcIldlIGFyZSBwbGVhc2VkIHRvIGFubm91bmNlIHRoZSByZWxlYXNlIG9mIFJ1YnkgMy40LjAtcHJldmlldzEuXCIsIFwiUnVieSAzLjMuMTIgaGFzIGJlZW4gcmVsZWFzZWQuIC4uLiBSdWJ5IDQuMC42IGhhcyBiZWVuIHJlbGVhc2VkLlwiLCBcIlJ1YnkgMy40LjEwIGhhcyBiZWVuIHJlbGVhc2VkLiAuLi4gUnVieSA0LjAuNSBoYXMgYmVlbiByZWxlYXNlZC5cIiwgXCJodHRwczovL2NhY2hlLnJ1YnktbGFuZy5vcmcvcHViL3J1YnkvMy40L3J1YnktMy40LjAtcHJldmlldzEuemlwXCIsIFwiU2VlIEdpdEh1YiByZWxlYXNlcyBsaWtlIExvZ2dlciBvciBjaGFuZ2Vsb2cgZm9yIGRldGFpbHMgb2YgdGhlIGRlZmF1bHQgZ2VtcyBvciBidW5kbGVkIGdlbXMuIFNlZSBORVdTIG9yIGNvbW1pdCBsb2dzIGZvciBtb3JlIGRldGFpbHMuIFdpdGggdGhvc2UgY2hhbmdlcywgMzI4MyBmaWxlcyBjaGFuZ2VkLCAxMDc0NDkgaW5zZXJ0aW9ucygrKSwgMTE1MzgwIGRlbGV0aW9ucygtKSBzaW5jZSBSdWJ5IDMuMy4wISBodHRwczovL2NhY2hlLnJ1YnktbGFuZy5vcmcvcHViL3J1YnkvMy40L3J1YnktMy40LjAtcHJldmlldzEudGFyLmd6XCJdLCBcImRhdGVcIjogbnVsbCwgXCJyYW5rXCI6IDMsIFwic291cmNlXCI6IFwiYnJhdmVcIiwgXCJtZXRhZGF0YVwiOiB7XCJsYW5nXCI6IFwiZW5cIiwgXCJ0aHVtYm5haWxcIjogXCJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2ltYWdlcy9vZy1pbWFnZS5wbmdcIiwgXCJmYXZpY29uXCI6IFwiaHR0cHM6Ly9pbWdzLnNlYXJjaC5icmF2ZS5jb20vaVg2R19HOU5fTjNQcndqa1ppS1UyS3p1RV9SOTVrOWZHbldOMkkxSW0xUS9yczpmaXQ6MzI6MzI6MTowL2c6Y2UvYUhSMGNEb3ZMMlpoZG1sai9iMjV6TG5ObFlYSmphQzVpL2NtRjJaUzVqYjIwdmFXTnYvYm5Ndk56WmxPRGxtTVRWbC9OVFk0TlRrMFpUUXhZVGs1L05EY3hZVGxrTlRVMVpERTQvWW1VM1pXRTVZelJrTm1JMC9aR0UwWXpGbVlUTmlNRFEyL09UazNPVEJsTkM5M2QzY3UvY25WaWVTMXNZVzVuTG05eS9aeThcIiwgXCJzb3VyY2VcIjogXCJicmF2ZVwifSwgXCJjYW5fb3BlblwiOiB0cnVlfSwgXCJoSGlmUlBCOFwiOiB7XCJ1cmxcIjogXCJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL25ld3MvMjAyNS8xMi8xOC9ydWJ5LTQtMC0wLXByZXZpZXczLXJlbGVhc2VkL1wiLCBcInRpdGxlXCI6IFwiUnVieSA0LjAuMCBwcmV2aWV3MyBSZWxlYXNlZCB8IFJ1YnlcIiwgXCJkZXNjcmlwdGlvblwiOiBcIldpdGggdGhvc2UgY2hhbmdlcywgMzc3NiBmaWxlcyBjaGFuZ2VkLCAyMjI4MDAgaW5zZXJ0aW9ucygrKSwgMjkzNjE3IGRlbGV0aW9ucygtKSBzaW5jZSBSdWJ5IDMuNC4wIVwiLCBcInNuaXBwZXRzXCI6IFtcIldpdGggdGhvc2UgY2hhbmdlcywgMzc3NiBmaWxlcyBjaGFuZ2VkLCAyMjI4MDAgaW5zZXJ0aW9ucygrKSwgMjkzNjE3IGRlbGV0aW9ucygtKSBzaW5jZSBSdWJ5IDMuNC4wIVwiLCBcIkEgbmV3IHRvcGxldmVsIG1vZHVsZSBSdWJ5IGhhcyBiZWVuIGRlZmluZWQsIHdoaWNoIGNvbnRhaW5zIFJ1YnktcmVsYXRlZCBjb25zdGFudHMuIFRoaXMgbW9kdWxlIHdhcyByZXNlcnZlZCBpbiBSdWJ5IDMuNCBhbmQgaXMgbm93IG9mZmljaWFsbHkgZGVmaW5lZC5cIiwgXCJEcm9wcGVkIHN1cHBvcnQgZm9yIE1TVkMgdmVyc2lvbnMgb2xkZXIgdGhhbiAxNC4wIChfTVNDX1ZFUiAxOTAwKS4gVGhpcyBtZWFucyBWaXN1YWwgU3R1ZGlvIDIwMTUgb3IgbGF0ZXIgaXMgbm93IHJlcXVpcmVkLiBUaGUgZm9sbG93aW5nIG1ldGhvZHMgd2VyZSByZW1vdmVkIGZyb20gUmFjdG9yIGR1ZSB0byB0aGUgYWRkaXRpb24gb2YgUmFjdG9yOjpQb3J0OiAuLi4gT2JqZWN0U3BhY2UuX2lkMnJlZiBpcyBkZXByZWNhdGVkLiBbRmVhdHVyZSAjMTU0MDhdIFByb2Nlc3M6OlN0YXR1cyMmIGFuZCBQcm9jZXNzOjpTdGF0dXMjPj4gaGF2ZSBiZWVuIHJlbW92ZWQuIFRoZXkgd2VyZSBkZXByZWNhdGVkIGluIFJ1YnkgMy4zLlwiLCBcIk90aGVyIGNoYW5nZXMgYXJlIGxpc3RlZCBpbiB0aGUgZm9sbG93aW5nIHNlY3Rpb25zLiBXZSBhbHNvIGxpc3RlZCByZWxlYXNlIGhpc3RvcnkgZnJvbSB0aGUgcHJldmlvdXMgYnVuZGxlZCB2ZXJzaW9uIHRoYXQgaXMgUnVieSAzLjMuMCBpZiBpdCBoYXMgR2l0SHViIHJlbGVhc2VzLlwiLCBcIldpdGggdGhvc2UgY2hhbmdlcywgMzc3NiBmaWxlcyBjaGFuZ2VkLCAyMjI4MDAgaW5zZXJ0aW9ucygrKSwgMjkzNjE3IGRlbGV0aW9ucygtKSBzaW5jZSBSdWJ5IDMuNC4wIVwiXSwgXCJkYXRlXCI6IG51bGwsIFwicmFua1wiOiA0LCBcInNvdXJjZVwiOiBcImJyYXZlXCIsIFwibWV0YWRhdGFcIjoge1wibGFuZ1wiOiBcImVuXCIsIFwidGh1bWJuYWlsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9pbWFnZXMvb2ctaW1hZ2UucG5nXCIsIFwiZmF2aWNvblwiOiBcImh0dHBzOi8vaW1ncy5zZWFyY2guYnJhdmUuY29tL2lYNkdfRzlOX04zUHJ3amtaaUtVMkt6dUVfUjk1azlmR25XTjJJMUltMVEvcnM6Zml0OjMyOjMyOjE6MC9nOmNlL2FIUjBjRG92TDJaaGRtbGovYjI1ekxuTmxZWEpqYUM1aS9jbUYyWlM1amIyMHZhV052L2JuTXZOelpsT0RsbU1UVmwvTlRZNE5UazBaVFF4WVRrNS9ORGN4WVRsa05UVTFaREU0L1ltVTNaV0U1WXpSa05tSTAvWkdFMFl6Rm1ZVE5pTURRMi9PVGszT1RCbE5DOTNkM2N1L2NuVmllUzFzWVc1bkxtOXkvWnk4XCIsIFwic291cmNlXCI6IFwiYnJhdmVcIn0sIFwiY2FuX29wZW5cIjogdHJ1ZX0sIFwiVm8yQm9PaWtcIjoge1widXJsXCI6IFwiaHR0cHM6Ly9ibG9nLnNhZWxvdW4uY29tLzIwMjUvMTIvMjQvd2hhdC1pcy1uZXctaW4tcnVieS00L1wiLCBcInRpdGxlXCI6IFwiV2hhdCBJcyBOZXcgSW4gUnVieSA0LjAgfCBTYWVsb3VuIEJsb2dcIiwgXCJkZXNjcmlwdGlvblwiOiBcIlJ1YnkgNC4wIGlzIGhlcmUsIHJlbGVhc2luZyBvbiA8c3Ryb25nPkNocmlzdG1hcyBEYXkgMjAyNTwvc3Ryb25nPiwgbWFya2luZyAzMCB5ZWFycyBzaW5jZSBSdWJ54oCZcyBmaXJzdCBwdWJsaWMgcmVsZWFzZS5cIiwgXCJzbmlwcGV0c1wiOiBbXCJSdWJ5IDQuMCBpcyBoZXJlLCByZWxlYXNpbmcgb24gPHN0cm9uZz5DaHJpc3RtYXMgRGF5IDIwMjU8L3N0cm9uZz4sIG1hcmtpbmcgMzAgeWVhcnMgc2luY2UgUnVieeKAmXMgZmlyc3QgcHVibGljIHJlbGVhc2UuXCIsIFwiVGhpcyByZWxlYXNlIHBhY2tzIHNvbWUgZ2VudWluZWx5IGV4Y2l0aW5nIGZlYXR1cmVzLiBMZXTigJlzIGV4cGxvcmUgdGhlIG1vc3QgaW1wYWN0ZnVsIGNoYW5nZXMgaW4gUnVieSA0LjAuXCIsIFwiUnVieSA0LjAgaXMgaGVyZSwgcmVsZWFzaW5nIG9uIENocmlzdG1hcyBEYXkgMjAyNSwgbWFya2luZyAzMCB5ZWFycyBzaW5jZSBSdWJ54oCZcyBmaXJzdCBwdWJsaWMgcmVsZWFzZS5cIiwgXCJSdWJ5IDQuMCBpcyBhIHNpZ25pZmljYW50IHJlbGVhc2UgdGhhdCBsYXlzIGdyb3VuZHdvcmsgZm9yIHRoZSBmdXR1cmUuXCIsIFwiQW1vbCBpcyBhIFNlbmlvciBTb2Z0d2FyZSBEZXZlbG9wZXIgd2hvIGNvbWJpbmVzIGhpcyBleHBlcnRpc2UgaW4gUnVieSBvbiBSYWlscyBhbmQgVnVlSlMgdG8gY3JlYXRlIGhpZ2hseSBwZXJmb3JtYW50IGFuZCBzY2FsYWJsZSB3ZWIgYXBwbGljYXRpb25zLiBIZSBpcyBwYXNzaW9uYXRlIHRvIGV4cGxvcmUgZGlmZmVyZW50IHRlY2hub2xvZ2llcyBhbmQgbWVudG9yIGp1bmlvcnMgaW4gdGhlIHdlYiBkZXZlbG9wbWVudCBpbmR1c3RyeS5cIl0sIFwiZGF0ZVwiOiBudWxsLCBcInJhbmtcIjogNSwgXCJzb3VyY2VcIjogXCJicmF2ZVwiLCBcIm1ldGFkYXRhXCI6IHtcImxhbmdcIjogXCJlblwiLCBcInRodW1ibmFpbFwiOiBcImh0dHBzOi8vYmxvZy5zYWVsb3VuLmNvbS9zYWVsb3VuX2Jsb2dfYW1wLnBuZ1wiLCBcImZhdmljb25cIjogXCJodHRwczovL2ltZ3Muc2VhcmNoLmJyYXZlLmNvbS9yZXpnZU1LMHFNVXpDQkpSQkw5YUw0a2hOT1ZKZ1NsQXpYRnVxT0NFekU0L3JzOmZpdDozMjozMjoxOjAvZzpjZS9hSFIwY0RvdkwyWmhkbWxqL2IyNXpMbk5sWVhKamFDNWkvY21GMlpTNWpiMjB2YVdOdi9ibk12Tm1aak5tUTFNelk1L1kySXpaRGxoTW1VMU16UmgvT1dSak1UZGtZak5tTVRjNC9abVJoTmpnM09UQXdOekEyL01UZzFOV000WWpjM1pHSXovWldNNU56WmlPQzlpYkc5bi9Mbk5oWld4dmRXNHVZMjl0L0x3XCIsIFwic291cmNlXCI6IFwiYnJhdmVcIn0sIFwiY2FuX29wZW5cIjogdHJ1ZX0sIFwiMHBGVHlIVUlcIjoge1widXJsXCI6IFwiaHR0cHM6Ly9lbmRvZmxpZmUuZGF0ZS9ydWJ5XCIsIFwidGl0bGVcIjogXCJSdWJ5IHwgZW5kb2ZsaWZlLmRhdGVcIiwgXCJkZXNjcmlwdGlvblwiOiBcIlNpbmNlIFJ1YnkgMi4xLCBhIG5ldyBtYWpvciB2ZXJzaW9uIG9mIFJ1YnkgaGFzIGJlZW4gcmVsZWFzZWQgZXZlcnkgeWVhciBvbiA8c3Ryb25nPkRlY2VtYmVyIDI1dGg8L3N0cm9uZz4sIGFuZCBFT0xlZCAzIHllYXJzLCAzIG1vbnRocyBsYXRlci5cIiwgXCJzbmlwcGV0c1wiOiBbXCJTaW5jZSBSdWJ5IDIuMSwgYSBuZXcgbWFqb3IgdmVyc2lvbiBvZiBSdWJ5IGhhcyBiZWVuIHJlbGVhc2VkIGV2ZXJ5IHllYXIgb24gPHN0cm9uZz5EZWNlbWJlciAyNXRoPC9zdHJvbmc+LCBhbmQgRU9MZWQgMyB5ZWFycywgMyBtb250aHMgbGF0ZXIuXCIsIFwiU2luY2UgUnVieSAyLjEsIGEgbmV3IG1ham9yIHZlcnNpb24gb2YgUnVieSBoYXMgYmVlbiByZWxlYXNlZCBldmVyeSB5ZWFyIG9uIERlY2VtYmVyIDI1dGgsIGFuZCBFT0xlZCAzIHllYXJzLCAzIG1vbnRocyBsYXRlci5cIiwgXCJZb3Ugc2hvdWxkIGJlIHJ1bm5pbmcgb25lIG9mIHRoZSBzdXBwb3J0ZWQgcmVsZWFzZSBudW1iZXJzIGxpc3RlZCBhYm92ZSBpbiB0aGUgcmlnaHRtb3N0IGNvbHVtbi4gLi4uIFlvdSBjYW4gc3VibWl0IGFuIGltcHJvdmVtZW50IHRvIHRoaXMgcGFnZSBvbiBHaXRIdWIgLiBUaGlzIHBhZ2UgaGFzIGFsc28gYSBjb3JyZXNwb25kaW5nIFRhbGsgUGFnZSDwn5KsLiBBIEpTT04gdmVyc2lvbiBvZiB0aGlzIHBhZ2UgaXMgYXZhaWxhYmxlIGF0IC9hcGkvdjEvcHJvZHVjdHMvcnVieS8g8J+ToS4gU2VlIHRoZSBBUEkgRG9jdW1lbnRhdGlvbiDwn5OWIGZvciBtb3JlIGluZm9ybWF0aW9uLiBZb3UgY2FuIHN1YnNjcmliZSB0byB0aGUgUlNTIGZlZWQgYXQgL3J1YnkuYXRvbSDimpvvuI8gb3IgdG8gdGhlIGlDYWxlbmRhciBmZWVkIGF0IC9jYWxlbmRhci9ydWJ5LmljcyDwn5OFLlwiLCBcIlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSB3aXRoIGEgZm9jdXMgb24gc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5LlwiXSwgXCJkYXRlXCI6IG51bGwsIFwicmFua1wiOiA2LCBcInNvdXJjZVwiOiBcImJyYXZlXCIsIFwibWV0YWRhdGFcIjoge1wibGFuZ1wiOiBcImVuXCIsIFwidGh1bWJuYWlsXCI6IFwiaHR0cHM6Ly9lbmRvZmxpZmUuZGF0ZS9hc3NldHMvbG9nby01MTJ4NTEyLnBuZ1wiLCBcImZhdmljb25cIjogXCJodHRwczovL2ltZ3Muc2VhcmNoLmJyYXZlLmNvbS8tTlNWT2NXakhsbkZTdmJfSk5tYzdyMVh4M21HSmZTN1Vnb1hneF9hZkw0L3JzOmZpdDozMjozMjoxOjAvZzpjZS9hSFIwY0RvdkwyWmhkbWxqL2IyNXpMbk5sWVhKamFDNWkvY21GMlpTNWpiMjB2YVdOdi9ibk12TVRCbFlqVTVaRGhrL1pqSTJNRGxtT1RKaE1UWmgvWVRneE9EWTVNMkl3TjJaay9OVFF3T0RjM09HWTJPV0ZrL05qWTRNVFExTW1OaVpqRmsvTTJVMk5ERXlaQzlsYm1Sdi9abXhwWm1VdVpHRjBaUzhcIiwgXCJzb3VyY2VcIjogXCJicmF2ZVwifSwgXCJjYW5fb3BlblwiOiB0cnVlfSwgXCJQM1M4TU94SFwiOiB7XCJ1cmxcIjogXCJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL25ld3MvMjAyNS8wNS8xNC9ydWJ5LTMtNC00LXJlbGVhc2VkL1wiLCBcInRpdGxlXCI6IFwiUnVieSAzLjQuNCBSZWxlYXNlZCB8IFJ1YnlcIiwgXCJkZXNjcmlwdGlvblwiOiBcIlBvc3RlZCBieSBrMGt1YnVuIG9uIDxzdHJvbmc+MTQgTWF5IDIwMjU8L3N0cm9uZz4gwrcgUnVieSAzLjQuNCBoYXMgYmVlbiByZWxlYXNlZFwiLCBcInNuaXBwZXRzXCI6IFtcIlBvc3RlZCBieSBrMGt1YnVuIG9uIDxzdHJvbmc+MTQgTWF5IDIwMjU8L3N0cm9uZz4gwrcgUnVieSAzLjQuNCBoYXMgYmVlbiByZWxlYXNlZFwiLCBcIlJ1YnkgNC4wLjYgaGFzIGJlZW4gcmVsZWFzZWQuXCIsIFwiUnVieSA0LjAuNSBoYXMgYmVlbiByZWxlYXNlZC5cIiwgXCJTSVpFOiAxNzI1NTM4OCBTSEExOiA4M2RkZjk4M2MxOTRiMzUzNjM0ZTkxYTg2YjQ2NmNlMGQwMWJmZjM5IFNIQTI1NjogZjc2ZDYzZWZlOTQ5OWRlZGQ4NTI2Yjc0MzY1YzBjODExYWYwMGRjOWZlYjBiZWQ3ZjUzNTY0ODg0NzZlMjhmNCBTSEE1MTI6IDBkMjU4Y2Y3OTBkYWFkNDI0Yzg2NjQwNGI1Y2JkYzhhZGJhMGU0ZTEzNzY0ODQ3YTg5YWRmMjMzNTIyOWU1MTg0MDk1YzlmM2U5NTk0NzA1ODk3Njk3ZTQ4YmNjMzIyZDlhOWY5MTliMDQwNDdhYmIyMDc1ZGFjYTlmY2U4ODcxXCIsIFwiUnVieSAzLjQuNCBoYXMgYmVlbiByZWxlYXNlZC5cIl0sIFwiZGF0ZVwiOiBudWxsLCBcInJhbmtcIjogNywgXCJzb3VyY2VcIjogXCJicmF2ZVwiLCBcIm1ldGFkYXRhXCI6IHtcImxhbmdcIjogXCJlblwiLCBcInRodW1ibmFpbFwiOiBcImh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvaW1hZ2VzL29nLWltYWdlLnBuZ1wiLCBcImZhdmljb25cIjogXCJodHRwczovL2ltZ3Muc2VhcmNoLmJyYXZlLmNvbS9pWDZHX0c5Tl9OM1Byd2prWmlLVTJLenVFX1I5NWs5ZkduV04ySTFJbTFRL3JzOmZpdDozMjozMjoxOjAvZzpjZS9hSFIwY0RvdkwyWmhkbWxqL2IyNXpMbk5sWVhKamFDNWkvY21GMlpTNWpiMjB2YVdOdi9ibk12TnpabE9EbG1NVFZsL05UWTROVGswWlRReFlUazUvTkRjeFlUbGtOVFUxWkRFNC9ZbVUzWldFNVl6UmtObUkwL1pHRTBZekZtWVROaU1EUTIvT1RrM09UQmxOQzkzZDNjdS9jblZpZVMxc1lXNW5MbTl5L1p5OFwiLCBcInNvdXJjZVwiOiBcImJyYXZlXCJ9LCBcImNhbl9vcGVuXCI6IHRydWV9LCBcIkRxTENrRlo5XCI6IHtcInVybFwiOiBcImh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvZW4vbmV3cy8yMDI2LzAxLzEzL3J1YnktNC0wLTEtcmVsZWFzZWQvXCIsIFwidGl0bGVcIjogXCJSdWJ5IDQuMC4xIFJlbGVhc2VkIHwgUnVieVwiLCBcImRlc2NyaXB0aW9uXCI6IFwiV2UgaW50ZW5kIHRvIHJlbGVhc2UgdGhlIGxhdGVzdCBzdGFibGUgUnVieSB2ZXJzaW9uIChjdXJyZW50bHkgUnVieSA0LjApIDxzdHJvbmc+ZXZlcnkgdHdvIG1vbnRocyBmb2xsb3dpbmcgdGhlIG1vc3QgcmVjZW50IHJlbGVhc2U8L3N0cm9uZz4uIFJ1YnkgNC4wLjIgd2lsbCBiZSByZWxlYXNlZCBpbiBNYXJjaCwgNC4wLjMgaW4gTWF5LCA0LjAuNCBpbiBKdWx5LCA0LjAuNSBpbiBTZXB0ZW1iZXIsIGFuZCA0LjAuNiBpbiBOb3ZlbWJlci5cIiwgXCJzbmlwcGV0c1wiOiBbXCJXZSBpbnRlbmQgdG8gcmVsZWFzZSB0aGUgbGF0ZXN0IHN0YWJsZSBSdWJ5IHZlcnNpb24gKGN1cnJlbnRseSBSdWJ5IDQuMCkgPHN0cm9uZz5ldmVyeSB0d28gbW9udGhzIGZvbGxvd2luZyB0aGUgbW9zdCByZWNlbnQgcmVsZWFzZTwvc3Ryb25nPi4gUnVieSA0LjAuMiB3aWxsIGJlIHJlbGVhc2VkIGluIE1hcmNoLCA0LjAuMyBpbiBNYXksIDQuMC40IGluIEp1bHksIDQuMC41IGluIFNlcHRlbWJlciwgYW5kIDQuMC42IGluIE5vdmVtYmVyLlwiLCBcIldlIGludGVuZCB0byByZWxlYXNlIHRoZSBsYXRlc3Qgc3RhYmxlIFJ1YnkgdmVyc2lvbiAoY3VycmVudGx5IFJ1YnkgNC4wKSBldmVyeSB0d28gbW9udGhzIGZvbGxvd2luZyB0aGUgbW9zdCByZWNlbnQgcmVsZWFzZS4gUnVieSA0LjAuMiB3aWxsIGJlIHJlbGVhc2VkIGluIE1hcmNoLCA0LjAuMyBpbiBNYXksIDQuMC40IGluIEp1bHksIDQuMC41IGluIFNlcHRlbWJlciwgYW5kIDQuMC42IGluIE5vdmVtYmVyLlwiLCBcIlJ1YnkgMy4zLjEyIGhhcyBiZWVuIHJlbGVhc2VkLiAuLi4gUnVieSA0LjAuNiBoYXMgYmVlbiByZWxlYXNlZC5cIiwgXCJSdWJ5IDMuNC4xMCBoYXMgYmVlbiByZWxlYXNlZC4gLi4uIFJ1YnkgNC4wLjUgaGFzIGJlZW4gcmVsZWFzZWQuXCIsIFwiU0laRTogMjM4MDczMDQgU0hBMTogMDFkYjU3NDZiYmIyOWIwMjhiZDQ0ZDUwNWExNDdkMDY4NjZiMWFiMiBTSEEyNTY6IDM5MjRiZTJkMDVkYjMwZjRlMzVmODU5YmYwMjhiZTg1ZjRiN2RkMDE3MTQxNDJmZDgyM2U0YWY1ZGUyZmFmOWQgU0hBNTEyOiBmNGVlYWQwOWM3MzU1Yjg3OGEzNDM0M2RkOGNmYjljNGMzNmYwMmFkM2I5YTdmZDQyOTgxZDcyMjQ0NGJlY2EwMTgyZGRlYTRmYzc3MWUyZTAxYTA1ZDlmMTQ5NzhhOTc5YmEwYmEzNTkwZDM2NmY1M2I2OTQ3ZjQzZmQ3OGFmZlwiXSwgXCJkYXRlXCI6IG51bGwsIFwicmFua1wiOiA4LCBcInNvdXJjZVwiOiBcImJyYXZlXCIsIFwibWV0YWRhdGFcIjoge1wibGFuZ1wiOiBcImVuXCIsIFwidGh1bWJuYWlsXCI6IFwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9pbWFnZXMvb2ctaW1hZ2UucG5nXCIsIFwiZmF2aWNvblwiOiBcImh0dHBzOi8vaW1ncy5zZWFyY2guYnJhdmUuY29tL2lYNkdfRzlOX04zUHJ3amtaaUtVMkt6dUVfUjk1azlmR25XTjJJMUltMVEvcnM6Zml0OjMyOjMyOjE6MC9nOmNlL2FIUjBjRG92TDJaaGRtbGovYjI1ekxuTmxZWEpqYUM1aS9jbUYyWlM1amIyMHZhV052L2JuTXZOelpsT0RsbU1UVmwvTlRZNE5UazBaVFF4WVRrNS9ORGN4WVRsa05UVTFaREU0L1ltVTNaV0U1WXpSa05tSTAvWkdFMFl6Rm1ZVE5pTURRMi9PVGszT1RCbE5DOTNkM2N1L2NuVmllUzFzWVc1bkxtOXkvWnk4XCIsIFwic291cmNlXCI6IFwiYnJhdmVcIn0sIFwiY2FuX29wZW5cIjogdHJ1ZX0sIFwicFg1MzZXWkdcIjoge1widXJsXCI6IFwiaHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL3J1YnkvY29tbWVudHMvMWhsdnpwZC9ydWJ5XzM0MF9yZWxlYXNlZC9cIiwgXCJ0aXRsZVwiOiBcInIvcnVieSBvbiBSZWRkaXQ6IFJ1YnkgMy40LjAgUmVsZWFzZWRcIiwgXCJkZXNjcmlwdGlvblwiOiBcIkFub3RoZXIgeWV0IFJ1YnkgYmFzZWQgd2ViIGZyYW1ld29yaywgdmVyc2lvbiAyLjAuMCByZWxlYXNlZC5cIiwgXCJzbmlwcGV0c1wiOiBbXCJBbm90aGVyIHlldCBSdWJ5IGJhc2VkIHdlYiBmcmFtZXdvcmssIHZlcnNpb24gMi4wLjAgcmVsZWFzZWQuXCIsIFwiQ2VsZWJyYXRlIHRoZSB3ZWlyZCBhbmQgd29uZGVyZnVsIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugd2l0aCB1cyEgLi4uIEV2ZXJ5dGhpbmcgRmFsbG91dCBtb2RkaW5nLCBGYWxsb3V0IDEsIEZhbGxvdXQgMiwgRmFsbG91dCAzLCBGYWxsb3V0IE5ldyBWZWdhcywgRmFsbG91dCA3NiwgYW5kIGV2ZXJ5dGhpbmcgaW4gYmV0d2Vlbi4gQSBjb21tdW5pdHkgZm9yIGJvdGggY29udGVudCBjcmVhdG9ycywgYW5kIHVzZXJzIG1vZGRpbmcgdGhlaXIgZ2FtZXMuIC4uLiBNZXNhIDMuNC4wOiBBZ2VudC1iYXNlZCBtb2RlbGluZzsgbm93IHdpdGggdW5pdmVyc2FsIHRpbWUgdHJhY2tpbmcgYW5kIGltcHJvdmVkIHJlcHJvZHVjaWJpbGl0eSEgLi4uIFRoZSBvZmZpY2lhbCBQeXRob24gY29tbXVuaXR5IGZvciBSZWRkaXQhIFN0YXkgdXAgdG8gZGF0ZSB3aXRoIHRoZSBsYXRlc3QgbmV3cywgcGFja2FnZXMsIGFuZCBtZXRhIGluZm9ybWF0aW9uIHJlbGF0aW5nIHRvIHRoZSBQeXRob24gcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuXCIsIFwiQ2VsZWJyYXRlIHRoZSB3ZWlyZCBhbmQgd29uZGVyZnVsIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugd2l0aCB1cyEgLi4uIE9GRklDSUFMIENPTU1VTklUWSBPRiBIWVBFVVJMUy5DT006IHIvaHlwZXVybHMgaXMgYSBSZWRkaXQgY29tbXVuaXR5IGZvciBzaGFyaW5nIGFuZCBkaXNjdXNzaW5nIG5ldyB0ZWNoIGFydGljbGVzLiBIeXBlIFVSTHMgdHJhY2tzIHRyZW5kaW5nIHRlY2ggYXJ0aWNsZXMuXCIsIFwiQW5vdGhlciB5ZXQgUnVieSBiYXNlZCB3ZWIgZnJhbWV3b3JrLCB2ZXJzaW9uIDIuMC4wIHJlbGVhc2VkLlwiLCBcIlBvc3RlZCBieSB1L2xhZXJpZW4gLSAxNDUgdm90ZXMgYW5kIDkgY29tbWVudHNcIl0sIFwiZGF0ZVwiOiBudWxsLCBcInJhbmtcIjogOSwgXCJzb3VyY2VcIjogXCJicmF2ZVwiLCBcIm1ldGFkYXRhXCI6IHtcImxhbmdcIjogXCJlblwiLCBcInRodW1ibmFpbFwiOiBcImh0dHBzOi8vZXh0ZXJuYWwtcHJldmlldy5yZWRkLml0L3J1YnktMy00LTAtcmVsZWFzZWQtdjAtOW1saXlHNDg1ckhsMGloS0JPempwQ0hCZm4xb04zeF9PODNIc1lpWVBnZy5qcGc/YXV0bz13ZWJwJnM9MDAwM2RjM2E4NGI3ZTgxMDJiMzYyZjE1NjgyNGRmNGVmZjU0OGI3ZVwiLCBcImZhdmljb25cIjogXCJodHRwczovL2ltZ3Muc2VhcmNoLmJyYXZlLmNvbS9VLWVITkNhcFJIVk5XV0NWUFBNVEl2T29mWlVMaDBfQV9GUUtlOHhURTRJL3JzOmZpdDozMjozMjoxOjAvZzpjZS9hSFIwY0RvdkwyWmhkbWxqL2IyNXpMbk5sWVhKamFDNWkvY21GMlpTNWpiMjB2YVdOdi9ibk12TjJaaU5UVTBNMk5qL01URmhaalJpWVdWaVpEbGsvTWpKaU1qQmpNekZqTURSay9ZMkl6WVdJME1HSTBNalZrL09HWTVOelF6T0dRNU56UTUvTldKaE1XSTBOQzkzZDNjdS9jbVZrWkdsMExtTnZiUzhcIiwgXCJzb3VyY2VcIjogXCJicmF2ZVwifSwgXCJjYW5fb3BlblwiOiB0cnVlfX0ifX0seyJvYmplY3QiOiJlbnRyeSIsInR5cGUiOiJtZXNzYWdlLm91dHB1dCIsImNyZWF0ZWRfYXQiOiIyMDI2LTA5LTA3VDIwOjU0OjUyLjQ1MzQxMVoiLCJjb21wbGV0ZWRfYXQiOiIyMDI2LTA5LTA3VDIwOjU0OjUyLjg4MzE2MVoiLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiaWQiOiJtc2dfMDFhMDdkYTcwMzI1NzczMzgxMDg5NzAyYzg4MmQyMWQiLCJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6W3sidHlwZSI6InRleHQiLCJ0ZXh0IjoiVGhlIG9mZmljaWFsIFJ1YnkgMy40LjAgcmVsZWFzZSBhbm5vdW5jZW1lbnQgd2FzIG1hZGUgb24gKipEZWNlbWJlciAyNSwgMjAyNCoqLlxuXG5DaXRhdGlvbjpcbltSdWJ5IDMuNC4wIFJlbGVhc2VkIHwgUnVieV0oaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjQvMTIvMjUvcnVieS0zLTQtMC1yZWxlYXNlZC8pICJ9LHsidHlwZSI6InRvb2xfcmVmZXJlbmNlIiwidG9vbCI6IndlYl9zZWFyY2giLCJ0aXRsZSI6IlJ1YnkgMy40LjAgUmVsZWFzZWQgfCBSdWJ5IiwidXJsIjoiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9uZXdzLzIwMjQvMTIvMjUvcnVieS0zLTQtMC1yZWxlYXNlZC8iLCJmYXZpY29uIjoiaHR0cHM6Ly9pbWdzLnNlYXJjaC5icmF2ZS5jb20vaVg2R19HOU5fTjNQcndqa1ppS1UyS3p1RV9SOTVrOWZHbldOMkkxSW0xUS9yczpmaXQ6MzI6MzI6MTowL2c6Y2UvYUhSMGNEb3ZMMlpoZG1sai9iMjV6TG5ObFlYSmphQzVpL2NtRjJaUzVqYjIwdmFXTnYvYm5Ndk56WmxPRGxtTVRWbC9OVFk0TlRrMFpUUXhZVGs1L05EY3hZVGxrTlRVMVpERTQvWW1VM1pXRTVZelJrTm1JMC9aR0UwWXpGbVlUTmlNRFEyL09UazNPVEJsTkM5M2QzY3UvY25WaWVTMXNZVzVuTG05eS9aeTgiLCJkZXNjcmlwdGlvbiI6IldlIGFyZSBwbGVhc2VkIHRvIGFubm91bmNlIHRoZSByZWxlYXNlIG9mIFJ1YnkgMy40LjAuIFJ1YnkgMy40IGFkZHMgaXQgYmxvY2sgcGFyYW1ldGVyIHJlZmVyZW5jZSxjaGFuZ2VzIFByaXNtIGFzIGRlZmF1bHQgcGFyc2VyLCBhZGRzIEhhcHB5IEV5ZWJhbGxzIFZlcnNpb24uLi4ifV19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Nzk4LCJjb21wbGV0aW9uX3Rva2VucyI6MTAxLCJ0b3RhbF90b2tlbnMiOjcwNzQsImNvbm5lY3Rvcl90b2tlbnMiOjYxNzUsImNvbm5lY3RvcnMiOnsid2ViX3NlYXJjaCI6MX19LCJndWFyZHJhaWxzIjpudWxsfQ==
+  recorded_at: Mon, 07 Sep 2026 20:54:52 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/conversations
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"mistral-small-latest\",\"inputs\":[{\"type\":\"message.input\",\"role\":\"user\",\"content\":\"Find
+        the official Ruby 3.4.0 release announcement. Give its date and a citation.\"},{\"type\":\"function.call\",\"tool_call_id\":\"911c119b9\",\"name\":\"web_search\",\"arguments\":\"{\\\"query\\\":
+        \\\"Ruby 3.4.0 official release announcement date\\\"}\"},{\"type\":\"function.result\",\"tool_call_id\":\"911c119b9\",\"result\":\"{\\\"8zO9I7Z1\\\":
+        {\\\"url\\\": \\\"https://www.fastruby.io/blog/ruby-3-4-0-released.html\\\",
+        \\\"title\\\": \\\"Ruby 3.4.0 Released: What’s New, Improved, and Breaking
+        - FastRuby.io | Rails Upgrade Service\\\", \\\"description\\\": \\\"Ruby 3.4.0
+        was released on <strong>December 25, 2024</strong>, bringing exciting new
+        features, performance improvements, and some breaking changes.\\\", \\\"snippets\\\":
+        [\\\"Ruby 3.4.0 was released on <strong>December 25, 2024</strong>, bringing
+        exciting new features, performance improvements, and some breaking changes.\\\",
+        \\\"Want to know what’s next for Ruby? Check out the official Ruby roadmap
+        opens a new window . Ruby 3.4.0 Release Announcement opens a new window\\\",
+        \\\"Ruby 3.4.0 was released on December 25, 2024, bringing exciting new features,
+        performance improvements, and some breaking changes.\\\", \\\"String literals:
+        Mutating string literals without a frozen_string_literal comment now triggers
+        a deprecation warning. This change is part of Ruby’s ongoing effort to make
+        frozen string literals the default in future versions.\\\", \\\"Standard library
+        updates: RubyGems, Bundler, JSON, Tempfile, and more get useful updates.\\\"],
+        \\\"date\\\": null, \\\"rank\\\": 0, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\":
+        {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\": \\\"https://www.fastruby.io/blog/assets/images/header/ruby-3-4-0.jpg\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/QB6sA6Q0Km_PYPOLhUq7JLCLK69zEIMtCSkBYU_ZLxs/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZDczOGMzNDVm/NzU0NDdkNjVjMWJj/MWFiNDA4Mjc2N2Ex/YzkyYjBkY2I3MTcx/ZmQzMjBiNTMwNTUw/NTE2MDA4ZC93d3cu/ZmFzdHJ1YnkuaW8v\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"nNGuJGPP\\\":
+        {\\\"url\\\": \\\"https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/\\\",
+        \\\"title\\\": \\\"Ruby 3.4.0 Released | Ruby\\\", \\\"description\\\": \\\"We
+        are pleased to announce the release of Ruby 3.4.0. Ruby 3.4 adds it block
+        parameter reference,changes Prism as default parser, adds Happy Eyeballs Version...\\\",
+        \\\"snippets\\\": [\\\"We are pleased to announce the release of Ruby 3.4.0.
+        Ruby 3.4 adds it block parameter reference,changes Prism as default parser,
+        adds Happy Eyeballs Version...\\\", \\\"Ruby 3.3.12 has been released. ...
+        Ruby 4.0.6 has been released.\\\", \\\"Ruby 3.4.10 has been released. ...
+        Ruby 4.0.5 has been released.\\\", \\\"With those changes, 4942 files changed,
+        202244 insertions(+), 255528 deletions(-) since Ruby 3.3.0! Merry Christmas,
+        Happy Holidays, and enjoy programming with Ruby 3.4!\\\", \\\"SIZE: 23153022
+        SHA1: 8ccb561848a7c460ae08e1a120a47c4a88a79335 SHA256: 068c8523442174bd3400e786f4a6952352c82b1b9f6210fd17fb4823086d3379
+        SHA512: bc70ecba27d1cdea00879f03487cad137a7d9ab2ad376cfb7a65780ad14da637fa3944eeeede2c04ab31eeafb970c64ccfeeb854c99c1093937ecc1165731562
+        · https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.0.tar.xz\\\"], \\\"date\\\":
+        null, \\\"rank\\\": 1, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\": {\\\"lang\\\":
+        \\\"en\\\", \\\"thumbnail\\\": \\\"https://www.ruby-lang.org/images/og-image.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/iX6G_G9N_N3PrwjkZiKU2KzuE_R95k9fGnWN2I1Im1Q/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzZlODlmMTVl/NTY4NTk0ZTQxYTk5/NDcxYTlkNTU1ZDE4/YmU3ZWE5YzRkNmI0/ZGE0YzFmYTNiMDQ2/OTk3OTBlNC93d3cu/cnVieS1sYW5nLm9y/Zy8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"pUlcPVNf\\\":
+        {\\\"url\\\": \\\"https://www.ruby-lang.org/en/downloads/releases/\\\", \\\"title\\\":
+        \\\"Ruby Releases | Ruby\\\", \\\"description\\\": \\\"This is a list of Ruby
+        releases. The shown dates correspond to the publication dates of the English
+        versions of release posts and may differ from the actual creation dates of
+        the source tarballs.\\\", \\\"snippets\\\": [\\\"This is a list of Ruby releases.
+        The shown dates correspond to the publication dates of the English versions
+        of release posts and may differ from the actual creation dates of the source
+        tarballs.\\\", \\\"This page lists individual Ruby releases.{: .summary}For
+        information about the current maintenance status of the variousRuby branches
+        see the[Branches page](...\\\", \\\"This is a list of Ruby releases. The shown
+        dates correspond to the publication dates of the English versions of release
+        posts and may differ from the actual creation dates of the source tarballs.\\\"],
+        \\\"date\\\": null, \\\"rank\\\": 2, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\":
+        {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\": \\\"https://www.ruby-lang.org/images/og-image.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/iX6G_G9N_N3PrwjkZiKU2KzuE_R95k9fGnWN2I1Im1Q/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzZlODlmMTVl/NTY4NTk0ZTQxYTk5/NDcxYTlkNTU1ZDE4/YmU3ZWE5YzRkNmI0/ZGE0YzFmYTNiMDQ2/OTk3OTBlNC93d3cu/cnVieS1sYW5nLm9y/Zy8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"VpcudFw1\\\":
+        {\\\"url\\\": \\\"https://www.ruby-lang.org/en/news/2024/05/16/ruby-3-4-0-preview1-released/\\\",
+        \\\"title\\\": \\\"Ruby 3.4.0 preview1 Released | Ruby\\\", \\\"description\\\":
+        \\\"We are pleased to announce the release of Ruby 3.4.0-preview1.\\\", \\\"snippets\\\":
+        [\\\"We are pleased to announce the release of Ruby 3.4.0-preview1.\\\", \\\"Ruby
+        3.3.12 has been released. ... Ruby 4.0.6 has been released.\\\", \\\"Ruby
+        3.4.10 has been released. ... Ruby 4.0.5 has been released.\\\", \\\"https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.0-preview1.zip\\\",
+        \\\"See GitHub releases like Logger or changelog for details of the default
+        gems or bundled gems. See NEWS or commit logs for more details. With those
+        changes, 3283 files changed, 107449 insertions(+), 115380 deletions(-) since
+        Ruby 3.3.0! https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.0-preview1.tar.gz\\\"],
+        \\\"date\\\": null, \\\"rank\\\": 3, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\":
+        {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\": \\\"https://www.ruby-lang.org/images/og-image.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/iX6G_G9N_N3PrwjkZiKU2KzuE_R95k9fGnWN2I1Im1Q/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzZlODlmMTVl/NTY4NTk0ZTQxYTk5/NDcxYTlkNTU1ZDE4/YmU3ZWE5YzRkNmI0/ZGE0YzFmYTNiMDQ2/OTk3OTBlNC93d3cu/cnVieS1sYW5nLm9y/Zy8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"hHifRPB8\\\":
+        {\\\"url\\\": \\\"https://www.ruby-lang.org/en/news/2025/12/18/ruby-4-0-0-preview3-released/\\\",
+        \\\"title\\\": \\\"Ruby 4.0.0 preview3 Released | Ruby\\\", \\\"description\\\":
+        \\\"With those changes, 3776 files changed, 222800 insertions(+), 293617 deletions(-)
+        since Ruby 3.4.0!\\\", \\\"snippets\\\": [\\\"With those changes, 3776 files
+        changed, 222800 insertions(+), 293617 deletions(-) since Ruby 3.4.0!\\\",
+        \\\"A new toplevel module Ruby has been defined, which contains Ruby-related
+        constants. This module was reserved in Ruby 3.4 and is now officially defined.\\\",
+        \\\"Dropped support for MSVC versions older than 14.0 (_MSC_VER 1900). This
+        means Visual Studio 2015 or later is now required. The following methods were
+        removed from Ractor due to the addition of Ractor::Port: ... ObjectSpace._id2ref
+        is deprecated. [Feature #15408] Process::Status#& and Process::Status#>> have
+        been removed. They were deprecated in Ruby 3.3.\\\", \\\"Other changes are
+        listed in the following sections. We also listed release history from the
+        previous bundled version that is Ruby 3.3.0 if it has GitHub releases.\\\",
+        \\\"With those changes, 3776 files changed, 222800 insertions(+), 293617 deletions(-)
+        since Ruby 3.4.0!\\\"], \\\"date\\\": null, \\\"rank\\\": 4, \\\"source\\\":
+        \\\"brave\\\", \\\"metadata\\\": {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\":
+        \\\"https://www.ruby-lang.org/images/og-image.png\\\", \\\"favicon\\\": \\\"https://imgs.search.brave.com/iX6G_G9N_N3PrwjkZiKU2KzuE_R95k9fGnWN2I1Im1Q/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzZlODlmMTVl/NTY4NTk0ZTQxYTk5/NDcxYTlkNTU1ZDE4/YmU3ZWE5YzRkNmI0/ZGE0YzFmYTNiMDQ2/OTk3OTBlNC93d3cu/cnVieS1sYW5nLm9y/Zy8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"Vo2BoOik\\\":
+        {\\\"url\\\": \\\"https://blog.saeloun.com/2025/12/24/what-is-new-in-ruby-4/\\\",
+        \\\"title\\\": \\\"What Is New In Ruby 4.0 | Saeloun Blog\\\", \\\"description\\\":
+        \\\"Ruby 4.0 is here, releasing on <strong>Christmas Day 2025</strong>, marking
+        30 years since Ruby’s first public release.\\\", \\\"snippets\\\": [\\\"Ruby
+        4.0 is here, releasing on <strong>Christmas Day 2025</strong>, marking 30
+        years since Ruby’s first public release.\\\", \\\"This release packs some
+        genuinely exciting features. Let’s explore the most impactful changes in Ruby
+        4.0.\\\", \\\"Ruby 4.0 is here, releasing on Christmas Day 2025, marking 30
+        years since Ruby’s first public release.\\\", \\\"Ruby 4.0 is a significant
+        release that lays groundwork for the future.\\\", \\\"Amol is a Senior Software
+        Developer who combines his expertise in Ruby on Rails and VueJS to create
+        highly performant and scalable web applications. He is passionate to explore
+        different technologies and mentor juniors in the web development industry.\\\"],
+        \\\"date\\\": null, \\\"rank\\\": 5, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\":
+        {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\": \\\"https://blog.saeloun.com/saeloun_blog_amp.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/rezgeMK0qMUzCBJRBL9aL4khNOVJgSlAzXFuqOCEzE4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNmZjNmQ1MzY5/Y2IzZDlhMmU1MzRh/OWRjMTdkYjNmMTc4/ZmRhNjg3OTAwNzA2/MTg1NWM4Yjc3ZGIz/ZWM5NzZiOC9ibG9n/LnNhZWxvdW4uY29t/Lw\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"0pFTyHUI\\\":
+        {\\\"url\\\": \\\"https://endoflife.date/ruby\\\", \\\"title\\\": \\\"Ruby
+        | endoflife.date\\\", \\\"description\\\": \\\"Since Ruby 2.1, a new major
+        version of Ruby has been released every year on <strong>December 25th</strong>,
+        and EOLed 3 years, 3 months later.\\\", \\\"snippets\\\": [\\\"Since Ruby
+        2.1, a new major version of Ruby has been released every year on <strong>December
+        25th</strong>, and EOLed 3 years, 3 months later.\\\", \\\"Since Ruby 2.1,
+        a new major version of Ruby has been released every year on December 25th,
+        and EOLed 3 years, 3 months later.\\\", \\\"You should be running one of the
+        supported release numbers listed above in the rightmost column. ... You can
+        submit an improvement to this page on GitHub . This page has also a corresponding
+        Talk Page \U0001F4AC. A JSON version of this page is available at /api/v1/products/ruby/
+        \U0001F4E1. See the API Documentation \U0001F4D6 for more information. You
+        can subscribe to the RSS feed at /ruby.atom ⚛️ or to the iCalendar feed at
+        /calendar/ruby.ics \U0001F4C5.\\\", \\\"Ruby is a dynamic, open-source programming
+        language with a focus on simplicity and productivity.\\\"], \\\"date\\\":
+        null, \\\"rank\\\": 6, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\": {\\\"lang\\\":
+        \\\"en\\\", \\\"thumbnail\\\": \\\"https://endoflife.date/assets/logo-512x512.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/-NSVOcWjHlnFSvb_JNmc7r1Xx3mGJfS7UgoXgx_afL4/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMTBlYjU5ZDhk/ZjI2MDlmOTJhMTZh/YTgxODY5M2IwN2Zk/NTQwODc3OGY2OWFk/NjY4MTQ1MmNiZjFk/M2U2NDEyZC9lbmRv/ZmxpZmUuZGF0ZS8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"P3S8MOxH\\\":
+        {\\\"url\\\": \\\"https://www.ruby-lang.org/en/news/2025/05/14/ruby-3-4-4-released/\\\",
+        \\\"title\\\": \\\"Ruby 3.4.4 Released | Ruby\\\", \\\"description\\\": \\\"Posted
+        by k0kubun on <strong>14 May 2025</strong> · Ruby 3.4.4 has been released\\\",
+        \\\"snippets\\\": [\\\"Posted by k0kubun on <strong>14 May 2025</strong> ·
+        Ruby 3.4.4 has been released\\\", \\\"Ruby 4.0.6 has been released.\\\", \\\"Ruby
+        4.0.5 has been released.\\\", \\\"SIZE: 17255388 SHA1: 83ddf983c194b353634e91a86b466ce0d01bff39
+        SHA256: f76d63efe9499dedd8526b74365c0c811af00dc9feb0bed7f5356488476e28f4 SHA512:
+        0d258cf790daad424c866404b5cbdc8adba0e4e13764847a89adf2335229e5184095c9f3e9594705897697e48bcc322d9a9f919b04047abb2075daca9fce8871\\\",
+        \\\"Ruby 3.4.4 has been released.\\\"], \\\"date\\\": null, \\\"rank\\\":
+        7, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\": {\\\"lang\\\": \\\"en\\\",
+        \\\"thumbnail\\\": \\\"https://www.ruby-lang.org/images/og-image.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/iX6G_G9N_N3PrwjkZiKU2KzuE_R95k9fGnWN2I1Im1Q/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzZlODlmMTVl/NTY4NTk0ZTQxYTk5/NDcxYTlkNTU1ZDE4/YmU3ZWE5YzRkNmI0/ZGE0YzFmYTNiMDQ2/OTk3OTBlNC93d3cu/cnVieS1sYW5nLm9y/Zy8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"DqLCkFZ9\\\":
+        {\\\"url\\\": \\\"https://www.ruby-lang.org/en/news/2026/01/13/ruby-4-0-1-released/\\\",
+        \\\"title\\\": \\\"Ruby 4.0.1 Released | Ruby\\\", \\\"description\\\": \\\"We
+        intend to release the latest stable Ruby version (currently Ruby 4.0) <strong>every
+        two months following the most recent release</strong>. Ruby 4.0.2 will be
+        released in March, 4.0.3 in May, 4.0.4 in July, 4.0.5 in September, and 4.0.6
+        in November.\\\", \\\"snippets\\\": [\\\"We intend to release the latest stable
+        Ruby version (currently Ruby 4.0) <strong>every two months following the most
+        recent release</strong>. Ruby 4.0.2 will be released in March, 4.0.3 in May,
+        4.0.4 in July, 4.0.5 in September, and 4.0.6 in November.\\\", \\\"We intend
+        to release the latest stable Ruby version (currently Ruby 4.0) every two months
+        following the most recent release. Ruby 4.0.2 will be released in March, 4.0.3
+        in May, 4.0.4 in July, 4.0.5 in September, and 4.0.6 in November.\\\", \\\"Ruby
+        3.3.12 has been released. ... Ruby 4.0.6 has been released.\\\", \\\"Ruby
+        3.4.10 has been released. ... Ruby 4.0.5 has been released.\\\", \\\"SIZE:
+        23807304 SHA1: 01db5746bbb29b028bd44d505a147d06866b1ab2 SHA256: 3924be2d05db30f4e35f859bf028be85f4b7dd01714142fd823e4af5de2faf9d
+        SHA512: f4eead09c7355b878a34343dd8cfb9c4c36f02ad3b9a7fd42981d722444beca0182ddea4fc771e2e01a05d9f14978a979ba0ba3590d366f53b6947f43fd78aff\\\"],
+        \\\"date\\\": null, \\\"rank\\\": 8, \\\"source\\\": \\\"brave\\\", \\\"metadata\\\":
+        {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\": \\\"https://www.ruby-lang.org/images/og-image.png\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/iX6G_G9N_N3PrwjkZiKU2KzuE_R95k9fGnWN2I1Im1Q/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNzZlODlmMTVl/NTY4NTk0ZTQxYTk5/NDcxYTlkNTU1ZDE4/YmU3ZWE5YzRkNmI0/ZGE0YzFmYTNiMDQ2/OTk3OTBlNC93d3cu/cnVieS1sYW5nLm9y/Zy8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}, \\\"pX536WZG\\\":
+        {\\\"url\\\": \\\"https://www.reddit.com/r/ruby/comments/1hlvzpd/ruby_340_released/\\\",
+        \\\"title\\\": \\\"r/ruby on Reddit: Ruby 3.4.0 Released\\\", \\\"description\\\":
+        \\\"Another yet Ruby based web framework, version 2.0.0 released.\\\", \\\"snippets\\\":
+        [\\\"Another yet Ruby based web framework, version 2.0.0 released.\\\", \\\"Celebrate
+        the weird and wonderful Ruby programming language with us! ... Everything
+        Fallout modding, Fallout 1, Fallout 2, Fallout 3, Fallout New Vegas, Fallout
+        76, and everything in between. A community for both content creators, and
+        users modding their games. ... Mesa 3.4.0: Agent-based modeling; now with
+        universal time tracking and improved reproducibility! ... The official Python
+        community for Reddit! Stay up to date with the latest news, packages, and
+        meta information relating to the Python programming language.\\\", \\\"Celebrate
+        the weird and wonderful Ruby programming language with us! ... OFFICIAL COMMUNITY
+        OF HYPEURLS.COM: r/hypeurls is a Reddit community for sharing and discussing
+        new tech articles. Hype URLs tracks trending tech articles.\\\", \\\"Another
+        yet Ruby based web framework, version 2.0.0 released.\\\", \\\"Posted by u/laerien
+        - 145 votes and 9 comments\\\"], \\\"date\\\": null, \\\"rank\\\": 9, \\\"source\\\":
+        \\\"brave\\\", \\\"metadata\\\": {\\\"lang\\\": \\\"en\\\", \\\"thumbnail\\\":
+        \\\"https://external-preview.redd.it/ruby-3-4-0-released-v0-9mliyG485rHl0ihKBOzjpCHBfn1oN3x_O83HsYiYPgg.jpg?auto=webp&s=0003dc3a84b7e8102b362f156824df4eff548b7e\\\",
+        \\\"favicon\\\": \\\"https://imgs.search.brave.com/U-eHNCapRHVNWWCVPPMTIvOofZULh0_A_FQKe8xTE4I/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2ZiNTU0M2Nj/MTFhZjRiYWViZDlk/MjJiMjBjMzFjMDRk/Y2IzYWI0MGI0MjVk/OGY5NzQzOGQ5NzQ5/NWJhMWI0NC93d3cu/cmVkZGl0LmNvbS8\\\",
+        \\\"source\\\": \\\"brave\\\"}, \\\"can_open\\\": true}}\"},{\"type\":\"message.output\",\"model\":\"mistral-small-latest\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"The
+        official Ruby 3.4.0 release announcement was made on **December 25, 2024**.\\n\\nCitation:\\n[Ruby
+        3.4.0 Released | Ruby](https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/)
+        \"},{\"type\":\"text\",\"text\":\"[Ruby 3.4.0 Released | Ruby](https://www.ruby-lang.org/en/news/2024/12/25/ruby-3-4-0-released/)\"}]},{\"type\":\"message.input\",\"role\":\"user\",\"content\":\"What
+        version was that announcement for?\"}],\"instructions\":\"Search once for
+        the first request. Answer subsequent requests from the existing results.\",\"completion_args\":{},\"tools\":[{\"type\":\"web_search\"}],\"store\":false,\"stream\":false}"
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 20:54:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - 01a07da7-0572-74ba-a993-88cea509a926
+      X-Kong-Request-Id:
+      - 01a07da7-0572-74ba-a993-88cea509a926
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '100000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '83143'
+      X-Envoy-Upstream-Service-Time:
+      - '1000'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '1002'
+      X-Kong-Proxy-Latency:
+      - '19'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"object":"conversation.response","conversation_id":"conv_01a07da7059875cea189b9bb0ee33c67","outputs":[{"object":"entry","type":"message.output","created_at":"2026-09-07T20:54:53.712409Z","completed_at":"2026-09-07T20:54:54.049255Z","model":"mistral-small-latest","id":"msg_01a07da708107278b69f79d459dbb05a","role":"assistant","content":"The
+        announcement was for **Ruby 3.4.0**."}],"usage":{"prompt_tokens":7115,"completion_tokens":14,"total_tokens":7129},"guardrails":null}'
+  recorded_at: Mon, 07 Sep 2026 20:54:54 GMT
+recorded_with: VCR 6.4.0

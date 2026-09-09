@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
     t.string 'name', null: false
     t.text 'thought_signature'
     t.string 'approval'
+    t.boolean 'remote', default: false, null: false
     t.json 'arguments', default: {}
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -144,6 +145,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
     t.string 'batch_protocol'
     t.json 'chat_ids', default: []
     t.json 'request_counts'
+    t.json 'reported_cost'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[provider provider_batch_id], name: 'index_ruby_llm_batches_on_provider_and_id', unique: true

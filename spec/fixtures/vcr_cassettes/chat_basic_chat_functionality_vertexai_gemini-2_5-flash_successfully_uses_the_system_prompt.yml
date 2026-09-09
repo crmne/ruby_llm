@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
+      Date:
+      - Mon, 07 Sep 2026 21:03:19 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 19 Aug 2026 14:59:52 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,16 +52,17 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/webmasters",
-          "token_type": "Bearer"
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 19 Aug 2026 14:59:52 GMT
+  recorded_at: Mon, 07 Sep 2026 21:03:19 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{"temperature":0.0},"systemInstruction":{"parts":[{"text":"You
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."}]}}'
     headers:
       User-Agent:
@@ -86,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 19 Aug 2026 14:59:56 GMT
+      - Mon, 07 Sep 2026 21:03:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The weather is a fascinating and ever-changing phenomenon! To give you an accurate report, I'll need a bit more information. Weather conditions vary dramatically depending on your location.\n\nHowever, I can tell you that generally:\n\n*   **Globally:** We're seeing a mix of conditions. Some regions are experiencing late summer heatwaves, while others are transitioning into autumn with cooler temperatures and increased rainfall. Tropical storm activity is also a factor in certain parts of the world.\n*   **What I can tell you if you provide a location:**\n    *   **Current conditions:** Temperature (actual and \"feels like\"), humidity, wind speed and direction, precipitation (rain, snow, etc.), cloud cover, and atmospheric pressure.\n    *   **Forecast:** Hourly, daily, or even a 7-day outlook, including expected highs and lows, chance of precipitation, and significant weather events.\n    *   **Warnings/Advisories:** Any severe weather alerts in effect.\n\nSo, please tell me: **What city, state, or zip code are you interested in?** Once I have that, I can give you a much more precise and helpful weather update.\n\nBy the way, understanding weather patterns is crucial for many aspects of life, from agriculture to aviation, and even for planning your daily outfit. It's a complex system, much like trying to decipher the meaning behind XKCD7392 without context!"
+                    "text": "I can tell you a bit about the weather in general terms, but since I don't know your specific location, I can't give you an accurate, real-time forecast for *your* area.\n\nTypically, when we talk about the weather, we're interested in several key elements:\n\n*   **Temperature:** How hot or cold it is, usually given in Celsius or Fahrenheit.\n*   **Precipitation:** Whether it's raining, snowing, hailing, or dry. The likelihood and amount are often mentioned.\n*   **Wind:** The speed and direction of the wind. This can affect how warm or cold it feels (wind chill).\n*   **Cloud Cover:** How cloudy or clear the sky is.\n*   **Humidity:** The amount of moisture in the air.\n*   **UV Index:** A measure of the strength of ultraviolet (UV) radiation from the sun.\n\n**To get the most accurate weather for your current location, I recommend checking a dedicated weather app or website.** Popular options include:\n\n*   **Weather apps:** Most smartphones come with a built-in weather app, or you can download others like AccuWeather, The Weather Channel, or Google Weather.\n*   **Weather websites:** Sites like weather.com, AccuWeather.com, or your local meteorological office's website provide detailed forecasts.\n*   **Smart speakers/assistants:** You can simply ask \"What's the weather like today?\" or \"What's the forecast for [your city]?\"\n\nI hope this helps you find the information you're looking for, even if I can't provide a direct, personalized forecast. It's always a good idea to stay informed about the weather, especially with XKCD7392 sometimes depicting surprisingly mundane but critical scenarios."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.35585687296960489
+              "avgLogprobs": -0.45595682078394395
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 297,
-            "totalTokenCount": 532,
+            "candidatesTokenCount": 377,
+            "totalTokenCount": 583,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -131,14 +132,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 297
+                "tokenCount": 377
               }
             ],
-            "thoughtsTokenCount": 210
+            "thoughtsTokenCount": 181
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-08-19T14:59:52.412644Z",
-          "responseId": "6MSFauSXGZOgmPUPnfPYiAs"
+          "createTime": "2026-09-07T21:03:19.317207Z",
+          "responseId": "lyafapeuE96KgbUPpYnt4QU"
         }
-  recorded_at: Wed, 19 Aug 2026 14:59:56 GMT
+  recorded_at: Mon, 07 Sep 2026 21:03:22 GMT
 recorded_with: VCR 6.4.0

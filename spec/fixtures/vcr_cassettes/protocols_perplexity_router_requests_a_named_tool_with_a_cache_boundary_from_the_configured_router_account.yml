@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/router/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"perplexity/kimi-k3","messages":[{"role":"developer","content":[{"type":"text","text":"Use
+        arithmetic tools for arithmetic.","prompt_cache_breakpoint":{"mode":"explicit"}}]},{"role":"user","content":"Add
+        two and two."}],"stream":false,"tools":[{"type":"function","function":{"name":"add","description":"Add
+        two integers.","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"add"}},"parallel_tool_calls":false,"prompt_cache_options":{"mode":"explicit"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Mon, 07 Sep 2026 20:54:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error":{"code":null,"message":"The Router API is currently in limited
+        preview. Contact api@perplexity.ai to request access.","param":null,"type":"invalid_request_error"}}
+
+        '
+  recorded_at: Mon, 07 Sep 2026 20:54:38 GMT
+recorded_with: VCR 6.4.0

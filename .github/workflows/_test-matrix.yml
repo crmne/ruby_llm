@@ -79,6 +79,7 @@ jobs:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_DISABLE_SHARED_GEMS: "true"
     strategy:
+      fail-fast: false
       matrix:
         ruby-version: ["3.1", "3.2", "3.3", "3.4", "4.0", "jruby-10.0.2.0"]
         rails-version: ["rails-7.1", "rails-7.2", "rails-8.0", "rails-8.1"]
@@ -119,9 +120,15 @@ jobs:
           SPEC_OPTS: --tag ~generator
           SKIP_COVERAGE: true
 
+      - name: Install RubyLLM 1.16 for upgrade compatibility tests
+        if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
+        run: gem install ruby_llm --version 1.16.0 --no-document --install-dir "$RUNNER_TEMP/ruby-llm-1.16"
+
       - name: Run full test suite with coverage (latest Ruby/Rails)
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
         run: bundle exec appraisal ${{ matrix.rails-version }} bin/rspec-queue
+        env:
+          RUBY_LLM_LEGACY_GEM_HOME: ${{ runner.temp }}/ruby-llm-1.16
 
       - name: Upload coverage to Codecov
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'

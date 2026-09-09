@@ -5,6 +5,7 @@ module RubyLLM
     # Cohere API integration.
     class Cohere < Provider
       protocol :cohere, Protocols::Cohere
+      protocol :files, Protocols::Cohere::Datasets
 
       def api_base
         @config.cohere_api_base || 'https://api.cohere.com'

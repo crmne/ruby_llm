@@ -10,8 +10,8 @@ module RubyLLM
   #   transcription.model  # => "gpt-transcribe"
   #
   class Transcription
-    include Inspectable
-    include Usage::Result
+    include Support::Inspectable
+    include Accounting::Usage::Result
 
     # The transcribed text.
     attr_reader :text
@@ -31,8 +31,8 @@ module RubyLLM
     # speaker label to each segment.
     attr_reader :segments
 
-    # Word-level timestamps as an array of hashes, or +nil+ unless requested
-    # through +format:+ and +provider_options:+ on models that support them.
+    # Word timing and speaker labels as an array of hashes, or +nil+ when
+    # the provider does not return them. Request timing with +timestamps:+.
     attr_reader :words
 
     def initialize(text:, model:, **attributes) # :nodoc:
@@ -82,7 +82,8 @@ module RubyLLM
     #     speaker_references: ["alice-voice.wav", "bob-voice.wav"]
     #   )
     #
-    # +language:+ hints at the spoken language as an ISO 639-1 code.
+    # +language:+ hints at the spoken language using the provider's accepted
+    # ISO 639-1 or BCP-47 language code.
     # +prompt:+ gives the model vocabulary or formatting guidance, and
     # +temperature:+ adjusts sampling. +format:+ selects the transcript
     # format in the provider's own vocabulary: OpenAI takes values such as
@@ -90,13 +91,17 @@ module RubyLLM
     # while Gemini takes a MIME type such as <tt>"text/plain"</tt>.
     # +speaker_names:+ and +speaker_references:+ label the speakers on
     # models that support diarization; references may be paths, URLs, or IO
-    # objects. Providers silently ignore the options they do not support.
+    # objects. Option support depends on the selected model and provider.
+    # +timestamps:+ requests +:word+ timestamps. Some providers also accept
+    # +:segment+ or +:character+; unsupported granularities raise ArgumentError.
     # +provider_options:+ takes options in the provider's request vocabulary
     # and merges them into the rendered request as-is.
     #
     # Given a block, the transcript streams: each TranscriptionChunk is
     # yielded as it arrives and the completed Transcription is still
-    # returned.
+    # returned. Partial chunks replace earlier tentative text; only
+    # +delta+ fields append to the committed transcript. WebSocket-based
+    # providers require the optional +websocket-driver+ gem.
     #
     #   transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe") do |chunk|
     #     print chunk.delta
@@ -114,6 +119,7 @@ module RubyLLM
                         prompt: nil,
                         temperature: nil,
                         format: nil,
+                        timestamps: nil,
                         speaker_names: nil,
                         speaker_references: nil,
                         provider_options: {},
@@ -137,7 +143,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.transcribe(audio_file, model:, language:, format:, speaker_names:,
+        result = provider_instance.transcribe(audio_file, model:, language:, format:, timestamps:, speaker_names:,
                                                           speaker_references:, provider_options:, prompt:,
                                                           temperature:, &block)
         event[:result] = result

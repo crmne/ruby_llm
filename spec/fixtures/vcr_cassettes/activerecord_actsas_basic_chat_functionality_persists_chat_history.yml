@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What''s
-        your favorite Ruby feature?"}],"stream":false,"store":false}'
+        your favorite Ruby feature?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:15:35 GMT
+      - Mon, 07 Sep 2026 21:05:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,9 +48,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1943'
+      - '1419'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -75,15 +75,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_044288e1f7dc94d3016a2b1765727481a19929d4abf9739761",
+          "id": "resp_03c2f16d0ce67aa1016a9f26fef94887d29c28aa3ae5622a2c",
           "object": "response",
-          "created_at": 1781208933,
+          "created_at": 1788815103,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781208935,
+          "completed_at": 1788815104,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -94,7 +94,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_044288e1f7dc94d3016a2b17666af081a18575b85eb15ade03",
+              "id": "msg_03c2f16d0ce67aa1016a9f26ff3ab087d2bbecab8cffa39a15",
               "type": "message",
               "status": "completed",
               "content": [
@@ -102,7 +102,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "I find the flexibility of Ruby's metaprogramming capabilities particularly fascinating. Features like dynamic method definitions and `method_missing` allow developers to write very elegant and DRY (Don't Repeat Yourself) code. They enable the creation of domain-specific languages (DSLs) and reduce boilerplate, making code more expressive and concise. How about you? Do you have a favorite Ruby feature?"
+                  "text": "I don't have personal preferences, but one of the standout features of Ruby that many developers appreciate is its elegant and expressive syntax. Ruby was designed to be intuitive and to read like natural language, which makes writing and understanding code more enjoyable. \n\nAdditionally, features like **blocks and iterators** make it easy to write clean, concise code for tasks like looping and callback functions. For example:\n\n```ruby\n[1, 2, 3].each { |n| puts n }\n```\n\nThis simplicity and flexibility are some of the reasons Ruby is loved by its community. Do you have a favorite Ruby feature?"
                 }
               ],
               "role": "assistant"
@@ -129,6 +129,24 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [],
           "top_logprobs": 0,
           "top_p": 1.0,
@@ -136,16 +154,17 @@ http_interactions:
           "usage": {
             "input_tokens": 13,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 78,
+            "output_tokens": 125,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 91
+            "total_tokens": 138
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:15:35 GMT
+  recorded_at: Mon, 07 Sep 2026 21:05:04 GMT
 recorded_with: VCR 6.4.0

@@ -23,7 +23,7 @@ module RubyLLM
           payload = { instances: instances }
           payload[:parameters] = { outputDimensionality: dimensions } if dimensions
 
-          Utils.deep_merge(payload, provider_options)
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def parse_embedding_response(response, model:, text:)

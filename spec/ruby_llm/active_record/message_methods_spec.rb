@@ -40,10 +40,45 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
   end
 
   describe 'Rails-backed message records' do
-    let(:chat) { Chat.create!(model: 'gpt-4.1-nano') }
+    let(:chat) { Chat.create!(model: model_for(:openai, :temperature)) }
 
     def tool_call
       RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'lookup', arguments: {})
+    end
+
+    it 'reads the model of the successful attempt after reloading the message' do
+      record = chat.add_message(role: :assistant, content: 'Answer')
+      chat.ruby_llm_usages.create!(
+        message: record, operation: 'chat', provider: 'openai', model: 'gpt-4.1', status: 'succeeded'
+      )
+      chat.ruby_llm_usages.create!(
+        message: record, operation: 'chat', provider: 'openai', model: model_for(:openai,
+                                                                                 :temperature), status: 'failed'
+      )
+
+      expect(record.reload.model).to eq('gpt-4.1')
+      expect(record.model_info.id).to eq('gpt-4.1')
+      expect(chat.add_message(role: :user, content: 'Continue').model).to be_nil
+    end
+
+    it 'exposes the plain message finish predicates after reloading' do
+      { stop: :stopped?, max_tokens: :max_tokens?, tool_calls: :tool_call_stop?,
+        content_filter: :content_filtered? }.each do |reason, predicate|
+        record = chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', finish_reason: reason))
+
+        expect(record.reload.public_send(predicate)).to be(true)
+        expect(record.stopped?).to eq(reason == :stop)
+      end
+    end
+
+    it 'recognizes tool calls when the provider reports a normal stop' do
+      call = tool_call
+      record = chat.add_message(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }, finish_reason: :stop)
+      )
+
+      expect(record.reload).to be_tool_call_stop
+      expect(record).not_to be_stopped
     end
 
     it 'names the partial by role' do

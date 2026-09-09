@@ -14,10 +14,10 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  let(:chat) { described_class.new(model: 'claude-haiku-4-5').with_tools(EchoTool) }
+  let(:chat) { described_class.new(model: model_for(:anthropic)).with_tools(EchoTool) }
   let(:answer_message) do
     RubyLLM::Message.new(
-      role: :assistant, content: 'hello', model: 'claude-haiku-4-5', input_tokens: 1, output_tokens: 1
+      role: :assistant, content: 'hello', model: model_for(:anthropic), input_tokens: 1, output_tokens: 1
     )
   end
 
@@ -218,7 +218,7 @@ RSpec.describe RubyLLM::Chat do
           "#{text} via #{tool_call.id}"
         end
       end)
-      chat = described_class.new(model: 'claude-haiku-4-5').with_tools(AttributedEchoTool)
+      chat = described_class.new(model: model_for(:anthropic)).with_tools(AttributedEchoTool)
       chat.ask_later('Echo "hello" back to me.')
       chat.add_message tool_call_message(name: 'attributed_echo')
 

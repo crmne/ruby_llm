@@ -39,6 +39,15 @@ module RubyLLM
     end
   end
 
+  # Raised when a deprecated API is used and
+  # Configuration#deprecation_behavior is +:raise+. With the default
+  # +:warn+, deprecations are logged instead.
+  #
+  #   RubyLLM.configure do |config|
+  #     config.deprecation_behavior = :raise
+  #   end
+  class DeprecationError < StandardError; end
+
   # Raised when required configuration, such as a provider API key, is
   # missing.
   class ConfigurationError < StandardError; end
@@ -68,6 +77,7 @@ module RubyLLM
 
   # Raised when an in-flight chat operation is cancelled with Chat#cancel.
   class CancelledError < StandardError
+    # Creates an error for a cancelled chat operation.
     def initialize(message = 'Chat generation cancelled')
       super
     end
@@ -116,6 +126,7 @@ module RubyLLM
   # Raised when a provider returns tool-call arguments that are not valid
   # JSON, often because the response was truncated mid-tool-call.
   class ToolCallParseError < Error
+    # Returns the normalized reason generation stopped, or +nil+.
     attr_reader :finish_reason
 
     def initialize(message = nil, response: nil, finish_reason: nil) # :nodoc:

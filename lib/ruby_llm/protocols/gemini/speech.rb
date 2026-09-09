@@ -36,7 +36,7 @@ module RubyLLM
             model: model
           }
 
-          Utils.deep_merge(payload, provider_options)
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def parse_speech_response(response, model:, voice:, format:) # rubocop:disable Lint/UnusedMethodArgument

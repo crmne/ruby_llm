@@ -41,7 +41,7 @@ module RubyLLM
 
           return definition if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(definition, tool.provider_options)
+          RubyLLM::Support::Utils.deep_merge(definition, tool.provider_options)
         end
 
         def format_tool_calls(tool_calls)

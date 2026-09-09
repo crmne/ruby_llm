@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Error do
-  it 'handles invalid API keys gracefully' do
+  it 'handles invalid API keys gracefully', :live do
     RubyLLM.configure do |config|
       config.openai_api_key = 'invalid-key'
     end
 
-    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+    chat = RubyLLM.chat(model: model_for(:openai, :temperature))
 
     expect do
       chat.ask('Hello')

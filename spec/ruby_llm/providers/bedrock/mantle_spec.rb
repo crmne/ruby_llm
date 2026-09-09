@@ -151,6 +151,26 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       expect(payload[:input].first[:role]).to eq('user')
     end
 
+    it 'renders ARN-backed MCP connectors and replays their completed results' do
+      connector = 'arn:aws:lambda:us-west-2:123456789012:function:read_docs'
+      chat = RubyLLM.chat(model: 'openai.gpt-oss-20b', provider: :bedrock)
+                    .with_server_tools(mcp: { name: 'docs', connector_id: connector, require_approval: 'never' })
+      output = [
+        { 'type' => 'mcp_list_tools', 'id' => 'list_1', 'server_label' => 'docs', 'tools' => [] },
+        { 'type' => 'mcp_call', 'id' => 'call_1', 'server_label' => 'docs', 'name' => 'read_docs',
+          'arguments' => '{}', 'output' => 'Documentation' }
+      ]
+      protocol = described_class::Responses.new(provider)
+      message = protocol.send(:parse_completion_body, { 'output' => output }, raw: nil)
+      chat.add_message(message)
+
+      expect(chat.render[:tools]).to eq([{ type: 'mcp', server_label: 'docs', connector_id: connector,
+                                           require_approval: 'never' }])
+      expect(chat.render[:input]).to eq(output)
+      expect(message.tool_calls).to be_nil
+      expect(message.server_tool_calls.last).to have_attributes(name: 'read_docs', result: 'Documentation')
+    end
+
     it 'points each protocol at its own mantle path' do
       expect(described_class::Anthropic.allocate.completion_url).to eq('anthropic/v1/messages')
       expect(described_class::Responses.allocate.completion_url).to eq('v1/responses')
@@ -193,7 +213,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
     end
   end
 
-  describe 'chat', skip: 'Claude on the mantle endpoint requires an AWS Sales agreement for this account' do
+  describe 'chat', :live, skip: 'Claude on the mantle endpoint requires an AWS Sales agreement for this account' do
     it 'chats with the newest Claude generation' do
       chat = RubyLLM.chat(model: 'anthropic.claude-sonnet-5', provider: :bedrock, assume_model_exists: true)
       response = chat.ask('Say OK and nothing else.')

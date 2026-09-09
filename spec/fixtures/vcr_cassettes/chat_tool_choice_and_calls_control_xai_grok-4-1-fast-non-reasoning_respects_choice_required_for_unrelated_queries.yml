@@ -1,0 +1,183 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"When was the
+        fall of Rome?"}],"instructions":"Your location is Berlin, at latitude 52.5200
+        and longitude 13.4050.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 08 Sep 2026 07:09:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '9998722'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Metrics-Ttft-Ms:
+      - '1146.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '7.6'
+      X-Metrics-E2e-Ms:
+      - '5768.3'
+      Traceparent:
+      - 00-e7670f5c7f46c054fd87cac4e455814a-f8938eff000100ef-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1788851342,"completed_at":1788851346,"id":"8e7aa9e0-c459-9411-b3de-2112a07cd293","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_8e7aa9e0-c459-9411-b3de-2112a07cd293","summary":[{"text":"The
+        question is: \"When was the fall of Rome?\"\nThe fall of Rome is traditionally
+        dated to 476 AD, when the Germanic chieftain Odoacer deposed the last Western
+        Roman emperor, Romulus Augustulus. This marked the end of the Western Roman
+        Empire, though the Eastern half continued as the Byzantine Empire until its
+        own collapse in 1453.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"content":[{"type":"output_text","text":"476
+        AD (Western Roman Empire)","logprobs":[],"annotations":[]}],"id":"msg_8e7aa9e0-c459-9411-b3de-2112a07cd293","role":"assistant","type":"message","status":"completed"},{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call-ee56aecb-43a5-4999-87e8-16105991c239-0","name":"weather","type":"function_call","id":"fc_8e7aa9e0-c459-9411-b3de-2112a07cd293_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"required","tools":[{"type":"function","description":"Gets
+        current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":362,"input_tokens_details":{"cached_tokens":128},"output_tokens":584,"output_tokens_details":{"reasoning_tokens":555},"total_tokens":946,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":17781000,"context_details":{"input_tokens":362,"output_tokens":584}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Your
+        location is Berlin, at latitude 52.5200 and longitude 13.4050."}'
+  recorded_at: Tue, 08 Sep 2026 07:09:06 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"When was the
+        fall of Rome?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
+        question is: \"When was the fall of Rome?\"\nThe fall of Rome is traditionally
+        dated to 476 AD, when the Germanic chieftain Odoacer deposed the last Western
+        Roman emperor, Romulus Augustulus. This marked the end of the Western Roman
+        Empire, though the Eastern half continued as the Byzantine Empire until its
+        own collapse in 1453."}],"encrypted_content":"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"},{"role":"assistant","content":[{"type":"output_text","text":"476
+        AD (Western Roman Empire)"}]},{"type":"function_call","call_id":"call-ee56aecb-43a5-4999-87e8-16105991c239-0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call-ee56aecb-43a5-4999-87e8-16105991c239-0","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"instructions":"Your location
+        is Berlin, at latitude 52.5200 and longitude 13.4050.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 08 Sep 2026 07:09:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Metrics-Ttft-Ms:
+      - '725.9'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.4'
+      X-Metrics-E2e-Ms:
+      - '1722.9'
+      Traceparent:
+      - 00-5fda78e7b64b698ada6359d8dd03332a-491c62b20000113a-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1788851347,"completed_at":1788851348,"id":"127537b5-93c0-959b-a81c-cd7640b6256c","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_127537b5-93c0-959b-a81c-cd7640b6256c","summary":[{"text":"The
+        tool returned weather info, which is irrelevant to the question. The fall
+        of Rome is a historical event, not related to current weather in Berlin.\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"bJAMq7xRRqZMc/lxyyIBrGaH7iHIhErOLdDQ1tZOoC5w2vUCJXKWrBh7ljvlM6M6Y3bY+O83zNYylrPbXIB3xAXRKEVBUGUuvN6QcG6HZE/I0lf0dt2bJ7hdCKYInjpvTAumW23UrVp40IssuneznPC7ZPJ0SLZ9rfRpsgDDbUcV9x5ZVYVS9IrE4gQ0EUlJfXkwE8zIWJD5ePRnmeIA3cZQ+Ef4/jfWp5JKvpOj92Xgwbf+ZXXU/8wmpE4n9XkULcxXmp/QF/V2tDAPKFMcE3KGHGLlsWVi3dQ0iHrVI1ZxhrapIwxvaN39uuHqWkeKqsfrs6FWJb8aH9ghaYm+WcDRqnxTWvzOvdsnm2CAoGgBvHjY4nGkp8lmi51A7HZhA1K9TFh/yg0CFF5T0V1vmLI2U9bL8LpUOegtGigTfG5yiWaqbjnRuFHV6zytN8CAaamxrhxle5+YejcbtGvljIVAdcXdh1owUg8M5gvvcSe/S2ywn+RVD+8Cgepb1Dm/eFdKgYxOtSTDtS9iPt9aPcYflJMLUBK/g9IM4/Vvi0eE1t65050/O/SKq81wRoUonkY2qK+5Oes/ZA"},{"content":[{"type":"output_text","text":"The
+        conventional date for the fall of the Western Roman Empire is 476 AD, when
+        the last Western Roman emperor, Romulus Augustulus, was deposed by the Germanic
+        chieftain Odoacer. (The Eastern Roman/Byzantine Empire continued until 1453.)","logprobs":[],"annotations":[]}],"id":"msg_127537b5-93c0-959b-a81c-cd7640b6256c","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets
+        current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":969,"input_tokens_details":{"cached_tokens":128},"output_tokens":144,"output_tokens_details":{"reasoning_tokens":89},"total_tokens":1113,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":14368500,"context_details":{"input_tokens":969,"output_tokens":144}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"Your
+        location is Berlin, at latitude 52.5200 and longitude 13.4050."}'
+  recorded_at: Tue, 08 Sep 2026 07:09:08 GMT
+recorded_with: VCR 6.4.0

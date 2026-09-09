@@ -23,63 +23,103 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - text/event-stream
+      Date:
+      - Mon, 07 Sep 2026 20:59:44 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
       Vary:
       - access-control-request-headers
-      Apim-Request-Id:
-      - 0d5cdc27-20d9-44b6-a6b9-3c983e10ae60
+      X-Ms-Rai-Invoked:
+      - 'true'
       Traceparent:
-      - 00-7adbd9808ad273487b0b5549ed3eca66-c3a2b31c00055b22-00
+      - 00-ba61821de4d8d208dd74bb1553cb8913-73babbf10004c5ba-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 93598164-4c12-4c05-a53f-b2bc10419c0b
+      Azureml-Model-Session:
+      - d20260810234415-1ce5aa48
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49962'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      Apim-Request-Id:
+      - 93598164-4c12-4c05-a53f-b2bc10419c0b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      Azureai-Fe-Offer-Type:
-      - paygo
-      Date:
-      - Wed, 19 Aug 2026 14:34:14 GMT
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"1","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"1","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" One"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"2"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"  \n"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"2"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"3"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" Two"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"  \n"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"3"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id": "a4c12840-0156-4fad-9be6-cff6a42a5867", "object": "chat.completion.chunk", "created": 1787150054, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 7, "completion_tokens": 8, "total_tokens": 15, "prompt_tokens_details": {"text_tokens": 7, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 161}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" Three"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id":"957153b4-bd35-4ff7-88ab-16720c6ace8e","object":"chat.completion.chunk","created":1788814785,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id": "957153b4-bd35-4ff7-88ab-16720c6ace8e", "object": "chat.completion.chunk", "created": 1788814785, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 7, "completion_tokens": 11, "total_tokens": 18, "prompt_tokens_details": {"text_tokens": 7, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 161}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
 
         data: [DONE]
 
-  recorded_at: Wed, 19 Aug 2026 14:34:14 GMT
+  recorded_at: Mon, 07 Sep 2026 20:59:45 GMT
 recorded_with: VCR 6.4.0
 ...

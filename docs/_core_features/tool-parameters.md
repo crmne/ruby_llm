@@ -52,7 +52,7 @@ Ruby method signatures do not expose reliable JSON Schema types or descriptions,
 
 ### Using the `parameter` Helper for Simple Tools
 
-If your tool needs a few scalar arguments with descriptions or non-string types, use the `parameter` helper. RubyLLM translates these declarations into JSON Schema under the hood.
+If your tool needs a few scalar arguments with descriptions or non-string types, use the `parameter` helper. RubyLLM turns these declarations into the schema sent to the model.
 
 ```ruby
 class Distance < RubyLLM::Tool

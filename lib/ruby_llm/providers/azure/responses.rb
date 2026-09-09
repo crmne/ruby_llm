@@ -5,19 +5,16 @@ module RubyLLM
     class Azure < Provider
       # Azure's dialect of the OpenAI Responses API, served from the
       # implicitly versioned openai/v1 base. The model field carries the
-      # deployment name, as on Chat Completions. Azure offers no web_search
-      # server tool and rejects the user_data file upload purpose.
+      # deployment name, as on Chat Completions. Azure rejects the
+      # user_data file upload purpose.
       class Responses < Protocols::Responses
         include Azure::Videos
-
-        SERVER_TOOL_ALIASES = Protocols::Responses::SERVER_TOOL_ALIASES.except(:web_search).freeze
+        include Azure::Images
+        include Azure::Audio
+        include Protocols::Responses::Compaction
 
         def completion_url
           "#{@provider.azure_openai_v1_base}/responses"
-        end
-
-        def server_tool_aliases
-          SERVER_TOOL_ALIASES
         end
 
         def provider_file_upload_options(_attachment)

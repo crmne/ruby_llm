@@ -44,11 +44,11 @@ RSpec.describe RubyLLM::Context, :live do
   describe 'context chat operations' do
     it 'creates a chat with context-specific configuration' do
       context = RubyLLM.context do |config|
-        config.default_model = 'claude-haiku-4-5'
+        config.default_model = model_for(:anthropic)
       end
 
       chat = context.chat
-      expect(chat.model.id).to eq('claude-haiku-4-5')
+      expect(chat.model.id).to eq(model_for(:anthropic))
 
       # Ensure global config wasn't affected
       global_chat = RubyLLM.chat
@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Context, :live do
       end
 
       expect do
-        chat = context.chat(model: 'gpt-4.1-nano')
+        chat = context.chat(model: model_for(:openai, :temperature))
         chat.ask('Hello')
       end.to raise_error RubyLLM::UnauthorizedError
 
@@ -73,16 +73,16 @@ RSpec.describe RubyLLM::Context, :live do
 
     it 'allows specifying a model when creating the chat' do
       context = RubyLLM.context do |config|
-        config.default_model = 'gpt-4.1-nano'
+        config.default_model = model_for(:openai, :temperature)
       end
 
-      chat = context.chat(model: 'claude-haiku-4-5')
-      expect(chat.model.id).to eq('claude-haiku-4-5')
+      chat = context.chat(model: model_for(:anthropic))
+      expect(chat.model.id).to eq(model_for(:anthropic))
     end
 
     it 'returns a chat to the global configuration with with_context(nil)' do
       context = RubyLLM.context do |config|
-        config.default_model = 'claude-haiku-4-5'
+        config.default_model = model_for(:anthropic)
       end
       chat = context.chat
 
@@ -96,11 +96,11 @@ RSpec.describe RubyLLM::Context, :live do
   describe 'context embed operations' do
     it 'respects context-specific embedding model' do
       context = RubyLLM.context do |config|
-        config.default_embedding_model = 'text-embedding-3-large'
+        config.default_embedding_model = model_for(:openai, :alternate_embedding)
       end
 
       embedding = context.embed('Test embedding')
-      expect(embedding.model).to eq('text-embedding-3-large')
+      expect(embedding.model).to eq(model_for(:openai, :alternate_embedding))
 
       # Global default should be unchanged
       global_embedding = RubyLLM.embed('Test embedding')
@@ -109,32 +109,32 @@ RSpec.describe RubyLLM::Context, :live do
 
     it 'allows specifying a model at embed time' do
       context = RubyLLM.context do |config|
-        config.default_embedding_model = 'text-embedding-3-large'
+        config.default_embedding_model = model_for(:openai, :alternate_embedding)
       end
 
-      embedding = context.embed('Test embedding', model: 'text-embedding-3-small')
-      expect(embedding.model).to eq('text-embedding-3-small')
+      embedding = context.embed('Test embedding', model: model_for(:openai, :embedding))
+      expect(embedding.model).to eq(model_for(:openai, :embedding))
     end
   end
 
   describe 'multiple independent contexts' do
     it 'allows multiple contexts with different configurations' do
       context1 = RubyLLM.context do |config|
-        config.default_model = 'gpt-4.1-nano'
+        config.default_model = model_for(:openai, :temperature)
         config.log_regexp_timeout = 5.0
       end
 
       context2 = RubyLLM.context do |config|
-        config.default_model = 'claude-haiku-4-5'
+        config.default_model = model_for(:anthropic)
       end
 
       chat1 = context1.chat
       chat2 = context2.chat
 
-      expect(chat1.model.id).to eq('gpt-4.1-nano')
+      expect(chat1.model.id).to eq(model_for(:openai, :temperature))
       expect(context1.config.log_regexp_timeout).to eq(5.0)
 
-      expect(chat2.model.id).to eq('claude-haiku-4-5')
+      expect(chat2.model.id).to eq(model_for(:anthropic))
       expected_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
       expect(context2.config.log_regexp_timeout).to eq(expected_timeout)
     end

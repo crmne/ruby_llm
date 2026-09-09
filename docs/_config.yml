@@ -133,10 +133,10 @@ jekyll_vitepress:
       "--vp-home-hero-name-background": 'linear-gradient(120deg, #e24a2f 28%, #9f1406
         78%)'
     dark:
-      "--vp-c-brand-1": "#FF433D"
+      "--vp-c-brand-1": "#ED3434"
       "--vp-c-brand-2": "#D52E2A"
       "--vp-c-brand-3": "#C9271E"
-      "--vp-c-brand-soft": rgba(255, 67, 61, 0.18)
+      "--vp-c-brand-soft": rgba(237, 52, 52, 0.18)
       "--vp-c-bg": "#1B1B1A"
       "--vp-c-bg-alt": "#181817"
       "--vp-c-bg-soft": "#232323"
@@ -152,7 +152,7 @@ jekyll_vitepress:
       "--vp-c-gutter": "#30302F"
       "--vp-nav-logo-height": 32px
       "--vp-home-hero-name-color": var(--vp-c-brand-1)
-      "--vp-home-hero-name-background": 'linear-gradient(120deg, #ff433d 28%, #c9271e
+      "--vp-home-hero-name-background": 'linear-gradient(120deg, #ed3434 28%, #c9271e
         76%)'
   github_star:
     enabled: true
@@ -178,14 +178,12 @@ jekyll_vitepress:
     text: Support
     label: Support RubyLLM on GitHub Sponsors
   footer:
-    # The homepage draws its own footer in _includes/home.html, and this one
-    # renders on the homepage only, so enabling it would print both.
-    enabled: false
+    enabled: true
     show_on_docs: false
     message: >-
       Brought to you by <a href="https://paolino.me" target="_blank" rel="noreferrer">Carmine Paolino</a>, maker of
     copyright: >-
-      <span class="footer-brand-links"><a class="footer-chatwithwork-link" href="https://chatwithwork.com" target="_blank" rel="noreferrer"><img class="footer-chatwithwork-logo" src="https://chatwithwork.com/logotype.svg" alt="Chat with Work"></a></span><br><span class="footer-built-with">Docs built with <a href="https://jekyll-vitepress.dev" target="_blank" rel="noreferrer">Jekyll VitePress</a>.</span>
+      <span class="footer-brand-links"><a href="https://chatwithwork.com" class="footer-chatwithwork-link" target="_blank" rel="noreferrer"><img class="footer-chatwithwork-logo theme-image light" src="https://chatwithwork.com/logotype.svg" alt="Chat with Work"><img class="footer-chatwithwork-logo theme-image dark" src="https://chatwithwork.com/logotype-dark.svg" alt="Chat with Work"></a></span><br><span class="footer-built-with">Docs built with <a href="https://jekyll-vitepress.dev" target="_blank" rel="noreferrer">Jekyll VitePress</a>.</span>
   doc_footer:
     enabled: true
     previous_label: Previous page
@@ -276,18 +274,44 @@ og_image:
 # These are used throughout the docs to ensure consistency
 # and make it easy to update model names in one place
 
+hosted_agents:
+  vertexai_research: deep-research-preview-04-2026
+
 models:
   # Default models for basic examples
   default_chat: "gpt-5.6-luna"
   default_embedding: "text-embedding-3-small"
   default_image: "gpt-image-2"
   default_speech: "gpt-4o-mini-tts-2025-12-15"
+  default_video: "grok-imagine-video-1.5"
+  vertexai_video: "veo-3.1-fast-generate-001"
+  bedrock_video: "luma.ray-v2:0"
+  video_elevenlabs: "veo-3.1-fast-generate-001"
+  video_elevenlabs_character: "creatify-aurora"
+  xai_video_extension: "grok-imagine-video"
+  gemini_video_extension: "veo-3.1-fast-generate-preview"
+  xai_tokenization: "grok-4.3"
+  transcription_xai: "grok-stt"
+  cohere_tokenization: "command-a-03-2025"
+  cohere_batch_chat: "command-a-03-2025"
+  cohere_batch_embedding: "embed-v4.0"
+  default_transcription: "gpt-transcribe"
+  default_ocr: "mistral-ocr-latest"
+  cohere_ocr: "parse-v5.0"
+  azure_embedding: "Cohere-embed-v3-english"
+  azure_embedding_multimodal: "embed-v-4-0"
+  azure_rerank: "Cohere-rerank-v4.0-fast"
+  bedrock_batch_embedding: "amazon.titan-embed-text-v2:0"
+  vertexai_batch_embedding: "text-embedding-004"
+  default_moderation: "omni-moderation-latest"
+  moderation_mistral: "mistral-moderation-2603"
 
   # OpenAI models
   openai_latest: "gpt-5.6"
   openai_current: "gpt-5.6-luna"
   openai_vision: "gpt-5.6"
   openai_tools: "gpt-5.6"
+  openai_mcp: "gpt-5-nano"
   openai_mini: "gpt-5.6-terra"
   openai_audio: "gpt-audio-1.5"
   openai_speech: "gpt-4o-mini-tts-2025-12-15"
@@ -296,6 +320,10 @@ models:
 
   # Anthropic models
   anthropic_server_tools: "claude-sonnet-5"
+  mistral_server_tools: "mistral-small-latest"
+  gemini_mcp: "gemini-3.8-flash"
+  openrouter_server_tools: "openai/gpt-5.2"
+  transcription_openrouter_diarization: "microsoft/mai-transcribe-2"
   anthropic_latest: "claude-sonnet-5"
   anthropic_current: "claude-sonnet-5"
   anthropic_newest: "claude-sonnet-5"
@@ -306,23 +334,42 @@ models:
   gemini_current: "gemini-3.7-flash"
   gemini_current_latest: "gemini-3.7-flash"
 
+  deepseek_chat: "deepseek-v4-flash"
+
   # Embedding models
   embedding_small: "text-embedding-3-small"
   embedding_large: "text-embedding-3-large"
   embedding_google: "gemini-embedding-2"
+  embedding_openrouter: "google/gemini-embedding-2"
   embedding_google_text: "gemini-embedding-001"
+  embedding_mistral: "mistral-embed"
+  rerank_cohere: "rerank-v3.5"
+  rerank_bedrock: "amazon.rerank-v1:0"
+  rerank_vertexai: "semantic-ranker-default-004"
 
   # Image generation models
   image_openai: "gpt-image-2"
   image_dalle: "gpt-image-2"
   image_google: "gemini-3.1-flash-lite-image"
+  image_bedrock: "stability.sd3-5-large-v1:0"
+  image_bedrock_edit: "us.stability.stable-image-inpaint-v1:0"
+  image_elevenlabs: "gemini-3.1-flash-lite-image"
+  transcription_bedrock: "mistral.voxtral-small-24b-2507"
 
   # Speech generation models
   speech_openai: "gpt-4o-mini-tts-2025-12-15"
   speech_google: "gemini-3.1-flash-tts-preview"
-
-  # Local/Other models
-  local_llama: "llama4"
+  speech_deepgram: "aura-2-thalia-en"
+  speech_elevenlabs: "eleven_flash_v2_5"
+  transcription_deepgram: "nova-3-general"
+  transcription_elevenlabs_realtime: "scribe_v2_realtime"
+  transcription_elevenlabs: "scribe_v2"
+  transcription_openai_timestamps: "whisper-1"
+  transcription_gemini: "gemini-3.5-transcribe"
+  transcription_vertexai: "gemini-3.5-transcribe-preview"
+  transcription_gemini_live: "gemini-3.5-transcribe-live"
+  perplexity_router: "perplexity/kimi-k3"
+  transcription_vertexai_live: "gemini-3.5-transcribe-live-preview"
 
   # Model categories for different use cases
   best_for_code: "gpt-5.6"

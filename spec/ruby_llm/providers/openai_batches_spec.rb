@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
 
   describe '#batch_protocol_for_stored_batch' do
     it 'falls back to the default protocol when the endpoint is unknown' do
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(connection).to receive(:get).with('batches/batch_1').and_return(
         Struct.new(:body).new({ 'endpoint' => '/v1/moderations' })
       )
@@ -64,7 +64,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
     end
 
     it 'reads the protocol out of the stored endpoint' do
-      connection = instance_double(RubyLLM::Connection)
+      connection = instance_double(RubyLLM::Transport::Connection)
       allow(connection).to receive(:get).with('batches/batch_1').and_return(
         Struct.new(:body).new({ 'endpoint' => '/v1/chat/completions' })
       )

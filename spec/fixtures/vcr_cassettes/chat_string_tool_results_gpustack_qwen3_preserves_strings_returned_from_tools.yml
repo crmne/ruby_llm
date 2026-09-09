@@ -1,0 +1,137 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Process this
+        query: test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Req-Cost-Time:
+      - '1097'
+      Req-Arrive-Time:
+      - '1788817140285'
+      Resp-Start-Time:
+      - '1788817141383'
+      Date:
+      - Mon, 07 Sep 2026 21:38:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '1094'
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
+        the user wants me to process the query \"test data\". Let me check the available
+        tools. There''s a function called content_returning that takes a query parameter.
+        The description says it returns a processed string result. Since the user
+        provided \"test data\" as the query, I should call this function with that
+        exact string. I need to make sure the arguments are correctly formatted in
+        JSON. No other tools are available, so I''ll just use this one. Alright, the
+        tool call should include the name \"content_returning\" and the arguments
+        with \"query\": \"test data\".\n","tool_calls":[{"type":"function","function":{"name":"content_returning","arguments":"{\"query\":
+        \"test data\"}"},"id":"6QJVqzEO4X5NMLvPohtsAwVCQuCJHbaQ"}]}}],"created":1788817141,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":145,"prompt_tokens":171,"total_tokens":316,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-4p6IIsb8sdHrc7SfSyYifz31vobqfSmx","timings":{"cache_n":51,"prompt_n":120,"prompt_ms":31.791,"prompt_per_token_ms":0.264925,"prompt_per_second":3774.6532037369066,"predicted_n":145,"predicted_ms":1030.75,"predicted_per_token_ms":7.157986111111111,"predicted_per_second":139.7040989570701}}'
+  recorded_at: Mon, 07 Sep 2026 21:39:01 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Process this
+        query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"6QJVqzEO4X5NMLvPohtsAwVCQuCJHbaQ","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning":"Okay, the user wants me to process the query \"test
+        data\". Let me check the available tools. There''s a function called content_returning
+        that takes a query parameter. The description says it returns a processed
+        string result. Since the user provided \"test data\" as the query, I should
+        call this function with that exact string. I need to make sure the arguments
+        are correctly formatted in JSON. No other tools are available, so I''ll just
+        use this one. Alright, the tool call should include the name \"content_returning\"
+        and the arguments with \"query\": \"test data\".\n","reasoning_content":"Okay,
+        the user wants me to process the query \"test data\". Let me check the available
+        tools. There''s a function called content_returning that takes a query parameter.
+        The description says it returns a processed string result. Since the user
+        provided \"test data\" as the query, I should call this function with that
+        exact string. I need to make sure the arguments are correctly formatted in
+        JSON. No other tools are available, so I''ll just use this one. Alright, the
+        tool call should include the name \"content_returning\" and the arguments
+        with \"query\": \"test data\".\n"},{"role":"tool","content":"Processed: test
+        data","tool_call_id":"6QJVqzEO4X5NMLvPohtsAwVCQuCJHbaQ"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1118'
+      Req-Arrive-Time:
+      - '1788817141388'
+      Resp-Start-Time:
+      - '1788817142507'
+      Server:
+      - istio-envoy
+      X-Envoy-Upstream-Service-Time:
+      - '1116'
+      Date:
+      - Mon, 07 Sep 2026 21:39:01 GMT
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        processed result for your query \"test data\" is:  \n**Processed: test data**\n\nLet
+        me know if you need further assistance!","reasoning_content":"Okay, the user
+        asked to process \"test data\" and I called the content_returning function
+        with that query. The response from the tool was \"Processed: test data\".
+        Now I need to present this result to the user. Since the function''s purpose
+        is to process the query, the response seems straightforward. I should confirm
+        that the processing was done and maybe offer further assistance. Let me check
+        if there''s any specific way the user wants the result formatted. The original
+        query was simple, so a direct answer should be fine. I''ll state the processed
+        result and ask if they need anything else.\n"}}],"created":1788817142,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":153,"prompt_tokens":333,"total_tokens":486,"prompt_tokens_details":{"cached_tokens":315}},"id":"chatcmpl-5X4xzyeQx0HWweyJaJOy9wm0U7gfjbrm","timings":{"cache_n":315,"prompt_n":18,"prompt_ms":14.258,"prompt_per_token_ms":0.7921111111111111,"prompt_per_second":1262.4491513536261,"predicted_n":153,"predicted_ms":1092.925,"predicted_per_token_ms":7.190296052631578,"predicted_per_second":139.07633186174715}}'
+  recorded_at: Mon, 07 Sep 2026 21:39:02 GMT
+recorded_with: VCR 6.4.0

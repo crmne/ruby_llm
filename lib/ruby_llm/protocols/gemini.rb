@@ -21,10 +21,10 @@ module RubyLLM
       SERVER_TOOL_ALIASES = %i[
         google_search url_context code_execution file_search google_maps
       ].to_h do |tool_key|
-        [tool_key, ->(options) { { tool: { tool_key => Utils.deep_symbolize_keys(options) } } }]
+        [tool_key, ->(options) { { tool: { tool_key => Support::Utils.deep_symbolize_keys(options) } } }]
       end.merge(
-        web_search: ->(options) { { tool: { google_search: Utils.deep_symbolize_keys(options) } } },
-        web_fetch: ->(options) { { tool: { url_context: Utils.deep_symbolize_keys(options) } } }
+        web_search: ->(options) { { tool: { google_search: Support::Utils.deep_symbolize_keys(options) } } },
+        web_fetch: ->(options) { { tool: { url_context: Support::Utils.deep_symbolize_keys(options) } } }
       ).freeze
 
       def server_tool_aliases

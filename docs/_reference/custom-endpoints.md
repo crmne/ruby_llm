@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Custom Endpoints and Unlisted Models
-parent: "Working with Models"
+parent: "Model Registry"
 nav_order: 3
 description: Target OpenAI-compatible endpoints and use model IDs the registry doesn't list
 ---
@@ -53,7 +53,7 @@ To use a model identifier not listed in RubyLLM's registry, use the `assume_mode
 ```ruby
 # Assumes openai_api_base points at your gateway
 chat = RubyLLM.chat(
-  model: 'my-company-secure-gpt4o', # Your custom deployment name
+  model: ENV.fetch("CUSTOM_CHAT_MODEL"), # Your custom deployment name
   provider: :openai,                # MUST specify provider
   assume_model_exists: true         # Bypass registry check
 )
@@ -62,7 +62,7 @@ puts response.content
 
 # You can also use it in .with_model
 chat.with_model(
-  'my-experimental-model',
+  ENV.fetch("CUSTOM_FALLBACK_MODEL"),
   provider: :openai,                # MUST specify provider
   assume_model_exists: true
 )
@@ -73,14 +73,14 @@ The `assume_model_exists` flag also works with `RubyLLM.embed` and `RubyLLM.pain
 ```ruby
 embedding = RubyLLM.embed(
   "Test text",
-  model: 'my-custom-embedder',
+  model: ENV.fetch("CUSTOM_EMBEDDING_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )
 
 image = RubyLLM.paint(
   "A beautiful landscape",
-  model: 'my-custom-dalle',
+  model: ENV.fetch("CUSTOM_IMAGE_MODEL"),
   provider: :openai,
   assume_model_exists: true
 )
@@ -100,4 +100,4 @@ Use these features when the standard registry doesn't cover your specific model 
 
 *   [Chat]({% link _core_features/chat.md %}) - start a conversation once your custom endpoint or unlisted model is wired up.
 *   [Model Resolution]({% link _reference/model-resolution.md %}) - the exact procedure behind `assume_model_exists` and provider selection.
-*   [Working with Models]({% link _reference/models.md %}) - return to the registry for validated, capability-aware models.
+*   [Model Registry]({% link _reference/models.md %}) - return to the registry for validated, capability-aware models.

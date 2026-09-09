@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat do
-  subject(:chat) { RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai) }
+  subject(:chat) { RubyLLM.chat(model: model_for(:openai, :temperature), provider: :openai) }
 
   include_context 'with configured RubyLLM'
 
@@ -172,6 +172,22 @@ RSpec.describe RubyLLM::Chat do
       chat.with_schema(nil)
 
       expect(chat.instance_variable_get(:@schema)).to be_nil
+    end
+  end
+
+  describe 'feature option hashes' do
+    it 'accepts thinking options from a hash without mutating its options' do
+      options = { 'effort' => :high }
+
+      expect(chat.with_thinking(options)).to be(chat)
+      expect(chat.thinking).to eq(effort: :high)
+      expect(options).to eq('effort' => :high)
+    end
+
+    it 'rejects nil for every feature switch' do
+      %i[with_thinking with_citations with_caching with_compaction].each do |setter|
+        expect { chat.public_send(setter, nil) }.to raise_error(ArgumentError)
+      end
     end
   end
 

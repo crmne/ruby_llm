@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Call
+        the array params tool with tags [\"red\",\"blue\"] and tell me the combined
+        tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 07 Sep 2026 20:58:12 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - e253f02fff476d998b8dfb15d8a15512
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 1667b9130b1f76b620cc4be89be16f74.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - H67rTJWMkMU6URiF1IiyDfI-deg6HuRhOohRDDEhxgP-Veak-Jv4Uw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"e1790e7f-5d0e-49e3-9501-8bb0092be297","object":"chat.completion","created":1788814692,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the array_params tool with tags [\"red\",\"blue\"] and
+        tell them the combined tags. Let me make the call.","tool_calls":[{"index":0,"id":"call_00_AXZIKFBhK74TTAYpbDqm3051","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":395,"completion_tokens":79,"total_tokens":474,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":30},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":11},"system_fingerprint":"a26a7955944dc5c60445bff77fac9c8e"}'
+  recorded_at: Mon, 07 Sep 2026 20:58:13 GMT
+recorded_with: VCR 6.4.0

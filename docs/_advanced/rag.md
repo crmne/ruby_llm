@@ -26,7 +26,7 @@ RAG is often just one step in a larger [workflow]({% link _advanced/agentic-work
 ```ruby
 # Gemfile
 gem 'neighbor'
-gem 'ruby_llm'
+gem 'ruby_llm', '2.0.0.rc1'
 ```
 
 ```bash
@@ -60,11 +60,19 @@ class Document < ApplicationRecord
   private
 
   def generate_embedding
-    response = RubyLLM.embed(content)
-    self.embedding = response.vectors
+    self.embedding = RubyLLM.embed(content).vectors
   end
 end
 ```
+
+For a short scanned document, combine the model with OCR:
+
+```ruby
+text = RubyLLM.ocr("refund-policy.pdf").markdown
+Document.create!(title: "Refund policy", content: text)
+```
+
+The callback generates its embedding. Configure the OCR provider as described in [Document OCR]({% link _core_features/ocr.md %}). Split long documents into passages before embedding them so each result contains focused context.
 
 ## Retrieval Tool
 
@@ -102,6 +110,8 @@ end
 agent = SupportWithDocsAgent.new
 agent.ask("What is our refund policy?").content
 ```
+
+To improve retrieval ordering, fetch a larger candidate set and rerank it before building `SearchResults`. [Reranking]({% link _core_features/rerank.md %}#retrieval-end-to-end) shows the complete database-to-results example.
 
 ## Next Steps
 

@@ -5,7 +5,8 @@ http_interactions:
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
-      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"When
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"Your
+        location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},{"role":"user","content":[{"type":"text","text":"When
         was the fall of Rome?"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -35,9 +36,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '7033'
+      - '7303'
       Num-Tokens:
-      - '116'
+      - '142'
       Pragma:
       - no-cache
       Vary:
@@ -45,32 +46,33 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 35277275b486a61d0b28f092a744865a
+      - c55467f2d37c9eec932ed35569663fe2
       Date:
-      - Thu, 13 Aug 2026 11:17:28 GMT
+      - Tue, 08 Sep 2026 07:07:29 GMT
       X-Envoy-Upstream-Service-Time:
-      - '716'
+      - '686'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d737d4ec-bedd-4d1d-98c3-7228ab0809cb","message":{"role":"assistant","tool_plan":"I
-        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_z5jpj51d0fka","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":80,"output_tokens":36},"tokens":{"input_tokens":1508,"output_tokens":50},"cached_tokens":992}}'
-  recorded_at: Thu, 13 Aug 2026 11:17:28 GMT
+      string: '{"id":"11959e6c-b782-4f9c-b963-22a68fab6697","message":{"role":"assistant","tool_plan":"I
+        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_5hdjzfqfvgqe","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":106,"output_tokens":36},"tokens":{"input_tokens":1568,"output_tokens":50},"cached_tokens":112}}'
+  recorded_at: Tue, 08 Sep 2026 07:07:29 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
-      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"When
-        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_z5jpj51d0fka","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","tool_call_id":"weather_z5jpj51d0fka","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"Your
+        location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},{"role":"user","content":[{"type":"text","text":"When
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_5hdjzfqfvgqe","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_5hdjzfqfvgqe","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}}]}'
@@ -99,9 +101,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '7449'
+      - '7719'
       Num-Tokens:
-      - '160'
+      - '182'
       Pragma:
       - no-cache
       Vary:
@@ -109,11 +111,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 22cc54a18990e243835e3240e7e51d2b
+      - 6cb911adcc83ba86f2ad8f525d37f4a3
       Date:
-      - Thu, 13 Aug 2026 11:17:49 GMT
+      - Tue, 08 Sep 2026 07:07:30 GMT
       X-Envoy-Upstream-Service-Time:
-      - '20508'
+      - '883'
       Server:
       - envoy
       Via:
@@ -125,6 +127,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjY0NjJkMmU3LTRiOGUtNDg3Mi05MTI4LTI1ZWUzNjZmNWFiYyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSBkb24ndCBoYXZlIHRoZSB0b29scyB0byBhbnN3ZXIgeW91ciBxdWVzdGlvbi5cblxuSSBjYW4gdGVsbCB5b3UgdGhhdCB0aGUgd2VhdGhlciBpbiBSb21lIGlzIGN1cnJlbnRseSAxNcKwQyB3aXRoIHdpbmRzIG9mIDEwIGttL2guIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0IjoxMTMsImVuZCI6MTQwLCJ0ZXh0IjoiMTXCsEMgd2l0aCB3aW5kcyBvZiAxMCBrbS9oLiIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyX3o1anBqNTFkMGZrYTowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA0MS45MDI4LCAxMi40OTY0OiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMTcsIm91dHB1dF90b2tlbnMiOjQzfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTYyNywib3V0cHV0X3Rva2VucyI6NTV9LCJjYWNoZWRfdG9rZW5zIjoxMTJ9fQ==
-  recorded_at: Thu, 13 Aug 2026 11:17:49 GMT
+        eyJpZCI6IjNhZDQwOGE5LTNjYzItNGM2YS05MjQ2LWY2MzBmYThkZTEwZCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSBkb24ndCBoYXZlIHRoZSB0b29scyB0byBhbnN3ZXIgeW91ciBxdWVzdGlvbi5cblxuVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIGN1cnJlbnRseSAxNcKwQywgd2l0aCB3aW5kcyBvZiAxMCBrbS9oLiJ9XSwiY2l0YXRpb25zIjpbeyJzdGFydCI6OTUsImVuZCI6MTIzLCJ0ZXh0IjoiMTXCsEMsIHdpdGggd2luZHMgb2YgMTAga20vaC4iLCJzb3VyY2VzIjpbeyJ0eXBlIjoidG9vbCIsImlkIjoid2VhdGhlcl81aGRqemZxZnZncWU6MCIsInRvb2xfb3V0cHV0Ijp7ImNvbnRlbnQiOiJDdXJyZW50IHdlYXRoZXIgYXQgNTIuNTIwMCwgMTMuNDA1MDogMTXCsEMsIFdpbmQ6IDEwIGttL2gifX1dLCJ0eXBlIjoiVEVYVF9DT05URU5UIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MTQzLCJvdXRwdXRfdG9rZW5zIjozOX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjE2ODcsIm91dHB1dF90b2tlbnMiOjUxfSwiY2FjaGVkX3Rva2VucyI6MTUwNH19
+  recorded_at: Tue, 08 Sep 2026 07:07:30 GMT
 recorded_with: VCR 6.4.0

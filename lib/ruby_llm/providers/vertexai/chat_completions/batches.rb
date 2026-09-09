@@ -6,7 +6,7 @@ module RubyLLM
       class ChatCompletions
         # Vertex AI MaaS batch prediction rows using OpenAI JSONL shape.
         module Batches
-          include VertexAI::BatchPrediction
+          include Protocols::VertexAI::BatchPrediction
 
           private
 

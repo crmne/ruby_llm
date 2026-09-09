@@ -3,6 +3,17 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Moderation do
+  it 'preserves the raw response alongside normalized verdicts' do
+    body = { 'id' => 'moderation-request', 'results' => [{ 'flagged' => false, 'categories' => {},
+                                                           'category_scores' => { 'violence' => 0.02 } }] }
+    result = described_class.parse_moderation_response(Struct.new(:body).new(body),
+                                                       model: RubyLLM.config.default_moderation_model)
+
+    expect(result.raw).to equal(body)
+    expect(result).not_to be_flagged
+    expect(result.category_scores).to eq('violence' => 0.02)
+  end
+
   describe '.render_moderation_payload' do
     it 'renders text moderation payloads unchanged' do
       payload = described_class.render_moderation_payload(

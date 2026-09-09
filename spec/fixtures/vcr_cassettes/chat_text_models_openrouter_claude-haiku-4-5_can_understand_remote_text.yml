@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,41 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Thu, 04 Jun 2026 23:49:36 GMT
+      - Mon, 07 Sep 2026 11:47:10 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6a220f10-9c6"
+      - W/"6a9ea43e-9c6"
       Expires:
-      - Mon, 08 Jun 2026 16:20:31 GMT
+      - Mon, 07 Sep 2026 21:02:09 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 8D16:192FC2:9BCB79:9D09A2:6A26E977
+      - 816C:15AB:43E3D27:4495830:6A9F23F9
+      X-Github-Edge-Region:
+      - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 08 Jun 2026 18:46:47 GMT
+      - Mon, 07 Sep 2026 20:53:20 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '70'
+      - '40'
       X-Served-By:
-      - cache-ber1080041-BER
+      - cache-ber1080033-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1780944408.882388,VS0,VE1
+      - S1788814401.514922,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - bedd3f1918194ac4965015f7896aebd04c4184d8
+      - 52418ca208997746283e53c686ea59b119e68e77
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 08 Jun 2026 18:46:47 GMT
+  recorded_at: Mon, 07 Sep 2026 20:53:20 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -140,9 +142,13 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -155,7 +161,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:50 GMT
+      - Mon, 07 Sep 2026 20:53:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,9 +171,11 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1780944409-HuDzmocWLqRJW9AWG9C2
+      - gen-1788814400-92Lv0cLkr3LYm2HvNWNK
       Access-Control-Expose-Headers:
-      - X-Generation-Id,cf-ray
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -181,25 +189,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1780944409-HuDzmocWLqRJW9AWG9C2\",\"object\":\"chat.completion\",\"created\":1780944409,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Ruby License File\\n\\nThis is the **license agreement for the Ruby programming
-        language**, copyrighted by Yukihiro Matsumoto (Ruby's creator).\\n\\n## Key
-        Points:\\n\\n**License Options:**\\n- 2-clause BSD License (BSDL), OR\\n-
-        Custom conditions listed in this file\\n\\n**Main Permissions:**\\n1. **Redistribution**
-        - Can copy the source code freely if you keep original copyright notices\\n2.
-        **Modifications** - Can modify code if you either:\\n   - Release modifications
-        publicly/freely\\n   - Use them only internally\\n   - Rename non-standard
-        binaries appropriately\\n   - Make other arrangements with the author\\n\\n3.
-        **Distribution** - Can distribute binaries if you either:\\n   - Provide instructions
-        on where to get the original\\n   - Include source code\\n   - Use non-standard
-        names with instructions\\n   - Make arrangements with the author\\n\\n4. **Commercial
-        use** - Can include Ruby code in commercial software (with some exceptions
-        noted in the LEGAL file)\\n\\n5. **User-generated code** - Scripts and output
-        generated by Ruby belong to the user, not Ruby\\n\\n**Disclaimer:**\\n- The
-        software is provided \\\"AS IS\\\" with no warranties (standard liability
-        waiver)\\n\\nThis is a **permissive open-source license** that allows significant
-        freedom for use, modification, and commercial purposes.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":298,\"total_tokens\":886,\"cost\":0.002078,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002078,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.00149},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 08 Jun 2026 18:46:53 GMT
+      string: "\n         \n\n         \n{\"id\":\"gen-1788814400-92Lv0cLkr3LYm2HvNWNK\",\"object\":\"chat.completion\",\"created\":1788814400,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
+        Ruby License Summary\\n\\nThis file contains the **license for Ruby**, the
+        programming language created by Yukihiro Matsumoto. Here are the key points:\\n\\n##
+        Main Terms:\\n\\n1. **Free redistribution** - You can copy and distribute
+        the source code freely, as long as you preserve original copyright notices\\n\\n2.
+        **Modification rights** - You can modify Ruby if you either:\\n   - Release
+        modifications publicly\\n   - Use them only internally in your organization\\n
+        \  - Distribute modified binaries with clear labeling\\n   - Make other arrangements
+        with the author\\n\\n3. **Binary distribution** - You can distribute compiled
+        versions if you:\\n   - Include source code or instructions on how to get
+        it\\n   - Label non-standard binaries clearly\\n   - Make other arrangements
+        with the author\\n\\n4. **Commercial use allowed** - You can incorporate Ruby
+        into other software, including commercial products\\n\\n5. **User-generated
+        content** - Scripts and files you create with Ruby belong to you, not the
+        Ruby copyright holders\\n\\n6. **No warranty** - Ruby is provided \\\"as-is\\\"
+        with no guarantees or liability\\n\\n## Alternative Option:\\nThe license
+        also references a **2-clause BSD license** (BSDL) as an alternative licensing
+        option.\\n\\nThis is a relatively permissive open-source license that allows
+        both free and commercial use.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":289,\"total_tokens\":877,\"cost\":0.002033,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002033,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.001445},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Mon, 07 Sep 2026 20:53:24 GMT
 recorded_with: VCR 6.4.0

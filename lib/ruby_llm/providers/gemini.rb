@@ -5,7 +5,16 @@ module RubyLLM
     # Native Gemini API implementation
     class Gemini < Provider
       protocol :gemini, Protocols::Gemini, batches: Protocols::Gemini::Batches
+      protocol :interactions, Protocols::Interactions
+      protocol :live_transcription, Protocols::Gemini::LiveTranscription
       protocol :files, Protocols::Gemini::Files
+
+      def protocol_for(model, operation: nil, **)
+        return protocols[:interactions] if operation == :transcribe && model.id == 'gemini-3.5-transcribe'
+        return protocols[:live_transcription] if operation == :transcribe && model.id == 'gemini-3.5-transcribe-live'
+
+        super
+      end
 
       def api_base
         @config.gemini_api_base || 'https://generativelanguage.googleapis.com/v1beta'

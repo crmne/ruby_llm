@@ -7,23 +7,22 @@ description: RDoc documentation for every public RubyLLM class and method
 
 # {{ page.title }}
 
-The full RDoc documentation for every public class and method in this
-version of RubyLLM.
+{{ page.description }}
+{: .fs-6 .fw-300 }
 
-[Browse the API docs]({{ '/api/' | relative_url }}){: .btn .btn-primary .fs-5 }
-[Browse as Markdown]({{ '/api/index.md' | relative_url }}){: .btn .fs-5 }
+The [API reference]({{ '/api/' | relative_url }}) opens on the RubyLLM module, with the framework's entry points and examples. Each class and method documents its arguments, return value, and behavior.
 
-These guides show you how to build things. The API reference tells you
-exactly what each class and method does: signatures, return values, and
-examples, in the style of Ruby's own documentation. Good entry points:
+| Build with | Reference |
+| --- | --- |
+| Conversations and structured responses | [Chat]({{ '/api/RubyLLM/Chat.html' | relative_url }}), [Message]({{ '/api/RubyLLM/Message.html' | relative_url }}) |
+| Tools and agents | [Tool]({{ '/api/RubyLLM/Tool.html' | relative_url }}), [Agent]({{ '/api/RubyLLM/Agent.html' | relative_url }}) |
+| Images, video, and speech | [Image]({{ '/api/RubyLLM/Image.html' | relative_url }}), [Video]({{ '/api/RubyLLM/Video.html' | relative_url }}), [Speech]({{ '/api/RubyLLM/Speech.html' | relative_url }}) |
+| Transcription, OCR, and moderation | [Transcription]({{ '/api/RubyLLM/Transcription.html' | relative_url }}), [OCR]({{ '/api/RubyLLM/OCR.html' | relative_url }}), [Moderation]({{ '/api/RubyLLM/Moderation.html' | relative_url }}) |
+| Search and retrieval | [Embedding]({{ '/api/RubyLLM/Embedding.html' | relative_url }}), [Rerank]({{ '/api/RubyLLM/Rerank.html' | relative_url }}) |
+| Rails records | [ActiveRecord::ActsAs]({{ '/api/RubyLLM/ActiveRecord/ActsAs.html' | relative_url }}) |
+| Models and configuration | [Models]({{ '/api/RubyLLM/Models.html' | relative_url }}), [Configuration]({{ '/api/RubyLLM/Configuration.html' | relative_url }}), [Context]({{ '/api/RubyLLM/Context.html' | relative_url }}) |
+| Usage and background processing | [Tokens]({{ '/api/RubyLLM/Tokens.html' | relative_url }}), [Cost]({{ '/api/RubyLLM/Cost.html' | relative_url }}), [Batch]({{ '/api/RubyLLM/Batch.html' | relative_url }}) |
 
-- [RubyLLM]({{ '/api/RubyLLM.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM.md' | relative_url }})), the module-level entry points
-- [Chat]({{ '/api/RubyLLM/Chat.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM/Chat.md' | relative_url }})), conversations and the agentic loop
-- [Tool]({{ '/api/RubyLLM/Tool.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM/Tool.md' | relative_url }})), giving models abilities
-- [Agent]({{ '/api/RubyLLM/Agent.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM/Agent.md' | relative_url }})), reusable configured chats
-- [ActiveRecord::ActsAs]({{ '/api/RubyLLM/ActiveRecord/ActsAs.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM/ActiveRecord/ActsAs.md' | relative_url }})), the Rails macros
-- [Models]({{ '/api/RubyLLM/Models.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM/Models.md' | relative_url }})), the model registry
-- [Configuration]({{ '/api/RubyLLM/Configuration.html' | relative_url }}) ([Markdown]({{ '/api/RubyLLM/Configuration.md' | relative_url }})), every setting
+For Markdown, start with [RubyLLM.md]({{ '/api/RubyLLM.md' | relative_url }}) or the [class index]({{ '/api/index.md' | relative_url }}). Every HTML class page has a matching `.md` page.
 
-The API reference is generated from the source with RDoc. Build it locally
-with `rake rdoc`.
+The reference is generated from source comments with RDoc. Build it locally with `bundle exec rake rdoc`.

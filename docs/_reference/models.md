@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Working with Models
+title: Model Registry
 nav_order: 1
 has_children: true
-description: Access hundreds of AI models from all major AI providers with one Ruby framework
+description: Find models by provider or capability, inspect their pricing, and refresh the registry in plain Ruby and Rails.
 redirect_from:
   - /guides/models
 ---
@@ -27,7 +27,7 @@ RubyLLM maintains a registry of known AI models. Every gem includes a snapshot s
 
 In plain Ruby, RubyLLM uses the valid registry in your operating system's user cache when it exists, otherwise it uses the bundled snapshot. In Rails applications, RubyLLM stores the registry in its internal `ruby_llm_models` table. Once that table has rows it is authoritative; while it is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
 
-The registry stores crucial information about each model, including:
+Each registry entry describes the model:
 
 *   **`id`**: The unique identifier used by the provider (e.g., `gpt-5.6`).
 *   **`provider`**: The source provider (`openai`, `anthropic`, etc.).
@@ -45,7 +45,7 @@ The registry stores crucial information about each model, including:
 
 This registry allows RubyLLM to validate models, route requests correctly, provide capability information, and offer convenient filtering.
 
-You can see the full list of currently registered models in the [Available Models Guide]({% link _reference/available-models.md %}).
+Browse all registered models on the [Models]({% link _reference/available-models.md %}) page.
 
 ## Refreshing the Registry
 
@@ -109,6 +109,16 @@ bundle exec rake models:update
 ```
 
 These tasks live outside the gem's packaged Rake task directory. They are not application commands and are intentionally unavailable after installing the gem.
+
+The task reports model removals and metadata changes from upstream sources without blocking the refresh. It validates the schema before saving and rejects empty registries or a model count drop greater than 20%, both overall and for each provider. A rejected refresh leaves the registry file unchanged.
+
+After reviewing a large model count drop, you can accept it explicitly:
+
+```bash
+ALLOW_MODEL_REGISTRY_DROP=true bundle exec rake models:update
+```
+
+The Deploy docs workflow refreshes the published catalog every six hours. You can also run it manually with `refresh_model_registry`, or use `allow_model_registry_drop` to refresh and accept a reviewed count drop. Push builds use the published catalog without refreshing upstream sources.
 
 ### Rails Database Registry
 
@@ -255,4 +265,4 @@ When you pass a provider, RubyLLM resolves aliases first. For Bedrock, it then a
 
 *   [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - turn token usage into a `RubyLLM::Cost` object and aggregate costs across messages.
 *   [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) - target OpenAI-compatible endpoints and use model IDs the registry doesn't list.
-*   [Available Models]({% link _reference/available-models.md %}) - browse every model currently registered with RubyLLM.
+*   [Models]({% link _reference/available-models.md %}) - browse every model currently registered with RubyLLM.

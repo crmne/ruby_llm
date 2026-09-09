@@ -6,6 +6,7 @@ require 'json'
 require 'json_schemer'
 require 'fileutils'
 require_relative 'support/model_registry_diff'
+require_relative 'support/model_catalog_page'
 
 desc 'Update models, docs, and aliases'
 task models: ['models:update', 'models:docs', 'models:aliases']
@@ -24,7 +25,7 @@ namespace :models do
     registry_file = ENV.fetch('MODEL_REGISTRY_FILE', RubyLLM::Models.bundled_registry_file)
     RubyLLM.models.load_from_json(registry_file)
     FileUtils.mkdir_p('docs/_reference')
-    output = generate_models_markdown
+    output = ModelCatalogPage.new(RubyLLM.models.all).render
     File.write('docs/_reference/available-models.md', output)
     puts 'Generated docs/_reference/available-models.md'
   end
@@ -87,16 +88,12 @@ end
 
 def persist_refreshed_models(existing_models, models, registry_file)
   initial_count = existing_models.size
-  if suspicious_model_drop?(initial_count, models.all.size)
-    abort "Refusing to replace #{initial_count} models with #{models.all.size}. " \
-          'Set ALLOW_MODEL_REGISTRY_DROP=true after reviewing the result.'
-  end
+  validate_model_counts!(existing_models, models.all)
 
-  regressions = ModelRegistryDiff.call(existing_models, models.all)
-  if regressions.any? && ENV['ALLOW_MODEL_REGISTRY_REGRESSIONS'] != 'true'
-    puts(regressions.map { |regression| "  - #{regression}" })
-    abort "Refusing to accept #{regressions.size} registry regressions. " \
-          'Set ALLOW_MODEL_REGISTRY_REGRESSIONS=true after reviewing every reported change.'
+  changes = ModelRegistryDiff.call(existing_models, models.all)
+  if changes.any?
+    puts "Upstream catalog changes (#{changes.size}):"
+    puts(changes.map { |change| "  - #{change}" })
   end
 
   if sorted_models_data(models.all) == sorted_models_data(existing_models) && initial_count.positive?
@@ -108,6 +105,24 @@ def persist_refreshed_models(existing_models, models, registry_file)
   validate_models!(models)
   puts "Saving models.json (#{models.all.size} models)"
   models.save_to_json(registry_file)
+end
+
+def validate_model_counts!(existing_models, new_models)
+  abort 'Refusing to publish an empty model registry.' if new_models.empty?
+
+  new_counts = model_counts(new_models)
+  drops = model_counts(existing_models).filter_map do |name, initial_count|
+    new_count = new_counts.fetch(name, 0)
+    "#{name}: #{initial_count} models -> #{new_count}" if suspicious_model_drop?(initial_count, new_count)
+  end
+  return if drops.empty?
+
+  abort "Refusing suspicious model count drops:\n#{drops.join("\n")}\n" \
+        'Set ALLOW_MODEL_REGISTRY_DROP=true after reviewing the result.'
+end
+
+def model_counts(models)
+  models.group_by(&:provider).transform_values(&:size).merge('registry' => models.size)
 end
 
 def suspicious_model_drop?(initial_count, new_count)
@@ -123,11 +138,11 @@ def sorted_models_data(models)
 end
 
 def validate_models!(models)
-  models_data = JSON.parse(RubyLLM::ModelRegistry.pretty_json(models.all))
+  models_data = JSON.parse(RubyLLM::Models::Registry.pretty_json(models.all))
   registry_schema = {
     '$schema' => 'https://json-schema.org/draft/2020-12/schema',
     'type' => 'array',
-    'items' => RubyLLM::ModelSchema.json_schema
+    'items' => RubyLLM::Models::Schema.json_schema
   }
   validation_errors = JSONSchemer.schema(registry_schema).validate(models_data).map do |error|
     "#{error['data_pointer']}: #{error['error']}"
@@ -176,216 +191,6 @@ def status(provider_sym)
   else
     ' (NOT CONFIGURED)'
   end
-end
-
-# The generated page renders inside the frozen 1.x site build; the /next
-# build replaces it with a redirect stub (docs/bin/build-versions.sh). The two
-# trees file the models guide under different collections, so link it by URL
-# rather than with a {% link %} tag, which resolves against one tree only.
-def generate_models_markdown
-  models = RubyLLM.models.all
-  total_models = models.count
-  provider_count = models.map(&:provider).uniq.count
-  updated_on = Time.now.utc.strftime('%Y-%m-%d')
-
-  <<~MARKDOWN
-    ---
-    layout: default
-    title: Available Models
-    nav_order: 2
-    llms: false
-    description: Browse #{total_models} AI models across #{provider_count} remote providers. Updated #{updated_on}.
-    redirect_from:
-      - /guides/available-models
-    ---
-
-    # {{ page.title }}
-    {: .no_toc }
-
-    {{ page.description }}
-    {: .fs-6 .fw-300 }
-
-    ## Table of contents
-    {: .no_toc .text-delta }
-
-    1. TOC
-    {:toc}
-
-    ---
-
-    _Updated #{updated_on}. This page lists the latest refreshed registry, also available as raw JSON at [rubyllm.com/models.json](https://rubyllm.com/models.json). It covers remote providers only; models on local providers (Ollama, GPUStack) are discovered from your own servers when you refresh._
-
-    Your installed gem may bundle an older snapshot of the registry. Refresh it to get the latest models in your app too:
-
-    ```ruby
-    RubyLLM.models.refresh
-    ```
-
-    See [the models guide]({{ "/models/" | relative_url }}) for how refreshing works in plain Ruby and Rails.
-
-    ## Models by Provider
-
-    #{generate_provider_sections}
-
-    ## Models by Capability
-
-    #{generate_capability_sections}
-
-    ## Models by Modality
-
-    #{generate_modality_sections}
-
-    ---
-
-    _Provider availability can vary by account and region. Model information is enriched by [models.dev](https://models.dev) and RubyLLM's provider integrations._
-  MARKDOWN
-end
-
-def generate_provider_sections
-  RubyLLM::Provider.providers.filter_map do |provider, provider_class|
-    models = RubyLLM.models.by_provider(provider)
-    next if models.none?
-
-    <<~PROVIDER
-      ### #{provider_class.display_name} (#{models.count})
-
-      #{models_table(models)}
-    PROVIDER
-  end.join("\n\n")
-end
-
-def generate_capability_sections
-  capabilities = {
-    'Function Calling' => RubyLLM.models.select { |m| m.supports?(:function_calling) },
-    'Structured Output' => RubyLLM.models.select { |m| m.supports?(:structured_output) },
-    'Streaming' => RubyLLM.models.select { |m| m.capabilities.include?('streaming') },
-    'Batch Processing' => RubyLLM.models.select { |m| m.capabilities.include?('batch') }
-  }
-
-  capabilities.filter_map do |capability, models|
-    next if models.none?
-
-    <<~CAPABILITY
-      ### #{capability} (#{models.count})
-
-      #{models_table(models)}
-    CAPABILITY
-  end.join("\n\n")
-end
-
-def generate_modality_sections # rubocop:disable Metrics/PerceivedComplexity
-  sections = []
-
-  vision_models = RubyLLM.models.select { |m| (m.modalities.input || []).include?('image') }
-  if vision_models.any?
-    sections << <<~SECTION
-      ### Vision Models (#{vision_models.count})
-
-      Models that can process images:
-
-      #{models_table(vision_models)}
-    SECTION
-  end
-
-  audio_models = RubyLLM.models.select { |m| (m.modalities.input || []).include?('audio') }
-  if audio_models.any?
-    sections << <<~SECTION
-      ### Audio Input Models (#{audio_models.count})
-
-      Models that can process audio:
-
-      #{models_table(audio_models)}
-    SECTION
-  end
-
-  pdf_models = RubyLLM.models.select { |m| (m.modalities.input || []).include?('pdf') }
-  if pdf_models.any?
-    sections << <<~SECTION
-      ### PDF Models (#{pdf_models.count})
-
-      Models that can process PDF documents:
-
-      #{models_table(pdf_models)}
-    SECTION
-  end
-
-  embedding_models = RubyLLM.models.select { |m| (m.modalities.output || []).include?('embeddings') }
-  if embedding_models.any?
-    sections << <<~SECTION
-      ### Embedding Models (#{embedding_models.count})
-
-      Models that generate embeddings:
-
-      #{models_table(embedding_models)}
-    SECTION
-  end
-
-  sections.join("\n\n")
-end
-
-def models_table(models)
-  return '*No models found*' if models.none?
-
-  headers = ['Model', 'Provider', 'I/O', 'Capabilities', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
-  alignment = [':--', ':--', ':--', ':--', '--:', '--:', ':--']
-
-  rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
-    pricing = standard_pricing_display(model)
-
-    [
-      model.id,
-      model.provider,
-      modalities_display(model),
-      list_display(model.capabilities),
-      model.context_window || '-',
-      model.max_output_tokens || '-',
-      pricing
-    ]
-  end
-
-  table = []
-  table << "| #{headers.join(' | ')} |"
-  table << "| #{alignment.join(' | ')} |"
-
-  rows.each do |row|
-    table << "| #{row.join(' | ')} |"
-  end
-
-  table.join("\n")
-end
-
-def modalities_display(model)
-  input_modalities = list_display(model.modalities.input)
-  output_modalities = list_display(model.modalities.output)
-  "In: #{input_modalities}; Out: #{output_modalities}"
-end
-
-def list_display(values)
-  items = Array(values).compact.map(&:to_s).reject(&:empty?)
-  return '-' if items.empty?
-
-  items.join(', ')
-end
-
-def standard_pricing_display(model)
-  pricing_data = model.pricing.to_h[:text_tokens]&.dig(:standard) || {}
-  parts = [
-    pricing_part(pricing_data, :input_per_million, 'In'),
-    pricing_part(pricing_data, :output_per_million, 'Out'),
-    pricing_part(pricing_data, :cache_read_input_per_million, 'Cache Read'),
-    pricing_part(pricing_data, :cache_write_input_per_million, 'Cache Write')
-  ].compact
-
-  return parts.join(', ') if parts.any?
-
-  '-'
-end
-
-def pricing_part(pricing_data, key, label)
-  key = Array(key).find { |candidate| pricing_data[candidate] }
-  return unless key
-
-  "#{label}: $#{format('%.2f', pricing_data[key])}"
 end
 
 def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -514,7 +319,7 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
   add_deepgram_aliases(aliases, models['deepgram'])
 
   sorted_aliases = aliases.sort.to_h
-  File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
+  File.write(RubyLLM::Models::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
 
   puts "Generated #{sorted_aliases.size} aliases"
 end

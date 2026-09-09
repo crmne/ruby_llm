@@ -204,7 +204,7 @@ RSpec.describe RubyLLM::Models do
     it 'keeps the models.dev entries it already had when the fetch fails' do
       failing = instance_double(Faraday::Connection)
       allow(failing).to receive(:get).and_raise(Faraday::ConnectionFailed, 'no route to host')
-      allow(RubyLLM::Connection).to receive(:basic).and_return(failing)
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(failing)
       allow(RubyLLM.logger).to receive(:warn)
 
       cached = model(id: 'cached', provider: 'openai', metadata: { source: 'models.dev' })
@@ -616,7 +616,7 @@ RSpec.describe RubyLLM::Models do
         model(id: 'gpt-4.1-mini', provider: 'openai'),
         model(id: 'claude-haiku-4-5', provider: 'anthropic')
       ]
-      catalog.write(RubyLLM::ModelRegistry.pretty_json(models))
+      catalog.write(RubyLLM::Models::Registry.pretty_json(models))
       catalog.close
       allow(RubyLLM::Provider).to receive(:model_registry_files).and_return(openai: catalog.path)
 
@@ -664,7 +664,7 @@ RSpec.describe RubyLLM::Models do
 
   describe '#persist_registry!' do
     let(:registry) { described_class.new([]) }
-    let(:published) { RubyLLM::ModelRegistry::PublishedSource::Result.new([], nil, false) }
+    let(:published) { RubyLLM::Models::Registry::PublishedSource::Result.new([], nil, false) }
 
     it 'writes through a store that supports it' do
       writes = []
@@ -740,7 +740,7 @@ RSpec.describe RubyLLM::Models do
 
     def stub_published(models, etag, not_modified)
       allow(described_class).to receive(:fetch_published_registry)
-        .and_return(RubyLLM::ModelRegistry::PublishedSource::Result.new(models, etag, not_modified))
+        .and_return(RubyLLM::Models::Registry::PublishedSource::Result.new(models, etag, not_modified))
     end
 
     around do |example|
@@ -767,8 +767,8 @@ RSpec.describe RubyLLM::Models do
     it 'fetches the whole catalog again when the snapshot behind the ETag is gone' do
       allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(8192)])
       results = [
-        RubyLLM::ModelRegistry::PublishedSource::Result.new(nil, 'etag-1', true),
-        RubyLLM::ModelRegistry::PublishedSource::Result.new(published, 'etag-1', false)
+        RubyLLM::Models::Registry::PublishedSource::Result.new(nil, 'etag-1', true),
+        RubyLLM::Models::Registry::PublishedSource::Result.new(published, 'etag-1', false)
       ]
       allow(described_class).to receive(:fetch_published_registry) { results.shift }
 
@@ -789,7 +789,7 @@ RSpec.describe RubyLLM::Models do
       stub_published(published_models, 'etag-1', false)
 
       registry = described_class.new(provider_models).refresh
-      cached = RubyLLM::ModelRegistry.read(RubyLLM.config.model_registry_file)
+      cached = RubyLLM::Models::Registry.read(RubyLLM.config.model_registry_file)
 
       expect(registry.all.map(&:id)).to contain_exactly('claude-haiku-4-5', 'gpt-4.1-mini')
       expect(cached.map(&:id)).to eq(['claude-haiku-4-5'])
