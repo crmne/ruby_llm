@@ -157,6 +157,8 @@ bin/rails generate ruby_llm:upgrade --mode copy --phase cleanup
 
 Review the migration and run `bin/rails db:migrate` in a later deployment. Cleanup requires a successful finish phase. It drops the old message model and tool-call references, `content_raw`, token and supported cost columns, and the backfill progress table.
 
+Cleanup also removes standalone indexes on the message `role` column in both modes. It preserves the chat index and composite indexes that include `role`.
+
 Copy-mode cleanup also removes the old chat model reference, conversation version marker, and original model and tool-call tables. Move any application-owned references to those tables first. After cleanup succeeds, remove the generated `ruby_llm_upgrade.rb` concern and initializer from your 2.0 application. A small finalized-state record remains so an old build with the compatibility code cannot resume writing.
 
 This removes the old copies, not the messages or usage already migrated to 2.0. Copy any application-specific data you still need before running it. New 2.0 writes do not update those legacy columns.

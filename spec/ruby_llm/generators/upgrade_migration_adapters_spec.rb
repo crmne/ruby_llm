@@ -98,6 +98,14 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
         expect(success).to be(true), output
       end
 
+      %i[rename copy].each do |mode|
+        it "removes only the standalone message role index during #{mode} cleanup" do
+          success, output = run_in_isolated_process(adapter, url, scenario: :"run_#{mode}_role_index_scenario")
+
+          expect(success).to be(true), output
+        end
+      end
+
       if name == :postgresql
         it 'preserves UUID references and resumes UUID checkpoints' do
           success, output = run_in_isolated_process(adapter, url, scenario: :run_uuid_scenario)
@@ -231,6 +239,33 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
 
     model_column = connection.columns(:chats).find { |column| column.name == 'ruby_llm_model_id' }
     raise 'Copy mode allows a chat without a model' if model_column.null
+  end
+
+  def run_rename_role_index_scenario(adapter)
+    run_role_index_scenario(adapter, mode: :rename)
+  end
+
+  def run_copy_role_index_scenario(adapter)
+    run_role_index_scenario(adapter, mode: :copy)
+  end
+
+  def run_role_index_scenario(adapter, mode:)
+    create_v1_schema(adapter)
+    insert_identity_records
+    connection.rename_index(:messages, :index_messages_on_role, :legacy_message_role_lookup)
+    connection.add_index(:messages, %i[role chat_id])
+    migrations = load_upgrade_migrations(adapter, mode:)
+    %i[prepare backfill finish].each { |phase| migrations.fetch(phase).new.migrate(:up) }
+    raise 'Upgrade removed the role index before cleanup' unless connection.index_exists?(:messages, :role)
+
+    RubyLLM::Generators::UpgradeMigration.new.finalize if mode == :copy
+    2.times { migrations.fetch(:cleanup).new.migrate(:up) }
+    indexes = connection.indexes(:messages).map(&:columns)
+    raise 'Cleanup retained the standalone role index' if indexes.include?(['role'])
+    raise 'Cleanup removed the composite role index' unless indexes.include?(%w[role chat_id])
+    raise 'Cleanup removed the chat index' unless indexes.include?(['chat_id'])
+  ensure
+    drop_test_tables
   end
 
   def verify_copy_reconciliation(upgrade, message)

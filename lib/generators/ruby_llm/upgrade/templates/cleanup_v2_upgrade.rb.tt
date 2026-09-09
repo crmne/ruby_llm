@@ -46,6 +46,7 @@ class <%= cleanup_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def remove_legacy_message_columns
     table = :<%= message_table_name %>
+    remove_matching_indexes(table, :role)
     reference_columns = %i[<%= v1_model_foreign_key %> <%= v1_tool_call_foreign_key %>]
     reference_columns.each do |column|
       remove_column_foreign_keys(table, column)
