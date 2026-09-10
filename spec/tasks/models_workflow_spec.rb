@@ -51,7 +51,7 @@ RSpec.describe 'Published model registry workflow', type: :task do
       'RUBYLIB' => File.expand_path('../../lib', __dir__),
       'RUNNER_TEMP' => tmpdir,
       'GITHUB_OUTPUT' => File.join(tmpdir, 'outputs'),
-      'BUNDLE_PATH' => Bundler.settings[:path] && File.expand_path(Bundler.settings[:path].to_s),
+      'BUNDLE_PATH' => Bundler.settings[:path] && File.expand_path(Bundler.settings[:path].to_s, Bundler.root.to_s),
       'BUNDLE_DISABLE_SHARED_GEMS' => ENV.fetch('BUNDLE_DISABLE_SHARED_GEMS', nil),
       'RUBYOPT' => nil,
       'REFRESH_MODEL_REGISTRY' => refresh.to_s,
