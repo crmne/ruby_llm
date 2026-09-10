@@ -254,7 +254,7 @@ RubyLLM looks for:
 
 * `app/prompts/work_assistant/instructions.txt.erb`
 
-If the file exists, it is rendered and used as instructions automatically. If it does not exist and you did not set `instructions`, the agent starts without system instructions. To require a prompt and fail loudly when it is missing, reference it explicitly:
+If the file exists, it is rendered and used as instructions automatically. If it does not exist and you did not set `instructions` on the class or an ancestor, the agent starts without system instructions. Subclasses inherit instruction declarations, and inherited declarations suppress the conventional prompt the same way the class's own declarations do; declare `instructions(append: true) { prompt("instructions") }` to use both.
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
