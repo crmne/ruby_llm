@@ -54,7 +54,7 @@ module RubyLLM
       :@fallbacks => [],
       :@fallback_options => {},
       :@rescue_handlers => [],
-      :@instructions => []
+      :@instruction_declarations => []
     }.freeze
     # Simple value options: a class-level getter/setter macro whose value the
     # agent forwards to the matching Chat#with_* when it builds its chat.

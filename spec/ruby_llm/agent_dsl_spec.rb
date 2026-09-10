@@ -280,6 +280,29 @@ RSpec.describe RubyLLM::Agent do
       expect(child.model).to eq(model: model_for(:openai, :temperature), provider: :openai)
       expect(child.model).not_to equal(parent.model)
     end
+
+    it 'copies instruction declarations with their options' do
+      parent = Class.new(described_class) do
+        instructions 'Be terse.', cache_until_here: true
+      end
+
+      child = Class.new(parent)
+
+      expect(child.instructions).to eq(parent.instructions)
+      expect(child.instructions.first[:cache_until_here]).to be(true)
+    end
+
+    it 'keeps a subclass declaration out of the parent' do
+      parent = Class.new(described_class) do
+        instructions 'Be terse.'
+      end
+
+      child = Class.new(parent)
+      child.instructions 'Answer in French.', append: true
+
+      expect(parent.instructions.length).to eq(1)
+      expect(child.instructions.length).to eq(2)
+    end
   end
 
   describe 'prompt paths' do
