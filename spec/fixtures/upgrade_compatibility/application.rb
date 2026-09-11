@@ -10,7 +10,12 @@ class UpgradeCompatibilityApplication
   def initialize(version:, directory:)
     @version = version
     @directory = directory
-    ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: File.join(directory, 'compatibility.sqlite3'))
+    configuration = if ENV['RUBY_LLM_COMPATIBILITY_DATABASE']
+                      JSON.parse(ENV.fetch('RUBY_LLM_COMPATIBILITY_DATABASE'))
+                    else
+                      { adapter: 'sqlite3', database: File.join(directory, 'compatibility.sqlite3') }
+                    end
+    ActiveRecord::Base.establish_connection(configuration)
     ActiveRecord::Migration.verbose = false
     configure_library
     @catalog_models = [MODEL, OTHER_MODEL, TWO_ONLY_MODEL].to_h do |id|
@@ -29,7 +34,8 @@ class UpgradeCompatibilityApplication
     editable = create_chat('editable')
     answer = ask(editable, 'legacy answer')
     raw = editable.add_message(role: :assistant, content: RubyLLM::Content::Raw.new({ 'answer' => 42 }))
-    empty_raw = [{}, []].map do |value|
+    raw.update!(content: 'stale serialized content')
+    empty_raw = [nil, {}, [], false, '', " \t\n", "\u00a0\u3000"].map do |value|
       message = editable.add_message(role: :assistant, content: 'text with empty raw content')
       message.update!(content_raw: value)
       { id: message.id, raw: value }
@@ -77,6 +83,50 @@ class UpgradeCompatibilityApplication
   def finish_migrations(_arguments)
     migrate(Dir[File.join(@directory, 'db/migrate/*{backfill,finish}*.rb')])
     { status: 'migrated', required_model: required_model? }
+  end
+
+  def backfill(_arguments)
+    migrate(Dir[File.join(@directory, 'db/migrate/*backfill*.rb')])
+    { backfilled: true }
+  end
+
+  def finish(_arguments)
+    migrate(Dir[File.join(@directory, 'db/migrate/*finish*.rb')])
+    { finished: true }
+  end
+
+  def watch_online(arguments)
+    chat = ::Chat.find(arguments.fetch('chat'))
+    chat.messages.load
+    raw = ::Message.find(arguments.fetch('raw'))
+    $stdout.puts(JSON.generate(ready: true))
+    $stdout.flush
+    $stdin.each_line do |command|
+      command = command.strip
+      break if command == 'stop'
+
+      begin
+        raw.update!(content: command, content_raw: nil)
+        answer = ask(chat, command)
+        $stdout.puts(JSON.generate(answer: answer.id, content: answer.content, raw: raw.content_raw))
+      rescue StandardError => e
+        $stdout.puts(JSON.generate(error: e.class.name, message: e.message))
+      end
+      $stdout.flush
+    end
+    { stopped: true }
+  end
+
+  def watch_response(arguments)
+    chat = ::Chat.find(arguments.fetch('chat'))
+    ask(chat, 'late response') do
+      $stdout.puts(JSON.generate(ready: true))
+      $stdout.flush
+      $stdin.gets
+    end
+    { saved: true }
+  rescue ActiveRecord::ReadOnlyRecord => e
+    { error: e.class.name }
   end
 
   def cleanup(_arguments)
@@ -131,6 +181,11 @@ class UpgradeCompatibilityApplication
       owned_tool: RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: 'two-only-tool').id }
   end
 
+  def delete_current(arguments)
+    ::Chat.find(arguments.fetch('chat')).destroy!
+    { deleted: true }
+  end
+
   def change_legacy(arguments)
     register_model(OTHER_MODEL)
     chat = ::Chat.find(arguments.fetch('editable'))
@@ -154,7 +209,7 @@ class UpgradeCompatibilityApplication
   end
 
   def transition(arguments)
-    RubyLLM::Generators::UpgradeMigration.new.public_send(arguments.fetch('action'))
+    RubyLLM::Generators::UpgradeMigration.for.public_send(arguments.fetch('action'))
     { transitioned: arguments.fetch('action') }
   end
 
@@ -191,7 +246,7 @@ class UpgradeCompatibilityApplication
   def check_current_cache(arguments)
     chat = ::Chat.find(arguments.fetch('chat'))
     chat.to_llm
-    RubyLLM::Generators::UpgradeMigration.new.rollback
+    RubyLLM::Generators::UpgradeMigration.for.rollback
     errors = [-> { chat.compact }, -> { chat.run_tools }, -> { chat.count_tokens },
               -> { chat.ask_later('This must not create a batch') }].map do |action|
       action.call
@@ -284,12 +339,13 @@ class UpgradeCompatibilityApplication
   end
 
   def ask(chat, text)
-    stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_return(
-      status: 200, headers: { 'Content-Type' => 'application/json' },
-      body: JSON.generate(id: "response-#{text}", model: chat.model_id,
-                          choices: [{ message: { role: 'assistant', content: text }, finish_reason: 'stop' }],
-                          usage: { prompt_tokens: 12, completion_tokens: 3, total_tokens: 15 })
-    )
+    stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_return do
+      yield if block_given?
+      { status: 200, headers: { 'Content-Type' => 'application/json' },
+        body: JSON.generate(id: "response-#{text}", model: chat.model_id,
+                            choices: [{ message: { role: 'assistant', content: text }, finish_reason: 'stop' }],
+                            usage: { prompt_tokens: 12, completion_tokens: 3, total_tokens: 15 }) }
+    end
     chat.ask('A local compatibility question')
     chat.messages.order(:id).last
   end

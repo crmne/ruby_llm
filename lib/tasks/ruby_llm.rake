@@ -7,7 +7,7 @@ namespace :ruby_llm do
       task action => :environment do
         require 'generators/ruby_llm/upgrade/upgrade_migration'
 
-        RubyLLM::Generators::UpgradeMigration.new.public_send(action)
+        RubyLLM::Generators::UpgradeMigration.for.public_send(action)
         puts "RubyLLM copy upgrade: #{action} completed"
       end
     end

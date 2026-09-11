@@ -92,8 +92,26 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
         expect(success).to be(true), output
       end
 
+      it 'adds existing-row defaults and bounds usage lookups to each message batch' do
+        success, output = run_in_isolated_process(adapter, url, scenario: :run_bounded_batch_scenario)
+
+        expect(success).to be(true), output
+      end
+
       it 'copies and reconciles legacy data before removing the rollback schema' do
         success, output = run_in_isolated_process(adapter, url, scenario: :run_copy_scenario)
+
+        expect(success).to be(true), output
+      end
+
+      it 'catches edits, inserts, deletes and usage changes after a completed online backfill' do
+        success, output = run_in_isolated_process(adapter, url, scenario: :run_online_changes_scenario)
+
+        expect(success).to be(true), output
+      end
+
+      it 'retries an interrupted online copy from the last committed 10,000-message batch' do
+        success, output = run_in_isolated_process(adapter, url, scenario: :run_online_interruption_scenario)
 
         expect(success).to be(true), output
       end
@@ -225,12 +243,124 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     migrations = load_upgrade_migrations(adapter, mode: :copy)
     %i[prepare backfill finish].each { |phase| migrations.fetch(phase).new.migrate(:up) }
     verify_copy_preparation
-    upgrade = RubyLLM::Generators::UpgradeMigration.new
+    upgrade = RubyLLM::Generators::UpgradeMigration.for
     verify_copy_reconciliation(upgrade, message)
     verify_copy_cleanup(upgrade, migrations)
     verify_clean_install_contract(adapter)
   ensure
     drop_test_tables
+  end
+
+  def run_bounded_batch_scenario(adapter)
+    create_v1_schema(adapter)
+    insert_identity_records
+    record_for(:messages).create!(id: 1, chat_id: 1, model_id: 1, role: 'assistant', input_tokens: 10)
+    record_for(:messages).create!(id: 2, chat_id: 1, model_id: 1, role: 'assistant', input_tokens: 20)
+    migrations = load_upgrade_migrations(adapter)
+    migrations.fetch(:prepare).new.migrate(:up)
+    boolean = ActiveRecord::Type::Boolean.new
+    unless boolean.cast(record_for(:chats).first.cancelled) == false
+      raise 'Preparation left an existing chat default NULL'
+    end
+    unless boolean.cast(record_for(:messages).first.cache_until_here) == false
+      raise 'Preparation left an existing message default NULL'
+    end
+
+    migration = migrations.fetch(:backfill).new
+    range = migration.send(:message_range, 'id', 1, 2)
+    joins, provider, model = migration.send(:usage_identity_sql)
+    candidate = migration.send(:usage_candidate_sql, ['1 = 1'], joins, range)
+    lookup = candidate.split('AND NOT EXISTS').last
+    raise 'Usage lookup omitted the lower batch bound' unless lookup.include?('existing_usages.message_id > 1')
+    raise 'Usage lookup omitted the upper batch bound' unless lookup.include?('existing_usages.message_id <= 2')
+
+    2.times { connection.execute(migration.send(:usage_insert_sql, candidate, provider, model)) }
+    unless record_for(:ruby_llm_usages).pluck(:message_id) == [2]
+      raise 'Usage insert escaped its batch or duplicated data'
+    end
+  ensure
+    drop_test_tables
+  end
+
+  def run_online_changes_scenario(adapter)
+    create_v1_schema(adapter)
+    insert_identity_records
+    source = record_for(:messages)
+    first = source.create!(id: 1, chat_id: 1, model_id: 1, role: 'assistant', content_raw: { answer: 42 },
+                           input_tokens: 10)
+    removed = source.create!(id: 2, chat_id: 1, model_id: 1, role: 'assistant', content: 'remove', input_tokens: 12)
+    original = first.attributes
+    migrations = load_upgrade_migrations(adapter, mode: :copy)
+    %i[prepare backfill].each { |phase| migrations.fetch(phase).new.migrate(:up) }
+    retained = record_for(:messages).find(first.id).attributes.slice(*original.keys)
+    raise 'Online copy rewrote legacy data' unless retained == original
+
+    source = record_for(:messages)
+    source.find(first.id).update!(content: 'edited', content_raw: nil, input_tokens: 25)
+    verify_journal_revisions(source, first.id)
+    source.find(removed.id).destroy!
+    source.create!(id: 3, chat_id: 1, model_id: 1, role: 'assistant', content: 'new', input_tokens: 7)
+    2.times { migrations.fetch(:backfill).new.migrate(:up) }
+    usages = record_for(:ruby_llm_usages).order(:message_id).pluck(:message_id, :input_tokens)
+    raise "The repeated backfill lost changes: #{usages.inspect}" unless usages == [[1, 25], [3, 7]]
+
+    source.find(first.id).update!(role: 'user', input_tokens: nil)
+    source.create!(id: 4, chat_id: 1, model_id: 1, role: 'assistant', content: 'last write', input_tokens: 9)
+    migrations.fetch(:finish).new.migrate(:up)
+    usages = record_for(:ruby_llm_usages).order(:message_id).pluck(:message_id, :input_tokens)
+    raise "Finish lost the last writes: #{usages.inspect}" unless usages == [[3, 7], [4, 9]]
+    raise 'Catch-up left stale raw content' unless source.find(first.id).raw_content.nil?
+    raise 'Finish left pending changes' if record_for(:ruby_llm_v2_changes).exists?
+  ensure
+    drop_test_tables
+  end
+
+  def run_online_interruption_scenario(adapter)
+    create_v1_schema(adapter)
+    insert_v1_records
+    migrations = load_upgrade_migrations(adapter, mode: :copy)
+    migrations.fetch(:prepare).new.migrate(:up)
+    upgrade = RubyLLM::Generators::UpgradeMigration.for
+    data = upgrade.send(:data)
+    data.define_singleton_method(:copy_batch) do |task, batch|
+      super(task, batch)
+      raise 'simulated copy failure' if task == 'usages' && batch.last.id > 10_000
+    end
+    error = migration_error { upgrade.backfill }
+    raise 'The copy did not reach the interrupted batch' unless error&.message == 'simulated copy failure'
+
+    verify_copy_checkpoint
+
+    migrations.fetch(:backfill).new.migrate(:up)
+    migrations.fetch(:finish).new.migrate(:up)
+    raise 'The copy retry lost or duplicated usage' unless record_for(:ruby_llm_usages).count == synthetic_message_count
+    raise 'The copy rewrote the original content' unless record_for(:messages).find(1).content.nil?
+  ensure
+    drop_test_tables
+  end
+
+  def verify_journal_revisions(source, id)
+    journal = record_for(:ruby_llm_v2_changes)
+    captured = journal.all.to_a
+    source.find(id).update!(content: 'EDITED')
+    raise 'The journal did not coalesce repeated changes' unless journal.one?
+
+    data = RubyLLM::Generators::UpgradeMigration.for.send(:data)
+    data.send(:acknowledge, captured)
+    raise 'An older catch-up erased a newer edit' unless journal.exists?
+
+    revision = journal.first.revision
+    source.transaction do
+      source.find(id).update!(content: 'rolled back')
+      raise ActiveRecord::Rollback
+    end
+    raise 'A rolled-back edit changed the journal' unless journal.first.revision == revision
+  end
+
+  def verify_copy_checkpoint
+    progress = record_for(:ruby_llm_v2_backfills).find_by!(task: 'usages')
+    raise 'The failed copy advanced its checkpoint' unless progress.last_id.to_i == 10_000 && !progress.completed
+    raise 'The failed copy committed partial usage rows' unless record_for(:ruby_llm_usages).count == 10_000
   end
 
   def verify_copy_preparation
@@ -258,7 +388,7 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     %i[prepare backfill finish].each { |phase| migrations.fetch(phase).new.migrate(:up) }
     raise 'Upgrade removed the role index before cleanup' unless connection.index_exists?(:messages, :role)
 
-    RubyLLM::Generators::UpgradeMigration.new.finalize if mode == :copy
+    RubyLLM::Generators::UpgradeMigration.for.finalize if mode == :copy
     2.times { migrations.fetch(:cleanup).new.migrate(:up) }
     indexes = connection.indexes(:messages).map(&:columns)
     raise 'Cleanup retained the standalone role index' if indexes.include?(['role'])
@@ -321,6 +451,12 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     migrations.fetch(:prepare).new.migrate(:up)
     migrations.fetch(:backfill).new.migrate(:up)
     verify_uuid_checkpoint(migrations, message_ids, mode:)
+    if mode == :copy
+      late_id = '00000000-0000-0000-0000-000000000001'
+      record_for(:messages).create!(id: late_id, chat_id: chat_id, model_id: model_id, role: 'assistant',
+                                    content: 'Arrived below the checkpoint', input_tokens: 7)
+      message_ids.push(late_id).sort!
+    end
     migrations.fetch(:finish).new.migrate(:up)
     legacy_model_column = connection.columns(:messages).find { |column| column.name == 'model_id' }
     raise 'legacy reference still requires a model' unless legacy_model_column.null
@@ -329,7 +465,7 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     migrated = record_for(:ruby_llm_tool_calls).find_by!(tool_call_id: 'call-uuid')
     raise 'UUID tool result reference was lost' unless migrated.result_id == message_ids.last
 
-    RubyLLM::Generators::UpgradeMigration.new.finalize if mode == :copy
+    RubyLLM::Generators::UpgradeMigration.for.finalize if mode == :copy
     migrations.fetch(:cleanup).new.migrate(:up)
     raise 'UUID usage reference was lost' unless record_for(:ruby_llm_usages).pluck(:message_id).sort == message_ids
   ensure
@@ -532,7 +668,7 @@ RSpec.describe 'RubyLLM upgrade migration adapters', :generator do # rubocop:dis
     connection.disable_referential_integrity do
       %i[
         ruby_llm_usages messages chats ruby_llm_tool_calls tool_calls ruby_llm_batches
-        ruby_llm_models models ruby_llm_v2_backfills ruby_llm_v2_upgrades
+        ruby_llm_models models ruby_llm_v2_backfills ruby_llm_v2_upgrades ruby_llm_v2_changes
       ].each do |table|
         connection.drop_table(table, force: :cascade) if connection.table_exists?(table)
       end

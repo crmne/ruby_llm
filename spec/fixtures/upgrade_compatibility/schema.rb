@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+json_defaults = ActiveRecord::Base.connection.adapter_name == 'Mysql2' ? {} : { default: {} }
+array_defaults = ActiveRecord::Base.connection.adapter_name == 'Mysql2' ? {} : { default: [] }
+
 ActiveRecord::Schema.define do
   create_table :models do |table|
     table.string :model_id, null: false
@@ -10,10 +13,10 @@ ActiveRecord::Schema.define do
     table.integer :context_window
     table.integer :max_output_tokens
     table.date :knowledge_cutoff
-    table.json :modalities, default: {}
-    table.json :capabilities, default: []
-    table.json :pricing, default: {}
-    table.json :metadata, default: {}
+    table.json :modalities, **json_defaults
+    table.json :capabilities, **array_defaults
+    table.json :pricing, **json_defaults
+    table.json :metadata, **json_defaults
     table.timestamps
     table.index %i[provider model_id], unique: true
   end
@@ -41,7 +44,7 @@ ActiveRecord::Schema.define do
     table.string :tool_call_id, null: false
     table.string :name, null: false
     table.text :thought_signature
-    table.json :arguments, default: {}
+    table.json :arguments, **json_defaults
     table.timestamps
     table.index :tool_call_id, unique: true
   end

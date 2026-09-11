@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+require 'generators/ruby_llm/upgrade/legacy_content_sql'
 <% if copy_mode? -%>
 
 require 'generators/ruby_llm/upgrade/upgrade_migration'
@@ -12,22 +14,19 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
 
   def up
 <% if copy_mode? -%>
-    RubyLLM::Generators::UpgradeMigration.new.verify_settings(<%= copy_upgrade_settings.inspect %>)
+    RubyLLM::Generators::UpgradeMigration.for.verify_settings(<%= copy_upgrade_settings.inspect %>)
+    verify_upgrade_in_progress
+    RubyLLM::Generators::UpgradeMigration.for.backfill
 <% else -%>
     raise 'Generate this migration with --mode copy' if table_exists?(:ruby_llm_v2_upgrades)
-<% end -%>
     verify_upgrade_in_progress
     create_progress_table
     backfill_required_defaults
-<% if copy_mode? -%>
-    RubyLLM::Generators::UpgradeMigration.new.backfill
-    %w[message_content tool_results usages].each { |task| mark_completed(task) }
-<% else -%>
     backfill_message_content
     backfill_tool_results
     backfill_usages
-<% end -%>
     verify_backfills
+<% end -%>
   end
 
   def down
@@ -69,18 +68,16 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
       content = message_value(:content)
 <% if postgresql? -%>
       structured_content = "#{content_raw}::jsonb"
-      rendered_content = "#{content_raw}::text"
 <% elsif mysql? -%>
       structured_content = content_raw
-      rendered_content = "CAST(#{content_raw} AS CHAR)"
 <% else -%>
       structured_content = content_raw
-      rendered_content = content_raw
 <% end -%>
+      rendered_content = RubyLLM::Generators::LegacyContentSQL.new(connection).render(content: content, raw: content_raw)
       execute <<~SQL
         UPDATE #{quote_table(:<%= message_table_name %>)} AS legacy_messages
            SET #{quote_column(:raw_content)} = COALESCE(#{raw_content}, #{structured_content}),
-               #{quote_column(:content)} = COALESCE(#{content}, #{rendered_content})
+               #{quote_column(:content)} = #{rendered_content}
          WHERE #{range}
            AND #{content_raw} IS NOT NULL
       SQL
@@ -187,6 +184,10 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
   end
 
   def verify_backfills
+<% if postgresql? -%>
+    tables = %i[<%= chat_table_name %> <%= message_table_name %> ruby_llm_models ruby_llm_tool_calls ruby_llm_usages]
+    with_upgrade_safety { execute "ANALYZE #{tables.map { |table| quote_table(table) }.join(', ')}" }
+<% end -%>
     verify_message_content
     verify_tool_results
     verify_usages
@@ -300,6 +301,7 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
 
   def usage_candidate_sql(conditions, joins, range)
     usages = quote_table(:ruby_llm_usages)
+    usage_range = range.gsub(message_value(connection.primary_key(:<%= message_table_name %>)), 'existing_usages.message_id')
     <<~SQL
       FROM #{quote_table(:<%= message_table_name %>)} legacy_messages
       #{joins}
@@ -309,6 +311,7 @@ class <%= backfill_migration_class_name %> < ActiveRecord::Migration<%= migratio
           SELECT 1
             FROM #{usages} existing_usages
            WHERE existing_usages.message_type = #{connection.quote('<%= message_model_name %>')}
+             AND (#{usage_range})
              AND existing_usages.message_id = #{message_value(connection.primary_key(:<%= message_table_name %>))}
              AND existing_usages.operation = 'chat'
              AND existing_usages.status = 'succeeded'

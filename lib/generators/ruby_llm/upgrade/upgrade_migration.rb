@@ -6,12 +6,22 @@ module RubyLLM
       TABLE = :ruby_llm_v2_upgrades
       VERSION_COLUMN = :ruby_llm_version
 
+      def self.for(connection: ::ActiveRecord::Base.connection)
+        require_relative 'online_copy_migration'
+        OnlineCopyMigration.new(connection:)
+      end
+
       def initialize(connection: ::ActiveRecord::Base.connection)
         @connection = connection
       end
 
       def prepare(settings)
         create_state_table unless @connection.table_exists?(TABLE)
+        prepare_state(settings)
+        yield if block_given?
+      end
+
+      def prepare_state(settings)
         existing = states.first
         if existing
           raise 'This database has a different RubyLLM copy upgrade' unless existing.settings == settings.stringify_keys
@@ -24,6 +34,9 @@ module RubyLLM
           states.create!(settings: settings.stringify_keys)
         end
       end
+      private :prepare_state
+
+      def online? = false
 
       def copy_table(source, target)
         return if @connection.table_exists?(target)
@@ -146,6 +159,7 @@ module RubyLLM
           table.integer :active_version, null: false, default: 1
           table.string :status, null: false, default: 'preparing'
           table.boolean :needs_reconcile, null: false, default: false
+          table.bigint :epoch, null: false, default: 0
           table.json :settings, null: false
         end
       end

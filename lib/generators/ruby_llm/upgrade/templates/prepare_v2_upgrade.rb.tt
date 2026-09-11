@@ -9,16 +9,11 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def up
 <% if copy_mode? -%>
-    RubyLLM::Generators::UpgradeMigration.new.prepare(<%= copy_upgrade_settings.inspect %>)
+    RubyLLM::Generators::UpgradeMigration.for.prepare(<%= copy_upgrade_settings.inspect %>) { prepare_schema }
 <% else -%>
     raise 'This database uses --mode copy' if table_exists?(:ruby_llm_v2_upgrades)
+    prepare_schema
 <% end -%>
-    validate_upgrade
-    move_models
-    add_chat_and_message_columns
-    move_tool_calls
-    create_usages
-    create_batches
   end
 
   def down
@@ -26,6 +21,15 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   end
 
   private
+
+  def prepare_schema
+    validate_upgrade
+    move_models
+    add_chat_and_message_columns
+    move_tool_calls
+    create_usages
+    create_batches
+  end
 
   def validate_upgrade
     %i[<%= chat_table_name %> <%= message_table_name %>].each do |table|
@@ -247,8 +251,7 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
     unless column_exists?(table, :ruby_llm_model_id)
       add_column table, :ruby_llm_model_id, reference_type_for(:ruby_llm_models)
     end
-    RubyLLM::Generators::UpgradeMigration.new.copy_model_references
-    with_upgrade_safety { change_column_null table, column, true } unless column_definition(table, column).null
+    RubyLLM::Generators::UpgradeMigration.for.copy_model_references
 <% else -%>
     with_upgrade_safety { rename_column table, column, :ruby_llm_model_id } if column != :ruby_llm_model_id
 <% end -%>
@@ -288,7 +291,9 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
   end
 
   def ensure_boolean_column(table, column)
-    add_column table, column, :boolean unless column_exists?(table, column)
+    unless column_exists?(table, column)
+      with_upgrade_safety { add_column table, column, :boolean, default: false }
+    end
     return if ActiveRecord::Type::Boolean.new.cast(column_definition(table, column).default) == false
 
     with_upgrade_safety { change_column_default table, column, false }
@@ -296,9 +301,6 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def move_tool_calls
     move_table(:<%= v1_tool_call_table_name %>, :ruby_llm_tool_calls)
-<% if copy_mode? -%>
-    remove_column_foreign_keys(:<%= v1_tool_call_table_name %>, :<%= message_foreign_key %>)
-<% end -%>
     table = :ruby_llm_tool_calls
 <% if postgresql? -%>
     normalize_postgresql_json_columns(table, %i[arguments])
@@ -524,7 +526,7 @@ class <%= prepare_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def move_table(source, target)
 <% if copy_mode? -%>
-    with_upgrade_safety { RubyLLM::Generators::UpgradeMigration.new.copy_table(source, target) }
+    with_upgrade_safety { RubyLLM::Generators::UpgradeMigration.for.copy_table(source, target) }
 <% else -%>
     return if source == target || !table_exists?(source)
 

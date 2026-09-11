@@ -69,6 +69,18 @@ jobs:
           bundle exec appraisal rails-8.1 rspec
           spec/ruby_llm/generators/upgrade_migration_adapters_spec.rb
 
+      - name: Install RubyLLM 1.16 for online upgrade tests
+        run: gem install ruby_llm --version 1.16.0 --no-document --install-dir "$RUNNER_TEMP/ruby-llm-1.16"
+
+      - name: Test live 1.16 writes and version switches on PostgreSQL and MySQL
+        env:
+          RUBY_LLM_LEGACY_GEM_HOME: ${{ runner.temp }}/ruby-llm-1.16
+        run: |
+          for database_url in "$RUBY_LLM_POSTGRES_URL" "$RUBY_LLM_MYSQL_URL"; do
+            RUBY_LLM_COMPATIBILITY_URL="$database_url" bundle exec appraisal rails-8.1 rspec \
+              spec/ruby_llm/generators/upgrade_migration_spec.rb
+          done
+
   test:
     # No " / " in the name: GitHub joins the caller job id and this name with
     # " / ", then splits on it to build the checks tree, so an inner slash

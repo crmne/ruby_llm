@@ -12,7 +12,9 @@ module RubyLLMUpgrade # :nodoc: all
 
     included do
       class_attribute :ruby_llm_upgrade_kind, instance_writer: false
+      self.enumerate_columns_in_select_statements = true
       default_scope { RubyLLMUpgrade.visible(self) }
+      after_initialize { @ruby_llm_upgrade_epoch = RubyLLMUpgrade.epoch }
       around_save :guard_ruby_llm_upgrade, prepend: true
       around_destroy :guard_ruby_llm_upgrade, prepend: true
       before_save { RubyLLMUpgrade.prepare_model(self) if ruby_llm_upgrade_kind == :chat }
@@ -27,6 +29,9 @@ module RubyLLMUpgrade # :nodoc: all
 
   class << self
     def install(chat:, message:, tool_call:)
+      if version == 2 && message.table_exists? && message.column_names.include?('ruby_llm_content')
+        message.alias_attribute :content, :ruby_llm_content
+      end
       { chat => :chat, message => :message, tool_call => :tool_call }.each do |model, kind|
         next if model < Records
 
@@ -37,11 +42,13 @@ module RubyLLMUpgrade # :nodoc: all
       return if chat.instance_variable_defined?(:@ruby_llm_upgrade_operations)
 
       operations = guarded_operations(chat, OPERATIONS, claim: true)
-      if chat.private_method_defined?(:persist_usage_entry)
-        operations.define_method(:persist_usage_entry) do |entry|
-          RubyLLMUpgrade.guard(self) { super(entry) }
+      %i[persist_usage_entry persist_new_message persist_message_completion].each do |name|
+        next unless chat.private_method_defined?(name)
+
+        operations.define_method(name) do |*args, **options, &block|
+          RubyLLMUpgrade.guard(self) { super(*args, **options, &block) }
         end
-        operations.send(:private, :persist_usage_entry)
+        operations.send(:private, name)
       end
       chat.prepend operations
       chat.instance_variable_set(:@ruby_llm_upgrade_operations, operations)
@@ -73,7 +80,9 @@ module RubyLLMUpgrade # :nodoc: all
     def prepare_model(chat)
       return unless available?
 
-      settings = current_state.settings
+      state = current_state
+      settings = state.settings
+      return if version == 1 && settings['online'] && state.status == 'preparing'
       if version == 1
         return unless ActiveRecord::Base.connection.column_exists?(settings.fetch('chat_table'), :ruby_llm_model_id)
         return unless ActiveRecord::Base.connection.table_exists?('ruby_llm_models')
@@ -87,15 +96,29 @@ module RubyLLMUpgrade # :nodoc: all
       states = records(TABLE)
       states.uncached do
         states.transaction do
-          state = states.lock.first!
+          if ActiveRecord::Base.connection.adapter_name == 'SQLite' && claim
+            states.update_all('epoch = epoch')
+          end
+          state = states.lock(lock_clause).first!
           check_version(state)
           protect(record, state, claim: claim)
+          if record.instance_variable_get(:@ruby_llm_upgrade_epoch) != state[:epoch].to_i
+            raise ActiveRecord::ReadOnlyRecord, 'Reload the conversation after switching RubyLLM versions'
+          end
           yield
         end
       end
     end
 
+    def epoch
+      available? ? current_state[:epoch].to_i : 0
+    end
+
     private
+
+    def lock_clause
+      ActiveRecord::Base.connection.adapter_name == 'Mysql2' ? 'LOCK IN SHARE MODE' : 'FOR SHARE'
+    end
 
     def guarded_operations(model, names, claim:)
       Module.new do
@@ -141,10 +164,15 @@ module RubyLLMUpgrade # :nodoc: all
 
     def records(table)
       @records ||= {}
-      @records[table] ||= Class.new(ActiveRecord::Base) do
+      model = @records[table] ||= Class.new(ActiveRecord::Base) do
         self.table_name = table
         self.inheritance_column = :_type_disabled
       end
+      if !model.column_names.include?(VERSION_COLUMN) &&
+         ActiveRecord::Base.connection.column_exists?(table, VERSION_COLUMN)
+        model.reset_column_information
+      end
+      model
     end
 
     def current_state
@@ -156,6 +184,7 @@ module RubyLLMUpgrade # :nodoc: all
     end
 
     def check_version(state)
+      return if version == 1 && state.active_version == 1 && state.settings['online'] && state.status == 'preparing'
       return if state.active_version == version && %w[active finalized].include?(state.status)
 
       raise ActiveRecord::ReadOnlyRecord,

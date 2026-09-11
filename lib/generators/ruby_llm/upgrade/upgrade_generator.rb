@@ -25,7 +25,7 @@ module RubyLLM
       class_option :phase, type: :string, enum: %w[prepare backfill finish cleanup],
                            desc: 'Generate one upgrade phase; cleanup runs in a later deployment'
       class_option :mode, type: :string, enum: %w[rename copy], default: 'rename',
-                          desc: 'Copy keeps a protected 1.16 rollback path until cleanup'
+                          desc: 'Copy prepares and backfills online, with protected 1.16 rollback until cleanup'
 
       argument :model_mappings,
                type: :array,
@@ -62,14 +62,24 @@ module RubyLLM
 
             Copy mode retains the legacy tables and a separate chat model reference.
             Install the generated RubyLLMUpgrade concern and initializer in BOTH the
-            1.16 rollback build and the 2.0 build. They protect whole conversations
+            running 1.16 build and the 2.0 build BEFORE running prepare. Restart
+            all affected 1.16 processes so they load the guards and explicit column
+            selects. The guards protect whole conversations
             changed by 2.0. Direct SQL, bulk updates/deletes and attachment purges
             bypass these guards; review those application paths before upgrading.
 
-            Pause affected traffic, workers, scheduled jobs and retries. Review and
-            rehearse prepare, backfill and finish on a production database copy,
-            then migrate and load models before restarting the 2.0 application.
+            Rehearse prepare, backfill and finish on a production database copy.
+            Run prepare and backfill from the 2.0 build while 1.16 serves traffic.
+            Stop affected traffic, workers, scheduled jobs and retries BEFORE finish.
+            Finish catches up intervening writes, validates and activates 2.0.
+            Then load models and restart the 2.0 application.
             Keep the old model/tool-call classes in the 1.16 build.
+
+            PostgreSQL, MySQL and SQLite support this workflow. Schema changes can
+            block writes; SQLite also serializes backfill and app writes.
+            Use a direct connection or session-mode pool for copy migrations.
+            db:migrate runs ALL pending phases. Stop at the backfill timestamp to
+            defer finish, or pause AI before running all three together.
 
             With all affected processes stopped, use the 2.0 build to run:
               bin/rails ruby_llm:upgrade:rollback  # activates the protected 1.16 view

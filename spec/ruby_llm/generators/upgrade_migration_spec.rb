@@ -10,16 +10,71 @@ require 'rbconfig'
 RSpec.describe RubyLLM::Generators::UpgradeMigration, :generator do
   let(:repository) { File.expand_path('../../..', __dir__) }
   let(:runner) { File.join(repository, 'spec/fixtures/upgrade_compatibility/runner.rb') }
-  let(:legacy_home) { ENV.fetch('RUBY_LLM_LEGACY_GEM_HOME', nil) }
   let(:gem_paths) do
     ([legacy_home] + Gem.path + Gem.loaded_specs.values.map(&:base_dir)).compact.uniq.join(File::PATH_SEPARATOR)
   end
   let(:directory) { Dir.mktmpdir('ruby_llm_copy_upgrade') }
+  let(:database_configuration) do
+    next nil unless database_url
+
+    ActiveRecord::Base.establish_connection(database_url)
+    config = ActiveRecord::Base.connection_db_config.configuration_hash
+    name = "ruby_llm_compatibility_#{Process.pid}_#{SecureRandom.hex(4)}"
+    if config[:adapter] == 'postgresql'
+      ActiveRecord::Base.connection.execute("CREATE SCHEMA #{ActiveRecord::Base.connection.quote_table_name(name)}")
+      config.merge(schema_search_path: name)
+    else
+      ActiveRecord::Base.connection.create_database(name, charset: 'utf8mb4')
+      config.merge(database: name)
+    end
+  end
+
+  def legacy_home = ENV.fetch('RUBY_LLM_LEGACY_GEM_HOME', nil)
+  def database_url = ENV.fetch('RUBY_LLM_COMPATIBILITY_URL', nil)
 
   around do |example|
     example.run
   ensure
+    if database_configuration
+      ActiveRecord::Base.establish_connection(database_url)
+      if database_configuration[:adapter] == 'postgresql'
+        schema = ActiveRecord::Base.connection.quote_table_name(database_configuration.fetch(:schema_search_path))
+        ActiveRecord::Base.connection.execute("DROP SCHEMA #{schema} CASCADE")
+      else
+        ActiveRecord::Base.connection.drop_database(database_configuration.fetch(:database))
+      end
+      ActiveRecord::Base.remove_connection
+    end
     FileUtils.remove_entry(directory)
+  end
+
+  it 'keeps a warm 1.16 process writing through prepare and repeated backfill, then fences it at finish' do
+    seed = run_stage('legacy', 'seed')
+    generate_copy_upgrade
+    arguments = { chat: seed.fetch('editable'), raw: seed.fetch('raw') }
+    Open3.popen3(child_environment, *command('legacy', 'watch_online', arguments)) do |input, output, errors, waiter|
+      expect(JSON.parse(output.gets)).to eq('ready' => true)
+      run_stage('current', 'prepare')
+      input.puts('after prepare')
+      expect(JSON.parse(output.gets)).to include('content' => 'after prepare', 'raw' => nil)
+      run_stage('current', 'backfill')
+      input.puts('after backfill')
+      response = JSON.parse(output.gets)
+      expect(response).to include('content' => 'after backfill', 'raw' => nil)
+      run_stage('current', 'backfill')
+      input.puts('before finish')
+      expect(JSON.parse(output.gets)).to include('content' => 'before finish')
+      run_stage('current', 'finish')
+      input.puts('too late')
+      expect(JSON.parse(output.gets)).to include('error' => 'ActiveRecord::ReadOnlyRecord')
+      input.puts('stop')
+      input.close
+      expect(waiter.value.success?).to be(true), errors.read
+      snapshot = run_stage('current', 'snapshot', ids: [seed.fetch('editable')])
+      messages = snapshot.dig('chats', seed.fetch('editable').to_s, 'messages')
+      expect(messages).to include(a_hash_including('content' => 'before finish'))
+      expect(messages.map { |message| message.fetch('content') }).not_to include('too late')
+    end
   end
 
   it 'round trips real 1.16 writes while preserving two-owned conversations and reconciling deletions' do
@@ -30,7 +85,9 @@ RSpec.describe RubyLLM::Generators::UpgradeMigration, :generator do
     expect(legacy.dig('chats', seed.fetch('editable').to_s, 'messages'))
       .to include(a_hash_including('content' => { 'answer' => 42 }))
     expect(run_stage('current', 'prepare').values).to all(be(true))
-    expect_stage_failure('legacy', 'snapshot', ids: [seed.fetch('editable')], message: /preparing/)
+    prepared = run_stage('legacy', 'snapshot', ids: [seed.fetch('editable')])
+    expect(prepared.dig('chats', seed.fetch('editable').to_s, 'messages'))
+      .to eq(legacy.dig('chats', seed.fetch('editable').to_s, 'messages'))
     expect(run_stage('current', 'migrate_all').fetch('required_model')).to be(true)
     changed = run_stage('current', 'change_current', claimed: seed.fetch('claimed'))
     expect(changed.fetch('read_ownership')).to eq(1)
@@ -54,6 +111,50 @@ RSpec.describe RubyLLM::Generators::UpgradeMigration, :generator do
     run_stage('current', 'transition', action: 'rollback')
     run_stage('current', 'transition', action: 'resume')
     expect(run_stage('current', 'snapshot', ids:)).to eq(restored)
+  end
+
+  it 'preserves 1.16 raw-content precedence without replacing text with empty raw values' do
+    seed = run_stage('legacy', 'seed')
+    generate_copy_upgrade
+    run_stage('current', 'migrate_all')
+    snapshot = run_stage('current', 'snapshot', ids: [seed.fetch('editable')])
+    messages = snapshot.dig('chats', seed.fetch('editable').to_s, 'messages')
+    structured = messages.find { |message| message.fetch('id') == seed.fetch('raw') }
+    expect(JSON.parse(structured.fetch('content'))).to eq('answer' => 42)
+    seed.fetch('empty_raw').each do |message|
+      expect(messages).to include(a_hash_including(message.merge('content' => 'text with empty raw content')))
+    end
+  end
+
+  it 'rejects a delayed 1.16 provider response after finish and rollback' do
+    seed = run_stage('legacy', 'seed')
+    generate_copy_upgrade
+    run_stage('current', 'prepare')
+    run_stage('current', 'backfill')
+    arguments = { chat: seed.fetch('editable') }
+    Open3.popen3(child_environment, *command('legacy', 'watch_response', arguments)) do |input, output, errors, waiter|
+      expect(JSON.parse(output.gets)).to eq('ready' => true)
+      run_stage('current', 'finish')
+      run_stage('current', 'transition', action: 'rollback')
+      input.puts('continue')
+      input.close
+      expect(JSON.parse(output.read)).to eq('error' => 'ActiveRecord::ReadOnlyRecord')
+      expect(waiter.value.success?).to be(true), errors.read
+    end
+    snapshot = run_stage('legacy', 'snapshot', ids: [seed.fetch('editable')])
+    messages = snapshot.dig('chats', seed.fetch('editable').to_s, 'messages')
+    expect(messages.map { |message| message.fetch('content') }).not_to include('late response')
+  end
+
+  it 'does not restore a legacy tool conversation deleted by two after rollback and resume' do
+    seed = run_stage('legacy', 'seed')
+    generate_copy_upgrade
+    run_stage('current', 'migrate_all')
+    run_stage('current', 'delete_current', chat: seed.fetch('tools'))
+    run_stage('current', 'transition', action: 'rollback')
+    run_stage('current', 'transition', action: 'resume')
+    snapshot = run_stage('current', 'snapshot', ids: [seed.fetch('tools')])
+    expect(snapshot.fetch('chats').fetch(seed.fetch('tools').to_s)).to be_nil
   end
 
   it 'rejects downgraded saves and destroys through records loaded before two claimed their chat' do
@@ -155,7 +256,9 @@ RSpec.describe RubyLLM::Generators::UpgradeMigration, :generator do
 
   def generate_copy_upgrade(**options)
     generator = RubyLLM::Generators::UpgradeGenerator.new([], { mode: 'copy', **options }, destination_root: directory)
-    allow(generator).to receive_messages(postgresql?: false, mysql?: false, migration_version: '[8.1]')
+    adapter = database_configuration&.fetch(:adapter)
+    allow(generator).to receive_messages(postgresql?: adapter == 'postgresql', mysql?: adapter == 'mysql2',
+                                         migration_version: '[8.1]')
     allow(generator).to receive(:say)
     allow(generator).to receive(:say_status)
     generator.invoke_all
@@ -188,7 +291,8 @@ RSpec.describe RubyLLM::Generators::UpgradeMigration, :generator do
     end.join(',')
     ENV.keys.grep(/\ABUNDLE/).to_h { |name| [name, nil] }
        .merge('RUBYOPT' => nil, 'RUBYLIB' => nil, 'GEM_PATH' => gem_paths,
-              'RUBY_LLM_COMPATIBILITY_GEMS' => dependencies)
+              'RUBY_LLM_COMPATIBILITY_GEMS' => dependencies,
+              'RUBY_LLM_COMPATIBILITY_DATABASE' => database_configuration&.to_json)
   end
 
   def verify_resumed_records(restored, seed, changed, returned)

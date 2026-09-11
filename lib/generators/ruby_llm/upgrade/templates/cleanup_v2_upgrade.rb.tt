@@ -11,15 +11,14 @@ class <%= cleanup_migration_class_name %> < ActiveRecord::Migration<%= migration
 
   def up
 <% if copy_mode? -%>
-    RubyLLM::Generators::UpgradeMigration.new.verify_settings(<%= copy_upgrade_settings.inspect %>)
-    RubyLLM::Generators::UpgradeMigration.new.verify_cleanup
+    RubyLLM::Generators::UpgradeMigration.for.verify_settings(<%= copy_upgrade_settings.inspect %>)
+    RubyLLM::Generators::UpgradeMigration.for.verify_cleanup
 <% else -%>
     raise 'Generate cleanup with --mode copy for this database' if table_exists?(:ruby_llm_v2_upgrades)
 <% end -%>
     unless table_exists?(PROGRESS_TABLE)
 <% if copy_mode? -%>
-      remove_legacy_message_columns
-      RubyLLM::Generators::UpgradeMigration.new.cleanup
+      RubyLLM::Generators::UpgradeMigration.for.cleanup { remove_legacy_message_columns }
       return
 <% else -%>
       return unless legacy_columns.any?
@@ -31,9 +30,10 @@ class <%= cleanup_migration_class_name %> < ActiveRecord::Migration<%= migration
       raise 'Run <%= finish_migration_class_name %> before removing the legacy message columns'
     end
 
-    remove_legacy_message_columns
 <% if copy_mode? -%>
-    RubyLLM::Generators::UpgradeMigration.new.cleanup
+    RubyLLM::Generators::UpgradeMigration.for.cleanup { remove_legacy_message_columns }
+<% else -%>
+    remove_legacy_message_columns
 <% end -%>
     drop_table PROGRESS_TABLE
   end
