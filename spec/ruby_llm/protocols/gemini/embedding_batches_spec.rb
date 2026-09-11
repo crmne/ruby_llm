@@ -93,6 +93,19 @@ RSpec.describe RubyLLM::Protocols::Gemini::EmbeddingBatches do
     expect(protocol.send(:parse_embedding_batch_results, [success, failure])).to eq([[0, nil, :failed]])
   end
 
+  it 'rejects a duplicated embedding_index instead of silently pairing the wrong vector' do
+    inputs = protocol.send(:embedding_batch_requests, batch_request(%w[Ruby Rails]), model.id)
+    # Both responses claim position 0 (position 1's response is missing), but
+    # the group is still the expected size -- the only way this can be
+    # detected is by checking the positions themselves, not just the count.
+    duplicated = inputs.first.fetch(:metadata)
+    responses = [inline_response(inputs.first.merge(metadata: duplicated), [1.0]),
+                 inline_response(inputs.last.merge(metadata: duplicated), [2.0])]
+    allow(RubyLLM.logger).to receive(:warn)
+
+    expect(protocol.send(:parse_embedding_batch_results, responses)).to eq([[0, nil, :failed]])
+  end
+
   it 'hydrates staged embedding requests and restores a completed batch by id' do
     allow(RubyLLM::Providers::Gemini).to receive(:new).and_return(provider)
     context = RubyLLM.context { |config| config.gemini_api_key = 'test' }
