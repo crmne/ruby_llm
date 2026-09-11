@@ -38,10 +38,13 @@ module RubyLLM
         def parse_rerank_results(data, documents = [])
           Array(data['results']).map do |result|
             index = result['index']
+            unless valid_rerank_index?(index, documents)
+              raise Error, 'Rerank endpoint returned an invalid document index'
+            end
 
             RubyLLM::Rerank::Result.new(
               index: index,
-              document: rerank_document(result['document']) || (index && documents[index]),
+              document: rerank_document(result['document']) || documents[index],
               score: result['relevance_score']
             )
           end
@@ -49,6 +52,14 @@ module RubyLLM
 
         def rerank_document(document)
           document.is_a?(Hash) ? document['text'] : document
+        end
+
+        # A negative index is a valid Ruby array index (it wraps from the
+        # end) and an out-of-range positive one just returns nil, so an
+        # unchecked index would substitute the wrong document, or a missing
+        # one, without ever raising.
+        def valid_rerank_index?(index, documents)
+          index.is_a?(Integer) && index.between?(0, documents.length - 1)
         end
       end
     end
