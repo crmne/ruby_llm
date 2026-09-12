@@ -39,6 +39,12 @@ See [Structured Output]({% link _core_features/structured-output.md %}) and [Too
 
 For provider-executed MCP tools, also see the built-in [Server Tools]({% link _core_features/server-tools.md %}#mcp-servers).
 
+## RubyLLM::Skills
+
+[RubyLLM::Skills](https://github.com/kieranklaassen/ruby_llm-skills) adds Agent Skills to chats and agents, so the model can discover and load instructions from `SKILL.md` directories, slash-command markdown files, and database records.
+
+Stay on `ruby_llm-skills ~> 0.3.0` with RubyLLM 1.x. For RubyLLM 2.0, use the published prerelease `0.4.0.pre1`.
+
 ## RubyLLM::Instrumentation
 
 [RubyLLM::Instrumentation](https://github.com/sinaptia/ruby_llm-instrumentation) adds ActiveSupport notifications to RubyLLM 1.x.
