@@ -59,16 +59,18 @@ Choose how much migration work you want to do before pausing AI activity. The de
 | Return to 1.16 | Restore the database backup and matching application together. | Run the rollback task and deploy the prepared 1.16 build. Conversations changed by 2.0 stay protected. |
 | Extra work | Rehearse migration and backup recovery. | Also prepare the compatibility files, rehearse version switches, and allow storage and time for the copies. |
 
-For example, with **100,000 synthetic chats and 1 million messages**, rename finished sooner overall, while online copy needed a shorter database pause:
+For example, with **100,000 synthetic chats and 1 million messages**, rename finished sooner overall, while online copy required less AI downtime:
 
-| Mode | Total migration time | Database pause |
+| Mode | Total migration time | Required AI downtime |
 | --- | ---: | ---: |
 | Rename | 20 s | 20 s |
 | Online copy | 136 s | 4 s |
 
 These are medians of three runs per mode using the generated migrations at [e5827a01](https://github.com/crmne/ruby_llm/commit/e5827a01a4226a1b4bbf28a4f42c0ff252918443), PostgreSQL 15.19, a Ryzen 5 7500F and 62 GiB RAM. Each run used a fresh database clone, 10 messages per chat, 256-byte text payloads and 10,000-message batches, without concurrent writes.
 
-Total time includes prepare, backfill, finish and their built-in validation. The database pause covers all three phases for rename, but only finish for copy. It excludes draining jobs, restarting the application, extra benchmark audits and later cleanup. Live writes and longer chats can add catch-up work. These are not production downtime estimates or MySQL/SQLite timings; rehearse on your own data before choosing.
+See the [migration benchmark repository](https://github.com/crmne/ruby_llm_migration_bench) for raw results and instructions to reproduce the comparison.
+
+Total time includes prepare, backfill, finish and their built-in validation. The reported AI downtime covers all three phases for rename, but only finish for copy. It excludes draining jobs, restarting the application, extra benchmark audits and later cleanup. Live writes and longer chats can add catch-up work. These are not production downtime estimates or MySQL/SQLite timings; rehearse on your own data before choosing.
 
 Generate the default rename migration:
 
