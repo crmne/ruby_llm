@@ -60,6 +60,17 @@ module RubyLLM
           metadata = responses.first.fetch('metadata')
           return if responses.size < metadata.fetch('embedding_count')
 
+          # The size check above only catches a short group; a duplicated
+          # embedding_index (with the true position's response missing)
+          # still has the right count, and embedding_batch_vectors' sort_by
+          # would silently pair the wrong vector with each text instead of
+          # raising -- mirrors the equivalent check in
+          # InvokeModel::EmbeddingBatches#consistent_embedding_metadata?.
+          positions = responses.map { |inline| inline.dig('metadata', 'embedding_index') }
+          unless positions.sort == (0...responses.size).to_a
+            return [index, nil, batch_failure(key, 'Invalid or duplicate embedding record positions')]
+          end
+
           vectors = embedding_batch_vectors(responses)
           return [index, nil, batch_failure(key, 'Gemini returned no embedding')] unless vectors
 
