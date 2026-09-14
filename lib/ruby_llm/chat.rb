@@ -1003,7 +1003,7 @@ module RubyLLM
       {
         chat: self,
         provider: @provider.slug,
-        provider_class: @provider.class.display_name,
+        provider_class: @provider.name,
         model: @model.id,
         model_info: @model,
         input_messages: messages.dup,
@@ -1347,7 +1347,7 @@ module RubyLLM
       payload = {
         chat: self,
         provider: @provider.slug,
-        provider_class: @provider.class.display_name,
+        provider_class: @provider.name,
         model: @model.id,
         model_info: @model,
         tool: tool,

@@ -20,12 +20,11 @@ RSpec.describe RubyLLM::Speech, :live do
   describe '.speak' do
     it 'uses the configured default speech model' do
       model = instance_double(RubyLLM::Model, id: 'gpt-4o-mini-tts-2025-12-15', provider: 'openai')
-      provider = instance_double(RubyLLM::Provider, slug: 'openai')
-      provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
+      provider = instance_double(RubyLLM::Provider, slug: 'openai', name: 'OpenAI')
       speech = described_class.new(
         data: 'audio bytes', model: 'gpt-4o-mini-tts-2025-12-15', voice: 'alloy', format: 'mp3'
       )
-      allow(provider).to receive_messages(speak: speech, class: provider_class)
+      allow(provider).to receive_messages(speak: speech)
       allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
       result = RubyLLM.speak('Hello')
@@ -51,11 +50,10 @@ RSpec.describe RubyLLM::Speech, :live do
         config.default_speech_model = model_for(:openai, :alternate_speech)
       end
       model = instance_double(RubyLLM::Model, id: model_for(:openai, :alternate_speech), provider: 'openai')
-      provider = instance_double(RubyLLM::Provider, slug: 'openai')
-      provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
+      provider = instance_double(RubyLLM::Provider, slug: 'openai', name: 'OpenAI')
       speech = described_class.new(data: 'audio bytes', model: model_for(:openai, :alternate_speech), voice: 'alloy',
                                    format: 'mp3')
-      allow(provider).to receive_messages(speak: speech, class: provider_class)
+      allow(provider).to receive_messages(speak: speech)
       allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
       result = context.speak('Hello')

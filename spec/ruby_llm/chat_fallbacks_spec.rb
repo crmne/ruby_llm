@@ -6,14 +6,11 @@ RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
   class FallbackSpecProvider # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    attr_reader :slug, :connection
-
-    def self.display_name
-      'Fallback Spec Provider'
-    end
+    attr_reader :slug, :name, :connection
 
     def initialize(slug)
       @slug = slug
+      @name = 'Fallback Spec Provider'
       @connection = Object.new
     end
 

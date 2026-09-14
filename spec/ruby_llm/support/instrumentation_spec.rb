@@ -176,11 +176,10 @@ RSpec.describe RubyLLM::Support::Instrumentation do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
     model = instance_double(RubyLLM::Model, id: model_for(:openai, :embedding), provider: 'openai')
-    provider = instance_double(RubyLLM::Provider, slug: 'openai')
-    provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
+    provider = instance_double(RubyLLM::Provider, slug: 'openai', name: 'OpenAI')
     embedding = RubyLLM::Embedding.new(vectors: [[0.1, 0.2, 0.3]], model: model_for(:openai, :embedding),
                                        input_tokens: 8)
-    allow(provider).to receive_messages(embed: embedding, class: provider_class)
+    allow(provider).to receive_messages(embed: embedding)
     allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
     result = context.embed(['hello'], model: model_for(:openai, :embedding))
@@ -207,10 +206,9 @@ RSpec.describe RubyLLM::Support::Instrumentation do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
     model = instance_double(RubyLLM::Model, id: model_for(:openai, :speech), provider: 'openai')
-    provider = instance_double(RubyLLM::Provider, slug: 'openai')
-    provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
+    provider = instance_double(RubyLLM::Provider, slug: 'openai', name: 'OpenAI')
     speech = RubyLLM::Speech.new(data: 'audio bytes', model: model_for(:openai, :speech), voice: 'alloy', format: 'mp3')
-    allow(provider).to receive_messages(speak: speech, class: provider_class)
+    allow(provider).to receive_messages(speak: speech)
     allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
     result = context.speak('hello', model: model_for(:openai, :speech))
@@ -237,10 +235,7 @@ RSpec.describe RubyLLM::Support::Instrumentation do
   describe 'one-shot provider options' do
     let(:instrumenter) { CaptureInstrumenter.new }
     let(:model) { instance_double(RubyLLM::Model, id: 'test-model', provider: 'openai') }
-    let(:provider) do
-      provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
-      instance_double(RubyLLM::Provider, slug: 'openai', class: provider_class)
-    end
+    let(:provider) { instance_double(RubyLLM::Provider, slug: 'openai', name: 'OpenAI') }
     let(:provider_options) { { custom: 'value' } }
     let(:metadata) { { academy_id: 42, feature: 'search' } }
 

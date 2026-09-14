@@ -81,7 +81,7 @@ module RubyLLM
       empty_tokens = Tokens.new
       payload = {
         provider: provider_instance.slug,
-        provider_class: provider_instance.class.display_name,
+        provider_class: provider_instance.name,
         model: model.id,
         model_info: model,
         query: query,
