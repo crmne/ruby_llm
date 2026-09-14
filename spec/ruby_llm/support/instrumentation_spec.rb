@@ -97,6 +97,22 @@ RSpec.describe RubyLLM::Support::Instrumentation do
     expect(payload[:streaming]).to be(true)
   end
 
+  it 'allows provider to be wrapped in a SimpleDelegator' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    chat = context.chat(model: model_for(:openai, :temperature))
+    provider = chat.instance_variable_get(:@provider)
+    response = RubyLLM::Message.new(role: :assistant, content: 'done', model: model_for(:openai, :temperature))
+    allow(provider).to receive(:complete).and_return(response)
+
+    chat.instance_variable_set(:@provider, SimpleDelegator.new(provider))
+
+    chat.ask('Hello')
+
+    _event_name, payload = instrumenter.events.last
+    expect(payload[:provider_class]).to eq(provider.name)
+  end
+
   it 'emits one usage event for every transport attempt' do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context do |config|
