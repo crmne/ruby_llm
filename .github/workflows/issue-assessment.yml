@@ -1,0 +1,58 @@
+name: Issue assessment
+
+on:
+  issues:
+    types: [opened, reopened]
+  discussion:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      kind:
+        type: choice
+        options: [issue, discussion]
+        default: issue
+      number:
+        description: Issue or discussion number
+        required: true
+      dry_run:
+        description: Preview without changing the report
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  issues: write
+  discussions: write
+
+concurrency:
+  group: assessment-${{ github.event.issue.number || github.event.discussion.number || inputs.number }}
+  cancel-in-progress: false
+
+jobs:
+  assess:
+    if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true' && github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TRIAGE_KIND: ${{ github.event.discussion && 'discussion' || inputs.kind || 'issue' }}
+      TRIAGE_NUMBER: ${{ github.event.issue.number || github.event.discussion.number || inputs.number }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/issue-assessment-cache
+          key: assessment-${{ env.TRIAGE_KIND }}-${{ env.TRIAGE_NUMBER }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: assessment-${{ env.TRIAGE_KIND }}-${{ env.TRIAGE_NUMBER }}-
+      - name: Install Copilot
+        run: npm install --global @github/copilot@1.0.83
+      - name: Assess the report
+        run: ruby .github/triage/assess.rb
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+          TRIAGE_DRY_RUN: ${{ inputs.dry_run || false }}
+          TRIAGE_MODEL: gpt-5.6-luna
+          TRIAGE_CACHE_DIR: ${{ runner.temp }}/issue-assessment-cache
