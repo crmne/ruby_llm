@@ -93,6 +93,16 @@ RSpec.describe RubyLLM::Chat do
     expect(payload[:messages][1][:content].first).to eq(type: 'redacted_thinking', data: 'signature')
   end
 
+  it 'does not guess the producer from a model id several providers serve' do
+    message = RubyLLM::Message.new(role: :assistant, content: 'Done.', model: model_for(:anthropic),
+                                   thinking: RubyLLM::Thinking.build(signature: 'signature'))
+    chat = RubyLLM.chat(model: model_for(:openrouter), provider: :openrouter)
+
+    payload = replay(chat, message)
+
+    expect(payload[:messages][1][:reasoning_details]).to eq([{ type: 'reasoning.encrypted', data: 'signature' }])
+  end
+
   it 'leaves the transcript untouched' do
     message = produced_by('gemini', model_for(:gemini), RubyLLM::Thinking.build(signature: 'gemini-signature'))
     chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)

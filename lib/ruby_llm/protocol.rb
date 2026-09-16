@@ -500,11 +500,10 @@ module RubyLLM
       message.tool_call? && message.tool_calls.each_value.any?(&:thought_signature)
     end
 
-    # The usage entry names the producer even when the registry does not
-    # list the model.
+    # Only a usage entry names the producer: a model id alone can belong
+    # to several providers.
     def producer_slug(message)
-      entry = message.ruby_llm_usage_entries.reverse.find(&:succeeded?)
-      entry ? entry.provider : message.model_info&.provider
+      message.ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider
     end
 
     def resolve_server_tools_for_request(entries)
