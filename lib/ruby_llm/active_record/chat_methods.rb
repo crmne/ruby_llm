@@ -778,6 +778,7 @@ module RubyLLM
 
         associations = %i[ruby_llm_tool_calls ruby_llm_parent_tool_call ruby_llm_usages]
         associations << { attachments_attachments: :blob } if attachment_association?(assoc.klass)
+        associations << :rich_text_content if assoc.klass.reflect_on_association(:rich_text_content)
 
         ::ActiveRecord::Associations::Preloader.new(records: messages, associations: associations).call
         messages
