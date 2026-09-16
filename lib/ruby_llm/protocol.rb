@@ -471,6 +471,7 @@ module RubyLLM
     end
 
     def preprocess_message(message)
+      return message.without_thinking if foreign_thinking?(message)
       return message unless auto_upload_large_files?
       return message unless message.role == :user
       return message if message.attachments.empty?
@@ -482,6 +483,16 @@ module RubyLLM
     end
 
     private
+
+    # A thinking signature is opaque to every provider but the one that
+    # issued it, so a message another provider produced replays without
+    # its thinking. A message with no known producer replays as it is.
+    def foreign_thinking?(message)
+      return false unless message.role == :assistant && (message.thinking || message.raw_reasoning)
+
+      producer = message.model_info&.provider
+      !producer.nil? && producer != @provider.slug
+    end
 
     def resolve_server_tools_for_request(entries)
       return nil if entries.nil? || entries.empty?

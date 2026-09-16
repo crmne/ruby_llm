@@ -52,6 +52,8 @@ response.content
 
 `response.thinking.text` combines the visible thinking text. RubyLLM also keeps the individual signed and encrypted blocks for later turns. When you restore a conversation, keep the complete messages instead of rebuilding thinking from `text` and `signature` alone.
 
+Thinking stays with the provider that produced it. When `with_model` moves a chat to another provider, earlier turns replay without their thinking, because no provider can verify another provider's signature. The messages themselves keep it.
+
 Pass `effort`, `budget`, or both:
 
 ```ruby

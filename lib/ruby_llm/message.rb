@@ -129,6 +129,13 @@ module RubyLLM
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }
     end
 
+    def without_thinking # :nodoc:
+      dup.tap do |message|
+        message.instance_variable_set(:@thinking, nil)
+        message.instance_variable_set(:@raw_reasoning, nil)
+      end
+    end
+
     # Returns +true+ if the assistant requested one or more tool calls,
     # +false+ otherwise.
     def tool_call?
