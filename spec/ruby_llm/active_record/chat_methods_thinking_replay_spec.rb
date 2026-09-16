@@ -5,8 +5,7 @@ require 'rails_helper'
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
 
-  def persist_thinking(message, provider: nil)
-    chat = Chat.create!(model: model_for(:openai))
+  def persist_thinking(message, chat: Chat.create!(model: model_for(:openai)), provider: nil)
     chat.send(:persist_new_message)
     if provider
       entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider:, model: message.model,
@@ -57,14 +56,15 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       :parse_completion_body,
       { 'modelVersion' => model_for(:gemini), 'candidates' => [{ 'content' => { 'parts' => parts } }] }, raw: nil
     )
-
-    restored = persist_thinking(message, provider: 'gemini')
-    chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+    chat = Chat.create!(model: model_for(:gemini), provider: 'gemini')
     chat.add_message(role: :user, content: '13*17?')
-    chat.add_message(restored)
+    persist_thinking(message, chat:, provider: 'gemini')
+    chat.with_model(model_for(:anthropic), provider: :anthropic)
     chat.add_message(role: :user, content: 'As a table.')
 
-    expect(restored.thinking.signature).to eq('gemini-signature')
-    expect(chat.render[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: '221' }])
+    payload = Chat.find(chat.id).to_llm.render
+
+    expect(payload[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: '221' }])
+    expect(chat.messages.second.thinking_signature).to eq('gemini-signature')
   end
 end

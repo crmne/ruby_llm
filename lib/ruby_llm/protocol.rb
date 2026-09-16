@@ -488,10 +488,23 @@ module RubyLLM
     # issued it, so a message another provider produced replays without
     # its thinking. A message with no known producer replays as it is.
     def foreign_thinking?(message)
-      return false unless message.role == :assistant && (message.thinking || message.raw_reasoning)
+      return false unless message.role == :assistant && carries_thinking?(message)
 
-      producer = message.model_info&.provider
+      producer = producer_slug(message)
       !producer.nil? && producer != @provider.slug
+    end
+
+    def carries_thinking?(message)
+      return true if message.thinking || message.raw_reasoning
+
+      message.tool_call? && message.tool_calls.each_value.any?(&:thought_signature)
+    end
+
+    # The usage entry names the producer even when the registry does not
+    # list the model.
+    def producer_slug(message)
+      entry = message.ruby_llm_usage_entries.reverse.find(&:succeeded?)
+      entry ? entry.provider : message.model_info&.provider
     end
 
     def resolve_server_tools_for_request(entries)

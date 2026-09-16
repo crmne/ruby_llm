@@ -133,6 +133,7 @@ module RubyLLM
       dup.tap do |message|
         message.instance_variable_set(:@thinking, nil)
         message.instance_variable_set(:@raw_reasoning, nil)
+        message.instance_variable_set(:@tool_calls, tool_calls_without_thought_signatures)
       end
     end
 
@@ -280,6 +281,12 @@ module RubyLLM
         [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
                           arguments: attributes[:arguments] || {},
                           thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))]
+      end
+    end
+
+    def tool_calls_without_thought_signatures
+      tool_calls&.transform_values do |call|
+        call.dup.tap { |copy| copy.thought_signature = nil }
       end
     end
 
