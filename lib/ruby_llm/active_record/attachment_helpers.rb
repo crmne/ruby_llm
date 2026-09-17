@@ -103,21 +103,15 @@ module RubyLLM
 
       def action_text_plain_text(content_value)
         body = content_value.body
-        attachables = action_text_attachables(content_value)
-        index = 0
+        preloaded_blobs = action_text_preloaded_blobs(content_value).index_by { |blob| blob.id.to_s }
         rendered = body.fragment.replace(ActionText::Attachment.tag_name) do |node|
           if node.key?('content')
             sanitized_content = body.sanitize_content_attachment(node.remove_attribute('content').to_s)
             node['content'] = sanitized_content if sanitized_content.present?
           end
 
-          attachment = if node['sgid'].present?
-                         ActionText::Attachment.from_node(node, attachables[index])
-                       else
-                         ActionText::Attachment.from_node(node)
-                       end
-          index += 1
-          attachment.to_plain_text
+          attachable = action_text_attachable_for_node(node, preloaded_blobs)
+          ActionText::Attachment.from_node(node, attachable).to_plain_text
         end
 
         ActionText::Content.new(rendered, canonicalize: false).fragment.to_plain_text
@@ -125,15 +119,10 @@ module RubyLLM
 
       def action_text_attachables(content_value)
         body = content_value.body
-        cached_content, cached_body, cached_attachables = @_ruby_llm_action_text_cache
-        return cached_attachables if cached_content.equal?(content_value) && cached_body.equal?(body)
-
         preloaded_blobs = action_text_preloaded_blobs(content_value).index_by { |blob| blob.id.to_s }
-        attachables = body.fragment.find_all(ActionText::Attachment.tag_name).map do |node|
+        body.fragment.find_all(ActionText::Attachment.tag_name).map do |node|
           action_text_attachable_for_node(node, preloaded_blobs)
         end
-        @_ruby_llm_action_text_cache = [content_value, body, attachables]
-        attachables
       end
 
       def action_text_attachable_for_node(node, preloaded_blobs)

@@ -2,10 +2,12 @@
 
 require 'rails_helper'
 require 'stringio'
+require 'active_support/testing/time_helpers'
 require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
+  include ActiveSupport::Testing::TimeHelpers
 
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     ActiveRecord::Migration.suppress_messages do
@@ -224,6 +226,39 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(llm_message.content).to include('See card:')
         expect(llm_message.content).to include('[Card]')
         expect(llm_message.attachments).to be_empty
+      end
+
+      it 'renders fallback content with an invalid SGID as Rails does' do
+        attachment = ActionText::Attachment.from_attributes(
+          sgid: 'invalid', content_type: 'text/html', content: '<p>safe</p><script>unsafe()</script>'
+        )
+        message = chat.action_text_messages.create!(role: :user, content: attachment.to_html)
+
+        expect(message.to_llm.content).to eq(message.content.to_plain_text)
+      end
+
+      it 'revalidates expiring SGIDs on subsequent conversions' do
+        blob = create_blob(filename: 'expiring.txt')
+        sgid = blob.to_sgid(expires_in: 1.minute, for: ActionText::Attachable::LOCATOR_NAME).to_s
+        attachment = ActionText::Attachment.from_attributes(sgid: sgid)
+        message = chat.action_text_messages.create!(role: :user, content: attachment.to_html)
+        expect(message.to_llm.content).to eq('[expiring.txt]')
+
+        travel 2.minutes do
+          converted = message.to_llm
+          expect(converted.content).to eq(message.content.to_plain_text)
+          expect(converted.attachments).to be_empty
+        end
+      end
+
+      it 'reflects custom attachable edits on subsequent conversions' do
+        attachable = ActionTextAttachable.create!(label: 'Before')
+        attachment = ActionText::Attachment.from_attachable(attachable)
+        message = chat.action_text_messages.create!(role: :user, content: attachment.to_html)
+        expect(message.to_llm.content).to eq('[Before]')
+        attachable.update!(label: 'After')
+
+        expect(message.to_llm.content).to eq('[After]')
       end
     end
   end
