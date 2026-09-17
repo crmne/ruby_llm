@@ -104,6 +104,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     context 'when the message model has rich text content' do
+      it 'converts messages without rich text without querying blobs' do
+        message = chat.action_text_messages.create!(role: :user)
+        expect(message.rich_text_content).to be_nil
+        fresh_chat = ActionTextChat.find(chat.id)
+        converted = nil
+
+        queries = QueryHelpers.matching(/active_storage_blobs/i) do
+          converted = fresh_chat.to_llm.messages.first
+        end
+
+        expect(converted.content).to eq('')
+        expect(converted.attachments).to be_empty
+        expect(queries).to be_empty
+      end
+
       it 'loads rich text content once for the whole transcript' do
         10.times do |index|
           chat.action_text_messages.create!(role: :user, content: "<div>Message #{index}</div>")
@@ -235,6 +250,37 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.action_text_messages.create!(role: :user, content: attachment.to_html)
 
         expect(message.to_llm.content).to eq(message.content.to_plain_text)
+      end
+
+      [nil, 'invalid'].each do |sgid|
+        it "handles inline content sanitized to empty with #{sgid ? 'an invalid' : 'no'} SGID" do
+          attachment = ActionText::Attachment.from_attributes(
+            sgid: sgid, content_type: 'text/html', content: '<iframe></iframe>'
+          )
+          message = chat.action_text_messages.create!(role: :user, content: attachment.to_html)
+
+          converted = message.to_llm
+
+          expect(converted.content).to eq(message.content.to_plain_text)
+          expect(converted.content).to eq('')
+          expect(converted.attachments).to be_empty
+        end
+      end
+
+      it 'resolves embedded blobs when only the attachment records are preloaded' do
+        blob = create_blob(content: 'embedded payload', filename: 'embedded.txt')
+        attachment = ActionText::Attachment.from_attachable(blob)
+        message = chat.action_text_messages.create!(role: :user, content: attachment.to_html).reload
+        rich_text = message.content
+        ActiveRecord::Associations::Preloader.new(records: [rich_text], associations: :embeds_attachments).call
+        expect(rich_text.embeds_attachments).not_to be_empty
+        expect(rich_text.embeds_attachments.map { |embed| embed.association(:blob).loaded? }).to all(be(false))
+
+        converted = message.to_llm
+
+        expect(converted.content).to eq('[embedded.txt]')
+        expect(converted.attachments.size).to eq(1)
+        expect(converted.attachments.first.content).to eq('embedded payload')
       end
 
       it 'revalidates expiring SGIDs on subsequent conversions' do

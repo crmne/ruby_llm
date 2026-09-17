@@ -175,6 +175,13 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
 
       expect(helpers.action_text_attachment_sources(rich_text)).to eq([blob])
     end
+
+    it 'resolves blobs from a content wrapper without Active Record associations' do
+      content = Struct.new(:body).new(ActionText::Content.new(ActionText::Attachment.from_attachable(blob).to_html))
+
+      expect(helpers.plain_text_content(content)).to eq('[hello.txt]')
+      expect(helpers.action_text_attachment_sources(content)).to eq([blob])
+    end
   end
 
   describe '#action_text_attachable_sources' do
