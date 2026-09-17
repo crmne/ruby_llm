@@ -138,7 +138,10 @@ module RubyLLM
       end
 
       def reference_type
-        Rails.application.config.generators.options.dig(:active_record, :primary_key_type) || :bigint
+        application = Rails.application if Rails.respond_to?(:application)
+        return :bigint unless application
+
+        application.config.generators.options.dig(:active_record, :primary_key_type) || :bigint
       end
 
       def create_migration_class_name(table_name)

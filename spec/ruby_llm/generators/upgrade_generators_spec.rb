@@ -46,6 +46,16 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
     end
   end
 
+  describe 'without an application' do
+    it 'defaults migration reference types to bigint' do
+      stub_const('Rails', Module.new)
+
+      generator = RubyLLM::Generators::UpgradeGenerator.new([])
+
+      expect(generator.reference_type).to eq(:bigint)
+    end
+  end
+
   describe 'incomplete tool-call cleanup' do
     it 'enables cleanup of all incomplete legacy calls at copy finish' do
       Dir.mktmpdir do |destination|
