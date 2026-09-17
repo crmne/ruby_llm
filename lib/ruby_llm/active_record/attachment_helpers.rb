@@ -93,7 +93,7 @@ module RubyLLM
       end
 
       def action_text_embeds?(body)
-        body.fragment.find_all(ActionText::Attachment.tag_name).any?
+        body.fragment.find_all(ActionText::Attachment.tag_name).any? { |node| action_text_blob_id(node) }
       end
 
       def action_text_body?(body)
@@ -126,13 +126,15 @@ module RubyLLM
       end
 
       def action_text_attachable_for_node(node, preloaded_blobs)
+        preloaded_blobs[action_text_blob_id(node)] || ActionText::Attachable.from_node(node)
+      end
+
+      def action_text_blob_id(node)
         sgid = node['sgid']
         gid = SignedGlobalID.parse(sgid, for: ActionText::Attachable::LOCATOR_NAME) if sgid
-        if gid && gid.app == GlobalID.app && gid.model_name == ActiveStorage::Blob.name
-          preloaded_blobs[gid.model_id.to_s] || ActionText::Attachable.from_node(node)
-        else
-          ActionText::Attachable.from_node(node)
-        end
+        return unless gid && gid.app == GlobalID.app && gid.model_name == ActiveStorage::Blob.name
+
+        gid.model_id.to_s
       end
 
       def action_text_preloaded_blobs(content_value)

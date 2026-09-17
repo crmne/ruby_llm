@@ -154,6 +154,36 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     context 'when the rich text message has Active Storage attachments' do
+      it 'skips embed preloading for a transcript containing only non-blob nodes' do
+        blob = create_blob(filename: 'expired.txt')
+        expired_sgid = blob.to_sgid(expires_in: 1.minute, for: ActionText::Attachable::LOCATOR_NAME).to_s
+        custom = ActionTextAttachable.create!(label: 'Card')
+        bodies = [
+          ActionText::Attachment.from_attributes(
+            url: 'https://example.com/image.png', content_type: 'image/png'
+          ).to_html,
+          ActionText::Attachment.from_attributes(content: '<p>Inline</p>', content_type: 'text/html').to_html,
+          ActionText::Attachment.from_attributes(sgid: 'invalid').to_html,
+          ActionText::Attachment.from_attributes(sgid: expired_sgid).to_html,
+          ActionText::Attachment.from_attachable(custom).to_html
+        ]
+        messages = bodies.map { |body| chat.action_text_messages.create!(role: :user, content: body) }
+
+        travel 2.minutes do
+          expected = messages.map { |message| message.content.to_plain_text }
+          fresh_chat = ActionTextChat.find(chat.id)
+          converted = nil
+          queries = QueryHelpers.matching(/active_storage_attachments|active_storage_blobs/i) do
+            converted = fresh_chat.to_llm.messages
+          end
+
+          expect(converted.map(&:content)).to eq(expected)
+          expect(converted.flat_map(&:attachments)).to be_empty
+          expect(queries.grep(/active_storage_blobs/i)).to be_empty
+          expect(queries.grep(/active_storage_attachments/i).size).to eq(1)
+        end
+      end
+
       it 'combines Action Text content with model attachments into RubyLLM::Content' do
         message = chat.action_text_messages.create!(
           role: :user,
