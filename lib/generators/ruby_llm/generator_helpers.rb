@@ -202,12 +202,7 @@ module RubyLLM
         end
       end
 
-      # Thor collects positional arguments only until the first switch, so model
-      # mappings written after --mode or --phase never reach the generator and
-      # every template silently falls back to the default model names. Generators
-      # take their mappings from a command line that reads naturally in either
-      # order, so move them ahead of the switches before Thor parses.
-      module ClassMethods
+      module ClassMethods # :nodoc:
         def start(given_args = ARGV, config = {})
           super(GeneratorHelpers.reorder_arguments(given_args, class_options), config)
         end
