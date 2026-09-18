@@ -63,6 +63,12 @@ Check its supported RubyLLM and instrumentation versions when upgrading.
 
 See its setup instructions for model downloads, hardware acceleration, and the Rust toolchain.
 
+## RubyLLM::Providers::Typesafe
+
+[RubyLLM::Providers::Typesafe](https://github.com/javiergradiche/ruby_llm-providers-typesafe) adds TypeSafe's Jev models as a provider. They answer yes/no, choice, and score questions about your data with calibrated probabilities, and rerank documents through `RubyLLM.rerank`.
+
+It needs a TypeSafe API key. See its README for question types and confidence thresholds.
+
 ## OpenTelemetry RubyLLM Instrumentation
 
 [OpenTelemetry RubyLLM Instrumentation](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm) exports traces for RubyLLM calls and tools to OpenTelemetry-compatible backends.
