@@ -202,6 +202,54 @@ module RubyLLM
         end
       end
 
+      # Thor collects positional arguments only until the first switch, so model
+      # mappings written after --mode or --phase never reach the generator and
+      # every template silently falls back to the default model names. Generators
+      # take their mappings from a command line that reads naturally in either
+      # order, so move them ahead of the switches before Thor parses.
+      module ClassMethods
+        def start(given_args = ARGV, config = {})
+          super(GeneratorHelpers.reorder_arguments(given_args, class_options), config)
+        end
+      end
+
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
+
+      def self.reorder_arguments(args, options)
+        mappings = []
+        switches = []
+        index = 0
+
+        while index < args.length
+          argument = args[index]
+          unless argument.is_a?(String) && argument.start_with?('-')
+            mappings << argument
+            index += 1
+            next
+          end
+
+          switches << argument
+          index += 1
+          next if argument.include?('=') || !takes_value?(options, argument)
+
+          value = args[index]
+          next if value.nil? || value.to_s.start_with?('-')
+
+          switches << value
+          index += 1
+        end
+
+        mappings + switches
+      end
+
+      def self.takes_value?(options, argument)
+        name = argument.sub(/\A--?/, '').delete_prefix('no-')
+        option = options[name.to_sym] || options[name]
+        option && !%i[boolean hash].include?(option.type)
+      end
+
       private
 
       def add_association_params(params, default_assoc, table_name, model_name,
