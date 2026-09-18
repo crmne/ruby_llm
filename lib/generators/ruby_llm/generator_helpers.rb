@@ -245,9 +245,12 @@ module RubyLLM
       end
 
       def self.takes_value?(options, argument)
-        name = argument.sub(/\A--?/, '').delete_prefix('no-')
+        return false if argument.match?(/\A--(?:no|skip)-/)
+
+        name = argument.sub(/\A--?/, '').tr('-', '_')
         option = options[name.to_sym] || options[name]
-        option && !%i[boolean hash].include?(option.type)
+        option ||= options.values.find { |candidate| candidate.aliases.include?(argument) }
+        option && option.type != :boolean
       end
 
       private
