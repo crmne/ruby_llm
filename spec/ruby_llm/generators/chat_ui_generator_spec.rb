@@ -380,7 +380,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         it 'honors mappings that follow UI options' do
           within_test_app(app_path) do
             FileUtils.mkdir_p('app/models/billing')
-            FileUtils.touch('app/models/billing/message.rb')
+            File.write('app/models/billing/message.rb', <<~RUBY)
+              module Billing
+                class Message < ApplicationRecord
+                end
+              end
+            RUBY
 
             output, status = run_rails_generate(
               'ruby_llm:chat_ui', '--force', '--ui', 'scaffold',
