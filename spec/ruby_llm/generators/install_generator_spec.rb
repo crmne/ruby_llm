@@ -10,6 +10,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
 
+  def run_rails_generate(*args)
+    env = {
+      'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
+      'BUNDLE_IGNORE_CONFIG' => '1',
+      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
+    }
+    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', 'generate', *args], chdir: app_path)
+  end
+
   describe 'with default model names' do
     let(:app_name) { 'test_install_default' }
     let(:app_path) { File.join(Dir.tmpdir, app_name) }
@@ -280,6 +289,20 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         RUBY
         success, output = run_rails_runner(test_script)
         expect(success).to be(true), output
+      end
+    end
+
+    it 'honors model mappings that follow boolean options' do
+      within_test_app(app_path) do
+        output, status = run_rails_generate(
+          'ruby_llm:install', '--skip-active-storage', '--force',
+          'chat:Billing::Chat', 'message:Billing::Message'
+        )
+        expect(status.success?).to be(true), output
+
+        expect(File.exist?('app/models/billing/chat.rb')).to be(true)
+        expect(Dir.glob('db/migrate/*create_billing_chats.rb')).not_to be_empty
+        expect(Dir.glob('db/migrate/*create_billing_messages.rb')).not_to be_empty
       end
     end
   end

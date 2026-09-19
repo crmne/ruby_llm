@@ -87,4 +87,16 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       expect(tool_call_partial).not_to include('message_<%= message.id %>')
     end
   end
+
+  it 'honors message mappings that follow UI options' do
+    within_test_app(app_path) do
+      output, status = run_rails_generate(
+        'ruby_llm:tool', 'ForecastMapped', '--ui', 'scaffold', 'message:Billing::Message'
+      )
+      expect(status.success?).to be(true), output
+
+      expect(File.exist?('app/views/billing/messages/tool_calls/_forecast_mapped.html.erb')).to be(true)
+      expect(File.exist?('app/views/billing/messages/tool_results/_forecast_mapped.html.erb')).to be(true)
+    end
+  end
 end

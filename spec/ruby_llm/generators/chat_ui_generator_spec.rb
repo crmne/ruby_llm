@@ -11,6 +11,15 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   let(:rails_root) { Rails.root }
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
 
+  def run_rails_generate(*args)
+    env = {
+      'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
+      'BUNDLE_IGNORE_CONFIG' => '1',
+      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
+    }
+    GeneratorTestHelpers.run_command(env, ['bundle', 'exec', 'rails', 'generate', *args], chdir: app_path)
+  end
+
   def expect_messages_helper_content(path)
     messages_helper = File.read(path)
     expect(messages_helper).to include('def default_model_display_name')
@@ -364,6 +373,30 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it config[:job_file_example] do
         within_test_app(app_path) do
           expect(File.exist?(config[:job_file_path])).to be true
+        end
+      end
+
+      if description == 'with namespaced model names'
+        it 'honors mappings that follow UI options' do
+          within_test_app(app_path) do
+            FileUtils.mkdir_p('app/models/billing')
+            File.write('app/models/billing/message.rb', <<~RUBY)
+              module Billing
+                class Message < ApplicationRecord
+                end
+              end
+            RUBY
+
+            output, status = run_rails_generate(
+              'ruby_llm:chat_ui', '--force', '--ui', 'scaffold',
+              'chat:Billing::Chat', 'message:Billing::Message'
+            )
+            expect(status.success?).to be(true), output
+
+            controller = File.read('app/controllers/billing/chats_controller.rb')
+            expect(controller).to include('class Billing::ChatsController')
+            expect(controller).to include('Billing::Chat.find')
+          end
         end
       end
 

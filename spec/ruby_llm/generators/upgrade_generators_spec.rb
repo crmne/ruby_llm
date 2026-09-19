@@ -27,6 +27,27 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         end.to raise_error(Thor::Error)
       end
     end
+
+    it 'resolves mappings that follow a class option on the command line' do
+      Dir.mktmpdir do |destination|
+        allow(RubyLLM::Generators::UpgradeGenerator).to receive(:new).and_wrap_original do |original, *args, **options|
+          generator = original.call(*args, **options)
+          allow(generator).to receive_messages(migration_version: '[8.1]')
+          generator
+        end
+
+        RubyLLM::Generators::UpgradeGenerator.start(
+          ['--mode', 'copy', '--discard-incomplete-tool-calls', 'false',
+           'chat:AI::Chat', 'message:AI::Chat::Message',
+           'model:AI::LLMModel', 'tool_call:AI::Chat::ToolCall'],
+          destination_root: destination
+        )
+
+        prepare = File.read(Dir.glob(File.join(destination, 'db/migrate/*_prepare_ruby_llm_v2_upgrade.rb')).sole)
+        expect(prepare).to include('move_table(:ai_llm_models, :ruby_llm_models)')
+        expect(prepare).to include('move_table(:ai_chat_tool_calls, :ruby_llm_tool_calls)')
+      end
+    end
   end
 
   describe 'individual phases' do

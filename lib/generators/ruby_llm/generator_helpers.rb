@@ -202,6 +202,64 @@ module RubyLLM
         end
       end
 
+      module ClassMethods # :nodoc:
+        def start(given_args = ARGV, config = {})
+          super(GeneratorHelpers.reorder_arguments(given_args, class_options), config)
+        end
+      end
+
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
+
+      def self.reorder_arguments(args, options)
+        mappings = []
+        switches = []
+        index = 0
+
+        while index < args.length
+          argument = args[index]
+          return mappings + switches + args[index..] if argument == '--'
+
+          unless argument.is_a?(String) && argument.start_with?('-')
+            mappings << argument
+            index += 1
+            next
+          end
+
+          switches << argument
+          index += 1
+          next if argument.include?('=')
+
+          value = args[index]
+          next unless takes_value?(options, argument, value)
+
+          switches << value
+          index += 1
+        end
+
+        mappings + switches
+      end
+
+      def self.takes_value?(options, argument, value)
+        return false if value.nil? || value.to_s.start_with?('-')
+
+        option = option_for(options, argument)
+        return false unless option
+        return %w[true TRUE t T false FALSE f F].include?(value) if option.type == :boolean
+
+        !argument.tr('_', '-').match?(/\A--(?:no|skip)-/)
+      end
+
+      def self.option_for(options, argument)
+        return option_for(options, "-#{argument[-1]}") if argument.match?(/\A-[a-z]{2,}\z/i)
+
+        name = argument.sub(/\A--?/, '').tr('-', '_')
+        options[name.to_sym] || options[name] ||
+          options.values.find { |candidate| candidate.aliases.include?(argument) } ||
+          options[name.sub(/\A(?:no|skip)_/, '').to_sym] || options[name.sub(/\A(?:no|skip)_/, '')]
+      end
+
       private
 
       def add_association_params(params, default_assoc, table_name, model_name,
