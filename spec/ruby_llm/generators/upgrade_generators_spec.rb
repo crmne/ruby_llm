@@ -37,7 +37,8 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         end
 
         RubyLLM::Generators::UpgradeGenerator.start(
-          ['--mode', 'copy', 'chat:AI::Chat', 'message:AI::Chat::Message',
+          ['--mode', 'copy', '--discard-incomplete-tool-calls', 'false',
+           'chat:AI::Chat', 'message:AI::Chat::Message',
            'model:AI::LLMModel', 'tool_call:AI::Chat::ToolCall'],
           destination_root: destination
         )

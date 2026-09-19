@@ -10,7 +10,9 @@ RSpec.describe RubyLLM::Generators::GeneratorHelpers, :generator do
       {
         mode: Thor::Option.new('mode', type: :string),
         output_format: Thor::Option.new('output_format', type: :string, aliases: ['-o']),
-        force: Thor::Option.new('force', type: :boolean)
+        quiet: Thor::Option.new('quiet', type: :boolean, aliases: ['-q']),
+        force: Thor::Option.new('force', type: :boolean, aliases: ['-f']),
+        skip_active_storage: Thor::Option.new('skip_active_storage', type: :boolean)
       }
     end
 
@@ -36,6 +38,34 @@ RSpec.describe RubyLLM::Generators::GeneratorHelpers, :generator do
       expect(described_class.reorder_arguments(args, options)).to eq(
         ['chat:Chat', '--mode=copy']
       )
+    end
+
+    %w[--force -f -qf --no-force --skip-force --skip-active-storage --skip_active_storage].each do |switch|
+      %w[true TRUE t T false FALSE f F].each do |value|
+        it "preserves #{switch} #{value} as an explicit boolean" do
+          args = [switch, value, 'chat:Chat']
+          reordered = described_class.reorder_arguments(args, options)
+
+          expect(reordered).to eq(['chat:Chat', switch, value])
+          expect(Thor::Options.new(options).parse(reordered)).to eq(Thor::Options.new(options).parse(args))
+        end
+      end
+    end
+
+    it 'keeps negated string options separate from mappings' do
+      args = ['--no-mode', 'chat:Chat']
+
+      expect(described_class.reorder_arguments(args, options)).to eq(['chat:Chat', '--no-mode'])
+    end
+
+    it 'preserves the end-of-options boundary' do
+      args = ['--force', 'chat:Chat', '--', '--mode', 'copy', 'message:Message']
+      reordered = described_class.reorder_arguments(args, options)
+      parser = Thor::Options.new(options)
+
+      expect(reordered).to eq(['chat:Chat', '--force', '--', '--mode', 'copy', 'message:Message'])
+      expect(parser.parse(reordered)).to include('force' => true)
+      expect(parser.remaining).to eq(['chat:Chat', '--mode', 'copy', 'message:Message'])
     end
 
     it 'leaves the token after an unknown switch positional' do
