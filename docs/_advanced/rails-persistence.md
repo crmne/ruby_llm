@@ -50,6 +50,8 @@ RubyLLM owns four supporting tables under the `ruby_llm_` prefix:
 
 They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below.
 
+Their shared abstract base, `RubyLLM::ActiveRecord::Record`, inherits the default database connection. If your chats and messages use a secondary database, [configure the shared connection]({% link _advanced/rails-advanced-config.md %}#using-a-secondary-database) so all related tables stay together.
+
 Do not validate message content as always present. Streaming creates an empty assistant message before content arrives, and a valid assistant message can contain tool calls without text.
 {: .warning }
 

@@ -3,7 +3,7 @@
 module RubyLLM
   module ActiveRecord
     # RubyLLM's private persistence for provider-side batches.
-    class Batch < ::ActiveRecord::Base # :nodoc:
+    class Batch < Record # :nodoc:
       self.table_name = 'ruby_llm_batches'
 
       STATUSES = %w[pending succeeded failed cancelled].freeze

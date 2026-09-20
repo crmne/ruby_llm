@@ -63,11 +63,6 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
     expect(ActiveRecord::Base).not_to respond_to(:acts_as_batch)
   end
 
-  it 'does not introduce an empty internal Active Record superclass' do
-    expect(RubyLLM::ActiveRecord.const_defined?(:Record, false)).to be(false)
-    expect(record_class.superclass).to eq(ActiveRecord::Base)
-  end
-
   it 'reports nothing when the table is missing' do
     allow(described_class).to receive(:table_exists?).and_return(false)
 

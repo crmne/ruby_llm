@@ -8,7 +8,7 @@ module RubyLLM
     # point at it through +belongs_to :model+. The +listed+ scope returns the
     # models the provider still serves; +unlisted+ returns the ones kept only
     # because a chat references them.
-    class Model < ::ActiveRecord::Base
+    class Model < Record
       self.table_name = 'ruby_llm_models'
 
       validates :model_id, presence: true, uniqueness: { scope: :provider }

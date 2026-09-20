@@ -160,7 +160,8 @@ loader.setup
 # Approvals and cancellation survive requests and processes.
 #
 # Your application owns chats and messages; RubyLLM owns usage, tool calls,
-# models, and batches. Agent can create and reload your chat records through
+# models, and batches. ActiveRecord::Record configures their shared database
+# connection. Agent can create and reload your chat records through
 # Agent.chat_model. Individual operations also work directly in Rails
 # services and jobs.
 module RubyLLM

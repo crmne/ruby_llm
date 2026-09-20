@@ -13,6 +13,7 @@ description: Route models through different providers, use per-tenant contexts, 
 
 After reading this guide, you will know:
 
+*   How to keep chats and RubyLLM's supporting tables on a secondary database.
 *   How to route a model through a different provider per chat.
 *   How to use per-tenant API keys with custom contexts.
 *   How to create chats for models that aren't in the registry.
@@ -20,6 +21,55 @@ After reading this guide, you will know:
 *   How to run ActiveRecord safely inside fiber-based async workloads.
 
 Persisted chats use the same configuration methods as plain Ruby. Use them to select a provider, isolate tenant credentials, or set cache boundaries on a conversation.
+
+## Using a Secondary Database
+
+When your chats and messages use another database, configure `RubyLLM::ActiveRecord::Record` to share their connection pool:
+
+```ruby
+# config/initializers/ruby_llm_database.rb
+Rails.application.config.to_prepare do
+  RubyLLM::ActiveRecord::Record.connection_specification_name =
+    LlmRecord.connection_specification_name
+end
+```
+
+Here, `LlmRecord` is your application's abstract class for that database. Your chat and message classes inherit from it:
+
+```ruby
+# app/models/llm_record.rb
+class LlmRecord < ApplicationRecord
+  self.abstract_class = true
+  connects_to database: { writing: :llm }
+end
+
+# app/models/chat.rb
+class Chat < LlmRecord
+  acts_as_chat
+end
+
+# app/models/message.rb
+class Message < LlmRecord
+  acts_as_message
+end
+```
+
+This uses the `llm` entry in `config/database.yml`. Set its `migrations_paths` to a dedicated directory, such as `db/llm_migrate`. See the [Rails multiple databases guide](https://guides.rubyonrails.org/active_record_multiple_databases.html) for database configuration.
+
+For a new installation, move the three RubyLLM migrations from `db/migrate` to that directory before running them. Keep the migration order: RubyLLM's supporting tables, chats, then messages. Run:
+
+```bash
+bin/rails db:migrate:llm
+bin/rails ruby_llm:load_models
+```
+
+The install generator uses the default database's adapter when generating migrations. If the secondary database uses another adapter, adjust the generated column types and indexes for that adapter before migrating. Configuring the record connection does not move existing tables or data, or redirect install and upgrade migrations automatically.
+
+Keep chats, messages, and all four `ruby_llm_` tables in the same database. The generated chat table has a foreign key to `ruby_llm_models`. Sharing the connection pool also makes writes to these records participate in the same transaction. Calling `connects_to` separately on two abstract classes creates separate pools, even when both point to the same database.
+
+You can also call `RubyLLM::ActiveRecord::Record.connects_to database: { writing: :llm }` directly when your chat and message classes inherit from `RubyLLM::ActiveRecord::Record`. This gives them and RubyLLM's supporting records one shared pool. Use the application-owned base above when you need to retain behavior from `ApplicationRecord`.
+
+This configuration selects one database for RubyLLM's supporting records. It does not route them independently for chat classes stored in different databases.
 
 ## Provider Overrides
 

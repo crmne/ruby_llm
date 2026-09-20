@@ -5,7 +5,7 @@ require 'ruby_llm/active_record/payload_helpers'
 module RubyLLM
   module ActiveRecord
     # RubyLLM's private persistence for provider tool calls.
-    class ToolCall < ::ActiveRecord::Base # :nodoc:
+    class ToolCall < Record # :nodoc:
       self.table_name = 'ruby_llm_tool_calls'
 
       include PayloadHelpers

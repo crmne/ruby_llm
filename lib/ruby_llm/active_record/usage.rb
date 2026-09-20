@@ -3,7 +3,7 @@
 module RubyLLM
   module ActiveRecord
     # RubyLLM's private normalized persistence for one provider attempt.
-    class Usage < ::ActiveRecord::Base # :nodoc:
+    class Usage < Record # :nodoc:
       self.table_name = 'ruby_llm_usages'
 
       belongs_to :chat, polymorphic: true

@@ -311,7 +311,7 @@ class UpgradeCompatibilityApplication
     names = if @version == 'legacy'
               %w[payload_helpers chat_methods message_methods model_methods tool_call_methods acts_as]
             else
-              %w[payload_helpers model tool_call usage batch chat_methods message_methods acts_as]
+              %w[record payload_helpers model tool_call usage batch chat_methods message_methods acts_as]
             end
     names.each { |name| require "ruby_llm/active_record/#{name}" }
     require 'generators/ruby_llm/upgrade/upgrade_migration' if @version == 'current'
