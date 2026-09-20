@@ -145,6 +145,31 @@ RSpec.describe RubyLLM::Agent do
     expect(SpecDynamicModelAgent.create!(quality: :low).model_id).to eq(model_for(:openai, :temperature))
   end
 
+  it 'resolves a deferred context from inputs for Rails chats' do
+    seen_chats = []
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model model_for(:openai, :temperature)
+      inputs :timeout
+      context do
+        seen_chats << chat
+        RubyLLM.context { |config| config.request_timeout = timeout }
+      end
+    end
+
+    stub_const('SpecDynamicContextAgent', agent_class)
+
+    created = SpecDynamicContextAgent.create!(timeout: 42)
+    loaded = SpecDynamicContextAgent.find(created.id, timeout: 84)
+
+    expect(seen_chats.first).to equal(created)
+    expect(seen_chats.last).to equal(loaded)
+    expect(created.context.config.request_timeout).to eq(42)
+    expect(created.to_llm.provider.config.request_timeout).to eq(42)
+    expect(loaded.context.config.request_timeout).to eq(84)
+    expect(loaded.to_llm.provider.config.request_timeout).to eq(84)
+  end
+
   it 'finds a Rails chat and applies runtime instructions without persisting them' do
     prompt_dir = write_prompt(
       'spec_runtime_agent',

@@ -46,6 +46,9 @@ RSpec.describe 'Published model registry workflow', type: :task do
   end
 
   def run_workflow(event: 'schedule', refresh: true, **overrides)
+    # The workflow shell runs from a temp directory with stubbed bundle and
+    # curl commands. Preserve the parent bundle settings for the real bundle
+    # exec calls, and clear inherited Ruby options so the harness stays isolated.
     env = {
       'PATH' => "#{File.join(tmpdir, 'bin')}:#{ENV.fetch('PATH')}",
       'RUBYLIB' => File.expand_path('../../lib', __dir__),

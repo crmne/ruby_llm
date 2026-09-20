@@ -368,8 +368,10 @@ module RubyLLM
       # use, applied via Chat#with_context. A block taking a configuration
       # argument creates an isolated Context when the agent class is defined.
       # A zero-argument block or Proc value defers evaluation until a chat is
-      # built, with declared ::inputs available as methods. Called with no
-      # argument or block, returns the configured context or deferred Proc.
+      # built or configured, with declared ::inputs available as methods. In
+      # plain Ruby, +chat+ is nil; in Rails mode, +chat+ is the record being
+      # configured. Called with no argument or block, returns the configured
+      # context or deferred Proc.
       #
       #   context SharedContext
       #   context { |config| config.request_timeout = 180 }
@@ -468,6 +470,8 @@ module RubyLLM
         @chat_kwargs || {}
       end
 
+      # Resolves a deferred context before plain-Ruby chat construction;
+      # +chat+ is nil in the evaluation runtime.
       def resolved_context(inputs:) # :nodoc:
         value = context
         return value unless value.is_a?(Proc)
