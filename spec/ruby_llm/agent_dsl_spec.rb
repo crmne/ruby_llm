@@ -152,6 +152,33 @@ RSpec.describe RubyLLM::Agent do
       expect { agent.context(RubyLLM.context) { |config| config.request_timeout = 42 } }
         .to raise_error(ArgumentError, 'Pass a context or a block, not both')
     end
+
+    it 'does not build runtime context for static or missing contexts' do
+      bare = Class.new(described_class)
+      configured = Class.new(described_class)
+      context = RubyLLM.context
+
+      configured.context(context)
+      expect(bare).not_to receive(:runtime_context)
+      expect(configured).not_to receive(:runtime_context)
+
+      expect(bare.send(:resolved_context, inputs: {})).to be_nil
+      expect(configured.send(:resolved_context, inputs: {})).to equal(context)
+    end
+
+    it 'does not rebind a chat already built with the resolved context' do
+      context = RubyLLM.context { |config| config.request_timeout = 42 }
+      agent = Class.new(described_class) do
+        model model_for(:openai, :temperature), provider: :openai
+      end
+      agent.context(context)
+      chat = context.chat(model: model_for(:openai, :temperature), provider: :openai)
+      allow(context).to receive(:chat).and_return(chat)
+
+      expect(chat).not_to receive(:with_context)
+
+      agent.chat
+    end
   end
 
   describe 'deferred configuration blocks' do

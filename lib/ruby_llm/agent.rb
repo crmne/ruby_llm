@@ -469,7 +469,10 @@ module RubyLLM
       end
 
       def resolved_context(inputs:) # :nodoc:
-        evaluate(context, runtime_context(chat: nil, inputs:))
+        value = context
+        return value unless value.is_a?(Proc)
+
+        evaluate(value, runtime_context(chat: nil, inputs:))
       end
 
       def resolved_chat_kwargs(inputs: {}) # :nodoc:
@@ -663,7 +666,7 @@ module RubyLLM
 
       def apply_context(chat, runtime, resolved_context: UNRESOLVED_CONTEXT)
         value = resolved_context.equal?(UNRESOLVED_CONTEXT) ? evaluate(context, runtime) : resolved_context
-        chat.with_context(value) if value
+        chat.with_context(value) if value && !chat.context.equal?(value)
       end
 
       def apply_instructions(chat, runtime, inputs:, persist:, persistent_only: false)
