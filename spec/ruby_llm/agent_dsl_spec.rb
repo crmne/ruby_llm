@@ -159,11 +159,13 @@ RSpec.describe RubyLLM::Agent do
       context = RubyLLM.context
 
       configured.context(context)
-      expect(bare).not_to receive(:runtime_context)
-      expect(configured).not_to receive(:runtime_context)
+      allow(bare).to receive(:runtime_context)
+      allow(configured).to receive(:runtime_context)
 
       expect(bare.send(:resolved_context, inputs: {})).to be_nil
       expect(configured.send(:resolved_context, inputs: {})).to equal(context)
+      expect(bare).not_to have_received(:runtime_context)
+      expect(configured).not_to have_received(:runtime_context)
     end
 
     it 'does not rebind a chat already built with the resolved context' do
@@ -175,9 +177,11 @@ RSpec.describe RubyLLM::Agent do
       chat = context.chat(model: model_for(:openai, :temperature), provider: :openai)
       allow(context).to receive(:chat).and_return(chat)
 
-      expect(chat).not_to receive(:with_context)
+      allow(chat).to receive(:with_context)
 
       agent.chat
+
+      expect(chat).not_to have_received(:with_context)
     end
   end
 

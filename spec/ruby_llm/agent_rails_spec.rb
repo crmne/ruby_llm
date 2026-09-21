@@ -151,7 +151,7 @@ RSpec.describe RubyLLM::Agent do
       chat_model Chat
       model model_for(:openai, :temperature)
       inputs :timeout
-      context do
+      send(:context) do
         seen_chats << chat
         RubyLLM.context { |config| config.request_timeout = timeout }
       end

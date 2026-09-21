@@ -233,10 +233,15 @@ class WorkAssistant < RubyLLM::Agent
 end
 ```
 
-`chat` is always available in execution context:
+Most runtime blocks can use `chat` in their execution context:
 
 * In `.chat` mode, `chat` is a `RubyLLM::Chat`
 * In `.create/.create!/.find` mode, `chat` is your `chat_model` record
+
+The `model` block runs before the chat exists, so it can read `inputs` but not
+`chat`. A deferred `context` block follows the same timing in plain Ruby, so
+`chat` is `nil` there. In Rails mode, the context block runs while the
+`chat_model` record is being configured, so `chat` is available.
 
 This enables Rails-style usage:
 
@@ -276,7 +281,7 @@ end
 CardAgent.chat(card: card)
 ```
 
-Options stay alongside the block: `model(provider: :openai) { ... }`. The model block runs before the chat exists, so it reads `inputs` but not `chat`.
+Options stay alongside the block: `model(provider: :openai) { ... }`.
 
 ## Prompt Management and Conventions
 

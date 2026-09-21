@@ -21,8 +21,10 @@ module RubyLLM
   # that class instead.
   #
   # Configuration that depends on runtime state goes in blocks or lambdas.
-  # They are evaluated when a chat is built, with +chat+ and any declared
-  # ::inputs available as methods:
+  # Most blocks run after a chat is built, with +chat+ and any declared
+  # ::inputs available as methods. The +model+ block runs before a chat
+  # exists. A deferred +context+ block also runs before Chat construction in
+  # plain Ruby, but receives the Rails chat record while Rails configures it:
   #
   #   class WorkAssistant < RubyLLM::Agent
   #     inputs :workspace
