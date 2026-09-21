@@ -384,10 +384,10 @@ module RubyLLM
         return @context if value.nil? && !block
 
         @context = if block
-                      block.arity.zero? ? block : RubyLLM.context(&block)
-                    else
-                      value
-                    end
+                     block.arity.zero? ? block : RubyLLM.context(&block)
+                   else
+                     value
+                   end
       end
 
       # Sets the ActiveRecord chat class this agent creates and finds,
