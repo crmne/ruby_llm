@@ -471,7 +471,12 @@ module RubyLLM
     end
 
     def preprocess_message(message)
-      return message.without_thinking if foreign_thinking?(message)
+      foreign_state = foreign_protocol_state?(message)
+      message = message.without_thinking if foreign_thinking?(message, foreign_state)
+      if foreign_raw_content?(message, foreign_state)
+        ensure_replayable_raw_content!(message)
+        message = message.without_raw_content
+      end
       return message unless auto_upload_large_files?
       return message unless message.role == :user
       return message if message.attachments.empty?
@@ -484,14 +489,30 @@ module RubyLLM
 
     private
 
-    # A thinking signature is opaque to every provider but the one that
-    # issued it, so a message another provider produced replays without
-    # its thinking. A message with no known producer replays as it is.
-    def foreign_thinking?(message)
-      return false unless message.role == :assistant && carries_thinking?(message)
+    def foreign_thinking?(message, foreign_state)
+      message.role == :assistant && carries_thinking?(message) && foreign_state
+    end
 
+    def foreign_raw_content?(message, foreign_state)
+      message.role == :assistant && message.raw_content && foreign_state
+    end
+
+    def foreign_protocol_state?(message)
       producer = producer_slug(message)
-      !producer.nil? && producer != @provider.slug
+      return true if producer && producer != @provider.slug
+
+      source_protocol = message.raw_content_protocol
+      target_protocol = @provider.batch_protocol_name(self.class)
+      source_protocol && target_protocol && source_protocol != target_protocol
+    end
+
+    def ensure_replayable_raw_content!(message)
+      return if message.content.to_s.strip != '' || message.attachments.any? || message.tool_call?
+
+      raise Error,
+            "Cannot replay provider-specific assistant state through #{@provider.name}: " \
+            'the message has no normalized content to continue from. Use the source provider and protocol, ' \
+            'or replace it with a normalized assistant response.'
     end
 
     def carries_thinking?(message)

@@ -108,6 +108,23 @@ RSpec.describe RubyLLM::Batch, :live do
   end
 
   describe '#messages' do
+    it 'records the batch protocol on raw response content', live: false do
+      provider = RubyLLM::Providers::VertexAI.new(RubyLLM.config)
+      message = RubyLLM::Message.new(
+        role: :assistant, content: 'Ruby 3.x is the latest stable line.', model: 'claude-haiku-4-5',
+        raw_content: [{ 'type' => 'server_tool_use' }]
+      )
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+      batch = described_class.new(
+        provider:, batch_protocol: provider.protocols[:anthropic], id: 'batch_protocol',
+        raw_status: 'JOB_STATE_SUCCEEDED', completed: true
+      )
+
+      batch.messages
+
+      expect(message.raw_content_protocol).to eq('anthropic')
+    end
+
     it 'leaves failed slots nil and their chats awaiting a response' do
       chats = [
         RubyLLM.chat(model: model).ask_later('This one fails'),

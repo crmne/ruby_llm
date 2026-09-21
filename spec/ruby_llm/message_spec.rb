@@ -102,6 +102,60 @@ RSpec.describe RubyLLM::Message do
       expect(rebuilt.server_tool_calls.first).to be_a(RubyLLM::ServerToolCall)
       expect(rebuilt.to_h).to eq(original.to_h)
     end
+
+    it 'preserves raw-content protocol provenance' do
+      original = described_class.new(
+        role: :assistant, content: 'Search results.', raw_content: [{ 'type' => 'server_tool_use' }],
+        raw_content_protocol: :anthropic
+      )
+
+      attributes = JSON.parse(JSON.generate(original.to_h)).transform_keys(&:to_sym)
+      rebuilt = described_class.new(attributes)
+
+      expect(rebuilt.raw_content).to eq(original.raw_content)
+      expect(rebuilt.raw_content_protocol).to eq('anthropic')
+    end
+  end
+
+  describe '#raw_content_for_storage and .raw_content_from_storage' do
+    it 'stores raw content bare when the protocol is unknown' do
+      message = described_class.new(role: :assistant, content: 'Done.',
+                                    raw_content: [{ 'type' => 'server_tool_use' }])
+
+      expect(message.raw_content_for_storage).to eq(message.raw_content)
+    end
+
+    it 'wraps raw content with its protocol for storage and reads it back' do
+      message = described_class.new(role: :assistant, content: 'Done.',
+                                    raw_content: [{ 'type' => 'server_tool_use' }], raw_content_protocol: :anthropic)
+
+      stored = message.raw_content_for_storage
+      content, protocol = described_class.raw_content_from_storage(stored)
+
+      expect(stored).to eq(
+        RubyLLM::Message::RAW_CONTENT_STORAGE_KEY => { 'version' => 1, 'protocol' => 'anthropic' },
+        'content' => message.raw_content
+      )
+      expect(content).to eq(message.raw_content)
+      expect(protocol).to eq('anthropic')
+    end
+
+    it 'reads a legacy row stored before protocol provenance existed' do
+      content, protocol = described_class.raw_content_from_storage([{ 'type' => 'server_tool_use' }])
+
+      expect(content).to eq([{ 'type' => 'server_tool_use' }])
+      expect(protocol).to be_nil
+    end
+
+    it 'reads a nil column as no raw content and no protocol' do
+      expect(described_class.raw_content_from_storage(nil)).to eq([nil, nil])
+    end
+
+    it 'does not mistake a raw Hash payload that merely has matching keys for the envelope' do
+      malformed = { RubyLLM::Message::RAW_CONTENT_STORAGE_KEY => 'not-a-metadata-hash', 'content' => 'x' }
+
+      expect(described_class.raw_content_from_storage(malformed)).to eq([malformed, nil])
+    end
   end
 
   describe '#attachments' do

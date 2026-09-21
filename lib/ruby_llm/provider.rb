@@ -133,7 +133,7 @@ module RubyLLM
                  protocol: nil, before_request: [], usage_recorder: nil, provider_tools: [],
                  compaction: nil, end_user: nil, &)
       protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
-      protocol_class.new(self, model).complete(
+      message = protocol_class.new(self, model).complete(
         messages,
         tools: tools,
         provider_tools: provider_tools,
@@ -152,16 +152,21 @@ module RubyLLM
         usage_recorder: usage_recorder,
         &
       )
+      tag_raw_content_protocol(message, protocol_class)
     end
 
     def tool_approval_response(tool_call, approved:, model:, protocol: nil) # :nodoc:
-      resolve_protocol(protocol, model).new(self, model).tool_approval_response(tool_call, approved:)
+      protocol_class = resolve_protocol(protocol, model)
+      message = protocol_class.new(self, model).tool_approval_response(tool_call, approved:)
+      tag_raw_content_protocol(message, protocol_class)
     end
 
     def compact(messages, model:, protocol: nil, headers: {}, before_request: [], usage_recorder: nil) # :nodoc:
-      resolve_protocol(protocol, model).new(self, model).compact(
+      protocol_class = resolve_protocol(protocol, model)
+      message = protocol_class.new(self, model).compact(
         messages, headers:, before_request:, usage_recorder:
       )
+      tag_raw_content_protocol(message, protocol_class)
     end
 
     def render(messages, tools:, temperature:, model:, provider_options: {}, schema: nil, thinking: nil, # :nodoc:
@@ -608,6 +613,13 @@ module RubyLLM
     end
 
     private
+
+    def tag_raw_content_protocol(message, protocol_class)
+      return message unless message.is_a?(Message) && message.raw_content
+
+      message.raw_content_protocol = batch_protocol_name(protocol_class)
+      message
+    end
 
     def ensure_batches_supported!(protocol = batch_protocol)
       raise Error, "#{slug} doesn't support batch requests" unless protocol.public_method_defined?(:create_batch)

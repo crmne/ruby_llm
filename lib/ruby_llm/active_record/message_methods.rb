@@ -20,6 +20,7 @@ module RubyLLM
       # Converts this record to a RubyLLM::Message.
       def to_llm
         entries = ruby_llm_usage_entries
+        raw_content, raw_content_protocol = RubyLLM::Message.raw_content_from_storage(optional_column(:raw_content))
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content,
@@ -27,7 +28,8 @@ module RubyLLM
           thinking: thinking,
           citations: citations,
           server_tool_calls: server_tool_calls,
-          raw_content: optional_column(:raw_content),
+          raw_content:,
+          raw_content_protocol:,
           raw_reasoning: optional_column(:raw_reasoning),
           usage_entries: entries,
           tool_calls: tool_calls,

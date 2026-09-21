@@ -106,6 +106,42 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.last.model).to eq('fallback-model')
   end
 
+  it 'preprocesses provider-specific history for the fallback provider' do
+    allow(RubyLLM::Provider).to receive(:resolve!).and_call_original
+    chat = described_class.new(model: model_for(:anthropic), provider: :anthropic)
+    primary = chat.provider
+    fallback = RubyLLM::Providers::OpenAI.new(RubyLLM.config)
+    allow(RubyLLM::Providers::OpenAI).to receive(:new).and_return(fallback)
+    allow(primary).to receive(:complete)
+      .and_raise(RubyLLM::ServiceUnavailableError.new('primary down'))
+
+    entry = RubyLLM::Accounting::Usage::Entry.new(
+      operation: :chat, provider: 'anthropic', model: model_for(:anthropic), status: :succeeded
+    )
+    raw_content = [
+      { 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search',
+        'input' => { 'query' => 'latest Ruby' } }
+    ]
+    source_message = RubyLLM::Message.new(
+      role: :assistant, content: 'Ruby 3.x is the latest stable line.', model: model_for(:anthropic),
+      raw_content:, raw_content_protocol: 'anthropic', usage_entries: [entry]
+    )
+    chat.add_message(role: :user, content: 'Search for the latest Ruby version.')
+    chat.add_message(source_message)
+    chat.with_fallbacks(model_for(:openai)).ask_later('Summarize the result.')
+    fallback_messages = nil
+    allow(fallback).to receive(:complete) do |messages, **|
+      fallback_messages = messages
+      RubyLLM::Message.new(role: :assistant, content: 'Fallback answer.', model: model_for(:openai))
+    end
+
+    chat.generate
+
+    replayed_message = fallback_messages.find { |message| message.role == :assistant }
+    expect(replayed_message.raw_content).to be_nil
+    expect(replayed_message.content).to eq('Ruby 3.x is the latest stable line.')
+  end
+
   it 'links failed fallback attempts to the response they ultimately produce' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     error = RubyLLM::ServiceUnavailableError.new('primary down')

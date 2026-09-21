@@ -67,4 +67,81 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(payload[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: '221' }])
     expect(chat.messages.second.thinking_signature).to eq('gemini-signature')
   end
+
+  it 'drops persisted Anthropic server-tool raw_content when the chat moves to OpenAI' do
+    blocks = [
+      { 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search',
+        'input' => { 'query' => 'latest Ruby' } },
+      { 'type' => 'web_search_tool_result', 'tool_use_id' => 'srvtoolu_1', 'content' => [] },
+      { 'type' => 'text', 'text' => 'Ruby 3.x is the latest stable line.' }
+    ]
+    protocol = RubyLLM::Protocols::Anthropic.allocate
+    message = protocol.send(:parse_completion_body,
+                            { 'model' => model_for(:anthropic), 'content' => blocks, 'usage' => {} }, raw: nil)
+
+    chat = Chat.create!(model: model_for(:anthropic), provider: 'anthropic')
+    chat.add_message(role: :user, content: 'What is the latest Ruby?')
+    restored = persist_thinking(message, chat:, provider: 'anthropic')
+    chat.with_model(model_for(:openai), provider: :openai)
+    chat.add_message(role: :user, content: 'And now?')
+
+    payload = Chat.find(chat.id).to_llm.render
+
+    input_types = payload[:input].filter_map { |item| item[:type] }
+    expect(input_types).not_to include('web_search_call')
+    expect(payload[:input].flatten).not_to include(a_hash_including('type' => 'server_tool_use'))
+    expect(payload[:input]).to include(
+      role: 'assistant', content: [{ type: 'output_text', text: 'Ruby 3.x is the latest stable line.' }]
+    )
+    expect(restored.raw_content).to eq(blocks)
+    expect(Chat.find(chat.id).messages.second.raw_content).to eq(blocks)
+  end
+
+  it 'keeps persisted raw_content from before protocol provenance when the chat continues with the same provider' do
+    blocks = [
+      { 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search',
+        'input' => { 'query' => 'latest Ruby' } },
+      { 'type' => 'web_search_tool_result', 'tool_use_id' => 'srvtoolu_1', 'content' => [] },
+      { 'type' => 'text', 'text' => 'Ruby 3.x is the latest stable line.' }
+    ]
+    protocol = RubyLLM::Protocols::Anthropic.allocate
+    message = protocol.send(:parse_completion_body,
+                            { 'model' => model_for(:anthropic), 'content' => blocks, 'usage' => {} }, raw: nil)
+
+    chat = Chat.create!(model: model_for(:anthropic), provider: 'anthropic')
+    chat.add_message(role: :user, content: 'What is the latest Ruby?')
+    persist_thinking(message, chat:, provider: 'anthropic')
+    chat.add_message(role: :user, content: 'And now?')
+
+    stored = Chat.find(chat.id).messages.second.raw_content
+    payload = Chat.find(chat.id).to_llm.render
+
+    expect(stored).to eq(blocks)
+    expect(payload[:messages][1]).to eq(role: 'assistant', content: blocks)
+  end
+
+  it 'filters persisted raw content after switching protocols' do
+    blocks = [{ 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search',
+                'input' => { 'query' => 'latest Ruby' } }]
+    message = RubyLLM::Message.new(
+      role: :assistant, content: 'Ruby 3.x is the latest stable line.', model: 'claude-haiku-4-5',
+      raw_content: blocks, raw_content_protocol: :anthropic
+    )
+    chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'vertexai')
+    chat.add_message(role: :user, content: 'Search for the latest Ruby version.')
+
+    restored = persist_thinking(message, chat:, provider: 'vertexai')
+    stored = chat.messages.last.raw_content
+    reloaded = Chat.find(chat.id).to_llm
+    reloaded.with_model(model_for(:vertexai), provider: :vertexai, protocol: :gemini)
+    reloaded.add_message(role: :user, content: 'Summarize the result.')
+    payload = reloaded.render
+
+    expect(stored).to include(
+      RubyLLM::Message::RAW_CONTENT_STORAGE_KEY => { 'version' => 1, 'protocol' => 'anthropic' }
+    )
+    expect(restored.raw_content).to eq(blocks)
+    expect(restored.raw_content_protocol).to eq('anthropic')
+    expect(payload[:contents][1][:parts]).to eq([{ text: 'Ruby 3.x is the latest stable line.' }])
+  end
 end

@@ -469,6 +469,52 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.send(:resolve_protocol, :responses, model)).to eq(provider.protocols[:responses])
     end
 
+    it 'records the selected protocol on completion raw content' do
+      provider = RubyLLM::Providers::VertexAI.new(config_for(:vertexai))
+      model = instance_double(RubyLLM::Model, id: 'claude-haiku-4-5')
+      protocol_class = provider.protocols[:anthropic]
+      message = RubyLLM::Message.new(role: :assistant, content: 'Done.', raw_content: [{ 'type' => 'text' }])
+      protocol = instance_double(protocol_class, complete: message)
+      allow(provider).to receive(:resolve_protocol).and_return(protocol_class)
+      allow(protocol_class).to receive(:new).with(provider, model).and_return(protocol)
+
+      result = provider.complete([], tools: {}, temperature: nil, model:, protocol: :anthropic)
+
+      expect(result).to equal(message)
+      expect(result.raw_content_protocol).to eq('anthropic')
+    end
+
+    it 'records the selected protocol on tool-approval raw content' do
+      provider = RubyLLM::Providers::VertexAI.new(config_for(:vertexai))
+      model = instance_double(RubyLLM::Model, id: 'claude-haiku-4-5')
+      protocol_class = provider.protocols[:anthropic]
+      tool_call = RubyLLM::ToolCall.new(id: 'approval_1', name: 'search', arguments: {}, remote: true)
+      message = RubyLLM::Message.new(role: :tool, content: 'Approved', raw_content: [{ 'type' => 'tool_result' }])
+      protocol = instance_double(protocol_class, tool_approval_response: message)
+      allow(provider).to receive(:resolve_protocol).and_return(protocol_class)
+      allow(protocol_class).to receive(:new).with(provider, model).and_return(protocol)
+
+      result = provider.tool_approval_response(tool_call, approved: true, model:, protocol: :anthropic)
+
+      expect(result).to equal(message)
+      expect(result.raw_content_protocol).to eq('anthropic')
+    end
+
+    it 'records the selected protocol on compaction raw content' do
+      provider = RubyLLM::Providers::OpenAI.new(config_for(:openai))
+      model = instance_double(RubyLLM::Model, id: 'gpt-5.4')
+      protocol_class = provider.protocols[:responses]
+      message = RubyLLM::Message.new(role: :assistant, content: '', raw_content: { 'object' => 'response.compaction' })
+      protocol = instance_double(protocol_class, compact: message)
+      allow(provider).to receive(:resolve_protocol).and_return(protocol_class)
+      allow(protocol_class).to receive(:new).with(provider, model).and_return(protocol)
+
+      result = provider.compact([], model:, protocol: :responses)
+
+      expect(result).to equal(message)
+      expect(result.raw_content_protocol).to eq('responses')
+    end
+
     it 'lists models through the declared protocol whatever the chat protocol is' do
       config = config_for(:vertexai)
       config.vertexai_protocol = :anthropic

@@ -340,6 +340,7 @@ module RubyLLM
     def deliver_message(index, message)
       chat = chats&.[](index)
       delivered = @delivered[index] || (chat && already_in_chat?(chat, message))
+      tag_raw_content_protocol(message)
       attach_batch_usage(
         message,
         operation: :chat,
@@ -351,6 +352,11 @@ module RubyLLM
 
       @delivered[index] = true
       chat&.add_completion(message, record_usage: true)
+    end
+
+    def tag_raw_content_protocol(message)
+      protocol = batch_protocol
+      message.raw_content_protocol ||= protocol if message.raw_content && protocol
     end
 
     def attach_batch_usage(result, operation:, model:, category:, instrument:)

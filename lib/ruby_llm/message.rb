@@ -68,9 +68,17 @@ module RubyLLM
     attr_reader :server_tool_calls
 
     # The provider-shaped content blocks of this assistant message, kept
-    # verbatim when the response used server tools so later requests can
-    # replay the turn exactly. +nil+ otherwise.
+    # verbatim when the response used server tools so the same provider and
+    # protocol can replay the turn exactly. +nil+ otherwise.
     attr_reader :raw_content # :nodoc:
+
+    RAW_CONTENT_STORAGE_KEY = '__ruby_llm_raw_content_storage__' # :nodoc:
+
+    attr_reader :raw_content_protocol # :nodoc:
+
+    def raw_content_protocol=(protocol) # :nodoc:
+      @raw_content_protocol = protocol&.to_s
+    end
 
     # The provider-shaped reasoning payload of this assistant message, kept
     # verbatim so later requests can replay the model's reasoning exactly.
@@ -104,6 +112,7 @@ module RubyLLM
       @citations = Array(options[:citations]).map { |citation| coerce_value(citation, Citation) }
       @server_tool_calls = Array(options[:server_tool_calls]).map { |call| coerce_value(call, ServerToolCall) }
       @raw_content = options[:raw_content]
+      self.raw_content_protocol = options[:raw_content_protocol]
       @raw_reasoning = options[:raw_reasoning]
       @finish_reason = options[:finish_reason]&.to_sym
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
@@ -136,6 +145,57 @@ module RubyLLM
         message.instance_variable_set(:@tool_calls, tool_calls_without_thought_signatures)
       end
     end
+
+    def without_raw_content # :nodoc:
+      dup.tap do |message|
+        message.instance_variable_set(:@raw_content, nil)
+        message.raw_content_protocol = nil
+      end
+    end
+
+    def raw_content_for_storage # :nodoc:
+      return raw_content unless raw_content && raw_content_protocol
+
+      {
+        RAW_CONTENT_STORAGE_KEY => { 'version' => 1, 'protocol' => raw_content_protocol },
+        'content' => raw_content
+      }
+    end
+
+    def self.raw_content_from_storage(value) # :nodoc:
+      metadata = raw_content_storage_metadata(value)
+      return [value, nil] unless metadata
+
+      [raw_content_storage_value(value, 'content'), raw_content_storage_value(metadata, 'protocol')]
+    end
+
+    def self.raw_content_storage_metadata(value)
+      return unless raw_content_storage_envelope?(value)
+
+      metadata = raw_content_storage_value(value, RAW_CONTENT_STORAGE_KEY)
+      metadata if raw_content_storage_metadata_valid?(metadata)
+    end
+    private_class_method :raw_content_storage_metadata
+
+    def self.raw_content_storage_envelope?(value)
+      value.is_a?(Hash) && value.keys.map(&:to_s).sort == [RAW_CONTENT_STORAGE_KEY, 'content'].sort
+    end
+    private_class_method :raw_content_storage_envelope?
+
+    def self.raw_content_storage_metadata_valid?(metadata)
+      return false unless metadata.is_a?(Hash)
+      return false unless metadata.keys.map(&:to_s).sort == %w[protocol version]
+
+      version = raw_content_storage_value(metadata, 'version')
+      protocol = raw_content_storage_value(metadata, 'protocol')
+      version == 1 && protocol.is_a?(String) && !protocol.empty?
+    end
+    private_class_method :raw_content_storage_metadata_valid?
+
+    def self.raw_content_storage_value(hash, key)
+      hash.key?(key) ? hash[key] : hash[key.to_sym]
+    end
+    private_class_method :raw_content_storage_value
 
     # Returns +true+ if the assistant requested one or more tool calls,
     # +false+ otherwise.
@@ -242,6 +302,7 @@ module RubyLLM
         citations: list_to_h(citations),
         server_tool_calls: list_to_h(server_tool_calls),
         raw_content: raw_content,
+        raw_content_protocol: raw_content_protocol,
         raw_reasoning: raw_reasoning,
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil

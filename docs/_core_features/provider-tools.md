@@ -116,6 +116,10 @@ response.tokens.server_tool_use
 
 Search results use the same [Citation objects]({% link _core_features/citations.md %}) as document citations. Generated images and files appear in [attachments]({% link _core_features/files.md %}). Each tool call's `raw` holds additional details returned by the service.
 
+A provider-tool turn keeps provider-specific request state so the same provider and protocol can replay it. When you switch provider or protocol, RubyLLM uses the normalized assistant content it has. It does not translate provider-tool activity. If no normalized answer or local continuation state remains, RubyLLM raises an error instead of dropping the turn.
+
+Messages saved before RubyLLM recorded protocol provenance cannot be classified during a protocol switch within the same provider. RubyLLM preserves their raw content rather than guessing the original protocol from the model ID.
+
 Streaming and follow-up questions use the normal `ask` API. Read the completed message for the full result list. Some services omit intermediate tool records or results; their answer and citations can still be available. OpenRouter MCP currently omits tool names and results from streamed records.
 
 Providers can charge for tool use as well as the tokens in the results. `tokens.server_tool_use` contains reported per-use counters; see [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
