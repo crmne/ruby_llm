@@ -381,6 +381,8 @@ module RubyLLM
       def context(value = nil, &block)
         raise ArgumentError, 'Pass a context or a block, not both' if value && block
 
+        validate_context_proc(value)
+
         return @context if value.nil? && !block
 
         @context = if block
@@ -618,6 +620,13 @@ module RubyLLM
       end
 
       private
+
+      def validate_context_proc(value)
+        return unless value.is_a?(Proc)
+        return if value.arity.zero?
+
+        raise ArgumentError, 'context Proc must accept zero arguments'
+      end
 
       def validate_thinking_options(enabled, options)
         raise ArgumentError, 'thinking accepts false or thinking options' unless [true, false].include?(enabled)

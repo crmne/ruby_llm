@@ -153,6 +153,26 @@ RSpec.describe RubyLLM::Agent do
         .to raise_error(ArgumentError, 'Pass a context or a block, not both')
     end
 
+    it 'rejects context Procs that require arguments' do
+      agent = Class.new(described_class)
+      error = 'context Proc must accept zero arguments'
+
+      expect { agent.context(->(config) { config }) }.to raise_error(ArgumentError, error)
+      expect { agent.context(proc { |config| config }) }.to raise_error(ArgumentError, error)
+      expect(agent.context).to be_nil
+    end
+
+    it 'accepts zero-argument context Procs' do
+      context = RubyLLM.context
+      deferred = -> { context }
+      agent = Class.new(described_class)
+
+      agent.context(deferred)
+
+      expect(agent.context).to equal(deferred)
+      expect(agent.send(:resolved_context, inputs: {})).to equal(context)
+    end
+
     it 'does not build runtime context for static or missing contexts' do
       bare = Class.new(described_class)
       configured = Class.new(described_class)
