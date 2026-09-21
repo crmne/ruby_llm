@@ -151,6 +151,25 @@ RSpec.describe RubyLLM::Message do
       expect(described_class.raw_content_from_storage(nil)).to eq([nil, nil])
     end
 
+    it 'preserves raw Hash content when envelope metadata has unexpected keys' do
+      malformed = {
+        RubyLLM::Message::RAW_CONTENT_STORAGE_KEY => { 'version' => 1, 'source' => 'anthropic' },
+        'content' => 'x'
+      }
+
+      expect(described_class.raw_content_from_storage(malformed)).to eq([malformed, nil])
+    end
+
+    it 'reads symbol-keyed storage envelopes' do
+      content = [{ type: 'server_tool_use' }]
+      stored = {
+        RubyLLM::Message::RAW_CONTENT_STORAGE_KEY.to_sym => { version: 1, protocol: 'anthropic' },
+        content: content
+      }
+
+      expect(described_class.raw_content_from_storage(stored)).to eq([content, 'anthropic'])
+    end
+
     it 'does not mistake a raw Hash payload that merely has matching keys for the envelope' do
       malformed = { RubyLLM::Message::RAW_CONTENT_STORAGE_KEY => 'not-a-metadata-hash', 'content' => 'x' }
 
