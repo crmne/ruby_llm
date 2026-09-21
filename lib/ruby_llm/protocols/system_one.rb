@@ -13,12 +13,16 @@ module RubyLLM
         return unless body.is_a?(Hash)
 
         detail = body['detail']
-        return detail if detail.is_a?(String)
-        return unless detail.is_a?(Array)
-
-        detail.map do |error|
-          [Array(error['loc']).join('.'), error['msg']].compact.reject(&:empty?).join(': ')
-        end.join('; ')
+        case detail
+        when String
+          detail
+        when Hash
+          detail['message']
+        when Array
+          detail.map do |error|
+            [Array(error['loc']).join('.'), error['msg']].compact.reject(&:empty?).join(': ')
+          end.join('; ')
+        end
       rescue JSON::ParserError
         nil
       end

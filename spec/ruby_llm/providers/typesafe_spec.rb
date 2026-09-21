@@ -64,6 +64,15 @@ RSpec.describe RubyLLM::Providers::TypeSafe do
       .to raise_error(RubyLLM::UnauthorizedError, 'Invalid API key')
   end
 
+  it 'reports the message of a refusal rather than its JSON envelope' do
+    refusal = { detail: { message: 'Your organization has no available TypeSafe API credits' } }
+    stub_request(:post, 'https://api.typesafe.ai/v1/systemone')
+      .to_return(status: 402, body: refusal.to_json, headers: { 'Content-Type' => 'application/json' })
+
+    expect { RubyLLM.judge('Help', model: model_id, questions:) }
+      .to raise_error(RubyLLM::PaymentRequiredError, 'Your organization has no available TypeSafe API credits')
+  end
+
   context 'with the TypeSafe API', :live do
     before { skip_without_cassette_or_key('TYPESAFE_API_KEY') }
 

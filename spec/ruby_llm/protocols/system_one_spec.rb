@@ -115,6 +115,21 @@ RSpec.describe RubyLLM::Protocols::SystemOne do
     expect(provider.parse_error(error_response)).to eq('body.questions.urgent: Invalid question')
   end
 
+  it 'reads the message of an error detail object' do
+    detail = { 'message' => 'Your organization has no available TypeSafe API credits' }
+    error_response = instance_double(Faraday::Response, body: { 'detail' => detail })
+
+    provider = RubyLLM::Providers::TypeSafe.new(RubyLLM.config)
+    expect(provider.parse_error(error_response)).to eq('Your organization has no available TypeSafe API credits')
+  end
+
+  it 'passes an error detail string through' do
+    error_response = instance_double(Faraday::Response, body: { 'detail' => 'Overloaded' })
+
+    provider = RubyLLM::Providers::TypeSafe.new(RubyLLM.config)
+    expect(provider.parse_error(error_response)).to eq('Overloaded')
+  end
+
   it 'parses catalog facts without inventing limits or pricing' do
     catalog = instance_double(Faraday::Response, body: {
                                 'models' => [{ 'name' => model.id, 'description' => 'System One model',
