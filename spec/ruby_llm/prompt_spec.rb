@@ -41,6 +41,12 @@ RSpec.describe RubyLLM::Prompt do
     it 'raises PromptNotFoundError for missing prompts' do
       expect { described_class.render('nonexistent') }.to raise_error(RubyLLM::PromptNotFoundError)
     end
+
+    it 'resolves constants from the top level, not from RubyLLM' do
+      stub_const('Chat', Class.new { def self.label = 'application chat' })
+      create_prompt('chat', '<%= Chat.label %>')
+      expect(described_class.render('chat')).to eq('application chat')
+    end
   end
 
   describe '#render' do
@@ -54,6 +60,46 @@ RSpec.describe RubyLLM::Prompt do
       prompt = described_class.new('greeting')
       expect(prompt.name).to eq('greeting')
       expect(prompt.path).to eq(prompt_dir.join('greeting.txt.erb'))
+    end
+  end
+
+  describe 'partials' do
+    it 'renders a partial from the current prompt directory' do
+      create_prompt('work_assistant/_tone', 'Be kind to <%= name %>.')
+      create_prompt('work_assistant/instructions', "Hello.\n<%= render 'tone', name: name %>")
+      expect(described_class.render('work_assistant/instructions', name: 'Ada')).to eq("Hello.\nBe kind to Ada.")
+    end
+
+    it 'falls back to the prompt root when the current directory has no partial' do
+      create_prompt('shared/_safety', 'Stay safe.')
+      create_prompt('work_assistant/instructions', '<%= render "shared/safety" %>')
+      expect(described_class.render('work_assistant/instructions')).to eq('Stay safe.')
+    end
+
+    it 'prefers the partial next to the prompt over the root partial' do
+      create_prompt('_tone', 'Root tone.')
+      create_prompt('work_assistant/_tone', 'Assistant tone.')
+      create_prompt('work_assistant/instructions', '<%= render "tone" %>')
+      expect(described_class.render('work_assistant/instructions')).to eq('Assistant tone.')
+    end
+
+    it 'renders nested partials' do
+      create_prompt('_inner', 'inner')
+      create_prompt('_outer', 'outer <%= render "inner" %>')
+      create_prompt('instructions', '<%= render "outer" %>')
+      expect(described_class.render('instructions')).to eq('outer inner')
+    end
+
+    it 'does not leak locals into a partial' do
+      create_prompt('_tone', '<%= name %>')
+      create_prompt('instructions', '<%= render "tone" %>')
+      expect { described_class.render('instructions', name: 'Ada') }.to raise_error(NameError, /name/)
+    end
+
+    it 'raises PromptNotFoundError for a missing partial' do
+      create_prompt('work_assistant/instructions', '<%= render "tone" %>')
+      expect { described_class.render('work_assistant/instructions') }
+        .to raise_error(RubyLLM::PromptNotFoundError, %r{work_assistant/_tone\.txt\.erb})
     end
   end
 
@@ -97,6 +143,12 @@ RSpec.describe RubyLLM::Prompt do
       create_engine_prompt('engine_agent/instructions', 'Engine default.')
       prompt = described_class.new('engine_agent/instructions')
       expect(prompt.path).to eq(engine_dir.join('engine_agent/instructions.txt.erb'))
+    end
+
+    it 'renders a partial shipped by an engine' do
+      create_engine_prompt('engine_agent/_tone', 'Engine tone.')
+      create_engine_prompt('engine_agent/instructions', '<%= render "tone" %>')
+      expect(described_class.render('engine_agent/instructions')).to eq('Engine tone.')
     end
 
     it 'falls back to the application path when no root has the file' do
