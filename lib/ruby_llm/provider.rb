@@ -256,7 +256,13 @@ module RubyLLM
       batch_tier = pricing.batch unless long_context_pricing?(pricing, tokens)
       batch = Cost.new(tokens:, model:, category:, tier: :batch) if batch_tier
       amounts = batch_cost_amounts(standard:, batch:, batch_tier:, model:)
-      Cost.from_h(amounts, tokens:)
+      Cost.new(amounts:, missing: batch_cost_missing(amounts, standard), reported: standard.tokens?)
+    end
+
+    def batch_cost_missing(amounts, standard) # :nodoc:
+      amounts.filter_map do |component, amount|
+        component if amount.nil? && (standard.missing?(component) || standard.public_send(component)&.positive?)
+      end
     end
 
     def batch_cost_amounts(standard:, batch:, batch_tier:, model:) # :nodoc:

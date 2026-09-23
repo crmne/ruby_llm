@@ -200,6 +200,47 @@ RSpec.describe RubyLLM::Provider do
         .to all(have_attributes(last: be_within(1e-12).of(0.0055)))
     end
 
+    it 'prices thinking billed as output at the batch rate' do
+      thinking_tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, thinking: 500)
+      model = RubyLLM::Model.new(id: 'test-model', name: 'test-model', provider: 'openai', pricing: pricing)
+      provider = RubyLLM::Providers::OpenAI.new(config_for(:openai))
+
+      cost = provider.batch_cost(thinking_tokens, model:)
+
+      expect(cost.thinking).to be_nil
+      expect(cost.total).to be_within(1e-12).of(0.0055)
+    end
+
+    it 'prices thinking billed as output at an explicit batch rate' do
+      explicit_pricing = {
+        text_tokens: {
+          standard: { input_per_million: 1, output_per_million: 5 },
+          batch: { input_per_million: 0.4, output_per_million: 2 }
+        }
+      }
+      model = RubyLLM::Model.new(id: 'test-model', name: 'test-model', provider: 'openai', pricing: explicit_pricing)
+      provider = RubyLLM::Providers::OpenAI.new(config_for(:openai))
+      thinking_tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, thinking: 500)
+
+      expect(provider.batch_cost(thinking_tokens, model:).total).to be_within(1e-12).of(0.0044)
+    end
+
+    it 'prices separately billed thinking at the batch rate' do
+      reasoning_pricing = {
+        text_tokens: {
+          standard: { input_per_million: 1, output_per_million: 5, reasoning_output_per_million: 10 }
+        }
+      }
+      model = RubyLLM::Model.new(id: 'test-model', name: 'test-model', provider: 'openai', pricing: reasoning_pricing)
+      provider = RubyLLM::Providers::OpenAI.new(config_for(:openai))
+      thinking_tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, thinking: 500)
+
+      cost = provider.batch_cost(thinking_tokens, model:)
+
+      expect(cost.thinking).to be_within(1e-12).of(0.0025)
+      expect(cost.total).to be_within(1e-12).of(0.008)
+    end
+
     it 'uses half-price inference for Vertex AI Gemini and Claude batches' do
       expect(batch_cost_for(:vertexai, model_id: 'gemini-test')).to be_within(1e-12).of(0.0055)
       expect(batch_cost_for(:vertexai, model_id: 'claude-test')).to be_within(1e-12).of(0.0055)
@@ -208,6 +249,17 @@ RSpec.describe RubyLLM::Provider do
     it 'leaves provider-variable batch rates unknown' do
       expect(batch_cost_for(:vertexai, model_id: 'meta/test-model')).to be_nil
       expect(batch_cost_for(:xai)).to be_nil
+    end
+
+    it 'does not count unused components as missing when no batch rate applies' do
+      model = RubyLLM::Model.new(id: 'test-model', name: 'test-model', provider: 'xai', pricing: pricing)
+      provider = RubyLLM::Providers::XAI.new(config_for(:xai))
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, cache_read: 0)
+
+      cost = provider.batch_cost(tokens, model:)
+
+      expect(cost.missing?(:input)).to be(true)
+      expect(cost.missing?(:cache_read)).to be(false)
     end
 
     it 'does not present a partial component sum as a complete batch cost' do
