@@ -71,12 +71,19 @@ module RubyLLM
         stream.replies
       rescue Faraday::Error => e
         raise unless e.response
+        return stream.replies if answered?(stream, message)
 
         if reauthorized?(e.response, retried)
           return post(message, version:, timeout:, params:, retried: true, &on_notification)
         end
 
         raise failure(e.response, stream)
+      end
+
+      # Some servers, such as Google's Drive preview, send a complete
+      # JSON-RPC result with an error status. The result is the answer.
+      def answered?(stream, message)
+        stream.replies.any? { |reply| reply['id'] == message[:id] && reply.key?('result') }
       end
 
       def reauthorized?(response, retried)

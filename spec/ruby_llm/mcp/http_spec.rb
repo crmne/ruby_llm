@@ -135,6 +135,13 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  it 'uses a result the server sends with an error status' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tools/list', status: 403, result: { tools: [{ name: 'search' }] })
+
+    expect(client.request('tools/list')).to eq('tools' => [{ 'name' => 'search' }])
+  end
+
   it 'raises UnauthorizedError when the server wants credentials' do
     stub_method('server/discover', status: 401, body: '')
 
