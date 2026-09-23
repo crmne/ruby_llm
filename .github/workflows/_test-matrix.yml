@@ -25,6 +25,8 @@ jobs:
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_DISABLE_SHARED_GEMS: "true"
+      # Specs run short snippets once, so JRuby's startup mode beats its optimizing JIT.
+      JRUBY_OPTS: ${{ startsWith(matrix.ruby-version, 'jruby') && '--dev' || '' }}
     strategy:
       fail-fast: false
       matrix:
