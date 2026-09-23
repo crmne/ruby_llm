@@ -93,7 +93,7 @@ bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 
 When a release changes the Rails schema, it ships `ruby_llm:upgrade` for applications on the previous release. The generator covers only the changes since that release, so upgrade one release at a time. See [Upgrading]({% link _reference/upgrading.md %}) for the current steps.
 
-An application on RubyLLM 1.16 first installs 2.0 and follows the [2.0 upgrade guide](https://rubyllm.com/v2.0/upgrading/).
+An application on RubyLLM 1.16 first installs 2.0 and follows the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md).
 
 ## Conventional Directory Structure
 

@@ -19,13 +19,13 @@ After reading this guide, you will know:
 * What to finish on 2.0 before you update the gem.
 * How to upgrade a 2.0 application to 2.1.
 
-This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://rubyllm.com/v2.0/upgrading/) with RubyLLM 2.0 first.
+This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
 ## One Release at a Time
 
 Each release ships the upgrade steps for the changes since the previous release. When a release changes the Rails schema, `bin/rails generate ruby_llm:upgrade` generates the migrations that take your database from the previous release to the current one. The next release replaces that generator with its own.
 
-To move across several releases, upgrade to each one in turn. Deploy it, run its upgrade, and resolve its deprecation warnings before you continue. The documentation for each release keeps its upgrade guide.
+To move across several releases, upgrade to each one in turn. Deploy it, run its upgrade, and resolve its deprecation warnings before you continue. Each release's upgrade guide stays in the repository at that release's tag.
 
 ## Finish the 2.0 Upgrade
 
@@ -36,7 +36,13 @@ To move across several releases, upgrade to each one in turn. Deploy it, run its
 
 ## Update the Gem
 
-Update RubyLLM in your development branch:
+Require 2.1 in your `Gemfile`, so the update stops at this release:
+
+```ruby
+gem "ruby_llm", "~> 2.1.0"
+```
+
+Then update it in your development branch:
 
 ```bash
 bundle update ruby_llm
@@ -46,4 +52,4 @@ bundle update ruby_llm
 
 ## Older Upgrade Guides
 
-Use the version selector, the [2.0 upgrade guide](https://rubyllm.com/v2.0/upgrading/), or the [1.16 upgrade guide](https://rubyllm.com/v1/upgrading/) for older releases. See [GitHub releases](https://github.com/crmne/ruby_llm/releases) for the full changelog.
+Use the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md), or the [1.16 upgrade guide](https://rubyllm.com/v1/upgrading/) for older releases. See [GitHub releases](https://github.com/crmne/ruby_llm/releases) for the full changelog.

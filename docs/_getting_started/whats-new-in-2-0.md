@@ -21,7 +21,7 @@ After reading this guide, you will know:
 
 RubyLLM 2.0 expands the framework across conversations, agents, media, documents, and Rails. You can use much more of each provider's API through Ruby methods, with consistent results, streaming, and usage tracking. You also get more control over how conversations run and persist.
 
-The examples assume you have [configured the providers you use]({% link _getting_started/configuration.md %}). For an existing application, the [upgrade guide](https://rubyllm.com/v2.0/upgrading/) covers API changes and database migrations.
+The examples assume you have [configured the providers you use]({% link _getting_started/configuration.md %}). For an existing application, the [upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) covers API changes and database migrations.
 
 ## Provider API Coverage
 
@@ -352,7 +352,7 @@ The saved transcript records completed work. If a job stops before saving a resu
 
 RubyLLM now owns the model-registry, tool-call, usage, and batch tables. These records describe the framework's work, so RubyLLM can evolve their schema without asking every application to maintain its own supporting models. Your app owns its chats and messages.
 
-The upgrade runs in phases, with cleanup in a later deployment. Optional [copy mode](https://rubyllm.com/v2.0/upgrading/#copy-mode) keeps a controlled route back to 1.16; conversations written by 2.0 remain hidden during that rollback.
+The upgrade runs in phases, with cleanup in a later deployment. Optional [copy mode](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md#copy-mode) keeps a controlled route back to 1.16; conversations written by 2.0 remain hidden during that rollback.
 
 The Rails integration uses the same Ruby API with Active Record persistence, Active Storage attachments, and Hotwire streaming. The [generators]({% link _advanced/rails-generators.md %}) set up those pieces in conventional Rails directories.
 
@@ -362,7 +362,7 @@ The [model registry]({% link _reference/models.md %}) uses the same `RubyLLM.mod
 
 The API uses one name for each concept across chats, agents, and persisted records. For example, `max_output_tokens` replaces `max_tokens`, and provider-specific request options use `with_provider_options`. Responses expose typed token counts, costs, citations, and other results through readers.
 
-The [upgrade guide](https://rubyllm.com/v2.0/upgrading/) lists the renames and Rails migration steps. Two other additions are [context compaction]({% link _core_features/chat-request-control.md %}#compacting-long-conversations) with `with_compaction`, and [file storage]({% link _core_features/files.md %}) with `RubyLLM.upload` and `RubyLLM.download`.
+The [upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) lists the renames and Rails migration steps. Two other additions are [context compaction]({% link _core_features/chat-request-control.md %}#compacting-long-conversations) with `with_compaction`, and [file storage]({% link _core_features/files.md %}) with `RubyLLM.upload` and `RubyLLM.download`.
 
 ## Try 2.0
 
@@ -372,4 +372,4 @@ Install RubyLLM 2.0:
 bundle add ruby_llm --version 2.0.0
 ```
 
-Start with [Getting Started]({% link _getting_started/getting-started.md %}), or follow [Upgrade to 2.0](https://rubyllm.com/v2.0/upgrading/) to update an existing application.
+Start with [Getting Started]({% link _getting_started/getting-started.md %}), or follow [Upgrade to 2.0](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) to update an existing application.
