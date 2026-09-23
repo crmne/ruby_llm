@@ -64,7 +64,13 @@ module RubyLLM
       end
 
       def call(method, params = {}, timeout: nil, &)
-        response = @transport.request(message(method, params, id: SecureRandom.uuid), version:, timeout:, &)
+        request = message(method, params, id: SecureRandom.uuid)
+        response = begin
+          @transport.request(request, version:, timeout:, &)
+        rescue CancelledError
+          @transport.cancel(message('notifications/cancelled', { requestId: request[:id] }), version:)
+          raise
+        end
         error = response['error']
         raise Error.new(error['message'], code: error['code'], data: error['data']) if error
 

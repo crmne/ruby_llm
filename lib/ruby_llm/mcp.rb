@@ -31,7 +31,7 @@ module RubyLLM
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
-      @only @except @tool_declarations @approvals
+      @only @except @tool_declarations @approvals @callbacks
     ].freeze
     private_constant :SETTINGS
 
@@ -213,6 +213,21 @@ module RubyLLM
         @approvals || []
       end
 
+      # Registers a callback for the progress the server reports while it
+      # works on a request. Pass a method name or a block; either runs on
+      # the MCP instance with an MCP::Progress.
+      #
+      #   after_progress :broadcast_progress
+      #   after_progress { |progress| puts progress.message }
+      #
+      def after_progress(method = nil, &block)
+        add_callback(:after_progress, method, block)
+      end
+
+      def callbacks(name) # :nodoc:
+        (@callbacks || {}).fetch(name, [])
+      end
+
       def default_name # :nodoc:
         @default_name || (name && Support::Utils.underscore(name.split('::').last))
       end
@@ -233,6 +248,12 @@ module RubyLLM
       end
 
       private
+
+      def add_callback(name, method, block)
+        raise ArgumentError, "#{name} takes a method name or a block" unless method.nil? ^ block.nil?
+
+        @callbacks = (@callbacks || {}).merge(name => callbacks(name) + [method || block])
+      end
 
       def default_name_for(url:, command:)
         return File.basename(Array(command).first.to_s) unless url
@@ -285,7 +306,7 @@ module RubyLLM
     # Raises MCP::Error when the server answers with a protocol error. A
     # tool that fails returns a Result whose #error? is +true+.
     def call(name, **arguments)
-      Result.new(client.request('tools/call', { name: name.to_s, arguments: }))
+      Result.new(request('tools/call', { name: name.to_s, arguments: }))
     end
 
     # Returns the resources the server lists, as MCP::Resource objects
@@ -302,7 +323,7 @@ module RubyLLM
     #
     def resource(uri, **variables)
       uri = ResourceTemplate.expand(uri, variables) unless variables.empty?
-      contents = client.request('resources/read', { uri: }).fetch('contents', [])
+      contents = request('resources/read', { uri: }).fetch('contents', [])
       data = contents.find { |content| content['uri'] == uri } || contents.first
       raise Error, "#{name} returned no content for #{uri}" unless data
 
@@ -326,7 +347,7 @@ module RubyLLM
     #   chat.ask github.prompt(:code_review, code: diff)
     #
     def prompt(name, **arguments)
-      result = client.request('prompts/get', { name: name.to_s, arguments: arguments.transform_values(&:to_s) })
+      result = request('prompts/get', { name: name.to_s, arguments: arguments.transform_values(&:to_s) })
       messages = result.fetch('messages', []).map do |message|
         content, attachments = Content.read([message['content']])
         Message.new(role: message['role'].to_sym, content:, attachments:)
@@ -391,6 +412,20 @@ module RubyLLM
 
     def respond_to_missing?(name, include_private = nil)
       (@server_tools && server_tool?(name)) || super
+    end
+
+    def request(method, params)
+      callbacks = self.class.callbacks(:after_progress)
+      return client.request(method, params) if callbacks.empty?
+
+      token = SecureRandom.uuid
+      client.request(method, params.merge(_meta: { progressToken: token })) do |notification|
+        next unless notification['method'] == 'notifications/progress'
+        next unless notification.dig('params', 'progressToken') == token
+
+        progress = Progress.new(notification['params'])
+        callbacks.each { |callback| apply(callback, progress) }
+      end
     end
 
     def shape(definition)

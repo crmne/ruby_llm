@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::MCP::Client do
     it 'follows pagination cursors' do
       names = client.list('tools/list', 'tools').map { |tool| tool['name'] }
 
-      expect(names).to eq(%w[echo add fail picture delete_everything])
+      expect(names).to eq(%w[echo add fail picture slow wait delete_everything])
     end
 
     it 'raises JSON-RPC errors with their code' do
@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::MCP::Client do
     end
 
     it 'works after the handshake' do
-      expect(client.list('tools/list', 'tools').size).to eq(5)
+      expect(client.list('tools/list', 'tools').size).to eq(7)
     end
   end
 end

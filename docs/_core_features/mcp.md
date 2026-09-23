@@ -305,6 +305,28 @@ review.suggest(language: "ru")              # => ["ruby", "rust"]
 files.resource_templates.first.suggest(path: "app/mo")
 ```
 
+## Progress and Cancellation
+
+Servers can report progress while they work. Register `after_progress` with a method name or a block. It runs on the MCP instance with a `RubyLLM::MCP::Progress`:
+
+```ruby
+class Deploys < RubyLLM::MCP
+  url "https://deploys.example.com/mcp"
+  inputs :chat
+  after_progress :broadcast_progress
+
+  private
+
+  def broadcast_progress(progress)
+    Turbo::StreamsChannel.broadcast_update_to chat, target: "status", html: progress.message
+  end
+end
+```
+
+`progress.value` only grows, `progress.total` is set when the server knows how much work there is, and `progress.fraction` gives the share done.
+
+Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
+
 ## Connections and Safety
 
 RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, RubyLLM falls back to the older handshake without declaring client capabilities, so those servers never send requests back.

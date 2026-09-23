@@ -26,6 +26,8 @@ TOOLS = [
   },
   { name: 'fail', description: 'Always fails', inputSchema: { type: 'object' } },
   { name: 'picture', description: 'Returns a picture', inputSchema: { type: 'object' } },
+  { name: 'slow', description: 'Reports progress', inputSchema: { type: 'object' } },
+  { name: 'wait', description: 'Never answers', inputSchema: { type: 'object' } },
   {
     name: 'delete_everything', description: 'Deletes everything', inputSchema: { type: 'object' },
     annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false }
@@ -84,11 +86,17 @@ def call_tool(params)
     { content: [{ type: 'text', text: 'Here it is' }, { type: 'image', data: PIXEL, mimeType: 'image/png' },
                 { type: 'resource_link', uri: 'file:///pixel.png', name: 'pixel.png' }] }
   when 'delete_everything' then { content: [{ type: 'text', text: 'Gone' }] }
+  when 'slow' then { content: [{ type: 'text', text: 'Finished' }] }
   else raise ArgumentError, "Unknown tool: #{params['name']}"
   end
 end
 
 initialized = false
+cancelled = []
+
+def notify(method, params)
+  puts JSON.generate({ jsonrpc: '2.0', method:, params: })
+end
 
 $stdin.each_line do |line|
   message = JSON.parse(line)
@@ -117,7 +125,17 @@ $stdin.each_line do |line|
 
     reply(id, result: tools_page(params['cursor']))
   when 'tools/call'
+    case params['name']
+    when 'wait' then next
+    when 'slow'
+      token = params.dig('_meta', 'progressToken')
+      if token
+        [1, 2].each { |step| notify('notifications/progress', { progressToken: token, progress: step, total: 2 }) }
+      end
+    end
     reply(id, result: call_tool(params))
+  when 'notifications/cancelled' then cancelled << params['requestId']
+  when 'spec/cancelled' then reply(id, result: { cancelled: })
   when 'resources/list'
     resources = RESOURCES.map { |uri, resource| { uri:, name: File.basename(uri), mimeType: resource[:mimeType] } }
     reply(id, result: { resources: })

@@ -89,6 +89,37 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect(a_request(:post, url).with { |request| request.body.include?('initialize') }).not_to have_been_made
   end
 
+  describe 'cancellation' do
+    let(:cancel) { -> { raise RubyLLM::CancelledError } }
+
+    before do
+      stub_method('tools/call', headers: { 'Content-Type' => 'text/event-stream' },
+                                body: "event: message\ndata: {}\n\n")
+      stub_method('notifications/cancelled', status: 202, body: '')
+    end
+
+    it 'closes the stream of a 2026-07-28 request' do
+      stub_method('server/discover', result: discover_result)
+
+      expect { RubyLLM::Support::Cancellation.watch(cancel) { client.request('tools/call', { name: 'slow' }) } }
+        .to raise_error(RubyLLM::CancelledError)
+      expect(a_request(:post, url).with { |request| request.body.include?('notifications/cancelled') })
+        .not_to have_been_made
+    end
+
+    it 'tells an older server that the request is cancelled' do
+      stub_method('server/discover', status: 404, body: '')
+      stub_method('initialize', result: { protocolVersion: '2025-06-18', capabilities: {} })
+      stub_method('notifications/initialized', status: 202, body: '')
+
+      client.server
+      expect { RubyLLM::Support::Cancellation.watch(cancel) { client.request('tools/call', { name: 'slow' }) } }
+        .to raise_error(RubyLLM::CancelledError)
+      expect(a_request(:post, url).with { |request| request.body.include?('notifications/cancelled') })
+        .to have_been_made
+    end
+  end
+
   it 'raises UnauthorizedError when the server wants credentials' do
     stub_method('server/discover', status: 401, body: '')
 

@@ -11,6 +11,7 @@ module RubyLLM
     # time. Its stderr is the parent's.
     class Stdio # :nodoc:
       SHUTDOWN_GRACE = 2
+      CHECK_INTERVAL = 0.5
 
       def initialize(command, env: {}, directory: nil, timeout: nil, config: RubyLLM.config)
         @command = Array(command).map(&:to_s)
@@ -30,6 +31,10 @@ module RubyLLM
       def notify(message, **)
         @lock.synchronize { write(message) }
         nil
+      end
+
+      def cancel(notification, **)
+        notify(notification)
       end
 
       def close
@@ -63,7 +68,11 @@ module RubyLLM
 
       def read(deadline)
         loop do
-          raise Error, "#{name} did not answer in time" unless @stdout.wait_readable([deadline - monotonic_now, 0].max)
+          remaining = deadline - monotonic_now
+          raise Error, "#{name} did not answer in time" unless remaining.positive?
+
+          Support::Cancellation.check
+          next unless @stdout.wait_readable([remaining, CHECK_INTERVAL].min)
 
           line = @stdout.gets
           unless line

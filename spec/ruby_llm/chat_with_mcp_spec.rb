@@ -84,6 +84,18 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.first.attachments.first).to have_attributes(filename: 'pixel.png', mime_type: 'image/png')
   end
 
+  it 'stops a server tool when the chat is cancelled' do
+    allow(chat.provider).to receive(:complete).and_return(tool_call('wait', {}), answer)
+    chat.with_mcp(files).before_tool_call do
+      Thread.new do
+        sleep 0.2
+        chat.cancel
+      end
+    end
+
+    expect { chat.ask('Wait for it') }.to raise_error(RubyLLM::CancelledError)
+  end
+
   it 'refuses two tools with the same name' do
     echo = Class.new(RubyLLM::Tool) do
       def self.tool_name = 'echo'

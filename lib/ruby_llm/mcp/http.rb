@@ -5,7 +5,8 @@ module RubyLLM
     # Streamable HTTP. Every message is its own POST, answered with a JSON
     # body or with an event stream that carries the request's notifications
     # before its response. Plain HTTP is only allowed on loopback addresses,
-    # and redirects are never followed.
+    # and redirects are never followed. A cancelled chat closes the stream,
+    # which is how 2026-07-28 cancels a request.
     class HTTP # :nodoc:
       LOOPBACK_HOSTS = %w[localhost 127.0.0.1 ::1].freeze
       HEADER_SAFE = /\A[\x21-\x7E](?:[\x20-\x7E]*[\x21-\x7E])?\z/
@@ -30,6 +31,10 @@ module RubyLLM
       def notify(message, version:)
         post(message, version:)
         nil
+      end
+
+      def cancel(notification, version:)
+        notify(notification, version:) unless version == Client::VERSION
       end
 
       def close
@@ -106,6 +111,7 @@ module RubyLLM
         end
 
         def feed(chunk, *)
+          Support::Cancellation.check
           @body << chunk
           return if @events == false
 

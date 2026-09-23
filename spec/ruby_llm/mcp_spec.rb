@@ -14,7 +14,7 @@ RSpec.describe RubyLLM::MCP do
 
   describe 'tools' do
     it 'lists the server tools' do
-      expect(mcp.tools.map(&:name)).to eq(%w[echo add fail picture delete_everything])
+      expect(mcp.tools.map(&:name)).to eq(%w[echo add fail picture slow wait delete_everything])
       expect(mcp.tools.first).to have_attributes(
         description: 'Echoes the text back',
         parameters_schema: { 'type' => 'object', 'properties' => { 'text' => { 'type' => 'string' } },
@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::MCP do
     it 'hides the named tools' do
       mcp = shaped { except :delete_everything, :fail }
 
-      expect(mcp.tools.map(&:name)).to eq(%w[echo add picture])
+      expect(mcp.tools.map(&:name)).to eq(%w[echo add picture slow wait])
     ensure
       mcp&.close
     end
@@ -133,8 +133,8 @@ RSpec.describe RubyLLM::MCP do
       end
       approvals = mcp.tools.to_h { |tool| [tool.name, tool.requires_approval?] }
 
-      expect(approvals).to eq('echo' => true, 'add' => true, 'fail' => true, 'picture' => true,
-                              'delete_everything' => true)
+      expect(approvals).to eq('echo' => true, 'add' => true, 'fail' => true, 'picture' => true, 'slow' => true,
+                              'wait' => true, 'delete_everything' => true)
     ensure
       mcp&.close
     end
@@ -231,6 +231,44 @@ RSpec.describe RubyLLM::MCP do
       expect(prompt.suggest(language: 'r')).to eq(%w[ruby rust])
       expect(prompt.suggest(language: 'py', code: 'x = 1')).to eq(['python (x = 1)'])
       expect(mcp.resource_templates.first.suggest(path: 'ru')).to eq(%w[ruby rust])
+    end
+  end
+
+  describe 'progress' do
+    let(:mcp_class) do
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        after_progress :record_progress
+        after_progress { |progress| reports << progress.message }
+
+        def reports = @reports ||= []
+
+        private
+
+        def record_progress(progress) = reports << progress.fraction
+      end
+    end
+
+    it 'runs callbacks as the server reports progress' do
+      expect(mcp.slow.text).to eq('Finished')
+      expect(mcp.reports).to eq([0.5, nil, 1.0, nil])
+    end
+
+    it 'takes a method name or a block' do
+      expect { Class.new(described_class) { after_progress } }.to raise_error(ArgumentError, /method name or a block/)
+    end
+  end
+
+  describe 'cancellation' do
+    it 'stops waiting and tells the server when the chat is cancelled' do
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      checkpoint = lambda do
+        raise RubyLLM::CancelledError if Process.clock_gettime(Process::CLOCK_MONOTONIC) - started > 0.2
+      end
+
+      expect { RubyLLM::Support::Cancellation.watch(checkpoint) { mcp.wait } }.to raise_error(RubyLLM::CancelledError)
+      expect(mcp.send(:client).request('spec/cancelled')['cancelled'].size).to eq(1)
     end
   end
 
