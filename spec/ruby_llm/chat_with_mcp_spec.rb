@@ -67,6 +67,23 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.find { |message| message.role == :tool }.content).to eq('5')
   end
 
+  it 'asks with a server prompt' do
+    allow(chat.provider).to receive(:complete).and_return(answer)
+
+    chat.ask(files.prompt(:code_review, code: 'puts 1'))
+
+    expect(chat.messages.map(&:role)).to eq(%i[user assistant user assistant])
+    expect(chat.messages[2].content).to eq('Security.')
+  end
+
+  it 'attaches server resources' do
+    allow(chat.provider).to receive(:complete).and_return(answer)
+
+    chat.ask('Describe this', with: files.resources.last)
+
+    expect(chat.messages.first.attachments.first).to have_attributes(filename: 'pixel.png', mime_type: 'image/png')
+  end
+
   it 'refuses two tools with the same name' do
     echo = Class.new(RubyLLM::Tool) do
       def self.tool_name = 'echo'

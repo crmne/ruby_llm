@@ -49,14 +49,18 @@ module RubyLLM
       case sources
       when nil then []
       when Hash then sources.values.flat_map { |group| wrap(group, config:) }
-      else
-        Support::Utils.to_safe_array(sources).filter_map do |source|
-          next if source.nil? || (source.is_a?(String) && source.strip.empty?)
-
-          source.is_a?(Attachment) ? source : new(source, config:)
-        end
+      else Support::Utils.to_safe_array(sources).filter_map { |source| coerce(source, config:) }
       end
     end
+
+    def self.coerce(source, config:) # :nodoc:
+      return if source.nil? || (source.is_a?(String) && source.strip.empty?)
+      return source if source.is_a?(Attachment)
+      return source.to_attachment if source.respond_to?(:to_attachment)
+
+      new(source, config:)
+    end
+    private_class_method :coerce
 
     # Creates an attachment from +source+: a file path, URL, IO-like object,
     # ActiveStorage object, or UploadedFile. Derives the filename from the

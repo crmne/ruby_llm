@@ -25,9 +25,7 @@ module RubyLLM
       def initialize(data) # :nodoc:
         @data = data
         @structured = data['structuredContent']
-        texts, @attachments = data.fetch('content', []).filter_map { |block| read(block) }
-                                  .partition { |part| part.is_a?(String) }
-        @text = texts.join("\n\n")
+        @text, @attachments = Content.read(data['content'])
       end
 
       # Returns whether the tool reported a failure.
@@ -48,28 +46,6 @@ module RubyLLM
       end
 
       private
-
-      def read(block)
-        case block['type']
-        when 'text' then block['text']
-        when 'image', 'audio' then attachment(block['data'], block['mimeType'], block['type'])
-        when 'resource' then embedded(block['resource'] || {})
-        when 'resource_link' then [block['title'] || block['name'], block['uri']].compact.join(': ')
-        end
-      end
-
-      def embedded(resource)
-        return resource['text'] if resource['text']
-        return unless resource['blob']
-
-        attachment(resource['blob'], resource['mimeType'], File.basename(URI(resource['uri'].to_s).path.to_s))
-      end
-
-      def attachment(data, mime_type, name)
-        extension = Marcel::TYPE_EXTS[mime_type]&.first
-        filename = name.to_s.include?('.') || extension.nil? ? name.to_s : "#{name}.#{extension}"
-        Attachment.new(StringIO.new(Base64.decode64(data.to_s)), filename:)
-      end
 
       def inspect_attributes
         { text:, structured:, attachments: attachments.size.nonzero?, error: error? || nil }

@@ -288,6 +288,63 @@ module RubyLLM
       Result.new(client.request('tools/call', { name: name.to_s, arguments: }))
     end
 
+    # Returns the resources the server lists, as MCP::Resource objects
+    # whose content is read when you first ask for it.
+    def resources
+      client.list('resources/list', 'resources').map { |data| Resource.new(self, data) }
+    end
+
+    # Reads the resource at +uri+ and returns an MCP::Resource. Given a
+    # template from #resource_templates, +variables+ fill it in.
+    #
+    #   files.resource("file:///project/README.md")
+    #   files.resource("file:///{path}", path: "Gemfile")
+    #
+    def resource(uri, **variables)
+      uri = ResourceTemplate.expand(uri, variables) unless variables.empty?
+      contents = client.request('resources/read', { uri: }).fetch('contents', [])
+      data = contents.find { |content| content['uri'] == uri } || contents.first
+      raise Error, "#{name} returned no content for #{uri}" unless data
+
+      Resource.new(self, data)
+    end
+
+    # Returns the server's resource templates as MCP::ResourceTemplate
+    # objects.
+    def resource_templates
+      client.list('resources/templates/list', 'resourceTemplates').map { |data| ResourceTemplate.new(self, data) }
+    end
+
+    # Returns the prompts the server offers, as MCP::Prompt objects.
+    def prompts
+      client.list('prompts/list', 'prompts').map { |data| Prompt.new(self, data) }
+    end
+
+    # Fills in the server prompt +name+ with +arguments+ and returns an
+    # MCP::Prompt with its messages, ready for Chat#ask.
+    #
+    #   chat.ask github.prompt(:code_review, code: diff)
+    #
+    def prompt(name, **arguments)
+      result = client.request('prompts/get', { name: name.to_s, arguments: arguments.transform_values(&:to_s) })
+      messages = result.fetch('messages', []).map do |message|
+        content, attachments = Content.read([message['content']])
+        Message.new(role: message['role'].to_sym, content:, attachments:)
+      end
+      Prompt.new(self, { 'name' => name.to_s, 'description' => result['description'] }, messages:)
+    end
+
+    # Asks the server to complete the first of +values+ for +reference+,
+    # with the rest as context.
+    def suggest(reference, values) # :nodoc:
+      (argument, value), *filled = values.to_a
+      raise ArgumentError, 'Pass the value to complete as a keyword' unless argument
+
+      params = { ref: reference, argument: { name: argument.to_s, value: value.to_s } }
+      params[:context] = { arguments: filled.to_h { |key, filler| [key.to_s, filler.to_s] } } if filled.any?
+      client.request('completion/complete', params).dig('completion', 'values') || []
+    end
+
     # Returns whether +tool+, one of this MCP's tools, needs approval
     # according to ::requires_approval.
     def requires_approval?(tool) # :nodoc:

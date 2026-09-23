@@ -34,6 +34,36 @@ TOOLS = [
 
 PIXEL = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
+RESOURCES = {
+  'file:///project/README.md' => { mimeType: 'text/markdown', text: "# Spec Project\n" },
+  'file:///project/pixel.png' => { mimeType: 'image/png', blob: PIXEL }
+}.freeze
+
+PROMPT = {
+  name: 'code_review', description: 'Reviews code',
+  arguments: [{ name: 'code', description: 'The code to review', required: true }, { name: 'language' }]
+}.freeze
+
+def read_resource(uri)
+  resource = RESOURCES[uri] || { mimeType: 'text/plain', text: "Contents of #{uri}" }
+  { contents: [{ uri: }.merge(resource)] }
+end
+
+def get_prompt(arguments)
+  request = "Review this #{arguments['language']} code:\n#{arguments['code']}"
+  { description: 'Reviews code', messages: [
+    { role: 'user', content: { type: 'text', text: request } },
+    { role: 'assistant', content: { type: 'text', text: 'Happy to. What should I focus on?' } },
+    { role: 'user', content: { type: 'text', text: 'Security.' } }
+  ] }
+end
+
+def complete(params)
+  values = %w[ruby rust python].select { |value| value.start_with?(params.dig('argument', 'value')) }
+  values = values.map { |value| "#{value} (#{params.dig('context', 'arguments', 'code')})" } if params['context']
+  { completion: { values:, total: values.size, hasMore: false } }
+end
+
 def reply(id, result: nil, error: nil)
   puts JSON.generate({ jsonrpc: '2.0', id:, result:, error: }.compact)
 end
@@ -88,6 +118,15 @@ $stdin.each_line do |line|
     reply(id, result: tools_page(params['cursor']))
   when 'tools/call'
     reply(id, result: call_tool(params))
+  when 'resources/list'
+    resources = RESOURCES.map { |uri, resource| { uri:, name: File.basename(uri), mimeType: resource[:mimeType] } }
+    reply(id, result: { resources: })
+  when 'resources/read' then reply(id, result: read_resource(params['uri']))
+  when 'resources/templates/list'
+    reply(id, result: { resourceTemplates: [{ uriTemplate: 'file:///project/{+path}', name: 'Project files' }] })
+  when 'prompts/list' then reply(id, result: { prompts: [PROMPT] })
+  when 'prompts/get' then reply(id, result: get_prompt(params.fetch('arguments', {})))
+  when 'completion/complete' then reply(id, result: complete(params))
   when 'meta/echo'
     reply(id, result: { meta: params['_meta'] })
   else

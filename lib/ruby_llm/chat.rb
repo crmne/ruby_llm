@@ -144,7 +144,8 @@ module RubyLLM
     # Adds +message+ as a user message and runs the conversation loop,
     # executing tools until the model answers or a call needs approval.
     # Returns the latest assistant Message; check #awaiting_approval? before
-    # treating it as a final answer. Attach files with +with:+.
+    # treating it as a final answer. Attach files with +with:+. An
+    # MCP::Prompt adds its messages instead.
     # A given block receives streamed Chunk objects as they arrive.
     #
     # String attachments read local paths or fetch URLs. Only pass trusted,
@@ -155,6 +156,7 @@ module RubyLLM
     #   chat.ask "What's in this image?", with: "ruby_conf.jpg"
     #   chat.ask "Analyze these files", with: ["diagram.png", "report.pdf"]
     #   chat.ask("Tell me a story") { |chunk| print chunk.content }
+    #   chat.ask github.prompt(:code_review, code: diff)
     #
     def ask(message = nil, with: nil, &)
       ask_later(message, with: with)
@@ -176,7 +178,11 @@ module RubyLLM
     # decisions for calls that require approval.
     def ask_later(message = nil, with: nil)
       raise_if_pending_tool_calls!
-      add_message role: :user, content: message, attachments: with
+      if message.is_a?(MCP::Prompt)
+        message.messages.each { |prompt_message| add_message(prompt_message) }
+      else
+        add_message role: :user, content: message, attachments: with
+      end
       self
     end
 

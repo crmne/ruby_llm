@@ -173,6 +173,67 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'resources' do
+    it 'lists resources and reads them when needed' do
+      readme, pixel = mcp.resources
+
+      expect(readme).to have_attributes(uri: 'file:///project/README.md', name: 'README.md', mime_type: 'text/markdown')
+      expect(readme.content).to eq("# Spec Project\n")
+      expect(pixel.to_blob.bytesize).to eq(70)
+    end
+
+    it 'reads a resource by URI' do
+      expect(mcp.resource('file:///project/notes.txt').content).to eq('Contents of file:///project/notes.txt')
+    end
+
+    it 'fills in resource templates' do
+      template = mcp.resource_templates.first
+
+      expect(template).to have_attributes(uri: 'file:///project/{+path}', name: 'Project files')
+      expect(mcp.resource(template.uri, path: 'app/models/user.rb').uri).to eq('file:///project/app/models/user.rb')
+    end
+
+    it 'saves resources' do
+      Dir.mktmpdir do |directory|
+        path = File.join(directory, 'README.md')
+
+        expect(mcp.resources.first.save(path)).to eq(path)
+        expect(File.read(path)).to eq("# Spec Project\n")
+      end
+    end
+
+    it 'becomes an attachment' do
+      attachment = RubyLLM::Attachment.wrap(mcp.resources.last).first
+
+      expect(attachment).to have_attributes(filename: 'pixel.png', mime_type: 'image/png')
+    end
+  end
+
+  describe 'prompts' do
+    it 'lists prompts with their arguments' do
+      prompt = mcp.prompts.first
+
+      expect(prompt).to have_attributes(name: 'code_review', description: 'Reviews code', messages: [])
+      expect(prompt.arguments.map(&:name)).to eq(%i[code language])
+      expect(prompt.arguments.map(&:required?)).to eq([true, false])
+    end
+
+    it 'fills in a prompt' do
+      prompt = mcp.prompt(:code_review, code: 'puts 1', language: 'Ruby')
+
+      expect(prompt.messages.map(&:role)).to eq(%i[user assistant user])
+      expect(prompt.messages.first.content).to eq("Review this Ruby code:\nputs 1")
+    end
+
+    it 'suggests argument values' do
+      prompt = mcp.prompts.first
+
+      expect(prompt.suggest(language: 'r')).to eq(%w[ruby rust])
+      expect(prompt.suggest(language: 'py', code: 'x = 1')).to eq(['python (x = 1)'])
+      expect(mcp.resource_templates.first.suggest(path: 'ru')).to eq(%w[ruby rust])
+    end
+  end
+
   it 'exposes every server tool as a method' do
     expect(mcp.echo(text: 'hi').text).to eq('hi')
     expect(mcp).to respond_to(:echo)

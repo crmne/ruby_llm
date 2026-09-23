@@ -597,7 +597,11 @@ module RubyLLM
       #
       def ask_later(message = nil, with: nil)
         to_llm.raise_if_pending_tool_calls!
-        add_message(role: :user, content: message, attachments: with)
+        if message.is_a?(RubyLLM::MCP::Prompt)
+          message.messages.each { |prompt_message| add_message(prompt_message) }
+        else
+          add_message(role: :user, content: message, attachments: with)
+        end
         self
       end
 

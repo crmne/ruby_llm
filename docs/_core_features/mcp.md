@@ -17,6 +17,7 @@ After reading this guide, you will know:
 * How to explore and call a server's tools from Ruby.
 * How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
+* How to read a server's resources and ask with its prompts.
 * How RubyLLM talks to servers and keeps connections safe.
 
 ## Describing a Server
@@ -254,6 +255,55 @@ TriageAgent.chat(user: current_user).ask "Triage the new reports"
 ### Rails
 
 Chat records respond to `with_mcp` and `mcp` like plain chats, and agents with a `chat_model` connect their servers to the records they create and find. Tool calls persist like any other tool call.
+
+## Resources
+
+Servers also offer resources: files, records, or any data they name with a URI. They are files as far as RubyLLM is concerned, so they go wherever attachments go:
+
+```ruby
+files.resources
+# => [#<RubyLLM::MCP::Resource uri: "file:///project/README.md", name: "README.md", mime_type: "text/markdown">, ...]
+
+readme = files.resource("file:///project/README.md")
+readme.content          # => "# My Project..."
+readme.save("README.md")
+
+chat.ask "Summarize this", with: readme
+```
+
+Resources from `resources` are read from the server the first time you need their content.
+
+Some servers describe families of resources with URI templates. Fill one in with keywords:
+
+```ruby
+files.resource_templates
+# => [#<RubyLLM::MCP::ResourceTemplate uri: "file:///{+path}", name: "Project files">]
+
+files.resource("file:///{+path}", path: "app/models/user.rb")
+```
+
+RubyLLM never fetches a resource's URI directly, even when it is an `https` link. Every read goes through the server.
+
+## Prompts
+
+Servers can offer prompts: messages the server writes, filled in with your arguments. Ask a chat with one:
+
+```ruby
+github.prompts
+# => [#<RubyLLM::MCP::Prompt name: "code_review", arguments: [:code, :language]>]
+
+chat.ask github.prompt(:code_review, code: diff, language: "Ruby")
+```
+
+A prompt can hold several turns, including assistant messages, and `ask` adds all of them before the model answers. Read them with `messages`.
+
+Prompts are meant to be chosen by people, like slash commands. To help users fill in arguments, ask the server for suggestions. The first keyword is the value to complete; the rest give context:
+
+```ruby
+review = github.prompts.first
+review.suggest(language: "ru")              # => ["ruby", "rust"]
+files.resource_templates.first.suggest(path: "app/mo")
+```
 
 ## Connections and Safety
 
