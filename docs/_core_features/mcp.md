@@ -79,7 +79,12 @@ docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
 files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
 ```
 
-It takes the same settings as keywords: `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, and `name:`.
+It takes the same settings as keywords: `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
+
+```ruby
+RubyLLM.mcp(url: server.endpoint, name: "mcp_#{server.id}", prefix: "mcp_#{server.id}",
+            oauth: { owner: server })
+```
 
 ## Exploring a Server
 
@@ -129,6 +134,19 @@ class GitHub < RubyLLM::MCP
   only :search_issues, :get_issue, :create_issue
 end
 ```
+
+### Prefixing Names
+
+Two servers can offer tools with the same name, such as `search`. Prefix one server's tools so both fit in a chat:
+
+```ruby
+class GitHub < RubyLLM::MCP
+  url "https://api.githubcopilot.com/mcp/"
+  prefix :github   # search_issues becomes github_search_issues
+end
+```
+
+Tools you rename with `tool :x, as:` keep the name you gave them.
 
 ### Renaming and Describing
 

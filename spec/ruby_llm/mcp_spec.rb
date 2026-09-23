@@ -67,6 +67,19 @@ RSpec.describe RubyLLM::MCP do
       mcp&.close
     end
 
+    it 'prefixes tool names, except for renamed tools' do
+      mcp = shaped do
+        prefix :files
+        tool :echo, as: :repeat
+      end
+
+      expect(mcp.tools.map(&:name)).to eq(%w[repeat files_add files_fail files_picture files_slow files_wait
+                                             files_deploy files_connect files_delete_everything])
+      expect(mcp.tools.last.server_name).to eq('delete_everything')
+    ensure
+      mcp&.close
+    end
+
     it 'renames and redescribes a tool' do
       mcp = shaped { tool :echo, as: :repeat, description: 'Repeats the text' }
       repeat = mcp.tools.first
@@ -411,6 +424,19 @@ RSpec.describe RubyLLM::MCP do
       expect(docs).to be_a(described_class)
       expect(docs.name).to eq('learn_microsoft')
       expect(docs.inspect).to eq('#<RubyLLM::MCP name: "learn_microsoft", url: "https://learn.microsoft.com/api/mcp">')
+    end
+
+    it 'accepts a prefix and OAuth settings' do
+      owner = Object.new
+      linear = RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', prefix: 'mcp_1', oauth: { owner:, scopes: %w[read] })
+
+      expect(linear.class.prefix).to eq('mcp_1')
+      expect(linear.class.oauth_settings).to include(owner:, scopes: %w[read])
+    end
+
+    it 'refuses unknown settings' do
+      expect { RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', only: [:search]) }
+        .to raise_error(ArgumentError, 'Unknown MCP settings: only')
     end
 
     it 'accepts a name' do

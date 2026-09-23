@@ -29,11 +29,11 @@ module RubyLLM
 
       attr_reader :fixed_arguments, :wrap # :nodoc:
 
-      def initialize(mcp, definition, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
+      def initialize(mcp, definition, prefix: nil, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
         super()
         @mcp = mcp
         @server_name = definition['name']
-        @name = (as || server_name).to_s
+        @name = (as || [prefix, server_name].compact.join('_')).to_s
         @description = description || definition['description']
         @fixed_arguments = fixed_arguments.transform_keys(&:to_sym)
         @wrap = wrap
