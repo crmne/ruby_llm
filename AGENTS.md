@@ -72,6 +72,7 @@ overcommit --install   # required: installs the git hooks that gate every commit
 | `overcommit --run` | Everything the pre-commit hook runs: RuboCop, Flay, archspec, RSpec. |
 | `bundle exec rubocop` | Lint (auto-corrects on commit). |
 | `bundle exec archspec check` | Architecture rules from `Archspec.rb`. |
+| `bundle exec rake conformance` | The official MCP client conformance suite against `RubyLLM::MCP` (needs Node). |
 | `bundle exec appraisal rails-8.0 rspec` | Rails version matrix (7.1 through 8.1, see `Appraisals`). |
 | `docs/bin/serve.sh` | Docs preview at localhost:4002. |
 

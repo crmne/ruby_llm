@@ -91,3 +91,26 @@ jobs:
         env:
           SPEC_OPTS: --tag ~generator
           SKIP_COVERAGE: true
+
+  mcp-conformance:
+    name: MCP conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: ${{ inputs.bundler-cache }}
+
+      - name: Install dependencies
+        if: ${{ !inputs.bundler-cache }}
+        run: bundle install
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Run the official MCP client conformance suite
+        run: bundle exec rake conformance
