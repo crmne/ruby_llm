@@ -224,6 +224,43 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(URI.decode_www_form(URI(url).query).to_h['client_id']).to eq('legacy')
   end
 
+  it 'adds challenged scopes to configured ones' do
+    url = server_url
+    scoped = Class.new(RubyLLM::MCP) do
+      url url
+      inputs :user
+      oauth owner: :user, scopes: %w[issues:read]
+    end.new(user: 'ada')
+    scoped.authorize(callback(scoped.authorization_url(redirect_uri:)))
+    stub_request(:post, server_url).to_return(
+      status: 403, headers: { 'WWW-Authenticate' => 'Bearer error="insufficient_scope", scope="issues:write"' }
+    )
+
+    expect { scoped.tools }.to raise_error(RubyLLM::ForbiddenError)
+    params = URI.decode_www_form(URI(scoped.authorization_url(redirect_uri:)).query).to_h
+    expect(params['scope'].split).to contain_exactly('issues:read', 'issues:write')
+  end
+
+  it 'refuses a legacy authorization server without PKCE' do
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp').to_return(status: 404)
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource').to_return(status: 404)
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-authorization-server')
+      .to_return(body: { issuer: 'https://mcp.example.com', authorization_endpoint: 'https://mcp.example.com/authorize',
+                         token_endpoint: 'https://mcp.example.com/token' }.to_json)
+    stub_request(:post, server_url).to_return(status: 401)
+
+    expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /PKCE/)
+  end
+
+  it 'refreshes once when the server keeps rejecting the token' do
+    linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+    stub_request(:post, server_url).to_return(status: 401)
+
+    expect { linear_class.new(user: 'ada').tools }.to raise_error(RubyLLM::UnauthorizedError)
+    refreshes = a_request(:post, 'https://auth.example.com/token').with { |request| request.body.include?('refresh_token') }
+    expect(refreshes).to have_been_made.once
+  end
+
   it 'forgets credentials' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 

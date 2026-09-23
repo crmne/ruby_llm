@@ -163,19 +163,21 @@ module RubyLLM
 
       def authorization_server
         metadata = protected_resource_metadata
-        return legacy_authorization_server unless metadata
+        server = metadata ? described_authorization_server(metadata) : legacy_authorization_server
+        unless Array(server['code_challenge_methods_supported']).include?('S256')
+          raise Error, "#{server['issuer']} does not support PKCE with S256"
+        end
 
+        server
+      end
+
+      def described_authorization_server(metadata)
         issuer = Array(metadata['authorization_servers']).first
         raise Error, "#{@server_url} names no authorization server" unless issuer
 
         @resource = checked_resource(metadata['resource'])
         @scopes_supported = metadata['scopes_supported']
-        server = discover_authorization_server(issuer)
-        unless Array(server['code_challenge_methods_supported']).include?('S256')
-          raise Error, "#{issuer} does not support PKCE with S256"
-        end
-
-        server
+        discover_authorization_server(issuer)
       end
 
       def protected_resource_metadata
@@ -258,10 +260,10 @@ module RubyLLM
       end
 
       def scopes_for(server)
-        challenged = @challenge&.dig(:scope)
-        challenged &&= challenged.split + credential.to_h['scope'].to_s.split
-        scopes = @scopes || challenged || @scopes_supported
-        scopes = Array(scopes)
+        challenged = @challenge&.dig(:scope)&.split
+        scopes = if challenged then Array(@scopes) + challenged + credential.to_h['scope'].to_s.split
+                 else Array(@scopes || @scopes_supported)
+                 end
         scopes += ['offline_access'] if Array(server['scopes_supported']).include?('offline_access')
         scopes.uniq.join(' ') unless scopes.empty?
       end

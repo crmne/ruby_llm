@@ -87,10 +87,10 @@ module RubyLLM
       end
 
       def reauthorized?(response, retried)
-        return false unless [401, 403].include?(response[:status]) && @unauthorized
+        status = response[:status]
+        return false unless @unauthorized && (status == 403 || (status == 401 && !retried))
 
-        refreshed = @unauthorized.call(response[:headers] || {}, response[:status])
-        response[:status] == 401 && !retried && refreshed
+        @unauthorized.call(response[:headers] || {}, status) && status == 401
       end
 
       def headers(message, version)

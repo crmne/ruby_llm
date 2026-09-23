@@ -61,6 +61,5 @@ rescue RubyLLM::UnauthorizedError, RubyLLM::ForbiddenError
   authorize(mcp, redirect_uri)
   retry
 rescue RubyLLM::Error => e
-  warn "#{scenario}: #{e.class}: #{e.message}"
-  exit
+  abort "#{scenario}: #{e.class}: #{e.message}"
 end
