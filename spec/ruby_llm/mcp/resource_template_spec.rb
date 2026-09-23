@@ -10,7 +10,12 @@ RSpec.describe RubyLLM::MCP::ResourceTemplate do
     ['search{?q,limit}', { q: 'mcp', limit: 5 }] => 'search?q=mcp&limit=5',
     ['items{/id}', { id: 42 }] => 'items/42',
     ['file:///{path}', {}] => 'file:///',
-    ['{{name}}', { name: 'x' }] => '{x}'
+    ['{{name}}', { name: 'x' }] => '{x}',
+    ['file:///{path*}', { path: 'README.md' }] => 'file:///README.md',
+    ['items{/path*}', { path: %w[a b] }] => 'items/a/b',
+    ['items{/path}', { path: %w[a b] }] => 'items/a,b',
+    ['search{?tags*}', { tags: %w[x y] }] => 'search?tags=x&tags=y',
+    ['id/{id:3}', { id: 'abcdef' }] => 'id/abc'
   }.each do |(template, variables), expanded|
     it "expands #{template} with #{variables}" do
       expect(described_class.expand(template, variables)).to eq(expanded)

@@ -5,7 +5,8 @@
 
 require 'json'
 
-LEGACY = ENV['MCP_ERA'] == 'legacy'
+LEGACY = %w[legacy discover_without_modern].include?(ENV.fetch('MCP_ERA', nil))
+DISCOVER_WITHOUT_MODERN = ENV['MCP_ERA'] == 'discover_without_modern'
 $stdout.sync = true
 
 TOOLS = [
@@ -144,7 +145,9 @@ $stdin.each_line do |line|
 
   case message['method']
   when 'server/discover'
-    if LEGACY
+    if DISCOVER_WITHOUT_MODERN
+      reply(id, result: { resultType: 'complete', supportedVersions: ['2025-11-25'], capabilities: { tools: {} } })
+    elsif LEGACY
       reply(id, error: { code: -32_601, message: 'Method not found' })
     else
       reply(id, result: {

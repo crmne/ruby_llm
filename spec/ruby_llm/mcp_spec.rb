@@ -359,9 +359,10 @@ RSpec.describe RubyLLM::MCP do
     let(:mcp) { mcp_class.new(user: { token: 'secret', account: 'acme' }) }
 
     it 'makes inputs available to blocks and methods' do
+      discovered = { supportedVersions: ['2026-07-28'] }
       stub_request(:post, 'https://mcp.example.com/mcp').to_return(
         headers: { 'Content-Type' => 'application/json' },
-        body: ->(request) { { jsonrpc: '2.0', id: JSON.parse(request.body)['id'], result: {} }.to_json }
+        body: ->(request) { { jsonrpc: '2.0', id: JSON.parse(request.body)['id'], result: discovered }.to_json }
       )
 
       mcp.instructions

@@ -49,5 +49,21 @@ RSpec.describe RubyLLM::MCP::Client do
     it 'works after the handshake' do
       expect(client.list('tools/list', 'tools').size).to eq(9)
     end
+
+    it 'shakes hands again after closing' do
+      client.list('tools/list', 'tools')
+      client.close
+
+      expect(client.list('tools/list', 'tools').size).to eq(9)
+    end
+  end
+
+  context 'with a server that answers discovery without 2026-07-28' do
+    let(:env) { { 'MCP_ERA' => 'discover_without_modern' } }
+
+    it 'falls back to the initialize handshake' do
+      expect(client.list('tools/list', 'tools').size).to eq(9)
+      expect(client.version).to eq('2025-06-18')
+    end
   end
 end

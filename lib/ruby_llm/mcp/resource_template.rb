@@ -37,22 +37,32 @@ module RubyLLM
       def self.expand(template, variables) # :nodoc:
         variables = variables.transform_keys(&:to_s)
         template.gsub(%r{\{([+#./;?&]?)([^{}]+)\}}) do
-          operator = Regexp.last_match(1)
-          names = Regexp.last_match(2).split(',').select { |name| variables.key?(name) }
-          expand_expression(operator, names, variables)
+          expand_expression(Regexp.last_match(1), Regexp.last_match(2).split(','), variables)
         end
       end
 
-      def self.expand_expression(operator, names, variables) # :nodoc:
-        return '' if names.empty?
-
+      def self.expand_expression(operator, specs, variables) # :nodoc:
         separator, reserved = OPERATORS.fetch(operator)
-        values = names.map do |name|
-          value = encode(variables[name].to_s, reserved)
-          NAMED_OPERATORS.include?(operator) ? "#{name}=#{value}" : value
-        end
+        values = specs.filter_map { |spec| expand_variable(spec, operator, separator, reserved, variables) }
+        return '' if values.empty?
+
         prefix = ['', '+'].include?(operator) ? '' : operator
         "#{prefix}#{values.join(separator)}"
+      end
+
+      # Expands one variable with its prefix (+:3+) and explode (+*+)
+      # modifiers. Array values join with the operator's separator when
+      # exploded and with commas otherwise.
+      def self.expand_variable(spec, operator, separator, reserved, variables) # :nodoc:
+        explode = spec.end_with?('*')
+        name, length = spec.delete_suffix('*').split(':')
+        return unless variables.key?(name)
+
+        parts = Array(variables[name]).map { |part| encode(length ? part.to_s[0, length.to_i] : part.to_s, reserved) }
+        named = NAMED_OPERATORS.include?(operator)
+        return parts.map { |part| named ? "#{name}=#{part}" : part }.join(separator) if explode
+
+        named ? "#{name}=#{parts.join(',')}" : parts.join(',')
       end
 
       def self.encode(value, reserved) # :nodoc:

@@ -44,14 +44,19 @@ module RubyLLM
       end
 
       def close
-        @transport.close
+        @connecting.synchronize do
+          @transport.close
+          @server = nil
+          @version = nil
+        end
       end
 
       private
 
       def discover
         @version = VERSION
-        call('server/discover', timeout: DISCOVERY_TIMEOUT)
+        result = call('server/discover', timeout: DISCOVERY_TIMEOUT)
+        result if Array(result['supportedVersions']).include?(VERSION)
       rescue Error => e
         raise if MODERN_ERRORS.include?(e.code)
       end
