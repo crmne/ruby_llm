@@ -166,7 +166,7 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#handling-e
 
 ## Model Context Protocol (MCP) Support
 
-Connect an MCP server to your chat with `with_mcp`, and the model can call its tools like your own. See [MCP Servers]({% link _core_features/mcp.md %}). When the provider should connect to a remote server instead, use [Provider Tools]({% link _core_features/provider-tools.md %}#mcp-servers).
+Connect an MCP server to your chat with `with_mcp`, and the model can call its tools like your own. See [MCP Client]({% link _core_features/mcp.md %}). When the provider should connect to a remote server instead, use [Provider Tools]({% link _core_features/provider-tools.md %}#mcp-servers).
 
 ## Debugging Tools
 

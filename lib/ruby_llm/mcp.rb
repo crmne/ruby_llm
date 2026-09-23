@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # An MCP connects your application to a Model Context Protocol server.
-  # Describe the server in a subclass, the way you describe a Tool or an
+  # An MCP is a client for a Model Context Protocol server. Describe the
+  # server to connect to in a subclass, the way you describe a Tool or an
   # Agent, then hand an instance to a chat:
   #
   #   class Linear < RubyLLM::MCP

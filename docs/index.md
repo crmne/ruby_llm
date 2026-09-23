@@ -202,9 +202,9 @@ chat.with_tools(Weather).ask "What's the weather in Berlin?"
 
     <div class="home-step">
       <div class="home-step-text">
-        <h3 class="home-step-title">Connect MCP servers</h3>
+        <h3 class="home-step-title">Connect to MCP servers</h3>
         <p class="home-step-desc">Describe a Model Context Protocol server in a Ruby class. Its tools become the model's tools, and you choose which ones it sees.</p>
-        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP guide</a>
+        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP client guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 

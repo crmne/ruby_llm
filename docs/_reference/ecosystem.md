@@ -35,7 +35,7 @@ See [Structured Output]({% link _core_features/structured-output.md %}) and [Too
 
 ## MCP
 
-RubyLLM connects to MCP servers itself with `RubyLLM::MCP`, and chats and agents use their tools, resources, and prompts. See [MCP Servers]({% link _core_features/mcp.md %}), and [Provider Tools]({% link _core_features/provider-tools.md %}#mcp-servers) for servers the provider connects to.
+RubyLLM includes an MCP client, `RubyLLM::MCP`. It connects to MCP servers, and chats and agents use their tools, resources, and prompts. See [MCP Client]({% link _core_features/mcp.md %}), and [Provider Tools]({% link _core_features/provider-tools.md %}#mcp-servers) for servers the provider connects to.
 
 The community [ruby_llm-mcp](https://github.com/patvice/ruby_llm-mcp) gem defines the same `RubyLLM::MCP` constant, so an application uses one or the other.
 

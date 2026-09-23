@@ -1,9 +1,9 @@
 ---
 layout: default
-title: MCP Servers
+title: MCP Client
 parent: "Tools"
 nav_order: 3
-description: Connect Model Context Protocol servers and give their tools to your chats and agents
+description: Connect your chats and agents to Model Context Protocol servers and use their tools, resources, and prompts
 ---
 
 # {{ page.title }}
@@ -13,7 +13,7 @@ description: Connect Model Context Protocol servers and give their tools to your
 
 After reading this guide, you will know:
 
-* How to describe an MCP server in a Ruby class.
+* How to connect to an MCP server from a Ruby class.
 * How to explore and call a server's tools from Ruby.
 * How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
@@ -24,7 +24,9 @@ After reading this guide, you will know:
 
 ## Describing a Server
 
-Services such as Linear, GitHub, Notion, and Dropbox expose their APIs as [Model Context Protocol](https://modelcontextprotocol.io) servers. Describe a server in a subclass of `RubyLLM::MCP`, the way you describe a tool or an agent:
+Services such as Linear, GitHub, Notion, and Dropbox expose their APIs as [Model Context Protocol](https://modelcontextprotocol.io) servers. RubyLLM is an MCP client: it connects to those servers and uses what they offer. It does not build MCP servers.
+
+Describe a server you want to connect to in a subclass of `RubyLLM::MCP`, the way you describe a tool or an agent:
 
 ```ruby
 class Linear < RubyLLM::MCP
