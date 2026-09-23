@@ -202,6 +202,30 @@ chat.with_tools(Weather).ask "What's the weather in Berlin?"
 
     <div class="home-step">
       <div class="home-step-text">
+        <h3 class="home-step-title">Connect MCP servers</h3>
+        <p class="home-step-desc">Describe a Model Context Protocol server in a Ruby class. Its tools become the model's tools, and you choose which ones it sees.</p>
+        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class Linear < RubyLLM::MCP
+  url "https://mcp.linear.app/mcp"
+  inputs :user
+  bearer_token { user.linear_token }
+  only :list_issues, :get_issue
+end
+
+chat.with_mcp(Linear.new(user: current_user))
+    .ask "What's blocking the release?"
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
         <h3 class="home-step-title">Get structured output</h3>
         <p class="home-step-desc">Define the fields you want in a Ruby schema. Read the result as a Hash with <code>response.parsed</code>.</p>
         <a class="home-step-link" href="{% link _core_features/structured-output.md %}">Structured output guide</a>
@@ -361,8 +385,7 @@ RubyLLM.chat(model: "{{ site.models.openai_current }}")
       Use <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">separate configurations for each tenant</a>
       and <a href="{% link _advanced/error-handling.md %}#automatic-retries">retries</a> when requests fail.
       Follow requests with <a href="{% link _advanced/instrumentation.md %}">instrumentation</a>,
-      or explore community gems for <a href="{% link _reference/ecosystem.md %}#rubyllmmcp">MCP</a>
-      and <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring dashboards</a>.
+      or explore community gems for <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring dashboards</a>.
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--guides" href="{% link _getting_started/getting-started.md %}">Build your first feature</a>

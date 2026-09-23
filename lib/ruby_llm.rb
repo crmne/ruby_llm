@@ -81,6 +81,8 @@ loader.setup
 # Chat#approve and Chat#deny record it. Chat#with_provider_tools enables
 # provider-executed tools such as web search, code execution, and remote MCP.
 # Their calls appear as ServerToolCall values, with Citation values for sources.
+# Describe a Model Context Protocol server in an MCP class, and Chat#with_mcp
+# gives the model its tools; RubyLLM.mcp connects one inline.
 #
 # Agent defines a reusable configuration with model, instructions, tools,
 # schema, and runtime inputs. Chat#ask_later, Chat#generate, Chat#run_tools,

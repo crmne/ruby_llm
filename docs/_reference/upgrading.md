@@ -50,6 +50,10 @@ bundle update ruby_llm
 
 2.1 does not require changes to your code or your Rails schema. Run your tests and deploy.
 
+## The Community MCP Gem
+
+2.1 includes an MCP client, `RubyLLM::MCP`. The community ruby_llm-mcp gem defines the same constant, so remove it before updating and move your servers to [MCP classes]({% link _core_features/mcp.md %}).
+
 ## Older Upgrade Guides
 
 Use the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md), or the [1.16 upgrade guide](https://rubyllm.com/v1/upgrading/) for older releases. See [GitHub releases](https://github.com/crmne/ruby_llm/releases) for the full changelog.
