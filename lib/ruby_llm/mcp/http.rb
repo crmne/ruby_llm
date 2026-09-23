@@ -33,6 +33,7 @@ module RubyLLM
         @unauthorized = unauthorized
         @connection = Transport::Connection.basic(config) do |faraday|
           faraday.options.timeout = timeout if timeout
+          faraday.adapter config.faraday_adapter
         end
       end
 

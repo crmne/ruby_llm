@@ -29,7 +29,10 @@ module RubyLLM
 
       # Reads the parameters of a Bearer WWW-Authenticate challenge.
       def self.challenge(header)
-        header.to_s.scan(/(\w+)="([^"]*)"/).to_h { |name, value| [name.to_sym, value] }
+        header.to_s.sub(/\A\s*Bearer\s+/i, '').split(',').to_h do |pair|
+          name, value = pair.split('=', 2).map(&:strip)
+          [name.to_sym, value.to_s.delete_prefix('"').delete_suffix('"')]
+        end
       end
 
       def initialize(server_url, owner:, scopes:, client_id:, client_secret:, config: RubyLLM.config)
@@ -69,12 +72,12 @@ module RubyLLM
         state = SecureRandom.urlsafe_base64(32)
         pending = client.merge('state' => state, 'verifier' => verifier, 'redirect_uri' => redirect_uri,
                                'issuer' => server['issuer'], 'expires_at' => Time.now.to_i + PENDING_FOR)
-        write(credential.to_h.merge('pending' => pending, 'server' => server.slice(*SERVER_FIELDS)))
+        write(credential.to_h.merge('pending' => pending.merge('server' => server.slice(*SERVER_FIELDS))))
 
         query = { response_type: 'code', client_id: client['client_id'], redirect_uri:, state:,
                   code_challenge: Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false),
                   code_challenge_method: 'S256', resource:, scope: scopes_for(server) }.compact
-        "#{server['authorization_endpoint']}?#{URI.encode_www_form(query)}"
+        "#{endpoint(server['authorization_endpoint'])}?#{URI.encode_www_form(query)}"
       end
 
       def authorize(params)
@@ -82,7 +85,7 @@ module RubyLLM
         check_callback(pending, params)
         tokens = token_request('authorization_code', code: value(params, :code), redirect_uri: pending['redirect_uri'],
                                                      code_verifier: pending['verifier'], pending:)
-        store_tokens(tokens, client: pending.slice('client_id', 'client_secret', 'issuer'))
+        store_tokens(tokens, client: pending.slice('client_id', 'client_secret', 'issuer', 'server'))
       end
 
       def deauthorize
@@ -135,12 +138,12 @@ module RubyLLM
       end
 
       def issuer_required?
-        credential.dig('server', 'authorization_response_iss_parameter_supported') == true
+        credential.dig('pending', 'server', 'authorization_response_iss_parameter_supported') == true
       end
 
       def token_request(grant_type, pending: nil, **params)
         client = pending || credential
-        server = credential['server'] or raise Error, 'No authorization server known; authorize first'
+        server = client['server'] or raise Error, 'No authorization server known; authorize first'
         form = params.merge(grant_type:, client_id: client['client_id'], resource:)
         headers = { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' }
         authenticate(client, server, form, headers) if client['client_secret']
@@ -278,9 +281,17 @@ module RubyLLM
       end
 
       def connection(url)
-        raise Error, "OAuth endpoints must use HTTPS: #{url}" unless HTTP.secure?(url)
+        endpoint(url)
+        Transport::Connection.basic(@config) { |faraday| faraday.adapter(@config.faraday_adapter) }
+      end
 
-        Transport::Connection.basic(@config)
+      def endpoint(url)
+        uri = URI(url.to_s)
+        loopback_allowed = HTTP.loopback?(@server_url)
+        return url if uri.scheme == 'https' && uri.userinfo.nil?
+        return url if loopback_allowed && HTTP.secure?(uri)
+
+        raise Error, "OAuth endpoints must use HTTPS: #{url}"
       end
 
       def value(params, name)

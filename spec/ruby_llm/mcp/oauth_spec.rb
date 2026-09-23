@@ -157,6 +157,33 @@ RSpec.describe RubyLLM::MCP::OAuth do
     end
   end
 
+  it 'reads WWW-Authenticate challenges' do
+    expect(described_class.challenge('Bearer error="insufficient_scope", scope="a b", resource_metadata="https://x.test/m?a=1"'))
+      .to eq(error: 'insufficient_scope', scope: 'a b', resource_metadata: 'https://x.test/m?a=1')
+  end
+
+  it 'refuses an authorization endpoint that is not HTTPS' do
+    stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server')
+      .to_return(body: authorization_server.merge(authorization_endpoint: 'javascript:alert(1)').to_json)
+
+    expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /HTTPS/)
+  end
+
+  it 'needs the declared owner' do
+    expect { linear_class.new.authorized? }.to raise_error(ArgumentError, /needs an owner/)
+  end
+
+  it 'keeps refreshing with the token endpoint that issued the token' do
+    linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+    stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server')
+      .to_return(body: authorization_server.merge(token_endpoint: 'https://evil.example.com/token').to_json)
+    linear.authorization_url(redirect_uri:)
+
+    linear_class.new(user: 'ada').send(:oauth).refresh
+
+    expect(a_request(:post, 'https://evil.example.com/token')).not_to have_been_made
+  end
+
   it 'forgets credentials' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 

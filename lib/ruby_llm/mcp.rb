@@ -599,7 +599,10 @@ module RubyLLM
 
     def oauth
       settings = self.class.oauth_settings or raise ConfigurationError, "#{name} does not use OAuth"
-      @oauth ||= OAuth.new(resolve(self.class.url), owner: resolve(settings[:owner]), scopes: settings[:scopes],
+      owner = resolve(settings[:owner])
+      raise ArgumentError, "#{name} needs an owner for OAuth credentials" if settings[:owner] && owner.nil?
+
+      @oauth ||= OAuth.new(resolve(self.class.url), owner:, scopes: settings[:scopes],
                                                     client_id: resolve(settings[:client_id]),
                                                     client_secret: resolve(settings[:client_secret]))
     end
