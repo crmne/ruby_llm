@@ -2,7 +2,7 @@
 layout: default
 title: Provider Tools
 parent: "Tools"
-nav_order: 3
+nav_order: 4
 description: Search the web, run code, and connect remote MCP tools through the same chat API
 redirect_from:
   - /server-tools

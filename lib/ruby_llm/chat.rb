@@ -39,8 +39,9 @@ module RubyLLM
     # The Message objects exchanged so far, including system instructions.
     attr_reader :messages
 
-    # The registered tools, as a Hash of tool name Symbols to Tool instances.
-    attr_reader :tools
+    # The MCP servers connected with #with_mcp, readable by name:
+    # <tt>chat.mcp.linear</tt>.
+    attr_reader :mcp
 
     # The provider tools enabled with #with_provider_tools, as an array of
     # normalized entry Hashes.
@@ -119,6 +120,7 @@ module RubyLLM
       @messages = []
       @usage_entries = []
       @tools = {}
+      @mcp = MCP::Collection.new
       @provider_tools = []
       @tool_prefs = { choice: nil, calls: nil }
       @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
@@ -343,6 +345,36 @@ module RubyLLM
       tools.flatten.compact.each do |tool|
         tool_instance = tool.is_a?(Class) ? tool.new : tool
         @tools[tool_instance.name.to_sym] = tool_instance
+      end
+      self
+    end
+
+    # Returns the tools the model can call, as a Hash of tool name Symbols
+    # to Tool instances: those registered with #with_tools and those of the
+    # MCP servers connected with #with_mcp.
+    #
+    # Raises ArgumentError when two tools share a name.
+    def tools
+      mcp.flat_map(&:tools).each_with_object(@tools.dup) do |tool, tools|
+        name = tool.name.to_sym
+        raise ArgumentError, "Two tools are named #{name}. Rename one with `tool :#{name}, as:`" if tools.key?(name)
+
+        tools[name] = tool
+      end
+    end
+
+    # Connects MCP servers, each an MCP instance or class, and gives the
+    # model their tools. The servers are contacted when the chat first
+    # needs their tools. Pass +nil+ to disconnect them all. Returns +self+.
+    #
+    #   chat.with_mcp(Linear.new(user: current_user), Files)
+    #   chat.mcp.linear
+    #
+    def with_mcp(*servers)
+      if servers == [nil]
+        @mcp = MCP::Collection.new
+      else
+        servers.flatten.compact.each { |server| @mcp << (server.is_a?(Class) ? server.new : server) }
       end
       self
     end
@@ -751,7 +783,7 @@ module RubyLLM
       @provider.count_tokens(
         preprocessed_messages(request_messages),
         model: @model,
-        tools: @tools,
+        tools: tools,
         tool_prefs: @tool_prefs,
         thinking: resolved_thinking,
         schema: @schema,
@@ -848,7 +880,7 @@ module RubyLLM
     def render
       @provider.render(
         preprocessed_messages,
-        tools: @tools,
+        tools: tools,
         provider_tools: @provider_tools,
         tool_prefs: @tool_prefs,
         temperature: @temperature,
@@ -1146,7 +1178,7 @@ module RubyLLM
 
       @provider.complete(
         preprocessed_messages,
-        tools: @tools,
+        tools: tools,
         provider_tools: @provider_tools,
         tool_prefs: @tool_prefs,
         temperature: @temperature,

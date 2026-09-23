@@ -212,7 +212,7 @@ module RubyLLM
       # RubyLLM::Chat. Each behaves exactly as documented on RubyLLM::Chat,
       # then returns the record so calls chain.
       CHAINABLE_CHAT_DELEGATES = %i[
-        with_tools with_tool_options with_provider_tools with_fallbacks with_temperature
+        with_tools with_mcp with_tool_options with_provider_tools with_fallbacks with_temperature
         with_max_output_tokens with_thinking with_citations with_caching
         with_end_user with_compaction
         with_provider_options with_headers with_schema
@@ -225,6 +225,12 @@ module RubyLLM
       # :call-seq: with_tools(*tools)
       #
       # Applies Chat#with_tools and returns this record.
+
+      ##
+      # :method: with_mcp
+      # :call-seq: with_mcp(*servers)
+      #
+      # Applies Chat#with_mcp and returns this record.
 
       ##
       # :method: with_tool_options
@@ -436,6 +442,12 @@ module RubyLLM
       #
       # Delegates to Chat#tools. See that method for arguments and return values.
 
+      ##
+      # :method: mcp
+      # :call-seq: mcp
+      #
+      # Delegates to Chat#mcp. See that method for arguments and return values.
+
       CHAINABLE_CHAT_DELEGATES.each do |name|
         define_method(name) do |*args, **kwargs, &block|
           to_llm.public_send(name, *args, **kwargs, &block)
@@ -449,7 +461,7 @@ module RubyLLM
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
-        schema provider_tools temperature thinking tool_options tools
+        schema provider_tools temperature thinking tool_options tools mcp
         add_completion count_tokens each render
       ].freeze
 

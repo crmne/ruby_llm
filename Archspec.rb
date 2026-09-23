@@ -34,6 +34,8 @@ component :domain, in: %w[
   lib/ruby_llm/judge.rb
   lib/ruby_llm/judge/**/*.rb
   lib/ruby_llm/judgment.rb
+  lib/ruby_llm/mcp.rb
+  lib/ruby_llm/mcp/**/*.rb
   lib/ruby_llm/probability.rb
   lib/ruby_llm/choice.rb
   lib/ruby_llm/score.rb

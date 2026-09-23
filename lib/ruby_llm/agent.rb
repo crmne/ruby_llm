@@ -46,6 +46,7 @@ module RubyLLM
     DUPED_INHERITED_CONFIG = {
       :@chat_kwargs => {},
       :@tools => [],
+      :@mcp => [],
       :@provider_tools => [],
       :@tool_options => {},
       :@caching => nil,
@@ -70,7 +71,7 @@ module RubyLLM
 
     # Chat methods that return the wrapped chat so calls can be chained there.
     CHAINABLE_CHAT_DELEGATES = %i[
-      with_instructions with_tools with_provider_tools with_tool_options with_model
+      with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
       with_temperature with_max_output_tokens with_thinking with_citations
       with_end_user with_compaction with_caching with_context with_provider_options
       with_headers with_schema with_fallbacks
@@ -81,7 +82,7 @@ module RubyLLM
 
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
-      model provider messages tools provider_tools tool_options provider_options headers schema concurrency
+      model provider messages tools mcp provider_tools tool_options provider_options headers schema concurrency
       caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
       each complete? cancelled? awaiting_approval? pending_approvals
       add_message add_completion tokens cost render
@@ -138,6 +139,20 @@ module RubyLLM
         return @tools || [] if tools.empty? && !block_given?
 
         @tools = block_given? ? block : tools.flatten
+      end
+
+      # Connects MCP servers to chats this agent builds, applied via
+      # Chat#with_mcp. A block defers construction until the chat is built,
+      # with the declared ::inputs available. Called with no arguments,
+      # returns the declared servers.
+      #
+      #   mcp Files
+      #   mcp { [Linear.new(user: user), Files] }
+      #
+      def mcp(*servers, &block)
+        return @mcp || [] if servers.empty? && !block_given?
+
+        @mcp = block_given? ? block : servers.flatten
       end
 
       # Sets how chats this agent builds use their tools, applied via
@@ -710,6 +725,9 @@ module RubyLLM
         tools_to_apply = Array(evaluate(tools, runtime)).compact
         chat.with_tools(*tools_to_apply) if tools_to_apply.any?
 
+        servers = Array(evaluate(mcp, runtime)).compact
+        chat.with_mcp(*servers) if servers.any?
+
         options = evaluate(tool_options, runtime)
         chat.with_tool_options(**options) if options && !options.empty?
 
@@ -936,6 +954,12 @@ module RubyLLM
     # Delegates to Chat#with_tools. See that method for arguments and return values.
 
     ##
+    # :method: with_mcp
+    # :call-seq: with_mcp(*servers)
+    #
+    # Delegates to Chat#with_mcp. See that method for arguments and return values.
+
+    ##
     # :method: with_provider_tools
     # :call-seq: with_provider_tools(*tools, **tools_with_options)
     #
@@ -1114,6 +1138,12 @@ module RubyLLM
     # :call-seq: tools
     #
     # Delegates to Chat#tools. See that method for arguments and return values.
+
+    ##
+    # :method: mcp
+    # :call-seq: mcp
+    #
+    # Delegates to Chat#mcp. See that method for arguments and return values.
 
     ##
     # :method: provider_tools

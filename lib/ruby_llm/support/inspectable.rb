@@ -17,9 +17,10 @@ module RubyLLM
         attributes = inspect_attributes
                      .reject { |_, value| value.nil? || (value.respond_to?(:empty?) && value.empty?) }
                      .map { |name, value| "#{name}: #{format_for_inspect(value)}" }
-        return "#<#{self.class.name}>" if attributes.empty?
+        class_name = self.class.ancestors.find(&:name).name
+        return "#<#{class_name}>" if attributes.empty?
 
-        "#<#{self.class.name} #{attributes.join(', ')}>"
+        "#<#{class_name} #{attributes.join(', ')}>"
       end
 
       def pretty_print(printer) # :nodoc:

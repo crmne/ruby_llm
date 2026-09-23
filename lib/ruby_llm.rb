@@ -25,7 +25,9 @@ loader.inflector.inflect(
   'deepseek' => 'DeepSeek',
   'elevenlabs' => 'ElevenLabs',
   'gpustack' => 'GPUStack',
+  'http' => 'HTTP',
   'llm' => 'LLM',
+  'mcp' => 'MCP',
   'mistral' => 'Mistral',
   'ocr' => 'OCR',
   'openai' => 'OpenAI',
@@ -235,6 +237,19 @@ module RubyLLM
     #
     def chat(...)
       Chat.new(...)
+    end
+
+    # Connects to a Model Context Protocol server without writing an MCP
+    # class. Pass +url:+ for a Streamable HTTP server or +command:+ for a
+    # local server that speaks over stdio. Also accepts +name:+,
+    # +bearer_token:+, +headers:+, +env:+, +directory:+, and +timeout:+.
+    #
+    #   docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
+    #   files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
+    #
+    # Returns an MCP.
+    def mcp(...)
+      MCP.define(...).new
     end
 
     # Counts the tokens +text+ would consume as a single user message,
