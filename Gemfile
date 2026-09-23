@@ -6,10 +6,7 @@ gemspec
 
 group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
-  if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
-    gem 'archspec'
-    gem 'strong_migrations', '~> 2.5.2'
-  end
+  gem 'archspec' if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
   gem 'async', '>= 2.0', platform: :mri
   gem 'avro'
   gem 'bundler', '>= 2.0'
@@ -42,8 +39,6 @@ group :development do # rubocop:disable Metrics/BlockLength
   # database drivers for MRI and JRuby
   gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'
   gem 'jdbc-sqlite3', platform: 'jruby'
-  gem 'mysql2', platform: 'mri'
-  gem 'pg', platform: 'mri'
   gem 'sqlite3', platform: 'mri'
 
   gem 'vcr'
