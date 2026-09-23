@@ -217,4 +217,4 @@ class ResearchAgent < RubyLLM::Agent
 end
 ```
 
-Tool history and approval decisions survive `Agent.find` and worker restarts. Run the [upgrade generator]({% link _reference/upgrading.md %}) for an existing app so its message and tool-call tables have the required columns.
+Tool history and approval decisions survive `Agent.find` and worker restarts. Apps upgrading from 1.16 get the required message and tool-call columns from the [2.0 upgrade](https://rubyllm.com/v2.0/upgrading/).

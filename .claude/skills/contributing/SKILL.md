@@ -86,7 +86,7 @@ Then make it real:
 - Rails specs run against the dummy app in `spec/dummy`; `acts_as_chat` and `acts_as_message` live in `lib/ruby_llm/active_record/`.
 - The Rails integration builds on the domain layer and the `Provider` contract only. It converts records with `to_llm`/`from_llm`; plain-Ruby objects never define those.
 - Preserve the Ruby conversation API on records, Active Storage attachment support, and the persisted message lifecycle used by Hotwire streaming and background jobs. Individual operations remain callable directly from Rails services and jobs.
-- Generators live in `lib/generators/ruby_llm/` (install, upgrade, chat_ui, agent, tool, schema, provider). Their specs are tagged `:generator` and excluded from the pre-commit run; run them explicitly with `bundle exec rspec --tag generator`.
+- Generators live in `lib/generators/ruby_llm/` (install, chat_ui, agent, tool, schema, provider, and upgrade when the last release changed the schema). Their specs are tagged `:generator` and excluded from the pre-commit run; run them explicitly with `bundle exec rspec --tag generator`.
 - Check Rails-version compatibility across the matrix: `bundle exec appraisal rails-7.1 rspec` through `rails-8.1`.
 
 ## Docs work

@@ -151,7 +151,7 @@ chat.cost.total           # includes retries and cancelled attempts
 
 An entry links to the message it produced when there is one. A failed retry or a cancelled generation links only to the chat. `acts_as_chat` and `acts_as_message` add a `ruby_llm_usages` association over those rows, with `provider`, `model`, `status`, the token buckets, and `total_cost`, so you can sum spend in SQL. Each attempt also fires a `usage.ruby_llm` event. `chat.tokens` and `chat.cost` remain the value objects.
 
-Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the upgrade generator moves 1.16 message tokens into it before removing the old columns.
+Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the 2.0 upgrade moves 1.16 message tokens into it before removing the old columns.
 
 See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for entry statuses, incomplete totals, cancellation behavior, and instrumentation.
 

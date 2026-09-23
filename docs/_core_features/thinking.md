@@ -118,7 +118,7 @@ response.tokens.thinking
 
 `tokens.thinking` reports reasoning work separately. `tokens.output` is already the billable output bucket, so do not add `tokens.thinking` to it when calculating costs. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
 
-Apps upgrading from 1.16 get the thinking columns from `bin/rails generate ruby_llm:upgrade`. See [Upgrading]({% link _reference/upgrading.md %}).
+Apps upgrading from 1.16 get the thinking columns from the [2.0 upgrade](https://rubyllm.com/v2.0/upgrading/).
 
 The generated schema also preserves the complete thinking blocks when you reload a conversation. Upgrading cannot recover blocks that an older version already discarded.
 

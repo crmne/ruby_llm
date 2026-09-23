@@ -66,7 +66,7 @@ end
 
 `after_message` observes transcript changes. A cancelled request may produce no message, so use `usage.ruby_llm` for accounting across provider attempts, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) and [Instrumentation]({% link _advanced/instrumentation.md %}).
 
-The 1.x `on_*` handlers were replaced in 2.0. See [Upgrading]({% link _reference/upgrading.md %}#chat-callbacks) for the name changes.
+The 1.x `on_*` handlers were replaced in 2.0. See the [2.0 upgrade guide](https://rubyllm.com/v2.0/upgrading/#chat-callbacks) for the name changes.
 
 ## Next Steps
 

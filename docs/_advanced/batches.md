@@ -168,7 +168,7 @@ A batch takes chats or embedding requests, not both; mixing them raises `Argumen
 
 Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later`, `run_tools`, and `complete?` all work on your records, so staged questions and collected answers land in the database with their usage entries attached.
 
-When all inputs are persisted chats, RubyLLM saves the batch ID and state in its own table. Your application keeps its chats and messages; it does not need a `Batch` model. The [upgrade generator]({% link _reference/upgrading.md %}) creates the supporting table for existing apps.
+When all inputs are persisted chats, RubyLLM saves the batch ID and state in its own table. Your application keeps its chats and messages; it does not need a `Batch` model. Apps upgrading from 1.16 get the supporting table from the [2.0 upgrade](https://rubyllm.com/v2.0/upgrading/).
 
 `RubyLLM.batch` sends the staged chats to the provider and persists the batch state in one step:
 

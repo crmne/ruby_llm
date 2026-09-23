@@ -74,7 +74,7 @@ Use the same chat API on persisted records. Persisted `ask` returns the applicat
 
 Pass Active Storage attachments through `with:` and retain the message attachment association set up by the install generator. For a Hotwire UI, use the Rails streaming guide or `ruby_llm:chat_ui` generator: persisted messages provide the targets for Turbo Streams. Individual operations work directly in Rails services and jobs with the same methods as plain Ruby.
 
-For an upgrade, read the complete matching upgrade guide before editing migrations. The 2.0 cutover requires preparation, backfill, finish, and application-specific reconciliation before affected activity resumes. Legacy-column cleanup is a later phase. Checkpoints make a stopped backfill resumable; retained columns do not make a 1.x code rollback safe. Rehearse against an isolated snapshot and respect the application's deployment and recovery process.
+For an upgrade, read the complete matching upgrade guide before editing migrations. Each release's upgrade covers only the changes since the previous release, so upgrade one release at a time; a 1.x application completes the 2.0 upgrade first. The 2.0 cutover requires preparation, backfill, finish, and application-specific reconciliation before affected activity resumes. Legacy-column cleanup is a later phase. Checkpoints make a stopped backfill resumable; retained columns do not make a 1.x code rollback safe. Rehearse against an isolated snapshot and respect the application's deployment and recovery process.
 
 ## Verify the application change
 

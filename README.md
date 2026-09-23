@@ -215,7 +215,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Configure the other providers used by the examples as needed: Gemini for files, xAI for video, Mistral for OCR, and Cohere for reranking. [Getting Started](https://rubyllm.com/getting-started/) shows each setup beside its example. If your app uses 1.16, follow the [upgrade guide](https://rubyllm.com/upgrading/) before deploying 2.0.
+Configure the other providers used by the examples as needed: Gemini for files, xAI for video, Mistral for OCR, and Cohere for reranking. [Getting Started](https://rubyllm.com/getting-started/) shows each setup beside its example. Upgrading an existing app? Follow the [upgrade guide](https://rubyllm.com/upgrading/).
 
 ## Feels at home in Rails
 
