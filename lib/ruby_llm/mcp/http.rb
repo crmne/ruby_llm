@@ -37,8 +37,8 @@ module RubyLLM
         end
       end
 
-      def request(message, version:, timeout: nil, &)
-        replies = post(message, version:, timeout:, &)
+      def request(message, version:, timeout: nil, headers: {}, &)
+        replies = post(message, version:, timeout:, params: headers, &)
         replies.find { |reply| reply['id'] == message[:id] } ||
           raise(Error, "#{@url.host} did not answer #{message[:method]}")
       end
@@ -58,10 +58,11 @@ module RubyLLM
 
       private
 
-      def post(message, version:, timeout: nil, retried: false, &on_notification)
+      def post(message, version:, timeout: nil, params: {}, retried: false, &on_notification)
         stream = Stream.new(&on_notification)
         response = @connection.post(@url) do |request|
           request.headers.update(headers(message, version))
+          params.each { |name, value| request.headers["Mcp-Param-#{name}"] = header_value(value) }
           request.body = JSON.generate(message)
           request.options.timeout = timeout if timeout
           request.options.on_data = stream.method(:feed).to_proc
@@ -71,13 +72,18 @@ module RubyLLM
       rescue Faraday::Error => e
         raise unless e.response
 
-        return post(message, version:, timeout:, retried: true, &on_notification) if reauthorized?(e.response, retried)
+        if reauthorized?(e.response, retried)
+          return post(message, version:, timeout:, params:, retried: true, &on_notification)
+        end
 
         raise failure(e.response, stream)
       end
 
       def reauthorized?(response, retried)
-        response[:status] == 401 && !retried && @unauthorized&.call(response[:headers] || {})
+        return false unless [401, 403].include?(response[:status]) && @unauthorized
+
+        refreshed = @unauthorized.call(response[:headers] || {}, response[:status])
+        response[:status] == 401 && !retried && refreshed
       end
 
       def headers(message, version)
@@ -95,7 +101,7 @@ module RubyLLM
         return if value.nil?
 
         value = value.to_s
-        return value if value.match?(HEADER_SAFE) && !value.match?(ENCODED_HEADER)
+        return value if value.empty? || (value.match?(HEADER_SAFE) && !value.match?(ENCODED_HEADER))
 
         "=?base64?#{Base64.strict_encode64(value)}?="
       end

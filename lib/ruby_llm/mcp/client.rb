@@ -24,16 +24,16 @@ module RubyLLM
         @connecting.synchronize { @server ||= discover || handshake }
       end
 
-      def request(method, params = {}, &)
+      def request(method, params = {}, headers: {}, &)
         server
-        call(method, params, &)
+        call(method, params, headers:, &)
       end
 
       def list(method, key)
         page = request(method)
         items = page.fetch(key, [])
         while (cursor = page['nextCursor'])
-          page = request(method, cursor:)
+          page = request(method, { cursor: })
           items += page.fetch(key, [])
         end
         items
@@ -69,10 +69,10 @@ module RubyLLM
         result
       end
 
-      def call(method, params = {}, timeout: nil, &)
+      def call(method, params = {}, timeout: nil, headers: {}, &)
         request = message(method, params, id: SecureRandom.uuid)
         response = begin
-          @transport.request(request, version:, timeout:, &)
+          @transport.request(request, version:, timeout:, headers:, &)
         rescue CancelledError
           @transport.cancel(message('notifications/cancelled', { requestId: request[:id] }), version:)
           raise

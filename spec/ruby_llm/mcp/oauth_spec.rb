@@ -199,6 +199,31 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(a_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')).to have_been_made
   end
 
+  it 'asks for challenged scopes along with the ones already granted' do
+    linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+    stub_request(:post, server_url).to_return(
+      status: 403, headers: { 'WWW-Authenticate' => 'Bearer error="insufficient_scope", scope="issues:write"' }
+    )
+    step_up = linear_class.new(user: 'ada')
+
+    expect { step_up.tools }.to raise_error(RubyLLM::ForbiddenError)
+    params = URI.decode_www_form(URI(step_up.authorization_url(redirect_uri:)).query).to_h
+    expect(params['scope'].split).to contain_exactly('issues:write', 'issues:read')
+  end
+
+  it 'uses the server origin for servers without protected resource metadata' do
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp').to_return(status: 404)
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource').to_return(status: 404)
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-authorization-server').to_return(status: 404)
+    stub_request(:post, 'https://mcp.example.com/register').to_return(body: { client_id: 'legacy' }.to_json)
+    stub_request(:post, server_url).to_return(status: 401)
+
+    url = linear.authorization_url(redirect_uri:)
+
+    expect(url).to start_with('https://mcp.example.com/authorize?')
+    expect(URI.decode_www_form(URI(url).query).to_h['client_id']).to eq('legacy')
+  end
+
   it 'forgets credentials' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 

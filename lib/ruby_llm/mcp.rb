@@ -518,17 +518,23 @@ module RubyLLM
     end
 
     def send_request(method, params)
+      headers = method == 'tools/call' ? mirrored_headers(params) : {}
       callbacks = self.class.callbacks(:after_progress)
-      return client.request(method, params) if callbacks.empty?
+      return client.request(method, params, headers:) if callbacks.empty?
 
       token = SecureRandom.uuid
-      client.request(method, params.merge(_meta: { progressToken: token })) do |notification|
+      client.request(method, params.merge(_meta: { progressToken: token }), headers:) do |notification|
         next unless notification['method'] == 'notifications/progress'
         next unless notification.dig('params', 'progressToken') == token
 
         progress = Progress.new(notification['params'])
         callbacks.each { |callback| apply(callback, progress) }
       end
+    end
+
+    def mirrored_headers(params)
+      definition = server_tools.find { |tool| tool['name'] == params[:name] }
+      definition ? ParamHeaders.for(definition, params[:arguments]) : {}
     end
 
     def shape(definition)
@@ -565,7 +571,7 @@ module RubyLLM
     end
 
     def server_tools
-      @server_tools ||= client.list('tools/list', 'tools')
+      @server_tools ||= client.list('tools/list', 'tools').select { |definition| ParamHeaders.valid?(definition) }
     end
 
     def server_info
@@ -607,9 +613,9 @@ module RubyLLM
                                                     client_secret: resolve(settings[:client_secret]))
     end
 
-    def unauthorized(headers)
+    def unauthorized(headers, status)
       @challenge = OAuth.challenge(headers['www-authenticate'] || headers['WWW-Authenticate'])
-      self.class.oauth_settings && oauth.authorized? && oauth.refresh
+      status == 401 && self.class.oauth_settings && oauth.authorized? && oauth.refresh
     end
 
     def challenge

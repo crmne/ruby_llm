@@ -71,12 +71,13 @@ module RubyLLM
         verifier = SecureRandom.urlsafe_base64(64)
         state = SecureRandom.urlsafe_base64(32)
         pending = client.merge('state' => state, 'verifier' => verifier, 'redirect_uri' => redirect_uri,
-                               'issuer' => server['issuer'], 'expires_at' => Time.now.to_i + PENDING_FOR)
+                               'issuer' => server['issuer'], 'scope' => scopes_for(server),
+                               'expires_at' => Time.now.to_i + PENDING_FOR)
         write(credential.to_h.merge('pending' => pending.merge('server' => server.slice(*SERVER_FIELDS))))
 
         query = { response_type: 'code', client_id: client['client_id'], redirect_uri:, state:,
                   code_challenge: Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false),
-                  code_challenge_method: 'S256', resource:, scope: scopes_for(server) }.compact
+                  code_challenge_method: 'S256', resource:, scope: pending['scope'] }.compact
         "#{endpoint(server['authorization_endpoint'])}?#{URI.encode_www_form(query)}"
       end
 
@@ -85,7 +86,7 @@ module RubyLLM
         check_callback(pending, params)
         tokens = token_request('authorization_code', code: value(params, :code), redirect_uri: pending['redirect_uri'],
                                                      code_verifier: pending['verifier'], pending:)
-        store_tokens(tokens, client: pending.slice('client_id', 'client_secret', 'issuer', 'server'))
+        store_tokens(tokens, client: pending.slice('client_id', 'client_secret', 'issuer', 'server', 'scope'))
       end
 
       def deauthorize
@@ -162,6 +163,8 @@ module RubyLLM
 
       def authorization_server
         metadata = protected_resource_metadata
+        return legacy_authorization_server unless metadata
+
         issuer = Array(metadata['authorization_servers']).first
         raise Error, "#{@server_url} names no authorization server" unless issuer
 
@@ -182,8 +185,19 @@ module RubyLLM
         uri = URI(@server_url)
         path = uri.path.chomp('/')
         candidates = ["/.well-known/oauth-protected-resource#{path}", '/.well-known/oauth-protected-resource'].uniq
-        first_json(candidates.map { |candidate| URI.join(uri, candidate).to_s }) ||
-          raise(Error, "#{@server_url} publishes no protected resource metadata")
+        first_json(candidates.map { |candidate| URI.join(uri, candidate).to_s })
+      end
+
+      # Servers from the 2025-03-26 revision publish no protected resource
+      # metadata: their own origin is the authorization server, with default
+      # endpoints when it publishes no metadata either.
+      def legacy_authorization_server
+        origin = URI.join(@server_url, '/').to_s.chomp('/')
+        first_json(["#{origin}/.well-known/oauth-authorization-server"]) || {
+          'issuer' => origin, 'authorization_endpoint' => "#{origin}/authorize",
+          'token_endpoint' => "#{origin}/token", 'registration_endpoint' => "#{origin}/register",
+          'code_challenge_methods_supported' => ['S256']
+        }
       end
 
       def checked_resource(resource)
@@ -244,7 +258,9 @@ module RubyLLM
       end
 
       def scopes_for(server)
-        scopes = @scopes || @challenge&.dig(:scope)&.split || @scopes_supported
+        challenged = @challenge&.dig(:scope)
+        challenged &&= challenged.split + credential.to_h['scope'].to_s.split
+        scopes = @scopes || challenged || @scopes_supported
         scopes = Array(scopes)
         scopes += ['offline_access'] if Array(server['scopes_supported']).include?('offline_access')
         scopes.uniq.join(' ') unless scopes.empty?
