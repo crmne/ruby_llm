@@ -21,16 +21,24 @@ module RubyLLM
       # The description the model sees.
       attr_reader :description
 
-      # The JSON Schema for the tool's arguments.
+      # The JSON Schema for the arguments the model provides.
       attr_reader :parameters_schema
 
-      def initialize(mcp, definition) # :nodoc:
+      # The tool's name on the server.
+      attr_reader :server_name
+
+      attr_reader :fixed_arguments, :wrap # :nodoc:
+
+      def initialize(mcp, definition, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
         super()
         @mcp = mcp
-        @name = definition['name']
-        @description = definition['description']
-        @parameters_schema = SchemaDefinition.new(schema: definition['inputSchema'] || {}).json_schema
+        @server_name = definition['name']
+        @name = (as || server_name).to_s
+        @description = description || definition['description']
+        @fixed_arguments = fixed_arguments.transform_keys(&:to_sym)
+        @wrap = wrap
         @annotations = definition['annotations'] || {}
+        @parameters_schema = model_schema(definition['inputSchema'] || {})
       end
 
       # Returns whether the server says the tool only reads.
@@ -56,17 +64,32 @@ module RubyLLM
         @annotations['openWorldHint'] != false
       end
 
+      # Returns whether the tool pauses for approval, as declared with
+      # MCP.requires_approval.
+      def requires_approval?
+        @mcp.requires_approval?(self)
+      end
+
       # Calls the tool on the server and returns what the model sees: the
-      # result's content, or <tt>{ error: }</tt> when the tool failed.
+      # result's content, what the +wrap:+ method made of it, or
+      # <tt>{ error: }</tt> when the tool failed.
       def call(**arguments)
-        result = @mcp.call(name, **arguments.except(:tool_call))
-        result.error? ? { error: result.text } : result.content
+        @mcp.run(self, arguments.except(:tool_call))
       end
 
       private
 
+      def model_schema(schema)
+        schema = SchemaDefinition.new(schema:).json_schema
+        return schema if fixed_arguments.empty? || !schema.key?('properties')
+
+        hidden = fixed_arguments.keys.map(&:to_s)
+        schema.merge('properties' => schema['properties'].except(*hidden),
+                     'required' => Array(schema['required']) - hidden)
+      end
+
       def inspect_attributes
-        { name:, read_only: read_only? || nil }
+        { name:, from: (server_name unless server_name == name), read_only: read_only? || nil }
       end
     end
   end

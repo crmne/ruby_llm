@@ -15,6 +15,7 @@ After reading this guide, you will know:
 
 * How to describe an MCP server in a Ruby class.
 * How to explore and call a server's tools from Ruby.
+* How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
 * How RubyLLM talks to servers and keeps connections safe.
 
@@ -107,6 +108,115 @@ docs.call("microsoft_docs_search", query: "Azure Blob Storage")
 A `RubyLLM::MCP::Result` has the text, any images or files as attachments, and the structured content when the server sends it. `error?` tells you whether the tool reported a failure.
 
 Each tool also carries the server's hints about its behavior: `read_only?`, `destructive?`, `idempotent?`, and `open_world?`. They come from the server, so trust them as far as you trust the server.
+
+## Shaping Tools
+
+A server hands the model every tool it has, often low-level ones written for any client. Decide what your model sees in the class.
+
+### Choosing Tools
+
+Keep the tools you need with `only`, or hide some with `except`:
+
+```ruby
+class GitHub < RubyLLM::MCP
+  url "https://api.githubcopilot.com/mcp/"
+  bearer_token ENV.fetch("GITHUB_TOKEN")
+  only :search_issues, :get_issue, :create_issue
+end
+```
+
+### Renaming and Describing
+
+Give a tool the name and description that fit your agent:
+
+```ruby
+tool :search_issues, as: :search_ruby_llm_issues,
+     description: "Search RubyLLM's issues. Use GitHub search syntax."
+```
+
+### Fixed Arguments
+
+Take an argument away from the model and always send your value:
+
+```ruby
+tool :search_issues, fixed_arguments: { owner: "crmne", repo: "ruby_llm" }
+```
+
+The model sees `search_issues` without `owner` and `repo`, so it cannot search anywhere else. Use a lambda when a value depends on inputs: `fixed_arguments: { repo: -> { user.default_repo } }`.
+
+### Wrapping Results
+
+Name a method with `wrap:` to decide what the model sees. It receives the server's result and the arguments of the call:
+
+```ruby
+class GoogleDrive < RubyLLM::MCP
+  url "https://drivemcp.googleapis.com/mcp/v1"
+  inputs :user
+  bearer_token { user.google_token }
+
+  tool :read_file, as: :drive_read, wrap: :cite
+
+  private
+
+  def cite(result, file_id:)
+    RubyLLM::SearchResults.new(title: file_id, url: "https://drive.google.com/open?id=#{file_id}",
+                               text: result.text)
+  end
+end
+```
+
+The method runs on the MCP instance, so inputs like `user` are available. A result the server marks as an error goes to the model as an error without passing through the method.
+
+### Adding Your Own Tools
+
+Build higher-level tools from the server's primitives with a regular `RubyLLM::Tool`. When its `initialize` takes an argument, it receives the MCP. In a Rails app, it can live next to the server in `app/mcp/dropbox/search_and_read.rb`:
+
+```ruby
+class Dropbox::SearchAndRead < RubyLLM::Tool
+  description "Search Dropbox and read the best match"
+  parameter :query, description: "What to look for"
+
+  def initialize(dropbox)
+    @dropbox = dropbox
+  end
+
+  def execute(query:)
+    match = @dropbox.search(query:, max_results: 1).structured["matches"].first
+    return "Nothing found" unless match
+
+    @dropbox.get_file_content(path_or_file_id: match["file_id"]).text
+  end
+end
+```
+
+Add it to the server in `app/mcp/dropbox.rb`:
+
+```ruby
+class Dropbox < RubyLLM::MCP
+  url "https://mcp.dropbox.com/mcp"
+  inputs :user
+  bearer_token { user.dropbox_token }
+
+  only :search
+  tool SearchAndRead
+end
+```
+
+The server's tools stay callable as methods even when `only` hides them from the model.
+
+### Requiring Approval
+
+Pause tools for a human decision with `requires_approval`. It uses the same flow as [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval), including persisted decisions in Rails:
+
+```ruby
+requires_approval :create_issue, :merge_pull_request
+requires_approval if: :destructive?
+requires_approval if: ->(tool) { tool.name.start_with?("delete") }
+```
+
+Without names, every tool needs approval. `if:` takes a tool predicate or a lambda that receives the tool.
+
+Every name you declare must exist on the server. When a server stops offering one, RubyLLM raises `RubyLLM::ConfigurationError` as the tools load, instead of silently changing what the model sees.
 
 ## Using Servers in Chats
 

@@ -42,6 +42,120 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'shaping tools' do
+    def shaped(&)
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        class_eval(&)
+      end.new
+    end
+
+    it 'keeps only the named tools' do
+      mcp = shaped { only :echo, :add }
+
+      expect(mcp.tools.map(&:name)).to eq(%w[echo add])
+    ensure
+      mcp&.close
+    end
+
+    it 'hides the named tools' do
+      mcp = shaped { except :delete_everything, :fail }
+
+      expect(mcp.tools.map(&:name)).to eq(%w[echo add picture])
+    ensure
+      mcp&.close
+    end
+
+    it 'renames and redescribes a tool' do
+      mcp = shaped { tool :echo, as: :repeat, description: 'Repeats the text' }
+      repeat = mcp.tools.first
+
+      expect(repeat).to have_attributes(name: 'repeat', server_name: 'echo', description: 'Repeats the text')
+      expect(repeat.call(text: 'hi')).to eq('hi')
+      expect(repeat.inspect).to eq('#<RubyLLM::MCP::Tool name: "repeat", from: "echo", read_only: true>')
+    ensure
+      mcp&.close
+    end
+
+    it 'fixes arguments the model no longer sees' do
+      mcp = shaped do
+        tool :add, fixed_arguments: { b: 10, a: -> { 5 } }
+      end
+      add = mcp.tools.find { |tool| tool.name == 'add' }
+
+      expect(add.parameters_schema).to eq('type' => 'object', 'properties' => {}, 'required' => [])
+      expect(add.call).to eq('15')
+    ensure
+      mcp&.close
+    end
+
+    it 'wraps results with a method' do
+      mcp = shaped do
+        tool :add, wrap: :describe_sum
+
+        private
+
+        def describe_sum(result, **terms)
+          "#{terms.values.join(' + ')} = #{result.structured['sum']}"
+        end
+      end
+
+      expect(mcp.tools.find { |tool| tool.name == 'add' }.call('a' => 2, 'b' => 3)).to eq('2 + 3 = 5')
+    ensure
+      mcp&.close
+    end
+
+    it 'adds Tool classes that receive the MCP' do
+      doubler = Class.new(RubyLLM::Tool) do
+        def self.tool_name = 'double'
+
+        def initialize(mcp)
+          super()
+          @mcp = mcp
+        end
+
+        def execute(number:)
+          @mcp.add(a: number, b: number).text
+        end
+      end
+      mcp = shaped { tool doubler }
+
+      expect(mcp.tools.last.call(number: 21)).to eq('42')
+    ensure
+      mcp&.close
+    end
+
+    it 'requires approval for the named tools and by annotation' do
+      mcp = shaped do
+        requires_approval :echo
+        requires_approval if: :destructive?
+      end
+      approvals = mcp.tools.to_h { |tool| [tool.name, tool.requires_approval?] }
+
+      expect(approvals).to eq('echo' => true, 'add' => true, 'fail' => true, 'picture' => true,
+                              'delete_everything' => true)
+    ensure
+      mcp&.close
+    end
+
+    it 'requires approval when a lambda says so' do
+      mcp = shaped { requires_approval if: ->(tool) { tool.name.start_with?('delete') } }
+
+      expect(mcp.tools.select(&:requires_approval?).map(&:name)).to eq(['delete_everything'])
+    ensure
+      mcp&.close
+    end
+
+    it 'refuses declarations for tools the server does not offer' do
+      mcp = shaped { tool :read_file, as: :drive_read }
+
+      expect { mcp.tools }.to raise_error(RubyLLM::ConfigurationError, /declares read_file/)
+    ensure
+      mcp&.close
+    end
+  end
+
   describe '#call' do
     it 'returns the result' do
       result = mcp.call(:add, a: 2, b: 3)

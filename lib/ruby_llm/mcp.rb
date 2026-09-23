@@ -29,7 +29,10 @@ module RubyLLM
   class MCP
     include Support::Inspectable
 
-    SETTINGS = %i[@url @command @directory @env @headers @bearer_token @timeout @input_names].freeze
+    SETTINGS = %i[
+      @url @command @directory @env @headers @bearer_token @timeout @input_names
+      @only @except @tool_declarations @approvals
+    ].freeze
     private_constant :SETTINGS
 
     class << self
@@ -139,6 +142,77 @@ module RubyLLM
         @input_names.each { |input| define_method(input) { @inputs[input] } }
       end
 
+      # Limits the tools the model sees to the named server tools.
+      #
+      #   only :search_issues, :get_issue
+      #
+      def only(*names)
+        return @only if names.empty?
+
+        @only = names.flatten.map(&:to_s)
+      end
+
+      # Hides the named server tools from the model.
+      #
+      #   except :delete_repository
+      #
+      def except(*names)
+        return @except || [] if names.empty?
+
+        @except = names.flatten.map(&:to_s)
+      end
+
+      # Shapes a server tool, or adds one of your own.
+      #
+      # Given a server tool's name, +as:+ renames it, +description:+
+      # rewrites what the model reads, and +fixed_arguments:+ removes
+      # arguments from the model's view and always sends your values, which
+      # may be lambdas. +wrap:+ names a method that receives
+      # the server's Result and the call's arguments and returns what the
+      # model sees:
+      #
+      #   tool :search_files, as: :drive_search, description: "Search the user's Drive"
+      #   tool :search_issues, fixed_arguments: { owner: "crmne", repo: "ruby_llm" }
+      #   tool :read_file, wrap: :extract_text
+      #
+      # Given a Tool class, adds it next to the server's tools. The tool is
+      # created with this MCP when its +initialize+ takes an argument, so it
+      # can call the server:
+      #
+      #   tool SearchWithPreviews
+      #
+      def tool(tool, as: nil, description: nil, fixed_arguments: nil, wrap: nil)
+        @tool_declarations = tool_declarations.dup
+        @tool_declarations << if tool.is_a?(Class)
+                                tool
+                              else
+                                [tool.to_s, { as:, description:, fixed_arguments:, wrap: }.compact]
+                              end
+      end
+
+      def tool_declarations # :nodoc:
+        @tool_declarations || []
+      end
+
+      # Pauses the named server tools for approval before they run, using
+      # the flow of Tool.requires_approval. Without names, every tool needs
+      # approval. +if:+ takes a Tool predicate, or a lambda that receives the
+      # tool:
+      #
+      #   requires_approval :create_issue, :merge_pull_request
+      #   requires_approval if: :destructive?
+      #
+      def requires_approval(*names, **options)
+        unknown = options.keys - [:if]
+        raise ArgumentError, "Unknown requires_approval options: #{unknown.join(', ')}" if unknown.any?
+
+        @approvals = approvals + [[names.flatten.map(&:to_s), options[:if]]]
+      end
+
+      def approvals # :nodoc:
+        @approvals || []
+      end
+
       def default_name # :nodoc:
         @default_name || (name && Support::Utils.underscore(name.split('::').last))
       end
@@ -189,10 +263,17 @@ module RubyLLM
       self.class.default_name
     end
 
-    # Returns the server's tools as MCP::Tool objects, ready for a chat.
-    # The list is fetched once per instance.
+    # Returns the tools the model sees: the server's tools, shaped by
+    # ::only, ::except, and ::tool, followed by the Tool classes added with
+    # ::tool. The server's list is fetched once per instance.
+    #
+    # Raises ConfigurationError when a declaration names a tool the server
+    # does not offer.
     def tools
-      @tools ||= server_tools.map { |definition| Tool.new(self, definition) }
+      @tools ||= begin
+        check_declared_tools
+        server_tools.filter_map { |definition| shape(definition) } + added_tools
+      end
     end
 
     # Calls the server tool +name+ with +arguments+ and returns an
@@ -205,6 +286,26 @@ module RubyLLM
     # tool that fails returns a Result whose #error? is +true+.
     def call(name, **arguments)
       Result.new(client.request('tools/call', { name: name.to_s, arguments: }))
+    end
+
+    # Returns whether +tool+, one of this MCP's tools, needs approval
+    # according to ::requires_approval.
+    def requires_approval?(tool) # :nodoc:
+      self.class.approvals.any? do |names, condition|
+        next false unless names.empty? || names.include?(tool.server_name)
+
+        condition.nil? || (condition.is_a?(Proc) ? instance_exec(tool, &condition) : tool.public_send(condition))
+      end
+    end
+
+    # Runs +tool+, one of this MCP's tools, with the model's +arguments+.
+    def run(tool, arguments) # :nodoc:
+      arguments = arguments.transform_keys(&:to_sym)
+      fixed = tool.fixed_arguments.transform_values { |value| value.is_a?(Proc) ? instance_exec(&value) : value }
+      result = call(tool.server_name, **arguments, **fixed)
+      return { error: result.text } if result.error?
+
+      tool.wrap ? apply(tool.wrap, result, **arguments) : result.content
     end
 
     # Returns the instructions the server gives for using it, or +nil+.
@@ -233,6 +334,35 @@ module RubyLLM
 
     def respond_to_missing?(name, include_private = nil)
       (@server_tools && server_tool?(name)) || super
+    end
+
+    def shape(definition)
+      name = definition['name']
+      only = self.class.only
+      return if (only && !only.include?(name)) || self.class.except.include?(name)
+
+      options = self.class.tool_declarations.select { |declaration| declaration.is_a?(Array) && declaration[0] == name }
+                    .map(&:last).reduce({}, :merge)
+      Tool.new(self, definition, **options)
+    end
+
+    def added_tools
+      self.class.tool_declarations.grep(Class).map do |tool|
+        tool.instance_method(:initialize).arity.zero? ? tool.new : tool.new(self)
+      end
+    end
+
+    def check_declared_tools
+      declared = Array(self.class.only) + self.class.approvals.flat_map(&:first) +
+                 self.class.tool_declarations.grep(Array).map(&:first)
+      missing = declared.uniq - server_tools.map { |definition| definition['name'] }
+      return if missing.empty?
+
+      raise ConfigurationError, "#{name} declares #{missing.join(', ')}, which the server does not offer"
+    end
+
+    def apply(callable, *arguments, **keywords)
+      callable.is_a?(Proc) ? instance_exec(*arguments, **keywords, &callable) : send(callable, *arguments, **keywords)
     end
 
     def server_tool?(name)

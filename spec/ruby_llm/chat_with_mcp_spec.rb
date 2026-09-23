@@ -56,6 +56,17 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.find { |message| message.role == :tool }.content).to eq('5')
   end
 
+  it 'pauses server tools that need approval' do
+    files_class.requires_approval :add
+    allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)
+
+    chat.with_mcp(files).ask('What is 2 + 3?')
+
+    expect(chat).to be_awaiting_approval
+    chat.approve(chat.pending_approvals.first).complete
+    expect(chat.messages.find { |message| message.role == :tool }.content).to eq('5')
+  end
+
   it 'refuses two tools with the same name' do
     echo = Class.new(RubyLLM::Tool) do
       def self.tool_name = 'echo'
