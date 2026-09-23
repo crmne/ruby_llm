@@ -47,10 +47,13 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.boolean :remote, default: false, null: false
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
+      t.jsonb :pending_input
 <% elsif mysql? %>
       t.json :arguments
+      t.json :pending_input
 <% else %>
       t.json :arguments, default: {}
+      t.json :pending_input
 <% end %>
       t.timestamps
 
@@ -58,6 +61,15 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.index [ :result_type, :result_id ]
       t.index :tool_call_id, unique: true
       t.index :name
+    end
+
+    create_table :ruby_llm_mcp_credentials, id: :<%= reference_type %> do |t|
+      t.references :owner, polymorphic: true, type: :<%= reference_type %>
+      t.string :key, null: false
+      t.text :data
+      t.timestamps
+
+      t.index :key, unique: true
     end
 
     create_table :ruby_llm_usages, id: :<%= reference_type %> do |t|

@@ -159,6 +159,30 @@ module RubyLLM
     # Optional persistence adapter installed by the Rails integration.
     option :batch_store, nil # :nodoc:
 
+    ##
+    # :attr_accessor: mcp_credential_store
+    #
+    # Store for the OAuth credentials of MCP servers. Rails apps keep them
+    # in the +ruby_llm_mcp_credentials+ table automatically. A store
+    # responds to +read(key)+, +write(key, data, owner:)+, and
+    # +delete(key)+. Default: +nil+ (keep them in memory).
+    option :mcp_credential_store, nil
+
+    ##
+    # :attr_accessor: mcp_client_name
+    #
+    # The client name RubyLLM gives when it registers with an MCP server's
+    # authorization server. Default: <tt>"RubyLLM"</tt>.
+    option :mcp_client_name, 'RubyLLM'
+
+    ##
+    # :attr_accessor: mcp_client_id
+    #
+    # The HTTPS URL of your OAuth client metadata document. Authorization
+    # servers that support client ID metadata documents use it instead of
+    # registering RubyLLM. Default: +nil+.
+    option :mcp_client_id, nil
+
     # Keeps custom 1.x initializers bootable long enough to run the 2.0
     # upgrade generator. The registry is always RubyLLM-owned in 2.0.
     def model_registry_class=(_value) # :nodoc:

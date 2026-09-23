@@ -72,9 +72,16 @@ module RubyLLM
 
       # Calls the tool on the server and returns what the model sees: the
       # result's content, what the +wrap:+ method made of it, or
-      # <tt>{ error: }</tt> when the tool failed.
+      # <tt>{ error: }</tt> when the tool failed. Raises
+      # MCP::InputRequiredError when the server needs input that no
+      # MCP.before_input_request callback gave.
       def call(**arguments)
         @mcp.run(self, arguments.except(:tool_call))
+      end
+
+      # Resumes a call that paused on input requests, now answered.
+      def resume(input, arguments) # :nodoc:
+        @mcp.run(self, arguments, input:)
       end
 
       private

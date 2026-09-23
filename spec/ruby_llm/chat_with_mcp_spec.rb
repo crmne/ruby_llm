@@ -96,6 +96,56 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.ask('Wait for it') }.to raise_error(RubyLLM::CancelledError)
   end
 
+  describe 'input requests' do
+    before { allow(chat.provider).to receive(:complete).and_return(tool_call('deploy', {}), answer) }
+
+    it 'pauses the tool call until the user answers' do
+      chat.with_mcp(files).ask('Deploy')
+
+      expect(chat).to be_awaiting_input
+      request = chat.pending_inputs.first
+      expect(request).to have_attributes(message: 'Which environment?', tool_call: have_attributes(name: 'deploy'))
+
+      chat.answer(request, environment: 'production').complete
+
+      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deployed to production')
+      expect(chat).not_to be_awaiting_input
+    end
+
+    it 'resumes a declined request' do
+      chat.with_mcp(files).ask('Deploy')
+      chat.decline(chat.pending_inputs.first).complete
+
+      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deploy cancelled')
+    end
+
+    it 'does not pause when a callback answers' do
+      files_class.before_input_request { |request| request.answer(environment: 'staging') }
+
+      chat.with_mcp(files).ask('Deploy')
+
+      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deployed to staging')
+    end
+
+    it 'waits on approvals and inputs together' do
+      files_class.requires_approval :add
+      allow(chat.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: {
+                               'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'deploy', arguments: {}),
+                               'call_2' => RubyLLM::ToolCall.new(id: 'call_2', name: 'add',
+                                                                 arguments: { 'a' => 1, 'b' => 1 })
+                             }),
+        answer
+      )
+
+      chat.with_mcp(files).ask('Deploy and add')
+
+      expect(chat).to be_awaiting_input
+      expect(chat).to be_awaiting_approval
+      expect { chat.ask_later('Next') }.to raise_error(RubyLLM::PendingToolCallsError, /answering pending inputs/)
+    end
+  end
+
   it 'refuses two tools with the same name' do
     echo = Class.new(RubyLLM::Tool) do
       def self.tool_name = 'echo'

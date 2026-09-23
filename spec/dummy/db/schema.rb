@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_923_130_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -69,6 +69,17 @@ ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
     t.index ['role'], name: 'index_messages_on_role'
   end
 
+  create_table 'ruby_llm_mcp_credentials', force: :cascade do |t|
+    t.string 'owner_type'
+    t.integer 'owner_id'
+    t.string 'key', null: false
+    t.text 'data'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[owner_type owner_id], name: 'index_ruby_llm_mcp_credentials_on_owner'
+    t.index ['key'], name: 'index_ruby_llm_mcp_credentials_on_key', unique: true
+  end
+
   create_table 'ruby_llm_models', force: :cascade do |t|
     t.string 'model_id', null: false
     t.string 'name', null: false
@@ -101,6 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_824_120_000) do
     t.string 'approval'
     t.boolean 'remote', default: false, null: false
     t.json 'arguments', default: {}
+    t.json 'pending_input'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[message_type message_id], name: 'index_ruby_llm_tool_calls_on_message'

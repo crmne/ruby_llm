@@ -12,11 +12,21 @@ module RubyLLM
       HEADER_SAFE = /\A[\x21-\x7E](?:[\x20-\x7E]*[\x21-\x7E])?\z/
       ENCODED_HEADER = /\A=\?base64\?.*\?=\z/
 
-      def initialize(url, headers: {}, timeout: nil, config: RubyLLM.config)
+      def self.secure?(url)
+        uri = URI(url.to_s)
+        uri.scheme == 'https' || (uri.scheme == 'http' && loopback?(uri))
+      end
+
+      def self.loopback?(url)
+        LOOPBACK_HOSTS.include?(URI(url.to_s).hostname)
+      end
+
+      def initialize(url, headers: {}, timeout: nil, unauthorized: nil, config: RubyLLM.config)
         @url = URI(url)
-        raise ArgumentError, "MCP servers must use HTTPS: #{url}" unless secure?
+        raise ArgumentError, "MCP servers must use HTTPS: #{url}" unless self.class.secure?(@url)
 
         @headers = headers
+        @unauthorized = unauthorized
         @connection = Transport::Connection.basic(config) do |faraday|
           faraday.options.timeout = timeout if timeout
         end
@@ -43,7 +53,7 @@ module RubyLLM
 
       private
 
-      def post(message, version:, timeout: nil, &on_notification)
+      def post(message, version:, timeout: nil, retried: false, &on_notification)
         stream = Stream.new(&on_notification)
         response = @connection.post(@url) do |request|
           request.headers.update(headers(message, version))
@@ -56,7 +66,13 @@ module RubyLLM
       rescue Faraday::Error => e
         raise unless e.response
 
+        return post(message, version:, timeout:, retried: true, &on_notification) if reauthorized?(e.response, retried)
+
         raise failure(e.response, stream)
+      end
+
+      def reauthorized?(response, retried)
+        response[:status] == 401 && !retried && @unauthorized&.call(response[:headers] || {})
       end
 
       def headers(message, version)
@@ -93,10 +109,6 @@ module RubyLLM
       def response_for(response)
         Faraday::Response.new(status: response[:status], response_headers: response[:headers],
                               body: response[:body])
-      end
-
-      def secure?
-        @url.scheme == 'https' || (@url.scheme == 'http' && LOOPBACK_HOSTS.include?(@url.hostname))
       end
 
       # Collects the JSON-RPC messages of one response, yielding

@@ -308,22 +308,15 @@ RSpec.describe RubyLLM::MCP do
       end
     end
 
-    it 'tells the model what the server needs when no callback answers' do
+    it 'raises from a tool when no callback answers' do
       connect = mcp.tools.find { |tool| tool.name == 'connect' }
 
-      expect(connect.call).to eq(error: "#{mcp.name} needs input from the user: " \
-                                        'Connect your account https://example.com/connect')
+      expect { connect.call }.to raise_error(RubyLLM::MCP::InputRequiredError)
     end
 
-    it 'declares form input only when a callback can answer it' do
-      answering = mcp_answering(&:decline)
-
+    it 'declares form and URL input to the server' do
       expect(mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
-        .to eq('elicitation' => { 'url' => {} })
-      expect(answering.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
         .to eq('elicitation' => { 'form' => {}, 'url' => {} })
-    ensure
-      answering&.close
     end
   end
 
@@ -400,6 +393,10 @@ RSpec.describe RubyLLM::MCP do
     stub_const('GoogleDrive', Class.new(described_class))
 
     expect(GoogleDrive.new.name).to eq('google_drive')
+  end
+
+  it 'names an anonymous class after its server' do
+    expect(Class.new(described_class) { url 'https://mcp.linear.app/mcp' }.new.name).to eq('linear')
   end
 
   it 'needs a url or a command' do

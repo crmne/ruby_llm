@@ -42,12 +42,13 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
           key_type = primary_key_type || :bigint
           prefix = mappings.empty? ? '' : 'llm_'
 
-          %W[#{prefix}chats #{prefix}messages ruby_llm_models ruby_llm_tool_calls ruby_llm_usages ruby_llm_batches]
+          %W[#{prefix}chats #{prefix}messages ruby_llm_models ruby_llm_tool_calls ruby_llm_mcp_credentials
+             ruby_llm_usages ruby_llm_batches]
             .each do |table|
               expect(migrations).to include("create_table :#{table}, id: :#{key_type} do |t|")
             end
           references = migrations.lines.grep(/t.references/)
-          expect(references.size).to eq(6)
+          expect(references.size).to eq(7)
           expect(references).to all(include("type: :#{key_type}"))
         end
       end

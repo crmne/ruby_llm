@@ -33,7 +33,7 @@ module RubyLLM
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
-      @only @except @tool_declarations @approvals @callbacks
+      @only @except @tool_declarations @approvals @callbacks @oauth
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS
 
@@ -118,6 +118,26 @@ module RubyLLM
         return @bearer_token if value.nil? && block.nil?
 
         @bearer_token = block || value
+      end
+
+      # Authorizes requests with OAuth, as the MCP authorization spec
+      # describes. RubyLLM discovers the server's authorization server and
+      # registers itself unless you pass the +client_id:+ and
+      # +client_secret:+ of an app you registered, which servers such as
+      # Slack require. +owner:+ names whose credentials these are, usually an
+      # input. +scopes:+ overrides the scopes the server asks for.
+      #
+      #   oauth owner: :user
+      #   oauth owner: :user, client_id: ENV["SLACK_CLIENT_ID"], client_secret: ENV["SLACK_CLIENT_SECRET"]
+      #
+      # Send the user to MCP#authorization_url, then pass the callback's
+      # parameters to MCP#authorize.
+      def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil)
+        @oauth = { owner:, scopes:, client_id:, client_secret: }
+      end
+
+      def oauth_settings # :nodoc:
+        @oauth
       end
 
       # Sets how many seconds a request to the server may take. Defaults to
@@ -228,8 +248,8 @@ module RubyLLM
 
       # Registers a callback for the server's requests for input from the
       # user. Pass a method name or a block; either runs on the MCP instance
-      # with an MCP::InputRequest to answer or decline. A request no
-      # callback answers goes to the model as the tool's error.
+      # with an MCP::InputRequest to answer or decline. In a chat, a request
+      # no callback answers pauses the tool call; see Chat#pending_inputs.
       #
       #   before_input_request :ask_operator
       #   before_input_request { |request| request.answer(environment: "staging") }
@@ -243,7 +263,10 @@ module RubyLLM
       end
 
       def default_name # :nodoc:
-        @default_name || (name && Support::Utils.underscore(name.split('::').last))
+        return @default_name if @default_name
+        return Support::Utils.underscore(name.split('::').last) if name
+
+        default_name_for(url:, command:) if url || command
       end
 
       # Builds an anonymous MCP class from keywords, as RubyLLM.mcp does.
@@ -257,7 +280,7 @@ module RubyLLM
           directory(directory) if directory
           bearer_token(bearer_token) if bearer_token
           timeout(timeout) if timeout
-          self.default_name = name || default_name_for(url:, command:)
+          self.default_name = name if name
         end
       end
 
@@ -391,15 +414,14 @@ module RubyLLM
     end
 
     # Runs +tool+, one of this MCP's tools, with the model's +arguments+.
-    def run(tool, arguments) # :nodoc:
+    def run(tool, arguments, input: nil) # :nodoc:
       arguments = arguments.transform_keys(&:to_sym)
       fixed = tool.fixed_arguments.transform_values { |value| value.is_a?(Proc) ? instance_exec(&value) : value }
-      result = call(tool.server_name, **arguments, **fixed)
+      params = { name: tool.server_name, arguments: arguments.merge(fixed) }
+      result = Result.new(request('tools/call', params, input:))
       return { error: result.text } if result.error?
 
       tool.wrap ? apply(tool.wrap, result, **arguments) : result.content
-    rescue InputRequiredError => e
-      { error: e.message }
     end
 
     # Returns the instructions the server gives for using it, or +nil+.
@@ -410,6 +432,40 @@ module RubyLLM
     # Returns the version the server reports for itself, or +nil+.
     def version
       server_info['version']
+    end
+
+    # Returns whether the owner has authorized this server. Only for
+    # servers declared with ::oauth.
+    def authorized?
+      oauth.authorized?
+    end
+
+    # Returns the URL to send the user to so they can authorize this
+    # server. The authorization server redirects back to +redirect_uri+,
+    # whose parameters go to #authorize.
+    #
+    #   redirect_to linear.authorization_url(redirect_uri: mcp_callback_url), allow_other_host: true
+    #
+    def authorization_url(redirect_uri:)
+      oauth.authorization_url(redirect_uri:, challenge: @challenge || challenge)
+    end
+
+    # Completes an authorization with the parameters of the callback
+    # request, such as a controller's +params+. Returns +self+.
+    #
+    #   Linear.new(user: current_user).authorize(params)
+    #
+    # Raises MCP::Error when the callback does not match the authorization
+    # that #authorization_url started.
+    def authorize(params)
+      oauth.authorize(params)
+      self
+    end
+
+    # Forgets the owner's credentials for this server. Returns +self+.
+    def deauthorize
+      oauth.deauthorize
+      self
     end
 
     # Closes the connection, stopping a stdio server's process. The next
@@ -430,20 +486,23 @@ module RubyLLM
       (@server_tools && server_tool?(name)) || super
     end
 
-    def request(method, params)
-      result = send_request(method, params)
+    def request(method, params, input: nil)
+      result = input ? send_answers(method, params, input) : send_request(method, params)
       INPUT_ROUNDS.times do
         return result unless result['resultType'] == 'input_required'
 
-        requests = input_requests(result)
-        unanswered = requests.reject(&:answered?)
-        raise InputRequiredError.new(name, unanswered) if unanswered.any?
+        input = { 'requests' => input_requests(result), 'request_state' => result['requestState'] }
+        raise InputRequiredError.new(name, input) unless input['requests'].all?(&:answered?)
 
-        responses = requests.to_h { |request| [request.key, request.response] }
-        retry_params = { inputResponses: responses, requestState: result['requestState'] }.compact
-        result = send_request(method, params.merge(retry_params))
+        result = send_answers(method, params, input)
       end
       raise Error, "#{name} kept asking for input"
+    end
+
+    def send_answers(method, params, input)
+      requests = input['requests'].map { |request| request.is_a?(Hash) ? InputRequest.from_h(request) : request }
+      responses = requests.to_h { |request| [request.key, request.response] }
+      send_request(method, params.merge({ inputResponses: responses, requestState: input['request_state'] }.compact))
     end
 
     def input_requests(result)
@@ -515,17 +574,14 @@ module RubyLLM
     end
 
     def client
-      @client ||= Client.new(transport, capabilities: { elicitation: elicitation_modes })
-    end
-
-    def elicitation_modes
-      self.class.callbacks(:before_input_request).any? ? { form: {}, url: {} } : { url: {} }
+      @client ||= Client.new(transport, capabilities: { elicitation: { form: {}, url: {} } })
     end
 
     def transport
       settings = self.class
       if settings.url
-        HTTP.new(resolve(settings.url), headers: -> { request_headers }, timeout: settings.timeout)
+        HTTP.new(resolve(settings.url), headers: -> { request_headers }, timeout: settings.timeout,
+                                        unauthorized: method(:unauthorized))
       elsif settings.command
         Stdio.new(settings.command.map { |part| resolve(part) },
                   env: settings.env.transform_values { |value| resolve(value) },
@@ -537,8 +593,27 @@ module RubyLLM
 
     def request_headers
       headers = self.class.headers.transform_values { |value| resolve(value) }
-      token = resolve(self.class.bearer_token)
+      token = self.class.oauth_settings ? oauth.access_token : resolve(self.class.bearer_token)
       token ? headers.merge('Authorization' => "Bearer #{token}") : headers
+    end
+
+    def oauth
+      settings = self.class.oauth_settings or raise ConfigurationError, "#{name} does not use OAuth"
+      @oauth ||= OAuth.new(resolve(self.class.url), owner: resolve(settings[:owner]), scopes: settings[:scopes],
+                                                    client_id: resolve(settings[:client_id]),
+                                                    client_secret: resolve(settings[:client_secret]))
+    end
+
+    def unauthorized(headers)
+      @challenge = OAuth.challenge(headers['www-authenticate'] || headers['WWW-Authenticate'])
+      self.class.oauth_settings && oauth.authorized? && oauth.refresh
+    end
+
+    def challenge
+      client.server
+      nil
+    rescue UnauthorizedError
+      @challenge
     end
 
     def resolve(value)

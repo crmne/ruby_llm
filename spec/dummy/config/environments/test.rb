@@ -45,4 +45,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Fixed keys for encrypted RubyLLM records in tests.
+  config.active_record.encryption.primary_key = 'ruby-llm-test-primary-key'
+  config.active_record.encryption.deterministic_key = 'ruby-llm-test-deterministic-key'
+  config.active_record.encryption.key_derivation_salt = 'ruby-llm-test-key-derivation-salt'
 end

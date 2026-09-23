@@ -21,11 +21,13 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/tool_call'
           require 'ruby_llm/active_record/usage'
           require 'ruby_llm/active_record/batch'
+          require 'ruby_llm/active_record/mcp_credential'
           require 'ruby_llm/active_record/chat_methods'
           require 'ruby_llm/active_record/message_methods'
 
           require 'ruby_llm/active_record/acts_as'
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
+          RubyLLM.config.mcp_credential_store ||= RubyLLM::ActiveRecord::MCPCredential
         end
       end
 

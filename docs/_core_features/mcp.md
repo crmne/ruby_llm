@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to give a server's tools to chats, agents, and Rails records.
 * How to read a server's resources and ask with its prompts.
 * How to answer a server's requests for input and follow its progress.
+* How to authorize servers with OAuth.
 * How RubyLLM talks to servers and keeps connections safe.
 
 ## Describing a Server
@@ -330,9 +331,25 @@ end
 
 A form request describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. A URL request has a `url` for the user to visit; `answer` with no values means the user agreed to go. `decline` refuses either kind. RubyLLM then sends the answers and the server finishes the call.
 
-A request no callback answers goes to the model as the tool's error, with the message and any URL. The model can then ask the user, share the link, and call the tool again once the user is done. Calling a tool directly raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
+In a chat, a request no callback answers pauses the tool call, the way [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval) pause. Show the requests to the user, record their answers, and resume:
 
-RubyLLM only tells servers it can fill in forms when the class has a `before_input_request` callback. Servers never ask for passwords or tokens through forms; those go through URL requests, so they never pass through your application.
+```ruby
+chat.ask "Deploy the release branch"
+
+chat.awaiting_input?                         # => true
+request = chat.pending_inputs.first
+request.message                              # => "Which environment?"
+request.fields.first.choices                 # => ["staging", "production"]
+
+chat.answer(request, environment: "staging") # or chat.decline(request)
+chat.complete
+```
+
+`complete` resumes the call once all its requests are settled: RubyLLM sends the answers with the server's saved request state, and the server finishes. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
+
+In Rails, the requests persist on the tool call, so a job can pause, a controller can record the user's answer, and another job can resume the call after a deploy or a restart. New applications get the `pending_input` column from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with `bin/rails generate ruby_llm:upgrade`.
+
+Servers never ask for passwords or tokens through forms; those go through URL requests, so they never pass through your application.
 
 ## Progress and Cancellation
 
@@ -355,6 +372,78 @@ end
 `progress.value` only grows, `progress.total` is set when the server knows how much work there is, and `progress.fraction` gives the share done.
 
 Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
+
+## Authorization
+
+A server that belongs to a service your app already signs users into can take that token with `bearer_token`. For everything else, MCP servers use OAuth, and RubyLLM runs it for you:
+
+```ruby
+class Linear < RubyLLM::MCP
+  url "https://mcp.linear.app/mcp"
+  inputs :user
+  oauth owner: :user
+end
+```
+
+`owner:` names whose credentials these are, usually an input. RubyLLM finds the server's authorization server, registers itself when needed, and uses PKCE, as the MCP authorization spec requires. Send the user to authorize, then finish in the callback:
+
+```ruby
+class LinearConnectionsController < ApplicationController
+  def new
+    redirect_to linear.authorization_url(redirect_uri: callback_linear_connection_url), allow_other_host: true
+  end
+
+  def callback
+    linear.authorize(params)
+    redirect_to root_path, notice: "Linear is connected."
+  end
+
+  private
+
+  def linear
+    Linear.new(user: Current.user)
+  end
+end
+```
+
+From then on, every request carries the user's token, and RubyLLM refreshes it when it expires. Check `linear.authorized?` before showing a chat that needs it, and call `linear.deauthorize` to forget the credentials. `authorize` raises `RubyLLM::MCP::Error` when the callback does not belong to the authorization it started, such as a wrong `state` or another issuer.
+
+Some servers, such as Slack's, only accept apps you registered with them. Pass that app's credentials:
+
+```ruby
+class Slack < RubyLLM::MCP
+  url "https://mcp.slack.com/mcp"
+  inputs :user
+  oauth owner: :user, client_id: ENV["SLACK_CLIENT_ID"], client_secret: ENV["SLACK_CLIENT_SECRET"]
+end
+```
+
+Pass `scopes:` to ask for specific scopes instead of the ones the server suggests.
+
+### Storing Credentials
+
+In Rails, credentials live in the `ruby_llm_mcp_credentials` table, encrypted with [Active Record encryption](https://guides.rubyonrails.org/active_record_encryption.html). New applications get the table from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with the upgrade generator:
+
+```bash
+bin/rails generate ruby_llm:upgrade
+bin/rails db:encryption:init   # if your app has no encryption keys yet
+bin/rails db:migrate
+```
+
+Plain Ruby keeps credentials in memory. Set `config.mcp_credential_store` to an object with `read(key)`, `write(key, data, owner:)`, and `delete(key)` to keep them elsewhere.
+
+### Client Registration
+
+Authorization servers that support client ID metadata documents can identify your app by a URL instead of a registration. Serve the document from your app and point RubyLLM at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.mcp_client_id = "https://app.example.com/oauth/client.json"
+  config.mcp_client_name = "Example"
+end
+```
+
+The document's `client_id` must be that exact URL, and its `redirect_uris` must list your callback. Without it, RubyLLM registers with servers that allow dynamic registration, once per authorization server and callback.
 
 ## Connections and Safety
 

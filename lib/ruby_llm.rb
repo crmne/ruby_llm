@@ -28,6 +28,7 @@ loader.inflector.inflect(
   'http' => 'HTTP',
   'llm' => 'LLM',
   'mcp' => 'MCP',
+  'oauth' => 'OAuth',
   'mistral' => 'Mistral',
   'ocr' => 'OCR',
   'openai' => 'OpenAI',

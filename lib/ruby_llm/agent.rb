@@ -77,14 +77,14 @@ module RubyLLM
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result
       before_fallback after_fallback
-      cancel approve deny cache_until_here
+      cancel approve deny answer decline cache_until_here
     ].freeze
 
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools mcp provider_tools tool_options provider_options headers schema concurrency
       caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
-      each complete? cancelled? awaiting_approval? pending_approvals
+      each complete? cancelled? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       add_message add_completion tokens cost render
     ].freeze
 
@@ -1110,6 +1110,18 @@ module RubyLLM
     # Delegates to Chat#deny. See that method for arguments and return values.
 
     ##
+    # :method: answer
+    # :call-seq: answer(request, **values)
+    #
+    # Delegates to Chat#answer. See that method for arguments and return values.
+
+    ##
+    # :method: decline
+    # :call-seq: decline(request)
+    #
+    # Delegates to Chat#decline. See that method for arguments and return values.
+
+    ##
     # :method: cache_until_here
     # :call-seq: cache_until_here()
     #
@@ -1264,6 +1276,18 @@ module RubyLLM
     # :call-seq: pending_approvals()
     #
     # Delegates to Chat#pending_approvals. See that method for arguments and return values.
+
+    ##
+    # :method: awaiting_input?
+    # :call-seq: awaiting_input?()
+    #
+    # Delegates to Chat#awaiting_input?. See that method for arguments and return values.
+
+    ##
+    # :method: pending_inputs
+    # :call-seq: pending_inputs()
+    #
+    # Delegates to Chat#pending_inputs. See that method for arguments and return values.
 
     ##
     # :method: add_message

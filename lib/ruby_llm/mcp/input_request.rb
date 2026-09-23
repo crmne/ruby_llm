@@ -16,8 +16,8 @@ module RubyLLM
     #     end
     #   end
     #
-    # A request no callback answers goes to the model as the tool's error,
-    # with the message and any URL, so it can ask the user.
+    # In a chat, a request no callback answers pauses the tool call until
+    # Chat#answer or Chat#decline settles it; see Chat#pending_inputs.
     class InputRequest
       include Support::Inspectable
 
@@ -40,8 +40,18 @@ module RubyLLM
 
       attr_reader :key, :response # :nodoc:
 
-      def initialize(key, params) # :nodoc:
+      # The ToolCall paused on this request, when it came from a chat.
+      attr_reader :tool_call
+
+      def self.from_h(data, tool_call: nil) # :nodoc:
+        new(data['key'], data['params'], response: data['response'], tool_call:)
+      end
+
+      def initialize(key, params, response: nil, tool_call: nil) # :nodoc:
         @key = key
+        @params = params
+        @response = response
+        @tool_call = tool_call
         @message = params['message']
         @url = params['url'] if params['mode'] == 'url'
         @fields = fields_from(params['requestedSchema'] || {})
@@ -71,6 +81,10 @@ module RubyLLM
       # Returns whether the request has been answered or declined.
       def answered?
         !response.nil?
+      end
+
+      def to_h # :nodoc:
+        { 'key' => key, 'params' => @params, 'response' => response&.transform_keys(&:to_s) }.compact
       end
 
       private
