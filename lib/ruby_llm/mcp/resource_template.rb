@@ -36,7 +36,7 @@ module RubyLLM
 
       def self.expand(template, variables) # :nodoc:
         variables = variables.transform_keys(&:to_s)
-        template.gsub(/\{([+#.\/;?&]?)([^}]+)\}/) do
+        template.gsub(%r{\{([+#./;?&]?)([^{}]+)\}}) do
           operator = Regexp.last_match(1)
           names = Regexp.last_match(2).split(',').select { |name| variables.key?(name) }
           expand_expression(operator, names, variables)
