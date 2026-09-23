@@ -6,7 +6,8 @@ require 'open3'
 module RubyLLM
   class MCP
     # stdio. The server is a child process that reads one JSON-RPC message
-    # per line on stdin and writes one per line on stdout. It starts on the
+    # per line on stdin and writes one per line on stdout. Reads never block
+    # past the deadline, even on a partial line. It starts on the
     # first request, restarts after it exits, and handles one request at a
     # time. Its stderr is the parent's.
     class Stdio # :nodoc:
@@ -68,23 +69,37 @@ module RubyLLM
 
       def read(deadline)
         loop do
-          remaining = deadline - monotonic_now
-          raise Error, "#{name} did not answer in time" unless remaining.positive?
-
-          Support::Cancellation.check
-          next unless @stdout.wait_readable([remaining, CHECK_INTERVAL].min)
-
-          line = @stdout.gets
-          unless line
-            stop
-            raise Error, "#{name} exited"
-          end
+          line = next_line(deadline)
           next if line.strip.empty?
 
           return JSON.parse(line)
         rescue JSON::ParserError
           RubyLLM.logger.debug { "#{name} wrote a line that is not JSON" }
         end
+      end
+
+      def next_line(deadline)
+        loop do
+          line = @buffer.slice!(/\A[^\n]*\n/)
+          return line if line
+
+          remaining = deadline - monotonic_now
+          raise Error, "#{name} did not answer in time" unless remaining.positive?
+
+          Support::Cancellation.check
+          next unless @stdout.wait_readable([remaining, CHECK_INTERVAL].min)
+
+          chunk = @stdout.read_nonblock(65_536, exception: false)
+          next if chunk == :wait_readable
+
+          exited unless chunk
+          @buffer << chunk
+        end
+      end
+
+      def exited
+        stop
+        raise Error, "#{name} exited"
       end
 
       def answer(request)
@@ -99,6 +114,7 @@ module RubyLLM
       def start
         options = @directory ? { chdir: @directory } : {}
         @stdin, @stdout, @process = Open3.popen2(@env, *@command, **options)
+        @buffer = +''
       end
 
       def stop

@@ -147,7 +147,11 @@ RSpec.describe RubyLLM::MCP::OAuth do
 
   ['https://mcp.example.com.attacker.io/mcp', 'https://mcp.example.com:8443/mcp'].each do |impostor|
     it "refuses a server at #{impostor} claiming another server's resource" do
-      stub_request(:post, impostor).to_return(status: 401, headers: { 'WWW-Authenticate' => challenge })
+      metadata = URI.join(impostor, '/.well-known/oauth-protected-resource/mcp').to_s
+      stub_request(:post, impostor)
+        .to_return(status: 401, headers: { 'WWW-Authenticate' => "Bearer resource_metadata=\"#{metadata}\"" })
+      stub_request(:get, metadata)
+        .to_return(body: { resource: server_url, authorization_servers: ['https://auth.example.com'] }.to_json)
       mcp = Class.new(RubyLLM::MCP) do
         url impostor
         oauth
@@ -182,6 +186,17 @@ RSpec.describe RubyLLM::MCP::OAuth do
     linear_class.new(user: 'ada').send(:oauth).refresh
 
     expect(a_request(:post, 'https://evil.example.com/token')).not_to have_been_made
+  end
+
+  it 'ignores metadata URLs on other hosts' do
+    stub_request(:post, server_url).to_return(
+      status: 401, headers: { 'WWW-Authenticate' => 'Bearer resource_metadata="https://internal.example.com/metadata"' }
+    )
+
+    linear.authorization_url(redirect_uri:)
+
+    expect(a_request(:get, 'https://internal.example.com/metadata')).not_to have_been_made
+    expect(a_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')).to have_been_made
   end
 
   it 'forgets credentials' do

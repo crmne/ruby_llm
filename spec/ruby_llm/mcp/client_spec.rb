@@ -31,6 +31,14 @@ RSpec.describe RubyLLM::MCP::Client do
       expect(names).to eq(%w[echo add fail picture slow wait deploy connect delete_everything])
     end
 
+    it 'times out on a server that stops in the middle of a line' do
+      stalled = described_class.new(RubyLLM::MCP::Stdio.new([RbConfig.ruby, server], timeout: 1))
+
+      expect { stalled.request('spec/stall') }.to raise_error(RubyLLM::MCP::Error, /did not answer in time/)
+    ensure
+      stalled&.close
+    end
+
     it 'raises JSON-RPC errors with their code' do
       expect { client.request('unknown/method') }
         .to raise_error(RubyLLM::MCP::Error, 'Method not found') { |error| expect(error.code).to eq(-32_601) }

@@ -178,6 +178,7 @@ $stdin.each_line do |line|
     reply(id, result: call_tool(params))
   when 'notifications/cancelled' then cancelled << params['requestId']
   when 'spec/cancelled' then reply(id, result: { cancelled: })
+  when 'spec/stall' then $stdout.write('{"jsonrpc":')
   when 'resources/list'
     resources = RESOURCES.map { |uri, resource| { uri:, name: File.basename(uri), mimeType: resource[:mimeType] } }
     reply(id, result: { resources: })

@@ -177,7 +177,7 @@ module RubyLLM
 
       def protected_resource_metadata
         url = @challenge&.dig(:resource_metadata)
-        return get_json(url) if url
+        return get_json(url) if url && same_origin?(URI(url), URI(@server_url))
 
         uri = URI(@server_url)
         path = uri.path.chomp('/')
@@ -193,9 +193,13 @@ module RubyLLM
         raise Error, "#{@server_url} published metadata for another resource: #{resource}"
       end
 
+      def same_origin?(url, server)
+        [url.scheme, url.host, url.port] == [server.scheme, server.host, server.port]
+      end
+
       def covers?(resource, server)
         return false if resource.userinfo || server.userinfo
-        return false unless [resource.scheme, resource.host, resource.port] == [server.scheme, server.host, server.port]
+        return false unless same_origin?(resource, server)
 
         path = resource.path.chomp('/')
         server.path == path || server.path.start_with?("#{path}/")
