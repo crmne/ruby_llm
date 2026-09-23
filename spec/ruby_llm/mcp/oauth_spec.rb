@@ -145,6 +145,18 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /another resource/)
   end
 
+  ['https://mcp.example.com.attacker.io/mcp', 'https://mcp.example.com:8443/mcp'].each do |impostor|
+    it "refuses a server at #{impostor} claiming another server's resource" do
+      stub_request(:post, impostor).to_return(status: 401, headers: { 'WWW-Authenticate' => challenge })
+      mcp = Class.new(RubyLLM::MCP) do
+        url impostor
+        oauth
+      end.new
+
+      expect { mcp.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /another resource/)
+    end
+  end
+
   it 'forgets credentials' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 

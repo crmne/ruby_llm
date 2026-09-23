@@ -5,7 +5,7 @@ module RubyLLM
     # Streamable HTTP. Every message is its own POST, answered with a JSON
     # body or with an event stream that carries the request's notifications
     # before its response. Plain HTTP is only allowed on loopback addresses,
-    # and redirects are never followed. A cancelled chat closes the stream,
+    # URLs cannot carry credentials, and redirects are never followed. A cancelled chat closes the stream,
     # which is how 2026-07-28 cancels a request.
     class HTTP # :nodoc:
       LOOPBACK_HOSTS = %w[localhost 127.0.0.1 ::1].freeze
@@ -14,6 +14,8 @@ module RubyLLM
 
       def self.secure?(url)
         uri = URI(url.to_s)
+        return false if uri.userinfo
+
         uri.scheme == 'https' || (uri.scheme == 'http' && loopback?(uri))
       end
 
@@ -23,7 +25,9 @@ module RubyLLM
 
       def initialize(url, headers: {}, timeout: nil, unauthorized: nil, config: RubyLLM.config)
         @url = URI(url)
-        raise ArgumentError, "MCP servers must use HTTPS: #{url}" unless self.class.secure?(@url)
+        unless self.class.secure?(@url)
+          raise ArgumentError, "MCP servers must use HTTPS without credentials in the URL: #{url}"
+        end
 
         @headers = headers
         @unauthorized = unauthorized

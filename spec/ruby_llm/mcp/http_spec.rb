@@ -25,6 +25,11 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect { described_class.new('http://localhost:3000/mcp') }.not_to raise_error
   end
 
+  it 'refuses URLs that carry credentials' do
+    expect { described_class.new('https://mcp.example.com@attacker.io/mcp') }
+      .to raise_error(ArgumentError, /credentials/)
+  end
+
   it 'sends the MCP headers with each request' do
     stub_method('server/discover', result: discover_result)
     stub_method('tools/call', result: { content: [] })

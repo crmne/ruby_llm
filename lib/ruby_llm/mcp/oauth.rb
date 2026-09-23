@@ -185,9 +185,17 @@ module RubyLLM
 
       def checked_resource(resource)
         return unless resource
-        return resource if @server_url.chomp('/').start_with?(resource.chomp('/'))
+        return resource if covers?(URI(resource), URI(@server_url))
 
         raise Error, "#{@server_url} published metadata for another resource: #{resource}"
+      end
+
+      def covers?(resource, server)
+        return false if resource.userinfo || server.userinfo
+        return false unless [resource.scheme, resource.host, resource.port] == [server.scheme, server.host, server.port]
+
+        path = resource.path.chomp('/')
+        server.path == path || server.path.start_with?("#{path}/")
       end
 
       def discover_authorization_server(issuer)
