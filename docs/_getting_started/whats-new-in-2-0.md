@@ -1,7 +1,7 @@
 ---
 layout: default
 title: What's New in 2.0
-nav_order: 4
+nav_order: 5
 description: Explore the expanded provider coverage, new AI operations, conversation controls, and Rails integration in RubyLLM 2.0.
 provider_coverage: true
 ---
@@ -25,45 +25,21 @@ The examples assume you have [configured the providers you use]({% link _getting
 
 ## Provider API Coverage
 
-1.16 already supported chat, tools, agents, structured output, thinking, embeddings, images, transcription, and moderation. 2.0 adds judgments, video, speech, OCR, reranking, files, batches, and a shared API for provider-hosted tools. It also extends the existing APIs with more controls and richer results.
+1.16 already supported chat, tools, agents, structured output, thinking, embeddings, images, transcription, and moderation. 2.0 adds video, speech, OCR, reranking, files, batches, and a shared API for provider-hosted tools. It also extends the existing APIs with more controls and richer results.
 
 Red cells show built-in support added in 2.0. Gray cells were already supported in 1.16. Outlined cells with a × mark missing integrations; use “Missing in 2.0” to find them. Select a cell for its sources and implementation notes.
 
 {% include provider_coverage_matrix.html compact=true %}
 
-The [Provider API Coverage]({% link _reference/provider-coverage.md %}) page records support at the audit date, with source references and remaining gaps. The comparison above uses the provider features documented at that date for both versions, so it includes features providers introduced after 1.16. It predates TypeSafe support; see [Typed Judgments](#typed-judgments) below.
+The [Provider API Coverage]({% link _reference/provider-coverage.md %}) page records support at the audit date, with source references and remaining gaps. The comparison above uses the provider features documented at that date for both versions, so it includes features providers introduced after 1.16. It predates TypeSafe support, which arrived with [typed judgments in 2.1]({% link _getting_started/whats-new-in-2-1.md %}#typed-judgments).
 
 ## Providers and Protocols
 
-Cohere, Deepgram, ElevenLabs, Ollama Cloud, and TypeSafe join the built-in providers, bringing the total to eighteen.
+Cohere, Deepgram, ElevenLabs, and Ollama Cloud join the built-in providers, bringing the total to seventeen.
 
 Providers and protocols are now separate. A provider supplies authentication, endpoints, model catalogs, and service-specific behavior. A protocol handles request formats, response parsing, and streaming. RubyLLM selects the protocol for the model and operation, so your application keeps the same API across providers.
 
 A new provider can reuse an existing protocol. The [provider gem generator]({% link _reference/custom-providers.md %}#generate-the-starting-point) creates the package, configuration, and tests to get started.
-
-## Typed Judgments
-
-Define questions about your application data and read probabilities, choices, and scores:
-
-```ruby
-class TicketTriage < RubyLLM::Judge
-  probability :urgent, "Does this need attention today?"
-
-  choice :department, "Which team should handle this?" do
-    billing "Payments and refunds"
-    technical "Bugs and integrations"
-    other "Everything else"
-  end
-end
-
-judgment = TicketTriage.judge("Please refund the duplicate charge today.")
-judgment.urgent.probability
-judgment.department.choice
-```
-
-Judges use `config.default_judgment_model` unless you override the model. They accept structured input, reusable definitions, and runtime procs. Choice and score answers include full distributions and confidence so your application can choose how to act. See [Judgments]({% link _core_features/judgments.md %}).
-
-Use TypeSafe's hosted Jev models or a [Jev-compatible local server]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) through the same judgment API.
 
 ## Human Approval for Tools
 
