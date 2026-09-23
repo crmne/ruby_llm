@@ -17,7 +17,7 @@ After reading this guide, you will know:
 
 * How RubyLLM upgrades move from one release to the next.
 * What to finish on 2.0 before you update the gem.
-* How to upgrade a 2.0 application to 2.1.
+* How to upgrade a 2.0 application and its Rails schema to 2.1.
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
@@ -48,7 +48,20 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code or your Rails schema. Run your tests and deploy.
+2.1 does not require changes to your code.
+
+## Upgrade the Rails Schema
+
+Rails applications generate and run the 2.1 upgrade:
+
+```bash
+bin/rails generate ruby_llm:upgrade
+bin/rails db:migrate
+```
+
+It adds the `ruby_llm_mcp_credentials` table, where the [MCP client]({% link _core_features/mcp.md %}#authorization) keeps OAuth credentials encrypted, and a `pending_input` column to `ruby_llm_tool_calls`, where a paused MCP tool call keeps its input requests. Both are new; the migration changes no existing data. Credentials use Active Record encryption, so run `bin/rails db:encryption:init` first if your app has no encryption keys.
+
+Run your tests and deploy.
 
 ## The Community MCP Gem
 

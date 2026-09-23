@@ -1,0 +1,22 @@
+class <%= 'upgrade_ruby_llm_to_2_1'.camelize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    unless table_exists?(:ruby_llm_mcp_credentials)
+      create_table :ruby_llm_mcp_credentials, id: :<%= reference_type %> do |t|
+        t.references :owner, polymorphic: true, type: :<%= reference_type %>
+        t.string :key, null: false
+        t.text :data
+        t.timestamps
+
+        t.index :key, unique: true
+      end
+    end
+
+    unless column_exists?(:ruby_llm_tool_calls, :pending_input)
+<% if postgresql? -%>
+      add_column :ruby_llm_tool_calls, :pending_input, :jsonb
+<% else -%>
+      add_column :ruby_llm_tool_calls, :pending_input, :json
+<% end -%>
+    end
+  end
+end
