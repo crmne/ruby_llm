@@ -29,11 +29,13 @@ module RubyLLM
   class MCP
     include Support::Inspectable
 
+    INPUT_ROUNDS = 10
+
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
       @only @except @tool_declarations @approvals @callbacks
     ].freeze
-    private_constant :SETTINGS
+    private_constant :SETTINGS, :INPUT_ROUNDS
 
     class << self
       attr_writer :default_name # :nodoc:
@@ -224,6 +226,18 @@ module RubyLLM
         add_callback(:after_progress, method, block)
       end
 
+      # Registers a callback for the server's requests for input from the
+      # user. Pass a method name or a block; either runs on the MCP instance
+      # with an MCP::InputRequest to answer or decline. A request no
+      # callback answers goes to the model as the tool's error.
+      #
+      #   before_input_request :ask_operator
+      #   before_input_request { |request| request.answer(environment: "staging") }
+      #
+      def before_input_request(method = nil, &block)
+        add_callback(:before_input_request, method, block)
+      end
+
       def callbacks(name) # :nodoc:
         (@callbacks || {}).fetch(name, [])
       end
@@ -384,6 +398,8 @@ module RubyLLM
       return { error: result.text } if result.error?
 
       tool.wrap ? apply(tool.wrap, result, **arguments) : result.content
+    rescue InputRequiredError => e
+      { error: e.message }
     end
 
     # Returns the instructions the server gives for using it, or +nil+.
@@ -415,6 +431,34 @@ module RubyLLM
     end
 
     def request(method, params)
+      result = send_request(method, params)
+      INPUT_ROUNDS.times do
+        return result unless result['resultType'] == 'input_required'
+
+        requests = input_requests(result)
+        unanswered = requests.reject(&:answered?)
+        raise InputRequiredError.new(name, unanswered) if unanswered.any?
+
+        responses = requests.to_h { |request| [request.key, request.response] }
+        retry_params = { inputResponses: responses, requestState: result['requestState'] }.compact
+        result = send_request(method, params.merge(retry_params))
+      end
+      raise Error, "#{name} kept asking for input"
+    end
+
+    def input_requests(result)
+      result.fetch('inputRequests', {}).filter_map do |key, request|
+        next unless request['method'] == 'elicitation/create'
+
+        InputRequest.new(key, request['params'] || {}).tap do |input_request|
+          self.class.callbacks(:before_input_request).each do |callback|
+            apply(callback, input_request) unless input_request.answered?
+          end
+        end
+      end
+    end
+
+    def send_request(method, params)
       callbacks = self.class.callbacks(:after_progress)
       return client.request(method, params) if callbacks.empty?
 
@@ -471,7 +515,11 @@ module RubyLLM
     end
 
     def client
-      @client ||= Client.new(transport)
+      @client ||= Client.new(transport, capabilities: { elicitation: elicitation_modes })
+    end
+
+    def elicitation_modes
+      self.class.callbacks(:before_input_request).any? ? { form: {}, url: {} } : { url: {} }
     end
 
     def transport

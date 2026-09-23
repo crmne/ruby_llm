@@ -14,8 +14,9 @@ module RubyLLM
 
       attr_reader :version
 
-      def initialize(transport)
+      def initialize(transport, capabilities: {})
         @transport = transport
+        @capabilities = capabilities
         @connecting = Mutex.new
       end
 
@@ -86,7 +87,7 @@ module RubyLLM
         {
           'io.modelcontextprotocol/protocolVersion' => VERSION,
           'io.modelcontextprotocol/clientInfo' => client_info,
-          'io.modelcontextprotocol/clientCapabilities' => {}
+          'io.modelcontextprotocol/clientCapabilities' => @capabilities
         }
       end
 

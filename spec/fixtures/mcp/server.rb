@@ -28,6 +28,8 @@ TOOLS = [
   { name: 'picture', description: 'Returns a picture', inputSchema: { type: 'object' } },
   { name: 'slow', description: 'Reports progress', inputSchema: { type: 'object' } },
   { name: 'wait', description: 'Never answers', inputSchema: { type: 'object' } },
+  { name: 'deploy', description: 'Asks where to deploy', inputSchema: { type: 'object' } },
+  { name: 'connect', description: 'Asks the user to connect an account', inputSchema: { type: 'object' } },
   {
     name: 'delete_everything', description: 'Deletes everything', inputSchema: { type: 'object' },
     annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false }
@@ -49,6 +51,41 @@ PROMPT = {
 def read_resource(uri)
   resource = RESOURCES[uri] || { mimeType: 'text/plain', text: "Contents of #{uri}" }
   { contents: [{ uri: }.merge(resource)] }
+end
+
+ENVIRONMENT_FORM = {
+  method: 'elicitation/create',
+  params: {
+    mode: 'form', message: 'Which environment?',
+    requestedSchema: {
+      type: 'object', required: ['environment'],
+      properties: { environment: { type: 'string', title: 'Environment', enum: %w[staging production] } }
+    }
+  }
+}.freeze
+
+CONNECT_URL = {
+  method: 'elicitation/create',
+  params: { mode: 'url', message: 'Connect your account', url: 'https://example.com/connect' }
+}.freeze
+
+def input_required(key, request)
+  { resultType: 'input_required', inputRequests: { key => request }, requestState: "#{key}-state" }
+end
+
+def deploy(params)
+  answer = params.dig('inputResponses', 'environment')
+  return input_required('environment', ENVIRONMENT_FORM) unless answer && params['requestState'] == 'environment-state'
+  return { content: [{ type: 'text', text: 'Deploy cancelled' }] } unless answer['action'] == 'accept'
+
+  { content: [{ type: 'text', text: "Deployed to #{answer.dig('content', 'environment')}" }] }
+end
+
+def connect(params)
+  answer = params.dig('inputResponses', 'connect')
+  return input_required('connect', CONNECT_URL) unless answer
+
+  { content: [{ type: 'text', text: 'Connected' }] }
 end
 
 def get_prompt(arguments)
@@ -87,6 +124,8 @@ def call_tool(params)
                 { type: 'resource_link', uri: 'file:///pixel.png', name: 'pixel.png' }] }
   when 'delete_everything' then { content: [{ type: 'text', text: 'Gone' }] }
   when 'slow' then { content: [{ type: 'text', text: 'Finished' }] }
+  when 'deploy' then deploy(params)
+  when 'connect' then connect(params)
   else raise ArgumentError, "Unknown tool: #{params['name']}"
   end
 end

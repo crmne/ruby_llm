@@ -14,7 +14,7 @@ RSpec.describe RubyLLM::MCP do
 
   describe 'tools' do
     it 'lists the server tools' do
-      expect(mcp.tools.map(&:name)).to eq(%w[echo add fail picture slow wait delete_everything])
+      expect(mcp.tools.map(&:name)).to eq(%w[echo add fail picture slow wait deploy connect delete_everything])
       expect(mcp.tools.first).to have_attributes(
         description: 'Echoes the text back',
         parameters_schema: { 'type' => 'object', 'properties' => { 'text' => { 'type' => 'string' } },
@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::MCP do
     it 'hides the named tools' do
       mcp = shaped { except :delete_everything, :fail }
 
-      expect(mcp.tools.map(&:name)).to eq(%w[echo add picture slow wait])
+      expect(mcp.tools.map(&:name)).to eq(%w[echo add picture slow wait deploy connect])
     ensure
       mcp&.close
     end
@@ -133,8 +133,7 @@ RSpec.describe RubyLLM::MCP do
       end
       approvals = mcp.tools.to_h { |tool| [tool.name, tool.requires_approval?] }
 
-      expect(approvals).to eq('echo' => true, 'add' => true, 'fail' => true, 'picture' => true, 'slow' => true,
-                              'wait' => true, 'delete_everything' => true)
+      expect(approvals.values.uniq).to eq([true])
     ensure
       mcp&.close
     end
@@ -257,6 +256,74 @@ RSpec.describe RubyLLM::MCP do
 
     it 'takes a method name or a block' do
       expect { Class.new(described_class) { after_progress } }.to raise_error(ArgumentError, /method name or a block/)
+    end
+  end
+
+  describe 'input requests' do
+    def mcp_answering(&)
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        before_input_request(&)
+      end.new
+    end
+
+    it 'answers form requests with a callback and retries the call' do
+      mcp = mcp_answering { |request| request.answer(environment: request.fields.first.choices.first) }
+
+      expect(mcp.deploy.text).to eq('Deployed to staging')
+    ensure
+      mcp&.close
+    end
+
+    it 'describes the fields a form asks for' do
+      requests = []
+      mcp = mcp_answering do |request|
+        requests << request
+        request.decline
+      end
+
+      expect(mcp.deploy.text).to eq('Deploy cancelled')
+      expect(requests.first).to have_attributes(message: 'Which environment?', url: nil)
+      expect(requests.first).to be_form
+      expect(requests.first.fields.first).to have_attributes(name: :environment, title: 'Environment',
+                                                             choices: %w[staging production])
+      expect(requests.first.fields.first).to be_required
+    ensure
+      mcp&.close
+    end
+
+    it 'accepts URL requests' do
+      mcp = mcp_answering { |request| request.answer if request.url? }
+
+      expect(mcp.connect.text).to eq('Connected')
+    ensure
+      mcp&.close
+    end
+
+    it 'raises when no callback answers' do
+      expect { mcp.connect }.to raise_error(RubyLLM::MCP::InputRequiredError) do |error|
+        expect(error.message).to end_with('needs input from the user: Connect your account https://example.com/connect')
+        expect(error.requests.first).to be_url
+      end
+    end
+
+    it 'tells the model what the server needs when no callback answers' do
+      connect = mcp.tools.find { |tool| tool.name == 'connect' }
+
+      expect(connect.call).to eq(error: "#{mcp.name} needs input from the user: " \
+                                        'Connect your account https://example.com/connect')
+    end
+
+    it 'declares form input only when a callback can answer it' do
+      answering = mcp_answering(&:decline)
+
+      expect(mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
+        .to eq('elicitation' => { 'url' => {} })
+      expect(answering.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
+        .to eq('elicitation' => { 'form' => {}, 'url' => {} })
+    ensure
+      answering&.close
     end
   end
 

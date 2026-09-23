@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
 * How to read a server's resources and ask with its prompts.
+* How to answer a server's requests for input and follow its progress.
 * How RubyLLM talks to servers and keeps connections safe.
 
 ## Describing a Server
@@ -304,6 +305,34 @@ review = github.prompts.first
 review.suggest(language: "ru")              # => ["ruby", "rust"]
 files.resource_templates.first.suggest(path: "app/mo")
 ```
+
+## Input Requests
+
+A server can stop in the middle of a call to ask the user something: which environment to deploy to, or to visit a page and connect an account. Answer with `before_input_request`, a method name or a block that receives a `RubyLLM::MCP::InputRequest`:
+
+```ruby
+class Deploys < RubyLLM::MCP
+  url "https://deploys.example.com/mcp"
+  inputs :user
+  before_input_request :answer_from_settings
+
+  private
+
+  def answer_from_settings(request)
+    if request.url?
+      request.decline
+    else
+      request.answer(environment: user.default_environment)
+    end
+  end
+end
+```
+
+A form request describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. A URL request has a `url` for the user to visit; `answer` with no values means the user agreed to go. `decline` refuses either kind. RubyLLM then sends the answers and the server finishes the call.
+
+A request no callback answers goes to the model as the tool's error, with the message and any URL. The model can then ask the user, share the link, and call the tool again once the user is done. Calling a tool directly raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
+
+RubyLLM only tells servers it can fill in forms when the class has a `before_input_request` callback. Servers never ask for passwords or tokens through forms; those go through URL requests, so they never pass through your application.
 
 ## Progress and Cancellation
 
