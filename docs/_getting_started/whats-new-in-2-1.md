@@ -14,7 +14,7 @@ After reading this guide, you will know:
 
 * How to connect your chats and agents to MCP servers.
 * How to ask typed judgments with TypeSafe's Jev models.
-* How to give an agent its own configuration.
+* How to build an agent's configuration from its inputs.
 * How to keep RubyLLM's tables on a secondary database.
 * How upgrades work from 2.1 on.
 
@@ -76,20 +76,22 @@ TypeSafe joins the built-in providers, bringing the total to eighteen. Use its h
 
 ## Agent Configuration
 
-An agent can carry its own credentials, endpoint, or timeouts without changing the global configuration. Pass a context, or configure one in place:
+An agent can now build its configuration for each chat from its inputs, so every tenant can bring its own credentials or endpoint. A `context` block without arguments runs when the chat is built:
 
 ```ruby
 class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}", provider: :openai
+  inputs :workspace
 
-  context do |config|
-    config.openai_api_key = ENV.fetch("SUPPORT_OPENAI_API_KEY")
-    config.request_timeout = 180
+  context do
+    RubyLLM.context { |config| config.openai_api_key = workspace.openai_api_key }
   end
 end
+
+SupportAgent.chat(workspace: current_workspace)
 ```
 
-Both forms work with `SupportAgent.chat` and with Rails-backed agents. See [Configuration Contexts]({% link _advanced/agents.md %}#configuration-contexts).
+It works with `SupportAgent.chat` and with Rails-backed agents, where the block also sees the chat record. A block that takes the configuration, as before, still runs once when the class is defined. See [Configuration Contexts]({% link _advanced/agents.md %}#configuration-contexts).
 
 ## A Secondary Database for RubyLLM
 
