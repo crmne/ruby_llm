@@ -245,11 +245,12 @@ module RubyLLM
     end
 
     # Connects to a Model Context Protocol server without writing an MCP
-    # class. Pass +url:+ for a Streamable HTTP server or +command:+ for a
-    # local server that speaks over stdio. Also accepts +name:+,
-    # +bearer_token:+, +headers:+, +env:+, +directory:+, +timeout:+,
-    # +prefix:+, and +oauth:+, which takes +true+ or the options of
-    # MCP.oauth.
+    # class. Pass +url:+ for a Streamable HTTP server, +command:+ for a
+    # local server that speaks over stdio, or +transport:+ and +name:+ for
+    # a server reached any other way, as MCP.transport describes. Also
+    # accepts +name:+, +bearer_token:+, +headers:+, +env:+, +directory:+,
+    # +timeout:+, +prefix:+, and +oauth:+, which takes +true+ or the
+    # options of MCP.oauth.
     #
     #   docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
     #   files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])

@@ -413,8 +413,84 @@ RSpec.describe RubyLLM::MCP do
     expect(Class.new(described_class) { url 'https://mcp.linear.app/mcp' }.new.name).to eq('linear')
   end
 
-  it 'needs a url or a command' do
-    expect { Class.new(described_class).new.tools }.to raise_error(RubyLLM::ConfigurationError, /url or a command/)
+  it 'needs a url, a command, or a transport' do
+    expect { Class.new(described_class).new.tools }
+      .to raise_error(RubyLLM::ConfigurationError, /url, a command, or a transport/)
+  end
+
+  describe 'transport' do
+    let(:tunnel_class) do
+      Class.new do
+        attr_reader :methods_sent
+
+        def initialize(label = 'tunnel')
+          @label = label
+          @methods_sent = []
+        end
+
+        def request(message, **)
+          @methods_sent << message[:method]
+          JSON.parse({ jsonrpc: '2.0', id: message[:id], result: result_for(message) }.to_json)
+        end
+
+        def notify(*, **) = nil
+        def cancel(*, **) = nil
+
+        def close
+          @closed = true
+        end
+
+        def closed? = @closed || false
+
+        private
+
+        def result_for(message)
+          case message[:method]
+          when 'server/discover' then { supportedVersions: ['2026-07-28'], serverInfo: { version: @label } }
+          when 'tools/list' then { tools: [{ name: 'echo', annotations: { readOnlyHint: true } }] }
+          when 'tools/call' then { content: [{ type: 'text', text: message.dig(:params, :arguments, :text) }] }
+          end
+        end
+      end
+    end
+    let(:tunnel) { tunnel_class.new }
+
+    it 'speaks through the transport it is given' do
+      mcp = RubyLLM.mcp(transport: tunnel, name: 'tunnelled', prefix: 'remote')
+
+      expect(mcp.tools.map(&:name)).to eq(['remote_echo'])
+      expect(mcp.tools.first.call(text: 'hi')).to eq('hi')
+      expect(tunnel.methods_sent).to eq(%w[server/discover tools/list tools/call])
+    end
+
+    it 'builds the transport on the instance' do
+      tunnel_class = self.tunnel_class
+      mcp_class = Class.new(described_class) do
+        inputs :device
+        transport { tunnel_class.new(device) }
+      end
+
+      expect(mcp_class.new(device: 'laptop').version).to eq('laptop')
+    end
+
+    it 'shares the transport object with subclasses' do
+      tunnel = self.tunnel
+      parent = Class.new(described_class) { transport tunnel }
+
+      expect(Class.new(parent).transport).to be(tunnel)
+    end
+
+    it 'closes the transport' do
+      mcp = RubyLLM.mcp(transport: tunnel, name: 'tunnelled')
+      mcp.tools
+      mcp.close
+
+      expect(tunnel).to be_closed
+    end
+
+    it 'needs a name inline' do
+      expect { RubyLLM.mcp(transport: tunnel) }.to raise_error(ArgumentError, /transport needs a name/)
+    end
   end
 
   describe '.mcp' do

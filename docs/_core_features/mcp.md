@@ -47,6 +47,34 @@ end
 
 The process starts on the first request and stops when you call `close`.
 
+### Custom Transports
+
+Some servers are reached neither over HTTP nor over stdio, such as a server on a user's computer that dials out to your app through a tunnel. Give those a `transport`, an object that carries the JSON-RPC messages:
+
+```ruby
+class LaptopFiles < RubyLLM::MCP
+  inputs :device
+  transport { Tunnel.new(device) }
+end
+```
+
+A transport responds to four methods:
+
+```ruby
+class Tunnel
+  def request(message, version:, timeout: nil, headers: {})
+    # Send the request and return the response as a Hash with string keys.
+    # Yield notifications the server sends while it works, such as progress.
+  end
+
+  def notify(message, version:) = send_message(message)
+  def cancel(notification, version:) = send_message(notification)
+  def close = disconnect
+end
+```
+
+The transport handles its own authentication and timeouts. `timeout` is `nil` unless RubyLLM wants a shorter one than the transport's own, and `headers` holds the tool arguments the server asks to receive as `Mcp-Param-*` HTTP headers, which a transport that doesn't end in HTTP can ignore. After `close`, the next request reconnects. Raise `RubyLLM::MCP::Error` when the server can't be reached. To let the model know instead, answer a `tools/call` request with a tool error, `{ "result" => { "isError" => true, "content" => [{ "type" => "text", "text" => "The laptop is offline" }] } }`.
+
 ### Inputs
 
 Most servers act on behalf of a user. Declare inputs, and settings that depend on them take a block or a method name:
@@ -79,12 +107,14 @@ docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
 files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
 ```
 
-It takes the same settings as keywords: `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
+It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
 
 ```ruby
 RubyLLM.mcp(url: server.endpoint, name: "mcp_#{server.id}", prefix: "mcp_#{server.id}",
             oauth: { owner: server })
 ```
+
+A server with a `transport:` also needs a `name:`, since it has no URL or command to be named after.
 
 ## Exploring a Server
 

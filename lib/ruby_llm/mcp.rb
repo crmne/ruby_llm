@@ -22,6 +22,9 @@ module RubyLLM
   #     command "npx", "-y", "@modelcontextprotocol/server-filesystem", "."
   #   end
   #
+  # A +transport+ carries the messages any other way, such as through a
+  # tunnel to a server behind a firewall.
+  #
   # Settings that depend on runtime state take a block or a method name,
   # evaluated on the instance, so declared ::inputs and private methods are
   # available. RubyLLM.mcp builds one inline when a class is not worth
@@ -30,7 +33,7 @@ module RubyLLM
     include Support::Inspectable
 
     INPUT_ROUNDS = 10
-    INLINE_SETTINGS = %i[url command bearer_token directory timeout prefix].freeze
+    INLINE_SETTINGS = %i[url command transport bearer_token directory timeout prefix].freeze
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
@@ -47,6 +50,7 @@ module RubyLLM
           value = instance_variable_get(setting)
           subclass.instance_variable_set(setting, value.dup) unless value.nil?
         end
+        subclass.transport(@transport) if @transport
       end
 
       # Sets the server's Streamable HTTP endpoint. Plain HTTP is only
@@ -71,6 +75,31 @@ module RubyLLM
         return @command if argv.empty?
 
         @command = argv.flatten
+      end
+
+      # Sets the transport that carries the server's JSON-RPC messages, for
+      # servers reached neither over Streamable HTTP nor over stdio. Pass
+      # the transport, a method name, or a block that returns one. Called
+      # with no argument, returns the configured value.
+      #
+      #   transport { Tunnel.new(device) }
+      #
+      # A transport responds to four methods.
+      # <tt>request(message, version:, timeout:, headers:)</tt> sends a
+      # JSON-RPC request and returns the response as a Hash with string
+      # keys, yielding any notifications the server sends meanwhile.
+      # +timeout+ is +nil+ unless RubyLLM needs a shorter one than the
+      # transport's own, and +headers+ holds the tool arguments the server
+      # asks to receive as <tt>Mcp-Param-*</tt> HTTP headers.
+      # <tt>notify(message, version:)</tt> and
+      # <tt>cancel(notification, version:)</tt> send a notification, and
+      # +close+ releases the connection until the next request. Raise
+      # MCP::Error when the server cannot be reached. The transport handles
+      # its own authentication and timeouts.
+      def transport(value = nil, &block)
+        return @transport if value.nil? && block.nil?
+
+        @transport = block || value
       end
 
       # Sets the working directory for a stdio server's process.
@@ -284,8 +313,7 @@ module RubyLLM
 
       # Builds an anonymous MCP class from keywords, as RubyLLM.mcp does.
       def define(name: nil, headers: {}, env: {}, oauth: nil, **settings) # :nodoc:
-        unknown = settings.keys - INLINE_SETTINGS
-        raise ArgumentError, "Unknown MCP settings: #{unknown.join(', ')}" if unknown.any?
+        check_inline_settings(name, settings)
 
         Class.new(self) do
           settings.each { |setting, value| public_send(setting, value) unless value.nil? }
@@ -297,6 +325,12 @@ module RubyLLM
       end
 
       private
+
+      def check_inline_settings(name, settings)
+        unknown = settings.keys - INLINE_SETTINGS
+        raise ArgumentError, "Unknown MCP settings: #{unknown.join(', ')}" if unknown.any?
+        raise ArgumentError, 'An MCP with a transport needs a name' if settings[:transport] && name.nil?
+      end
 
       def add_callback(name, method, block)
         raise ArgumentError, "#{name} takes a method name or a block" unless method.nil? ^ block.nil?
@@ -602,7 +636,9 @@ module RubyLLM
 
     def transport
       settings = self.class
-      if settings.url
+      if settings.transport
+        resolve(settings.transport)
+      elsif settings.url
         HTTP.new(resolve(settings.url), headers: -> { request_headers }, timeout: settings.timeout,
                                         unauthorized: method(:unauthorized), config:)
       elsif settings.command
@@ -610,7 +646,7 @@ module RubyLLM
                   env: settings.env.transform_values { |value| resolve(value) },
                   directory: resolve(settings.directory), timeout: settings.timeout, config:)
       else
-        raise ConfigurationError, "#{settings.name || 'MCP'} needs a url or a command"
+        raise ConfigurationError, "#{settings.name || 'MCP'} needs a url, a command, or a transport"
       end
     end
 
