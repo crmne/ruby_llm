@@ -71,9 +71,16 @@ RSpec.describe RubyLLM::Prompt do
     end
 
     it 'falls back to the prompt root when the current directory has no partial' do
-      create_prompt('shared/_safety', 'Stay safe.')
+      create_prompt('_tone', 'Root tone.')
+      create_prompt('work_assistant/instructions', '<%= render "tone" %>')
+      expect(described_class.render('work_assistant/instructions')).to eq('Root tone.')
+    end
+
+    it 'resolves a path name from the prompt roots, not the current prompt directory' do
+      create_prompt('shared/_safety', 'Root safety.')
+      create_prompt('work_assistant/shared/_safety', 'Nested safety.')
       create_prompt('work_assistant/instructions', '<%= render "shared/safety" %>')
-      expect(described_class.render('work_assistant/instructions')).to eq('Stay safe.')
+      expect(described_class.render('work_assistant/instructions')).to eq('Root safety.')
     end
 
     it 'prefers the partial next to the prompt over the root partial' do
@@ -100,6 +107,12 @@ RSpec.describe RubyLLM::Prompt do
       create_prompt('work_assistant/instructions', '<%= render "tone" %>')
       expect { described_class.render('work_assistant/instructions') }
         .to raise_error(RubyLLM::PromptNotFoundError, %r{work_assistant/_tone\.txt\.erb})
+    end
+
+    it 'reports the root path for a missing path partial' do
+      create_prompt('work_assistant/instructions', '<%= render "shared/safety" %>')
+      expect { described_class.render('work_assistant/instructions') }
+        .to raise_error(RubyLLM::PromptNotFoundError, %r{prompts/shared/_safety\.txt\.erb})
     end
   end
 

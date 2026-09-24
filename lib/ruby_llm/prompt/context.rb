@@ -12,9 +12,11 @@ class RubyLLM::Prompt::Context # rubocop:disable Style/ClassAndModuleChildren
     @locals = locals
   end
 
-  # Renders the partial +name+ with +locals+. The partial is looked up next
-  # to the current prompt first, then in every prompt root.
+  # Renders the partial +name+ with +locals+. A bare name is looked up next
+  # to the current prompt first, then in every prompt root. A name with a
+  # path is looked up in the prompt roots only.
   #
+  #   <%= render "tone" %>
   #   <%= render "shared/safety", product_name: product_name %>
   #
   def render(name, **locals)
@@ -33,7 +35,10 @@ class RubyLLM::Prompt::Context # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def partial_names(name)
-    partial = name.to_s.sub(%r{([^/]+)\z}, '_\\1')
+    name = name.to_s
+    partial = name.sub(%r{([^/]+)\z}, '_\\1')
+    return [partial] if name.include?('/')
+
     directory = File.dirname(@prompt.name)
     directory == '.' ? [partial] : ["#{directory}/#{partial}", partial]
   end
