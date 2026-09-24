@@ -10,6 +10,8 @@ require 'tmpdir'
 RSpec.describe RubyLLM::Generators::Provider::CLI do
   let(:dir) { File.realpath(Dir.mktmpdir('ruby_llm_provider_cli')) }
 
+  around { |example| GitEnvironment.without { example.run } }
+
   after do
     FileUtils.rm_rf(dir)
   end
