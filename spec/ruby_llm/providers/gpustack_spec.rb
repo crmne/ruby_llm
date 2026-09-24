@@ -29,15 +29,16 @@ RSpec.describe RubyLLM::Providers::GPUStack do
       )
     end
 
-    it 'passes remote image URLs through instead of downloading and re-encoding them' do
+    it 'sends remote images inline, because clusters often cannot reach the internet' do
+      png = File.binread(File.expand_path('../../fixtures/ruby.png', __dir__))
+      stub_request(:get, 'https://example.com/photo.png')
+        .to_return(body: png, headers: { 'Content-Type' => 'image/png' })
       attachment = RubyLLM::Attachment.new('https://example.com/photo.png')
 
       formatted = provider.send(:format_content, 'Describe this image', [attachment])
 
-      expect(formatted.last).to eq(
-        type: 'image_url',
-        image_url: { url: 'https://example.com/photo.png', detail: 'auto' }
-      )
+      data_url = "data:image/png;base64,#{Base64.strict_encode64(png)}"
+      expect(formatted.last).to eq(type: 'image_url', image_url: { url: data_url, detail: 'auto' })
     end
   end
 end
