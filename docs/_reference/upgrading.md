@@ -42,6 +42,12 @@ Require 2.1 in your `Gemfile`, so the update stops at this release:
 gem "ruby_llm", "~> 2.1.0"
 ```
 
+RubyLLM 2.1 allows JSON 3. On Rails versions before 8.1.4, keep JSON 2 explicitly in your `Gemfile` before updating:
+
+```ruby
+gem "json", "< 3"
+```
+
 Then update it in your development branch:
 
 ```bash

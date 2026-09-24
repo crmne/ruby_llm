@@ -102,7 +102,7 @@ module RubyLLM
         def gemini_connection(request_json:, response_json:)
           connection = Transport::Connection.basic(@config) do |connection|
             connection.request :json if request_json
-            connection.response :json if response_json
+            connection.use Transport::JsonResponse if response_json
             connection.adapter @config.faraday_adapter
             connection.use :llm_errors, provider: @provider
           end

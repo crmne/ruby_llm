@@ -16,8 +16,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'flay'
   gem 'image_processing', '~> 1.2'
   gem 'irb'
-  # RubyLLM's runtime dependency pins JSON 2 because Faraday and Rails use
-  # positional options; keep development and appraisal environments aligned.
+  # Older Rails versions need JSON 2; the Rails 8.1 appraisal also tests JSON 3.
   gem 'json', '< 3'
   gem 'json_schemer'
   gem 'nokogiri'

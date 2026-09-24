@@ -63,6 +63,20 @@ RSpec.describe RubyLLM::Models::Registry do
   end
 
   describe RubyLLM::Models::Registry::FileStore do
+    it 'reads UTF-8 model names under an ASCII locale' do
+      original_encoding = Encoding.default_external
+      Encoding.default_external = Encoding::US_ASCII
+
+      Dir.mktmpdir do |directory|
+        path = File.join(directory, 'models.json')
+        File.binwrite(path, JSON.generate([model.to_h.merge(name: 'Modèle français')]))
+
+        expect(described_class.new(path).read.first.name).to eq('Modèle français')
+      end
+    ensure
+      Encoding.default_external = original_encoding
+    end
+
     it 'writes a top-level array and an adjacent ETag' do
       Dir.mktmpdir do |directory|
         path = File.join(directory, 'models.json')
@@ -332,7 +346,7 @@ RSpec.describe RubyLLM::Models::Registry do
 
   describe '.read' do
     it 'reports an unreadable registry file' do
-      allow(File).to receive(:read).with('/tmp/models.json').and_raise(Errno::EACCES)
+      allow(File).to receive(:read).with('/tmp/models.json', encoding: Encoding::UTF_8).and_raise(Errno::EACCES)
 
       expect { described_class.read('/tmp/models.json') }.to raise_error(
         RubyLLM::ModelRegistryError, %r{Could not read the model registry from /tmp/models.json}

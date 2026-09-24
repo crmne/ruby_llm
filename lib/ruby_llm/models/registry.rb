@@ -94,7 +94,7 @@ module RubyLLM
 
         def fetch(etag: nil)
           connection = RubyLLM::Transport::Connection.basic do |faraday|
-            faraday.response :json, parser_options: { symbolize_names: true }
+            faraday.use Transport::JsonResponse, parser_options: { symbolize_names: true }
           end
           response = connection.get(url) do |request|
             request.headers['If-None-Match'] = etag if etag
@@ -116,7 +116,7 @@ module RubyLLM
       module_function
 
       def read(file)
-        data = JSON.parse(File.read(file), symbolize_names: true)
+        data = JSON.parse(File.read(file, encoding: Encoding::UTF_8), symbolize_names: true)
         models_from_data(data, source: file)
       rescue Errno::ENOENT
         nil

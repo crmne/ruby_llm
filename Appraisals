@@ -20,6 +20,7 @@ end
 
 appraise 'rails-8.1' do
   group :development do
-    gem 'rails', '~> 8.1.0'
+    gem 'rails', '~> 8.1.4'
+    gem 'json', '>= 3', '< 4'
   end
 end

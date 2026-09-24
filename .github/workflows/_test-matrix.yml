@@ -85,10 +85,11 @@ jobs:
       - name: Run the test suite with Faraday v1
         if: matrix.ruby-version != '4.0'
         run: |
-          FARADAY_VERSION=1.10.3 bundle install
-          bundle exec appraisal ${{ matrix.rails-version }} bundle install
+          bundle install
+          bundle exec appraisal ${{ matrix.rails-version }} bundle update faraday faraday-retry
           bundle exec appraisal ${{ matrix.rails-version }} bin/rspec-queue
         env:
+          FARADAY_VERSION: '1.10.3'
           SPEC_OPTS: --tag ~generator
           SKIP_COVERAGE: true
 

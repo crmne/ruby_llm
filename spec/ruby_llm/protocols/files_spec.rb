@@ -222,23 +222,22 @@ RSpec.describe RubyLLM::Protocols::Files do
     end
 
     it 'uploads in two steps and returns the stored file' do
-      connection = instance_double(Faraday::Connection)
-      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
-      allow(connection).to receive(:url_prefix=)
-      allow(connection).to receive(:post) do |url, &block|
-        request = Struct.new(:headers, :body, keyword_init: false).new({}, nil)
-        block.call(request)
-        if url == protocol.send(:gemini_upload_url)
-          Struct.new(:headers, :body).new({ 'x-goog-upload-url' => 'https://upload.example/session' }, {})
-        else
-          Struct.new(:headers, :body).new({}, { 'file' => { 'name' => 'files/abc', 'displayName' => 'ruby.txt' } })
-        end
-      end
+      start_request = stub_request(:post, 'https://generativelanguage.googleapis.com/upload/v1beta/files')
+                      .with(body: { file: { display_name: 'ruby.txt' } }.to_json,
+                            headers: { 'X-Goog-Upload-Command' => 'start', 'X-Goog-Api-Key' => 'test' })
+                      .to_return(headers: { 'X-Goog-Upload-URL' => 'https://upload.example/session' })
+      upload_request = stub_request(:post, 'https://upload.example/session')
+                       .with(body: File.binread(fixture_path),
+                             headers: { 'X-Goog-Upload-Command' => 'upload, finalize' })
+                       .to_return(body: '{"file":{"name":"files/abc","displayName":"ruby.txt","state":"ACTIVE"}}',
+                                  headers: { 'Content-Type' => 'application/json' })
 
       file = protocol.upload(fixture_path)
 
       expect(file.id).to eq('files/abc')
       expect(file.filename).to eq('ruby.txt')
+      expect(start_request).to have_been_requested
+      expect(upload_request).to have_been_requested
     end
 
     it 'raises when Gemini does not hand back an upload URL' do
@@ -261,21 +260,19 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect { protocol.download('files/abc') }.to raise_error(RubyLLM::Error, 'gemini file has no download URI')
     end
 
-    it 'downloads the bytes from the URI the file carries' do
+    it 'downloads JSON files without parsing their contents' do
       allow(protocol).to receive(:find).and_return(
         RubyLLM::UploadedFile.new(
           id: 'files/abc', provider: 'gemini', metadata: { 'downloadUri' => 'https://files.example/abc' }
         )
       )
-      connection = instance_double(Faraday::Connection)
-      allow(RubyLLM::Transport::Connection).to receive(:basic).and_return(connection)
-      allow(connection).to receive(:url_prefix=)
-      allow(connection).to receive(:get) do |_url, &block|
-        block.call(Struct.new(:headers).new({}))
-        Struct.new(:body).new('bytes')
-      end
+      body = "{\"content\":\"Hello\"}\n"
+      request = stub_request(:get, 'https://files.example/abc')
+                .with(headers: { 'X-Goog-Api-Key' => 'test' })
+                .to_return(body: body, headers: { 'Content-Type' => 'application/json' })
 
-      expect(protocol.download('files/abc')).to eq('bytes')
+      expect(protocol.download('files/abc')).to eq(body)
+      expect(request).to have_been_requested
     end
   end
 

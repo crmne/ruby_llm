@@ -45,6 +45,12 @@ bundle add ruby_llm --version 2.0.0
 For an existing 1.x application, use the [1.x docs]({{ legacy_docs.url }}) or follow the [upgrade guide]({% link _reference/upgrading.md %}) before switching versions.
 {: .important }
 
+RubyLLM supports JSON 2 and JSON 3. For Rails applications, JSON 3 requires Rails 8.1.4 or later. On older Rails versions, keep JSON 2 in your Gemfile:
+
+```ruby
+gem 'json', '< 3'
+```
+
 ## Minimal Configuration
 
 Start with an OpenAI API key. Put this configuration at the start of your script, or in `config/initializers/ruby_llm.rb` in Rails:

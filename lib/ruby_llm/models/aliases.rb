@@ -26,7 +26,7 @@ module RubyLLM
 
         def load_aliases
           if File.exist?(aliases_file)
-            JSON.parse(File.read(aliases_file))
+            JSON.parse(File.read(aliases_file, encoding: Encoding::UTF_8))
           else
             {}
           end

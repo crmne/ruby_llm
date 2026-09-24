@@ -79,7 +79,7 @@ module RubyLLM
           service = options.fetch(:service, 'bedrock')
           conn = Transport::Connection.basic(@config) do |f|
             f.request :json
-            f.response :json
+            f.use Transport::JsonResponse
             f.adapter :net_http
             f.use :llm_errors, provider: self
           end

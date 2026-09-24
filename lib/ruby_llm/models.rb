@@ -217,7 +217,7 @@ module RubyLLM
 
         connection = Transport::Connection.basic do |f|
           f.request :json
-          f.response :json, parser_options: { symbolize_names: true }
+          f.use Transport::JsonResponse, parser_options: { symbolize_names: true }
         end
         { models: parse_models_dev_catalog(connection.get('https://models.dev/api.json').body), fetched: true }
       rescue StandardError => e
