@@ -54,14 +54,25 @@ RSpec.describe RubyLLM::Protocols::GPUStack::Videos do
     expect(payload[:extra_params]).to eq('{"foo":1}')
   end
 
-  it 'preserves ordered multiple references and passes remote videos without downloading them' do
+  it 'preserves ordered multiple references and sends remote references inline' do
+    stub_request(:get, 'https://media.test/first.png')
+      .to_return(body: 'first image', headers: { 'Content-Type' => 'image/png' })
+    stub_request(:get, 'https://media.test/last.png')
+      .to_return(body: 'last image', headers: { 'Content-Type' => 'image/png' })
+    stub_request(:get, 'https://media.test/clip.mp4')
+      .to_return(body: 'clip video', headers: { 'Content-Type' => 'video/mp4' })
     attachments = RubyLLM::Attachment.wrap(['https://media.test/first.png', 'https://media.test/last.png',
                                             'https://media.test/clip.mp4'])
     payload = protocol.render_video_payload('Continue the scene', model:, with: attachments)
 
-    expect(JSON.parse(payload[:image_reference])).to eq([{ 'image_url' => 'https://media.test/first.png' },
-                                                         { 'image_url' => 'https://media.test/last.png' }])
-    expect(JSON.parse(payload[:video_reference])).to eq('video_url' => 'https://media.test/clip.mp4')
+    expect(JSON.parse(payload[:image_reference])).to eq(
+      [
+        { 'image_url' => "data:image/png;base64,#{Base64.strict_encode64('first image')}" },
+        { 'image_url' => "data:image/png;base64,#{Base64.strict_encode64('last image')}" }
+      ]
+    )
+    expect(JSON.parse(payload[:video_reference]))
+      .to eq('video_url' => "data:video/mp4;base64,#{Base64.strict_encode64('clip video')}")
   end
 
   it 'accepts a local video through the public attachment API and sends a JSON reference field' do

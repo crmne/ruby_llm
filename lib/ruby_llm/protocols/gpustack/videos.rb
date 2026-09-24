@@ -60,7 +60,7 @@ module RubyLLM
 
         def video_references(attachments)
           attachments.group_by(&:type).to_h do |type, group|
-            values = group.map { |attachment| { "#{type}_url" => attachment.url_or_data_uri } }
+            values = group.map { |attachment| { "#{type}_url" => attachment.for_llm } }
             [:"#{type}_reference", values.one? ? values.first : values]
           end
         end
