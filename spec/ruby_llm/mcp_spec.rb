@@ -473,6 +473,19 @@ RSpec.describe RubyLLM::MCP do
       expect(mcp_class.new(device: 'laptop').version).to eq('laptop')
     end
 
+    it 'builds the transport with a method' do
+      tunnel = self.tunnel
+      mcp_class = Class.new(described_class) do
+        transport :build_transport
+
+        private
+
+        define_method(:build_transport) { tunnel }
+      end
+
+      expect(mcp_class.new.version).to eq('tunnel')
+    end
+
     it 'shares the transport object with subclasses' do
       tunnel = self.tunnel
       parent = Class.new(described_class) { transport tunnel }
