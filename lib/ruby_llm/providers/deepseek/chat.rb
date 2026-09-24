@@ -62,7 +62,6 @@ module RubyLLM
             content,
             attachments,
             document_attachments: :none,
-            image_attachments: false,
             audio_attachments: false
           )
         end

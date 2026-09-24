@@ -133,6 +133,7 @@ vision_models = [
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :cohere, model: 'command-a-plus-05-2026' },
+  { provider: :deepseek, model: 'deepseek-flash' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :hetzner, model: 'Qwen3.8-27B' },
   { provider: :mistral, model: 'pixtral-12b' },

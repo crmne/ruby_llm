@@ -131,8 +131,9 @@ RSpec.describe RubyLLM::Chat do
       expect(roles).to eq(%w[user assistant tool tool user])
     end
 
-    it 'raises for file types a provider cannot take' do
-      chat = chat_with_tool_attachment(model_for(:deepseek), 'deepseek')
+    it 'raises for tool audio on providers without audio support' do
+      chat = chat_with_tool_attachment(model_for(:deepseek), 'deepseek',
+                                       attachment: File.expand_path('../fixtures/ruby.wav', __dir__))
 
       expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end

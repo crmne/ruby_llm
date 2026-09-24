@@ -259,14 +259,29 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       )
     end
 
-    it 'keeps image attachments disabled for DeepSeek' do
+    it 'renders inline image attachments for DeepSeek' do
       provider = RubyLLM::Providers::DeepSeek::ChatCompletions.allocate
       attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'image.png')
       message = RubyLLM::Message.new(role: :user, content: 'Describe this', attachments: [attachment])
 
-      expect do
-        provider.send(:format_messages, [message])
-      end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: image/png})
+      formatted = provider.send(:format_messages, [message])
+
+      expect(formatted.first).to eq(
+        role: 'user',
+        content: [{ type: 'text', text: 'Describe this' },
+                  { type: 'image_url', image_url: { url: 'data:image/png;base64,cG5nIGJ5dGVz' } }]
+      )
+    end
+
+    it 'preserves remote image URLs for DeepSeek' do
+      provider = RubyLLM::Providers::DeepSeek::ChatCompletions.allocate
+      url = 'https://example.com/image.png'
+      stub_request(:get, url).to_return(body: 'png bytes', headers: { 'Content-Type' => 'image/png' })
+      message = RubyLLM::Message.new(role: :user, content: 'Describe this', attachments: [url])
+
+      formatted = provider.send(:format_messages, [message])
+
+      expect(formatted.dig(0, :content, 1)).to eq(type: 'image_url', image_url: { url: url })
     end
 
     it 'uses Perplexity file_url parts for supported file attachments' do
