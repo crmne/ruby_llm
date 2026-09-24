@@ -313,6 +313,25 @@ module RubyLLM
       raise NotImplementedError, 'Subclasses must implement #execute'
     end
 
+    # Reports what the tool is doing while #execute runs, so an application
+    # can show it before the result arrives. Chat#after_tool_progress
+    # callbacks receive it as a Progress. Pass +value:+ and +total:+ when
+    # you can count the work. Outside a chat, the report goes nowhere.
+    #
+    #   def execute(url:)
+    #     progress "Downloading #{File.basename(url)}"
+    #     pages = Scanner.pages(url)
+    #     pages.each_with_index.map do |page, index|
+    #       progress "Reading page #{index + 1} of #{pages.size}", value: index + 1, total: pages.size
+    #       page.text
+    #     end.join("\n")
+    #   end
+    #
+    def progress(message = nil, value: nil, total: nil)
+      Support::ProgressReporter.report(Progress.new(value:, total:, message:))
+      nil
+    end
+
     protected
 
     def validate_keyword_arguments(arguments) # :nodoc:

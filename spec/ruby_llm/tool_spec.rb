@@ -347,6 +347,19 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
+  describe '#progress' do
+    it 'reports nowhere outside a chat' do
+      stub_const('ReportingTool', Class.new(described_class) do
+        def execute
+          progress 'Working', value: 1, total: 2
+          'done'
+        end
+      end)
+
+      expect(ReportingTool.new.call).to eq('done')
+    end
+  end
+
   describe RubyLLM::Tool::SchemaDefinition do
     describe '.from_parameters' do
       it 'returns nothing without parameters' do

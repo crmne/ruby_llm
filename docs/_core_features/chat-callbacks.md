@@ -16,7 +16,7 @@ After reading this guide, you will know:
 * Which lifecycle events you can register handlers for.
 * Why callbacks are additive and what replaced the 1.x `on_*` handlers.
 * How chat callbacks differ from retry- and cancellation-safe usage instrumentation.
-* How to observe tool calls and tool results as they happen.
+* How to observe tool calls, their progress, and tool results as they happen.
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
 
@@ -47,6 +47,16 @@ chat.after_tool_result do |result|
   puts "Tool returned: #{result}"
 end
 ```
+
+A slow tool can report what it is doing before its result arrives:
+
+```ruby
+chat.after_tool_progress do |call, progress|
+  puts "#{call.name}: #{progress.message}"
+end
+```
+
+See [Reporting Progress]({% link _core_features/tool-execution.md %}#reporting-progress).
 
 ## Fallback Events
 

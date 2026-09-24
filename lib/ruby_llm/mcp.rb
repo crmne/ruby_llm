@@ -279,7 +279,8 @@ module RubyLLM
 
       # Registers a callback for the progress the server reports while it
       # works on a request. Pass a method name or a block; either runs on
-      # the MCP instance with an MCP::Progress.
+      # the MCP instance with a Progress. In a chat, the progress of a tool
+      # call also reaches Chat#after_tool_progress.
       #
       #   after_progress :broadcast_progress
       #   after_progress { |progress| puts progress.message }
@@ -570,17 +571,22 @@ module RubyLLM
 
     def send_request(method, params)
       headers = method == 'tools/call' ? mirrored_headers(params) : {}
-      callbacks = self.class.callbacks(:after_progress)
-      return client.request(method, params, headers:) if callbacks.empty?
+      listeners = progress_listeners
+      return client.request(method, params, headers:) if listeners.empty?
 
       token = SecureRandom.uuid
       client.request(method, params.merge(_meta: { progressToken: token }), headers:) do |notification|
-        next unless notification['method'] == 'notifications/progress'
-        next unless notification.dig('params', 'progressToken') == token
+        data = notification['params'] || {}
+        next unless notification['method'] == 'notifications/progress' && data['progressToken'] == token
 
-        progress = Progress.new(notification['params'])
-        callbacks.each { |callback| apply(callback, progress) }
+        progress = Progress.new(value: data['progress'], total: data['total'], message: data['message'])
+        listeners.each { |listener| listener.call(progress) }
       end
+    end
+
+    def progress_listeners
+      listeners = self.class.callbacks(:after_progress).map { |callback| ->(progress) { apply(callback, progress) } }
+      [*listeners, Support::ProgressReporter.listener].compact
     end
 
     def mirrored_headers(params)

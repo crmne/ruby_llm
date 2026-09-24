@@ -403,7 +403,7 @@ Servers never ask for passwords or tokens through forms; those go through URL re
 
 ## Progress and Cancellation
 
-Servers can report progress while they work. Register `after_progress` with a method name or a block. It runs on the MCP instance with a `RubyLLM::MCP::Progress`:
+Servers can report progress while they work. Register `after_progress` with a method name or a block. It runs on the MCP instance with a `RubyLLM::Progress`:
 
 ```ruby
 class Deploys < RubyLLM::MCP
@@ -420,6 +420,16 @@ end
 ```
 
 `progress.value` only grows, `progress.total` is set when the server knows how much work there is, and `progress.fraction` gives the share done.
+
+In a chat, the progress of a server tool call also reaches `after_tool_progress` with the tool call, the same way a Ruby tool's reports do:
+
+```ruby
+chat.with_mcp(Deploys.new(chat:)).after_tool_progress do |tool_call, progress|
+  puts "#{tool_call.name}: #{progress.message}"
+end
+```
+
+RubyLLM asks the server for progress only when an `after_progress` or `after_tool_progress` callback listens.
 
 Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
 

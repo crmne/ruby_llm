@@ -84,6 +84,20 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.first.attachments.first).to have_attributes(filename: 'pixel.png', mime_type: 'image/png')
   end
 
+  it 'passes server progress to after_tool_progress' do
+    server_reports = []
+    files_class.after_progress { |progress| server_reports << progress.value }
+    allow(chat.provider).to receive(:complete).and_return(tool_call('slow', {}), answer)
+    reports = []
+
+    chat.with_mcp(files).after_tool_progress { |call, progress| reports << [call.name, progress.fraction] }
+    chat.ask('Take your time')
+
+    expect(reports).to eq([['slow', 0.5], ['slow', 1.0]])
+    expect(server_reports).to eq([1, 2])
+    expect(chat.messages.find(&:tool_result?).content).to eq('Finished')
+  end
+
   it 'stops a server tool when the chat is cancelled' do
     allow(chat.provider).to receive(:complete).and_return(tool_call('wait', {}), answer)
     chat.with_mcp(files).before_tool_call do

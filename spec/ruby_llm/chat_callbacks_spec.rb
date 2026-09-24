@@ -13,6 +13,17 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class ProgressProbeTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Reports progress while it works'
+
+    def execute(label:)
+      progress "Starting #{label}"
+      sleep 0.01
+      progress "Finishing #{label}", value: 2, total: 2
+      "#{label} done"
+    end
+  end
+
   def stub_completion(chat, *messages)
     provider = chat.instance_variable_get(:@provider)
     allow(provider).to receive(:complete).and_return(*messages)
@@ -59,5 +70,70 @@ RSpec.describe RubyLLM::Chat do
                           [:before_tool_call, 'callback_probe'],
                           [:after_tool_result, 'tool result']
                         ])
+  end
+
+  describe 'tool progress' do
+    def progress_calls(*labels)
+      tool_calls = labels.to_h do |label|
+        id = "call_#{label}"
+        [id, RubyLLM::ToolCall.new(id:, name: 'progress_probe', arguments: { 'label' => label })]
+      end
+      RubyLLM::Message.new(role: :assistant, content: nil, tool_calls:)
+    end
+
+    let(:chat) { described_class.new(model: model_for(:openai, :temperature)).with_tools(ProgressProbeTool) }
+
+    it 'passes each report to after_tool_progress with its tool call, before the result' do
+      calls = []
+      stub_completion(chat, progress_calls('a'), RubyLLM::Message.new(role: :assistant, content: 'complete'))
+
+      chat.after_tool_progress { |call, progress| calls << [call.id, progress.message, progress.fraction] }
+          .after_tool_result { |result| calls << [:result, result] }
+      chat.ask('Use the tool')
+
+      expect(calls).to eq([['call_a', 'Starting a', nil], ['call_a', 'Finishing a', 1.0], [:result, 'a done']])
+    end
+
+    %i[threads fibers].each do |mode|
+      it "keeps progress with its own tool call when tools run with #{mode}" do
+        calls = Queue.new
+        chat.with_tool_options(concurrency: mode)
+        stub_completion(chat, progress_calls('a', 'b'), RubyLLM::Message.new(role: :assistant, content: 'complete'))
+
+        chat.after_tool_progress { |call, progress| calls << [call.id, progress.message] }
+        chat.ask('Use the tools')
+
+        reports = Array.new(calls.size) { calls.pop }.group_by(&:first).transform_values { |pairs| pairs.map(&:last) }
+        expect(reports).to eq('call_a' => ['Starting a', 'Finishing a'], 'call_b' => ['Starting b', 'Finishing b'])
+      end
+    end
+
+    it 'passes reports from threads the tool starts', skip: (Fiber.respond_to?(:[]) ? false : 'needs fiber storage') do
+      stub_const('FanOutTool', Class.new(RubyLLM::Tool) do
+        def execute
+          Thread.new { progress 'Reading in the background' }.join
+          'done'
+        end
+      end)
+      calls = []
+      stub_completion(chat.with_tools(FanOutTool),
+                      RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: {
+                                             'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'fan_out')
+                                           }),
+                      RubyLLM::Message.new(role: :assistant, content: 'complete'))
+
+      chat.after_tool_progress { |call, progress| calls << [call.id, progress.message] }
+      chat.ask('Use the tool')
+
+      expect(calls).to eq([['call_1', 'Reading in the background']])
+    end
+
+    it 'runs tools that report progress without a callback' do
+      stub_completion(chat, progress_calls('a'), RubyLLM::Message.new(role: :assistant, content: 'complete'))
+
+      chat.ask('Use the tool')
+
+      expect(chat.messages.find(&:tool_result?).content).to eq('a done')
+    end
   end
 end

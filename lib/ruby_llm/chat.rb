@@ -766,6 +766,23 @@ module RubyLLM
       add_callback(:after_tool_result, &)
     end
 
+    # Registers a callback that receives the ToolCall and a Progress each
+    # time a running local tool reports what it is doing, with
+    # Tool#progress or, for MCP tools, through the server's progress
+    # notifications. Returns +self+.
+    #
+    #   chat.after_tool_progress do |tool_call, progress|
+    #     puts "#{tool_call.name}: #{progress.message}"
+    #   end
+    #
+    # The callback runs in the thread or fiber that reports, before the
+    # tool's result. On Ruby 3.2 and later, that includes threads and
+    # fibers the tool starts. With concurrent tool execution, callbacks for
+    # different tool calls can run at the same time.
+    def after_tool_progress(&)
+      add_callback(:after_tool_progress, &)
+    end
+
     # Registers a callback that receives the Fallback attempt after the
     # current model fails and before the fallback model is tried. Returns
     # +self+.
@@ -1442,12 +1459,20 @@ module RubyLLM
       }
 
       RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|
-        result = Support::Cancellation.watch(-> { raise_if_cancelled! }) { invoke_tool(tool, tool_call, args) }
+        result = Support::Cancellation.watch(-> { raise_if_cancelled! }) do
+          Support::ProgressReporter.listen(progress_listener(tool_call)) { invoke_tool(tool, tool_call, args) }
+        end
         event[:result] = result
         event[:result_content] = result
         event[:result_class] = result.class.name
         result
       end
+    end
+
+    def progress_listener(tool_call)
+      return if @callbacks.fetch(:after_tool_progress, []).empty?
+
+      ->(progress) { run_callbacks(:after_tool_progress, tool_call, progress) }
     end
 
     def invoke_tool(tool, tool_call, arguments)

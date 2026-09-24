@@ -75,7 +75,7 @@ module RubyLLM
       with_temperature with_max_output_tokens with_thinking with_citations
       with_end_user with_compaction with_caching with_context with_provider_options
       with_headers with_schema with_fallbacks
-      before_request before_message after_message before_tool_call after_tool_result
+      before_request before_message after_message before_tool_call after_tool_result after_tool_progress
       before_fallback after_fallback
       cancel approve deny answer decline cache_until_here
     ].freeze
@@ -1078,6 +1078,12 @@ module RubyLLM
     # :call-seq: after_tool_result(&block)
     #
     # Delegates to Chat#after_tool_result. See that method for arguments and return values.
+
+    ##
+    # :method: after_tool_progress
+    # :call-seq: after_tool_progress(&block)
+    #
+    # Delegates to Chat#after_tool_progress. See that method for arguments and return values.
 
     ##
     # :method: before_fallback

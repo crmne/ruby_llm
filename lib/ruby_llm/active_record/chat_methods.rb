@@ -216,7 +216,7 @@ module RubyLLM
         with_max_output_tokens with_thinking with_citations with_caching
         with_end_user with_compaction
         with_provider_options with_headers with_schema
-        before_request before_message after_message before_tool_call after_tool_result
+        before_request before_message after_message before_tool_call after_tool_result after_tool_progress
         before_fallback after_fallback
       ].freeze
 
@@ -352,6 +352,12 @@ module RubyLLM
       # :call-seq: after_tool_result(&block)
       #
       # Applies Chat#after_tool_result and returns this record.
+
+      ##
+      # :method: after_tool_progress
+      # :call-seq: after_tool_progress(&block)
+      #
+      # Applies Chat#after_tool_progress and returns this record.
 
       ##
       # :method: before_fallback

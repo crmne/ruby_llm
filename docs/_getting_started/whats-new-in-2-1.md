@@ -13,6 +13,7 @@ description: Connect to MCP servers, ask typed judgments, and give agents their 
 After reading this guide, you will know:
 
 * How to connect your chats and agents to MCP servers.
+* How to show what a slow tool is doing while it runs.
 * How to ask typed judgments with TypeSafe's Jev models.
 * How to chat with open-weight models on Hetzner.
 * How to build an agent's configuration from its inputs.
@@ -50,6 +51,29 @@ docs.microsoft_docs_search(query: "Azure Blob Storage").text
 You decide what the model sees. Rename and redescribe tools, fix arguments the model should not choose, pass results through your own method, or build higher-level tools from the server's primitives with a regular `RubyLLM::Tool`. Resources work as attachments, prompts work with `ask`, and a server's requests for input pause the chat the way tool approvals do, surviving restarts in Rails.
 
 The client speaks the 2026-07-28 revision of the protocol and falls back for servers that predate it. OAuth follows the MCP authorization spec, and Rails keeps the credentials encrypted. See [MCP Client]({% link _core_features/mcp.md %}).
+
+## Tool Progress
+
+A tool that downloads a large file or reads a scanned document can take a while. It can now say what it is doing, and your app can show it before the result arrives:
+
+```ruby
+class ReadReport < RubyLLM::Tool
+  def execute(url:)
+    progress "Downloading #{File.basename(url)}"
+    pages = Scanner.pages(url)
+    pages.each_with_index.map do |page, index|
+      progress "Reading page #{index + 1} of #{pages.size}", value: index + 1, total: pages.size
+      page.text
+    end.join("\n")
+  end
+end
+
+chat.with_tools(ReadReport).after_tool_progress do |tool_call, progress|
+  puts "#{tool_call.name}: #{progress.message}"
+end
+```
+
+MCP server tools report their progress through the same callback. It works with concurrent tool execution, on agents, and on Rails chat records. See [Reporting Progress]({% link _core_features/tool-execution.md %}#reporting-progress).
 
 ## Typed Judgments
 

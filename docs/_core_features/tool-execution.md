@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How to access the executing tool call from inside a tool.
 * What happens when a model does not support function calling.
 * How to observe tool calls and results with callbacks.
+* How to report what a slow tool is doing while it runs.
 * How to cap tool usage to prevent runaway loops.
 
 By default RubyLLM lets the model decide when to call tools and runs them sequentially. When you need tighter control, these options let you steer tool choice, parallelism, and observability per chat.
@@ -262,6 +263,39 @@ response = chat.ask "What's the weather in Paris?"
 # Tool returned: {"temperature": 15, "conditions": "Partly cloudy"}
 ```
 
+
+## Reporting Progress
+
+A tool that downloads a large file, reads a scanned document, or pages through search results can take a while. Call `progress` from `execute` to say what it is doing:
+
+```ruby
+class ReadReport < RubyLLM::Tool
+  description "Reads a scanned report"
+  parameter :url, description: "Report URL"
+
+  def execute(url:)
+    progress "Downloading #{File.basename(url)}"
+    pages = Scanner.pages(url)
+
+    pages.each_with_index.map do |page, index|
+      progress "Reading page #{index + 1} of #{pages.size}", value: index + 1, total: pages.size
+      page.text
+    end.join("\n")
+  end
+end
+```
+
+`after_tool_progress` receives the tool call and a `RubyLLM::Progress` for each report:
+
+```ruby
+chat.with_tools(ReadReport).after_tool_progress do |tool_call, progress|
+  puts "#{tool_call.name}: #{progress.message}"
+end
+```
+
+`progress.value` and `progress.total` are set when the tool counts its work, and `progress.fraction` gives the share done. Tools from [MCP servers]({% link _core_features/mcp.md %}#progress-and-cancellation) report the server's progress through the same callback.
+
+The callback runs in the thread or fiber that reports, before the tool's result. On Ruby 3.2 and later, that includes threads and fibers the tool starts itself, such as a batch of downloads. With concurrent tool execution, callbacks for different tool calls can run at the same time, so keep shared state thread-safe. Tools can report as often as they like; throttle in the callback if you forward reports to a UI. Outside a chat, `progress` does nothing.
 
 ### Limiting Tool Calls
 
