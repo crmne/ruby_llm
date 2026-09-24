@@ -28,5 +28,16 @@ RSpec.describe RubyLLM::Providers::GPUStack do
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
       )
     end
+
+    it 'passes remote image URLs through instead of downloading and re-encoding them' do
+      attachment = RubyLLM::Attachment.new('https://example.com/photo.png')
+
+      formatted = provider.send(:format_content, 'Describe this image', [attachment])
+
+      expect(formatted.last).to eq(
+        type: 'image_url',
+        image_url: { url: 'https://example.com/photo.png', detail: 'auto' }
+      )
+    end
   end
 end
