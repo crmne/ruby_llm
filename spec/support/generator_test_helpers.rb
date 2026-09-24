@@ -13,10 +13,10 @@ module GeneratorTestHelpers
     ruby_llm_path = File.expand_path('../..', __dir__)
     root_bundle_gemfile = ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s
 
-    root_env = {
+    root_env = GitEnvironment.cleared.merge(
       'RUBYLLM_PATH' => ruby_llm_path,
       'BUNDLE_GEMFILE' => root_bundle_gemfile
-    }
+    )
     root_env['BUNDLE_PATH'] = ENV['BUNDLE_PATH'] if ENV.key?('BUNDLE_PATH')
     root_env['BUNDLE_DISABLE_SHARED_GEMS'] = ENV['BUNDLE_DISABLE_SHARED_GEMS'] if ENV.key?('BUNDLE_DISABLE_SHARED_GEMS')
 

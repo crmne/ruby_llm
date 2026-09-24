@@ -31,6 +31,8 @@ RSpec.describe 'Versioned documentation site', type: :task do
   end
 
   describe 'release selection' do
+    around { |example| GitEnvironment.without { example.run } }
+
     before do
       commands = [
         %w[init --quiet],

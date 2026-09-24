@@ -106,7 +106,7 @@ RSpec.describe 'Release workflow', type: :task do
   end
 
   def verify_release(tag: self.tag, prerelease: true)
-    environment = git_environment.merge(
+    environment = GitEnvironment.cleared.merge(
       'RELEASE_TAG' => tag,
       'RELEASE_PRERELEASE' => prerelease.to_s,
       'GITHUB_OUTPUT' => File.join(directory, 'outputs')
@@ -117,13 +117,9 @@ RSpec.describe 'Release workflow', type: :task do
   end
 
   def git(*arguments)
-    stdout, stderr, status = Open3.capture3(git_environment, 'git', *arguments, chdir: directory)
+    stdout, stderr, status = Open3.capture3(GitEnvironment.cleared, 'git', *arguments, chdir: directory)
     raise stderr unless status.success?
 
     stdout.strip
-  end
-
-  def git_environment
-    ENV.keys.grep(/\AGIT_/).to_h { |name| [name, nil] }
   end
 end
