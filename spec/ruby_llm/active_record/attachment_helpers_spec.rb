@@ -113,6 +113,14 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
     end
   end
 
+  describe 'ActiveStorage-backed attachments' do
+    it 'inline as a base64 data URI' do
+      expected = "data:text/plain;base64,#{Base64.strict_encode64('hello')}"
+
+      expect(RubyLLM::Attachment.new(blob).url_or_data_uri).to eq(expected)
+    end
+  end
+
   describe '#convert_to_active_storage_format' do
     it 'ignores a blank source' do
       expect(helpers.convert_to_active_storage_format(nil)).to be_nil

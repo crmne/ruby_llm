@@ -27,14 +27,14 @@ module RubyLLM
         def format_image(image)
           {
             type: 'image_url',
-            image_url: image.url? ? image.source.to_s : image.for_llm
+            image_url: image.url_or_data_uri
           }
         end
 
         def format_document(document)
           {
             type: 'document_url',
-            document_url: document.url? ? document.source.to_s : document.for_llm
+            document_url: document.url_or_data_uri
           }
         end
       end

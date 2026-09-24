@@ -148,8 +148,12 @@ module RubyLLM
       when :text
         "<file name='#{filename}' mime_type='#{mime_type}'>#{content}</file>"
       else
-        "data:#{mime_type};base64,#{encoded}"
+        data_uri
       end
+    end
+
+    def url_or_data_uri # :nodoc:
+      url? ? @source.to_s : data_uri
     end
 
     # Returns the attachment category as a Symbol: +:image+, +:video+,
@@ -223,6 +227,10 @@ module RubyLLM
     end
 
     private
+
+    def data_uri
+      "data:#{mime_type};base64,#{encoded}"
+    end
 
     def file_byte_size
       return @source.byte_size if provider_file?

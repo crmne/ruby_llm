@@ -77,9 +77,8 @@ module RubyLLM
 
         def video_reference(attachment)
           return { file_id: attachment.provider_file_id } if attachment.provider_file?
-          return { url: attachment.source.to_s } if attachment.url?
 
-          { url: attachment.for_llm }
+          { url: attachment.url_or_data_uri }
         end
       end
     end

@@ -16,7 +16,7 @@ module RubyLLM
           raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
           raise ArgumentError, 'Cohere Parse accepts one image; pages must be [0]' unless pages.nil? || pages == [0]
 
-          reference = attachment.url? ? attachment.source.to_s : attachment.for_llm
+          reference = attachment.url_or_data_uri
           {
             model: model,
             document: { type: 'image_url', image_url: reference },

@@ -34,7 +34,7 @@ module RubyLLM
         def format_image(image)
           {
             type: 'input_image',
-            image_url: image.url? ? image.source.to_s : image.for_llm
+            image_url: image.url_or_data_uri
           }
         end
 

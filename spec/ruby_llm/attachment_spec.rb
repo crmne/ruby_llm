@@ -96,6 +96,34 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment.source).to be_a(URI::HTTPS)
   end
 
+  describe '#url_or_data_uri' do
+    it 'passes a remote URL through without fetching it' do
+      attachment = described_class.new('https://example.com/ruby.png')
+      allow(RubyLLM::Transport::Connection).to receive(:basic).and_raise('unexpected network request')
+
+      expect(attachment.url_or_data_uri).to eq('https://example.com/ruby.png')
+    end
+
+    it 'inlines a local path as a base64 data URI' do
+      path = File.expand_path('../fixtures/ruby.png', __dir__)
+      attachment = described_class.new(path)
+
+      expect(attachment.url_or_data_uri).to eq("data:image/png;base64,#{Base64.strict_encode64(File.binread(path))}")
+    end
+
+    it 'inlines an IO as a base64 data URI' do
+      attachment = described_class.new(StringIO.new('%PDF-1.4'), filename: 'report.pdf')
+
+      expect(attachment.url_or_data_uri).to eq("data:application/pdf;base64,#{Base64.strict_encode64('%PDF-1.4')}")
+    end
+
+    it 'inlines text as a data URI rather than a file tag' do
+      attachment = described_class.new(StringIO.new('notes'), filename: 'notes.txt')
+
+      expect(attachment.url_or_data_uri).to eq("data:text/plain;base64,#{Base64.strict_encode64('notes')}")
+    end
+  end
+
   it 'treats partially loaded ActiveStorage constants as unavailable' do
     stub_const('ActiveStorage', Module.new)
     stub_const('ActiveStorage::Blob', Class.new)

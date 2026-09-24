@@ -37,7 +37,7 @@ module RubyLLM
         def format_video(video)
           {
             type: 'video_url',
-            video_url: { url: video.url? ? video.source.to_s : video.for_llm }
+            video_url: { url: video.url_or_data_uri }
           }
         end
       end

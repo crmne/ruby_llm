@@ -24,7 +24,7 @@ module RubyLLM
           {
             type: 'video_url',
             video_url: {
-              url: video.url? ? video.source.to_s : video.for_llm
+              url: video.url_or_data_uri
             }
           }
         end

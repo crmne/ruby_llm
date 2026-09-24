@@ -60,7 +60,7 @@ module RubyLLM
 
         def video_references(attachments)
           attachments.group_by(&:type).to_h do |type, group|
-            values = group.map { |attachment| { "#{type}_url" => video_reference(attachment) } }
+            values = group.map { |attachment| { "#{type}_url" => attachment.url_or_data_uri } }
             [:"#{type}_reference", values.one? ? values.first : values]
           end
         end
@@ -85,10 +85,6 @@ module RubyLLM
 
             raise UnsupportedAttachmentError, attachment.mime_type
           end
-        end
-
-        def video_reference(attachment)
-          attachment.url? ? attachment.source.to_s : attachment.for_llm
         end
       end
     end

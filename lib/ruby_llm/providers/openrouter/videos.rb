@@ -71,7 +71,7 @@ module RubyLLM
 
         def frame_images(attachments)
           attachments.zip(FRAME_TYPES).map do |attachment, frame_type|
-            url = attachment.url? ? attachment.source.to_s : attachment.for_llm
+            url = attachment.url_or_data_uri
             { type: 'image_url', image_url: { url: url }, frame_type: frame_type }
           end
         end

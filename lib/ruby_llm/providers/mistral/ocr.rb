@@ -22,17 +22,13 @@ module RubyLLM
         end
 
         def ocr_document_part(attachment)
-          reference = attachment.url? ? attachment.source.to_s : ocr_data_uri(attachment)
+          reference = attachment.url_or_data_uri
 
           if attachment.image?
             { type: 'image_url', image_url: reference }
           else
             { type: 'document_url', document_url: reference }
           end
-        end
-
-        def ocr_data_uri(attachment)
-          "data:#{attachment.mime_type};base64,#{attachment.encoded}"
         end
 
         def parse_ocr_response(response, model:)
