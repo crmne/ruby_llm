@@ -5,15 +5,18 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Providers::GPUStack::Media do
   let(:model) { model_for(:gpustack) }
 
-  it 'passes remote videos to the backend without downloading them' do
+  it 'sends remote videos inline, because clusters often cannot reach the internet' do
+    stub_request(:get, 'https://example.com/clip.mp4')
+      .to_return(body: 'video bytes', headers: { 'Content-Type' => 'video/mp4' })
     attachment = RubyLLM::Attachment.new('https://example.com/clip.mp4')
 
     content = described_class.format_content('Describe this clip', [attachment])
 
+    data_url = "data:video/mp4;base64,#{Base64.strict_encode64('video bytes')}"
     expect(content).to eq(
       [
         { type: 'text', text: 'Describe this clip' },
-        { type: 'video_url', video_url: { url: 'https://example.com/clip.mp4' } }
+        { type: 'video_url', video_url: { url: data_url } }
       ]
     )
   end
@@ -29,13 +32,17 @@ RSpec.describe RubyLLM::Providers::GPUStack::Media do
   end
 
   it 'accepts video attachments through the public chat API' do
+    stub_request(:get, 'https://example.com/clip.mp4')
+      .to_return(body: 'video bytes', headers: { 'Content-Type' => 'video/mp4' })
+    data_url = "data:video/mp4;base64,#{Base64.strict_encode64('video bytes')}"
+
     request = stub_request(:post, 'http://localhost:11444/v1/chat/completions')
               .with do |http_request|
       payload = JSON.parse(http_request.body)
       payload['messages'] == [
         { 'role' => 'user', 'content' => [
           { 'type' => 'text', 'text' => 'Describe this clip' },
-          { 'type' => 'video_url', 'video_url' => { 'url' => 'https://example.com/clip.mp4' } }
+          { 'type' => 'video_url', 'video_url' => { 'url' => data_url } }
         ] }
       ]
     end.to_return_json(body: { choices: [{ message: { role: 'assistant', content: 'A Ruby tutorial.' } }] })
