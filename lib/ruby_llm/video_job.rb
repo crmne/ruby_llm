@@ -117,9 +117,10 @@ module RubyLLM
       deadline = monotonic_time + timeout
 
       until done?
-        raise Error, "Video generation timed out after #{timeout} seconds" if monotonic_time > deadline
+        remaining = deadline - monotonic_time
+        raise Error, "Video generation timed out after #{timeout} seconds" unless remaining.positive?
 
-        sleep interval
+        sleep [interval, remaining].min
         refresh
       end
       raise Error, "Video generation failed: #{error}" if failed?

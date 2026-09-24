@@ -58,6 +58,17 @@ RSpec.describe RubyLLM::Video, :live do
       expect { job.wait(timeout: 0, interval: 0) }.to raise_error(RubyLLM::Error, /timed out after 0 seconds/)
     end
 
+    it 'does not sleep past the timeout deadline' do
+      allow(protocol).to receive(:refresh_video_job).and_return({ status: :pending })
+      job = described_class.new(id: 'operations/op-1', protocol: protocol)
+      allow(job).to receive(:monotonic_time).and_return(100.0, 100.25, 101.1)
+      allow(job).to receive(:sleep)
+
+      expect { job.wait(timeout: 1, interval: 60) }.to raise_error(RubyLLM::Error, /timed out after 1 seconds/)
+
+      expect(job).to have_received(:sleep).with(0.75)
+    end
+
     it 'surfaces the provider failure from wait and #video' do
       allow(protocol).to receive(:refresh_video_job)
         .and_return({ status: :failed, error: 'flagged by moderation' })
