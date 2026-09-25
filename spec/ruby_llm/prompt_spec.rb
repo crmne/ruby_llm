@@ -70,10 +70,17 @@ RSpec.describe RubyLLM::Prompt do
       expect(described_class.render('work_assistant/instructions', name: 'Ada')).to eq("Hello.\nBe kind to Ada.")
     end
 
-    it 'falls back to the prompt root when the current directory has no partial' do
+    it 'does not fall back to the prompt root for a bare name' do
       create_prompt('_tone', 'Root tone.')
       create_prompt('work_assistant/instructions', '<%= render "tone" %>')
-      expect(described_class.render('work_assistant/instructions')).to eq('Root tone.')
+      expect { described_class.render('work_assistant/instructions') }
+        .to raise_error(RubyLLM::PromptNotFoundError, %r{work_assistant/_tone\.txt\.erb})
+    end
+
+    it 'resolves a bare name from the prompt root for a top-level prompt' do
+      create_prompt('_tone', 'Root tone.')
+      create_prompt('instructions', '<%= render "tone" %>')
+      expect(described_class.render('instructions')).to eq('Root tone.')
     end
 
     it 'resolves a path name from the prompt roots, not the current prompt directory' do
@@ -83,17 +90,52 @@ RSpec.describe RubyLLM::Prompt do
       expect(described_class.render('work_assistant/instructions')).to eq('Root safety.')
     end
 
-    it 'prefers the partial next to the prompt over the root partial' do
-      create_prompt('_tone', 'Root tone.')
-      create_prompt('work_assistant/_tone', 'Assistant tone.')
-      create_prompt('work_assistant/instructions', '<%= render "tone" %>')
-      expect(described_class.render('work_assistant/instructions')).to eq('Assistant tone.')
+    it 'renders a partial with the hash form' do
+      create_prompt('work_assistant/_tone', 'Be kind to <%= name %>.')
+      create_prompt('work_assistant/instructions', '<%= render partial: "tone", locals: { name: name } %>')
+      expect(described_class.render('work_assistant/instructions', name: 'Ada')).to eq('Be kind to Ada.')
+    end
+
+    it 'renders a partial with the hash form and no locals' do
+      create_prompt('shared/_safety', 'Stay safe.')
+      create_prompt('instructions', '<%= render partial: "shared/safety" %>')
+      expect(described_class.render('instructions')).to eq('Stay safe.')
+    end
+
+    it 'exposes local_assigns in a partial' do
+      create_prompt('_tone', '<%= local_assigns.fetch(:name, "friend") %>')
+      create_prompt('instructions', '<%= render "tone" %> <%= render "tone", name: "Ada" %>')
+      expect(described_class.render('instructions')).to eq('friend Ada')
+    end
+
+    it 'exposes local_assigns in a prompt' do
+      create_prompt('instructions', '<%= local_assigns[:name] || "friend" %>')
+      expect(described_class.render('instructions')).to eq('friend')
+      expect(described_class.render('instructions', name: 'Ada')).to eq('Ada')
+    end
+
+    it 'keeps a local with an invalid variable name in local_assigns only' do
+      create_prompt('instructions', '<%= local_assigns["x-y"] %><%= local_assigns[:Name] %>')
+      expect(described_class.render('instructions', 'x-y' => 1, Name: 2)).to eq('12')
+    end
+
+    it 'treats nil locals in the hash form as no locals' do
+      create_prompt('_tone', 'Stay calm.')
+      create_prompt('instructions', '<%= render partial: "tone", locals: nil %>')
+      expect(described_class.render('instructions')).to eq('Stay calm.')
     end
 
     it 'renders nested partials' do
       create_prompt('_inner', 'inner')
       create_prompt('_outer', 'outer <%= render "inner" %>')
       create_prompt('instructions', '<%= render "outer" %>')
+      expect(described_class.render('instructions')).to eq('outer inner')
+    end
+
+    it 'resolves a bare name next to the partial that renders it' do
+      create_prompt('shared/_inner', 'inner')
+      create_prompt('shared/_outer', 'outer <%= render "inner" %>')
+      create_prompt('instructions', '<%= render "shared/outer" %>')
       expect(described_class.render('instructions')).to eq('outer inner')
     end
 

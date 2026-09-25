@@ -7,39 +7,49 @@
 # RubyLLM lexical scope: +Chat+ in a template is the application's model,
 # not RubyLLM::Chat.
 class RubyLLM::Prompt::Context # rubocop:disable Style/ClassAndModuleChildren
-  def initialize(prompt, locals) # :nodoc:
+  LOCAL_VARIABLE_NAME = /\A(?![A-Z0-9])(?:[[:alnum:]_]|[^\0-\177])+\z/
+  private_constant :LOCAL_VARIABLE_NAME
+
+  # Returns the locals passed to the current prompt or partial. Use it to
+  # read an optional local, or a local whose name is not a valid Ruby
+  # variable name:
+  #
+  #   <% if local_assigns[:product_name] %>
+  #
+  attr_reader :local_assigns
+
+  def initialize(prompt, local_assigns) # :nodoc:
     @prompt = prompt
-    @locals = locals
+    @local_assigns = local_assigns
   end
 
-  # Renders the partial +name+ with +locals+. A bare name is looked up next
-  # to the current prompt first, then in every prompt root. A name with a
-  # path is looked up in the prompt roots only.
+  # Renders a partial with locals. A bare name is looked up next to the
+  # current prompt only. A name with a path is looked up in the prompt roots.
   #
   #   <%= render "tone" %>
   #   <%= render "shared/safety", product_name: product_name %>
+  #   <%= render partial: "shared/safety", locals: { product_name: product_name } %>
   #
-  def render(name, **locals)
-    partial(name).render(**locals)
+  def render(options = {}, locals = {})
+    return partial(options).render(**locals) unless options.is_a?(Hash)
+
+    partial(options.fetch(:partial)).render(**(options[:locals] || {}))
   end
 
   def scope # :nodoc:
-    @locals.each_with_object(binding) { |(name, value), scope| scope.local_variable_set(name, value) }
+    @local_assigns.each_with_object(binding) do |(name, value), scope|
+      scope.local_variable_set(name, value) if name.to_s.match?(LOCAL_VARIABLE_NAME)
+    end
   end
 
   private
 
   def partial(name)
-    candidates = partial_names(name).map { |candidate| RubyLLM::Prompt.new(candidate) }
-    candidates.find { |candidate| File.exist?(candidate.path) } || candidates.first
-  end
-
-  def partial_names(name)
     name = name.to_s
     partial = name.sub(%r{([^/]+)\z}, '_\\1')
-    return [partial] if name.include?('/')
-
     directory = File.dirname(@prompt.name)
-    directory == '.' ? [partial] : ["#{directory}/#{partial}", partial]
+    return RubyLLM::Prompt.new(partial) if name.include?('/') || directory == '.'
+
+    RubyLLM::Prompt.new("#{directory}/#{partial}")
   end
 end
