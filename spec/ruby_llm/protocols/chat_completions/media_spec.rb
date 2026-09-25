@@ -56,5 +56,29 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
       )
     end
+
+    it 'maps low resolution to low image detail' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :low)
+
+      formatted = described_class.format_content('Describe this', [image])
+
+      expect(formatted.second[:image_url][:detail]).to eq('low')
+    end
+
+    it 'maps higher resolutions to high image detail' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :medium)
+
+      formatted = described_class.format_content('Describe this', [image])
+
+      expect(formatted.second[:image_url][:detail]).to eq('high')
+    end
+
+    it 'omits image detail when no resolution is set' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+
+      formatted = described_class.format_content('Describe this', [image])
+
+      expect(formatted.second[:image_url]).not_to have_key(:detail)
+    end
   end
 end
