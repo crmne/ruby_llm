@@ -54,13 +54,9 @@ module RubyLLM
           error = error_data['error']
           return [nil, error.to_s] unless error.is_a?(Hash)
 
-          return [503, error['message']] if error['code'] == 'server_is_overloaded'
-
           case error['type']
           when 'server_error'
             [500, error['message']]
-          when 'service_unavailable_error'
-            [503, error['message']]
           when 'rate_limit_exceeded', 'insufficient_quota'
             [429, error['message']]
           else

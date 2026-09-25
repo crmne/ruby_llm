@@ -66,17 +66,6 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
       expect(message).to eq('Slow down')
     end
 
-    it 'reports a 503 for an overloaded model' do
-      status, message = protocol.send(
-        :parse_streaming_error,
-        { error: { type: 'service_unavailable_error', code: 'server_is_overloaded',
-                   message: 'Our servers are currently overloaded. Please try again later.' } }.to_json
-      )
-
-      expect(status).to eq(503)
-      expect(message).to eq('Our servers are currently overloaded. Please try again later.')
-    end
-
     it 'reports a 500 for server errors' do
       status, message = protocol.send(
         :parse_streaming_error,

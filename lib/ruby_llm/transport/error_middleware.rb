@@ -82,6 +82,10 @@ module RubyLLM
           /per day/i
         ].freeze
 
+        OVERLOAD_PATTERNS = [
+          /currently overloaded/i
+        ].freeze
+
         def parse_error(provider:, response:)
           message = provider&.parse_error(response)
 
@@ -89,9 +93,7 @@ module RubyLLM
           when 200..399
             message
           when 400
-            raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
-
-            raise BadRequestError.new(message, response:)
+            raise_bad_request(message, response)
           when 401
             raise UnauthorizedError.new(message, response:)
           when 402
@@ -116,21 +118,33 @@ module RubyLLM
 
         private
 
-        # Providers hand back whatever their error body holds, which is not
-        # always a String: bedrock-mantle nests code, message, and type in a
-        # Hash. Match on the rendered text so any shape classifies.
-        def context_length_exceeded?(message)
-          text = message.to_s
-          return false if text.empty?
+        def raise_bad_request(message, response)
+          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
+          raise OverloadedError.new(message, response:) if overloaded?(message)
 
-          CONTEXT_LENGTH_PATTERNS.any? { |pattern| text.match?(pattern) }
+          raise BadRequestError.new(message, response:)
+        end
+
+        def context_length_exceeded?(message)
+          matches?(message, CONTEXT_LENGTH_PATTERNS)
+        end
+
+        def overloaded?(message)
+          matches?(message, OVERLOAD_PATTERNS)
         end
 
         def rate_limited?(message)
+          matches?(message, RATE_LIMIT_PATTERNS)
+        end
+
+        # Providers hand back whatever their error body holds, which is not
+        # always a String: bedrock-mantle nests code, message, and type in a
+        # Hash. Match on the rendered text so any shape classifies.
+        def matches?(message, patterns)
           text = message.to_s
           return false if text.empty?
 
-          RATE_LIMIT_PATTERNS.any? { |pattern| text.match?(pattern) }
+          patterns.any? { |pattern| text.match?(pattern) }
         end
       end
     end
