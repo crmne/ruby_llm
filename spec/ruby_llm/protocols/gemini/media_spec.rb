@@ -56,12 +56,12 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       )
     end
 
-    it 'sets media_resolution on parts with a resolution' do
+    it 'sends high resolution when ultra high is requested for a PDF' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf', resolution: :ultra_high)
 
       parts = described_class.format_content('Read this page', [attachment])
 
-      expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_ULTRA_HIGH')
+      expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_HIGH')
     end
 
     it 'sets media_resolution on provider-managed files' do
@@ -71,6 +71,23 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       parts = described_class.format_content('Watch this', [attachment])
 
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_LOW')
+    end
+
+    it 'sends ultra high resolution on images' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
+
+      parts = described_class.format_content('Read this', [image])
+
+      expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_ULTRA_HIGH')
+    end
+
+    it 'sends high resolution when ultra high is requested for a video' do
+      file = RubyLLM::UploadedFile.new(id: 'files/abc', filename: 'video.mp4', mime_type: 'video/mp4')
+      attachment = RubyLLM::Attachment.new(file, resolution: :ultra_high)
+
+      parts = described_class.format_content('Watch this', [attachment])
+
+      expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_HIGH')
     end
 
     it 'omits media_resolution on audio' do
