@@ -530,7 +530,7 @@ module RubyLLM
     # :startdoc:
 
     def initialize(models = nil) # :nodoc:
-      @models = models || self.class.load_models
+      replace_models(models || self.class.load_models)
     end
 
     # Replaces the models in this registry with those read from the JSON
@@ -538,7 +538,7 @@ module RubyLLM
     # <tt>RubyLLM.config.model_registry_file</tt>. A missing or invalid
     # file falls back to the registry bundled with the gem.
     def load_from_json(file = RubyLLM.config.model_registry_file)
-      @models = self.class.models_from_file(file) || self.class.models_from_bundle
+      replace_models(self.class.models_from_file(file) || self.class.models_from_bundle)
       self
     end
 
@@ -548,7 +548,7 @@ module RubyLLM
       store = RubyLLM.config.model_registry_store
       raise ModelRegistryError, 'No model registry store is configured' unless store
 
-      @models = Array(store.read)
+      replace_models(Array(store.read))
       self
     end
 
@@ -670,14 +670,14 @@ module RubyLLM
         merged_models = self.class.merge_models(self.class.models_from_provider_gems, main_models)
         persisted_models = RubyLLM.config.model_registry_store ? merged_models : main_models
         persist_registry!(persisted_models, published:)
-        @models = stored_models || merged_models
+        replace_models(stored_models || merged_models)
         payload.merge!(model_count: all.size, not_modified: published.not_modified)
       end
       self
     end
 
     def refresh_from_providers(remote_only: false) # :nodoc:
-      @models = self.class.fetch_merged_models(remote_only: remote_only)
+      replace_models(self.class.fetch_merged_models(remote_only: remote_only))
       self
     end
 
@@ -686,6 +686,11 @@ module RubyLLM
     end
 
     private
+
+    def replace_models(models)
+      @models = models.dup
+      @model_index = nil
+    end
 
     # Filters keep the unlisted entries so #find and #unlisted still see them
     # after a chain such as by_provider(:openai).unlisted.

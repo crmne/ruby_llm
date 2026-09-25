@@ -1,0 +1,242 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+require 'timeout'
+
+RSpec.describe RubyLLM::Models do
+  let(:original) { RubyLLM::Model.new(id: 'gpt-5-nano', provider: 'openai', name: 'Original') }
+  let(:replacement) { RubyLLM::Model.new(id: original.id, provider: 'openai', name: 'Updated') }
+  let(:retired) { RubyLLM::Model.new(id: 'gpt-4.1', provider: 'openai') }
+  let(:registry) { described_class.new([original, retired]) }
+
+  around do |example|
+    store = RubyLLM.config.model_registry_store
+    RubyLLM.config.model_registry_store = nil
+    example.run
+  ensure
+    RubyLLM.config.model_registry_store = store
+  end
+
+  describe '#find' do
+    let(:alias_models) do
+      [
+        RubyLLM::Model.new(id: 'claude-haiku-4-5', provider: 'anthropic'),
+        RubyLLM::Model.new(id: 'claude-haiku-4-5-20251001', provider: 'anthropic')
+      ]
+    end
+
+    it 'keeps exact matches first when provider preferences tie' do
+      exact, aliased = alias_models
+      models = described_class.new([aliased, exact])
+
+      2.times { expect(models.find(exact.id)).to equal(exact) }
+    end
+
+    it 'prefers the resolved alias when a provider is specified' do
+      exact, aliased = alias_models
+      models = described_class.new([exact, aliased])
+
+      expect(models.find(exact.id, provider: :anthropic)).to equal(aliased)
+      expect(models.find(exact.id, provider: 'anthropic')).to equal(aliased)
+    end
+
+    it 'falls back to the exact id when the resolved alias belongs to another provider' do
+      exact, aliased = alias_models
+      other = RubyLLM::Model.new(id: aliased.id, provider: 'azure')
+      models = described_class.new([other, exact])
+
+      expect(models.find(exact.id, provider: :anthropic)).to equal(exact)
+    end
+
+    it 'prefers a first-party alias over another provider with the exact id' do
+      exact, aliased = alias_models
+      other = RubyLLM::Model.new(id: exact.id, provider: 'vertexai')
+      models = described_class.new([other, aliased])
+
+      expect(models.find(exact.id)).to equal(aliased)
+      expect(models.find(exact.id, provider: :vertexai)).to equal(other)
+    end
+
+    it 'prefers listed entries while keeping unlisted entries available after filtering' do
+      exact = alias_models.first
+      unlisted = RubyLLM::Model.new(id: exact.id, provider: 'anthropic', unlisted_at: Time.now.utc)
+      listed = RubyLLM::Model.new(id: exact.id, provider: 'vertexai')
+      models = described_class.new([unlisted, listed])
+
+      expect(models.find(exact.id)).to equal(listed)
+      expect(models.find(exact.id, provider: :anthropic)).to equal(unlisted)
+      filtered = models.by_provider(:anthropic).chat_models
+      expect(filtered.all).to be_empty
+      expect(filtered.find(exact.id)).to equal(unlisted)
+    end
+
+    it 'preserves catalog order for duplicate ids from the same provider' do
+      models = described_class.new([original, replacement])
+
+      expect(models.find(original.id)).to equal(original)
+      expect(models.find(original.id, provider: :openai)).to equal(original)
+    end
+
+    it 'does not retain alias resolutions between lookups' do
+      models = described_class.new([original, retired])
+      expect(models.find(original.id)).to equal(original)
+      allow(described_class::Aliases).to receive(:resolve).with(original.id, :openai).and_return(retired.id)
+
+      expect(models.find(original.id, provider: :openai)).to equal(retired)
+    end
+  end
+
+  describe '#load_from_json' do
+    it 'replaces previously found entries and removes entries absent from the file' do
+      expect(registry.find(original.id)).to equal(original)
+      expect(registry.find(retired.id)).to equal(retired)
+
+      Tempfile.create(['models', '.json']) do |file|
+        file.write(described_class::Registry.pretty_json([replacement]))
+        file.flush
+
+        expect(registry.load_from_json(file.path)).to equal(registry)
+      end
+
+      expect(registry.find(original.id).name).to eq('Updated')
+      expect(registry.find(original.id, provider: :openai).name).to eq('Updated')
+      expect { registry.find(retired.id) }.to raise_error(RubyLLM::ModelNotFoundError)
+    end
+
+    it 'discards previous lookups when falling back to the bundled registry' do
+      expect(registry.find(original.id)).to equal(original)
+      allow(described_class).to receive(:models_from_bundle).and_return([replacement])
+
+      registry.load_from_json(nil)
+
+      expect(registry.find(original.id)).to equal(replacement)
+      expect { registry.find(retired.id, provider: :openai) }.to raise_error(RubyLLM::ModelNotFoundError)
+    end
+  end
+
+  describe '#load_from_store' do
+    it 'reloads a store that reuses its array, including an empty result' do
+      stored = [original]
+      RubyLLM.config.model_registry_store = instance_double(described_class::Registry::FileStore, read: stored)
+      registry.load_from_store
+      expect(registry.find(original.id)).to equal(original)
+      expect { registry.find(retired.id) }.to raise_error(RubyLLM::ModelNotFoundError)
+
+      stored.replace([replacement, retired])
+      expect(registry.load_from_store).to equal(registry)
+      expect(registry.find(original.id)).to equal(replacement)
+      expect(registry.find(retired.id, provider: :openai)).to equal(retired)
+
+      stored.clear
+      registry.load_from_store
+      expect { registry.find(original.id) }.to raise_error(RubyLLM::ModelNotFoundError)
+    end
+
+    it 'does not reuse a lookup index built during an earlier catalog load' do
+      started = Queue.new
+      resume = Queue.new
+      model_id = original.id
+      RubyLLM.config.model_registry_store = instance_double(described_class::Registry::FileStore, read: [replacement])
+      allow(original).to receive(:id) do
+        started << true
+        resume.pop
+        model_id
+      end
+
+      lookup = Thread.new { registry.find(model_id) }
+      Timeout.timeout(5) { started.pop }
+      registry.load_from_store
+      expect(registry.find(model_id)).to equal(replacement)
+      resume << true
+      Timeout.timeout(5) { lookup.join }
+
+      expect(lookup.value).to equal(original)
+      expect(registry.find(model_id)).to equal(replacement)
+    ensure
+      lookup&.kill
+      lookup&.join
+    end
+
+    it 'does not let an in-flight lookup restore an index after a reused store array changes' do
+      started = Queue.new
+      resume = Queue.new
+      old_id = original.id
+      new_model = replacement
+      new_id = new_model.id
+      stored = [original]
+      RubyLLM.config.model_registry_store = instance_double(described_class::Registry::FileStore, read: stored)
+      registry = described_class.new(stored)
+      calls = 0
+      allow(original).to receive(:id) do
+        calls += 1
+        if calls == 1
+          started << true
+          resume.pop
+        end
+        old_id
+      end
+
+      lookup = Thread.new { registry.find(old_id) }
+      Timeout.timeout(5) { started.pop }
+      stored.replace([new_model])
+      registry.load_from_store
+      expect(registry.find(new_id)).to equal(new_model)
+      resume << true
+      Timeout.timeout(5) { lookup.join }
+
+      expect(lookup.value).to equal(original)
+      expect(registry.find(new_id)).to equal(new_model)
+    ensure
+      lookup&.kill
+      lookup&.join
+    end
+  end
+
+  describe '#refresh' do
+    before do
+      allow(described_class).to receive_messages(
+        fetch_published_registry: described_class::Registry::PublishedSource::Result.new([replacement], nil, false),
+        fetch_provider_models: { models: [], fetched_providers: [], configured_names: [], failed: [] },
+        models_from_provider_gems: []
+      )
+    end
+
+    it 'finds refreshed entries and unlisted entries retained by the store' do
+      unlisted = RubyLLM::Model.new(id: retired.id, provider: 'openai', unlisted_at: Time.now.utc)
+      RubyLLM.config.model_registry_store = instance_double(described_class::Registry::FileStore,
+                                                            read: [replacement, unlisted], write: nil)
+      expect(registry.find(original.id)).to equal(original)
+      expect(registry.find(retired.id)).to equal(retired)
+
+      expect(registry.refresh).to equal(registry)
+
+      expect(registry.find(original.id)).to equal(replacement)
+      expect(registry.find(retired.id, provider: :openai)).to equal(unlisted)
+      expect(registry.all).to eq([replacement])
+    end
+
+    it 'keeps the previous lookup results when the refresh cannot be persisted' do
+      store = instance_double(described_class::Registry::FileStore)
+      allow(store).to receive(:write).and_raise(IOError, 'disk full')
+      RubyLLM.config.model_registry_store = store
+      expect(registry.find(original.id)).to equal(original)
+
+      expect { registry.refresh }.to raise_error(RubyLLM::ModelRegistryError, /disk full/)
+
+      expect(registry.find(original.id)).to equal(original)
+      expect(registry.find(retired.id, provider: :openai)).to equal(retired)
+    end
+  end
+
+  describe '#refresh_from_providers' do
+    it 'replaces previous lookup results with the new provider catalog' do
+      expect(registry.find(original.id)).to equal(original)
+      allow(described_class).to receive(:fetch_merged_models).with(remote_only: true).and_return([replacement])
+
+      expect(registry.refresh_from_providers(remote_only: true)).to equal(registry)
+
+      expect(registry.find(original.id, provider: :openai)).to equal(replacement)
+      expect { registry.find(retired.id) }.to raise_error(RubyLLM::ModelNotFoundError)
+    end
+  end
+end

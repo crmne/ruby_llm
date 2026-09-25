@@ -7,6 +7,13 @@ module RubyLLM
     module Lookup # :nodoc:
       private
 
+      def models_by_id
+        models = @models
+        index = @model_index
+        index = @model_index = [models, models.group_by(&:id)] unless index && index.first.equal?(models)
+        index.last
+      end
+
       def find_with_provider(model_id, provider, config = nil)
         deployed_id = Provider.resolve(provider)&.deployed_model_id(model_id, config || RubyLLM.config)
         return find_registered(model_id, provider, config) unless deployed_id
@@ -24,8 +31,9 @@ module RubyLLM
       def find_registered(model_id, provider, config)
         resolved_id = Aliases.resolve(model_id, provider)
         resolved_id = resolve_provider_registry_id(resolved_id, provider, config)
-        all_including_unlisted.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
-          all_including_unlisted.find { |m| m.id == model_id && m.provider == provider.to_s } ||
+        index = models_by_id
+        Array(index[resolved_id]).find { |m| m.provider == provider.to_s } ||
+          Array(index[model_id]).find { |m| m.provider == provider.to_s } ||
           raise_model_not_found(model_id, provider: provider)
       end
 
@@ -41,8 +49,9 @@ module RubyLLM
       # Provider preference settles it, not the kind of match.
       def find_without_provider(model_id)
         resolved_id = Aliases.resolve(model_id)
-        matches = all_including_unlisted.select { |m| [model_id, resolved_id].include?(m.id) }
-                                        .sort_by { |m| m.id == model_id ? 0 : 1 }
+        index = models_by_id
+        matches = Array(index[model_id])
+        matches += Array(index[resolved_id]) unless resolved_id == model_id
 
         preferred_match(matches) || raise_model_not_found(model_id)
       end
