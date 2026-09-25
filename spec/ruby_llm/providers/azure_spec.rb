@@ -59,6 +59,20 @@ RSpec.describe RubyLLM::Providers::Azure do
         .to raise_error(RubyLLM::ModelNotFoundError)
     end
 
+    it 'rejects a deployments setting that is not a Hash' do
+      config.azure_deployments = 'gpt-4o-global'
+
+      expect { registry.find('gpt-4o-global', provider: :azure, config: config) }
+        .to raise_error(RubyLLM::ConfigurationError, /azure_deployments must be a Hash/)
+    end
+
+    it 'raises instead of assuming a model when a deployment points to an unknown one' do
+      config.azure_deployments = { 'gpt-4o-global' => 'gtp-4o' }
+
+      expect { RubyLLM::Models.resolve('gpt-4o-global', provider: :azure, config: config) }
+        .to raise_error(RubyLLM::ConfigurationError, /"gpt-4o-global" points to unknown model "gtp-4o"/)
+    end
+
     it 'gives a chat the deployment name and the registry entry instead of an assumed model' do
       chat = RubyLLM.context do |context_config|
         context_config.azure_api_base = config.azure_api_base

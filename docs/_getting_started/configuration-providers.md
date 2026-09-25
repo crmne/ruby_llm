@@ -258,7 +258,7 @@ chat = RubyLLM.chat(model: "gpt-4o-global", provider: :azure)
 chat.model.id # => "gpt-4o-global", the name sent to Azure
 ```
 
-The chat keeps the deployment name for requests and takes everything else from the `gpt-4o` entry. Rails creates the deployment's model row from that entry the first time a chat uses it. Names you don't declare are sent as given.
+The chat keeps the deployment name for requests and takes everything else from the `gpt-4o` entry. In Rails, a model row created for the deployment takes that entry's metadata; a row that already existed keeps what it has. Names you don't declare are sent as given, and a declared model the registry doesn't know raises `RubyLLM::ConfigurationError`.
 
 For a custom Cohere embedding deployment name or a dedicated serverless endpoint, select the protocol in a context:
 

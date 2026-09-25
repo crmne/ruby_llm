@@ -589,7 +589,7 @@ module RubyLLM
 
       # Returns the id of the model that the deployment named +model_id+
       # runs, or +nil+ when +model_id+ is not a declared deployment.
-      # Providers whose requests name deployments (Azure) override it.
+      # Providers whose requests name deployments override it.
       def deployed_model_id(_model_id, _config = nil)
         nil
       end

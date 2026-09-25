@@ -113,6 +113,11 @@ module RubyLLM
 
         def deployed_model_id(deployment, config = RubyLLM.config)
           deployments = config.azure_deployments || {}
+          unless deployments.is_a?(Hash)
+            raise ConfigurationError, 'azure_deployments must be a Hash of deployment names to model ids, ' \
+                                      "got #{deployments.class}"
+          end
+
           (deployments[deployment.to_s] || deployments[deployment.to_sym])&.to_s
         end
 

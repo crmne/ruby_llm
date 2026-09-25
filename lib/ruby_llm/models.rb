@@ -783,23 +783,32 @@ module RubyLLM
     end
 
     def find_with_provider(model_id, provider, config = nil)
-      config ||= RubyLLM.config
-      provider_class = Provider.resolve(provider)
-      deployed_id = provider_class&.deployed_model_id(model_id, config)
-      registry_id = provider_registry_id(deployed_id || model_id, provider, provider_class, config)
-      model = find_registered(registry_id, model_id, provider)
-      deployed_id && model.id != model_id ? Model.new(model.to_h.merge(id: model_id)) : model
+      deployed_id = Provider.resolve(provider)&.deployed_model_id(model_id, config || RubyLLM.config)
+      return find_registered(model_id, provider, config) unless deployed_id
+
+      Model.new(find_deployed_model(model_id, deployed_id, provider, config).to_h.merge(id: model_id))
     end
 
-    def provider_registry_id(model_id, provider, provider_class, config)
+    def find_deployed_model(deployment, model_id, provider, config)
+      find_registered(model_id, provider, config)
+    rescue ModelNotFoundError
+      raise ConfigurationError, "Deployment #{deployment.inspect} points to unknown model #{model_id.inspect} " \
+                                "for provider: #{provider.inspect}. #{refresh_registry_guidance}"
+    end
+
+    def find_registered(model_id, provider, config)
       resolved_id = Aliases.resolve(model_id, provider)
-      provider_class ? provider_class.resolve_registry_id(resolved_id, self, config) : resolved_id
-    end
-
-    def find_registered(registry_id, model_id, provider)
-      all_including_unlisted.find { |m| m.id == registry_id && m.provider == provider.to_s } ||
+      resolved_id = resolve_provider_registry_id(resolved_id, provider, config)
+      all_including_unlisted.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         all_including_unlisted.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         raise_model_not_found(model_id, provider: provider)
+    end
+
+    def resolve_provider_registry_id(model_id, provider, config = nil)
+      provider_class = Provider.resolve(provider)
+      return model_id unless provider_class
+
+      provider_class.resolve_registry_id(model_id, self, config || RubyLLM.config)
     end
 
     # A name can be one provider's exact id and another's alias:
