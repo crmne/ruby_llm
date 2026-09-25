@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Perplexity, :live do
   describe 'Agent API' do
-    let(:preset) { RubyLLM.chat(model: 'fast', provider: :perplexity, assume_model_exists: true) }
+    let(:preset) { RubyLLM.chat(model: 'fast', provider: :perplexity) }
     let(:add_tool) do
       Class.new(RubyLLM::Tool) do
         description 'Add two integers.'

@@ -39,7 +39,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
   end
 
   def preset_chat(model)
-    RubyLLM.chat(model:, provider: :perplexity, assume_model_exists: true).tap do |preset|
+    RubyLLM.chat(model:, provider: :perplexity).tap do |preset|
       preset.add_message(role: :user, content: 'Hello')
     end
   end

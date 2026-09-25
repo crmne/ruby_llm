@@ -139,9 +139,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     context "with perplexity/#{model_for(:perplexity, :citations)}" do
-      let(:chat) do
-        RubyLLM.chat(model: model_for(:perplexity, :citations), provider: :perplexity, assume_model_exists: true)
-      end
+      let(:chat) { RubyLLM.chat(model: model_for(:perplexity, :citations), provider: :perplexity) }
 
       it 'returns search result citations' do
         response = chat.ask('What is the Ruby programming language?')
