@@ -82,6 +82,14 @@ module RubyLLM
           /per day/i
         ].freeze
 
+        # OpenAI has returned capacity failures as HTTP 400 ("Our servers are
+        # currently overloaded. Please try again later."). Status 529 is the
+        # only code that maps to OverloadedError on its own, so match the
+        # message the same way a 400 context-length error is reclassified.
+        OVERLOAD_PATTERNS = [
+          /overloaded/i
+        ].freeze
+
         def parse_error(provider:, response:)
           message = provider&.parse_error(response)
 
@@ -89,9 +97,7 @@ module RubyLLM
           when 200..399
             message
           when 400
-            raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
-
-            raise BadRequestError.new(message, response:)
+            classify_bad_request!(message, response)
           when 401
             raise UnauthorizedError.new(message, response:)
           when 402
@@ -124,6 +130,20 @@ module RubyLLM
           return false if text.empty?
 
           CONTEXT_LENGTH_PATTERNS.any? { |pattern| text.match?(pattern) }
+        end
+
+        def classify_bad_request!(message, response)
+          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
+          raise OverloadedError.new(message, response:) if overloaded?(message)
+
+          raise BadRequestError.new(message, response:)
+        end
+
+        def overloaded?(message)
+          text = message.to_s
+          return false if text.empty?
+
+          OVERLOAD_PATTERNS.any? { |pattern| text.match?(pattern) }
         end
 
         def rate_limited?(message)

@@ -236,6 +236,26 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::ContextLengthExceededError)
     end
 
+    it "maps OpenAI's overloaded 400 error to OverloadedError" do
+      msg = 'Our servers are currently overloaded. Please try again later.'
+      response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::OverloadedError, msg)
+    end
+
+    it "maps 'the engine is currently overloaded' 400 errors to OverloadedError" do
+      msg = 'The engine is currently overloaded, please try again later.'
+      response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::OverloadedError, msg)
+    end
+
     it 'keeps regular 400 errors as BadRequestError' do
       response = Struct.new(:status, :body).new(400, '{"error":{"message":"Invalid model specified"}}')
       provider = instance_double(RubyLLM::Provider, parse_error: 'Invalid model specified')
