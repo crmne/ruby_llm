@@ -8,6 +8,7 @@ module RubyLLM
       module Streaming
         ERROR_STATUSES = {
           'server_error' => 500,
+          'server_is_overloaded' => 503,
           'rate_limit_exceeded' => 429,
           'insufficient_quota' => 429
         }.freeze
@@ -101,11 +102,16 @@ module RubyLLM
 
         # Responses reports a stream error as a flat event carrying a code,
         # where Chat Completions nests type and message under an error object.
+        # An unrecognized code stays a 400. server_is_overloaded is OpenAI's
+        # documented 503 (type service_unavailable_error); leaving it unmapped
+        # made an in-stream overload look like a deterministic bad request.
         def parse_streaming_error(data)
           event = JSON.parse(data)
           return super unless event.is_a?(Hash) && event['type'] == 'error'
 
-          [ERROR_STATUSES.fetch(event['code'], 400), event['message']]
+          code = event['code'] || event.dig('error', 'code')
+          message = event['message'] || event.dig('error', 'message')
+          [ERROR_STATUSES.fetch(code, 400), message]
         end
 
         def chunk(content: nil, **attributes)

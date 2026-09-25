@@ -202,6 +202,26 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       expect(status).to eq(500)
     end
 
+    it 'classifies server_is_overloaded as a 503' do
+      status, message = parse_streaming_error(
+        { type: 'error', code: 'server_is_overloaded',
+          message: 'Our servers are currently overloaded. Please try again later.' }
+      )
+
+      expect(status).to eq(503)
+      expect(message).to eq('Our servers are currently overloaded. Please try again later.')
+    end
+
+    it 'classifies a nested server_is_overloaded event as a 503' do
+      status, message = parse_streaming_error(
+        { type: 'error', error: { type: 'service_unavailable_error', code: 'server_is_overloaded',
+                                  message: 'Our servers are currently overloaded. Please try again later.' } }
+      )
+
+      expect(status).to eq(503)
+      expect(message).to eq('Our servers are currently overloaded. Please try again later.')
+    end
+
     it 'falls back to a 400 for other flat error codes' do
       status, message = parse_streaming_error({ type: 'error', code: 'invalid_prompt', message: 'Bad prompt' })
 
