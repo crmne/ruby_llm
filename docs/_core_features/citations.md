@@ -107,7 +107,7 @@ response.citations.map(&:url).compact.uniq
 # => ["https://www.ruby-lang.org/...", ...]
 ```
 
-Models that search by default, such as Perplexity Sonar, need no tool setting.
+Models that search by default, such as Perplexity's presets, need no tool setting.
 
 ## Citing Files from Search
 

@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Count
+        from 1 to 3"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:37:32 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325453'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"response":{"background":false,"completed_at":null,"created_at":1790325452,"error":null,"frequency_penalty":0,"id":"resp_bf9158a8-f951-40b9-bde2-0e9bd7788fb0","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":0,"type":"response.created"}
+
+        event: response.in_progress
+        data: {"response":{"background":false,"completed_at":null,"created_at":1790325452,"error":null,"frequency_penalty":0,"id":"resp_bf9158a8-f951-40b9-bde2-0e9bd7788fb0","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"in_progress","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":null,"user":null},"sequence_number":1,"type":"response.in_progress"}
+
+        event: response.output_item.added
+        data: {"item":{"content":null,"id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","role":"assistant","status":"completed","type":"message"},"output_index":0,"sequence_number":4,"type":"response.output_item.added"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"1","item_id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","output_index":0,"sequence_number":5,"type":"response.output_text.delta"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"\n","item_id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","output_index":0,"sequence_number":6,"type":"response.output_text.delta"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"2","item_id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","output_index":0,"sequence_number":7,"type":"response.output_text.delta"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"\n","item_id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","output_index":0,"sequence_number":8,"type":"response.output_text.delta"}
+
+        event: response.output_text.delta
+        data: {"content_index":0,"delta":"3","item_id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","output_index":0,"sequence_number":9,"type":"response.output_text.delta"}
+
+        event: response.output_text.done
+        data: {"content_index":0,"item_id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","output_index":0,"sequence_number":11,"text":"1\n2\n3","type":"response.output_text.done"}
+
+        event: response.output_item.done
+        data: {"item":{"content":[{"annotations":[],"text":"1\n2\n3","type":"output_text"}],"id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","role":"assistant","status":"completed","type":"message"},"output_index":0,"sequence_number":12,"type":"response.output_item.done"}
+
+        event: response.completed
+        data: {"response":{"background":false,"completed_at":1790325452,"created_at":1790325452,"error":null,"frequency_penalty":0,"id":"resp_bf9158a8-f951-40b9-bde2-0e9bd7788fb0","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"1\n2\n3","type":"output_text"}],"id":"msg_67291811-3b9a-40d5-9808-97bb7512345b","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00001,"output_cost":0.00021,"total_cost":0.00022},"input_tokens":33,"input_tokens_details":{"cached_tokens":0},"output_tokens":105,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":138},"user":null},"sequence_number":13,"type":"response.completed"}
+
+  recorded_at: Fri, 25 Sep 2026 08:37:34 GMT
+recorded_with: VCR 6.4.0
+...

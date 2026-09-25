@@ -56,7 +56,7 @@ chat_models = [
   { provider: :ollama_cloud, model: 'gpt-oss:120b' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
-  { provider: :perplexity, model: 'sonar' },
+  { provider: :perplexity, model: 'openai/gpt-5-mini' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
   { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
 ].freeze
@@ -87,7 +87,6 @@ thinking_models = [
   { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-5.4' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
-  { provider: :perplexity, model: 'sonar-reasoning-pro' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },
   { provider: :xai, model: 'grok-3-mini' }
 ].freeze
@@ -119,8 +118,7 @@ PDF_MODELS = [
 DOCUMENT_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :mistral, model: 'mistral-small-latest' },
-  { provider: :openai, model: 'gpt-5-nano' },
-  { provider: :perplexity, model: 'sonar-pro' }
+  { provider: :openai, model: 'gpt-5-nano' }
 ].freeze
 
 SPREADSHEET_MODELS = [
@@ -251,7 +249,7 @@ TEST_MODELS = {
   azure_speech: [{ provider: :azure, model: 'gpt-4o-mini-tts' }],
   azure_transcription: [{ provider: :azure, model: 'gpt-4o-mini-transcribe' }],
   parallel_tools: [{ provider: :openrouter, model: 'upstage/solar-pro4' }],
-  temperature: [{ provider: :openai, model: 'gpt-4.1-nano' }],
+  temperature: [{ provider: :openai, model: 'gpt-4.1-nano' }, { provider: :perplexity, model: 'perplexity/sonar' }],
   alternate_chat: [{ provider: :openai, model: 'gpt-4.1-mini' }],
   alternate_batch: [{ provider: :openai, model: 'gpt-5-mini' }],
   alternate_embedding: [{ provider: :openai, model: 'text-embedding-3-large' }],
@@ -259,8 +257,9 @@ TEST_MODELS = {
   reasoning_effort: [{ provider: :openai, model: 'gpt-5.2' }],
   adaptive_thinking: [{ provider: :anthropic, model: 'claude-sonnet-5' }],
   compaction: [{ provider: :anthropic, model: 'claude-sonnet-4-6' }],
-  citations: [{ provider: :openrouter, model: 'perplexity/sonar' }],
+  citations: [{ provider: :openrouter, model: 'perplexity/sonar' }, { provider: :perplexity, model: 'fast' }],
   router: [{ provider: :perplexity, model: 'perplexity/kimi-k3' }],
+  agent: [{ provider: :perplexity, model: 'openai/gpt-5-mini' }],
   mcp: [
     { provider: :openai, model: 'gpt-5-nano', protocol: :responses, approval: true },
     { provider: :azure, model: 'gpt-5-nano', protocol: :responses, approval: true },

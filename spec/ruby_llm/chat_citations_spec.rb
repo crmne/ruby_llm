@@ -138,10 +138,13 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    context "with perplexity/#{model_for(:perplexity)}" do
+    context "with perplexity/#{model_for(:perplexity, :citations)}" do
+      let(:chat) do
+        RubyLLM.chat(model: model_for(:perplexity, :citations), provider: :perplexity, assume_model_exists: true)
+      end
+
       it 'returns search result citations' do
-        response = RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity)
-                          .ask('What is the Ruby programming language?')
+        response = chat.ask('What is the Ruby programming language?')
 
         expect(response.citations).not_to be_empty
         expect(response.citations.first.url).to be_present
@@ -149,8 +152,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
       it 'returns search result citations when streaming' do
         chunks = []
-        response = RubyLLM.chat(model: model_for(:perplexity), provider: :perplexity)
-                          .ask('What is the Ruby programming language?') do |chunk|
+        response = chat.ask('What is the Ruby programming language?') do |chunk|
           chunks << chunk
         end
 

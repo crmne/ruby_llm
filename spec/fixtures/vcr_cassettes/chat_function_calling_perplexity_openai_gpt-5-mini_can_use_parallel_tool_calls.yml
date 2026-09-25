@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325481'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325477,"created_at":1790325477,"error":null,"frequency_penalty":0,"id":"resp_0e1ff2aa-cb7f-4035-99fd-5cf31940b59f","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call_1KsYF29bRW5rb0rfmbqShmXP","id":"fc_c8a54ae3-ebd5-41c0-adcd-df5ac43c942d","name":"weather","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_RIWVyI84beYbBYDkDtJDGTEz","id":"fc_7a28a36e-e2f7-43db-8ee0-a167cec13a6f","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"additionalProperties":false,"properties":{"latitude":{"description":"Latitude
+        (e.g., 52.5200)","type":"string"},"longitude":{"description":"Longitude (e.g.,
+        13.4050)","type":"string"}},"required":["latitude","longitude"],"strict":true,"type":"object"},"strict":false},{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00052,"total_cost":0.00055},"input_tokens":137,"input_tokens_details":{"cached_tokens":0},"output_tokens":261,"output_tokens_details":{"reasoning_tokens":192},"total_tokens":398},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:38:00 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"},{"type":"function_call","call_id":"call_1KsYF29bRW5rb0rfmbqShmXP","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call","call_id":"call_RIWVyI84beYbBYDkDtJDGTEz","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_1KsYF29bRW5rb0rfmbqShmXP","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"type":"function_call_output","call_id":"call_RIWVyI84beYbBYDkDtJDGTEz","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325487'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkwMzI1NDgwLCJjcmVhdGVkX2F0IjoxNzkwMzI1NDgwLCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF84NWQ3MjJiZC1mYWU3LTQ5OGQtYmU3OC0wZDA3MjI2Yjg1YTkiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtZXRhZGF0YSI6e30sIm1vZGVsIjoib3BlbmFpL2dwdC01LW1pbmkiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siY29udGVudCI6W3siYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApXG4tIEN1cnJlbnQ6IDE1wrBDLCB3aW5kIDEwIGttL2guXG5cbkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm5cbi0gUmVjb21tZW5kYXRpb246IFJ1YnkuXG4tIFF1aWNrIG5vdGU6IOKAnEJlc3TigJ0gZGVwZW5kcyBvbiB5b3VyIGdvYWxzLiBSdWJ5IGlzIGdyZWF0IGZvciByYXBpZCB3ZWIgZGV2ZWxvcG1lbnQgKFJ1Ynkgb24gUmFpbHMpLCBpcyBiZWdpbm5lci1mcmllbmRseSwgYW5kIGhhcyBhIHByb2R1Y3RpdmUgZWNvc3lzdGVtLiBJZiB5b3UgdGVsbCBtZSB3aGF0IHlvdSB3YW50IHRvIGJ1aWxkIG9yIHlvdXIgY2FyZWVyIGdvYWxzLCBJIGNhbiByZWNvbW1lbmQgYSBiZXR0ZXIgZml0IOKAlCBmb3IgZXhhbXBsZTpcbiAgLSBXZWIgZnJvbnQtZW5kL2JhY2stZW5kOiBKYXZhU2NyaXB0IC8gVHlwZVNjcmlwdFxuICAtIERhdGEgc2NpZW5jZSAvIE1MOiBQeXRob25cbiAgLSBNb2JpbGUgYXBwczogS290bGluIChBbmRyb2lkKSBvciBTd2lmdCAoaU9TKVxuICAtIFN5c3RlbXMgLyBwZXJmb3JtYW5jZTogUnVzdCBvciBHb1xuICAtIEVudGVycHJpc2U6IEphdmEgb3IgQyNcblxuV2FudCBhIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9uIG9yIHN0YXJ0ZXIgcmVzb3VyY2VzIGZvciBSdWJ5IChvciBhbm90aGVyIGxhbmd1YWdlKT8iLCJ0eXBlIjoib3V0cHV0X3RleHQifV0sImlkIjoibXNnXzM5NGYyZTFjLWZmOTMtNDYzMS05MGY3LTYyYzllMmFhOWUxMCIsInJvbGUiOiJhc3Npc3RhbnQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJ0eXBlIjoibWVzc2FnZSJ9XSwicGFyYWxsZWxfdG9vbF9jYWxscyI6dHJ1ZSwicHJlc2VuY2VfcGVuYWx0eSI6MCwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsInByb21wdF9jYWNoZV9rZXkiOm51bGwsInJlYXNvbmluZyI6bnVsbCwic2FmZXR5X2lkZW50aWZpZXIiOm51bGwsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJzdG9yZSI6ZmFsc2UsInRlbXBlcmF0dXJlIjoxLCJ0ZXh0Ijp7ImZvcm1hdCI6eyJ0eXBlIjoidGV4dCJ9fSwidG9vbF9jaG9pY2UiOiJhdXRvIiwidG9vbHMiOlt7InR5cGUiOiJmdW5jdGlvbiIsIm5hbWUiOiJ3ZWF0aGVyIiwiZGVzY3JpcHRpb24iOiJHZXRzIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBsb2NhdGlvbiIsInBhcmFtZXRlcnMiOnsiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJwcm9wZXJ0aWVzIjp7ImxhdGl0dWRlIjp7ImRlc2NyaXB0aW9uIjoiTGF0aXR1ZGUgKGUuZy4sIDUyLjUyMDApIiwidHlwZSI6InN0cmluZyJ9LCJsb25naXR1ZGUiOnsiZGVzY3JpcHRpb24iOiJMb25naXR1ZGUgKGUuZy4sIDEzLjQwNTApIiwidHlwZSI6InN0cmluZyJ9fSwicmVxdWlyZWQiOlsibGF0aXR1ZGUiLCJsb25naXR1ZGUiXSwic3RyaWN0Ijp0cnVlLCJ0eXBlIjoib2JqZWN0In0sInN0cmljdCI6ZmFsc2V9LHsidHlwZSI6ImZ1bmN0aW9uIiwibmFtZSI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4iLCJkZXNjcmlwdGlvbiI6IkdldHMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4iLCJwYXJhbWV0ZXJzIjp7ImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjpmYWxzZSwicHJvcGVydGllcyI6e30sInJlcXVpcmVkIjpbXSwic3RyaWN0Ijp0cnVlLCJ0eXBlIjoib2JqZWN0In0sInN0cmljdCI6ZmFsc2V9XSwidG9wX2xvZ3Byb2JzIjowLCJ0b3BfcCI6MSwidHJ1bmNhdGlvbiI6IiIsInVzYWdlIjp7ImNvc3QiOnsiY3VycmVuY3kiOiJVU0QiLCJpbnB1dF9jb3N0IjowLjAwMDA2LCJvdXRwdXRfY29zdCI6MC4wMDExNiwidG90YWxfY29zdCI6MC4wMDEyMn0sImlucHV0X3Rva2VucyI6MjI1LCJpbnB1dF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NTgyLCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6Mzg0fSwidG90YWxfdG9rZW5zIjo4MDd9LCJ1c2VyIjpudWxsfQo=
+  recorded_at: Fri, 25 Sep 2026 08:38:06 GMT
+recorded_with: VCR 6.4.0

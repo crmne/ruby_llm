@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Call
+        the object params tool with window start 2025-01-01 and end 2025-01-02 and
+        include the result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:39:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325544'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325539,"created_at":1790325539,"error":null,"frequency_penalty":0,"id":"resp_403d1958-9f6e-4308-97a4-fcf6d4727476","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"window\":{\"start\":\"2025-01-01T00:00:00Z\",\"end\":\"2025-01-02T00:00:00Z\"}}","call_id":"call_JZiWOUNRrgoG5GWxVDMsrmRH","id":"fc_a3fb9c62-24e0-4e44-aedb-39a610692f97","name":"object_params","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"object_params","description":"Uses
+        params DSL object support","parameters":{"additionalProperties":false,"properties":{"window":{"additionalProperties":false,"description":"Time
+        window to schedule","properties":{"end":{"description":"ISO end","type":"string"},"start":{"description":"ISO
+        start","type":"string"}},"required":["start","end"],"type":"object"}},"required":["window"],"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00071,"total_cost":0.00074},"input_tokens":110,"input_tokens_details":{"cached_tokens":0},"output_tokens":356,"output_tokens_details":{"reasoning_tokens":256},"total_tokens":466},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:39:03 GMT
+recorded_with: VCR 6.4.0

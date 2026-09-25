@@ -161,6 +161,22 @@ end
 
 The `protocol:` option sits alongside `provider:` in model selection: a model is identified by its name, its provider, and its protocol. Unknown protocol names raise when the request is rendered or sent, listing the protocols the provider supports. A bare `with_model` returns the chat to the provider's default protocol, just as it re-resolves the provider.
 
+### Perplexity Presets
+
+Perplexity chat runs on its Agent API. Name a preset, which bundles a model, web search, and instructions, or name a model in `provider/model` form:
+
+```ruby
+chat = RubyLLM.chat(model: "fast", provider: :perplexity)
+chat.ask "What changed in Ruby this week?"
+
+chat = RubyLLM.chat(model: "{{ site.models.perplexity_agent }}", provider: :perplexity)
+              .with_provider_tools(:web_search)
+```
+
+The presets are `fast`, `low`, `medium`, `high`, `xhigh`, and `wide-research`. They search the web on their own and return [citations]({% link _core_features/citations.md %}). A model searches when you add the `web_search` provider tool. `response.cost` is the total Perplexity bills, search fees included.
+
+Perplexity retires Sonar on September 27, 2026. The Sonar model names run the presets Perplexity recommends and log a deprecation warning: `sonar` runs `fast`, `sonar-pro` runs `low`, `sonar-reasoning-pro` runs `medium`, and `sonar-deep-research` runs `high`. The Agent API accepts images and text files, but not PDFs or other documents.
+
 ### Perplexity Router
 
 Perplexity's Router requires separate account access and an explicit protocol. Use it for function tools, tool-choice controls, and cache boundaries:
@@ -174,7 +190,7 @@ chat = RubyLLM.chat(model: "{{ site.models.perplexity_router }}", provider: :per
 chat.ask "Find the installation guide."
 ```
 
-Router requires tool descriptions and strict JSON schemas. For hosted search and MCP, use the Agent protocol described in [Provider Tools]({% link _core_features/provider-tools.md %}#protocol-selection).
+Router requires tool descriptions and strict JSON schemas. For hosted web search, use a preset or the `web_search` provider tool on the default Agent API.
 
 ## Request Hooks
 

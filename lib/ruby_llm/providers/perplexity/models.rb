@@ -11,12 +11,16 @@ module RubyLLM
           sonar-reasoning-pro
           sonar-deep-research
         ].freeze
+        PRESET_MODEL_IDS = Protocols::Perplexity::Agent::PRESETS
         EMBEDDING_MODEL_IDS = %w[
           pplx-embed-v1-0.6b
           pplx-embed-v1-4b
         ].freeze
-        STATIC_MODEL_IDS = (SEARCH_MODEL_IDS + EMBEDDING_MODEL_IDS).freeze
-        STATIC_MODEL_DATA = {
+        STATIC_MODEL_IDS = (SEARCH_MODEL_IDS + PRESET_MODEL_IDS + EMBEDDING_MODEL_IDS).freeze
+        PRESET_MODEL_DATA = PRESET_MODEL_IDS.to_h do |id|
+          [id, { capabilities: %w[streaming structured_output citations function_calling] }]
+        end
+        STATIC_MODEL_DATA = PRESET_MODEL_DATA.merge(
           'sonar' => {
             context_window: 128_000, input_price: 1.0, output_price: 1.0,
             capabilities: %w[streaming structured_output citations]
@@ -35,7 +39,7 @@ module RubyLLM
           },
           'pplx-embed-v1-0.6b' => { context_window: 32_768, input_price: 0.004 },
           'pplx-embed-v1-4b' => { context_window: 32_768, input_price: 0.03 }
-        }.freeze
+        ).freeze
 
         def models_url
           'v1/models'
@@ -49,7 +53,7 @@ module RubyLLM
         end
 
         # The models endpoint lists the multi-model catalog but not the search
-        # or embedding models, so those ride along statically.
+        # models, presets, or embedding models, so those ride along statically.
         def parse_list_models_response(response, slug)
           listed = Array(response.body['data']).map do |model_data|
             create_model_info(model_data['id'], slug, pricing: endpoint_pricing(model_data['pricing']))

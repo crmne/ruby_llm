@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.raw.env.request_body).to be_present
       end
 
-      token_model = provider == :openai ? model_for(:openai, :temperature) : model
+      token_model = provider.in?(%i[openai perplexity]) ? model_for(provider, :temperature) : model
       it "#{provider}/#{token_model} reports token usage with and without streaming" do
         model = token_model
 

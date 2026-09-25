@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Process
+        this query: test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:40:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325646'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325643,"created_at":1790325643,"error":null,"frequency_penalty":0,"id":"resp_7f6d8f68-4377-470d-bbe7-3d933bbd68ab","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call_d0uhgr5E6KHcgTZcJdratwfm","id":"fc_b7922221-ef2c-41eb-a466-dbf8d032f00f","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+        a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
+        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00035,"total_cost":0.00037},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":175,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":249},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:40:45 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Process
+        this query: test data"},{"type":"function_call","call_id":"call_d0uhgr5E6KHcgTZcJdratwfm","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call_d0uhgr5E6KHcgTZcJdratwfm","output":"Processed:
+        test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:40:47 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325648'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325645,"created_at":1790325645,"error":null,"frequency_penalty":0,"id":"resp_af1a666a-1eeb-4197-812f-f91ea375835d","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
+        test data","type":"output_text"}],"id":"msg_2a4a7f33-70dd-4946-b1c3-da1448b06793","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+        a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
+        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00002,"total_cost":0.00005},"input_tokens":107,"input_tokens_details":{"cached_tokens":0},"output_tokens":8,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":115},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:40:47 GMT
+recorded_with: VCR 6.4.0

@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.perplexity.ai/chat/completions
+    uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
-      string: '{"model":"sonar","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:32 GMT
+      - Fri, 25 Sep 2026 08:36:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,5 +51,5 @@ http_interactions:
         is correct and active.","type":"invalid_api_key","code":401}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:06:32 GMT
+  recorded_at: Fri, 25 Sep 2026 08:36:36 GMT
 recorded_with: VCR 6.4.0

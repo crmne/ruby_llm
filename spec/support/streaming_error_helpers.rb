@@ -154,7 +154,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     perplexity: {
-      url: 'https://api.perplexity.ai/chat/completions',
+      url: 'https://api.perplexity.ai/v1/agent',
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',

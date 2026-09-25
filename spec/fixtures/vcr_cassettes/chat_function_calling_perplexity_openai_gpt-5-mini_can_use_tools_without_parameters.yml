@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Use
+        the best_language_to_learn tool to tell me which language to learn."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325499'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325497,"created_at":1790325497,"error":null,"frequency_penalty":0,"id":"resp_0c1b0b72-7aa0-4858-9011-a92ff8cab2cb","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_4qYdVRS6aYEwJySeK6v2tQO1","id":"fc_f963ce5b-1d79-4c62-91db-3f7249cdd397","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00021,"total_cost":0.00023},"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":104,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":179},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:38:19 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Use
+        the best_language_to_learn tool to tell me which language to learn."},{"type":"function_call","call_id":"call_4qYdVRS6aYEwJySeK6v2tQO1","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_4qYdVRS6aYEwJySeK6v2tQO1","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:25 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325506'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkwMzI1NDk5LCJjcmVhdGVkX2F0IjoxNzkwMzI1NDk5LCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF9lODFiNWYzYS1mZjJmLTQzMmMtODE3NS03ZDk0YTQyNDY3ZWEiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtZXRhZGF0YSI6e30sIm1vZGVsIjoib3BlbmFpL2dwdC01LW1pbmkiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siY29udGVudCI6W3siYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiSSB1c2VkIHRoZSBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIHRvb2wg4oCUIGl0IHJlY29tbWVuZHM6IFJ1YnkuXG5cbldoeSBSdWJ5IChzaG9ydCk6XG4tIENsZWFuLCByZWFkYWJsZSBzeW50YXggZm9jdXNlZCBvbiBkZXZlbG9wZXIgaGFwcGluZXNzLlxuLSBFeGNlbGxlbnQgZm9yIHdlYiBkZXZlbG9wbWVudCB2aWEgUnVieSBvbiBSYWlscyDigJQgZmFzdCBwcm90b3R5cGluZyBhbmQgbWF0dXJlIGVjb3N5c3RlbSAoZ2VtcykuXG4tIEdyZWF0IGNvbW11bml0eSBhbmQgcGxlbnR5IG9mIGxlYXJuaW5nIHJlc291cmNlcyBmb3IgYmVnaW5uZXJzLlxuLSBXZWxsLXN1aXRlZCBmb3Igc3RhcnR1cHMsIE1WUHMsIGFuZCBidWlsZGluZyBDUlVEL3dlYiBhcHBzIHF1aWNrbHkuXG5cblRoaW5ncyB0byBjb25zaWRlcjpcbi0gTGVzcyBkb21pbmFudCB0aGFuIFB5dGhvbiBvciBKYXZhU2NyaXB0IGluIGRhdGEgc2NpZW5jZSBhbmQgZnJvbnRlbmQgZWNvc3lzdGVtcy5cbi0gRmV3ZXIgam9iIG9wZW5pbmdzIHRoYW4gSlMvUHl0aG9uIGluIG1hbnkgbWFya2V0cywgdGhvdWdoIFJhaWxzIGpvYnMgc3RpbGwgZXhpc3QuXG4tIE5vdCB0aGUgYmVzdCBjaG9pY2UgaWYgeW91IG5lZWQgbG93LWxldmVsIHBlcmZvcm1hbmNlLCBzeXN0ZW1zIHByb2dyYW1taW5nLCBvciBtb2JpbGUtZmlyc3Qgd29yay5cblxuSWYgeW91ciBnb2FscyBhcmU6XG4tIFdlYiBhcHBzIC8gc3RhcnR1cHMgLyByYXBpZCBwcm90b3R5cGluZyDihpIgUnVieSAoUmFpbHMpIGlzIGFuIGV4Y2VsbGVudCBjaG9pY2UuXG4tIERhdGEgc2NpZW5jZSAvIE1MIOKGkiBjb25zaWRlciBQeXRob24uXG4tIEZyb250ZW5kICsgZnVsbC1zdGFjayBKYXZhU2NyaXB0IOKGkiBjb25zaWRlciBKYXZhU2NyaXB0L1R5cGVTY3JpcHQgKFJlYWN0L05vZGUpLlxuLSBTeXN0ZW1zIC8gcGVyZm9ybWFuY2UtY3JpdGljYWwgd29yayDihpIgY29uc2lkZXIgUnVzdCBvciBHby5cbi0gTW9iaWxlIG5hdGl2ZSBhcHBzIOKGkiBTd2lmdCAoaU9TKSBvciBLb3RsaW4gKEFuZHJvaWQpLlxuXG5JZiB5b3Ugd2FudCwgSSBjYW46XG4tIENyZWF0ZSBhIDTigJM4IHdlZWsgbGVhcm5pbmcgcGxhbiBmb3IgUnVieSAoYmVnaW5uZXIg4oaSIFJhaWxzIGFwcCkuXG4tIFN1Z2dlc3QgYmVnaW5uZXIgcmVzb3VyY2VzIGFuZCB0dXRvcmlhbHMgdGFpbG9yZWQgdG8geW91ciBleHBlcmllbmNlIGxldmVsLlxuLSBSZWNvbW1lbmQgc3RhcnRlciBwcm9qZWN0cyB0byBidWlsZCB3aGlsZSBsZWFybmluZy5cblxuV2hpY2ggb2YgdGhlIGFib3ZlIGZpdHMgeW91ciBnb2FscyBhbmQgYmFja2dyb3VuZD8iLCJ0eXBlIjoib3V0cHV0X3RleHQifV0sImlkIjoibXNnX2FiNjBhNzcyLTg2MDctNDk5Zi1hODM1LWJhMGJiMGZlMTE5ZiIsInJvbGUiOiJhc3Npc3RhbnQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJ0eXBlIjoibWVzc2FnZSJ9XSwicGFyYWxsZWxfdG9vbF9jYWxscyI6dHJ1ZSwicHJlc2VuY2VfcGVuYWx0eSI6MCwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsInByb21wdF9jYWNoZV9rZXkiOm51bGwsInJlYXNvbmluZyI6bnVsbCwic2FmZXR5X2lkZW50aWZpZXIiOm51bGwsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJzdG9yZSI6ZmFsc2UsInRlbXBlcmF0dXJlIjoxLCJ0ZXh0Ijp7ImZvcm1hdCI6eyJ0eXBlIjoidGV4dCJ9fSwidG9vbF9jaG9pY2UiOiJhdXRvIiwidG9vbHMiOlt7InR5cGUiOiJmdW5jdGlvbiIsIm5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwiZGVzY3JpcHRpb24iOiJHZXRzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIiwicGFyYW1ldGVycyI6eyJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInByb3BlcnRpZXMiOnt9LCJyZXF1aXJlZCI6W10sInN0cmljdCI6dHJ1ZSwidHlwZSI6Im9iamVjdCJ9LCJzdHJpY3QiOmZhbHNlfV0sInRvcF9sb2dwcm9icyI6MCwidG9wX3AiOjEsInRydW5jYXRpb24iOiIiLCJ1c2FnZSI6eyJjb3N0Ijp7ImN1cnJlbmN5IjoiVVNEIiwiaW5wdXRfY29zdCI6MC4wMDAwMywib3V0cHV0X2Nvc3QiOjAuMDAxMTcsInRvdGFsX2Nvc3QiOjAuMDAxMn0sImlucHV0X3Rva2VucyI6MTA0LCJpbnB1dF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NTg0LCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjU2fSwidG90YWxfdG9rZW5zIjo2ODh9LCJ1c2VyIjpudWxsfQo=
+  recorded_at: Fri, 25 Sep 2026 08:38:25 GMT
+recorded_with: VCR 6.4.0

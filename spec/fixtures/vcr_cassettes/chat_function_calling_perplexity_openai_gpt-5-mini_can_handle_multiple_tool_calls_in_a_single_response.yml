@@ -1,0 +1,268 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
+        the dice 3 times"}],"instructions":"You must call the dice_roll tool exactly
+        3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:47 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325528'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325522,"created_at":1790325522,"error":null,"frequency_penalty":0,"id":"resp_7b679465-3812-436c-bae3-d7ab6544d819","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","id":"fc_2e13d051-dc19-446d-be2f-2c35090b0af1","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00103,"total_cost":0.00105},"input_tokens":91,"input_tokens_details":{"cached_tokens":0},"output_tokens":515,"output_tokens_details":{"reasoning_tokens":448},"total_tokens":606},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:38:47 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
+        the dice 3 times"},{"type":"function_call","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","output":"{\"roll\":1}"}],"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325529'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325527,"created_at":1790325527,"error":null,"frequency_penalty":0,"id":"resp_1733d076-7cd8-4d0a-9bdf-b2c25525cff1","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","id":"fc_c12550df-aca2-42e4-8a2b-ea0c652e01ac","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00003,"total_cost":0.00006},"input_tokens":120,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":135},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:38:48 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
+        the dice 3 times"},{"type":"function_call","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","output":"{\"roll\":1}"},{"type":"function_call","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","output":"{\"roll\":2}"}],"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325530'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325528,"created_at":1790325528,"error":null,"frequency_penalty":0,"id":"resp_6fcdaa9a-e2b2-4e28-8985-383aa57fb737","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_XZKaHibz53aZhtLTzQPgNJ9K","id":"fc_f565a363-fbd2-4a58-8e87-41e03782c28c","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00003,"total_cost":0.00007},"input_tokens":149,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":164},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:38:49 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
+        the dice 3 times"},{"type":"function_call","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","output":"{\"roll\":1}"},{"type":"function_call","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","output":"{\"roll\":2}"},{"type":"function_call","call_id":"call_XZKaHibz53aZhtLTzQPgNJ9K","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_XZKaHibz53aZhtLTzQPgNJ9K","output":"{\"roll\":3}"}],"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:38:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325532'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325529,"created_at":1790325529,"error":null,"frequency_penalty":0,"id":"resp_456b9b18-26eb-4d90-b54c-f9111f9a58ac","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"You
+        rolled: 1, 2, 3","type":"output_text"}],"id":"msg_60f344d8-39af-437a-8f80-8f99dff5c2f5","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00003,"total_cost":0.00007},"input_tokens":178,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":193},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:38:51 GMT
+recorded_with: VCR 6.4.0

@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * What to finish on 2.0 before you update the gem.
 * How to upgrade a 2.0 application and its Rails schema to 2.1.
+* How to move Perplexity chat from Sonar to presets.
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
@@ -54,7 +55,34 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code.
+2.1 does not require changes to your code, except to move Perplexity chat off Sonar.
+
+## Move Perplexity Chat to Presets
+
+Perplexity retires Sonar on September 27, 2026, so Perplexity chat now runs on its Agent API. Chats that name a Sonar model keep working: each runs the preset Perplexity recommends and logs a deprecation warning. Replace the model names to silence it:
+
+| Sonar model | Preset |
+| --- | --- |
+| `sonar` | `fast` |
+| `sonar-pro` | `low` |
+| `sonar-reasoning-pro` | `medium` |
+| `sonar-deep-research` | `high` |
+
+```ruby
+RubyLLM.chat(model: "fast", provider: :perplexity)
+```
+
+Expect a few differences:
+
+* Perplexity picks the model behind each preset, so answers can read differently.
+* PDF and other document attachments raise `RubyLLM::UnsupportedAttachmentError`. Images and text files still work.
+* `response.cost` is the total Perplexity bills, search fees included.
+
+To stay on Sonar while Perplexity still serves it, select its protocol:
+
+```ruby
+RubyLLM.chat(model: "sonar", provider: :perplexity, protocol: :chat_completions)
+```
 
 ## Upgrade the Rails Schema
 

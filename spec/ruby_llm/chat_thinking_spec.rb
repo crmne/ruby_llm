@@ -179,8 +179,6 @@ RSpec.describe RubyLLM::Chat, :live do
         expect_response_payload(response)
         if provider.in?(%i[openai azure])
           expect(response.tokens.thinking).to be_present
-        elsif provider == :perplexity && response.thinking.nil?
-          expect(response.content).to be_present
         else
           expect(response.thinking).to be_present
         end
@@ -197,7 +195,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect_response_payload(response)
         expect(chunks).not_to be_empty
-        expect(chunks.any?(&:thinking)).to be true if response.thinking && provider != :perplexity
+        expect(chunks.any?(&:thinking)).to be true if response.thinking
       end
 
       it "#{provider}/#{model} preserves thinking signatures between turns when provided" do

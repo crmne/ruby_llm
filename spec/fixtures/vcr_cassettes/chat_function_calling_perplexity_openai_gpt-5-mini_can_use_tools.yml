@@ -1,0 +1,136 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:37:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325473'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325470,"created_at":1790325470,"error":null,"frequency_penalty":0,"id":"resp_e0d24ca9-4a25-4154-bf86-0806b274e47e","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call_DF4g5keAcSxhmKfttFjSXAwN","id":"fc_5ab43da2-f186-4cb0-a169-9b811890b5f7","name":"weather","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"additionalProperties":false,"properties":{"latitude":{"description":"Latitude
+        (e.g., 52.5200)","type":"string"},"longitude":{"description":"Longitude (e.g.,
+        13.4050)","type":"string"}},"required":["latitude","longitude"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00027,"total_cost":0.0003},"input_tokens":109,"input_tokens_details":{"cached_tokens":0},"output_tokens":137,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":246},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:37:52 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_DF4g5keAcSxhmKfttFjSXAwN","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_DF4g5keAcSxhmKfttFjSXAwN","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:37:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325478'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkwMzI1NDczLCJjcmVhdGVkX2F0IjoxNzkwMzI1NDczLCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF9kMWY3MzhjYS1kMDljLTQ1ZjctOTBjYy0wZmQ1Y2EwOTE4MjQiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtZXRhZGF0YSI6e30sIm1vZGVsIjoib3BlbmFpL2dwdC01LW1pbmkiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siY29udGVudCI6W3siYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiQ3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6IDE1wrBDICg1OcKwRiksIHdpbmQgMTAga20vaC4gXG5cbldvdWxkIHlvdSBsaWtlIHdpbmQgZGlyZWN0aW9uLCBwcmVjaXBpdGF0aW9uL2Nsb3VkIGNvdmVyLCBvciBhIGZvcmVjYXN0IGZvciB0aGUgbmV4dCBob3Vycy9kYXlzPyIsInR5cGUiOiJvdXRwdXRfdGV4dCJ9XSwiaWQiOiJtc2dfOWJiMmRjN2UtZmM4MC00Y2I4LTg3Y2EtMTc1ZjljMTkwNjhjIiwicm9sZSI6ImFzc2lzdGFudCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInR5cGUiOiJtZXNzYWdlIn1dLCJwYXJhbGxlbF90b29sX2NhbGxzIjp0cnVlLCJwcmVzZW5jZV9wZW5hbHR5IjowLCJwcmV2aW91c19yZXNwb25zZV9pZCI6bnVsbCwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwicmVhc29uaW5nIjpudWxsLCJzYWZldHlfaWRlbnRpZmllciI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInN0b3JlIjpmYWxzZSwidGVtcGVyYXR1cmUiOjEsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In19LCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwibmFtZSI6IndlYXRoZXIiLCJkZXNjcmlwdGlvbiI6IkdldHMgY3VycmVudCB3ZWF0aGVyIGZvciBhIGxvY2F0aW9uIiwicGFyYW1ldGVycyI6eyJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInByb3BlcnRpZXMiOnsibGF0aXR1ZGUiOnsiZGVzY3JpcHRpb24iOiJMYXRpdHVkZSAoZS5nLiwgNTIuNTIwMCkiLCJ0eXBlIjoic3RyaW5nIn0sImxvbmdpdHVkZSI6eyJkZXNjcmlwdGlvbiI6IkxvbmdpdHVkZSAoZS5nLiwgMTMuNDA1MCkiLCJ0eXBlIjoic3RyaW5nIn19LCJyZXF1aXJlZCI6WyJsYXRpdHVkZSIsImxvbmdpdHVkZSJdLCJzdHJpY3QiOnRydWUsInR5cGUiOiJvYmplY3QifSwic3RyaWN0IjpmYWxzZX1dLCJ0b3BfbG9ncHJvYnMiOjAsInRvcF9wIjoxLCJ0cnVuY2F0aW9uIjoiIiwidXNhZ2UiOnsiY29zdCI6eyJjdXJyZW5jeSI6IlVTRCIsImlucHV0X2Nvc3QiOjAuMDAwMDQsIm91dHB1dF9jb3N0IjowLjAwMDYxLCJ0b3RhbF9jb3N0IjowLjAwMDY1fSwiaW5wdXRfdG9rZW5zIjoxNjgsImlucHV0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjozMDQsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxOTJ9LCJ0b3RhbF90b2tlbnMiOjQ3Mn0sInVzZXIiOm51bGx9Cg==
+  recorded_at: Fri, 25 Sep 2026 08:37:57 GMT
+recorded_with: VCR 6.4.0

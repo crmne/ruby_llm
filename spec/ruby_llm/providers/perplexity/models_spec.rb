@@ -14,7 +14,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
 
       ids = models.map(&:id)
       expect(ids).to include('sonar', 'sonar-pro', 'sonar-reasoning-pro', 'sonar-deep-research',
-                             'pplx-embed-v1-0.6b', 'pplx-embed-v1-4b', 'perplexity/sonar')
+                             'fast', 'wide-research', 'pplx-embed-v1-0.6b', 'pplx-embed-v1-4b', 'perplexity/sonar')
       expect(ids).not_to include('sonar-reasoning')
       expect(models).to all(have_attributes(provider: 'perplexity'))
 
@@ -39,7 +39,8 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
       models = provider.list_models
 
       expect(models.map(&:id)).to eq(
-        %w[sonar sonar-pro sonar-reasoning-pro sonar-deep-research pplx-embed-v1-0.6b pplx-embed-v1-4b]
+        %w[sonar sonar-pro sonar-reasoning-pro sonar-deep-research fast low medium high xhigh wide-research
+           pplx-embed-v1-0.6b pplx-embed-v1-4b]
       )
     end
   end

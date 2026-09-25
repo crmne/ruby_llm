@@ -14,9 +14,20 @@ module RubyLLM
       protocol :chat_completions, ChatCompletions
       protocol :router_chat_completions, Protocols::Perplexity::Router
       protocol :files, Protocols::Perplexity::Files
+      protocol :agent_responses, Protocols::Perplexity::Agent
 
       def api_base
         @config.perplexity_api_base || 'https://api.perplexity.ai'
+      end
+
+      # Chat runs on the Agent API. Embeddings and the model listing stay on
+      # the endpoints the Chat Completions dialect knows.
+      def protocol_for(model, operation: nil, **)
+        operation ? super : protocols[:agent_responses]
+      end
+
+      def agent_url # :nodoc:
+        "#{api_base.delete_suffix('/').delete_suffix('/v1')}/v1/agent"
       end
 
       def router_url(operation) # :nodoc:

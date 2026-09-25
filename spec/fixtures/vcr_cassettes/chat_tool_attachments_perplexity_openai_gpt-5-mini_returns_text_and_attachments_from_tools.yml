@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Call
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:39:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325545'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325543,"created_at":1790325543,"error":null,"frequency_penalty":0,"id":"resp_49858894-3469-4ad3-8781-04070a171fbf","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_ioLAADZGiphgFVCZ23RRPq9R","id":"fc_564e1ade-afb5-48bf-87bb-064727714a78","name":"file_fetch","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00018,"total_cost":0.0002},"input_tokens":76,"input_tokens_details":{"cached_tokens":0},"output_tokens":91,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":167},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:39:04 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/agent
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Call
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"type":"function_call","call_id":"call_ioLAADZGiphgFVCZ23RRPq9R","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call_ioLAADZGiphgFVCZ23RRPq9R","output":"Fetched
+        the file."},{"role":"user","content":[{"type":"input_text","text":"Attachments
+        from tool call call_ioLAADZGiphgFVCZ23RRPq9R:"},{"type":"input_text","text":"<file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Sep 2026 08:39:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit:
+      - '1'
+      X-Ratelimit-Remaining:
+      - '0'
+      X-Ratelimit-Reset:
+      - '1790325548'
+      X-Ratelimit-Used:
+      - '1'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"background":false,"completed_at":1790325544,"created_at":1790325544,"error":null,"frequency_penalty":0,"id":"resp_52986d55-b46d-4613-92be-b5c36a1321b2","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"Ruby
+        is the best.","type":"output_text"}],"id":"msg_5a461a12-24f6-4d53-92e3-1a095655dd33","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.0003,"total_cost":0.00034},"input_tokens":147,"input_tokens_details":{"cached_tokens":0},"output_tokens":149,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":296},"user":null}
+
+        '
+  recorded_at: Fri, 25 Sep 2026 08:39:07 GMT
+recorded_with: VCR 6.4.0
