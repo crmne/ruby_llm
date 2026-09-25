@@ -466,7 +466,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         end
       end)
       chat = Chat.create!(model: model_id).with_tools(ProgressTool)
-      call = tool_call(id: 'call_1', name: 'progress')
+      call = tool_call(name: 'progress')
       allow(chat.to_llm.provider).to receive(:complete).and_return(
         RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
         RubyLLM::Message.new(role: :assistant, content: 'Finished')
@@ -477,7 +477,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         .to eq(chat)
       chat.ask('Use the tool')
 
-      expect(reports).to eq([['call_1', 'Working', 0.5]])
+      expect(reports).to eq([[call.id, 'Working', 0.5]])
     end
 
     it 'persists completions added out of band' do

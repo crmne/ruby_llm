@@ -11,6 +11,7 @@ module RubyLLM
     # starts inherit.
     module ProgressReporter # :nodoc:
       KEY = :ruby_llm_progress_listener
+      FIBER_STORAGE = Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
 
       module_function
 
@@ -31,7 +32,7 @@ module RubyLLM
       end
 
       def storage
-        Fiber.respond_to?(:[]) ? Fiber : Thread.current
+        FIBER_STORAGE ? Fiber : Thread.current
       end
     end
   end

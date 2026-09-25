@@ -108,7 +108,7 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    it 'passes reports from threads the tool starts', skip: (Fiber.respond_to?(:[]) ? false : 'needs fiber storage') do
+    it 'passes reports from threads the tool starts', skip: (RUBY_VERSION >= '3.2' ? false : 'needs fiber storage') do
       stub_const('FanOutTool', Class.new(RubyLLM::Tool) do
         def execute
           Thread.new { progress 'Reading in the background' }.join
