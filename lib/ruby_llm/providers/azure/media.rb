@@ -11,7 +11,7 @@ module RubyLLM
           Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
             case attachment.type
             when :image
-              format_image(attachment)
+              Protocols::ChatCompletions::Media.with_image_detail(format_image(attachment), attachment)
             when :audio
               Protocols::ChatCompletions::Media.format_audio(attachment)
             when :text
