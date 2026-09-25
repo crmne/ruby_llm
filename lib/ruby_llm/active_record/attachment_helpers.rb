@@ -41,7 +41,8 @@ module RubyLLM
           {
             io: StringIO.new(attachment.content),
             filename: attachment.filename,
-            content_type: attachment.mime_type
+            content_type: attachment.mime_type,
+            metadata: { resolution: attachment.resolution&.to_s }.compact
           }
         end
       rescue StandardError => e
@@ -198,7 +199,8 @@ module RubyLLM
           pending_upload_attachment(attachable)
         else
           tempfile = download_attachment(attachment)
-          RubyLLM::Attachment.new(tempfile, filename: attachment.filename.to_s)
+          RubyLLM::Attachment.new(tempfile, filename: attachment.filename.to_s,
+                                            resolution: attachment.metadata['resolution']&.to_sym)
         end
       end
 
@@ -225,7 +227,9 @@ module RubyLLM
 
       def pending_upload_attachment(attachable)
         if attachable.is_a?(Hash)
-          RubyLLM::Attachment.new(attachment_hash_io(attachable), filename: attachment_hash_filename(attachable))
+          RubyLLM::Attachment.new(attachment_hash_io(attachable),
+                                  filename: attachment_hash_filename(attachable),
+                                  resolution: attachable.dig(:metadata, :resolution)&.to_sym)
         else
           RubyLLM::Attachment.new(attachable)
         end

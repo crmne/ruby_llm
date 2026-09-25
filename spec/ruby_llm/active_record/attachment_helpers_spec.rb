@@ -82,6 +82,26 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
     it 'does nothing for a record without an attachments association' do
       expect { helpers.persist_content(Object.new, [blob]) }.not_to raise_error
     end
+
+    it 'keeps the media resolution across a reload' do
+      chat = Chat.create!(model: model_for(:openai))
+      message = chat.messages.create!(role: 'user', content: 'see attached')
+      page = RubyLLM::Attachment.new(StringIO.new('png'), filename: 'page.png', resolution: :high)
+
+      helpers.persist_content(message, [page])
+
+      expect(Message.find(message.id).to_llm.attachments.first.resolution).to eq(:high)
+    end
+
+    it 'keeps the media resolution before the record is saved' do
+      chat = Chat.create!(model: model_for(:openai))
+      message = chat.messages.build(role: 'user', content: 'see attached')
+      page = RubyLLM::Attachment.new(StringIO.new('png'), filename: 'page.png', resolution: :low)
+
+      helpers.persist_content(message, [page])
+
+      expect(message.to_llm.attachments.first.resolution).to eq(:low)
+    end
   end
 
   describe '#prepare_for_active_storage' do
