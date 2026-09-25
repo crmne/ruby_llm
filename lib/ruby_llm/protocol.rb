@@ -581,7 +581,7 @@ module RubyLLM
       return attachment unless upload_large_attachment?(attachment)
 
       ensure_provider_file_size!(attachment)
-      Attachment.new(provider_upload(attachment), config: @config)
+      Attachment.new(provider_upload(attachment), resolution: attachment.resolution, config: @config)
     end
 
     # Uploads are memoized per provider on the attachment itself, so a chat

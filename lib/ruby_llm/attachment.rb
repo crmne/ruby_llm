@@ -391,7 +391,7 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      { filename: filename, mime_type: mime_type, source: @source }
+      { filename: filename, mime_type: mime_type, resolution: resolution, source: @source }
     end
   end
 end

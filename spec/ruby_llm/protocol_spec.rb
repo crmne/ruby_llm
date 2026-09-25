@@ -109,6 +109,14 @@ RSpec.describe RubyLLM::Protocol do
       expect(protocol.send(:auto_upload_large_files?)).to be(false)
     end
 
+    it 'keeps the resolution when it uploads a large attachment' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf'), filename: 'a.pdf', resolution: :high)
+      upload = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'a.pdf', mime_type: 'application/pdf')
+      allow(protocol).to receive_messages(upload_large_attachment?: true, provider_upload: upload)
+
+      expect(protocol.send(:preprocess_attachment, attachment).resolution).to eq(:high)
+    end
+
     it 'accepts any file size when the provider states no limit' do
       attachment = RubyLLM::Attachment.new(StringIO.new('x' * 10), filename: 'a.txt')
 

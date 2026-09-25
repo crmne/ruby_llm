@@ -73,6 +73,20 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_LOW')
     end
 
+    it 'omits media_resolution on audio' do
+      attachment = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__), resolution: :low)
+
+      parts = described_class.format_content('Listen', [attachment])
+
+      expect(parts.second).not_to have_key(:media_resolution)
+    end
+
+    it 'omits media_resolution from standalone parts such as tool results' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf', resolution: :high)
+
+      expect(described_class.format_content_attachment(attachment)).not_to have_key(:media_resolution)
+    end
+
     it 'omits media_resolution when no resolution is set' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf')
 
