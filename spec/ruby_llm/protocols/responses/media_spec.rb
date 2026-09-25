@@ -51,5 +51,29 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
       expect { described_class.format_content('Listen', [audio]) }
         .to raise_error(RubyLLM::UnsupportedAttachmentError, %r{audio/wav})
     end
+
+    it 'maps low resolution to low image detail' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :low)
+
+      formatted = described_class.format_content('Describe this', [image])
+
+      expect(formatted.second[:detail]).to eq('low')
+    end
+
+    it 'maps higher resolutions to high image detail' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
+
+      formatted = described_class.format_content('Describe this', [image])
+
+      expect(formatted.second[:detail]).to eq('high')
+    end
+
+    it 'omits image detail when no resolution is set' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+
+      formatted = described_class.format_content('Describe this', [image])
+
+      expect(formatted.second).not_to have_key(:detail)
+    end
   end
 end

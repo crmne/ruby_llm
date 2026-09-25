@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * How to attach images, video, audio, text files, and PDFs to a message.
 * How to send local files and remote URLs through the `with:` parameter.
 * How RubyLLM detects file types automatically.
+* How to trade tokens for detail with `resolution:`.
 * When to use in-prompt attachments versus provider-managed file IDs.
 
 ## Attaching Files
@@ -135,6 +136,19 @@ response = chat.ask "Which region had the highest revenue?", with: "sales.xlsx"
 
 Providers without native document support raise `RubyLLM::UnsupportedAttachmentError`. Convert those files to PDF or text first.
 {: .note }
+
+### Choosing the Media Resolution
+
+Small print and dense tables need more detail than a photo of a cat. Build the attachment yourself and set `resolution:` to control how many tokens the model spends on it:
+
+```ruby
+page = RubyLLM::Attachment.new(io, filename: "page-3.png", resolution: :ultra_high)
+chat.ask "Where is the revenue figure?", with: page
+```
+
+The values are `:low`, `:medium`, `:high`, and `:ultra_high`. Each attachment keeps its own setting, so one message can mix a high-detail page with low-detail thumbnails. Leave it unset to use the provider's default.
+
+Gemini applies the setting to images, videos, and PDFs. OpenAI applies it to images, sending `:low` as low detail and anything higher as high detail. Other providers ignore it, since it is a quality hint rather than a requirement.
 
 ### Automatic File Type Detection
 

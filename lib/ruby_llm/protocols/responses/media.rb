@@ -32,10 +32,10 @@ module RubyLLM
         end
 
         def format_image(image)
-          {
-            type: 'input_image',
-            image_url: image.url_or_data_uri
-          }
+          part = { type: 'input_image', image_url: image.url_or_data_uri }
+          return part unless image.resolution
+
+          part.merge(detail: image.resolution == :low ? 'low' : 'high')
         end
 
         # The Responses API extracts text from documents, presentations, and

@@ -30,6 +30,13 @@ module RubyLLM
     # The detected MIME type string, such as <tt>"image/png"</tt>.
     attr_reader :mime_type
 
+    # The requested media resolution: +:low+, +:medium+, +:high+,
+    # +:ultra_high+, or +nil+ for the provider default.
+    attr_reader :resolution
+
+    # Media resolutions accepted by +resolution:+.
+    RESOLUTIONS = %i[low medium high ultra_high].freeze
+
     # File extensions recognized as document attachments when the MIME type
     # alone is inconclusive.
     DOCUMENT_EXTENSIONS = %w[
@@ -69,6 +76,11 @@ module RubyLLM
     #   RubyLLM::Attachment.new("diagram.png")
     #   RubyLLM::Attachment.new(StringIO.new(data), filename: "report.pdf")
     #
+    # +resolution:+ asks the provider to spend more or fewer tokens on an
+    # image, video, or PDF. Providers without the setting ignore it.
+    #
+    #   RubyLLM::Attachment.new("page-3.png", resolution: :ultra_high)
+    #
     # +config:+ is the Configuration a URL source is downloaded with, and
     # defaults to the global one.
     #
@@ -76,8 +88,13 @@ module RubyLLM
     # They can be read or fetched during construction to detect the MIME type.
     # Validate upload parameters before passing them here: an unchecked String
     # can access local files or internal network endpoints.
-    def initialize(source, filename: nil, config: nil)
+    def initialize(source, filename: nil, resolution: nil, config: nil)
+      unless resolution.nil? || RESOLUTIONS.include?(resolution)
+        raise ArgumentError, "resolution must be one of #{RESOLUTIONS.join(', ')}, got #{resolution.inspect}"
+      end
+
       @config = config
+      @resolution = resolution
       @source = source
       @source = source_type_cast
       @filename = filename || source_filename

@@ -55,6 +55,31 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
         }
       )
     end
+
+    it 'sets media_resolution on parts with a resolution' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf', resolution: :ultra_high)
+
+      parts = described_class.format_content('Read this page', [attachment])
+
+      expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_ULTRA_HIGH')
+    end
+
+    it 'sets media_resolution on provider-managed files' do
+      file = RubyLLM::UploadedFile.new(id: 'files/abc', filename: 'video.mp4', mime_type: 'video/mp4')
+      attachment = RubyLLM::Attachment.new(file, resolution: :low)
+
+      parts = described_class.format_content('Watch this', [attachment])
+
+      expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_LOW')
+    end
+
+    it 'omits media_resolution when no resolution is set' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf')
+
+      parts = described_class.format_content('Read this page', [attachment])
+
+      expect(parts.second).not_to have_key(:media_resolution)
+    end
   end
 
   describe '#build_response_content' do

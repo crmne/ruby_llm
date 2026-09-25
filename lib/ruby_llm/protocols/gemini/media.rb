@@ -33,14 +33,14 @@ module RubyLLM
         end
 
         def format_attachment(attachment)
-          return format_file_data(attachment) if attachment.provider_file?
+          part = if attachment.provider_file?
+                   format_file_data(attachment)
+                 else
+                   { inline_data: { mime_type: attachment.mime_type, data: attachment.encoded } }
+                 end
+          return part unless attachment.resolution
 
-          {
-            inline_data: {
-              mime_type: attachment.mime_type,
-              data: attachment.encoded
-            }
-          }
+          part.merge(media_resolution: { level: "MEDIA_RESOLUTION_#{attachment.resolution.upcase}" })
         end
 
         def format_file_data(attachment)
