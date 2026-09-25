@@ -587,6 +587,13 @@ module RubyLLM
         model_id
       end
 
+      # Returns the id of the model that the deployment named +model_id+
+      # runs, or +nil+ when +model_id+ is not a declared deployment.
+      # Providers whose requests name deployments (Azure) override it.
+      def deployed_model_id(_model_id, _config = nil)
+        nil
+      end
+
       # Returns the global registry of providers, a hash mapping slug
       # symbols to provider classes.
       def providers

@@ -146,6 +146,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.model_id).to eq('made-up-deployment')
     end
 
+    it 'stores a declared Azure deployment with the metadata of the model it deploys' do
+      RubyLLM.config.azure_deployments = { 'gpt-4o-global' => 'gpt-4o' }
+      chat = Chat.create!(model: model_id)
+
+      chat.with_model('gpt-4o-global', provider: :azure)
+
+      expect(chat.model_id).to eq('gpt-4o-global')
+      expect(chat.model.metadata).to eq(RubyLLM.models.find('gpt-4o', provider: :azure).metadata.deep_stringify_keys)
+    ensure
+      RubyLLM.config.azure_deployments = nil
+    end
+
     it 'reuses a model row another process inserted after the lookup missed' do
       relation = RubyLLM::ActiveRecord::Model.all
       allow(RubyLLM::ActiveRecord::Model).to receive(:all).and_return(relation)

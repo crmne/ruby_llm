@@ -783,18 +783,23 @@ module RubyLLM
     end
 
     def find_with_provider(model_id, provider, config = nil)
-      resolved_id = Aliases.resolve(model_id, provider)
-      resolved_id = resolve_provider_registry_id(resolved_id, provider, config)
-      all_including_unlisted.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
-        all_including_unlisted.find { |m| m.id == model_id && m.provider == provider.to_s } ||
-        raise_model_not_found(model_id, provider: provider)
+      config ||= RubyLLM.config
+      provider_class = Provider.resolve(provider)
+      deployed_id = provider_class&.deployed_model_id(model_id, config)
+      registry_id = provider_registry_id(deployed_id || model_id, provider, provider_class, config)
+      model = find_registered(registry_id, model_id, provider)
+      deployed_id && model.id != model_id ? Model.new(model.to_h.merge(id: model_id)) : model
     end
 
-    def resolve_provider_registry_id(model_id, provider, config = nil)
-      provider_class = Provider.resolve(provider)
-      return model_id unless provider_class
+    def provider_registry_id(model_id, provider, provider_class, config)
+      resolved_id = Aliases.resolve(model_id, provider)
+      provider_class ? provider_class.resolve_registry_id(resolved_id, self, config) : resolved_id
+    end
 
-      provider_class.resolve_registry_id(model_id, self, config || RubyLLM.config)
+    def find_registered(registry_id, model_id, provider)
+      all_including_unlisted.find { |m| m.id == registry_id && m.provider == provider.to_s } ||
+        all_including_unlisted.find { |m| m.id == model_id && m.provider == provider.to_s } ||
+        raise_model_not_found(model_id, provider: provider)
     end
 
     # A name can be one provider's exact id and another's alias:

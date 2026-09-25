@@ -34,6 +34,7 @@ RubyLLM.configure do |config|
   config.azure_api_base = ENV['AZURE_API_BASE'] # Azure OpenAI or Foundry resource endpoint
   config.azure_api_key = ENV['AZURE_API_KEY'] # use this or
   config.azure_ai_auth_token = ENV['AZURE_AI_AUTH_TOKEN'] # this
+  # config.azure_deployments = { 'gpt-4o-global' => 'gpt-4o' } # optional deployment names
 
   # Bedrock
   config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
@@ -244,6 +245,20 @@ These headers are optional and only needed for organization-specific billing or 
 Pass your Azure deployment name as `model:`. It can differ from the underlying model's name. Listing a model in the catalog does not mean your resource has a deployment for it.
 
 Set `azure_api_base` to your resource URL, deployment URL, or `/openai/v1` base. Use a deployment that supports the operation you call.
+
+When a deployment name differs from the model it deploys, declare it so RubyLLM uses that model's registry entry for pricing, limits, and capabilities:
+
+```ruby
+RubyLLM.configure do |config|
+  config.azure_api_base = "https://acme.openai.azure.com"
+  config.azure_deployments = { "gpt-4o-global" => "gpt-4o" }
+end
+
+chat = RubyLLM.chat(model: "gpt-4o-global", provider: :azure)
+chat.model.id # => "gpt-4o-global", the name sent to Azure
+```
+
+The chat keeps the deployment name for requests and takes everything else from the `gpt-4o` entry. Rails creates the deployment's model row from that entry the first time a chat uses it. Names you don't declare are sent as given.
 
 For a custom Cohere embedding deployment name or a dedicated serverless endpoint, select the protocol in a context:
 

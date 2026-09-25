@@ -108,7 +108,12 @@ module RubyLLM
         end
 
         def configuration_options
-          %i[azure_api_base azure_api_key azure_ai_auth_token]
+          %i[azure_api_base azure_api_key azure_ai_auth_token azure_deployments]
+        end
+
+        def deployed_model_id(deployment, config = RubyLLM.config)
+          deployments = config.azure_deployments || {}
+          (deployments[deployment.to_s] || deployments[deployment.to_sym])&.to_s
         end
 
         def configuration_requirements

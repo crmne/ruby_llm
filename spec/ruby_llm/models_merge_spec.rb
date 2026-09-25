@@ -830,11 +830,11 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#resolve_provider_registry_id' do
-    it 'leaves the id alone for an unknown provider' do
-      registry = described_class.new([])
+  describe '#find with an unregistered provider' do
+    it 'looks the id up as given' do
+      model = RubyLLM::Model.new(id: 'some-model', provider: 'nowhere')
 
-      expect(registry.send(:resolve_provider_registry_id, 'some-model', :nowhere)).to eq('some-model')
+      expect(described_class.new([model]).find('some-model', provider: :nowhere)).to be(model)
     end
   end
 
