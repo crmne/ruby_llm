@@ -27,6 +27,14 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Embeddings do
     )
   end
 
+  it 'leaves image detail out of embedding inputs' do
+    attachment = RubyLLM::Attachment.new('https://example.com/logo.png', resolution: :high)
+
+    expect(render(nil, with: [attachment]).dig(:input, 0, :content, 0)).to eq(
+      type: 'image_url', image_url: { url: 'https://example.com/logo.png' }
+    )
+  end
+
   it 'encodes local images' do
     attachment = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
     part = render(nil, with: [attachment]).dig(:input, 0, :content, 0)

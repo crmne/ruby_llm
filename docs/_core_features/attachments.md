@@ -142,7 +142,7 @@ Providers without native document support raise `RubyLLM::UnsupportedAttachmentE
 Small print and dense tables need more detail than a photo of a cat. Build the attachment yourself and set `resolution:` to control how many tokens the model spends on it:
 
 ```ruby
-page = RubyLLM::Attachment.new(io, filename: "page-3.png", resolution: :ultra_high)
+page = RubyLLM::Attachment.new("page-3.png", resolution: :ultra_high)
 chat.ask "Where is the revenue figure?", with: page
 ```
 

@@ -39,6 +39,8 @@ module RubyLLM
 
           if (type = EMBEDDING_MEDIA_TYPES[attachment.type])
             { type: type.to_s, type => { data: attachment.for_llm, format: attachment.format } }
+          elsif attachment.type == :image
+            Protocols::ChatCompletions::Media.format_image(attachment)
           else
             Protocols::ChatCompletions::Media.format_attachment(
               attachment, document_attachments: :none, image_attachments: true, audio_attachments: false
