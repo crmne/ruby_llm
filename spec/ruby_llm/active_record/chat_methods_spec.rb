@@ -458,6 +458,28 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.provider_options).to eq(reasoning_effort: 'low')
     end
 
+    it 'passes tool progress to after_tool_progress' do
+      stub_const('ProgressTool', Class.new(RubyLLM::Tool) do
+        def execute
+          progress 'Working', value: 1, total: 2
+          'done'
+        end
+      end)
+      chat = Chat.create!(model: model_id).with_tools(ProgressTool)
+      call = tool_call(id: 'call_1', name: 'progress')
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
+        RubyLLM::Message.new(role: :assistant, content: 'Finished')
+      )
+      reports = []
+
+      expect(chat.after_tool_progress { |call, progress| reports << [call.id, progress.message, progress.fraction] })
+        .to eq(chat)
+      chat.ask('Use the tool')
+
+      expect(reports).to eq([['call_1', 'Working', 0.5]])
+    end
+
     it 'persists completions added out of band' do
       chat = Chat.create!(model: model_id)
       response = RubyLLM::Message.new(role: :assistant, content: 'Batch response')

@@ -403,6 +403,11 @@ RSpec.describe RubyLLM::Agent, :live do
         self
       end
 
+      def after_tool_progress(&)
+        @events << :after_tool_progress
+        self
+      end
+
       def before_fallback(&)
         @events << :before_fallback
         self
@@ -421,6 +426,7 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(agent.after_message { :ok }).to eq(fake_chat)
     expect(agent.before_tool_call { :ok }).to eq(fake_chat)
     expect(agent.after_tool_result { :ok }).to eq(fake_chat)
+    expect(agent.after_tool_progress { :ok }).to eq(fake_chat)
     expect(agent.before_fallback { :ok }).to eq(fake_chat)
     expect(agent.after_fallback { :ok }).to eq(fake_chat)
     expect(fake_chat.events).to eq(%i[
@@ -429,6 +435,7 @@ RSpec.describe RubyLLM::Agent, :live do
                                      after_message
                                      before_tool_call
                                      after_tool_result
+                                     after_tool_progress
                                      before_fallback
                                      after_fallback
                                    ])
