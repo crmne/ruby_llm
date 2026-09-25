@@ -4,16 +4,24 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Transport::JsonResponse do
   def response_for(body, content_type: 'application/json', status: 200, **options)
+    headers = { 'Content-Type' => content_type }.compact
+
     Faraday.new do |connection|
       connection.use described_class, **options
       connection.adapter :test do |stubs|
-        stubs.get('/') { [status, { 'Content-Type' => content_type }, body] }
+        stubs.get('/') { [status, headers, body] }
       end
     end.get('/')
   end
 
   it 'decodes JSON responses with string keys' do
     expect(response_for('{"content":"Hello"}').body).to eq('content' => 'Hello')
+  end
+
+  it 'decodes JSON media types with a suffix and charset' do
+    response = response_for('{"content":"Hello"}', content_type: 'application/problem+json; charset=utf-8')
+
+    expect(response.body).to eq('content' => 'Hello')
   end
 
   it 'passes parser options as keywords when reading model catalogs' do
@@ -23,6 +31,10 @@ RSpec.describe RubyLLM::Transport::JsonResponse do
   end
 
   it 'returns nil for an empty response' do
+    expect(response_for('').body).to be_nil
+  end
+
+  it 'returns nil for a whitespace-only response' do
     expect(response_for(" \n").body).to be_nil
   end
 
@@ -31,7 +43,41 @@ RSpec.describe RubyLLM::Transport::JsonResponse do
   end
 
   it 'wraps malformed JSON in a Faraday parsing error' do
-    expect { response_for('{') }.to raise_error(Faraday::ParsingError)
+    expect { response_for('{', preserve_raw: true) }.to raise_error(Faraday::ParsingError) do |error|
+      expect(error.wrapped_exception).to be_a(JSON::ParserError)
+      expect(error.response.body).to eq('{')
+      expect(error.response.env[:raw_body]).to eq('{')
+    end
+  end
+
+  it 'wraps invalid UTF-8 responses in a Faraday parsing error' do
+    body = "\xFF"
+
+    expect { response_for(body) }.to raise_error(Faraday::ParsingError)
+  end
+
+  it 'wraps incomplete multibyte responses in a Faraday parsing error' do
+    body = '{'.dup.force_encoding(Encoding::UTF_16LE)
+
+    expect { response_for(body) }.to raise_error(Faraday::ParsingError)
+  end
+
+  it 'leaves already parsed responses untouched' do
+    body = { 'content' => 'Hello' }
+
+    expect(response_for(body).body).to equal(body)
+  end
+
+  it 'leaves non-JSON responses unparsed' do
+    body = '{"content":"Hello"}'
+
+    expect(response_for(body, content_type: 'text/plain').body).to eq(body)
+  end
+
+  it 'leaves responses without a content type unparsed' do
+    body = '{"content":"Hello"}'
+
+    expect(response_for(body, content_type: nil).body).to eq(body)
   end
 
   it 'leaves streaming responses unparsed' do
