@@ -36,10 +36,8 @@ module RubyLLM
 
         private
 
-        # Perplexity rejects Anthropic models without an output cap, so they get
-        # the one the Anthropic protocol sends.
         def default_max_output_tokens(model)
-          model.max_output_tokens || 4096 if model.id.start_with?('anthropic/')
+          model.max_output_tokens || Anthropic::DEFAULT_MAX_OUTPUT_TOKENS if model.id.start_with?('anthropic/')
         end
 
         def preset_for(model_id)

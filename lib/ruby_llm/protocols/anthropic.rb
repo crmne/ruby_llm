@@ -15,6 +15,8 @@ module RubyLLM
       # continued before RubyLLM returns what it has.
       MAX_PAUSE_TURN_CONTINUATIONS = 8
 
+      DEFAULT_MAX_OUTPUT_TOKENS = 4096
+
       # web_search/web_fetch pin allowed_callers to direct invocation: their
       # 2026 tool versions otherwise default to requiring programmatic tool
       # calling, which not every model supports.

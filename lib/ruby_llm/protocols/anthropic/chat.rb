@@ -100,7 +100,7 @@ module RubyLLM
             model: model.id,
             messages: format_messages(chat_messages, thinking:, citations:, caching:),
             stream: stream,
-            max_tokens: max_output_tokens || model.max_output_tokens || 4096
+            max_tokens: max_output_tokens || model.max_output_tokens || DEFAULT_MAX_OUTPUT_TOKENS
           }
 
           add_thinking_fields(payload, thinking, model)
