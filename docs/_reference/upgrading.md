@@ -78,10 +78,27 @@ Expect a few differences:
 * PDF and other document attachments raise `RubyLLM::UnsupportedAttachmentError`. Images and text files still work.
 * `response.cost` is the total Perplexity bills, search fees included.
 
-To stay on Sonar while Perplexity still serves it, select its protocol:
+Sonar's search parameters moved onto the `web_search` tool. The Agent API rejects them at the top level of a request, so a chat that still sends them raises `RubyLLM::BadRequestError` (`unknown field "search_recency_filter"`). Pass them as tool options instead:
 
 ```ruby
-RubyLLM.chat(model: "sonar", provider: :perplexity, protocol: :chat_completions)
+# Before
+chat.with_provider_options(search_recency_filter: "week",
+                           search_domain_filter: ["rubyonrails.org"])
+
+# After
+chat.with_provider_tools(web_search: {
+  filters: { search_recency_filter: "week", search_domain_filter: ["rubyonrails.org"] }
+})
+```
+
+The options you sent in `web_search_options`, such as `search_context_size` and `user_location`, become `web_search` options too.
+
+Read sources from `response.citations`. The Agent API response has no top-level `citations` field, so code that read them from `response.raw` finds none.
+
+To keep Sonar writing the answers, name it as a model. A model searches only with the `web_search` tool:
+
+```ruby
+RubyLLM.chat(model: "perplexity/sonar", provider: :perplexity).with_provider_tools(:web_search)
 ```
 
 ## Upgrade the Rails Schema
