@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
     rows = [embedding_row('0', [[1, 2]]), embedding_row('0', [[3, 4]])]
     stub_request(:get, "#{endpoint}/batch-ruby")
       .to_return_json(body: batch_data(model: embedding_model, results: rows, api: '/v1/embeddings'))
-    expect { batch.results }.to raise_error(RubyLLM::Error, /duplicate batch request IDs/)
+    expect { batch.results }.to raise_error(RubyLLM::Error, 'Duplicate batch result index: 0')
   end
 
   it 'does not repeat a submission whose outcome is uncertain' do

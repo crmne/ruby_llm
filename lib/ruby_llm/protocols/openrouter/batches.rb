@@ -34,12 +34,7 @@ module RubyLLM
 
         def batch_results(id)
           data = batch_data(id)
-          results = Array(data['results']).map { |row| parse_batch_result(row, data:) }
-          unless results.map(&:first).uniq.size == results.size
-            raise Error, 'OpenRouter returned duplicate batch request IDs'
-          end
-
-          results
+          Array(data['results']).map { |row| parse_batch_result(row, data:) }
         end
 
         private

@@ -123,11 +123,11 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
     response = batch_data(model: embedding_model, count: 2)
     stub_request(:get, 'https://api.cohere.com/v2/batches/batch_ruby')
       .to_return_json(body: { batch: response })
-    expect { protocol.batch_results('batch_ruby') }.to raise_error(RubyLLM::Error, /duplicate batch request IDs/)
+    batch = RubyLLM::Batch.find('batch_ruby', provider: :cohere, context:)
+    expect { batch.results }.to raise_error(RubyLLM::Error, 'Duplicate batch result index: 0')
     stub_request(:post, 'https://api.cohere.com/v2/batches/batch_ruby/cancel').to_return_json(body: {})
     stub_request(:get, 'https://api.cohere.com/v2/batches/batch_ruby')
       .to_return_json(body: { batch: response.merge(status: 'BATCH_STATUS_CANCELED') })
-    batch = RubyLLM::Batch.find('batch_ruby', provider: :cohere, context:)
     expect(batch.cancel).to be_cancelled
   end
 

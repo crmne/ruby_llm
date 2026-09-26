@@ -40,13 +40,7 @@ module RubyLLM
           file = datasets.wait_for_validation(data.fetch('output_dataset_id'))
           model = RubyLLM.models.find(data.fetch('model'), provider: @provider.slug, config: @config)
           parser = self.class.new(@provider, model)
-          results = datasets.records(file).map { |row| parse_batch_result(row, parser:, model: model.id) }
-          unless results.map(&:first).uniq.size == results.size
-            raise Error,
-                  'Cohere returned duplicate batch request IDs'
-          end
-
-          results
+          datasets.records(file).map { |row| parse_batch_result(row, parser:, model: model.id) }
         end
 
         private

@@ -96,8 +96,6 @@ batch.messages
 batch.statuses # => [:succeeded, :failed, :cancelled]
 ```
 
-If the provider's results are inconsistent, `messages` (or `results` in an embedding batch) raises `RubyLLM::Error` without delivering any of them. That covers two results for the same request, and a result at a negative position or past the end of the batch. RubyLLM knows where the batch ends when it holds the submitted chats or embedding requests, or when the provider reports the request count. A batch loaded with `Batch.find` from a provider that does not report it accepts results at any position, and `messages` grows to fit them. Nothing is delivered from a rejected response, so you can collect again once the provider's results are consistent.
-
 Use `batch.cancel` to stop unfinished work where the provider supports cancellation. Collect any completed results afterward.
 
 ## Cost and Usage

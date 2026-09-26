@@ -237,10 +237,7 @@ module RubyLLM
     #     puts message.content
     #   end
     #
-    # Raises Error without delivering any result when the provider returns
-    # two results for one request, or a result at a negative position or
-    # past the request count. The count is known when the batch holds its
-    # chats or requests, or when the provider reports it to ::find.
+    # Raises Error when the provider returns malformed result indices.
     def messages
       return @messages if @messages
 
@@ -307,17 +304,12 @@ module RubyLLM
     def validate_result_indices(results)
       count = known_request_count
       seen = {}
-      results.each do |row|
-        index = row.first
-        raise Error, "Invalid batch result index: #{index.inspect}" unless valid_result_index?(index, count)
+      results.map(&:first).each do |index|
+        raise Error, "Invalid batch result index: #{index}" if index.negative? || (count && index >= count)
         raise Error, "Duplicate batch result index: #{index}" if seen[index]
 
         seen[index] = true
       end
-    end
-
-    def valid_result_index?(index, count)
-      index.is_a?(Integer) && index >= 0 && (count.nil? || index < count)
     end
 
     def known_request_count
