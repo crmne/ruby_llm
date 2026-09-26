@@ -44,6 +44,12 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
     end
   end
 
+  def anthropic_chat(model)
+    RubyLLM.chat(model:, provider: :perplexity).tap do |claude|
+      claude.add_message(role: :user, content: 'Hello')
+    end
+  end
+
   it 'runs chat on the Agent API while embeddings keep their own protocol' do
     provider = chat.provider
 
@@ -78,6 +84,26 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
 
     expect(preset_chat('sonar-pro').render).to include(preset: 'low')
     expect(RubyLLM.deprecator).to have_received(:warn).with(/sonar-pro now runs the low Agent API preset/)
+  end
+
+  it 'caps the output of Anthropic models, which Perplexity requires' do
+    expect(anthropic_chat('anthropic/claude-haiku-4-5').render).to include(max_output_tokens: 64_000)
+  end
+
+  it 'caps Anthropic models the registry has no output limit for' do
+    expect(anthropic_chat('anthropic/claude-sonnet-5').render).to include(max_output_tokens: 4096)
+  end
+
+  it 'keeps an explicit output cap for Anthropic models' do
+    claude = anthropic_chat('anthropic/claude-haiku-4-5').with_max_output_tokens(200)
+
+    expect(claude.render).to include(max_output_tokens: 200)
+  end
+
+  it 'leaves the output of other models uncapped' do
+    chat.add_message(role: :user, content: 'Hello')
+
+    expect(chat.render).not_to have_key(:max_output_tokens)
   end
 
   it 'posts to the Agent endpoint, keeping configured gateway base paths' do

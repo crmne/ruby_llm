@@ -20,7 +20,8 @@ module RubyLLM
           @provider.agent_url
         end
 
-        def render_payload(messages, model:, **)
+        def render_payload(messages, model:, max_output_tokens: nil, **)
+          max_output_tokens ||= default_max_output_tokens(model)
           payload = super
           preset = preset_for(model.id)
           return payload unless preset
@@ -34,6 +35,12 @@ module RubyLLM
         end
 
         private
+
+        # Perplexity rejects Anthropic models without an output cap, so they get
+        # the one the Anthropic protocol sends.
+        def default_max_output_tokens(model)
+          model.max_output_tokens || 4096 if model.id.start_with?('anthropic/')
+        end
 
         def preset_for(model_id)
           return model_id if PRESETS.include?(model_id)
