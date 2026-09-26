@@ -238,7 +238,9 @@ module RubyLLM
     #   end
     #
     # Raises Error without delivering any result when the provider returns
-    # two results for one request or a result for no submitted request.
+    # two results for one request, or a result at a negative position or
+    # past the request count. The count is known when the batch holds its
+    # chats or requests, or when the provider reports it to ::find.
     def messages
       return @messages if @messages
 
