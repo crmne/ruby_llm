@@ -275,6 +275,104 @@ RSpec.describe RubyLLM::Batch do
       expect(batch.messages).to eq([nil, nil])
       expect(batch.statuses).to eq(%i[cancelled cancelled])
     end
+
+    context 'with malformed result indices' do
+      let(:chats) { Array.new(2) { RubyLLM.chat(model: model_for(:anthropic)).ask_later('Hi') } }
+      let(:provider) { chats.first.provider }
+      let(:answer) { RubyLLM::Message.new(role: :assistant, content: 'Hello', model: chats.first.model.id) }
+      let(:batch) do
+        described_class.new(provider:, chats:, id: 'msgbatch_123', raw_status: 'ended', completed: true)
+      end
+
+      [0, -1, 2, '1', 1.5, nil].each do |index|
+        it "rejects index #{index.inspect} without delivering any answer" do
+          allow(provider).to receive(:batch_results).and_return([[0, answer], [index, answer]])
+
+          expect { batch.messages }.to raise_error(RubyLLM::Error, /batch result index/)
+          expect(chats.map { |chat| chat.messages.map(&:role) }).to eq([[:user], [:user]])
+          expect(batch.statuses).to be_empty
+          expect(answer.ruby_llm_usage_entries).to be_empty
+        end
+      end
+
+      it 'rejects a duplicate index even when the first row failed' do
+        allow(provider).to receive(:batch_results).and_return([[0, nil, :failed], [0, answer]])
+
+        expect { batch.messages }.to raise_error(RubyLLM::Error, 'Duplicate batch result index: 0')
+        expect(batch.statuses).to be_empty
+      end
+
+      it 'rejects a negative index after an earlier poll' do
+        batch = described_class.new(provider:, chats:, id: 'msgbatch_123', raw_status: 'in_progress', completed: false)
+        allow(provider).to receive(:batch_results).and_return([[0, nil, :failed], [1, nil, :failed]], [[-1, answer]])
+
+        batch.messages
+
+        expect { batch.messages }.to raise_error(RubyLLM::Error, 'Invalid batch result index: -1')
+        expect(chats.last.messages.map(&:role)).to eq([:user])
+      end
+
+      it 'collects again once the provider returns consistent results' do
+        allow(provider).to receive(:batch_results).and_return([[0, answer], [0, answer]], [[0, answer]])
+
+        expect { batch.messages }.to raise_error(RubyLLM::Error)
+        expect(batch.messages).to eq([answer, nil])
+        expect(chats.first.messages.map(&:role)).to eq(%i[user assistant])
+      end
+    end
+
+    it 'places out-of-order results in submission order' do
+      chats = Array.new(2) { RubyLLM.chat(model: model_for(:anthropic)).ask_later('Hi') }
+      first, second = %w[First Second].map do |content|
+        RubyLLM::Message.new(role: :assistant, content:, model: chats.first.model.id)
+      end
+      provider = chats.first.provider
+      allow(provider).to receive(:batch_results).and_return([[1, second], [0, first]])
+      batch = described_class.new(provider:, chats:, id: 'msgbatch_123', raw_status: 'ended', completed: true)
+
+      expect(batch.messages).to eq([first, second])
+      expect(chats.map { |chat| chat.messages.last }).to eq([first, second])
+    end
+
+    it 'bounds a reloaded batch by its reported request count' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      answer = RubyLLM::Message.new(role: :assistant, content: 'Hello', model: model_for(:openai))
+      allow(provider).to receive(:batch_results).and_return([[2, answer]])
+      batch = described_class.new(provider:, id: 'batch_1', raw_status: 'completed', completed: true, request_count: 2)
+
+      expect { batch.messages }.to raise_error(RubyLLM::Error, 'Invalid batch result index: 2')
+    end
+
+    it 'keeps sparse results for a reloaded batch without a request count' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      answer = RubyLLM::Message.new(role: :assistant, content: 'Hello', model: model_for(:openai))
+      allow(provider).to receive(:batch_results).and_return([[3, answer]])
+      batch = described_class.new(provider:, id: 'batch_1', raw_status: 'completed', completed: true)
+
+      expect(batch.messages).to eq([nil, nil, nil, answer])
+    end
+
+    it 'rejects a negative index for a reloaded batch without a request count' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      answer = RubyLLM::Message.new(role: :assistant, content: 'Hello', model: model_for(:openai))
+      allow(provider).to receive(:batch_results).and_return([[-1, answer]])
+      batch = described_class.new(provider:, id: 'batch_1', raw_status: 'completed', completed: true)
+
+      expect { batch.messages }.to raise_error(RubyLLM::Error, 'Invalid batch result index: -1')
+    end
+
+    [[0, 0], [0, -1], [0, 2]].each do |indices|
+      it "rejects embedding indices #{indices} without hydrating any request" do
+        requests = Array.new(2) { RubyLLM.embed_later('Hi', model: model_for(:openai, :embedding)) }
+        embeddings = [0.1, 0.2].map { |value| RubyLLM::Embedding.new(vectors: [value], model: requests.first.model.id) }
+        provider = requests.first.provider
+        allow(provider).to receive(:batch_results).and_return(indices.zip(embeddings))
+        batch = described_class.new(provider:, requests:, id: 'batch_1', raw_status: 'completed', completed: true)
+
+        expect { batch.results }.to raise_error(RubyLLM::Error, /batch result index/)
+        expect(requests.map(&:result)).to eq([nil, nil])
+      end
+    end
   end
 
   describe '#inspect' do

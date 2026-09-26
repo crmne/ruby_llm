@@ -232,13 +232,13 @@ module RubyLLM
     # hydrated into its request's EmbeddingRequest#result. Fetches results
     # from the provider; cached once #complete? is true, so collecting
     # early keeps reading fresh.
-    # Raises Error for duplicate, negative, non-integer, or out-of-range
-    # result indices before delivering any results from that collection.
     #
     #   batch.messages.each do |message|
     #     puts message.content
     #   end
     #
+    # Raises Error without delivering any result when the provider returns
+    # two results for one request or a result for no submitted request.
     def messages
       return @messages if @messages
 
@@ -303,7 +303,7 @@ module RubyLLM
     end
 
     def validate_result_indices(results)
-      count = chats&.size || requests&.size || @request_count
+      count = known_request_count
       seen = {}
       results.each do |row|
         index = row.first
@@ -318,8 +318,12 @@ module RubyLLM
       index.is_a?(Integer) && index >= 0 && (count.nil? || index < count)
     end
 
+    def known_request_count
+      chats&.size || requests&.size || @request_count
+    end
+
     def result_slot_count(results)
-      chats&.size || requests&.size || @request_count || ((results.map(&:first).max || -1) + 1)
+      known_request_count || ((results.map(&:first).max || -1) + 1)
     end
 
     def fill_missing_statuses(size)
