@@ -303,13 +303,12 @@ module RubyLLM
 
     def validate_result_indices(results)
       count = known_request_count
-      seen = {}
-      results.map(&:first).each do |index|
-        raise Error, "Invalid batch result index: #{index}" if index.negative? || (count && index >= count)
-        raise Error, "Duplicate batch result index: #{index}" if seen[index]
+      indices = results.map(&:first)
+      invalid = indices.find { |index| index.negative? || (count && index >= count) }
+      raise Error, "Invalid batch result index: #{invalid}" if invalid
 
-        seen[index] = true
-      end
+      duplicate, = indices.tally.find { |_, occurrences| occurrences > 1 }
+      raise Error, "Duplicate batch result index: #{duplicate}" if duplicate
     end
 
     def known_request_count
