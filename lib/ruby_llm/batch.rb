@@ -232,6 +232,8 @@ module RubyLLM
     # hydrated into its request's EmbeddingRequest#result. Fetches results
     # from the provider; cached once #complete? is true, so collecting
     # early keeps reading fresh.
+    # Raises Error for duplicate, negative, non-integer, or out-of-range
+    # result indices before delivering any results from that collection.
     #
     #   batch.messages.each do |message|
     #     puts message.content
@@ -287,6 +289,7 @@ module RubyLLM
 
     def collect_results
       results = @provider.batch_results(id, batch_protocol: @batch_protocol)
+      validate_result_indices(results)
       slots = Array.new(result_slot_count(results))
 
       results.each do |index, result, failure_status|
@@ -297,6 +300,22 @@ module RubyLLM
       fill_missing_statuses(slots.size) if complete?
 
       slots
+    end
+
+    def validate_result_indices(results)
+      count = chats&.size || requests&.size || @request_count
+      seen = {}
+      results.each do |row|
+        index = row.first
+        raise Error, "Invalid batch result index: #{index.inspect}" unless valid_result_index?(index, count)
+        raise Error, "Duplicate batch result index: #{index}" if seen[index]
+
+        seen[index] = true
+      end
+    end
+
+    def valid_result_index?(index, count)
+      index.is_a?(Integer) && index >= 0 && (count.nil? || index < count)
     end
 
     def result_slot_count(results)

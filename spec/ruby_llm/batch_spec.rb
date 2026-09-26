@@ -339,4 +339,141 @@ RSpec.describe RubyLLM::Batch, :live do
       expect(batch.raw_status).to be_in(%w[canceling ended])
     end
   end
+
+  describe 'result index validation', live: false do
+    include_context 'with configured RubyLLM'
+
+    let(:chats) { Array.new(2) { RubyLLM.chat(model: model_for(:anthropic)).ask_later('Hi') } }
+    let(:provider) { chats.first.provider }
+    let(:message) { RubyLLM::Message.new(role: :assistant, content: 'Hello', model: chats.first.model.id) }
+    let(:batch) do
+      described_class.new(provider:, chats:, id: 'batch_test', raw_status: 'ended', completed: true)
+    end
+
+    [0, -1, 2, '1', 1.5, nil].each do |index|
+      it "rejects index #{index.inspect} before delivering any chat results" do
+        allow(provider).to receive(:batch_results).and_return([[0, message], [index, message]])
+
+        expect { batch.messages }.to raise_error(RubyLLM::Error, /batch result index/i)
+        expect(chats.map { |chat| chat.messages.map(&:role) }).to eq([[:user], [:user]])
+        expect(batch.statuses).to be_empty
+        expect(message.ruby_llm_usage_entries).to be_empty
+      end
+    end
+
+    it 'rejects duplicate indices even when the first result failed' do
+      allow(provider).to receive(:batch_results).and_return([[0, nil, :failed], [0, message]])
+
+      expect { batch.messages }.to raise_error(RubyLLM::Error, /Duplicate batch result index: 0/)
+      expect(batch.statuses).to be_empty
+    end
+
+    it 'delivers out-of-order results in submission order' do
+      other = RubyLLM::Message.new(role: :assistant, content: 'Other', model: chats.first.model.id)
+      allow(provider).to receive(:batch_results).and_return([[1, other], [0, message]])
+
+      expect(batch.messages).to eq([message, other])
+      expect(chats.map { |chat| chat.messages.last }).to eq([message, other])
+      expect(batch.statuses).to eq(%i[succeeded succeeded])
+    end
+
+    it 'allows missing results' do
+      allow(provider).to receive(:batch_results).and_return([[1, message]])
+
+      expect(batch.messages).to eq([nil, message])
+      expect(batch.statuses).to eq(%i[failed succeeded])
+      expect(chats.first.messages.map(&:role)).to eq([:user])
+    end
+
+    it 'allows an empty collection' do
+      allow(provider).to receive(:batch_results).and_return([])
+
+      expect(batch.messages).to eq([nil, nil])
+      expect(batch.statuses).to eq(%i[failed failed])
+    end
+
+    it 'can retry a rejected collection without losing delivery' do
+      allow(provider).to receive(:batch_results).and_return([[0, message], [0, message]], [[0, message]])
+
+      expect { batch.messages }.to raise_error(RubyLLM::Error)
+      expect(batch.messages).to eq([message, nil])
+      expect(chats.first.messages.map(&:role)).to eq(%i[user assistant])
+    end
+
+    it 'allows the same index in successive polls without delivering twice' do
+      batch = described_class.new(provider:, chats:, id: 'batch_test', raw_status: 'in_progress', completed: false)
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+      2.times { expect(batch.messages).to eq([message, nil]) }
+      expect(chats.first.messages.map(&:role)).to eq(%i[user assistant])
+    end
+
+    context 'when loaded by id' do
+      let(:batch) { described_class.find('batch_test', provider: :anthropic) }
+
+      before do
+        allow(RubyLLM::Providers::Anthropic).to receive(:new).and_return(provider)
+        allow(provider).to receive(:find_batch)
+          .and_return(id: 'batch_test', raw_status: 'ended', completed: true, request_count: 2)
+      end
+
+      it 'uses the reported request count as the upper bound' do
+        allow(provider).to receive(:batch_results).and_return([[2, message]])
+
+        expect { batch.results }.to raise_error(RubyLLM::Error, /Invalid batch result index: 2/)
+        expect(batch.statuses).to be_empty
+      end
+
+      it 'preserves missing slots within the reported request count' do
+        allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+        expect(batch.results).to eq([message, nil])
+      end
+
+      it 'allows sparse indices without a reported request count' do
+        allow(provider).to receive_messages(
+          find_batch: { id: 'batch_test', raw_status: 'ended', completed: true }, batch_results: [[3, message]]
+        )
+
+        expect(batch.results).to eq([nil, nil, nil, message])
+      end
+
+      [0, -1, '1', 1.5, nil].each do |index|
+        it "rejects index #{index.inspect} without a reported request count" do
+          allow(provider).to receive_messages(
+            find_batch: { id: 'batch_test', raw_status: 'ended', completed: true },
+            batch_results: [[0, message], [index, message]]
+          )
+
+          expect { batch.results }.to raise_error(RubyLLM::Error, /batch result index/i)
+          expect(batch.statuses).to be_empty
+        end
+      end
+    end
+  end
+
+  describe 'embedding result index validation', live: false do
+    include_context 'with configured RubyLLM'
+
+    let(:requests) do
+      Array.new(2) { RubyLLM.embed_later('Hi', model: model_for(:openai, :embedding)) }
+    end
+    let(:provider) { requests.first.provider }
+    let(:embedding) { RubyLLM::Embedding.new(vectors: [0.1], model: requests.first.model.id) }
+    let(:batch) do
+      described_class.new(provider:, requests:, id: 'batch_test', raw_status: 'completed', completed: true)
+    end
+
+    [0, -1, 2].each do |index|
+      it "rejects index #{index} before hydrating any embedding request" do
+        other = RubyLLM::Embedding.new(vectors: [0.2], model: requests.first.model.id)
+        allow(provider).to receive(:batch_results).and_return([[0, embedding], [index, other]])
+
+        expect { batch.results }.to raise_error(RubyLLM::Error, /batch result index/i)
+        expect(requests.map(&:result)).to eq([nil, nil])
+        expect(batch.statuses).to be_empty
+        expect(embedding.ruby_llm_usage_entries).to be_empty
+      end
+    end
+  end
 end

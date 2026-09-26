@@ -96,6 +96,8 @@ batch.messages
 batch.statuses # => [:succeeded, :failed, :cancelled]
 ```
 
+If a provider returns duplicate or invalid result indices, `messages` and `results` raise `RubyLLM::Error` before delivering any results from that collection. Indices must be non-negative integers and fall within the submitted request count when it is known. Missing results and results returned out of order are allowed.
+
 Use `batch.cancel` to stop unfinished work where the provider supports cancellation. Collect any completed results afterward.
 
 ## Cost and Usage
