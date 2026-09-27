@@ -424,6 +424,20 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.messages).to be_empty
     end
 
+    it 'restores attachments from serialized messages' do
+      image_path = File.expand_path('../fixtures/ruby.png', __dir__)
+      source = described_class.new
+      source.add_message(role: :user, content: 'Look',
+                         attachments: [RubyLLM::Attachment.new(image_path, filename: 'custom.png', resolution: :high)])
+      chat = described_class.new
+
+      chat.messages = source.messages.map(&:to_h)
+
+      expect(chat.messages.first.attachments).to contain_exactly(
+        have_attributes(filename: 'custom.png', mime_type: 'image/png', resolution: :high)
+      )
+    end
+
     it 'does not use the assigned array as backing storage' do
       chat = described_class.new
       assigned = [RubyLLM::Message.new(role: :user, content: 'Hello')]
