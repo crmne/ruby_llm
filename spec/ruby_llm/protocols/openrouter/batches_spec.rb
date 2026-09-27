@@ -16,8 +16,8 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
     { custom_id: id, response: { status_code: 200, body: }, error: nil }
   end
 
-  def embedding_row(id, vectors)
-    rows = vectors.each_with_index.map { |vector, index| { index:, embedding: vector } }.reverse
+  def embedding_row(id, vectors, positions: vectors.each_index.to_a)
+    rows = vectors.zip(positions).map { |vector, index| { index:, embedding: vector } }.reverse
     response_row(id, { model: embedding_model, data: rows, usage: { prompt_tokens: 4, cost: 0.0001 } })
   end
 
@@ -55,6 +55,35 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Batches do
     expect(restored.results.map(&:vectors)).to eq(batch.results.map(&:vectors))
     expect(restored.tokens.input).to eq(12)
     expect(restored.cost.total).to be_within(0.0000001).of(0.0003)
+  end
+
+  [[0, 0], [0, 2], [-1, 0], [nil, 0], ['0', 1], [0.0, 1], [1]].each do |positions|
+    it "fails only the embedding result with invalid positions #{positions.inspect}" do
+      invalid = embedding_row(positions.size == 1 ? '0' : '0:array', [[1, 2]] * positions.size, positions:)
+      rows = [invalid, embedding_row('1:array', [[3, 4], [5, 6]])]
+      data = batch_data(model: embedding_model, api: '/v1/embeddings', results: rows)
+      stub_request(:get, "#{endpoint}/batch-ruby").to_return_json(body: data)
+      batch = RubyLLM::Batch.find('batch-ruby', provider: :openrouter, context:)
+
+      expect(batch.results.first).to be_nil
+      expect(batch.results.last.vectors).to eq([[3, 4], [5, 6]])
+      expect(batch.statuses).to eq(%i[failed succeeded])
+      expect(batch.tokens.input).to eq(4)
+      expect(batch.cost.total).to eq(0.0001)
+    end
+  end
+
+  it 'fails only the embedding result with a missing position' do
+    invalid = embedding_row('0', [[1, 2]])
+    invalid[:response][:body][:data].first.delete(:index)
+    rows = [invalid, embedding_row('1', [[3, 4]])]
+    data = batch_data(model: embedding_model, api: '/v1/embeddings', results: rows)
+    stub_request(:get, "#{endpoint}/batch-ruby").to_return_json(body: data)
+    batch = RubyLLM::Batch.find('batch-ruby', provider: :openrouter, context:)
+
+    expect(batch.results.first).to be_nil
+    expect(batch.results.last.vectors).to eq([3, 4])
+    expect(batch.statuses).to eq(%i[failed succeeded])
   end
 
   it 'normalizes Responses results and preserves per-request failures after a fresh find' do

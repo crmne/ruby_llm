@@ -120,8 +120,18 @@ module RubyLLM
             return [index, nil, batch_failure(custom_id, batch_error_message(row))]
           end
 
-          [index, parse_batch_body(response.fetch('body'), endpoint: data.fetch('endpoint'),
-                                                           model: data.fetch('model'), shape:)]
+          body = response.fetch('body')
+          endpoint = data.fetch('endpoint')
+          if endpoint == '/v1/embeddings' && !embedding_positions?(body)
+            return [index, nil, batch_failure(custom_id, 'Invalid or duplicate embedding record positions')]
+          end
+
+          [index, parse_batch_body(body, endpoint:, model: data.fetch('model'), shape:)]
+        end
+
+        def embedding_positions?(body)
+          positions = body.fetch('data').map { |row| row['index'] }
+          positions.all?(Integer) && positions.sort == (0...positions.size).to_a
         end
 
         def parse_batch_body(body, endpoint:, model:, shape:)
