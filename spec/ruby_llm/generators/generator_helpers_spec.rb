@@ -1,10 +1,52 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'active_record'
 require 'thor'
 require 'generators/ruby_llm/generator_helpers'
 
 RSpec.describe RubyLLM::Generators::GeneratorHelpers, :generator do
+  describe 'database detection' do
+    let(:helpers) { Object.new.extend(described_class) }
+
+    def connect_to(*class_names)
+      adapter = class_names.reverse.inject(Object) do |parent, class_name|
+        Class.new(parent) { define_singleton_method(:name) { class_name } }
+      end
+      allow(ActiveRecord::Base).to receive(:connection).and_return(adapter.allocate)
+    end
+
+    it 'recognizes adapters built on PostgreSQL, such as PostGIS' do
+      connect_to('ActiveRecord::ConnectionAdapters::PostGISAdapter',
+                 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter')
+
+      expect(helpers).to be_postgresql
+      expect(helpers).not_to be_mysql
+    end
+
+    it 'recognizes adapters built on MySQL, such as Trilogy' do
+      connect_to('ActiveRecord::ConnectionAdapters::TrilogyAdapter',
+                 'ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter')
+
+      expect(helpers).to be_mysql
+      expect(helpers).not_to be_postgresql
+    end
+
+    it 'treats other adapters as neither' do
+      connect_to('ActiveRecord::ConnectionAdapters::SQLite3Adapter')
+
+      expect(helpers).not_to be_postgresql
+      expect(helpers).not_to be_mysql
+    end
+
+    it 'treats an unavailable connection as neither' do
+      allow(ActiveRecord::Base).to receive(:connection).and_raise(ActiveRecord::ConnectionNotEstablished)
+
+      expect(helpers).not_to be_postgresql
+      expect(helpers).not_to be_mysql
+    end
+  end
+
   describe '.reorder_arguments' do
     let(:options) do
       {

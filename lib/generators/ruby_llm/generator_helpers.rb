@@ -149,15 +149,11 @@ module RubyLLM
       end
 
       def postgresql?
-        ::ActiveRecord::Base.connection.adapter_name.downcase.include?('postgresql')
-      rescue StandardError
-        false
+        adapter_built_on?('ActiveRecord::ConnectionAdapters::PostgreSQLAdapter')
       end
 
       def mysql?
-        ::ActiveRecord::Base.connection.adapter_name.downcase.include?('mysql')
-      rescue StandardError
-        false
+        adapter_built_on?('ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter')
       end
 
       def table_exists?(table_name)
@@ -261,6 +257,14 @@ module RubyLLM
       end
 
       private
+
+      # Compares class names because referencing an adapter constant loads
+      # its database driver, which the application may not have installed.
+      def adapter_built_on?(adapter_class_name)
+        ::ActiveRecord::Base.connection.class.ancestors.any? { |ancestor| ancestor.name == adapter_class_name }
+      rescue StandardError
+        false
+      end
 
       def add_association_params(params, default_assoc, table_name, model_name,
                                  owner_table:, owner_model_name:, plural: false)
