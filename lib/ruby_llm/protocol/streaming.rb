@@ -6,9 +6,9 @@ require 'json'
 module RubyLLM
   class Protocol
     module Streaming # :nodoc: all
-      StreamState = Struct.new(:parser, :buffer) do
+      StreamState = Struct.new(:parser, :buffer, :json_body) do
         def initialize
-          super(Transport::EventStreamParser.new, +'')
+          super(Transport::EventStreamParser.new, +'', nil)
         end
       end
 
@@ -85,13 +85,33 @@ module RubyLLM
       def process_stream_chunk(chunk, state, env, progress, &)
         RubyLLM.logger.debug { "Received chunk: #{chunk}" } if RubyLLM.config.log_stream_debug
 
-        if error_chunk?(chunk)
+        if json_body?(chunk, state)
+          handle_json_body(chunk, state, env)
+        elsif error_chunk?(chunk)
           handle_error_chunk(chunk, env)
-        elsif json_error_payload?(chunk)
-          handle_json_error_chunk(chunk, env)
         else
           handle_sse(chunk, state.parser, env, progress, &)
         end
+      end
+
+      # Adapters cut reads anywhere, so a read inside an event can start with
+      # "{". Only the first bytes of a body can open a bare JSON error.
+      def json_body?(chunk, state)
+        state.json_body = chunk.lstrip.start_with?('{') if state.json_body.nil? && !chunk.strip.empty?
+        state.json_body
+      end
+
+      # A parsed body resets the state, so a retry that shares it (Faraday v1)
+      # reads its own body from the start.
+      def handle_json_body(chunk, state, env)
+        state.buffer << chunk
+        parsed = JSON.parse(state.buffer)
+        body = state.buffer.dup
+        state.buffer.clear
+        state.json_body = nil
+        raise_stream_error(body, parsed, env) if body.include?('"error"')
+      rescue JSON::ParserError
+        RubyLLM.logger.debug { "Accumulating JSON body chunk: #{chunk}" }
       end
 
       # An error event split across network reads reaches here in pieces, so only
@@ -99,14 +119,6 @@ module RubyLLM
       # them until the event is complete.
       def error_chunk?(chunk)
         chunk.start_with?('event: error') && chunk.end_with?("\n\n")
-      end
-
-      def json_error_payload?(chunk)
-        chunk.lstrip.start_with?('{') && chunk.include?('"error"')
-      end
-
-      def handle_json_error_chunk(chunk, env)
-        parse_error_from_json(chunk, env, 'Failed to parse JSON error chunk')
       end
 
       def handle_error_chunk(chunk, env)
