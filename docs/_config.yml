@@ -208,7 +208,6 @@ jekyll_vitepress:
     text: Edit page on Github
 
 plugins:
-  - jekyll-og-image
   - jekyll-redirect-from
   - jekyll-vitepress-theme
 
@@ -238,37 +237,6 @@ author:
   twitter: paolino
 
 # Jekyll uses Dart Sass; suppress deprecations emitted by upstream theme styles.
-
-og_image:
-  output_dir: "assets/images/og"
-  force: true
-  collections:
-    - pages
-    - getting_started
-    - core_features
-    - advanced
-    - reference
-  image:
-    path: "assets/images/logotype.svg"
-    width: 290
-    height: 100
-  domain: "rubyllm.com"
-  header:
-    prefix: "RubyLLM Docs: "
-    font_family: "Plus Jakarta Sans, bold"
-  content:
-    font_family: "Inter, regular"
-  metadata:
-    fields:
-      - description
-  border_bottom:
-    width: 20
-    fill:
-      - "#820C02"
-      - "#A91401"
-      - "#D51F06"
-      - "#DE3F24"
-      - "#EDA895"
 
 # Model variables for documentation
 # These are used throughout the docs to ensure consistency
