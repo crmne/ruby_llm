@@ -1,0 +1,26 @@
+.home-tour-frame .home-tour-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-tour-frame.is-playing .home-tour-cover {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.home-tour-frame .home-play-button {
+  top: 82%;
+}
+
+@media (max-width: 760px) {
+  .home-tour-frame .home-play-button {
+    top: 84%;
+    width: 44px;
+    height: 44px;
+  }
+}

@@ -43,6 +43,15 @@ prepare_version() {
   ruby "$docs/bin/prepare_versions.rb" "$source/_data/versions.yml" "$channel" "$BASE" "$stable_ref" "$onex_ref"
 }
 
+share_home_tour() {
+  local source="$1"
+  cp "$docs/_includes/home_tour.html" "$source/_includes/"
+  cp "$docs/assets/css/home-tour.css" "$source/assets/css/"
+  cp "$docs/assets/images/home/tour-cover.jpg" "$source/assets/images/home/"
+  perl -0pi -e 's{    <div class="home-demo-frame" data-demo-video>\n.*?<img class="home-demo-avatar"[^\n]*\n    </div>\n}{    \{% include home_tour.html %\}\n}s' \
+    "$source/index.md"
+}
+
 render_models_page() {
   local source="$1" docs_dir="$2"
   BUNDLE_GEMFILE="$repo_root/Gemfile" bundle exec ruby "$docs/bin/render_models_page.rb" \
@@ -58,6 +67,7 @@ build_version() {
 echo "==> Building stable docs ($stable_ref) -> /"
 archive_release "$stable_ref" "$workspace/stable" tasks/
 prepare_version "$workspace/stable/docs" stable
+share_home_tour "$workspace/stable/docs"
 render_models_page "$workspace/stable" "$workspace/stable/docs"
 build_version "$workspace/stable/docs" "$workspace/stable-out" "$BASE" "$workspace/stable"
 

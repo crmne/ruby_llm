@@ -33,20 +33,7 @@ hero:
 
 </div>
 
-    <div class="home-demo-frame" data-demo-video>
-      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> irb -r ruby_llm
-<span class="term-green">&gt;&gt;</span> chat = RubyLLM.chat
-<span class="term-green">&gt;&gt;</span> chat.ask "What can you do?"
-=&gt; "Chat with every major model, stream replies, call your
-   Ruby code as tools, return structured output, read images
-   and PDFs, transcribe, speak, paint... Want the full tour?"
-~ <span class="term-cursor"></span></code></pre>
-      <video class="home-demo-video" src="https://github.com/crmne/ruby_llm/releases/download/v2.0.0/rubyllm-tour.mp4" preload="none" playsinline></video>
-      <button class="home-play-button" type="button" aria-label="Play the RubyLLM tour">
-        <span aria-hidden="true"></span>
-      </button>
-      <img class="home-demo-avatar" src="{{ '/assets/images/founder/carmine.jpg' | relative_url }}" alt="" aria-hidden="true">
-    </div>
+    {% include home_tour.html %}
   </div>
 </section>
 
