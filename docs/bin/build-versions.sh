@@ -52,6 +52,10 @@ share_home_tour() {
     "$source/index.md"
 }
 
+use_generated_about_card() {
+  sed -i.bak '/^image: /d' "$1/about.md" && rm "$1/about.md.bak"
+}
+
 render_models_page() {
   local source="$1" docs_dir="$2"
   BUNDLE_GEMFILE="$repo_root/Gemfile" bundle exec ruby "$docs/bin/render_models_page.rb" \
@@ -68,6 +72,7 @@ echo "==> Building stable docs ($stable_ref) -> /"
 archive_release "$stable_ref" "$workspace/stable" tasks/
 prepare_version "$workspace/stable/docs" stable
 share_home_tour "$workspace/stable/docs"
+use_generated_about_card "$workspace/stable/docs"
 render_models_page "$workspace/stable" "$workspace/stable/docs"
 build_version "$workspace/stable/docs" "$workspace/stable-out" "$BASE" "$workspace/stable"
 

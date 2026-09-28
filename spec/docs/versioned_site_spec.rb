@@ -201,7 +201,7 @@ RSpec.describe 'Versioned documentation site', type: :task do
       expect(html(path).at_css('link[rel=canonical]')['href'])
         .to eq('https://rubyllm.com/ruby_llm/next/api/RubyLLM/Chat.html')
       expect(html(path).at_css('meta[property="og:image"]')['content'])
-        .to eq('https://rubyllm.com/ruby_llm/next/assets/images/social-card.jpg')
+        .to eq('https://rubyllm.com/ruby_llm/next/assets/images/social/index.png')
       expect(html(path).css('a').map { |link| link['href'] }).to eq([
                                                                       'https://rubyllm.com/ruby_llm/next/',
                                                                       'https://rubyllm.com/ruby_llm/next/upgrading/',
@@ -229,13 +229,11 @@ RSpec.describe 'Versioned documentation site', type: :task do
 
       config = YAML.load_file(File.join(site, '_config.yml'))
       expect(config.dig('jekyll_vitepress', 'seo', 'image')).to eq(
-        'path' => '/assets/images/social-card.jpg',
+        'path' => '/assets/images/social/index.png',
         'alt' => 'RubyLLM',
         'width' => 1200,
         'height' => 630
       )
-      expect(File.binread(File.join(site, 'assets/images/social-card.jpg')))
-        .to eq(File.binread(File.join(root, 'docs/assets/images/social-card.jpg')))
       head = File.read(File.join(site, '_includes/head_custom.html'))
       expect(head).to include("{{ '/assets/js/copy-page-markdown.js' | relative_url }}")
       expect(head).to include("{{ '/assets/images/logo.svg' | relative_url }}")

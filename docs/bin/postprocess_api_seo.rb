@@ -6,7 +6,7 @@ require 'pathname'
 
 output_dir = Pathname(ARGV.fetch(0)).expand_path
 site_root = ARGV.fetch(1).sub(%r{/+\z}, '')
-image_url = "#{site_root}/assets/images/social-card.jpg"
+image_url = "#{site_root}/assets/images/social/index.png"
 default_robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
 api_urls = []
 index_pages = %w[index.html RubyLLM.html]

@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'fileutils'
 require 'yaml'
 
 docs_dir = File.expand_path(ARGV.fetch(0))
@@ -21,7 +20,7 @@ config['jekyll_vitepress'] = {
   'seo' => {
     'page_type' => 'TechArticle',
     'image' => {
-      'path' => '/assets/images/social-card.jpg',
+      'path' => '/assets/images/social/index.png',
       'alt' => 'RubyLLM',
       'width' => 1200,
       'height' => 630
@@ -47,10 +46,6 @@ config['jekyll_vitepress'] = {
 }
 
 File.write(config_path, YAML.dump(config))
-
-images_dir = File.join(docs_dir, 'assets', 'images')
-FileUtils.mkdir_p(images_dir)
-FileUtils.cp(File.expand_path('../assets/images/social-card.jpg', __dir__), images_dir)
 
 head_path = File.join(docs_dir, '_includes', 'head.html')
 head = File.read(head_path).gsub(/^\s*\{% ai_json_ld %\}\s*$\n?/, '')
