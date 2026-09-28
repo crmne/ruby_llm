@@ -41,10 +41,10 @@ hero:
    Ruby code as tools, return structured output, read images
    and PDFs, transcribe, speak, paint... Want the full tour?"
 ~ <span class="term-cursor"></span></code></pre>
-      <button class="home-play-button" type="button" aria-label="RubyLLM full tour, coming soon">
+      <video class="home-demo-video" src="https://github.com/crmne/ruby_llm/releases/download/v2.0.0/rubyllm-tour.mp4" preload="none" playsinline></video>
+      <button class="home-play-button" type="button" aria-label="Play the RubyLLM tour">
         <span aria-hidden="true"></span>
       </button>
-      <p class="home-demo-soon" role="status">Coming soon</p>
       <img class="home-demo-avatar" src="{{ '/assets/images/founder/carmine.jpg' | relative_url }}" alt="" aria-hidden="true">
     </div>
   </div>
@@ -126,32 +126,18 @@ ruby_llm provider-gem Acme \
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Just ask</h3>
-        <p class="home-step-desc">Ask a question. The chat keeps the conversation history, so you can follow up.</p>
+        <p class="home-step-desc">Ask a question, then ask again. The chat keeps the conversation history, so every follow-up has context.</p>
         <a class="home-step-link" href="{% link _core_features/chat.md %}">Chat guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
-RubyLLM.chat.ask "What's the best way to learn Ruby?"
-```
-{: .home-code-card }
+chat = RubyLLM.chat
+chat.ask "What's the best way to learn Ruby?"
+# Build small things you care about and read good Ruby code...
 
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Send files</h3>
-        <p class="home-step-desc">Ask about an image, a recording, or a PDF. Pass your files with <code>with:</code> and RubyLLM prepares them for the model.</p>
-        <a class="home-step-link" href="{% link _core_features/attachments.md %}">Attachments guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
-chat.ask "What's in this image?", with: "ruby_conf.jpg"
-chat.ask "Describe this meeting", with: "meeting.wav"
-chat.ask "Summarize this document", with: "contract.pdf"
+chat.ask "What should I build first?"
+# A command-line tool for something you do every day...
 ```
 {: .home-code-card }
 
@@ -167,9 +153,29 @@ chat.ask "Summarize this document", with: "contract.pdf"
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
+chat = RubyLLM.chat
 chat.ask "Tell me a story about Ruby" do |chunk|
   print chunk.content
 end
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Send files</h3>
+        <p class="home-step-desc">Ask about an image, a recording, or a PDF. Pass local paths, URLs, or several files at once with <code>with:</code> and RubyLLM prepares them for the model.</p>
+        <a class="home-step-link" href="{% link _core_features/attachments.md %}">Attachments guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
+chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "Summarize this", with: "https://example.com/q3.pdf"
+chat.ask "Recap this call", with: ["call.wav", "notes.pdf"]
 ```
 {: .home-code-card }
 
