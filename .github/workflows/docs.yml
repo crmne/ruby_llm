@@ -122,12 +122,6 @@ jobs:
           echo "file=$registry" >> "$GITHUB_OUTPUT"
           echo "deploy=$deploy" >> "$GITHUB_OUTPUT"
 
-      - name: Generate the live Available Models page
-        if: steps.registry.outputs.deploy == 'true'
-        run: bundle exec rake models:docs
-        env:
-          MODEL_REGISTRY_FILE: ${{ steps.registry.outputs.file }}
-
       - name: Install OG image system dependencies (only if missing)
         if: steps.registry.outputs.deploy == 'true'
         run: |

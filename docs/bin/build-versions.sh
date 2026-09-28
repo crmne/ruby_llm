@@ -22,8 +22,9 @@ trap 'rm -rf "$workspace"' EXIT
 
 archive_release() {
   local ref="$1" source="$2"
+  shift 2
   mkdir -p "$source"
-  git -C "$repo_root" archive "$ref" docs/ lib/ | tar -x -C "$source"
+  git -C "$repo_root" archive "$ref" docs/ lib/ "$@" | tar -x -C "$source"
   if git -C "$repo_root" cat-file -e "$ref:.rdoc_options" 2>/dev/null; then
     git -C "$repo_root" show "$ref:.rdoc_options" > "$source/.rdoc_options"
   else
@@ -40,6 +41,12 @@ prepare_version() {
   ruby "$docs/bin/prepare_versions.rb" "$source/_data/versions.yml" "$channel" "$BASE" "$stable_ref" "$onex_ref"
 }
 
+render_models_page() {
+  local source="$1" docs_dir="$2"
+  BUNDLE_GEMFILE="$repo_root/Gemfile" bundle exec ruby "$docs/bin/render_models_page.rb" \
+    "$source" "$registry" "$docs_dir/_reference/available-models.md"
+}
+
 build_version() {
   local source="$1" output="$2" prefix="$3" api_source="$4"
   ( cd "$source" && BUNDLE_GEMFILE="$gemfile" bundle exec jekyll build --baseurl "$prefix" -d "$output" --quiet )
@@ -47,14 +54,16 @@ build_version() {
 }
 
 echo "==> Building stable docs ($stable_ref) -> /"
-archive_release "$stable_ref" "$workspace/stable"
+archive_release "$stable_ref" "$workspace/stable" tasks/
 prepare_version "$workspace/stable/docs" stable
+render_models_page "$workspace/stable" "$workspace/stable/docs"
 build_version "$workspace/stable/docs" "$workspace/stable-out" "$BASE" "$workspace/stable"
 
 echo "==> Building next docs (main) -> /next/"
 mkdir -p "$workspace/next"
 rsync -a --exclude='_site' --exclude='_data_serve' --exclude='_config_serve.yml' --exclude='vendor' --exclude='.jekyll-cache' --exclude='.bundle' "$docs/" "$workspace/next/"
 prepare_version "$workspace/next" next
+render_models_page "$repo_root" "$workspace/next"
 build_version "$workspace/next" "$workspace/next-out" "$BASE/next" "$repo_root"
 
 echo "==> Building 1.x docs ($onex_ref) -> /v1/"
