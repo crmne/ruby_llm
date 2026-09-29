@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
   include_context 'with configured RubyLLM'
 
   let(:model_id) { model_for(:openai, :judgment) }
-  let(:image_url) { 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png' }
+  let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
   let(:questions) { { urgent: { type: :probability, instructions: 'Does this need attention today?' } } }
 
   it 'routes judgments to Decisions even when chat uses a configured protocol' do
@@ -85,7 +85,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
     end
 
     it 'judges an image without text input' do
-      result = RubyLLM.judge(with: image_url, model: model_id, provider: :openai, questions: {
+      result = RubyLLM.judge(with: image_path, model: model_id, provider: :openai, questions: {
                                logo: { type: :probability, instructions: 'Is this image a logo?' },
                                color: { type: :choice, instructions: 'What is the dominant color?',
                                         options: { red: nil, blue: nil, green: nil } }

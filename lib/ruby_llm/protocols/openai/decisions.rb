@@ -50,10 +50,22 @@ module RubyLLM
           text = describe(input)
           return text if attachments.empty?
 
-          attachments.each do |attachment|
-            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
-          end
-          [{ type: 'message', role: 'user', content: Responses::Media.format_content(text, attachments) }]
+          attachments.each { |attachment| validate_image(attachment) }
+          content = attachments.map { |attachment| render_image(attachment) }
+          content.unshift({ type: 'input_text', text: }) unless text.nil? || text.empty?
+          [{ type: 'message', role: 'user', content: }]
+        end
+
+        def validate_image(attachment)
+          raise UnsupportedAttachmentError, 'uploaded file' if attachment.provider_file?
+          raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
+        end
+
+        def render_image(image)
+          part = { type: 'input_image', image_url: image.for_llm }
+          return part unless image.resolution
+
+          part.merge(detail: image.resolution == :low ? 'low' : 'high')
         end
 
         def render_question(question)

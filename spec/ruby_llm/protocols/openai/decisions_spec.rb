@@ -76,22 +76,37 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
     expect(render(questions: { 'urgent' => implicit })[:questions].first[:instructions]).to eq('No: No deadline')
   end
 
-  it 'sends images as a Responses message with the input text' do
-    image = RubyLLM::Attachment.new('https://example.com/receipt.png')
+  it 'sends images inline in a message with the input text' do
+    path = File.expand_path('../../../fixtures/ruby.png', __dir__)
+    data_uri = "data:image/png;base64,#{Base64.strict_encode64(File.binread(path))}"
+    image = RubyLLM::Attachment.new(path)
 
     expect(render('Classify this page', with: [image])[:input]).to eq(
       [{ type: 'message', role: 'user',
-         content: [{ type: 'input_text', text: 'Classify this page' },
-                   { type: 'input_image', image_url: 'https://example.com/receipt.png' }] }]
+         content: [{ type: 'input_text', text: 'Classify this page' }, { type: 'input_image', image_url: data_uri }] }]
     )
-    expect(render(nil, with: [image])[:input].first[:content])
-      .to eq([{ type: 'input_image', image_url: 'https://example.com/receipt.png' }])
+    expect(render(nil, with: [image])[:input].first[:content]).to eq([{ type: 'input_image', image_url: data_uri }])
+    expect(render('', with: [image])[:input].first[:content]).to eq([{ type: 'input_image', image_url: data_uri }])
+    expect(render(nil, with: [RubyLLM::Attachment.new(path, resolution: :low)])[:input].first[:content])
+      .to eq([{ type: 'input_image', image_url: data_uri, detail: 'low' }])
   end
 
-  it 'rejects attachments other than images' do
+  it 'downloads image URLs to send them inline' do
+    stub_request(:get, 'https://example.com/receipt.png')
+      .to_return(status: 200, body: 'png', headers: { 'Content-Type' => 'image/png' })
+
+    expect(render(nil, with: [RubyLLM::Attachment.new('https://example.com/receipt.png')])[:input].first[:content])
+      .to eq([{ type: 'input_image', image_url: "data:image/png;base64,#{Base64.strict_encode64('png')}" }])
+  end
+
+  it 'rejects uploaded files and attachments other than images' do
     document = RubyLLM::Attachment.new('https://example.com/contract.pdf')
+    uploaded = RubyLLM::Attachment.new(
+      RubyLLM::UploadedFile.new(id: 'file-123', filename: 'receipt.png', mime_type: 'image/png')
+    )
 
     expect { render(with: [document]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
+    expect { render(with: [uploaded]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, /uploaded file/)
   end
 
   it 'enforces Decisions limits without putting them in the domain' do

@@ -140,7 +140,7 @@ DocumentType.judge("Scanned by the mail room", with: "scan.png").type.choice
 DocumentType.judge(with: document.scan).type.choice
 ```
 
-`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`. Other attachment types, and models that judge text only, raise `RubyLLM::UnsupportedAttachmentError`.
+`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`. Files uploaded with `RubyLLM.upload`, other attachment types, and models that judge text only raise `RubyLLM::UnsupportedAttachmentError`.
 
 ## Structured Questions and Dynamic Values
 
