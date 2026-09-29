@@ -12,6 +12,14 @@ RSpec.describe RubyLLM::Providers::Azure::Media do
       expect(formatted.second[:image_url][:detail]).to eq('low')
     end
 
+    it 'sends ultra high resolution as original image detail' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
+
+      formatted = described_class.format_content('Read the small print', [image])
+
+      expect(formatted.second[:image_url][:detail]).to eq('original')
+    end
+
     it 'keeps non-PDF documents unsupported for chat completions' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 

@@ -60,12 +60,25 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
       expect(formatted.second[:detail]).to eq('low')
     end
 
-    it 'maps higher resolutions to high image detail' do
+    it 'keeps ultra high resolution at high detail unless original detail is enabled' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
 
       formatted = described_class.format_content('Describe this', [image])
 
       expect(formatted.second[:detail]).to eq('high')
+    end
+
+    { openai: 'original', azure: 'original', xai: 'high', openrouter: 'high' }.each do |provider_name, detail|
+      it "maps ultra high resolution to #{detail} image detail for #{provider_name}" do
+        provider = instance_double(RubyLLM::Provider, slug: provider_name.to_s, config: RubyLLM.config, connection: nil)
+        protocol = RubyLLM::Protocols::Responses.new(provider)
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__),
+                                        resolution: :ultra_high)
+
+        formatted = protocol.send(:format_content, 'Read the small print', [image])
+
+        expect(formatted.second[:detail]).to eq(detail)
+      end
     end
 
     it 'omits image detail when no resolution is set' do

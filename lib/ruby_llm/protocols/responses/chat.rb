@@ -333,7 +333,8 @@ module RubyLLM
 
           if msg.attachments.any?
             parts = [{ type: 'input_text', text: "Attachments from tool call #{msg.tool_call_id}:" }]
-            parts.concat(Media.format_content(nil, msg.attachments))
+            parts.concat(Media.format_content(nil, msg.attachments,
+                                              original_detail: %w[openai azure].include?(@provider&.slug)))
             items << { role: 'user', content: parts }
           end
 

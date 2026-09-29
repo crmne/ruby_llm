@@ -148,7 +148,9 @@ chat.ask "Where is the revenue figure?", with: page
 
 The values are `:low`, `:medium`, `:high`, and `:ultra_high`. Each attachment keeps its own setting, so one message can mix a high-detail page with low-detail thumbnails. Leave it unset to use the provider's default. Persisted chats keep the setting, so later turns and background jobs send the same detail.
 
-Gemini applies the setting to images, videos, and PDFs, sending `:high` for videos and PDFs when you ask for `:ultra_high`. OpenAI, Azure, OpenRouter, and xAI apply it to images, sending `:low` as low detail and anything higher as high detail. Other providers ignore it, since it is a quality hint rather than a requirement.
+Gemini applies the setting to images, videos, and PDFs, sending `:high` for videos and PDFs when you ask for `:ultra_high`. OpenAI and Azure send `:low` as low image detail, `:medium` and `:high` as high detail, and `:ultra_high` as original detail. OpenRouter and xAI send `:low` as low detail and anything higher as high detail. Other providers ignore it, since it is a quality hint rather than a requirement.
+
+For OpenAI and Azure, use `:ultra_high` for dense text and precise image coordinates when the model supports `original` detail. Older models that do not support it reject the request; use `:high` with those models. RubyLLM does not check model support or silently fall back to a lower detail level. See [OpenAI's image detail guide](https://developers.openai.com/api/docs/guides/images-vision#choose-an-image-detail-level).
 
 ### Automatic File Type Detection
 

@@ -35,6 +35,10 @@ To move across several releases, upgrade to each one in turn. Deploy it, run its
 * Run the 2.0 cleanup phase in every environment. In copy mode, finalize the upgrade first, then remove the generated `ruby_llm_upgrade.rb` concern and initializer.
 * Delete the 2.0 upgrade migrations from `db/migrate` once every environment has run them. They load helpers that ship only with 2.0, and your schema file already records their result.
 
+## Image Resolution on OpenAI and Azure
+
+If you use unreleased attachment resolution support from `main`, `resolution: :ultra_high` now sends `detail: "original"` for OpenAI and Azure images through Responses and Chat Completions. It previously sent `"high"`. Use `resolution: :high` to keep the previous behavior or when your model does not support `original` detail. Original detail can use more image tokens. See [Attachments]({% link _core_features/attachments.md %}) for resolution settings.
+
 ## Update the Gem
 
 Require 2.1 in your `Gemfile`, so the update stops at this release:

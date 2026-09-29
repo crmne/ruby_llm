@@ -7,21 +7,21 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content, attachments = [])
+        def format_content(content, attachments = [], original_detail: %w[openai azure].include?(@provider&.slug))
           return content if attachments.empty?
 
           parts = []
           parts << { type: 'input_text', text: content } if content
-          attachments.each { |attachment| parts << format_attachment(attachment) }
+          attachments.each { |attachment| parts << format_attachment(attachment, original_detail:) }
           parts
         end
 
-        def format_attachment(attachment)
+        def format_attachment(attachment, original_detail: false)
           return format_provider_file(attachment) if attachment.provider_file?
 
           case attachment.type
           when :image
-            format_image(attachment)
+            format_image(attachment, original_detail:)
           when :pdf, :document
             format_document(attachment)
           when :text
@@ -31,11 +31,11 @@ module RubyLLM
           end
         end
 
-        def format_image(image)
+        def format_image(image, original_detail: false)
           part = { type: 'input_image', image_url: image.url_or_data_uri }
           return part unless image.resolution
 
-          part.merge(detail: image.resolution == :low ? 'low' : 'high')
+          part.merge(detail: ChatCompletions::Media.image_detail(image.resolution, original_detail:))
         end
 
         # The Responses API extracts text from documents, presentations, and
