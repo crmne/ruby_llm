@@ -148,22 +148,13 @@ module RubyLLM
       raise ArgumentError, 'Pass judgment input or a block, not both' if !input.nil? && block
 
       data = resolve_data(block || input)
-      attachments = Attachment.wrap(with)
-      validate_input!(data, attachments)
-
       definitions = resolve_questions(questions)
       settings = self.class.model.merge(provider_options: self.class.provider_options).merge(options)
       settings = settings.transform_values { |value| resolve_data(value) }
-      Judgment.judge(data, questions: definitions, with: attachments, context:, metadata:, **settings)
+      Judgment.judge(data, questions: definitions, with:, context:, metadata:, **settings)
     end
 
     private
-
-    def validate_input!(data, attachments)
-      return if data.is_a?(String) || data.is_a?(Hash) || data.is_a?(Array) || (data.nil? && attachments.any?)
-
-      raise ArgumentError, 'Judgment input must be text, a Hash, or an Array'
-    end
 
     def resolve_data(value)
       Data.copy(value) { |callable| Builder.resolve(callable, scope: self) }

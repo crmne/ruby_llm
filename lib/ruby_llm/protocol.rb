@@ -448,7 +448,8 @@ module RubyLLM
 
     def judge(input, questions:, model:, with: [], provider_options: {}) # :nodoc:
       track_usage(:judgment) do
-        payload = render_judgment_payload(input, questions:, model:, with:, provider_options:)
+        payload = render_judgment_payload(input, questions:, model:, with: Attachment.wrap(with, config: @config),
+                                                 provider_options:)
         response = @connection.post judgment_url, payload, usage: @usage_tracker
         parse_judgment_response(response, questions:)
       end

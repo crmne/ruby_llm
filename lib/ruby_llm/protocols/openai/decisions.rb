@@ -24,7 +24,7 @@ module RubyLLM
 
           {
             model:,
-            input: render_input(input, Attachment.wrap(with, config: @config)),
+            input: render_input(input, with),
             questions: questions.values.map { |question| render_question(question) }
           }.merge(provider_options)
         end
