@@ -1,0 +1,23 @@
+<svg viewBox="142 0 565 320" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <filter id="pp-gray"><feColorMatrix type="saturate" values="0" /></filter>
+                <filter id="pp-rough" x="-10%" y="-10%" width="120%" height="120%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" />
+                  <feDisplacementMap in="SourceGraphic" scale="46" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+                <mask id="pp-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="848" height="480">
+                  <rect width="848" height="480" fill="black" />
+                  <g filter="url(#pp-rough)" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+                    <path class="pp-stroke" stroke-width="150" d="M -40 60 C 200 20, 500 110, 900 40" />
+                    <path class="pp-stroke" stroke-width="150" d="M 900 150 C 650 110, 300 200, -40 140" />
+                    <path class="pp-stroke" stroke-width="150" d="M -40 230 C 250 280, 520 180, 900 250" />
+                    <path class="pp-stroke" stroke-width="150" d="M 900 340 C 600 300, 280 390, -40 320" />
+                    <path class="pp-stroke" stroke-width="160" d="M -40 420 C 260 460, 560 380, 900 450" />
+                    <path class="pp-stroke" stroke-width="130" d="M 420 -40 C 380 160, 470 330, 430 520" />
+                  </g>
+                </mask>
+              </defs>
+              <rect width="848" height="480" fill="#f1ebe6" />
+              <image id="pp-under" href="assets/media/panda.png" width="848" height="480" filter="url(#pp-gray)" opacity="0.22" />
+              <image href="assets/media/panda.png" width="848" height="480" mask="url(#pp-mask)" />
+            </svg>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>%%TITLE%%</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Lora"; src: url("assets/fonts/lora-600-normal.woff2") format("woff2"); font-weight: 400 700; font-style: normal; }
+      :root {
+        --bg: #f7f3f1; --card: #faf9f7; --bar: #f1ece8; --line: #e0d9d5; --text: #2c2926; --heading: #3a3430;
+        --muted: #5c5353; --soft: #796b67; --red: #b30000;
+        --serif: "Lora", Georgia, serif; --sans: "Inter", ui-sans-serif, system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+      #scr { position: absolute; inset: 0; overflow: hidden; }
+      #glow1 { position: absolute; left: 0; top: 0; width: 1400px; height: 1400px; border-radius: 50%; background: radial-gradient(circle, rgba(201,39,30,0.14) 0%, rgba(201,39,30,0.05) 40%, rgba(201,39,30,0) 70%); }
+      #glow2 { position: absolute; left: 0; top: 0; width: 1100px; height: 1100px; border-radius: 50%; background: radial-gradient(circle, rgba(181,118,20,0.12) 0%, rgba(181,118,20,0) 68%); }
+      #shake, #camwrap { position: absolute; inset: 0; }
+      #cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+      #pan { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+      #world { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+      #grid { position: absolute; left: -6000px; top: -6000px; width: 20000px; height: 16000px;
+        background: linear-gradient(#ece3dd 2px, transparent 2px) 0 0 / 120px 120px, linear-gradient(90deg, #ece3dd 2px, transparent 2px) 0 0 / 120px 120px; }
+      #bgfx { position: absolute; left: 0; top: 0; }
+      .ripple { position: absolute; width: 400px; height: 400px; margin: -200px 0 0 -200px; border-radius: 50%; border: 6px solid rgba(179,0,0,0.28); opacity: 0; }
+      .ripple-fill { position: absolute; width: 900px; height: 900px; margin: -450px 0 0 -450px; border-radius: 50%; background: radial-gradient(circle, rgba(201,39,30,0.2) 0%, rgba(201,39,30,0.06) 45%, rgba(201,39,30,0) 70%); opacity: 0; }
+
+      .tired { position: absolute; overflow: hidden; background: #1a1715; filter: saturate(0.55); box-shadow: 0 60px 160px rgba(20,12,8,0.35); }
+      .tired .ghost { position: absolute; top: 20px; margin: 0; font-family: var(--mono); line-height: 1.5; color: #8a7f76; opacity: 0.16; white-space: pre; }
+      .tired-vig { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(26,23,21,0) 40%, rgba(10,8,7,0.75) 100%); }
+
+      .cb { position: absolute; font-family: var(--mono); white-space: pre; color: var(--text); }
+      .cb .ln { display: block; white-space: pre; }
+      .cb .t { display: inline-block; white-space: pre; }
+      .cb.pending .t { opacity: 0; }
+      .cb .s, .cb .sb, .cb .sc, .cb .dl, .cb .sd, .cb .s1, .cb .s2, .cb .sh, .cb .si, .cb .sr, .cb .sx, .cb .na { color: #79740e; }
+      .cb .se { color: #af3a03; }
+      .cb .k, .cb .kn, .cb .kp, .cb .kr, .cb .kv, .cb .nt { color: #9d0006; }
+      .cb .kd { color: #af3a03; }
+      .cb .kc, .cb .no, .cb .m, .cb .mi, .cb .mf, .cb .il, .cb .mh { color: #8f3f71; }
+      .cb .c, .cb .c1, .cb .cm, .cb .cs, .cb .ch { color: #7f7366; }
+      .cb .nc, .cb .nn, .cb .cp { color: #427b58; }
+      .cb .ss { color: #076678; }
+      .cb.dark { color: #d9d3c7; filter: saturate(0.5) brightness(0.92); }
+      .cb.dark .s, .cb.dark .sb, .cb.dark .sc, .cb.dark .dl, .cb.dark .sd, .cb.dark .s1, .cb.dark .s2, .cb.dark .sh, .cb.dark .si, .cb.dark .sr, .cb.dark .sx, .cb.dark .na { color: #b8bb26; }
+      .cb.dark .se { color: #fe8019; }
+      .cb.dark .k, .cb.dark .kn, .cb.dark .kp, .cb.dark .kr, .cb.dark .kv, .cb.dark .nt { color: #fb4934; }
+      .cb.dark .kd { color: #fe8019; }
+      .cb.dark .kc, .cb.dark .no, .cb.dark .m, .cb.dark .mi, .cb.dark .mf, .cb.dark .il, .cb.dark .mh { color: #d3869b; }
+      .cb.dark .c, .cb.dark .c1, .cb.dark .cm, .cb.dark .cs, .cb.dark .ch { color: #a89984; }
+      .cb.dark .nc, .cb.dark .nn, .cb.dark .cp { color: #8ec07c; }
+      .cb.dark .ss, .cb.dark .nv, .cb.dark .nb, .cb.dark .vg { color: #83a598; }
+      .mk { position: absolute; border-radius: 10px; background: rgba(251, 73, 52, 0.16); box-shadow: inset 0 0 0 3px rgba(251, 73, 52, 0.6); }
+      .mk-label { position: absolute; font-family: var(--sans); font-weight: 700; font-size: 30px; color: #fff; background: #b30000; padding: 10px 20px; border-radius: 12px; white-space: nowrap; box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+      .snap-ring { display: none; }
+      .stick { position: absolute; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #b57614; box-shadow: 0 0 0 3px rgba(181,118,20,0.2); opacity: 0; z-index: 4; }
+      .hbox { position: absolute; border-radius: 10px; border: 3px solid #fb4934; background: rgba(251,73,52,0.18); box-shadow: 0 0 0 6px rgba(251,73,52,0.12); opacity: 0; z-index: 4; }
+
+      .bigtype { position: absolute; font-family: var(--serif); font-weight: 600; color: var(--heading); letter-spacing: -0.01em; }
+      .bigtype .tok, .tok { display: inline-block; white-space: pre; }
+      .q { position: absolute; font-family: var(--sans); color: #fdf6f4; background: var(--red); border-radius: 26px 26px 8px 26px; white-space: nowrap; box-shadow: 0 18px 40px rgba(179,0,0,0.2); }
+      .panel { position: absolute; border-radius: 22px; background: var(--card); border: 2px solid var(--line); box-shadow: 0 40px 100px rgba(66,42,34,0.16); overflow: hidden; }
+      .panel .bar { height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 24px; background: var(--bar); border-bottom: 2px solid var(--line); font-family: var(--sans); font-weight: 600; font-size: 24px; color: var(--red); white-space: nowrap; }
+      .panel .bar i { display: block; width: 15px; height: 15px; border-radius: 50%; background: #ddd3cd; }
+      .term { position: absolute; border-radius: 22px; background: #1f1c1a; box-shadow: 0 40px 100px rgba(20,12,8,0.3); padding: 44px 52px; font-family: var(--mono); color: #ebe8dc; }
+      .ava { width: 64px; height: 64px; padding: 8px; border-radius: 50%; background: var(--card); border: 2px solid var(--line); }
+      #ovl { position: absolute; inset: 0; pointer-events: none; }
+%%CSS%%
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="%%DURATION%%" data-width="1920" data-height="1080">
+      <div id="scr"><div id="glow1"></div><div id="glow2"></div></div>
+      <div id="shake">
+        <div id="v6-shake" style="position:absolute;inset:0;transform-origin:960px 540px">
+          <div id="cam">
+            <div id="pan">
+              <div id="world">
+                <div id="grid"></div>
+                <div id="bgfx"></div>
+%%WORLD%%
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="ovl"></div>
+    </div>
+    <script>
+      (function () {
+        const tl = gsap.timeline({ paused: true });
+        const SID = "v6";
+        const D = %%DURATION%%;
+        // ---- section time warp: authored time -> film time ----
+        let WP = (t) => t;
+        function warp(pairs) {
+          if (!pairs) { WP = (t) => t; return; }
+          WP = (t) => {
+            if (t <= pairs[0][0]) return t - pairs[0][0] + pairs[0][1];
+            for (let i = 1; i < pairs.length; i++) {
+              const [a0, n0] = pairs[i - 1], [a1, n1] = pairs[i];
+              if (t <= a1) return n0 + ((t - a0) * (n1 - n0)) / (a1 - a0);
+            }
+            const [a, n] = pairs[pairs.length - 1];
+            return t - a + n;
+          };
+        }
+        const _fromTo = tl.fromTo.bind(tl), _to = tl.to.bind(tl), _set = tl.set.bind(tl);
+        const wd = (v, p) => {
+          if (typeof p !== "number" || !v) return v;
+          const d = v.duration == null ? 0.5 : v.duration;
+          return Object.assign({}, v, { duration: Math.max(0, WP(p + d) - WP(p)) });
+        };
+        const wp = (p) => (typeof p === "number" ? WP(p) : p);
+        tl.fromTo = (e, a, b, p) => _fromTo(e, a, wd(b, p), wp(p));
+        tl.to = (e, b, p) => _to(e, wd(b, p), wp(p));
+        tl.set = (e, b, p) => _set(e, b, wp(p));
+%%ENGINE%%
+        // ---- camera ----
+        const CAM = { x: 960, y: 540, s: 1, r: 0, ry: 0, rx: 0 };
+        function camSet(p) {
+          Object.assign(CAM, p);
+          gsap.set("#pan", { x: 960 - CAM.x, y: 540 - CAM.y });
+          gsap.set("#cam", { scale: CAM.s, rotation: CAM.r, rotationY: CAM.ry, rotationX: CAM.rx, transformPerspective: 2600 });
+        }
+        // Camera moves never overlap: a move that starts while the previous one runs cuts it at that
+        // moment (at its eased in-between state), so a longer earlier move can't win after a later one ends.
+        let LASTCAM = null;
+        function camTween(from, to, d, e, t) {
+          const a = gsap.fromTo("#pan", { x: 960 - from.x, y: 540 - from.y }, wd({ x: 960 - to.x, y: 540 - to.y, duration: d, ease: e, immediateRender: false }, t));
+          const b = gsap.fromTo("#cam", { scale: from.s, rotation: from.r, rotationY: from.ry, rotationX: from.rx },
+            wd({ scale: to.s, rotation: to.r, rotationY: to.ry, rotationX: to.rx, duration: d, ease: e, immediateRender: false }, t));
+          tl.add(a, wp(t)); tl.add(b, wp(t));
+          return [a, b];
+        }
+        function cam(t, d, p, ease) {
+          const e = ease || "power3.inOut";
+          if (LASTCAM && t < LASTCAM.t + LASTCAM.d - 1e-6) {
+            const L = LASTCAM;
+            const f = Math.max(0, (t - L.t) / L.d);
+            const E = gsap.parseEase(L.e);
+            const kf = E(f);
+            const mid = {};
+            Object.keys(L.to).forEach((q) => (mid[q] = L.from[q] + (L.to[q] - L.from[q]) * kf));
+            L.tw.forEach((x) => tl.remove(x));
+            if (t - L.t > 1e-3 && Math.abs(kf) > 1e-6) camTween(L.from, mid, t - L.t, (x) => E(x * f) / kf, L.t);
+            Object.assign(CAM, mid);
+          }
+          const from = Object.assign({}, CAM);
+          const to = Object.assign({}, CAM, p);
+          LASTCAM = { t: t, d: d, from: from, to: to, e: e, tw: camTween(from, to, d, e, t) };
+          Object.assign(CAM, to);
+        }
+        function whipBlur(t, d, amt) {
+          tl.to("#world", { filter: "blur(" + (amt || 7) + "px)", duration: d / 2, ease: "power2.in" }, t);
+          tl.to("#world", { filter: "blur(0px)", duration: d / 2, ease: "power2.out" }, t + d / 2);
+        }
+        function ripple() {}
+        // A highlight box in world space: the value landed here, it is the same thing.
+        function hbox(x, y, w, h, t, tOut) {
+          const b = document.createElement("div");
+          b.className = "hbox";
+          b.style.cssText = "left:" + (x - 8) + "px;top:" + (y - 4) + "px;width:" + (w + 16) + "px;height:" + (h + 8) + "px";
+          document.getElementById("world").appendChild(b);
+          tl.fromTo(b, { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, t);
+          if (tOut) tl.to(b, { opacity: 0, duration: 0.2 }, tOut);
+        }
+        // One steady highlight while a stream runs, plus a small tick that steps along its lower edge per chunk.
+        function streamLine(sel, x, yBottom, w, tOn, t0, step, n, tOff) {
+          tl.fromTo(sel, { backgroundColor: "rgba(181,118,20,0)" }, { backgroundColor: "rgba(181,118,20,0.18)", duration: 0.3, ease: "sine.out", immediateRender: false }, tOn);
+          tl.to(sel, { backgroundColor: "rgba(181,118,20,0)", duration: 0.4, ease: "sine.in" }, tOff);
+          const tk = document.createElement("div");
+          tk.className = "stick";
+          tk.style.cssText = "left:" + x + "px;top:" + (yBottom - 5) + "px";
+          document.getElementById("world").appendChild(tk);
+          tl.fromTo(tk, { opacity: 0, x: 0 }, { opacity: 1, duration: 0.2, immediateRender: false }, tOn);
+          for (let k = 0; k < n; k++) tl.to(tk, { x: (w * (k + 1)) / n, duration: step * 0.8, ease: "power2.inOut" }, t0 + k * step);
+          tl.to(tk, { opacity: 0, duration: 0.3 }, tOff);
+        }
+        function collapseRegion(sel) { REGQ.push(sel); }
+        function stream(sel, text, t, step) {
+          const box = document.querySelector(sel);
+          const all = [];
+          text.split("\n").forEach((line) => {
+            const div = document.createElement("div");
+            line.split(" ").forEach((w, i, arr) => {
+              const sp = document.createElement("span");
+              sp.className = "tok";
+              sp.textContent = i < arr.length - 1 ? w + " " : w;
+              div.appendChild(sp);
+              all.push(sp);
+            });
+            box.appendChild(div);
+          });
+          tl.fromTo(all, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.12, stagger: step || 0.08, ease: "power2.out" }, t);
+          return t + all.length * (step || 0.08);
+        }
+        tl.fromTo("#glow1", { x: 700, y: -300 }, { x: -300, y: 200, duration: D / 2, ease: "sine.inOut" }, 0);
+        tl.to("#glow1", { x: 700, y: -300, duration: D / 2, ease: "sine.inOut" }, D / 2);
+        tl.fromTo("#glow2", { x: -200, y: 400 }, { x: 900, y: 300, duration: D / 2, ease: "sine.inOut" }, 0);
+        tl.to("#glow2", { x: -200, y: 400, duration: D / 2, ease: "sine.inOut" }, D / 2);
+%%JS%%
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
