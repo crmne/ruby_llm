@@ -183,7 +183,7 @@ RubyLLM emits these events:
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
 *   `ocr.ruby_llm` - OCR model, provider options, and extracted document result
 *   `rerank.ruby_llm` - reranking model, query, document count, result, token usage, and cost
-*   `judgment.ruby_llm` - judgment model, question count, result, token usage, cost, and application metadata
+*   `judgment.ruby_llm` - judgment model, question count, attachment count, result, token usage, cost, and application metadata
 *   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage
 *   `models.refresh.ruby_llm` - model registry refresh metadata

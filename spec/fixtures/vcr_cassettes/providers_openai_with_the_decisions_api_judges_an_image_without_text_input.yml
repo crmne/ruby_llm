@@ -1,0 +1,37 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/decisions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-6-luna","input":[{"type":"message","role":"user","content":[{"type":"input_image","image_url":"https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png"}]}],"questions":[{"type":"predicate","name":"logo","instructions":"Is this image a logo?"},{"type":"choice","name":"color","instructions":"What is the dominant color?","choices":[{"value":"red"},{"value":"blue"},{"value":"green"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 29 Sep 2026 17:20:12 GMT
+      Content-Type:
+      - application/json
+      Openai-Processing-Ms:
+      - '394'
+      X-Request-Id:
+      - req_8a2d4e6f0b1c3d5e7f9a0b2c4d6e8f1a
+    body:
+      encoding: UTF-8
+      string: '{"object":"decision","model":"gpt-6-luna-2026-09-22","answers":[{"type":"predicate","name":"logo","probability":0.99},{"type":"choice","name":"color","choice":"red","confidence":0.98,"probabilities":[{"value":"red","probability":0.99},{"value":"blue","probability":0.0},{"value":"green","probability":0.01}]}],"usage":{"input_tokens":412,"input_tokens_details":{"cached_tokens":0},"output_tokens":2,"total_tokens":414}}'
+  recorded_at: Tue, 29 Sep 2026 17:20:12 GMT
+recorded_with: VCR 6.4.0

@@ -134,28 +134,36 @@ module RubyLLM
     end
 
     # Judges the supplied input and returns a Judgment. Accepts model and
-    # provider overrides, an isolated +context:+, +provider_options:+, and
-    # instrumentation +metadata:+. Additional +questions:+ are a Hash keyed by
-    # question name, with +type:+, +instructions:+, and +criteria:+ (probability),
-    # +options:+ (choice), or +levels:+ (score). The block supplies input only.
+    # provider overrides, images as +with:+, an isolated +context:+,
+    # +provider_options:+, and instrumentation +metadata:+. Additional
+    # +questions:+ are a Hash keyed by question name, with +type:+,
+    # +instructions:+, and +criteria:+ (probability), +options:+ (choice), or
+    # +levels:+ (score). The block supplies input only. Input may be omitted
+    # when images are supplied.
     #
     #   RubyLLM.judge("Please help today",
     #     questions: { urgent: { type: :probability, instructions: "Is this urgent?" } })
-    def judge(input = nil, questions: {}, context: nil, metadata: nil, **options, &block)
+    #   Receipt.judge(with: "receipt.png")
+    def judge(input = nil, questions: {}, with: nil, context: nil, metadata: nil, **options, &block)
       raise ArgumentError, 'Pass judgment input or a block, not both' if !input.nil? && block
 
       data = resolve_data(block || input)
-      unless data.is_a?(String) || data.is_a?(Hash) || data.is_a?(Array)
-        raise ArgumentError, 'Judgment input must be text, a Hash, or an Array'
-      end
+      attachments = Attachment.wrap(with)
+      validate_input!(data, attachments)
 
       definitions = resolve_questions(questions)
       settings = self.class.model.merge(provider_options: self.class.provider_options).merge(options)
       settings = settings.transform_values { |value| resolve_data(value) }
-      Judgment.judge(data, questions: definitions, context:, metadata:, **settings)
+      Judgment.judge(data, questions: definitions, with: attachments, context:, metadata:, **settings)
     end
 
     private
+
+    def validate_input!(data, attachments)
+      return if data.is_a?(String) || data.is_a?(Hash) || data.is_a?(Array) || (data.nil? && attachments.any?)
+
+      raise ArgumentError, 'Judgment input must be text, a Hash, or an Array'
+    end
 
     def resolve_data(value)
       Data.copy(value) { |callable| Builder.resolve(callable, scope: self) }

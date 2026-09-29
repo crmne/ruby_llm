@@ -380,9 +380,9 @@ module RubyLLM
       protocol.new(self, model).rerank(query, documents, model: model_id_for(model), top_n:, provider_options:)
     end
 
-    def judge(input, questions:, model:, provider_options: {}) # :nodoc:
+    def judge(input, questions:, model:, with: [], provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :judge)
-      protocol.new(self, model).judge(input, questions:, model: model_id_for(model), provider_options:)
+      protocol.new(self, model).judge(input, questions:, model: model_id_for(model), with:, provider_options:)
     end
 
     def upload_file(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil, # :nodoc:

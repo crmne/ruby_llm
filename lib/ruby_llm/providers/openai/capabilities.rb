@@ -46,13 +46,15 @@ module RubyLLM
           gpt-4o-transcribe-diarize
           whisper-1
         ].freeze
+        JUDGMENT_MODELS = %w[gpt-6-luna].freeze
         EXPLICIT_CAPABILITIES = {
           'function_calling' => (CHAT_MODELS + CODEX_MODELS).freeze,
           'structured_output' => (CHAT_MODELS + CODEX_MODELS + SEARCH_MODELS).freeze,
           'vision' => (CHAT_MODELS + CODEX_MODELS + DEEP_RESEARCH_MODELS + MODERATION_MODELS).freeze,
           'reasoning' => (CODEX_MODELS + DEEP_RESEARCH_MODELS).freeze,
           'transcription' => TRANSCRIPTION_MODELS,
-          'citations' => SEARCH_MODELS
+          'citations' => SEARCH_MODELS,
+          'judgment' => JUDGMENT_MODELS
         }.freeze
 
         def self.augment(capabilities, model_id:, **)

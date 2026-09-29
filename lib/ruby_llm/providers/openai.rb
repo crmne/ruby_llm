@@ -9,6 +9,7 @@ module RubyLLM
       protocol :embeddings, Protocols::ChatCompletions,
                batches: Protocols::ChatCompletions::EmbeddingBatches
       protocol :files, Protocols::OpenAI::Files
+      protocol :decisions, Protocols::OpenAI::Decisions
 
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
       RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze
@@ -17,8 +18,10 @@ module RubyLLM
         @config.openai_api_base || 'https://api.openai.com/v1'
       end
 
-      # Audio, realtime, and dedicated search models only exist on Chat Completions.
-      def protocol_for(model, **)
+      # Judgments use Decisions. Audio, realtime, and dedicated search models
+      # only exist on Chat Completions.
+      def protocol_for(model, operation: nil, **)
+        return protocols[:decisions] if operation == :judge
         return protocols[:chat_completions] if Capabilities::SEARCH_MODELS.include?(model.id)
 
         model.id.match?(/audio|realtime/) ? protocols[:chat_completions] : super

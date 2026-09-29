@@ -41,6 +41,11 @@ RSpec.describe RubyLLM::Provider, '.capability augmenters' do
     ).not_to include('citations')
   end
 
+  it 'recognizes only explicit OpenAI Decisions model ids as judgment models' do
+    expect(augment(RubyLLM::Providers::OpenAI, [], model_id: 'gpt-6-luna')).to include('judgment')
+    expect(augment(RubyLLM::Providers::OpenAI, [], model_id: 'gpt-6-sol')).not_to include('judgment')
+  end
+
   it 'restores documented capabilities for exact OpenAI Chat and Codex model ids' do
     expect(
       augment(RubyLLM::Providers::OpenAI, [], model_id: 'gpt-5-chat-latest')

@@ -1,0 +1,37 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/decisions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-6-luna","input":"{\"message\":\"I was charged twice. Please refund the duplicate charge today.\"}","questions":[{"type":"predicate","name":"urgent","instructions":"Does the customer explicitly need action today?\nYes: Explicitly asks for action today\nNo: No deadline or a later deadline"},{"type":"choice","name":"department","instructions":"Which team should handle this message?","choices":[{"value":"billing","description":"Payments and refunds"},{"value":"technical","description":"Bugs and integrations"},{"value":"other"}]},{"type":"score","name":"frustration","instructions":"How frustrated is the customer?","levels":[{"label":"0","description":"Calm and polite"},{"label":"1","description":"Expresses frustration"},{"label":"2","description":"Angry or hostile"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 29 Sep 2026 17:20:11 GMT
+      Content-Type:
+      - application/json
+      Openai-Processing-Ms:
+      - '287'
+      X-Request-Id:
+      - req_4f0c2b7d9a1e4c3b8d6e5f7a9b0c1d2e
+    body:
+      encoding: UTF-8
+      string: '{"object":"decision","model":"gpt-6-luna-2026-09-22","answers":[{"type":"predicate","name":"urgent","probability":0.97},{"type":"choice","name":"department","choice":"billing","confidence":0.99,"probabilities":[{"value":"billing","probability":0.99},{"value":"technical","probability":0.0},{"value":"other","probability":0.01}]},{"type":"score","name":"frustration","score":0.61,"confidence":0.42,"probabilities":[{"value":0,"label":"0","probability":0.41},{"value":1,"label":"1","probability":0.57},{"value":2,"label":"2","probability":0.02}]}],"usage":{"input_tokens":1086,"input_tokens_details":{"cached_tokens":0},"output_tokens":3,"total_tokens":1089}}'
+  recorded_at: Tue, 29 Sep 2026 17:20:11 GMT
+recorded_with: VCR 6.4.0

@@ -69,13 +69,14 @@ module RubyLLM
       { model:, answers: answers.keys }
     end
 
-    def self.judge(input, questions:, model: nil, provider: nil, context: nil, # :nodoc:
+    def self.judge(input, questions:, with: nil, model: nil, provider: nil, context: nil, # :nodoc:
                    assume_model_exists: false, provider_options: {}, metadata: nil)
       config = context&.config || RubyLLM.config
       raise ArgumentError, 'A judgment requires a model' unless model || config.default_judgment_model
 
       model, provider_instance = Models.resolve(model, provider:, assume_model_exists:, config:, operation: :judge,
                                                        default_model: config.default_judgment_model)
+      attachments = Attachment.wrap(with)
       empty_tokens = Tokens.new
       payload = {
         provider: provider_instance.slug,
@@ -83,6 +84,7 @@ module RubyLLM
         model: model.id,
         model_info: model,
         question_count: questions.size,
+        attachment_count: attachments.size,
         provider_options:,
         metadata:,
         tokens: empty_tokens,
@@ -90,7 +92,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('judgment.ruby_llm', payload, config:) do |event|
-        result = provider_instance.judge(input, questions:, model:, provider_options:)
+        result = provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
         event[:result] = result
         event[:tokens] = result.tokens
         event[:cost] = result.cost
