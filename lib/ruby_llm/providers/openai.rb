@@ -18,10 +18,13 @@ module RubyLLM
         @config.openai_api_base || 'https://api.openai.com/v1'
       end
 
-      # Judgments use Decisions. Audio, realtime, and dedicated search models
-      # only exist on Chat Completions.
-      def protocol_for(model, operation: nil, **)
-        return protocols[:decisions] if operation == :judge
+      def resolve_protocol(name, model, operation: nil, **options)
+        name ||= :decisions if operation == :judge
+        super
+      end
+
+      # Audio, realtime, and dedicated search models only exist on Chat Completions.
+      def protocol_for(model, **)
         return protocols[:chat_completions] if Capabilities::SEARCH_MODELS.include?(model.id)
 
         model.id.match?(/audio|realtime/) ? protocols[:chat_completions] : super

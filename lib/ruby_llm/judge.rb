@@ -90,7 +90,8 @@ module RubyLLM
         declare_question(name, :score, instructions, levels, &)
       end
 
-      # Judges text, a Hash, or an Array and returns a Judgment. A block or proc
+      # Judges text, a Hash, an Array, or images passed as +with:+ and returns
+      # a Judgment. A block or proc
       # can supply the input. Declared inputs are accepted as keyword arguments;
       # remaining options are forwarded to #judge.
       #

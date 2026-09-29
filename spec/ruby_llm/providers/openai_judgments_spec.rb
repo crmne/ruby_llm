@@ -9,12 +9,16 @@ RSpec.describe RubyLLM::Providers::OpenAI do
   let(:image_url) { 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png' }
   let(:questions) { { urgent: { type: :probability, instructions: 'Does this need attention today?' } } }
 
-  it 'routes judgments to Decisions while chat keeps its default protocol' do
-    provider = described_class.new(RubyLLM.config)
-    model = RubyLLM.models.find(model_id, provider: :openai)
+  it 'routes judgments to Decisions even when chat uses a configured protocol' do
+    context = RubyLLM.context { |config| config.openai_protocol = :chat_completions }
+    stub = stub_request(:post, 'https://api.openai.com/v1/decisions').to_return(
+      status: 200, headers: { 'Content-Type' => 'application/json' },
+      body: { model: model_id, answers: [{ type: 'predicate', name: 'urgent', probability: 0.2 }],
+              usage: { input_tokens: 10, output_tokens: 1 } }.to_json
+    )
 
-    expect(provider.protocol_for(model, operation: :judge)).to eq(RubyLLM::Protocols::OpenAI::Decisions)
-    expect(provider.protocol_for(model)).to eq(described_class.protocols[:responses])
+    expect(context.judge('Help', model: model_id, provider: :openai, questions:).urgent.probability).to eq(0.2)
+    expect(stub).to have_been_requested.once
   end
 
   it 'judges through the OpenAI connection and prices usage from the model registry' do
