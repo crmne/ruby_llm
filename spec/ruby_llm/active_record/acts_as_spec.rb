@@ -59,6 +59,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       expect { record.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
+    # Rails infers the inverse of a scoped association only under
+    # automatic_scope_inversing, which older applications leave off; without
+    # it every preloaded usage queries its message again.
+    it 'declares the usage inverses so preloaded usages do not query their owners', live: false do
+      expect(Chat.reflect_on_association(:ruby_llm_usages).options).to include(inverse_of: :chat)
+      expect(Message.reflect_on_association(:ruby_llm_usages).options).to include(inverse_of: :message)
+    end
+
     it 'enforces the usage model constraint when validations are bypassed', live: false do
       chat = Chat.create!(model: model_for(:openai))
       record = chat.ruby_llm_usages.build(operation: 'chat', provider: 'openai', status: 'succeeded')

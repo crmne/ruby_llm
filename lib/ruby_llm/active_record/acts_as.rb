@@ -104,6 +104,7 @@ module RubyLLM
                    -> { chronological },
                    as: :chat,
                    class_name: 'RubyLLM::ActiveRecord::Usage',
+                   inverse_of: :chat,
                    dependent: :destroy
         end
 
@@ -133,6 +134,7 @@ module RubyLLM
                    -> { chronological },
                    as: :message,
                    class_name: 'RubyLLM::ActiveRecord::Usage',
+                   inverse_of: :message,
                    dependent: :nullify
         end
       end
