@@ -256,6 +256,17 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::OverloadedError, msg)
     end
 
+    it "maps Anthropic's credit balance 400 to PaymentRequiredError" do
+      msg = 'Your credit balance is too low to access the Anthropic API. ' \
+            'Please go to Plans & Billing to upgrade or purchase credits.'
+      response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::PaymentRequiredError, msg)
+    end
+
     it 'keeps a 400 that only mentions overloaded as BadRequestError' do
       msg = 'Unknown parameter: overloaded'
       response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))

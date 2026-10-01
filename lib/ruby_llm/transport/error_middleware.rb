@@ -86,6 +86,10 @@ module RubyLLM
           /currently overloaded/i
         ].freeze
 
+        PAYMENT_REQUIRED_PATTERNS = [
+          /credit balance is too low/i
+        ].freeze
+
         def parse_error(provider:, response:)
           message = provider&.parse_error(response)
 
@@ -121,6 +125,7 @@ module RubyLLM
         def raise_bad_request(message, response)
           raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
           raise OverloadedError.new(message, response:) if overloaded?(message)
+          raise PaymentRequiredError.new(message, response:) if payment_required?(message)
 
           raise BadRequestError.new(message, response:)
         end
@@ -131,6 +136,10 @@ module RubyLLM
 
         def overloaded?(message)
           matches?(message, OVERLOAD_PATTERNS)
+        end
+
+        def payment_required?(message)
+          matches?(message, PAYMENT_REQUIRED_PATTERNS)
         end
 
         def rate_limited?(message)

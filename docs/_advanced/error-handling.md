@@ -31,7 +31,7 @@ Provider/API operation errors inherit from `RubyLLM::Error`. Local setup and pro
 RubyLLM::Error                    # Base error class for provider-operation issues
     RubyLLM::BadRequestError      # 400: Invalid request parameters
     RubyLLM::UnauthorizedError    # 401: API key issues
-    RubyLLM::PaymentRequiredError # 402: Billing issues
+    RubyLLM::PaymentRequiredError # 402: Billing issues, such as an account out of credit
     RubyLLM::ForbiddenError       # 403: Permission issues
     RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
     RubyLLM::ToolCallParseError   # Provider returned malformed tool-call arguments
