@@ -23,11 +23,14 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     ActiveRecord::Base.transaction do
       connection.drop_table(:ruby_llm_mcp_credentials)
       connection.remove_column(:ruby_llm_tool_calls, :pending_input)
+      connection.drop_table(:ruby_llm_provider_files)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
       expect(connection.table_exists?(:ruby_llm_mcp_credentials)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :pending_input)).to be(true)
+      expect(connection.index_exists?(:ruby_llm_provider_files, %i[blob_key provider account], unique: true))
+        .to be(true)
       raise ActiveRecord::Rollback
     end
   end

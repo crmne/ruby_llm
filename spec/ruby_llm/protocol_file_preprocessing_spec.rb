@@ -222,4 +222,123 @@ RSpec.describe RubyLLM::Protocol do
     expect(protocol.preprocess_message(message)).to be(message)
     expect(provider).not_to have_received(:upload_file)
   end
+
+  describe 'with uploads stored for the attachment' do
+    let(:provider) { RubyLLM::Providers::Gemini.new(RubyLLM.config) }
+    let(:protocol) { RubyLLM::Protocols::Gemini.new(provider, model) }
+    let(:store) do
+      Class.new do
+        attr_reader :files
+
+        def initialize
+          @files = {}
+        end
+
+        def fetch(provider:, account:)
+          @files[[provider, account]]
+        end
+
+        def store(upload, provider:, account:)
+          @files[[provider, account]] = upload
+        end
+      end.new
+    end
+
+    def gemini_file(id, expires_at: Time.now + (48 * 3600))
+      RubyLLM::UploadedFile.new(id:, provider: 'gemini', filename: 'clip.mp4', mime_type: 'video/mp4',
+                                uri: "https://example.test/#{id}", expires_at:)
+    end
+
+    def stored_attachment
+      attachment = RubyLLM::Attachment.new(StringIO.new('video bytes'), filename: 'clip.mp4')
+      allow(attachment).to receive(:byte_size).and_return(25 * 1024 * 1024)
+      attachment.provider_file_store = store
+      attachment
+    end
+
+    def sent_file_id(attachment, via: protocol)
+      message = RubyLLM::Message.new(role: :user, content: 'Watch this', attachments: [attachment])
+      via.preprocess_message(message).attachments.first.provider_file_id
+    end
+
+    def remember(file, account: provider.account_identity)
+      store.files[['gemini', account]] = file
+    end
+
+    it 'reuses a stored upload once the provider confirms it still has the file' do
+      remember(gemini_file('files/stored'))
+      allow(provider).to receive(:find_file).with('files/stored').and_return(gemini_file('files/stored'))
+      allow(provider).to receive(:upload_file)
+
+      expect(sent_file_id(stored_attachment)).to eq('files/stored')
+      expect(provider).not_to have_received(:upload_file)
+    end
+
+    it 'asks the provider about a stored upload once per process' do
+      remember(gemini_file('files/stored'))
+      allow(provider).to receive(:find_file).and_return(gemini_file('files/stored'))
+
+      ids = Array.new(3) { sent_file_id(stored_attachment) }
+
+      expect(ids).to eq(Array.new(3, 'files/stored'))
+      expect(provider).to have_received(:find_file).once
+    end
+
+    it 'uploads again and stores the new file when the provider no longer has the stored one' do
+      remember(gemini_file('files/gone'))
+      allow(provider).to receive(:find_file).and_raise(RubyLLM::Error, 'File not found')
+      allow(provider).to receive(:upload_file).and_return(gemini_file('files/new'))
+
+      expect(sent_file_id(stored_attachment)).to eq('files/new')
+      expect(store.files.values.map(&:id)).to eq(['files/new'])
+    end
+
+    it 'uploads again without asking the provider when the stored file has expired' do
+      remember(gemini_file('files/old', expires_at: Time.now - 1))
+      allow(provider).to receive(:find_file)
+      allow(provider).to receive(:upload_file).and_return(gemini_file('files/new'))
+
+      expect(sent_file_id(stored_attachment)).to eq('files/new')
+      expect(provider).not_to have_received(:find_file)
+    end
+
+    it 'uploads again when the provider reports the stored file has expired' do
+      remember(gemini_file('files/old'))
+      allow(provider).to receive_messages(find_file: gemini_file('files/old', expires_at: Time.now),
+                                          upload_file: gemini_file('files/new'))
+
+      expect(sent_file_id(stored_attachment)).to eq('files/new')
+    end
+
+    it 'stores a new upload and trusts it for the rest of the process' do
+      allow(provider).to receive_messages(upload_file: gemini_file('files/new'), find_file: nil)
+
+      first = sent_file_id(stored_attachment)
+      second = sent_file_id(stored_attachment)
+
+      expect([first, second]).to eq(%w[files/new files/new])
+      expect(provider).to have_received(:upload_file).once
+      expect(provider).not_to have_received(:find_file)
+    end
+
+    it 'keeps each account apart' do
+      other_config = RubyLLM.config.dup
+      other_config.gemini_api_key = 'other-tenant'
+      other = RubyLLM::Providers::Gemini.new(other_config)
+      remember(gemini_file('files/ours'))
+      allow(provider).to receive(:find_file).and_return(gemini_file('files/ours'))
+      allow(other).to receive(:upload_file).and_return(gemini_file('files/theirs'))
+
+      expect(sent_file_id(stored_attachment, via: RubyLLM::Protocols::Gemini.new(other, model))).to eq('files/theirs')
+      expect(store.files.keys).to contain_exactly(['gemini', provider.account_identity],
+                                                  ['gemini', other.account_identity])
+    end
+
+    it 'keeps uploads in memory when the provider cannot name the account' do
+      allow(provider).to receive_messages(account_identity: nil, upload_file: gemini_file('files/new'))
+
+      expect(sent_file_id(stored_attachment)).to eq('files/new')
+      expect(store.files).to be_empty
+    end
+  end
 end

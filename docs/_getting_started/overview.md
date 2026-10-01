@@ -182,7 +182,7 @@ chat = Chat.create!(model: "{{ site.models.default_chat }}")
 response = chat.ask "Help me plan a Ruby study group."
 ```
 
-RubyLLM owns the supporting model-registry, tool-call, usage, and batch tables. Your application keeps its users, permissions, and other relationships on its own records. The framework can evolve its supporting data without asking you to maintain those models.
+RubyLLM owns the supporting model-registry, tool-call, usage, batch, MCP credential, and provider file tables. Your application keeps its users, permissions, and other relationships on its own records. The framework can evolve its supporting data without asking you to maintain those models.
 
 With [Active Record]({% link _advanced/rails-persistence.md %}), you can reload conversations, restore agents, and read usage through associations. Pass [Active Storage attachments]({% link _core_features/attachments.md %}) with `with:`, just as you pass a file in plain Ruby.
 

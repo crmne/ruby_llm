@@ -11,7 +11,27 @@ module RubyLLM
         return unless message_record.respond_to?(:attachments)
 
         attachables = prepare_for_active_storage(attachments)
-        message_record.attachments.attach(attachables) if attachables.any?
+        return if attachables.empty?
+
+        message_record.attachments.attach(attachables)
+        Support::Utils.to_safe_array(attachments).grep(RubyLLM::Attachment).each do |attachment|
+          attachment.provider_file_store ||= ProviderFile.store { persisted_blob_key(message_record, attachment) }
+        end
+      end
+
+      # Active Storage records the size and MD5 of every blob, so the
+      # message's blob of the same size holds the attachment's bytes. Only
+      # attachments of equal size need the MD5 to tell them apart.
+      def persisted_blob_key(message_record, attachment)
+        blob = active_storage_blobs(attachment.source) if attachment.active_storage?
+        return blob.key if blob.is_a?(ActiveStorage::Blob)
+
+        content = attachment.content
+        candidates = message_record.attachments.blobs.where(byte_size: content.bytesize).to_a
+        return candidates.first&.key unless candidates.many?
+
+        checksum = OpenSSL::Digest::MD5.base64digest(content)
+        candidates.find { |candidate| candidate.checksum == checksum }&.key
       end
 
       def prepare_for_active_storage(attachments)
@@ -210,11 +230,13 @@ module RubyLLM
       end
 
       def stored_attachment(attachment, attachable)
-        if pending_upload_attachable?(attachable)
-          pending_upload_attachment(attachable)
-        else
-          RubyLLM::Attachment.new(attachment, resolution: attachment.metadata['resolution']&.to_sym)
-        end
+        stored = if pending_upload_attachable?(attachable)
+                   pending_upload_attachment(attachable)
+                 else
+                   RubyLLM::Attachment.new(attachment, resolution: attachment.metadata['resolution']&.to_sym)
+                 end
+        stored.provider_file_store = ProviderFile.store { attachment.blob&.key }
+        stored
       end
 
       def pending_upload_attachable?(attachable)

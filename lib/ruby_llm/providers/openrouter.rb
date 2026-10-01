@@ -56,6 +56,10 @@ module RubyLLM
         }
       end
 
+      def account_identity
+        account_digest(api_base, @config.openrouter_api_key)
+      end
+
       def parse_error(response)
         body = parse_error_body(response)
         return unless body

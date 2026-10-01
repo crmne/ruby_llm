@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
           prefix = mappings.empty? ? '' : 'llm_'
 
           %W[#{prefix}chats #{prefix}messages ruby_llm_models ruby_llm_tool_calls ruby_llm_mcp_credentials
-             ruby_llm_usages ruby_llm_batches]
+             ruby_llm_usages ruby_llm_batches ruby_llm_provider_files]
             .each do |table|
               expect(migrations).to include("create_table :#{table}, id: :#{key_type} do |t|")
             end

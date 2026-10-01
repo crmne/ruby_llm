@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_260_923_130_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_001_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -99,6 +99,17 @@ ActiveRecord::Schema[7.1].define(version: 20_260_923_130_000) do
     t.index ['family'], name: 'index_ruby_llm_models_on_family'
     t.index %w[provider model_id], name: 'index_ruby_llm_models_on_provider_and_model_id', unique: true
     t.index ['provider'], name: 'index_ruby_llm_models_on_provider'
+  end
+
+  create_table 'ruby_llm_provider_files', force: :cascade do |t|
+    t.string 'blob_key', null: false
+    t.string 'provider', null: false
+    t.string 'account', null: false
+    t.text 'file_id', null: false
+    t.datetime 'expires_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[blob_key provider account], name: 'index_ruby_llm_provider_files_uniqueness', unique: true
   end
 
   create_table 'ruby_llm_tool_calls', force: :cascade do |t|

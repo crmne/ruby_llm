@@ -592,8 +592,9 @@ module RubyLLM
       upload = attachment.provider_uploads[scope]
       return upload if upload && !upload.expired?
 
-      attachment.provider_uploads[scope] =
+      attachment.provider_uploads[scope] = StoredUploads.new(@provider, attachment.provider_file_store).fetch do
         @provider.upload_file(attachment, **provider_file_upload_options(attachment))
+      end
     end
 
     # A file id belongs to the account that uploaded it, so the memo is keyed

@@ -69,6 +69,13 @@ module RubyLLM
         @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
       end
 
+      # Uploads are objects in the configured bucket, readable with any
+      # credentials the bucket admits.
+      def account_identity
+        bucket = @config.bedrock_batch_s3_uri
+        account_digest(bucket) if bucket
+      end
+
       def control_api_base
         @config.bedrock_api_base || "https://bedrock.#{bedrock_region}.amazonaws.com"
       end

@@ -32,6 +32,10 @@ module RubyLLM
         }.compact
       end
 
+      def account_identity
+        account_digest(api_base, @config.openai_api_key, @config.openai_organization_id, @config.openai_project_id)
+      end
+
       # OpenAI reports when each rate limit resets in its own headers,
       # as durations like "6m0s", "7.66s" or "76ms".
       def retry_delay(response)

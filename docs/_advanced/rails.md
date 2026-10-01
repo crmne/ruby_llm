@@ -70,7 +70,7 @@ chat.messages.count
 chat.cost.total
 ```
 
-Your application owns its `Chat` and `Message` models, so you can add users, permissions, titles, and other relationships. RubyLLM owns the supporting registry, tool-call, usage, and batch tables. See [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) for the records and associations.
+Your application owns its `Chat` and `Message` models, so you can add users, permissions, titles, and other relationships. RubyLLM owns the supporting registry, tool-call, usage, batch, MCP credential, and provider file tables. See [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) for the records and associations.
 
 ## Active Storage Attachments
 

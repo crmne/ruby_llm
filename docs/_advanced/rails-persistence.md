@@ -41,12 +41,14 @@ end
 
 That is the complete application-facing persistence setup. There is no `Model`, `ToolCall`, `UsageEntry`, or `Batch` model to add to `app/models`.
 
-RubyLLM owns four supporting tables under the `ruby_llm_` prefix:
+RubyLLM owns six supporting tables under the `ruby_llm_` prefix:
 
 * `ruby_llm_models` for the model registry.
 * `ruby_llm_tool_calls` for provider tool requests and their result links.
 * `ruby_llm_usages` for retry- and cancellation-safe cost and usage tracking.
 * `ruby_llm_batches` for provider-side batch state.
+* `ruby_llm_mcp_credentials` for encrypted MCP OAuth credentials.
+* `ruby_llm_provider_files` for the provider uploads of stored attachments.
 
 They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below.
 
@@ -233,6 +235,8 @@ chat.ask("Compare these", with: project.documents)
 ```
 
 Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `awaiting_approval?`, or listing `pending_approvals` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
+
+Files too large to send inline are [uploaded to the provider]({% link _core_features/files.md %}#large-chat-attachments), and RubyLLM records each upload of a blob in `ruby_llm_provider_files`. A chat loaded later, in any process, sends the provider's copy instead of downloading and uploading the file again. The first time a process reuses a copy, RubyLLM asks the provider whether it still has it, and uploads the file again when it is missing or expired. Uploads belong to the account that made them, so a chat that switches to another API key, project, or storage bucket uploads its own copy. Purging a blob deletes its records.
 
 Structured output is stored as JSON text in the application message content:
 

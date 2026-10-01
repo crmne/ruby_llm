@@ -26,6 +26,10 @@ module RubyLLM
         }
       end
 
+      def account_identity
+        account_digest(api_base, @config.gemini_api_key)
+      end
+
       def batch_cost_multiplier(component:, **)
         %i[cache_read cache_write].include?(component) ? 1 : 0.5
       end

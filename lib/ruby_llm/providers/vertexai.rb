@@ -104,6 +104,13 @@ module RubyLLM
         api_base_for(@config.vertexai_location)
       end
 
+      # Uploads are objects in the configured bucket, readable with any
+      # credentials the bucket admits.
+      def account_identity
+        bucket = @config.vertexai_batch_gcs_uri
+        account_digest(bucket) if bucket
+      end
+
       def api_base_for(location)
         return @config.vertexai_api_base if @config.vertexai_api_base
 

@@ -22,12 +22,19 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/usage'
           require 'ruby_llm/active_record/batch'
           require 'ruby_llm/active_record/mcp_credential'
+          require 'ruby_llm/active_record/provider_file'
           require 'ruby_llm/active_record/chat_methods'
           require 'ruby_llm/active_record/message_methods'
 
           require 'ruby_llm/active_record/acts_as'
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
           RubyLLM.config.mcp_credential_store ||= RubyLLM::ActiveRecord::MCPCredential
+        end
+      end
+
+      initializer 'ruby_llm.active_storage' do
+        ActiveSupport.on_load :active_storage_blob do
+          after_destroy { RubyLLM::ActiveRecord::ProviderFile.forget_blob(self) }
         end
       end
 

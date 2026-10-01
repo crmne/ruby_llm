@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'digest'
 require 'json'
 require 'ruby_llm/error'
 
@@ -293,6 +294,21 @@ module RubyLLM
 
     def files? # :nodoc:
       protocols.key?(:files)
+    end
+
+    # Returns a String naming the account that owns the files this provider
+    # uploads, or +nil+ to keep each upload within the process that made it.
+    # The base implementation returns +nil+. Rails chats reuse an upload in
+    # later processes only under the same identity, so build it from what
+    # decides where uploaded files live, such as the endpoint and API key,
+    # an organization or project, or a storage bucket. Digest anything
+    # secret, and leave out credentials that rotate, such as session tokens:
+    #
+    #   def account_identity
+    #     Digest::SHA256.hexdigest([api_base, @config.acme_api_key].join("\0"))
+    #   end
+    def account_identity
+      nil
     end
 
     def list_models # :nodoc:
@@ -684,6 +700,10 @@ module RubyLLM
 
     def model_id_for(model)
       model.respond_to?(:id) ? model.id : model
+    end
+
+    def account_digest(*parts)
+      Digest::SHA256.hexdigest(parts.join("\0"))
     end
 
     def try_parse_json(maybe_json)

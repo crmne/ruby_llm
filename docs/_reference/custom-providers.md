@@ -223,6 +223,18 @@ end
 
 The optional `batches:` argument adds batch operations to a protocol. Register a provider-wide Files API as `protocol :files`; file upload, lookup, and download resolve that entry directly rather than routing through `protocol_for`.
 
+### Reusing Uploaded Files
+
+When your provider has a Files API and its chat protocol sends files by reference, RubyLLM [uploads large attachments automatically]({% link _core_features/files.md %}#large-chat-attachments). Rails apps record each upload and reuse it from later processes, but only for a provider that names the account that owns its files. Override `account_identity` to name it:
+
+```ruby
+def account_identity
+  Digest::SHA256.hexdigest([api_base, @config.acme_api_key].join("\0"))
+end
+```
+
+Build the identity from what decides where uploaded files live: the endpoint and API key, an organization or project, or a storage bucket. Digest anything secret, and leave out credentials that rotate, such as session tokens, or each rotation uploads the files again. The default, `nil`, keeps each upload within the process that made it.
+
 ## Registering the Provider
 
 A provider does nothing until it is registered. Register Acme after its classes are loaded:

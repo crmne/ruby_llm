@@ -23,6 +23,10 @@ module RubyLLM
         }
       end
 
+      def account_identity
+        account_digest(api_base, @config.deepseek_api_key)
+      end
+
       class << self
         def capabilities
           DeepSeek::Capabilities

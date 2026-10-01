@@ -18,6 +18,10 @@ module RubyLLM
         }
       end
 
+      def account_identity
+        account_digest(api_base, @config.anthropic_api_key)
+      end
+
       def batch_cost_multiplier(**) = 0.5
 
       class << self

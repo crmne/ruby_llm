@@ -1231,7 +1231,7 @@ module RubyLLM
     # Preprocessing builds a per-request view of the conversation: the
     # provider can change through fallbacks or with_model, so history keeps
     # the original attachments while each provider's upload is memoized on
-    # them. Reloaded Rails chats rebuild history from rows and upload again.
+    # them. An attachment's store keeps its uploads for later processes.
     def preprocessed_messages(list = messages)
       return list unless @provider
 

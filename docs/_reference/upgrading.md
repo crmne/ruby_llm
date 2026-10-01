@@ -145,7 +145,7 @@ bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-It adds the `ruby_llm_mcp_credentials` table, where the [MCP client]({% link _core_features/mcp.md %}#authorization) keeps OAuth credentials encrypted, and a `pending_input` column to `ruby_llm_tool_calls`, where a paused MCP tool call keeps its input requests. Both are new; the migration changes no existing data. Credentials use Active Record encryption, so run `bin/rails db:encryption:init` first if your app has no encryption keys.
+It adds the `ruby_llm_mcp_credentials` table, where the [MCP client]({% link _core_features/mcp.md %}#authorization) keeps OAuth credentials encrypted, a `pending_input` column to `ruby_llm_tool_calls`, where a paused MCP tool call keeps its input requests, and the `ruby_llm_provider_files` table, where RubyLLM records the [provider uploads of stored attachments]({% link _advanced/rails-persistence.md %}#attachments-and-structured-output). All three are new; the migration changes no existing data. Credentials use Active Record encryption, so run `bin/rails db:encryption:init` first if your app has no encryption keys.
 
 Run your tests and deploy.
 
