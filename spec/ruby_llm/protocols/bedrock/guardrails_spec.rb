@@ -109,7 +109,7 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Guardrails do
 
   it 'rejects ambiguous or unsupported input and explicitly supplied models before networking' do
     image = RubyLLM::Attachment.new(StringIO.new('image'), filename: 'image.png')
-    unsupported = RubyLLM::Attachment.new(StringIO.new('image'), filename: 'image.webp')
+    unsupported = RubyLLM::Attachment.new(StringIO.new('audio'), filename: 'voice.wav')
     expect do
       RubyLLM.moderate(['one'], with: image, provider: :bedrock)
     end.to raise_error(ArgumentError, /one text input/)

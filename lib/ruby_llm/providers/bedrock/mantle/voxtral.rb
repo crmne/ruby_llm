@@ -61,9 +61,7 @@ module RubyLLM
             raise ArgumentError, 'Transcription requires exactly one audio file' unless attachments.one?
 
             attachment = attachments.first
-            unless attachment.audio? && %w[mp3 wav].include?(attachment.format)
-              raise UnsupportedAttachmentError, attachment.mime_type
-            end
+            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.audio?
 
             content = [
               Protocols::ChatCompletions::Media.format_audio(attachment),

@@ -191,14 +191,21 @@ RSpec.describe RubyLLM::Protocols::Bedrock::AsyncVideos do
     expect(a_request(:post, endpoint)).not_to have_been_made
   end
 
-  it 'rejects unsupported models, prompts, attachments, and extensions before HTTP' do
+  it 'leaves prompt length and keyframe image formats to Bedrock' do
+    webp = RubyLLM::Attachment.new(StringIO.new('frame'), filename: 'frame.webp')
+    request = stub_request(:post, endpoint).with do |req|
+      input = JSON.parse(req.body)['modelInput']
+      input['prompt'].length == 5001 && input.dig('keyframes', 'frame0', 'source', 'media_type') == 'image/webp'
+    end.to_return_json(body: { invocationArn: job_id })
+
+    context.animate_later('x' * 5001, model:, provider: :bedrock, with: webp)
+
+    expect(request).to have_been_requested.once
+  end
+
+  it 'rejects unsupported models, attachments, and extensions before HTTP' do
     expect { context.animate_later('A boat', model: model_for(:bedrock), provider: :bedrock) }
       .to raise_error(RubyLLM::Error, /video generation is not supported/)
-    [nil, '', 'x' * 5001].each do |prompt|
-      expect do
-        context.animate_later(prompt, model:, provider: :bedrock)
-      end.to raise_error(ArgumentError, /requires a prompt/)
-    end
     expect { context.animate_later('A boat', model:, provider: :bedrock, with: [image, image, image]) }
       .to raise_error(ArgumentError, /at most two reference images/)
     expect { context.animate_later('A boat', model:, provider: :bedrock, with: 'https://media.test/boat.mp4') }

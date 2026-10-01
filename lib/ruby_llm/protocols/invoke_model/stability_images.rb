@@ -11,7 +11,6 @@ module RubyLLM
         INPAINT_MODEL = 'stability.stable-image-inpaint-v1:0'
         MODELS = (GENERATION_MODELS + [INPAINT_MODEL]).freeze
         ASPECT_RATIOS = %w[16:9 1:1 21:9 2:3 3:2 4:5 5:4 9:16 9:21].freeze
-        IMAGE_TYPES = %w[image/jpeg image/png image/webp].freeze
 
         def paint(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
           track_usage(:image) do
@@ -39,10 +38,7 @@ module RubyLLM
           end
 
           images.map do |data|
-            mime_type = RubyLLM::Files::MimeType.for(StringIO.new(Base64.decode64(data)))
-            raise Error.new('Bedrock returned invalid image data', response:) unless IMAGE_TYPES.include?(mime_type)
-
-            Image.new(data:, model:, mime_type:)
+            Image.new(data:, model:, mime_type: RubyLLM::Files::MimeType.for(StringIO.new(Base64.decode64(data))))
           end
         end
 
@@ -71,7 +67,7 @@ module RubyLLM
         end
 
         def encoded_image(attachment)
-          raise UnsupportedAttachmentError, attachment.mime_type unless IMAGE_TYPES.include?(attachment.mime_type)
+          raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
 
           attachment.encoded
         end

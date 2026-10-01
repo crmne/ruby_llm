@@ -14,9 +14,8 @@ module RubyLLM
         }.freeze
         private_constant :POLICY_FILTERS
 
-        IMAGE_TYPES = %w[image/png image/jpeg].freeze
         INTERVENTIONS = %w[BLOCKED ANONYMIZED].freeze
-        private_constant :IMAGE_TYPES, :INTERVENTIONS
+        private_constant :INTERVENTIONS
 
         def moderate(input, model:, with: [], provider_options: {})
           raise ArgumentError, 'Bedrock guardrails do not accept a model' unless model.nil?
@@ -59,9 +58,7 @@ module RubyLLM
           raise ArgumentError, 'Bedrock moderation requires text or an image' if input.nil? && attachments.empty?
 
           attachments.each do |attachment|
-            next if IMAGE_TYPES.include?(attachment.mime_type)
-
-            raise UnsupportedAttachmentError, attachment.mime_type
+            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
           end
         end
 
