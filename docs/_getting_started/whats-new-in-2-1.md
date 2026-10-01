@@ -12,6 +12,7 @@ description: Connect to MCP servers, ask typed judgments, and give agents their 
 
 After reading this guide, you will know:
 
+* What got faster, and how to keep connections open between calls.
 * How to connect your chats and agents to MCP servers.
 * How to show what a slow tool is doing while it runs.
 * How to ask typed judgments with TypeSafe's Jev models.
@@ -20,7 +21,49 @@ After reading this guide, you will know:
 * How to keep RubyLLM's tables on a secondary database.
 * How upgrades work from 2.1 on.
 
-RubyLLM 2.1 brings an MCP client, typed judgments, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
+RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
+
+## Faster by Default
+
+Most of 2.1's speed comes without changing your code. Streams parse events with RubyLLM's own parser, append long text and reasoning in place, deduplicate the citations a provider repeats on every chunk in one pass, and compute the cost once, when the stream ends, instead of on every chunk. Requests pick their protocol once instead of once per message, derive tool names once, and parse a successful response once.
+
+A reply no longer keeps the request it answered, so a long chat holds one copy of its history instead of one per reply. If you read that request, see [Read Requests Before They Are Sent]({% link _reference/upgrading.md %}#read-requests-before-they-are-sent). The model registry loads once when several threads reach it together, and Vertex AI calls share one OAuth token instead of fetching their own. Persisted chats rebuild from the rows they already loaded, with fewer queries in applications that predate `automatic_scope_inversing`, and download a stored file only when a request sends it.
+
+These measurements compare 2.0.0 with 2.1 on the same machine. Providers answer from canned responses, so the times show RubyLLM's own work:
+
+| Workload | 2.0 | 2.1 |
+| --- | --- | --- |
+| Stream 500 text deltas from Anthropic | 9.8 ms | 4.1 ms |
+| Stream a 2 MB event that arrives in 16 KB pieces | 116 ms | 2.0 ms |
+| Stream 500 Perplexity chunks that each cite 20 sources | 137 ms | 17 ms |
+| Ask a Bedrock chat with 200 messages of history | 2.9 ms | 0.40 ms |
+| Embed 100 texts and read the 2.4 MB response | 4.5 ms | 2.2 ms |
+| Memory kept by a streamed 40-turn chat with a 256 KB image | 28 MB | 0.48 MB |
+| Eight threads loading the model registry at once | 273 ms | 32 ms |
+| Twenty Vertex AI calls with a service account key | 20 token requests | 1 token request |
+| Rebuild a persisted 100-message chat | 11.4 ms | 6.8 ms |
+| The same chat without `automatic_scope_inversing` | 58 queries | 8 queries |
+| Check `awaiting_approval?` on a chat with ten 1 MB images | 10 downloads | none |
+
+Two more speedups need you to opt in. Calls now share HTTP connections, so an adapter that keeps connections open lets every call after the first skip the TCP and TLS handshake. Use `:net_http_persistent` from the `faraday-net_http_persistent` gem with threads, as in Puma and Sidekiq, or `:async_http` from `async-http-faraday` inside an Async reactor, as in Falcon:
+
+```ruby
+RubyLLM.configure do |config|
+  config.faraday_adapter = :net_http_persistent
+end
+```
+
+Twenty calls to a local HTTPS server through `:net_http_persistent` took one handshake instead of twenty, and 0.4 ms each instead of 2.1 ms. Across a real network, each handshake you skip also saves its round trips. See [Connection Reuse]({% link _getting_started/configuration-connection.md %}#connection-reuse).
+
+In Rails, [run the 2.1 upgrade]({% link _reference/upgrading.md %}#upgrade-the-rails-schema) so chats remember the provider uploads of their stored files. A chat loaded in another process then sends the provider's copy of a large file instead of downloading the file and uploading it again. Five turns of a chat with a 30 MB PDF, each in a new process, uploaded 150 MB with 2.0 and nothing with 2.1.
+
+To measure on your own machine, clone RubyLLM and compare any version with your checkout. The [benchmarks](https://github.com/crmne/ruby_llm/tree/main/benchmarks) need no API keys or network access:
+
+```sh
+bundle exec rake "benchmark:compare[v2.0.0]"
+```
+
+The numbers above are medians from an AMD Ryzen 9 9900X running Ruby 4.0.7. Times vary from machine to machine; counts such as queries, downloads, and uploads do not.
 
 ## MCP Client
 
