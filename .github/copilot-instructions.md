@@ -75,6 +75,8 @@ Look for these, in this order, and treat the first four as blockers:
 - Checks the provider already makes. Model capability checks, copied
   provider limits (counts, sizes, option values), silent downgrades of an
   explicit request, or field-by-field validation of a successful response.
+  Checks that map a response back onto the request (indices, IDs, positions)
+  belong, since a wrong mapping corrupts results silently.
   Raising before a request is right only when the protocol cannot express it.
 - Implementation comments, drive-by refactors, style sweeps outside the
   touched lines, and duplication Flay would reject.

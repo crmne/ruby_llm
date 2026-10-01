@@ -56,7 +56,7 @@ Rules that bite:
 
 1. Start with the public operation and its typed result. Keep the shared RubyLLM names consistent across providers.
 2. Route service calls through the `Provider` contract and registered protocols. Keep request rendering, response parsing, and format quirks in protocols.
-   Let the provider reject what the model can't do: raise early only when the protocol cannot express the request, and don't copy provider limits or validate a successful response field by field.
+   Let the provider reject what the model can't do: raise early only when the protocol cannot express the request, and don't copy provider limits or validate a successful response field by field. Do check the indices, IDs, and positions that map a response back onto the request.
 3. Reuse model resolution, configuration, usage accounting, and instrumentation where applicable. Preserve the operation's streaming or job lifecycle.
 4. Test public behavior and protocol translation at their respective layers. Document the operation in its feature guide and keep its Getting Started example short.
 
