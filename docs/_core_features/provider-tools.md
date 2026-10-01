@@ -161,7 +161,7 @@ Some services use an existing connector or require additional settings:
 
 | Service | Connection and execution requirements |
 | --- | --- |
-| Anthropic | Use `default_config` and `configs` to select allowed tools |
+| Anthropic | Use `allowed_tools`, or `default_config` and `configs`, to select tools; allowed calls execute automatically, so `require_approval` other than `"never"` raises |
 | Gemini Interactions | Streamable HTTP server; names cannot contain hyphens; allowed tools execute automatically |
 | xAI | Use `allowed_tools` to select tools; allowed calls execute automatically |
 | Mistral | Use `connector_id:` for a connector configured in Mistral Studio |

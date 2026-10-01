@@ -30,12 +30,28 @@ module RubyLLM
           name = options[:name] || 'mcp'
           server = { type: 'url', name: name }.merge(options.slice(:url, :authorization_token))
           {
-            tool: { type: 'mcp_toolset', mcp_server_name: name }.merge(options.slice(:default_config, :configs)),
+            tool: { type: 'mcp_toolset', mcp_server_name: name }
+              .merge(Anthropic.mcp_tool_filter(options))
+              .merge(options.slice(:default_config, :configs)),
             payload: { mcp_servers: [server] },
             headers: { 'anthropic-beta' => 'mcp-client-2025-11-20' }
           }
         end
       }.freeze
+
+      def self.mcp_tool_filter(options) # :nodoc:
+        approval = options[:require_approval]
+        unless approval.nil? || approval.to_s == 'never'
+          raise ArgumentError, "Anthropic runs MCP tools without approval; use require_approval: 'never'"
+        end
+
+        tools = options[:allowed_tools]
+        tools = tools[:tool_names] if tools.is_a?(Hash) && tools.keys == [:tool_names]
+        return {} if tools.nil?
+        raise ArgumentError, 'Anthropic filters MCP tools by name; use allowed_tools: [name]' unless tools.is_a?(Array)
+
+        { default_config: { enabled: false }, configs: tools.to_h { |tool| [tool.to_sym, { enabled: true }] } }
+      end
 
       def server_tool_aliases
         SERVER_TOOL_ALIASES

@@ -78,6 +78,32 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ type: 'mcp_toolset', mcp_server_name: 'example' })
     end
 
+    it 'translates allowed_tools on the Anthropic MCP alias into toolset configs' do
+      payload = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+                       .with_provider_tools(mcp: { url: 'https://mcp.example.com', name: 'example',
+                                                   allowed_tools: ['search'], require_approval: 'never' })
+                       .render
+
+      expect(payload[:tools]).to include(
+        { type: 'mcp_toolset', mcp_server_name: 'example', default_config: { enabled: false },
+          configs: { search: { enabled: true } } }
+      )
+    end
+
+    it 'rejects MCP approval on Anthropic, which cannot pause for it' do
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+                    .with_provider_tools(mcp: { url: 'https://mcp.example.com', require_approval: 'always' })
+
+      expect { chat.render }.to raise_error(ArgumentError, /require_approval: 'never'/)
+    end
+
+    it 'rejects MCP tool filters Anthropic cannot express' do
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+                    .with_provider_tools(mcp: { url: 'https://mcp.example.com', allowed_tools: { read_only: true } })
+
+      expect { chat.render }.to raise_error(ArgumentError, /allowed_tools: \[name\]/)
+    end
+
     it 'renders the Bedrock web_search alias as the Nova grounding system tool' do
       payload = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock)
                        .with_provider_tools(:web_search)
