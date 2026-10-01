@@ -11,6 +11,19 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
   end
 
   describe '#render_payload' do
+    { RubyLLM::Providers::OpenAI => 'original', RubyLLM::Providers::XAI => 'high' }.each do |provider_class, detail|
+      it "preserves #{detail} detail for #{provider_class} tool-returned images" do
+        protocol.instance_variable_set(:@provider, provider_class.allocate)
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__),
+                                        resolution: :original)
+        message = RubyLLM::Message.new(role: :tool, content: 'Page image', tool_call_id: 'call_1', attachments: [image])
+
+        payload = render_payload([message])
+
+        expect(payload.dig(:input, 1, :content, 1, :detail)).to eq(detail)
+      end
+    end
+
     it 'runs stateless and replays encrypted reasoning' do
       payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')])
 

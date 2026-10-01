@@ -46,7 +46,8 @@ module RubyLLM
         def with_media_resolution(part, attachment)
           return part unless attachment.resolution && %i[image video pdf].include?(attachment.type)
 
-          level = attachment.resolution == :ultra_high && attachment.type != :image ? :high : attachment.resolution
+          level = attachment.resolution == :original ? :ultra_high : attachment.resolution
+          level = :high if level == :ultra_high && attachment.type != :image
           part.merge(media_resolution: { level: "MEDIA_RESOLUTION_#{level.upcase}" })
         end
 

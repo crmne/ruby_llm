@@ -65,12 +65,29 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
       expect(formatted.second[:image_url][:detail]).to eq('low')
     end
 
-    it 'maps higher resolutions to high image detail' do
-      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :medium)
+    %i[medium high ultra_high].each do |resolution|
+      it "maps #{resolution} resolution to high detail even when original detail is enabled" do
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution:)
 
-      formatted = described_class.format_content('Describe this', [image])
+        protocol = RubyLLM::Protocols::ChatCompletions.new(RubyLLM::Providers::OpenAI.allocate)
+        formatted = protocol.send(:format_content, 'Describe this', [image])
 
-      expect(formatted.second[:image_url][:detail]).to eq('high')
+        expect(formatted.second[:image_url][:detail]).to eq('high')
+      end
+    end
+
+    {
+      RubyLLM::Providers::OpenAI => 'original', RubyLLM::Providers::Azure => 'original',
+      RubyLLM::Providers::XAI => 'high', RubyLLM::Providers::OpenRouter => 'high'
+    }.each do |provider_class, detail|
+      it "maps original resolution to #{detail} image detail for #{provider_class}" do
+        protocol = provider_class.protocols.fetch(:chat_completions).new(provider_class.allocate)
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
+
+        formatted = protocol.send(:format_content, 'Read the small print', [image])
+
+        expect(formatted.second[:image_url][:detail]).to eq(detail)
+      end
     end
 
     it 'omits image detail when no resolution is set' do

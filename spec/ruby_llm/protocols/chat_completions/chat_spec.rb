@@ -207,6 +207,17 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   end
 
   describe '.format_messages' do
+    it 'sends OpenAI tool-returned images at original detail' do
+      provider = RubyLLM::Providers::OpenAI.allocate
+      protocol = RubyLLM::Protocols::ChatCompletions.new(provider)
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
+      message = RubyLLM::Message.new(role: :tool, content: 'Page image', tool_call_id: 'call_1', attachments: [image])
+
+      formatted = protocol.send(:format_messages, [message])
+
+      expect(formatted.dig(1, :content, 1, :image_url, :detail)).to eq('original')
+    end
+
     it 'renders system messages before conversation messages' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'Hi'),

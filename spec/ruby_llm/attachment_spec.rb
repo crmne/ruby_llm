@@ -263,6 +263,12 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment.resolution).to eq(:ultra_high)
   end
 
+  it 'accepts original resolution' do
+    attachment = described_class.new(StringIO.new('png'), filename: 'page.png', resolution: :original)
+
+    expect(attachment.resolution).to eq(:original)
+  end
+
   it 'shows the media resolution in inspect' do
     attachment = described_class.new(StringIO.new('png'), filename: 'page.png', resolution: :low)
 

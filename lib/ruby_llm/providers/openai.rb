@@ -13,6 +13,10 @@ module RubyLLM
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
       RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze
 
+      def original_image_detail? # :nodoc:
+        true
+      end
+
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
       end

@@ -142,13 +142,15 @@ Providers without native document support raise `RubyLLM::UnsupportedAttachmentE
 Small print and dense tables need more detail than a photo of a cat. Build the attachment yourself and set `resolution:` to control how many tokens the model spends on it:
 
 ```ruby
-page = RubyLLM::Attachment.new("page-3.png", resolution: :ultra_high)
+page = RubyLLM::Attachment.new("page-3.png", resolution: :original)
 chat.ask "Where is the revenue figure?", with: page
 ```
 
-The values are `:low`, `:medium`, `:high`, and `:ultra_high`. Each attachment keeps its own setting, so one message can mix a high-detail page with low-detail thumbnails. Leave it unset to use the provider's default. Persisted chats keep the setting, so later turns and background jobs send the same detail.
+The values are `:low`, `:medium`, `:high`, `:ultra_high`, and `:original`. Each attachment keeps its own setting, so one message can mix a high-detail page with low-detail thumbnails. Leave it unset to use the provider's default. Persisted chats keep the setting, so later turns and background jobs send the same detail.
 
-Gemini applies the setting to images, videos, and PDFs, sending `:high` for videos and PDFs when you ask for `:ultra_high`. OpenAI, Azure, OpenRouter, and xAI apply it to images, sending `:low` as low detail and anything higher as high detail. Other providers ignore it, since it is a quality hint rather than a requirement.
+Gemini applies the setting to images, videos, and PDFs, sending `:high` for videos and PDFs when you ask for `:ultra_high`. OpenAI, Azure, OpenRouter, and xAI apply it to images, sending `:low` as low detail and `:medium`, `:high`, and `:ultra_high` as high detail. Other providers ignore it, since it is a quality hint rather than a requirement.
+
+For `:original`, OpenAI and Azure send `detail: "original"`. RubyLLM passes the request through without checking the model; a model that does not support original detail returns an API error. Gemini treats `:original` like `:ultra_high`, using its highest setting for the attachment type. OpenRouter and xAI use high detail, and other providers ignore it.
 
 ### Automatic File Type Detection
 

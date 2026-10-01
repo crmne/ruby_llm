@@ -64,11 +64,18 @@ module RubyLLM
           }
         end
 
-        def with_image_detail(part, image)
+        def with_image_detail(part, image, original_detail: @provider&.original_image_detail?)
           return part unless image.resolution
 
-          part[:image_url][:detail] = image.resolution == :low ? 'low' : 'high'
+          part[:image_url][:detail] = image_detail(image.resolution, original_detail:)
           part
+        end
+
+        def image_detail(resolution, original_detail: false)
+          return 'low' if resolution == :low
+          return 'original' if resolution == :original && original_detail
+
+          'high'
         end
 
         def format_document(document)

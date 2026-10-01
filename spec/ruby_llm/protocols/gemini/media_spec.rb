@@ -90,6 +90,16 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_HIGH')
     end
 
+    { 'page.png' => 'ULTRA_HIGH', 'document.pdf' => 'HIGH', 'video.mp4' => 'HIGH' }.each do |filename, level|
+      it "maps original resolution to #{level} for #{filename}" do
+        attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename:, resolution: :original)
+
+        parts = described_class.format_content('Read this', [attachment])
+
+        expect(parts.second[:media_resolution]).to eq(level: "MEDIA_RESOLUTION_#{level}")
+      end
+    end
+
     it 'omits media_resolution on audio' do
       attachment = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__), resolution: :low)
 

@@ -35,7 +35,8 @@ module RubyLLM
           part = { type: 'input_image', image_url: image.url_or_data_uri }
           return part unless image.resolution
 
-          part.merge(detail: image.resolution == :low ? 'low' : 'high')
+          part.merge(detail: ChatCompletions::Media.image_detail(image.resolution,
+                                                                 original_detail: @provider&.original_image_detail?))
         end
 
         # The Responses API extracts text from documents, presentations, and
