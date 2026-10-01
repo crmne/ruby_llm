@@ -56,6 +56,7 @@ Rules that bite:
 
 1. Start with the public operation and its typed result. Keep the shared RubyLLM names consistent across providers.
 2. Route service calls through the `Provider` contract and registered protocols. Keep request rendering, response parsing, and format quirks in protocols.
+   Let the provider reject what the model can't do: raise early only when the protocol cannot express the request, and don't copy provider limits or validate a successful response field by field.
 3. Reuse model resolution, configuration, usage accounting, and instrumentation where applicable. Preserve the operation's streaming or job lifecycle.
 4. Test public behavior and protocol translation at their respective layers. Document the operation in its feature guide and keep its Getting Started example short.
 
@@ -103,4 +104,4 @@ Then make it real:
 1. `overcommit --run` passes.
 2. New behavior has specs; changed provider behavior has re-recorded cassettes, reviewed for secrets.
 3. Public API changes are documented in `docs/` and have RDoc.
-4. The PR does one thing, references its approved issue, and explains the problem before the solution.
+4. The PR does one thing, links its issue when there is one, and explains the problem before the solution.

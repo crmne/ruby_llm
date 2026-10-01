@@ -42,8 +42,10 @@ integration or explain a distinct RubyLLM requirement.
 
 ## Reviewing a pull request
 
-Read the linked issue first. A feature without an approved issue is closed
-without review per `CONTRIBUTING.md`; say so and stop.
+Read the linked issue first, if there is one. A pull request does not need
+an issue: review a feature on its merits. When it departs from a design a
+maintainer agreed in an issue, point out the difference as a question for the
+maintainer.
 
 Look for these, in this order, and treat the first four as blockers:
 
@@ -70,6 +72,10 @@ Look for these, in this order, and treat the first four as blockers:
   an API key or personal data in it.
 - Public API changes without RDoc, without the matching page under `docs/`,
   or without an entry in `docs/_reference/upgrading.md` when they break.
+- Checks the provider already makes. Model capability checks, copied
+  provider limits (counts, sizes, option values), silent downgrades of an
+  explicit request, or field-by-field validation of a successful response.
+  Raising before a request is right only when the protocol cannot express it.
 - Implementation comments, drive-by refactors, style sweeps outside the
   touched lines, and duplication Flay would reject.
 

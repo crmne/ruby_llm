@@ -17,14 +17,9 @@
 - [ ] This isn't application-specific logic that belongs in user code
 - [ ] This benefits most users, not just my specific use case
 
-## Required for new features
+## Related issue
 
-<!-- Skip this section for bug fixes and documentation -->
-
-- [ ] I opened an issue **before** writing code and received maintainer approval
-- [ ] Linked issue: #___
-
-**PRs for new features or enhancements without a prior approved issue will be closed.**
+<!-- Optional. Fixes #___ -->
 
 ## Quality check
 
@@ -35,10 +30,9 @@
 - [ ] I updated documentation if needed
 - [ ] I didn't modify auto-generated files manually (`models.json`, `aliases.json`)
 
-## AI-generated code
+## Ownership
 
-- [ ] I used AI tools to help write this code
-- [ ] I have reviewed and understand all generated code (required if above is checked)
+- [ ] I understand every line of this change and can answer questions about it
 
 ## API changes
 

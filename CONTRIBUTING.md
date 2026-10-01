@@ -29,11 +29,9 @@ Working with a coding agent? [AGENTS.md](AGENTS.md) has the commands, architectu
   - Integrations with specific external services (vector databases, search engines, etc.) — these work great as separate gems
   - Testing frameworks
 
-* **You must open an issue first** and wait for maintainer feedback before writing code. PRs for new features without an approved issue will be closed without review.
+* **Keep PRs focused and reasonably sized.** Break large features into smaller, reviewable PRs.
 
-* **Keep PRs focused and reasonably sized.** Large features should be discussed in the issue and potentially broken into smaller, reviewable PRs. Dropping thousands of lines of code without prior discussion is not helpful.
-
-* **If you use AI tools**, you must understand every single line of code you submit. AI-generated code often requires more review time from maintainers, which may delay your PR.
+* **Use whatever tools you like, AI included.** We review the change, not how it was written. You're responsible for every line you submit, so make sure you understand it and can answer questions about it.
 
 ### Provider contributions
 
