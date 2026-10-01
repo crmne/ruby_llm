@@ -5,10 +5,6 @@ module RubyLLM
     class ElevenLabs
       class Flows
         module Videos # :nodoc: all
-          REFERENCE_VIDEO_MODELS = %w[
-            bytedance-seedance-v2 bytedance-seedance-v2-fast bytedance-seedance-v2-mini bytedance-seedance-v2.5
-          ].freeze
-
           def video_url
             'v1/flows/video'
           end
@@ -17,22 +13,20 @@ module RubyLLM
             payload = if model == 'creatify-aurora'
                         render_character_animation(prompt, with:)
                       else
-                        render_video_inputs(prompt, model:, with:)
+                        render_video_inputs(prompt, with:)
                       end
             Support::Utils.deep_merge({ model_id: model }.merge(payload), provider_options)
           end
 
-          def render_video_inputs(prompt, model:, with:)
-            raise ArgumentError, 'This ElevenLabs video model requires a prompt' if prompt.to_s.empty?
-
-            payload = { prompt: }
+          def render_video_inputs(prompt, with:)
+            payload = { prompt: }.compact
             if with.all?(&:image?)
               raise ArgumentError, 'Video generation accepts at most two frame images' if with.size > 2
 
               payload[:start_frame] = render_media_reference(with[0]) if with[0]
               payload[:end_frame] = render_media_reference(with[1]) if with[1]
             else
-              render_video_references(payload, with, model:)
+              render_video_references(payload, with)
             end
             payload
           end
@@ -51,11 +45,7 @@ module RubyLLM
             { image: render_media_reference(image.first), audio: render_media_reference(audio.first) }
           end
 
-          def render_video_references(payload, attachments, model:)
-            unless REFERENCE_VIDEO_MODELS.include?(model)
-              raise ArgumentError, 'This ElevenLabs video model only accepts image attachments'
-            end
-
+          def render_video_references(payload, attachments)
             { images: :image?, audios: :audio?, videos: :video? }.each do |field, predicate|
               references = attachments.select { |attachment| attachment.public_send(predicate) }
               payload[field] = references.map { |attachment| render_media_reference(attachment) } if references.any?

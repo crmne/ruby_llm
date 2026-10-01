@@ -117,7 +117,6 @@ RSpec.describe RubyLLM::Protocols::GPUStack::Videos do
       context.animate_later('A street', model:, provider: :gpustack, provider_options: { num_outputs_per_prompt: 2 })
     end
       .to raise_error(ArgumentError, /one video/)
-    expect { context.animate_later(model:, provider: :gpustack) }.to raise_error(ArgumentError, /requires a prompt/)
     expect { context.animate_later('Continue', model:, provider: :gpustack, extend: 'https://media.test/clip.mp4') }
       .to raise_error(RubyLLM::Error, /doesn't support video extension/)
     context.config.gpustack_api_base = 'https://gpu.example.test/v1'

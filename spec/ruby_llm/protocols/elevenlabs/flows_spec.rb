@@ -85,9 +85,8 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
 
     expect(payload[:images]).to eq([{ type: 'asset', asset_id: 'asset_image' }])
     expect(payload[:mask]).to include(type: 'inline_base64', mime_type: 'image/png')
-    expect do
-      protocol.render_image_payload('Change it', model:, size: nil, with: file, mask: image_path)
-    end.to raise_error(ArgumentError, /GPT Image model/)
+    expect(protocol.render_image_payload('Change it', model:, size: nil, with: file, mask: image_path)[:mask])
+      .to include(type: 'inline_base64')
   end
 
   it 'rejects references owned by another provider' do
@@ -119,15 +118,15 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
     expect(request).to have_been_requested.once
   end
 
-  it 'maps documented Seedance reference video input and refuses it for Veo' do
+  it 'maps reference video input and leaves model support to ElevenLabs' do
     source = RubyLLM::UploadedFile.new(id: 'asset_video', provider: :elevenlabs, filename: 'scene.mp4',
                                        mime_type: 'video/mp4')
     attachments = RubyLLM::Attachment.wrap(source)
-    payload = protocol.render_video_payload('Change the lighting', model: 'bytedance-seedance-v2', with: attachments)
 
-    expect(payload[:videos]).to eq([{ type: 'asset', asset_id: 'asset_video' }])
-    expect { protocol.render_video_payload('Change it', model: video_model, with: attachments) }
-      .to raise_error(ArgumentError, /only accepts image attachments/)
+    [video_model, 'bytedance-seedance-v2'].each do |model|
+      payload = protocol.render_video_payload('Change the lighting', model:, with: attachments)
+      expect(payload[:videos]).to eq([{ type: 'asset', asset_id: 'asset_video' }])
+    end
   end
 
   it 'leaves speech and transcription on the existing audio protocol' do
@@ -164,8 +163,7 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
     expect do
       protocol.render_video_payload(nil, model: 'creatify-aurora', with: RubyLLM::Attachment.wrap(image_path))
     end.to raise_error(ArgumentError, /exactly one image and one audio/)
-    expect { protocol.render_video_payload(nil, model: video_model) }
-      .to raise_error(ArgumentError, /requires a prompt/)
+    expect(protocol.render_video_payload(nil, model: video_model)).not_to have_key(:prompt)
   end
 
   it 'generates an image through ElevenLabs Image and Video', :live do

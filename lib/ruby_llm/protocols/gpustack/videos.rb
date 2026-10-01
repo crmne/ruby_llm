@@ -10,8 +10,6 @@ module RubyLLM
         end
 
         def render_video_payload(prompt, model:, with: [], provider_options: {})
-          raise ArgumentError, 'vLLM-Omni video generation requires a prompt' if prompt.nil?
-
           options = video_options(provider_options)
           payload = { model: model, prompt: prompt }.merge(video_references(with)).merge(options).compact
           payload.transform_values do |value|

@@ -114,6 +114,8 @@ RubyLLM no longer copies provider limits into checks of its own. A request it us
 * `RubyLLM.research` on Vertex AI with an agent other than the Deep Research preview, or with audio or video attachments.
 * `RubyLLM.animate` with Luma Ray 2 on Bedrock and an empty prompt, a prompt over 5,000 characters, or keyframes other than PNG or JPEG.
 * Other media formats on Bedrock: Stability source images beyond JPEG, PNG, and WebP, guardrail images beyond PNG and JPEG, and Voxtral audio beyond MP3 and WAV.
+* ElevenLabs image masks on models other than GPT Image, and reference audio or video on video models other than Seedance.
+* `RubyLLM.animate` without a prompt on ElevenLabs or GPUStack.
 
 If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
 

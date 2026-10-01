@@ -5,8 +5,6 @@ module RubyLLM
     class ElevenLabs
       class Flows
         module Images # :nodoc: all
-          MASK_MODELS = %w[gpt-image-1 gpt-image-1.5 gpt-image-2].freeze
-
           def images_url(**)
             'v1/flows/image'
           end
@@ -20,11 +18,7 @@ module RubyLLM
             payload = { model_id: model, prompt: }
             payload[:images] = images.map { |image| render_media_reference(image) } if images.any?
             payload[:aspect_ratio] = image_aspect_ratio(size) if size && size != 'auto'
-            if mask
-              raise ArgumentError, 'ElevenLabs image masks require a GPT Image model' unless MASK_MODELS.include?(model)
-
-              payload[:mask] = render_media_reference(Attachment.wrap(mask, config: @config).first)
-            end
+            payload[:mask] = render_media_reference(Attachment.wrap(mask, config: @config).first) if mask
             Support::Utils.deep_merge(payload, provider_options)
           end
 
