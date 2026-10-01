@@ -137,6 +137,19 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
 
       expect(chunk.tokens.reported_cost).to eq(9.54e-07)
     end
+
+    it 'appends streamed reasoning text to its detail in place' do
+      delta = lambda do |text|
+        detail = { 'type' => 'reasoning.text', 'index' => 0, 'text' => text }
+        { 'choices' => [{ 'delta' => { 'reasoning_details' => [detail] } }] }
+      end
+      provider.send(:build_chunk, delta.call('Let'))
+      text = provider.send(:build_chunk, delta.call(' me')).raw_reasoning.first['text']
+
+      chunk = provider.send(:build_chunk, delta.call(' think'))
+
+      expect(chunk.raw_reasoning.first['text']).to be(text).and eq('Let me think')
+    end
   end
 
   describe '#format_messages' do

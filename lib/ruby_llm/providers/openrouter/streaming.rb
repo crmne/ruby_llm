@@ -47,7 +47,8 @@ module RubyLLM
 
           detail.each do |key, value|
             if value.is_a?(String) && target[key].is_a?(String) && ACCUMULATED_REASONING_KEYS.include?(key)
-              target[key] += value
+              target[key] = +target[key]
+              target[key] << value
             elsif target[key].nil?
               target[key] = value
             end
