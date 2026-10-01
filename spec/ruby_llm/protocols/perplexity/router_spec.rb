@@ -101,22 +101,22 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Router do
       .to raise_error(RubyLLM::UnsupportedAttachmentError)
   end
 
-  it 'rejects explicitly unsupported request controls before making a request' do
-    [{ seed: 1 }, { modalities: ['audio'] }, { n: 2 }, { presence_penalty: 1 },
-     { stream_options: { include_obfuscation: true } }].each do |options|
-      expect { chat.with_provider_options(**options).ask_later('Hello').render }
-        .to raise_error(ArgumentError, /Perplexity Router does not support/)
-    end
-    expect(a_request(:post, url)).not_to have_been_made
+  it 'leaves request controls and tool descriptions to Router' do
+    unnamed = Class.new(RubyLLM::Tool) { define_method(:name) { 'undescribed' } }
+    payload = chat.with_tools(unnamed).with_provider_options(seed: 1).ask_later('Hello').render
+
+    expect(payload[:seed]).to eq(1)
+    expect(payload[:tools].first.dig(:function, :name)).to eq('undescribed')
   end
 
-  it 'requires tool descriptions and strict schemas without changing the default protocol' do
-    unnamed = Class.new(RubyLLM::Tool) { define_method(:name) { 'undescribed' } }
-    expect { chat.with_tools(unnamed).ask_later('Hello').render }
-      .to raise_error(ArgumentError, /require a description/)
-    schema = { name: 'answer', schema: { type: 'object', properties: {} }, strict: false }
-    expect { described_class.new(chat.provider, chat.model).send(:render_payload, [], schema:) }
-      .to raise_error(ArgumentError, /strict structured output/)
+  it 'defaults schemas to strict without overriding an explicit choice' do
+    schema = { name: 'answer', schema: { type: 'object', properties: {} } }
+
+    [[schema, true], [schema.merge(strict: false), false]].each do |given, strict|
+      payload = RubyLLM.chat(model:, provider: :perplexity, protocol: :router_chat_completions)
+                       .with_schema(given).ask_later('Hello').render
+      expect(payload.dig(:response_format, :json_schema, :strict)).to be(strict)
+    end
   end
 
   it 'requests a named tool with a cache boundary from the configured Router account', :live do

@@ -118,6 +118,7 @@ RubyLLM no longer copies provider limits into checks of its own. A request it us
 * `RubyLLM.animate` without a prompt on ElevenLabs or GPUStack.
 * `RubyLLM.transcribe` on Gemini with `prompt:` combined with speaker names or word timestamps.
 * Streaming transcription on ElevenLabs or xAI with a WAV sample rate outside the rates RubyLLM listed, or on xAI with more than eight channels.
+* Perplexity Router chats with request options such as `seed`, tools without descriptions, audio other than MP3 or WAV, or a schema with `strict: false`, and Sonar chats with documents other than PDF, DOC, DOCX, TXT, or RTF.
 
 If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
 
