@@ -155,8 +155,9 @@ module RubyLLM
       # describes. RubyLLM discovers the server's authorization server and
       # registers itself unless you pass the +client_id:+ and
       # +client_secret:+ of an app you registered, which servers such as
-      # Slack require. +owner:+ names whose credentials these are, usually an
-      # input. +scopes:+ overrides the scopes the server asks for.
+      # Slack require. Those only go to the authorization server they were
+      # first used with. +owner:+ names whose credentials these are, usually
+      # an input. +scopes:+ overrides the scopes the server asks for.
       #
       #   oauth owner: :user
       #   oauth owner: :user, client_id: ENV["SLACK_CLIENT_ID"], client_secret: ENV["SLACK_CLIENT_SECRET"]

@@ -489,6 +489,8 @@ class Slack < RubyLLM::MCP
 end
 ```
 
+An app belongs to the authorization server you registered it with. RubyLLM remembers that server the first time it uses the app's credentials, and if the MCP server later names another one, it raises `RubyLLM::MCP::Error` instead of sending them there. Register an app with the new authorization server and pass its credentials.
+
 Pass `scopes:` to ask for specific scopes instead of the ones the server suggests.
 
 ### Storing Credentials

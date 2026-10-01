@@ -191,6 +191,44 @@ RSpec.describe RubyLLM::MCP::OAuth do
       .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('slack-app:shh')}" })).to have_been_made
   end
 
+  describe 'a pre-registered client' do
+    def pre_registered(client_id)
+      url = server_url
+      Class.new(RubyLLM::MCP) do
+        url url
+        oauth client_id:, client_secret: 'shh'
+      end.new
+    end
+
+    def moved_to(issuer)
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+        .to_return(body: { resource: server_url, authorization_servers: [issuer] }.to_json)
+      stub_request(:get, "#{issuer}/.well-known/oauth-authorization-server")
+        .to_return(body: authorization_server.merge(issuer:, authorization_endpoint: "#{issuer}/authorize",
+                                                    token_endpoint: "#{issuer}/token").to_json)
+    end
+
+    it 'stays with the authorization server it was first used with' do
+      slack = pre_registered('slack-app')
+      slack.authorize(callback(slack.authorization_url(redirect_uri:)))
+      moved_to('https://elsewhere.example.com')
+
+      expect { pre_registered('slack-app').authorization_url(redirect_uri:) }
+        .to raise_error(RubyLLM::MCP::Error, 'slack-app is registered with https://auth.example.com, ' \
+                                             "but #{server_url} now uses https://elsewhere.example.com")
+      expect(a_request(:post, 'https://elsewhere.example.com/token')).not_to have_been_made
+    end
+
+    it 'binds another client to the authorization server it is used with' do
+      pre_registered('slack-app').authorization_url(redirect_uri:)
+      moved_to('https://elsewhere.example.com')
+
+      url = pre_registered('elsewhere-app').authorization_url(redirect_uri:)
+
+      expect(url).to start_with('https://elsewhere.example.com/authorize?')
+    end
+  end
+
   it 'refuses authorization servers without PKCE' do
     stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server')
       .to_return(body: authorization_server.except(:code_challenge_methods_supported).to_json)

@@ -263,7 +263,7 @@ module RubyLLM
       end
 
       def client_for(server, redirect_uri)
-        return { 'client_id' => @client_id, 'client_secret' => @client_secret }.compact if @client_id
+        return preregistered_client(server) if @client_id
 
         metadata_client_id = @config.mcp_client_id
         if metadata_client_id && server['client_id_metadata_document_supported']
@@ -271,6 +271,17 @@ module RubyLLM
         end
 
         register(server, redirect_uri)
+      end
+
+      def preregistered_client(server)
+        issuer_key = "issuer:#{@client_id} #{@server_url}"
+        issuer = store.read(issuer_key)&.fetch('issuer', nil)
+        store.write(issuer_key, { 'issuer' => server['issuer'] }, owner: nil) unless issuer
+        if issuer && issuer != server['issuer']
+          raise Error, "#{@client_id} is registered with #{issuer}, but #{@server_url} now uses #{server['issuer']}"
+        end
+
+        { 'client_id' => @client_id, 'client_secret' => @client_secret }.compact
       end
 
       def register(server, redirect_uri)
