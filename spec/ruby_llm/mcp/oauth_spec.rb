@@ -188,10 +188,17 @@ RSpec.describe RubyLLM::MCP::OAuth do
         .to_return(body: authorization_server.merge(issuer: published).to_json)
 
       url = linear.authorization_url(redirect_uri:)
-      linear.authorize(callback(url, iss: listed))
+      linear.authorize(callback(url, iss: published))
 
       expect(linear).to be_authorized
     end
+  end
+
+  it 'compares the iss parameter exactly, without normalizing a trailing slash' do
+    url = linear.authorization_url(redirect_uri:)
+
+    expect { linear.authorize(callback(url, iss: 'https://auth.example.com/')) }
+      .to raise_error(RubyLLM::MCP::Error, /wrong issuer/)
   end
 
   it 'still refuses an issuer whose path differs by more than an empty path' do

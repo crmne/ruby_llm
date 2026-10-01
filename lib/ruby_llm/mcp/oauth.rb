@@ -149,9 +149,7 @@ module RubyLLM
       end
 
       def check_issuer(pending, issuer)
-        if issuer && !same_issuer?(issuer, pending['issuer'])
-          raise Error, 'The authorization response came from the wrong issuer'
-        end
+        raise Error, 'The authorization response came from the wrong issuer' if issuer && issuer != pending['issuer']
         raise Error, 'The authorization server did not identify itself' if issuer.nil? && issuer_required?
       end
 
