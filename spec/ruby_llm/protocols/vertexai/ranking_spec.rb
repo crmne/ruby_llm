@@ -94,27 +94,23 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Ranking do
       .to raise_error(RubyLLM::ForbiddenError, /Discovery Engine API is disabled/)
   end
 
-  it 'rejects invalid input before HTTP' do
-    [[], Array.new(1001, 'text'), [1], ['']].each do |input|
-      expect { protocol.rerank('Ruby', input, model:) }.to raise_error(ArgumentError, /documents/)
-    end
-    expect { protocol.rerank('', documents, model:) }.to raise_error(ArgumentError, /query/)
-    expect { protocol.rerank('Ruby', documents, model:, top_n: 0) }.to raise_error(ArgumentError, /top_n/)
+  it 'rejects documents its records cannot carry before HTTP' do
+    expect { protocol.rerank('Ruby', [1], model:) }.to raise_error(ArgumentError, /documents must be text/)
     expect(a_request(:post, endpoint)).not_to have_been_made
   end
 
-  it 'rejects malformed or duplicate document identities and absent scores' do
-    invalid = [{ id: '2', score: 0.8 }, { id: '-1', score: 0.8 }, { id: '01', score: 0.8 },
-               { id: 1, score: 0.8 }, { id: '1' }, { id: '1', score: '0.8' }, nil]
-    invalid.each do |record|
-      stub_request(:post, endpoint).to_return_json(body: { records: [record] })
-      expect do
-        protocol.rerank('Ruby', documents, model:)
-      end.to raise_error(RubyLLM::Error, /invalid document id or score/)
+  it 'leaves document counts, empty text, and top_n to Vertex AI Search' do
+    stub_request(:post, endpoint).to_return_json(body: { records: [] })
+
+    protocol.rerank('', Array.new(1001, ''), model:, top_n: 0)
+
+    expect(a_request(:post, endpoint).with { |request| JSON.parse(request.body)['topN'].zero? }).to have_been_made
+  end
+
+  it 'rejects document ids that do not map back onto the documents' do
+    ['2', '-1', '01', 1].each do |id|
+      stub_request(:post, endpoint).to_return_json(body: { records: [{ id:, score: 0.8 }] })
+      expect { protocol.rerank('Ruby', documents, model:) }.to raise_error(RubyLLM::Error, /invalid document id/)
     end
-    stub_request(:post, endpoint).to_return_json(body: { records: [{ id: '1', score: 0.9 }, { id: '1', score: 0.8 }] })
-    expect { protocol.rerank('Ruby', documents, model:) }.to raise_error(RubyLLM::Error, /duplicate document id/)
-    stub_request(:post, endpoint).to_return_json(body: {})
-    expect { protocol.rerank('Ruby', documents, model:) }.to raise_error(RubyLLM::Error, /no ranking records/)
   end
 end

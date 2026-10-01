@@ -16,7 +16,6 @@ module RubyLLM
         private
 
         def render_rerank_payload(query, documents, model:, top_n:, provider_options:)
-          validate_rerank_input(query, documents, top_n)
           payload = {
             queries: [{ type: 'TEXT', textQuery: { text: query } }],
             sources: documents.map { |document| render_rerank_source(document) },
@@ -29,18 +28,6 @@ module RubyLLM
             }
           }
           Support::Utils.deep_merge(payload, provider_options)
-        end
-
-        def validate_rerank_input(query, documents, top_n)
-          unless query.is_a?(String) && !query.empty?
-            raise ArgumentError, 'Bedrock reranking requires one nonempty text query'
-          end
-          unless documents.is_a?(Array) && (1..1000).cover?(documents.length)
-            raise ArgumentError, 'Bedrock reranking accepts between 1 and 1000 documents'
-          end
-          return if top_n.nil? || (top_n.is_a?(Integer) && (1..1000).cover?(top_n))
-
-          raise ArgumentError, 'Bedrock reranking top_n must be between 1 and 1000'
         end
 
         def render_rerank_source(document)

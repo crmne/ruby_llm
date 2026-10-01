@@ -75,14 +75,21 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Rerank do
     )
   end
 
-  it 'rejects unsupported inputs and models before making a request' do
-    [[], Array.new(1001, 'text'), [1]].each do |input|
-      expect { protocol.rerank('Ruby', input, model:) }.to raise_error(ArgumentError, /documents/)
-    end
-    expect { protocol.rerank('', documents, model:) }.to raise_error(ArgumentError, /query/)
-    expect { protocol.rerank('Ruby', documents, model:, top_n: 0) }.to raise_error(ArgumentError, /top_n/)
-    expect { protocol.rerank('Ruby', documents, model: model_for(:bedrock)) }
-      .to raise_error(RubyLLM::Error, /not supported/)
+  it 'rejects documents its sources cannot carry before making a request' do
+    expect { protocol.rerank('Ruby', [1], model:) }.to raise_error(ArgumentError, /documents/)
+    expect(a_request(:post, endpoint)).not_to have_been_made
+  end
+
+  it 'leaves document counts, top_n, and model support to Bedrock' do
+    stub_request(:post, endpoint).to_return_json(body: { results: [] })
+
+    protocol.rerank('', Array.new(1001, 'text'), model: model_for(:bedrock), top_n: 0)
+
+    expect(a_request(:post, endpoint).with do |request|
+      configuration = JSON.parse(request.body).dig('rerankingConfiguration', 'bedrockRerankingConfiguration')
+      configuration['numberOfResults'].zero? &&
+        configuration.dig('modelConfiguration', 'modelArn').end_with?("foundation-model/#{model_for(:bedrock)}")
+    end).to have_been_made.once
   end
 
   it 'rejects repeated page tokens and invalid provider result indices' do

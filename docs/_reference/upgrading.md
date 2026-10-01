@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * What to finish on 2.0 before you update the gem.
 * How to upgrade a 2.0 application and its Rails schema to 2.1.
 * How to move Perplexity chat from Sonar to presets.
+* Which provider limits now raise the provider's error.
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
@@ -55,7 +56,7 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code, except to move Perplexity chat off Sonar.
+2.1 does not require changes to your code, except to move Perplexity chat off Sonar and to rescue provider errors where RubyLLM used to check a provider's limits.
 
 ## Move Perplexity Chat to Presets
 
@@ -100,6 +101,14 @@ To keep Sonar writing the answers, name it as a model. A model searches only wit
 ```ruby
 RubyLLM.chat(model: "perplexity/sonar", provider: :perplexity).with_provider_tools(:web_search)
 ```
+
+## Rescue Provider Errors for Provider Limits
+
+RubyLLM no longer copies provider limits into checks of its own. A request it used to refuse now reaches the provider, and the provider's error names the limit. These calls raised `ArgumentError` before the request in 2.0. They now raise `RubyLLM::BadRequestError` or another `RubyLLM::Error`:
+
+* `RubyLLM.rerank` on Bedrock or Vertex AI with no documents, more than 1,000 documents, an empty query, or a `top_n:` outside the provider's range.
+
+If you rescue `ArgumentError` around these calls, rescue `RubyLLM::Error` instead.
 
 ## Upgrade the Rails Schema
 

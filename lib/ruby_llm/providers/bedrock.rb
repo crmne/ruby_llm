@@ -84,10 +84,6 @@ module RubyLLM
       def rerank_model_arn(model_id) # :nodoc:
         return model_id if model_id.start_with?('arn:')
 
-        unless %w[amazon.rerank-v1:0 cohere.rerank-v3-5:0].include?(model_id)
-          raise Error, "Bedrock reranking is not supported for #{model_id.inspect}"
-        end
-
         "arn:aws:bedrock:#{bedrock_region}::foundation-model/#{model_id}"
       end
 
