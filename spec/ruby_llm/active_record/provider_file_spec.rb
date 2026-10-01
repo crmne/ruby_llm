@@ -154,6 +154,23 @@ RSpec.describe RubyLLM::ActiveRecord::ProviderFile do
     expect(described_class.sole.blob_key).to eq(blob.key)
   end
 
+  it 'replaces the recorded upload when the provider deletes it mid-process' do
+    stub_uploads('file_1', 'file_2')
+    chat = Chat.create!(model:)
+    chat.ask('Summarize these notes', with: notes)
+    stub_request(:post, messages_url).to_return(
+      json_response({ type: 'error', error: { type: 'not_found_error', message: 'File not found: file_1' } },
+                    status: 404),
+      json_response(reply)
+    )
+
+    Chat.find(chat.id).ask('And the action items?')
+
+    expect(sent_file('file_2')).to have_been_made.once
+    expect(a_request(:get, "#{files_url}/file_1")).not_to have_been_made
+    expect(described_class.sole.file_id).to eq('file_2')
+  end
+
   it 'never reuses the upload of a deleted blob for a blob that takes its id' do
     stub_uploads('file_1', 'file_2')
     deleted = stored_blob('First notes, long enough to upload.')

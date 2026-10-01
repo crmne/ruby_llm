@@ -22,6 +22,13 @@ module RubyLLM
         @lock.synchronize { @entries.clear }
       end
 
+      def delete(key)
+        @lock.synchronize do
+          forget_inherited_entries
+          @entries.delete(key)
+        end
+      end
+
       private
 
       def touch(key)

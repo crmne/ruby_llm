@@ -1241,35 +1241,62 @@ module RubyLLM
     def provider_completion(usage_recorder:, stream_tracker: nil, &)
       raise_if_cancelled!
 
-      @provider.complete(
-        preprocessed_messages,
-        tools: tools,
-        provider_tools: @provider_tools,
-        tool_prefs: @tool_prefs,
-        temperature: @temperature,
-        max_output_tokens: @max_output_tokens,
-        model: @model,
-        provider_options: Support::Utils.deep_dup(@provider_options),
-        headers: @headers,
-        schema: @schema,
-        thinking: resolved_thinking,
-        citations: @citations,
-        caching: @caching,
-        compaction: @compaction,
-        end_user: @end_user,
-        protocol: @protocol,
-        before_request: @callbacks[:before_request],
-        usage_recorder: usage_recorder,
-        &wrap_streaming_block(stream_tracker:, &)
-      )
+      request_messages = preprocessed_messages
+      streamed = false
+      tracker = proc do |chunk|
+        streamed = true
+        stream_tracker&.call(chunk)
+      end
+      on_chunk = wrap_streaming_block(stream_tracker: tracker, &)
+
+      replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
+        @provider.complete(
+          sent_messages,
+          tools: tools,
+          provider_tools: @provider_tools,
+          tool_prefs: @tool_prefs,
+          temperature: @temperature,
+          max_output_tokens: @max_output_tokens,
+          model: @model,
+          provider_options: Support::Utils.deep_dup(@provider_options),
+          headers: @headers,
+          schema: @schema,
+          thinking: resolved_thinking,
+          citations: @citations,
+          caching: @caching,
+          compaction: @compaction,
+          end_user: @end_user,
+          protocol: @protocol,
+          before_request: @callbacks[:before_request],
+          usage_recorder: usage_recorder,
+          &on_chunk
+        )
+      end
     end
 
     def provider_compaction
-      @provider.compact(
-        preprocessed_messages, model: @model, protocol: @protocol,
-                               headers: @headers, before_request: @callbacks[:before_request],
-                               usage_recorder: method(:record_usage_entry)
-      )
+      replacing_missing_uploads(preprocessed_messages) do |sent_messages|
+        @provider.compact(
+          sent_messages, model: @model, protocol: @protocol,
+                         headers: @headers, before_request: @callbacks[:before_request],
+                         usage_recorder: method(:record_usage_entry)
+        )
+      end
+    end
+
+    # A provider can delete a file RubyLLM uploaded for an attachment. A
+    # request that fails over such a file before streaming anything uploads
+    # the file again and runs once more; one that streamed is not repeated.
+    def replacing_missing_uploads(request_messages, streamed = -> { false })
+      yield request_messages
+    rescue Error => e
+      raise if streamed.call || discard_missing_uploads(e).empty?
+
+      yield preprocessed_messages
+    end
+
+    def discard_missing_uploads(error)
+      @provider.discard_missing_uploads(messages, error, model: @model, protocol: @protocol)
     end
 
     def record_usage_entry(entry)

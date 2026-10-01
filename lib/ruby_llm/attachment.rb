@@ -128,8 +128,9 @@ module RubyLLM
     end
 
     # Where uploads of this attachment outlive the process: an object that
-    # responds to <tt>fetch(provider:, account:)</tt> and
-    # <tt>store(upload, provider:, account:)</tt>. The Rails integration sets
+    # responds to <tt>fetch(provider:, account:)</tt>,
+    # <tt>store(upload, provider:, account:)</tt>, and
+    # <tt>forget(id, provider:, account:)</tt>. The Rails integration sets
     # one for files kept in Active Storage.
     attr_accessor :provider_file_store # :nodoc:
 

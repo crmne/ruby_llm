@@ -41,6 +41,15 @@ RSpec.describe RubyLLM::Support::ProcessCache do
     expect(fetch(:openai)).not_to be(first)
   end
 
+  it 'forgets one value when deleted' do
+    openai = fetch(:openai)
+    anthropic = fetch(:anthropic)
+    cache.delete(:openai)
+
+    expect(fetch(:openai)).not_to be(openai)
+    expect(fetch(:anthropic)).to be(anthropic)
+  end
+
   it 'hands every caller that races to build a value the first one stored' do
     values = Array.new(8) do
       Thread.new do

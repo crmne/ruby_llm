@@ -17,6 +17,10 @@ RSpec.describe RubyLLM::Chat do
     def preprocess_messages(messages, **)
       messages
     end
+
+    def discard_missing_uploads(*, **)
+      []
+    end
   end
 
   before do

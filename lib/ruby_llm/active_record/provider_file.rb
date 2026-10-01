@@ -46,6 +46,12 @@ module RubyLLM
           nil
         end
 
+        # Only a row that still names the missing file goes: another process
+        # may have recorded a newer upload meanwhile.
+        def forget(id, provider:, account:)
+          ProviderFile.where(blob_key:, provider:, account:, file_id: id).delete_all if blob_key
+        end
+
         private
 
         def blob_key

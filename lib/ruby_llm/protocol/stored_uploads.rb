@@ -24,6 +24,13 @@ module RubyLLM
         stored_file || remember(yield)
       end
 
+      def forget(upload)
+        return unless @account
+
+        FILES.delete(key(upload.id))
+        @store.forget(upload.id, provider: @provider.slug, account: @account)
+      end
+
       private
 
       def stored_file

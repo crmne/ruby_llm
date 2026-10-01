@@ -493,6 +493,19 @@ module RubyLLM
       message.with_attachments(uploaded)
     end
 
+    # A provider can delete a file RubyLLM uploaded for an attachment. When
+    # a request fails naming such a file, or with a 404 that names none, the
+    # attachments forget those uploads so the next request uploads them
+    # again. Returns the uploads it forgot.
+    def discard_missing_uploads(messages, error)
+      scope = provider_upload_scope
+      missing_uploads(messages, error, scope).map do |attachment, upload|
+        attachment.provider_uploads.delete(scope)
+        StoredUploads.new(@provider, attachment.provider_file_store).forget(upload)
+        upload
+      end
+    end
+
     private
 
     # A thinking signature is opaque to every provider but the one that
@@ -604,6 +617,19 @@ module RubyLLM
     def provider_upload_scope
       credentials = @provider.class.configuration_options.map { |option| @config.public_send(option) }
       "#{@provider.slug}:#{Digest::SHA256.hexdigest(credentials.join("\0"))}"
+    end
+
+    def missing_uploads(messages, error, scope)
+      uploads = messages.flat_map(&:attachments).filter_map do |attachment|
+        upload = attachment.provider_uploads[scope]
+        [attachment, upload] if upload
+      end
+      named = uploads.select { |_, upload| names_file?(error, upload.id) }
+      named.empty? && error.response&.status == 404 ? uploads : named
+    end
+
+    def names_file?(error, id)
+      [error.message, error.response&.body].any? { |text| text.to_s.include?(id) }
     end
 
     def upload_large_attachment?(attachment)

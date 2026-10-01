@@ -202,17 +202,12 @@ module RubyLLM
     end
 
     def preprocess_messages(messages, model:, protocol: nil) # :nodoc:
-      protocol_class = resolve_protocol(
-        protocol,
-        model,
-        tools: {},
-        schema: nil,
-        thinking: nil,
-        tool_prefs: nil,
-        citations: false
-      )
-      preprocessor = protocol_class.new(self, model)
+      preprocessor = preprocessing_protocol(protocol, model)
       messages.map { |message| preprocessor.preprocess_message(message) }
+    end
+
+    def discard_missing_uploads(messages, error, model:, protocol: nil) # :nodoc:
+      preprocessing_protocol(protocol, model).discard_missing_uploads(messages, error)
     end
 
     def batches? # :nodoc:
@@ -657,6 +652,11 @@ module RubyLLM
     def resolve_protocol(name, model, **request)
       explicit = name || configured_protocol
       explicit ? fetch_protocol(explicit) : protocol_for(model, **request)
+    end
+
+    def preprocessing_protocol(protocol, model)
+      resolve_protocol(protocol, model, tools: {}, schema: nil, thinking: nil, tool_prefs: nil, citations: false)
+        .new(self, model)
     end
 
     def default_protocol
