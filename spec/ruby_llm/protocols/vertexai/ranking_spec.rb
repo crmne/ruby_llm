@@ -113,4 +113,10 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Ranking do
       expect { protocol.rerank('Ruby', documents, model:) }.to raise_error(RubyLLM::Error, /invalid document id/)
     end
   end
+
+  it 'rejects a document id returned twice' do
+    stub_request(:post, endpoint).to_return_json(body: { records: [{ id: '0', score: 0.9 }, { id: '0', score: 0.8 }] })
+
+    expect { protocol.rerank('Ruby', documents, model:) }.to raise_error(RubyLLM::Error, /duplicate document id/)
+  end
 end

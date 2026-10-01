@@ -22,8 +22,11 @@ module RubyLLM
         end
 
         def parse_rerank_response(response, model:, documents: [])
+          seen = Set.new
           results = Array(response.body['records']).map do |record|
             index = ranking_index(record, documents)
+            raise Error.new('Vertex AI Search returned a duplicate document id', response:) unless seen.add?(index)
+
             Rerank::Result.new(index: index, document: documents[index], score: record['score'])
           end
           Rerank.new(results: results, model: model, raw: response.body)
