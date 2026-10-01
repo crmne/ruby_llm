@@ -99,26 +99,26 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
       .to eq([{ type: 'input_image', image_url: "data:image/png;base64,#{Base64.strict_encode64('png')}" }])
   end
 
-  it 'rejects uploaded files and attachments other than images' do
-    document = RubyLLM::Attachment.new('https://example.com/contract.pdf')
+  it 'sends uploaded images by file ID and rejects attachments Decisions cannot express' do
     uploaded = RubyLLM::Attachment.new(
       RubyLLM::UploadedFile.new(id: 'file-123', filename: 'receipt.png', mime_type: 'image/png')
     )
+    document = RubyLLM::Attachment.new('https://example.com/contract.pdf')
 
+    expect(render(nil, with: [uploaded])[:input].first[:content]).to eq([{ type: 'input_image', file_id: 'file-123' }])
     expect { render(with: [document]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
-    expect { render(with: [uploaded]) }.to raise_error(RubyLLM::UnsupportedAttachmentError, /uploaded file/)
   end
 
-  it 'enforces Decisions limits without putting them in the domain' do
+  it 'leaves question limits and missing instructions to the API' do
     many = 65.times.to_h do |n|
       [n.to_s, RubyLLM::Judge::Question.new(n.to_s, type: :probability, instructions: 'Is this urgent?')]
     end
     single = RubyLLM::Judge::Question.new(:team, type: :choice, instructions: 'Which team?', criteria: { a: nil })
     bare = RubyLLM::Judge::Question.new(:urgent, type: :probability)
 
-    expect { render(questions: many) }.to raise_error(ArgumentError, /64/)
-    expect { render(questions: { 'team' => single }) }.to raise_error(ArgumentError, /two options/)
-    expect { render(questions: { 'urgent' => bare }) }.to raise_error(ArgumentError, /instructions for urgent/)
+    expect(render(questions: many)[:questions].size).to eq(65)
+    expect(render(questions: { 'team' => single })[:questions].first[:choices]).to eq([{ value: 'a' }])
+    expect(render(questions: { 'urgent' => bare })[:questions]).to eq([{ type: 'predicate', name: 'urgent' }])
   end
 
   it 'prevents provider options from replacing the questions, model, or input behind the parser' do
@@ -128,7 +128,7 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
     expect(render(provider_options: { service_tier: 'flex' })[:service_tier]).to eq('flex')
   end
 
-  it 'parses ordered answers into declared names and option types' do
+  it 'parses answers in question order into declared names and option types' do
     judgment = protocol.parse_judgment_response(response, questions:)
 
     expect(judgment.answers.keys).to eq([:urgent, 'team', :severity])
@@ -142,17 +142,21 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
     expect([judgment.tokens.input, judgment.tokens.output, judgment.tokens.cache_read]).to eq([100, 3, 20])
   end
 
-  it 'rejects answers that do not match the questions' do
-    partial_score = body['answers'][2].merge('probabilities' => body['answers'][2]['probabilities'].take(1))
+  it 'records reasoning tokens and tolerates missing usage' do
+    reasoning = body.merge('usage' => body['usage'].merge('output_tokens_details' => { 'reasoning_tokens' => 2 }))
+    parse = ->(parsed) { protocol.parse_judgment_response(instance_double(Faraday::Response, body: parsed), questions:) }
+
+    expect(parse.call(reasoning).tokens.thinking).to eq(2)
+    expect(parse.call(body.except('usage')).tokens.input).to be_nil
+  end
+
+  it 'turns a malformed body into a RubyLLM error' do
     invalid = [
-      body.merge('answers' => body['answers'].reverse),
+      'Internal error',
+      body.except('answers'),
+      body.except('model'),
       body.merge('answers' => body['answers'].take(2)),
-      body.merge('answers' => [body['answers'][0].merge('probability' => 1.2), *body['answers'].drop(1)]),
-      body.merge('answers' => [body['answers'][0], body['answers'][1].merge('choice' => 'sales'),
-                               body['answers'][2]]),
-      body.merge('answers' => [*body['answers'].take(2), body['answers'][2].merge('score' => 1.5)]),
-      body.merge('answers' => [*body['answers'].take(2), partial_score]),
-      body.except('usage')
+      body.merge('answers' => [body['answers'][0], body['answers'][1].merge('choice' => 'sales'), body['answers'][2]])
     ]
 
     invalid.each do |invalid_body|

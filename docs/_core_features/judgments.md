@@ -32,7 +32,7 @@ judgment = Urgency.judge("Please refund the duplicate charge today.")
 judgment.urgent.probability # => 0.96
 ```
 
-Configure your [TypeSafe API key]({% link _getting_started/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`, which answers the same questions through OpenAI Decisions. Judges use `config.default_judgment_model`, not the default chat model.
+Configure your [TypeSafe API key]({% link _getting_started/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. Judges use `config.default_judgment_model`, not the default chat model.
 
 Each call judges the input you supply. It does not retain conversation history. Put a conversation in the input when you want the questions to consider it.
 
@@ -55,7 +55,7 @@ class TicketTriage < RubyLLM::Judge
 end
 ```
 
-Question names identify answers in your code. Include the full meaning in the question or its answer descriptions; the model does not use the question name as an instruction. OpenAI accepts up to 64 questions per judgment.
+Question names identify answers in your code. Include the full meaning in the question or its answer descriptions; the model does not use the question name as an instruction.
 
 ### Probabilities
 
@@ -84,7 +84,7 @@ choice :department, "Which team?", {
 }
 ```
 
-Use `nil` when an option needs no description. Symbol options return Symbols; String options return Strings. TypeSafe supports up to 255 options per choice. OpenAI requires at least two.
+Use `nil` when an option needs no description. Symbol options return Symbols; String options return Strings. TypeSafe supports up to 255 options per choice.
 
 ### Scores
 
@@ -140,7 +140,7 @@ DocumentType.judge("Scanned by the mail room", with: "scan.png").type.choice
 DocumentType.judge(with: document.scan).type.choice
 ```
 
-`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`. Files uploaded with `RubyLLM.upload`, other attachment types, and models that judge text only raise `RubyLLM::UnsupportedAttachmentError`.
+`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`. Other attachment types, and models that judge text only, raise `RubyLLM::UnsupportedAttachmentError`.
 
 ## Structured Questions and Dynamic Values
 
