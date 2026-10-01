@@ -11,6 +11,7 @@ module RubyLLM
       def initialize
         @content = +''
         @citations = []
+        @citation_keys = {}
         @thinking_text = nil
         @thinking_signature = nil
         @tool_calls = {}
@@ -77,7 +78,11 @@ module RubyLLM
       # Providers like Perplexity repeat the full citation list on every chunk.
       def accumulate_citations(new_citations)
         new_citations.each do |citation|
-          @citations << citation unless @citations.include?(citation)
+          key = citation.to_h
+          next if @citation_keys.key?(key)
+
+          @citation_keys[key] = true
+          @citations << citation
         end
       end
 

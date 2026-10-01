@@ -102,6 +102,20 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       expect(message.citations).to eq([citation])
     end
 
+    it 'reads each citation of a repeated list once to deduplicate it' do
+      accumulator = described_class.new
+      build = -> { Array.new(5) { |index| RubyLLM::Citation.new(url: "https://example.com/#{index}") } }
+      first = build.call
+      repeated = build.call
+      repeated.each { |citation| allow(citation).to receive(:to_h).and_call_original }
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hello', citations: first))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: ' world', citations: repeated))
+
+      expect(accumulator.to_message(nil).citations).to eq(first)
+      expect(repeated).to all(have_received(:to_h).once)
+    end
+
     it 'retains distinct server events without ids and replaces repeated identified events' do
       accumulator = described_class.new
       calls = [
