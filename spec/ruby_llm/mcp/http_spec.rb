@@ -282,6 +282,20 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(calls).to have_been_made.once
       end
 
+      it 'resumes from an event ID and wait the server sends without data' do
+        call = nil
+        stub_method('tools/call', headers: events, body: lambda { |request|
+          call = request
+          "#{event(progress)}id: event-2\nretry: 200\n\n"
+        })
+        stub_request(:get, url).to_return(headers: events, body: ->(_) { event(answer(call), id: 'event-3') })
+        started = monotonic_now
+
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+        expect(monotonic_now - started).to be >= 0.2
+        expect(a_request(:get, url).with(headers: { 'Last-Event-ID' => 'event-2' })).to have_been_made.once
+      end
+
       it 'gives up on a stream without event IDs' do
         stub_method('tools/call', headers: events, body: event(progress))
 

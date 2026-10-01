@@ -215,12 +215,12 @@ module RubyLLM
       # request +id+, since servers may keep it open, and one that breaks
       # midway counts as ended.
       class Stream # :nodoc:
-        attr_reader :id, :headers, :last_event_id
+        attr_reader :id, :headers
 
         def initialize(id, &on_notification)
           @id = id
           @on_notification = on_notification
-          @parser = EventStreamParser::Parser.new
+          @parser = Transport::EventStreamParser.new
           @body = +''
           @replies = []
           @headers = {}
@@ -254,7 +254,7 @@ module RubyLLM
           end
           return unless @events
 
-          @parser.feed(chunk) { |_type, data, event_id, retry_after| receive_event(data, event_id, retry_after) }
+          @parser.feed(chunk) { |_type, data| receive_event(data) }
           throw self if answer
         end
 
@@ -271,8 +271,12 @@ module RubyLLM
           events? && answer.nil?
         end
 
+        def last_event_id
+          @parser.last_event_id unless @parser.last_event_id.empty?
+        end
+
         def retry_after
-          @retry_after / 1000.0 if @retry_after
+          @parser.reconnection_time / 1000.0 if @parser.reconnection_time
         end
 
         private
@@ -281,9 +285,7 @@ module RubyLLM
           @events == true
         end
 
-        def receive_event(data, event_id, retry_after)
-          @last_event_id = event_id unless event_id.empty?
-          @retry_after = retry_after if retry_after
+        def receive_event(data)
           receive(data) unless data.empty?
         end
 

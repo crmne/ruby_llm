@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'event_stream_parser'
 require 'faraday'
 require 'json'
 
@@ -9,7 +8,7 @@ module RubyLLM
     module Streaming # :nodoc: all
       StreamState = Struct.new(:parser, :buffer) do
         def initialize
-          super(EventStreamParser::Parser.new, +'')
+          super(Transport::EventStreamParser.new, +'')
         end
       end
 

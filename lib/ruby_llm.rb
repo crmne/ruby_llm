@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'base64'
-require 'event_stream_parser'
 require 'faraday'
 require 'faraday/multipart'
 require 'faraday/retry'
