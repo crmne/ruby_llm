@@ -503,6 +503,8 @@ bin/rails db:migrate
 
 Plain Ruby keeps credentials in memory. Set `config.mcp_credential_store` to an object with `read(key)`, `write(key, data, owner:)`, and `delete(key)` to keep them elsewhere.
 
+Some authorization servers rotate refresh tokens and reject one that was used twice, so RubyLLM refreshes each grant in one place at a time. Threads take turns, and a worker that waited uses the token the first one received. In Rails, a row lock does the same across processes. A store of your own that several processes share should also respond to `synchronize(key)`, running the block while no other process holds that key.
+
 ### Client Registration
 
 Authorization servers that support client ID metadata documents can identify your app by a URL instead of a registration. Serve the document from your app and point RubyLLM at it:

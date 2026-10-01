@@ -165,7 +165,10 @@ module RubyLLM
     # Store for the OAuth credentials of MCP servers. Rails apps keep them
     # in the +ruby_llm_mcp_credentials+ table automatically. A store
     # responds to +read(key)+, +write(key, data, owner:)+, and
-    # +delete(key)+. Default: +nil+ (keep them in memory).
+    # +delete(key)+. A store that several processes share also responds
+    # to +synchronize(key)+, running the block while no other process
+    # holds +key+, so only one of them refreshes a token at a time.
+    # Default: +nil+ (keep them in memory).
     option :mcp_credential_store, nil
 
     ##

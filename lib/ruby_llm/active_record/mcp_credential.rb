@@ -27,6 +27,14 @@ module RubyLLM
         def delete(key)
           where(key:).delete_all
         end
+
+        # Updating the row locks it on every adapter; SQLite ignores FOR UPDATE.
+        def synchronize(key)
+          transaction do
+            where(key:).touch_all
+            yield
+          end
+        end
       end
     end
   end

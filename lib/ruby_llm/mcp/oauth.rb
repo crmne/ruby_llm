@@ -24,8 +24,17 @@ module RubyLLM
         '%<path>s/.well-known/openid-configuration'
       ].freeze
 
+      @refreshes = Hash.new { |refreshes, key| refreshes[key] = Mutex.new }
+      @refreshes_lock = Mutex.new
+
       def self.memory_store
         @memory_store ||= MemoryStore.new
+      end
+
+      # Runs the block while no other thread in this process refreshes the
+      # credentials stored under +key+.
+      def self.refreshing(key, &)
+        @refreshes_lock.synchronize { @refreshes[key] }.synchronize(&)
       end
 
       # Reads the parameters of a Bearer WWW-Authenticate challenge.
@@ -59,8 +68,15 @@ module RubyLLM
       def refresh
         return false unless credential&.key?('refresh_token')
 
-        store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
-        true
+        used = credential['access_token']
+        synchronize do
+          @credential = store.read(key)
+          next true if credential && credential['access_token'] != used
+          next false unless credential&.key?('refresh_token')
+
+          store_tokens(token_request('refresh_token', refresh_token: credential['refresh_token']))
+          true
+        end
       rescue Error
         false
       end
@@ -104,6 +120,10 @@ module RubyLLM
       def write(data)
         @credential = data
         store.write(key, data, owner: @owner)
+      end
+
+      def synchronize(&block)
+        self.class.refreshing(key) { store.respond_to?(:synchronize) ? store.synchronize(key, &block) : yield }
       end
 
       def store_tokens(tokens, client: nil)

@@ -119,6 +119,49 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(store.read(key)['access_token']).to eq('access-2')
   end
 
+  describe 'refreshing a rotating token' do
+    def store = RubyLLM.config.mcp_credential_store
+    def key = "ada@#{server_url}"
+
+    def rotating_token_endpoint
+      used = Set.new
+      stub_request(:post, 'https://auth.example.com/token').to_return do |request|
+        reused = !used.add?(URI.decode_www_form(request.body).to_h['refresh_token'])
+        sleep 0.2
+        next { status: 400, body: { error: 'invalid_grant' }.to_json } if reused
+
+        { body: { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 }.to_json }
+      end
+    end
+
+    def refreshes
+      a_request(:post, 'https://auth.example.com/token').with { |request| request.body.include?('refresh_token') }
+    end
+
+    before { linear.authorize(callback(linear.authorization_url(redirect_uri:))) }
+
+    it 'refreshes once when threads refresh together' do
+      store.write(key, store.read(key).merge('expires_at' => 0))
+      rotating_token_endpoint
+
+      tokens = Array.new(2) { Thread.new { linear_class.new(user: 'ada').send(:oauth).access_token } }.map(&:value)
+
+      expect(tokens).to eq(%w[access-2 access-2])
+      expect(refreshes).to have_been_made.once
+      expect(store.read(key)['refresh_token']).to eq('refresh-2')
+    end
+
+    it 'uses the token another worker refreshed since the server rejected its own' do
+      oauth = linear_class.new(user: 'ada').send(:oauth)
+      oauth.access_token
+      store.write(key, store.read(key).merge('access_token' => 'access-2', 'refresh_token' => 'refresh-2'))
+
+      expect(oauth.refresh).to be(true)
+      expect(oauth.access_token).to eq('access-2')
+      expect(refreshes).not_to have_been_made
+    end
+  end
+
   it 'refuses a callback with the wrong state' do
     url = linear.authorization_url(redirect_uri:)
 

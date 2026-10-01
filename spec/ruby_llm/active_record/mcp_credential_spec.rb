@@ -18,6 +18,41 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
       .not_to include('secret-token')
   end
 
+  it 'lets one process refresh a grant while the others wait for its token' do
+    skip 'needs fork' unless RUBY_ENGINE == 'ruby'
+    server_url = 'https://mcp.example.com/mcp'
+    key = "#{owner.to_gid}@#{server_url}"
+    described_class.write(key, {
+                            'access_token' => 'access-1', 'refresh_token' => 'refresh-1', 'expires_at' => 0,
+                            'client_id' => 'client', 'issuer' => 'https://auth.example.com',
+                            'server' => { 'issuer' => 'https://auth.example.com',
+                                          'token_endpoint' => 'https://auth.example.com/token' }
+                          }, owner:)
+    refreshes, refreshed = IO.pipe
+    tokens, token = IO.pipe
+    stub_request(:post, 'https://auth.example.com/token').to_return do
+      refreshed.puts('refresh')
+      sleep 0.2
+      { body: { access_token: 'access-2', refresh_token: 'refresh-2', expires_in: 3600 }.to_json }
+    end
+    described_class.connection_pool.disconnect!
+
+    workers = Array.new(2) do
+      fork do
+        token.puts RubyLLM::MCP::OAuth.new(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil)
+                                      .access_token
+      ensure
+        exit!
+      end
+    end
+    workers.each { |worker| Process.wait(worker) }
+    [refreshed, token].each(&:close)
+
+    expect(tokens.read.split).to eq(%w[access-2 access-2])
+    expect(refreshes.read.split).to eq(['refresh'])
+    expect(described_class.read(key)['refresh_token']).to eq('refresh-2')
+  end
+
   it 'replaces and deletes credentials' do
     described_class.write('key', { 'access_token' => 'first' })
     described_class.write('key', { 'access_token' => 'second' })
