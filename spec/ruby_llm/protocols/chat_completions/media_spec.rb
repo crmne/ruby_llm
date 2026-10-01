@@ -65,20 +65,24 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
       expect(formatted.second[:image_url][:detail]).to eq('low')
     end
 
-    it 'maps medium resolution to high image detail even when original detail is enabled' do
-      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :medium)
+    %i[medium high ultra_high].each do |resolution|
+      it "maps #{resolution} resolution to high detail even when original detail is enabled" do
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution:)
 
-      formatted = described_class.format_content('Describe this', [image], original_detail: true)
+        protocol = RubyLLM::Protocols::ChatCompletions.new(RubyLLM::Providers::OpenAI.allocate)
+        formatted = protocol.send(:format_content, 'Describe this', [image])
 
-      expect(formatted.second[:image_url][:detail]).to eq('high')
+        expect(formatted.second[:image_url][:detail]).to eq('high')
+      end
     end
 
-    { openai: 'original', azure: 'original', xai: 'high', openrouter: 'high' }.each do |provider_name, detail|
-      it "maps ultra high resolution to #{detail} image detail for #{provider_name}" do
-        provider = instance_double(RubyLLM::Provider, slug: provider_name.to_s, config: RubyLLM.config, connection: nil)
-        protocol = RubyLLM::Protocols::ChatCompletions.new(provider)
-        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__),
-                                        resolution: :ultra_high)
+    {
+      RubyLLM::Providers::OpenAI => 'original', RubyLLM::Providers::Azure => 'original',
+      RubyLLM::Providers::XAI => 'high', RubyLLM::Providers::OpenRouter => 'high'
+    }.each do |provider_class, detail|
+      it "maps original resolution to #{detail} image detail for #{provider_class}" do
+        protocol = provider_class.protocols.fetch(:chat_completions).new(provider_class.allocate)
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
 
         formatted = protocol.send(:format_content, 'Read the small print', [image])
 

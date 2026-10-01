@@ -208,9 +208,9 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
   describe '.format_messages' do
     it 'sends OpenAI tool-returned images at original detail' do
-      provider = instance_double(RubyLLM::Provider, slug: 'openai', config: RubyLLM.config, connection: nil)
+      provider = RubyLLM::Providers::OpenAI.allocate
       protocol = RubyLLM::Protocols::ChatCompletions.new(provider)
-      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
       message = RubyLLM::Message.new(role: :tool, content: 'Page image', tool_call_id: 'call_1', attachments: [image])
 
       formatted = protocol.send(:format_messages, [message])

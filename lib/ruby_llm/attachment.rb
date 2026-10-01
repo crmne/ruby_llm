@@ -31,11 +31,11 @@ module RubyLLM
     attr_reader :mime_type
 
     # The requested media resolution: +:low+, +:medium+, +:high+,
-    # +:ultra_high+, or +nil+ for the provider default.
+    # +:ultra_high+, +:original+, or +nil+ for the provider default.
     attr_reader :resolution
 
     # Media resolutions accepted by +resolution:+.
-    RESOLUTIONS = %i[low medium high ultra_high].freeze
+    RESOLUTIONS = %i[low medium high ultra_high original].freeze
 
     # File extensions recognized as document attachments when the MIME type
     # alone is inconclusive.
@@ -77,7 +77,9 @@ module RubyLLM
     #   RubyLLM::Attachment.new(StringIO.new(data), filename: "report.pdf")
     #
     # +resolution:+ asks the provider to spend more or fewer tokens on an
-    # image, video, or PDF. Providers without the setting ignore it.
+    # image, video, or PDF. +:original+ requests original image detail where
+    # supported, or the highest available resolution. Providers without
+    # the setting ignore it.
     #
     #   RubyLLM::Attachment.new("page-3.png", resolution: :ultra_high)
     #

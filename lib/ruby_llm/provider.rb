@@ -110,6 +110,10 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
+    def original_image_detail? # :nodoc:
+      false
+    end
+
     def protocols # :nodoc:
       self.class.protocols
     end

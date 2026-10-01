@@ -8,14 +8,13 @@ module RubyLLM
         module_function
 
         def format_content(content, attachments = [], document_attachments: :pdf, image_attachments: true,
-                           audio_attachments: true, original_detail: %w[openai azure].include?(@provider&.slug))
+                           audio_attachments: true)
           format_parts(content, attachments) do |attachment|
             format_attachment(
               attachment,
               document_attachments:,
               image_attachments:,
-              audio_attachments:,
-              original_detail:
+              audio_attachments:
             )
           end
         end
@@ -35,15 +34,14 @@ module RubyLLM
           parts
         end
 
-        def format_attachment(attachment, document_attachments:, image_attachments:, audio_attachments:,
-                              original_detail: false)
+        def format_attachment(attachment, document_attachments:, image_attachments:, audio_attachments:)
           return format_provider_file(attachment, document_attachments:) if attachment.provider_file?
 
           case attachment.type
           when :image
             raise UnsupportedAttachmentError, attachment.mime_type unless image_attachments
 
-            with_image_detail(format_image(attachment), attachment, original_detail:)
+            with_image_detail(format_image(attachment), attachment)
           when :audio
             raise UnsupportedAttachmentError, attachment.mime_type unless audio_attachments
 
@@ -66,7 +64,7 @@ module RubyLLM
           }
         end
 
-        def with_image_detail(part, image, original_detail: false)
+        def with_image_detail(part, image, original_detail: @provider&.original_image_detail?)
           return part unless image.resolution
 
           part[:image_url][:detail] = image_detail(image.resolution, original_detail:)
@@ -75,7 +73,7 @@ module RubyLLM
 
         def image_detail(resolution, original_detail: false)
           return 'low' if resolution == :low
-          return 'original' if resolution == :ultra_high && original_detail
+          return 'original' if resolution == :original && original_detail
 
           'high'
         end

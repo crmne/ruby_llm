@@ -60,20 +60,22 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
       expect(formatted.second[:detail]).to eq('low')
     end
 
-    it 'keeps ultra high resolution at high detail unless original detail is enabled' do
+    it 'keeps ultra high resolution at high detail even when original detail is enabled' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
 
-      formatted = described_class.format_content('Describe this', [image])
+      protocol = RubyLLM::Protocols::Responses.new(RubyLLM::Providers::OpenAI.allocate)
+      formatted = protocol.send(:format_content, 'Describe this', [image])
 
       expect(formatted.second[:detail]).to eq('high')
     end
 
-    { openai: 'original', azure: 'original', xai: 'high', openrouter: 'high' }.each do |provider_name, detail|
-      it "maps ultra high resolution to #{detail} image detail for #{provider_name}" do
-        provider = instance_double(RubyLLM::Provider, slug: provider_name.to_s, config: RubyLLM.config, connection: nil)
-        protocol = RubyLLM::Protocols::Responses.new(provider)
-        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__),
-                                        resolution: :ultra_high)
+    {
+      RubyLLM::Providers::OpenAI => 'original', RubyLLM::Providers::Azure => 'original',
+      RubyLLM::Providers::XAI => 'high', RubyLLM::Providers::OpenRouter => 'high'
+    }.each do |provider_class, detail|
+      it "maps original resolution to #{detail} image detail for #{provider_class}" do
+        protocol = provider_class.protocols.fetch(:responses).new(provider_class.allocate)
+        image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
 
         formatted = protocol.send(:format_content, 'Read the small print', [image])
 

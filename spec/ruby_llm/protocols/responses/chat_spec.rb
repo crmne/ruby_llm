@@ -11,11 +11,11 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
   end
 
   describe '#render_payload' do
-    { openai: 'original', xai: 'high' }.each do |provider_name, detail|
-      it "preserves #{detail} detail for #{provider_name} tool-returned images" do
-        protocol.instance_variable_set(:@provider, instance_double(RubyLLM::Provider, slug: provider_name.to_s))
+    { RubyLLM::Providers::OpenAI => 'original', RubyLLM::Providers::XAI => 'high' }.each do |provider_class, detail|
+      it "preserves #{detail} detail for #{provider_class} tool-returned images" do
+        protocol.instance_variable_set(:@provider, provider_class.allocate)
         image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__),
-                                        resolution: :ultra_high)
+                                        resolution: :original)
         message = RubyLLM::Message.new(role: :tool, content: 'Page image', tool_call_id: 'call_1', attachments: [image])
 
         payload = render_payload([message])

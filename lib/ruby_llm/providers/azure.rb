@@ -13,6 +13,10 @@ module RubyLLM
       protocol :files, Protocols::Azure::Files
       protocol :cohere, Azure::Cohere
 
+      def original_image_detail? # :nodoc:
+        true
+      end
+
       def api_base
         @config.azure_api_base
       end
