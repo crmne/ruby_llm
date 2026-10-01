@@ -94,11 +94,11 @@ module RubyLLM
         ].freeze
 
         def parse_error(provider:, response:)
+          return if (200..399).cover?(response.status)
+
           message = provider&.parse_error(response)
 
           case response.status
-          when 200..399
-            message
           when 400
             raise_bad_request(message, response)
           when 401
