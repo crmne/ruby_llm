@@ -75,10 +75,9 @@ module RubyLLM
           require 'google/cloud/storage'
 
           options = { project_id: @config.vertexai_project_id }
-          if @config.vertexai_service_account_key
-            options[:credentials] =
-              JSON.parse(@config.vertexai_service_account_key)
-          end
+          # Without a key, Cloud Storage resolves its own credentials,
+          # including settings of its own such as STORAGE_KEYFILE.
+          options[:credentials] = @provider.google_credentials if @config.vertexai_service_account_key
           ::Google::Cloud::Storage.new(**options)
         rescue LoadError
           raise Error, 'The google-cloud-storage gem is required for Vertex AI file uploads. ' \

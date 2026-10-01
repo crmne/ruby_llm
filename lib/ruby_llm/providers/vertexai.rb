@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'stringio'
-
 module RubyLLM
   module Providers
     # Google Vertex AI implementation
@@ -68,11 +66,6 @@ module RubyLLM
         "#{location_path}/publishers/#{publisher}/models/#{model}"
       end
 
-      def initialize(config)
-        super
-        @authorizer = nil
-      end
-
       def batch_protocol
         batch_protocol_for_name(:gemini)
       end
@@ -137,12 +130,15 @@ module RubyLLM
       # when googleauth is missing, evaluating the constant would replace
       # the helpful install error with a NameError.
       def headers
-        initialize_authorizer unless @authorizer
-        @authorizer.apply({})
+        Credentials.for(@config).headers
       rescue StandardError => e
         raise unless defined?(Google::Auth::AuthorizationError) && e.is_a?(Google::Auth::AuthorizationError)
 
         raise UnauthorizedError, "Invalid Google Cloud credentials for Vertex AI: #{e.message}"
+      end
+
+      def google_credentials # :nodoc:
+        Credentials.for(@config).authorizer
       end
 
       class << self
@@ -170,22 +166,6 @@ module RubyLLM
         when 'gemini-3.5-transcribe-preview' then protocols[:transcription]
         when 'gemini-3.5-transcribe-live-preview' then protocols[:live_transcription]
         end
-      end
-
-      def initialize_authorizer
-        require 'googleauth'
-        @authorizer =
-          if @config.vertexai_service_account_key
-            ::Google::Auth::ServiceAccountCredentials.make_creds(
-              json_key_io: StringIO.new(@config.vertexai_service_account_key),
-              scope: SCOPES
-            )
-          else
-            ::Google::Auth.get_application_default(SCOPES)
-          end
-      rescue LoadError
-        raise Error,
-              'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
       end
 
       def batch_protocol_name_for(model)
