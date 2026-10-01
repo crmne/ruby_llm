@@ -82,12 +82,13 @@ module RubyLLM
 
       def post(url, payload, usage: nil, idempotent: true, stream: false, &)
         instrument_request(:post, url) do
-          connection(stream:).post url, payload do |req|
+          response = connection(stream:).post url, payload do |req|
             prepare(req)
             set_usage_tracker(req, usage) if usage
             mark_non_idempotent(req) unless idempotent
             yield req if block_given?
           end
+          release_request(response)
         end
       end
 
@@ -102,10 +103,11 @@ module RubyLLM
 
       def patch(url, payload, &)
         instrument_request(:patch, url) do
-          connection.patch url, payload do |req|
+          response = connection.patch url, payload do |req|
             prepare(req)
             yield req if block_given?
           end
+          release_request(response)
         end
       end
 
@@ -132,6 +134,15 @@ module RubyLLM
           event[:status] = response.status if response.respond_to?(:status)
           response
         end
+      end
+
+      # The response outlives the call as Message#raw and other results. A chat
+      # request body is the whole serialized conversation, and a streaming
+      # callback closes over the payload it was built from.
+      def release_request(response)
+        response.env.request_body = nil
+        response.env.request.on_data = nil
+        response
       end
 
       def settings_for(api_base)

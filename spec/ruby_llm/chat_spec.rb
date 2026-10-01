@@ -31,7 +31,9 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.raw.body).to be_present
         expect(response.raw.status).to be_present
         expect(response.raw.status).to eq(200)
-        expect(response.raw.env.request_body).to be_present
+        expect(response.raw.env.request_body).to be_nil
+        expect(a_request(:post, //).with { |request| request.body.include?('What is the capital of France?') })
+          .to have_been_made.at_least_once
       end
 
       it "#{provider}/#{model} can handle multi-turn conversations" do

@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How to upgrade a 2.0 application and its Rails schema to 2.1.
 * How to move Perplexity chat from Sonar to presets.
 * Which provider limits now raise the provider's error.
+* Where to read the request a chat sends.
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
@@ -56,7 +57,7 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code, except to move Perplexity chat off Sonar and to rescue provider errors where RubyLLM used to check a provider's limits.
+2.1 does not require changes to your code, except to move Perplexity chat off Sonar, to rescue provider errors where RubyLLM used to check a provider's limits, and to stop reading request bodies from raw responses.
 
 ## Move Perplexity Chat to Presets
 
@@ -125,6 +126,15 @@ RubyLLM no longer copies provider limits into checks of its own. A request it us
 If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
 
 RubyLLM no longer drops an explicit option the provider might reject, either. `RubyLLM.paint` on xAI now sends `size:`, so xAI's error replaces an image at its default size. Leave `size:` unset for xAI.
+
+## Read Requests Before They Are Sent
+
+A raw response no longer keeps the request it answered: `response.raw.env.request_body` is `nil`, so a conversation does not hold a serialized copy of its history for every reply. Read the request from the chat instead:
+
+```ruby
+chat.render
+chat.before_request { |payload| Rails.logger.debug(payload) }
+```
 
 ## Upgrade the Rails Schema
 

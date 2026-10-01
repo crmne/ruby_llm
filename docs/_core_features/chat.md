@@ -160,7 +160,7 @@ response = chat.ask("What is the capital of France?")
 puts response.raw.body
 ```
 
-The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
+The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code. It does not keep the request it answered, so a long conversation does not hold a copy of every request it sent. To see what a chat sends, use `render` or a `before_request` hook, described in [Advanced Request Control]({% link _core_features/chat-request-control.md %}#request-hooks).
 
 ## Finish Reasons
 
