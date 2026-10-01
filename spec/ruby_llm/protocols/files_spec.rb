@@ -27,12 +27,10 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect(payload.fetch(:expires_after)).to eq(anchor: 'created_at', seconds: 3600)
     end
 
-    it 'requires a purpose' do
-      expect { protocol.send(:render_upload_payload, RubyLLM::Attachment.new(fixture_path)) }
-        .to raise_error(
-          ArgumentError,
-          'OpenAI file uploads require purpose: assistants, batch, fine-tune, vision, user_data, evals'
-        )
+    it 'leaves the purpose requirement to OpenAI' do
+      payload = protocol.send(:render_upload_payload, RubyLLM::Attachment.new(fixture_path))
+
+      expect(payload).not_to have_key(:purpose)
     end
 
     it 'normalizes file metadata' do

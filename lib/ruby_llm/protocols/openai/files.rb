@@ -5,18 +5,11 @@ module RubyLLM
     module OpenAI
       # OpenAI Files API.
       class Files < Protocols::Files
-        UPLOAD_PURPOSES = %w[assistants batch fine-tune vision user_data evals].freeze
-
         private
 
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                   display_name: nil, uri: nil, content_type: nil)
-          unless purpose
-            raise ArgumentError, "#{@provider.name} file uploads require purpose: " \
-                                 "#{UPLOAD_PURPOSES.join(', ')}"
-          end
-
           multipart_payload(attachment, purpose:, expires_after: expires_after(expires_in))
         end
 

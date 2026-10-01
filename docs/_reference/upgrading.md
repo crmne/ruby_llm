@@ -104,13 +104,15 @@ RubyLLM.chat(model: "perplexity/sonar", provider: :perplexity).with_provider_too
 
 ## Rescue Provider Errors for Provider Limits
 
-RubyLLM no longer copies provider limits into checks of its own. A request it used to refuse now reaches the provider, and the provider's error names the limit. These calls raised `ArgumentError` before the request in 2.0. Now the provider decides, and a request it rejects raises `RubyLLM::BadRequestError` or another `RubyLLM::Error`:
+RubyLLM no longer copies provider limits into checks of its own. A request it used to refuse now reaches the provider, and the provider's error names the limit. These calls raised `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` before the request in 2.0. Now the provider decides, and a request it rejects raises `RubyLLM::BadRequestError` or another `RubyLLM::Error`:
 
 * `RubyLLM.rerank` on Bedrock or Vertex AI with no documents, more than 1,000 documents, an empty query, or a `top_n:` outside the provider's range.
 * `RubyLLM.embed` with more than one image on Cohere Embed v3.
 * Cohere embedding batches with `dimensions:`.
+* `RubyLLM.upload` on OpenAI or Azure without `purpose:`.
+* `RubyLLM.upload` on DeepSeek with a file that is not an image, a file over 64 MiB, or a `purpose:` other than `"user_data"`.
 
-If you rescue `ArgumentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
+If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
 
 ## Upgrade the Rails Schema
 

@@ -20,21 +20,10 @@ RSpec.describe RubyLLM::Protocols::DeepSeek::Files do
     expect(provider).to be_files
   end
 
-  it 'rejects non-image files' do
+  it 'leaves file types, sizes, and explicit purposes to DeepSeek' do
     text = RubyLLM::Attachment.new(StringIO.new('Ruby'), filename: 'ruby.txt')
 
-    expect { protocol.send(:render_upload_payload, text) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
-  end
-
-  it 'rejects unsupported file purposes' do
-    expect { protocol.send(:render_upload_payload, image, purpose: 'batch') }
-      .to raise_error(ArgumentError, /user_data/)
-  end
-
-  it 'rejects images larger than the upload limit' do
-    allow(protocol).to receive(:file_size).with(image).and_return((64 * 1024 * 1024) + 1)
-
-    expect { protocol.send(:render_upload_payload, image) }.to raise_error(ArgumentError, /64 MiB/)
+    expect(protocol.send(:render_upload_payload, text, purpose: 'batch')).to include(purpose: 'batch')
   end
 
   it 'reports that stored images cannot be downloaded' do
