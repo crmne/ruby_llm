@@ -11,16 +11,7 @@ module RubyLLM
         end
 
         def parse_list_models_response(response, slug)
-          body = response.body
-          unless body.is_a?(Hash) && body['models'].is_a?(Array)
-            raise Error.new('System One returned an invalid model catalog', response:)
-          end
-
-          body['models'].map do |entry|
-            unless entry.is_a?(Hash) && entry['name'].is_a?(String) && !entry['name'].empty?
-              raise Error.new('System One returned a model without a name', response:)
-            end
-
+          Array(response.body['models']).map do |entry|
             Model.new(
               id: entry['name'], name: entry['name'], provider: slug,
               created_at: entry['release_date'],
