@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+eval_gemfile File.expand_path('../Gemfile', __dir__)
+
+group :benchmark do
+  # The keep-alive adapters the connection guide recommends, so the
+  # connection benchmark measures what applications configure.
+  gem 'async-http-faraday'
+  gem 'faraday-net_http_persistent'
+
+  # The dummy app of RubyLLM 2.0.0 loads it, so its Rails benchmarks boot.
+  gem 'strong_migrations', '~> 2.5'
+end
