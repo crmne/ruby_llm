@@ -1,0 +1,30 @@
+name: Board
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Show where cards would go without moving them
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: board
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: crmne/copilot-triage@v0
+        with:
+          mode: sweep
+          project-token: ${{ secrets.TRIAGE_PROJECT_TOKEN }}
+          dry-run: ${{ inputs.dry_run || false }}
