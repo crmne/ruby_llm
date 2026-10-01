@@ -330,10 +330,10 @@ module RubyLLM
       Moderation.moderate(...)
     end
 
-    # Judges text, structured data, or images against typed questions and returns a
-    # Judgment. Accepts the same arguments as Judge.judge. Subclass Judge to
-    # define reusable questions with probability, choice, and score. Uses
-    # Configuration#default_judgment_model unless a model is supplied.
+    # Judges text, structured data, or images against typed questions and
+    # returns a Judgment. Accepts the same arguments as Judge.judge. Subclass
+    # Judge to define reusable questions with probability, choice, and score.
+    # Uses Configuration#default_judgment_model unless a model is supplied.
     #
     #   RubyLLM.judge("Please help today",
     #     questions: { urgent: { type: :probability, instructions: "Is this urgent?" } })

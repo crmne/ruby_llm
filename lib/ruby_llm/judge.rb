@@ -91,9 +91,8 @@ module RubyLLM
       end
 
       # Judges text, a Hash, an Array, or images passed as +with:+ and returns
-      # a Judgment. A block or proc
-      # can supply the input. Declared inputs are accepted as keyword arguments;
-      # remaining options are forwarded to #judge.
+      # a Judgment. A block or proc can supply the input. Declared inputs are
+      # accepted as keyword arguments; remaining options are forwarded to #judge.
       #
       #   TicketTriage.judge do
       #     message "Please refund the duplicate charge today."
