@@ -66,17 +66,11 @@ RSpec.describe RubyLLM::Transport::Connection do
     end
 
     it 'shares the adapter across fibers' do
-      skip 'async runs on MRI' unless RUBY_ENGINE == 'ruby'
-      require 'async'
       llm = context
-      experimental = Warning[:experimental]
-      Warning[:experimental] = false
 
-      Sync { Array.new(4) { Async { embed(llm) } }.each(&:wait) }
+      in_reactor { |task| Array.new(4) { task.async { embed(llm) } }.each(&:wait) }
 
       expect(server.requests).to eq([1] * 4)
-    ensure
-      Warning[:experimental] = experimental unless experimental.nil?
     end
 
     it 'never sends a forked child through the parent socket' do

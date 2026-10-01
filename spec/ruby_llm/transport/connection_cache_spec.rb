@@ -41,19 +41,56 @@ RSpec.describe RubyLLM::Transport::ConnectionCache do
     expect(fetch(:openai)).not_to be(first)
   end
 
-  it 'builds a connection once when threads ask for it together' do
+  it 'hands every caller that races to build a connection the first one stored' do
     connections = Array.new(8) do
       Thread.new do
         cache.fetch(:openai) do
           sleep 0.05
-          builds << :openai
           Object.new
         end
       end
     end.map(&:value)
 
     expect(connections.uniq.size).to eq(1)
-    expect(builds).to eq([:openai])
+    expect(fetch(:openai)).to be(connections.first)
+  end
+
+  it 'lets other threads through while a connection is being built' do
+    order = Queue.new
+    building = Queue.new
+    slow = Thread.new do
+      cache.fetch(:slow) do
+        building << true
+        sleep 0.2
+        order << :slow_built
+        Object.new
+      end
+    end
+    building.pop
+    fetch(:fast)
+    order << :fast_returned
+    slow.join
+
+    expect(Array.new(order.size) { order.pop }).to eq(%i[fast_returned slow_built])
+  end
+
+  it 'lets other fibers through while a connection is being built' do
+    order = []
+
+    in_reactor do |task|
+      slow = task.async do
+        cache.fetch(:slow) do
+          sleep 0.05
+          order << :slow_built
+          Object.new
+        end
+      end
+      task.async { fetch(:fast) }.wait
+      order << :fast_returned
+      slow.wait
+    end
+
+    expect(order).to eq(%i[fast_returned slow_built])
   end
 
   it 'builds new connections in a forked child instead of reusing the parent sockets' do

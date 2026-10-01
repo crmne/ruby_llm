@@ -216,6 +216,38 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(a_request(:post, url).with(headers: { 'Authorization' => 'Bearer tenant-bb' })).to have_been_made.once
     end
 
+    it 'keep the responses of many fibers apart in one reactor' do
+      stub_request(:post, url).to_return do |request|
+        sleep(rand / 200)
+        input = JSON.parse(request.body)['input']
+        { status: 200, headers: { 'Content-Type' => 'application/json' },
+          body: JSON.generate(data: [{ embedding: [input.length.to_f] }],
+                              usage: { prompt_tokens: input.length, total_tokens: input.length }) }
+      end
+      stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_return do |request|
+        sleep(rand / 200)
+        content = JSON.parse(request.body)['messages'].last['content']
+        { status: 200, body: "data: #{JSON.generate(choices: [{ delta: { content: } }])}\n\ndata: [DONE]\n\n" }
+      end
+
+      results = in_reactor do |task|
+        Array.new(20) do |index|
+          task.async do
+            text = "fiber #{index}"
+            next RubyLLM.embed(text, model: model_for(:openai, :embedding)).tokens.input if index.odd?
+
+            chunks = []
+            RubyLLM.chat(model: model_for(:openai), protocol: :chat_completions).ask(text) do |chunk|
+              chunks << chunk.content
+            end
+            chunks.join
+          end
+        end.map(&:wait)
+      end
+
+      expect(results).to eq(Array.new(20) { |index| index.odd? ? "fiber #{index}".length : "fiber #{index}" })
+    end
+
     it 'stream to their own handlers while they are in flight together' do
       stub_request(:post, url).to_return do |request|
         hold_until_all_arrive
