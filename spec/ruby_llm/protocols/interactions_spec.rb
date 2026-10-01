@@ -147,7 +147,7 @@ RSpec.describe RubyLLM::Protocols::Interactions do
      RubyLLM::Thinking::Config.new(budget: 0)].each do |config|
       expect { protocol.send(:render_interaction_thinking, config) }.to raise_error(ArgumentError, /thinking-off/)
     end
-    expect { chat.with_thinking(effort: :xhigh).render }.to raise_error(ArgumentError, /effort must be/)
+    expect(chat.with_thinking(effort: :xhigh).render[:generation_config]).to include(thinking_level: 'xhigh')
     expect { chat.with_thinking(budget: 1024).render }.to raise_error(ArgumentError, /not a token budget/)
     expect { chat.with_thinking(display: :full).render }.to raise_error(ArgumentError, /display must be/)
   end

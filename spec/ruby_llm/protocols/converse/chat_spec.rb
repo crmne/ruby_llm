@@ -336,10 +336,13 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         )
       end
 
-      it 'refuses a max_output_tokens that leaves no room for the smallest budget' do
-        expect do
-          render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high), max_output_tokens: 500)
-        end.to raise_error(ArgumentError, /at least 1024 tokens.*max_output_tokens: 500.*room for 499/m)
+      it 'sends the smallest budget when max_output_tokens leaves no room and lets Bedrock decide' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high),
+                                 max_output_tokens: 500)
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 1024 }
+        )
       end
 
       it 'still clamps under max_output_tokens when the model states no minimum' do

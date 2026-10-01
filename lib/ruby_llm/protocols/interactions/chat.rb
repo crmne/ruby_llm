@@ -34,9 +34,6 @@ module RubyLLM
             raise ArgumentError, 'Gemini Interactions does not expose a thinking-off control'
           end
           raise ArgumentError, 'Gemini Interactions accepts thinking effort, not a token budget' if thinking.budget
-          if thinking.effort && !%i[minimal low medium high].include?(thinking.effort)
-            raise ArgumentError, 'Gemini Interactions thinking effort must be minimal, low, medium, or high'
-          end
 
           { thinking_level: thinking.effort&.to_s,
             thinking_summaries: render_interaction_summaries(thinking.display) }.compact

@@ -424,7 +424,7 @@ module RubyLLM
           return nil if effort.empty? || effort == 'none'
 
           schema = reasoning_budget_schema(model)
-          schema && effort_budget_tokens(effort, schema, model, max_output_tokens)
+          schema && effort_budget_tokens(effort, schema, max_output_tokens)
         end
 
         # Bedrock only publishes Converse metadata for some regional entries, so use the
@@ -466,24 +466,14 @@ module RubyLLM
         # Models that take a budget reject reasoning_effort, so effort has to become a budget.
         # Bedrock names the levels of an enumerated budget after the efforts they stand for;
         # otherwise the effort spans the range the schema allows.
-        def effort_budget_tokens(effort, schema, model, max_output_tokens)
+        def effort_budget_tokens(effort, schema, max_output_tokens)
           budget = enumerated_budget(effort, schema) || ranged_budget(effort, schema)
           return nil unless budget
 
           minimum = schema[:minimum].is_a?(Integer) ? schema[:minimum] : MINIMUM_BUDGET_TOKENS
           return [budget, minimum].max unless max_output_tokens
 
-          budget.clamp(minimum, budget_ceiling(model, minimum, max_output_tokens))
-        end
-
-        # Bedrock rejects a budget that leaves no room for the answer.
-        def budget_ceiling(model, minimum, max_output_tokens)
-          ceiling = max_output_tokens - 1
-          return ceiling if minimum <= ceiling
-
-          raise ArgumentError, "#{model&.id} reasons on a budget of at least #{minimum} tokens, and " \
-                               "max_output_tokens: #{max_output_tokens} leaves room for #{ceiling}. " \
-                               "Raise max_output_tokens above #{minimum} or turn thinking off."
+          budget.clamp(minimum, [max_output_tokens - 1, minimum].max)
         end
 
         def enumerated_budget(effort, schema)
