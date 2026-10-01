@@ -518,7 +518,7 @@ The document's `client_id` must be that exact URL, and its `redirect_uris` must 
 
 ## Connections and Safety
 
-RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, RubyLLM falls back to the older handshake without declaring client capabilities, so those servers never send requests back.
+RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, RubyLLM falls back to the older handshake without declaring client capabilities, so those servers never send requests back. When such a server ends its session, RubyLLM starts a new one and sends the request again, and `close` ends the session.
 
 Some defaults protect applications that connect to servers they do not control:
 

@@ -540,8 +540,8 @@ module RubyLLM
       self
     end
 
-    # Closes the connection, stopping a stdio server's process. The next
-    # request reconnects.
+    # Closes the connection, stopping a stdio server's process and ending
+    # the session of a server that keeps one. The next request reconnects.
     def close
       @client&.close
     end

@@ -27,6 +27,9 @@ module RubyLLM
       def request(method, params = {}, headers: {}, &)
         server
         call(method, params, headers:, &)
+      rescue HTTP::SessionExpired
+        @connecting.synchronize { @server = handshake }
+        call(method, params, headers:, &)
       end
 
       def list(method, key)

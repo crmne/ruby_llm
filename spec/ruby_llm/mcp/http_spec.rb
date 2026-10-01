@@ -135,6 +135,75 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  describe 'sessions of older servers' do
+    let(:ended) { [] }
+
+    before do
+      sessions = 0
+      stub_request(:post, url).to_return do |request|
+        body = JSON.parse(request.body)
+        case body['method']
+        when 'server/discover' then { status: 404, body: '' }
+        when 'initialize'
+          sessions += 1
+          { headers: { 'Content-Type' => 'application/json', 'Mcp-Session-Id' => "session-#{sessions}" },
+            body: json_rpc(result: { protocolVersion: '2025-06-18', capabilities: {} }).call(request) }
+        else
+          next { status: 202, body: '' } unless body['id']
+          next { status: 404, body: '' } if ended.include?(request.headers['Mcp-Session-Id'])
+
+          { headers: { 'Content-Type' => 'application/json' }, body: json_rpc(result: { tools: [] }).call(request) }
+        end
+      end
+    end
+
+    def initializations
+      a_request(:post, url).with do |request|
+        JSON.parse(request.body)['method'] == 'initialize' && !request.headers.key?('Mcp-Session-Id')
+      end
+    end
+
+    it 'starts a new session when the server ends the old one' do
+      client.request('tools/list')
+      ended << 'session-1'
+
+      expect(client.request('tools/list')).to eq('tools' => [])
+      expect(initializations).to have_been_made.twice
+      expect(a_request(:post, url).with(headers: { 'Mcp-Session-Id' => 'session-2' })).to have_been_made.twice
+    end
+
+    it 'gives up when the new session ends too' do
+      client.request('tools/list')
+      ended.push('session-1', 'session-2')
+
+      expect { client.request('tools/list') }.to raise_error(RubyLLM::MCP::Error, 'mcp.example.com ended the session')
+      expect(initializations).to have_been_made.twice
+    end
+
+    it 'ends the session when it closes' do
+      stub_request(:delete, url).to_return(status: 405)
+      client.request('tools/list')
+
+      client.close
+
+      expect(a_request(:delete, url).with(headers: {
+                                            'Mcp-Session-Id' => 'session-1', 'MCP-Protocol-Version' => '2025-06-18',
+                                            'Authorization' => 'Bearer secret'
+                                          })).to have_been_made
+      client.request('tools/list')
+      expect(initializations).to have_been_made.twice
+    end
+  end
+
+  it 'has no session to end with a 2026-07-28 server' do
+    stub_method('server/discover', result: discover_result)
+    client.server
+
+    client.close
+
+    expect(a_request(:delete, url)).not_to have_been_made
+  end
+
   it 'uses a result the server sends with an error status' do
     stub_method('server/discover', result: discover_result)
     stub_method('tools/list', status: 403, result: { tools: [{ name: 'search' }] })

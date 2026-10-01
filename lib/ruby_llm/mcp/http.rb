@@ -6,11 +6,16 @@ module RubyLLM
     # body or with an event stream that carries the request's notifications
     # before its response. Plain HTTP is only allowed on loopback addresses,
     # URLs cannot carry credentials, and redirects are never followed. A cancelled chat closes the stream,
-    # which is how 2026-07-28 cancels a request.
+    # which is how 2026-07-28 cancels a request. Servers that predate it may
+    # keep a session, which ends with a DELETE when the transport closes.
     class HTTP # :nodoc:
       LOOPBACK_HOSTS = %w[localhost 127.0.0.1 ::1].freeze
       HEADER_SAFE = /\A[\x21-\x7E](?:[\x20-\x7E]*[\x21-\x7E])?\z/
       ENCODED_HEADER = /\A=\?base64\?.*\?=\z/
+      CLOSE_TIMEOUT = 5
+
+      # Raised when a server has ended the session a request belonged to.
+      class SessionExpired < Error; end
 
       def self.secure?(url)
         uri = URI(url.to_s)
@@ -53,31 +58,51 @@ module RubyLLM
       end
 
       def close
+        session = @session
         @session = nil
+        return unless session
+
+        @connection.delete(@url) do |request|
+          request.headers.update({ 'MCP-Protocol-Version' => @version, 'Mcp-Session-Id' => session }.compact)
+          request.headers.update(custom_headers)
+          request.options.timeout = CLOSE_TIMEOUT
+        end
+      rescue Faraday::Error
+        nil
       end
 
       private
 
       def post(message, version:, timeout: nil, params: {}, retried: false, &on_notification)
+        session = @session unless message[:method] == 'initialize'
         stream = Stream.new(&on_notification)
         response = @connection.post(@url) do |request|
-          request.headers.update(headers(message, version))
+          request.headers.update(headers(message, version, session))
           params.each { |name, value| request.headers["Mcp-Param-#{name}"] = header_value(value) }
           request.body = JSON.generate(message)
-          request.options.timeout = timeout if timeout
-          request.options.on_data = stream.method(:feed).to_proc
+          stream.attach(request, timeout)
         end
-        @session = response.headers['mcp-session-id'] if message[:method] == 'initialize'
+        remember(message, version, response.headers)
         stream.replies
       rescue Faraday::Error => e
         raise unless e.response
         return stream.replies if answered?(stream, message)
+        raise SessionExpired, "#{@url.host} ended the session" if expired?(e.response, message, session)
 
         if reauthorized?(e.response, retried)
           return post(message, version:, timeout:, params:, retried: true, &on_notification)
         end
 
         raise failure(e.response, stream)
+      end
+
+      def remember(message, version, headers)
+        @version = version if version
+        @session = headers['mcp-session-id'] if message[:method] == 'initialize'
+      end
+
+      def expired?(response, message, session)
+        session && message[:id] && response[:status] == 404
       end
 
       # Some servers, such as Google's Drive preview, send a complete
@@ -93,15 +118,19 @@ module RubyLLM
         @unauthorized.call(response[:headers] || {}, status) && status == 401
       end
 
-      def headers(message, version)
+      def headers(message, version, session)
         {
           'Content-Type' => 'application/json',
           'Accept' => 'application/json, text/event-stream',
           'MCP-Protocol-Version' => version,
-          'Mcp-Session-Id' => @session,
+          'Mcp-Session-Id' => session,
           'Mcp-Method' => message[:method],
           'Mcp-Name' => header_value(message.dig(:params, :name) || message.dig(:params, :uri))
-        }.compact.merge(@headers.respond_to?(:call) ? @headers.call : @headers)
+        }.compact.merge(custom_headers)
+      end
+
+      def custom_headers
+        @headers.respond_to?(:call) ? @headers.call : @headers
       end
 
       def header_value(value)
@@ -138,6 +167,11 @@ module RubyLLM
           @parser = EventStreamParser::Parser.new
           @body = +''
           @replies = []
+        end
+
+        def attach(request, timeout)
+          request.options.timeout = timeout if timeout
+          request.options.on_data = method(:feed).to_proc
         end
 
         def feed(chunk, *)
