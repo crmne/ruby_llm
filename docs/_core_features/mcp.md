@@ -520,6 +520,8 @@ The document's `client_id` must be that exact URL, and its `redirect_uris` must 
 
 RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, RubyLLM falls back to the older handshake without declaring client capabilities, so those servers never send requests back. When such a server ends its session, RubyLLM starts a new one and sends the request again, and `close` ends the session.
 
+A response stream can break before the answer arrives, such as when a proxy drops a long call. RubyLLM then sends the request again, as the 2026-07-28 revision requires. Older servers can resume the stream instead: RubyLLM waits as long as the server asks and reconnects from the last event it received. Either way it tries three times at most, then raises `RubyLLM::MCP::Error`.
+
 Some defaults protect applications that connect to servers they do not control:
 
 * Plain HTTP is only allowed for `localhost` and loopback addresses. Everything else needs HTTPS.

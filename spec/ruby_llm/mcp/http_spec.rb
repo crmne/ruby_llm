@@ -195,6 +195,190 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
   end
 
+  describe 'streams that end before the answer' do
+    let(:events) { { 'Content-Type' => 'text/event-stream' } }
+    let(:progress) { { jsonrpc: '2.0', method: 'notifications/progress', params: { progress: 1 } }.to_json }
+
+    def event(data = '', id: nil, retry_after: nil)
+      fields = { id:, retry: retry_after, data: }.compact
+      "#{fields.map { |field, value| "#{field}: #{value}" }.join("\n")}\n\n"
+    end
+
+    def answer(request)
+      { jsonrpc: '2.0', id: JSON.parse(request.body)['id'], result: { content: [] } }.to_json
+    end
+
+    def calls
+      a_request(:post, url).with { |request| JSON.parse(request.body)['method'] == 'tools/call' }
+    end
+
+    def monotonic_now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+    context 'with a 2026-07-28 server' do
+      before { stub_method('server/discover', result: discover_result) }
+
+      it 'sends the request again with a new ID' do
+        ids = []
+        stub_method('tools/call', headers: events, body: lambda { |request|
+          ids << JSON.parse(request.body)['id']
+          ids.one? ? event(progress) : event(answer(request))
+        })
+
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+        expect(ids.uniq.size).to eq(2)
+        expect(a_request(:get, url)).not_to have_been_made
+      end
+
+      it 'gives up after a few attempts' do
+        stub_method('tools/call', headers: events, body: event(progress))
+
+        expect { client.request('tools/call', { name: 'slow' }) }
+          .to raise_error(RubyLLM::MCP::Error, 'mcp.example.com did not answer tools/call')
+        expect(calls).to have_been_made.times(4)
+      end
+
+      it 'skips event data that is not a JSON-RPC message' do
+        stub_method('tools/call', headers: events, body: ->(request) { event('"keep-alive"') + event(answer(request)) })
+
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+      end
+
+      it 'does not send the request again after a JSON body without the answer' do
+        stub_method('tools/call', body: { jsonrpc: '2.0', id: 'another', result: {} }.to_json)
+
+        expect { client.request('tools/call', { name: 'slow' }) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(calls).to have_been_made.once
+      end
+    end
+
+    context 'with an older server' do
+      before do
+        stub_method('server/discover', status: 404, body: '')
+        stub_method('initialize', headers: { 'Content-Type' => 'application/json', 'Mcp-Session-Id' => 'session-1' },
+                                  result: { protocolVersion: '2025-11-25', capabilities: {} })
+        stub_method('notifications/initialized', status: 202, body: '')
+      end
+
+      it 'resumes the stream from its last event after the wait the server asks for' do
+        call = nil
+        stub_method('tools/call', headers: events, body: lambda { |request|
+          call = request
+          event(id: 'event-1', retry_after: 200) + event(progress, id: 'event-2')
+        })
+        stub_request(:get, url).to_return(headers: events, body: ->(_) { event(answer(call), id: 'event-3') })
+        notifications = []
+        started = monotonic_now
+
+        result = client.request('tools/call', { name: 'slow' }) { |message| notifications << message }
+
+        expect(result).to eq('content' => [])
+        expect(monotonic_now - started).to be >= 0.2
+        expect(notifications.map { |message| message['method'] }).to eq(['notifications/progress'])
+        expect(a_request(:get, url).with(headers: {
+                                           'Accept' => 'text/event-stream', 'Last-Event-ID' => 'event-2',
+                                           'Mcp-Session-Id' => 'session-1', 'MCP-Protocol-Version' => '2025-11-25',
+                                           'Authorization' => 'Bearer secret'
+                                         })).to have_been_made.once
+        expect(calls).to have_been_made.once
+      end
+
+      it 'gives up on a stream without event IDs' do
+        stub_method('tools/call', headers: events, body: event(progress))
+
+        expect { client.request('tools/call', { name: 'slow' }) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(a_request(:get, url)).not_to have_been_made
+      end
+
+      it 'gives up after a few resumptions' do
+        stub_method('tools/call', headers: events, body: event(id: 'event-1', retry_after: 0))
+        stub_request(:get, url).to_return(headers: events, body: event(id: 'event-2', retry_after: 0))
+
+        expect { client.request('tools/call', { name: 'slow' }) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(a_request(:get, url)).to have_been_made.times(3)
+      end
+
+      it 'gives up rather than wait longer than the timeout' do
+        stub_method('tools/call', headers: events, body: event(id: 'event-1', retry_after: 3_600_000))
+
+        expect { client.request('tools/call', { name: 'slow' }) }.to raise_error(RubyLLM::MCP::Error, /did not answer/)
+        expect(a_request(:get, url)).not_to have_been_made
+      end
+
+      it 'stops waiting when the chat is cancelled' do
+        stub_method('tools/call', headers: events, body: event(id: 'event-1', retry_after: 60_000))
+        stub_method('notifications/cancelled', status: 202, body: '')
+        client.server
+        started = monotonic_now
+        cancel = -> { raise RubyLLM::CancelledError if monotonic_now - started > 0.2 }
+
+        expect { RubyLLM::Support::Cancellation.watch(cancel) { client.request('tools/call', { name: 'slow' }) } }
+          .to raise_error(RubyLLM::CancelledError)
+        expect(monotonic_now - started).to be < 5
+        expect(a_request(:get, url)).not_to have_been_made
+      end
+    end
+  end
+
+  describe 'over a real connection' do
+    around do |example|
+      WebMock.disable!
+      example.run
+    ensure
+      WebMock.enable!
+    end
+
+    def serve(responses)
+      server = TCPServer.new('127.0.0.1', 0)
+      sockets = []
+      worker = Thread.new do
+        responses.each do |respond|
+          socket = server.accept
+          sockets << socket
+          head = socket.gets("\r\n\r\n")
+          respond.call(socket, JSON.parse(socket.read(head[/^content-length: (\d+)/i, 1].to_i)))
+        end
+      end
+      yield RubyLLM::MCP::Client.new(described_class.new("http://127.0.0.1:#{server.addr[1]}/mcp", timeout: 3))
+    ensure
+      worker&.kill
+      sockets&.each(&:close)
+      server&.close
+    end
+
+    def discovered(socket, request)
+      body = { jsonrpc: '2.0', id: request['id'], result: discover_result }.to_json
+      socket.write("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: #{body.bytesize}\r\n" \
+                   "Connection: close\r\n\r\n#{body}")
+      socket.close
+    end
+
+    def open_stream(socket, *events)
+      socket.write("HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nTransfer-Encoding: chunked\r\n\r\n")
+      events.each { |data| socket.write("#{data.bytesize.to_s(16)}\r\n#{data}\r\n") }
+    end
+
+    def answer(request)
+      "data: #{{ jsonrpc: '2.0', id: request['id'], result: { content: [] } }.to_json}\n\n"
+    end
+
+    it 'returns the answer while the server keeps the stream open' do
+      serve([method(:discovered), ->(socket, request) { open_stream(socket, answer(request)) }]) do |client|
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+      end
+    end
+
+    it 'sends the request again when the connection breaks midway' do
+      broken = lambda do |socket, _request|
+        open_stream(socket, "data: #{{ jsonrpc: '2.0', method: 'notifications/progress', params: {} }.to_json}\n\n")
+        socket.close
+      end
+
+      serve([method(:discovered), broken, ->(socket, request) { open_stream(socket, answer(request)) }]) do |client|
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+      end
+    end
+  end
+
   it 'has no session to end with a 2026-07-28 server' do
     stub_method('server/discover', result: discover_result)
     client.server

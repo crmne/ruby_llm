@@ -30,6 +30,7 @@ MRTR_TOOLS = %i[test_mrtr_echo_state test_mrtr_unrelated test_mrtr_no_state test
 
 SCENARIOS = {
   'tools_call' => ->(mcp, _) { mcp.call(:add_numbers, a: 1, b: 2) },
+  'sse-retry' => ->(mcp, _) { mcp.call(:test_reconnection) },
   'sep-2322-client-request-state' => ->(mcp, _) { MRTR_TOOLS.each { |name| mcp.call(name) } },
   'json-schema-2020-12-preservation' => lambda do |mcp, _|
     schema = mcp.send(:server_tools).find { |tool| tool['name'] == 'json_schema_2020_12_tool' }['inputSchema']

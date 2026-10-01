@@ -1,8 +1,7 @@
 client:
-  # Servers asking for input or resuming streams mid-request belong to the
-  # 2025 revisions; RubyLLM declares no capabilities to older servers.
+  # Servers asking for input mid-request belong to the 2025 revisions;
+  # RubyLLM declares no capabilities to older servers.
   - elicitation-sep1034-client-defaults
-  - sse-retry
   # RubyLLM speaks one modern revision, so it has no other to retry with.
   - request-metadata
   # Authorization extensions RubyLLM does not implement.
