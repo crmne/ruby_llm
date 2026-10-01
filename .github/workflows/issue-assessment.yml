@@ -11,6 +11,8 @@ on:
     types: [created]
   pull_request_target:
     types: [opened, reopened, ready_for_review, synchronize]
+  pull_request_review:
+    types: [submitted]
   workflow_dispatch:
     inputs:
       kind:
@@ -38,7 +40,7 @@ concurrency:
 
 jobs:
   assess:
-    if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true' && (github.event.sender.type != 'Bot' || github.event_name == 'issues')
+    if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true' && (github.event.sender.type != 'Bot' || github.event_name == 'issues' || github.event_name == 'pull_request_review')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
