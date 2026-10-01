@@ -2,8 +2,6 @@ client:
   # Servers asking for input mid-request belong to the 2025 revisions;
   # RubyLLM declares no capabilities to older servers.
   - elicitation-sep1034-client-defaults
-  # RubyLLM speaks one modern revision, so it has no other to retry with.
-  - request-metadata
   # Authorization extensions RubyLLM does not implement.
   - auth/client-credentials-jwt
   - auth/client-credentials-basic

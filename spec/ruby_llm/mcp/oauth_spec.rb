@@ -33,8 +33,10 @@ RSpec.describe RubyLLM::MCP::OAuth do
   before do
     stub_request(:post, server_url).to_return do |request|
       if ['Bearer access-1', 'Bearer access-2'].include?(request.headers['Authorization'])
+        message = JSON.parse(request.body)
+        result = message['method'] == 'server/discover' ? { supportedVersions: ['2026-07-28'] } : { tools: [] }
         { status: 200, headers: { 'Content-Type' => 'application/json' },
-          body: { jsonrpc: '2.0', id: JSON.parse(request.body)['id'], result: { tools: [] } }.to_json }
+          body: { jsonrpc: '2.0', id: message['id'], result: }.to_json }
       else
         { status: 401, headers: { 'WWW-Authenticate' => challenge } }
       end

@@ -66,6 +66,92 @@ RSpec.describe RubyLLM::MCP::Client do
     end
   end
 
+  describe 'protocol versions' do
+    let(:fake_server) do
+      Class.new do
+        attr_reader :sent
+
+        def initialize(&answer)
+          @answer = answer
+          @sent = []
+        end
+
+        def request(message, **)
+          @sent << message[:method]
+          reply = @answer.call(message[:method], @sent.count(message[:method]))
+          { 'jsonrpc' => '2.0', 'id' => message[:id] }.merge(reply)
+        end
+
+        def notify(message, **) = @sent << message[:method]
+        def cancel(*, **) = nil
+        def close = @closed = true
+        def closed? = @closed == true
+      end
+    end
+
+    def unsupported(*versions)
+      { 'error' => { 'code' => -32_022, 'message' => 'Unsupported protocol version',
+                     'data' => { 'supported' => versions, 'requested' => '2026-07-28' } } }
+    end
+
+    def handshake(version)
+      { 'result' => { 'protocolVersion' => version, 'capabilities' => {} } }
+    end
+
+    def legacy(version)
+      fake_server.new do |method|
+        method == 'initialize' ? handshake(version) : { 'error' => { 'code' => -32_601, 'message' => 'Not found' } }
+      end
+    end
+
+    it 'sends a request again when the server rejects a version it lists' do
+      server = fake_server.new do |method, attempt|
+        next unsupported('2026-07-28') if method == 'server/discover' && attempt == 1
+
+        { 'result' => { 'supportedVersions' => ['2026-07-28'] } }
+      end
+      mcp_client = described_class.new(server)
+
+      expect(mcp_client.server).to eq('supportedVersions' => ['2026-07-28'])
+      expect(mcp_client).to be_modern
+      expect(server.sent).to eq(['server/discover', 'server/discover'])
+    end
+
+    it 'sends a request again only once' do
+      server = fake_server.new { unsupported('2026-07-28') }
+
+      expect { described_class.new(server).server }.to raise_error(RubyLLM::MCP::Error, 'Unsupported protocol version')
+      expect(server.sent).to eq(['server/discover', 'server/discover'])
+    end
+
+    it 'does not shake hands with a modern server that lists only older versions' do
+      server = fake_server.new { unsupported('2025-11-25') }
+
+      expect { described_class.new(server).server }.to raise_error(RubyLLM::MCP::Error, 'Unsupported protocol version')
+      expect(server.sent).not_to include('initialize')
+    end
+
+    it 'speaks every version it knows from before 2026-07-28' do
+      described_class::LEGACY_VERSIONS.each do |version|
+        mcp_client = described_class.new(legacy(version))
+
+        mcp_client.server
+
+        expect(mcp_client.version).to eq(version)
+      end
+    end
+
+    it 'disconnects from a server that answers the handshake with a version it does not speak' do
+      server = legacy('2099-01-01')
+      mcp_client = described_class.new(server)
+
+      expect { mcp_client.server }.to raise_error(RubyLLM::MCP::Error, /protocol version 2099-01-01/)
+      expect(mcp_client.version).to be_nil
+      expect(server).to be_closed
+      expect(server.sent).not_to include('notifications/initialized')
+    end
+  end
+
   context 'with a server that answers discovery without 2026-07-28' do
     let(:env) { { 'MCP_ERA' => 'discover_without_modern' } }
 

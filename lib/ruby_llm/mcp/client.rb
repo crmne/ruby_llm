@@ -5,11 +5,14 @@ module RubyLLM
     # Speaks JSON-RPC to one MCP server over a transport. It speaks the
     # 2026-07-28 revision and falls back to the initialize handshake for
     # servers that predate it, declaring no client capabilities so those
-    # servers never call back.
+    # servers never call back. A server that rejects 2026-07-28 while
+    # listing it gets the request once more; one that answers the handshake
+    # with a revision missing from LEGACY_VERSIONS is disconnected.
     class Client # :nodoc:
       VERSION = '2026-07-28'
-      LEGACY_VERSION = '2025-11-25'
-      MODERN_ERRORS = [-32_020, -32_021, -32_022].freeze
+      LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
+      UNSUPPORTED_VERSION = -32_022
+      MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
       DISCOVERY_TIMEOUT = 10
 
       attr_reader :version
@@ -66,13 +69,20 @@ module RubyLLM
 
       def handshake
         @version = nil
-        result = call('initialize', { protocolVersion: LEGACY_VERSION, capabilities: {}, clientInfo: client_info })
+        params = { protocolVersion: LEGACY_VERSIONS.first, capabilities: {}, clientInfo: client_info }
+        result = call('initialize', params)
+        unless LEGACY_VERSIONS.include?(result['protocolVersion'])
+          @transport.close
+          raise Error, "The server answered with protocol version #{result['protocolVersion']}, " \
+                       'which RubyLLM does not speak'
+        end
+
         @version = result['protocolVersion']
         @transport.notify(message('notifications/initialized'), version:)
         result
       end
 
-      def call(method, params = {}, timeout: nil, headers: {}, &)
+      def call(method, params = {}, timeout: nil, headers: {}, retried: false, &)
         request = message(method, params, id: SecureRandom.uuid)
         response = begin
           @transport.request(request, version:, timeout:, headers:, &)
@@ -84,6 +94,15 @@ module RubyLLM
         raise Error.new(error['message'], code: error['code'], data: error['data']) if error
 
         response['result']
+      rescue Error => e
+        raise if retried || !offers_version?(e)
+
+        call(method, params, timeout:, headers:, retried: true, &)
+      end
+
+      def offers_version?(error)
+        supported = error.data['supported'] if error.data.is_a?(Hash)
+        modern? && error.code == UNSUPPORTED_VERSION && Array(supported).include?(VERSION)
       end
 
       def message(method, params = {}, id: nil)
