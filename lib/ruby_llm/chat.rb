@@ -1235,7 +1235,7 @@ module RubyLLM
     def preprocessed_messages(list = messages)
       return list unless @provider
 
-      list.map { |message| @provider.preprocess_message(message, model: @model, protocol: @protocol) }
+      @provider.preprocess_messages(list, model: @model, protocol: @protocol)
     end
 
     def provider_completion(usage_recorder:, stream_tracker: nil, &)

@@ -14,8 +14,8 @@ RSpec.describe RubyLLM::Chat do
       @connection = Object.new
     end
 
-    def preprocess_message(message, **)
-      message
+    def preprocess_messages(messages, **)
+      messages
     end
   end
 

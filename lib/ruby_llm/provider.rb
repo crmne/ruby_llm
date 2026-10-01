@@ -200,7 +200,7 @@ module RubyLLM
       )
     end
 
-    def preprocess_message(message, model:, protocol: nil) # :nodoc:
+    def preprocess_messages(messages, model:, protocol: nil) # :nodoc:
       protocol_class = resolve_protocol(
         protocol,
         model,
@@ -210,7 +210,8 @@ module RubyLLM
         tool_prefs: nil,
         citations: false
       )
-      protocol_class.new(self, model).preprocess_message(message)
+      preprocessor = protocol_class.new(self, model)
+      messages.map { |message| preprocessor.preprocess_message(message) }
     end
 
     def batches? # :nodoc:

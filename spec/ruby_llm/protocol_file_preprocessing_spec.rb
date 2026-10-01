@@ -181,23 +181,33 @@ RSpec.describe RubyLLM::Protocol do
 
   it 'preprocesses at request time rather than when messages are added' do
     chat = RubyLLM.chat(model: RubyLLM.config.default_model)
-    allow(chat.provider).to receive(:preprocess_message) { |message, **| message }
+    allow(chat.provider).to receive(:preprocess_messages) { |messages, **| messages }
 
     chat.add_message(role: :user, content: 'hi')
-    expect(chat.provider).not_to have_received(:preprocess_message)
+    expect(chat.provider).not_to have_received(:preprocess_messages)
 
     chat.render
-    expect(chat.provider).to have_received(:preprocess_message)
+    expect(chat.provider).to have_received(:preprocess_messages)
   end
 
   it 'preprocesses the messages it counts tokens for' do
     chat = RubyLLM.chat(model: RubyLLM.config.default_model)
-    allow(chat.provider).to receive(:preprocess_message) { |message, **| message }
+    allow(chat.provider).to receive(:preprocess_messages) { |messages, **| messages }
     allow(chat.provider).to receive(:count_tokens).and_return(1)
 
     chat.count_tokens('hi')
 
-    expect(chat.provider).to have_received(:preprocess_message).once
+    expect(chat.provider).to have_received(:preprocess_messages).with([have_attributes(content: 'hi')], any_args)
+  end
+
+  it 'resolves the preprocessing protocol once per request' do
+    chat = RubyLLM.chat(model: RubyLLM.config.default_model)
+    5.times { |index| chat.add_message(role: :user, content: "message #{index}") }
+    allow(chat.provider).to receive(:protocol_for).and_call_original
+
+    chat.render
+
+    expect(chat.provider).to have_received(:protocol_for).twice
   end
 
   it 'does not auto-upload Vertex AI Claude attachments as Anthropic file IDs' do
