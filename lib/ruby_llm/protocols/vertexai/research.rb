@@ -22,7 +22,6 @@ module RubyLLM
         def server_tool_aliases = SERVER_TOOL_ALIASES
 
         def create_research_job(prompt, agent:, with: nil, provider_tools: nil, provider_options: {})
-          validate_research_agent(agent)
           payload = render_research_payload(prompt, agent:, with:, provider_tools:, provider_options:)
           response = @connection.post(research_url, payload, idempotent: false)
           parse_research_job(response, agent:)
@@ -37,14 +36,14 @@ module RubyLLM
           response = @connection.get(research_url(job.id)) do |request|
             request.options.timeout = request_timeout(timeout)
           end
-          parse_research_state(response, id: job.id, agent: job.agent)
+          parse_research_state(response)
         end
 
         def cancel_research_job(job, timeout: nil)
           response = @connection.post("#{research_url(job.id)}/cancel", {}, idempotent: false) do |request|
             request.options.timeout = request_timeout(timeout)
           end
-          parse_research_state(response, id: job.id, agent: job.agent)
+          parse_research_state(response)
         end
 
         private
@@ -65,17 +64,10 @@ module RubyLLM
           [timeout, @config.request_timeout].compact.min
         end
 
-        def validate_research_agent(agent)
-          return if agent == 'deep-research-preview-04-2026'
-
-          raise ArgumentError, 'Vertex AI research requires the supported Deep Research agent ID'
-        end
-
         def render_research_payload(prompt, agent:, with:, provider_tools:, provider_options:)
           raise ArgumentError, 'Research requires a nonempty prompt' unless prompt.is_a?(String) && !prompt.empty?
 
           attachments = Attachment.wrap(with, config: @config)
-          validate_research_attachments(attachments)
           payload = { agent:, input: render_interaction_content(prompt, attachments), background: true, stream: false }
           payload[:tools] = [] unless provider_tools.nil?
           options = render_research_options(provider_options)
@@ -85,14 +77,6 @@ module RubyLLM
                       RubyLLM::Tools::ProviderTools.normalize(Array(provider_tools), {})
                     end
           apply_provider_tools(payload, entries).merge(options)
-        end
-
-        def validate_research_attachments(attachments)
-          attachments.each do |attachment|
-            next if attachment.image? || attachment.pdf? || attachment.text?
-
-            raise UnsupportedAttachmentError, attachment.mime_type
-          end
         end
 
         def render_research_options(provider_options)
@@ -121,7 +105,7 @@ module RubyLLM
 
         def parse_research_job(response, agent: nil, id: nil)
           data = response.body
-          state = parse_research_state(response, agent:, id:)
+          state = parse_research_state(response)
           ResearchJob.new(id: data['id'], provider: @provider.slug, agent: data['agent'] || agent, protocol: self,
                           **state)
         rescue RubyLLM::Error, ArgumentError => e
@@ -135,9 +119,9 @@ module RubyLLM
                                        job:, response:), cause: e
         end
 
-        def parse_research_state(response, id: nil, agent: nil)
+        def parse_research_state(response)
           data = response.body
-          validate_research_response(data, response, id:, agent:)
+          validate_research_response(data, response)
           status = STATUSES.fetch(data['status'])
           message = parse_research_message(data, response) if %i[completed incomplete].include?(status)
           {
@@ -146,21 +130,10 @@ module RubyLLM
           }
         end
 
-        def validate_research_response(data, response, id:, agent:)
-          unless data.is_a?(Hash) && !data['id'].to_s.empty? && STATUSES.key?(data['status'])
-            raise RubyLLM::Error.new('Vertex AI research returned no recognized job state', response:)
-          end
+        def validate_research_response(data, response)
+          return if data.is_a?(Hash) && !data['id'].to_s.empty? && STATUSES.key?(data['status'])
 
-          validate_research_identity(data, response, id:, agent:)
-          validate_research_agent(data['agent'] || agent)
-        rescue ArgumentError => e
-          raise RubyLLM::Error.new(e.message, response:), cause: e
-        end
-
-        def validate_research_identity(data, response, id:, agent:)
-          return unless (id && id != data['id']) || (agent && data['agent'] && agent != data['agent'])
-
-          raise RubyLLM::Error.new('Vertex AI research returned a different job identity', response:)
+          raise RubyLLM::Error.new('Vertex AI research returned no recognized job state', response:)
         end
 
         def parse_research_tokens(data)
@@ -174,12 +147,7 @@ module RubyLLM
           state = data.merge('status' => data['status'] == 'completed' ? 'completed' : 'incomplete')
           tokens = parse_research_tokens(data)
           cost = Cost.from_h({ total: tokens.reported_cost }.compact, tokens:)
-          message = parse_completion_body(state, raw: response, model: nil, cost:)
-          if message.content.to_s.empty? && message.attachments.empty?
-            raise RubyLLM::Error.new('Vertex AI research finished without a report', response:)
-          end
-
-          message
+          parse_completion_body(state, raw: response, model: nil, cost:)
         end
 
         def parse_research_error(data)

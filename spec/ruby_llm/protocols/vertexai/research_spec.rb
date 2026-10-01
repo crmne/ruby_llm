@@ -100,15 +100,11 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Research do
     expect(RubyLLM::Message.new(job.message.to_h).cost.total).to be_nil
   end
 
-  it 'retains incomplete output with canonical finish reason and rejects missing successful reports' do
+  it 'retains incomplete output with canonical finish reason' do
     stub_request(:get, "#{endpoint}/research-job").to_return_json(body: completed.merge(status: 'budget_exceeded'))
     job = RubyLLM::ResearchJob.find('research-job', provider: :vertexai, context:)
     expect(job).to be_incomplete
     expect(job.message.finish_reason).to eq(:max_tokens)
-
-    stub_request(:get, "#{endpoint}/research-job").to_return_json(body: completed.merge(steps: []))
-    expect { RubyLLM::ResearchJob.find('research-job', provider: :vertexai, context:) }
-      .to raise_error(RubyLLM::Error, /without a report/)
   end
 
   it 'preserves provider failures and refuses unsupported action states' do
@@ -163,9 +159,7 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Research do
     expect(cancellation).to have_been_requested.once
   end
 
-  it 'rejects unrelated agent families, transcript continuation and lifecycle overrides before submission' do
-    expect { context.research_later('Question', provider: :vertexai, agent: 'unknown-agent') }
-      .to raise_error(ArgumentError, /Deep Research agent/)
+  it 'rejects transcript continuation and lifecycle overrides before submission' do
     %i[model previous_interaction_id background stream input agent].each do |key|
       expect do
         context.research_later('Question', provider: :vertexai, agent:, provider_options: { key => 'override' })
@@ -207,16 +201,18 @@ RSpec.describe RubyLLM::Protocols::VertexAI::Research do
       end
   end
 
-  it 'renders document attachments and rejects audio before uploading or submitting anything' do
+  it 'renders attachments and leaves the agent and the media it accepts to Vertex AI' do
     pdf = RubyLLM::Attachment.new(StringIO.new('%PDF data'), filename: 'notes.pdf')
-    request = stub_request(:post, endpoint).with do |req|
-      expect(JSON.parse(req.body)['input'].last).to eq('type' => 'document', 'mime_type' => 'application/pdf',
-                                                       'data' => pdf.encoded)
-    end.to_return_json(body: pending)
-    context.research_later('Question', provider: :vertexai, agent:, with: pdf)
     audio = RubyLLM::Attachment.new(StringIO.new('audio'), filename: 'speech.wav')
-    expect { context.research_later('Question', provider: :vertexai, agent:, with: audio) }
-      .to raise_error(RubyLLM::UnsupportedAttachmentError)
+    request = stub_request(:post, endpoint).with do |req|
+      body = JSON.parse(req.body)
+      expect(body['agent']).to eq('unknown-agent')
+      expect(body['input'][1]).to eq('type' => 'document', 'mime_type' => 'application/pdf', 'data' => pdf.encoded)
+      expect(body['input'][2]).to include('type' => 'audio')
+    end.to_return_json(body: pending)
+
+    context.research_later('Question', provider: :vertexai, agent: 'unknown-agent', with: [pdf, audio])
+
     expect(request).to have_been_requested.once
   end
 

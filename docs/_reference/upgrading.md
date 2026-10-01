@@ -111,6 +111,7 @@ RubyLLM no longer copies provider limits into checks of its own. A request it us
 * Cohere embedding batches with `dimensions:`.
 * `RubyLLM.upload` on OpenAI or Azure without `purpose:`.
 * `RubyLLM.upload` on DeepSeek with a file that is not an image, a file over 64 MiB, or a `purpose:` other than `"user_data"`.
+* `RubyLLM.research` on Vertex AI with an agent other than the Deep Research preview, or with audio or video attachments.
 
 If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
 
