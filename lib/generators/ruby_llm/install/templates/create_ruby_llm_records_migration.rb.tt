@@ -95,8 +95,8 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.index [ :chat_type, :chat_id ]
       t.index [ :message_type, :message_id ]
       t.index :status
-      t.check_constraint "operation IN (<%= usage_operations_sql %>)"
-      t.check_constraint "status IN (<%= usage_statuses_sql %>)"
+      t.check_constraint "operation<%= '::text' if postgresql? %> IN (<%= usage_operations_sql %>)"
+      t.check_constraint "status<%= '::text' if postgresql? %> IN (<%= usage_statuses_sql %>)"
     end
 
     create_table :ruby_llm_batches, id: :<%= reference_type %> do |t|
