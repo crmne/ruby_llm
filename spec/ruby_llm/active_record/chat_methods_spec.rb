@@ -782,6 +782,27 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(queries.size).to eq(2)
     end
 
+    it 'reads preloaded rows without building a proxy per message' do
+      chat = Chat.create!(model: model_id)
+      call_ids = Array.new(4) { "call_#{SecureRandom.hex(8)}" }
+      call_ids.each_with_index do |call_id, index|
+        chat.messages.create!(role: 'user', content: "question #{index}")
+        answer = chat.messages.create!(role: 'assistant', content: "answer #{index}")
+        answer.ruby_llm_tool_calls.create!(tool_call_id: call_id, name: 'lookup')
+        chat.ruby_llm_usages.create!(message: answer, operation: 'chat', provider: 'openai', model: model_id,
+                                     status: 'succeeded', input_tokens: 3, output_tokens: 5)
+      end
+      loaded = Chat.find(chat.id)
+      allow(ActiveRecord::Associations::CollectionProxy).to receive(:create).and_call_original
+
+      llm_chat = loaded.to_llm
+
+      expect(ActiveRecord::Associations::CollectionProxy).to have_received(:create).at_most(2).times
+      expect(llm_chat.messages.map { |message| message.tokens.output }).to eq([nil, 5] * 4)
+      expect(llm_chat.messages.last.tool_calls.keys).to eq([call_ids.last])
+      expect(llm_chat.usage_entries.map { |entry| entry.message.content }).to eq(Array.new(4) { "answer #{_1}" })
+    end
+
     it 'checks for attachments once for a transcript that has none' do
       chat = Chat.create!(model: model_id)
       10.times { |index| chat.messages.create!(role: 'user', content: "message #{index}") }

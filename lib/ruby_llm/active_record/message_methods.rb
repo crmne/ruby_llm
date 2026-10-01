@@ -39,7 +39,11 @@ module RubyLLM
       end
 
       def ruby_llm_usage_entries # :nodoc:
-        ruby_llm_usages.map(&:to_entry)
+        ruby_llm_usage_records.map(&:to_entry)
+      end
+
+      def ruby_llm_usage_records # :nodoc:
+        preloaded_records(:ruby_llm_usages) || ruby_llm_usages.to_a
       end
 
       # Returns the model ID from the last successful attempt, or +nil+.
@@ -94,7 +98,8 @@ module RubyLLM
 
       # Returns the tool calls as RubyLLM::ToolCall values keyed by call id.
       def tool_calls
-        ruby_llm_tool_calls.to_h { |record| [record.tool_call_id, record.to_llm] }
+        records = preloaded_records(:ruby_llm_tool_calls) || ruby_llm_tool_calls
+        records.to_h { |record| [record.tool_call_id, record.to_llm] }
       end
 
       # Returns the tool call this message answers, or +nil+.

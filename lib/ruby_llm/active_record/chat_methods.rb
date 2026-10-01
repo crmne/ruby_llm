@@ -887,7 +887,7 @@ module RubyLLM
         message_records = eager_load_messages
         chat.messages = message_records
         linked_entry_pairs = message_records.zip(chat.messages).flat_map do |record, message|
-          record.ruby_llm_usages.zip(message.ruby_llm_usage_entries)
+          record.ruby_llm_usage_records.zip(message.ruby_llm_usage_entries)
         end
         linked_entries = linked_entry_pairs.to_h { |record, entry| [record.id, entry] }
         chat.usage_entries = ruby_llm_usages.map do |record|

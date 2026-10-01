@@ -163,7 +163,23 @@ module RubyLLM
       end
 
       def active_storage_attachments?
-        respond_to?(:attachments) && attachments.attached?
+        return false unless respond_to?(:attachments)
+
+        preloaded = preloaded_attachments
+        preloaded ? preloaded.any? : attachments.attached?
+      end
+
+      def preloaded_attachments
+        return if pending_attachment_change || !self.class.reflect_on_association(:attachments_attachments)
+
+        preloaded_records(:attachments_attachments)
+      end
+
+      # Building an association proxy evaluates the association's scope,
+      # which costs more than reading the records a preload already loaded.
+      def preloaded_records(name)
+        association = association(name)
+        association.target if association.loaded?
       end
 
       def collect_attachments(action_text_attachments)
