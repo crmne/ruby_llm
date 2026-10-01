@@ -17,8 +17,8 @@ module RubyLLM
           requests.each do |request|
             values = request.fetch(:text)
             values = [values] unless values.is_a?(Array)
-            unless values.any? && values.all? { |value| value.is_a?(String) && !value.empty? }
-              raise ArgumentError, 'Bedrock embedding batches require nonempty text strings'
+            unless values.any? && values.all?(String)
+              raise ArgumentError, 'Bedrock embedding batches require a nonempty list of text strings'
             end
             unless request.fetch(:payload).key?(:inputText)
               raise ArgumentError, 'Bedrock embedding batches require Titan embedding requests'

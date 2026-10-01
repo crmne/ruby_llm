@@ -24,11 +24,6 @@ module RubyLLM
 
         def render_batch_request(request, type:)
           body = JSON.parse(JSON.generate(batch_payload(request, except: :model)))
-          if type == 'batch-embed-v2-input' && body['output_dimension']
-            raise ArgumentError,
-                  'Cohere batch datasets currently reject dimensions; omit dimensions to use the model default'
-          end
-
           render_batch_chat(body) if type == 'batch-chat-v2-input'
           allowed = type == 'batch-chat-v2-input' ? CHAT_FIELDS : EMBEDDING_FIELDS
           unsupported = body.keys - allowed

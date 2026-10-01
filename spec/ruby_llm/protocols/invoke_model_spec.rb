@@ -42,11 +42,11 @@ RSpec.describe RubyLLM::Protocols::InvokeModel do
       end
     end
 
-    it 'rejects custom dimensions on G1 and V1 models' do
-      expect do
-        protocol.send(:render_embedding_payload, 'Ruby', model: 'amazon.titan-embed-text-v1',
-                                                         dimensions: 256, provider_options: {})
-      end.to raise_error(RubyLLM::Error, /does not support custom dimensions/)
+    it 'leaves custom dimensions on G1 and V1 models to Bedrock' do
+      payload = protocol.send(:render_embedding_payload, 'Ruby', model: 'amazon.titan-embed-text-v1',
+                                                                 dimensions: 256, provider_options: {})
+
+      expect(payload).to eq(inputText: 'Ruby', dimensions: 256)
     end
 
     it 'parses Titan typed embedding responses' do
@@ -148,16 +148,11 @@ RSpec.describe RubyLLM::Protocols::InvokeModel do
       expect(payload).to eq(input_type: 'image', images: ['base64-image'])
     end
 
-    it 'rejects custom dimensions for Cohere v3' do
-      expect do
-        protocol.send(
-          :render_embedding_payload,
-          'Ruby',
-          model: 'cohere.embed-english-v3',
-          dimensions: 512,
-          provider_options: {}
-        )
-      end.to raise_error(RubyLLM::Error, /does not support custom dimensions/)
+    it 'leaves custom dimensions for Cohere v3 to Bedrock' do
+      payload = protocol.send(:render_embedding_payload, 'Ruby', model: 'cohere.embed-english-v3',
+                                                                 dimensions: 512, provider_options: {})
+
+      expect(payload[:output_dimension]).to eq(512)
     end
 
     it 'parses Cohere float embedding responses' do

@@ -90,8 +90,6 @@ RSpec.describe RubyLLM::Providers::Azure::Cohere do
   it 'rejects unsupported v3 mixed media before any request' do
     expect { RubyLLM.embed('A ruby', model: v3_model, provider: :azure, with: image_path) }
       .to raise_error(ArgumentError, /not both/)
-    expect { RubyLLM.embed(nil, model: v3_model, provider: :azure, with: [image_path, image_path]) }
-      .to raise_error(ArgumentError, /one image/)
     expect do
       RubyLLM.embed(nil, model: v3_model, provider: :azure,
                          with: RubyLLM::Attachment.new(StringIO.new('audio'), filename: 'voice.wav'))

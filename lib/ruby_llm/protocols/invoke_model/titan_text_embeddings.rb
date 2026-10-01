@@ -23,14 +23,8 @@ module RubyLLM
         # The G1 and V1 models take inputText alone; Bedrock rejects the V2
         # tuning keys as extraneous.
         def render_embedding_payload(text, model:, dimensions:, provider_options:, **)
-          payload = { inputText: text.to_s }
-
-          if titan_v2?(model)
-            payload[:dimensions] = dimensions if dimensions
-            payload[:normalize] = true
-          elsif dimensions
-            raise Error, "#{model} does not support custom dimensions"
-          end
+          payload = { inputText: text.to_s, dimensions: }.compact
+          payload[:normalize] = true if titan_v2?(model)
 
           deep_merge_provider_options(payload, provider_options)
         end

@@ -37,11 +37,14 @@ module RubyLLM
         end
 
         def image_embedding_inputs(text, attachments) # :nodoc:
-          raise ArgumentError, 'Cohere Embed v3 accepts text or an image, not both' unless text.nil? || text == ''
-          raise ArgumentError, 'Cohere Embed v3 accepts one image per request' unless attachments.one?
-          raise UnsupportedAttachmentError, attachments.first.mime_type unless attachments.first.image?
+          raise ArgumentError, 'Cohere Embed v3 accepts text or images, not both' unless text.nil? || text == ''
 
-          { images: ["data:#{attachments.first.mime_type};base64,#{attachments.first.encoded}"] }
+          images = attachments.map do |attachment|
+            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
+
+            "data:#{attachment.mime_type};base64,#{attachment.encoded}"
+          end
+          { images: }
         end
 
         def parse_embedding_response(response, model:, text:)

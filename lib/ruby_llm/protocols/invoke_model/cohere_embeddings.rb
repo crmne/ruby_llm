@@ -18,18 +18,13 @@ module RubyLLM
 
         private
 
-        def render_embedding_payload(text, model:, dimensions:, provider_options:, task_type: nil)
+        def render_embedding_payload(text, dimensions:, provider_options:, task_type: nil, **)
           payload = {
             input_type: task_type || 'search_document'
           }
           texts = [text].flatten.compact.map(&:to_s).reject(&:empty?)
           payload[:texts] = texts unless texts.empty?
-
-          if dimensions
-            raise Error, "#{model} does not support custom dimensions" unless cohere_v4?(model)
-
-            payload[:output_dimension] = dimensions
-          end
+          payload[:output_dimension] = dimensions if dimensions
 
           deep_merge_provider_options(payload, provider_options)
         end
@@ -40,10 +35,6 @@ module RubyLLM
           vectors = vectors.first unless text.is_a?(Array)
 
           Embedding.new(vectors:, model:)
-        end
-
-        def cohere_v4?(model)
-          model.to_s.include?('cohere.embed-v4')
         end
       end
     end

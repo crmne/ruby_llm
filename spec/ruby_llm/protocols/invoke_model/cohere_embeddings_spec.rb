@@ -22,13 +22,6 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
 
       expect(payload[:output_dimension]).to eq(512)
     end
-
-    it 'rejects custom dimensions on Embed v3' do
-      expect do
-        protocol.send(:render_embedding_payload, 'one', model: 'cohere.embed-english-v3',
-                                                        dimensions: 512, provider_options: {})
-      end.to raise_error(RubyLLM::Error, /does not support custom dimensions/)
-    end
   end
 
   describe 'response shape' do

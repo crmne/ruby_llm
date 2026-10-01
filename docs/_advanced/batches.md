@@ -206,7 +206,7 @@ The batch workflow above is shared. These differences affect which requests you 
 |----------|-------------|
 | Azure | Requires a batch-capable deployment. Azure embedding batches are not currently available through RubyLLM. |
 | Bedrock | Chat batches do not support tools or structured output. Region and batch-size limits depend on the model. |
-| Cohere | Chat batches do not support structured output, forced tool choice, or retrieval documents. Omit `dimensions:` for embedding batches. |
+| Cohere | Chat batches do not support structured output, forced tool choice, or retrieval documents. |
 | OpenRouter | Requires a model with batch access. Batches accept text input and output, with one protocol per batch. Embedding task types and provider-routing preferences are unavailable. Cancellation is not supported. |
 | Vertex AI | Text embedding batches require matching dimensions and parameters across requests. |
 

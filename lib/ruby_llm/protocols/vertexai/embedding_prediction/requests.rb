@@ -11,8 +11,8 @@ module RubyLLM
           def validate_embedding_request!(request)
             text = request.fetch(:text)
             values = text.is_a?(Array) ? text : [text]
-            unless values.any? && values.all? { |value| value.is_a?(String) && !value.empty? }
-              raise ArgumentError, 'Vertex AI embedding batches require nonempty text strings'
+            unless values.any? && values.all?(String)
+              raise ArgumentError, 'Vertex AI embedding batches require a nonempty list of text strings'
             end
 
             payload = request.fetch(:payload)

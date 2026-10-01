@@ -96,11 +96,19 @@ RSpec.describe RubyLLM::Protocols::Cohere::Embeddings do
         expect(request).to have_been_requested.once
       end
 
-      it 'rejects mixed text, multiple images, and unsupported media before HTTP' do
+      it 'leaves the number of images to Cohere' do
+        request = stub_request(:post, 'https://api.cohere.com/v2/embed')
+                  .with { |req| JSON.parse(req.body)['images'].size == 2 }
+                  .to_return_json(body: { embeddings: { float: [[0.1], [0.2]] } })
+
+        RubyLLM.embed(nil, model:, provider: :cohere, with: [image_path, image_path])
+
+        expect(request).to have_been_requested.once
+      end
+
+      it 'rejects mixed text and unsupported media before HTTP' do
         expect { RubyLLM.embed('A ruby', model:, provider: :cohere, with: image_path) }
           .to raise_error(ArgumentError, /not both/)
-        expect { RubyLLM.embed(nil, model:, provider: :cohere, with: [image_path, image_path]) }
-          .to raise_error(ArgumentError, /one image/)
         audio = RubyLLM::Attachment.new(StringIO.new('audio'), filename: 'voice.wav')
         expect { RubyLLM.embed(nil, model:, provider: :cohere, with: audio) }
           .to raise_error(RubyLLM::UnsupportedAttachmentError)

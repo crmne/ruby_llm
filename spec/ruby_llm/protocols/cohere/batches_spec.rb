@@ -114,8 +114,13 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
     request = { custom_id: '0', model:, payload: { messages: [], response_format: { type: 'json_object' } } }
     expect { protocol.create_batch([request]) }.to raise_error(ArgumentError, /response_format/)
     expect(a_request(:post, /datasets/)).not_to have_been_made
-    embedding = context.embed_later('Ruby', model: embedding_model, provider: :cohere, dimensions: 256)
-    expect { RubyLLM.batch(embedding) }.to raise_error(ArgumentError, /omit dimensions/)
+  end
+
+  it 'leaves embedding dimensions to Cohere' do
+    request = { custom_id: '0', text: 'Ruby', payload: { texts: ['Ruby'], output_dimension: 256 } }
+
+    expect(protocol.render_batch_request(request, type: 'batch-embed-v2-input')[:body])
+      .to include('output_dimension' => 256)
   end
 
   it 'rejects duplicate result IDs and retains cancellation status' do
