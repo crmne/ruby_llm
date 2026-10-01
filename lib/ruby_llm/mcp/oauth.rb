@@ -149,7 +149,9 @@ module RubyLLM
       end
 
       def check_issuer(pending, issuer)
-        raise Error, 'The authorization response came from the wrong issuer' if issuer && issuer != pending['issuer']
+        if issuer && !same_issuer?(issuer, pending['issuer'])
+          raise Error, 'The authorization response came from the wrong issuer'
+        end
         raise Error, 'The authorization server did not identify itself' if issuer.nil? && issuer_required?
       end
 
@@ -257,9 +259,14 @@ module RubyLLM
         urls = AUTHORIZATION_SERVER_PATHS.map { |pattern| URI.join(uri, format(pattern, path:)).to_s }
         urls = urls.first(2) if path.empty?
         server = first_json(urls.uniq) or raise Error, "#{issuer} publishes no authorization server metadata"
-        raise Error, "#{issuer} metadata names a different issuer" unless server['issuer'] == issuer
+        raise Error, "#{issuer} metadata names a different issuer" unless same_issuer?(server['issuer'], issuer)
 
         server
+      end
+
+      # RFC 3986 section 6.2.3: an empty path and "/" name the same resource.
+      def same_issuer?(one, other)
+        [one, other].map { |issuer| issuer.to_s.sub(%r{\A([a-z][a-z0-9+.-]*://[^/?#]+)/(?=[?#]|\z)}i, '\\1') }.uniq.one?
       end
 
       def client_for(server, redirect_uri)
@@ -277,7 +284,7 @@ module RubyLLM
         issuer_key = "issuer:#{@client_id} #{@server_url}"
         issuer = store.read(issuer_key)&.fetch('issuer', nil)
         store.write(issuer_key, { 'issuer' => server['issuer'] }, owner: nil) unless issuer
-        if issuer && issuer != server['issuer']
+        if issuer && !same_issuer?(issuer, server['issuer'])
           raise Error, "#{@client_id} is registered with #{issuer}, but #{@server_url} now uses #{server['issuer']}"
         end
 

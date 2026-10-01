@@ -179,6 +179,29 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect { linear.authorize(callback(url, iss: nil)) }.to raise_error(RubyLLM::MCP::Error, /did not identify/)
   end
 
+  [%w[https://auth.example.com/ https://auth.example.com], %w[https://auth.example.com https://auth.example.com/]]
+    .each do |listed, published|
+    it "accepts issuer #{published} for authorization server #{listed}" do
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+        .to_return(body: { resource: server_url, authorization_servers: [listed] }.to_json)
+      stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server')
+        .to_return(body: authorization_server.merge(issuer: published).to_json)
+
+      url = linear.authorization_url(redirect_uri:)
+      linear.authorize(callback(url, iss: listed))
+
+      expect(linear).to be_authorized
+    end
+  end
+
+  it 'still refuses an issuer whose path differs by more than an empty path' do
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+      .to_return(body: { resource: server_url, authorization_servers: ['https://auth.example.com/tenant'] }.to_json)
+    stub_request(:get, %r{\Ahttps://auth\.example\.com/\.well-known/}).to_return(body: authorization_server.to_json)
+
+    expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /different issuer/)
+  end
+
   it 'uses a pre-registered client with its secret' do
     url = server_url
     slack = Class.new(RubyLLM::MCP) do
