@@ -4,8 +4,6 @@ module RubyLLM
   module Protocols
     class ElevenLabs
       module StreamingTranscription # :nodoc: all
-        SAMPLE_RATES = [8000, 16_000, 22_050, 24_000, 44_100, 48_000].freeze
-
         def stream_transcription(payload, model:, &block)
           validate_streaming_transcription(payload)
           audio = RubyLLM::Transcription::WavAudio.new(payload.fetch(:file).io.read)
@@ -74,8 +72,7 @@ module RubyLLM
         end
 
         def pcm_audio?(audio)
-          [audio.channels, audio.encoding, audio.bits_per_sample] == [1, 1, 16] &&
-            SAMPLE_RATES.include?(audio.sample_rate)
+          [audio.channels, audio.encoding, audio.bits_per_sample] == [1, 1, 16]
         end
 
         def streaming_transcription_url(payload, audio_format:)

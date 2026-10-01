@@ -4,7 +4,6 @@ module RubyLLM
   module Protocols
     module XAI
       module StreamingTranscription # :nodoc: all
-        SAMPLE_RATES = [8000, 16_000, 22_050, 24_000, 44_100, 48_000].freeze
         ENCODINGS = { [1, 16] => 'pcm', [6, 8] => 'alaw', [7, 8] => 'mulaw' }.freeze
 
         def stream_transcription(payload, model:, &block)
@@ -53,9 +52,7 @@ module RubyLLM
 
         def streaming_transcription_url(payload, audio:)
           encoding = ENCODINGS[[audio.encoding, audio.bits_per_sample]]
-          unless encoding && SAMPLE_RATES.include?(audio.sample_rate) && (1..8).cover?(audio.channels)
-            raise ArgumentError, 'xAI streaming requires 16-bit PCM or 8-bit G.711 WAV audio at a supported sample rate'
-          end
+          raise ArgumentError, 'xAI streaming requires 16-bit PCM or 8-bit G.711 WAV audio' unless encoding
 
           params = payload.except(:file).merge(encoding:, sample_rate: audio.sample_rate, interim_results: true)
           params[:channels] = audio.channels
@@ -68,7 +65,7 @@ module RubyLLM
 
         def send_transcription_audio(socket, audio)
           offset = 0
-          bytes = audio.sample_rate * audio.channels * audio.bits_per_sample / 8 / 10
+          bytes = [audio.sample_rate * audio.channels * audio.bits_per_sample / 8 / 10, 1].max
           while offset < audio.data.bytesize
             socket.send_binary(audio.data.byteslice(offset, bytes))
             offset += bytes

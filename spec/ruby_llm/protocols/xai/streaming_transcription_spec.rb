@@ -65,6 +65,14 @@ RSpec.describe RubyLLM::Protocols::XAI::StreamingTranscription do
     expect(result.words).to eq(segment['words'])
   end
 
+  it 'leaves sample rates and channel counts to xAI' do
+    audio = instance_double(RubyLLM::Transcription::WavAudio, encoding: 1, bits_per_sample: 16,
+                                                              sample_rate: 32_000, channels: 10)
+    params = URI.decode_www_form(URI(protocol.streaming_transcription_url({}, audio:)).query)
+
+    expect(params).to include(%w[sample_rate 32000], %w[channels 10])
+  end
+
   it 'rejects unsupported WAV encodings before opening a socket' do
     audio = instance_double(RubyLLM::Transcription::WavAudio, encoding: 3, bits_per_sample: 32)
 

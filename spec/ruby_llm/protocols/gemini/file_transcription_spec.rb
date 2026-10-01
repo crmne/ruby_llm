@@ -92,11 +92,13 @@ RSpec.describe RubyLLM::Protocols::Gemini::FileTranscription do
     expect(result.tokens.input).to be_nil
   end
 
-  it 'rejects incompatible custom vocabulary and timestamp options before requesting an interaction' do
-    expect do
-      RubyLLM.transcribe(audio_path, model: model_for(:gemini, :dedicated_transcription), provider: :gemini,
-                                     timestamps: :word, prompt: 'RubyLLM')
-    end.to raise_error(ArgumentError, /custom vocabulary cannot be combined/)
+  it 'leaves combining custom vocabulary with diarization to Gemini' do
+    payload = interactions.send(:render_transcription_payload, RubyLLM::Attachment.new(audio_path),
+                                model: model_for(:gemini, :dedicated_transcription), language: nil,
+                                speaker_names: ['Alice'], provider_options: {}, prompt: 'RubyLLM')
+
+    expect(payload.dig(:generation_config, :transcription_config))
+      .to include(custom_vocabulary: ['RubyLLM'], mode: { type: 'verbatim', diarization_mode: 'speaker' })
   end
 
   it 'rejects unknown granularities and unsupported reference clips instead of ignoring them' do

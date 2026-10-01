@@ -105,6 +105,13 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::StreamingTranscription do
       .to raise_error(RubyLLM::Error, 'Quota exceeded')
   end
 
+  it 'leaves the PCM sample rate to ElevenLabs' do
+    audio = instance_double(RubyLLM::Transcription::WavAudio,
+                            channels: 1, encoding: 1, sample_rate: 32_000, bits_per_sample: 16)
+
+    expect(protocol.streaming_audio_format(audio)).to eq('pcm_32000')
+  end
+
   it 'rejects unsupported WAV encodings and channel layouts' do
     audio = instance_double(RubyLLM::Transcription::WavAudio,
                             channels: 2, encoding: 1, sample_rate: 16_000, bits_per_sample: 16)

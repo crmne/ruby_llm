@@ -24,17 +24,7 @@ module RubyLLM
           payload = { model:, store: false,
                       input: [{ type: 'audio', mime_type: attachment.mime_type, data: attachment.encoded }],
                       generation_config: { transcription_config: config } }
-          payload = Support::Utils.deep_merge(payload, provider_options)
-          validate_transcription_config(payload.dig(:generation_config, :transcription_config))
-          payload
-        end
-
-        def validate_transcription_config(config)
-          mode = config[:mode]
-          return unless config[:custom_vocabulary] && mode.is_a?(Hash)
-          return unless mode[:diarization_mode] || mode[:timestamp_granularities]
-
-          raise ArgumentError, 'Gemini custom vocabulary cannot be combined with diarization or word timestamps'
+          Support::Utils.deep_merge(payload, provider_options)
         end
 
         def parse_transcription_response(response, model:)
