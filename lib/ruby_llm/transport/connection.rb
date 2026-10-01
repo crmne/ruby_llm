@@ -23,7 +23,7 @@ module RubyLLM
         keyword_init: true
       )
 
-      CACHE = ConnectionCache.new
+      CACHE = Support::ProcessCache.new
 
       attr_reader :provider, :config
 
