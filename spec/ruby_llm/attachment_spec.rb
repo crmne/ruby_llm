@@ -273,4 +273,51 @@ RSpec.describe RubyLLM::Attachment do
     expect { described_class.new(StringIO.new('png'), filename: 'page.png', resolution: 'high') }
       .to raise_error(ArgumentError, /resolution must be one of/)
   end
+
+  describe 'serialized attributes' do
+    let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
+    let(:original) { described_class.new(image_path, filename: 'custom.png', resolution: :high) }
+
+    it 'serializes the source, filename, and resolution' do
+      expect(original.to_h).to eq(type: :image, source: Pathname.new(image_path), filename: 'custom.png',
+                                  resolution: :high)
+    end
+
+    it 'omits an unset resolution' do
+      expect(described_class.new(image_path).to_h).not_to have_key(:resolution)
+    end
+
+    it 'rebuilds an attachment from Symbol keys' do
+      rebuilt = described_class.wrap([original.to_h]).first
+
+      expect(rebuilt).to have_attributes(source: Pathname.new(image_path), filename: 'custom.png',
+                                         mime_type: 'image/png', resolution: :high)
+      expect(rebuilt.content).to eq(File.binread(image_path))
+    end
+
+    it 'rebuilds an attachment from String keys and a String resolution' do
+      attributes = JSON.parse(JSON.generate(original.to_h))
+      expect(attributes).to include('filename' => 'custom.png', 'resolution' => 'high')
+
+      rebuilt = described_class.wrap([attributes]).first
+
+      expect(rebuilt).to have_attributes(source: Pathname.new(image_path), filename: 'custom.png',
+                                         mime_type: 'image/png', resolution: :high)
+    end
+
+    it 'rebuilds a URL attachment from JSON attributes' do
+      attributes = JSON.parse(JSON.generate(described_class.new('https://example.com/ruby.png').to_h))
+
+      rebuilt = described_class.wrap([attributes]).first
+
+      expect(rebuilt).to have_attributes(source: URI('https://example.com/ruby.png'), filename: 'ruby.png',
+                                         mime_type: 'image/png')
+    end
+
+    it 'passes the configuration to rebuilt attachments' do
+      config = RubyLLM.config.dup
+
+      expect(described_class.wrap([original.to_h], config:).first.config).to be(config)
+    end
+  end
 end

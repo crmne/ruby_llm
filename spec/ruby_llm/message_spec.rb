@@ -102,6 +102,33 @@ RSpec.describe RubyLLM::Message do
       expect(rebuilt.server_tool_calls.first).to be_a(RubyLLM::ServerToolCall)
       expect(rebuilt.to_h).to eq(original.to_h)
     end
+
+    context 'with attachments' do
+      let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
+      let(:original) do
+        described_class.new(role: :user, content: 'Look',
+                            attachments: [RubyLLM::Attachment.new(image_path, filename: 'custom.png',
+                                                                              resolution: :high)])
+      end
+
+      it 'rebuilds attachments as usable value objects' do
+        rebuilt = described_class.new(original.to_h)
+
+        expect(rebuilt.attachments).to contain_exactly(
+          have_attributes(filename: 'custom.png', mime_type: 'image/png', resolution: :high,
+                          content: File.binread(image_path))
+        )
+        expect(rebuilt.to_h).to eq(original.to_h)
+      end
+
+      it 'rebuilds attachments through JSON serialization' do
+        attributes = JSON.parse(JSON.generate(original.to_h)).transform_keys(&:to_sym)
+
+        rebuilt = described_class.new(attributes)
+
+        expect(rebuilt.to_h).to eq(original.to_h)
+      end
+    end
   end
 
   describe '#attachments' do

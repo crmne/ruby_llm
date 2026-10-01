@@ -64,10 +64,16 @@ module RubyLLM
       return if source.nil? || (source.is_a?(String) && source.strip.empty?)
       return source if source.is_a?(Attachment)
       return source.to_attachment if source.respond_to?(:to_attachment)
+      return from_h(source, config:) if source.is_a?(Hash)
 
       new(source, config:)
     end
     private_class_method :coerce
+
+    def self.from_h(data, config: nil) # :nodoc:
+      data = data.transform_keys(&:to_sym)
+      new(data.fetch(:source), filename: data[:filename], resolution: data[:resolution]&.to_sym, config:)
+    end
 
     # Creates an attachment from +source+: a file path, URL, IO-like object,
     # ActiveStorage object, or UploadedFile. Derives the filename from the
@@ -236,7 +242,7 @@ module RubyLLM
     end
 
     def to_h # :nodoc:
-      { type: type, source: @source }
+      { type: type, source: @source, filename: filename, resolution: resolution }.compact
     end
 
     def byte_size # :nodoc:
