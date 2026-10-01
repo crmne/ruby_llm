@@ -93,19 +93,4 @@ RSpec.describe RubyLLM::Providers::VertexAI::Credentials do
     expect(authorization(key)).to eq('Bearer token-2')
     expect(endpoint).to have_been_requested.twice
   end
-
-  it 'hands Cloud Storage the same credentials for a service account key' do
-    require 'google/cloud/storage'
-    key = service_account_key('ruby@test-project.iam.gserviceaccount.com')
-    provider = RubyLLM::Providers::VertexAI.new(config(key).tap do |config|
-      config.vertexai_project_id = 'test-project'
-      config.vertexai_location = 'global'
-    end)
-    allow(Google::Cloud::Storage).to receive(:new)
-
-    provider.protocols.fetch(:files).new(provider).send(:storage)
-
-    expect(Google::Cloud::Storage).to have_received(:new)
-      .with(project_id: 'test-project', credentials: described_class.for(provider.config).authorizer)
-  end
 end

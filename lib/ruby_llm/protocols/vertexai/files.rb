@@ -8,6 +8,12 @@ module RubyLLM
         # GCS object names allow spaces and other characters URI() rejects.
         GCS_URI = %r{\Ags://([^/]+)/?(.*)\z}m
 
+        STORAGE_CLIENTS = Support::ProcessCache.new
+
+        def self.storage_clients
+          STORAGE_CLIENTS
+        end
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil,
                    provider_options: {})
@@ -74,14 +80,37 @@ module RubyLLM
         def storage
           require 'google/cloud/storage'
 
-          options = { project_id: @config.vertexai_project_id }
-          # Without a key, Cloud Storage resolves its own credentials,
-          # including settings of its own such as STORAGE_KEYFILE.
-          options[:credentials] = @provider.google_credentials if @config.vertexai_service_account_key
-          ::Google::Cloud::Storage.new(**options)
+          STORAGE_CLIENTS.fetch(storage_key) { ::Google::Cloud::Storage.new(**storage_options) }
         rescue LoadError
           raise Error, 'The google-cloud-storage gem is required for Vertex AI file uploads. ' \
                        'Please add it to your Gemfile: gem "google-cloud-storage"'
+        end
+
+        # Without a key, Cloud Storage resolves its own credentials, including
+        # settings of its own such as STORAGE_KEYFILE.
+        def storage_options
+          options = { project_id: @config.vertexai_project_id }
+          options[:credentials] = @provider.google_credentials if @config.vertexai_service_account_key
+          options
+        end
+
+        # A client keeps the credentials, scope, endpoint, and settings it was
+        # built with, so only callers that would build the same one share it.
+        def storage_key
+          settings = ::Google::Cloud::Storage.configure
+          [
+            storage_options,
+            settings.fields!.to_h { |field| [field, settings[field]] },
+            ::Google::Cloud.configure.credentials,
+            ENV.values_at(*credential_variables)
+          ]
+        end
+
+        def credential_variables
+          storage = ::Google::Cloud::Storage::Credentials
+          loader = ::Google::Auth::CredentialsLoader
+          storage::PATH_ENV_VARS + storage::JSON_ENV_VARS +
+            loader.constants.grep(/_VAR\z/).map { |name| loader.const_get(name) }
         end
 
         def bucket(name)

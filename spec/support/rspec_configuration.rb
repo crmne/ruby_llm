@@ -33,6 +33,7 @@ RSpec.configure do |config|
   config.before do
     RubyLLM::Transport::Connection.cache.clear
     RubyLLM::Providers::VertexAI::Credentials.cache.clear
+    RubyLLM::Protocols::VertexAI::Files.storage_clients.clear
   end
 
   # Replaying VertexAI cassettes must not hit Google auth; live recording still does.
