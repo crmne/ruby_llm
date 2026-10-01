@@ -11,7 +11,6 @@ module RubyLLM
         }.freeze
 
         ANTHROPIC_INLINE_REQUEST_LIMIT = 24 * 1024 * 1024
-        ANTHROPIC_FILE_UPLOAD_LIMIT = 500 * 1024 * 1024
         CACHE_CONTROL_TYPE = 'ephemeral'
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
         BETA_HEADER = 'anthropic-beta'
@@ -194,10 +193,6 @@ module RubyLLM
 
         def default_large_file_upload_threshold
           ANTHROPIC_INLINE_REQUEST_LIMIT
-        end
-
-        def provider_file_upload_limit
-          ANTHROPIC_FILE_UPLOAD_LIMIT
         end
 
         def provider_file_attachable?(attachment)

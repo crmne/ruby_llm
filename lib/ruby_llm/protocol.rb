@@ -580,7 +580,6 @@ module RubyLLM
       return attachment if attachment.provider_file?
       return attachment unless upload_large_attachment?(attachment)
 
-      ensure_provider_file_size!(attachment)
       Attachment.new(provider_upload(attachment), resolution: attachment.resolution, config: @config)
     end
 
@@ -615,30 +614,12 @@ module RubyLLM
       Float::INFINITY
     end
 
-    def provider_file_upload_limit
-      nil
-    end
-
     def provider_file_attachable?(_attachment)
       false
     end
 
     def provider_file_upload_options(_attachment)
       {}
-    end
-
-    def ensure_provider_file_size!(attachment)
-      limit = provider_file_upload_limit
-      return unless limit && attachment.byte_size.to_i > limit
-
-      raise Error, "#{@provider.name} file uploads support files up to #{format_bytes(limit)}; " \
-                   "#{attachment.filename} is #{format_bytes(attachment.byte_size)}"
-    end
-
-    def format_bytes(bytes)
-      return 'unknown size' unless bytes
-
-      "#{(bytes.to_f / (1024 * 1024)).round(1)} MB"
     end
 
     def validate_paint_inputs!(with:, mask:)

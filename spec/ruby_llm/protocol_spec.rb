@@ -104,7 +104,6 @@ RSpec.describe RubyLLM::Protocol do
       expect(protocol.send(:supports_provider_file_references?)).to be(false)
       expect(protocol.send(:provider_file_attachable?, nil)).to be(false)
       expect(protocol.send(:provider_file_upload_options, nil)).to eq({})
-      expect(protocol.send(:provider_file_upload_limit)).to be_nil
       expect(protocol.send(:default_large_file_upload_threshold)).to eq(Float::INFINITY)
       expect(protocol.send(:auto_upload_large_files?)).to be(false)
     end
@@ -115,17 +114,6 @@ RSpec.describe RubyLLM::Protocol do
       allow(protocol).to receive_messages(upload_large_attachment?: true, provider_upload: upload)
 
       expect(protocol.send(:preprocess_attachment, attachment).resolution).to eq(:high)
-    end
-
-    it 'accepts any file size when the provider states no limit' do
-      attachment = RubyLLM::Attachment.new(StringIO.new('x' * 10), filename: 'a.txt')
-
-      expect { protocol.send(:ensure_provider_file_size!, attachment) }.not_to raise_error
-    end
-
-    it 'formats sizes for its error messages' do
-      expect(protocol.send(:format_bytes, nil)).to eq('unknown size')
-      expect(protocol.send(:format_bytes, 1024 * 1024 * 3)).to eq('3.0 MB')
     end
   end
 

@@ -779,7 +779,6 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 
     it 'accepts images, PDFs and text files' do
-      expect(protocol.send(:provider_file_upload_limit)).to be_positive
       expect(
         protocol.send(:provider_file_attachable?,
                       RubyLLM::Attachment.new(StringIO.new('x'), filename: 'a.pdf'))

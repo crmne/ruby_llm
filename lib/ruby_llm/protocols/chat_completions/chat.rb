@@ -11,7 +11,6 @@ module RubyLLM
         }.freeze
 
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
-        OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
         PROMPT_CACHE_OPTIONS = %i[key ttl mode retention].freeze
 
         def completion_url
@@ -402,10 +401,6 @@ module RubyLLM
 
         def default_large_file_upload_threshold
           OPENAI_INLINE_FILE_LIMIT
-        end
-
-        def provider_file_upload_limit
-          OPENAI_FILE_UPLOAD_LIMIT
         end
 
         def provider_file_attachable?(attachment)

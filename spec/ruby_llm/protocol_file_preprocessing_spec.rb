@@ -165,18 +165,18 @@ RSpec.describe RubyLLM::Protocol do
     expect(protocol.preprocess_message(message).attachments.first.provider_file_id).to eq('file_456')
   end
 
-  it 'raises before uploading files above the provider file limit' do
+  it 'leaves the upload size limit to the provider' do
     provider = RubyLLM::Providers::OpenRouter.new(RubyLLM.config)
     protocol = RubyLLM::Providers::OpenRouter::ChatCompletions.new(provider, model)
     attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'huge.pdf')
     allow(attachment).to receive(:byte_size).and_return(101 * 1024 * 1024)
-    allow(provider).to receive(:upload_file)
+    uploaded = RubyLLM::UploadedFile.new(id: 'file_789', provider: 'openrouter', filename: 'huge.pdf',
+                                         mime_type: 'application/pdf')
+    allow(provider).to receive(:upload_file).and_return(uploaded)
 
     message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [attachment])
 
-    expect { protocol.preprocess_message(message) }
-      .to raise_error(RubyLLM::Error, /OpenRouter file uploads support files up to/)
-    expect(provider).not_to have_received(:upload_file)
+    expect(protocol.preprocess_message(message).attachments.first.provider_file_id).to eq('file_789')
   end
 
   it 'preprocesses at request time rather than when messages are added' do

@@ -15,7 +15,6 @@ module RubyLLM
 
         GEMINI_INLINE_FILE_THRESHOLD = 20 * 1024 * 1024
         VERTEX_INLINE_FILE_THRESHOLD = 7 * 1024 * 1024
-        GEMINI_FILE_UPLOAD_LIMIT = 2 * 1024 * 1024 * 1024
 
         module_function
 
@@ -126,10 +125,6 @@ module RubyLLM
 
         def default_large_file_upload_threshold
           @provider.slug == 'vertexai' ? VERTEX_INLINE_FILE_THRESHOLD : GEMINI_INLINE_FILE_THRESHOLD
-        end
-
-        def provider_file_upload_limit
-          GEMINI_FILE_UPLOAD_LIMIT
         end
 
         def provider_file_attachable?(attachment)

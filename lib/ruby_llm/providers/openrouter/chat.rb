@@ -6,7 +6,6 @@ module RubyLLM
       # Chat methods of the OpenRouter API integration
       module Chat
         OPENROUTER_INLINE_FILE_THRESHOLD = 50 * 1024 * 1024
-        OPENROUTER_FILE_UPLOAD_LIMIT = 100 * 1024 * 1024
         CACHE_CONTROL_TYPE = 'ephemeral'
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
         COMPACTION_PLUGIN_ID = 'context-compression'
@@ -164,10 +163,6 @@ module RubyLLM
 
         def default_large_file_upload_threshold
           OPENROUTER_INLINE_FILE_THRESHOLD
-        end
-
-        def provider_file_upload_limit
-          OPENROUTER_FILE_UPLOAD_LIMIT
         end
 
         def provider_file_attachable?(attachment)
