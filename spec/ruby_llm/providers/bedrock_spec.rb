@@ -291,5 +291,24 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       expect(response.body).to eq('status' => 'Submitted')
       expect(request).to have_been_requested
     end
+
+    it 'serializes a chat request once and sends the bytes it signed' do
+      context = RubyLLM.context do |config|
+        config.bedrock_api_key = 'key'
+        config.bedrock_secret_key = 'secret'
+        config.bedrock_region = 'us-east-1'
+      end
+      reply = { output: { message: { role: 'assistant', content: [{ text: 'Hi' }] } },
+                stopReason: 'end_turn', usage: { inputTokens: 3, outputTokens: 1 } }.to_json
+      request = stub_request(:post, %r{\Ahttps://bedrock-runtime\.us-east-1\.amazonaws\.com/model/.+/converse\z})
+                .with { |req| req.headers['X-Amz-Content-Sha256'] == Digest::SHA256.hexdigest(req.body) }
+                .to_return(body: reply, headers: { 'Content-Type' => 'application/json' })
+      allow(JSON).to receive(:generate).and_call_original
+
+      context.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).ask('Hello')
+
+      expect(request).to have_been_requested
+      expect(JSON).to have_received(:generate).once
+    end
   end
 end

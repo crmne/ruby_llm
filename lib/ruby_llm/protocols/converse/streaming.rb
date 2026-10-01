@@ -31,7 +31,7 @@ module RubyLLM
             on_failed_response: ->(chunk, env) { handle_failed_stream(chunk, env) }
           )
 
-          response = @connection.post(stream_url, payload, usage: @usage_tracker, stream: true) do |req|
+          response = @connection.post(stream_url, body, usage: @usage_tracker, stream: true) do |req|
             req.headers.merge!(@provider.sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'

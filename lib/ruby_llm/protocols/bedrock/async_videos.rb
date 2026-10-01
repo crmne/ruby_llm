@@ -19,8 +19,9 @@ module RubyLLM
         end
 
         def post_video(url, payload)
-          @connection.post(url, payload, idempotent: false) do |request|
-            request.headers.merge!(@provider.sign_headers('POST', url, JSON.generate(payload)))
+          body = JSON.generate(payload)
+          @connection.post(url, body, idempotent: false) do |request|
+            request.headers.merge!(@provider.sign_headers('POST', url, body))
           end
         end
 
