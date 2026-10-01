@@ -37,6 +37,19 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(chunk.tokens.thinking).to eq(7)
   end
 
+  it 'appends streamed text to its content block in place' do
+    delta = lambda do |text|
+      { 'type' => 'content_block_delta', 'index' => 0, 'delta' => { 'type' => 'text_delta', 'text' => text } }
+    end
+    protocol.send(:build_chunk, { 'type' => 'content_block_start', 'index' => 0,
+                                  'content_block' => { 'type' => 'text', 'text' => '' } })
+    protocol.send(:build_chunk, delta.call('Hello'))
+    text = protocol.instance_variable_get(:@stream_blocks)[0]['text']
+    protocol.send(:build_chunk, delta.call(', world'))
+
+    expect(protocol.instance_variable_get(:@stream_blocks)[0]['text']).to be(text).and eq('Hello, world')
+  end
+
   it 'sends Accept-Encoding: identity on streaming requests' do
     captured = nil
 

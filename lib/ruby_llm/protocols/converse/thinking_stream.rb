@@ -37,7 +37,8 @@ module RubyLLM
           else
             text = (block['reasoningText'] ||= { 'text' => '' })
             (delta['reasoningText'] || delta).slice('text', 'signature').each do |key, value|
-              text[key] = text[key].to_s + value.to_s
+              text[key] = +text[key].to_s
+              text[key] << value.to_s
             end
           end
         end

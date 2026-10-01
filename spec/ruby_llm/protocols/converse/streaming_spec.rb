@@ -30,6 +30,17 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     expect(chunk.thinking.text).to eq('thinking text')
   end
 
+  it 'appends streamed reasoning text to its block in place' do
+    stream = RubyLLM::Protocols::Converse::ThinkingStream.new
+    delta = ->(text) { { 'contentBlockIndex' => 0, 'delta' => { 'reasoningContent' => { 'text' => text } } } }
+    read_text = -> { stream.raw_reasoning.dig('converse', 0, 'reasoningContent', 'reasoningText', 'text') }
+    stream.add('contentBlockDelta' => delta.call('Let'))
+    text = read_text.call
+    stream.add('contentBlockDelta' => delta.call(' me think'))
+
+    expect(read_text.call).to be(text).and eq('Let me think')
+  end
+
   it 'extracts thinking signatures from Bedrock Converse Stream reasoningContent deltas' do
     event = {
       'contentBlockDelta' => {

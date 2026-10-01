@@ -84,13 +84,18 @@ module RubyLLM
           return unless block
 
           case delta_type
-          when 'text_delta' then block['text'] = block['text'].to_s + data.dig('delta', 'text').to_s
-          when 'thinking_delta' then block['thinking'] = block['thinking'].to_s + data.dig('delta', 'thinking').to_s
+          when 'text_delta' then append_stream_text(block, 'text', data.dig('delta', 'text'))
+          when 'thinking_delta' then append_stream_text(block, 'thinking', data.dig('delta', 'thinking'))
           when 'signature_delta' then block['signature'] = data.dig('delta', 'signature')
           when 'input_json_delta' then @stream_block_json&.dig(data['index'])&.<< data.dig('delta', 'partial_json').to_s
           when 'citations_delta' then (block['citations'] ||= []) << data.dig('delta', 'citation')
-          when 'compaction_delta' then block['content'] = block['content'].to_s + data.dig('delta', 'content').to_s
+          when 'compaction_delta' then append_stream_text(block, 'content', data.dig('delta', 'content'))
           end
+        end
+
+        def append_stream_text(block, key, text)
+          block[key] = +block[key].to_s
+          block[key] << text.to_s
         end
 
         def finalize_stream_block(index)
