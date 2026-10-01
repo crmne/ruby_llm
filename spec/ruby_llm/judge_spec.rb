@@ -290,6 +290,17 @@ RSpec.describe RubyLLM::Judge do
     end.to raise_error(RubyLLM::Error, /doesn't support judgments/)
   end
 
+  it 'lets OpenAI reject chat models through Decisions' do
+    model = model_for(:openai)
+    stub = stub_request(:post, 'https://api.openai.com/v1/decisions').to_return(
+      status: 404, headers: { 'Content-Type' => 'application/json' },
+      body: { error: { message: "The model `#{model}` does not exist or you do not have access to it." } }.to_json
+    )
+
+    expect { judge_class.judge('Help', model:, provider: :openai) }.to raise_error(RubyLLM::Error, /does not exist/)
+    expect(stub).to have_been_requested.once
+  end
+
   context 'with all question types' do
     let(:response_body) do
       {
