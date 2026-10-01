@@ -188,7 +188,6 @@ module RubyLLM
         action_text_attachments = action_text_attachment_sources(content)
         return [] unless content_attachments?(action_text_attachments)
 
-        @_tempfiles = []
         collect_attachments(action_text_attachments)
       end
     end

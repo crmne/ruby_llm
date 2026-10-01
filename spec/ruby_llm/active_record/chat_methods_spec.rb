@@ -767,6 +767,38 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat
     end
 
+    def downloads
+      count = 0
+      subscriber = ActiveSupport::Notifications.subscribe(/\Aservice_(streaming_)?download\.active_storage\z/) do
+        count += 1
+      end
+      yield
+      count
+    ensure
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
+
+    it 'rebuilds and inspects a transcript without downloading its files' do
+      chat = chat_with_attachments(messages: 2, attachments: 2)
+
+      count = downloads do
+        loaded = Chat.find(chat.id)
+        loaded.to_llm.messages.each(&:inspect)
+        loaded.awaiting_approval?
+        loaded.pending_approvals.to_a
+      end
+
+      expect(count).to eq(0)
+    end
+
+    it 'downloads each file once, when a request needs its bytes' do
+      llm_chat = Chat.find(chat_with_attachments(messages: 2, attachments: 2).id).to_llm
+
+      expect(downloads { 2.times { llm_chat.render } }).to eq(4)
+      expect(llm_chat.messages.flat_map(&:attachments).map(&:content)).to eq(['content 0-0', 'content 0-1',
+                                                                              'content 1-0', 'content 1-1'])
+    end
+
     it 'falls back to a plain list for an association without a class' do
       chat = Chat.create!(model: model_id)
       allow(chat).to receive(:messages_association).and_return([])

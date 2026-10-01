@@ -232,6 +232,8 @@ You can also pass stored attachments that the current user is authorized to acce
 chat.ask("Compare these", with: project.documents)
 ```
 
+Stored files stay in Active Storage until a request needs their bytes. Loading a chat, checking `awaiting_approval?`, or listing `pending_approvals` downloads nothing, and each file downloads once, when a request first sends it. RubyLLM takes the file's type from the blob's content type.
+
 Structured output is stored as JSON text in the application message content:
 
 ```ruby

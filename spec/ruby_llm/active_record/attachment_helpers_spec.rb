@@ -12,8 +12,7 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
       public :prepare_for_active_storage, :convert_to_active_storage_format, :active_storage_blobs,
              :plain_text_content, :action_text_attachment_sources, :action_text_attachable_sources,
              :content_attachments?, :pending_upload_attachable?, :pending_upload_attachment,
-             :attachment_hash_io, :attachment_hash_filename, :instance_of_class?, :download_attachment,
-             :persist_content
+             :attachment_hash_io, :attachment_hash_filename, :instance_of_class?, :persist_content
     end.new
   end
 
@@ -283,18 +282,6 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
 
     it 'checks against a loaded class' do
       expect(helpers.instance_of_class?('anything', 'String')).to be(true)
-    end
-  end
-
-  describe '#download_attachment' do
-    it 'streams a stored attachment into a tempfile' do
-      helpers.instance_variable_set(:@_tempfiles, [])
-      message = message_with_attachment
-
-      tempfile = helpers.download_attachment(message.attachments.first)
-
-      expect(tempfile.read).to eq('hello')
-      expect(File.extname(tempfile.path)).to eq('.txt')
     end
   end
 end

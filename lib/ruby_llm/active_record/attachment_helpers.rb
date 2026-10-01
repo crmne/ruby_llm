@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'active_support/core_ext/object/blank'
-require 'tempfile'
 
 module RubyLLM
   module ActiveRecord
@@ -214,9 +213,7 @@ module RubyLLM
         if pending_upload_attachable?(attachable)
           pending_upload_attachment(attachable)
         else
-          tempfile = download_attachment(attachment)
-          RubyLLM::Attachment.new(tempfile, filename: attachment.filename.to_s,
-                                            resolution: attachment.metadata['resolution']&.to_sym)
+          RubyLLM::Attachment.new(attachment, resolution: attachment.metadata['resolution']&.to_sym)
         end
       end
 
@@ -264,20 +261,6 @@ module RubyLLM
         Object.const_get(class_name).then { |klass| object.is_a?(klass) }
       rescue NameError
         false
-      end
-
-      def download_attachment(attachment)
-        ext = File.extname(attachment.filename.to_s)
-        basename = File.basename(attachment.filename.to_s, ext)
-        tempfile = Tempfile.new([basename, ext])
-        tempfile.binmode
-
-        attachment.download { |chunk| tempfile.write(chunk) }
-
-        tempfile.flush
-        tempfile.rewind
-        @_tempfiles << tempfile
-        tempfile
       end
     end
   end
