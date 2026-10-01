@@ -51,7 +51,7 @@ module RubyLLM
         OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank judgment].freeze
         STATUSES = %i[pending succeeded failed cancelled].freeze
 
-        attr_reader :operation, :provider, :model, :status, :tokens, :cost
+        attr_reader :operation, :provider, :model, :status, :tokens
         attr_accessor :message
 
         include Support::Inspectable
@@ -66,9 +66,13 @@ module RubyLLM
           @model = model&.to_s
           @status = status.to_sym
           @tokens = tokens || Tokens.new
-          @cost = cost || Cost.new(tokens: @tokens)
+          @cost = cost
           @message = message
           validate!
+        end
+
+        def cost
+          @cost ||= Cost.new(tokens:)
         end
 
         def pending? = status == :pending
@@ -92,7 +96,7 @@ module RubyLLM
         def finish(status:, tokens: nil, cost: nil) # :nodoc:
           @status = status.to_sym
           @tokens = tokens || Tokens.new
-          @cost = cost || Cost.new(tokens: @tokens)
+          @cost = cost
           validate!
           self
         end

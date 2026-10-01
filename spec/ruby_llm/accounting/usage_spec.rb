@@ -256,6 +256,18 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     expect(entry.tokens.to_h).to eq(input_tokens: 7)
   end
 
+  it 'prices a streaming attempt only when its cost is read' do
+    tracker = build_tracker
+    entry = tracker.start
+    allow(RubyLLM::Cost).to receive(:new).and_call_original
+
+    3.times { tracker.observe(RubyLLM::Chunk.new(role: :assistant, content: 'part', output_tokens: 4)) }
+
+    expect(RubyLLM::Cost).not_to have_received(:new)
+    expect(entry.cost.total).to be_nil
+    expect(RubyLLM::Cost).to have_received(:new).with(tokens: entry.tokens).once
+  end
+
   it 'refuses an unknown operation or status' do
     expect do
       RubyLLM::Accounting::Usage::Entry.new(operation: :telepathy, provider: 'openai', model: 'm')
