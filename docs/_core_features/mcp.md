@@ -514,7 +514,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-The document's `client_id` must be that exact URL, and its `redirect_uris` must list your callback. Without it, RubyLLM registers with servers that allow dynamic registration, once per authorization server and callback.
+The document's `client_id` must be that exact URL, and its `redirect_uris` must list your callback. Without it, RubyLLM registers with servers that allow dynamic registration, once per authorization server and callback. When an authorization server forgets a registration and answers `invalid_client`, RubyLLM registers again the next time a user authorizes.
 
 ## Connections and Safety
 

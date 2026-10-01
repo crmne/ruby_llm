@@ -279,6 +279,73 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(refreshes).to have_been_made.once
   end
 
+  describe 'registrations the authorization server forgets' do
+    def store = RubyLLM.config.mcp_credential_store
+    def key = "ada@#{server_url}"
+
+    def forgotten_client
+      stub_request(:post, 'https://auth.example.com/token')
+        .to_return(status: 401, body: { error: 'invalid_client', error_description: 'Unknown client' }.to_json)
+    end
+
+    def registers_as(client)
+      stub_request(:post, 'https://auth.example.com/register').to_return(body: client.to_json)
+    end
+
+    def client_id_in(url)
+      URI.decode_www_form(URI(url).query).to_h['client_id']
+    end
+
+    it 'registers again after a refresh finds the client gone' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store.write(key, store.read(key).merge('access_token' => 'stale'))
+      forgotten_client
+      registers_as(client_id: 'registered-again')
+
+      expect { linear_class.new(user: 'ada').tools }.to raise_error(RubyLLM::UnauthorizedError)
+      expect(client_id_in(linear_class.new(user: 'ada').authorization_url(redirect_uri:))).to eq('registered-again')
+    end
+
+    it 'registers again after a code exchange finds the client gone' do
+      url = linear.authorization_url(redirect_uri:)
+      forgotten_client
+      registers_as(client_id: 'registered-again')
+
+      expect { linear.authorize(callback(url)) }.to raise_error(RubyLLM::MCP::Error, /Unknown client/) do |error|
+        expect(error.data).to include('error' => 'invalid_client')
+      end
+      expect(client_id_in(linear.authorization_url(redirect_uri:))).to eq('registered-again')
+    end
+
+    it 'keeps a registration made since' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      registration = "client:https://auth.example.com #{redirect_uri}"
+      store.write(registration, { 'client_id' => 'newer' }, owner: nil)
+      store.write(key, store.read(key).merge('access_token' => 'stale'))
+      forgotten_client
+
+      expect { linear_class.new(user: 'ada').tools }.to raise_error(RubyLLM::UnauthorizedError)
+      expect(store.read(registration)).to eq('client_id' => 'newer')
+    end
+
+    it 'drops the secret of the registration it replaces' do
+      registers_as(client_id: 'registered', client_secret: 'old-secret')
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store.write(key, store.read(key).merge('access_token' => 'stale'))
+      forgotten_client
+      expect { linear_class.new(user: 'ada').tools }.to raise_error(RubyLLM::UnauthorizedError)
+      registers_as(client_id: 'registered-again')
+      stub_request(:post, 'https://auth.example.com/token')
+        .to_return(body: { access_token: 'access-1', refresh_token: 'refresh-1', expires_in: 3600 }.to_json)
+      again = linear_class.new(user: 'ada')
+
+      again.authorize(callback(again.authorization_url(redirect_uri:)))
+
+      expect(store.read(key)).to include('client_id' => 'registered-again')
+      expect(store.read(key)).not_to have_key('client_secret')
+    end
+  end
+
   it 'forgets credentials' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 

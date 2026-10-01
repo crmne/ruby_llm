@@ -17,6 +17,7 @@ module RubyLLM
       SERVER_FIELDS = %w[
         issuer token_endpoint token_endpoint_auth_methods_supported authorization_response_iss_parameter_supported
       ].freeze
+      CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri].freeze
       AUTHORIZATION_SERVER_PATHS = [
         '/.well-known/oauth-authorization-server%<path>s',
         '/.well-known/openid-configuration%<path>s',
@@ -86,7 +87,7 @@ module RubyLLM
         check_callback(pending, params)
         tokens = token_request('authorization_code', code: value(params, :code), redirect_uri: pending['redirect_uri'],
                                                      code_verifier: pending['verifier'], pending:)
-        store_tokens(tokens, client: pending.slice('client_id', 'client_secret', 'issuer', 'server', 'scope'))
+        store_tokens(tokens, client: pending.slice(*CLIENT_FIELDS, 'scope'))
       end
 
       def deauthorize
@@ -106,7 +107,8 @@ module RubyLLM
       end
 
       def store_tokens(tokens, client: nil)
-        data = credential.to_h.except('pending').merge(client.to_h)
+        data = credential.to_h.except('pending')
+        data = data.except(*CLIENT_FIELDS).merge(client) if client
         data = data.merge('access_token' => tokens['access_token'], 'scope' => tokens['scope'] || data['scope'],
                           'expires_at' => (Time.now.to_i + tokens['expires_in'].to_i if tokens['expires_in']))
         data['refresh_token'] = tokens['refresh_token'] if tokens['refresh_token']
@@ -149,6 +151,14 @@ module RubyLLM
         headers = { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' }
         authenticate(client, server, form, headers) if client['client_secret']
         post(server['token_endpoint'], URI.encode_www_form(form.compact), headers)
+      rescue Error => e
+        forget_registration(client) if e.data.is_a?(Hash) && e.data['error'] == 'invalid_client'
+        raise
+      end
+
+      def forget_registration(client)
+        registration = registration_key(client['issuer'], client['redirect_uri'])
+        store.delete(registration) if store.read(registration)&.fetch('client_id', nil) == client['client_id']
       end
 
       def authenticate(client, server, form, headers)
@@ -245,8 +255,8 @@ module RubyLLM
 
       def register(server, redirect_uri)
         endpoint = server['registration_endpoint'] or raise Error, "#{server['issuer']} does not register clients"
-        registration_key = "client:#{server['issuer']} #{redirect_uri}"
-        registered = store.read(registration_key)
+        registration = registration_key(server['issuer'], redirect_uri)
+        registered = store.read(registration)
         return registered if registered
 
         body = JSON.generate(
@@ -255,8 +265,12 @@ module RubyLLM
           application_type: HTTP.loopback?(redirect_uri) ? 'native' : 'web'
         )
         client = post(endpoint, body, 'Content-Type' => 'application/json').slice('client_id', 'client_secret')
-        store.write(registration_key, client, owner: nil)
+        store.write(registration, client, owner: nil)
         client
+      end
+
+      def registration_key(issuer, redirect_uri)
+        "client:#{issuer} #{redirect_uri}"
       end
 
       def scopes_for(server)
@@ -293,7 +307,9 @@ module RubyLLM
         rescue JSON::ParserError
           {}
         end
-        raise Error, "#{URI(url).host} refused the request: #{details['error_description'] || details['error']}"
+        details = {} unless details.is_a?(Hash)
+        raise Error.new("#{URI(url).host} refused the request: #{details['error_description'] || details['error']}",
+                        data: details)
       end
 
       def parse(response)
