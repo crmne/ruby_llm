@@ -15,10 +15,10 @@ module RubyLLM
       IDEMPOTENT_KEY = :ruby_llm_idempotent
       STREAM_PROGRESS_KEY = :ruby_llm_stream_progress
 
-      # The key a shared Faraday connection is cached under: the provider and
-      # everything ::build reads.
+      # The key a shared Faraday connection is cached under: the provider,
+      # whether it streams, and everything ::build reads.
       Settings = Struct.new(
-        :provider, :api_base, :adapter, :timeout, :proxy, :logger, :log_bodies, :log_regexp_timeout,
+        :provider, :stream, :api_base, :adapter, :timeout, :proxy, :logger, :log_bodies, :log_regexp_timeout,
         :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness, :retry_backoff_factor,
         keyword_init: true
       )
@@ -67,19 +67,22 @@ module RubyLLM
         @config = config
         @headers = headers
         @settings = settings_for(api_base || provider.api_base)
+        @stream_settings = @settings.dup.tap { |settings| settings.stream = true }.freeze
         connection
       end
 
       # The Faraday connection shared by every request with these settings in
       # this process. Looked up per request, so an object that outlives a fork
-      # never reaches the parent's sockets.
-      def connection
-        CACHE.fetch(@settings) { self.class.build(@settings) }
+      # never reaches the parent's sockets. Streaming requests get their own:
+      # some adapters, such as httpx, only stream if their first request did.
+      def connection(stream: false)
+        settings = stream ? @stream_settings : @settings
+        CACHE.fetch(settings) { self.class.build(settings) }
       end
 
-      def post(url, payload, usage: nil, idempotent: true, &)
+      def post(url, payload, usage: nil, idempotent: true, stream: false, &)
         instrument_request(:post, url) do
-          connection.post url, payload do |req|
+          connection(stream:).post url, payload do |req|
             prepare(req)
             set_usage_tracker(req, usage) if usage
             mark_non_idempotent(req) unless idempotent
@@ -134,6 +137,7 @@ module RubyLLM
       def settings_for(api_base)
         Settings.new(
           provider: @provider.class,
+          stream: false,
           api_base: api_base,
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,

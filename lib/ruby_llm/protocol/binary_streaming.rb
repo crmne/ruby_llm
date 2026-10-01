@@ -8,7 +8,7 @@ module RubyLLM
         fallback = Streaming::StreamState.new
         on_data = binary_on_data(fallback, progress, &)
 
-        response = @connection.post(url, payload, usage: @usage_tracker) do |request|
+        response = @connection.post(url, payload, usage: @usage_tracker, stream: true) do |request|
           (request.options.context ||= {})[Transport::Connection::STREAM_PROGRESS_KEY] = progress
           if faraday_1?
             request.options[:on_data] = on_data

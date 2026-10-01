@@ -53,6 +53,31 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(faraday_for(config)).not_to be(shared)
     end
 
+    it 'gives streaming requests a shared connection of their own' do
+      streaming = RubyLLM::Providers::OpenAI.new(config).connection.connection(stream: true)
+
+      expect(streaming).not_to be(faraday_for(config))
+      expect(RubyLLM::Providers::OpenAI.new(config.dup).connection.connection(stream: true)).to be(streaming)
+    end
+
+    it 'streams after buffered requests on adapters that settle on streaming at their first request' do
+      first_request_decides = Class.new(Faraday::Adapter) do
+        def call(env)
+          super
+          @streams = env.request.stream_response? if @streams.nil?
+          raise Faraday::ConnectionFailed, 'this session cannot stream' if env.request.stream_response? && !@streams
+
+          save_response(env, 200, '')
+          @app.call(env)
+        end
+      end
+      transport = RubyLLM::Providers::OpenAI.new(configured(faraday_adapter: first_request_decides)).connection
+      transport.post('chat/completions', {})
+
+      expect { transport.post('chat/completions', {}, stream: true) { |req| req.options.on_data = proc {} } }
+        .not_to raise_error
+    end
+
     it 'builds the middleware stack before it is shared' do
       expect(faraday_for(config).builder).to be_locked
     end
@@ -201,7 +226,7 @@ RSpec.describe RubyLLM::Transport::Connection do
       streams = in_flight_together(%w[alpha beta].map do |name|
         Thread.new do
           chunks = []
-          transport.post('embeddings', { name: }) do |req|
+          transport.post('embeddings', { name: }, stream: true) do |req|
             req.options.on_data = proc { |chunk, _bytes, _env| chunks << chunk }
           end
           chunks.join
