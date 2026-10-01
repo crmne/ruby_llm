@@ -84,7 +84,7 @@ choice :department, "Which team?", {
 }
 ```
 
-Use `nil` when an option needs no description. Symbol options return Symbols; String options return Strings. TypeSafe supports up to 255 options per choice.
+Use `nil` when an option needs no description. Symbol options return Symbols; String options return Strings.
 
 ### Scores
 
@@ -96,7 +96,7 @@ score :frustration, "How frustrated is the customer?" do
 end
 ```
 
-Describe each level concretely. TypeSafe supports two through ten levels, and each level must have a description.
+Describe each level concretely.
 
 ## Supplying Input
 

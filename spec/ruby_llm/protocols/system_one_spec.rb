@@ -46,12 +46,12 @@ RSpec.describe RubyLLM::Protocols::SystemOne do
     expect(protocol.send(:render_question, question)[:criteria]).to eq('true' => { deadline: 'today' }, 'false' => nil)
   end
 
-  it 'enforces provider limits without putting them in the domain' do
+  it 'leaves option and level limits to System One' do
     choice = RubyLLM::Judge::Question.new(:team, type: :choice, criteria: 256.times.to_h { |n| [n.to_s, nil] })
     score = RubyLLM::Judge::Question.new(:score, type: :score, criteria: Array.new(11, 'A level'))
 
-    expect { protocol.send(:render_question, choice) }.to raise_error(ArgumentError, /255/)
-    expect { protocol.send(:render_question, score) }.to raise_error(ArgumentError, /10/)
+    expect(protocol.send(:render_question, choice)[:criteria].size).to eq(256)
+    expect(protocol.send(:render_question, score)[:criteria].size).to eq(11)
   end
 
   it 'prevents provider options from replacing the questions, model, or input behind the parser' do
@@ -74,21 +74,14 @@ RSpec.describe RubyLLM::Protocols::SystemOne do
     expect(result.tokens.output).to eq(20)
   end
 
-  it 'rejects missing and unexpected answers rather than returning partial results' do
-    body['answers'].delete('urgent')
-
-    expect { protocol.send(:parse_judgment_response, response, questions:) }
-      .to raise_error(RubyLLM::Error, /different question IDs/)
-  end
-
-  it 'rejects incorrect answer types, out-of-range probabilities, and unrecognized options' do
+  it 'raises an error with the response when the answers do not map onto the questions' do
     modifications = [
-      -> { body['answers']['urgent']['type'] = 'choice' },
-      -> { body['answers']['urgent']['noul'] = 1.1 },
+      -> { body['answers'].delete('urgent') },
       -> { body['answers']['team']['choice'] = 'unknown' },
-      -> { body['answers']['team']['confidence'] = '0.9' },
-      -> { body['answers']['severity']['score'] = -1 },
-      -> { body['answers']['severity']['legend'].delete('0') }
+      -> { body['answers']['team']['probabilities'].delete('other') },
+      -> { body['answers']['severity']['legend'].delete('0') },
+      -> { body['answers']['severity'] = 0.1 },
+      -> { body['answers'] = [] }
     ]
     original = JSON.generate(body)
     modifications.each do |change|

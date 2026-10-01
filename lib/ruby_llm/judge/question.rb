@@ -86,9 +86,7 @@ module RubyLLM
       end
 
       def validate_score!
-        unless criteria.is_a?(Array) && criteria.size >= 2 && criteria.none?(&:nil?)
-          raise ArgumentError, 'A score needs at least two non-nil levels'
-        end
+        raise ArgumentError, 'A score needs a nonempty Array of levels' unless criteria.is_a?(Array) && !criteria.empty?
 
         validate_descriptions!(criteria)
       end

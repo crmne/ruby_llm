@@ -29,13 +29,18 @@ RSpec.describe RubyLLM::Judge::Question do
       { type: :choice, criteria: { '': 'Blank' } },
       { type: :choice, criteria: { true => 'Boolean option name' } },
       { type: :choice, criteria: { first: 42 } },
-      { type: :score, criteria: ['One level'] },
-      { type: :score, criteria: ['First', nil] },
+      { type: :score, criteria: [] },
       { type: :score, criteria: { first: 'First', second: 'Second' } }
     ]
 
     definitions.each do |definition|
       expect { described_class.new(:question, **definition).resolve(scope) }.to raise_error(ArgumentError)
+    end
+  end
+
+  it 'leaves the number of levels and their descriptions to the provider' do
+    [['Only level'], ['Calm', nil]].each do |levels|
+      expect(described_class.new(:severity, type: :score, criteria: levels).resolve(scope).criteria).to eq(levels)
     end
   end
 

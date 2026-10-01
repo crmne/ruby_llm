@@ -28,13 +28,6 @@ module RubyLLM
 
         def render_question(question)
           criteria = question.criteria
-          if question.type == :choice && criteria.size > 255
-            raise ArgumentError, 'System One choices support at most 255 options'
-          end
-          if question.type == :score && criteria.size > 10
-            raise ArgumentError, 'System One scores support at most 10 levels'
-          end
-
           if question.type == :probability && criteria
             criteria = criteria.transform_keys { |key| BOOLEAN_KEYS.fetch(key.to_s) }
           end
