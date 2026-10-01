@@ -124,6 +124,8 @@ RubyLLM no longer copies provider limits into checks of its own. A request it us
 
 If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
 
+RubyLLM no longer drops an explicit option the provider might reject, either. `RubyLLM.paint` on xAI now sends `size:`, so xAI's error replaces an image at its default size. Leave `size:` unset for xAI.
+
 ## Upgrade the Rails Schema
 
 Rails applications generate and run the 2.1 upgrade:

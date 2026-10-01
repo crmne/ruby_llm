@@ -3,10 +3,9 @@
 module RubyLLM
   module Providers
     class XAI
-      # Image generation and editing for the xAI API. Generation rejects the
-      # size parameter. Editing takes JSON image references (URL, data URI,
-      # or file id) instead of multipart uploads, up to three per request,
-      # and has no mask support.
+      # Image generation and editing for the xAI API. Editing takes JSON
+      # image references (URL, data URI, or file id) instead of multipart
+      # uploads, up to three per request, and has no mask support.
       module Images
         module_function
 
@@ -15,21 +14,21 @@ module RubyLLM
         end
 
         def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
-          return render_edit_payload(prompt, model:, count:, with:, provider_options:) if editing?(with, mask)
+          return render_edit_payload(prompt, model:, size:, count:, with:, provider_options:) if editing?(with, mask)
 
-          RubyLLM.logger.debug { "Ignoring size #{size}. xAI image generation does not support a size parameter." }
-          payload = { model: model, prompt: prompt }
+          payload = { model: model, prompt: prompt, size: size }.compact
           payload[:n] = count if count
 
           payload.merge(provider_options)
         end
 
-        def render_edit_payload(prompt, model:, with:, provider_options:, count: nil)
+        def render_edit_payload(prompt, model:, with:, provider_options:, size: nil, count: nil)
           payload = {
             model: model,
             prompt: prompt,
-            images: image_references(with)
-          }
+            images: image_references(with),
+            size: size
+          }.compact
           payload[:n] = count if count
 
           payload.merge(provider_options)
