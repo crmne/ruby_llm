@@ -58,6 +58,24 @@ RSpec.describe RubyLLM::Tool do
       expect(ClassNameTool.tool_name).to eq('weather')
       expect(ClassNameTool.new.name).to eq('weather')
     end
+
+    it 'derives the name once for a named class' do
+      stub_const('RepeatedNameTool', Class.new(described_class))
+      allow(RubyLLM::Support::Utils).to receive(:underscore).and_call_original
+
+      3.times { RepeatedNameTool.new.name }
+
+      expect(RubyLLM::Support::Utils).to have_received(:underscore).once
+    end
+
+    it 'derives the name again once an anonymous class is named' do
+      tool_class = Class.new(described_class)
+      expect(tool_class.tool_name).to eq('')
+
+      stub_const('LaterNamedTool', tool_class)
+
+      expect(tool_class.tool_name).to eq('later_named')
+    end
   end
 
   describe '#name' do

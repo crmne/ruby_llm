@@ -74,9 +74,13 @@ module RubyLLM
       #   WeatherLookup.tool_name  # => "weather_lookup"
       #
       def tool_name
+        return @tool_name if @tool_name
+
         normalized = name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
         ascii_name = normalized.encode('ASCII', replace: '').gsub(/[^a-zA-Z0-9_-]/, '-')
-        Support::Utils.underscore(ascii_name).delete_suffix('_tool')
+        derived = Support::Utils.underscore(ascii_name).delete_suffix('_tool')
+        @tool_name = derived if name
+        derived
       end
 
       # :call-seq:
