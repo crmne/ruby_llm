@@ -251,8 +251,8 @@ module RubyLLM
     # local server that speaks over stdio, or +transport:+ and +name:+ for
     # a server reached any other way, as MCP.transport describes. Also
     # accepts +name:+, +bearer_token:+, +headers:+, +env:+, +directory:+,
-    # +timeout:+, +prefix:+, and +oauth:+, which takes +true+ or the
-    # options of MCP.oauth.
+    # +timeout:+, +prefix:+, +input_requests:+, and +oauth:+, which takes
+    # +true+ or the options of MCP.oauth.
     #
     #   docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
     #   files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])

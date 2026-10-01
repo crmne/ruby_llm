@@ -331,6 +331,49 @@ RSpec.describe RubyLLM::MCP do
       expect(mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
         .to eq('elicitation' => { 'form' => {}, 'url' => {} })
     end
+
+    def mcp_accepting(*kinds, &)
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        input_requests(*kinds)
+        before_input_request(&) if block_given?
+      end.new
+    end
+
+    it 'declares only the input it accepts' do
+      mcp = mcp_accepting(:url)
+
+      expect(mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
+        .to eq('elicitation' => { 'url' => {} })
+    ensure
+      mcp&.close
+    end
+
+    it 'declares no input when it accepts none' do
+      mcp = mcp_accepting(false)
+
+      expect(mcp.class.input_requests).to eq([])
+      expect(mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities'))
+        .to eq({})
+    ensure
+      mcp&.close
+    end
+
+    it 'declines requests it does not accept without asking its callbacks' do
+      asked = []
+      mcp = mcp_accepting(:url) { |request| asked << request }
+
+      expect(mcp.deploy.text).to eq('Deploy cancelled')
+      expect(asked).to be_empty
+    ensure
+      mcp&.close
+    end
+
+    it 'refuses kinds of input it does not know' do
+      expect { Class.new(described_class) { input_requests :email } }
+        .to raise_error(ArgumentError, 'Unknown input requests: email')
+    end
   end
 
   describe 'cancellation' do
@@ -521,6 +564,12 @@ RSpec.describe RubyLLM::MCP do
 
       expect(linear.class.prefix).to eq('mcp_1')
       expect(linear.class.oauth_settings).to include(owner:, scopes: %w[read])
+    end
+
+    it 'accepts the input requests it takes' do
+      expect(RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', input_requests: false).class.input_requests).to eq([])
+      expect(RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', input_requests: [:form]).class.input_requests)
+        .to eq([:form])
     end
 
     it 'refuses unknown settings' do

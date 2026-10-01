@@ -107,7 +107,7 @@ docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
 files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
 ```
 
-It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
+It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `input_requests:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
 
 ```ruby
 RubyLLM.mcp(url: server.endpoint, name: "mcp_#{server.id}", prefix: "mcp_#{server.id}",
@@ -396,6 +396,17 @@ chat.complete
 ```
 
 `complete` resumes the call once all its requests are settled: RubyLLM sends the answers with the server's saved request state, and the server finishes. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
+
+A paused chat waits until someone answers. If your app has nowhere to show a kind of request, tell servers not to send it:
+
+```ruby
+class Deploys < RubyLLM::MCP
+  url "https://deploys.example.com/mcp"
+  input_requests :url
+end
+```
+
+RubyLLM accepts form and URL requests by default. `input_requests :form` or `input_requests :url` keeps one kind, and `input_requests false` accepts none, so servers finish the call without asking or answer with an error that raises `RubyLLM::MCP::Error`. A server that asks for a kind you left out gets a decline. Inline servers take the same setting: `RubyLLM.mcp(url: server.endpoint, input_requests: false)`.
 
 In Rails, the requests persist on the tool call, so a job can pause, a controller can record the user's answer, and another job can resume the call after a deploy or a restart. New applications get the `pending_input` column from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with `bin/rails generate ruby_llm:upgrade`.
 

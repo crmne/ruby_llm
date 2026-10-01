@@ -133,6 +133,15 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deploy cancelled')
     end
 
+    it 'does not pause for input requests the MCP does not accept' do
+      files_class.input_requests false
+
+      chat.with_mcp(files).ask('Deploy')
+
+      expect(chat).not_to be_awaiting_input
+      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deploy cancelled')
+    end
+
     it 'does not pause when a callback answers' do
       files_class.before_input_request { |request| request.answer(environment: 'staging') }
 

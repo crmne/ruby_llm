@@ -33,13 +33,14 @@ module RubyLLM
     include Support::Inspectable
 
     INPUT_ROUNDS = 10
-    INLINE_SETTINGS = %i[url command transport bearer_token directory timeout prefix].freeze
+    INPUT_REQUESTS = %i[form url].freeze
+    INLINE_SETTINGS = %i[url command transport bearer_token directory timeout prefix input_requests].freeze
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
-      @only @except @prefix @tool_declarations @approvals @callbacks @oauth
+      @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests
     ].freeze
-    private_constant :SETTINGS, :INPUT_ROUNDS, :INLINE_SETTINGS
+    private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS
 
     class << self
       attr_writer :default_name # :nodoc:
@@ -287,6 +288,25 @@ module RubyLLM
       #
       def after_progress(method = nil, &block)
         add_callback(:after_progress, method, block)
+      end
+
+      # Sets the kinds of requests for input the server may send: +:form+,
+      # +:url+, or both, the default. Pass +false+ when your app cannot
+      # show them to anyone, so a call never waits on an answer that will
+      # not come. RubyLLM declines requests of other kinds. Called with no
+      # arguments, returns the accepted kinds.
+      #
+      #   input_requests false
+      #   input_requests :url
+      #
+      def input_requests(*kinds)
+        return @input_requests || INPUT_REQUESTS if kinds.empty?
+
+        kinds = (kinds.flatten - [false, nil]).map(&:to_sym)
+        unknown = kinds - INPUT_REQUESTS
+        raise ArgumentError, "Unknown input requests: #{unknown.join(', ')}" if unknown.any?
+
+        @input_requests = kinds
       end
 
       # Registers a callback for the server's requests for input from the
@@ -543,7 +563,7 @@ module RubyLLM
       INPUT_ROUNDS.times do
         return result unless result['resultType'] == 'input_required'
 
-        input = { 'requests' => input_requests(result), 'request_state' => result['requestState'] }
+        input = { 'requests' => requests_for_input(result), 'request_state' => result['requestState'] }
         raise InputRequiredError.new(name, input) unless input['requests'].all?(&:answered?)
 
         result = send_answers(method, params, input)
@@ -557,16 +577,22 @@ module RubyLLM
       send_request(method, params.merge({ inputResponses: responses, requestState: input['request_state'] }.compact))
     end
 
-    def input_requests(result)
+    def requests_for_input(result)
       result.fetch('inputRequests', {}).filter_map do |key, request|
         next unless request['method'] == 'elicitation/create'
 
         InputRequest.new(key, request['params'] || {}).tap do |input_request|
+          next input_request.decline unless accepts?(input_request)
+
           self.class.callbacks(:before_input_request).each do |callback|
             apply(callback, input_request) unless input_request.answered?
           end
         end
       end
+    end
+
+    def accepts?(input_request)
+      self.class.input_requests.include?(input_request.url? ? :url : :form)
     end
 
     def send_request(method, params)
@@ -637,7 +663,12 @@ module RubyLLM
     end
 
     def client
-      @client ||= Client.new(transport, capabilities: { elicitation: { form: {}, url: {} } })
+      @client ||= Client.new(transport, capabilities:)
+    end
+
+    def capabilities
+      kinds = self.class.input_requests
+      kinds.empty? ? {} : { elicitation: kinds.to_h { |kind| [kind, {}] } }
     end
 
     def transport
