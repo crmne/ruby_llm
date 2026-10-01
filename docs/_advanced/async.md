@@ -116,7 +116,7 @@ answers = Async do |task|
 end.wait
 ```
 
-RubyLLM's default HTTP adapter cooperates with Ruby's fiber scheduler. Each task above creates its own chat, so the conversations stay independent. See Async's [task guide](https://socketry.github.io/async/guides/tasks/index.html) for task creation and waiting.
+RubyLLM's default HTTP adapter cooperates with Ruby's fiber scheduler. Each task above creates its own chat, so the conversations stay independent. To keep connections open between calls inside a reactor, use the `:async_http` adapter described in [Connection Reuse]({% link _getting_started/configuration-connection.md %}#connection-reuse). See Async's [task guide](https://socketry.github.io/async/guides/tasks/index.html) for task creation and waiting.
 
 ## Concurrent Operations
 

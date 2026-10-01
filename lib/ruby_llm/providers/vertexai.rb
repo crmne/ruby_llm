@@ -128,9 +128,9 @@ module RubyLLM
 
       def ranking_connection # :nodoc:
         base = @config.vertexai_ranking_api_base || 'https://discoveryengine.googleapis.com/v1'
-        @ranking_connection ||= Transport::Connection.new(self, @config, api_base: base).tap do |connection|
-          connection.connection.headers['X-Goog-User-Project'] = @config.vertexai_project_id
-        end
+        @ranking_connection ||= Transport::Connection.new(
+          self, @config, api_base: base, headers: { 'X-Goog-User-Project' => @config.vertexai_project_id }
+        )
       end
 
       # The rescue can't name Google::Auth::AuthorizationError directly:

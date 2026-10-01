@@ -28,6 +28,12 @@ RSpec.configure do |config|
     FileUtils.rm_f(cassette_path) if example.exception
   end
 
+  # Connections outlive a call, so each example starts without the previous
+  # example's middleware and adapters.
+  config.before do
+    RubyLLM::Transport::Connection.cache.clear
+  end
+
   # Replaying VertexAI cassettes must not hit Google auth; live recording still does.
   config.before do
     unless VCR.current_cassette&.recording?

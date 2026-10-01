@@ -3,7 +3,7 @@ layout: default
 title: Connection, Logging and Contexts
 parent: Configuration
 nav_order: 2
-description: Timeouts, retries, proxies, logging, the model registry file, and isolated multi-tenant contexts.
+description: Timeouts, retries, proxies, connection reuse, logging, the model registry file, and isolated multi-tenant contexts.
 ---
 
 # {{ page.title }}
@@ -15,6 +15,7 @@ After reading this guide, you will know:
 
 * Where RubyLLM reads the model registry and how to relocate it.
 * How to tune timeouts, retries, and HTTP proxies.
+* How to reuse connections between calls with a keep-alive adapter.
 * How to configure logging and debug streaming responses.
 * How to create isolated configurations with contexts for multi-tenancy.
 
@@ -94,6 +95,27 @@ RubyLLM.configure do |config|
   config.http_proxy = "socks5://proxy.company.com:1080"
 end
 ```
+
+### Connection Reuse
+
+A new connection costs a TCP and TLS handshake, which can add tens of milliseconds to a fast call. RubyLLM keeps one HTTP client for each provider endpoint and set of connection settings, shared by every call, thread, and fiber in the process. Choose an adapter that keeps connections open, and consecutive calls skip the handshake:
+
+```ruby
+# Gemfile
+gem "faraday-net_http_persistent"
+```
+
+```ruby
+require "faraday/net_http_persistent"
+
+RubyLLM.configure do |config|
+  config.faraday_adapter = :net_http_persistent
+end
+```
+
+The default `:net_http` adapter opens a new connection for every request. `:net_http_persistent` keeps a pool that every thread draws from, which suits Puma and Sidekiq. On Falcon or Solid Queue fiber workers, use `:async_http` from the `async-http-faraday` gem instead. It keeps connections open for as long as the Async reactor that opened them runs, so calls made outside a reactor still connect every time.
+
+Contexts share connections when their connection settings match. Credentials travel with each request, so tenants with their own API keys reuse the same connections. A context that changes an API base, `request_timeout`, a retry setting, `http_proxy`, or `faraday_adapter` gets connections of its own. Each forked process, such as a Puma worker, opens its own connections instead of sharing its parent's.
 
 ## Logging & Debugging
 
@@ -215,6 +237,7 @@ tenant_b_service = TenantService.new(tenant_b)
 - **Isolation**: Changes don't affect global `RubyLLM.config`
 - **Coverage**: Every entry point the context exposes uses it, chat and non-chat alike, including the file downloads those calls make
 - **Thread Safety**: Each context is independent and thread-safe
+- **Connections**: Contexts with the same connection settings share connections, as described in [Connection Reuse](#connection-reuse)
 
 ## Next Steps
 

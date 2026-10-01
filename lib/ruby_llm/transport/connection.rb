@@ -15,7 +15,17 @@ module RubyLLM
       IDEMPOTENT_KEY = :ruby_llm_idempotent
       STREAM_PROGRESS_KEY = :ruby_llm_stream_progress
 
-      attr_reader :provider, :connection, :config
+      # The key a shared Faraday connection is cached under: the provider and
+      # everything ::build reads.
+      Settings = Struct.new(
+        :provider, :api_base, :adapter, :timeout, :proxy, :logger, :log_bodies, :log_regexp_timeout,
+        :max_retries, :retry_interval, :retry_max_interval, :retry_interval_randomness, :retry_backoff_factor,
+        keyword_init: true
+      )
+
+      CACHE = ConnectionCache.new
+
+      attr_reader :provider, :config
 
       def self.basic(config = RubyLLM.config, &)
         Faraday.new do |f|
@@ -32,23 +42,45 @@ module RubyLLM
         end
       end
 
-      def initialize(provider, config, api_base: nil)
+      def self.cache
+        CACHE
+      end
+
+      # The result is shared across threads and contexts, so the middleware
+      # stack is built now rather than lazily, without a lock, on the first
+      # request, and the defaults every request copies are frozen.
+      def self.build(settings)
+        connection = Faraday.new(settings.api_base) do |faraday|
+          setup_timeout(faraday, settings)
+          setup_logging(faraday, settings)
+          setup_retry(faraday, settings)
+          setup_middleware(faraday, settings)
+          setup_http_proxy(faraday, settings)
+        end
+        [connection.headers, connection.params, connection.options].each(&:freeze)
+        connection.app
+        connection
+      end
+
+      def initialize(provider, config, api_base: nil, headers: {})
         @provider = provider
         @config = config
+        @headers = headers
+        @settings = settings_for(api_base || provider.api_base)
+        connection
+      end
 
-        @connection = Faraday.new(api_base || provider.api_base) do |faraday|
-          setup_timeout(faraday)
-          setup_logging(faraday)
-          setup_retry(faraday)
-          setup_middleware(faraday)
-          setup_http_proxy(faraday)
-        end
+      # The Faraday connection shared by every request with these settings in
+      # this process. Looked up per request, so an object that outlives a fork
+      # never reaches the parent's sockets.
+      def connection
+        CACHE.fetch(@settings) { self.class.build(@settings) }
       end
 
       def post(url, payload, usage: nil, idempotent: true, &)
         instrument_request(:post, url) do
-          @connection.post url, payload do |req|
-            req.headers.merge! @provider.headers
+          connection.post url, payload do |req|
+            prepare(req)
             set_usage_tracker(req, usage) if usage
             mark_non_idempotent(req) unless idempotent
             yield req if block_given?
@@ -58,8 +90,8 @@ module RubyLLM
 
       def get(url, &)
         instrument_request(:get, url) do
-          @connection.get url do |req|
-            req.headers.merge! @provider.headers
+          connection.get url do |req|
+            prepare(req)
             yield req if block_given?
           end
         end
@@ -67,8 +99,8 @@ module RubyLLM
 
       def patch(url, payload, &)
         instrument_request(:patch, url) do
-          @connection.patch url, payload do |req|
-            req.headers.merge! @provider.headers
+          connection.patch url, payload do |req|
+            prepare(req)
             yield req if block_given?
           end
         end
@@ -76,8 +108,8 @@ module RubyLLM
 
       def delete(url, &)
         instrument_request(:delete, url) do
-          @connection.delete url do |req|
-            req.headers.merge! @provider.headers
+          connection.delete url do |req|
+            prepare(req)
             yield req if block_given?
           end
         end
@@ -99,35 +131,60 @@ module RubyLLM
         end
       end
 
-      def setup_timeout(faraday)
-        faraday.options.timeout = @config.request_timeout
+      def settings_for(api_base)
+        Settings.new(
+          provider: @provider.class,
+          api_base: api_base,
+          adapter: @config.faraday_adapter,
+          timeout: @config.request_timeout,
+          proxy: @config.http_proxy,
+          logger: RubyLLM.logger,
+          log_bodies: RubyLLM.logger.debug?,
+          log_regexp_timeout: @config.log_regexp_timeout,
+          max_retries: @config.max_retries,
+          retry_interval: @config.retry_interval,
+          retry_max_interval: @config.retry_max_interval,
+          retry_interval_randomness: @config.retry_interval_randomness,
+          retry_backoff_factor: @config.retry_backoff_factor
+        ).freeze
       end
 
-      def setup_logging(faraday)
+      # Credentials and the provider that parses errors travel with each
+      # request, because the Faraday connection is shared across contexts.
+      def prepare(request)
+        request.headers.merge!(@headers).merge!(@provider.headers)
+        (request.options.context ||= {})[ErrorMiddleware::PROVIDER_KEY] = @provider
+      end
+
+      def self.setup_timeout(faraday, settings)
+        faraday.options.timeout = settings.timeout
+      end
+
+      def self.setup_logging(faraday, settings)
         faraday.response :logger,
-                         RubyLLM.logger,
-                         bodies: RubyLLM.logger.debug?,
+                         settings.logger,
+                         bodies: settings.log_bodies,
                          errors: true,
                          headers: false,
                          log_level: :debug do |logger|
-          logger.filter(logging_regexp('[A-Za-z0-9+/=]{100,}'), '[BASE64 DATA]')
-          logger.filter(logging_regexp('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
+          logger.filter(logging_regexp('[A-Za-z0-9+/=]{100,}', settings), '[BASE64 DATA]')
+          logger.filter(logging_regexp('[-\\d.e,\\s]{100,}', settings), '[EMBEDDINGS ARRAY]')
         end
       end
 
-      def logging_regexp(pattern)
-        return Regexp.new(pattern) if @config.log_regexp_timeout.nil? || !Regexp.respond_to?(:timeout)
+      def self.logging_regexp(pattern, settings)
+        return Regexp.new(pattern) if settings.log_regexp_timeout.nil? || !Regexp.respond_to?(:timeout)
 
-        Regexp.new(pattern, timeout: @config.log_regexp_timeout)
+        Regexp.new(pattern, timeout: settings.log_regexp_timeout)
       end
 
-      def setup_retry(faraday)
+      def self.setup_retry(faraday, settings)
         faraday.request :retry, {
-          max: @config.max_retries,
-          interval: @config.retry_interval,
-          max_interval: @config.retry_max_interval,
-          interval_randomness: @config.retry_interval_randomness,
-          backoff_factor: @config.retry_backoff_factor,
+          max: settings.max_retries,
+          interval: settings.retry_interval,
+          max_interval: settings.retry_max_interval,
+          interval_randomness: settings.retry_interval_randomness,
+          backoff_factor: settings.retry_backoff_factor,
           methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
           retry_if: lambda { |env, _exception|
             env[:method] == :post && idempotent?(env) && !stream_delivered?(env)
@@ -137,29 +194,29 @@ module RubyLLM
         faraday.use :llm_usage
       end
 
-      def stream_delivered?(env)
+      def self.stream_delivered?(env)
         env[:request]&.context&.dig(STREAM_PROGRESS_KEY, :started)
       end
 
-      def idempotent?(env)
+      def self.idempotent?(env)
         env[:request]&.context&.dig(IDEMPOTENT_KEY) != false
       end
 
-      def setup_middleware(faraday)
+      def self.setup_middleware(faraday, settings)
         faraday.request :multipart
         faraday.request :json
         faraday.use JsonResponse
-        faraday.adapter(@config.faraday_adapter)
-        faraday.use :llm_errors, provider: @provider
+        faraday.adapter(settings.adapter)
+        faraday.use :llm_errors
       end
 
-      def setup_http_proxy(faraday)
-        return unless @config.http_proxy
+      def self.setup_http_proxy(faraday, settings)
+        return unless settings.proxy
 
-        faraday.proxy = @config.http_proxy
+        faraday.proxy = settings.proxy
       end
 
-      def retry_exceptions
+      def self.retry_exceptions
         [
           Errno::ETIMEDOUT,
           Timeout::Error,
@@ -172,6 +229,9 @@ module RubyLLM
           RubyLLM::OverloadedError
         ]
       end
+
+      private_class_method :setup_timeout, :setup_logging, :logging_regexp, :setup_retry, :stream_delivered?,
+                           :idempotent?, :setup_middleware, :setup_http_proxy, :retry_exceptions
 
       def set_usage_tracker(request, tracker)
         context = request.options.context ||= {}
