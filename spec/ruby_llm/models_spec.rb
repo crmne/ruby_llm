@@ -11,6 +11,23 @@ RSpec.describe RubyLLM::Models do
     described_class.instance_variable_set(:@instance, nil)
   end
 
+  describe '.instance' do
+    it 'loads the registry once when threads ask for it together' do
+      described_class.instance_variable_set(:@instance, nil)
+      loads = 0
+      allow(described_class).to receive(:load_models) do
+        loads += 1
+        sleep 0.05
+        []
+      end
+
+      registries = Array.new(8) { Thread.new { described_class.instance } }.map(&:value)
+
+      expect(registries.map(&:object_id).uniq.size).to eq(1)
+      expect(loads).to eq(1)
+    end
+  end
+
   describe 'filtering and chaining' do
     it 'filters models by provider' do
       openai_models = RubyLLM.models.by_provider('openai')

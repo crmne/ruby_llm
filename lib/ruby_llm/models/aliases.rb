@@ -5,6 +5,9 @@ require 'json'
 module RubyLLM
   class Models
     class Aliases # :nodoc:
+      LOAD_LOCK = Mutex.new
+      private_constant :LOAD_LOCK
+
       class << self
         def resolve(model_id, provider = nil)
           return model_id unless aliases[model_id]
@@ -17,7 +20,7 @@ module RubyLLM
         end
 
         def aliases
-          @aliases ||= load_aliases
+          @aliases || LOAD_LOCK.synchronize { @aliases ||= load_aliases }
         end
 
         def aliases_file

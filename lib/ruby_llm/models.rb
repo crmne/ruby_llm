@@ -58,6 +58,8 @@ module RubyLLM
       load_from_store
       save_to_json
     ]).uniq.freeze # :nodoc:
+    INSTANCE_LOCK = Mutex.new
+    private_constant :INSTANCE_LOCK
 
     class << self
       # The providers whose model list could not be fetched during the last
@@ -72,7 +74,7 @@ module RubyLLM
       end
 
       def instance # :nodoc:
-        @instance ||= new
+        @instance || INSTANCE_LOCK.synchronize { @instance ||= new }
       end
 
       def bundled_registry_file # :nodoc:
