@@ -323,6 +323,22 @@ module RubyLLM
         add_callback(:after_progress, method, block)
       end
 
+      # Registers a callback for the changes the server announces. Pass a
+      # method name or a block; either runs on the MCP instance with what
+      # changed: +:tools+, +:prompts+, or +:resources+ when the server's
+      # list of them changes, or the MCP::Resource whose content changed.
+      # RubyLLM has already forgotten the old tools when +:tools+ arrives.
+      #
+      #   after_change :refresh
+      #   after_change { |change| Rails.cache.delete("handbook/tools") if change == :tools }
+      #
+      # Servers that predate 2026-07-28 announce changes as they answer a
+      # request; the callback runs once the request is answered. Newer
+      # servers announce them only while the MCP listens; see #listen.
+      def after_change(method = nil, &block)
+        add_callback(:after_change, method, block)
+      end
+
       # Sets the kinds of requests for input the server may send: +:form+,
       # +:url+, or both, the default. Pass +false+ when your app cannot
       # show them to anyone, so a call never waits on an answer that will
@@ -575,9 +591,32 @@ module RubyLLM
       self
     end
 
+    # Listens for the server's changes in a background thread until
+    # #close, so ::after_change callbacks run as changes happen and #tools
+    # follows the server's list. Pass +resources+, as URIs or
+    # MCP::Resource objects, to hear when their content changes; a later
+    # call replaces them. Returns +self+ once the server confirms.
+    #
+    #   handbook = Handbook.new.listen(resources: ["handbook://policies"])
+    #
+    # Without +resources+, does nothing for a server that announces no
+    # changes. Raises MCP::Error when the server cannot be reached or does
+    # not watch the resources.
+    def listen(resources: [])
+      uris = resources.map { |resource| resource.respond_to?(:uri) ? resource.uri : resource.to_s }
+      watched = listener.start(listened_changes(uris)) || {}
+      missing = uris - Array(watched['resourceSubscriptions'])
+      return self if missing.empty?
+
+      listener.stop
+      raise Error, "#{name} does not send updates for #{missing.join(', ')}"
+    end
+
     # Closes the connection, stopping a stdio server's process and ending
-    # the session of a server that keeps one. The next request reconnects.
+    # the session of a server that keeps one, and stops listening. The next
+    # request reconnects.
     def close
+      @listener&.stop
       @client&.close
     end
 
@@ -702,10 +741,39 @@ module RubyLLM
     end
 
     def changed(notification)
-      return unless notification['method'] == 'notifications/tools/list_changed'
+      case notification['method']
+      when Client::ACKNOWLEDGED then forget_tools
+      when 'notifications/tools/list_changed'
+        forget_tools
+        announce(:tools)
+      when 'notifications/prompts/list_changed' then announce(:prompts)
+      when 'notifications/resources/list_changed' then announce(:resources)
+      when 'notifications/resources/updated'
+        announce(Resource.new(self, 'uri' => notification.dig('params', 'uri')))
+      end
+    end
 
+    def forget_tools
       @tool_changes = @tool_changes.to_i + 1
       @tools = @server_tools = nil
+    end
+
+    def announce(change)
+      self.class.callbacks(:after_change).each { |callback| apply(callback, change) }
+    end
+
+    def listener
+      @listener ||= Listener.new(client, name:, timeout: self.class.timeout || config.request_timeout) do |notification|
+        changed(notification)
+      end
+    end
+
+    def listened_changes(uris)
+      capabilities = client.server['capabilities'] || {}
+      changes = %w[tools prompts resources].each_with_object({}) do |list, listened|
+        listened[:"#{list}ListChanged"] = true if capabilities.dig(list, 'listChanged')
+      end
+      uris.empty? ? changes : changes.merge(resourceSubscriptions: uris)
     end
 
     def server_info

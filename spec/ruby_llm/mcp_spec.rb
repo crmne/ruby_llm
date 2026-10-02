@@ -394,6 +394,189 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'listening' do
+    let(:changes) { Queue.new }
+    let(:mcp_class) { listening_to(server) }
+
+    def listening_to(server, **env)
+      command = [RbConfig.ruby, server]
+      changes = self.changes
+      Class.new(described_class) do
+        command(*command)
+        env(**env)
+        after_change { |change| changes << (change.is_a?(RubyLLM::MCP::Resource) ? change.content : change) }
+      end
+    end
+
+    def next_change
+      Timeout.timeout(5) { changes.pop }
+    end
+
+    def ask(mcp, method, **params)
+      mcp.send(:client).request(method, params)
+    end
+
+    def eventually
+      Timeout.timeout(5) do
+        loop do
+          result = yield
+          return result if result
+
+          sleep 0.01
+        end
+      end
+    end
+
+    def subscriptions(mcp)
+      ask(mcp, 'spec/subscriptions')['subscriptions']
+    end
+
+    def listener_threads
+      Thread.list.count { |thread| thread.name == 'ruby_llm-mcp-listener' && thread.alive? }
+    end
+
+    before do
+      stub_const('RubyLLM::MCP::Listener::RETRY_DELAY', 0.01)
+      allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    it 'subscribes to the lists the server announces changes to' do
+      mcp.listen
+
+      expect(subscriptions(mcp).values)
+        .to eq([{ 'toolsListChanged' => true, 'promptsListChanged' => true, 'resourcesListChanged' => true }])
+    end
+
+    it 'lists tools again and runs after_change when the server changes them' do
+      mcp.listen.tools
+
+      ask(mcp, 'spec/change_tools')
+
+      expect(next_change).to eq(:tools)
+      expect(mcp.tools.map(&:name)).to include('extra_9')
+    end
+
+    it 'hears changes that arrive while no request is reading' do
+      mcp.listen
+
+      ask(mcp, 'spec/announce_later', method: 'notifications/prompts/list_changed')
+
+      expect(next_change).to eq(:prompts)
+    end
+
+    it 'hears when a resource it listens to changes, and lets the callback read it' do
+      mcp.listen(resources: [mcp.resources.first])
+
+      ask(mcp, 'spec/announce', method: 'notifications/resources/updated',
+                                params: { uri: 'file:///project/README.md' })
+
+      expect(next_change).to eq("# Spec Project\n")
+    end
+
+    it 'replaces the resources it listens to, cancelling the old subscription' do
+      mcp.listen(resources: ['file:///a'])
+      first = subscriptions(mcp).keys
+
+      mcp.listen(resources: ['file:///b'])
+
+      expect(subscriptions(mcp).values.map { |filter| filter['resourceSubscriptions'] }).to eq([['file:///b']])
+      expect(ask(mcp, 'spec/cancelled')['cancelled']).to eq(first)
+    end
+
+    it 'raises and stops listening when the server does not watch a resource' do
+      expect { mcp.listen(resources: ['unwatched:notes']) }
+        .to raise_error(RubyLLM::MCP::Error, /does not send updates for unwatched:notes/)
+      expect(subscriptions(mcp)).to be_empty
+    end
+
+    it 'subscribes again when the server ends the subscription' do
+      mcp.listen
+      first = subscriptions(mcp)
+
+      ask(mcp, 'spec/end_subscriptions')
+
+      renewed = eventually { subscriptions(mcp).except(*first.keys).presence }
+      expect(renewed.values).to eq(first.values)
+    end
+
+    it 'subscribes again when the server cancels the subscription' do
+      mcp.listen
+      first = subscriptions(mcp)
+
+      ask(mcp, 'spec/cancel_subscriptions')
+
+      renewed = eventually { subscriptions(mcp).except(*first.keys).presence }
+      expect(renewed.values).to eq(first.values)
+    end
+
+    it 'subscribes again after the server exits' do
+      mcp.listen
+
+      expect { ask(mcp, 'spec/exit') }.to raise_error(RubyLLM::MCP::Error, /exited/)
+
+      expect(eventually { subscriptions(mcp).presence }.size).to eq(1)
+    end
+
+    it 'logs a callback that raises and keeps listening' do
+      allow(RubyLLM.logger).to receive(:error)
+      calls = 0
+      mcp_class.after_change { |change| raise 'Callback failed' if change == :prompts && (calls += 1) == 1 }
+      mcp.listen
+
+      2.times { ask(mcp, 'spec/announce', method: 'notifications/prompts/list_changed') }
+
+      expect([next_change, next_change]).to eq(%i[prompts prompts])
+      eventually { calls == 2 }
+      expect(RubyLLM.logger).to have_received(:error).once
+    end
+
+    it 'stops its thread when the MCP closes' do
+      before = listener_threads
+      mcp.listen
+      expect(listener_threads).to eq(before + 1)
+
+      mcp.close
+
+      expect(listener_threads).to eq(before)
+    end
+
+    it 'does nothing for a server that announces no changes' do
+      quiet = listening_to(server, MCP_CHANGES: 'none').new
+
+      expect(quiet.listen).to be(quiet)
+      expect(subscriptions(quiet)).to be_empty
+    ensure
+      quiet&.close
+    end
+
+    it 'listens in a forked child only once the child asks' do
+      skip 'fork is unavailable' unless Process.respond_to?(:fork)
+
+      mcp.listen
+      child = fork do
+        inherited = listener_threads
+        mcp.listen
+        ask(mcp, 'spec/change_tools')
+        exit!(inherited.zero? && next_change == :tools ? 0 : 1)
+      end
+      Process.wait(child)
+
+      expect(Process.last_status.exitstatus).to eq(0)
+      ask(mcp, 'spec/change_tools')
+      expect(next_change).to eq(:tools)
+    end
+
+    context 'with a server that predates subscriptions' do
+      let(:mcp_class) { listening_to(server, MCP_ERA: 'legacy') }
+
+      it 'runs after_change for changes announced while it answers a request' do
+        ask(mcp, 'spec/change_tools')
+
+        expect(next_change).to eq(:tools)
+      end
+    end
+  end
+
   describe 'cancellation' do
     it 'stops waiting and tells the server when the chat is cancelled' do
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)

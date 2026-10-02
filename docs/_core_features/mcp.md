@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to give a server's tools to chats, agents, and Rails records.
 * How to read a server's resources and ask with its prompts.
 * How to answer a server's requests for input and follow its progress.
+* How to keep up with servers whose tools and resources change.
 * How to authorize servers with OAuth.
 * How RubyLLM talks to servers and keeps connections safe.
 
@@ -74,6 +75,8 @@ end
 ```
 
 The transport handles its own authentication and timeouts. `timeout` is `nil` unless RubyLLM wants a shorter one than the transport's own, and `headers` holds the tool arguments the server asks to receive as `Mcp-Param-*` HTTP headers, which a transport that doesn't end in HTTP can ignore. After `close`, the next request reconnects. Raise `RubyLLM::MCP::Error` when the server can't be reached. To let the model know instead, answer a `tools/call` request with a tool error, `{ "result" => { "isError" => true, "content" => [{ "type" => "text", "text" => "The laptop is offline" }] } }`.
+
+To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it.
 
 ### Inputs
 
@@ -443,6 +446,90 @@ end
 RubyLLM asks the server for progress only when an `after_progress` or `after_tool_progress` callback listens.
 
 Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
+
+## Listening for Changes
+
+A server's tools can change while you use it: a user connects another account, or the server adds tools when the model asks for them. Its resources change too, such as a file it serves.
+
+When a server says its tools changed, RubyLLM forgets the list it fetched, so the next turn of a chat lists them again. Servers that predate the 2026-07-28 revision may say so while they answer any request, and RubyLLM follows them with no setup. Newer servers only tell clients that listen.
+
+### Reacting to Changes
+
+Register `after_change` to act on changes yourself. It takes a method name or a block, runs on the MCP instance, and receives what changed: `:tools`, `:prompts`, or `:resources` when one of the server's lists changes, or the `RubyLLM::MCP::Resource` whose content changed:
+
+```ruby
+class Handbook < RubyLLM::MCP
+  url "https://handbook.example.com/mcp"
+  after_change :announce
+
+  private
+
+  def announce(change)
+    case change
+    when :tools then puts "Tools now: #{tools.map(&:name).join(', ')}"
+    when RubyLLM::MCP::Resource then puts "#{change.uri} now reads: #{change.content}"
+    end
+  end
+end
+```
+
+The resource reads its new content from the server the first time you ask for it.
+
+### Listening in the Background
+
+Call `listen` to hear about changes as they happen, between requests too:
+
+```ruby
+handbook = Handbook.new.listen(resources: ["handbook://policies"])
+```
+
+`listen` asks the server for every list it announces changes to, and for updates to the `resources` you pass, as URIs or as resources from `resources`. It returns once the server confirms, then listens in a thread of its own until you call `close`, while chats and requests go on as before. Calling `listen` again replaces the resources it listens to.
+
+A server that announces no changes leaves `listen` nothing to do. When the server cannot be reached, or will not send updates for a resource you pass, `listen` raises `RubyLLM::MCP::Error`.
+
+Callbacks for the changes a listener hears run in its thread, one at a time, so keep them short. They can call the server, as `tools` and `content` do above. An exception in one is logged, and listening goes on.
+
+When the connection drops or the server ends the subscription, RubyLLM subscribes again after about a second, doubling the wait up to a minute while the server stays away. Changes made in between are not replayed, so RubyLLM lists tools again once it is back.
+
+`listen` works over stdio too, where the listener shares the server's pipe with your requests.
+
+### Running a Listener
+
+A listener holds a connection and a thread for as long as it runs, so start one where something owns it, and close it there. Requests and jobs rarely need one, since an MCP built for them lists the server's tools fresh. When your app should react to changes as they happen, run the listener in a process of its own:
+
+```ruby
+# script/listen_to_handbook.rb
+handbook = Handbook.new.listen(resources: ["handbook://policies"])
+
+begin
+  sleep
+ensure
+  handbook.close
+end
+```
+
+```
+# Procfile
+handbook: bin/rails runner script/listen_to_handbook.rb
+```
+
+In Rails, callbacks run inside the executor, like a job, so they can use Active Record and enqueue work:
+
+```ruby
+class Handbook < RubyLLM::MCP
+  url "https://handbook.example.com/mcp"
+  bearer_token Rails.application.credentials.handbook_token
+  after_change :reindex
+
+  private
+
+  def reindex(change)
+    ReindexPolicyJob.perform_later(change.uri) if change.is_a?(RubyLLM::MCP::Resource)
+  end
+end
+```
+
+A forked process does not inherit the listener's thread. If forked workers should listen too, call `listen` after forking, such as in Puma's `on_worker_boot`.
 
 ## Authorization
 

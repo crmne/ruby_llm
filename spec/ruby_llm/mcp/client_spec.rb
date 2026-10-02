@@ -64,6 +64,19 @@ RSpec.describe RubyLLM::MCP::Client do
 
       expect(client.list('tools/list', 'tools').size).to eq(9)
     end
+
+    it 'reports a change once the request that carried it is answered, so the report can make requests' do
+      sizes = []
+      changing = described_class.new(RubyLLM::MCP::Stdio.new([RbConfig.ruby, server], env:)) do
+        sizes << changing.list('tools/list', 'tools').size
+      end
+
+      changing.request('spec/change_tools')
+
+      expect(sizes).to eq([10])
+    ensure
+      changing&.close
+    end
   end
 
   describe 'protocol versions' do

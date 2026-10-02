@@ -9,15 +9,19 @@ module RubyLLM
     # listing it gets the request once more; one that answers the handshake
     # with a revision missing from LEGACY_VERSIONS is disconnected.
     #
-    # Notifications that the server's tools, prompts, or resources changed
-    # reach the block given to ::new, whichever stream carries them. Servers
-    # that predate 2026-07-28 send them on the stream of any request.
+    # Servers that predate 2026-07-28 may announce that their tools,
+    # prompts, or resources changed on the stream of any request. Those
+    # notifications reach the block given to ::new once the request is
+    # answered, so the block can make requests of its own. #listen opens a
+    # subscription for them instead, with subscriptions/listen.
     class Client # :nodoc:
       VERSION = '2026-07-28'
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
       UNSUPPORTED_VERSION = -32_022
       MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
+      METHOD_NOT_FOUND = -32_601
       DISCOVERY_TIMEOUT = 10
+      ACKNOWLEDGED = 'notifications/subscriptions/acknowledged'
       CHANGES = %w[
         notifications/tools/list_changed notifications/prompts/list_changed
         notifications/resources/list_changed notifications/resources/updated
@@ -52,6 +56,18 @@ module RubyLLM
           items += page.fetch(key, [])
         end
         items
+      end
+
+      # Subscribes to +changes+, a subscriptions/listen filter, and yields
+      # each notification of the subscription, starting with the server's
+      # acknowledgment. Returns when the server ends the subscription and
+      # raises Error when it refuses one or the stream breaks.
+      def listen(changes, &)
+        server
+        raise ConfigurationError, 'The MCP transport does not respond to listen' unless @transport.respond_to?(:listen)
+        raise Error.new('The MCP server predates subscriptions/listen', code: METHOD_NOT_FOUND) unless modern?
+
+        subscribe(changes, &)
       end
 
       def modern?
@@ -93,27 +109,52 @@ module RubyLLM
 
       def call(method, params = {}, timeout: nil, headers: {}, retried: false, &on_notification)
         request = message(method, params, id: SecureRandom.uuid)
-        response = begin
-          @transport.request(request, version:, timeout:, headers:) do |notification|
-            forward(notification, &on_notification)
-          end
-        rescue CancelledError
-          @transport.cancel(message('notifications/cancelled', { requestId: request[:id] }), version:)
-          raise
-        end
-        error = response['error']
-        raise Error.new(error['message'], code: error['code'], data: error['data']) if error
-
-        response['result']
+        answer(exchange(request, timeout:, headers:, &on_notification))
       rescue Error => e
         raise if retried || !offers_version?(e)
 
         call(method, params, timeout:, headers:, retried: true, &on_notification)
       end
 
-      def forward(notification)
-        @on_change&.call(notification) if CHANGES.include?(notification['method'])
-        yield notification if block_given?
+      def exchange(request, timeout:, headers:, &on_notification)
+        changes = []
+        @transport.request(request, version:, timeout:, headers:) do |notification|
+          CHANGES.include?(notification['method']) ? changes << notification : on_notification&.call(notification)
+        end
+      rescue CancelledError
+        cancel(request)
+        raise
+      ensure
+        changes.each { |change| @on_change&.call(change) }
+      end
+
+      def subscribe(changes)
+        request = message('subscriptions/listen', { notifications: changes }, id: SecureRandom.uuid)
+        ending = catch(request) do
+          @transport.listen(request, version:) do |notification|
+            throw request, notification if cancels?(notification, request)
+            yield notification
+          end
+        end
+        answer(ending)
+      rescue CancelledError
+        cancel(request)
+        raise
+      end
+
+      def cancels?(notification, request)
+        notification['method'] == 'notifications/cancelled' && notification.dig('params', 'requestId') == request[:id]
+      end
+
+      def cancel(request)
+        @transport.cancel(message('notifications/cancelled', { requestId: request[:id] }), version:)
+      end
+
+      def answer(response)
+        error = response['error']
+        raise Error.new(error['message'], code: error['code'], data: error['data']) if error
+
+        response['result']
       end
 
       def offers_version?(error)

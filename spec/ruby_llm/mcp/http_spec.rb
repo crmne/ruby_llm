@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require_relative '../../support/mcp_stream_server'
 
 RSpec.describe RubyLLM::MCP::HTTP do
   let(:url) { 'https://mcp.example.com/mcp' }
@@ -406,6 +407,164 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
       end
     end
+  end
+
+  describe 'listening over a real connection' do
+    let(:changes) { Queue.new }
+    let(:mcp) do
+      url = server.url
+      changes = self.changes
+      Class.new(RubyLLM::MCP) do
+        url url
+        after_change { |change| changes << change }
+      end.new
+    end
+
+    around do |example|
+      WebMock.disable!
+      example.run
+    ensure
+      WebMock.enable!
+    end
+
+    before do
+      stub_const('RubyLLM::MCP::Listener::RETRY_DELAY', 0.01)
+      allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    after do
+      mcp.close
+      server.close
+    end
+
+    def next_change
+      Timeout.timeout(5) { changes.pop }
+    end
+
+    def eventually
+      Timeout.timeout(5) do
+        loop do
+          result = yield
+          return result if result
+
+          sleep 0.01
+        end
+      end
+    end
+
+    def modern_server
+      MCPStreams::Server.new do |request, reply|
+        case request.rpc_method
+        when 'server/discover'
+          reply.json(result: { supportedVersions: ['2026-07-28'],
+                               capabilities: { tools: { listChanged: true }, resources: { subscribe: true } } })
+        when 'subscriptions/listen' then yield(request, reply)
+        when 'tools/list' then reply.json(result: { tools: [] })
+        end
+      end
+    end
+
+    def subscription_id
+      server.requests_for('subscriptions/listen').last.body['id']
+    end
+
+    def changed(method, **params)
+      meta = { 'io.modelcontextprotocol/subscriptionId' => subscription_id }
+      server.push(jsonrpc: '2.0', method:, params: params.merge(_meta: meta))
+    end
+
+    context 'with a 2026-07-28 server' do
+      let(:server) do
+        modern_server do |request, reply|
+          reply.stream(jsonrpc: '2.0', method: 'notifications/subscriptions/acknowledged',
+                       params: { _meta: { 'io.modelcontextprotocol/subscriptionId' => request.body['id'] },
+                                 notifications: request.body.dig('params', 'notifications') })
+        end
+      end
+
+      it 'subscribes on a stream that stays open, with the standard headers' do
+        mcp.listen(resources: ['file:///notes.md'])
+
+        listen = server.requests_for('subscriptions/listen').first
+        expect(listen.headers)
+          .to include('mcp-method' => 'subscriptions/listen', 'mcp-protocol-version' => '2026-07-28')
+        expect(listen.body.dig('params', 'notifications'))
+          .to eq('toolsListChanged' => true, 'resourceSubscriptions' => ['file:///notes.md'])
+
+        changed('notifications/resources/updated', uri: 'file:///notes.md')
+        expect(next_change).to have_attributes(uri: 'file:///notes.md')
+      end
+
+      it 'runs callbacks that call the server while the stream stays open' do
+        sizes = changes
+        mcp.class.after_change { |change| sizes << tools.size if change == :tools }
+        mcp.listen
+
+        changed('notifications/tools/list_changed')
+
+        expect([next_change, next_change]).to eq([:tools, 0])
+        expect(server.open_streams).to eq(1)
+      end
+
+      it 'ignores the comments a server sends to keep the stream alive' do
+        mcp.listen
+
+        server.write_event(': keepalive')
+        changed('notifications/tools/list_changed')
+
+        expect(next_change).to eq(:tools)
+      end
+
+      it 'closes the stream when the MCP closes' do
+        mcp.listen
+
+        mcp.close
+
+        expect(eventually { server.open_streams.zero? }).to be(true)
+      end
+
+      it 'subscribes again for the same changes when the connection drops' do
+        mcp.listen
+
+        server.drop
+
+        renewed = eventually { server.requests_for('subscriptions/listen')[1] }
+        expect(renewed.body.dig('params', 'notifications')).to eq('toolsListChanged' => true)
+        expect(RubyLLM.logger).to have_received(:warn).once
+        changed('notifications/tools/list_changed')
+        expect(next_change).to eq(:tools)
+      end
+
+      it 'subscribes again for the same changes when the server ends the subscription' do
+        mcp.listen
+
+        server.finish
+
+        renewed = eventually { server.requests_for('subscriptions/listen')[1] }
+        expect(renewed.body.dig('params', 'notifications')).to eq('toolsListChanged' => true)
+      end
+    end
+
+    context 'with a 2026-07-28 server that does not know subscriptions/listen' do
+      let(:server) do
+        modern_server do |_request, reply|
+          reply.json(status: 404, error: { code: -32_601, message: 'Method not found' })
+        end
+      end
+
+      it 'raises' do
+        expect { mcp.listen }.to raise_error(RubyLLM::MCP::Error, 'Method not found')
+      end
+    end
+  end
+
+  it 'keeps only the answers of a stream, so one that stays open does not grow' do
+    stream = described_class::Stream.new('listen-1') { |_message| nil }
+    event = "data: #{{ jsonrpc: '2.0', method: 'notifications/tools/list_changed' }.to_json}\n\n"
+
+    100.times { stream.feed(event) }
+
+    expect(stream.replies).to be_empty
   end
 
   it 'has no session to end with a 2026-07-28 server' do

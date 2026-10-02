@@ -1,13 +1,28 @@
 # frozen_string_literal: true
 
 # A small MCP server for specs. It speaks 2026-07-28 by default and only the
-# legacy initialize handshake when MCP_ERA=legacy.
+# legacy initialize handshake when MCP_ERA=legacy. It announces changes to
+# its lists and resources unless MCP_CHANGES=none, and never watches
+# resources whose URI starts with unwatched:.
 
 require 'json'
 
 LEGACY = %w[legacy discover_without_modern].include?(ENV.fetch('MCP_ERA', nil))
 DISCOVER_WITHOUT_MODERN = ENV['MCP_ERA'] == 'discover_without_modern'
 $stdout.sync = true
+
+SUBSCRIPTION_ID = 'io.modelcontextprotocol/subscriptionId'
+CAPABILITIES = if ENV['MCP_CHANGES'] == 'none'
+                 { tools: {} }
+               else
+                 { tools: { listChanged: true }, prompts: { listChanged: true },
+                   resources: { listChanged: true, subscribe: true } }
+               end
+LISTS = {
+  'notifications/tools/list_changed' => 'toolsListChanged',
+  'notifications/prompts/list_changed' => 'promptsListChanged',
+  'notifications/resources/list_changed' => 'resourcesListChanged'
+}.freeze
 
 TOOLS = [
   {
@@ -134,9 +149,39 @@ end
 initialized = false
 cancelled = []
 tools = TOOLS.dup
+subscriptions = {}
 
 def notify(method, params)
   puts JSON.generate({ jsonrpc: '2.0', method:, params: })
+end
+
+def wants?(filter, method, params)
+  return Array(filter['resourceSubscriptions']).include?(params['uri']) if method == 'notifications/resources/updated'
+
+  filter[LISTS.fetch(method)] == true
+end
+
+# Servers that predate subscriptions announce every change.
+def announce(subscriptions, method, params = {})
+  return notify(method, params) if LEGACY
+
+  subscriptions.each do |id, filter|
+    notify(method, params.merge('_meta' => { SUBSCRIPTION_ID => id })) if wants?(filter, method, params)
+  end
+end
+
+def listen(subscriptions, id, filter)
+  watched = Array(filter['resourceSubscriptions']).reject { |uri| uri.start_with?('unwatched:') }
+  honored = filter.except('resourceSubscriptions')
+  honored['resourceSubscriptions'] = watched if watched.any?
+  notify('notifications/subscriptions/acknowledged', { _meta: { SUBSCRIPTION_ID => id }, notifications: honored })
+  return close_subscription(id) if honored.empty?
+
+  subscriptions[id] = honored
+end
+
+def close_subscription(id)
+  reply(id, result: { resultType: 'complete', _meta: { SUBSCRIPTION_ID => id } })
 end
 
 $stdin.each_line do |line|
@@ -153,13 +198,13 @@ $stdin.each_line do |line|
     else
       reply(id, result: {
               resultType: 'complete', supportedVersions: ['2026-07-28'],
-              capabilities: { tools: {} }, instructions: 'A server for specs.',
+              capabilities: CAPABILITIES, instructions: 'A server for specs.',
               _meta: { 'io.modelcontextprotocol/serverInfo' => { name: 'spec-server', version: '1.0.0' } }
             })
     end
   when 'initialize'
     initialized = true
-    reply(id, result: { protocolVersion: '2025-06-18', capabilities: { tools: {} },
+    reply(id, result: { protocolVersion: '2025-06-18', capabilities: CAPABILITIES,
                         serverInfo: { name: 'spec-server', version: '0.9.0' } })
   when 'notifications/initialized'
     nil
@@ -169,8 +214,29 @@ $stdin.each_line do |line|
     reply(id, result: tools_page(params['cursor'], tools))
   when 'spec/change_tools'
     tools += [{ name: "extra_#{tools.size}", description: 'Added at runtime', inputSchema: { type: 'object' } }]
-    notify('notifications/tools/list_changed', {})
+    announce(subscriptions, 'notifications/tools/list_changed')
     reply(id, result: {})
+  when 'subscriptions/listen'
+    next reply(id, error: { code: -32_601, message: 'Method not found' }) if LEGACY
+
+    listen(subscriptions, id, params.fetch('notifications', {}))
+  when 'spec/announce'
+    announce(subscriptions, params['method'], params.fetch('params', {}))
+    reply(id, result: {})
+  when 'spec/announce_later'
+    Thread.new do
+      sleep 0.2
+      announce(subscriptions, params['method'], params.fetch('params', {}))
+    end
+    reply(id, result: {})
+  when 'spec/end_subscriptions'
+    subscriptions.each_key { |subscription| close_subscription(subscription) }.clear
+    reply(id, result: {})
+  when 'spec/cancel_subscriptions'
+    subscriptions.each_key { |subscription| notify('notifications/cancelled', { requestId: subscription }) }.clear
+    reply(id, result: {})
+  when 'spec/subscriptions' then reply(id, result: { subscriptions: })
+  when 'spec/exit' then exit
   when 'tools/call'
     case params['name']
     when 'wait' then next
@@ -181,7 +247,9 @@ $stdin.each_line do |line|
       end
     end
     reply(id, result: call_tool(params))
-  when 'notifications/cancelled' then cancelled << params['requestId']
+  when 'notifications/cancelled'
+    subscriptions.delete(params['requestId'])
+    cancelled << params['requestId']
   when 'spec/cancelled' then reply(id, result: { cancelled: })
   when 'spec/stall' then $stdout.write('{"jsonrpc":')
   when 'resources/list'
