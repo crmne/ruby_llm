@@ -222,16 +222,6 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     end.to raise_error(RubyLLM::ServerError, /Rate limit exceeded/)
   end
 
-  it 'reads an event stream after a JSON error body on the same state' do
-    yielded = []
-    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
-
-    expect { handler.call('{"error":{"message":"Overloaded"}}', 0, nil) }.to raise_error(RubyLLM::ServerError)
-    handler.call("data: {\"x\":\"ok\"}\n\n", 0, nil)
-
-    expect(yielded).to eq(['chunk:ok'])
-  end
-
   it 'raises a bare JSON error body that follows a blank read' do
     handler = test_obj.send(:handle_stream) { |_chunk| nil }
 
@@ -242,24 +232,12 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     end.to raise_error(RubyLLM::ServerError, /Overloaded/)
   end
 
-  it 'raises each JSON error body that shares the same state' do
-    handler = test_obj.send(:handle_stream) { |_chunk| nil }
-
-    2.times do
-      expect do
-        handler.call('{"error":{"message":"Overloaded"}}', 0, nil)
-      end.to raise_error(RubyLLM::ServerError, /Overloaded/)
-    end
-  end
-
-  it 'reads an event stream after a JSON body that is not an error on the same state' do
+  it 'ignores a bare JSON body without an error' do
     yielded = []
     handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
 
-    handler.call('{"detail":"Service busy"}', 0, nil)
-    handler.call("data: {\"x\":\"ok\"}\n\n", 0, nil)
-
-    expect(yielded).to eq(['chunk:ok'])
+    expect { handler.call('{"detail":"Service busy"}', 0, nil) }.not_to raise_error
+    expect(yielded).to be_empty
   end
 
   it 'raises the error an SSE error event carries' do

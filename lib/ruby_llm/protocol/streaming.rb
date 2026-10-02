@@ -107,15 +107,10 @@ module RubyLLM
         state.json_body
       end
 
-      # A parsed body resets the state, so a retry that shares it (Faraday v1)
-      # reads its own body from the start.
       def handle_json_body(chunk, state, env)
         state.buffer << chunk
         parsed = JSON.parse(state.buffer)
-        body = state.buffer.dup
-        state.buffer.clear
-        state.json_body = nil
-        raise_stream_error(body, parsed, env) if body.include?('"error"')
+        raise_stream_error(state.buffer, parsed, env) if state.buffer.include?('"error"')
       rescue JSON::ParserError
         RubyLLM.logger.debug { "Accumulating JSON body chunk: #{chunk}" }
       end
