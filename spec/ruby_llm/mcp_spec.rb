@@ -62,6 +62,41 @@ RSpec.describe RubyLLM::MCP do
       expect(attachments.first).to have_attributes(mime_type: 'image/png')
     end
 
+    it 'lists them again after the server answers that a tool it called does not exist' do
+      expect(mcp.tools.map(&:name)).to include('delete_everything')
+      mcp.send(:client).request('spec/remove_tool', { name: 'delete_everything' })
+
+      expect { mcp.call(:delete_everything) }.to raise_error(RubyLLM::MCP::Error, 'Unknown tool: delete_everything')
+      expect(mcp.tools.map(&:name)).not_to include('delete_everything')
+    end
+
+    it 'lists them again after the server answers a tool call with method not found' do
+      transport = Class.new do
+        attr_reader :listings
+
+        def request(message, **)
+          @listings = listings.to_i + 1 if message[:method] == 'tools/list'
+          reply = case message[:method]
+                  when 'server/discover' then { result: { supportedVersions: ['2026-07-28'] } }
+                  when 'tools/list' then { result: { tools: [{ name: 'gone', inputSchema: {} }] } }
+                  else { error: { code: -32_601, message: 'Method not found' } }
+                  end
+          JSON.parse({ jsonrpc: '2.0', id: message[:id], **reply }.to_json)
+        end
+
+        def notify(*, **) = nil
+        def cancel(*, **) = nil
+        def close = nil
+      end.new
+      flaky = RubyLLM.mcp(transport:, name: 'flaky')
+
+      flaky.tools
+      expect { flaky.call(:gone) }.to raise_error(RubyLLM::MCP::Error, 'Method not found')
+      flaky.tools
+
+      expect(transport.listings).to eq(2)
+    end
+
     context 'with a server that predates 2026-07-28' do
       let(:mcp_class) do
         command = [RbConfig.ruby, server]

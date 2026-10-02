@@ -319,6 +319,9 @@ $stdin.each_line do |line|
 
     extensions = params.dig('_meta', 'io.modelcontextprotocol/clientCapabilities', 'extensions')
     reply(id, result: tools_page(params['cursor'], tools, extensions || handshake_extensions))
+  when 'spec/remove_tool'
+    tools = tools.reject { |tool| tool[:name] == params['name'] }
+    reply(id, result: {})
   when 'spec/change_tools'
     tools += [{ name: "extra_#{tools.size}", description: 'Added at runtime', inputSchema: { type: 'object' } }]
     announce(subscriptions, watched, 'notifications/tools/list_changed')
@@ -349,6 +352,10 @@ $stdin.each_line do |line|
   when 'spec/subscriptions' then reply(id, result: { subscriptions:, watched: })
   when 'spec/exit' then exit
   when 'tools/call'
+    if (TOOLS - tools).any? { |tool| tool[:name] == params['name'] }
+      next reply(id, error: { code: -32_602, message: "Unknown tool: #{params['name']}" })
+    end
+
     case params['name']
     when 'wait' then next
     when 'echo'

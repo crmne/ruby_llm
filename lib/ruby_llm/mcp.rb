@@ -44,13 +44,14 @@ module RubyLLM
       tasks: ['io.modelcontextprotocol/tasks', {}]
     }.freeze
     POLL_INTERVAL = 1
+    UNKNOWN_TOOL_ERRORS = [-32_601, -32_602].freeze
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
       @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests @extensions @log_level
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
-                     :LOG_LEVELS
+                     :LOG_LEVELS, :UNKNOWN_TOOL_ERRORS
 
     class << self
       attr_writer :default_name # :nodoc:
@@ -511,7 +512,8 @@ module RubyLLM
 
     # Returns the server's tools, shaped by ::only, ::except, and ::tool,
     # followed by the Tool classes added with ::tool. The server's list is
-    # fetched once, and again after the server says it changed.
+    # fetched once, and again after the server says it changed or answers
+    # a call with an error because the tool is gone.
     #
     # The list includes the tools of an MCP App that only its UI may call,
     # whose MCP::Tool#visibility leaves out +:model+. Chats never offer
@@ -774,8 +776,15 @@ module RubyLLM
     def call_tool(params, input: nil)
       return check_task(Task.load(self, input), input['requests']) if input&.key?('task')
 
-      data = request('tools/call', params, input:)
+      data = request_tool(params, input:)
       data['resultType'] == 'task' ? Task.new(self, data) : data
+    end
+
+    def request_tool(params, input:)
+      request('tools/call', params, input:)
+    rescue Error => e
+      forget_tools if UNKNOWN_TOOL_ERRORS.include?(e.code)
+      raise
     end
 
     def check_task(task, answered_requests)

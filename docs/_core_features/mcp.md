@@ -464,7 +464,7 @@ Cancelling a chat also stops the server call it is waiting on, with no threads i
 
 A server's tools can change while you use it: a user connects another account, or the server adds tools when the model asks for them. Its resources change too, such as a file it serves.
 
-When a server says its tools changed, RubyLLM forgets the list it fetched, so the next turn of a chat lists them again. Servers that predate the 2026-07-28 revision may say so while they answer any request, and RubyLLM follows them with no setup. Newer servers only tell clients that listen.
+When a server says its tools changed, or answers a call with an error because the tool is gone, RubyLLM forgets the list it fetched, so the next turn of a chat lists them again. Servers that predate the 2026-07-28 revision may say so while they answer any request, and RubyLLM follows them with no setup. Newer servers only tell clients that listen.
 
 ### Reacting to Changes
 
