@@ -12,10 +12,12 @@ module RubyLLM
     # token refresh. Credentials live in the configured
     # +mcp_credential_store+, keyed by owner and server.
     #
-    # Two grants need no user: the client credentials grant of the OAuth
-    # Client Credentials extension, and the JWT bearer grant (RFC 7523
-    # section 2.1), with which Workload Identity Federation presents a
-    # token the workload's platform issued. As the extensions' flows
+    # Two grants need no user to authorize: the client credentials grant
+    # of the OAuth Client Credentials extension, and the JWT bearer grant
+    # (RFC 7523 section 2.1). The latter presents a token the workload's
+    # platform issued (Workload Identity Federation) or an identity
+    # assertion grant the user's identity provider issued for their ID
+    # token (Enterprise-Managed Authorization). As the extensions' flows
     # describe, a token is requested once the server rejects a request
     # without one, and again before it expires. Pre-registered clients
     # authenticate with their secret or with a private_key_jwt assertion
@@ -27,6 +29,9 @@ module RubyLLM
       ASSERTION_FOR = 60
       GRANTS = %i[authorization_code client_credentials jwt_bearer].freeze
       JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+      TOKEN_EXCHANGE = 'urn:ietf:params:oauth:grant-type:token-exchange'
+      ID_JAG = 'urn:ietf:params:oauth:token-type:id-jag'
+      ID_TOKEN = 'urn:ietf:params:oauth:token-type:id_token'
       CLIENT_ASSERTION = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
       SERVER_FIELDS = %w[
         issuer token_endpoint token_endpoint_auth_methods_supported token_endpoint_auth_signing_alg_values_supported
@@ -61,7 +66,8 @@ module RubyLLM
       end
 
       def initialize(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil, grant: nil,
-                     private_key: nil, assertion: nil, config: RubyLLM.config, resolve: ->(value) { value })
+                     private_key: nil, assertion: nil, identity_provider: nil, config: RubyLLM.config,
+                     resolve: ->(value) { value })
         @server_url = server_url.to_s
         @owner = owner
         @scopes = scopes
@@ -69,7 +75,8 @@ module RubyLLM
         @client_secret = resolve.call(client_secret)
         @private_key = resolve.call(private_key)
         @assertion = assertion
-        @grant = grant || (assertion ? :jwt_bearer : :authorization_code)
+        @identity_provider = identity_provider
+        @grant = grant || (assertion || identity_provider ? :jwt_bearer : :authorization_code)
         @resolve = resolve
         @config = config
       end
@@ -188,8 +195,9 @@ module RubyLLM
 
           server = authorization_server
           client = granting_client(server)
-          grant_type, grant = grant_parameters
-          store_tokens(token_request(grant_type, client:, scope: scopes_for(server), **grant), client:)
+          scope = scopes_for(server)
+          grant_type, grant = grant_parameters(server, scope)
+          store_tokens(token_request(grant_type, client:, scope:, **grant), client:)
           true
         end
       rescue Error => e
@@ -204,13 +212,36 @@ module RubyLLM
         preregistered_client(server).merge('issuer' => server['issuer'], 'server' => server.slice(*SERVER_FIELDS))
       end
 
-      # The assertion is resolved for every token, since workload
-      # platforms rotate the tokens they issue.
-      def grant_parameters
+      # Assertions are resolved for every token, since workload platforms
+      # rotate the tokens they issue and ID tokens expire.
+      def grant_parameters(server, scope)
         return ['client_credentials', {}] if @grant == :client_credentials
 
-        assertion = @resolve.call(@assertion) or raise ConfigurationError, 'The jwt_bearer grant needs an assertion'
+        assertion = @identity_provider ? identity_assertion(server, scope) : @resolve.call(@assertion)
+        raise ConfigurationError, 'The jwt_bearer grant needs an assertion or an identity provider' unless assertion
+
         [JWT_BEARER, { assertion: }]
+      end
+
+      # Exchanges the user's ID token at the identity provider for an
+      # Identity Assertion JWT Authorization Grant addressed to the
+      # server's authorization server (enterprise-managed authorization,
+      # section 4). Only that grant is forwarded: any other token the
+      # identity provider returns is the user's credential there.
+      def identity_assertion(server, scope)
+        provider = Hash(@resolve.call(@identity_provider)).to_h { |name, value| [name.to_sym, @resolve.call(value)] }
+        unless provider[:issuer] && provider[:id_token]
+          raise ConfigurationError, 'The identity provider needs an issuer and an id_token'
+        end
+
+        client = { 'client_id' => provider[:client_id], 'client_secret' => provider[:client_secret],
+                   'server' => discover_authorization_server(provider[:issuer]) }
+        grant = token_request(TOKEN_EXCHANGE, client:, key: nil, requested_token_type: ID_JAG,
+                                              audience: server['issuer'], scope:, subject_token: provider[:id_token],
+                                              subject_token_type: ID_TOKEN)
+        return grant['access_token'] if grant['issued_token_type'] == ID_JAG
+
+        raise Error, "#{provider[:issuer]} did not issue an identity assertion grant"
       end
 
       def check_callback(pending, params)
@@ -238,11 +269,12 @@ module RubyLLM
         credential.dig('pending', 'server', 'authorization_response_iss_parameter_supported') == true
       end
 
-      def token_request(grant_type, client: credential, **params)
+      def token_request(grant_type, client: credential, key: (signing_key if client['client_id'] == @client_id),
+                        **params)
         server = client['server'] or raise Error, 'No authorization server known; authorize first'
         form = params.merge(grant_type:, client_id: client['client_id'], resource:)
         headers = { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' }
-        authenticate(client, server, form, headers)
+        authenticate(client, server, form, headers, key)
         post(server['token_endpoint'], URI.encode_www_form(form.compact), headers)
       rescue Error => e
         forget_registration(client) if e.data.is_a?(Hash) && e.data['error'] == 'invalid_client'
@@ -254,10 +286,11 @@ module RubyLLM
         store.delete(registration) if store.read(registration)&.fetch('client_id', nil) == client['client_id']
       end
 
-      def authenticate(client, server, form, headers)
-        if signing_key && client['client_id'] == @client_id
+      def authenticate(client, server, form, headers, key)
+        if key
           form.delete(:client_id)
-          form.merge!(client_assertion_type: CLIENT_ASSERTION, client_assertion: client_assertion(server))
+          form.merge!(client_assertion_type: CLIENT_ASSERTION,
+                      client_assertion: client_assertion(key, client['client_id'], server))
         elsif client['client_secret']
           methods = server['token_endpoint_auth_methods_supported'] || ['client_secret_basic']
           if methods.include?('client_secret_basic')
@@ -272,12 +305,12 @@ module RubyLLM
       # RFC 7523bis section 4: the issuer is the sole audience, so no other
       # authorization server can replay the assertion, and the explicit
       # type tells servers the client follows that rule.
-      def client_assertion(server)
+      def client_assertion(key, client_id, server)
         now = Time.now.to_i
-        claims = { iss: @client_id, sub: @client_id, aud: server['issuer'], iat: now, exp: now + ASSERTION_FOR,
+        claims = { iss: client_id, sub: client_id, aud: server['issuer'], iat: now, exp: now + ASSERTION_FOR,
                    jti: SecureRandom.uuid }
-        algorithm = signing_key.algorithm(server['token_endpoint_auth_signing_alg_values_supported'])
-        signing_key.jwt(claims, algorithm:, typ: 'client-authentication+jwt')
+        algorithm = key.algorithm(server['token_endpoint_auth_signing_alg_values_supported'])
+        key.jwt(claims, algorithm:, typ: 'client-authentication+jwt')
       end
 
       def signing_key

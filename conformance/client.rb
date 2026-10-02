@@ -22,6 +22,9 @@ def oauth_settings(scenario, context)
   when 'auth/client-credentials-jwt'
     { grant: :client_credentials, client_id: context['client_id'], private_key: context['private_key_pem'] }
   when 'auth/wif-jwt-bearer' then { assertion: context['valid_jwt'] }
+  when 'auth/enterprise-managed-authorization'
+    client.merge(identity_provider: { issuer: context['idp_issuer'], client_id: context['idp_client_id'],
+                                      id_token: context['idp_id_token'] })
   else client
   end
 end

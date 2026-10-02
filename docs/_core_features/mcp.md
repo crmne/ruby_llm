@@ -516,7 +516,7 @@ oauth grant: :client_credentials, client_id: "reports", private_key: Rails.appli
 
 `private_key:` works for any app you registered, including one your users authorize.
 
-A workload that already holds a token from its platform, such as a Kubernetes service account token or a SPIFFE JWT, needs no client of its own. Pass that token as the `assertion:`:
+A workload that already holds a token from its platform, such as a Kubernetes service account token or a SPIFFE JWT, can present that token instead and needs no client of its own:
 
 ```ruby
 class Reports < RubyLLM::MCP
@@ -525,7 +525,25 @@ class Reports < RubyLLM::MCP
 end
 ```
 
-RubyLLM presents it with the JWT bearer grant, and a block or method name is read again for every token, since platforms rotate them. The authorization server decides which platforms and workloads it trusts.
+RubyLLM presents the `assertion:` with the JWT bearer grant. A block or method name is read again for every token, since platforms rotate them. The authorization server decides which platforms and workloads it trusts.
+
+### Enterprise Single Sign-On
+
+When your users sign in to your app through their company's identity provider, such as Okta, the company can decide which MCP servers they reach, and they skip the authorization screens. Pass the identity provider and the ID token from the user's sign-in:
+
+```ruby
+class Wiki < RubyLLM::MCP
+  url "https://wiki.example.com/mcp"
+  inputs :user
+  oauth owner: :user, client_id: ENV["WIKI_CLIENT_ID"], client_secret: ENV["WIKI_CLIENT_SECRET"],
+        identity_provider: { issuer: "https://acme.okta.com", client_id: ENV["OKTA_CLIENT_ID"],
+                             client_secret: ENV["OKTA_CLIENT_SECRET"], id_token: -> { user.okta_id_token } }
+end
+```
+
+The outer `client_id:` and `client_secret:` are your app's registration with the server's authorization server, and the ones under `identity_provider:` are its registration with the identity provider. Like other settings, the values may be blocks or method names.
+
+RubyLLM exchanges the ID token at the identity provider for a grant addressed to the server's authorization server, then exchanges that grant for a token. The identity provider's policy decides who reaches which servers, and a refusal raises `RubyLLM::UnauthorizedError`. Every new token needs a current ID token, so refresh it the way your sign-in does.
 
 ### Storing Credentials
 

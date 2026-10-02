@@ -93,7 +93,7 @@ docs.microsoft_docs_search(query: "Azure Blob Storage").text
 
 You decide what the model sees. Rename and redescribe tools, fix arguments the model should not choose, pass results through your own method, or build higher-level tools from the server's primitives with a regular `RubyLLM::Tool`. Resources work as attachments, prompts work with `ask`, and a server's requests for input pause the chat the way tool approvals do, surviving restarts in Rails.
 
-The client speaks the 2026-07-28 revision of the protocol and falls back for servers that predate it. OAuth follows the MCP authorization spec, and Rails keeps the credentials encrypted. Background jobs can connect as your app itself, with client credentials, a private key, or a workload identity token. See [MCP Client]({% link _core_features/mcp.md %}).
+The client speaks the 2026-07-28 revision of the protocol and falls back for servers that predate it. OAuth follows the MCP authorization spec, and Rails keeps the credentials encrypted. Background jobs can connect as your app itself, with client credentials, a private key, or a workload identity token, and companies can authorize their people through their identity provider. See [MCP Client]({% link _core_features/mcp.md %}).
 
 ## Tool Progress
 

@@ -667,6 +667,70 @@ RSpec.describe RubyLLM::MCP::OAuth do
     end
   end
 
+  describe 'enterprise-managed authorization' do
+    def wiki_class
+      url = server_url
+      Class.new(RubyLLM::MCP) do
+        url url
+        inputs :user
+        oauth owner: :user, client_id: 'wiki-app', client_secret: 'wiki-secret',
+              identity_provider: { issuer: 'https://idp.example.com', client_id: 'sso-app', client_secret: 'sso-secret',
+                                   id_token: -> { "id-token-for-#{user}" } }
+      end
+    end
+
+    before do
+      stub_request(:get, 'https://idp.example.com/.well-known/oauth-authorization-server').to_return(status: 404)
+      stub_request(:get, 'https://idp.example.com/.well-known/openid-configuration').to_return(
+        body: { issuer: 'https://idp.example.com', token_endpoint: 'https://idp.example.com/token',
+                token_endpoint_auth_methods_supported: ['client_secret_post'] }.to_json
+      )
+      issues_grant('urn:ietf:params:oauth:token-type:id-jag')
+    end
+
+    def issues_grant(type)
+      stub_request(:post, 'https://idp.example.com/token')
+        .to_return(body: { issued_token_type: type, access_token: 'id-jag', token_type: 'N_A' }.to_json)
+    end
+
+    it "exchanges the user's ID token for a grant the authorization server accepts" do
+      expect(wiki_class.new(user: 'ada').tools).to eq([])
+
+      exchange = nil
+      expect(a_request(:post, 'https://idp.example.com/token').with do |request|
+        exchange = URI.decode_www_form(request.body).to_h
+      end).to have_been_made.once
+      expect(exchange).to eq(
+        'grant_type' => 'urn:ietf:params:oauth:grant-type:token-exchange',
+        'requested_token_type' => 'urn:ietf:params:oauth:token-type:id-jag', 'audience' => 'https://auth.example.com',
+        'resource' => server_url, 'scope' => 'issues:read', 'subject_token' => 'id-token-for-ada',
+        'subject_token_type' => 'urn:ietf:params:oauth:token-type:id_token', 'client_id' => 'sso-app',
+        'client_secret' => 'sso-secret'
+      )
+      expect(token_form).to eq('grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer', 'assertion' => 'id-jag',
+                               'client_id' => 'wiki-app', 'resource' => server_url, 'scope' => 'issues:read')
+      expect(a_request(:post, 'https://auth.example.com/token')
+        .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('wiki-app:wiki-secret')}" }))
+        .to have_been_made
+    end
+
+    it 'forwards nothing the identity provider issues but an identity assertion grant' do
+      issues_grant('urn:ietf:params:oauth:token-type:access_token')
+
+      expect { wiki_class.new(user: 'ada').tools }
+        .to raise_error(RubyLLM::UnauthorizedError, 'https://idp.example.com did not issue an identity assertion grant')
+      expect(a_request(:post, 'https://auth.example.com/token')).not_to have_been_made
+    end
+
+    it "raises the identity provider's refusal" do
+      stub_request(:post, 'https://idp.example.com/token')
+        .to_return(status: 400, body: { error: 'invalid_grant', error_description: 'The ID token expired' }.to_json)
+
+      expect { wiki_class.new(user: 'ada').tools }
+        .to raise_error(RubyLLM::UnauthorizedError, 'idp.example.com refused the request: The ID token expired')
+    end
+  end
+
   it 'refuses grants it does not know' do
     expect { Class.new(RubyLLM::MCP) { oauth grant: :password } }
       .to raise_error(ArgumentError, 'Unknown OAuth grant: password')

@@ -180,11 +180,23 @@ module RubyLLM
       # rotate them.
       #
       #   oauth assertion: -> { File.read("/var/run/secrets/tokens/mcp-token") }
+      #
+      # +identity_provider:+ authorizes the users who sign in to your app
+      # through their company's identity provider, with no consent screen:
+      # RubyLLM exchanges the user's ID token for a grant the server's
+      # authorization server accepts, as the identity provider's policy
+      # allows. Pass its +issuer:+, your app's +client_id:+ and
+      # +client_secret:+ there, and the user's +id_token:+. Values may be
+      # blocks or method names.
+      #
+      #   oauth owner: :user, client_id: ENV["WIKI_CLIENT_ID"], client_secret: ENV["WIKI_CLIENT_SECRET"],
+      #         identity_provider: { issuer: "https://acme.okta.com", client_id: ENV["OKTA_CLIENT_ID"],
+      #                              client_secret: ENV["OKTA_CLIENT_SECRET"], id_token: -> { user.id_token } }
       def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, grant: nil, private_key: nil,
-                assertion: nil)
+                assertion: nil, identity_provider: nil)
         raise ArgumentError, "Unknown OAuth grant: #{grant}" unless grant.nil? || OAuth::GRANTS.include?(grant)
 
-        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key:, assertion: }
+        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key:, assertion:, identity_provider: }
       end
 
       def oauth_settings # :nodoc:
