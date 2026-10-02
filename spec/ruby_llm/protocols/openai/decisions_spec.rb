@@ -89,6 +89,8 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
     expect(render('', with: [image])[:input].first[:content]).to eq([{ type: 'input_image', image_url: data_uri }])
     expect(render(nil, with: [RubyLLM::Attachment.new(path, resolution: :low)])[:input].first[:content])
       .to eq([{ type: 'input_image', image_url: data_uri, detail: 'low' }])
+    expect(render(nil, with: [RubyLLM::Attachment.new(path, resolution: :original)])[:input].first[:content])
+      .to eq([{ type: 'input_image', image_url: data_uri, detail: 'original' }])
   end
 
   it 'downloads image URLs to send them inline' do
