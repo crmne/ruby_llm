@@ -9,7 +9,9 @@ module RubyLLM
     # per line on stdin and writes one per line on stdout. Reads never block
     # past the deadline, even on a partial line. It starts on the
     # first request, restarts after it exits, and handles one request at a
-    # time. Its stderr is the parent's.
+    # time. Its stderr is the parent's. A server that predates 2026-07-28
+    # keeps its session for the life of its process, so after a restart its
+    # requests raise SessionExpired until the client initializes it again.
     #
     # Subscriptions share the channel, so whichever thread reads a message
     # that belongs to one hands it to the subscription's listener: a
@@ -46,9 +48,11 @@ module RubyLLM
         @subscriptions = []
       end
 
-      def request(message, timeout: nil, **, &)
+      def request(message, version: nil, timeout: nil, **, &)
         @lock.synchronize do
+          check_session(version)
           write(message)
+          @session = @process if message[:method] == 'initialize'
           await(message[:id], timeout || @timeout, &)
         end
       end
@@ -87,6 +91,12 @@ module RubyLLM
       end
 
       private
+
+      def check_session(version)
+        return if version.nil? || version == Client::VERSION || (@process&.alive? && @process.equal?(@session))
+
+        raise SessionExpired, "#{name} exited"
+      end
 
       def subscribe(subscription, message)
         raise Error, "#{name} exited" unless message || @process&.alive?

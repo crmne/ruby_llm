@@ -27,9 +27,6 @@ module RubyLLM
       RECONNECT_DELAY = 1
       CHECK_INTERVAL = 0.1
 
-      # Raised when a server has ended the session a request belonged to.
-      class SessionExpired < Error; end
-
       def self.secure?(url)
         uri = URI(url.to_s)
         return false if uri.userinfo

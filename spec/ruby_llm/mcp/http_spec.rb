@@ -500,7 +500,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
                      result: { protocolVersion: '2025-06-18',
                                capabilities: { tools: { listChanged: true }, resources: { subscribe: true } } })
         when 'GET' then events ? reply.stream : reply.status(405)
-        when 'resources/subscribe' then reply.json(result: {})
+        when 'resources/subscribe', 'ping' then reply.json(result: {})
         else reply.status(202)
         end
       end
@@ -632,7 +632,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
             reply.json(headers: { 'Mcp-Session-Id' => "session-#{sessions}" },
                        result: { protocolVersion: '2025-06-18', capabilities: { resources: { subscribe: true } } })
           when 'GET' then request.headers['mcp-session-id'] == 'session-1' ? reply.status(404) : reply.stream
-          when 'resources/subscribe' then reply.json(result: {})
+          when 'resources/subscribe', 'ping' then reply.json(result: {})
           else reply.status(202)
           end
         end

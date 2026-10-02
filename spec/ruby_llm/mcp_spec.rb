@@ -113,6 +113,13 @@ RSpec.describe RubyLLM::MCP do
 
         expect(mcp.tools.map(&:name)).to include('extra_9')
       end
+
+      it 'starts a new session after the server process restarts' do
+        mcp.tools
+        expect { mcp.send(:client).request('spec/exit') }.to raise_error(RubyLLM::MCP::Error, /exited/)
+
+        expect(mcp.send(:client).request('tools/list')['tools']).not_to be_empty
+      end
     end
   end
 
@@ -693,6 +700,17 @@ RSpec.describe RubyLLM::MCP do
 
         expect(next_change).to eq(:tools)
         expect(ask(mcp, 'spec/subscriptions')['watched']).to eq(['file:///project/README.md'])
+      end
+
+      it 'starts a new session once the server process restarts, and catches up once' do
+        mcp.listen
+
+        expect { ask(mcp, 'spec/exit') }.to raise_error(RubyLLM::MCP::Error, /exited/)
+
+        expect(Array.new(3) { next_change }).to eq(%i[tools prompts resources])
+        expect { Timeout.timeout(0.5) { changes.pop } }.to raise_error(Timeout::Error)
+        ask(mcp, 'spec/announce_later', method: 'notifications/tools/list_changed')
+        expect(next_change).to eq(:tools)
       end
 
       it 'raises for tasks, whose status such a server never announces' do

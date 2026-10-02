@@ -314,6 +314,7 @@ $stdin.each_line do |line|
                         serverInfo: { name: 'spec-server', version: '0.9.0' } })
   when 'notifications/initialized'
     nil
+  when 'ping' then reply(id, result: {})
   when 'tools/list'
     next reply(id, error: { code: -32_600, message: 'Not initialized' }) if LEGACY && !initialized
 
