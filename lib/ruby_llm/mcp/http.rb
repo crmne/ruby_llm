@@ -187,7 +187,7 @@ module RubyLLM
 
       def answer(request, version:)
         post(Client.reply(request), version:, connection: answers)
-      rescue Error, Faraday::Error => e
+      rescue RubyLLM::Error, Faraday::Error => e
         RubyLLM.logger.debug { "#{@url.host} did not take the answer to #{request['method']}: #{e.message}" }
       end
 

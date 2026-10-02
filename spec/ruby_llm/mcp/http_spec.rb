@@ -91,6 +91,18 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect(notifications.map { |message| message['method'] }).to eq(['notifications/progress'])
   end
 
+  it 'goes on with a call when the server refuses the answer to its own request' do
+    stub_method('server/discover', result: discover_result)
+    stub_request(:post, url).with { |request| JSON.parse(request.body)['id'] == 'roots-1' }.to_return(status: 401)
+    stub_method('tools/call', headers: { 'Content-Type' => 'text/event-stream' }, body: lambda { |request|
+      ask = { jsonrpc: '2.0', id: 'roots-1', method: 'roots/list' }
+      result = { jsonrpc: '2.0', id: JSON.parse(request.body)['id'], result: { content: [] } }
+      "data: #{ask.to_json}\n\ndata: #{result.to_json}\n\n"
+    })
+
+    expect(client.request('tools/call', { name: 'deploy' })).to eq('content' => [])
+  end
+
   it 'falls back to the initialize handshake when the server does not know server/discover' do
     stub_method('server/discover', status: 400, body: 'Bad Request: missing session')
     stub_method('initialize', headers: { 'Content-Type' => 'application/json', 'Mcp-Session-Id' => 'session-1' },
