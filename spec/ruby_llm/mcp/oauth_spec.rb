@@ -578,6 +578,14 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(a_request(:post, 'https://auth.example.com/register')).not_to have_been_made
     end
 
+    it 'form-encodes the client credentials before sending them as Basic authentication' do
+      reports(client_secret: 'p:ss%word').tools
+
+      expect(a_request(:post, 'https://auth.example.com/token')
+        .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('reports:p%3Ass%25word')}" }))
+        .to have_been_made
+    end
+
     it 'declares the client credentials extension with every request' do
       reports(client_secret: 'shh').tools
 

@@ -394,12 +394,17 @@ module RubyLLM
         elsif client['client_secret']
           methods = server['token_endpoint_auth_methods_supported'] || ['client_secret_basic']
           if methods.include?('client_secret_basic')
-            credentials = Base64.strict_encode64("#{client['client_id']}:#{client['client_secret']}")
-            headers['Authorization'] = "Basic #{credentials}"
+            headers['Authorization'] = "Basic #{basic_credentials(client['client_id'], client['client_secret'])}"
           else
             form[:client_secret] = client['client_secret']
           end
         end
+      end
+
+      # RFC 6749 section 2.3.1: the client ID and secret are form-encoded
+      # before they become the user and password of Basic authentication.
+      def basic_credentials(client_id, client_secret)
+        Base64.strict_encode64([client_id, client_secret].map { |part| URI.encode_www_form_component(part) }.join(':'))
       end
 
       # RFC 7523bis section 4: the issuer is the sole audience, so no other
