@@ -5,7 +5,7 @@ source "https://rubygems.org"
 group :development do
   gem "appraisal"
   gem "archspec"
-  gem "async", ">= 2.0", platform: :mri
+  gem "async", ">= 2.0", "!= 2.24.0", platform: :mri
   gem "avro"
   gem "bundler", ">= 2.0"
   gem "colorize"

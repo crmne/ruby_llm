@@ -7,7 +7,8 @@ gemspec
 group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   gem 'archspec' if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
-  gem 'async', '>= 2.0', platform: :mri
+  # async 2.24.0 calls IO#timeout, which Ruby 3.1 lacks; 2.23 checks for it first.
+  gem 'async', '>= 2.0', '!= 2.24.0', platform: :mri
   gem 'avro'
   gem 'bundler', '>= 2.0'
   gem 'colorize'
