@@ -249,7 +249,8 @@ module RubyLLM
       end
 
       def mantle_protocol_for(model_id)
-        return protocols[:mantle_anthropic] if model_id.start_with?('anthropic.')
+        return protocols[:mantle_anthropic] if model_id.start_with?('anthropic.') ||
+                                               RubyLLM::Thinking.between_tools_off_model?(model_id)
         return protocols[:mantle_responses] if Bedrock::Mantle::RESPONSES_MODELS.include?(model_id)
 
         protocols[:mantle_chat_completions]
