@@ -288,11 +288,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         instance_double(RubyLLM::Model,
                         id: id,
                         max_output_tokens: nil,
+                        reasoning_options: [],
                         metadata: { converse: { additionalRequestFieldsSchema: JSON.generate(schema) } })
       end
 
       let(:enumerated_budget_model) do
-        bedrock_model('us.anthropic.claude-sonnet-5',
+        bedrock_model('us.anthropic.claude-sonnet-4-6',
                       { type: 'enum', enum: { low: 1024, medium: 40_000, high: 63_999 },
                         minimum: 1024, maximum: 63_999 })
       end
@@ -346,7 +347,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'still clamps under max_output_tokens when the model states no minimum' do
-        model = bedrock_model('us.anthropic.claude-sonnet-5', { type: 'enum', enum: { low: 1024, high: 8192 } })
+        model = bedrock_model('us.anthropic.claude-sonnet-4-6', { type: 'enum', enum: { low: 1024, high: 8192 } })
 
         payload = render_payload(model: model, thinking: thinking(effort: :low), max_output_tokens: 500)
 
@@ -382,8 +383,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       it 'maps effort for regional entries that carry no converse metadata of their own' do
         model = instance_double(RubyLLM::Model,
-                                id: 'eu.anthropic.claude-sonnet-5',
+                                id: 'eu.anthropic.claude-sonnet-4-6',
                                 max_output_tokens: nil,
+                                reasoning_options: [],
                                 metadata: {})
 
         payload = render_payload(model: model, thinking: thinking(effort: :low))
@@ -439,9 +441,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'maps effort onto a budget for a Claude model reached through an inference profile ARN' do
-        model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {},
+        model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {}, reasoning_options: [],
                                                 id: 'arn:aws:bedrock:us-west-2:123456789012:' \
-                                                    'inference-profile/us.anthropic.claude-sonnet-5')
+                                                    'inference-profile/us.anthropic.claude-sonnet-4-6')
 
         payload = render_payload(model: model, thinking: thinking(effort: :low))
 

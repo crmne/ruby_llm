@@ -18,6 +18,7 @@ module RubyLLM
           return nil unless thinking&.enabled?
           return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
           return { reasoning_config: { type: 'disabled' } } if thinking.enabled == false
+          return format_adaptive_reasoning_fields(thinking) if adaptive_thinking?(thinking, model)
 
           effort = thinking.effort.to_s
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
@@ -32,6 +33,37 @@ module RubyLLM
           return { reasoning_config: effort } if reasoning_config_schema(model)
 
           { reasoning_effort: effort } unless effort == 'none'
+        end
+
+        # Claude generations that take an effort but no budget only think
+        # adaptively, and reject a reasoning_config that enables a budget.
+        def adaptive_thinking?(thinking, model)
+          return false unless thinking.budget.nil?
+          return false unless Chat.foundation_model_id(model&.id).start_with?('anthropic.claude')
+
+          registered = registered_model(model)
+          !registered.nil? && !registered.reasoning_option(:effort).nil? &&
+            registered.reasoning_option(:budget_tokens).nil?
+        end
+
+        def format_adaptive_reasoning_fields(thinking)
+          effort = thinking.effort.to_s
+          return nil if effort == 'none'
+          return { thinking: { type: 'adaptive' } } if effort.empty?
+
+          { thinking: { type: 'adaptive' }, output_config: { effort: effort } }
+        end
+
+        # Inference profile ARNs and unlisted regional ids carry no reasoning
+        # options of their own, so use another entry for the same model.
+        def registered_model(model)
+          return model if model.reasoning_options.any?
+
+          foundation_id = Chat.foundation_model_id(model.id)
+          RubyLLM.models.all.find do |candidate|
+            candidate.provider == 'bedrock' && candidate.reasoning_options.any? &&
+              Chat.foundation_model_id(candidate.id) == foundation_id
+          end
         end
 
         def nova_model?(model)
