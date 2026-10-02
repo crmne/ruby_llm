@@ -22,9 +22,16 @@ module RubyLLM
           effort = thinking.effort.to_s
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
           return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
-          return nil if effort.empty? || effort == 'none'
 
-          { reasoning_effort: effort }
+          format_effort_fields(effort, model) unless effort.empty?
+        end
+
+        # Models that publish a reasoning_config enum, such as OpenAI's GPT
+        # models, take the effort as its value and reject reasoning_effort.
+        def format_effort_fields(effort, model)
+          return { reasoning_config: effort } if reasoning_config_schema(model)
+
+          { reasoning_effort: effort } unless effort == 'none'
         end
 
         def nova_model?(model)
@@ -57,10 +64,21 @@ module RubyLLM
           schema && effort_budget_tokens(effort, schema, max_output_tokens)
         end
 
+        def reasoning_budget_schema(model)
+          request_fields_schema(model) { |schema| schema.dig(:reasoningConfig, :budgetTokens) }
+        end
+
+        def reasoning_config_schema(model)
+          request_fields_schema(model) do |schema|
+            config = schema[:reasoning_config]
+            config if config.is_a?(Hash) && config[:type] == 'enum'
+          end
+        end
+
         # Bedrock only publishes Converse metadata for some regional entries, so use the
         # schema from another entry for the same foundation model when needed.
-        def reasoning_budget_schema(model)
-          schema = budget_tokens_schema(model)
+        def request_fields_schema(model, &)
+          schema = published_schema(model, &)
           return schema if schema
           return unless model
 
@@ -69,20 +87,20 @@ module RubyLLM
             next unless candidate.provider == 'bedrock' && candidate.id != model.id
             next unless Chat.foundation_model_id(candidate.id) == foundation_id
 
-            return schema if (schema = budget_tokens_schema(candidate))
+            return schema if (schema = published_schema(candidate, &))
           end
 
           nil
         end
 
-        def budget_tokens_schema(model)
+        def published_schema(model)
           metadata = RubyLLM::Support::Utils.deep_symbolize_keys(model&.metadata || {})
           raw_schema = metadata.dig(:converse, :additionalRequestFieldsSchema)
           return unless raw_schema.is_a?(String)
 
           schema = JSON.parse(raw_schema, symbolize_names: true)
-          budget = schema.is_a?(Hash) ? schema.dig(:reasoningConfig, :budgetTokens) : nil
-          budget if budget.is_a?(Hash)
+          found = schema.is_a?(Hash) ? yield(schema) : nil
+          found if found.is_a?(Hash)
         rescue JSON::ParserError
           nil
         end

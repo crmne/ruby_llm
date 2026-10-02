@@ -400,6 +400,32 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         expect(payload[:additionalModelRequestFields]).to eq(reasoning_effort: 'high')
       end
 
+      it 'sends the effort as the reasoning_config value a model publishes' do
+        payload = render_payload(model: RubyLLM.models.find('us.openai.gpt-6-sol', provider: :bedrock),
+                                 thinking: thinking(effort: :low))
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_config: 'low')
+      end
+
+      it 'reads the reasoning_config schema from another entry for the same model' do
+        payload = render_payload(model: RubyLLM.models.find('global.openai.gpt-6-luna', provider: :bedrock),
+                                 thinking: thinking(effort: :none))
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_config: 'none')
+      end
+
+      it 'turns reasoning off through reasoning_config' do
+        context = RubyLLM.context do |config|
+          config.bedrock_api_key = 'key'
+          config.bedrock_secret_key = 'secret'
+          config.bedrock_region = 'us-east-1'
+        end
+
+        payload = context.chat(model: 'us.openai.gpt-6-sol', provider: :bedrock).with_thinking(false).render
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_config: 'none')
+      end
+
       it 'reads the model out of an inference profile ARN' do
         model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {},
                                                 id: 'arn:aws:bedrock:us-west-2:123456789012:' \
