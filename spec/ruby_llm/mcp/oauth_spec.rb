@@ -751,7 +751,7 @@ RSpec.describe RubyLLM::MCP::OAuth do
       verified(proof, public_key(JSON.parse(Base64.urlsafe_decode64(proof.split('.').first))['jwk']))
     end
 
-    def requires_dpop(nonce: nil, challenge: "DPoP resource_metadata=\"#{metadata_url}\"")
+    def requires_dpop(nonce: nil, supplies: nil, challenge: "DPoP resource_metadata=\"#{metadata_url}\"")
       stub_request(:post, server_url).to_return do |request|
         proof = request.headers['Dpop']
         if proof.nil? || !request.headers['Authorization'].to_s.start_with?('DPoP access-')
@@ -761,9 +761,28 @@ RSpec.describe RubyLLM::MCP::OAuth do
         else
           message = JSON.parse(request.body)
           result = message['method'] == 'server/discover' ? { supportedVersions: ['2026-07-28'] } : { tools: [] }
-          { headers: { 'Content-Type' => 'application/json' },
+          { headers: { 'Content-Type' => 'application/json', 'DPoP-Nonce' => supplies }.compact,
             body: { jsonrpc: '2.0', id: message['id'], result: }.to_json }
         end
+      end
+    end
+
+    def keeps_sessions
+      stub_request(:post, server_url).to_return do |request|
+        next { status: 401, headers: { 'WWW-Authenticate' => "DPoP resource_metadata=\"#{metadata_url}\"" } } unless
+          request.headers['Authorization'].to_s.start_with?('DPoP access-')
+
+        message = JSON.parse(request.body)
+        result = if message['method'] == 'initialize'
+                   { protocolVersion: '2025-06-18', capabilities: { tools: { listChanged: true } } }
+                 else
+                   { tools: [] }
+                 end
+        next { status: 404, body: '' } if message['method'] == 'server/discover'
+        next { status: 202, body: '' } unless message['id']
+
+        { headers: { 'Content-Type' => 'application/json', 'Mcp-Session-Id' => 'session-1' },
+          body: { jsonrpc: '2.0', id: message['id'], result: }.to_json }
       end
     end
 
@@ -837,6 +856,48 @@ RSpec.describe RubyLLM::MCP::OAuth do
       requires_dpop(nonce: 'rs-nonce')
 
       expect(linear_class.new(user: 'ada').tools).to eq([])
+
+      expect(proofs_sent_to(server_url).map { |_, claims| claims['nonce'] }).to eq([nil, 'rs-nonce', 'rs-nonce'])
+    end
+
+    it 'proves possession with the HTTP method of each request' do
+      keeps_sessions
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      streams = Queue.new
+      stub_request(:get, server_url).to_return do |request|
+        streams << request.headers['Dpop']
+        { status: 405 }
+      end
+      ended = stub_request(:delete, server_url).to_return(status: 204)
+
+      mcp = linear_class.new(user: 'ada')
+      mcp.listen
+      stream = Timeout.timeout(5) { streams.pop }
+      mcp.close
+
+      expect(proofs_sent_to(server_url).map(&:last)).to all(include('htm' => 'POST'))
+      expect(proved(stream).last).to include('htm' => 'GET', 'htu' => server_url)
+      expect(ended.with { |request| proved(request.headers['Dpop']).last['htm'] == 'DELETE' }).to have_been_made
+    end
+
+    it 'signs the next proof with the nonce the server sends with a response' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      requires_dpop(supplies: 'rs-nonce')
+
+      linear_class.new(user: 'ada').tools
+
+      expect(proofs_sent_to(server_url).map { |_, claims| claims['nonce'] }).to eq([nil, 'rs-nonce'])
+    end
+
+    it "gets a token for the app's first request, then retries it with the server's nonce" do
+      requires_dpop(nonce: 'rs-nonce')
+      url = server_url
+      reports = Class.new(RubyLLM::MCP) do
+        url url
+        oauth grant: :client_credentials, client_id: 'reports', client_secret: 'shh'
+      end.new
+
+      expect(reports.tools).to eq([])
 
       expect(proofs_sent_to(server_url).map { |_, claims| claims['nonce'] }).to eq([nil, 'rs-nonce', 'rs-nonce'])
     end

@@ -41,7 +41,7 @@ module RubyLLM
         LOOPBACK_HOSTS.include?(URI(url.to_s).hostname)
       end
 
-      def initialize(url, headers: {}, timeout: nil, unauthorized: nil, config: RubyLLM.config)
+      def initialize(url, headers: {}, timeout: nil, unauthorized: nil, responded: nil, config: RubyLLM.config)
         @url = URI(url)
         unless self.class.secure?(@url)
           raise ArgumentError, "MCP servers must use HTTPS without credentials in the URL: #{url}"
@@ -49,6 +49,7 @@ module RubyLLM
 
         @headers = headers
         @unauthorized = unauthorized
+        @responded = responded
         @timeout = timeout || config.request_timeout
         @connect = lambda do
           Transport::Connection.basic(config) do |faraday|
@@ -98,18 +99,19 @@ module RubyLLM
         @session = nil
         return unless session
 
-        @connection.delete(@url) do |request|
+        response = @connection.delete(@url) do |request|
           request.headers.update({ 'MCP-Protocol-Version' => @version, 'Mcp-Session-Id' => session }.compact)
-          request.headers.update(custom_headers)
+          request.headers.update(custom_headers('DELETE'))
           request.options.timeout = CLOSE_TIMEOUT
         end
-      rescue Faraday::Error
-        nil
+        responded(response.headers)
+      rescue Faraday::Error => e
+        responded(e.response[:headers]) if e.response
       end
 
       private
 
-      def post(message, version:, timeout: nil, params: {}, connection: @connection, retried: false, &on_notification)
+      def post(message, version:, timeout: nil, params: {}, connection: @connection, recovered: [], &on_notification)
         session = @session unless message[:method] == 'initialize'
         stream = Stream.new(message[:id], &on_notification)
         stream.read do
@@ -120,15 +122,20 @@ module RubyLLM
             stream.attach(request, timeout)
           end
         end
+        responded(stream.headers)
         remember(message, version, stream.headers)
         stream
       rescue Faraday::Error => e
         raise unless e.response
+
+        responded(e.response[:headers])
         return stream if answered?(stream)
         raise SessionExpired, "#{@url.host} ended the session" if expired?(e.response, message, session)
 
-        if reauthorized?(e.response, retried)
-          return post(message, version:, timeout:, params:, connection:, retried: true, &on_notification)
+        recovery = recover(e.response, recovered)
+        if recovery
+          return post(message, version:, timeout:, params:, connection:, recovered: [*recovered, recovery],
+                      &on_notification)
         end
 
         raise failure(e.response, stream)
@@ -161,10 +168,15 @@ module RubyLLM
           connection.get(@url) do |request|
             request.headers.update({ 'Accept' => 'text/event-stream', 'MCP-Protocol-Version' => version,
                                      'Mcp-Session-Id' => @session, 'Last-Event-ID' => last_event_id }.compact)
-            request.headers.update(custom_headers)
+            request.headers.update(custom_headers('GET'))
             stream.attach(request, timeout)
           end
         end
+        responded(stream.headers)
+        stream
+      rescue Faraday::Error => e
+        responded(e.response[:headers]) if e.response
+        raise
       end
 
       def streams
@@ -201,11 +213,18 @@ module RubyLLM
         stream.answer&.key?('result')
       end
 
-      def reauthorized?(response, retried)
+      # Returns how a rejected request recovered, such as with a new token
+      # or a nonce for its proof, unless it already recovered that way.
+      def recover(response, recovered)
         status = response[:status]
-        return false unless @unauthorized && (status == 403 || (status == 401 && !retried))
+        return unless @unauthorized && [401, 403].include?(status)
 
-        @unauthorized.call(response[:headers] || {}, status) && status == 401
+        recovery = @unauthorized.call(response[:headers] || {}, status, recovered)
+        recovery if status == 401
+      end
+
+      def responded(headers)
+        @responded&.call(headers || {})
       end
 
       def headers(message, version, session)
@@ -217,11 +236,11 @@ module RubyLLM
           'Mcp-Method' => message[:method],
           'Mcp-Name' => header_value(message.dig(:params, :name) || message.dig(:params, :uri) ||
                                      message.dig(:params, :taskId))
-        }.compact.merge(custom_headers)
+        }.compact.merge(custom_headers('POST'))
       end
 
-      def custom_headers
-        @headers.respond_to?(:call) ? @headers.call : @headers
+      def custom_headers(verb)
+        @headers.respond_to?(:call) ? @headers.call(verb) : @headers
       end
 
       def header_value(value)
@@ -275,8 +294,9 @@ module RubyLLM
           request.options.on_data = method(:feed).to_proc
         end
 
-        def read
-          catch(self) { @headers = yield.headers }
+        def read(&)
+          response = catch(self, &)
+          @headers = response.headers if @headers.empty? && response.respond_to?(:headers)
           self
         rescue Faraday::ConnectionFailed
           raise unless events?

@@ -191,6 +191,23 @@ RSpec.describe RubyLLM::MCP::HTTP do
       expect(initializations).to have_been_made.twice
     end
 
+    it 'gives callable headers the HTTP method of each request' do
+      verbs = []
+      headers = lambda do |verb|
+        verbs << verb
+        {}
+      end
+      client = RubyLLM::MCP::Client.new(described_class.new(url, headers:))
+      stub_request(:get, url).to_return(status: 405)
+      stub_request(:delete, url).to_return(status: 204)
+
+      client.request('tools/list')
+      expect { client.listen({}) { nil } }.to raise_error(RubyLLM::MCP::Error, 'mcp.example.com sends no events')
+      client.close
+
+      expect(verbs.uniq).to eq(%w[POST GET DELETE])
+    end
+
     it 'ends the session when it closes' do
       stub_request(:delete, url).to_return(status: 405)
       client.request('tools/list')
@@ -677,7 +694,8 @@ RSpec.describe RubyLLM::MCP::HTTP do
 
   it 'resolves callable headers on every request' do
     tokens = %w[first second].each
-    client = RubyLLM::MCP::Client.new(described_class.new(url, headers: -> { { 'Authorization' => tokens.next } }))
+    headers = ->(_verb) { { 'Authorization' => tokens.next } }
+    client = RubyLLM::MCP::Client.new(described_class.new(url, headers:))
     stub_method('server/discover', result: discover_result)
     stub_method('tools/list', result: { tools: [] })
 

@@ -13,11 +13,11 @@ module RubyLLM
           @keys = {}
         end
 
-        # Returns a proof for a POST to +url+ with the PEM-encoded key, and
-        # with the hash of the access +token+ it accompanies.
-        def sign(pem, url, token: nil)
+        # Returns a proof for a +verb+ request to +url+ with the PEM-encoded
+        # key, and with the hash of the access +token+ it accompanies.
+        def sign(pem, url, token: nil, verb: 'POST')
           key = @keys[pem] ||= Key.new(pem)
-          claims = { jti: SecureRandom.uuid, htm: 'POST', htu: url.to_s[/\A[^?#]*/], iat: Time.now.to_i,
+          claims = { jti: SecureRandom.uuid, htm: verb, htu: url.to_s[/\A[^?#]*/], iat: Time.now.to_i,
                      ath: (Base64.urlsafe_encode64(Digest::SHA256.digest(token), padding: false) if token),
                      nonce: @nonces[origin(url)] }
           key.jwt(claims.compact, typ: 'dpop+jwt', jwk: key.jwk)

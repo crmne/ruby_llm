@@ -110,23 +110,34 @@ module RubyLLM
         credential['access_token']
       end
 
-      # Returns the headers that authorize a request to the server: none
-      # without a token, and a proof of possession with a bound one.
-      def authorization_headers
+      # Returns the headers that authorize a +verb+ request to the server:
+      # none without a token, and a proof of possession with a bound one.
+      def authorization_headers(verb = 'POST')
         token = access_token or return {}
         return { 'Authorization' => "Bearer #{token}" } unless credential['token_type'] == 'DPoP'
 
-        { 'Authorization' => "DPoP #{token}", 'DPoP' => proofs.sign(credential['dpop_key'], @server_url, token:) }
+        proof = proofs.sign(credential['dpop_key'], @server_url, token:, verb:)
+        { 'Authorization' => "DPoP #{token}", 'DPoP' => proof }
       end
 
-      # Answers the server's rejection of a request, given its challenge
-      # and DPoP nonce. Returns whether it is worth sending again.
-      def recover(challenge, nonce: nil)
+      # Answers the server's rejection of a request, given its challenge,
+      # its DPoP nonce, and the ways the request +recovered+ before. Returns
+      # how to send it again, +:nonce+ with the nonce in its proof or
+      # +:token+ with a new token, or +nil+ when it is not worth sending
+      # again.
+      def recover(challenge, nonce: nil, recovered: [])
         @challenge = challenge
-        proofs.remember(@server_url, nonce)
-        return true if nonce && nonce_requested?
+        remember_nonce(nonce)
+        recovery = nonce && nonce_requested? ? :nonce : :token
+        return if recovered.include?(recovery)
 
-        authorization_code? ? authorized? && refresh : obtain
+        recovery if recovery == :nonce || renewed?
+      end
+
+      # Keeps the DPoP nonce the server supplied with a response for the
+      # next proof (RFC 9449 section 9).
+      def remember_nonce(nonce)
+        proofs.remember(@server_url, nonce)
       end
 
       def refresh
@@ -212,6 +223,10 @@ module RubyLLM
 
       def renew
         authorization_code? ? refresh : obtain
+      end
+
+      def renewed?
+        authorization_code? ? authorized? && refresh : obtain
       end
 
       # Requests a token with the configured grant, unless another worker

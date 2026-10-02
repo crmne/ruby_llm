@@ -990,8 +990,8 @@ module RubyLLM
       if settings.transport
         resolve(settings.transport)
       elsif settings.url
-        HTTP.new(resolve(settings.url), headers: -> { request_headers }, timeout: settings.timeout,
-                                        unauthorized: method(:unauthorized), config:)
+        HTTP.new(resolve(settings.url), headers: method(:request_headers), timeout: settings.timeout,
+                                        unauthorized: method(:unauthorized), responded: method(:responded), config:)
       elsif settings.command
         Stdio.new(settings.command.map { |part| resolve(part) },
                   env: settings.env.transform_values { |value| resolve(value) },
@@ -1001,9 +1001,9 @@ module RubyLLM
       end
     end
 
-    def request_headers
+    def request_headers(verb)
       headers = self.class.headers.transform_values { |value| resolve(value) }
-      return headers.merge(oauth.authorization_headers) if self.class.oauth_settings
+      return headers.merge(oauth.authorization_headers(verb)) if self.class.oauth_settings
 
       token = resolve(self.class.bearer_token)
       token ? headers.merge('Authorization' => "Bearer #{token}") : headers
@@ -1022,10 +1022,19 @@ module RubyLLM
       @context&.config || RubyLLM.config
     end
 
-    def unauthorized(headers, status)
+    def unauthorized(headers, status, recovered)
       @challenge = OAuth.challenge(headers['www-authenticate'] || headers['WWW-Authenticate'])
-      status == 401 && self.class.oauth_settings &&
-        oauth.recover(@challenge, nonce: headers['dpop-nonce'] || headers['DPoP-Nonce'])
+      return unless status == 401 && self.class.oauth_settings
+
+      oauth.recover(@challenge, nonce: dpop_nonce(headers), recovered:)
+    end
+
+    def responded(headers)
+      oauth.remember_nonce(dpop_nonce(headers)) if self.class.oauth_settings
+    end
+
+    def dpop_nonce(headers)
+      headers['dpop-nonce'] || headers['DPoP-Nonce']
     end
 
     def challenge
