@@ -206,6 +206,13 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       expect(provider.send(:with_region_prefix, 'us.anthropic.claude', 'eu-west-1')).to eq('eu.anthropic.claude')
       expect(provider.send(:with_region_prefix, 'anthropic.claude', 'eu-west-1')).to eq('eu.anthropic.claude')
     end
+
+    it 'recognises the in geography prefix' do
+      expect(provider.send(:with_region_prefix, 'in.openai.gpt-5.6-luna', 'eu-west-1')).to eq('eu.openai.gpt-5.6-luna')
+      expect(described_class.mantle_model_id?('in.openai.gpt-5.6-luna')).to be(false)
+      expect(RubyLLM::Protocols::Converse.allocate.send(:foundation_model_id, 'in.openai.gpt-5.6-luna'))
+        .to eq('openai.gpt-5.6-luna')
+    end
   end
 
   describe '#region_prefix_candidates' do
