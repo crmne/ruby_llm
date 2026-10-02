@@ -201,12 +201,41 @@ RSpec.describe RubyLLM::MCP::OAuth do
       .to raise_error(RubyLLM::MCP::Error, /wrong issuer/)
   end
 
-  it 'still refuses an issuer whose path differs by more than an empty path' do
-    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
-      .to_return(body: { resource: server_url, authorization_servers: ['https://auth.example.com/tenant'] }.to_json)
-    stub_request(:get, %r{\Ahttps://auth\.example\.com/\.well-known/}).to_return(body: authorization_server.to_json)
+  context 'when the listed issuer serves metadata naming another issuer' do
+    before do
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+        .to_return(body: { resource: server_url, authorization_servers: ['https://api.example.com'] }.to_json)
+      stub_request(:get, 'https://api.example.com/.well-known/oauth-authorization-server')
+        .to_return(body: authorization_server.to_json)
+    end
 
-    expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /different issuer/)
+    it 'follows it once to metadata the named issuer publishes about itself' do
+      url = linear.authorization_url(redirect_uri:)
+      linear.authorize(callback(url, iss: 'https://auth.example.com'))
+
+      expect(url).to start_with('https://auth.example.com/authorize?')
+      expect(linear).to be_authorized
+    end
+
+    it 'compares iss with the issuer it confirmed' do
+      url = linear.authorization_url(redirect_uri:)
+
+      expect { linear.authorize(callback(url, iss: 'https://api.example.com')) }
+        .to raise_error(RubyLLM::MCP::Error, /wrong issuer/)
+    end
+
+    it 'refuses when the named issuer does not name itself' do
+      stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server')
+        .to_return(body: authorization_server.merge(issuer: 'https://other.example.com').to_json)
+
+      expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /different issuer/)
+    end
+
+    it 'refuses when the named issuer publishes no metadata' do
+      stub_request(:get, %r{\Ahttps://auth\.example\.com/\.well-known/}).to_return(status: 404)
+
+      expect { linear.authorization_url(redirect_uri:) }.to raise_error(RubyLLM::MCP::Error, /publishes no/)
+    end
   end
 
   it 'uses a pre-registered client with its secret' do

@@ -252,14 +252,26 @@ module RubyLLM
       end
 
       def discover_authorization_server(issuer)
+        server = authorization_server_metadata(issuer)
+        return server if same_issuer?(server['issuer'], issuer)
+
+        named = server['issuer']
+        raise Error, "#{issuer} metadata names a different issuer" unless named.is_a?(String) && URI(named).host
+
+        server = authorization_server_metadata(named)
+        raise Error, "#{issuer} metadata names a different issuer" unless same_issuer?(server['issuer'], named)
+
+        server
+      rescue URI::InvalidURIError
+        raise Error, "#{issuer} metadata names a different issuer"
+      end
+
+      def authorization_server_metadata(issuer)
         uri = URI(issuer)
         path = uri.path.chomp('/')
         urls = AUTHORIZATION_SERVER_PATHS.map { |pattern| URI.join(uri, format(pattern, path:)).to_s }
         urls = urls.first(2) if path.empty?
-        server = first_json(urls.uniq) or raise Error, "#{issuer} publishes no authorization server metadata"
-        raise Error, "#{issuer} metadata names a different issuer" unless same_issuer?(server['issuer'], issuer)
-
-        server
+        first_json(urls.uniq) or raise Error, "#{issuer} publishes no authorization server metadata"
       end
 
       # RFC 3986 section 6.2.3: an empty path and "/" name the same resource.
