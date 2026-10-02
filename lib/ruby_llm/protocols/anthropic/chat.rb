@@ -472,6 +472,7 @@ module RubyLLM
 
         def build_thinking_payload(thinking, model, max_tokens)
           return nil unless thinking&.enabled?
+
           if thinking.enabled == false
             reject_invalid_between_tools_effort!(thinking, model)
             return { thinking: { type: thinking_off_type(model) } }

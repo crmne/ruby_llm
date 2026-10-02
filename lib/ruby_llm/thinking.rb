@@ -37,18 +37,18 @@ module RubyLLM
     def inspect_attributes # :nodoc:
       { text: text, signature: signature ? '[REDACTED]' : nil }
     end
-  end
 
-  class Thinking
     # Sonnet 5.5 rejects thinking.type "disabled". Its lowest setting is
     # between_tools. Match Anthropic/Vertex bare ids and Bedrock Mantle /
     # regional prefixes only (start or "." before the suffix).
-    BETWEEN_TOOLS_OFF_MODEL = /\A(?:[a-z0-9-]+\.)*claude-sonnet-5-5\z/.freeze
+    BETWEEN_TOOLS_OFF_MODEL = /\A(?:[a-z0-9-]+\.)*claude-sonnet-5-5\z/
 
     def self.between_tools_off_model?(model_id)
       model_id.to_s.match?(BETWEEN_TOOLS_OFF_MODEL)
     end
+  end
 
+  class Thinking
     class Controls # :nodoc: all
       PREFERRED_EFFORTS = %w[medium low minimal high xhigh max].freeze
 

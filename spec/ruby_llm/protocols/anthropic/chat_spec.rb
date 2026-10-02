@@ -625,7 +625,6 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         end.to raise_error(ArgumentError, /between_tools thinking at effort "#{effort}"/)
       end
     end
-
   end
 
   describe '#parse_completion_response' do

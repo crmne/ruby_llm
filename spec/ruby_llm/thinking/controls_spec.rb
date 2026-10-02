@@ -73,5 +73,4 @@ RSpec.describe RubyLLM::Thinking::Controls do
       expect(RubyLLM::Thinking.between_tools_off_model?('claude-opus-5')).to be(false)
     end
   end
-
 end
