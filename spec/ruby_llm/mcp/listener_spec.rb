@@ -153,6 +153,30 @@ RSpec.describe RubyLLM::MCP::Listener do
     end
   end
 
+  context 'when a subscription resumes' do
+    let(:resumes) { Queue.new }
+    let(:listener) do
+      described_class.new(client, name: 'files', timeout: 2, resumed: ->(listened) { resumes << listened }, &callback)
+    end
+    let(:script) do
+      lambda do |attempt, notify|
+        notify[acknowledgment]
+        sleep if attempt == 2
+      end
+    end
+
+    it 'reports what it listens to, since changes in between are lost' do
+      allow(listener).to receive(:sleep)
+      allow(RubyLLM.logger).to receive(:warn)
+
+      listener.start(tools)
+
+      expect(Timeout.timeout(5) { resumes.pop }).to eq('toolsListChanged' => true)
+      expect(client.attempts.size).to eq(2)
+      expect(resumes).to be_empty
+    end
+  end
+
   context 'when a subscription ends' do
     let(:delays) { [] }
 

@@ -346,6 +346,8 @@ module RubyLLM
       # Servers that predate 2026-07-28 announce changes as they answer a
       # request; the callback runs once the request is answered. Newer
       # servers announce them only while the MCP listens; see #listen.
+      # Changes made while a listener reconnects are lost, so once it is
+      # back, the callback runs for everything it listens to.
       def after_change(method = nil, &block)
         add_callback(:after_change, method, block)
       end
@@ -954,9 +956,14 @@ module RubyLLM
     end
 
     def listener
-      @listener ||= Listener.new(client, name:, timeout: self.class.timeout || config.request_timeout) do |notification|
-        changed(notification)
-      end
+      @listener ||= Listener.new(client, name:, timeout: self.class.timeout || config.request_timeout,
+                                         resumed: method(:caught_up)) { |notification| changed(notification) }
+    end
+
+    def caught_up(listened)
+      %i[tools prompts resources].each { |list| announce(list) if listened["#{list}ListChanged"] }
+      Array(listened['resourceSubscriptions']).each { |uri| announce(Resource.new(self, 'uri' => uri)) }
+      Array(listened['taskIds']).each { |id| announce(Task.new(self, poll_task(id))) }
     end
 
     def listened_changes(uris, ids)

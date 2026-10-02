@@ -7,7 +7,9 @@ module RubyLLM
     # on. #start returns once the server acknowledges the subscription.
     # When a stream ends, the listener subscribes again after a delay that
     # starts at a second and doubles up to a minute, and gives up when the
-    # server agrees to send nothing or does not know the method.
+    # server agrees to send nothing or does not know the method. Changes
+    # made in between are lost, so once the server acknowledges again, the
+    # +resumed+ callable receives what the listener listens to.
     #
     # Stopping raises CancelledError in the listener's thread. Callbacks run
     # with that deferred, so a stop never cuts one short, and inside the
@@ -19,10 +21,11 @@ module RubyLLM
       MAX_RETRY_DELAY = 60
       STOP_TIMEOUT = 5
 
-      def initialize(client, name:, timeout:, &on_notification)
+      def initialize(client, name:, timeout:, resumed: nil, &on_notification)
         @client = client
         @name = name
         @timeout = timeout
+        @resumed = resumed
         @on_notification = on_notification
         @control = Mutex.new
         @lock = Mutex.new
@@ -115,13 +118,19 @@ module RubyLLM
       end
 
       def receive(notification)
-        Thread.handle_interrupt(CancelledError => :never) { dispatch(notification) }
-        settle(notification.dig('params', 'notifications') || {}) if notification['method'] == Client::ACKNOWLEDGED
+        acknowledged = notification['method'] == Client::ACKNOWLEDGED
+        listened = notification.dig('params', 'notifications') || {}
+        resumed = acknowledged && @resumed && @state.is_a?(Hash)
+        Thread.handle_interrupt(CancelledError => :never) do
+          dispatch(@on_notification, notification)
+          dispatch(@resumed, listened) if resumed
+        end
+        settle(listened) if acknowledged
       end
 
-      def dispatch(notification)
+      def dispatch(callback, argument)
         executor = defined?(Rails) && Rails.respond_to?(:application) && Rails.application&.executor
-        executor ? executor.wrap { @on_notification.call(notification) } : @on_notification.call(notification)
+        executor ? executor.wrap { callback.call(argument) } : callback.call(argument)
       rescue StandardError => e
         RubyLLM.logger.error { "#{@name} after_change callback failed: #{e.class}: #{e.message}" }
       end

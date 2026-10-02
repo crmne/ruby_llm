@@ -536,6 +536,14 @@ RSpec.describe RubyLLM::MCP do
       expect(renewed.values).to eq(first.values)
     end
 
+    it 'runs after_change for everything it listens to once it subscribes again, since changes in between are lost' do
+      mcp.listen(resources: ['file:///project/README.md'])
+
+      ask(mcp, 'spec/end_subscriptions')
+
+      expect(Array.new(4) { next_change }).to eq([:tools, :prompts, :resources, "# Spec Project\n"])
+    end
+
     it 'subscribes again when the server cancels the subscription' do
       mcp.listen
       first = subscriptions(mcp)
@@ -620,6 +628,17 @@ RSpec.describe RubyLLM::MCP do
         expect(change).to have_attributes(class: RubyLLM::MCP::Task, id: task.id, status: :completed)
         expect(change.result.text).to eq('Report ready')
         expect(subscriptions(mcp).values.map { |filter| filter['taskIds'] }).to eq([[task.id]])
+      end
+
+      it 'checks on the tasks it listens to once it subscribes again' do
+        task = report
+        mcp.listen(tasks: [task])
+
+        ask(mcp, 'spec/end_subscriptions')
+
+        *lists, change = Array.new(4) { next_change }
+        expect(lists).to eq(%i[tools prompts resources])
+        expect(change).to have_attributes(id: task.id, status: :working, status_message: 'Rendering')
       end
 
       it 'raises and stops listening when the server does not send the status of a task' do

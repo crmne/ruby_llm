@@ -502,7 +502,7 @@ A server that announces no changes leaves `listen` nothing to do. When the serve
 
 Callbacks for the changes a listener hears run in its thread, one at a time, so keep them short. They can call the server, as `tools` and `content` do above. An exception in one is logged, and listening goes on.
 
-When the connection drops or the server ends the subscription, RubyLLM subscribes again after about a second, doubling the wait up to a minute while the server stays away. Changes made in between are not replayed, so RubyLLM lists tools again once it is back.
+When the connection drops or the server ends the subscription, RubyLLM subscribes again after about a second, doubling the wait up to a minute while the server stays away. Changes made in between are lost, so once it is back, RubyLLM treats everything it listens to as changed: it lists tools again, and `after_change` runs for each list the server announces changes to, each resource, and each task, which it checks on first. Write callbacks that can run again for something that didn't change.
 
 Older servers send their changes on their session's event stream, and RubyLLM subscribes to resources with `resources/subscribe`; over stdio, the listener shares the server's pipe with your requests. `listen` works the same either way.
 
