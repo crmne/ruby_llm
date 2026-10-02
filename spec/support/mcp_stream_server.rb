@@ -57,7 +57,7 @@ module MCPStreams
       @lock.synchronize { @streams.dup }.each do |socket, request|
         id = request.body['id']
         chunk(socket, "data: #{JSON.generate(jsonrpc: '2.0', id:, result: { resultType: 'complete' })}\n\n")
-        socket.write("0\r\n\r\n")
+        write(socket, "0\r\n\r\n")
         socket.close
       end
     end
@@ -87,7 +87,14 @@ module MCPStreams
     end
 
     def chunk(socket, data)
-      socket.write("#{data.bytesize.to_s(16)}\r\n#{data}\r\n")
+      write(socket, "#{data.bytesize.to_s(16)}\r\n#{data}\r\n")
+    end
+
+    # A client may close a stream as soon as it reads the answer, and the
+    # thread serving it then closes its end, so writes that follow find it
+    # gone.
+    def write(socket, data)
+      socket.write(data)
     rescue IOError, SystemCallError
       nil
     end
