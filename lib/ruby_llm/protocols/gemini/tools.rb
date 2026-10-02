@@ -23,7 +23,7 @@ module RubyLLM
 
           parts.concat(Media.format_content(msg.content, msg.attachments)) if msg.content && !msg.content.empty?
 
-          fallback_signature = msg.thinking&.signature
+          fallback_signature = msg.thinking&.signature unless msg.tool_calls.each_value.any?(&:thought_signature)
           used_fallback = false
 
           msg.tool_calls.each_value do |tool_call|

@@ -48,6 +48,34 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
       expect(result[1][:functionCall]).to eq(name: 'weather', args: { 'latitude' => '52.5200' })
       expect(result[2][:functionCall]).to eq(name: 'best_language_to_learn', args: {})
     end
+
+    it 'replays a signature only on the parallel call Gemini signed' do
+      parts = [
+        { 'functionCall' => { 'name' => 'weather', 'args' => { 'city' => 'Zurich' } }, 'thoughtSignature' => 'sig' },
+        { 'functionCall' => { 'name' => 'time', 'args' => { 'city' => 'Zurich' } } }
+      ]
+      body = { 'candidates' => [{ 'content' => { 'role' => 'model', 'parts' => parts } }] }
+      model = instance_double(RubyLLM::Model, id: 'gemini-3.5-flash')
+      protocol = RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config), model)
+      message = protocol.send(:parse_completion_body, body, raw: nil)
+
+      result = protocol.send(:format_tool_call, message)
+
+      expect(result.map { |part| part[:thoughtSignature] }).to eq(['sig', nil])
+    end
+
+    it 'gives the thinking signature to the first call when no call carries one' do
+      tool_calls = {
+        'a' => RubyLLM::ToolCall.new(id: 'a', name: 'weather', arguments: {}),
+        'b' => RubyLLM::ToolCall.new(id: 'b', name: 'time', arguments: {})
+      }
+      message = RubyLLM::Message.new(role: :assistant, content: '', tool_calls:,
+                                     thinking: RubyLLM::Thinking.new(signature: 'sig'))
+
+      result = test_obj.format_tool_call(message)
+
+      expect(result.map { |part| part[:thoughtSignature] }).to eq(['sig', nil])
+    end
   end
 
   describe '#format_tool_result' do
