@@ -243,6 +243,7 @@ module RubyLLM
           Timeout::Error,
           Faraday::TimeoutError,
           Faraday::ConnectionFailed,
+          Faraday::SSLError,
           Faraday::RetriableResponse,
           RubyLLM::RateLimitError,
           RubyLLM::ServerError,
