@@ -537,7 +537,7 @@ module RubyLLM
     # tool that fails returns a Result whose #error? is +true+.
     def call(name, **arguments)
       outcome = call_tool({ name: name.to_s, arguments: })
-      Result.new(outcome.is_a?(Task) ? finish(outcome) : outcome, ui_uri: ui_uri_of(name))
+      Result.new(outcome.is_a?(Task) ? finish(outcome) : outcome, ui_uri_of(name))
     end
 
     # Returns the resources the server lists, as MCP::Resource objects
@@ -615,7 +615,7 @@ module RubyLLM
       outcome = call_tool(params, input:)
       return outcome if outcome.is_a?(Task)
 
-      result = Result.new(outcome, ui_uri: tool.ui_uri)
+      result = Result.new(outcome, tool.ui_uri)
       return { error: result.text } if result.error?
 
       tool.wrap ? apply(tool.wrap, result, **arguments) : result

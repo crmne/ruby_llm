@@ -34,10 +34,10 @@ module RubyLLM
       attr_reader :ui_uri
 
       def self.load(data) # :nodoc:
-        new(data['result'], ui_uri: data['ui_uri'])
+        new(data['result'], data['ui_uri'])
       end
 
-      def initialize(data, ui_uri: nil) # :nodoc:
+      def initialize(data, ui_uri = nil) # :nodoc:
         @data = data
         @ui_uri = ui_uri
         @structured = data['structuredContent']
