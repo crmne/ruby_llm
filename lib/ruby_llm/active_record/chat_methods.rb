@@ -878,12 +878,12 @@ module RubyLLM
 
       def persisted_tool_call_input(tool_call)
         record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
-        record.pending_input if record&.has_attribute?(:pending_input)
+        record.mcp_state if record&.has_attribute?(:mcp_state)
       end
 
       def persist_tool_call_input(tool_call, input)
         record = find_tool_call(tool_call.id)
-        record.update!(pending_input: input) if record&.has_attribute?(:pending_input)
+        record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
       end
 
       def persisted_tool_call_approval(tool_call)

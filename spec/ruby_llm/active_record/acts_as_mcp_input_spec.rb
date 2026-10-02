@@ -31,7 +31,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     chat = paused_chat
 
     expect(chat).to be_awaiting_input
-    expect(tool_call_record.pending_input).to include('request_state' => 'environment-state')
+    expect(tool_call_record.mcp_state).to include('request_state' => 'environment-state')
     expect(chat.pending_inputs.first.message).to eq('Which environment?')
   end
 
@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     resumed.complete
 
     expect(resumed.messages_association.find_by(role: 'tool').content).to eq('Deployed to staging')
-    expect(tool_call_record.pending_input).to be_nil
+    expect(tool_call_record.mcp_state).to be_nil
     expect(resumed).not_to be_awaiting_input
   end
 end

@@ -11,12 +11,16 @@ class <%= 'upgrade_ruby_llm_to_2_1'.camelize %> < ActiveRecord::Migration<%= mig
       end
     end
 
-    unless column_exists?(:ruby_llm_tool_calls, :pending_input)
+    unless column_exists?(:ruby_llm_tool_calls, :mcp_state)
+      if column_exists?(:ruby_llm_tool_calls, :pending_input)
+        rename_column :ruby_llm_tool_calls, :pending_input, :mcp_state
+      else
 <% if postgresql? -%>
-      add_column :ruby_llm_tool_calls, :pending_input, :jsonb
+        add_column :ruby_llm_tool_calls, :mcp_state, :jsonb
 <% else -%>
-      add_column :ruby_llm_tool_calls, :pending_input, :json
+        add_column :ruby_llm_tool_calls, :mcp_state, :json
 <% end -%>
+      end
     end
 
     unless column_exists?(:ruby_llm_tool_calls, :mcp_result)

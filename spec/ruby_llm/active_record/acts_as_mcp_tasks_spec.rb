@@ -34,8 +34,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     chat = paused_chat
 
     expect(chat).to be_awaiting_tasks
-    expect(tool_call_record.pending_input['task']).to include('taskId' => 'task-1', 'pollIntervalMs' => 10,
-                                                              'ttlMs' => 60_000)
+    expect(tool_call_record.mcp_state['task'])
+      .to include('taskId' => 'task-1', 'pollIntervalMs' => 10, 'ttlMs' => 60_000)
     expect(Chat.find(chat.id).with_mcp(reports).pending_tasks.first).to have_attributes(id: 'task-1', status: :working)
   end
 
@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     resumed.complete
 
     expect(resumed.messages_association.find_by(role: 'tool').content).to eq('Report ready')
-    expect(tool_call_record.pending_input).to be_nil
+    expect(tool_call_record.mcp_state).to be_nil
     expect(resumed).not_to be_awaiting_tasks
   end
 
