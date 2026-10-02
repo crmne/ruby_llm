@@ -304,17 +304,24 @@ module RubyLLM
       def register(server, redirect_uri)
         endpoint = server['registration_endpoint'] or raise Error, "#{server['issuer']} does not register clients"
         registration = registration_key(server['issuer'], redirect_uri)
+        scope = scopes_for(server)
         registered = store.read(registration)
-        return registered if registered
+        if registered && registered_for?(registered['scope'], scope)
+          return registered.slice('client_id', 'client_secret')
+        end
 
-        body = JSON.generate(
+        body = JSON.generate({
           client_name: @config.mcp_client_name, redirect_uris: [redirect_uri], response_types: ['code'],
           grant_types: %w[authorization_code refresh_token], token_endpoint_auth_method: 'none',
-          application_type: HTTP.loopback?(redirect_uri) ? 'native' : 'web'
-        )
+          application_type: HTTP.loopback?(redirect_uri) ? 'native' : 'web', scope:
+        }.compact)
         client = post(endpoint, body, 'Content-Type' => 'application/json').slice('client_id', 'client_secret')
-        store.write(registration, client, owner: nil)
+        store.write(registration, client.merge('scope' => scope).compact, owner: nil)
         client
+      end
+
+      def registered_for?(registered, requested)
+        (requested.to_s.split - registered.to_s.split).empty?
       end
 
       def registration_key(issuer, redirect_uri)

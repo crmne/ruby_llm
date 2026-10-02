@@ -75,6 +75,25 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(registration).to have_been_made
   end
 
+  it 'registers for the scopes it requests, and again when it needs more' do
+    linear.authorization_url(redirect_uri:)
+    url = linear_class.new(user: 'ada').authorization_url(redirect_uri:)
+    write_scope = server_url
+    writer = Class.new(RubyLLM::MCP) do
+      url write_scope
+      inputs :user
+      oauth owner: :user, scopes: ['issues:write']
+    end
+    writer.new(user: 'bob').authorization_url(redirect_uri:)
+
+    scopes = []
+    expect(a_request(:post, 'https://auth.example.com/register').with do |request|
+      scopes << JSON.parse(request.body)['scope']
+    end).to have_been_made.twice
+    expect(scopes).to eq(['issues:read', 'issues:write issues:read'])
+    expect(URI.decode_www_form(URI(url).query).to_h['client_id']).to eq('registered')
+  end
+
   it 'exchanges the code and uses the token' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 
