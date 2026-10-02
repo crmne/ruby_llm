@@ -33,14 +33,14 @@ permissions:
   discussions: write
   pull-requests: write
 
-concurrency:
-  group: >-
-    assessment-${{ github.event.discussion && 'discussion' || inputs.kind || 'issue' }}-${{ github.event.issue.number || github.event.discussion.number || github.event.pull_request.number || inputs.number }}-${{ github.event.discussion && (github.event.comment.parent_id || github.event.comment.id) || 'report' }}
-  cancel-in-progress: false
-
 jobs:
   assess:
     if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true' && (github.event.sender.type != 'Bot' || github.event_name == 'issues' || github.event_name == 'pull_request_review')
+    # On the job, so a bot comment's skipped run never replaces a queued one.
+    concurrency:
+      group: >-
+        assessment-${{ github.event.discussion && 'discussion' || inputs.kind || 'issue' }}-${{ github.event.issue.number || github.event.discussion.number || github.event.pull_request.number || inputs.number }}-${{ github.event.discussion && (github.event.comment.parent_id || github.event.comment.id) || 'report' }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
