@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
 * How to read a server's resources and ask with its prompts.
-* How to answer a server's requests for input, and follow its progress and logs.
+* How to answer a server's requests for input and follow its progress and logs.
 * How to keep up with servers whose tools and resources change.
 * How to declare protocol extensions, host MCP Apps, and follow long tasks.
 * How to authorize servers with OAuth.
@@ -464,7 +464,7 @@ Cancelling a chat also stops the server call it is waiting on, with no threads i
 
 A server's tools can change while you use it: a user connects another account, or the server adds tools when the model asks for them. Its resources change too, such as a file it serves.
 
-When a server says its tools changed, or answers a call with an error because the tool is gone, RubyLLM forgets the list it fetched, so the next turn of a chat lists them again. Servers that predate the 2026-07-28 revision may say so while they answer any request, and RubyLLM follows them with no setup. Newer servers only tell clients that listen.
+When a server says its tools changed, RubyLLM forgets the list it fetched, so the next turn of a chat lists them again. Servers that predate the 2026-07-28 revision may say so while they answer any request, and RubyLLM follows them with no setup. Newer servers only tell clients that listen. RubyLLM also forgets the list when a server answers a call with an error because the tool is gone.
 
 ### Reacting to Changes
 
@@ -496,7 +496,7 @@ Call `listen` to hear about changes as they happen, between requests too:
 handbook = Handbook.new.listen(resources: ["handbook://policies"])
 ```
 
-`listen` asks the server for every list it announces changes to, and for updates to the `resources` you pass, as URIs or as resources from `resources`. It returns once the server confirms, then listens in a thread of its own until you call `close`, while chats and requests go on as before. Calling `listen` again replaces the resources and tasks it listens to.
+`listen` asks the server for every list it announces changes to, for updates to the `resources` you pass, as URIs or as resources from `resources`, and for the status of the `tasks` you pass, as [Tasks](#tasks) describes. It returns once the server confirms, then listens in a thread of its own until you call `close`, while chats and requests go on as before. Calling `listen` again replaces the resources and tasks it listens to.
 
 A server that announces no changes leaves `listen` nothing to do. When the server cannot be reached, or will not send updates for a resource or task you pass, `listen` raises `RubyLLM::MCP::Error`.
 
@@ -563,7 +563,7 @@ Inline servers take `extensions:`, a name or a Hash of names to settings:
 RubyLLM.mcp(url: server.endpoint, extensions: { "com.example/audit" => { level: "full" } })
 ```
 
-RubyLLM implements the official extensions it knows by name. Declare those with a Symbol.
+RubyLLM implements the official extensions it knows by name. Declare those with a Symbol. It also declares the authorization extensions your [OAuth settings](#without-a-user) use.
 
 ### MCP Apps
 
@@ -613,7 +613,7 @@ class Weather::ViewsController < ApplicationController
 end
 ```
 
-Your page loads `html` into the sandbox, then sends the UI `input` and `result` as the spec's tool input and tool result notifications. `mcp_result` is `nil` for tools without a UI, whose results are only what the model saw, and for failed calls, whose content is `{ "error": ... }` as for any tool. New applications get the `mcp_result` column from `ruby_llm:install`; others add it with `bin/rails generate ruby_llm:upgrade`.
+Your page loads `html` into the sandbox, then sends the UI `input` and `result` as the spec's tool input and tool result notifications. `mcp_result` is `nil` for tools without a UI, whose results are only what the model saw, and for failed calls, whose content is `{ "error": ... }` as for any tool. New applications get the `mcp_result` column from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with `bin/rails generate ruby_llm:upgrade`.
 
 Some tools exist only for their UI, such as the one behind a refresh button. Their `visibility` leaves out `:model`: `tools` lists them, and you can call them, but chats never offer them to the model, even when you pass them to `with_tools`.
 
@@ -832,7 +832,7 @@ The document's `client_id` must be that exact URL, and its `redirect_uris` must 
 
 ## Connections and Safety
 
-RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, back to 2024-11-05, RubyLLM falls back to the older handshake and declares only your extensions, so those servers never send requests back. Should one ask anyway, RubyLLM answers right away that it doesn't support the request, so the call goes on. When such a server ends its session, or its process exits, RubyLLM starts a new session and sends the request again, and `close` ends the session. Connecting to a server that speaks none of these revisions raises `RubyLLM::MCP::Error`.
+RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, back to 2024-11-05, RubyLLM falls back to the older handshake and declares nothing but extensions, so those servers never send requests back. Should one ask anyway, RubyLLM answers right away that it doesn't support the request, so the call goes on. When such a server ends its session, or its process exits, RubyLLM starts a new session and sends the request again, and `close` ends the session. Connecting to a server that speaks none of these revisions raises `RubyLLM::MCP::Error`.
 
 A response stream can break before the answer arrives, such as when a proxy drops a long call. RubyLLM then sends the request again, as the 2026-07-28 revision requires. Older servers can resume the stream instead: RubyLLM waits as long as the server asks and reconnects from the last event it received. Either way it tries three times at most, then raises `RubyLLM::MCP::Error`.
 

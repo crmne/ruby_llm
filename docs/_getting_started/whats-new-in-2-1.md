@@ -93,7 +93,7 @@ docs.microsoft_docs_search(query: "Azure Blob Storage").text
 
 You decide what the model sees. Rename and redescribe tools, fix arguments the model should not choose, pass results through your own method, or build higher-level tools from the server's primitives with a regular `RubyLLM::Tool`. Resources work as attachments, prompts work with `ask`, and a server's requests for input pause the chat the way tool approvals do, surviving restarts in Rails.
 
-Servers change while you use them. When a server says its tools changed, the next turn of a chat sees the new list. Call `listen` to hear about changes as they happen, including updates to the resources you care about, and react with `after_change`:
+Servers change while you use them. When a server says its tools changed, the next turn of a chat sees the new list. Call `listen` to hear about changes as they happen, including updates to the resources and tasks you care about, and react with `after_change`:
 
 ```ruby
 class Handbook < RubyLLM::MCP
