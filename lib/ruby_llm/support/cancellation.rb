@@ -8,6 +8,7 @@ module RubyLLM
     # the chat has been cancelled.
     module Cancellation # :nodoc:
       KEY = :ruby_llm_cancellation_checkpoint
+      CHECK_INTERVAL = 0.1
 
       module_function
 
@@ -21,6 +22,17 @@ module RubyLLM
 
       def check
         Thread.current[KEY]&.call
+      end
+
+      def pause(seconds)
+        deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + seconds
+        loop do
+          check
+          remaining = deadline - Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          break unless remaining.positive?
+
+          sleep [remaining, CHECK_INTERVAL].min
+        end
       end
     end
   end

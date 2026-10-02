@@ -215,7 +215,8 @@ module RubyLLM
           'MCP-Protocol-Version' => version,
           'Mcp-Session-Id' => session,
           'Mcp-Method' => message[:method],
-          'Mcp-Name' => header_value(message.dig(:params, :name) || message.dig(:params, :uri))
+          'Mcp-Name' => header_value(message.dig(:params, :name) || message.dig(:params, :uri) ||
+                                     message.dig(:params, :taskId))
         }.compact.merge(custom_headers)
       end
 

@@ -748,6 +748,104 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'tasks' do
+    let(:mcp_class) do
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        extension :tasks
+      end
+    end
+
+    def tool(name) = mcp.tools.find { |tool| tool.name == name }
+    def server_tasks = mcp.send(:client).request('spec/tasks')
+
+    it 'declares the tasks extension' do
+      capabilities = mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities')
+
+      expect(capabilities['extensions']).to eq('io.modelcontextprotocol/tasks' => {})
+    end
+
+    it 'hands a chat the task a tool call becomes' do
+      task = tool('report').call
+
+      expect(task).to be_a(RubyLLM::MCP::Task)
+      expect(task).to have_attributes(id: 'task-1', status: :working, status_message: 'Queued', poll_interval: 0.01,
+                                      expires_at: Time.utc(2026, 10, 2, 10, 1), result: nil)
+      expect(task).not_to be_done
+    end
+
+    it 'checks on a task once each time you refresh it' do
+      task = tool('report').call
+
+      expect(task.refresh).to have_attributes(status: :working, status_message: 'Rendering')
+      expect(task.refresh).to be_completed
+      expect(task.result).to have_attributes(text: 'Report ready', structured: { 'pages' => 2 })
+      expect(task.refresh).to be_done
+      expect(server_tasks['polls']).to eq('task-1' => 2)
+    end
+
+    it 'waits for a task' do
+      expect(tool('report').call.wait.result.text).to eq('Report ready')
+    end
+
+    it 'waits for the task of a tool you call directly' do
+      expect(mcp.call(:report)).to have_attributes(text: 'Report ready', structured: { 'pages' => 2 })
+    end
+
+    it 'reports what a task is doing as progress' do
+      messages = []
+      mcp_class.after_progress { |progress| messages << progress.message }
+
+      mcp.call(:report)
+
+      expect(messages).to eq(['Rendering'])
+    end
+
+    it 'raises the error a task failed with' do
+      expect { mcp.call(:broken_report) }.to raise_error(RubyLLM::MCP::Error, 'Renderer crashed') do |error|
+        expect(error.code).to eq(-32_603)
+      end
+      expect(tool('broken_report').call.refresh).to be_failed
+    end
+
+    it 'answers the input requests of a task with callbacks' do
+      mcp_class.before_input_request { |request| request.answer(approved: true) }
+
+      expect(mcp.call(:approve_report).text).to eq('Approved: true')
+    end
+
+    it 'raises when no callback answers the input requests of a task' do
+      expect { mcp.call(:approve_report) }.to raise_error(RubyLLM::MCP::InputRequiredError, /Publish the report/)
+    end
+
+    it 'cancels a task' do
+      task = tool('endless_report').call
+
+      expect(task.cancel).to be(task)
+      expect(server_tasks['cancelled']).to eq([task.id])
+      expect(task.refresh).to be_cancelled
+    end
+
+    it 'stops waiting for a task after the timeout and leaves it to you' do
+      task = tool('endless_report').call
+
+      expect do
+        task.wait(timeout: 0.05)
+      end.to raise_error(RubyLLM::MCP::Error, 'Task task-1 did not finish in 0.05 seconds')
+      expect(server_tasks['cancelled']).to be_empty
+    end
+
+    it 'cancels the task of a direct call when the chat is cancelled' do
+      checks = 0
+      checkpoint = -> { raise RubyLLM::CancelledError if (checks += 1) == 5 }
+
+      expect { RubyLLM::Support::Cancellation.watch(checkpoint) { mcp.call(:endless_report) } }
+        .to raise_error(RubyLLM::CancelledError)
+      expect(server_tasks['cancelled']).to eq(['task-1'])
+    end
+  end
+
   describe 'cancellation' do
     it 'stops waiting and tells the server when the chat is cancelled' do
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)

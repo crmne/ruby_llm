@@ -480,6 +480,19 @@ module RubyLLM
       # Delegates to Chat#pending_inputs. Requests persist on their tool
       # calls, so they survive restarts.
 
+      ##
+      # :method: awaiting_tasks?
+      # :call-seq: awaiting_tasks?
+      #
+      # Delegates to Chat#awaiting_tasks?. See that method for arguments and return values.
+
+      ##
+      # :method: pending_tasks
+      # :call-seq: pending_tasks
+      #
+      # Delegates to Chat#pending_tasks. Tasks persist on their tool calls,
+      # so any process can check on them and resume the chat.
+
       CHAINABLE_CHAT_DELEGATES.each do |name|
         define_method(name) do |*args, **kwargs, &block|
           to_llm.public_send(name, *args, **kwargs, &block)
@@ -494,7 +507,7 @@ module RubyLLM
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
         schema provider_tools temperature thinking tool_options tools mcp awaiting_input? pending_inputs
-        add_completion count_tokens each render
+        awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 
       ##

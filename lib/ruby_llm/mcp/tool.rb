@@ -91,16 +91,24 @@ module RubyLLM
 
       # Calls the tool on the server and returns its MCP::Result, or what
       # the +wrap:+ method made of a result that did not fail. A chat sends
-      # the model the result's content. Raises MCP::InputRequiredError when
-      # the server needs input that no MCP.before_input_request callback
-      # gave.
+      # the model the result's content. When the server runs the call as a
+      # task, returns the MCP::Task without waiting, and a chat pauses the
+      # tool call until the task is done. Raises MCP::InputRequiredError
+      # when the server needs input that no MCP.before_input_request
+      # callback gave.
       def call(**arguments)
         @mcp.run(self, arguments.except(:tool_call))
       end
 
-      # Resumes a call that paused on input requests, now answered.
+      # Resumes a call that paused on input requests, now answered, or on a
+      # task, which it checks on once.
       def resume(input, arguments) # :nodoc:
         @mcp.run(self, arguments, input:)
+      end
+
+      # Returns the MCP::Task a call paused on, from its saved state.
+      def task(state, tool_call: nil) # :nodoc:
+        Task.load(@mcp, state, tool_call:)
       end
 
       private

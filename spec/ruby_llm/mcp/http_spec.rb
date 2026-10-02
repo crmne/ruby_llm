@@ -45,6 +45,16 @@ RSpec.describe RubyLLM::MCP::HTTP do
     ).to have_been_made
   end
 
+  it 'names the task in the Mcp-Name header of task requests' do
+    stub_method('server/discover', result: discover_result)
+    stub_method('tasks/get', result: { resultType: 'complete', taskId: 'task-1', status: 'working' })
+
+    client.request('tasks/get', { taskId: 'task-1' })
+
+    expect(a_request(:post, url).with(headers: { 'Mcp-Method' => 'tasks/get', 'Mcp-Name' => 'task-1' }))
+      .to have_been_made
+  end
+
   it 'sends mirrored tool arguments as Mcp-Param headers' do
     stub_method('server/discover', result: discover_result)
     stub_method('tools/call', result: { content: [] })

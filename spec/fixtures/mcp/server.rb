@@ -108,6 +108,59 @@ CONNECT_URL = {
   params: { mode: 'url', message: 'Connect your account', url: 'https://example.com/connect' }
 }.freeze
 
+TASKS = 'io.modelcontextprotocol/tasks'
+
+TASK_TOOLS = %w[report approve_report broken_report endless_report].map do |name|
+  { name:, description: "Runs #{name.tr('_', ' ')} in the background", inputSchema: { type: 'object' } }
+end.freeze
+
+CONFIRM_FORM = {
+  method: 'elicitation/create',
+  params: {
+    mode: 'form', message: 'Publish the report?',
+    requestedSchema: { type: 'object', properties: { approved: { type: 'boolean' } }, required: ['approved'] }
+  }
+}.freeze
+
+def task_state(id, status, **fields)
+  { taskId: id, status:, createdAt: '2026-10-02T10:00:00Z', lastUpdatedAt: '2026-10-02T10:00:00Z',
+    ttlMs: 60_000, pollIntervalMs: 10 }.merge(fields)
+end
+
+def create_task(tasks, name)
+  id = "task-#{tasks.size + 1}"
+  tasks[id] = { tool: name, polls: 0, answers: {} }
+  task_state(id, 'working', statusMessage: 'Queued').merge(resultType: 'task')
+end
+
+def report_state(task, id)
+  return task_state(id, 'working', statusMessage: 'Rendering') if task[:polls] < 2
+
+  task_state(id, 'completed', result: { content: [{ type: 'text', text: 'Report ready' }],
+                                        structuredContent: { pages: 2 } })
+end
+
+def approval_state(task, id)
+  answer = task[:answers]['confirm']
+  return task_state(id, 'input_required', inputRequests: { 'confirm' => CONFIRM_FORM }) unless answer
+
+  text = "Approved: #{answer.dig('content', 'approved')}"
+  task_state(id, 'completed', result: { content: [{ type: 'text', text: }] })
+end
+
+def poll_task(task, id)
+  task[:polls] += 1
+  return task_state(id, 'cancelled', statusMessage: 'Cancelled by the client') if task[:cancelled]
+
+  case task[:tool]
+  when 'report' then report_state(task, id)
+  when 'approve_report' then approval_state(task, id)
+  when 'broken_report'
+    task_state(id, 'failed', statusMessage: 'Renderer crashed', error: { code: -32_603, message: 'Renderer crashed' })
+  else task_state(id, 'working', statusMessage: 'Still rendering')
+  end
+end
+
 def input_required(key, request)
   { resultType: 'input_required', inputRequests: { key => request }, requestState: "#{key}-state" }
 end
@@ -149,7 +202,7 @@ end
 def tools_page(cursor, tools, extensions)
   return { tools: tools.take(2), nextCursor: 'page-2' } unless cursor
 
-  { tools: tools.drop(2) + (extensions.key?(UI) ? UI_TOOLS : []) }
+  { tools: tools.drop(2) + (extensions.key?(UI) ? UI_TOOLS : []) + (extensions.key?(TASKS) ? TASK_TOOLS : []) }
 end
 
 def forecast(arguments)
@@ -185,6 +238,7 @@ tools = TOOLS.dup
 subscriptions = {}
 watched = []
 handshake_extensions = {}
+tasks = {}
 
 def notify(method, params)
   puts JSON.generate({ jsonrpc: '2.0', method:, params: })
@@ -289,12 +343,27 @@ $stdin.each_line do |line|
       if token
         [1, 2].each { |step| notify('notifications/progress', { progressToken: token, progress: step, total: 2 }) }
       end
+    when *TASK_TOOLS.map { |tool| tool[:name] } then next reply(id, result: create_task(tasks, params['name']))
     end
     reply(id, result: call_tool(params))
+  when 'tasks/get'
+    task = tasks[params['taskId']]
+    next reply(id, error: { code: -32_602, message: 'Task not found' }) unless task
+
+    reply(id, result: poll_task(task, params['taskId']).merge(resultType: 'complete'))
+  when 'tasks/update'
+    tasks.fetch(params['taskId'])[:answers].merge!(params['inputResponses'])
+    reply(id, result: { resultType: 'complete' })
+  when 'tasks/cancel'
+    tasks.fetch(params['taskId'])[:cancelled] = true
+    reply(id, result: { resultType: 'complete' })
   when 'notifications/cancelled'
     subscriptions.delete(params['requestId'])
     cancelled << params['requestId']
   when 'spec/cancelled' then reply(id, result: { cancelled: })
+  when 'spec/tasks'
+    reply(id, result: { cancelled: tasks.select { |_, task| task[:cancelled] }.keys,
+                        polls: tasks.transform_values { |task| task[:polls] } })
   when 'spec/stall' then $stdout.write('{"jsonrpc":')
   when 'resources/list'
     resources = RESOURCES.map do |uri, resource|

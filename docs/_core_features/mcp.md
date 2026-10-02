@@ -20,7 +20,7 @@ After reading this guide, you will know:
 * How to read a server's resources and ask with its prompts.
 * How to answer a server's requests for input and follow its progress.
 * How to keep up with servers whose tools and resources change.
-* How to declare protocol extensions and host MCP Apps.
+* How to declare protocol extensions, host MCP Apps, and follow long tasks.
 * How to authorize servers with OAuth.
 * How RubyLLM talks to servers and keeps connections safe.
 
@@ -622,6 +622,56 @@ end
 ```
 
 `call` returns the whole result, and `to_h` is the result as the server sent it, content, structured content, and `_meta` included, which is what the UI expects.
+
+### Tasks
+
+Some tools take minutes, such as rendering a report or running a deploy. With the [Tasks extension](https://modelcontextprotocol.io/extensions/tasks/overview), a server answers such a call with a task and does the work in the background. Declare `:tasks`:
+
+```ruby
+class Reports < RubyLLM::MCP
+  url "https://reports.example.com/mcp"
+  extension :tasks
+end
+```
+
+A chat never waits for a task. The tool call pauses, the way [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval) and [input requests](#input-requests) do, and `complete` returns:
+
+```ruby
+chat = RubyLLM.chat.with_mcp(Reports)
+chat.ask "Render the quarterly report"
+
+chat.awaiting_tasks? # => true
+task = chat.pending_tasks.first
+task.status          # => :working
+task.status_message  # => "Rendering page 3 of 12"
+task.poll_interval   # => 5.0
+```
+
+Call `complete` again later. It checks on each task once, without waiting, and resumes the chat when they're done, so the model sees their results. In Rails, the task persists on its tool call, so one job can pause the chat and another can check on it, even after a deploy. Schedule the next check from the task's poll interval:
+
+```ruby
+class CheckTasksJob < ApplicationJob
+  def perform(chat_id)
+    chat = ReportsAgent.find(chat_id)
+    chat.complete
+    return unless chat.awaiting_tasks?
+
+    wait = chat.pending_tasks.filter_map(&:poll_interval).min || 5
+    CheckTasksJob.set(wait: wait.seconds).perform_later(chat_id)
+  end
+end
+```
+
+`refresh` checks on a task without resuming the chat, which suits a progress indicator. `done?`, `completed?`, `failed?`, and `cancelled?` tell where it stands, `result` is its `RubyLLM::MCP::Result` once it completes, and `expires_at` is when the server may forget it. Every check also reports the task's status message to `after_progress` and `after_tool_progress`.
+
+A task that needs input pauses the chat on [input requests](#input-requests): answer them and call `complete`. A task that fails raises `RubyLLM::MCP::Error` from `complete`. Cancelling the chat cancels its tasks the next time it runs, so after `chat.cancel`, or the persisted flag on a Rails record, `complete` cancels them and raises `RubyLLM::CancelledError`. `task.cancel` asks the server right away; the server may still finish the task.
+
+Outside a chat, `call` waits for the task of a tool you call directly, and `wait` waits for any task, both up to the server's `timeout`:
+
+```ruby
+reports.render_report(quarter: "Q3").text
+task.wait.result
+```
 
 ## Authorization
 

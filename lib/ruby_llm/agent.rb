@@ -85,7 +85,7 @@ module RubyLLM
       model provider messages tools mcp provider_tools tool_options provider_options headers schema concurrency
       caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
       each complete? cancelled? awaiting_approval? pending_approvals awaiting_input? pending_inputs
-      add_message add_completion tokens cost render
+      awaiting_tasks? pending_tasks add_message add_completion tokens cost render
     ].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
@@ -1294,6 +1294,18 @@ module RubyLLM
     # :call-seq: pending_inputs()
     #
     # Delegates to Chat#pending_inputs. See that method for arguments and return values.
+
+    ##
+    # :method: awaiting_tasks?
+    # :call-seq: awaiting_tasks?()
+    #
+    # Delegates to Chat#awaiting_tasks?. See that method for arguments and return values.
+
+    ##
+    # :method: pending_tasks
+    # :call-seq: pending_tasks()
+    #
+    # Delegates to Chat#pending_tasks. See that method for arguments and return values.
 
     ##
     # :method: add_message

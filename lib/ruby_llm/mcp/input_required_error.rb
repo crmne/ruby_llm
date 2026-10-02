@@ -22,7 +22,7 @@ module RubyLLM
       # Returns everything needed to answer the requests later and resume
       # the call, as a Hash that serializes to JSON.
       def to_h # :nodoc:
-        { 'requests' => @input['requests'].map(&:to_h), 'request_state' => @input['request_state'] }.compact
+        @input.merge('requests' => @input['requests'].map(&:to_h)).compact
       end
     end
   end

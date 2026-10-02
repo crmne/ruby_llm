@@ -217,6 +217,99 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'tasks' do
+    before { files_class.extension :tasks }
+
+    def server_tasks = files.send(:client).request('spec/tasks')
+
+    def run_task(name)
+      allow(chat.provider).to receive(:complete).and_return(tool_call(name, {}), answer)
+      chat.with_mcp(files).ask('Run it')
+    end
+
+    it 'pauses a tool call that becomes a task, without waiting for it' do
+      run_task('report')
+
+      expect(chat).to be_awaiting_tasks
+      expect(chat).not_to be_complete
+      expect(chat.pending_tasks.first).to have_attributes(id: 'task-1', status: :working, poll_interval: 0.01,
+                                                          tool_call: have_attributes(name: 'report'))
+      expect(server_tasks['polls']).to eq('task-1' => 0)
+    end
+
+    it 'checks on each task once every time it completes, and resumes once they finish' do
+      run_task('report')
+
+      chat.complete
+      expect(chat).to be_awaiting_tasks
+      expect(chat.pending_tasks.first).to have_attributes(status: :working, status_message: 'Rendering')
+
+      chat.complete
+      expect(chat).to be_complete
+      expect(chat).not_to be_awaiting_tasks
+      expect(chat.messages.find(&:tool_result?).content).to eq('Report ready')
+      expect(server_tasks['polls']).to eq('task-1' => 2)
+    end
+
+    it 'checks on a task without resuming the chat' do
+      run_task('report')
+
+      task = chat.pending_tasks.first.refresh.refresh
+
+      expect(task).to be_completed
+      expect(chat).to be_awaiting_tasks
+      expect(chat.complete.content).to eq('Done')
+    end
+
+    it 'reports what a task is doing to after_tool_progress' do
+      reports = []
+      run_task('report')
+
+      chat.after_tool_progress { |call, progress| reports << [call.name, progress.message] }.complete
+
+      expect(reports).to eq([%w[report Rendering]])
+    end
+
+    it 'pauses on the input requests of a task until the user answers' do
+      run_task('approve_report')
+      chat.complete
+
+      expect(chat).to be_awaiting_input
+      expect(chat).not_to be_awaiting_tasks
+      request = chat.pending_inputs.first
+      expect(request).to have_attributes(message: 'Publish the report?',
+                                         tool_call: have_attributes(name: 'approve_report'))
+
+      chat.answer(request, approved: true).complete
+
+      expect(chat).to be_complete
+      expect(chat.messages.find(&:tool_result?).content).to eq('Approved: true')
+    end
+
+    it 'cancels its tasks when the chat is cancelled' do
+      run_task('endless_report')
+      task = chat.pending_tasks.first
+
+      chat.cancel
+      expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+
+      expect(server_tasks['cancelled']).to eq([task.id])
+      expect(chat).not_to be_awaiting_tasks
+    end
+
+    it 'raises the error a task failed with' do
+      run_task('broken_report')
+
+      expect { chat.complete }.to raise_error(RubyLLM::MCP::Error, 'Renderer crashed')
+    end
+
+    it 'refuses a new question while a task runs' do
+      run_task('report')
+
+      expect { chat.ask('Anything else?') }.to raise_error(RubyLLM::PendingToolCallsError, /waiting for tasks/)
+    end
+  end
+
   it 'refuses two tools with the same name' do
     echo = Class.new(RubyLLM::Tool) do
       def self.tool_name = 'echo'
