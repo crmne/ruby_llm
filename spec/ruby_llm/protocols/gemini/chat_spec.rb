@@ -249,14 +249,47 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
-  describe '#build_thought_part' do
-    it 'omits the fields the provider did not send' do
-      expect(test_obj.send(:build_thought_part, RubyLLM::Thinking.new(text: 'why'))).to eq(
-        thought: true, text: 'why'
-      )
-      expect(test_obj.send(:build_thought_part, RubyLLM::Thinking.new(signature: 'sig'))).to eq(
-        thought: true, thoughtSignature: 'sig'
-      )
+  describe 'replaying an answer' do
+    let(:protocol) { RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config)) }
+    let(:data_fields) { %i[text inline_data file_data functionCall functionResponse] }
+
+    def answer(content, thinking)
+      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'gemini', model: model_for(:gemini),
+                                                    status: :succeeded)
+      RubyLLM::Message.new(role: :assistant, content:, thinking:, usage_entries: [usage])
+    end
+
+    def replay(message)
+      protocol.send(:format_parts, message)
+    end
+
+    it 'sends a signature without thinking text back on the answer part' do
+      parts = replay(answer('Done.', RubyLLM::Thinking.build(text: nil, signature: 'sig')))
+
+      expect(parts).to all(satisfy { |part| part.keys.intersect?(data_fields) })
+      expect(parts).to eq([{ text: 'Done.', thoughtSignature: 'sig' }])
+    end
+
+    it 'keeps the thought summary unsigned ahead of the signed answer' do
+      parts = replay(answer('Done.', RubyLLM::Thinking.build(text: 'Adding.', signature: 'sig')))
+
+      expect(parts).to eq([{ thought: true, text: 'Adding.' }, { text: 'Done.', thoughtSignature: 'sig' }])
+    end
+
+    it 'carries the signature of an answer without content in an empty text part' do
+      parts = replay(answer(nil, RubyLLM::Thinking.build(signature: 'sig')))
+
+      expect(parts).to eq([{ text: '', thoughtSignature: 'sig' }])
+    end
+
+    it 'sends an answer back with its parts as Gemini returned them' do
+      parts = [{ 'text' => 'Adding.', 'thought' => true }, { 'text' => '5 + 3 = 8', 'thoughtSignature' => 'sig' }]
+      parsed = protocol.send(:parse_completion_body, { 'candidates' => [{ 'content' => { 'parts' => parts } }] },
+                             raw: nil)
+
+      replayed = replay(answer(parsed.content, parsed.thinking))
+
+      expect(JSON.parse(JSON.generate(replayed))).to eq(parts)
     end
   end
 

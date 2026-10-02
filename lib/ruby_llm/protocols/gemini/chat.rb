@@ -167,19 +167,19 @@ module RubyLLM
         end
 
         def format_message_parts(msg)
-          parts = []
+          parts = Media.format_content(msg.content, msg.attachments)
+          thinking = msg.thinking if msg.role == :assistant
+          return parts unless thinking
 
-          parts << build_thought_part(msg.thinking) if msg.role == :assistant && msg.thinking
-
-          parts.concat(Media.format_content(msg.content, msg.attachments))
-          parts
+          parts = sign_last_part(parts, thinking.signature) if thinking.signature
+          thinking.text ? [{ thought: true, text: thinking.text }, *parts] : parts
         end
 
-        def build_thought_part(thinking)
-          part = { thought: true }
-          part[:text] = thinking.text if thinking.text
-          part[:thoughtSignature] = thinking.signature if thinking.signature
-          part
+        # Gemini signs the last part of an answer. An answer without parts gets
+        # the empty text part a stream ends with: Gemini refuses a part without data.
+        def sign_last_part(parts, signature)
+          parts = [Media.format_text('')] if parts.empty?
+          [*parts[...-1], parts.last.merge(thoughtSignature: signature)]
         end
 
         def parse_completion_body(data, raw:)
