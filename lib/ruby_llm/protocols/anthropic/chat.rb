@@ -480,7 +480,10 @@ module RubyLLM
 
         def build_thinking_payload(thinking, model, max_tokens)
           return nil unless thinking&.enabled?
-          return { thinking: { type: thinking_off_type(model) } } if thinking.enabled == false
+          if thinking.enabled == false
+            reject_invalid_between_tools_effort!(thinking, model)
+            return { thinking: { type: thinking_off_type(model) } }
+          end
 
           effort = resolve_effort(thinking)
           return nil if effort == 'none'
@@ -530,6 +533,19 @@ module RubyLLM
 
         def thinking_off_type(model)
           between_tools_off_model?(model.id) ? 'between_tools' : 'disabled'
+        end
+
+        # between_tools is Sonnet 5.5's off switch, but Anthropic rejects it at
+        # xhigh/max effort. Raise locally the way other invalid thinking combos do.
+        def reject_invalid_between_tools_effort!(thinking, model)
+          return unless between_tools_off_model?(model.id)
+
+          effort = resolve_effort(thinking)
+          return unless %w[xhigh max].include?(effort)
+
+          raise ArgumentError,
+                "Claude Sonnet 5.5 rejects between_tools thinking at effort #{effort.inspect}. " \
+                'Use :low, :medium, or :high, or omit effort with with_thinking(false).'
         end
 
         def resolve_effort(thinking)

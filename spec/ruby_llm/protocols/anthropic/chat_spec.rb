@@ -603,6 +603,19 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(thinking.enabled).to be(false)
       expect(payload[:thinking]).to eq(type: 'between_tools')
     end
+
+    %i[xhigh max].each do |effort|
+      it "rejects between_tools with #{effort} effort on Sonnet 5.5" do
+        expect do
+          render_payload(
+            model_id: 'claude-sonnet-5-5',
+            thinking: RubyLLM::Thinking::Config.new(enabled: false, effort: effort),
+            reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+          )
+        end.to raise_error(ArgumentError, /between_tools thinking at effort "#{effort}"/)
+      end
+    end
+
   end
 
   describe '#parse_completion_response' do
