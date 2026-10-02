@@ -213,7 +213,8 @@ module RubyLLM
       # or a server-sent event stream; the first character tells them apart.
       # An event stream stops being read once it carries the answer to
       # request +id+, since servers may keep it open, and one that breaks
-      # midway counts as ended.
+      # midway counts as ended. Faraday 2 passes the response headers with
+      # each chunk; Faraday 1 has them only once the response ends.
       class Stream # :nodoc:
         attr_reader :id, :headers
 
@@ -231,8 +232,8 @@ module RubyLLM
           request.options.on_data = method(:feed).to_proc
         end
 
-        def read(&)
-          catch(self, &)
+        def read
+          catch(self) { @headers = yield.headers }
           self
         rescue Faraday::ConnectionFailed
           raise unless events?

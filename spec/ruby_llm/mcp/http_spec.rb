@@ -193,6 +193,21 @@ RSpec.describe RubyLLM::MCP::HTTP do
       client.request('tools/list')
       expect(initializations).to have_been_made.twice
     end
+
+    it 'keeps the session when the adapter passes no response to on_data, as Faraday 1 does' do
+      adapter = Class.new(Faraday::Adapter::NetHttp) do
+        def call(env)
+          on_data = env.request.on_data
+          env.request.on_data = ->(chunk, size, _env = nil) { on_data.call(chunk, size) }
+          super
+        end
+      end
+      config = RubyLLM.config.dup.tap { |copy| copy.faraday_adapter = adapter }
+
+      RubyLLM::MCP::Client.new(described_class.new(url, config:)).request('tools/list')
+
+      expect(a_request(:post, url).with(headers: { 'Mcp-Session-Id' => 'session-1' })).to have_been_made.twice
+    end
   end
 
   describe 'streams that end before the answer' do
