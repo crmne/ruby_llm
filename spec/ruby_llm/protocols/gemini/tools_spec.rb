@@ -50,16 +50,18 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
     end
 
     it 'replays a signature only on the parallel call Gemini signed' do
-      parts = [
-        { 'functionCall' => { 'name' => 'weather', 'args' => { 'city' => 'Zurich' } }, 'thoughtSignature' => 'sig' },
-        { 'functionCall' => { 'name' => 'time', 'args' => { 'city' => 'Zurich' } } }
-      ]
-      body = { 'candidates' => [{ 'content' => { 'role' => 'model', 'parts' => parts } }] }
-      model = instance_double(RubyLLM::Model, id: 'gemini-3.5-flash')
-      protocol = RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config), model)
-      message = protocol.send(:parse_completion_body, body, raw: nil)
+      tool_calls = {
+        'a' => RubyLLM::ToolCall.new(id: 'a', name: 'weather', arguments: { 'city' => 'Zurich' },
+                                     thought_signature: 'sig'),
+        'b' => RubyLLM::ToolCall.new(id: 'b', name: 'time', arguments: { 'city' => 'Zurich' })
+      }
+      # thinking.signature mirrors what extract_thought_signature would have pulled off call
+      # 'a' as the message-level fallback, which is the shape the duplicate-signature bug needs:
+      # a fallback equal to a signature a tool call already carries.
+      message = RubyLLM::Message.new(role: :assistant, content: '', tool_calls:,
+                                     thinking: RubyLLM::Thinking.new(signature: 'sig'))
 
-      result = protocol.send(:format_tool_call, message)
+      result = test_obj.format_tool_call(message)
 
       expect(result.map { |part| part[:thoughtSignature] }).to eq(['sig', nil])
     end
