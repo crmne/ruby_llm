@@ -82,15 +82,17 @@ RSpec.describe RubyLLM::MCP::Client do
   describe 'protocol versions' do
     let(:fake_server) do
       Class.new do
-        attr_reader :sent
+        attr_reader :sent, :params
 
         def initialize(&answer)
           @answer = answer
           @sent = []
+          @params = {}
         end
 
         def request(message, **)
           @sent << message[:method]
+          @params[message[:method]] = message[:params]
           reply = @answer.call(message[:method], @sent.count(message[:method]))
           { 'jsonrpc' => '2.0', 'id' => message[:id] }.merge(reply)
         end
@@ -152,6 +154,15 @@ RSpec.describe RubyLLM::MCP::Client do
 
         expect(mcp_client.version).to eq(version)
       end
+    end
+
+    it 'declares only its extensions in the handshake' do
+      server = legacy('2025-06-18')
+      capabilities = { elicitation: { form: {} }, extensions: { 'com.example/audit' => {} } }
+
+      described_class.new(server, capabilities:).server
+
+      expect(server.params['initialize'][:capabilities]).to eq(extensions: { 'com.example/audit' => {} })
     end
 
     it 'disconnects from a server that answers the handshake with a version it does not speak' do

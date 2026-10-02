@@ -38,7 +38,7 @@ module RubyLLM
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
-      @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests
+      @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests @extensions
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS
 
@@ -370,6 +370,29 @@ module RubyLLM
         add_callback(:before_input_request, method, block)
       end
 
+      # Declares an extension to the protocol that your app supports, so
+      # servers can use it. +settings+ belong to the extension and go to
+      # the server as written. Extensions are named with a vendor prefix.
+      #
+      #   extension "com.example/audit", level: "full"
+      #
+      # RubyLLM declares extensions in the capabilities of every request,
+      # and when it connects to a server that predates 2026-07-28.
+      #
+      # Raises ArgumentError for a name without a vendor prefix.
+      def extension(name, **settings)
+        name = name.to_s
+        unless name.include?('/')
+          raise ArgumentError, "MCP extensions are named with a vendor prefix, such as com.example/#{name}"
+        end
+
+        @extensions = extensions.merge(name => settings.transform_keys(&:to_s))
+      end
+
+      def extensions # :nodoc:
+        @extensions || {}
+      end
+
       def callbacks(name) # :nodoc:
         (@callbacks || {}).fetch(name, [])
       end
@@ -382,12 +405,13 @@ module RubyLLM
       end
 
       # Builds an anonymous MCP class from keywords, as RubyLLM.mcp does.
-      def define(name: nil, headers: {}, env: {}, oauth: nil, **settings) # :nodoc:
+      def define(name: nil, headers: {}, env: {}, oauth: nil, extensions: nil, **settings) # :nodoc:
         check_inline_settings(name, settings)
 
         Class.new(self) do
           settings.each { |setting, value| public_send(setting, value) unless value.nil? }
           headers.each { |header_name, value| header(header_name, value) }
+          Array(extensions).each { |extension_name, options| extension(extension_name, **options.to_h) }
           env(**env)
           oauth(**(oauth == true ? {} : oauth)) if oauth
           self.default_name = name if name
@@ -787,7 +811,9 @@ module RubyLLM
 
     def capabilities
       kinds = self.class.input_requests
-      kinds.empty? ? {} : { elicitation: kinds.to_h { |kind| [kind, {}] } }
+      extensions = self.class.extensions
+      capabilities = kinds.empty? ? {} : { elicitation: kinds.to_h { |kind| [kind, {}] } }
+      extensions.empty? ? capabilities : capabilities.merge(extensions:)
     end
 
     def transport

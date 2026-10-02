@@ -4,7 +4,7 @@ module RubyLLM
   class MCP
     # Speaks JSON-RPC to one MCP server over a transport. It speaks the
     # 2026-07-28 revision and falls back to the initialize handshake for
-    # servers that predate it, declaring no client capabilities so those
+    # servers that predate it, declaring only its extensions so those
     # servers never call back. A server that rejects 2026-07-28 while
     # listing it gets the request once more; one that answers the handshake
     # with a revision missing from LEGACY_VERSIONS is disconnected.
@@ -105,7 +105,8 @@ module RubyLLM
 
       def handshake
         @version = nil
-        params = { protocolVersion: LEGACY_VERSIONS.first, capabilities: {}, clientInfo: client_info }
+        params = { protocolVersion: LEGACY_VERSIONS.first, capabilities: @capabilities.slice(:extensions),
+                   clientInfo: client_info }
         result = call('initialize', params)
         unless LEGACY_VERSIONS.include?(result['protocolVersion'])
           @transport.close

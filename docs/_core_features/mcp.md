@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How to read a server's resources and ask with its prompts.
 * How to answer a server's requests for input and follow its progress.
 * How to keep up with servers whose tools and resources change.
+* How to declare the protocol extensions your app supports.
 * How to authorize servers with OAuth.
 * How RubyLLM talks to servers and keeps connections safe.
 
@@ -110,7 +111,7 @@ docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
 files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
 ```
 
-It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `input_requests:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
+It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `input_requests:`, `extensions:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
 
 ```ruby
 RubyLLM.mcp(url: server.endpoint, name: "mcp_#{server.id}", prefix: "mcp_#{server.id}",
@@ -531,6 +532,25 @@ end
 
 A forked process does not inherit the listener's thread. If forked workers should listen too, call `listen` after forking, such as in Puma's `on_worker_boot`.
 
+## Extensions
+
+Extensions add features to the protocol that a client and a server both opt into. Declare the ones your app supports with `extension`, the extension's name and its settings:
+
+```ruby
+class Deploys < RubyLLM::MCP
+  url "https://deploys.example.com/mcp"
+  extension "com.example/audit", level: "full"
+end
+```
+
+An extension's name starts with its vendor's prefix, and its settings belong to the extension, so they go to the server as you write them. RubyLLM declares your extensions with every request, and in the handshake with servers that predate 2026-07-28. A server that doesn't know an extension ignores it.
+
+Inline servers take `extensions:`, a name or a Hash of names to settings:
+
+```ruby
+RubyLLM.mcp(url: server.endpoint, extensions: { "com.example/audit" => { level: "full" } })
+```
+
 ## Authorization
 
 A server that belongs to a service your app already signs users into can take that token with `bearer_token`. For everything else, MCP servers use OAuth, and RubyLLM runs it for you:
@@ -665,7 +685,7 @@ The document's `client_id` must be that exact URL, and its `redirect_uris` must 
 
 ## Connections and Safety
 
-RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, back to 2024-11-05, RubyLLM falls back to the older handshake without declaring client capabilities, so those servers never send requests back. When such a server ends its session, RubyLLM starts a new one and sends the request again, and `close` ends the session. Connecting to a server that speaks none of these revisions raises `RubyLLM::MCP::Error`.
+RubyLLM speaks the 2026-07-28 revision of the protocol, where every request stands alone. For servers that predate it, back to 2024-11-05, RubyLLM falls back to the older handshake and declares only your extensions, so those servers never send requests back. When such a server ends its session, RubyLLM starts a new one and sends the request again, and `close` ends the session. Connecting to a server that speaks none of these revisions raises `RubyLLM::MCP::Error`.
 
 A response stream can break before the answer arrives, such as when a proxy drops a long call. RubyLLM then sends the request again, as the 2026-07-28 revision requires. Older servers can resume the stream instead: RubyLLM waits as long as the server asks and reconnects from the last event it received. Either way it tries three times at most, then raises `RubyLLM::MCP::Error`.
 

@@ -594,6 +594,47 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'extensions' do
+    def mcp_declaring(&)
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        class_eval(&)
+      end.new
+    end
+
+    def declared(mcp)
+      mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities', 'extensions')
+    end
+
+    it 'declares extensions and their settings with every request' do
+      mcp = mcp_declaring do
+        extension 'com.example/audit', level: 'full'
+        extension 'com.example/replay'
+      end
+
+      expect(declared(mcp)).to eq('com.example/audit' => { 'level' => 'full' }, 'com.example/replay' => {})
+    ensure
+      mcp&.close
+    end
+
+    it 'declares none unless asked' do
+      expect(declared(mcp)).to be_nil
+    end
+
+    it 'refuses names without a vendor prefix' do
+      expect { Class.new(described_class) { extension 'audit' } }.to raise_error(ArgumentError, /vendor prefix/)
+    end
+
+    it 'passes extensions to subclasses without sharing them' do
+      parent = Class.new(described_class) { extension 'com.example/audit' }
+      child = Class.new(parent) { extension 'com.example/replay' }
+
+      expect(child.extensions.keys).to eq(%w[com.example/audit com.example/replay])
+      expect(parent.extensions.keys).to eq(%w[com.example/audit])
+    end
+  end
+
   describe 'cancellation' do
     it 'stops waiting and tells the server when the chat is cancelled' do
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
@@ -805,6 +846,15 @@ RSpec.describe RubyLLM::MCP do
       expect(RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', input_requests: false).class.input_requests).to eq([])
       expect(RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', input_requests: [:form]).class.input_requests)
         .to eq([:form])
+    end
+
+    it 'accepts extensions by name or with settings' do
+      url = 'https://mcp.linear.app/mcp'
+
+      expect(RubyLLM.mcp(url:, extensions: 'com.example/replay').class.extensions)
+        .to eq('com.example/replay' => {})
+      expect(RubyLLM.mcp(url:, extensions: { 'com.example/audit' => { level: 'full' } }).class.extensions)
+        .to eq('com.example/audit' => { 'level' => 'full' })
     end
 
     it 'refuses unknown settings' do
