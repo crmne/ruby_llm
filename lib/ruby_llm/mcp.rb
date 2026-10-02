@@ -980,7 +980,7 @@ module RubyLLM
 
     def capabilities
       kinds = self.class.input_requests
-      extensions = self.class.extensions
+      extensions = OAuth.extensions(self.class.oauth_settings).merge(self.class.extensions)
       capabilities = kinds.empty? ? {} : { elicitation: kinds.to_h { |kind| [kind, {}] } }
       extensions.empty? ? capabilities : capabilities.merge(extensions:)
     end

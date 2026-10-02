@@ -39,6 +39,8 @@ module RubyLLM
       ID_JAG = 'urn:ietf:params:oauth:token-type:id-jag'
       ID_TOKEN = 'urn:ietf:params:oauth:token-type:id_token'
       CLIENT_ASSERTION = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
+      CLIENT_CREDENTIALS = 'io.modelcontextprotocol/oauth-client-credentials'
+      ENTERPRISE_MANAGED = 'io.modelcontextprotocol/enterprise-managed-authorization'
       SERVER_FIELDS = %w[
         issuer token_endpoint token_endpoint_auth_methods_supported token_endpoint_auth_signing_alg_values_supported
         authorization_response_iss_parameter_supported
@@ -58,6 +60,18 @@ module RubyLLM
 
       def self.memory_store
         @memory_store ||= MemoryStore.new
+      end
+
+      # Returns the authorization extensions that the options of MCP.oauth
+      # use, as client capabilities declare them, so servers that require
+      # an extension know the client follows it.
+      def self.extensions(settings)
+        return {} unless settings
+
+        names = []
+        names << CLIENT_CREDENTIALS if settings[:grant] == :client_credentials
+        names << ENTERPRISE_MANAGED if settings[:identity_provider]
+        names.to_h { |name| [name, {}] }
       end
 
       # Runs the block while no other thread in this process refreshes the

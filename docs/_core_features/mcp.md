@@ -760,7 +760,7 @@ end
 Reports.new.tools
 ```
 
-No one signs in. RubyLLM requests a token the first time the server asks for one, and a new one before it expires. When the authorization server refuses, the request raises `RubyLLM::UnauthorizedError` with its reason.
+No one signs in. RubyLLM requests a token the first time the server asks for one, and a new one before it expires. When the authorization server refuses, the request raises `RubyLLM::UnauthorizedError` with its reason. Every request declares the [OAuth Client Credentials extension](https://modelcontextprotocol.io/extensions/auth/oauth-client-credentials), which servers that require it check.
 
 Authorization servers that accept signed assertions let you register a public key instead of sharing a secret. Pass the private key, as a PEM string or an `OpenSSL::PKey`, and RubyLLM signs a short-lived assertion for each token request:
 
@@ -797,7 +797,7 @@ end
 
 The outer `client_id:` and `client_secret:` are your app's registration with the server's authorization server, and the ones under `identity_provider:` are its registration with the identity provider. Like other settings, the values may be blocks or method names.
 
-RubyLLM exchanges the ID token at the identity provider for a grant addressed to the server's authorization server, then exchanges that grant for a token. The identity provider's policy decides who reaches which servers, and a refusal raises `RubyLLM::UnauthorizedError`. Every new token needs a current ID token, so refresh it the way your sign-in does.
+RubyLLM exchanges the ID token at the identity provider for a grant addressed to the server's authorization server, then exchanges that grant for a token. The identity provider's policy decides who reaches which servers, and a refusal raises `RubyLLM::UnauthorizedError`. Every new token needs a current ID token, so refresh it the way your sign-in does. Every request declares the [Enterprise-Managed Authorization extension](https://modelcontextprotocol.io/extensions/auth/enterprise-managed-authorization), which servers that require it check.
 
 ### Proof-of-Possession Tokens
 

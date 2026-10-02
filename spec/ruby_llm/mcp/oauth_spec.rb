@@ -78,6 +78,15 @@ RSpec.describe RubyLLM::MCP::OAuth do
     form
   end
 
+  def declared_extensions
+    declared = []
+    expect(a_request(:post, server_url).with do |request|
+      declared << JSON.parse(request.body).dig('params', '_meta', 'io.modelcontextprotocol/clientCapabilities',
+                                               'extensions')
+    end).to have_been_made.at_least_once
+    declared.uniq
+  end
+
   def verified(jwt, key)
     input, signature = jwt.rpartition('.').values_at(0, 2)
     signature = Base64.urlsafe_decode64(signature)
@@ -133,6 +142,14 @@ RSpec.describe RubyLLM::MCP::OAuth do
       form.values_at('grant_type', 'resource') == ['authorization_code', server_url] && form['code_verifier']
     end
     expect(exchange).to have_been_made
+  end
+
+  it 'declares no authorization extension for apps that users authorize' do
+    linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+
+    linear_class.new(user: 'ada').tools
+
+    expect(declared_extensions).to eq([nil])
   end
 
   it 'sends the server and OAuth requests through the connection of its context' do
@@ -561,6 +578,12 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(a_request(:post, 'https://auth.example.com/register')).not_to have_been_made
     end
 
+    it 'declares the client credentials extension with every request' do
+      reports(client_secret: 'shh').tools
+
+      expect(declared_extensions).to eq([{ 'io.modelcontextprotocol/oauth-client-credentials' => {} }])
+    end
+
     it 'signs an assertion for the issuer with a private key instead of a secret' do
       key = OpenSSL::PKey::EC.generate('prime256v1')
 
@@ -720,6 +743,12 @@ RSpec.describe RubyLLM::MCP::OAuth do
       expect(a_request(:post, 'https://auth.example.com/token')
         .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('wiki-app:wiki-secret')}" }))
         .to have_been_made
+    end
+
+    it 'declares the enterprise-managed authorization extension with every request' do
+      wiki_class.new(user: 'ada').tools
+
+      expect(declared_extensions).to eq([{ 'io.modelcontextprotocol/enterprise-managed-authorization' => {} }])
     end
 
     it 'forwards nothing the identity provider issues but an identity assertion grant' do
