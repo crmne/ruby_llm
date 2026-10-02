@@ -7,6 +7,7 @@ module RubyLLM
   module Transport # :nodoc:
     class ErrorMiddleware < Faraday::Middleware # :nodoc: all
       PROVIDER_KEY = :ruby_llm_provider
+      STREAM_RESET_KEY = :ruby_llm_stream_reset
 
       def initialize(app, options = {})
         super(app)
@@ -19,7 +20,9 @@ module RubyLLM
       def call(env)
         env[:streaming_error_response] = nil
         env[:streaming_state] = nil
-        provider = env[:request]&.context&.[](PROVIDER_KEY) || @provider
+        context = env[:request]&.context
+        context&.[](STREAM_RESET_KEY)&.call
+        provider = context&.[](PROVIDER_KEY) || @provider
         @app.call(env).on_complete do |response|
           apply_retry_delay(response, provider)
           self.class.parse_error(provider:, response: streaming_error_response(response))

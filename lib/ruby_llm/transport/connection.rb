@@ -144,6 +144,7 @@ module RubyLLM
       def release_request(response)
         response.env.request_body = nil
         response.env.request.on_data = nil
+        response.env.request.context&.delete(ErrorMiddleware::STREAM_RESET_KEY)
         response
       end
 
