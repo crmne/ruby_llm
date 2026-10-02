@@ -231,8 +231,10 @@ module RubyLLM
           request.options.on_data = method(:feed).to_proc
         end
 
-        def read(&)
-          catch(self, &)
+        # Faraday 1 passes no response to on_data, so a stream read to its
+        # end takes its headers from the response instead.
+        def read
+          catch(self) { @headers = yield.headers }
           self
         rescue Faraday::ConnectionFailed
           raise unless events?
