@@ -124,7 +124,7 @@ chat.complete # appends the denial result and asks the model to respond
 
 Calls that need no approval still run while protected calls wait.
 
-If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop at pending approvals: `chat.step until chat.complete? || chat.awaiting_approval?`.
+If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `waiting?` is true while every pending call waits on something outside the chat, such as an approval, and `awaiting_approval?` tells you an approval is what it waits on.
 
 Finish the pending calls before asking another question. Otherwise `ask` raises `RubyLLM::PendingToolCallsError`.
 

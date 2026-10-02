@@ -147,7 +147,7 @@ module RubyLLM
 
     # Adds +message+ as a user message and runs the conversation loop,
     # executing tools until the model answers or a call needs approval.
-    # Returns the latest assistant Message; check #awaiting_approval? before
+    # Returns the latest assistant Message; check #waiting? before
     # treating it as a final answer. Attach files with +with:+. An
     # MCP::Prompt adds its messages instead.
     # A given block receives streamed Chunk objects as they arrive.
@@ -227,7 +227,7 @@ module RubyLLM
     # Advances the conversation by one move: runs the pending tool calls
     # if any are unanswered, otherwise generates the next response.
     # Returns the Message that move produced, and +nil+ once there is
-    # nothing left to do or the loop is parked on an approval.
+    # nothing left to do or the chat is #waiting?.
     def step(&)
       return if complete?
 
@@ -242,10 +242,9 @@ module RubyLLM
       raise
     end
 
-    # Runs the conversation loop until #complete?, #awaiting_approval?,
-    # #awaiting_input?, or #awaiting_tasks? is +true+. Returns the last
-    # conversation Message, or +nil+ for an empty chat. Used after
-    # #ask_later; #ask calls #complete for you.
+    # Runs the conversation loop until #complete? or #waiting? is +true+.
+    # Returns the last conversation Message, or +nil+ for an empty chat.
+    # Used after #ask_later; #ask calls #complete for you.
     #
     # When a pending tool call requires approval and no decision has been
     # recorded, or waits on input for an MCP server, the loop pauses.
@@ -288,6 +287,23 @@ module RubyLLM
     # +self+.
     def deny(tool_call)
       record_tool_call_decision(tool_call, false)
+    end
+
+    # Returns whether the conversation can't continue until something
+    # outside it happens: every remaining pending tool call waits on an
+    # approval decision, an answer to an MCP input request, or an MCP task.
+    # #complete stops here, and #awaiting_approval?, #awaiting_input?, and
+    # #awaiting_tasks? tell what it waits on. Stop a loop you drive with
+    # #step here too:
+    #
+    #   chat.step until chat.complete? || chat.waiting?
+    #
+    def waiting?
+      response = pending_tool_response
+      return false unless response
+
+      pending = pending_tool_calls(response).values
+      pending.any? && pending.all? { |tool_call| approval_pending?(tool_call) || paused?(tool_call) }
     end
 
     # Returns whether the conversation can make no progress without an
@@ -1563,14 +1579,6 @@ module RubyLLM
     def pause_tool_call(tool_call, state)
       record_tool_call_input(tool_call, state)
       PAUSED
-    end
-
-    def waiting?
-      response = pending_tool_response
-      return false unless response
-
-      pending = pending_tool_calls(response).values
-      pending.any? && pending.all? { |tool_call| approval_pending?(tool_call) || paused?(tool_call) }
     end
 
     def paused?(tool_call)

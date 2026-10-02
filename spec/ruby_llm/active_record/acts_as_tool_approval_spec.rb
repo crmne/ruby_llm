@@ -36,6 +36,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(records.map(&:tool_call_id)).to eq([call_id])
     expect(records.first).to be_a(RubyLLM::ActiveRecord::ToolCall)
     expect(chat).to be_awaiting_approval
+    expect(chat).to be_waiting
   end
 
   it 'persists an approval recorded from a pending record' do
@@ -45,6 +46,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     expect(chat.pending_approvals).to be_empty
     expect(chat).not_to be_awaiting_approval
+    expect(chat).not_to be_waiting
     expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id).approval).to eq('approved')
   end
 

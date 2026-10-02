@@ -387,7 +387,7 @@ Delegated methods include:
 * `concurrency`, `caching`, `compaction`, `end_user`, `fallbacks`
 * `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
-* `cancel`, `cancelled?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`
+* `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`
 * `add_message`, `each`
 * `cache_until_here`, `with_tools`, `with_provider_tools`, `with_tool_options`
 * `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`

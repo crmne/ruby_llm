@@ -400,7 +400,7 @@ chat.answer(request, environment: "staging") # or chat.decline(request)
 chat.complete
 ```
 
-`complete` resumes the call once all its requests are settled: RubyLLM sends the answers with the server's saved request state, and the server finishes. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
+`complete` resumes the call once all its requests are settled: RubyLLM sends the answers with the server's saved request state, and the server finishes. Until then the chat is `waiting?`, as it is while a call waits for approval. Calling a tool outside a chat raises `RubyLLM::MCP::InputRequiredError` instead, with the unanswered requests in `requests`.
 
 A paused chat waits until someone answers. If your app has nowhere to show a kind of request, tell servers not to send it:
 
@@ -658,7 +658,7 @@ task.status_message  # => "Rendering page 3 of 12"
 task.poll_interval   # => 5.0
 ```
 
-Call `complete` again later. It checks on each task once, without waiting, and resumes the chat when they're done, so the model sees their results. In Rails, the task persists on its tool call, so one job can pause the chat and another can check on it, even after a deploy. Schedule the next check from the task's poll interval:
+Call `complete` again later. The chat is `waiting?` until then, as it is for approvals and input requests. `complete` checks on each task once, without waiting, and resumes the chat when they're done, so the model sees their results. In Rails, the task persists on its tool call, so one job can pause the chat and another can check on it, even after a deploy. Schedule the next check from the task's poll interval:
 
 ```ruby
 class CheckTasksJob < ApplicationJob

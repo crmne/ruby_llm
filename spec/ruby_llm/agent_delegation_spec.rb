@@ -20,6 +20,7 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.end_user).to eq('customer-42')
     expect(agent.fallbacks).to eq(chat.fallbacks)
     expect(agent.cache_until_here).to be(chat)
+    expect(agent).not_to be_waiting
   end
 
   it 'classifies every method defined on Chat' do

@@ -157,6 +157,7 @@ RSpec.describe RubyLLM::Chat do
       chat.with_mcp(files).ask('Deploy')
 
       expect(chat).to be_awaiting_input
+      expect(chat).to be_waiting
       request = chat.pending_inputs.first
       expect(request).to have_attributes(message: 'Which environment?', tool_call: have_attributes(name: 'deploy'))
 
@@ -278,6 +279,7 @@ RSpec.describe RubyLLM::Chat do
       run_task('report')
 
       expect(chat).to be_awaiting_tasks
+      expect(chat).to be_waiting
       expect(chat).not_to be_complete
       expect(chat.pending_tasks.first).to have_attributes(id: 'task-1', status: :working, poll_interval: 0.01,
                                                           tool_call: have_attributes(name: 'report'))
@@ -342,6 +344,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect(server_tasks['cancelled']).to eq([task.id])
       expect(chat).not_to be_awaiting_tasks
+      expect(chat).not_to be_waiting
     end
 
     it 'raises the error a task failed with' do

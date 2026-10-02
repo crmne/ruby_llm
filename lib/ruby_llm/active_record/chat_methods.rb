@@ -468,6 +468,13 @@ module RubyLLM
       # Delegates to Chat#mcp. See that method for arguments and return values.
 
       ##
+      # :method: waiting?
+      # :call-seq: waiting?
+      #
+      # Delegates to Chat#waiting?. Approvals, answers, and tasks persist on
+      # their tool calls, so any process sees what the chat waits on.
+
+      ##
       # :method: awaiting_input?
       # :call-seq: awaiting_input?
       #
@@ -506,7 +513,7 @@ module RubyLLM
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
-        schema provider_tools temperature thinking tool_options tools mcp awaiting_input? pending_inputs
+        schema provider_tools temperature thinking tool_options tools mcp waiting? awaiting_input? pending_inputs
         awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 
@@ -678,9 +685,9 @@ module RubyLLM
 
       # Advances the conversation by one move: runs the pending tool calls if
       # there are any, otherwise generates a response. Returns +nil+ once the
-      # chat is complete or waiting for approval. See RubyLLM::Chat#step.
+      # chat is complete or #waiting?. See RubyLLM::Chat#step.
       #
-      #   chat.step until chat.complete? || chat.awaiting_approval?
+      #   chat.step until chat.complete? || chat.waiting?
       #
       def step(...)
         to_llm.step(...)

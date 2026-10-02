@@ -42,12 +42,12 @@ class AgentTurnJob < ApplicationJob
   def perform(chat_id)
     chat = SupportAgent.find(chat_id)
     chat.step
-    AgentTurnJob.perform_later(chat_id) unless chat.complete? || chat.awaiting_approval?
+    AgentTurnJob.perform_later(chat_id) unless chat.complete? || chat.waiting?
   end
 end
 ```
 
-Each job makes one move and enqueues the next unless the conversation is complete or waiting for approval. Any worker can load the saved transcript.
+Each job makes one move and enqueues the next unless the conversation is complete or `waiting?`: paused until something outside it happens, such as an approval, an answer to an MCP input request, or an MCP task. Any worker can load the saved transcript.
 
 ## Surviving Deploys with ActiveJob Continuations
 
@@ -60,7 +60,7 @@ class AgentRunJob < ApplicationJob
   def perform(chat_id)
     step :agent_loop do |job_step|
       chat = SupportAgent.find(chat_id)
-      until chat.complete? || chat.awaiting_approval?
+      until chat.complete? || chat.waiting?
         chat.step
         job_step.checkpoint!
       end

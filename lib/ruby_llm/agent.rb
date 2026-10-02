@@ -84,7 +84,7 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools mcp provider_tools tool_options provider_options headers schema concurrency
       caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
-      each complete? cancelled? awaiting_approval? pending_approvals awaiting_input? pending_inputs
+      each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
     ].freeze
 
@@ -1270,6 +1270,12 @@ module RubyLLM
     # :call-seq: cancelled?()
     #
     # Delegates to Chat#cancelled?. See that method for arguments and return values.
+
+    ##
+    # :method: waiting?
+    # :call-seq: waiting?()
+    #
+    # Delegates to Chat#waiting?. See that method for arguments and return values.
 
     ##
     # :method: awaiting_approval?
