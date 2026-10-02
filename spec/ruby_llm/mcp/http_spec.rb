@@ -20,6 +20,18 @@ RSpec.describe RubyLLM::MCP::HTTP do
     { resultType: 'complete', supportedVersions: ['2026-07-28'], capabilities: { tools: {} } }
   end
 
+  def client_without_response_env(endpoint = url, **options)
+    adapter = Class.new(Faraday::Adapter::NetHttp) do
+      def call(env)
+        on_data = env.request.on_data
+        env.request.on_data = proc { |chunk, size| on_data.call(chunk, size) }
+        super
+      end
+    end
+    config = RubyLLM.config.dup.tap { |copy| copy.faraday_adapter = adapter }
+    RubyLLM::MCP::Client.new(described_class.new(endpoint, config:, **options))
+  end
+
   it 'refuses plain HTTP outside loopback addresses' do
     expect { described_class.new('http://mcp.example.com/mcp') }.to raise_error(ArgumentError, /HTTPS/)
     expect { described_class.new('http://localhost:3000/mcp') }.not_to raise_error
@@ -195,16 +207,17 @@ RSpec.describe RubyLLM::MCP::HTTP do
     end
 
     it 'keeps the session when the adapter streams without the response' do
-      adapter = Class.new(Faraday::Adapter::NetHttp) do
-        def call(env)
-          on_data = env.request.on_data
-          env.request.on_data = proc { |chunk, size| on_data.call(chunk, size) }
-          super
-        end
-      end
-      config = RubyLLM.config.dup.tap { |copy| copy.faraday_adapter = adapter }
+      client_without_response_env.request('tools/list')
 
-      RubyLLM::MCP::Client.new(described_class.new(url, config:)).request('tools/list')
+      expect(a_request(:post, url).with(headers: { 'Mcp-Session-Id' => 'session-1' })).to have_been_made.twice
+    end
+
+    it 'keeps the session from an event stream when the adapter streams without the response' do
+      initialized = json_rpc(result: { protocolVersion: '2025-06-18', capabilities: {} })
+      stub_method('initialize', headers: { 'Content-Type' => 'text/event-stream', 'Mcp-Session-Id' => 'session-1' },
+                                body: ->(request) { "data: #{initialized.call(request)}\n\n" })
+
+      client_without_response_env.request('tools/list')
 
       expect(a_request(:post, url).with(headers: { 'Mcp-Session-Id' => 'session-1' })).to have_been_made.twice
     end
@@ -356,7 +369,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
       WebMock.enable!
     end
 
-    def serve(responses)
+    def serve(responses, build: ->(endpoint) { RubyLLM::MCP::Client.new(described_class.new(endpoint, timeout: 3)) })
       server = TCPServer.new('127.0.0.1', 0)
       sockets = []
       worker = Thread.new do
@@ -367,7 +380,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
           respond.call(socket, JSON.parse(socket.read(head[/^content-length: (\d+)/i, 1].to_i)))
         end
       end
-      yield RubyLLM::MCP::Client.new(described_class.new("http://127.0.0.1:#{server.addr[1]}/mcp", timeout: 3))
+      yield build.call("http://127.0.0.1:#{server.addr[1]}/mcp")
     ensure
       worker&.kill
       sockets&.each(&:close)
@@ -390,9 +403,48 @@ RSpec.describe RubyLLM::MCP::HTTP do
       "data: #{{ jsonrpc: '2.0', id: request['id'], result: { content: [] } }.to_json}\n\n"
     end
 
+    def older_server
+      [method(:without_discovery), method(:initialized), method(:accepted), method(:listed)]
+    end
+
+    def without_discovery(socket, _request) = empty_response(socket, '404 Not Found')
+
+    def accepted(socket, _request) = empty_response(socket, '202 Accepted')
+
+    def empty_response(socket, status)
+      socket.write("HTTP/1.1 #{status}\r\nContent-Length: 0\r\nConnection: close\r\n\r\n")
+      socket.close
+    end
+
+    def initialized(socket, request)
+      result = { protocolVersion: '2025-06-18', capabilities: { tools: {} } }
+      open_stream(socket, "data: #{{ jsonrpc: '2.0', id: request['id'], result: }.to_json}\n\n")
+    end
+
+    def listed(socket, request)
+      open_stream(socket, "data: #{{ jsonrpc: '2.0', id: request['id'], result: { tools: [] } }.to_json}\n\n")
+    end
+
     it 'returns the answer while the server keeps the stream open' do
       serve([method(:discovered), ->(socket, request) { open_stream(socket, answer(request)) }]) do |client|
         expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+      end
+    end
+
+    it 'uses the initialize answer at once while an older server keeps the stream open' do
+      skip 'Faraday 1 passes no response to on_data' if Faraday::VERSION.start_with?('1')
+
+      serve(older_server) do |client|
+        started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+        expect(client.request('tools/list')).to eq('tools' => [])
+        expect(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started).to be < 2
+      end
+    end
+
+    it 'uses the initialize answer after a read timeout when the adapter streams without the response' do
+      serve(older_server, build: ->(endpoint) { client_without_response_env(endpoint, timeout: 1) }) do |client|
+        expect(client.request('tools/list')).to eq('tools' => [])
       end
     end
 

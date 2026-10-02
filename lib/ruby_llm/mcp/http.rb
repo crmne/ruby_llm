@@ -92,8 +92,9 @@ module RubyLLM
       private
 
       def post(message, version:, timeout: nil, params: {}, retried: false, &on_notification)
-        session = @session unless message[:method] == 'initialize'
-        stream = Stream.new(message[:id], &on_notification)
+        initializing = message[:method] == 'initialize'
+        session = @session unless initializing
+        stream = Stream.new(message[:id], opens_session: initializing, &on_notification)
         stream.read do
           @connection.post(@url) do |request|
             request.headers.update(headers(message, version, session))
@@ -213,12 +214,15 @@ module RubyLLM
       # or a server-sent event stream; the first character tells them apart.
       # An event stream stops being read once it carries the answer to
       # request +id+, since servers may keep it open, and one that breaks
-      # midway counts as ended.
+      # midway counts as ended. A stream that opens a session also waits for
+      # its headers, which Faraday 1 delivers only when the response ends; a
+      # server that holds it open costs one read timeout.
       class Stream # :nodoc:
         attr_reader :id, :headers
 
-        def initialize(id, &on_notification)
+        def initialize(id, opens_session: false, &on_notification)
           @id = id
+          @opens_session = opens_session
           @on_notification = on_notification
           @parser = Transport::EventStreamParser.new
           @body = +''
@@ -238,6 +242,10 @@ module RubyLLM
           raise unless events?
 
           self
+        rescue Faraday::TimeoutError
+          raise unless answer
+
+          self
         end
 
         def feed(chunk, _size = nil, env = nil)
@@ -255,7 +263,7 @@ module RubyLLM
           return unless @events
 
           @parser.feed(chunk) { |_type, data| receive_event(data) }
-          throw self if answer
+          throw self if complete?
         end
 
         def replies
@@ -283,6 +291,10 @@ module RubyLLM
 
         def events?
           @events == true
+        end
+
+        def complete?
+          answer && !(@opens_session && @headers.empty?)
         end
 
         def receive_event(data)
