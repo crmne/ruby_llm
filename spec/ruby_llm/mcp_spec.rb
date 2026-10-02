@@ -40,6 +40,24 @@ RSpec.describe RubyLLM::MCP do
     it 'reports a failed tool as an error for the model' do
       expect(mcp.tools.find { |tool| tool.name == 'fail' }.call).to eq(error: 'Something broke')
     end
+
+    context 'with a server that predates 2026-07-28' do
+      let(:mcp_class) do
+        command = [RbConfig.ruby, server]
+        Class.new(described_class) do
+          command(*command)
+          env MCP_ERA: 'legacy'
+        end
+      end
+
+      it 'lists them again after the server says they changed during a request' do
+        expect(mcp.tools.map(&:name)).not_to include('extra_9')
+
+        mcp.send(:client).request('spec/change_tools')
+
+        expect(mcp.tools.map(&:name)).to include('extra_9')
+      end
+    end
   end
 
   describe 'shaping tools' do
@@ -542,6 +560,23 @@ RSpec.describe RubyLLM::MCP do
       mcp.close
 
       expect(tunnel).to be_closed
+    end
+
+    it 'does not keep a tool list the server changed while sending it' do
+      churning = Class.new(tunnel_class) do
+        def request(message, **)
+          if message[:method] == 'tools/list' && block_given?
+            yield('jsonrpc' => '2.0', 'method' => 'notifications/tools/list_changed')
+          end
+          super
+        end
+      end
+      tunnel = churning.new
+      mcp = RubyLLM.mcp(transport: tunnel, name: 'tunnelled')
+
+      2.times { mcp.tools }
+
+      expect(tunnel.methods_sent.count('tools/list')).to eq(2)
     end
 
     it 'needs a name inline' do

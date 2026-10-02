@@ -428,14 +428,16 @@ module RubyLLM
 
     # Returns the tools the model sees: the server's tools, shaped by
     # ::only, ::except, and ::tool, followed by the Tool classes added with
-    # ::tool. The server's list is fetched once per instance.
+    # ::tool. The server's list is fetched once, and again after the server
+    # says it changed.
     #
     # Raises ConfigurationError when a declaration names a tool the server
     # does not offer.
     def tools
-      @tools ||= begin
-        check_declared_tools
-        server_tools.filter_map { |definition| shape(definition) } + added_tools
+      @tools || remember(:@tools) do
+        definitions = server_tools
+        check_declared_tools(definitions)
+        definitions.filter_map { |definition| shape(definition) } + added_tools
       end
     end
 
@@ -669,10 +671,10 @@ module RubyLLM
       end
     end
 
-    def check_declared_tools
+    def check_declared_tools(definitions)
       declared = Array(self.class.only) + self.class.approvals.flat_map(&:first) +
                  self.class.tool_declarations.grep(Array).map(&:first)
-      missing = declared.uniq - server_tools.map { |definition| definition['name'] }
+      missing = declared.uniq - definitions.map { |definition| definition['name'] }
       return if missing.empty?
 
       raise ConfigurationError, "#{name} declares #{missing.join(', ')}, which the server does not offer"
@@ -687,7 +689,23 @@ module RubyLLM
     end
 
     def server_tools
-      @server_tools ||= client.list('tools/list', 'tools').select { |definition| ParamHeaders.valid?(definition) }
+      @server_tools || remember(:@server_tools) do
+        client.list('tools/list', 'tools').select { |definition| ParamHeaders.valid?(definition) }
+      end
+    end
+
+    def remember(variable)
+      changes = @tool_changes
+      value = yield
+      instance_variable_set(variable, value) if changes == @tool_changes
+      value
+    end
+
+    def changed(notification)
+      return unless notification['method'] == 'notifications/tools/list_changed'
+
+      @tool_changes = @tool_changes.to_i + 1
+      @tools = @server_tools = nil
     end
 
     def server_info
@@ -696,7 +714,7 @@ module RubyLLM
     end
 
     def client
-      @client ||= Client.new(transport, capabilities:)
+      @client ||= Client.new(transport, capabilities:) { |notification| changed(notification) }
     end
 
     def capabilities

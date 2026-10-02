@@ -8,18 +8,27 @@ module RubyLLM
     # servers never call back. A server that rejects 2026-07-28 while
     # listing it gets the request once more; one that answers the handshake
     # with a revision missing from LEGACY_VERSIONS is disconnected.
+    #
+    # Notifications that the server's tools, prompts, or resources changed
+    # reach the block given to ::new, whichever stream carries them. Servers
+    # that predate 2026-07-28 send them on the stream of any request.
     class Client # :nodoc:
       VERSION = '2026-07-28'
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
       UNSUPPORTED_VERSION = -32_022
       MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
       DISCOVERY_TIMEOUT = 10
+      CHANGES = %w[
+        notifications/tools/list_changed notifications/prompts/list_changed
+        notifications/resources/list_changed notifications/resources/updated
+      ].freeze
 
       attr_reader :version
 
-      def initialize(transport, capabilities: {})
+      def initialize(transport, capabilities: {}, &on_change)
         @transport = transport
         @capabilities = capabilities
+        @on_change = on_change
         @connecting = Mutex.new
       end
 
@@ -82,10 +91,12 @@ module RubyLLM
         result
       end
 
-      def call(method, params = {}, timeout: nil, headers: {}, retried: false, &)
+      def call(method, params = {}, timeout: nil, headers: {}, retried: false, &on_notification)
         request = message(method, params, id: SecureRandom.uuid)
         response = begin
-          @transport.request(request, version:, timeout:, headers:, &)
+          @transport.request(request, version:, timeout:, headers:) do |notification|
+            forward(notification, &on_notification)
+          end
         rescue CancelledError
           @transport.cancel(message('notifications/cancelled', { requestId: request[:id] }), version:)
           raise
@@ -97,7 +108,12 @@ module RubyLLM
       rescue Error => e
         raise if retried || !offers_version?(e)
 
-        call(method, params, timeout:, headers:, retried: true, &)
+        call(method, params, timeout:, headers:, retried: true, &on_notification)
+      end
+
+      def forward(notification)
+        @on_change&.call(notification) if CHANGES.include?(notification['method'])
+        yield notification if block_given?
       end
 
       def offers_version?(error)

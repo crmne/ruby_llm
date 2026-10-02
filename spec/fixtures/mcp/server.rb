@@ -108,8 +108,8 @@ def reply(id, result: nil, error: nil)
   puts JSON.generate({ jsonrpc: '2.0', id:, result:, error: }.compact)
 end
 
-def tools_page(cursor)
-  cursor ? { tools: TOOLS.drop(2) } : { tools: TOOLS.take(2), nextCursor: 'page-2' }
+def tools_page(cursor, tools)
+  cursor ? { tools: tools.drop(2) } : { tools: tools.take(2), nextCursor: 'page-2' }
 end
 
 def call_tool(params)
@@ -133,6 +133,7 @@ end
 
 initialized = false
 cancelled = []
+tools = TOOLS.dup
 
 def notify(method, params)
   puts JSON.generate({ jsonrpc: '2.0', method:, params: })
@@ -165,7 +166,11 @@ $stdin.each_line do |line|
   when 'tools/list'
     next reply(id, error: { code: -32_600, message: 'Not initialized' }) if LEGACY && !initialized
 
-    reply(id, result: tools_page(params['cursor']))
+    reply(id, result: tools_page(params['cursor'], tools))
+  when 'spec/change_tools'
+    tools += [{ name: "extra_#{tools.size}", description: 'Added at runtime', inputSchema: { type: 'object' } }]
+    notify('notifications/tools/list_changed', {})
+    reply(id, result: {})
   when 'tools/call'
     case params['name']
     when 'wait' then next
