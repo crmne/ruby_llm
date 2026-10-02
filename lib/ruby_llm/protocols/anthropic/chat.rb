@@ -472,13 +472,10 @@ module RubyLLM
 
         # Sonnet 5.5 rejects thinking.type "disabled". Its lowest setting is
         # between_tools, with no display or budget_tokens beside it.
-        BETWEEN_TOOLS_OFF_MODEL_IDS = %w[
-          claude-sonnet-5-5
-          anthropic.claude-sonnet-5-5
-        ].freeze
-
+        # Exact Anthropic/Vertex ids plus Bedrock Mantle and regional prefixes
+        # (anthropic.claude-sonnet-5-5, us.anthropic.claude-sonnet-5-5, ...).
         def between_tools_off_model?(model_id)
-          BETWEEN_TOOLS_OFF_MODEL_IDS.include?(model_id.to_s)
+          model_id.to_s.end_with?('claude-sonnet-5-5')
         end
 
         def build_thinking_payload(thinking, model, max_tokens)

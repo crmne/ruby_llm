@@ -34,9 +34,15 @@ RSpec.describe RubyLLM::Thinking::Controls do
         provider: 'bedrock',
         reasoning_options: [{ type: 'effort', values: %w[low medium high xhigh max] }]
       )
+      bedrock_regional = model_for(
+        'us.anthropic.claude-sonnet-5-5',
+        provider: 'bedrock',
+        reasoning_options: [{ type: 'effort', values: %w[low medium high xhigh max] }]
+      )
 
       expect(described_class.new(vertex).disable).to eq(enabled: false)
       expect(described_class.new(bedrock).disable).to eq(enabled: false)
+      expect(described_class.new(bedrock_regional).disable).to eq(enabled: false)
     end
 
     it 'still raises when neither the registry nor the provider exposes an off control' do
