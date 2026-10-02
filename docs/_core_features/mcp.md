@@ -613,7 +613,7 @@ class Weather::ViewsController < ApplicationController
 end
 ```
 
-Your page loads `html` into the sandbox, then sends the UI `input` and `result` as the spec's tool input and tool result notifications. `mcp_result` is `nil` for tools without a UI, whose results are only what the model saw. New applications get the `mcp_result` column from `ruby_llm:install`; others add it with `bin/rails generate ruby_llm:upgrade`.
+Your page loads `html` into the sandbox, then sends the UI `input` and `result` as the spec's tool input and tool result notifications. `mcp_result` is `nil` for tools without a UI, whose results are only what the model saw, and for failed calls, whose content is `{ "error": ... }` as for any tool. New applications get the `mcp_result` column from `ruby_llm:install`; others add it with `bin/rails generate ruby_llm:upgrade`.
 
 Some tools exist only for their UI, such as the one behind a refresh button. Their `visibility` leaves out `:model`: `tools` lists them, and you can call them, but chats never offer them to the model, even when you pass them to `with_tools`.
 

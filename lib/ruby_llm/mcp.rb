@@ -616,9 +616,9 @@ module RubyLLM
       return outcome if outcome.is_a?(Task)
 
       result = Result.new(outcome, ui_uri: tool.ui_uri)
-      return result if result.error? || tool.wrap.nil?
+      return { error: result.text } if result.error?
 
-      apply(tool.wrap, result, **arguments)
+      tool.wrap ? apply(tool.wrap, result, **arguments) : result
     end
 
     # Checks on the task +id+ once and returns its state, reporting what it

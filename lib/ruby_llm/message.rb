@@ -68,8 +68,8 @@ module RubyLLM
     attr_reader :server_tool_calls
 
     # The MCP::Result behind a tool result message, when the MCP tool that
-    # returned it has a UI, so your app can render the UI again with the
-    # result. +nil+ otherwise.
+    # returned it has a UI and did not fail, so your app can render the UI
+    # again with the result. +nil+ otherwise.
     attr_reader :mcp_result
 
     # The provider-shaped content blocks of this assistant message, kept

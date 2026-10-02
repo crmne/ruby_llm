@@ -41,6 +41,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(Chat.find(chat.id).to_llm.messages.find(&:tool_result?).mcp_result.ui_uri).to eq('ui://spec/forecast')
   end
 
+  it 'stores a failed call as 2.0 did' do
+    chat = answered_chat('fail', {})
+
+    tool_message = Chat.find(chat.id).messages_association.find_by(role: 'tool')
+    expect(tool_message.content).to eq('{"error":"Something broke"}')
+    expect(tool_message.tool_error_message).to eq('Something broke')
+    expect(tool_message.mcp_result).to be_nil
+  end
+
   it 'keeps nothing for tools without a UI' do
     chat = answered_chat('add', { 'a' => 2, 'b' => 3 })
 

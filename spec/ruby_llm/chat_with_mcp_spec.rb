@@ -56,6 +56,46 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.find { |message| message.role == :tool }.content).to eq('5')
   end
 
+  describe 'tool results' do
+    let(:laptop_transport) do
+      Class.new do
+        def request(message, **)
+          result = case message[:method]
+                   when 'server/discover' then { 'supportedVersions' => ['2026-07-28'] }
+                   when 'tools/list' then { 'tools' => [{ 'name' => 'read_notes', 'inputSchema' => {} }] }
+                   else { 'isError' => true, 'content' => [{ 'type' => 'text', 'text' => 'The laptop is offline' }] }
+                   end
+          { 'jsonrpc' => '2.0', 'id' => message[:id], 'result' => result }
+        end
+
+        def notify(*, **) = nil
+        def cancel(*, **) = nil
+        def close = nil
+      end
+    end
+
+    it 'stores and reports a failed call as 2.0 did, through a custom transport' do
+      results = []
+      laptop = RubyLLM.mcp(transport: laptop_transport.new, name: 'laptop')
+      allow(chat.provider).to receive(:complete).and_return(tool_call('read_notes', {}), answer)
+
+      chat.with_mcp(laptop).after_tool_result { |result| results << result }.ask('Read my notes')
+
+      expect(chat.messages.find(&:tool_result?).content).to eq('{"error":"The laptop is offline"}')
+      expect(results).to eq([{ error: 'The laptop is offline' }])
+    end
+
+    it 'stores a successful result as before' do
+      allow(chat.provider).to receive(:complete).and_return(tool_call('picture', {}), answer)
+
+      chat.with_mcp(files).ask('Show me')
+
+      message = chat.messages.find(&:tool_result?)
+      expect(message.content).to eq("Here it is\n\npixel.png: file:///pixel.png")
+      expect(message.attachments.first).to have_attributes(mime_type: 'image/png')
+    end
+  end
+
   it 'pauses server tools that need approval' do
     files_class.requires_approval :add
     allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)

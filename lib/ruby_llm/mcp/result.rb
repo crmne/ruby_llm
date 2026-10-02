@@ -52,10 +52,7 @@ module RubyLLM
 
       # Returns what a chat sends to the model: the text, or the structured
       # content as JSON when there is no text, followed by any attachments.
-      # A failure goes as <tt>{ error: text }</tt>.
       def content
-        return { error: text } if error?
-
         body = text.empty? && structured ? JSON.generate(structured) : text
         attachments.empty? ? body : [body, *attachments]
       end

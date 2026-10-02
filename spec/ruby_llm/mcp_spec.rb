@@ -47,10 +47,10 @@ RSpec.describe RubyLLM::MCP do
       expect(RubyLLM::Tool.split_result(result)).to eq(['hello', []])
     end
 
-    it 'reports a failed tool as an error for the model' do
+    it 'reports a failed tool as an error for the model, as 2.0 did' do
       result = mcp.tools.find { |tool| tool.name == 'fail' }.call
 
-      expect(result).to be_error
+      expect(result).to eq(error: 'Something broke')
       expect(RubyLLM::Tool.split_result(result)).to eq(['{"error":"Something broke"}', []])
     end
 
@@ -214,6 +214,13 @@ RSpec.describe RubyLLM::MCP do
       expect(result).to have_attributes(text: '5', structured: { 'sum' => 5 }, meta: { 'com.example/exact' => true })
       expect(result).not_to be_error
       expect(mcp.call(:echo, text: 'hi').meta).to eq({})
+    end
+
+    it 'returns a failed result whole, with its text as content' do
+      result = mcp.call(:fail)
+
+      expect(result).to be_error
+      expect(result).to have_attributes(text: 'Something broke', content: 'Something broke')
     end
 
     it 'turns images into attachments' do
