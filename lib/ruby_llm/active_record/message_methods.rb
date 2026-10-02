@@ -32,6 +32,7 @@ module RubyLLM
           usage_entries: entries,
           tool_calls: tool_calls,
           tool_call_id: parent_tool_call&.id,
+          mcp_result: mcp_result,
           finish_reason: optional_column(:finish_reason),
           model: entries.reverse.find(&:succeeded?)&.model,
           cache_until_here: cache_until_here?
@@ -105,6 +106,15 @@ module RubyLLM
       # Returns the tool call this message answers, or +nil+.
       def parent_tool_call
         ruby_llm_parent_tool_call&.to_llm
+      end
+
+      # Returns the RubyLLM::MCP::Result kept for an MCP tool with a UI, as
+      # RubyLLM::Message#mcp_result does, or +nil+. It persists on the tool
+      # call, so the UI renders again after a reload.
+      def mcp_result
+        record = ruby_llm_parent_tool_call
+        data = record[:mcp_result] if record&.has_attribute?(:mcp_result)
+        RubyLLM::MCP::Result.load(data) if data
       end
 
       # Returns the message records that answer this message's tool calls.

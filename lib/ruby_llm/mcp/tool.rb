@@ -89,11 +89,11 @@ module RubyLLM
         @mcp.requires_approval?(self)
       end
 
-      # Calls the tool on the server and returns what the model sees: the
-      # result's content, what the +wrap:+ method made of it, or
-      # <tt>{ error: }</tt> when the tool failed. Raises
-      # MCP::InputRequiredError when the server needs input that no
-      # MCP.before_input_request callback gave.
+      # Calls the tool on the server and returns its MCP::Result, or what
+      # the +wrap:+ method made of a result that did not fail. A chat sends
+      # the model the result's content. Raises MCP::InputRequiredError when
+      # the server needs input that no MCP.before_input_request callback
+      # gave.
       def call(**arguments)
         @mcp.run(self, arguments.except(:tool_call))
       end

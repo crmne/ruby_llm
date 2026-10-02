@@ -67,6 +67,11 @@ module RubyLLM
     # Chat#with_provider_tools and the model used one.
     attr_reader :server_tool_calls
 
+    # The MCP::Result behind a tool result message, when the MCP tool that
+    # returned it has a UI, so your app can render the UI again with the
+    # result. +nil+ otherwise.
+    attr_reader :mcp_result
+
     # The provider-shaped content blocks of this assistant message, kept
     # verbatim when the response used server tools so later requests can
     # replay the turn exactly. +nil+ otherwise.
@@ -105,6 +110,7 @@ module RubyLLM
       @server_tool_calls = Array(options[:server_tool_calls]).map { |call| coerce_value(call, ServerToolCall) }
       @raw_content = options[:raw_content]
       @raw_reasoning = options[:raw_reasoning]
+      @mcp_result = coerce_mcp_result(options[:mcp_result])
       @finish_reason = options[:finish_reason]&.to_sym
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
@@ -243,6 +249,7 @@ module RubyLLM
         server_tool_calls: list_to_h(server_tool_calls),
         raw_content: raw_content,
         raw_reasoning: raw_reasoning,
+        mcp_result: mcp_result&.dump,
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil
       }.merge(tokens.to_h).compact
@@ -300,6 +307,10 @@ module RubyLLM
 
     def coerce_value(value, klass)
       value.is_a?(Hash) ? klass.from_h(value) : value
+    end
+
+    def coerce_mcp_result(value)
+      value.is_a?(Hash) ? MCP::Result.load(value.transform_keys(&:to_s)) : value
     end
 
     def normalize_content(content)

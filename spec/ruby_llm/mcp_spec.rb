@@ -40,12 +40,26 @@ RSpec.describe RubyLLM::MCP do
       expect(echo.meta).to eq({})
     end
 
-    it 'calls a tool the way a chat does' do
-      expect(mcp.tools.first.call(text: 'hello', tool_call: nil)).to eq('hello')
+    it 'calls a tool the way a chat does and returns the server result' do
+      result = mcp.tools.first.call(text: 'hello', tool_call: nil)
+
+      expect(result).to be_a(RubyLLM::MCP::Result)
+      expect(RubyLLM::Tool.split_result(result)).to eq(['hello', []])
     end
 
     it 'reports a failed tool as an error for the model' do
-      expect(mcp.tools.find { |tool| tool.name == 'fail' }.call).to eq(error: 'Something broke')
+      result = mcp.tools.find { |tool| tool.name == 'fail' }.call
+
+      expect(result).to be_error
+      expect(RubyLLM::Tool.split_result(result)).to eq(['{"error":"Something broke"}', []])
+    end
+
+    it 'sends the model the attachments of a result' do
+      result = mcp.tools.find { |tool| tool.name == 'picture' }.call
+
+      text, attachments = RubyLLM::Tool.split_result(result)
+      expect(text).to eq("Here it is\n\npixel.png: file:///pixel.png")
+      expect(attachments.first).to have_attributes(mime_type: 'image/png')
     end
 
     context 'with a server that predates 2026-07-28' do
@@ -110,7 +124,7 @@ RSpec.describe RubyLLM::MCP do
       repeat = mcp.tools.first
 
       expect(repeat).to have_attributes(name: 'repeat', server_name: 'echo', description: 'Repeats the text')
-      expect(repeat.call(text: 'hi')).to eq('hi')
+      expect(repeat.call(text: 'hi').text).to eq('hi')
       expect(repeat.inspect).to eq('#<RubyLLM::MCP::Tool name: "repeat", from: "echo", read_only: true>')
     ensure
       mcp&.close
@@ -123,7 +137,7 @@ RSpec.describe RubyLLM::MCP do
       add = mcp.tools.find { |tool| tool.name == 'add' }
 
       expect(add.parameters_schema).to eq('type' => 'object', 'properties' => {}, 'required' => [])
-      expect(add.call).to eq('15')
+      expect(add.call.text).to eq('15')
     ensure
       mcp&.close
     end
@@ -700,6 +714,24 @@ RSpec.describe RubyLLM::MCP do
       expect(mcp.refresh_forecast.text).to eq('Refreshed')
     end
 
+    it 'names the UI that renders a result' do
+      expect(mcp.call(:forecast, city: 'Rome')).to have_attributes(
+        ui_uri: 'ui://spec/forecast', structured: { 'city' => 'Rome', 'temperature' => 24 },
+        meta: { 'com.example/station' => 'spec' }
+      )
+      expect(tool('forecast').call(city: 'Rome').ui_uri).to eq('ui://spec/forecast')
+      expect(mcp.call(:echo, text: 'hi').ui_uri).to be_nil
+    end
+
+    it 'keeps a result with a UI on a message across serialization' do
+      result = mcp.call(:forecast, city: 'Rome')
+      message = RubyLLM::Message.new(role: :tool, content: result.text, tool_call_id: 'call_1', mcp_result: result)
+
+      copy = RubyLLM::Message.new(message.to_h)
+
+      expect(copy.mcp_result).to have_attributes(ui_uri: 'ui://spec/forecast', to_h: result.to_h)
+    end
+
     it 'reads the URI of a UI written the deprecated way' do
       definition = { 'name' => 'chart', '_meta' => { 'ui/resourceUri' => 'ui://spec/chart' } }
 
@@ -842,7 +874,7 @@ RSpec.describe RubyLLM::MCP do
       mcp = RubyLLM.mcp(transport: tunnel, name: 'tunnelled', prefix: 'remote')
 
       expect(mcp.tools.map(&:name)).to eq(['remote_echo'])
-      expect(mcp.tools.first.call(text: 'hi')).to eq('hi')
+      expect(mcp.tools.first.call(text: 'hi').text).to eq('hi')
       expect(tunnel.methods_sent).to eq(%w[server/discover tools/list tools/call])
     end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_001_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_002_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -124,6 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 20_261_001_120_000) do
     t.boolean 'remote', default: false, null: false
     t.json 'arguments', default: {}
     t.json 'pending_input'
+    t.json 'mcp_result'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[message_type message_id], name: 'index_ruby_llm_tool_calls_on_message'

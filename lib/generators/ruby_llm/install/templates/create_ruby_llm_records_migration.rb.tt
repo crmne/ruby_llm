@@ -48,12 +48,15 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
       t.jsonb :pending_input
+      t.jsonb :mcp_result
 <% elsif mysql? %>
       t.json :arguments
       t.json :pending_input
+      t.json :mcp_result
 <% else %>
       t.json :arguments, default: {}
       t.json :pending_input
+      t.json :mcp_result
 <% end %>
       t.timestamps
 

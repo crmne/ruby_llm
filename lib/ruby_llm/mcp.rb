@@ -504,7 +504,7 @@ module RubyLLM
     # Raises MCP::Error when the server answers with a protocol error. A
     # tool that fails returns a Result whose #error? is +true+.
     def call(name, **arguments)
-      Result.new(request('tools/call', { name: name.to_s, arguments: }))
+      Result.new(request('tools/call', { name: name.to_s, arguments: }), ui_uri: ui_uri_of(name))
     end
 
     # Returns the resources the server lists, as MCP::Resource objects
@@ -579,10 +579,10 @@ module RubyLLM
       arguments = arguments.transform_keys(&:to_sym)
       fixed = tool.fixed_arguments.transform_values { |value| value.is_a?(Proc) ? instance_exec(&value) : value }
       params = { name: tool.server_name, arguments: arguments.merge(fixed) }
-      result = Result.new(request('tools/call', params, input:))
-      return { error: result.text } if result.error?
+      result = Result.new(request('tools/call', params, input:), ui_uri: tool.ui_uri)
+      return result if result.error? || tool.wrap.nil?
 
-      tool.wrap ? apply(tool.wrap, result, **arguments) : result.content
+      apply(tool.wrap, result, **arguments)
     end
 
     # Returns the instructions the server gives for using it, or +nil+.
@@ -728,8 +728,13 @@ module RubyLLM
     end
 
     def mirrored_headers(params)
-      definition = server_tools.find { |tool| tool['name'] == params[:name] }
+      definition = server_tool(params[:name])
       definition ? ParamHeaders.for(definition, params[:arguments]) : {}
+    end
+
+    def ui_uri_of(name)
+      definition = server_tool(name)
+      Apps.uri(definition['_meta'] || {}) if definition
     end
 
     def shape(definition)
@@ -762,7 +767,11 @@ module RubyLLM
     end
 
     def server_tool?(name)
-      server_tools.any? { |definition| definition['name'] == name.to_s }
+      !server_tool(name).nil?
+    end
+
+    def server_tool(name)
+      server_tools.find { |definition| definition['name'] == name.to_s }
     end
 
     def server_tools

@@ -203,6 +203,7 @@ module RubyLLM
         case result
         when Attachment then ['', [result]]
         when Array then split_array_result(result)
+        when MCP::Result then split_result(result.content)
         else [result_content(result), []]
         end
       end

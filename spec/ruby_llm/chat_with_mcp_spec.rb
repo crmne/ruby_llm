@@ -185,6 +185,36 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.tools).to be_empty
     end
+
+    it 'keeps the result of a tool with a UI on its tool result message' do
+      allow(chat.provider).to receive(:complete).and_return(tool_call('forecast', { 'city' => 'Rome' }), answer)
+
+      chat.with_mcp(files).ask('How is the weather in Rome?')
+
+      message = chat.messages.find(&:tool_result?)
+      expect(message.content).to eq('Sunny in Rome')
+      expect(message.mcp_result).to have_attributes(
+        ui_uri: 'ui://spec/forecast', structured: { 'city' => 'Rome', 'temperature' => 24 },
+        meta: { 'com.example/station' => 'spec' }
+      )
+    end
+
+    it 'keeps no result for tools without a UI' do
+      allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)
+
+      chat.with_mcp(files).ask('What is 2 + 3?')
+
+      expect(chat.messages.find(&:tool_result?).mcp_result).to be_nil
+    end
+
+    it 'hands the server result to after_tool_result' do
+      results = []
+      allow(chat.provider).to receive(:complete).and_return(tool_call('forecast', { 'city' => 'Rome' }), answer)
+
+      chat.with_mcp(files).after_tool_result { |result| results << result }.ask('How is the weather in Rome?')
+
+      expect(results.first).to have_attributes(structured: { 'city' => 'Rome', 'temperature' => 24 })
+    end
   end
 
   it 'refuses two tools with the same name' do

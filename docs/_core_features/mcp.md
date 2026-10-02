@@ -583,6 +583,27 @@ view.meta["ui"] # => { "csp" => { "connectDomains" => ["https://api.weather.exam
 
 Rendering the UI is your app's job. Following the MCP Apps spec, it runs in a sandboxed iframe on an origin separate from your app, inside a second iframe whose content security policy you build from `meta["ui"]["csp"]`, and your page passes it the tool's arguments and result.
 
+In a chat, the model calls a tool with a UI like any other tool, and sees its text. The UI needs more, such as the structured content, so the tool result message keeps the server's whole result as `mcp_result`. In Rails it persists on the tool call, so a UI renders the same after a reload. A controller can give your page everything it needs:
+
+```ruby
+class Weather::ViewsController < ApplicationController
+  def show
+    message = Message.where(chat: Current.user.chats).find(params[:message_id])
+    result = message.mcp_result
+    view = Weather.new(user: Current.user).resource(result.ui_uri)
+
+    render json: {
+      html: view.content,
+      csp: view.meta.dig("ui", "csp"),
+      input: message.parent_tool_call.arguments,
+      result: result.to_h
+    }
+  end
+end
+```
+
+Your page loads `html` into the sandbox, then sends the UI `input` and `result` as the spec's tool input and tool result notifications. `mcp_result` is `nil` for tools without a UI, whose results are only what the model saw. New applications get the `mcp_result` column from `ruby_llm:install`; others add it with `bin/rails generate ruby_llm:upgrade`.
+
 Some tools exist only for their UI, such as the one behind a refresh button. Their `visibility` leaves out `:model`: `tools` lists them, and you can call them, but chats never offer them to the model, even when you pass them to `with_tools`.
 
 When the UI calls a tool, your page sends the call to a controller, which makes it on the UI's behalf. Look the tool up by its name on the server, and refuse it unless its `visibility` includes `:app`:

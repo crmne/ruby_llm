@@ -992,7 +992,7 @@ module RubyLLM
         transaction do
           @message.assign_attributes(attrs)
           @message.save!
-          tool_call&.update!(result: @message)
+          tool_call&.update!(tool_result_attributes(tool_call, message))
 
           persist_content(@message, message.attachments) if message.attachments.any?
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
@@ -1011,6 +1011,12 @@ module RubyLLM
         assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         attrs
+      end
+
+      def tool_result_attributes(tool_call, message)
+        attributes = { result: @message }
+        attributes[:mcp_result] = message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
+        attributes
       end
 
       def assign_supported_attribute(attributes, name, value)

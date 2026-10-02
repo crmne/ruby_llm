@@ -1461,7 +1461,8 @@ module RubyLLM
 
     def add_tool_result_message(tool_call, result)
       content, attachments = Tool.split_result(result)
-      message = add_message role: :tool, content:, attachments:, tool_call_id: tool_call.id
+      mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
+      message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id, mcp_result:)
       run_callbacks(:after_message, message)
       message
     end
