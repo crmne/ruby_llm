@@ -52,19 +52,6 @@ RSpec.describe RubyLLM::Configuration do
 
       expect(config.instance_variables).not_to include(:@bedrock_credential_provider)
     end
-
-    it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do
-      allow(Regexp).to receive(:respond_to?).and_call_original
-      allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)
-      allow(RubyLLM.logger).to receive(:warn)
-
-      config.log_regexp_timeout = 5.0
-
-      expect(config.log_regexp_timeout).to eq(5.0)
-      expect(RubyLLM.logger).to have_received(:warn).with(
-        "log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}"
-      )
-    end
   end
 
   describe 'log_file' do
@@ -94,7 +81,7 @@ RSpec.describe RubyLLM::Configuration do
   end
 
   describe 'method redefinition warnings' do
-    it 'does not emit method redefined warning for log_regexp_timeout=' do
+    it 'loads without method redefined warnings' do
       warnings = `#{RbConfig.ruby} -W -e 'require "ruby_llm"' 2>&1`
       expect(warnings).not_to include('method redefined')
     end

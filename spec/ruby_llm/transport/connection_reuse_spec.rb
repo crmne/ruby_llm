@@ -107,7 +107,7 @@ RSpec.describe RubyLLM::Transport::Connection do
 
     def describe_state(object, depth = 0)
       case object
-      when Regexp then [object.source, object.options, object.respond_to?(:timeout) ? object.timeout : nil]
+      when Regexp then [object.source, object.options, object.timeout]
       when Proc, Method then :callable
       when Module then object.name || :anonymous
       when Logger, IO then object.object_id

@@ -135,8 +135,7 @@ RSpec.describe RubyLLM::Context, :live do
       expect(context1.config.log_regexp_timeout).to eq(5.0)
 
       expect(chat2.model.id).to eq(model_for(:anthropic))
-      expected_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
-      expect(context2.config.log_regexp_timeout).to eq(expected_timeout)
+      expect(context2.config.log_regexp_timeout).to eq(Regexp.timeout || 1.0)
     end
 
     it 'ensures changes in one context do not affect another' do

@@ -234,7 +234,7 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
-  config.log_regexp_timeout = Numeric  # Ruby 3.2+ support
+  config.log_regexp_timeout = Numeric
 end
 ```
 

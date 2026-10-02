@@ -322,9 +322,8 @@ module RubyLLM
     #
     # Timeout in seconds for the regular expressions that scrub logged
     # payloads. Defaults to the global <tt>Regexp.timeout</tt>, or 1.0
-    # when none is set. Requires Ruby 3.2 or later; on older Rubies
-    # setting a value logs a warning.
-    option :log_regexp_timeout, -> { Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil }
+    # when none is set.
+    option :log_regexp_timeout, -> { Regexp.timeout || 1.0 }
 
     def initialize # :nodoc:
       self.class.send(:defaults).each do |key, default|
@@ -343,14 +342,6 @@ module RubyLLM
     def inspect # :nodoc:
       attributes = instance_variables.map { |ivar| "#{ivar}=#{instance_variable_get(ivar).inspect}" }
       "#<#{self.class.name} #{attributes.join(', ')}>"
-    end
-
-    remove_method :log_regexp_timeout=
-    def log_regexp_timeout=(value) # :nodoc:
-      if value && !Regexp.respond_to?(:timeout)
-        RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
-      end
-      @log_regexp_timeout = value
     end
 
     private
