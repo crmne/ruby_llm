@@ -349,6 +349,7 @@ RSpec.describe RubyLLM::MCP::HTTP do
       it 'stops waiting when the chat is cancelled' do
         stub_method('tools/call', headers: events, body: event(id: 'event-1', retry_after: 60_000))
         stub_method('notifications/cancelled', status: 202, body: '')
+        client = RubyLLM::MCP::Client.new(described_class.new(url, timeout: 120))
         client.server
         started = monotonic_now
         cancel = -> { raise RubyLLM::CancelledError if monotonic_now - started > 0.2 }
