@@ -363,7 +363,15 @@ RSpec.describe RubyLLM::MCP::OAuth do
 
   it 'reads WWW-Authenticate challenges' do
     expect(described_class.challenge('Bearer error="insufficient_scope", scope="a b", resource_metadata="https://x.test/m?a=1"'))
-      .to eq(error: 'insufficient_scope', scope: 'a b', resource_metadata: 'https://x.test/m?a=1')
+      .to eq('bearer' => { error: 'insufficient_scope', scope: 'a b', resource_metadata: 'https://x.test/m?a=1' })
+  end
+
+  it 'reads every challenge of a WWW-Authenticate header' do
+    header = 'Bearer realm="a, \"b\"", DPoP algs="ES256 PS256", error=use_dpop_nonce, Basic'
+
+    expect(described_class.challenge(header)).to eq('bearer' => { realm: 'a, "b"' },
+                                                    'dpop' => { algs: 'ES256 PS256', error: 'use_dpop_nonce' },
+                                                    'basic' => {})
   end
 
   it 'refuses an authorization endpoint that is not HTTPS' do
@@ -728,6 +736,136 @@ RSpec.describe RubyLLM::MCP::OAuth do
 
       expect { wiki_class.new(user: 'ada').tools }
         .to raise_error(RubyLLM::UnauthorizedError, 'idp.example.com refused the request: The ID token expired')
+    end
+  end
+
+  describe 'servers that require DPoP' do
+    def public_key(jwk)
+      point = "\x04".b + Base64.urlsafe_decode64(jwk['x']) + Base64.urlsafe_decode64(jwk['y'])
+      algorithm = OpenSSL::ASN1::Sequence([OpenSSL::ASN1::ObjectId('id-ecPublicKey'),
+                                           OpenSSL::ASN1::ObjectId('prime256v1')])
+      OpenSSL::PKey.read(OpenSSL::ASN1::Sequence([algorithm, OpenSSL::ASN1::BitString(point)]).to_der)
+    end
+
+    def proved(proof)
+      verified(proof, public_key(JSON.parse(Base64.urlsafe_decode64(proof.split('.').first))['jwk']))
+    end
+
+    def requires_dpop(nonce: nil, challenge: "DPoP resource_metadata=\"#{metadata_url}\"")
+      stub_request(:post, server_url).to_return do |request|
+        proof = request.headers['Dpop']
+        if proof.nil? || !request.headers['Authorization'].to_s.start_with?('DPoP access-')
+          { status: 401, headers: { 'WWW-Authenticate' => challenge } }
+        elsif nonce && proved(proof).last['nonce'] != nonce
+          { status: 401, headers: { 'WWW-Authenticate' => 'DPoP error="use_dpop_nonce"', 'DPoP-Nonce' => nonce } }
+        else
+          message = JSON.parse(request.body)
+          result = message['method'] == 'server/discover' ? { supportedVersions: ['2026-07-28'] } : { tools: [] }
+          { headers: { 'Content-Type' => 'application/json' },
+            body: { jsonrpc: '2.0', id: message['id'], result: }.to_json }
+        end
+      end
+    end
+
+    def metadata_url = 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp'
+
+    def proofs_sent_to(url)
+      proofs = []
+      expect(a_request(:post, url).with { |request| proofs << request.headers['Dpop'] }).to have_been_made.at_least_once
+      proofs.compact.map { |proof| proved(proof) }
+    end
+
+    before do
+      requires_dpop
+      stub_request(:post, 'https://auth.example.com/token').to_return do |request|
+        refreshing = URI.decode_www_form(request.body).to_h['grant_type'] == 'refresh_token'
+        { body: { access_token: refreshing ? 'access-2' : 'access-1', refresh_token: 'refresh-1', expires_in: 3600,
+                  token_type: request.headers['Dpop'] ? 'DPoP' : 'Bearer' }.to_json }
+      end
+    end
+
+    it 'binds tokens to a key kept with the credentials and proves possession of it on every request' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      linear_class.new(user: 'ada').tools
+
+      (token_header, token_claims), = proofs_sent_to('https://auth.example.com/token')
+      expect(token_header).to include('typ' => 'dpop+jwt', 'alg' => 'ES256')
+      expect(token_header['jwk'].keys).to contain_exactly('kty', 'crv', 'x', 'y')
+      expect(token_claims).to include('htm' => 'POST', 'htu' => 'https://auth.example.com/token')
+      expect(token_claims).not_to include('ath', 'nonce')
+      requests = proofs_sent_to(server_url)
+      expect(requests.size).to eq(2)
+      expect(requests.map { |header, _| header['jwk'] }.uniq).to eq([token_header['jwk']])
+      expect(requests.map(&:last)).to all(include('htm' => 'POST', 'htu' => server_url,
+                                                  'ath' => Base64.urlsafe_encode64(Digest::SHA256.digest('access-1'),
+                                                                                   padding: false)))
+      expect(requests.map { |_, claims| claims['jti'] }.uniq.size).to eq(2)
+      expect(RubyLLM.config.mcp_credential_store.read("ada@#{server_url}"))
+        .to include('token_type' => 'DPoP', 'dpop_key' => a_string_starting_with('-----BEGIN PRIVATE KEY-----'))
+    end
+
+    it 'refreshes with a proof from the same key' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store = RubyLLM.config.mcp_credential_store
+      store.write("ada@#{server_url}", store.read("ada@#{server_url}").merge('expires_at' => 0))
+
+      linear_class.new(user: 'ada').tools
+
+      exchange, refresh = proofs_sent_to('https://auth.example.com/token').map(&:first)
+      expect(refresh['jwk']).to eq(exchange['jwk'])
+      expect(a_request(:post, server_url).with(headers: { 'Authorization' => 'DPoP access-2' })).to have_been_made.twice
+    end
+
+    it "retries a token request with the authorization server's nonce" do
+      requests = 0
+      stub_request(:post, 'https://auth.example.com/token').to_return do
+        next { status: 400, headers: { 'DPoP-Nonce' => 'as-nonce' }, body: { error: 'use_dpop_nonce' }.to_json } if
+          (requests += 1) == 1
+
+        { body: { access_token: 'access-1', token_type: 'DPoP', expires_in: 3600 }.to_json }
+      end
+
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+
+      expect(proofs_sent_to('https://auth.example.com/token').map { |_, claims| claims['nonce'] })
+        .to eq([nil, 'as-nonce'])
+      expect(linear).to be_authorized
+    end
+
+    it "retries a request with the server's nonce" do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      requires_dpop(nonce: 'rs-nonce')
+
+      expect(linear_class.new(user: 'ada').tools).to eq([])
+
+      expect(proofs_sent_to(server_url).map { |_, claims| claims['nonce'] }).to eq([nil, 'rs-nonce', 'rs-nonce'])
+    end
+
+    it 'binds tokens the app requests for itself when the metadata requires it' do
+      requires_dpop(challenge: "Bearer resource_metadata=\"#{metadata_url}\"")
+      stub_request(:get, metadata_url).to_return(
+        body: { resource: server_url, authorization_servers: ['https://auth.example.com'],
+                dpop_bound_access_tokens_required: true }.to_json
+      )
+      url = server_url
+      reports = Class.new(RubyLLM::MCP) do
+        url url
+        oauth grant: :client_credentials, client_id: 'reports', client_secret: 'shh'
+      end.new
+
+      expect(reports.tools).to eq([])
+
+      expect(proofs_sent_to('https://auth.example.com/token').size).to eq(1)
+      expect(proofs_sent_to(server_url).size).to eq(2)
+    end
+
+    it 'keeps bearer tokens for servers that also accept them' do
+      challenge = "Bearer resource_metadata=\"#{metadata_url}\", DPoP algs=\"ES256\""
+      stub_request(:post, server_url).to_return(status: 401, headers: { 'WWW-Authenticate' => challenge })
+
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+
+      expect(a_request(:post, 'https://auth.example.com/token').with(headers: { 'DPoP' => /.+/ })).not_to have_been_made
     end
   end
 

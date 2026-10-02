@@ -2,6 +2,7 @@
 
 require 'digest'
 require 'openssl'
+require 'strscan'
 
 module RubyLLM
   class MCP
@@ -23,6 +24,11 @@ module RubyLLM
     # authenticate with their secret or with a private_key_jwt assertion
     # (RFC 7523 section 2.2) addressed to the authorization server's
     # issuer.
+    #
+    # A server that requires DPoP-bound tokens (RFC 9449) gets them: new
+    # tokens are bound to a key kept with them in the credentials, and
+    # every token request and server request carries a fresh proof with
+    # the nonce the server last supplied.
     class OAuth # :nodoc:
       PENDING_FOR = 600
       REFRESH_EARLY = 60
@@ -37,7 +43,10 @@ module RubyLLM
         issuer token_endpoint token_endpoint_auth_methods_supported token_endpoint_auth_signing_alg_values_supported
         authorization_response_iss_parameter_supported
       ].freeze
-      CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri].freeze
+      CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri dpop_key].freeze
+      TOKEN = /[!\#$%&'*+.^_`|~0-9A-Za-z-]+/
+      PARAMETER = /#{TOKEN}\s*=/
+      QUOTED = /"((?:[^"\\]|\\.)*)"/
       AUTHORIZATION_SERVER_PATHS = [
         '/.well-known/oauth-authorization-server%<path>s',
         '/.well-known/openid-configuration%<path>s',
@@ -57,12 +66,21 @@ module RubyLLM
         @refreshes_lock.synchronize { @refreshes[key] }.synchronize(&)
       end
 
-      # Reads the parameters of a Bearer WWW-Authenticate challenge.
+      # Reads the challenges of a WWW-Authenticate header (RFC 9110
+      # section 11.6.1) into their parameters, keyed by lowercase scheme.
       def self.challenge(header)
-        header.to_s.sub(/\A\s*Bearer\s+/i, '').split(',').to_h do |pair|
-          name, value = pair.split('=', 2).map(&:strip)
-          [name.to_sym, value.to_s.delete_prefix('"').delete_suffix('"')]
+        scanner = StringScanner.new(header.to_s)
+        challenges = {}
+        while scanner.skip(/[\s,]*/) && (scheme = scanner.scan(TOKEN))
+          parameters = challenges[scheme.downcase] ||= {}
+          while scanner.skip(/[\s,]*/) && scanner.check(PARAMETER)
+            name = scanner.scan(TOKEN).downcase.to_sym
+            scanner.skip(/\s*=\s*/)
+            value = scanner.scan(QUOTED) ? scanner[1].gsub(/\\(.)/, '\1') : scanner.scan(/[^\s,]*/)
+            parameters[name] ||= value
+          end
         end
+        challenges
       end
 
       def initialize(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil, grant: nil,
@@ -92,10 +110,22 @@ module RubyLLM
         credential['access_token']
       end
 
-      # Answers the server's rejection of a request. Returns whether a new
-      # token makes it worth sending again.
-      def recover(challenge)
+      # Returns the headers that authorize a request to the server: none
+      # without a token, and a proof of possession with a bound one.
+      def authorization_headers
+        token = access_token or return {}
+        return { 'Authorization' => "Bearer #{token}" } unless credential['token_type'] == 'DPoP'
+
+        { 'Authorization' => "DPoP #{token}", 'DPoP' => proofs.sign(credential['dpop_key'], @server_url, token:) }
+      end
+
+      # Answers the server's rejection of a request, given its challenge
+      # and DPoP nonce. Returns whether it is worth sending again.
+      def recover(challenge, nonce: nil)
         @challenge = challenge
+        proofs.remember(@server_url, nonce)
+        return true if nonce && nonce_requested?
+
         authorization_code? ? authorized? && refresh : obtain
       end
 
@@ -125,7 +155,7 @@ module RubyLLM
         state = SecureRandom.urlsafe_base64(32)
         pending = client.merge('state' => state, 'verifier' => verifier, 'redirect_uri' => redirect_uri,
                                'issuer' => server['issuer'], 'scope' => scopes_for(server),
-                               'expires_at' => Time.now.to_i + PENDING_FOR)
+                               'dpop_key' => binding_key, 'expires_at' => Time.now.to_i + PENDING_FOR)
         write(credential.to_h.merge('pending' => pending.merge('server' => server.slice(*SERVER_FIELDS))))
 
         query = { response_type: 'code', client_id: client['client_id'], redirect_uri:, state:,
@@ -166,7 +196,8 @@ module RubyLLM
         data = credential.to_h.except('pending')
         data = data.except(*CLIENT_FIELDS).merge(client) if client
         data = data.merge('access_token' => tokens['access_token'], 'scope' => tokens['scope'] || data['scope'],
-                          'expires_at' => (Time.now.to_i + tokens['expires_in'].to_i if tokens['expires_in']))
+                          'expires_at' => (Time.now.to_i + tokens['expires_in'].to_i if tokens['expires_in']),
+                          'token_type' => ('DPoP' if tokens['token_type'].to_s.casecmp?('DPoP')))
         data['refresh_token'] = tokens['refresh_token'] if tokens['refresh_token']
         write(data.compact)
       end
@@ -209,7 +240,30 @@ module RubyLLM
           raise ConfigurationError, 'The client_credentials grant needs a client_id'
         end
 
-        preregistered_client(server).merge('issuer' => server['issuer'], 'server' => server.slice(*SERVER_FIELDS))
+        preregistered_client(server).merge('issuer' => server['issuer'], 'server' => server.slice(*SERVER_FIELDS),
+                                           'dpop_key' => binding_key).compact
+      end
+
+      # RFC 9449 section 7.1 and RFC 9728 section 2: a server requires
+      # DPoP-bound tokens when it challenges with the DPoP scheme and not
+      # Bearer, or when its metadata says so.
+      def dpop_required?
+        schemes = @challenge.to_h.keys
+        @dpop_required || (schemes.include?('dpop') && !schemes.include?('bearer'))
+      end
+
+      def binding_key
+        Key.generate.to_pem if dpop_required?
+      end
+
+      # RFC 9449 section 9: a server that wants a nonce in proofs answers
+      # with use_dpop_nonce and the nonce to use.
+      def nonce_requested?
+        @challenge.to_h.dig('dpop', :error) == 'use_dpop_nonce' && credential&.fetch('token_type', nil) == 'DPoP'
+      end
+
+      def proofs
+        @proofs ||= Proofs.new
       end
 
       # Assertions are resolved for every token, since workload platforms
@@ -272,13 +326,30 @@ module RubyLLM
       def token_request(grant_type, client: credential, key: (signing_key if client['client_id'] == @client_id),
                         **params)
         server = client['server'] or raise Error, 'No authorization server known; authorize first'
-        form = params.merge(grant_type:, client_id: client['client_id'], resource:)
+        send_token_request(server, client, key, params.merge(grant_type:))
+      rescue Error => e
+        forget_registration(client) if oauth_error(e) == 'invalid_client'
+        raise
+      end
+
+      # RFC 9449 section 8: an authorization server that wants a nonce in
+      # the proof answers use_dpop_nonce once with the nonce to use. Every
+      # attempt signs a new proof and a new client assertion.
+      def send_token_request(server, client, key, params, retried: false)
+        url = server['token_endpoint']
+        form = params.merge(client_id: client['client_id'], resource:)
         headers = { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' }
         authenticate(client, server, form, headers, key)
-        post(server['token_endpoint'], URI.encode_www_form(form.compact), headers)
+        headers['DPoP'] = proofs.sign(client['dpop_key'], url) if client['dpop_key']
+        post(url, URI.encode_www_form(form.compact), headers)
       rescue Error => e
-        forget_registration(client) if e.data.is_a?(Hash) && e.data['error'] == 'invalid_client'
-        raise
+        raise if retried || !client['dpop_key'] || oauth_error(e) != 'use_dpop_nonce'
+
+        send_token_request(server, client, key, params, retried: true)
+      end
+
+      def oauth_error(error)
+        error.data['error'] if error.data.is_a?(Hash)
       end
 
       def forget_registration(client)
@@ -333,11 +404,12 @@ module RubyLLM
 
         @resource = checked_resource(metadata['resource'])
         @scopes_supported = metadata['scopes_supported']
+        @dpop_required = metadata['dpop_bound_access_tokens_required'] == true
         discover_authorization_server(issuer)
       end
 
       def protected_resource_metadata
-        url = @challenge&.dig(:resource_metadata)
+        url = challenged(:resource_metadata)
         return get_json(url) if url && same_origin?(URI(url), URI(@server_url))
 
         uri = URI(@server_url)
@@ -456,8 +528,8 @@ module RubyLLM
       end
 
       def scopes_for(server)
-        challenged = @challenge&.dig(:scope)&.split
-        scopes = if challenged then Array(@scopes) + challenged + credential.to_h['scope'].to_s.split
+        requested = challenged(:scope)&.split
+        scopes = if requested then Array(@scopes) + requested + credential.to_h['scope'].to_s.split
                  else Array(@scopes || @scopes_supported)
                  end
         scopes += ['offline_access'] if offline_access?(server)
@@ -466,6 +538,10 @@ module RubyLLM
 
       def offline_access?(server)
         authorization_code? && Array(server['scopes_supported']).include?('offline_access')
+      end
+
+      def challenged(name)
+        @challenge.to_h.each_value.filter_map { |parameters| parameters[name] }.first
       end
 
       def resource
@@ -486,18 +562,24 @@ module RubyLLM
       end
 
       def post(url, body, headers)
-        parse(connection(url).post(url, body, headers))
+        response = connection(url).post(url, body, headers)
+        proofs.remember(url, response.headers['dpop-nonce'])
+        parse(response)
       rescue Faraday::Error => e
+        raise refusal(url, e.response && Faraday::Response.new(status: e.response[:status], body: e.response[:body],
+                                                               response_headers: e.response[:headers]))
+      end
+
+      def refusal(url, response)
+        proofs.remember(url, Hash(response&.headers)['dpop-nonce'])
         details = begin
-          JSON.parse(e.response&.dig(:body).to_s)
+          JSON.parse(response&.body.to_s)
         rescue JSON::ParserError
           {}
         end
         details = {} unless details.is_a?(Hash)
-        response = e.response && Faraday::Response.new(status: e.response[:status], body: e.response[:body],
-                                                       response_headers: e.response[:headers])
-        raise Error.new("#{URI(url).host} refused the request: #{details['error_description'] || details['error']}",
-                        data: details, response:)
+        Error.new("#{URI(url).host} refused the request: #{details['error_description'] || details['error']}",
+                  data: details, response:)
       end
 
       def parse(response)

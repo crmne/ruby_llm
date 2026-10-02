@@ -163,7 +163,8 @@ module RubyLLM
       #   oauth owner: :user, client_id: ENV["SLACK_CLIENT_ID"], client_secret: ENV["SLACK_CLIENT_SECRET"]
       #
       # Send the user to MCP#authorization_url, then pass the callback's
-      # parameters to MCP#authorize.
+      # parameters to MCP#authorize. Servers that require DPoP get tokens
+      # bound to a key that RubyLLM keeps with the credentials.
       #
       # +grant: :client_credentials+ connects your app as itself, with no
       # user: RubyLLM requests a token when the server first asks for one
@@ -721,7 +722,9 @@ module RubyLLM
 
     def request_headers
       headers = self.class.headers.transform_values { |value| resolve(value) }
-      token = self.class.oauth_settings ? oauth.access_token : resolve(self.class.bearer_token)
+      return headers.merge(oauth.authorization_headers) if self.class.oauth_settings
+
+      token = resolve(self.class.bearer_token)
       token ? headers.merge('Authorization' => "Bearer #{token}") : headers
     end
 
@@ -740,7 +743,8 @@ module RubyLLM
 
     def unauthorized(headers, status)
       @challenge = OAuth.challenge(headers['www-authenticate'] || headers['WWW-Authenticate'])
-      status == 401 && self.class.oauth_settings && oauth.recover(@challenge)
+      status == 401 && self.class.oauth_settings &&
+        oauth.recover(@challenge, nonce: headers['dpop-nonce'] || headers['DPoP-Nonce'])
     end
 
     def challenge

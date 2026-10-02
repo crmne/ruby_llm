@@ -53,6 +53,22 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
     expect(described_class.read(key)['refresh_token']).to eq('refresh-2')
   end
 
+  it 'keeps the key of DPoP-bound tokens with them, encrypted' do
+    key = OpenSSL::PKey::EC.generate('prime256v1')
+    server_url = 'https://mcp.example.com/mcp'
+    described_class.write("#{owner.to_gid}@#{server_url}", {
+                            'access_token' => 'access-1', 'token_type' => 'DPoP', 'dpop_key' => key.private_to_pem
+                          }, owner:)
+
+    headers = RubyLLM::MCP::OAuth.new(server_url, owner:).authorization_headers
+
+    jwk = JSON.parse(Base64.urlsafe_decode64(headers['DPoP'].split('.').first))['jwk']
+    expect(headers['Authorization']).to eq('DPoP access-1')
+    expect(Base64.urlsafe_decode64(jwk['x'])).to eq(key.public_key.to_octet_string(:uncompressed)[1, 32])
+    expect(described_class.connection.select_value('SELECT data FROM ruby_llm_mcp_credentials'))
+      .not_to include('PRIVATE KEY')
+  end
+
   it 'replaces and deletes credentials' do
     described_class.write('key', { 'access_token' => 'first' })
     described_class.write('key', { 'access_token' => 'second' })

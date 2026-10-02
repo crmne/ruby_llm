@@ -4,12 +4,17 @@ module RubyLLM
   class MCP
     class OAuth
       # A private key that signs JSON Web Tokens with JWS (RFC 7515): the
-      # client assertions of private_key_jwt (RFC 7523 section 2.2). Takes
-      # an RSA or elliptic curve key, as a PEM string or an OpenSSL key.
+      # client assertions of private_key_jwt (RFC 7523 section 2.2) and
+      # DPoP proofs (RFC 9449 section 4.2). Takes an RSA or elliptic curve
+      # key, as a PEM string or an OpenSSL key.
       class Key # :nodoc:
         CURVES = { 'prime256v1' => %w[P-256 ES256], 'secp384r1' => %w[P-384 ES384],
                    'secp521r1' => %w[P-521 ES512] }.freeze
         RSA_ALGORITHMS = %w[RS256 PS256 RS384 PS384 RS512 PS512].freeze
+
+        def self.generate
+          new(OpenSSL::PKey::EC.generate('prime256v1'))
+        end
 
         def initialize(key)
           @key = key.is_a?(OpenSSL::PKey::PKey) ? key : OpenSSL::PKey.read(key.to_s)
@@ -28,6 +33,18 @@ module RubyLLM
         def jwt(claims, algorithm: self.algorithm, **header)
           input = [header.merge(alg: algorithm), claims].map { |part| encode(JSON.generate(part)) }.join('.')
           "#{input}.#{encode(sign(input, algorithm))}"
+        end
+
+        # Returns the public half of an elliptic curve key as a JSON Web Key
+        # (RFC 7518 section 6.2.1).
+        def jwk
+          point = @key.public_key.to_octet_string(:uncompressed)
+          size = point.bytesize / 2
+          { kty: 'EC', crv: CURVES[curve_name].first, x: encode(point[1, size]), y: encode(point[size + 1, size]) }
+        end
+
+        def to_pem
+          @key.private_to_pem
         end
 
         private

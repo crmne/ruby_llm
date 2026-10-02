@@ -545,6 +545,10 @@ The outer `client_id:` and `client_secret:` are your app's registration with the
 
 RubyLLM exchanges the ID token at the identity provider for a grant addressed to the server's authorization server, then exchanges that grant for a token. The identity provider's policy decides who reaches which servers, and a refusal raises `RubyLLM::UnauthorizedError`. Every new token needs a current ID token, so refresh it the way your sign-in does.
 
+### Proof-of-Possession Tokens
+
+Some servers only accept tokens bound to a key, so a token that leaks is useless without the key. When a server's challenge or metadata requires DPoP, RubyLLM binds new tokens to a key it creates, keeps the key with the credentials, and signs every token request and every request to the server with it. There is nothing to configure.
+
 ### Storing Credentials
 
 In Rails, credentials live in the `ruby_llm_mcp_credentials` table, encrypted with [Active Record encryption](https://guides.rubyonrails.org/active_record_encryption.html). New applications get the table from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with the upgrade generator:
