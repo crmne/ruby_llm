@@ -172,10 +172,19 @@ module RubyLLM
       # +client_secret:+, for any app you registered.
       #
       #   oauth grant: :client_credentials, client_id: "reports", private_key: ENV["REPORTS_PRIVATE_KEY"]
-      def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, grant: nil, private_key: nil)
+      #
+      # +assertion:+ presents a JWT your platform issued, such as a
+      # Kubernetes service account token, with the JWT bearer grant
+      # (+grant: :jwt_bearer+), so a workload needs no credentials of its
+      # own. A block or method name is read for every token, as platforms
+      # rotate them.
+      #
+      #   oauth assertion: -> { File.read("/var/run/secrets/tokens/mcp-token") }
+      def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, grant: nil, private_key: nil,
+                assertion: nil)
         raise ArgumentError, "Unknown OAuth grant: #{grant}" unless grant.nil? || OAuth::GRANTS.include?(grant)
 
-        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key: }
+        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key:, assertion: }
       end
 
       def oauth_settings # :nodoc:

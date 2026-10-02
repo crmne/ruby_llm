@@ -21,6 +21,7 @@ def oauth_settings(scenario, context)
   when 'auth/client-credentials-basic' then client.merge(grant: :client_credentials)
   when 'auth/client-credentials-jwt'
     { grant: :client_credentials, client_id: context['client_id'], private_key: context['private_key_pem'] }
+  when 'auth/wif-jwt-bearer' then { assertion: context['valid_jwt'] }
   else client
   end
 end

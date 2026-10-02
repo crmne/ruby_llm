@@ -12,17 +12,21 @@ module RubyLLM
     # token refresh. Credentials live in the configured
     # +mcp_credential_store+, keyed by owner and server.
     #
-    # The client credentials grant of the OAuth Client Credentials
-    # extension needs no user. As the extension's flow describes, a token
-    # is requested once the server rejects a request without one, and
-    # again before it expires. Pre-registered clients authenticate with
-    # their secret or with a private_key_jwt assertion (RFC 7523 section
-    # 2.2) addressed to the authorization server's issuer.
+    # Two grants need no user: the client credentials grant of the OAuth
+    # Client Credentials extension, and the JWT bearer grant (RFC 7523
+    # section 2.1), with which Workload Identity Federation presents a
+    # token the workload's platform issued. As the extensions' flows
+    # describe, a token is requested once the server rejects a request
+    # without one, and again before it expires. Pre-registered clients
+    # authenticate with their secret or with a private_key_jwt assertion
+    # (RFC 7523 section 2.2) addressed to the authorization server's
+    # issuer.
     class OAuth # :nodoc:
       PENDING_FOR = 600
       REFRESH_EARLY = 60
       ASSERTION_FOR = 60
-      GRANTS = %i[authorization_code client_credentials].freeze
+      GRANTS = %i[authorization_code client_credentials jwt_bearer].freeze
+      JWT_BEARER = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
       CLIENT_ASSERTION = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
       SERVER_FIELDS = %w[
         issuer token_endpoint token_endpoint_auth_methods_supported token_endpoint_auth_signing_alg_values_supported
@@ -57,14 +61,16 @@ module RubyLLM
       end
 
       def initialize(server_url, owner:, scopes: nil, client_id: nil, client_secret: nil, grant: nil,
-                     private_key: nil, config: RubyLLM.config, resolve: ->(value) { value })
+                     private_key: nil, assertion: nil, config: RubyLLM.config, resolve: ->(value) { value })
         @server_url = server_url.to_s
         @owner = owner
         @scopes = scopes
         @client_id = resolve.call(client_id)
         @client_secret = resolve.call(client_secret)
         @private_key = resolve.call(private_key)
-        @grant = grant || :authorization_code
+        @assertion = assertion
+        @grant = grant || (assertion ? :jwt_bearer : :authorization_code)
+        @resolve = resolve
         @config = config
       end
 
@@ -182,7 +188,8 @@ module RubyLLM
 
           server = authorization_server
           client = granting_client(server)
-          store_tokens(token_request('client_credentials', client:, scope: scopes_for(server)), client:)
+          grant_type, grant = grant_parameters
+          store_tokens(token_request(grant_type, client:, scope: scopes_for(server), **grant), client:)
           true
         end
       rescue Error => e
@@ -190,9 +197,20 @@ module RubyLLM
       end
 
       def granting_client(server)
-        raise ConfigurationError, "The #{@grant} grant needs a client_id" unless @client_id
+        if @grant == :client_credentials && @client_id.nil?
+          raise ConfigurationError, 'The client_credentials grant needs a client_id'
+        end
 
         preregistered_client(server).merge('issuer' => server['issuer'], 'server' => server.slice(*SERVER_FIELDS))
+      end
+
+      # The assertion is resolved for every token, since workload
+      # platforms rotate the tokens they issue.
+      def grant_parameters
+        return ['client_credentials', {}] if @grant == :client_credentials
+
+        assertion = @resolve.call(@assertion) or raise ConfigurationError, 'The jwt_bearer grant needs an assertion'
+        [JWT_BEARER, { assertion: }]
       end
 
       def check_callback(pending, params)
@@ -370,7 +388,8 @@ module RubyLLM
         issuer = store.read(issuer_key)&.fetch('issuer', nil)
         store.write(issuer_key, { 'issuer' => server['issuer'] }, owner: nil) unless issuer
         if issuer && !same_issuer?(issuer, server['issuer'])
-          raise Error, "#{@client_id} is registered with #{issuer}, but #{@server_url} now uses #{server['issuer']}"
+          raise Error, "#{@client_id || 'The workload'} is registered with #{issuer}, " \
+                       "but #{@server_url} now uses #{server['issuer']}"
         end
 
         { 'client_id' => @client_id, 'client_secret' => @client_secret }.compact

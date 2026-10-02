@@ -62,6 +62,35 @@ RSpec.describe RubyLLM::MCP::OAuth do
     { code: 'code-1', state: params['state'], iss: 'https://auth.example.com' }.merge(overrides)
   end
 
+  def moved_to(issuer)
+    stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+      .to_return(body: { resource: server_url, authorization_servers: [issuer] }.to_json)
+    stub_request(:get, "#{issuer}/.well-known/oauth-authorization-server")
+      .to_return(body: authorization_server.merge(issuer:, authorization_endpoint: "#{issuer}/authorize",
+                                                  token_endpoint: "#{issuer}/token").to_json)
+  end
+
+  def token_form
+    form = nil
+    expect(a_request(:post, 'https://auth.example.com/token').with do |request|
+      form = URI.decode_www_form(request.body).to_h
+    end).to have_been_made.once
+    form
+  end
+
+  def verified(jwt, key)
+    input, signature = jwt.rpartition('.').values_at(0, 2)
+    signature = Base64.urlsafe_decode64(signature)
+    if key.is_a?(OpenSSL::PKey::EC)
+      signature = OpenSSL::ASN1::Sequence(signature.unpack('a32a32').map do |half|
+        OpenSSL::ASN1::Integer(OpenSSL::BN.new(half, 2))
+      end).to_der
+    end
+    raise 'The signature does not verify' unless key.verify('SHA256', signature, input)
+
+    input.split('.').map { |part| JSON.parse(Base64.urlsafe_decode64(part)) }
+  end
+
   it 'starts an authorization with PKCE, the resource, and the challenged scope' do
     url = linear.authorization_url(redirect_uri:)
     params = URI.decode_www_form(URI(url).query).to_h
@@ -278,14 +307,6 @@ RSpec.describe RubyLLM::MCP::OAuth do
         url url
         oauth client_id:, client_secret: 'shh'
       end.new
-    end
-
-    def moved_to(issuer)
-      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
-        .to_return(body: { resource: server_url, authorization_servers: [issuer] }.to_json)
-      stub_request(:get, "#{issuer}/.well-known/oauth-authorization-server")
-        .to_return(body: authorization_server.merge(issuer:, authorization_endpoint: "#{issuer}/authorize",
-                                                    token_endpoint: "#{issuer}/token").to_json)
     end
 
     it 'stays with the authorization server it was first used with' do
@@ -522,27 +543,6 @@ RSpec.describe RubyLLM::MCP::OAuth do
       end.new
     end
 
-    def token_form
-      form = nil
-      expect(a_request(:post, 'https://auth.example.com/token').with do |request|
-        form = URI.decode_www_form(request.body).to_h
-      end).to have_been_made.once
-      form
-    end
-
-    def verified(jwt, key)
-      input, signature = jwt.rpartition('.').values_at(0, 2)
-      signature = Base64.urlsafe_decode64(signature)
-      if key.is_a?(OpenSSL::PKey::EC)
-        signature = OpenSSL::ASN1::Sequence(signature.unpack('a32a32').map do |half|
-          OpenSSL::ASN1::Integer(OpenSSL::BN.new(half, 2))
-        end).to_der
-      end
-      raise 'The signature does not verify' unless key.verify('SHA256', signature, input)
-
-      input.split('.').map { |part| JSON.parse(Base64.urlsafe_decode64(part)) }
-    end
-
     it 'requests a token when the server asks for one, authenticating with the secret' do
       expect(reports(client_secret: 'shh').tools).to eq([])
 
@@ -617,6 +617,53 @@ RSpec.describe RubyLLM::MCP::OAuth do
       form = token_form
       expect(form).to include('grant_type' => 'authorization_code')
       expect(verified(form['client_assertion'], key).last).to include('iss' => 'slack-app', 'sub' => 'slack-app')
+    end
+  end
+
+  describe 'the JWT bearer grant' do
+    def workload(assertion)
+      url = server_url
+      Class.new(RubyLLM::MCP) do
+        url url
+        oauth assertion:
+      end
+    end
+
+    it "presents the workload's assertion when the server asks for a token" do
+      expect(workload('workload-jwt').new.tools).to eq([])
+
+      expect(token_form).to eq('grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                               'assertion' => 'workload-jwt', 'resource' => server_url, 'scope' => 'issues:read')
+      expect(a_request(:post, 'https://auth.example.com/token').with(headers: { 'Authorization' => /.+/ }))
+        .not_to have_been_made
+    end
+
+    it 'reads the assertion again for every token' do
+      assertions = []
+      stub_request(:post, 'https://auth.example.com/token').to_return do |request|
+        assertions << URI.decode_www_form(request.body).to_h['assertion']
+        { body: { access_token: 'access-1', expires_in: 3600 }.to_json }
+      end
+      rotating = %w[first second].each
+      platform = workload(-> { rotating.next })
+      store = RubyLLM.config.mcp_credential_store
+
+      platform.new.tools
+      store.write("@#{server_url}", store.read("@#{server_url}").merge('expires_at' => 0))
+      platform.new.tools
+
+      expect(assertions).to eq(%w[first second])
+    end
+
+    it 'keeps the assertion from an authorization server the server moves to' do
+      workload('workload-jwt').new.tools
+      RubyLLM.config.mcp_credential_store.delete("@#{server_url}")
+      moved_to('https://elsewhere.example.com')
+
+      expect { workload('workload-jwt').new.tools }
+        .to raise_error(RubyLLM::UnauthorizedError, 'The workload is registered with https://auth.example.com, ' \
+                                                    "but #{server_url} now uses https://elsewhere.example.com")
+      expect(a_request(:post, 'https://elsewhere.example.com/token')).not_to have_been_made
     end
   end
 

@@ -516,6 +516,17 @@ oauth grant: :client_credentials, client_id: "reports", private_key: Rails.appli
 
 `private_key:` works for any app you registered, including one your users authorize.
 
+A workload that already holds a token from its platform, such as a Kubernetes service account token or a SPIFFE JWT, needs no client of its own. Pass that token as the `assertion:`:
+
+```ruby
+class Reports < RubyLLM::MCP
+  url "https://mcp.example.com/mcp"
+  oauth assertion: -> { File.read("/var/run/secrets/tokens/mcp-token") }
+end
+```
+
+RubyLLM presents it with the JWT bearer grant, and a block or method name is read again for every token, since platforms rotate them. The authorization server decides which platforms and workloads it trusts.
+
 ### Storing Credentials
 
 In Rails, credentials live in the `ruby_llm_mcp_credentials` table, encrypted with [Active Record encryption](https://guides.rubyonrails.org/active_record_encryption.html). New applications get the table from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with the upgrade generator:
