@@ -514,8 +514,14 @@ module RubyLLM
     def foreign_thinking?(message)
       return false unless message.role == :assistant && carries_thinking?(message)
 
-      producer = producer_slug(message)
-      !producer.nil? && producer != @provider.slug
+      producer = producer_entry(message)
+      !producer.nil? && foreign_producer?(producer)
+    end
+
+    # Whether the usage entry names a producer whose thinking this request
+    # cannot replay.
+    def foreign_producer?(entry)
+      entry.provider != @provider.slug
     end
 
     def carries_thinking?(message)
@@ -526,8 +532,12 @@ module RubyLLM
 
     # Only a usage entry names the producer: a model id alone can belong
     # to several providers.
+    def producer_entry(message)
+      message.ruby_llm_usage_entries.reverse.find(&:succeeded?)
+    end
+
     def producer_slug(message)
-      message.ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider
+      producer_entry(message)&.provider
     end
 
     def resolve_provider_tools_for_request(entries)

@@ -41,6 +41,20 @@ module RubyLLM
         signed_post(count_tokens_url, payload)
       end
 
+      # Converse serves several model families, and none of them can replay
+      # the reasoning another family produced.
+      def foreign_producer?(entry)
+        return true if super
+
+        producer = model_vendor(entry.model)
+        target = model_vendor(@model&.id)
+        !producer.nil? && !target.nil? && producer != target
+      end
+
+      def model_vendor(model_id)
+        foundation_model_id(model_id)[/\A[^.]+(?=\.)/]
+      end
+
       def signed_post(url, payload, additional_headers = {})
         body = JSON.generate(payload)
 

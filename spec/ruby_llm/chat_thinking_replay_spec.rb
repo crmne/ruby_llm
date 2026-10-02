@@ -139,6 +139,51 @@ RSpec.describe RubyLLM::Chat do
     expect(payload[:messages][1][:reasoning_details]).to eq([{ type: 'reasoning.encrypted', data: 'signature' }])
   end
 
+  describe 'on Bedrock Converse' do
+    let(:claude) { 'us.anthropic.claude-haiku-4-5-20251001-v1:0' }
+    let(:gpt) { 'us.openai.gpt-6-sol' }
+    let(:claude_thinking) { RubyLLM::Thinking.build(text: 'Let me think.', signature: 'claude-signature') }
+    let(:gpt_reasoning) { { 'converse' => [{ 'reasoningContent' => { 'redactedContent' => 'gpt-encrypted' } }] } }
+
+    def assistant_content(model, message)
+      replay(RubyLLM.chat(model:, provider: :bedrock), message)[:messages][1][:content]
+    end
+
+    it 'drops Claude thinking when the chat moves to GPT' do
+      message = produced_by('bedrock', claude, claude_thinking)
+
+      expect(assistant_content(gpt, message)).to eq([{ text: 'Done.' }])
+    end
+
+    it 'drops GPT reasoning when the chat moves to Claude' do
+      message = produced_by('bedrock', gpt, raw_reasoning: gpt_reasoning)
+
+      expect(assistant_content(claude, message)).to eq([{ text: 'Done.' }])
+    end
+
+    it 'keeps thinking for another model of the family that produced it' do
+      message = produced_by('bedrock', claude, claude_thinking)
+
+      expect(assistant_content('us.anthropic.claude-sonnet-4-5-20250929-v1:0', message).first).to eq(
+        reasoningContent: { reasoningText: { text: 'Let me think.', signature: 'claude-signature' } }
+      )
+    end
+
+    it 'keeps encrypted GPT reasoning for another GPT model' do
+      message = produced_by('bedrock', gpt, raw_reasoning: gpt_reasoning)
+
+      expect(assistant_content('us.openai.gpt-6-luna', message).first)
+        .to eq('reasoningContent' => { 'redactedContent' => 'gpt-encrypted' })
+    end
+
+    it 'keeps thinking from a model whose id names no family' do
+      profile = 'arn:aws:bedrock:us-west-2:123456789012:application-inference-profile/abc123'
+      message = produced_by('bedrock', profile, claude_thinking)
+
+      expect(assistant_content(gpt, message).first).to have_key(:reasoningContent)
+    end
+  end
+
   it 'leaves the transcript untouched' do
     message = produced_by('gemini', model_for(:gemini), RubyLLM::Thinking.build(signature: 'gemini-signature'))
     chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
