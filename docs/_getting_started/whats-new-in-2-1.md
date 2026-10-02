@@ -106,7 +106,19 @@ Handbook.new.listen(resources: ["handbook://policies"])
 
 See [Listening for Changes]({% link _core_features/mcp.md %}#listening-for-changes).
 
-The client speaks the 2026-07-28 revision of the protocol and falls back for servers that predate it. OAuth follows the MCP authorization spec, and Rails keeps the credentials encrypted. Background jobs can connect as your app itself, with client credentials, a private key, or a workload identity token, and companies can authorize their people through their identity provider. Servers that require DPoP get tokens bound to a key. See [MCP Client]({% link _core_features/mcp.md %}).
+The client speaks the 2026-07-28 revision of the protocol and falls back for servers that predate it. OAuth follows the MCP authorization spec, and Rails keeps the credentials encrypted. Background jobs can connect as your app itself, with client credentials, a private key, or a workload identity token, and companies can authorize their people through their identity provider. Servers that require DPoP get tokens bound to a key.
+
+Declare the protocol extensions your app supports with `extension`. RubyLLM implements two. With MCP Apps, tools come with a UI your app renders next to their results, and each tool call keeps the result its UI needs, so the UI renders again after a reload. With Tasks, a server runs a long tool call in the background while the chat pauses, the way it pauses for an approval, so no job waits for it:
+
+```ruby
+class Reports < RubyLLM::MCP
+  url "https://reports.example.com/mcp"
+  extension :apps
+  extension :tasks
+end
+```
+
+Tools, results, and resources also expose the `_meta` that extensions write, and `log_level` brings a server's log messages into your logs. See [MCP Client]({% link _core_features/mcp.md %}).
 
 ## Tool Progress
 
