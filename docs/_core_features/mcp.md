@@ -76,7 +76,7 @@ end
 
 The transport handles its own authentication and timeouts. `timeout` is `nil` unless RubyLLM wants a shorter one than the transport's own, and `headers` holds the tool arguments the server asks to receive as `Mcp-Param-*` HTTP headers, which a transport that doesn't end in HTTP can ignore. After `close`, the next request reconnects. Raise `RubyLLM::MCP::Error` when the server can't be reached. To let the model know instead, answer a `tools/call` request with a tool error, `{ "result" => { "isError" => true, "content" => [{ "type" => "text", "text" => "The laptop is offline" }] } }`.
 
-To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it.
+To support [listening for changes](#listening-for-changes), a transport also responds to `listen(message, version:)`. It sends `message`, a `subscriptions/listen` request, yields each notification the server sends for it, and returns the server's response once the server ends the subscription. RubyLLM calls it from the listener's thread and raises `RubyLLM::CancelledError` there to stop it. For servers that predate the 2026-07-28 revision, `message` is `nil`, and the transport yields the changes the server announces on its own.
 
 ### Inputs
 
@@ -491,7 +491,7 @@ Callbacks for the changes a listener hears run in its thread, one at a time, so 
 
 When the connection drops or the server ends the subscription, RubyLLM subscribes again after about a second, doubling the wait up to a minute while the server stays away. Changes made in between are not replayed, so RubyLLM lists tools again once it is back.
 
-`listen` works over stdio too, where the listener shares the server's pipe with your requests.
+Older servers send their changes on their session's event stream, and RubyLLM subscribes to resources with `resources/subscribe`; over stdio, the listener shares the server's pipe with your requests. `listen` works the same either way.
 
 ### Running a Listener
 

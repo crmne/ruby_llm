@@ -464,6 +464,21 @@ RSpec.describe RubyLLM::MCP::HTTP do
       end
     end
 
+    def legacy_server(events:)
+      MCPStreams::Server.new do |request, reply|
+        case request.verb == 'GET' ? 'GET' : request.rpc_method
+        when 'server/discover' then reply.status(404)
+        when 'initialize'
+          reply.json(headers: { 'Mcp-Session-Id' => 'session-1' },
+                     result: { protocolVersion: '2025-06-18',
+                               capabilities: { tools: { listChanged: true }, resources: { subscribe: true } } })
+        when 'GET' then events ? reply.stream : reply.status(405)
+        when 'resources/subscribe' then reply.json(result: {})
+        else reply.status(202)
+        end
+      end
+    end
+
     def subscription_id
       server.requests_for('subscriptions/listen').last.body['id']
     end
@@ -554,6 +569,67 @@ RSpec.describe RubyLLM::MCP::HTTP do
 
       it 'raises' do
         expect { mcp.listen }.to raise_error(RubyLLM::MCP::Error, 'Method not found')
+      end
+    end
+
+    context 'with a server that predates 2026-07-28' do
+      let(:server) { legacy_server(events: true) }
+
+      it 'subscribes to resources, listens on the session stream, and answers pings' do
+        mcp.listen(resources: ['file:///notes.md'])
+
+        expect(server.requests_for('resources/subscribe').map { |request| request.body.dig('params', 'uri') })
+          .to eq(['file:///notes.md'])
+        eventually { server.open_streams == 1 }
+        expect(server.requests.find { |request| request.verb == 'GET' }.headers)
+          .to include('mcp-session-id' => 'session-1', 'accept' => 'text/event-stream')
+
+        server.push(jsonrpc: '2.0', id: 'ping-1', method: 'ping')
+        server.push(jsonrpc: '2.0', method: 'notifications/resources/updated', params: { uri: 'file:///notes.md' })
+
+        expect(next_change).to have_attributes(uri: 'file:///notes.md')
+        pong = eventually { server.requests.find { |request| request.body&.fetch('id', nil) == 'ping-1' } }
+        expect(pong.body).to include('result' => {})
+        expect(pong.headers).to include('mcp-session-id' => 'session-1')
+      end
+    end
+
+    context 'with a server that predates 2026-07-28 and ends the session' do
+      let(:server) do
+        sessions = 0
+        MCPStreams::Server.new do |request, reply|
+          case request.verb == 'GET' ? 'GET' : request.rpc_method
+          when 'server/discover' then reply.status(404)
+          when 'initialize'
+            sessions += 1
+            reply.json(headers: { 'Mcp-Session-Id' => "session-#{sessions}" },
+                       result: { protocolVersion: '2025-06-18', capabilities: { resources: { subscribe: true } } })
+          when 'GET' then request.headers['mcp-session-id'] == 'session-1' ? reply.status(404) : reply.stream
+          when 'resources/subscribe' then reply.json(result: {})
+          else reply.status(202)
+          end
+        end
+      end
+
+      it 'starts a new session and subscribes again' do
+        mcp.listen(resources: ['file:///notes.md'])
+
+        eventually { server.open_streams == 1 }
+
+        expect(server.requests_for('resources/subscribe').map { |request| request.headers['mcp-session-id'] })
+          .to eq(%w[session-1 session-2])
+      end
+    end
+
+    context 'with a server that predates 2026-07-28 and offers no event stream' do
+      let(:server) { legacy_server(events: false) }
+
+      it 'stops listening instead of asking again' do
+        mcp.listen
+
+        sleep 0.2
+
+        expect(server.requests.count { |request| request.verb == 'GET' }).to eq(1)
       end
     end
   end

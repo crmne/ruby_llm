@@ -21,16 +21,19 @@ module RubyLLM
       CHECK_INTERVAL = 0.5
       SUBSCRIPTION_ID = 'io.modelcontextprotocol/subscriptionId'
 
-      # The messages of the subscription opened by request +id+.
+      # The messages of the subscription opened by request +id+, or with no
+      # +id+, the changes a server that predates subscriptions announces.
       Subscription = Struct.new(:id, :messages) do
         def claims?(message)
+          return !message.key?('id') && Client::CHANGES.include?(message['method']) if id.nil?
+
           params = message['params'].is_a?(Hash) ? message['params'] : {}
           params.dig('_meta', SUBSCRIPTION_ID) == id || answer?(message) ||
             (message['method'] == 'notifications/cancelled' && params['requestId'] == id)
         end
 
         def answer?(message)
-          message['id'] == id && !message.key?('method')
+          !id.nil? && message['id'] == id && !message.key?('method')
         end
       end
 
@@ -60,7 +63,7 @@ module RubyLLM
       end
 
       def listen(message, **)
-        subscription = Subscription.new(message[:id], Queue.new)
+        subscription = Subscription.new(message&.dig(:id), Queue.new)
         process = uninterrupted { @lock.synchronize { subscribe(subscription, message) } }
         loop do
           until subscription.messages.empty?
@@ -86,8 +89,10 @@ module RubyLLM
       private
 
       def subscribe(subscription, message)
+        raise Error, "#{name} exited" unless message || @process&.alive?
+
         @subscriptions << subscription
-        write(message)
+        write(message) if message
         @process
       end
 
@@ -198,12 +203,7 @@ module RubyLLM
       end
 
       def answer(request)
-        reply = if request['method'] == 'ping'
-                  { jsonrpc: '2.0', id: request['id'], result: {} }
-                else
-                  { jsonrpc: '2.0', id: request['id'], error: { code: -32_601, message: 'Method not found' } }
-                end
-        write(reply)
+        write(Client.reply(request))
       end
 
       def start

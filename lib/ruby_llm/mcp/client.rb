@@ -13,7 +13,8 @@ module RubyLLM
     # prompts, or resources changed on the stream of any request. Those
     # notifications reach the block given to ::new once the request is
     # answered, so the block can make requests of its own. #listen opens a
-    # subscription for them instead, with subscriptions/listen.
+    # subscription for them instead: subscriptions/listen on newer servers,
+    # resources/subscribe and the session's own stream on older ones.
     class Client # :nodoc:
       VERSION = '2026-07-28'
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
@@ -27,6 +28,15 @@ module RubyLLM
         notifications/resources/list_changed notifications/resources/updated
       ].freeze
 
+      # The answer to a request the server sends: RubyLLM only answers pings.
+      def self.reply(request)
+        if request['method'] == 'ping'
+          { jsonrpc: '2.0', id: request['id'], result: {} }
+        else
+          { jsonrpc: '2.0', id: request['id'], error: { code: METHOD_NOT_FOUND, message: 'Method not found' } }
+        end
+      end
+
       attr_reader :version
 
       def initialize(transport, capabilities: {}, &on_change)
@@ -34,6 +44,7 @@ module RubyLLM
         @capabilities = capabilities
         @on_change = on_change
         @connecting = Mutex.new
+        @subscribed = []
       end
 
       def server
@@ -65,9 +76,8 @@ module RubyLLM
       def listen(changes, &)
         server
         raise ConfigurationError, 'The MCP transport does not respond to listen' unless @transport.respond_to?(:listen)
-        raise Error.new('The MCP server predates subscriptions/listen', code: METHOD_NOT_FOUND) unless modern?
 
-        subscribe(changes, &)
+        modern? ? subscribe(changes, &) : listen_to_session(changes, &)
       end
 
       def modern?
@@ -79,6 +89,7 @@ module RubyLLM
           @transport.close
           @server = nil
           @version = nil
+          @subscribed = []
         end
       end
 
@@ -103,6 +114,7 @@ module RubyLLM
         end
 
         @version = result['protocolVersion']
+        @subscribed = []
         @transport.notify(message('notifications/initialized'), version:)
         result
       end
@@ -139,6 +151,18 @@ module RubyLLM
         answer(ending)
       rescue CancelledError
         cancel(request)
+        raise
+      end
+
+      def listen_to_session(changes, &)
+        uris = Array(changes[:resourceSubscriptions])
+        (@subscribed - uris).each { |uri| request('resources/unsubscribe', { uri: }) }
+        uris.each { |uri| request('resources/subscribe', { uri: }) }
+        @subscribed = uris
+        yield({ 'method' => ACKNOWLEDGED, 'params' => { 'notifications' => changes.transform_keys(&:to_s) } })
+        @transport.listen(nil, version:, &)
+      rescue HTTP::SessionExpired
+        @connecting.synchronize { @server = handshake }
         raise
       end
 

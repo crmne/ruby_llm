@@ -569,6 +569,23 @@ RSpec.describe RubyLLM::MCP do
     context 'with a server that predates subscriptions' do
       let(:mcp_class) { listening_to(server, MCP_ERA: 'legacy') }
 
+      it 'subscribes to resources and hears the changes the server announces' do
+        mcp.listen(resources: ['file:///project/README.md'])
+
+        ask(mcp, 'spec/announce_later', method: 'notifications/tools/list_changed')
+
+        expect(next_change).to eq(:tools)
+        expect(ask(mcp, 'spec/subscriptions')['watched']).to eq(['file:///project/README.md'])
+      end
+
+      it 'unsubscribes from resources it no longer listens to' do
+        mcp.listen(resources: ['file:///a', 'file:///b'])
+
+        mcp.listen(resources: ['file:///b'])
+
+        expect(ask(mcp, 'spec/subscriptions')['watched']).to eq(['file:///b'])
+      end
+
       it 'runs after_change for changes announced while it answers a request' do
         ask(mcp, 'spec/change_tools')
 

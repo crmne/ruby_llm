@@ -150,6 +150,7 @@ initialized = false
 cancelled = []
 tools = TOOLS.dup
 subscriptions = {}
+watched = []
 
 def notify(method, params)
   puts JSON.generate({ jsonrpc: '2.0', method:, params: })
@@ -161,12 +162,15 @@ def wants?(filter, method, params)
   filter[LISTS.fetch(method)] == true
 end
 
-# Servers that predate subscriptions announce every change.
-def announce(subscriptions, method, params = {})
-  return notify(method, params) if LEGACY
-
-  subscriptions.each do |id, filter|
-    notify(method, params.merge('_meta' => { SUBSCRIPTION_ID => id })) if wants?(filter, method, params)
+# Servers that predate subscriptions announce every change, and resource
+# updates for the URIs subscribed with resources/subscribe.
+def announce(subscriptions, watched, method, params = {})
+  if LEGACY
+    notify(method, params) unless method == 'notifications/resources/updated' && !watched.include?(params['uri'])
+  else
+    subscriptions.each do |id, filter|
+      notify(method, params.merge('_meta' => { SUBSCRIPTION_ID => id })) if wants?(filter, method, params)
+    end
   end
 end
 
@@ -214,19 +218,23 @@ $stdin.each_line do |line|
     reply(id, result: tools_page(params['cursor'], tools))
   when 'spec/change_tools'
     tools += [{ name: "extra_#{tools.size}", description: 'Added at runtime', inputSchema: { type: 'object' } }]
-    announce(subscriptions, 'notifications/tools/list_changed')
+    announce(subscriptions, watched, 'notifications/tools/list_changed')
     reply(id, result: {})
   when 'subscriptions/listen'
     next reply(id, error: { code: -32_601, message: 'Method not found' }) if LEGACY
 
     listen(subscriptions, id, params.fetch('notifications', {}))
+  when 'resources/subscribe', 'resources/unsubscribe'
+    watched.delete(params['uri'])
+    watched << params['uri'] if message['method'] == 'resources/subscribe'
+    reply(id, result: {})
   when 'spec/announce'
-    announce(subscriptions, params['method'], params.fetch('params', {}))
+    announce(subscriptions, watched, params['method'], params.fetch('params', {}))
     reply(id, result: {})
   when 'spec/announce_later'
     Thread.new do
       sleep 0.2
-      announce(subscriptions, params['method'], params.fetch('params', {}))
+      announce(subscriptions, watched, params['method'], params.fetch('params', {}))
     end
     reply(id, result: {})
   when 'spec/end_subscriptions'
@@ -235,7 +243,7 @@ $stdin.each_line do |line|
   when 'spec/cancel_subscriptions'
     subscriptions.each_key { |subscription| notify('notifications/cancelled', { requestId: subscription }) }.clear
     reply(id, result: {})
-  when 'spec/subscriptions' then reply(id, result: { subscriptions: })
+  when 'spec/subscriptions' then reply(id, result: { subscriptions:, watched: })
   when 'spec/exit' then exit
   when 'tools/call'
     case params['name']
