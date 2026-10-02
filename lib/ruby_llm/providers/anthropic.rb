@@ -29,6 +29,10 @@ module RubyLLM
           Anthropic::Capabilities
         end
 
+        def thinking_off_control(model_id)
+          { enabled: false } if Protocols::Anthropic::Chat.between_tools_off_model?(model_id)
+        end
+
         def configuration_options
           %i[anthropic_api_key anthropic_api_base]
         end

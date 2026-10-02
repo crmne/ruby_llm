@@ -28,6 +28,10 @@ module RubyLLM
         Bedrock::Capabilities
       end
 
+      def self.thinking_off_control(model_id)
+        { enabled: false } if Protocols::Anthropic::Chat.between_tools_off_model?(model_id)
+      end
+
       def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
         Models.resolve_registry_id(model_id, models, config)
       end

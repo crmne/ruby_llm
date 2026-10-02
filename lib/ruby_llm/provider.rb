@@ -493,6 +493,12 @@ module RubyLLM
         nil
       end
 
+      # Returns the thinking options that turn thinking off for +model_id+, or
+      # +nil+ when the provider has no off control beyond the model registry.
+      def thinking_off_control(_model_id) # :nodoc:
+        nil
+      end
+
       def models_dev_alias(_model_id, _models_dev_by_key, _provider_model = nil) # :nodoc:
         nil
       end

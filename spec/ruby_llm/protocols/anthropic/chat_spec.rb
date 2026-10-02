@@ -554,6 +554,45 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(payload).not_to have_key(:thinking)
       expect(payload).not_to have_key(:output_config)
     end
+
+    it 'sends disabled thinking when the model accepts it' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-5',
+        thinking: RubyLLM::Thinking::Config.new(enabled: false),
+        reasoning_options: [{ type: 'toggle' }, effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'disabled')
+    end
+
+    it 'sends between_tools when turning thinking off on Sonnet 5.5' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-5-5',
+        thinking: RubyLLM::Thinking::Config.new(enabled: false),
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'between_tools')
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'resolves with_thinking(false) to between_tools on Sonnet 5.5' do
+      model = RubyLLM::Model.new(
+        id: 'claude-sonnet-5-5',
+        provider: 'anthropic',
+        metadata: { reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)] }
+      )
+      thinking = RubyLLM::Thinking::Config.disabled.resolve(model)
+
+      payload = render_payload(
+        model_id: 'claude-sonnet-5-5',
+        thinking: thinking,
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(thinking.enabled).to be(false)
+      expect(payload[:thinking]).to eq(type: 'between_tools')
+    end
   end
 
   describe '#parse_completion_response' do
@@ -743,6 +782,20 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'asks for adaptive thinking to carry a display without a budget' do
       expect(build(RubyLLM::Thinking::Config.new(display: :summarized))).to eq(
         thinking: { type: 'adaptive', display: 'summarized' }
+      )
+    end
+
+    it 'sends disabled for models that still accept it' do
+      expect(build(RubyLLM::Thinking::Config.new(enabled: false))).to eq(
+        thinking: { type: 'disabled' }
+      )
+    end
+
+    it 'sends between_tools for Claude Sonnet 5.5' do
+      sonnet = RubyLLM::Model.new(id: 'claude-sonnet-5-5', provider: 'anthropic')
+
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(enabled: false), sonnet, 4096)).to eq(
+        thinking: { type: 'between_tools' }
       )
     end
   end

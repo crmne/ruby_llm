@@ -26,6 +26,10 @@ module RubyLLM
           VertexAI::Capabilities
         end
 
+        def thinking_off_control(model_id)
+          { enabled: false } if Protocols::Anthropic::Chat.between_tools_off_model?(model_id)
+        end
+
         def models_dev_alias(...)
           VertexAI::Models.models_dev_alias(...)
         end

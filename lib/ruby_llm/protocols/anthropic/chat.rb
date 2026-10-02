@@ -470,9 +470,20 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(thinking_payload[:output_config])
         end
 
+        # Sonnet 5.5 rejects thinking.type "disabled". Its lowest setting is
+        # between_tools, with no display or budget_tokens beside it.
+        BETWEEN_TOOLS_OFF_MODEL_IDS = %w[
+          claude-sonnet-5-5
+          anthropic.claude-sonnet-5-5
+        ].freeze
+
+        def between_tools_off_model?(model_id)
+          BETWEEN_TOOLS_OFF_MODEL_IDS.include?(model_id.to_s)
+        end
+
         def build_thinking_payload(thinking, model, max_tokens)
           return nil unless thinking&.enabled?
-          return { thinking: { type: 'disabled' } } if thinking.enabled == false
+          return { thinking: { type: thinking_off_type(model) } } if thinking.enabled == false
 
           effort = resolve_effort(thinking)
           return nil if effort == 'none'
@@ -518,6 +529,10 @@ module RubyLLM
           return [budget, minimum].max unless max_tokens
 
           budget.clamp(minimum, [max_tokens - 1, minimum].max)
+        end
+
+        def thinking_off_type(model)
+          between_tools_off_model?(model.id) ? 'between_tools' : 'disabled'
         end
 
         def resolve_effort(thinking)
