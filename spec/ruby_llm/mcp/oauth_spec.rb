@@ -512,4 +512,116 @@ RSpec.describe RubyLLM::MCP::OAuth do
 
     expect(linear_class.new(user: 'ada').deauthorize).not_to be_authorized
   end
+
+  describe 'the client credentials grant' do
+    def reports(**credentials)
+      url = server_url
+      Class.new(RubyLLM::MCP) do
+        url url
+        oauth grant: :client_credentials, client_id: 'reports', **credentials
+      end.new
+    end
+
+    def token_form
+      form = nil
+      expect(a_request(:post, 'https://auth.example.com/token').with do |request|
+        form = URI.decode_www_form(request.body).to_h
+      end).to have_been_made.once
+      form
+    end
+
+    def verified(jwt, key)
+      input, signature = jwt.rpartition('.').values_at(0, 2)
+      signature = Base64.urlsafe_decode64(signature)
+      if key.is_a?(OpenSSL::PKey::EC)
+        signature = OpenSSL::ASN1::Sequence(signature.unpack('a32a32').map do |half|
+          OpenSSL::ASN1::Integer(OpenSSL::BN.new(half, 2))
+        end).to_der
+      end
+      raise 'The signature does not verify' unless key.verify('SHA256', signature, input)
+
+      input.split('.').map { |part| JSON.parse(Base64.urlsafe_decode64(part)) }
+    end
+
+    it 'requests a token when the server asks for one, authenticating with the secret' do
+      expect(reports(client_secret: 'shh').tools).to eq([])
+
+      expect(token_form).to include('grant_type' => 'client_credentials', 'resource' => server_url,
+                                    'scope' => 'issues:read')
+      expect(a_request(:post, 'https://auth.example.com/token')
+        .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('reports:shh')}" })).to have_been_made
+      expect(a_request(:post, 'https://auth.example.com/register')).not_to have_been_made
+    end
+
+    it 'signs an assertion for the issuer with a private key instead of a secret' do
+      key = OpenSSL::PKey::EC.generate('prime256v1')
+
+      reports(private_key: key.private_to_pem).tools
+
+      form = token_form
+      header, claims = verified(form['client_assertion'], key)
+      expect(form).to include('client_assertion_type' => 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer')
+      expect(form).not_to include('client_id', 'client_secret')
+      expect(header).to eq('typ' => 'client-authentication+jwt', 'alg' => 'ES256')
+      expect(claims).to include('iss' => 'reports', 'sub' => 'reports', 'aud' => 'https://auth.example.com')
+      expect(claims['exp'] - claims['iat']).to eq(60)
+    end
+
+    it 'signs with an RSA key in an algorithm the authorization server accepts' do
+      key = OpenSSL::PKey::RSA.generate(2048)
+      stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server').to_return(
+        body: authorization_server.merge(token_endpoint_auth_signing_alg_values_supported: %w[RS256 ES256]).to_json
+      )
+
+      reports(private_key: key).tools
+
+      expect(verified(token_form['client_assertion'], key).first).to include('alg' => 'RS256')
+    end
+
+    it 'requests a new token before the old one expires' do
+      reports(client_secret: 'shh').tools
+      store = RubyLLM.config.mcp_credential_store
+      store.write("@#{server_url}", store.read("@#{server_url}").merge('expires_at' => 0))
+
+      reports(client_secret: 'shh').tools
+
+      grants = a_request(:post, 'https://auth.example.com/token')
+               .with(body: hash_including('grant_type' => 'client_credentials'))
+      expect(grants).to have_been_made.twice
+    end
+
+    it "raises the authorization server's reason after asking once" do
+      stub_request(:post, 'https://auth.example.com/token')
+        .to_return(status: 401, body: { error: 'invalid_client', error_description: 'Unknown client' }.to_json)
+
+      expect { reports(client_secret: 'wrong').tools }
+        .to raise_error(RubyLLM::UnauthorizedError, 'auth.example.com refused the request: Unknown client')
+      expect(a_request(:post, 'https://auth.example.com/token')).to have_been_made.once
+    end
+
+    it 'has no authorization for a user to complete' do
+      expect { reports(client_secret: 'shh').authorization_url(redirect_uri:) }
+        .to raise_error(RubyLLM::ConfigurationError, 'The client_credentials grant needs no authorization')
+    end
+
+    it 'signs the code exchange of an app that users authorize' do
+      key = OpenSSL::PKey::EC.generate('prime256v1')
+      url = server_url
+      slack = Class.new(RubyLLM::MCP) do
+        url url
+        oauth client_id: 'slack-app', private_key: key
+      end.new
+
+      slack.authorize(callback(slack.authorization_url(redirect_uri:)))
+
+      form = token_form
+      expect(form).to include('grant_type' => 'authorization_code')
+      expect(verified(form['client_assertion'], key).last).to include('iss' => 'slack-app', 'sub' => 'slack-app')
+    end
+  end
+
+  it 'refuses grants it does not know' do
+    expect { Class.new(RubyLLM::MCP) { oauth grant: :password } }
+      .to raise_error(ArgumentError, 'Unknown OAuth grant: password')
+  end
 end

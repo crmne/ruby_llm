@@ -493,6 +493,29 @@ An app belongs to the authorization server you registered it with. RubyLLM remem
 
 Pass `scopes:` to ask for specific scopes instead of the ones the server suggests.
 
+### Without a User
+
+Background jobs and services often connect as your app rather than on behalf of a user. When the authorization server issued your app its own credentials, use the client credentials grant:
+
+```ruby
+class Reports < RubyLLM::MCP
+  url "https://mcp.example.com/mcp"
+  oauth grant: :client_credentials, client_id: ENV["REPORTS_CLIENT_ID"], client_secret: ENV["REPORTS_CLIENT_SECRET"]
+end
+
+Reports.new.tools
+```
+
+No one signs in. RubyLLM requests a token the first time the server asks for one, and a new one before it expires. When the authorization server refuses, the request raises `RubyLLM::UnauthorizedError` with its reason.
+
+Authorization servers that accept signed assertions let you register a public key instead of sharing a secret. Pass the private key, as a PEM string or an `OpenSSL::PKey`, and RubyLLM signs a short-lived assertion for each token request:
+
+```ruby
+oauth grant: :client_credentials, client_id: "reports", private_key: Rails.application.credentials.reports_private_key
+```
+
+`private_key:` works for any app you registered, including one your users authorize.
+
 ### Storing Credentials
 
 In Rails, credentials live in the `ruby_llm_mcp_credentials` table, encrypted with [Active Record encryption](https://guides.rubyonrails.org/active_record_encryption.html). New applications get the table from `ruby_llm:install`; applications that installed RubyLLM 2.0 add it with the upgrade generator:

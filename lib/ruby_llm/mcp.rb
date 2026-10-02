@@ -164,8 +164,18 @@ module RubyLLM
       #
       # Send the user to MCP#authorization_url, then pass the callback's
       # parameters to MCP#authorize.
-      def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil)
-        @oauth = { owner:, scopes:, client_id:, client_secret: }
+      #
+      # +grant: :client_credentials+ connects your app as itself, with no
+      # user: RubyLLM requests a token when the server first asks for one
+      # and a new one before it expires. +private_key:+, a PEM string or an
+      # OpenSSL key, signs a short-lived assertion in place of
+      # +client_secret:+, for any app you registered.
+      #
+      #   oauth grant: :client_credentials, client_id: "reports", private_key: ENV["REPORTS_PRIVATE_KEY"]
+      def oauth(owner: nil, scopes: nil, client_id: nil, client_secret: nil, grant: nil, private_key: nil)
+        raise ArgumentError, "Unknown OAuth grant: #{grant}" unless grant.nil? || OAuth::GRANTS.include?(grant)
+
+        @oauth = { owner:, scopes:, client_id:, client_secret:, grant:, private_key: }
       end
 
       def oauth_settings # :nodoc:
@@ -699,9 +709,8 @@ module RubyLLM
       owner = resolve(settings[:owner])
       raise ArgumentError, "#{name} needs an owner for OAuth credentials" if settings[:owner] && owner.nil?
 
-      @oauth ||= OAuth.new(resolve(self.class.url), owner:, scopes: settings[:scopes],
-                                                    client_id: resolve(settings[:client_id]),
-                                                    client_secret: resolve(settings[:client_secret]), config:)
+      @oauth ||= OAuth.new(resolve(self.class.url), owner:, resolve: method(:resolve), config:,
+                                                    **settings.except(:owner))
     end
 
     def config
@@ -710,7 +719,7 @@ module RubyLLM
 
     def unauthorized(headers, status)
       @challenge = OAuth.challenge(headers['www-authenticate'] || headers['WWW-Authenticate'])
-      status == 401 && self.class.oauth_settings && oauth.authorized? && oauth.refresh
+      status == 401 && self.class.oauth_settings && oauth.recover(@challenge)
     end
 
     def challenge
