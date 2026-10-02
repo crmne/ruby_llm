@@ -336,8 +336,9 @@ module RubyLLM
       # Registers a callback for the changes the server announces. Pass a
       # method name or a block; either runs on the MCP instance with what
       # changed: +:tools+, +:prompts+, or +:resources+ when the server's
-      # list of them changes, or the MCP::Resource whose content changed.
-      # RubyLLM has already forgotten the old tools when +:tools+ arrives.
+      # list of them changes, the MCP::Resource whose content changed, or
+      # the MCP::Task whose status changed. RubyLLM has already forgotten
+      # the old tools when +:tools+ arrives.
       #
       #   after_change :refresh
       #   after_change { |change| Rails.cache.delete("handbook/tools") if change == :tools }
@@ -701,18 +702,22 @@ module RubyLLM
     # Listens for the server's changes in a background thread until
     # #close, so ::after_change callbacks run as changes happen and #tools
     # follows the server's list. Pass +resources+, as URIs or
-    # MCP::Resource objects, to hear when their content changes; a later
-    # call replaces them. Returns +self+ once the server confirms.
+    # MCP::Resource objects, to hear when their content changes, and
+    # +tasks+, as MCP::Task objects or their IDs, to hear when their status
+    # changes; a later call replaces them. Returns +self+ once the server
+    # confirms.
     #
     #   handbook = Handbook.new.listen(resources: ["handbook://policies"])
+    #   reports.listen(tasks: chat.pending_tasks)
     #
-    # Without +resources+, does nothing for a server that announces no
-    # changes. Raises MCP::Error when the server cannot be reached or does
-    # not watch the resources.
-    def listen(resources: [])
+    # Without +resources+ or +tasks+, does nothing for a server that
+    # announces no changes. Raises MCP::Error when the server cannot be
+    # reached or does not send updates for the resources or tasks.
+    def listen(resources: [], tasks: [])
       uris = resources.map { |resource| resource.respond_to?(:uri) ? resource.uri : resource.to_s }
-      watched = listener.start(listened_changes(uris)) || {}
-      missing = uris - Array(watched['resourceSubscriptions'])
+      ids = tasks.map { |task| task.respond_to?(:id) ? task.id : task.to_s }
+      watched = listener.start(listened_changes(uris, ids)) || {}
+      missing = (uris - Array(watched['resourceSubscriptions'])) + (ids - Array(watched['taskIds']))
       return self if missing.empty?
 
       listener.stop
@@ -935,6 +940,7 @@ module RubyLLM
       when 'notifications/resources/list_changed' then announce(:resources)
       when 'notifications/resources/updated'
         announce(Resource.new(self, 'uri' => notification.dig('params', 'uri')))
+      when 'notifications/tasks' then announce(Task.new(self, notification['params'].except('_meta')))
       end
     end
 
@@ -953,12 +959,14 @@ module RubyLLM
       end
     end
 
-    def listened_changes(uris)
+    def listened_changes(uris, ids)
       capabilities = client.server['capabilities'] || {}
       changes = %w[tools prompts resources].each_with_object({}) do |list, listened|
         listened[:"#{list}ListChanged"] = true if capabilities.dig(list, 'listChanged')
       end
-      uris.empty? ? changes : changes.merge(resourceSubscriptions: uris)
+      changes[:resourceSubscriptions] = uris unless uris.empty?
+      changes[:taskIds] = ids unless ids.empty?
+      changes
     end
 
     def server_info

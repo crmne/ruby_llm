@@ -248,6 +248,7 @@ end
 
 def wants?(filter, method, params)
   return Array(filter['resourceSubscriptions']).include?(params['uri']) if method == 'notifications/resources/updated'
+  return Array(filter['taskIds']).include?(params['taskId']) if method == 'notifications/tasks'
 
   filter[LISTS.fetch(method)] == true
 end
@@ -264,10 +265,12 @@ def announce(subscriptions, watched, method, params = {})
   end
 end
 
-def listen(subscriptions, id, filter)
+def listen(subscriptions, id, filter, tasks)
   watched = Array(filter['resourceSubscriptions']).reject { |uri| uri.start_with?('unwatched:') }
-  honored = filter.except('resourceSubscriptions')
+  followed = Array(filter['taskIds']) & tasks.keys
+  honored = filter.except('resourceSubscriptions', 'taskIds')
   honored['resourceSubscriptions'] = watched if watched.any?
+  honored['taskIds'] = followed if followed.any?
   notify('notifications/subscriptions/acknowledged', { _meta: { SUBSCRIPTION_ID => id }, notifications: honored })
   return close_subscription(id) if honored.empty?
 
@@ -323,7 +326,7 @@ $stdin.each_line do |line|
   when 'subscriptions/listen'
     next reply(id, error: { code: -32_601, message: 'Method not found' }) if LEGACY
 
-    listen(subscriptions, id, params.fetch('notifications', {}))
+    listen(subscriptions, id, params.fetch('notifications', {}), tasks)
   when 'resources/subscribe', 'resources/unsubscribe'
     watched.delete(params['uri'])
     watched << params['uri'] if message['method'] == 'resources/subscribe'

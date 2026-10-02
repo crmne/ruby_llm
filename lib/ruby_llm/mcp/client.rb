@@ -14,7 +14,8 @@ module RubyLLM
     # notifications reach the block given to ::new once the request is
     # answered, so the block can make requests of its own. #listen opens a
     # subscription for them instead: subscriptions/listen on newer servers,
-    # resources/subscribe and the session's own stream on older ones.
+    # resources/subscribe and the session's own stream on older ones, which
+    # never announce the status of tasks.
     class Client # :nodoc:
       VERSION = '2026-07-28'
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
@@ -160,7 +161,8 @@ module RubyLLM
         (@subscribed - uris).each { |uri| request('resources/unsubscribe', { uri: }) }
         uris.each { |uri| request('resources/subscribe', { uri: }) }
         @subscribed = uris
-        yield({ 'method' => ACKNOWLEDGED, 'params' => { 'notifications' => changes.transform_keys(&:to_s) } })
+        listened = changes.except(:taskIds).transform_keys(&:to_s)
+        yield({ 'method' => ACKNOWLEDGED, 'params' => { 'notifications' => listened } })
         @transport.listen(nil, version:, &)
       rescue HTTP::SessionExpired
         @connecting.synchronize { @server = handshake }

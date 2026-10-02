@@ -603,6 +603,32 @@ RSpec.describe RubyLLM::MCP do
       expect(next_change).to eq(:tools)
     end
 
+    context 'with tasks' do
+      before { mcp_class.extension :tasks }
+
+      def report = mcp.tools.find { |tool| tool.name == 'report' }.call
+
+      it 'hears when the status of a task it listens to changes, with the task as it stands' do
+        task = report
+        mcp.listen(tasks: [task])
+
+        ask(mcp, 'spec/announce', method: 'notifications/tasks',
+                                  params: { taskId: task.id, status: 'completed',
+                                            result: { content: [{ type: 'text', text: 'Report ready' }] } })
+
+        change = next_change
+        expect(change).to have_attributes(class: RubyLLM::MCP::Task, id: task.id, status: :completed)
+        expect(change.result.text).to eq('Report ready')
+        expect(subscriptions(mcp).values.map { |filter| filter['taskIds'] }).to eq([[task.id]])
+      end
+
+      it 'raises and stops listening when the server does not send the status of a task' do
+        expect { mcp.listen(tasks: ['task-404']) }
+          .to raise_error(RubyLLM::MCP::Error, /does not send updates for task-404/)
+        expect(subscriptions(mcp)).to be_empty
+      end
+    end
+
     context 'with a server that predates subscriptions' do
       let(:mcp_class) { listening_to(server, MCP_ERA: 'legacy') }
 
@@ -613,6 +639,11 @@ RSpec.describe RubyLLM::MCP do
 
         expect(next_change).to eq(:tools)
         expect(ask(mcp, 'spec/subscriptions')['watched']).to eq(['file:///project/README.md'])
+      end
+
+      it 'raises for tasks, whose status such a server never announces' do
+        expect { mcp.listen(tasks: ['task-1']) }
+          .to raise_error(RubyLLM::MCP::Error, /does not send updates for task-1/)
       end
 
       it 'unsubscribes from resources it no longer listens to' do

@@ -468,7 +468,7 @@ When a server says its tools changed, RubyLLM forgets the list it fetched, so th
 
 ### Reacting to Changes
 
-Register `after_change` to act on changes yourself. It takes a method name or a block, runs on the MCP instance, and receives what changed: `:tools`, `:prompts`, or `:resources` when one of the server's lists changes, or the `RubyLLM::MCP::Resource` whose content changed:
+Register `after_change` to act on changes yourself. It takes a method name or a block, runs on the MCP instance, and receives what changed: `:tools`, `:prompts`, or `:resources` when one of the server's lists changes, the `RubyLLM::MCP::Resource` whose content changed, or the `RubyLLM::MCP::Task` whose status changed when you [listen to tasks](#tasks):
 
 ```ruby
 class Handbook < RubyLLM::MCP
@@ -496,9 +496,9 @@ Call `listen` to hear about changes as they happen, between requests too:
 handbook = Handbook.new.listen(resources: ["handbook://policies"])
 ```
 
-`listen` asks the server for every list it announces changes to, and for updates to the `resources` you pass, as URIs or as resources from `resources`. It returns once the server confirms, then listens in a thread of its own until you call `close`, while chats and requests go on as before. Calling `listen` again replaces the resources it listens to.
+`listen` asks the server for every list it announces changes to, and for updates to the `resources` you pass, as URIs or as resources from `resources`. It returns once the server confirms, then listens in a thread of its own until you call `close`, while chats and requests go on as before. Calling `listen` again replaces the resources and tasks it listens to.
 
-A server that announces no changes leaves `listen` nothing to do. When the server cannot be reached, or will not send updates for a resource you pass, `listen` raises `RubyLLM::MCP::Error`.
+A server that announces no changes leaves `listen` nothing to do. When the server cannot be reached, or will not send updates for a resource or task you pass, `listen` raises `RubyLLM::MCP::Error`.
 
 Callbacks for the changes a listener hears run in its thread, one at a time, so keep them short. They can call the server, as `tools` and `content` do above. An exception in one is logged, and listening goes on.
 
@@ -674,6 +674,20 @@ end
 ```
 
 `refresh` checks on a task without resuming the chat, which suits a progress indicator. `done?`, `completed?`, `failed?`, and `cancelled?` tell where it stands, `result` is its `RubyLLM::MCP::Result` once it completes, and `expires_at` is when the server may forget it. Every check also reports the task's status message to `after_progress` and `after_tool_progress`.
+
+Servers can also announce when the status of a task changes, so you check on it when there is news instead of on a schedule. Pass the tasks to [`listen`](#listening-in-the-background), and `after_change` receives each `RubyLLM::MCP::Task` as it stands, with its `result` once it completes:
+
+```ruby
+class Reports < RubyLLM::MCP
+  url "https://reports.example.com/mcp"
+  extension :tasks
+  after_change { |change| ReportReadyJob.perform_later(change.id) if change.is_a?(RubyLLM::MCP::Task) && change.done? }
+end
+
+reports = Reports.new.listen(tasks: chat.pending_tasks)
+```
+
+A server decides whether it announces the status of a task, and servers that predate 2026-07-28 never do, so `listen` raises `RubyLLM::MCP::Error` for tasks it won't hear about. Checking with `complete` works either way.
 
 A task that needs input pauses the chat on [input requests](#input-requests): answer them and call `complete`. A task that fails raises `RubyLLM::MCP::Error` from `complete`. Cancelling the chat cancels its tasks the next time it runs, so after `chat.cancel`, or the persisted flag on a Rails record, `complete` cancels them and raises `RubyLLM::CancelledError`. `task.cancel` asks the server right away; the server may still finish the task.
 
