@@ -32,6 +32,17 @@ module RubyLLM
       # there.
       attr_reader :meta
 
+      # The URI of the tool's UI, the +ui://+ resource an MCP App renders
+      # next to the tool's results, or +nil+ for a tool without one. Read
+      # it with MCP#resource.
+      attr_reader :ui_uri
+
+      # Who may call the tool, as Symbols: +:model+ when chats offer it to
+      # the model, +:app+ when a UI from the same server may call it. Tools
+      # say nothing about it unless they belong to an MCP App, which makes
+      # them <tt>[:model, :app]</tt>.
+      attr_reader :visibility
+
       attr_reader :fixed_arguments, :wrap # :nodoc:
 
       def initialize(mcp, definition, prefix: nil, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
@@ -44,6 +55,8 @@ module RubyLLM
         @wrap = wrap
         @annotations = definition['annotations'] || {}
         @meta = definition['_meta'] || {}
+        @ui_uri = Apps.uri(meta)
+        @visibility = Apps.visibility(meta)
         @parameters_schema = model_schema(definition['inputSchema'] || {})
       end
 

@@ -169,6 +169,24 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'MCP Apps' do
+    before { files_class.extension :apps }
+
+    it 'never offers the model tools that only a UI may call' do
+      chat.with_mcp(files)
+
+      expect(chat.tools.keys).to include(:forecast)
+      expect(chat.tools.keys).not_to include(:refresh_forecast)
+      expect(files.tools.map(&:name)).to include('refresh_forecast')
+    end
+
+    it 'keeps those tools from the model when given to the chat directly' do
+      chat.with_tools(files.tools.find { |tool| tool.name == 'refresh_forecast' })
+
+      expect(chat.tools).to be_empty
+    end
+  end
+
   it 'refuses two tools with the same name' do
     echo = Class.new(RubyLLM::Tool) do
       def self.tool_name = 'echo'

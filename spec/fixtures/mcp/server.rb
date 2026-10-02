@@ -53,6 +53,25 @@ TOOLS = [
   }
 ].freeze
 
+UI = 'io.modelcontextprotocol/ui'
+
+UI_TOOLS = [
+  {
+    name: 'forecast', description: 'Shows the forecast',
+    inputSchema: { type: 'object', properties: { city: { type: 'string' } } },
+    _meta: { ui: { resourceUri: 'ui://spec/forecast' } }
+  },
+  {
+    name: 'refresh_forecast', description: 'Refreshes the forecast view', inputSchema: { type: 'object' },
+    _meta: { ui: { resourceUri: 'ui://spec/forecast', visibility: ['app'] } }
+  }
+].freeze
+
+FORECAST_VIEW = {
+  mimeType: 'text/html;profile=mcp-app', text: '<!DOCTYPE html><html><body>Forecast</body></html>',
+  _meta: { ui: { csp: { connectDomains: ['https://api.example.com'] }, prefersBorder: true } }
+}.freeze
+
 PIXEL = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
 RESOURCES = {
@@ -68,7 +87,8 @@ PROMPT = {
 }.freeze
 
 def read_resource(uri)
-  resource = RESOURCES[uri] || { mimeType: 'text/plain', text: "Contents of #{uri}" }
+  resource = RESOURCES[uri] || (FORECAST_VIEW if uri == 'ui://spec/forecast') ||
+             { mimeType: 'text/plain', text: "Contents of #{uri}" }
   { contents: [{ uri: }.merge(resource)] }
 end
 
@@ -126,8 +146,16 @@ def reply(id, result: nil, error: nil)
   puts JSON.generate({ jsonrpc: '2.0', id:, result:, error: }.compact)
 end
 
-def tools_page(cursor, tools)
-  cursor ? { tools: tools.drop(2) } : { tools: tools.take(2), nextCursor: 'page-2' }
+def tools_page(cursor, tools, extensions)
+  return { tools: tools.take(2), nextCursor: 'page-2' } unless cursor
+
+  { tools: tools.drop(2) + (extensions.key?(UI) ? UI_TOOLS : []) }
+end
+
+def forecast(arguments)
+  city = arguments['city'] || 'Rome'
+  { content: [{ type: 'text', text: "Sunny in #{city}" }], structuredContent: { city:, temperature: 24 },
+    _meta: { 'com.example/station' => 'spec' } }
 end
 
 def call_tool(params)
@@ -142,6 +170,8 @@ def call_tool(params)
     { content: [{ type: 'text', text: 'Here it is' }, { type: 'image', data: PIXEL, mimeType: 'image/png' },
                 { type: 'resource_link', uri: 'file:///pixel.png', name: 'pixel.png' }] }
   when 'delete_everything' then { content: [{ type: 'text', text: 'Gone' }] }
+  when 'forecast' then forecast(arguments)
+  when 'refresh_forecast' then { content: [{ type: 'text', text: 'Refreshed' }], structuredContent: { fresh: true } }
   when 'slow' then { content: [{ type: 'text', text: 'Finished' }] }
   when 'deploy' then deploy(params)
   when 'connect' then connect(params)
@@ -154,6 +184,7 @@ cancelled = []
 tools = TOOLS.dup
 subscriptions = {}
 watched = []
+handshake_extensions = {}
 
 def notify(method, params)
   puts JSON.generate({ jsonrpc: '2.0', method:, params: })
@@ -211,6 +242,7 @@ $stdin.each_line do |line|
     end
   when 'initialize'
     initialized = true
+    handshake_extensions = params.dig('capabilities', 'extensions') || {}
     reply(id, result: { protocolVersion: '2025-06-18', capabilities: CAPABILITIES,
                         serverInfo: { name: 'spec-server', version: '0.9.0' } })
   when 'notifications/initialized'
@@ -218,7 +250,8 @@ $stdin.each_line do |line|
   when 'tools/list'
     next reply(id, error: { code: -32_600, message: 'Not initialized' }) if LEGACY && !initialized
 
-    reply(id, result: tools_page(params['cursor'], tools))
+    extensions = params.dig('_meta', 'io.modelcontextprotocol/clientCapabilities', 'extensions')
+    reply(id, result: tools_page(params['cursor'], tools, extensions || handshake_extensions))
   when 'spec/change_tools'
     tools += [{ name: "extra_#{tools.size}", description: 'Added at runtime', inputSchema: { type: 'object' } }]
     announce(subscriptions, watched, 'notifications/tools/list_changed')

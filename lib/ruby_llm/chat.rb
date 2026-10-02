@@ -399,11 +399,15 @@ module RubyLLM
 
     # Returns the tools the model can call, as a Hash of tool name Symbols
     # to Tool instances: those registered with #with_tools and those of the
-    # MCP servers connected with #with_mcp.
+    # MCP servers connected with #with_mcp. MCP tools that only the UI of
+    # an MCP App may call are left out; see MCP::Tool#visibility.
     #
     # Raises ArgumentError when two tools share a name.
     def tools
-      mcp.flat_map(&:tools).each_with_object(@tools.dup) do |tool, tools|
+      offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
+      mcp.flat_map(&:tools).each_with_object(offered) do |tool, tools|
+        next if hidden_from_model?(tool)
+
         name = tool.name.to_sym
         raise ArgumentError, "Two tools are named #{name}. Rename one with `tool :#{name}, as:`" if tools.key?(name)
 
@@ -1605,6 +1609,10 @@ module RubyLLM
 
     def last_non_system_message
       messages.reverse.find { |message| message.role != :system }
+    end
+
+    def hidden_from_model?(tool)
+      tool.is_a?(MCP::Tool) && !tool.visibility.include?(:model)
     end
 
     def pending_tool_response

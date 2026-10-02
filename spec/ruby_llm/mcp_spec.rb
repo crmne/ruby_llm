@@ -642,12 +642,77 @@ RSpec.describe RubyLLM::MCP do
       expect { Class.new(described_class) { extension 'audit' } }.to raise_error(ArgumentError, /vendor prefix/)
     end
 
+    it 'refuses names of extensions it does not know' do
+      expect { Class.new(described_class) { extension :widgets } }
+        .to raise_error(ArgumentError, 'Unknown MCP extension: widgets')
+    end
+
     it 'passes extensions to subclasses without sharing them' do
       parent = Class.new(described_class) { extension 'com.example/audit' }
       child = Class.new(parent) { extension 'com.example/replay' }
 
       expect(child.extensions.keys).to eq(%w[com.example/audit com.example/replay])
       expect(parent.extensions.keys).to eq(%w[com.example/audit])
+    end
+  end
+
+  describe 'MCP Apps' do
+    let(:mcp_class) do
+      command = [RbConfig.ruby, server]
+      Class.new(described_class) do
+        command(*command)
+        extension :apps
+      end
+    end
+
+    def tool(name) = mcp.tools.find { |tool| tool.name == name }
+
+    it 'declares UIs written in HTML' do
+      capabilities = mcp.send(:client).request('meta/echo').dig('meta', 'io.modelcontextprotocol/clientCapabilities')
+
+      expect(capabilities['extensions'])
+        .to eq('io.modelcontextprotocol/ui' => { 'mimeTypes' => ['text/html;profile=mcp-app'] })
+    end
+
+    it 'declares the settings you give it' do
+      mcp_class.extension :apps, mimeTypes: %w[text/html;profile=mcp-app text/uri-list]
+
+      expect(mcp_class.extensions['io.modelcontextprotocol/ui'])
+        .to eq('mimeTypes' => %w[text/html;profile=mcp-app text/uri-list])
+    end
+
+    it 'lists every tool with its UI and who may call it' do
+      expect(tool('forecast')).to have_attributes(ui_uri: 'ui://spec/forecast', visibility: %i[model app])
+      expect(tool('refresh_forecast')).to have_attributes(ui_uri: 'ui://spec/forecast', visibility: [:app])
+      expect(tool('echo')).to have_attributes(ui_uri: nil, visibility: %i[model app])
+    end
+
+    it 'reads a UI and its content security policy through the resource API' do
+      view = mcp.resource(tool('forecast').ui_uri)
+
+      expect(view).to have_attributes(mime_type: 'text/html;profile=mcp-app', content: start_with('<!DOCTYPE html>'))
+      expect(view.meta['ui']).to eq('csp' => { 'connectDomains' => ['https://api.example.com'] },
+                                    'prefersBorder' => true)
+    end
+
+    it 'calls tools that only a UI may call' do
+      expect(mcp.call(:refresh_forecast)).to have_attributes(text: 'Refreshed', structured: { 'fresh' => true })
+      expect(mcp.refresh_forecast.text).to eq('Refreshed')
+    end
+
+    it 'reads the URI of a UI written the deprecated way' do
+      definition = { 'name' => 'chart', '_meta' => { 'ui/resourceUri' => 'ui://spec/chart' } }
+
+      expect(RubyLLM::MCP::Tool.new(mcp, definition).ui_uri).to eq('ui://spec/chart')
+    end
+
+    it 'lists no UI tools to a client that does not declare the extension' do
+      command = [RbConfig.ruby, server]
+      plain = Class.new(described_class) { command(*command) }.new
+
+      expect(plain.tools.map(&:name)).not_to include('forecast')
+    ensure
+      plain&.close
     end
   end
 

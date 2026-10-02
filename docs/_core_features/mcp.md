@@ -20,7 +20,7 @@ After reading this guide, you will know:
 * How to read a server's resources and ask with its prompts.
 * How to answer a server's requests for input and follow its progress.
 * How to keep up with servers whose tools and resources change.
-* How to declare the protocol extensions your app supports.
+* How to declare protocol extensions and host MCP Apps.
 * How to authorize servers with OAuth.
 * How RubyLLM talks to servers and keeps connections safe.
 
@@ -551,6 +551,56 @@ Inline servers take `extensions:`, a name or a Hash of names to settings:
 ```ruby
 RubyLLM.mcp(url: server.endpoint, extensions: { "com.example/audit" => { level: "full" } })
 ```
+
+RubyLLM implements the official extensions it knows by name. Declare those with a Symbol.
+
+### MCP Apps
+
+[MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview) let a server ship a UI with its tools: an HTML page, such as a chart or a form, that your app shows next to a tool's results. Declare `:apps`, and the server lists the tools that come with one:
+
+```ruby
+class Weather < RubyLLM::MCP
+  url "https://weather.example.com/mcp"
+  inputs :user
+  bearer_token { user.weather_token }
+  extension :apps
+end
+
+weather = Weather.new(user: current_user)
+forecast = weather.tools.find { |tool| tool.name == "get_forecast" }
+forecast.ui_uri     # => "ui://weather/forecast"
+forecast.visibility # => [:model, :app]
+```
+
+The UI is a resource. Read it like any other, with its content security policy in `meta`:
+
+```ruby
+view = weather.resource(forecast.ui_uri)
+view.mime_type # => "text/html;profile=mcp-app"
+view.content   # => "<!DOCTYPE html>..."
+view.meta["ui"] # => { "csp" => { "connectDomains" => ["https://api.weather.example"] }, "prefersBorder" => true }
+```
+
+Rendering the UI is your app's job. Following the MCP Apps spec, it runs in a sandboxed iframe on an origin separate from your app, inside a second iframe whose content security policy you build from `meta["ui"]["csp"]`, and your page passes it the tool's arguments and result.
+
+Some tools exist only for their UI, such as the one behind a refresh button. Their `visibility` leaves out `:model`: `tools` lists them, and you can call them, but chats never offer them to the model, even when you pass them to `with_tools`.
+
+When the UI calls a tool, your page sends the call to a controller, which makes it on the UI's behalf. Look the tool up by its name on the server, and refuse it unless its `visibility` includes `:app`:
+
+```ruby
+class Weather::ToolCallsController < ApplicationController
+  def create
+    weather = Weather.new(user: Current.user)
+    tool = weather.tools.find { |tool| tool.server_name == params[:name] }
+    return head :forbidden unless tool&.visibility&.include?(:app)
+
+    arguments = params.fetch(:arguments, {}).permit!.to_h.symbolize_keys
+    render json: weather.call(tool.server_name, **arguments).to_h
+  end
+end
+```
+
+`call` returns the whole result, and `to_h` is the result as the server sent it, content, structured content, and `_meta` included, which is what the UI expects.
 
 ## Authorization
 

@@ -35,12 +35,13 @@ module RubyLLM
     INPUT_ROUNDS = 10
     INPUT_REQUESTS = %i[form url].freeze
     INLINE_SETTINGS = %i[url command transport bearer_token directory timeout prefix input_requests].freeze
+    EXTENSIONS = { apps: [Apps::EXTENSION, { 'mimeTypes' => [Apps::MIME_TYPE] }] }.freeze
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
       @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests @extensions
     ].freeze
-    private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS
+    private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS
 
     class << self
       attr_writer :default_name # :nodoc:
@@ -376,17 +377,20 @@ module RubyLLM
       #
       #   extension "com.example/audit", level: "full"
       #
+      # RubyLLM implements +:apps+, MCP Apps, whose tools come with a UI
+      # your app renders next to their results. Its tools that only a UI
+      # may call stay out of chats; see MCP::Tool#visibility.
+      #
+      #   extension :apps
+      #
       # RubyLLM declares extensions in the capabilities of every request,
       # and when it connects to a server that predates 2026-07-28.
       #
-      # Raises ArgumentError for a name without a vendor prefix.
+      # Raises ArgumentError for a name without a vendor prefix, or a
+      # Symbol RubyLLM does not know.
       def extension(name, **settings)
-        name = name.to_s
-        unless name.include?('/')
-          raise ArgumentError, "MCP extensions are named with a vendor prefix, such as com.example/#{name}"
-        end
-
-        @extensions = extensions.merge(name => settings.transform_keys(&:to_s))
+        name, defaults = extension_identifier(name)
+        @extensions = extensions.merge(name => defaults.merge(settings.transform_keys(&:to_s)))
       end
 
       def extensions # :nodoc:
@@ -424,6 +428,13 @@ module RubyLLM
         unknown = settings.keys - INLINE_SETTINGS
         raise ArgumentError, "Unknown MCP settings: #{unknown.join(', ')}" if unknown.any?
         raise ArgumentError, 'An MCP with a transport needs a name' if settings[:transport] && name.nil?
+      end
+
+      def extension_identifier(name)
+        return EXTENSIONS.fetch(name) { raise ArgumentError, "Unknown MCP extension: #{name}" } if name.is_a?(Symbol)
+        return [name.to_s, {}] if name.to_s.include?('/')
+
+        raise ArgumentError, "MCP extensions are named with a vendor prefix, such as com.example/#{name}"
       end
 
       def add_callback(name, method, block)
@@ -466,10 +477,13 @@ module RubyLLM
       self.class.default_name
     end
 
-    # Returns the tools the model sees: the server's tools, shaped by
-    # ::only, ::except, and ::tool, followed by the Tool classes added with
-    # ::tool. The server's list is fetched once, and again after the server
-    # says it changed.
+    # Returns the server's tools, shaped by ::only, ::except, and ::tool,
+    # followed by the Tool classes added with ::tool. The server's list is
+    # fetched once, and again after the server says it changed.
+    #
+    # The list includes the tools of an MCP App that only its UI may call,
+    # whose MCP::Tool#visibility leaves out +:model+. Chats never offer
+    # those to the model.
     #
     # Raises ConfigurationError when a declaration names a tool the server
     # does not offer.
