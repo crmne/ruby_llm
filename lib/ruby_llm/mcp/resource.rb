@@ -30,6 +30,12 @@ module RubyLLM
       # The MIME type the server reports, or +nil+.
       attr_reader :mime_type
 
+      # The +_meta+ the server sent with the resource, as a Hash with String
+      # keys, empty when there is none. A resource read with MCP#resource
+      # has the +_meta+ of its contents; one from MCP#resources has the
+      # +_meta+ of the listing.
+      attr_reader :meta
+
       def initialize(mcp, data) # :nodoc:
         @mcp = mcp
         @uri = data['uri']
@@ -37,6 +43,7 @@ module RubyLLM
         @title = data['title']
         @description = data['description']
         @mime_type = data['mimeType']
+        @meta = data['_meta'] || {}
         @data = data
       end
 

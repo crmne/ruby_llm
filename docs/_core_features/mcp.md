@@ -141,6 +141,7 @@ result = docs.microsoft_docs_search(query: "Azure Blob Storage")
 result.text        # => "..."
 result.structured  # => { "results" => [...] }
 result.attachments # => [#<RubyLLM::Attachment ...>]
+result.meta        # => { "com.microsoft/request_id" => "..." }
 ```
 
 Use `call` when a tool's name is not a valid Ruby method name:
@@ -149,9 +150,9 @@ Use `call` when a tool's name is not a valid Ruby method name:
 docs.call("microsoft_docs_search", query: "Azure Blob Storage")
 ```
 
-A `RubyLLM::MCP::Result` has the text, any images or files as attachments, and the structured content when the server sends it. `error?` tells you whether the tool reported a failure.
+A `RubyLLM::MCP::Result` has the text, any images or files as attachments, and the structured content when the server sends it. `error?` tells you whether the tool reported a failure. `meta` is the `_meta` Hash the server attached, in the vocabulary of whichever extension wrote it, and empty when there is none.
 
-Each tool also carries the server's hints about its behavior: `read_only?`, `destructive?`, `idempotent?`, and `open_world?`. They come from the server, so trust them as far as you trust the server.
+Each tool also carries the server's hints about its behavior: `read_only?`, `destructive?`, `idempotent?`, and `open_world?`. They come from the server, so trust them as far as you trust the server. A tool's `meta` is the `_meta` of its definition.
 
 ## Shaping Tools
 
@@ -327,7 +328,7 @@ readme.save("README.md")
 chat.ask "Summarize this", with: readme
 ```
 
-Resources from `resources` are read from the server the first time you need their content.
+Resources from `resources` are read from the server the first time you need their content. `content` is text for a text resource and bytes for a binary one, and `meta` is the `_meta` the server sent: a resource you read has the `_meta` of its contents, one from `resources` has the `_meta` of the listing.
 
 Some servers describe families of resources with URI templates. Fill one in with keywords:
 

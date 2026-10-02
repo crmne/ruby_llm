@@ -27,6 +27,11 @@ module RubyLLM
       # The tool's name on the server.
       attr_reader :server_name
 
+      # The tool's +_meta+ as the server sent it: a Hash with String keys,
+      # empty when there is none. Extensions keep their own vocabulary
+      # there.
+      attr_reader :meta
+
       attr_reader :fixed_arguments, :wrap # :nodoc:
 
       def initialize(mcp, definition, prefix: nil, as: nil, description: nil, fixed_arguments: {}, wrap: nil) # :nodoc:
@@ -38,6 +43,7 @@ module RubyLLM
         @fixed_arguments = fixed_arguments.transform_keys(&:to_sym)
         @wrap = wrap
         @annotations = definition['annotations'] || {}
+        @meta = definition['_meta'] || {}
         @parameters_schema = model_schema(definition['inputSchema'] || {})
       end
 

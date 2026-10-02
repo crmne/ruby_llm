@@ -33,6 +33,13 @@ RSpec.describe RubyLLM::MCP do
       expect(delete_everything).not_to be_open_world
     end
 
+    it 'reads the _meta of each tool' do
+      echo, add, = mcp.tools
+
+      expect(add.meta).to eq('com.example/owner' => 'math')
+      expect(echo.meta).to eq({})
+    end
+
     it 'calls a tool the way a chat does' do
       expect(mcp.tools.first.call(text: 'hello', tool_call: nil)).to eq('hello')
     end
@@ -190,8 +197,9 @@ RSpec.describe RubyLLM::MCP do
     it 'returns the result' do
       result = mcp.call(:add, a: 2, b: 3)
 
-      expect(result).to have_attributes(text: '5', structured: { 'sum' => 5 })
+      expect(result).to have_attributes(text: '5', structured: { 'sum' => 5 }, meta: { 'com.example/exact' => true })
       expect(result).not_to be_error
+      expect(mcp.call(:echo, text: 'hi').meta).to eq({})
     end
 
     it 'turns images into attachments' do
@@ -214,6 +222,14 @@ RSpec.describe RubyLLM::MCP do
 
     it 'reads a resource by URI' do
       expect(mcp.resource('file:///project/notes.txt').content).to eq('Contents of file:///project/notes.txt')
+    end
+
+    it 'reads the _meta of resources and of their contents' do
+      readme = mcp.resource('file:///project/README.md')
+
+      expect(readme).to have_attributes(mime_type: 'text/markdown', meta: { 'com.example/etag' => 'v2' })
+      expect(mcp.resources.first.meta).to eq('com.example/listed' => true)
+      expect(mcp.resource('file:///project/notes.txt').meta).to eq({})
     end
 
     it 'fills in resource templates' do

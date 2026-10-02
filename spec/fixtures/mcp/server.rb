@@ -38,7 +38,8 @@ TOOLS = [
       type: 'object',
       properties: { a: { type: 'number' }, b: { type: 'number' } },
       required: %w[a b]
-    }
+    },
+    _meta: { 'com.example/owner' => 'math' }
   },
   { name: 'fail', description: 'Always fails', inputSchema: { type: 'object' } },
   { name: 'picture', description: 'Returns a picture', inputSchema: { type: 'object' } },
@@ -55,7 +56,9 @@ TOOLS = [
 PIXEL = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
 RESOURCES = {
-  'file:///project/README.md' => { mimeType: 'text/markdown', text: "# Spec Project\n" },
+  'file:///project/README.md' => {
+    mimeType: 'text/markdown', text: "# Spec Project\n", _meta: { 'com.example/etag' => 'v2' }
+  },
   'file:///project/pixel.png' => { mimeType: 'image/png', blob: PIXEL }
 }.freeze
 
@@ -133,7 +136,7 @@ def call_tool(params)
   when 'echo' then { content: [{ type: 'text', text: arguments['text'] }] }
   when 'add'
     sum = arguments['a'] + arguments['b']
-    { content: [{ type: 'text', text: sum.to_s }], structuredContent: { sum: } }
+    { content: [{ type: 'text', text: sum.to_s }], structuredContent: { sum: }, _meta: { 'com.example/exact' => true } }
   when 'fail' then { content: [{ type: 'text', text: 'Something broke' }], isError: true }
   when 'picture'
     { content: [{ type: 'text', text: 'Here it is' }, { type: 'image', data: PIXEL, mimeType: 'image/png' },
@@ -261,7 +264,9 @@ $stdin.each_line do |line|
   when 'spec/cancelled' then reply(id, result: { cancelled: })
   when 'spec/stall' then $stdout.write('{"jsonrpc":')
   when 'resources/list'
-    resources = RESOURCES.map { |uri, resource| { uri:, name: File.basename(uri), mimeType: resource[:mimeType] } }
+    resources = RESOURCES.map do |uri, resource|
+      { uri:, name: File.basename(uri), mimeType: resource[:mimeType], _meta: { 'com.example/listed' => true } }
+    end
     reply(id, result: { resources: })
   when 'resources/read' then reply(id, result: read_resource(params['uri']))
   when 'resources/templates/list'

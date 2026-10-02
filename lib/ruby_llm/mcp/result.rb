@@ -9,6 +9,7 @@ module RubyLLM
     #   result.text        # => "Found 3 issues..."
     #   result.structured  # => { "issues" => [...] }
     #   result.attachments # => [#<RubyLLM::Attachment ...>]
+    #   result.meta        # => { "com.linear/request_id" => "..." }
     #
     class Result
       include Support::Inspectable
@@ -22,9 +23,14 @@ module RubyLLM
       # The structured content, parsed from JSON, or +nil+.
       attr_reader :structured
 
+      # The result's +_meta+ as the server sent it: a Hash with String
+      # keys, empty when there is none.
+      attr_reader :meta
+
       def initialize(data) # :nodoc:
         @data = data
         @structured = data['structuredContent']
+        @meta = data['_meta'] || {}
         @text, @attachments = Content.read(data['content'])
       end
 
