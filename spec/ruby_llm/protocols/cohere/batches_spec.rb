@@ -30,8 +30,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
   end
 
   def configure_live_batch
-    RubyLLM.config.max_retries = 2
-    RubyLLM.config.request_timeout = 45
+    allow(RubyLLM.config).to receive_messages(max_retries: 2, request_timeout: 45)
     allow(RubyLLM::Protocols::Cohere::Datasets).to receive(:new).and_wrap_original do |constructor, *args|
       constructor.call(*args).tap do |instance|
         allow(instance).to receive(:upload).and_wrap_original do |upload, *upload_args, **options|
