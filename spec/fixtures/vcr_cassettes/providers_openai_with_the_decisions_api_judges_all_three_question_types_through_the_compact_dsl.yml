@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/decisions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-6-luna","input":"{\"message\":\"I was charged twice.
+        Please refund the duplicate charge today.\"}","questions":[{"type":"predicate","name":"urgent","instructions":"Does
+        the customer explicitly need action today?\nYes: Explicitly asks for action
+        today\nNo: No deadline or a later deadline"},{"type":"choice","name":"department","instructions":"Which
+        team should handle this message?","choices":[{"value":"billing","description":"Payments
+        and refunds"},{"value":"technical","description":"Bugs and integrations"},{"value":"other"}]},{"type":"score","name":"frustration","instructions":"How
+        frustrated is the customer?","levels":[{"label":"0","description":"Calm and
+        polite"},{"label":"1","description":"Expresses frustration"},{"label":"2","description":"Angry
+        or hostile"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 29 Sep 2026 17:32:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - x-request-id,retry-after
+      Server-Timing:
+      - total;dur=104.923, ingress;dur=1.129, prepare;dur=1.469, auth;dur=0.138, model_routing;dur=0.015,
+        router_admission;dur=0.979, router_token_count;dur=0.772, fanout;dur=102.214,
+        render_max;dur=0.019, setup_max;dur=0.183, inference_max;dur=100.980, native_ttft_max;dur=98.726,
+        native_ttlt_max;dur=98.726, cross_cluster_network_max;dur=58.151, iapi_ttft_max;dur=38.000,
+        batcher_ttft_max;dur=18.000, lb_routing_max;dur=0.744, model_prepare;dur=0.203,
+        inference_batch_wall;dur=101.215, response_assembly;dur=0.019, prepare_other;dur=1.316,
+        app_other;dur=0.116
+      Openai-Processing-Ms:
+      - '105'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"urgent","probability":1.0},{"type":"choice","name":"department","choice":"billing","probabilities":[{"value":"billing","probability":1.0},{"value":"technical","probability":0.0},{"value":"other","probability":0.0}],"confidence":1.0},{"type":"score","name":"frustration","score":1.0,"probabilities":[{"value":0,"label":"0","probability":0.0},{"value":1,"label":"1","probability":1.0},{"value":2,"label":"2","probability":0.0}],"confidence":1.0}],"usage":{"input_tokens":396,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":3,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":399}}'
+  recorded_at: Tue, 29 Sep 2026 17:32:23 GMT
+recorded_with: VCR 6.4.0

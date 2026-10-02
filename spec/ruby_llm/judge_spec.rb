@@ -160,7 +160,16 @@ RSpec.describe RubyLLM::Judge do
       .with(headers: { 'Authorization' => 'Bearer tenant-key' })).to have_been_made.once
     expect(requests.first['extension']).to eq('enabled' => true)
     event = instrumenter.events.find { |name, _| name == 'judgment.ruby_llm' }
-    expect(event.last).to include(metadata: { ticket_id: 42 }, question_count: 1)
+    expect(event.last).to include(metadata: { ticket_id: 42 }, question_count: 1, attachment_count: 0)
+  end
+
+  it 'accepts images with or without input and rejects them on text-only protocols before sending' do
+    image = 'https://example.com/receipt.png'
+
+    expect { judge_class.judge('Help', with: image) }.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{image/png})
+    expect { judge_class.judge(with: [image]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+    expect { judge_class.judge(with: []) }.to raise_error(ArgumentError, /Judgment input/)
+    expect(requests).to be_empty
   end
 
   it 'rejects missing or unknown runtime inputs' do
@@ -277,8 +286,19 @@ RSpec.describe RubyLLM::Judge do
 
   it 'rejects unsupported providers through the provider contract' do
     expect do
-      judge_class.judge('Help', model: model_for(:openai), provider: :openai)
+      judge_class.judge('Help', model: model_for(:anthropic), provider: :anthropic)
     end.to raise_error(RubyLLM::Error, /doesn't support judgments/)
+  end
+
+  it 'lets OpenAI reject chat models through Decisions' do
+    model = model_for(:openai)
+    stub = stub_request(:post, 'https://api.openai.com/v1/decisions').to_return(
+      status: 404, headers: { 'Content-Type' => 'application/json' },
+      body: { error: { message: "The model `#{model}` does not exist or you do not have access to it." } }.to_json
+    )
+
+    expect { judge_class.judge('Help', model:, provider: :openai) }.to raise_error(RubyLLM::Error, /does not exist/)
+    expect(stub).to have_been_requested.once
   end
 
   context 'with all question types' do

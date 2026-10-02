@@ -90,9 +90,9 @@ module RubyLLM
         declare_question(name, :score, instructions, levels, &)
       end
 
-      # Judges text, a Hash, or an Array and returns a Judgment. A block or proc
-      # can supply the input. Declared inputs are accepted as keyword arguments;
-      # remaining options are forwarded to #judge.
+      # Judges text, a Hash, an Array, or images passed as +with:+ and returns
+      # a Judgment. A block or proc can supply the input. Declared inputs are
+      # accepted as keyword arguments; remaining options are forwarded to #judge.
       #
       #   TicketTriage.judge do
       #     message "Please refund the duplicate charge today."
@@ -134,25 +134,24 @@ module RubyLLM
     end
 
     # Judges the supplied input and returns a Judgment. Accepts model and
-    # provider overrides, an isolated +context:+, +provider_options:+, and
-    # instrumentation +metadata:+. Additional +questions:+ are a Hash keyed by
-    # question name, with +type:+, +instructions:+, and +criteria:+ (probability),
-    # +options:+ (choice), or +levels:+ (score). The block supplies input only.
+    # provider overrides, images as +with:+, an isolated +context:+,
+    # +provider_options:+, and instrumentation +metadata:+. Additional
+    # +questions:+ are a Hash keyed by question name, with +type:+,
+    # +instructions:+, and +criteria:+ (probability), +options:+ (choice), or
+    # +levels:+ (score). The block supplies input only. Input may be omitted
+    # when images are supplied.
     #
     #   RubyLLM.judge("Please help today",
     #     questions: { urgent: { type: :probability, instructions: "Is this urgent?" } })
-    def judge(input = nil, questions: {}, context: nil, metadata: nil, **options, &block)
+    #   Receipt.judge(with: "receipt.png")
+    def judge(input = nil, questions: {}, with: nil, context: nil, metadata: nil, **options, &block)
       raise ArgumentError, 'Pass judgment input or a block, not both' if !input.nil? && block
 
       data = resolve_data(block || input)
-      unless data.is_a?(String) || data.is_a?(Hash) || data.is_a?(Array)
-        raise ArgumentError, 'Judgment input must be text, a Hash, or an Array'
-      end
-
       definitions = resolve_questions(questions)
       settings = self.class.model.merge(provider_options: self.class.provider_options).merge(options)
       settings = settings.transform_values { |value| resolve_data(value) }
-      Judgment.judge(data, questions: definitions, context:, metadata:, **settings)
+      Judgment.judge(data, questions: definitions, with:, context:, metadata:, **settings)
     end
 
     private

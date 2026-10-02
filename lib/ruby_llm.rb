@@ -144,7 +144,8 @@ loader.setup
 # == Typed judgments
 #
 # Judge defines reusable probability, choice, and score questions. Its +judge+
-# method evaluates supplied text or structured data and returns a Judgment:
+# method evaluates supplied text, structured data, or images passed as +with:+
+# and returns a Judgment:
 #
 #   class Urgency < RubyLLM::Judge
 #     probability :urgent, "Does this need attention today?"
@@ -328,10 +329,10 @@ module RubyLLM
       Moderation.moderate(...)
     end
 
-    # Judges text or structured data against typed questions and returns a
-    # Judgment. Accepts the same arguments as Judge.judge. Subclass Judge to
-    # define reusable questions with probability, choice, and score. Uses
-    # Configuration#default_judgment_model unless a model is supplied.
+    # Judges text, structured data, or images against typed questions and
+    # returns a Judgment. Accepts the same arguments as Judge.judge. Subclass
+    # Judge to define reusable questions with probability, choice, and score.
+    # Uses Configuration#default_judgment_model unless a model is supplied.
     #
     #   RubyLLM.judge("Please help today",
     #     questions: { urgent: { type: :probability, instructions: "Is this urgent?" } })

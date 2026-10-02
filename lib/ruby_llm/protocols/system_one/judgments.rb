@@ -13,7 +13,9 @@ module RubyLLM
           'v1/systemone'
         end
 
-        def render_judgment_payload(input, questions:, model:, provider_options: {})
+        def render_judgment_payload(input, questions:, model:, with: [], provider_options: {})
+          raise UnsupportedAttachmentError, with.first.mime_type unless with.empty?
+
           reserved = provider_options.keys.map(&:to_s) & %w[model state questions]
           unless reserved.empty?
             raise ArgumentError, "Use the judgment arguments instead of provider_options for #{reserved.join(', ')}"

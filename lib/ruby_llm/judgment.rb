@@ -69,9 +69,11 @@ module RubyLLM
       { model:, answers: answers.keys }
     end
 
-    def self.judge(input, questions:, model: nil, provider: nil, context: nil, # :nodoc:
+    def self.judge(input, questions:, with: nil, model: nil, provider: nil, context: nil, # :nodoc:
                    assume_model_exists: false, provider_options: {}, metadata: nil)
       config = context&.config || RubyLLM.config
+      attachments = Attachment.wrap(with, config:)
+      validate_input!(input, attachments)
       raise ArgumentError, 'A judgment requires a model' unless model || config.default_judgment_model
 
       model, provider_instance = Models.resolve(model, provider:, assume_model_exists:, config:, operation: :judge,
@@ -83,6 +85,7 @@ module RubyLLM
         model: model.id,
         model_info: model,
         question_count: questions.size,
+        attachment_count: attachments.size,
         provider_options:,
         metadata:,
         tokens: empty_tokens,
@@ -90,13 +93,20 @@ module RubyLLM
       }
 
       RubyLLM.instrument('judgment.ruby_llm', payload, config:) do |event|
-        result = provider_instance.judge(input, questions:, model:, provider_options:)
+        result = provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
         event[:result] = result
         event[:tokens] = result.tokens
         event[:cost] = result.cost
         result
       end
     end
+
+    def self.validate_input!(input, attachments)
+      return if input.is_a?(String) || input.is_a?(Hash) || input.is_a?(Array) || (input.nil? && attachments.any?)
+
+      raise ArgumentError, 'Judgment input must be text, a Hash, or an Array'
+    end
+    private_class_method :validate_input!
 
     private
 
