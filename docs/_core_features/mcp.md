@@ -384,7 +384,7 @@ class Deploys < RubyLLM::MCP
 end
 ```
 
-A form request describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. A URL request has a `url` for the user to visit; `answer` with no values means the user agreed to go. `decline` refuses either kind. RubyLLM then sends the answers and the server finishes the call.
+A form request describes what it asks for in `fields`, each with a `name`, `type`, `title`, `description`, `choices`, and `default`, and `required?`. Show each `default` in your form: the fields an answer leaves out take theirs. A URL request has a `url` for the user to visit; `answer` with no values means the user agreed to go. `decline` refuses either kind. RubyLLM then sends the answers and the server finishes the call.
 
 In a chat, a request no callback answers pauses the tool call, the way [tools that require approval]({% link _core_features/tool-execution.md %}#requiring-approval) pause. Show the requests to the user, record their answers, and resume:
 

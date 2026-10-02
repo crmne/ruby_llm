@@ -67,10 +67,12 @@ module RubyLLM
         !url?
       end
 
-      # Accepts the request. A form request takes the values as keywords;
-      # a URL request takes none, meaning the user agreed to visit the page.
+      # Accepts the request. A form request takes the values as keywords,
+      # and the fields you leave out take the defaults the server gave
+      # them; a URL request takes none, meaning the user agreed to visit
+      # the page.
       def answer(**values)
-        @response = { action: 'accept', content: (values.transform_keys(&:to_s) unless url?) }.compact
+        @response = { action: 'accept', content: (with_defaults(values) unless url?) }.compact
       end
 
       # Declines the request.
@@ -88,6 +90,11 @@ module RubyLLM
       end
 
       private
+
+      def with_defaults(values)
+        fields.reject { |field| field.default.nil? }.to_h { |field| [field.name, field.default] }
+              .merge(values).transform_keys(&:to_s)
+      end
 
       def fields_from(schema)
         required = Array(schema['required'])

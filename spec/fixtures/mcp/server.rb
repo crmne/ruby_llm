@@ -98,7 +98,9 @@ ENVIRONMENT_FORM = {
     mode: 'form', message: 'Which environment?',
     requestedSchema: {
       type: 'object', required: ['environment'],
-      properties: { environment: { type: 'string', title: 'Environment', enum: %w[staging production] } }
+      properties: {
+        environment: { type: 'string', title: 'Environment', enum: %w[staging production], default: 'staging' }
+      }
     }
   }
 }.freeze

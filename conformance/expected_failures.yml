@@ -1,4 +1,5 @@
 client:
-  # Servers asking for input mid-request belong to the 2025 revisions;
-  # RubyLLM declares only extensions to older servers.
+  # A 2025-11-25 server asking for input mid-request. RubyLLM declares
+  # only extensions to older servers, so they never call back; answers
+  # to 2026-07-28 servers fill in the defaults this scenario checks.
   - elicitation-sep1034-client-defaults

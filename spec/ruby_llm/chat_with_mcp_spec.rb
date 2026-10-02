@@ -126,6 +126,13 @@ RSpec.describe RubyLLM::Chat do
       expect(chat).not_to be_awaiting_input
     end
 
+    it 'answers with the defaults the server gave' do
+      chat.with_mcp(files).ask('Deploy')
+      chat.answer(chat.pending_inputs.first).complete
+
+      expect(chat.messages.find { |message| message.role == :tool }.content).to eq('Deployed to staging')
+    end
+
     it 'resumes a declined request' do
       chat.with_mcp(files).ask('Deploy')
       chat.decline(chat.pending_inputs.first).complete
