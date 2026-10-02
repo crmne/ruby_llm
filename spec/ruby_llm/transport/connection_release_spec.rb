@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Transport::Connection do
     Class.new(Faraday::Adapter) do
       def call(env)
         super
-        env.request.on_data.call("data: {}\n\n", 10, env) if env.stream_response?
+        env.request.on_data.call("data: {}\n\n", 10, env) if env.request.stream_response?
         save_response(env, 200, '{"ok":true}', { 'Content-Type' => 'application/json' })
         @app.call(env)
       end
