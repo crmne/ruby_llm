@@ -57,4 +57,21 @@ RSpec.describe RubyLLM::Thinking::Controls do
         .to raise_error(ArgumentError, /does not know how to disable thinking/)
     end
   end
+
+  describe '.between_tools_off_model?' do
+    it 'matches Anthropic/Vertex and Bedrock Mantle / regional Sonnet 5.5 ids' do
+      expect(RubyLLM::Thinking.between_tools_off_model?('claude-sonnet-5-5')).to be(true)
+      expect(RubyLLM::Thinking.between_tools_off_model?('anthropic.claude-sonnet-5-5')).to be(true)
+      expect(RubyLLM::Thinking.between_tools_off_model?('us.anthropic.claude-sonnet-5-5')).to be(true)
+      expect(RubyLLM::Thinking.between_tools_off_model?('apac.anthropic.claude-sonnet-5-5')).to be(true)
+    end
+
+    it 'rejects accidental suffix matches and unrelated models' do
+      expect(RubyLLM::Thinking.between_tools_off_model?('evilclaude-sonnet-5-5')).to be(false)
+      expect(RubyLLM::Thinking.between_tools_off_model?('claude-sonnet-5-5-preview')).to be(false)
+      expect(RubyLLM::Thinking.between_tools_off_model?('claude-sonnet-5')).to be(false)
+      expect(RubyLLM::Thinking.between_tools_off_model?('claude-opus-5')).to be(false)
+    end
+  end
+
 end

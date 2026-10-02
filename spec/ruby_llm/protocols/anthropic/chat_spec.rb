@@ -586,6 +586,16 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(payload[:thinking]).to eq(type: 'between_tools')
     end
 
+    it 'does not treat accidental claude-sonnet-5-5 suffixes as Sonnet 5.5' do
+      payload = render_payload(
+        model_id: 'evilclaude-sonnet-5-5',
+        thinking: RubyLLM::Thinking::Config.new(enabled: false),
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'disabled')
+    end
+
     it 'resolves with_thinking(false) to between_tools on Sonnet 5.5' do
       model = RubyLLM::Model.new(
         id: 'claude-sonnet-5-5',

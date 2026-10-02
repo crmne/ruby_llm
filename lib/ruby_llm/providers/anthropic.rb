@@ -30,7 +30,7 @@ module RubyLLM
         end
 
         def thinking_off_control(model_id)
-          { enabled: false } if Protocols::Anthropic::Chat.between_tools_off_model?(model_id)
+          { enabled: false } if RubyLLM::Thinking.between_tools_off_model?(model_id)
         end
 
         def configuration_options

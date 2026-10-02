@@ -470,14 +470,6 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(thinking_payload[:output_config])
         end
 
-        # Sonnet 5.5 rejects thinking.type "disabled". Its lowest setting is
-        # between_tools, with no display or budget_tokens beside it.
-        # Exact Anthropic/Vertex ids plus Bedrock Mantle and regional prefixes
-        # (anthropic.claude-sonnet-5-5, us.anthropic.claude-sonnet-5-5, ...).
-        def between_tools_off_model?(model_id)
-          model_id.to_s.end_with?('claude-sonnet-5-5')
-        end
-
         def build_thinking_payload(thinking, model, max_tokens)
           return nil unless thinking&.enabled?
           if thinking.enabled == false
@@ -532,13 +524,13 @@ module RubyLLM
         end
 
         def thinking_off_type(model)
-          between_tools_off_model?(model.id) ? 'between_tools' : 'disabled'
+          RubyLLM::Thinking.between_tools_off_model?(model.id) ? 'between_tools' : 'disabled'
         end
 
         # between_tools is Sonnet 5.5's off switch, but Anthropic rejects it at
         # xhigh/max effort. Raise locally the way other invalid thinking combos do.
         def reject_invalid_between_tools_effort!(thinking, model)
-          return unless between_tools_off_model?(model.id)
+          return unless RubyLLM::Thinking.between_tools_off_model?(model.id)
 
           effort = resolve_effort(thinking)
           return unless %w[xhigh max].include?(effort)
