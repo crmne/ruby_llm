@@ -163,6 +163,23 @@ def poll_task(task, id)
   end
 end
 
+CLIENT_ASKS = {
+  'ping-1' => 'ping', 'roots-1' => 'roots/list', 'sample-1' => 'sampling/createMessage',
+  'elicit-1' => 'elicitation/create'
+}.freeze
+
+# Asks the client what servers of the 2025 revisions may ask mid-call,
+# and waits for every answer before it answers the call.
+def ask_client
+  CLIENT_ASKS.each { |id, method| puts JSON.generate({ jsonrpc: '2.0', id:, method:, params: {} }) }
+  answers = {}
+  while answers.size < CLIENT_ASKS.size && (line = $stdin.gets)
+    answer = JSON.parse(line)
+    answers[answer['id']] = answer['result'] || answer['error'] if CLIENT_ASKS.key?(answer['id'])
+  end
+  { content: [{ type: 'text', text: JSON.generate(answers) }] }
+end
+
 def input_required(key, request)
   { resultType: 'input_required', inputRequests: { key => request }, requestState: "#{key}-state" }
 end
@@ -359,6 +376,7 @@ $stdin.each_line do |line|
 
     case params['name']
     when 'wait' then next
+    when 'ask_client' then next reply(id, result: ask_client)
     when 'echo'
       level = params.dig('_meta', 'io.modelcontextprotocol/logLevel')
       log(level, 'debug', 'Echoing')

@@ -265,6 +265,14 @@ RSpec.describe RubyLLM::MCP do
       expect(result).to have_attributes(text: 'Something broke', content: 'Something broke')
     end
 
+    it 'answers what the server asks mid-call, pings with a result and everything else with method not found' do
+      answers = JSON.parse(mcp.call(:ask_client).text)
+
+      unsupported = { 'code' => -32_601, 'message' => 'Method not found' }
+      expect(answers).to eq('ping-1' => {}, 'roots-1' => unsupported, 'sample-1' => unsupported,
+                            'elicit-1' => unsupported)
+    end
+
     it 'turns images into attachments' do
       result = mcp.call(:picture)
 

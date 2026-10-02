@@ -648,6 +648,51 @@ RSpec.describe RubyLLM::MCP::HTTP do
       end
     end
 
+    context 'with a server that predates 2026-07-28 and asks the client something mid-call' do
+      let(:mcp) { RubyLLM.mcp(url: server.url, timeout: 5) }
+      let(:server) do
+        asks = self.asks
+        MCPStreams::Server.new do |request, reply|
+          case request.rpc_method
+          when 'server/discover' then reply.status(404)
+          when 'initialize'
+            reply.json(headers: { 'Mcp-Session-Id' => 'session-1' },
+                       result: { protocolVersion: '2025-06-18', capabilities: { tools: {} } })
+          when 'tools/list' then reply.json(result: { tools: [{ name: 'deploy', inputSchema: { type: 'object' } }] })
+          when 'tools/call'
+            reply.stream(*asks.map { |id, method| { jsonrpc: '2.0', id:, method:, params: {} } })
+          else reply.status(202)
+          end
+        end
+      end
+
+      def asks
+        { 'ping-1' => 'ping', 'roots-1' => 'roots/list', 'sample-1' => 'sampling/createMessage',
+          'elicit-1' => 'elicitation/create' }
+      end
+
+      def answers
+        server.requests.select { |request| request.verb == 'POST' && asks.key?(request.body['id']) }
+      end
+
+      it 'answers right away, pings with a result and everything else with method not found' do
+        call = Thread.new { mcp.call(:deploy) }
+
+        replies = eventually { answers.size == asks.size && answers }
+        call_id = server.requests_for('tools/call').first.body['id']
+        server.push(jsonrpc: '2.0', id: call_id, result: { content: [{ type: 'text', text: 'Deployed' }] })
+
+        expect(call.value.text).to eq('Deployed')
+        expect(replies.to_h { |request| [request.body['id'], request.body['result'] || request.body['error']] })
+          .to eq('ping-1' => {}, 'roots-1' => { 'code' => -32_601, 'message' => 'Method not found' },
+                 'sample-1' => { 'code' => -32_601, 'message' => 'Method not found' },
+                 'elicit-1' => { 'code' => -32_601, 'message' => 'Method not found' })
+        expect(replies.map { |request| request.headers['mcp-session-id'] }.uniq).to eq(['session-1'])
+      ensure
+        call&.kill
+      end
+    end
+
     context 'with a server that predates 2026-07-28 and offers no event stream' do
       let(:server) { legacy_server(events: false) }
 

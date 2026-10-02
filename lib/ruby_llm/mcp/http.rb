@@ -16,8 +16,11 @@ module RubyLLM
     # A subscription's stream stays open, so it gets a connection of its
     # own: callbacks it runs can make requests of their own, even through
     # adapters that keep one connection per thread. Older servers send
-    # changes on the session's event stream instead, where RubyLLM answers
-    # their pings.
+    # changes on the session's event stream instead.
+    #
+    # A server's own requests, on any stream, are answered right away on
+    # another connection: pings with a result, the rest with method not
+    # found, so a server never waits on RubyLLM.
     class HTTP # :nodoc:
       LOOPBACK_HOSTS = %w[localhost 127.0.0.1 ::1].freeze
       HEADER_SAFE = /\A[\x21-\x7E](?:[\x20-\x7E]*[\x21-\x7E])?\z/
@@ -110,7 +113,7 @@ module RubyLLM
 
       def post(message, version:, timeout: nil, params: {}, connection: @connection, recovered: [], &on_notification)
         session = @session unless message[:method] == 'initialize'
-        stream = Stream.new(message[:id], &on_notification)
+        stream = Stream.new(message[:id], &receiver(version, on_notification))
         stream.read do
           connection.post(@url) do |request|
             request.headers.update(headers(message, version, session))
@@ -140,16 +143,14 @@ module RubyLLM
 
       def resume(stream, version:, timeout:, &on_notification)
         wait(stream.retry_after || RECONNECT_DELAY)
-        resumed = Stream.new(stream.id, &on_notification)
+        resumed = Stream.new(stream.id, &receiver(version, on_notification))
         get(resumed, version:, timeout:, last_event_id: stream.last_event_id)
       rescue Faraday::Error
         resumed
       end
 
       def listen_to_session(version:, &on_notification)
-        stream = Stream.new(nil) do |message|
-          message.key?('id') ? notify(Client.reply(message), version:) : on_notification.call(message)
-        end
+        stream = Stream.new(nil, &receiver(version, on_notification))
         get(stream, version:, connection: streams)
         nil
       rescue Faraday::Error => e
@@ -178,6 +179,20 @@ module RubyLLM
 
       def streams
         @streams ||= @connect.call
+      end
+
+      def receiver(version, on_notification)
+        ->(message) { message.key?('id') ? answer(message, version:) : on_notification&.call(message) }
+      end
+
+      def answer(request, version:)
+        post(Client.reply(request), version:, connection: answers)
+      rescue Error, Faraday::Error => e
+        RubyLLM.logger.debug { "#{@url.host} did not take the answer to #{request['method']}: #{e.message}" }
+      end
+
+      def answers
+        @answers ||= @connect.call
       end
 
       def resumable?(stream, limit)
