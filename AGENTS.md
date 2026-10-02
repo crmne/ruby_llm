@@ -4,7 +4,7 @@ How RubyLLM is built. For coding agents first, humans welcome. Read [CONTRIBUTIN
 
 ## What this is
 
-RubyLLM is a Ruby AI framework: chat, tools, agents, structured output, embeddings, reranking, images, video, audio, OCR, moderation, and Rails integration behind one API, with seventeen providers in the box. Plain Ruby (>= 3.1.3), a handful of small dependencies, no heavyweight abstractions.
+RubyLLM is a Ruby AI framework: chat, tools, agents, structured output, embeddings, reranking, images, video, audio, OCR, moderation, and Rails integration behind one API, with seventeen providers in the box. Plain Ruby (>= 3.2), a handful of small dependencies, no heavyweight abstractions.
 
 ## Framework structure
 

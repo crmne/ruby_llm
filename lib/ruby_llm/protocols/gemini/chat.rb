@@ -83,8 +83,8 @@ module RubyLLM
           "models/#{@model.id}:countTokens"
         end
 
-        def render_count_tokens_payload(messages, model:, **options)
-          request = count_tokens_request(messages, model: model, **options)
+        def render_count_tokens_payload(messages, model:, **)
+          request = count_tokens_request(messages, model: model, **)
           { generateContentRequest: request.merge(model: "models/#{model.id}") }
         end
 

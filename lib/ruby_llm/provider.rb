@@ -338,8 +338,8 @@ module RubyLLM
       )
     end
 
-    def research_later(prompt, **options) # :nodoc:
-      fetch_protocol(:research).new(self).create_research_job(prompt, **options)
+    def research_later(prompt, **) # :nodoc:
+      fetch_protocol(:research).new(self).create_research_job(prompt, **)
     end
 
     def find_research_job(id) # :nodoc:

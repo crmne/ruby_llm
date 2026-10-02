@@ -30,8 +30,8 @@ module RubyLLM
           true
         end
 
-        def render_embedding(text, dimensions: nil, **options)
-          payload = render_embedding_payload(text, dimensions:, **options)
+        def render_embedding(text, dimensions: nil, **)
+          payload = render_embedding_payload(text, dimensions:, **)
           return payload if text.is_a?(Array) || !payload.key?(:requests)
 
           payload.fetch(:requests).first

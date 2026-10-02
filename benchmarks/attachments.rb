@@ -20,10 +20,10 @@ def seed
   end
 end
 
-def measure_with_downloads(name, teardown: nil, &block)
-  downloads = RailsApp.downloads(&block)
+def measure_with_downloads(name, teardown: nil, &)
+  downloads = RailsApp.downloads(&)
   teardown&.call
-  Benchmarks.measure(name, runs: 15, warmup: 3, teardown:, &block)
+  Benchmarks.measure(name, runs: 15, warmup: 3, teardown:, &)
   Benchmarks.record(name, :downloads, '', [downloads])
 end
 

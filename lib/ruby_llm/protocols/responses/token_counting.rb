@@ -13,8 +13,8 @@ module RubyLLM
           "#{completion_url}/input_tokens"
         end
 
-        def render_count_tokens_payload(messages, model:, **options)
-          render_payload(messages, model: model, temperature: nil, **options).slice(*COUNT_TOKENS_KEYS)
+        def render_count_tokens_payload(messages, model:, **)
+          render_payload(messages, model: model, temperature: nil, **).slice(*COUNT_TOKENS_KEYS)
         end
 
         def parse_count_tokens_response(response)

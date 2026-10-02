@@ -35,8 +35,8 @@ module RubyLLM
 
     # Creates a new Chat that uses this context's configuration.
     # Accepts the same arguments as RubyLLM.chat.
-    def chat(*args, **kwargs, &)
-      Chat.new(*args, **kwargs, context: self, &)
+    def chat(*, **, &)
+      Chat.new(*, **, context: self, &)
     end
 
     # Counts tokens using this context's configuration.
@@ -47,8 +47,8 @@ module RubyLLM
 
     # Tokenizes plain text using this context's configuration.
     # Accepts the same arguments as RubyLLM.tokenize.
-    def tokenize(*args, **kwargs)
-      Tokenization.tokenize(*args, **kwargs, context: self)
+    def tokenize(*, **)
+      Tokenization.tokenize(*, **, context: self)
     end
 
     # Runs a named workflow using this context's instrumenter. Accepts the same
@@ -59,8 +59,8 @@ module RubyLLM
 
     # Generates embeddings using this context's configuration.
     # Accepts the same arguments as RubyLLM.embed.
-    def embed(*args, **kwargs, &)
-      Embedding.embed(*args, **kwargs, context: self, &)
+    def embed(*, **, &)
+      Embedding.embed(*, **, context: self, &)
     end
 
     # Stages an embedding request using this context's configuration.
@@ -71,87 +71,87 @@ module RubyLLM
 
     # Generates an image using this context's configuration.
     # Accepts the same arguments as RubyLLM.paint.
-    def paint(*args, **kwargs, &)
-      Image.paint(*args, **kwargs, context: self, &)
+    def paint(*, **, &)
+      Image.paint(*, **, context: self, &)
     end
 
     # Generates a video using this context's configuration, blocking
     # until it is ready. Accepts the same arguments as RubyLLM.animate.
-    def animate(*args, **kwargs, &)
-      Video.animate(*args, **kwargs, context: self, &)
+    def animate(*, **, &)
+      Video.animate(*, **, context: self, &)
     end
 
     # Submits a video generation job using this context's configuration.
     # Accepts the same arguments as RubyLLM.animate_later.
-    def animate_later(*args, **kwargs, &)
-      VideoJob.animate_later(*args, **kwargs, context: self, &)
+    def animate_later(*, **, &)
+      VideoJob.animate_later(*, **, context: self, &)
     end
 
     # Runs content moderation using this context's configuration.
     # Accepts the same arguments as RubyLLM.moderate.
-    def moderate(*args, **kwargs, &)
-      Moderation.moderate(*args, **kwargs, context: self, &)
+    def moderate(*, **, &)
+      Moderation.moderate(*, **, context: self, &)
     end
 
     # Judges text, structured data, or images using this context's configuration.
     # Accepts the same arguments as RubyLLM.judge.
-    def judge(*args, **kwargs, &)
-      Judge.judge(*args, **kwargs, context: self, &)
+    def judge(*, **, &)
+      Judge.judge(*, **, context: self, &)
     end
 
     # Runs hosted research using this context's configuration.
     # Accepts the same arguments as RubyLLM.research.
-    def research(*args, **kwargs)
-      ResearchJob.research(*args, **kwargs, context: self)
+    def research(*, **)
+      ResearchJob.research(*, **, context: self)
     end
 
     # Submits hosted research using this context's configuration.
     # Accepts the same arguments as RubyLLM.research_later.
-    def research_later(*args, **kwargs)
-      ResearchJob.research_later(*args, **kwargs, context: self)
+    def research_later(*, **)
+      ResearchJob.research_later(*, **, context: self)
     end
 
     # Generates speech audio using this context's configuration. Given a
     # block, yields SpeechChunk objects and returns the complete Speech.
     # Accepts the same arguments as RubyLLM.speak.
-    def speak(*args, **kwargs, &)
-      Speech.speak(*args, **kwargs, context: self, &)
+    def speak(*, **, &)
+      Speech.speak(*, **, context: self, &)
     end
 
     # Transcribes audio using this context's configuration.
     # Accepts the same arguments as RubyLLM.transcribe.
-    def transcribe(*args, **kwargs, &)
-      Transcription.transcribe(*args, **kwargs, context: self, &)
+    def transcribe(*, **, &)
+      Transcription.transcribe(*, **, context: self, &)
     end
 
     # Extracts document text using this context's configuration.
     # Accepts the same arguments as RubyLLM.ocr.
-    def ocr(*args, **kwargs, &)
-      OCR.ocr(*args, **kwargs, context: self, &)
+    def ocr(*, **, &)
+      OCR.ocr(*, **, context: self, &)
     end
 
     # Ranks documents using this context's configuration.
     # Accepts the same arguments as RubyLLM.rerank.
-    def rerank(*args, **kwargs, &)
-      Rerank.rerank(*args, **kwargs, context: self, &)
+    def rerank(*, **, &)
+      Rerank.rerank(*, **, context: self, &)
     end
 
     # Uploads a file to a provider using this context's configuration.
     # Accepts the same arguments as RubyLLM.upload.
-    def upload(*args, **kwargs, &)
-      UploadedFile.upload(*args, **kwargs, context: self, &)
+    def upload(*, **, &)
+      UploadedFile.upload(*, **, context: self, &)
     end
 
     # Downloads a provider-hosted file using this context's configuration.
     # Accepts the same arguments as RubyLLM.download.
-    def download(*args, **kwargs, &)
-      UploadedFile.download(*args, **kwargs, context: self, &)
+    def download(*, **, &)
+      UploadedFile.download(*, **, context: self, &)
     end
 
     # Creates a provider-side prompt cache using this context's
     # configuration. Accepts the same arguments as RubyLLM.cache.
-    def cache(*args, **kwargs, &)
-      CachedContent.create(*args, **kwargs, context: self, &)
+    def cache(*, **, &)
+      CachedContent.create(*, **, context: self, &)
     end
 
     # Connects to an MCP server using this context's configuration, so its

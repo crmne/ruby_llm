@@ -532,8 +532,8 @@ module RubyLLM
       #   chat = WorkAssistant.create(user: current_user)
       #
       # Raises ArgumentError if ::chat_model is not configured.
-      def create(**kwargs)
-        with_rails_chat_record(:create, **kwargs)
+      def create(**)
+        with_rails_chat_record(:create, **)
       end
 
       # Like ::create, but calls the model's <tt>create!</tt>, raising if
@@ -541,8 +541,8 @@ module RubyLLM
       #
       #   chat = WorkAssistant.create!(user: current_user)
       #
-      def create!(**kwargs)
-        with_rails_chat_record(:create!, **kwargs)
+      def create!(**)
+        with_rails_chat_record(:create!, **)
       end
 
       # Finds the ::chat_model record with +id+ and applies this agent's

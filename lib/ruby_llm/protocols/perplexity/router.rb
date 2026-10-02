@@ -9,8 +9,8 @@ module RubyLLM
           @provider.router_url('chat/completions')
         end
 
-        def render_payload(messages, schema: nil, **options)
-          super(messages, schema: schema && { strict: true }.merge(schema), **options)
+        def render_payload(messages, schema: nil, **)
+          super(messages, schema: schema && { strict: true }.merge(schema), **)
         end
       end
     end

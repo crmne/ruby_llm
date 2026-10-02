@@ -45,9 +45,9 @@ RSpec.describe RubyLLM::Generators::Provider::CLI do
       gemspec = File.read(File.join(dir, 'ruby_llm-providers-acme-ai.gemspec'))
       workflow = File.read(File.join(dir, '.github/workflows/ci.yml'))
       rubocop = File.read(File.join(dir, '.rubocop.yml'))
-      expect(gemspec).to include("spec.required_ruby_version = '>= 3.1'")
-      expect(workflow).to include('ruby-version: ["3.1", "3.2", "3.3", "3.4", "4.0"]')
-      expect(rubocop).to include('TargetRubyVersion: 3.1')
+      expect(gemspec).to include("spec.required_ruby_version = '>= 3.2'")
+      expect(workflow).to include('ruby-version: ["3.2", "3.3", "3.4", "4.0"]')
+      expect(rubocop).to include('TargetRubyVersion: 3.2')
     end
 
     it 'prints help for unknown commands' do

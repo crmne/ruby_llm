@@ -295,7 +295,7 @@ end
 
 `progress.value` and `progress.total` are set when the tool counts its work, and `progress.fraction` gives the share done. Tools from [MCP servers]({% link _core_features/mcp.md %}#progress-and-cancellation) report the server's progress through the same callback.
 
-The callback runs in the thread or fiber that reports, before the tool's result. On Ruby 3.2 and later, that includes threads and fibers the tool starts itself, such as a batch of downloads. With concurrent tool execution, callbacks for different tool calls can run at the same time, so keep shared state thread-safe. Tools can report as often as they like; throttle in the callback if you forward reports to a UI. Outside a chat, `progress` does nothing.
+The callback runs in the thread or fiber that reports, before the tool's result. That includes threads and fibers the tool starts itself, such as a batch of downloads. With concurrent tool execution, callbacks for different tool calls can run at the same time, so keep shared state thread-safe. Tools can report as often as they like; throttle in the callback if you forward reports to a UI. Outside a chat, `progress` does nothing.
 
 ### Limiting Tool Calls
 

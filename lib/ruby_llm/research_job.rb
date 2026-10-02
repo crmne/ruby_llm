@@ -85,9 +85,9 @@ module RubyLLM
     # Runs a research task and returns its Message. On a timeout or
     # interrupt, attempts to cancel the remote task before raising an
     # error retaining the job. +timeout:+ and +interval:+ are seconds.
-    def self.research(prompt, timeout: 600, interval: 5, **options)
+    def self.research(prompt, timeout: 600, interval: 5, **)
       validate_polling_options(timeout, interval)
-      job = research_later(prompt, **options)
+      job = research_later(prompt, **)
       job.wait(timeout:, interval:).message
     rescue Interrupt => e
       raise unless job

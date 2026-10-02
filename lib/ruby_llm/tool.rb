@@ -111,8 +111,8 @@ module RubyLLM
       #     parameter :units, type: :string, description: "metric or imperial", required: false
       #   end
       #
-      def parameter(name, **options)
-        declared_parameters[name] = Parameter.new(name, **options)
+      def parameter(name, **)
+        declared_parameters[name] = Parameter.new(name, **)
       end
 
       def declared_parameters # :nodoc:

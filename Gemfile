@@ -6,7 +6,7 @@ gemspec
 
 group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
-  gem 'archspec' if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
+  gem 'archspec' if RUBY_ENGINE == 'ruby'
   gem 'async', '>= 2.0', platform: :mri
   gem 'avro'
   gem 'bundler', '>= 2.0'

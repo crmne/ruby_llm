@@ -52,8 +52,8 @@ module RubyLLM
       { KEY => results }
     end
 
-    def to_json(*args) # :nodoc:
-      JSON.generate(to_h, *args)
+    def to_json(*) # :nodoc:
+      JSON.generate(to_h, *)
     end
 
     private

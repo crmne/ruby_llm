@@ -117,7 +117,7 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       definition = Bundler::Dsl.evaluate(File.join(dir, 'Gemfile'), nil, {})
       dependency = definition.dependencies.find { |entry| entry.name == 'archspec' }
 
-      if RUBY_ENGINE == 'ruby' && Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2')
+      if RUBY_ENGINE == 'ruby'
         expect(dependency.requirement).to eq(Gem::Requirement.default)
         expect(dependency.source).to be_nil
       else

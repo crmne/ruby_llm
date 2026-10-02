@@ -646,8 +646,8 @@ module RubyLLM
       raise ConfigurationError, "#{name} declares #{missing.join(', ')}, which the server does not offer"
     end
 
-    def apply(callable, *arguments, **keywords)
-      callable.is_a?(Proc) ? instance_exec(*arguments, **keywords, &callable) : send(callable, *arguments, **keywords)
+    def apply(callable, *, **keywords)
+      callable.is_a?(Proc) ? instance_exec(*, **keywords, &callable) : send(callable, *, **keywords)
     end
 
     def server_tool?(name)

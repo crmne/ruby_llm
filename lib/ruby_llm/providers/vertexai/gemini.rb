@@ -31,8 +31,8 @@ module RubyLLM
           "#{@provider.model_path(@model.id)}:countTokens"
         end
 
-        def render_count_tokens_payload(messages, **options)
-          count_tokens_request(messages, **options)
+        def render_count_tokens_payload(messages, **)
+          count_tokens_request(messages, **)
         end
 
         def caches_url
