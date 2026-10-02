@@ -276,6 +276,14 @@ def close_subscription(id)
   reply(id, result: { resultType: 'complete', _meta: { SUBSCRIPTION_ID => id } })
 end
 
+LOG_LEVELS = %w[debug info notice warning error critical alert emergency].freeze
+
+def log(requested, level, data)
+  return unless requested && LOG_LEVELS.index(level) >= LOG_LEVELS.index(requested)
+
+  notify('notifications/message', { level:, logger: 'echo', data: })
+end
+
 $stdin.each_line do |line|
   message = JSON.parse(line)
   id = message['id']
@@ -338,6 +346,10 @@ $stdin.each_line do |line|
   when 'tools/call'
     case params['name']
     when 'wait' then next
+    when 'echo'
+      level = params.dig('_meta', 'io.modelcontextprotocol/logLevel')
+      log(level, 'debug', 'Echoing')
+      log(level, 'warning', { 'slow' => true })
     when 'slow'
       token = params.dig('_meta', 'progressToken')
       if token

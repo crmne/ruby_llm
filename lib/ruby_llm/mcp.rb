@@ -34,7 +34,11 @@ module RubyLLM
 
     INPUT_ROUNDS = 10
     INPUT_REQUESTS = %i[form url].freeze
-    INLINE_SETTINGS = %i[url command transport bearer_token directory timeout prefix input_requests].freeze
+    INLINE_SETTINGS = %i[url command transport bearer_token directory timeout prefix input_requests log_level].freeze
+    LOG_LEVELS = {
+      debug: Logger::DEBUG, info: Logger::INFO, notice: Logger::INFO, warning: Logger::WARN,
+      error: Logger::ERROR, critical: Logger::FATAL, alert: Logger::FATAL, emergency: Logger::FATAL
+    }.freeze
     EXTENSIONS = {
       apps: [Apps::EXTENSION, { 'mimeTypes' => [Apps::MIME_TYPE] }],
       tasks: ['io.modelcontextprotocol/tasks', {}]
@@ -43,9 +47,10 @@ module RubyLLM
 
     SETTINGS = %i[
       @url @command @directory @env @headers @bearer_token @timeout @input_names
-      @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests @extensions
+      @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests @extensions @log_level
     ].freeze
-    private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL
+    private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
+                     :LOG_LEVELS
 
     class << self
       attr_writer :default_name # :nodoc:
@@ -402,6 +407,23 @@ module RubyLLM
 
       def extensions # :nodoc:
         @extensions || {}
+      end
+
+      # Asks the server for the log messages it writes while it works on a
+      # request, at +level+ and above, and writes them to the RubyLLM
+      # logger. The levels are the protocol's, from +:debug+ through
+      # +:info+, +:notice+, +:warning+, +:error+, +:critical+, and +:alert+
+      # to +:emergency+. Without a level, servers send no log messages.
+      # Called with no argument, returns the level.
+      #
+      #   log_level :warning
+      #
+      # Raises ArgumentError for a level the protocol does not define.
+      def log_level(level = nil)
+        return @log_level if level.nil?
+        raise ArgumentError, "Unknown MCP log level: #{level}" unless LOG_LEVELS.key?(level.to_sym)
+
+        @log_level = level.to_sym
       end
 
       def callbacks(name) # :nodoc:
@@ -809,16 +831,33 @@ module RubyLLM
     def send_request(method, params)
       headers = method == 'tools/call' ? mirrored_headers(params) : {}
       listeners = progress_listeners
-      return client.request(method, params, headers:) if listeners.empty?
+      level = self.class.log_level
+      return client.request(method, params, headers:) if listeners.empty? && level.nil?
 
-      token = SecureRandom.uuid
-      client.request(method, params.merge(_meta: { progressToken: token }), headers:) do |notification|
+      token = SecureRandom.uuid unless listeners.empty?
+      meta = { progressToken: token, 'io.modelcontextprotocol/logLevel' => level&.to_s }.compact
+      client.request(method, params.merge(_meta: meta), headers:) do |notification|
         data = notification['params'] || {}
-        next unless notification['method'] == 'notifications/progress' && data['progressToken'] == token
-
-        progress = Progress.new(value: data['progress'], total: data['total'], message: data['message'])
-        listeners.each { |listener| listener.call(progress) }
+        case notification['method']
+        when 'notifications/progress' then report_progress(data, token, listeners)
+        when 'notifications/message' then log(data, level)
+        end
       end
+    end
+
+    def report_progress(data, token, listeners)
+      return unless token && data['progressToken'] == token
+
+      progress = Progress.new(value: data['progress'], total: data['total'], message: data['message'])
+      listeners.each { |listener| listener.call(progress) }
+    end
+
+    def log(data, minimum)
+      level = data['level'].to_s.to_sym
+      return unless minimum && LOG_LEVELS.key?(level) && LOG_LEVELS.keys.index(level) >= LOG_LEVELS.keys.index(minimum)
+
+      text = data['data'].is_a?(String) ? data['data'] : JSON.generate(data['data'])
+      RubyLLM.logger.add(LOG_LEVELS[level], "#{name}#{" (#{data['logger']})" if data['logger']}: #{text}")
     end
 
     def progress_listeners

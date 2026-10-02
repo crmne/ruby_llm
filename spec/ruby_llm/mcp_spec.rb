@@ -846,6 +846,42 @@ RSpec.describe RubyLLM::MCP do
     end
   end
 
+  describe 'log messages' do
+    before { allow(RubyLLM.logger).to receive(:add) }
+
+    it 'writes the messages at the level it asks for and above to the RubyLLM logger' do
+      mcp_class.log_level :warning
+
+      mcp.echo(text: 'hi')
+
+      expect(RubyLLM.logger).to have_received(:add).with(Logger::WARN, "#{mcp.name} (echo): {\"slow\":true}").once
+      expect(RubyLLM.logger).not_to have_received(:add).with(Logger::DEBUG, anything)
+    end
+
+    it 'asks for messages down to debug' do
+      mcp_class.log_level :debug
+
+      mcp.echo(text: 'hi')
+
+      expect(RubyLLM.logger).to have_received(:add).with(Logger::DEBUG, "#{mcp.name} (echo): Echoing")
+    end
+
+    it 'asks for no messages unless you set a level' do
+      mcp.echo(text: 'hi')
+
+      expect(RubyLLM.logger).not_to have_received(:add)
+    end
+
+    it 'refuses levels the protocol does not define' do
+      expect { Class.new(described_class) { log_level :verbose } }
+        .to raise_error(ArgumentError, 'Unknown MCP log level: verbose')
+    end
+
+    it 'takes a level inline' do
+      expect(RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', log_level: :info).class.log_level).to eq(:info)
+    end
+  end
+
   describe 'cancellation' do
     it 'stops waiting and tells the server when the chat is cancelled' do
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)

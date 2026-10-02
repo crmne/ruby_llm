@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How to choose, rename, wrap, and build on a server's tools.
 * How to give a server's tools to chats, agents, and Rails records.
 * How to read a server's resources and ask with its prompts.
-* How to answer a server's requests for input and follow its progress.
+* How to answer a server's requests for input, and follow its progress and logs.
 * How to keep up with servers whose tools and resources change.
 * How to declare protocol extensions, host MCP Apps, and follow long tasks.
 * How to authorize servers with OAuth.
@@ -111,7 +111,7 @@ docs = RubyLLM.mcp(url: "https://learn.microsoft.com/api/mcp")
 files = RubyLLM.mcp(command: ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."])
 ```
 
-It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `input_requests:`, `extensions:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
+It takes the same settings as keywords: `transport:`, `bearer_token:`, `headers:`, `env:`, `directory:`, `timeout:`, `prefix:`, `input_requests:`, `log_level:`, `extensions:`, `oauth:`, and `name:`. That suits servers your users add at runtime:
 
 ```ruby
 RubyLLM.mcp(url: server.endpoint, name: "mcp_#{server.id}", prefix: "mcp_#{server.id}",
@@ -446,6 +446,17 @@ end
 ```
 
 RubyLLM asks the server for progress only when an `after_progress` or `after_tool_progress` callback listens.
+
+Servers can also write log messages while they work on a request. Ask for them with `log_level`, and RubyLLM writes the messages at that level and above to its logger, under the server's name:
+
+```ruby
+class Deploys < RubyLLM::MCP
+  url "https://deploys.example.com/mcp"
+  log_level :warning
+end
+```
+
+The levels are the protocol's, from `:debug` through `:info`, `:notice`, `:warning`, `:error`, `:critical`, and `:alert` to `:emergency`. Without a level, servers send no log messages.
 
 Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
 
