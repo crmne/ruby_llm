@@ -79,19 +79,17 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle::Voxtral do
   end
 
   it 'signs the Mantle transcription request and records its usage' do
-    response = instance_double(Faraday::Response, body: {
-                                 'choices' => [{ 'message' => { 'content' => 'Ruby is a programming language.' } }],
-                                 'usage' => { 'prompt_tokens' => 386, 'completion_tokens' => 11 }
-                               })
-    request = Struct.new(:headers).new({})
-    allow(provider).to receive(:sign_headers).and_return('Authorization' => 'signed')
-    allow(provider.mantle_connection).to receive(:post).and_yield(request).and_return(response)
+    request = stub_request(:post, "#{provider.mantle_api_base}/v1/chat/completions")
+              .with(body: JSON.generate(render),
+                    headers: { 'Authorization' => %r{Credential=test/\d{8}/us-west-2/bedrock-mantle/aws4_request} })
+              .to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: {
+                choices: [{ message: { content: 'Ruby is a programming language.' } }],
+                usage: { prompt_tokens: 386, completion_tokens: 11 }
+              }.to_json)
 
     result = protocol.transcribe(audio_path, model: model.id, language: nil)
 
-    expect(provider).to have_received(:sign_headers).with('POST', 'v1/chat/completions', JSON.generate(render),
-                                                          base_url: provider.mantle_api_base, service: 'bedrock-mantle')
-    expect(request.headers).to include('Authorization' => 'signed')
+    expect(request).to have_been_requested
     expect(result.tokens).to have_attributes(input: 386, output: 11)
   end
 

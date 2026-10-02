@@ -35,21 +35,17 @@ module RubyLLM
         end
 
         def signed_post(url, payload, additional_headers = {})
-          body = JSON.generate(payload)
-
-          @connection.post(url, body, usage: @usage_tracker) do |req|
-            req.headers.merge!(mantle_headers(url, body))
-            req.headers.merge!(additional_headers) unless additional_headers.empty?
+          @connection.post(url, JSON.generate(payload), usage: @usage_tracker) do |req|
+            req.headers.merge!(mantle_headers.merge(additional_headers))
           end
         end
 
         def stream_response(payload, additional_headers = {}, &)
-          body = JSON.generate(payload)
-          super(body, mantle_headers(stream_url, body).merge(additional_headers), &)
+          super(JSON.generate(payload), mantle_headers.merge(additional_headers), &)
         end
 
-        def mantle_headers(url, body)
-          @provider.sign_headers('POST', url, body, base_url: @provider.mantle_api_base, service: SIGNING_SERVICE)
+        def mantle_headers
+          {}
         end
       end
     end

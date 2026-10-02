@@ -19,10 +19,7 @@ module RubyLLM
         end
 
         def post_video(url, payload)
-          body = JSON.generate(payload)
-          @connection.post(url, body, idempotent: false) do |request|
-            request.headers.merge!(@provider.sign_headers('POST', url, body))
-          end
+          @connection.post(url, JSON.generate(payload), idempotent: false)
         end
 
         def parse_video_job(response, model:)
@@ -37,11 +34,7 @@ module RubyLLM
         end
 
         def refresh_video_job(job)
-          url = video_job_url(job)
-          response = @connection.get(url) do |request|
-            request.headers.merge!(@provider.sign_headers('GET', url, ''))
-          end
-          parse_video_job_status(response, job:)
+          parse_video_job_status(@connection.get(video_job_url(job)), job:)
         end
 
         def parse_video_job_status(response, **)

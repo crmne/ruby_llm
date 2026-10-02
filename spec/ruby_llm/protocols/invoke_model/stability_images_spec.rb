@@ -102,16 +102,15 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::StabilityImages do
   end
 
   it 'signs image invocations and propagates configuration to the result' do
-    response = instance_double(Faraday::Response, body: { 'images' => [image.encoded] })
-    request = Struct.new(:headers).new({})
-    allow(provider).to receive(:sign_headers).and_return('Authorization' => 'signed')
-    allow(provider.connection).to receive(:post).and_yield(request).and_return(response)
+    request = stub_request(:post, "#{provider.api_base}/model/#{model.id}/invoke")
+              .with(body: JSON.generate(prompt: 'A blue teapot', output_format: 'webp'),
+                    headers: { 'Authorization' => %r{Credential=test/\d{8}/us-west-2/bedrock/aws4_request} })
+              .to_return(status: 200, headers: { 'Content-Type' => 'application/json' },
+                         body: { images: [image.encoded] }.to_json)
 
     result = protocol.paint('A blue teapot', model: model.id, size: nil, provider_options: { output_format: 'webp' })
 
-    expect(provider).to have_received(:sign_headers).with('POST', "/model/#{model.id}/invoke",
-                                                          JSON.generate(prompt: 'A blue teapot', output_format: 'webp'))
-    expect(request.headers).to include('Authorization' => 'signed')
+    expect(request).to have_been_requested
     expect(result).to have_attributes(mime_type: 'image/png', config: provider.config)
   end
 

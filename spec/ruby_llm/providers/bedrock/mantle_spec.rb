@@ -180,8 +180,8 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       anthropic = described_class::Anthropic.new(provider)
       responses = described_class::Responses.new(provider)
 
-      expect(anthropic.send(:mantle_headers, 'anthropic/v1/messages', '{}')).to include('anthropic-version')
-      expect(responses.send(:mantle_headers, 'v1/responses', '{}')).not_to include('anthropic-version')
+      expect(anthropic.send(:mantle_headers)).to include('anthropic-version')
+      expect(responses.send(:mantle_headers)).not_to include('anthropic-version')
     end
 
     it 'signs for the bedrock-mantle service' do
@@ -201,11 +201,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
 
   describe 'signed requests', :live do
     it 'reaches the mantle endpoint with bedrock-mantle credentials' do
-      url = 'v1/models'
-      headers = provider.sign_headers('GET', url, '', base_url: provider.mantle_api_base,
-                                                      service: described_class::SIGNING_SERVICE)
-
-      response = provider.mantle_connection.get(url) { |req| req.headers.merge!(headers) }
+      response = provider.mantle_connection.get('v1/models')
 
       expect(response.body['data']).to be_an(Array)
       expect(response.body['data'].map { |model| model['id'] }).to include(a_string_including('anthropic.claude'))

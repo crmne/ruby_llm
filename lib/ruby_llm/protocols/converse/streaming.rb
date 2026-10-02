@@ -32,7 +32,6 @@ module RubyLLM
           )
 
           response = @connection.post(stream_url, body, usage: @usage_tracker, stream: true) do |req|
-            req.headers.merge!(@provider.sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'
             (req.options.context ||= {})[RubyLLM::Transport::Connection::STREAM_PROGRESS_KEY] = progress
