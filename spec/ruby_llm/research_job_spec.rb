@@ -3,8 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::ResearchJob do
-  let(:protocol) { instance_double(RubyLLM::Protocols::VertexAI::Research) }
+  let(:instrumenter) { CaptureInstrumenter.new }
+  let(:config) { RubyLLM.context { |config| config.instrumenter = instrumenter }.config }
+  let(:protocol) { instance_double(RubyLLM::Protocols::VertexAI::Research, config:) }
+
   let(:job) { described_class.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol:, status: :pending) }
+
+  before { allow(RubyLLM::Accounting::Usage).to receive(:ledger).and_return(nil) }
 
   it 'retains a timed-out independent task without cancelling it' do
     allow(protocol).to receive(:refresh_research_job).with(job, timeout: be > 0).and_return(status: :pending)
@@ -67,5 +72,42 @@ RSpec.describe RubyLLM::ResearchJob do
     expect(job.cost.total).to be_nil
     expect(job).to have_attributes(agent: 'agent-id', provider: :vertexai, id: 'job-1')
     expect(job.inspect).to include('job-1', 'pending')
+  end
+
+  describe 'usage' do
+    def usage_events
+      instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }
+    end
+
+    it 'records the reported usage when it observes the job finish, attributed to the owner' do
+      job = RubyLLM.with_usage_owner('account-1') do
+        described_class.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol:, status: :pending)
+      end
+      tokens = RubyLLM::Tokens.new(input: 1200, output: 300, reported_cost: 0.42)
+      allow(protocol).to receive(:refresh_research_job).and_return(status: :completed, tokens:)
+
+      job.refresh
+      job.refresh
+
+      expect(usage_events.size).to eq(1)
+      expect(usage_events.first).to include(operation: :research, provider: 'vertexai', model: 'agent-id',
+                                            status: :succeeded, owner: 'account-1')
+      expect(usage_events.first[:tokens].input).to eq(1200)
+      expect(usage_events.first[:cost].total).to eq(0.42)
+    end
+
+    it 'records a cancelled job as cancelled' do
+      allow(protocol).to receive(:cancel_research_job).and_return(status: :cancelled)
+
+      job.cancel
+
+      expect(usage_events.map { |event| event[:status] }).to eq([:cancelled])
+    end
+
+    it 'leaves a job found already finished to the process that observed it finish' do
+      described_class.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol:, status: :completed)
+
+      expect(usage_events).to be_empty
+    end
   end
 end

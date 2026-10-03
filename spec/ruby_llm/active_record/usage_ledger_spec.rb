@@ -95,6 +95,27 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
                                                     input_tokens: 133)
   end
 
+  it 'writes a row when a video or research job finishes, attributed to the owner at submission' do
+    provider = instance_double(RubyLLM::Providers::Gemini, slug: 'gemini')
+    video_protocol = instance_double(RubyLLM::Protocols::Gemini, config: RubyLLM.config, provider:)
+    research_protocol = instance_double(RubyLLM::Protocols::VertexAI::Research, config: RubyLLM.config)
+    allow(video_protocol).to receive(:refresh_video_job).and_return({ status: :completed })
+    allow(research_protocol).to receive(:refresh_research_job)
+      .and_return(status: :completed, tokens: RubyLLM::Tokens.new(input: 1200, output: 300, reported_cost: 0.42))
+    video, research = RubyLLM.with_usage_owner(owner) do
+      [RubyLLM::VideoJob.new(id: 'operations/op-1', protocol: video_protocol, model: 'veo-3.1-fast-generate-preview'),
+       RubyLLM::ResearchJob.new(id: 'job-1', provider: :vertexai, agent: 'agent-id', protocol: research_protocol,
+                                status: :pending)]
+    end
+
+    video.refresh
+    research.refresh
+
+    expect(rows_for(owner).map { |row| [row.operation, row.model, row.status, row.total_cost&.to_f] })
+      .to eq([['video', 'veo-3.1-fast-generate-preview', 'succeeded', nil],
+              ['research', 'agent-id', 'succeeded', 0.42]])
+  end
+
   it 'leaves the rows of a persisted chat to the chat, written once' do
     reply = { id: 'msg_1', type: 'message', role: 'assistant', model: model_for(:anthropic),
               content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn',

@@ -30,6 +30,8 @@ module RubyLLM
     # Submits a video generation job and returns a VideoJob without
     # waiting for the result. Most code calls this through
     # RubyLLM.animate_later. Takes the same arguments as Video.animate.
+    # The job records its usage, attributed to +owner:+ or the owner of
+    # RubyLLM.with_usage_owner, once it finishes.
     #
     #   job = RubyLLM.animate_later("a hummingbird in slow motion")
     #   job.id      # => "0eb6910f-a353-4699-9d1e-6a4f7a5b39e2"
@@ -43,7 +45,8 @@ module RubyLLM
                            with: nil,
                            extend: nil,
                            provider_options: {},
-                           metadata: nil)
+                           metadata: nil,
+                           owner: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_video_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -59,7 +62,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('video_job.ruby_llm', payload, config: config) do |event|
-        job = provider_instance.animate_later(prompt, model:, with:, extend:, provider_options:)
+        job = Accounting::Usage.owned_by(owner) do
+          provider_instance.animate_later(prompt, model:, with:, extend:, provider_options:)
+        end
         event[:job_id] = job.id
         job
       end
@@ -72,6 +77,8 @@ module RubyLLM
       @status = status
       @raw = raw
       @error = error
+      @usage_owner = Accounting::Usage.owner
+      record_usage
     end
 
     # Returns +true+ while the provider is still rendering the video.
@@ -104,6 +111,7 @@ module RubyLLM
       @status = state.fetch(:status)
       @raw = state[:raw]
       @error = state[:error]
+      record_usage
       self
     end
 
@@ -139,6 +147,15 @@ module RubyLLM
     end
 
     private
+
+    def record_usage
+      return if pending? || @usage_recorded
+
+      @usage_recorded = true
+      entry = Accounting::Usage::Entry.new(operation: :video, provider: @protocol.provider.slug, model:,
+                                           status: completed? ? :succeeded : :failed, owner: @usage_owner)
+      Accounting::Usage.report(entry, config: @protocol.config)
+    end
 
     def monotonic_time
       Process.clock_gettime(Process::CLOCK_MONOTONIC)

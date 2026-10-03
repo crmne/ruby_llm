@@ -84,7 +84,7 @@ module RubyLLM
 
       # One physical provider request attempt and its accounting facts.
       class Entry
-        OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank judgment].freeze
+        OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank judgment video research].freeze
         STATUSES = %i[pending succeeded failed cancelled].freeze
 
         attr_reader :operation, :provider, :model, :status, :tokens, :owner

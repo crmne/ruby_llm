@@ -49,7 +49,14 @@ RSpec.describe RubyLLM::Video, :live do
   end
 
   describe RubyLLM::VideoJob do
-    let(:protocol) { instance_double(RubyLLM::Protocols::Gemini) }
+    let(:instrumenter) { CaptureInstrumenter.new }
+    let(:config) { RubyLLM.context { |config| config.instrumenter = instrumenter }.config }
+    let(:protocol) do
+      instance_double(RubyLLM::Protocols::Gemini, config:,
+                                                  provider: instance_double(RubyLLM::Providers::Gemini, slug: 'gemini'))
+    end
+
+    before { allow(RubyLLM::Accounting::Usage).to receive(:ledger).and_return(nil) }
 
     it 'raises when the job outlives the timeout' do
       allow(protocol).to receive(:refresh_video_job).and_return({ status: :pending })
@@ -87,6 +94,24 @@ RSpec.describe RubyLLM::Video, :live do
 
       job.refresh
       expect(protocol).to have_received(:refresh_video_job).once
+    end
+
+    it 'records its usage once when it finishes, attributed to the owner at submission' do
+      allow(protocol).to receive(:refresh_video_job).and_return({ status: :pending }, { status: :completed })
+      job = RubyLLM.with_usage_owner('account-1') do
+        described_class.new(id: 'operations/op-1', protocol:, model: 'veo-3.1-fast-generate-preview')
+      end
+
+      job.refresh
+      expect(instrumenter.events.map(&:first)).not_to include('usage.ruby_llm')
+      job.refresh
+      job.refresh
+
+      usage = instrumenter.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }
+      expect(usage.size).to eq(1)
+      expect(usage.first).to include(operation: :video, provider: 'gemini', model: 'veo-3.1-fast-generate-preview',
+                                     status: :succeeded, owner: 'account-1')
+      expect(usage.first[:cost].total).to be_nil
     end
   end
 end

@@ -49,7 +49,8 @@ module RubyLLM
     # vocabulary, such as durations and resolutions, and merges them into
     # the request as-is. +context:+ supplies a Context whose configuration
     # replaces the global one. +metadata:+ is included in the
-    # instrumentation payload.
+    # instrumentation payload. +owner:+ attributes the usage to a record,
+    # such as a user, and wins over RubyLLM.with_usage_owner.
     #
     #   video = RubyLLM.animate("a hummingbird in slow motion", model: "veo-3.1-fast-generate-preview")
     #
@@ -68,13 +69,14 @@ module RubyLLM
                      with: nil,
                      extend: nil,
                      provider_options: {},
-                     metadata: nil)
+                     metadata: nil,
+                     owner: nil)
       config = context&.config || RubyLLM.config
       payload = { model:, prompt:, provider_options:, metadata: }
 
       RubyLLM.instrument('video.ruby_llm', payload, config: config) do |event|
         job = VideoJob.animate_later(prompt, model:, provider:, assume_model_exists:,
-                                             context:, with:, extend:, provider_options:, metadata:)
+                                             context:, with:, extend:, provider_options:, metadata:, owner:)
         event[:model] = job.model
         event[:job_id] = job.id
         job.wait

@@ -68,14 +68,18 @@ module RubyLLM
     # Submits one research task without waiting. +provider:+ and +agent:+
     # are required; +with:+ attaches documents or images where supported.
     # +provider_tools:+ accepts an array of aliases or a Hash of aliases
-    # and their options, as on Chat#with_provider_tools.
+    # and their options, as on Chat#with_provider_tools. The job records
+    # its usage, attributed to +owner:+ or the owner of
+    # RubyLLM.with_usage_owner, when it finishes.
     def self.research_later(prompt, provider:, agent:, with: nil, provider_tools: nil,
-                            context: nil, provider_options: {}, metadata: nil)
+                            context: nil, provider_options: {}, metadata: nil, owner: nil)
       config = context&.config || RubyLLM.config
       instance = Provider.resolve!(provider).new(config)
       payload = { provider: instance.slug, agent:, prompt:, metadata: }
       RubyLLM.instrument('research_job.ruby_llm', payload, config:) do |event|
-        job = instance.research_later(prompt, agent:, with:, provider_tools:, provider_options:)
+        job = Accounting::Usage.owned_by(owner) do
+          instance.research_later(prompt, agent:, with:, provider_tools:, provider_options:)
+        end
         event[:job_id] = job.id
         event[:status] = job.status
         job
@@ -123,6 +127,7 @@ module RubyLLM
       @provider = provider.to_sym
       @agent = agent
       @protocol = protocol
+      @usage_owner = Accounting::Usage.owner
       apply_state(state)
     end
 
@@ -216,12 +221,23 @@ module RubyLLM
       raise Error.new("Research request failed: #{e.message} (job #{id})", job: self, response:), cause: e
     end
 
+    # A job found by ID may have been submitted and recorded elsewhere, so
+    # only a finish this object observes records usage.
     def apply_state(state)
+      observed_finish = pending? && state.fetch(:status) != :pending
       @status = state.fetch(:status)
       @raw = state[:raw]
       @error = state[:error]
       @message = state[:message]
       @tokens = state[:tokens] || @message&.tokens || Tokens.new
+      record_usage if observed_finish
+    end
+
+    def record_usage
+      status = { completed: :succeeded, incomplete: :succeeded, cancelled: :cancelled }.fetch(@status, :failed)
+      entry = Accounting::Usage::Entry.new(operation: :research, provider:, model: agent, status:, tokens:, cost:,
+                                           owner: @usage_owner)
+      Accounting::Usage.report(entry, config: @protocol.config)
     end
 
     def attempt_cancellation

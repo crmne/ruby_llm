@@ -86,7 +86,7 @@ RSpec.describe 'Context connection settings' do # rubocop:disable RSpec/Describe
 
   describe RubyLLM::Video do
     def finished_job(config)
-      protocol = instance_double(RubyLLM::Protocol, config: config)
+      protocol = instance_double(RubyLLM::Protocol, config:, provider: instance_double(RubyLLM::Provider, slug: 'xai'))
       allow(protocol).to receive(:download_video)
         .and_return(RubyLLM::Video.new(url: 'https://cdn.example.test/clip.mp4', mime_type: 'video/mp4'))
       RubyLLM::VideoJob.new(id: 'vid_1', protocol: protocol, model: 'test-video-model', status: :completed)
