@@ -35,6 +35,12 @@ response.content
 
 ## Setting Up Your Rails Application
 
+JSON 3 needs Rails 8.1.4 or later. RubyLLM allows JSON 2 and 3, so on an older Rails version, keep JSON 2 in your `Gemfile`:
+
+```ruby
+gem "json", "< 3"
+```
+
 The install generator creates your chat and message models, migrations, and initializer:
 
 ```bash
