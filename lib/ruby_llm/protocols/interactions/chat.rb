@@ -47,20 +47,25 @@ module RubyLLM
           display == :omitted ? 'none' : 'auto'
         end
 
+        # Gemini checks signatures only in the current turn, which starts at
+        # the last user message.
         def format_interaction_input(messages)
           calls = messages.flat_map { |message| message.tool_calls.to_h.values }.to_h { |call| [call.id, call] }
-          messages.reject { |message| message.role == :system }.flat_map do |message|
-            render_interaction_turn(message, calls)
+          turn_start = messages.rindex { |message| message.role == :user }
+          messages.each_with_index.flat_map do |message, index|
+            next [] if message.role == :system
+
+            render_interaction_turn(message, calls, current: turn_start.nil? || index > turn_start)
           end
         end
 
-        def render_interaction_turn(message, calls)
+        def render_interaction_turn(message, calls, current:)
           if interaction_state?(message.raw_content)
             render_interaction_history(message.raw_content.dig('response', 'steps') || [])
           elsif message.tool_result?
             [render_interaction_result(message, calls)]
           else
-            render_interaction_message(message)
+            render_interaction_message(message, current:)
           end
         end
 
@@ -75,12 +80,14 @@ module RubyLLM
           end
         end
 
-        def render_interaction_message(message)
+        def render_interaction_message(message, current:)
           steps = []
           content = render_interaction_content(message.content, message.attachments)
           steps << { type: message.role == :assistant ? 'model_output' : 'user_input', content: } if content.any?
-          message.tool_calls&.each_value do |call|
-            steps << { type: 'function_call', id: call.id, name: call.name, arguments: call.arguments }
+          message.tool_calls.to_h.values.each_with_index do |call, position|
+            signature = call.thought_signature || (Gemini::Tools::PLACEHOLDER_SIGNATURE if current && position.zero?)
+            steps << { type: 'function_call', id: call.id, name: call.name, arguments: call.arguments,
+                       signature: }.compact
           end
           steps
         end

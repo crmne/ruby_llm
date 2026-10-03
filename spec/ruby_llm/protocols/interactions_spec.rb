@@ -196,8 +196,31 @@ RSpec.describe RubyLLM::Protocols::Interactions do
 
     expect(chat.render[:input]).to eq(
       [{ type: 'user_input', content: [{ type: 'text', text: 'Multiply 17 by 19' }] },
-       { type: 'function_call', id: 'call_1', name: 'multiply', arguments: { 'left' => 17, 'right' => 19 } },
+       { type: 'function_call', id: 'call_1', name: 'multiply', arguments: { 'left' => 17, 'right' => 19 },
+         signature: 'skip_thought_signature_validator' },
        { type: 'function_result', call_id: 'call_1', name: 'multiply', result: [{ type: 'text', text: '323' }] }]
+    )
+  end
+
+  it 'signs the first call of each step in the current turn only, keeping signatures Gemini made' do
+    calls = lambda do |*ids, signature: nil|
+      ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'multiply', arguments: {}, thought_signature: signature)] }
+    end
+    chat.add_message(role: :user, content: 'Question?')
+    chat.add_message(role: :assistant, content: '', tool_calls: calls.call('a'))
+    chat.add_message(role: :tool, content: 'A', tool_call_id: 'a')
+    chat.add_message(role: :assistant, content: 'Answer.')
+    chat.add_message(role: :user, content: 'Again?')
+    chat.add_message(role: :assistant, content: '', tool_calls: calls.call('b', 'c'))
+    chat.add_message(role: :tool, content: 'B', tool_call_id: 'b')
+    chat.add_message(role: :tool, content: 'C', tool_call_id: 'c')
+    chat.add_message(role: :assistant, content: '', tool_calls: calls.call('d', signature: 'gemini-signature'))
+    chat.add_message(role: :tool, content: 'D', tool_call_id: 'd')
+
+    steps = chat.render[:input].select { |step| step[:type] == 'function_call' }
+
+    expect(steps.map { |step| step[:signature] }).to eq(
+      [nil, 'skip_thought_signature_validator', nil, 'gemini-signature']
     )
   end
 
