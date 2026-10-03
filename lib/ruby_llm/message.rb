@@ -135,11 +135,11 @@ module RubyLLM
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }
     end
 
-    def without_native_content # :nodoc:
+    def without_native_content(raw_content: nil) # :nodoc:
       dup.tap do |message|
         message.instance_variable_set(:@thinking, nil)
         message.instance_variable_set(:@raw_reasoning, nil)
-        message.instance_variable_set(:@raw_content, nil)
+        message.instance_variable_set(:@raw_content, raw_content)
         message.instance_variable_set(:@tool_calls, tool_calls_without_thought_signatures)
       end
     end

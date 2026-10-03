@@ -96,7 +96,7 @@ module RubyLLM
                 finish_reason: parse_finish_reason(response),
                 citations: parse_citations(response, output, nil),
                 server_tool_calls: server_tool_calls,
-                raw_content: server_tool_calls.any? ? output : nil,
+                raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
                 **parse_usage(response['usage'] || {}),
                 server_tool_use: parse_server_tool_use(response)
         end
