@@ -17,7 +17,7 @@ module RubyLLM
         def format_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
           return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
-          return thinking_off_fields(model) if thinking.enabled == false
+          return { reasoning_config: { type: 'disabled' } } if thinking.enabled == false
           return format_adaptive_reasoning_fields(thinking) if adaptive_thinking?(thinking, model)
 
           effort = thinking.effort.to_s
@@ -25,16 +25,6 @@ module RubyLLM
           return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
 
           format_effort_fields(effort, model) unless effort.empty?
-        end
-
-        # Sonnet 5.5 rejects reasoning_config disabled on Converse; its off
-        # switch is thinking.type between_tools in additionalModelRequestFields.
-        def thinking_off_fields(model)
-          if RubyLLM::Thinking.between_tools_off_model?(model&.id)
-            { thinking: { type: 'between_tools' } }
-          else
-            { reasoning_config: { type: 'disabled' } }
-          end
         end
 
         # Models that publish a reasoning_config enum, such as OpenAI's GPT

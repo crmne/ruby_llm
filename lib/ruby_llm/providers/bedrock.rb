@@ -28,8 +28,12 @@ module RubyLLM
         Bedrock::Capabilities
       end
 
-      def self.thinking_off_control(model_id)
-        { enabled: false } if RubyLLM::Thinking.between_tools_off_model?(model_id)
+      def self.between_tools_off?(model_id) # :nodoc:
+        Providers::Anthropic.between_tools_off?(model_id)
+      end
+
+      def self.thinking_off_control(model_id) # :nodoc:
+        { enabled: false } if between_tools_off?(model_id)
       end
 
       def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
@@ -249,8 +253,7 @@ module RubyLLM
       end
 
       def mantle_protocol_for(model_id)
-        return protocols[:mantle_anthropic] if model_id.start_with?('anthropic.') ||
-                                               RubyLLM::Thinking.between_tools_off_model?(model_id)
+        return protocols[:mantle_anthropic] if model_id.start_with?('anthropic.')
         return protocols[:mantle_responses] if Bedrock::Mantle::RESPONSES_MODELS.include?(model_id)
 
         protocols[:mantle_chat_completions]

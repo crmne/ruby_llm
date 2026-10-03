@@ -37,17 +37,6 @@ module RubyLLM
     def inspect_attributes # :nodoc:
       { text: text, signature: signature ? '[REDACTED]' : nil }
     end
-
-    # :nodoc:
-    BETWEEN_TOOLS_OFF_MODEL = /\A(?:[a-z0-9-]+\.)*claude-sonnet-5-5\z/
-
-    # Whether +model_id+ is Claude Sonnet 5.5, whose lowest thinking setting
-    # is +between_tools+ rather than +disabled+. Matches Anthropic/Vertex bare
-    # ids and Bedrock Mantle / regional prefixes (start of string or +.+ before
-    # the suffix).
-    def self.between_tools_off_model?(model_id)
-      model_id.to_s.match?(BETWEEN_TOOLS_OFF_MODEL)
-    end
   end
 
   class Thinking

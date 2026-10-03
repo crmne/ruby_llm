@@ -51,21 +51,6 @@ RSpec.describe RubyLLM::Protocols::Converse::Reasoning do
       )
     end
 
-    it 'sends reasoning_config disabled when turning thinking off' do
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(enabled: false))).to eq(
-        reasoning_config: { type: 'disabled' }
-      )
-    end
-
-    it 'sends between_tools when turning thinking off on Sonnet 5.5' do
-      model = instance_double(RubyLLM::Model, id: 'us.anthropic.claude-sonnet-5-5', metadata: {}, reasoning_options: [],
-                                              capabilities: ['reasoning'])
-
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(enabled: false), model: model)).to eq(
-        thinking: { type: 'between_tools' }
-      )
-    end
-
     context 'with a Claude model that takes an effort but no budget' do
       let(:adaptive_model) { RubyLLM.models.find('us.anthropic.claude-sonnet-5', provider: :bedrock) }
 

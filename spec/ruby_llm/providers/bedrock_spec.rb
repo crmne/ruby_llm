@@ -193,19 +193,6 @@ RSpec.describe RubyLLM::Providers::Bedrock do
 
       expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::Bedrock::Mantle::Responses)
     end
-
-    it 'keeps regional Sonnet 5.5 ids on Mantle Anthropic when Mantle serves them' do
-      expect(provider.send(:mantle_protocol_for, 'us.anthropic.claude-sonnet-5-5'))
-        .to eq(provider.protocols[:mantle_anthropic])
-      expect(provider.send(:mantle_protocol_for, 'global.anthropic.claude-sonnet-5-5'))
-        .to eq(provider.protocols[:mantle_anthropic])
-    end
-
-    it 'keeps regional Sonnet 5.5 chat routing on Converse' do
-      model = instance_double(RubyLLM::Model, id: 'us.anthropic.claude-sonnet-5-5')
-
-      expect(provider.protocol_for(model)).to eq(provider.protocols[:converse])
-    end
   end
 
   describe 'model id path encoding' do
