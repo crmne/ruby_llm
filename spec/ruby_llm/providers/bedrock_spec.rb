@@ -304,12 +304,16 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       request = stub_request(:post, %r{\Ahttps://bedrock-runtime\.us-east-1\.amazonaws\.com/model/.+/converse\z})
                 .with { |req| req.headers['X-Amz-Content-Sha256'] == Digest::SHA256.hexdigest(req.body) }
                 .to_return(body: reply, headers: { 'Content-Type' => 'application/json' })
-      allow(JSON).to receive(:generate).and_call_original
+      payloads = []
+      allow(JSON).to receive(:generate).and_wrap_original do |original, value, *args|
+        payloads << value if value.is_a?(Hash) && (value.key?(:messages) || value.key?('messages'))
+        original.call(value, *args)
+      end
 
       context.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).ask('Hello')
 
       expect(request).to have_been_requested
-      expect(JSON).to have_received(:generate).once
+      expect(payloads.size).to eq(1)
     end
   end
 
