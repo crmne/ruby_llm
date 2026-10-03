@@ -955,8 +955,16 @@ RSpec.describe RubyLLM::MCP do
     end
 
     it 'cancels the task of a direct call when the chat is cancelled' do
-      checks = 0
-      checkpoint = -> { raise RubyLLM::CancelledError if (checks += 1) == 5 }
+      cancel = false
+      allow(RubyLLM::MCP::Task).to receive(:new).and_wrap_original do |original, *arguments, **options|
+        original.call(*arguments, **options).tap { cancel = true }
+      end
+      checkpoint = lambda do
+        next unless cancel
+
+        cancel = false
+        raise RubyLLM::CancelledError
+      end
 
       expect { RubyLLM::Support::Cancellation.watch(checkpoint) { mcp.call(:endless_report) } }
         .to raise_error(RubyLLM::CancelledError)
