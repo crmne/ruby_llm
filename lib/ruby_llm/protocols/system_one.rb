@@ -18,10 +18,6 @@ module RubyLLM
           detail
         when Hash
           detail['message']
-        when Array
-          detail.map do |error|
-            [Array(error['loc']).join('.'), error['msg']].compact.reject(&:empty?).join(': ')
-          end.join('; ')
         end
       rescue JSON::ParserError
         nil
