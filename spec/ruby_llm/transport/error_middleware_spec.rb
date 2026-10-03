@@ -66,6 +66,18 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
     end
   end
 
+  describe '.parse_error with a bad request' do
+    it 'spots a rate limit reported as a bad request' do
+      message = 'Your requests to gpt-6-luna for gpt-6-luna in germanywestcentral have exceeded token rate limit.'
+      provider = instance_double(RubyLLM::Provider, parse_error: message)
+      response = Faraday::Env.from(status: 400, body: {})
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::RateLimitError, message)
+    end
+  end
+
   describe 'retry delay normalization' do
     def middleware_for(provider, env)
       app_response = instance_double(Faraday::Response)

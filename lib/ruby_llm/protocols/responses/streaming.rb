@@ -9,6 +9,7 @@ module RubyLLM
         ERROR_STATUSES = {
           'server_error' => 500,
           'rate_limit_exceeded' => 429,
+          'too_many_requests' => 429,
           'insufficient_quota' => 429
         }.freeze
 
@@ -38,7 +39,7 @@ module RubyLLM
           when 'response.completed', 'response.incomplete'
             build_final_chunk(data)
           when 'response.failed'
-            raise Error, data.dig('response', 'error', 'message')
+            raise_failed_response(data['response'] || {})
           else
             chunk
           end
@@ -99,13 +100,27 @@ module RubyLLM
                 **parse_usage(response['usage'] || {})
         end
 
-        # Responses reports a stream error as a flat event carrying a code,
-        # where Chat Completions nests type and message under an error object.
+        def raise_failed_response(response)
+          body = { 'error' => response['error'] }
+          raise_stream_error(JSON.generate(body), body, nil)
+        end
+
+        # OpenAI reports a stream error as a flat event carrying a code. Azure
+        # nests the code and type under an error object, as a failed response
+        # and Chat Completions do.
         def parse_streaming_error(data)
           event = JSON.parse(data)
-          return super unless event.is_a?(Hash) && event['type'] == 'error'
+          error = stream_error(event)
+          return super unless error
 
-          [ERROR_STATUSES.fetch(event['code'], 400), event['message']]
+          [ERROR_STATUSES[error['code']] || ERROR_STATUSES.fetch(error['type'], 400), error['message']]
+        end
+
+        def stream_error(event)
+          return unless event.is_a?(Hash)
+          return event['error'] if event['error'].is_a?(Hash)
+
+          event if event['type'] == 'error'
         end
 
         def chunk(content: nil, **attributes)

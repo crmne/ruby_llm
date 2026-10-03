@@ -215,6 +215,72 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       expect(status).to eq(429)
       expect(message).to eq('Slow down')
     end
+
+    it 'classifies an error event that nests its code under an error object' do
+      status, message = parse_streaming_error(
+        { type: 'error', error: { type: 'too_many_requests', code: 'rate_limit_exceeded', message: 'Slow down' } }
+      )
+
+      expect(status).to eq(429)
+      expect(message).to eq('Slow down')
+    end
+
+    it 'classifies a nested error by its type when it carries no code' do
+      status, = parse_streaming_error({ type: 'error', error: { type: 'too_many_requests', message: 'Slow down' } })
+
+      expect(status).to eq(429)
+    end
+  end
+
+  describe 'stream errors' do
+    include_context 'with configured RubyLLM'
+
+    let(:azure_error_event) do
+      <<~SSE
+        event: error
+        data: {"type":"error","error":{"type":"too_many_requests","code":"rate_limit_exceeded","headers":{"x-ms-fe-error":"true"},"message":"Your requests to gpt-6-luna for gpt-6-luna in germanywestcentral have exceeded token rate limit.","param":null},"sequence_number":1}
+
+      SSE
+    end
+
+    let(:failed_response_event) do
+      <<~SSE
+        event: response.failed
+        data: {"type":"response.failed","response":{"object":"response","status":"failed","error":{"code":"rate_limit_exceeded","message":"Your requests to gpt-6-luna for gpt-6-luna in germanywestcentral have exceeded token rate limit."},"model":"gpt-6-luna","output":[]},"sequence_number":2}
+
+      SSE
+    end
+
+    def stream(events, url:, model:, provider:)
+      stub_request(:post, url).to_return(status: 200, body: events, headers: { 'Content-Type' => 'text/event-stream' })
+
+      RubyLLM.chat(model:, provider:).ask('Hello') { |_chunk| nil }
+    end
+
+    def stream_from_azure(events)
+      stream(events, url: %r{/openai/v1/responses}, model: 'gpt-5.4-mini', provider: :azure)
+    end
+
+    it 'raises a rate limit that Azure reports in an error event' do
+      expect { stream_from_azure(azure_error_event + failed_response_event) }
+        .to raise_error(RubyLLM::RateLimitError, /exceeded token rate limit/)
+    end
+
+    it 'raises a rate limit that a failed response reports' do
+      expect { stream_from_azure(failed_response_event) }
+        .to raise_error(RubyLLM::RateLimitError, /exceeded token rate limit/)
+    end
+
+    it 'raises a rate limit that OpenAI reports in a flat error event' do
+      event = <<~SSE
+        event: error
+        data: {"type":"error","code":"rate_limit_exceeded","message":"Rate limit reached for requests","param":null,"sequence_number":1}
+
+      SSE
+
+      expect { stream(event, url: 'https://api.openai.com/v1/responses', model: model_for(:openai), provider: :openai) }
+        .to raise_error(RubyLLM::RateLimitError, 'Rate limit reached for requests')
+    end
   end
 
   it 'preserves incomplete_details reason on completed events' do

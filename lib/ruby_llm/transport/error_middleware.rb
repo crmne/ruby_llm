@@ -80,9 +80,7 @@ module RubyLLM
           when 200..399
             message
           when 400
-            raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
-
-            raise BadRequestError.new(message, response:)
+            raise_bad_request(message, response)
           when 401
             raise UnauthorizedError.new(message, response:)
           when 402
@@ -106,6 +104,13 @@ module RubyLLM
         end
 
         private
+
+        def raise_bad_request(message, response)
+          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
+          raise RateLimitError.new(message, response:) if rate_limited?(message)
+
+          raise BadRequestError.new(message, response:)
+        end
 
         # Providers hand back whatever their error body holds, which is not
         # always a String: bedrock-mantle nests code, message, and type in a
