@@ -127,6 +127,7 @@ module RubyLLM
 
         def raise_bad_request(message, response)
           raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
+          raise RateLimitError.new(message, response:) if rate_limited?(message)
           raise OverloadedError.new(message, response:) if overloaded?(message)
           raise PaymentRequiredError.new(message, response:) if payment_required?(message)
 
