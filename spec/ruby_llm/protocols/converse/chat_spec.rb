@@ -288,11 +288,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         instance_double(RubyLLM::Model,
                         id: id,
                         max_output_tokens: nil,
+                        reasoning_options: [],
                         metadata: { converse: { additionalRequestFieldsSchema: JSON.generate(schema) } })
       end
 
       let(:enumerated_budget_model) do
-        bedrock_model('us.anthropic.claude-sonnet-5',
+        bedrock_model('us.anthropic.claude-sonnet-4-6',
                       { type: 'enum', enum: { low: 1024, medium: 40_000, high: 63_999 },
                         minimum: 1024, maximum: 63_999 })
       end
@@ -346,7 +347,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'still clamps under max_output_tokens when the model states no minimum' do
-        model = bedrock_model('us.anthropic.claude-sonnet-5', { type: 'enum', enum: { low: 1024, high: 8192 } })
+        model = bedrock_model('us.anthropic.claude-sonnet-4-6', { type: 'enum', enum: { low: 1024, high: 8192 } })
 
         payload = render_payload(model: model, thinking: thinking(effort: :low), max_output_tokens: 500)
 
@@ -382,8 +383,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       it 'maps effort for regional entries that carry no converse metadata of their own' do
         model = instance_double(RubyLLM::Model,
-                                id: 'eu.anthropic.claude-sonnet-5',
+                                id: 'eu.anthropic.claude-sonnet-4-6',
                                 max_output_tokens: nil,
+                                reasoning_options: [],
                                 metadata: {})
 
         payload = render_payload(model: model, thinking: thinking(effort: :low))
@@ -400,6 +402,32 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         expect(payload[:additionalModelRequestFields]).to eq(reasoning_effort: 'high')
       end
 
+      it 'sends the effort as the reasoning_config value a model publishes' do
+        payload = render_payload(model: RubyLLM.models.find('us.openai.gpt-6-sol', provider: :bedrock),
+                                 thinking: thinking(effort: :low))
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_config: 'low')
+      end
+
+      it 'reads the reasoning_config schema from another entry for the same model' do
+        payload = render_payload(model: RubyLLM.models.find('global.openai.gpt-6-luna', provider: :bedrock),
+                                 thinking: thinking(effort: :none))
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_config: 'none')
+      end
+
+      it 'turns reasoning off through reasoning_config' do
+        context = RubyLLM.context do |config|
+          config.bedrock_api_key = 'key'
+          config.bedrock_secret_key = 'secret'
+          config.bedrock_region = 'us-east-1'
+        end
+
+        payload = context.chat(model: 'us.openai.gpt-6-sol', provider: :bedrock).with_thinking(false).render
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_config: 'none')
+      end
+
       it 'reads the model out of an inference profile ARN' do
         model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {},
                                                 id: 'arn:aws:bedrock:us-west-2:123456789012:' \
@@ -413,9 +441,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
 
       it 'maps effort onto a budget for a Claude model reached through an inference profile ARN' do
-        model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {},
+        model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {}, reasoning_options: [],
                                                 id: 'arn:aws:bedrock:us-west-2:123456789012:' \
-                                                    'inference-profile/us.anthropic.claude-sonnet-5')
+                                                    'inference-profile/us.anthropic.claude-sonnet-4-6')
 
         payload = render_payload(model: model, thinking: thinking(effort: :low))
 
@@ -496,58 +524,6 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       )
 
       expect(config[:tools].first).to include(cachePoint: { type: 'default' })
-    end
-  end
-
-  describe '.format_reasoning_fields' do
-    let(:model_without_budget) do
-      instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', metadata: {},
-                                      capabilities: ['reasoning'])
-    end
-
-    def reasoning_fields(thinking, model: model_without_budget)
-      protocol = described_class
-      target = Object.new
-      target.extend(protocol)
-      target.instance_variable_set(:@model, model)
-      target.send(:format_reasoning_fields, thinking, model)
-    end
-
-    it 'is nil when thinking is off' do
-      expect(reasoning_fields(nil)).to be_nil
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new)).to be_nil
-    end
-
-    it 'is nil for an explicit none effort' do
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
-    end
-
-    it 'maps effort to an advertised token budget' do
-      model = instance_double(
-        RubyLLM::Model,
-        id: 'anthropic.claude-test',
-        metadata: {
-          converse: {
-            additionalRequestFieldsSchema: JSON.generate(
-              reasoningConfig: { budgetTokens: { enum: { low: 1024, high: 8192 }, minimum: 1024, maximum: 8192 } }
-            )
-          }
-        }
-      )
-
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high), model: model)).to eq(
-        reasoning_config: { type: 'enabled', budget_tokens: 8192 }
-      )
-    end
-
-    it 'sends a flat effort otherwise' do
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :low))).to eq(reasoning_effort: 'low')
-    end
-
-    it 'falls back to a token budget' do
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(budget: 2048))).to eq(
-        reasoning_config: { type: 'enabled', budget_tokens: 2048 }
-      )
     end
   end
 
