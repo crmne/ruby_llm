@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
     response = chat.with_provider_tools(:web_search).ask(question)
 
     expect(response.server_tool_calls.filter_map(&:search_suggestions).join).to include('gradient-container')
+    expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
     expect(stored_text(chat)).not_to include(*suggestion_markers)
 
     restored = Chat.find(chat.id)

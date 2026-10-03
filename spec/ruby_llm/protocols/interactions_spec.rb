@@ -204,6 +204,16 @@ RSpec.describe RubyLLM::Protocols::Interactions do
       chat.add_message(message)
       expect(chat.ask_later('Thanks').render[:input]).to include(searched.first, searched[1].merge('result' => [{}]))
     end
+
+    it 'counts the searches the grounding reports' do
+      usage = body['usage'].merge(
+        'grounding_tool_count' => [{ 'type' => 'google_search', 'count' => 2, 'search_query_count' => 2 }]
+      )
+      message = protocol.send(:parse_completion_body, body.merge('steps' => search_steps('<style></style>'),
+                                                                 'usage' => usage), raw: nil)
+
+      expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2)
+    end
   end
 
   it 'rejects failed or truncated streams and unsupported required actions' do
@@ -354,6 +364,7 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chunks.flat_map(&:server_tool_calls).filter_map(&:search_suggestions).join).to include('<style>')
     expect(message.server_tool_calls.filter_map(&:search_suggestions).join).to include('<style>')
     expect(JSON.generate(message.raw_content)).not_to include('search_suggestions')
+    expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2)
   end
 
   it 'executes local tools and returns JSON Schema output through Interactions', :live do

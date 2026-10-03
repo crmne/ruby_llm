@@ -5,6 +5,7 @@ module RubyLLM
     class Interactions
       module Chat # :nodoc:
         FINISH_REASONS = { 'completed' => :stop, 'requires_action' => :tool_calls, 'incomplete' => :max_tokens }.freeze
+        SERVER_TOOL_USAGE_NAMES = { 'google_search' => 'web_search' }.freeze
 
         module_function
 
@@ -116,7 +117,15 @@ module RubyLLM
                       raw_content: kept_interaction(data, steps),
                       model: model, raw: raw, cost: cost,
                       finish_reason: interaction_finish_reason(data['status'], calls),
+                      server_tool_use: parse_interaction_server_tool_use(data['usage'] || {}),
                       **parse_interaction_usage(data['usage'] || {}))
+        end
+
+        def parse_interaction_server_tool_use(usage)
+          Array(usage['grounding_tool_count']).to_h do |grounding|
+            tool = grounding['type']
+            ["#{SERVER_TOOL_USAGE_NAMES.fetch(tool, tool)}_requests", grounding['count']]
+          end
         end
 
         def kept_interaction(data, steps)
