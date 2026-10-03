@@ -29,7 +29,7 @@ module RubyLLM
       end
 
       def self.between_tools_off?(model_id) # :nodoc:
-        Providers::Anthropic.between_tools_off?(model_id)
+        Providers::Anthropic.between_tools_off?(Protocols::Converse::Chat.foundation_model_id(model_id))
       end
 
       def self.thinking_off_control(model_id) # :nodoc:

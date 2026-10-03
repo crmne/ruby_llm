@@ -27,10 +27,6 @@ module RubyLLM
           format_effort_fields(effort, model) unless effort.empty?
         end
 
-        # Models that publish a reasoning_config enum, such as OpenAI's GPT
-        # models, take the effort as its value and reject reasoning_effort.
-        # Sonnet 5.5 rejects reasoning_config type disabled. between_tools is
-        # its off path, including regional ids such as us.anthropic.claude-sonnet-5-5.
         def disabled_reasoning_fields(model)
           return { thinking: { type: 'between_tools' } } if between_tools_off?(model)
 
@@ -44,6 +40,8 @@ module RubyLLM
           provider.respond_to?(:between_tools_off?) && provider.between_tools_off?(model.id)
         end
 
+        # Models that publish a reasoning_config enum, such as OpenAI's GPT
+        # models, take the effort as its value and reject reasoning_effort.
         def format_effort_fields(effort, model)
           return { reasoning_config: effort } if reasoning_config_schema(model)
 
