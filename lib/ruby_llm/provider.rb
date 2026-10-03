@@ -742,8 +742,6 @@ module RubyLLM
         validation_detail_message(part['detail'])
     end
 
-    # FastAPI and vLLM return 422 as detail: [{loc:, msg:}]. A detail object
-    # is handled by TypeSafe; this is the array shape.
     def validation_detail_message(detail)
       return unless detail.is_a?(Array)
 
@@ -754,15 +752,8 @@ module RubyLLM
     def format_validation_error(error)
       return unless error.is_a?(Hash)
 
-      text = [Array(error['loc']).join('.'), validation_error_text(error['msg'])].compact.reject(&:empty?).join(': ')
+      text = [Array(error['loc']).join('.'), error['msg']&.to_s].compact.reject(&:empty?).join(': ')
       text unless text.empty?
-    end
-
-    def validation_error_text(value)
-      return if value.nil?
-      return value if value.is_a?(String)
-
-      value.to_s
     end
 
     def ensure_configured!
