@@ -33,8 +33,16 @@ module RubyLLM
         end
 
         def between_tools_off?(model_id) # :nodoc:
-          SONNET_55_MODEL_IDS.include?(model_id.to_s)
+          SONNET_55_MODEL_IDS.include?(sonnet_55_model_id(model_id))
         end
+
+        # Regional Bedrock ids (us., global., eu.) and inference-profile ARNs
+        # name the same foundation model after the geography prefix.
+        def sonnet_55_model_id(model_id)
+          prefixes = Protocols::Converse::REGION_PREFIXES.join('|')
+          model_id.to_s.rpartition('/').last.sub(/\A(?:#{prefixes})\./, '')
+        end
+        private :sonnet_55_model_id
 
         def thinking_off_control(model_id) # :nodoc:
           { enabled: false } if between_tools_off?(model_id)

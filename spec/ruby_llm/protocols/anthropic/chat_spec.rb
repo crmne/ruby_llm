@@ -593,6 +593,15 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(payload).not_to have_key(:output_config)
     end
 
+    it 'sends between_tools for regional Bedrock Sonnet 5.5 ids' do
+      %w[us.anthropic.claude-sonnet-5-5 global.anthropic.claude-sonnet-5-5
+         eu.anthropic.claude-sonnet-5-5].each do |model_id|
+        payload = render_off_payload(model_id, provider_class: RubyLLM::Providers::Bedrock)
+
+        expect(payload[:thinking]).to eq(type: 'between_tools')
+      end
+    end
+
     it 'sends between_tools for the Bedrock Mantle Sonnet 5.5 id' do
       payload = render_off_payload(
         'anthropic.claude-sonnet-5-5',

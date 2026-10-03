@@ -17,7 +17,7 @@ module RubyLLM
         def format_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
           return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
-          return { reasoning_config: { type: 'disabled' } } if thinking.enabled == false
+          return disabled_reasoning_fields(model) if thinking.enabled == false
           return format_adaptive_reasoning_fields(thinking) if adaptive_thinking?(thinking, model)
 
           effort = thinking.effort.to_s
@@ -29,6 +29,21 @@ module RubyLLM
 
         # Models that publish a reasoning_config enum, such as OpenAI's GPT
         # models, take the effort as its value and reject reasoning_effort.
+        # Sonnet 5.5 rejects reasoning_config type disabled. between_tools is
+        # its off path, including regional ids such as us.anthropic.claude-sonnet-5-5.
+        def disabled_reasoning_fields(model)
+          return { thinking: { type: 'between_tools' } } if between_tools_off?(model)
+
+          { reasoning_config: { type: 'disabled' } }
+        end
+
+        def between_tools_off?(model)
+          return false unless model.respond_to?(:provider_class)
+
+          provider = model.provider_class
+          provider.respond_to?(:between_tools_off?) && provider.between_tools_off?(model.id)
+        end
+
         def format_effort_fields(effort, model)
           return { reasoning_config: effort } if reasoning_config_schema(model)
 
