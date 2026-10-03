@@ -95,6 +95,12 @@ module RubyLLM
           /credit balance is too low/i
         ].freeze
 
+        AUTHENTICATION_PATTERNS = [
+          /api key not valid/i,
+          /incorrect api key/i,
+          /security token included in the request is (?:invalid|expired)/i
+        ].freeze
+
         def parse_error(provider:, response:)
           return if (200..399).cover?(response.status)
 
@@ -108,7 +114,7 @@ module RubyLLM
           when 402
             raise PaymentRequiredError.new(message, response:)
           when 403
-            raise ForbiddenError.new(message, response:)
+            raise_forbidden(message, response)
           when 429
             raise RateLimitError.new(message, response:) if rate_limited?(message)
             raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
@@ -128,12 +134,19 @@ module RubyLLM
         private
 
         def raise_bad_request(message, response)
+          raise UnauthorizedError.new(message, response:) if authentication_failed?(message)
           raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
           raise RateLimitError.new(message, response:) if rate_limited?(message)
           raise OverloadedError.new(message, response:) if overloaded?(message)
           raise PaymentRequiredError.new(message, response:) if payment_required?(message)
 
           raise BadRequestError.new(message, response:)
+        end
+
+        def raise_forbidden(message, response)
+          raise UnauthorizedError.new(message, response:) if authentication_failed?(message)
+
+          raise ForbiddenError.new(message, response:)
         end
 
         def context_length_exceeded?(message)
@@ -150,6 +163,10 @@ module RubyLLM
 
         def rate_limited?(message)
           matches?(message, RATE_LIMIT_PATTERNS)
+        end
+
+        def authentication_failed?(message)
+          matches?(message, AUTHENTICATION_PATTERNS)
         end
 
         # Providers hand back whatever their error body holds, which is not

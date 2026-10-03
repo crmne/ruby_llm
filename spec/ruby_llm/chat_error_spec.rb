@@ -37,8 +37,7 @@ RSpec.describe RubyLLM::Chat, :live do
           RubyLLM.config.gpustack_api_key = 'invalid-key' if provider == :gpustack
           skip('Vertex AI uses OAuth, not API keys') if provider == :vertexai
           expect { chat.ask('Hello') }.to raise_error do |error|
-            expect(error).to be_a(RubyLLM::Error)
-            expect(error).to be_a(RubyLLM::UnauthorizedError) if provider == :gpustack
+            expect(error).to be_a(RubyLLM::UnauthorizedError)
             expect(error.class.ancestors).to include(RubyLLM::Error)
             expect(error.response).to be_present
             expect(error.message).to be_present

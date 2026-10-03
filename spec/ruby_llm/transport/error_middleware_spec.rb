@@ -198,6 +198,21 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::RateLimitError)
     end
 
+    it 'raises UnauthorizedError for a rejected key whatever status reports it' do
+      {
+        'API key not valid. Please pass a valid API key.' => 400,
+        'Incorrect API key provided. You can obtain an API key from https://console.x.ai.' => 400,
+        'The security token included in the request is invalid.' => 403
+      }.each do |message, status|
+        provider = instance_double(RubyLLM::Provider, parse_error: message)
+        response = Struct.new(:status, :body).new(status, '{}')
+
+        expect do
+          described_class.parse_error(provider: provider, response: response)
+        end.to raise_error(RubyLLM::UnauthorizedError, message)
+      end
+    end
+
     it 'keeps 429 errors about token quotas as RateLimitError' do
       messages = [
         'You exceeded your current quota, please check your plan and billing details. ' \
