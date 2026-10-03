@@ -52,6 +52,28 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect { described_class.transcribe(audio_path, model:, provider: :gemini, context:) }
         .to raise_error(RubyLLM::ContentFilterError, 'Gemini blocked the transcription: SAFETY')
     end
+
+    it 'records the tokens Gemini billed for the blocked attempt' do
+      model = model_for(:gemini, :transcription)
+      instrumenter = CaptureInstrumenter.new
+      context = RubyLLM.context do |config|
+        config.gemini_api_key = 'test'
+        config.instrumenter = instrumenter
+      end
+      stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+        .to_return(headers: { 'Content-Type' => 'application/json' }, body: {
+          candidates: [{ finishReason: 'SAFETY' }],
+          usageMetadata: { promptTokenCount: 133, candidatesTokenCount: 0, totalTokenCount: 133 }
+        }.to_json)
+
+      expect { described_class.transcribe(audio_path, model:, provider: :gemini, context:) }
+        .to raise_error(RubyLLM::ContentFilterError)
+
+      usage = instrumenter.events.find { |name, _| name == 'usage.ruby_llm' }.last
+      expect(usage).to include(operation: :transcription, status: :failed)
+      expect(usage[:tokens].to_h).to eq(input_tokens: 133, output_tokens: 0)
+      expect(usage[:cost].total).not_to be_nil
+    end
   end
 
   describe 'basic functionality' do

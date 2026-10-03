@@ -237,4 +237,27 @@ RSpec.describe RubyLLM::Image, :live do
       end
     end
   end
+
+  describe 'blocked generations', live: false do
+    it 'records the tokens Gemini billed when it returns no image' do
+      model = model_for(:gemini, :image)
+      instrumenter = CaptureInstrumenter.new
+      context = RubyLLM.context do |config|
+        config.gemini_api_key = 'test'
+        config.instrumenter = instrumenter
+      end
+      stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+        .to_return(headers: { 'Content-Type' => 'application/json' }, body: {
+          candidates: [{ finishReason: 'IMAGE_SAFETY', content: { parts: [{ text: 'I cannot draw that.' }] } }],
+          usageMetadata: { promptTokenCount: 12, candidatesTokenCount: 6 }
+        }.to_json)
+
+      expect { described_class.paint('A paper boat', model:, provider: :gemini, context:) }
+        .to raise_error(RubyLLM::Error, 'Unexpected response format from Gemini image generation API')
+
+      usage = instrumenter.events.find { |name, _| name == 'usage.ruby_llm' }.last
+      expect(usage).to include(operation: :image, status: :failed)
+      expect(usage[:tokens].to_h).to eq(input_tokens: 12, output_tokens: 6)
+    end
+  end
 end

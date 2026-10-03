@@ -83,6 +83,18 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     expect(rows_for(owner).map(&:status)).to eq(['failed'])
   end
 
+  it 'records a blocked transcription with the tokens the provider billed' do
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{transcription_model}:generateContent")
+      .to_return(json_response({ promptFeedback: { blockReason: 'SAFETY' },
+                                 usageMetadata: { promptTokenCount: 133, totalTokenCount: 133 } }))
+
+    expect { RubyLLM.transcribe(audio, model: transcription_model, provider: :gemini, owner:) }
+      .to raise_error(RubyLLM::ContentFilterError)
+
+    expect(rows_for(owner).sole).to have_attributes(operation: 'transcription', status: 'failed', chat_id: nil,
+                                                    input_tokens: 133)
+  end
+
   it 'leaves the rows of a persisted chat to the chat, written once' do
     reply = { id: 'msg_1', type: 'message', role: 'assistant', model: model_for(:anthropic),
               content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn',

@@ -243,6 +243,8 @@ end
 
 The message names the reason the provider gave, as in `Gemini blocked the transcription: SAFETY`. RubyLLM raises instead of returning an empty transcript, so a blocked recording never looks like a silent one. Silent audio still returns an empty `transcription.text`.
 
+Google still bills the audio it read before blocking it. The failed attempt keeps those tokens in `usage.ruby_llm` and, in Rails, in the [usage ledger]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
+
 ## Longer Recordings and Errors
 
 Long recordings may need a longer [request timeout]({% link _getting_started/configuration-connection.md %}#connection-settings). See [Error Handling]({% link _advanced/error-handling.md %}) for retries and provider failures.

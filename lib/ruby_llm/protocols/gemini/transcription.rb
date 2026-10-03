@@ -94,6 +94,8 @@ module RubyLLM
           reason = data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
           return unless data.dig('candidates', 0).nil? || normalize_finish_reason(reason) == :content_filter
 
+          usage = extract_usage(data)
+          @usage_tracker&.observe_tokens(Tokens.new(input: usage[:input_tokens], output: usage[:output_tokens]))
           raise ContentFilterError.new(['Gemini blocked the transcription', reason].compact.join(': '), response:)
         end
 

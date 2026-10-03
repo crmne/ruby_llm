@@ -125,7 +125,11 @@ module RubyLLM
 
         def parse_gemini_image_responses(data, model:)
           parts = gemini_image_parts(data)
-          raise Error, 'Unexpected response format from Gemini image generation API' if parts.empty?
+          if parts.empty?
+            usage = gemini_image_usage(data)
+            @usage_tracker&.observe_tokens(Tokens.new(input: usage['input_tokens'], output: usage['output_tokens']))
+            raise Error, 'Unexpected response format from Gemini image generation API'
+          end
 
           parts.map.with_index do |image_data, index|
             Image.new(

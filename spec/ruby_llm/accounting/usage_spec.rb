@@ -46,6 +46,18 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     expect(refused.to_h).to include(model: nil, status: :failed, tokens: {})
   end
 
+  it 'keeps the usage a response reported when the attempt then fails' do
+    tracker = build_tracker
+    entry = tracker.start
+    tracker.observe_tokens(RubyLLM::Tokens.new(input: 133, output: 0))
+    response = Struct.new(:status, :body).new(200, {})
+
+    tracker.fail_attempt(entry, RubyLLM::ContentFilterError.new('Blocked', response:))
+
+    expect(entry.status).to eq(:failed)
+    expect(entry.tokens.to_h).to eq(input_tokens: 133, output_tokens: 0)
+  end
+
   it 'records zero tokens for attempts the provider refused' do
     tracker = build_tracker
     entry = tracker.start

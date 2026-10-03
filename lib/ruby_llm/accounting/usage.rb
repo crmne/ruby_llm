@@ -182,14 +182,17 @@ module RubyLLM
         end
 
         def observe(chunk)
+          observe_tokens(chunk.tokens) if chunk.respond_to?(:tokens)
+        end
+
+        # Keeps the usage a response reported for the current attempt, so an
+        # attempt that fails after the provider answered, such as a blocked
+        # one, still records what it billed.
+        def observe_tokens(tokens)
           entry = @pending.last
           return unless entry
-          return unless chunk.respond_to?(:tokens)
 
-          entry.finish(
-            status: :pending,
-            tokens: merge_stream_tokens(entry.tokens, chunk.tokens)
-          )
+          entry.finish(status: :pending, tokens: merge_stream_tokens(entry.tokens, tokens))
         end
 
         def fail_attempt(entry, error)
