@@ -35,6 +35,7 @@ module RubyLLM
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           segments = parts.filter_map { |part| parse_transcription_segment(part) }
           text = parts.filter_map { |part| part['text'] || part.dig('audioTranscription', 'text') }.join
+          raise_if_transcription_blocked(data, text, response)
           words = segments.flat_map { |segment| segment['words'] }
           RubyLLM::Transcription.new(text:, model:, segments: segments.empty? ? nil : segments,
                                      words: words.empty? ? nil : words, **extract_usage(data))

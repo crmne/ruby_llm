@@ -75,6 +75,7 @@ module RubyLLM
         def parse_transcription_response(response, model:)
           data = response.body
           text = extract_text(data)
+          raise_if_transcription_blocked(data, text, response)
 
           usage = extract_usage(data)
 
@@ -84,6 +85,16 @@ module RubyLLM
             input_tokens: usage[:input_tokens],
             output_tokens: usage[:output_tokens]
           )
+        end
+
+        # Gemini returns no candidates only for a prompt it blocked.
+        def raise_if_transcription_blocked(data, text, response)
+          return unless text.to_s.empty? && data.is_a?(Hash)
+
+          reason = data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
+          return unless data.dig('candidates', 0).nil? || normalize_finish_reason(reason) == :content_filter
+
+          raise ContentFilterError.new(['Gemini blocked the transcription', reason].compact.join(': '), response:)
         end
 
         def extract_text(data)

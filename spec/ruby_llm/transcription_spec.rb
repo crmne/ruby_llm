@@ -38,6 +38,22 @@ RSpec.describe RubyLLM::Transcription, :live do
     end
   end
 
+  describe 'blocked transcriptions', live: false do
+    it 'raises instead of returning an empty transcript when Gemini blocks the audio' do
+      model = model_for(:gemini, :transcription)
+      context = RubyLLM.context { |config| config.gemini_api_key = 'test' }
+      stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/#{model}:generateContent")
+        .to_return(headers: { 'Content-Type' => 'application/json' }, body: {
+          promptFeedback: { blockReason: 'SAFETY' },
+          usageMetadata: { promptTokenCount: 133, totalTokenCount: 133 },
+          modelVersion: model
+        }.to_json)
+
+      expect { described_class.transcribe(audio_path, model:, provider: :gemini, context:) }
+        .to raise_error(RubyLLM::ContentFilterError, 'Gemini blocked the transcription: SAFETY')
+    end
+  end
+
   describe 'basic functionality' do
     each_model(TRANSCRIPTION_MODELS) do |provider, model|
       it "#{provider}/#{model} can transcribe audio" do
