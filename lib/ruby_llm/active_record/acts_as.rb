@@ -121,6 +121,7 @@ module RubyLLM
                      touch: touch_chat
 
           has_many :ruby_llm_tool_calls,
+                   -> { order(:created_at, :id) },
                    as: :message,
                    class_name: 'RubyLLM::ActiveRecord::ToolCall',
                    dependent: :destroy

@@ -67,4 +67,31 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect { chat.ask_later('Write an essay instead') }.to raise_error(RubyLLM::PendingToolCallsError)
     expect(chat.messages_association.where(role: 'user')).to be_empty
   end
+
+  it 'reloads parallel calls in the order the model made them' do
+    ids = [call_id, "call_#{SecureRandom.hex(6)}"]
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    chat.add_message(
+      RubyLLM::Message.new(
+        role: :assistant,
+        content: '',
+        tool_calls: ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'dangerous', arguments: {})] }
+      )
+    )
+    chat.approve(call_id)
+
+    calls = reading_rows_in_reverse { Chat.find(chat.id).to_llm.messages.last.tool_calls.keys }
+
+    expect(calls).to eq(ids)
+  end
+
+  # SQLite returns the rows of a query without ORDER BY in reverse under
+  # this pragma, as PostgreSQL returns a row after an update moves it.
+  def reading_rows_in_reverse
+    connection = RubyLLM::ActiveRecord::ToolCall.connection
+    connection.execute('PRAGMA reverse_unordered_selects = ON')
+    yield
+  ensure
+    connection.execute('PRAGMA reverse_unordered_selects = OFF')
+  end
 end
