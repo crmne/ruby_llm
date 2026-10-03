@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.2","input":[{"role":"user","content":"Search the web:
+        what is the latest stable Ruby version?"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 03 Oct 2026 01:03:41 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '955'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '1000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '995072'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 295ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","response":{"id":"resp_03637662ef32b02c016ac0546c25e487d2a03828ce0b1767a0","object":"response","created_at":1790989420,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.2-2025-12-11","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"current_turn","effort":"none","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"web_search","return_token_budget":"default","search_content_types":["text"],"search_context_size":"medium","user_location":{"type":"approximate","city":null,"country":"US","region":null,"timezone":null}}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","response":{"id":"resp_03637662ef32b02c016ac0546c25e487d2a03828ce0b1767a0","object":"response","created_at":1790989420,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.2-2025-12-11","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"current_turn","effort":"none","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"web_search","return_token_budget":"default","search_content_types":["text"],"search_context_size":"medium","user_location":{"type":"approximate","city":null,"country":"US","region":null,"timezone":null}}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"ws_03637662ef32b02c016ac0546d5b4c87d287061206eab5fe2d","type":"web_search_call","status":"in_progress"},"output_index":0,"sequence_number":2}
+
+        event: response.web_search_call.in_progress
+        data: {"type":"response.web_search_call.in_progress","item_id":"ws_03637662ef32b02c016ac0546d5b4c87d287061206eab5fe2d","output_index":0,"sequence_number":3}
+
+        event: response.web_search_call.searching
+        data: {"type":"response.web_search_call.searching","item_id":"ws_03637662ef32b02c016ac0546d5b4c87d287061206eab5fe2d","output_index":0,"sequence_number":4}
+
+        event: response.web_search_call.completed
+        data: {"type":"response.web_search_call.completed","item_id":"ws_03637662ef32b02c016ac0546d5b4c87d287061206eab5fe2d","output_index":0,"sequence_number":5}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"ws_03637662ef32b02c016ac0546d5b4c87d287061206eab5fe2d","type":"web_search_call","status":"completed","action":{"type":"search","queries":["latest stable Ruby version","ruby latest stable release version ruby-lang.org download","Ruby releases latest stable version 3.4 3.3 3.2"],"query":"latest stable Ruby version"}},"output_index":0,"sequence_number":6}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","type":"message","status":"in_progress","content":[],"role":"assistant"},"output_index":1,"sequence_number":7}
+
+        event: response.content_part.added
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":8}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"The latest **stable Ruby (CR","item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","logprobs":[],"obfuscation":"9TKC","output_index":1,"sequence_number":9}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"uby/MRI)** release is **","item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","logprobs":[],"obfuscation":"s0ZrTclB","output_index":1,"sequence_number":10}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"Ruby 4.0.7**. ","item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","logprobs":[],"obfuscation":"PF","output_index":1,"sequence_number":11}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))","item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","logprobs":[],"obfuscation":"puQL","output_index":1,"sequence_number":12}
+
+        event: response.output_text.annotation.added
+        data: {"type":"response.output_text.annotation.added","annotation":{"type":"url_citation","end_index":142,"start_index":66,"title":"Download Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"},"annotation_index":0,"content_index":0,"item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","output_index":1,"sequence_number":13}
+
+        event: response.output_text.done
+        data: {"type":"response.output_text.done","content_index":0,"item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","logprobs":[],"output_index":1,"sequence_number":14,"text":"The latest **stable Ruby (CRuby/MRI)** release is **Ruby 4.0.7**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}
+
+        event: response.content_part.done
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","output_index":1,"part":{"type":"output_text","annotations":[{"type":"url_citation","end_index":142,"start_index":66,"title":"Download Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}],"logprobs":[],"text":"The latest **stable Ruby (CRuby/MRI)** release is **Ruby 4.0.7**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"},"sequence_number":15}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":142,"start_index":66,"title":"Download Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}],"logprobs":[],"text":"The latest **stable Ruby (CRuby/MRI)** release is **Ruby 4.0.7**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}],"role":"assistant"},"output_index":1,"sequence_number":16}
+
+        event: response.completed
+        data: {"type":"response.completed","response":{"id":"resp_03637662ef32b02c016ac0546c25e487d2a03828ce0b1767a0","object":"response","created_at":1790989420,"status":"completed","access_programs":null,"background":false,"completed_at":1790989425,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.2-2025-12-11","moderation":null,"output":[{"id":"ws_03637662ef32b02c016ac0546d5b4c87d287061206eab5fe2d","type":"web_search_call","status":"completed","action":{"type":"search","queries":["latest stable Ruby version","ruby latest stable release version ruby-lang.org download","Ruby releases latest stable version 3.4 3.3 3.2"],"query":"latest stable Ruby version"}},{"id":"msg_03637662ef32b02c016ac05470dafc87d297f5acbb1b3a7f9d","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":142,"start_index":66,"title":"Download Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}],"logprobs":[],"text":"The latest **stable Ruby (CRuby/MRI)** release is **Ruby 4.0.7**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}],"role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"current_turn","effort":"none","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":1}},"tools":[{"type":"web_search","return_token_budget":"default","search_content_types":["text"],"search_context_size":"medium","user_location":{"type":"approximate","city":null,"country":"US","region":null,"timezone":null}}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":8737,"input_tokens_details":{"cache_write_tokens":0,"cached_tokens":0},"output_tokens":122,"output_tokens_details":{"reasoning_tokens":74},"total_tokens":8859},"user":null,"metadata":{}},"sequence_number":17}
+
+  recorded_at: Sat, 03 Oct 2026 01:03:45 GMT
+recorded_with: VCR 6.4.0
+...

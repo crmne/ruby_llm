@@ -270,10 +270,34 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
         expect(response.raw_content).to be_an(Array)
 
         followup = chat.ask('Thanks. Now just say OK.')
         expect(followup.content).to be_present
+      end
+
+      it 'streams searches and counts the ones it bills' do
+        chunks = []
+        response = chat.ask('Search the web: what is the latest stable Ruby version?') { |chunk| chunks << chunk }
+
+        expect(chunks).not_to be_empty
+        expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
+      end
+    end
+
+    context "with azure/#{model_for(:azure, :thinking)}" do
+      let(:chat) do
+        RubyLLM.chat(model: model_for(:azure, :thinking), provider: :azure, protocol: :responses)
+               .with_provider_tools(:web_search)
+      end
+
+      it 'searches and counts the searches Azure bills' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
     end
 
@@ -314,8 +338,15 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.server_tool_calls).not_to be_empty
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to include('num_server_side_tools_used')
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
         expect(response.raw_content).to be_an(Array)
+      end
+
+      it 'streams searches and counts them' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version?') { |_chunk| nil }
+
+        expect(response.citations).not_to be_empty
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
 
       it 'replays search turns so the conversation can continue' do

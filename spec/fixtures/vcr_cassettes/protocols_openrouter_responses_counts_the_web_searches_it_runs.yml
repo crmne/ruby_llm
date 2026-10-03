@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"openai/gpt-5.2","input":[{"role":"user","content":"Search
+        the web: what is the latest stable Ruby version? Cite your source."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"max_output_tokens":700,"tools":[{"type":"openrouter:web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 03 Oct 2026 01:04:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1790989451-os08m6Pj8aRg14pAAj71
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,request-id,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1790989451-os08m6Pj8aRg14pAAj71\",\"object\":\"response\",\"created_at\":1790989451,\"model\":\"openai/gpt-5.2\",\"status\":\"completed\",\"completed_at\":1790989458,\"output\":[{\"id\":\"rs_0b6f7d0d31bf6260016ac0548d274487d1983aa73c9ffaa44b\",\"type\":\"reasoning\",\"status\":\"completed\",\"summary\":[],\"encrypted_content\":\"gAAAAABqwFSNORXqvz1tsDv57U3u0EczUWhhTXpNAU2AdRKG3ZVF6VcgU_qT41sMzxiViAccMmLDoVbYm3mziUz9kFJKDv1IuovRQ7wcUWLOtT2q8dTWDJjxj97gvVA4wlOnr6x09R8FWt8kGS-iMtFBbHV1EDSlJTEwdLadxtLXCv365HE4JT8rAjKm56RtFY6YfEC922sw6ChxbqMxKzGw90b54kizqUCU3mYVY2DwSbk1a_u3ClviMR6ZGoo7Rh_mk6kGgG4fsPCjJEodxzCH5gcPuf5fFvoDS2Uo-DJLzJ7POkCKDkU5OFj2bYAnYOGkFmZ0gPh0JaTg6iP2YpoFs8LAJE1B1UmQ5ZbvjgRTgliPyyLKJXaO9VFCmM9wjAhreMwRj7kMrt-163_vZccTn_mOhzd38gcKFCagFtcDn2F0oE4P-Au_IA9jZnK48zEGMcEfhrzx9ylxAlYJxDdGANYzs_mo6VjX6j2Xog1N6KGZqciViGwcANNhRj_Uvt0_eJW_2F0GXJHhqPIareAyDQQw-uKE3G62qPZLeShN5oc_dV8QqImU8FVfu9QnIoHCB_u9T5lFMwnCCqlA52qXINRqylC6V_maOpzjXrYk2DMxa80mLv2QpecnlhcbVs3GOVB0KQLeBFqLXpTtip9Ee2DjDvHhy0e1CHdmlctAh6LNuK2A1lvI5oDYH3FZeiQNAAU-VjaEBPcws6a9D1tumsLyZwq7Ao-iTkQHxKk6FNIQGw7YXWL1jgdbQyGiGB_VoUZ9VglYq0Tevz_MS6_8R8Pmo-BY5_wm1ZXj59cdWYMm85_TsUvD8KONTkWjbr1U72ulJcBwQHMeM-vc4sYkPqpgnTwwlmO6htAgGyvErEAM6vn5T6fppMCr7ytKaQ1wgLBwSU0GjRbNVfpDAIaKFY89cA4ShOEUC-WoagQdrUuWtB126ehZDNhc8MRx0Hk-z4-ipfW0qupHT3nXEpAYxAnw4DAwR8XbuBm5nvFjW6xiVPto5DZ3cujgdLUix5RzxuVDyStEEf1lvi8xQSoN90oKbkKO_wdfNRnMDGAiRZj9zcm-45i_6WElU_cY5NdFs9smlR4k6oNXgsXO9vJ4a8s_KhOC8qmqyubFg44FDw6k_EivP7u3Gyn6s3ZUHOanG9VpfWzCa8jQW2ZGy-w6I74KmG2fxy6gegj6Mk5xESM8CO3j_i26CfuI5canOvdRgXqqn6DeU153o-vAckGVaJ650kox5NvYxwfNtT4y7AC4iIkJVyJlWjwKhIWTPvCe96qdM2zdYU4MHs8cjUS-R_ZPSe7c5f0WFWukrXYBu9LQSz9jb7g8uEgOvNmGKnW0EW2vNLaC6O60SDXOWgPg6sazegMmoIu7dC29JzufHTp-iESYLrjL3-aN1qEAyPY-wtxDr3KS20HECo2X6UbQ18tZuY_5kJqJ4laF3Ph1G2kMiNRYTFI=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjItMjAyNTEyMTF8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\"},{\"type\":\"web_search_call\",\"id\":\"ws_0b6f7d0d31bf6260016ac0548dd00087d192c768ddd02c9f3a\",\"status\":\"completed\",\"action\":{\"type\":\"search\",\"query\":\"latest
+        stable Ruby version\"}},{\"id\":\"rs_0b6f7d0d31bf6260016ac05490adc887d195da137a8af9c025\",\"type\":\"reasoning\",\"status\":\"completed\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"**Providing
+        Ruby version details**\\n\\nI need to provide the latest stable version of
+        Ruby, which is 4.0.7, as of today, October 3, 2026. I should mention that
+        there's also a stable patch for the 3.4 line, which is 3.4.11. I will cite
+        the ruby-lang downloads page as my source. Keeping it concise will be key,
+        so I'll ensure to clearly state that 4.0.7 is the latest stable version overall
+        while including the relevant citation.\"}],\"encrypted_content\":\"gAAAAABqwFSS6K5AI_nZmcWkBNR5JFlSIjugWRcfzPPoa1ug5FWfkhO9bHtBFNDPxHAf9648cCNchmt4qQ-_sTRzMvhD_FWFsOmPn4C8OaZRxWRvxKJqRK5TnZmEvO3b8nQk-Mqun1TH1uX-PJ6H-oeHreONgEWfo-bTP4CLpWJLMQT1spqVrWiGgxXVq_R__lQDw1vkcB5zuFK1HOTWxPAJ047uCQN1dG3lSIEYxHc_VaiCPEKrn39BDbSnXEILdfIX-R3WdB6erm2DSXWZ74ZU8AmotI41YJ0L9FoDKlDEzyala_2PttOBtfBSgT6DmGm86FhnW0-6M13DtqrE0Hs98JS1lZZCzLFiz1hZZQI9AXBFsSnLLBmn1M3AB4fa3URicegX6uIxfu6VIJzh7ZrbpUJgUs3xP9O6abePOEN5uRsR4pPGt2QPLGrFGAsyZ03Sk1yeSej3tE6QFUPauF9z-uwNcMJGe5dibblCmMo1VXlzsOfi3hYzyeRQbndG4rGG0rx8fudHNAHhtPIRQ9GL-aVBAkCMgvP5qGwIg9HrN-h9l71Cte046hpB4Ti5Fn4wAZUupTb-YBUOnNsoJlkVSKf85mX6dBBEsrXlso3gd7z91dR4IW4XXQ2rNxL0yFvUP8ltFUGOJzUxDEbAlCAOjC0Lr-kXGiZL1uJbtE81jNMNVbq_94x0-EAPxnRC-xfo-9cdh1PTJRt71iv6Y_y7_lXhy68XtrSBYaV8tpkSP6_QMpl0-SDZaTlfbgiBEzw-artJAM-xdWgAoyYACMiS5uq859r_f1CLm8lS6ykVQuQjL3P78VihgQYZ9Paztb4e3mTHDDhO0mTa7Dd84ZYpEtXDj9w3lS6Vfexi4qxWrGx3EPXatyKwDOQEDDTP1CvXSpptbCSAMCBIvJ4P8MeCznRoGRjDGuY56iSeVkiMKBAbqBAoIqf_e571KomNF1K367xTxNaIsUKBqCmP-8_1VnGi3-YHfGE_YCdEyLUBNfHdXETcC4M_7bpW0Xl9S364fEj2G6QYxcUPkZL2kq6zgiK3fG-ksV3L8N5RPVhKWm7jt2RnhOH_O7x37fQyR7yfyEUXoD0bDN4tarP9JO660YFyN-Lf0afg3mRDOlyz-3y1WMwrBarlVIeyMb7fWPDV7V2eLXkn9qA24mIZ-tTK5eUn7rBxOk4X-EFY03NvfJMKH21PbNjLMRo3pbcW1ajubnf-SGMx-G9A3MvXIhxeb1IGuwy9Je5eO68uZW-mu4dCS47SHv8-tY2iXAD1CUKipWJvBGRt8uyV6DcWmOGZqPM7wV1zjs2aoUwqX8Uhz0zSyOKFQ3TbSlJd-73ImfQnpS1jg77eSQ4lSCNKRtOK4JGTQ39RAMt7yqy56ziwd-yURmJwephvp-EgWiVKBRFmGkTHNTv44xP1l5xGLEudAcaPd9zR6D6hEHBWOwBKDGe0yVfnK6HQ25UKu8Jvv5RDEtg_OlyVI-QvN144Pc8yMjdTFHWYhJb5PLLs96uDCXumYMRIq97_sRm7w7nKzfOj9zZQ17JOovFycN754erCqpnmd9--PBUsOgha5AlPDJWVGe3jO-M4YW0hM8TmA45-EtPNcu2OcsBYoSCPEWTu3QPEDUKgBB2UG-ILUvg4RQ5oQzDVNI2aDYTQOyUkIRvUNgwjauKFSw3OjEGWpNICyLXcFHI1cayt3pRQs9dL0Wu9ibryQ0AJf16e5ixhftSHARveplbF5LXThu1n6CBLYGMzqM1nOc9oj4ttVCNMh28X8JCaS62zEFk_OdL3Tj21IiTzEbxGyiolnZjvuPIkhIpVVrnn8A==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjItMjAyNTEyMTF8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\"},{\"id\":\"msg_tmp_jay7edydbq\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"The
+        latest **stable Ruby** release is **Ruby 4.0.7** (as of **October 3, 2026**).
+        ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))\",\"annotations\":[{\"type\":\"url_citation\",\"url\":\"https://www.ruby-lang.org/en/downloads/?utm_source=openai\",\"title\":\"Download
+        Ruby | Ruby\",\"start_index\":82,\"end_index\":158}],\"logprobs\":[]}]}],\"error\":null,\"incomplete_details\":null,\"tools\":[],\"tool_choice\":\"auto\",\"parallel_tool_calls\":true,\"max_output_tokens\":700,\"temperature\":1,\"top_p\":1,\"presence_penalty\":0,\"frequency_penalty\":0,\"top_logprobs\":0,\"max_tool_calls\":null,\"metadata\":{},\"background\":false,\"previous_response_id\":null,\"service_tier\":\"default\",\"truncation\":\"disabled\",\"store\":false,\"instructions\":null,\"text\":{\"format\":{\"type\":\"text\"}},\"reasoning\":{\"context\":\"current_turn\",\"effort\":\"medium\",\"mode\":\"standard\",\"summary\":\"detailed\"},\"safety_identifier\":null,\"prompt_cache_key\":null,\"prompt_cache_options\":null,\"usage\":{\"input_tokens\":8735,\"input_tokens_details\":{\"cached_tokens\":2560},\"output_tokens\":245,\"output_tokens_details\":{\"reasoning_tokens\":188},\"total_tokens\":8980,\"cost\":0.02468425,\"is_byok\":false,\"cost_details\":{\"upstream_inference_cost\":0.02468425,\"upstream_inference_input_cost\":0.01125425,\"upstream_inference_output_cost\":0.00343},\"server_tool_use_details\":{\"web_search_requests\":1}}}"
+  recorded_at: Sat, 03 Oct 2026 01:04:18 GMT
+recorded_with: VCR 6.4.0

@@ -37,6 +37,35 @@ RSpec.describe RubyLLM::Providers::XAI::Responses do
     expect(chunk.citations.first).to have_attributes(url: source, source_index: 0)
   end
 
+  describe 'server tool use' do
+    let(:protocol) { described_class.new(RubyLLM::Providers::XAI.new(RubyLLM.config)) }
+    let(:usage) do
+      {
+        'input_tokens' => 12_540, 'output_tokens' => 486, 'num_sources_used' => 0, 'num_server_side_tools_used' => 3,
+        'server_side_tool_usage_details' => {
+          'web_search_calls' => 2, 'x_search_calls' => 0, 'code_interpreter_calls' => 1, 'file_search_calls' => 0,
+          'mcp_calls' => 0, 'document_search_calls' => 0, 'image_generation_calls' => 0
+        }
+      }
+    end
+
+    it 'names each tool that ran the way other providers do' do
+      message = protocol.send(:parse_completion_body, { 'status' => 'completed', 'output' => [], 'usage' => usage },
+                              raw: nil)
+
+      expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2, 'code_execution_requests' => 1)
+    end
+
+    it 'counts the tools a completed stream reports' do
+      chunk = protocol.send(:build_chunk, {
+                              'type' => 'response.completed',
+                              'response' => { 'status' => 'completed', 'output' => [], 'usage' => usage }
+                            })
+
+      expect(chunk.tokens.server_tool_use).to eq('web_search_requests' => 2, 'code_execution_requests' => 1)
+    end
+  end
+
   describe '#parse_usage' do
     let(:protocol) do
       described_class.new(RubyLLM::Providers::XAI.new(RubyLLM.config))

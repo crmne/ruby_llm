@@ -356,6 +356,21 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tokens.thinking).to eq(3)
     end
 
+    it 'counts the web searches the response reports in tool_usage' do
+      response = instance_double(Faraday::Response, body: {
+                                   'model' => 'gpt-5.2', 'status' => 'completed', 'output' => [],
+                                   'usage' => { 'input_tokens' => 8610, 'output_tokens' => 89 },
+                                   'tool_usage' => {
+                                     'image_gen' => { 'input_tokens' => 0, 'output_tokens' => 0, 'total_tokens' => 0 },
+                                     'web_search' => { 'num_requests' => 2 }
+                                   }
+                                 })
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2)
+    end
+
     it 'maps cache write tokens for models that bill cache writes' do
       response = response_with([], usage: {
                                  'input_tokens' => 2048,

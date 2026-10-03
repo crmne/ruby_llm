@@ -142,8 +142,11 @@ module RubyLLM
           nil
         end
 
+        # Per-tool counters end in _requests; OpenRouter's tool_calls_requested
+        # and tool_calls_executed count every tool at once.
         def server_tool_use(usage)
-          usage['server_tool_use'] || usage['server_tool_use_details']
+          counters = usage['server_tool_use'] || usage['server_tool_use_details']
+          counters.to_h.select { |counter, _| counter.end_with?('_requests') }
         end
 
         def no_completion_message_error(data, raw)

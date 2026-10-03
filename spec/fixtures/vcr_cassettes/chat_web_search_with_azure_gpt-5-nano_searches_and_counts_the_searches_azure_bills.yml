@@ -1,0 +1,325 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Search the
+        web: what is the latest stable Ruby version? Cite your source."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '18665'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 03 Oct 2026 01:03:45 GMT
+      Server:
+      - istio-envoy
+      Vary:
+      - Origin
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '240647'
+      X-Ratelimit-Reset-Tokens:
+      - '2'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'True'
+      Azureai-Fe-Offer-Type:
+      - paygo
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 9a876341-90d4-40a6-8f91-48cb67a2f418
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_01a17867d744abfb016ac05471f3308196bc4743f163eeba38",
+          "object": "response",
+          "created_at": 1790989425,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1790989443,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 19839,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 21157,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_01a17867d744abfb016ac05472dcc0819695beb1a0448a1af6",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqwFSD2RksehegVqdlMQi20obWb2O14_BGbzoXycmj7_-nBlSndmFxAHbWyxz-c3KMYRXOF-2kRP2zPSN7oAWhHnhlF8iunHiRkupysgN3BPzSdb9ZIjv9CZPZ0CaxeJv9jExJUPeSwFpaROzoowi0LgWBCD277R80AdtDVrJ3eTXqiIggdBFsQ-1T3LgSdbwSzPSuDoDNhm26RW6w7Fa0gAodMEk4Fk8Pj5VwwQ5DO2xh8KMac2bHFrjGChqH_SPLaSKkbm2fabPeyhPZB0sWz2qhHvWh5ZD6rQ76EPDlNXx2-yY4xE9iZ9cQZd7N8eMf67M7xSRtn9_62ZQNstiWvwQUKvVcrDy5nnmXDJYRldibjqrOD-cE5iyugjR8lgsnt3XfrK_0kssWIZRoorsWTzTlllDDHvjqUsjfC_JDwqq-gP5Em2z-B7nQ9WaBWMf3EbdbD1j6JeNm1L5B05hVQKczLXUKsXnfF2brU2wygAbiGQY3NrmkyeGJjBbkBHJoEyYDgnj2sxw6aR1Iz4Lry2g9FxoWSCNMUpBK0oF8V4rkRcCy2yuMow4_-I4EwYLnTI7Y6nczhhzTMkRmJWvRpk-do3e2LhVeM78XXJCikEaHO8GYn5xfGU3w6rYrxh6Qr3sh1pp0XwFNR7u8YEbWjLSfiVKBNreFetqnweeS4UKVOYIhDJlZ3P5uPRlTzeG17_uqMf_JSOqWULVHZQRv8Q6h2b_iP5T6zJ7Lu5fFDmA-3QveP4RGRj3VHVe0HW0J0qo9Wytvzg_MSUVVAuJyFnIvFGxXNRcHnCXUtvGHA7B90hfiw9TP0XCby_UX79lxO-UeSQbad4z61ATk1JI3q8MVbizOnaCVbVUyD1gxDpeeO38tVEGoNApgL7jpqL3lf5b8AhWUv-qF8_YPeFpRsstfxBjS0JciBKDqFHeist1yLWLd6B-fbt9fNNYeNGk69ncE2Xn1CIMxwvGTwOYKdZmcqZy9qG96FnF6E1xROhWwARRKm2QH-SrcYUXjtV_-4MvZwPjimQiiQlIBni8xGyXU9xbeK8l5-Z0wKomVRrgByfLmaICUw_mWiazOf2Ah1uTf6X6sb0NBT2Uab863VHjPI7CUD8k_EnpKi64igI9lRhBCFtXpOC1MgJER9D1LaughzyMq1P_Z-UuyVTI7g6WOBPqbsL__TJ8jpyjgXt6xglQaQlLLLNEKNz37D1oS4Aes6AtvIqy0DOIreq4MbIHQbPIW414AE7VdQBEu-qDMNDP67hbP_rHbRhv4d3ZqkQ3NHBEWGyIkFigBskPwnjQ5gZARvLcYra1DARagtrFJT0MBb9DWZMUe_8J4d0ymcvflHXjzkZXBcvxfceKausrukzrz3r3QYiV73Nl5GBRSQIooi-GnLhVvcM-xOn615x2KIHr754GMFgcbOK5wMBTQok4SrlhEfohpVMbbGewtmhmj5VaD-2UB4-tSacuNBb9oZHUt1VciSRgfK9tW6QbRskd2OytjxVhHkG7CiEeEAEKMObGvRrpzt7mOdMfVskxcQ7dSWsHj0P2GvRrA8Zpj8GHdLiLADOOTHcUT6e268yS_EEiEuE5RrKjVPra4ToeEvUzY811e22yYu9Z0bPyB7oSICFMuZJzn4t6NanzpzNjB5PbLzbLIPn6gaSpKOfz8HdpVfS7Df_00szjl03Kj4dq5TEo9ckr4zSMIixPY17BCfFhlod6F88SYKpYiSZPqO8vSDSSXvkm0P5BybChT8uWwM9GvawemjYaFxgqZBrzsyoBRji6PLL4DJWMPAdw1OYmvrbu3QJptVKSoVrn__DLleLA_Jf5prg8E2T6rrA2ziu1_SF18X8FozOZ4lIuyz8vatG1EpY6xaGmtxDfWPSHyrpTXOx1JUCasDW3PBkdvCQ9sbHXyUWW8mk2bBuEG6j3DxfYI2DC6lD_tiLTsMdqEyv9jLRv06496WCAZsUJlP0b3PdN3_AhJcdJwIgvVXMGFx7xe_DWmSE1tQ534GsGQP88BkmAeqajJlxGWCPnTUfRsZGns8MBrY1zmNjY65nr2TzHn-kxwJgycdHoKNcQocEVUqbOHDoZdeevd7zX9Q9wr5_1F-S89bvvZ5CxuMz6r26KNPk-ZJkW7DzAkWptWK3qC1T-nVTDxhlOLHLFeUydIUit0i7mb634o5Qzm_21qQdVKEJcWKLujcoIBO1LIybdoVEvhDrivAr4qQU0Uzb-ENaVrvY6Cd93HRTyGOpiu_BOVVL9DzlsZqcYiX3EI8yg19RZo45KS35gyzPiIfMQZGdWDbFodcbyd1wmzpWj-GBS1wCZWztX0tBWTeCUbGbbQUR0jbRfb3wtvnu3_Uh2zimJZ7-ftzjlnUzJA_zoM1v9W6Ai_reklluI_Ra0szMh9PL1tgtQtiikHlX5oKsQpSzmQPjR3-IymKpZDuqlWghnfUx_itQyly_CJMsASflCtaAJmFwoC1n6NDGN_8O2mXekmbS96QUvsYji0iPY-NQNWYkMhfZWYgkh-gczIMRMUzethVFw0s23Cj9SC94kamvX0f2fpOlEFwxUtZv_4jyrJDTw69aGkXRGBjtryeGUxAl5ZTwN0obzxvizR8Xse8DtUwcT_giSbQqZWQTvRe3eOXlX2quVROL9jDfVgG9xsgbFKqPkFsg9u5tATiwO1eYB_kEXlY6IhdnD9S2QaivYLovzV8DGJr88C2gPlyEVqVhKxXYquMqHGjBuVXSKaE6gvkbfTMxcmZgLBy0tT9mU27N9F6nz9z6TnD1cUTi32vPDwuTl8dw7yC_DFuOfbtCMX8wSZ03IShy-TjldcJgeA5ka8jFvpv2pAEYuqyXzhQI3C8izc2-fz5WQ5UHSW_o766daAV-uEkOHy-iul9cgIQU9P_x-YNYPlJAkn3V84iCpsZcRitnidLio5o5QY8JQ-K6GXCy77NxtVaSVVRLl_XaGRKG2xHnxe71Dws30Awx6_Ti1PrZMxcslJqCxq1ZnNJaGzTmMAs3U1KqeuxzmUorfqeEHeEuRDx93PwS34w5NgPYBX9s18ghWMbWRIlHhjZy-y2sYj3vjeKClR15OXMafoUK3tuiTel_Jl9CS54BtXZxdpccaH_Pw=",
+              "summary": []
+            },
+            {
+              "id": "ws_01a17867d744abfb016ac05475cc28819687089acd05140abb",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "queries": [
+                  "Ruby latest stable version official",
+                  "Ruby language latest stable release",
+                  "Ruby 3.x latest release Ruby-lang.org",
+                  "Ruby releases latest"
+                ],
+                "query": "Ruby latest stable version official"
+              }
+            },
+            {
+              "id": "rs_01a17867d744abfb016ac0547797548196ac3ada7fc01c4fd9",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqwFSDOujtOCJTX1HAMWiolly-1hJHaiJceGTGBM_acUZHyku3ltudb4FLf2QbTynAxj5wW7PHcAydE6pblsNNIDCt27Dpl_PWyG3kKLcidrmUDZ187ZSP9fYj5dr5Rp7BoapARGYjJ9TCfyxtYxWeo3U5zUSfQ-O0DQ1ZkR8eRiqfzIzwRtz0FYY8QIPpzNuJdfR9uh2eZetSu29NQT6rXF2Jom-R6yh5_CT1Vw4XMP1NriRTPifYTQwnkbB7p3TfH0Ek76ZCHwkJ7n_pTS4rsDtCCKelZogy19tOobhRMQ6WEE-nJgkxPxMDvOJW73Dl0I8TRgpKaGmZ3XGp7flcKhRtet6L39CgoHxZo2OmKKKqxLLcxGHyi9K6UtPCLWWQTzlayUo2OyZXq_z1-uIadXShuM--9c0auOlFMm5uLTg4rsRXt_rT1kxq5el1LPg_o3ydi7guLb0FRNWIL2mzlxY1nTG2oEeGV9mXvUCT04snYwlfTBzABr_ewgAFzKca35YPyUAb3ZYBHFRl294l6dkCzgl3_hpsNlHB4bWbOHC52YIqc1sic2JqxEjr8fQt8pz2xGTzygZ-x4tzbsiHjCfnc0BvgKy52aUBbDJ6dUdUEAyo9KSymDGHp3yTgbnguot5PRQQeP_UlRCB-fhFTW9SqAbXLQfkrI2Kzxv9HTs0w3Bt41BQCIhnXm7Th7n5Vh0HyvprUv6Hv_dJyjLpt1gGn7Gji4b6fptdj-bzQeygnTdw2Whrxr2-sbKjY2caJX_pe6m3Ian7WPdwziqFX6QefyUyQZBrSmMYjiFOvUnNOATXgRiSYzx_6aIE8FX3a8h8-JeG6_H8bA-bwGFNtmkTZTtsCsxhXJSxR0a5hwT5w0M3FJ9-8HgDdUDRrKEFmzTk9dq6cPGxstyXJDf6__6rhPHj56erO5lxTgEn6V-JGgRbF7csFbtdd6cCH8DaOYG_Ble0MixJfKSTp7n0lp6Rt0es8nSxqbaNCS_soCjN5bsjUHDtNiRW0zFIK7RFrc_Jsx0zmq8Sueq_U_OmyIc2CYhM1Q4jcycZYU5KZn6ATzdugzMO4Uqm1RSntIDz5eqYljrVHbbFjyECFf6L7h0Uvz3H2trT07tajtR0fbTCH8I7ejL7UJRXoMAYBE45lD3f1aR0ir1RY1SMsTQNsndm_1GtBS-cB14-n9nkEvQns4iLnzSwy3pKPmv1JOlBqKJzc5CnVQA0GsNTIj4TQvjTVr5POexrFVamn-aZ2k_2qqpHDHraaGAbv6ihPk1jzjRGz4DEtiQXTNoPtYQ5FvoqO4HFe42eZw-qT5BF0ethcor8F2m_csvBfchNPWOGPVpGek3L-ESmp24KL6fvCWuwNlNVcGCWwPvOO-ZkscLm2TzXlJxpOjqfrqmupkNChPxG76sARcknOBufwGoWTL-EbgME8k8wlSumsFW2gtGIeNXMjze727HTGDV7aop5paUq1gpZ_eApSEvC6AAGmcJ5dyviJuKXoKVbJDD2jLJbMW57zXZHmgKN9pduSjKFMXbXrBCrHFUyTawPcUHk00ogJ2Lnc4zEzEmtmOJ4FmqE5FIO--p7QvMr62YDn3hHu2APfpAzQdiy4cyQEBPHuaU3w7A3Pk4jIFXPzVHGDo--vWLU18jt65fPGTiPrZu4vAHKWNkfhBpLoIPCtmnCS18AM5zyc5fvq2CZFJ7LtIXTuffhDcuwqYJoq5x7OIsKKVc0LrG-OtrNoLYD9xpErSS5LewOY_fhVIJP9gYiHS0y4YaZENjbvsjtuYFmiNizpMIPma1f0eJMDvWzIlc-leG_QsctnEYh1gevVOl5tZxNtyRTy1MsHD3Au1noRF0QFPx6sWSlS4bfFrthi2fT1MNwfBHvD5uDG9PybnevapKtrOsAAAnRuGks_p61zoKGC6Hkax0rAXXYqaIOXRhWO-Y_Sn4hh_l0z-WYifs3NM1V7cWOWZDnniM5aYLJPGAV-NhX8n2cZdoPRBjNNTY2H4odMJDaavTQYf0SkjE1YZWCdgbuz_jqz3Nvg2_JnLLV-Uwf",
+              "summary": []
+            },
+            {
+              "id": "ws_01a17867d744abfb016ac0547903908196acc9f10cdc307eb3",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://www.ruby-lang.org/en/downloads/"
+              }
+            },
+            {
+              "id": "rs_01a17867d744abfb016ac05479f9a481969b5d1ce3da81d2c8",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqwFSDnVexLpGZJNj4FequhUk3DKiac3xhZEew1_F8UFAR6dYHg04ZCkoyJKQVfpZ3DmspRCUDZcY6OnL7v1oTvTe498v42PQm9YKsEqoTrL3lVQXyCLQtDB7QXaBKKcTS6swOrpLDhstK1884l3vcPv4rv1ACiE-xwgFweBJeUco_iPTexcz8VUcGAQDyiWCS3DFAeMrjq7HLsaPGx5QRJSUowhp-j64ypTM2ZebB8hwu-LtjrCDp8bljqfROE1hAT377lJyKqBbZh24IiG1K2sofbpprDWrte4DzKCE9mCEShpeYXMFN_VHD2aekrv-NDFDZUOG-izFGJ3KZ-ohc1lrnWGcWX1oT-8RVnvvPVafDd4fMtywN3WOXQC-dLRm2MjjYiRwVPza-wJ4AqzAL1imiz6myzerauGlleXwDvsi2b0xZ5eAixpGT6317iCGG97KCK9xgcyYoy1xzSdsQWLnC8anL1QKmLkhv-iNEnL0GE9ByvUVJpI-jFAghIyjpq1TcpJIruN-MuhpoFwgXcQKrCmLJ0K-ndOnZeYPxJIu77GslcivLPTs6cYayOSkYPxsKaJDvgjNfcNRqvKPtrOUn53N31QG9jZb84WxMm7pQWko1S75LEC1HEBlPiHrf4c3VljPmUF8ZOVV5zlpyaN2f3a4zmnMXcocekzIcGZgRdLFywi-vNg223d_np_NS7Vb4ue5DVnjwXknAfNfWFNaQoBd2ZW9wIt3cFvpx_U1qThdkVF-Mp92NeNPEp7Xe8QL5wXMMlhmW5FJVa2Y5BtHfgZdDyw-YOsoQMUu5kmXC562QakNviba1PRn25WGMrJ21CWh7N224wuk59YHGMv_5YeVPBL1O2j9haJi5ytzHuCrFWeYTV7sBFZd8ondNfm0poQ-TQBnsFw0tz-D8Uc4Gex5wIjKZvTYBmkwRtsFNiW0dNJuBvcOwsDqYCFuTF49n6T1Qt5yg3YY0lFE-rpcIOfMuP0k7wn4fPRmZ9NPzw8z2dbFizbkNdhi9OhHHIqRjtp3PIaMXcckSvHlXuBqcOADO1ACrCKNjly6KpFELCu2ntM03uB4rR8Kpx-RRDt0CSf_XblzxspdQY9-0XG0TbiAzbXTf5p37YKNEZ_c0wS94cvkbf9_PcQyLC3Rmt-2T9QyYkGxBhzPVFG2_5Rrbjlr0gXOuPz3isU0TStiaaEzygWPBnuAPtiWsHZPWNihZUpzZ4aiIvxwxvXLy7Mrn7bNO3QJcQVw9YlLFsS-Y45sj2z0H03XySwWf60nYcMBPD8wls5np2pJ2ktfQL8ruI7IpdmIpaDpZ1ZTvORYswK2ZtthglHmBCZ6C_j6JzybRsSibmye1tNGPqIV1yUnEmPVSQgUYw8eSIc91HFX2samV8ujpHlT4r146O-plPt1sxBC80ARlVwkKr_uVYjCn7BpXu_AYpSGkSfSqFP2fy1zNcVHsMoNtsGvftci0d6rWCVqz97cVCY9TTfsZUsFWNzGs_yU6lKhKH1jE0Gz8bJy6Y7HNVjhvA9DnE6nPPCz-R1WFMR8hSfEfzas8yDG_PHDMO79UKwFLqE_eclWJhcMhDU9QXHTxRBX1u9-dpTGO6E_bM72vQAzWNUacUBbsavV85mZm7koOY0PTvijPAG8A2PsVB3lZzCji3IXZysiliHkTZMR-lpjFERmgsrsx5G9hWSfwkn3fDBBatfDg3N9fYyzQ6_mz9Dyc211pWjfTQMSJ_Vv8q3c7ztf9Oa0e0V8a_G2JqcAcR_s33vq1OfHZbvMNPTj7w458-EpJyYsV--S881TzohJsFk9a3E9ZH6rWDkTw6kKweD7HRN-_C8xKpRsB1bv-GHEkjyURorWauJ39JjguQSy2xJjAG-hwvaKsa9Oh4VJtt1Ok1s1mvEnxpkOqAfIgxP7nQulT4rFvCtBAHSK7OZwCQpyu6hLttaiq7Frf4upxmEyjzcvelI5vYsroPBX1Blbqm53C45_Q-6lzcJElUdP916z2U2hxfkBTrq2iRayV8l4HXGDyRPoeUdZ08sYpDjPbOFZQ0PSOArYD2EffJG-_z3KdK0hWbu796i1gj-Whvzvm5YCmWmphNljPcroFxRazqHv1Hi9e8YQ1tO6AXEHSKMr69Ctl-vruDCap6k9Wrz8bB8pWWkOtk10rwjRUIe-yy4iQK9kIeZHTg9NkBMviLrEFo5eTI8usH0dU3RJJ541hMNMxyIERo7glNxEbmnq4p-4l44tLppg7aQLdwftf98G-LaGl4L1M6UY0DLs6O3-HEUxhrbaPfwZFoj4_11PN25vqOSlHSy0MGZntp6Tac0X_BTBPztSTJfmhXywjIEhv3oSEMc1m4U2ekzAVTm3wFxpRsxlA-zIGpEeU3YG6bfKOTSOiG1zqDbQsxwOabLAom6DzIMC9kcUDy04QkxpRUfJcN2s7ItlLvIUfOSb6XKSSiZcTuNh4ygKwfmvVhTFeS8_n-PR28vgv5oBn2dVDb0jnSNN348hGyzyP0_9bhLPs7ykP_EHGuV1QKx5t8hC0o1kaiQzWBJ9K9o4GmfqybStLyYibSysP0dzpo06iwi-sK_sNBzMYTLGQENjU2aJ7738AYwEmhIPFrQesIM994KpOGvTv_KaR3muQHXTMjvtpyRhpNTtM31nSid9qM_TZoJEvg-fUPQWxXtXEZx54WswJb3DwT4jY7cwsg0YLk24EMS_tBmoXk7EbPsp7wbnQydJjZOc9w3MGHpgBvMUZSDo_a8Go1J4A0-tjfr7WixI99SsLs7PH9TwPhv6ewpmjGNqbGS5K4QJzep_YFqQqo_W0Bik0pPelTBkz-oLnDN_eHXvwo_IGE-rlLyE3SX8nU5BZLLvj_O54VJ9BM7HVm7uwbEMfaxA2AxkmJv-4YIuwBn_jKzaZHJrgDNKatELwiaUCD3r1T9VItgzJIBuT1cAbizvBA1N2ZBGgSR0dM2R3rb4ofyuQLxB_2BttaoIiMhduZ_EL5MLpNKtZ3NBnlkemcTxUjvjbciDnfr6Ok-yOzyDFx-TbQ4afhyThpplVrgASpE56YlnQgDMWo8i03KaxBl3rKv9oKgaajJOHyH7eEmkEspNEhFkQNVndhjMYh7MN7dOog0fdeYPc_yquCFTSu3gpP-1mWB6d5Xt307PAVuKtItj5XWWo8lLB4Nv9oniQQLQLfX-g3We0fagFu3YoSSzmF9MncCgkvEVpAA7fb0m6TcZSQBGNs65gGn3CLUQ6s7xFtZATAS_sQmbhf34Yqqaxi52Z0JkSVxbC_L7AovpIn2YvjZJctm481G_cHVOkeknPfoEM4b6zbq049zMbHY1Z4PJ-pq4ETHd4k0r3GarGI1Q6uE-VC1S9ViNXEnCO_B8o0Nc9a2UerkMCKkoVjSIxrC7JdGSGkuLqc5ppnTxIAu86dYjrPKM9kRfkrfhbWRj42f_A9zfOisYUtTx9hCJj0BjJpZJRIhWJqhan5A4mX1f6VA7pVi-QE7_QIQQJZg8uf6CyIhQlZjuFah1kNTKYNFfzauX2Eheg9l1oZuAX9z8Ji128XT0lvnGdclmnbt14MocTBBGe7eYnihWOL32TKTPRaWob0P1LbRaV9NNiv7TAZ1qGuuCHSApSWt0603J2LjTOfRbCmY8u9Fvub8ozOXa1itZPe0ZPGe0DuTADQFo_GUmSlv6w2FxHfttPMqKbg_fVKryuaRck5b6znAJwIDGZ0KLJlhbZoSFw_no-J9jHKCqp2UhpowiBlr2Q_MrJrsasezr47mAvZ481l2lMYmCZRIpmJDTP2TXnCm1-nyOTRr47hu9MbpvWI9j-ZocAdoBwwBMUx70osFI1HYcOFx8sngn2fGGj3LoD-wbVw_9OtjDMBVc6iXrXZWWN9zTSjc_wPg_hyhDJ1YaIjlkaOZyQRRtf62moPqbhEydtPSo_NDmPRJgSPPIEw8cSmMRr1zrukxAVV8nU7UEOpyhwNtWsNrqmIRbCB5X-yAbH9zY5IpML3spYoRIqOegRmw16dZIlF3QLYkZNuivxvehs48lCj0GBD-jZ-fbGyL1OhqfZoz2xtXNdpliWumgR_CqYtuGbOBII_PN-1Lgz6LycswptYYTmxF3dUGAqJCJCoWIZe3ye3rbr3xaZ_fkWYhIFegCqnPVY4sHnTqd9RcJJT1ovqqal4rQ5hsbVupW9YNTKcPA9D7BAtp9Xg0R-xFL32PG-kVBQOTPpDT0kaYlth6CqkvwyXzRdkQRRgxjcFf5WQwe1bs9LqZe_KKHWABokAcYj5ZdFYV9nl_EM8YYzuCbg1HNTuQ6VUq1V5T_-Frmd5c96D7KzwxAzRMFOYie7Rdw6H6fH_d5CkHUqNwya0tkEf1brmvvcaRK4t5NwLB9V1uSkPtk7iv3ZnwektKQ26sW3-TfdLOFe3rzuqMzpEOee_iak6f7MgdvLHxp84xHr_D5OJvrFKlj_3TcQLYSOjzuQipa0za3Yn_aGdUJ5O277-KENz3l_9Mt_4_BvxRudAcAQQYOioUz_LglJHLG5YZwbOpw6zaCJbl_ntKaVsC5iQf4MJXsMtqzRL5EKLA1bGbjU4eD8rUqHk8qIpBe3I20-EESK-q3S1alxwez0c5Auf7AdTx3GWtIjZfSpfkXLcelIifDmHhjpQQCLhQVBJmq6ogtC0NH3l70ty0qOXVgu_oFDSRrQK6QjUKofcSgWe2uzLP9F5wIy9vO_BnbW5zCKs0Wdy6bE8o7qQP6hQ-sE-Qb74tYj5Xu5r1AyAuLzu3XTTLad85HEsHlgSHmow6Oi6DtoL7Fu4eD_ec15pddGMKmJrWkvbW7cgOlRQcDEIPQnmpuPmvFCZKDi5tNlxWbQLq4zjk3zYiaI3rtvvA2cvK4zKJF0_Kzwzl4clrW8w4LGX382W8NzDdaPA69a-9rrmWcaYCjPcxual9vea5OPpmCWuer1PHFnBEBDb4f2zm2RhiPV7DXLNvaG2QLaxkGq-X_Waj-xXtQRhDatZLp1FJfI65cX9BRrQdBv7xihrLGAKI5Abc3x50APaz1U0sh5wa78mrrktQMmRsLaL0ZYXZ6vfdTbQ_LKhwKmXiQ9T1kcgwfVt4hby_XvLt4o5oI2i4MW80pQYHl2asGwarrqhN2k_6lY99ZmXN3CgOvGQwE4qpKA4VtobrB_uI3nYSwlNAzjOcyEsODqrCK7U6YKKrMAfJLDnjXYIbozXfio8WbMF7Myjzy3reEcionTDevn7jsbZFTJROlS_ss0egvC88BtuvXeTJ3KT4np_eTv5rtRBWSNh0brXTOilRUJxyVGHxkp39uq8QmxH_eS-caftaAchYrdb_0jEGfa3J6YAoAYis0TcGdVUix7aZWr7yOwdUhvitylhp48KHCViIPlPvIxxZzVRnpSB0whCkrCz8AIbB60mXG9qcnfuWd1zUErjgeB6Wpnk4jRvfyE4kXwzZGYt9OwPdVUl7ORIjio3Rl0vPDacavosJR7w9R5ffkeI7e5akhlGC8aaWtulW_Bi0oNsbUG_kebi38aOwMFnFh8i2kc5ofVYMwxBOKSUgNQELgRz9gLUo7FOF-zfHF9l9xZCiY_dDdTk7DyZnl7pZop_9e06deSslappDuygKbTKYm11HAuz0UwiUSjEDvQczhKtqTYRnB5vijt_iKbeR2IwyEayZmN2TYYS2vqv_Vpmxr_bctm5ToMl_TGz-9OCcKZc78G79FQ80RMPPEFq79lccyx686KVrR_b8xe-GK-Y-fB2dHv2LGfCqP7LLx8nX-tcWNhlEdPylvTIw9dYod5HrqChca8NGLxkYUMXWr7K63VKqe98bsFI_fJxKUyd7DLdHiLPD1O7Y5CdBFkbYKO9I_pY8mW-J8b8BN0iKubUTca4vfKgcc4Q6w_tcJNmbRNsaa2FTpdnXeccDhmylYHxw5PFH9SUkdCZxFS-Fr_UjoCy_gJhvbsoW3drtLcR5fzCCP2jNrSZfZVEOA2DQOrTQCSyQzsDwHkjWZIxyssLctK6SdXS9cdIhhnIO6oiKP2_WvCOVmnj46KFfby34K223zkXCmzuPx3jY4Z9GCJ0WqRf4UhU2d5mxXMRtLycq10CsvRDPrQ189tskuwdna0Nlf3EHwqFkvc4L6nFxNmzCt6yOAgnsfifWHQ7EmffPSmQuiMX3qn6uFFDngzGmiQ9Vf9Ye4zS6Wv769McaF5eaRWxyG2xjEbb-orGRSUv-bXX7G5v2SmvVuujOub2uGQRoi9he7otjOYrVCbpuVO4MHEifwCY5esErTaGoPI2-aeHvNgF4M3t7iCpK14bmFBF3j8oD4gANLPElFWQnSchpRlTY3ELBXIYX7LL3DErEkHeuxD4nb42mWvjwnlbtqwZ3Uxnmn-2mK-6ZTJ7Q5lkBAqC4dZByn8LnfaDO4ajFCWoUGZUIEJEQaNAqrUiBTX5oQsmDejyNil7bcE8w9718IkRfBmBjrOitoLc5WMO_HZqvm66oEBRFdC0AsH6jXMJfecS53lvmm8ZbkMZfuVel4TERxUtWU0aZ2OeC9_ezVFZChvRyWPpxL4OYXrdBn6poNMMeo8iVgVmwED_O58nGCUmDO9du4JjRv7Ndg2yURKAu88vAFjvwaCPp0taBbf7d6NcTVDf721ctGGVaQ34a3cd_m9aKOs9F-SchZpcfhRu3-JdNCiqVEQA2vC-PbPFLh22BRuXReg-axotL_W6Qs9mbTp6vCxf8L--_awk-UIzPkhwetPgi0MJ7b_i5mKDAN4T4Q7QbrA-iXRwwAAGAF1z1ycT_EYpUrS8zXlipxSEq3oaXomOdrAMfwQcXieZd0CLdIE5rzVs0adigjzOHdMLVeSzzegg7WvXKSrUVOQMUHTaps0JAWqeQYSTPb2UXB3xLDd0vZ4Gb5ljE4zf_ZHBzpJHLfp6xOxDKHi0FYBBaEposeKN0EXfoIOg8uRbJqTA5Wnznwf5Dh7gcaL_iB5xzoBNnVnBV2_zGYOe8UC8GS8yISTBNRQPQ6iSlzXdVxZ4cu7LVh_NLh-J0dOphOn_hp2r_wBXNcd",
+              "summary": []
+            },
+            {
+              "id": "msg_01a17867d744abfb016ac054828a988196ad9a87719b39c97e",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [
+                    {
+                      "type": "url_citation",
+                      "end_index": 123,
+                      "start_index": 65,
+                      "title": "Download Ruby | Ruby",
+                      "url": "https://www.ruby-lang.org/en/downloads/"
+                    },
+                    {
+                      "type": "url_citation",
+                      "end_index": 342,
+                      "start_index": 284,
+                      "title": "Download Ruby | Ruby",
+                      "url": "https://www.ruby-lang.org/en/downloads/"
+                    },
+                    {
+                      "type": "url_citation",
+                      "end_index": 472,
+                      "start_index": 388,
+                      "title": "Ruby 3.3.9 Released | Ruby - Ruby Programming Language",
+                      "url": "https://www.ruby-lang.org/en/news/2025/07/24/ruby-3-3-9-released/"
+                    }
+                  ],
+                  "logprobs": [],
+                  "text": "Latest stable Ruby version: 4.0.7 (released September 15, 2026). ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/))\n\nIf you want to verify or see related releases, you can check Ruby\u2019s Downloads page and News posts:\n- Downloads page shows 4.0.7 as the current stable version. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/))\n- News post confirms the 4.0.7 release date. ([ruby-lang.org](https://www.ruby-lang.org/en/news/2025/07/24/ruby-3-3-9-released/))"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 4
+            }
+          },
+          "tools": [
+            {
+              "type": "web_search",
+              "return_token_budget": "default",
+              "search_content_types": [
+                "text"
+              ],
+              "search_context_size": "medium",
+              "user_location": {
+                "type": "approximate",
+                "city": null,
+                "country": "US",
+                "region": null,
+                "timezone": null
+              }
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 8944,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 1967,
+            "output_tokens_details": {
+              "reasoning_tokens": 1728
+            },
+            "total_tokens": 10911
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sat, 03 Oct 2026 01:04:03 GMT
+recorded_with: VCR 6.4.0

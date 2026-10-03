@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How to move Perplexity chat from Sonar to presets.
 * Which provider limits now raise the provider's error.
 * Where to read the request a chat sends.
+* How provider tool use is counted.
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
@@ -57,7 +58,7 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code, except to move Perplexity chat off Sonar, to rescue provider errors where RubyLLM used to check a provider's limits, and to stop reading request bodies from raw responses.
+2.1 does not require changes to your code, except to move Perplexity chat off Sonar, to rescue provider errors where RubyLLM used to check a provider's limits, to stop reading request bodies from raw responses, and to read tool use counts by their new names.
 
 ## Move Perplexity Chat to Presets
 
@@ -135,6 +136,17 @@ A raw response no longer keeps the request it answered: `response.raw.env.reques
 chat.render
 chat.before_request { |payload| Rails.logger.debug(payload) }
 ```
+
+## Read Tool Use by Its New Names
+
+`tokens.server_tool_use` now uses the same names on every provider and leaves out tools that did not run, so a response that used no provider tools returns `nil` even when the provider reported zero counts. Web searches are `web_search_requests` everywhere, and OpenAI, Azure, and Perplexity now report theirs. See [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
+
+Two providers reported other counters in 2.0:
+
+| Provider | 2.0 | 2.1 |
+| --- | --- | --- |
+| xAI | `num_server_side_tools_used` and `num_sources_used` | One count per tool, such as `web_search_requests` and `x_search_requests` |
+| OpenRouter Responses | `tool_calls_requested` and `tool_calls_executed` as well | Only per-tool counts such as `web_search_requests`, since those totals span every tool |
 
 ## Upgrade the Rails Schema
 

@@ -72,7 +72,8 @@ module RubyLLM
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
-            **parse_usage(data['usage'] || {})
+            **parse_usage(data['usage'] || {}),
+            server_tool_use: parse_server_tool_use(data)
           )
         end
 
@@ -248,6 +249,14 @@ module RubyLLM
             cache_write_tokens: cache_writes,
             thinking_tokens: usage.dig('output_tokens_details', 'reasoning_tokens')
           }
+        end
+
+        # Searches are billed by tool_usage, not by the web_search_call items
+        # in the output, which can each run several.
+        def parse_server_tool_use(response)
+          response['tool_usage'].to_h.filter_map do |tool, usage|
+            ["#{tool}_requests", usage['num_requests']] if usage['num_requests']
+          end.to_h
         end
 
         def schema_format(schema)

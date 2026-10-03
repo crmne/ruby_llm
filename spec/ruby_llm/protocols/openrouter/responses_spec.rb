@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
                  output: [{ stdout: "391\n", stderr: '', outcome: { type: 'exit', exit_code: 0 } }] },
                { type: 'message', role: 'assistant', content: [{ type: 'output_text', text: '391' }] }],
       usage: { input_tokens: 395, output_tokens: 50, input_tokens_details: { cached_tokens: 10 },
-               cost: 0.00139125, server_tool_use_details: { tool_calls_executed: 1 } }
+               cost: 0.00139125, server_tool_use_details: { tool_calls_requested: 1, tool_calls_executed: 1 } }
     }
   end
 
@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
     expect(message).to have_attributes(content: '391', finish_reason: :stop)
     expect(message.server_tool_calls.first.result.first['stdout']).to eq("391\n")
     expect(message.tokens).to have_attributes(input: 385, output: 50, cache_read: 10, reported_cost: 0.00139125)
-    expect(message.tokens.server_tool_use).to eq('tool_calls_executed' => 1)
+    expect(message.tokens.server_tool_use).to be_nil
     expect(message.raw_content.first['id']).to eq('shell-1')
     expect(request).to have_been_requested.once
   end
@@ -71,6 +71,14 @@ RSpec.describe RubyLLM::Protocols::OpenRouter::Responses do
     expect(call.result.first.dig('outcome', 'exit_code')).to eq(0)
     expect(message.tokens.input).to be > 0
     expect(message.tokens.output).to be > 0
+    expect(message.cost.total).to be > 0
+  end
+
+  it 'counts the web searches it runs', :live do
+    message = RubyLLM.chat(model:, provider: :openrouter, protocol: :responses).with_max_output_tokens(700)
+                     .with_provider_tools(:web_search)
+                     .ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+    expect(message.tokens.server_tool_use).to match('web_search_requests' => be_positive)
     expect(message.cost.total).to be > 0
   end
 

@@ -147,6 +147,27 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Agent do
     expect(chat.ask('Who created Rails?').cost.total).to eq(0.0028)
   end
 
+  it 'counts the web searches Perplexity bills' do
+    body = response_body
+    body[:usage][:tool_calls_details] = { search_web: { cost_usd: 0.0025, invocation: 1 } }
+    stub_request(:post, url).to_return_json(body:)
+
+    expect(chat.ask('Who created Rails?').tokens.server_tool_use).to eq('web_search_requests' => 1)
+  end
+
+  it 'counts the web searches Perplexity bills while streaming' do
+    body = response_body('Rails')
+    body[:usage][:tool_calls_details] = { search_web: { cost_usd: 0.0025, invocation: 1 } }
+    stub_request(:post, url).to_return(
+      event_stream({ type: 'response.output_text.delta', delta: 'Rails' },
+                   { type: 'response.completed', response: body })
+    )
+
+    response = chat.ask('Who created Rails?') { |_chunk| nil }
+
+    expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+  end
+
   it 'counts cache writes apart from fresh input' do
     body = response_body
     body[:usage] = { input_tokens: 1494, output_tokens: 7,

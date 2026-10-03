@@ -166,6 +166,20 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.finish_reason).to eq(:stop)
   end
 
+  it 'counts the web searches the completed event reports in tool_usage' do
+    chunk = build_chunk({
+                          'type' => 'response.completed',
+                          'response' => {
+                            'model' => 'gpt-5.2',
+                            'status' => 'completed',
+                            'usage' => { 'input_tokens' => 8610, 'output_tokens' => 89 },
+                            'tool_usage' => { 'web_search' => { 'num_requests' => 1 } }
+                          }
+                        })
+
+    expect(chunk.tokens.server_tool_use).to eq('web_search_requests' => 1)
+  end
+
   it 'reports the completed status as finish_reason for function-call responses' do
     chunk = build_chunk({
                           'type' => 'response.completed',

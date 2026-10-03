@@ -15,6 +15,7 @@ module RubyLLM
           'sonar-reasoning-pro' => 'medium',
           'sonar-deep-research' => 'high'
         }.freeze
+        SERVER_TOOL_USAGE_NAMES = { 'search_web' => 'web_search', 'fetch_url' => 'web_fetch' }.freeze
 
         def completion_url
           @provider.agent_url
@@ -66,6 +67,12 @@ module RubyLLM
           details = { 'cache_write_tokens' => details['cache_creation_input_tokens'] }.merge(details)
 
           super(usage.merge('input_tokens_details' => details)).merge(reported_cost: usage.dig('cost', 'total_cost'))
+        end
+
+        def parse_server_tool_use(response)
+          response.dig('usage', 'tool_calls_details').to_h.to_h do |tool, details|
+            ["#{SERVER_TOOL_USAGE_NAMES.fetch(tool, tool)}_requests", details['invocation']]
+          end
         end
 
         # Perplexity sends each function call whole, without argument deltas,

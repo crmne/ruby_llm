@@ -30,7 +30,11 @@ module RubyLLM
         end
 
         def parse_usage(usage)
-          super.merge(reported_cost: reported_cost(usage), server_tool_use: server_tool_use(usage))
+          super.merge(reported_cost: reported_cost(usage))
+        end
+
+        def parse_server_tool_use(response)
+          server_tool_use(response['usage'].to_h)
         end
 
         def reported_cost(usage)

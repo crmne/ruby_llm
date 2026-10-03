@@ -27,24 +27,26 @@ module RubyLLM
           mcp: Protocols::Responses::SERVER_TOOL_ALIASES.fetch(:mcp)
         }.freeze
 
-        SERVER_TOOL_USAGE_COUNTERS = %w[num_sources_used num_server_side_tools_used].freeze
+        SERVER_TOOL_USAGE_NAMES = { 'code_interpreter' => 'code_execution' }.freeze
 
         def server_tool_aliases
           SERVER_TOOL_ALIASES
         end
 
         def parse_usage(usage)
-          super.merge(
-            server_tool_use: server_side_tool_usage(usage),
-            reported_cost: reported_cost(usage)
-          )
+          super.merge(reported_cost: reported_cost(usage))
         end
 
         private
 
-        def server_side_tool_usage(usage)
-          counters = usage.slice(*SERVER_TOOL_USAGE_COUNTERS).reject { |_, count| count.to_i.zero? }
-          counters.empty? ? nil : counters
+        # Each *_calls detail counts one tool; the totals and the X Search
+        # fetch counts beside them do not.
+        def parse_server_tool_use(response)
+          details = response.dig('usage', 'server_side_tool_usage_details').to_h
+          details.filter_map do |counter, count|
+            tool = counter[/\A(.+)_calls\z/, 1]
+            ["#{SERVER_TOOL_USAGE_NAMES.fetch(tool, tool)}_requests", count] if tool
+          end.to_h
         end
       end
     end

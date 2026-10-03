@@ -20,6 +20,7 @@ RSpec.describe RubyLLM::Providers::Perplexity, :live do
 
       expect(response.content).to include('Heinemeier Hansson')
       expect(response.cost.total).to be_positive
+      expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
     end
 
     it 'streams through a preset without running its web searches as tools' do
@@ -29,6 +30,7 @@ RSpec.describe RubyLLM::Providers::Perplexity, :live do
       expect(chunks).not_to be_empty
       expect(response.tool_calls).to be_blank
       expect(response.content).to include('Heinemeier Hansson')
+      expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
     end
 
     it 'continues a searched conversation' do
