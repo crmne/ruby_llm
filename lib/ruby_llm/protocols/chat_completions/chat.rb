@@ -53,8 +53,9 @@ module RubyLLM
         end
 
         # rubocop:disable-next Metrics/PerceivedComplexity
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
-                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil, provider_tools: [])
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           payload = {

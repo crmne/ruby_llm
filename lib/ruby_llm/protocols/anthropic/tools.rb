@@ -7,8 +7,19 @@ module RubyLLM
       module Tools
         module_function
 
+        NATIVE_TOOL_SEARCH = {
+          type: 'tool_search_tool_bm25_20251119',
+          name: 'tool_search_tool_bm25'
+        }.freeze
+
         def find_tool_uses(blocks)
           blocks.select { |c| c['type'] == 'tool_use' }
+        end
+
+        def tool_search_block?(block)
+          return true if block['type'] == 'tool_search_tool_result'
+
+          block['type'] == 'server_tool_use' && block['name'].to_s.start_with?('tool_search_tool_')
         end
 
         def format_tool_result(msg)
@@ -56,10 +67,31 @@ module RubyLLM
             description: tool.description,
             input_schema: input_schema || default_input_schema
           }
+          declaration[:defer_loading] = true if deferred?(tool)
 
           return declaration if tool.provider_options.empty?
 
           RubyLLM::Support::Utils.deep_merge(declaration, tool.provider_options)
+        end
+
+        def format_tools(tools, provider_tools: [])
+          formatted = tools.values.map { |tool| function_for(tool) }
+          if formatted.any? { |entry| entry[:defer_loading] } && !search_tool_configured?(provider_tools)
+            formatted << NATIVE_TOOL_SEARCH.dup
+          end
+          formatted
+        end
+
+        def deferred?(tool)
+          tool.is_a?(RubyLLM::Tool::Registration) && tool.deferred?
+        end
+
+        def replay_search?(tools, provider_tools)
+          tools.values.any? { |tool| deferred?(tool) } || search_tool_configured?(provider_tools)
+        end
+
+        def search_tool_configured?(provider_tools)
+          provider_tools.any? { |entry| (entry[:type] || entry['type']).to_s.start_with?('tool_search_tool_') }
         end
 
         def extract_tool_calls(data)

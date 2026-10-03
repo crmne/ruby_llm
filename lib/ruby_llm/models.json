@@ -25,6 +25,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -98,6 +99,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -171,7 +173,8 @@
       "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls"
+      "parallel_tool_calls",
+      "tool_search"
     ],
     "pricing": {
       "text_tokens": {
@@ -238,6 +241,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -305,7 +309,8 @@
       "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls"
+      "parallel_tool_calls",
+      "tool_search"
     ],
     "pricing": {
       "text_tokens": {
@@ -380,6 +385,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -456,6 +462,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -533,6 +540,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -607,6 +615,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -681,6 +690,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -755,6 +765,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -828,7 +839,8 @@
       "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls"
+      "parallel_tool_calls",
+      "tool_search"
     ],
     "pricing": {
       "text_tokens": {
@@ -895,6 +907,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -963,6 +976,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -1040,6 +1054,7 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
+      "tool_search",
       "batch",
       "citations"
     ],
@@ -1089,6 +1104,81 @@
         "output": 128000
       },
       "knowledge": "2026-01-31"
+    }
+  },
+  {
+    "id": "claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "anthropic",
+    "family": "claude-sonnet",
+    "created_at": "2026-09-28 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "tool_choice",
+      "parallel_tool_calls",
+      "tool_search",
+      "batch",
+      "citations"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "anthropic",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-06"
     }
   },
   {
@@ -3990,6 +4080,76 @@
       "object": "model",
       "lifecycle_status": "generally-available",
       "inference_retires_at": 1814313600
+    }
+  },
+  {
+    "id": "claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "azure",
+    "family": "claude-sonnet",
+    "created_at": "2026-09-28 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "azure",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-06"
     }
   },
   {
@@ -8002,6 +8162,102 @@
       "object": "model",
       "lifecycle_status": "generally-available",
       "inference_retires_at": 1836345600
+    }
+  },
+  {
+    "id": "gpt-6.1-sol",
+    "name": "GPT-6.1 Sol",
+    "provider": "azure",
+    "family": "gpt-sol",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-04-30",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.1,
+          "cache_write_input_per_million": 2.5
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "azure",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "tiers": [
+          {
+            "input": 4,
+            "output": 15,
+            "cache_read": 0.2,
+            "cache_write": 5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.2,
+          "cache_write": 5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-04-30"
     }
   },
   {
@@ -12988,6 +13244,75 @@
     }
   },
   {
+    "id": "anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "bedrock",
+    "family": "claude-sonnet",
+    "created_at": "2026-09-28 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-06"
+    }
+  },
+  {
     "id": "apac.amazon.nova-lite-v1:0",
     "name": "Nova Lite (APAC)",
     "provider": "bedrock",
@@ -16403,6 +16728,75 @@
     }
   },
   {
+    "id": "global.anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5 (Global)",
+    "provider": "bedrock",
+    "family": "claude-sonnet",
+    "created_at": "2026-09-28 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-06"
+    }
+  },
+  {
     "id": "global.moonshotai.kimi-k3",
     "name": "Kimi K3 (Global)",
     "provider": "bedrock",
@@ -17034,6 +17428,101 @@
     }
   },
   {
+    "id": "global.openai.gpt-6.1-sol",
+    "name": "GPT-6.1 Sol (Global)",
+    "provider": "bedrock",
+    "family": "gpt-sol",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-04-30",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.1,
+          "cache_write_input_per_million": 2.5
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "tiers": [
+          {
+            "input": 4,
+            "output": 15,
+            "cache_read": 0.2,
+            "cache_write": 5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.2,
+          "cache_write": 5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-04-30"
+    }
+  },
+  {
     "id": "global.xai.grok-4.6",
     "name": "Grok 4.6 (Global)",
     "provider": "bedrock",
@@ -17096,6 +17585,73 @@
         "output": 500000
       },
       "knowledge": "2026-02-01"
+    }
+  },
+  {
+    "id": "global.xai.grok-4.7",
+    "name": "Grok 4.7 (Global)",
+    "provider": "bedrock",
+    "family": "grok",
+    "created_at": "2026-09-21 00:00:00 UTC",
+    "context_window": 500000,
+    "max_output_tokens": 500000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 6,
+          "cache_read_input_per_million": 0.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 6,
+        "cache_read": 0.5
+      },
+      "limit": {
+        "context": 500000,
+        "output": 500000
+      },
+      "knowledge": "2026-05"
     }
   },
   {
@@ -17512,6 +18068,215 @@
         "context": 131072,
         "output": 8192
       }
+    }
+  },
+  {
+    "id": "in.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "name": "Claude Haiku 4.5 (India)",
+    "provider": "bedrock",
+    "family": "claude-haiku",
+    "created_at": "2025-10-15 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": "2025-02-28",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.1,
+          "output_per_million": 5.5,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 1.375
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-10-15",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        },
+        {
+          "type": "budget_tokens",
+          "min": 1024
+        }
+      ],
+      "cost": {
+        "input": 1.1,
+        "output": 5.5,
+        "cache_read": 0.11,
+        "cache_write": 1.375
+      },
+      "limit": {
+        "context": 200000,
+        "output": 64000
+      },
+      "knowledge": "2025-02-28"
+    }
+  },
+  {
+    "id": "in.anthropic.claude-opus-5",
+    "name": "Claude Opus 5 (India)",
+    "provider": "bedrock",
+    "family": "claude-opus",
+    "created_at": "2026-07-24 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 5.5,
+          "output_per_million": 27.5,
+          "cache_read_input_per_million": 0.55,
+          "cache_write_input_per_million": 6.875
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-07-24",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        },
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 5.5,
+        "output": 27.5,
+        "cache_read": 0.55,
+        "cache_write": 6.875
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-05"
+    }
+  },
+  {
+    "id": "in.anthropic.claude-sonnet-5",
+    "name": "Claude Sonnet 5 (India)",
+    "provider": "bedrock",
+    "family": "claude-sonnet",
+    "created_at": "2026-06-30 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-01-31",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.2,
+          "output_per_million": 11,
+          "cache_read_input_per_million": 0.22,
+          "cache_write_input_per_million": 2.75
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-06-30",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        },
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2.2,
+        "output": 11,
+        "cache_read": 0.22,
+        "cache_write": 2.75
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-01-31"
     }
   },
   {
@@ -21032,6 +21797,102 @@
         "output": 128000
       },
       "knowledge": "2026-04-20"
+    }
+  },
+  {
+    "id": "openai.gpt-6.1-sol",
+    "name": "GPT-6.1 Sol",
+    "provider": "bedrock",
+    "family": "gpt-sol",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-04-30",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.2,
+          "output_per_million": 11,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 2.75
+        },
+        "long_context": {
+          "input_per_million": 4.4,
+          "output_per_million": 16.5,
+          "cache_read_input_per_million": 0.22,
+          "cache_write_input_per_million": 5.5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2.2,
+        "output": 11,
+        "cache_read": 0.11,
+        "cache_write": 2.75,
+        "tiers": [
+          {
+            "input": 4.4,
+            "output": 16.5,
+            "cache_read": 0.22,
+            "cache_write": 5.5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4.4,
+          "output": 16.5,
+          "cache_read": 0.22,
+          "cache_write": 5.5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-04-30"
     }
   },
   {
@@ -25424,6 +26285,101 @@
     }
   },
   {
+    "id": "us.openai.gpt-6.1-sol",
+    "name": "GPT-6.1 Sol (US)",
+    "provider": "bedrock",
+    "family": "gpt-sol",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-04-30",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.2,
+          "output_per_million": 11,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 2.75
+        },
+        "long_context": {
+          "input_per_million": 4.4,
+          "output_per_million": 16.5,
+          "cache_read_input_per_million": 0.22,
+          "cache_write_input_per_million": 5.5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2.2,
+        "output": 11,
+        "cache_read": 0.11,
+        "cache_write": 2.75,
+        "tiers": [
+          {
+            "input": 4.4,
+            "output": 16.5,
+            "cache_read": 0.22,
+            "cache_write": 5.5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4.4,
+          "output": 16.5,
+          "cache_read": 0.22,
+          "cache_write": 5.5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-04-30"
+    }
+  },
+  {
     "id": "us.stability.stable-conservative-upscale-v1:0",
     "name": "Stable Image Conservative Upscale",
     "provider": "bedrock",
@@ -26031,6 +26987,73 @@
         "output": 500000
       },
       "knowledge": "2026-02-01"
+    }
+  },
+  {
+    "id": "us.xai.grok-4.7",
+    "name": "Grok 4.7 (US)",
+    "provider": "bedrock",
+    "family": "grok",
+    "created_at": "2026-09-21 00:00:00 UTC",
+    "context_window": 500000,
+    "max_output_tokens": 500000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.2,
+          "output_per_million": 6.6,
+          "cache_read_input_per_million": 0.55
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2.2,
+        "output": 6.6,
+        "cache_read": 0.55
+      },
+      "limit": {
+        "context": 500000,
+        "output": 500000
+      },
+      "knowledge": "2026-05"
     }
   },
   {
@@ -27752,12 +28775,12 @@
   },
   {
     "id": "north-small-translate-09-2026",
-    "name": "north-small-translate-09-2026",
+    "name": "North Small Translate",
     "provider": "cohere",
-    "family": null,
-    "created_at": null,
+    "family": "north",
+    "created_at": "2026-09-09 00:00:00 UTC",
     "context_window": 32768,
-    "max_output_tokens": null,
+    "max_output_tokens": 16000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -27770,7 +28793,14 @@
     "capabilities": [
       "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
     "metadata": {
       "endpoints": [
         "generate",
@@ -27782,7 +28812,23 @@
         "safety_modes"
       ],
       "finetuned": false,
-      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/north-small-translate-09-2026.json"
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/north-small-translate-09-2026.json",
+      "source": "models.dev",
+      "provider_id": "cohere",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-09-09",
+      "tool_call": false,
+      "reasoning": false,
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 32768,
+        "output": 16000
+      }
     }
   },
   {
@@ -27967,12 +29013,12 @@
   },
   {
     "id": "tiny-aya-earth",
-    "name": "tiny-aya-earth",
+    "name": "Tiny Aya Earth",
     "provider": "cohere",
     "family": null,
-    "created_at": null,
-    "context_window": 8192,
-    "max_output_tokens": null,
+    "created_at": "2026-02-17 00:00:00 UTC",
+    "context_window": 8000,
+    "max_output_tokens": 8000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -27983,8 +29029,8 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "streaming",
       "tool_choice",
       "citations"
     ],
@@ -28003,17 +29049,29 @@
         "citations"
       ],
       "finetuned": false,
-      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-earth.json"
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-earth.json",
+      "source": "models.dev",
+      "provider_id": "cohere",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-17",
+      "tool_call": true,
+      "reasoning": false,
+      "limit": {
+        "context": 8000,
+        "output": 8000
+      }
     }
   },
   {
     "id": "tiny-aya-fire",
-    "name": "tiny-aya-fire",
+    "name": "Tiny Aya Fire",
     "provider": "cohere",
     "family": null,
-    "created_at": null,
-    "context_window": 8192,
-    "max_output_tokens": null,
+    "created_at": "2026-02-17 00:00:00 UTC",
+    "context_window": 8000,
+    "max_output_tokens": 8000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -28024,8 +29082,8 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "streaming",
       "tool_choice",
       "citations"
     ],
@@ -28044,17 +29102,29 @@
         "citations"
       ],
       "finetuned": false,
-      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-fire.json"
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-fire.json",
+      "source": "models.dev",
+      "provider_id": "cohere",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-17",
+      "tool_call": true,
+      "reasoning": false,
+      "limit": {
+        "context": 8000,
+        "output": 8000
+      }
     }
   },
   {
     "id": "tiny-aya-global",
-    "name": "tiny-aya-global",
+    "name": "Tiny Aya Global",
     "provider": "cohere",
     "family": null,
-    "created_at": null,
-    "context_window": 8192,
-    "max_output_tokens": null,
+    "created_at": "2026-02-17 00:00:00 UTC",
+    "context_window": 8000,
+    "max_output_tokens": 8000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -28065,8 +29135,8 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "streaming",
       "tool_choice",
       "citations"
     ],
@@ -28085,17 +29155,29 @@
         "citations"
       ],
       "finetuned": false,
-      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-global.json"
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-global.json",
+      "source": "models.dev",
+      "provider_id": "cohere",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-17",
+      "tool_call": true,
+      "reasoning": false,
+      "limit": {
+        "context": 8000,
+        "output": 8000
+      }
     }
   },
   {
     "id": "tiny-aya-water",
-    "name": "tiny-aya-water",
+    "name": "Tiny Aya Water",
     "provider": "cohere",
     "family": null,
-    "created_at": null,
-    "context_window": 8192,
-    "max_output_tokens": null,
+    "created_at": "2026-02-17 00:00:00 UTC",
+    "context_window": 8000,
+    "max_output_tokens": 8000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -28106,8 +29188,8 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "streaming",
       "tool_choice",
       "citations"
     ],
@@ -28126,7 +29208,19 @@
         "citations"
       ],
       "finetuned": false,
-      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-water.json"
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-water.json",
+      "source": "models.dev",
+      "provider_id": "cohere",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-17",
+      "tool_call": true,
+      "reasoning": false,
+      "limit": {
+        "context": 8000,
+        "output": 8000
+      }
     }
   },
   {
@@ -35260,10 +36354,10 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.435,
-          "output_per_million": 0.87,
-          "cache_read_input_per_million": 0.003625,
-          "reasoning_output_per_million": 0.87
+          "input_per_million": 0.66,
+          "output_per_million": 1.98,
+          "cache_read_input_per_million": 0.022,
+          "reasoning_output_per_million": 1.98
         }
       }
     },
@@ -35296,10 +36390,10 @@
         }
       ],
       "cost": {
-        "input": 0.435,
-        "output": 0.87,
-        "reasoning": 0.87,
-        "cache_read": 0.003625
+        "input": 0.66,
+        "output": 1.98,
+        "reasoning": 1.98,
+        "cache_read": 0.022
       },
       "limit": {
         "context": 1000000,
@@ -39186,7 +40280,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.3,
-          "output_per_million": 0.9
+          "output_per_million": 0.9,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -39209,7 +40304,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.3,
-        "output": 0.9
+        "output": 0.9,
+        "cache_read": 0.03
       },
       "limit": {
         "context": 256000,
@@ -39300,7 +40396,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.3,
-          "output_per_million": 0.9
+          "output_per_million": 0.9,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -39323,7 +40420,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.3,
-        "output": 0.9
+        "output": 0.9,
+        "cache_read": 0.03
       },
       "limit": {
         "context": 256000,
@@ -39979,7 +41077,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.15,
-          "output_per_million": 0.6
+          "output_per_million": 0.6,
+          "cache_read_input_per_million": 0.015
         }
       }
     },
@@ -40011,7 +41110,8 @@
       ],
       "cost": {
         "input": 0.15,
-        "output": 0.6
+        "output": 0.6,
+        "cache_read": 0.015
       },
       "limit": {
         "context": 256000,
@@ -40344,7 +41444,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.3,
-          "output_per_million": 0.9
+          "output_per_million": 0.9,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -40367,7 +41468,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.3,
-        "output": 0.9
+        "output": 0.9,
+        "cache_read": 0.03
       },
       "limit": {
         "context": 256000,
@@ -40402,7 +41504,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.3,
-          "output_per_million": 0.9
+          "output_per_million": 0.9,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -40425,7 +41528,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.3,
-        "output": 0.9
+        "output": 0.9,
+        "cache_read": 0.03
       },
       "limit": {
         "context": 256000,
@@ -40615,7 +41719,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.5,
-          "output_per_million": 1.5
+          "output_per_million": 1.5,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -40636,7 +41741,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.5,
-        "output": 1.5
+        "output": 1.5,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 262144,
@@ -40674,7 +41780,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.5,
-          "output_per_million": 1.5
+          "output_per_million": 1.5,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -40695,7 +41802,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.5,
-        "output": 1.5
+        "output": 1.5,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 262144,
@@ -40734,7 +41842,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -40772,7 +41881,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -40914,7 +42024,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -40952,7 +42063,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -40990,7 +42102,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -41028,7 +42141,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -41066,7 +42180,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -41104,7 +42219,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -41142,7 +42258,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -41180,7 +42297,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -41218,7 +42336,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -41256,7 +42375,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -41664,7 +42784,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.15,
-          "output_per_million": 0.6
+          "output_per_million": 0.6,
+          "cache_read_input_per_million": 0.015
         }
       }
     },
@@ -41696,7 +42817,8 @@
       ],
       "cost": {
         "input": 0.15,
-        "output": 0.6
+        "output": 0.6,
+        "cache_read": 0.015
       },
       "limit": {
         "context": 256000,
@@ -41735,7 +42857,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.15,
-          "output_per_million": 0.6
+          "output_per_million": 0.6,
+          "cache_read_input_per_million": 0.015
         }
       }
     },
@@ -41767,7 +42890,8 @@
       ],
       "cost": {
         "input": 0.15,
-        "output": 0.6
+        "output": 0.6,
+        "cache_read": 0.015
       },
       "limit": {
         "context": 256000,
@@ -41806,7 +42930,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.15,
-          "output_per_million": 0.6
+          "output_per_million": 0.6,
+          "cache_read_input_per_million": 0.015
         }
       }
     },
@@ -41838,7 +42963,8 @@
       ],
       "cost": {
         "input": 0.15,
-        "output": 0.6
+        "output": 0.6,
+        "cache_read": 0.015
       },
       "limit": {
         "context": 256000,
@@ -41877,7 +43003,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -41915,7 +43042,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -41953,7 +43081,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.5,
-          "output_per_million": 7.5
+          "output_per_million": 7.5,
+          "cache_read_input_per_million": 0.15
         }
       }
     },
@@ -41991,7 +43120,8 @@
       ],
       "cost": {
         "input": 1.5,
-        "output": 7.5
+        "output": 7.5,
+        "cache_read": 0.15
       },
       "limit": {
         "context": 262144,
@@ -44486,6 +45616,48 @@
         "input": 0,
         "output": 0
       }
+    }
+  },
+  {
+    "id": "computer-use-preview",
+    "name": "computer-use-preview",
+    "provider": "openai",
+    "family": null,
+    "created_at": "2024-12-20 00:47:57 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "system",
+      "shutdown_date": "2026-07-23"
+    }
+  },
+  {
+    "id": "computer-use-preview-2025-03-11",
+    "name": "computer-use-preview-2025-03-11",
+    "provider": "openai",
+    "family": null,
+    "created_at": "2025-03-07 19:50:21 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "system",
+      "shutdown_date": "2026-07-23"
     }
   },
   {
@@ -47448,6 +48620,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -47543,6 +48716,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -47637,6 +48811,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -47709,6 +48884,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -47781,6 +48957,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -47853,6 +49030,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -47924,6 +49102,7 @@
       "function_calling",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48010,6 +49189,7 @@
       "function_calling",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48098,6 +49278,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48193,6 +49374,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48288,6 +49470,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48376,6 +49559,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48464,6 +49648,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48563,6 +49748,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48664,6 +49850,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48765,6 +49952,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48866,6 +50054,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48966,6 +50155,8 @@
       "structured_output",
       "reasoning",
       "vision",
+      "judgment",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49067,6 +50258,7 @@
       "structured_output",
       "reasoning",
       "vision",
+      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49142,6 +50334,107 @@
         "output": 128000
       },
       "knowledge": "2026-04-20"
+    }
+  },
+  {
+    "id": "gpt-6.1-sol",
+    "name": "GPT-6.1 Sol",
+    "provider": "openai",
+    "family": "gpt-sol",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-04-30",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "tool_search",
+      "tool_choice",
+      "parallel_tool_calls"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.1,
+          "cache_write_input_per_million": 2.5
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system",
+      "source": "models.dev",
+      "provider_id": "openai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "tiers": [
+          {
+            "input": 4,
+            "output": 15,
+            "cache_read": 0.2,
+            "cache_write": 5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.2,
+          "cache_write": 5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-04-30"
     }
   },
   {
@@ -49265,6 +50558,178 @@
     "metadata": {
       "object": "model",
       "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-daybreak-blue-latest",
+    "name": "Daybreak Blue",
+    "provider": "openai",
+    "family": "gpt-sol",
+    "created_at": "2026-08-07 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-02-16",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "tool_choice",
+      "parallel_tool_calls"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 4,
+          "output_per_million": 20,
+          "cache_read_input_per_million": 0.4,
+          "cache_write_input_per_million": 5
+        },
+        "long_context": {
+          "input_per_million": 8,
+          "output_per_million": 30,
+          "cache_read_input_per_million": 0.8,
+          "cache_write_input_per_million": 10
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-08-07",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 4,
+        "output": 20,
+        "cache_read": 0.4,
+        "cache_write": 5,
+        "tiers": [
+          {
+            "input": 8,
+            "output": 30,
+            "cache_read": 0.8,
+            "cache_write": 10,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 8,
+          "output": 30,
+          "cache_read": 0.8,
+          "cache_write": 10
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-02-16"
+    }
+  },
+  {
+    "id": "gpt-daybreak-red-latest",
+    "name": "Daybreak Red",
+    "provider": "openai",
+    "family": "gpt",
+    "created_at": "2026-08-07 00:00:00 UTC",
+    "context_window": 400000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-02-16",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "tool_choice",
+      "parallel_tool_calls"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 12.5,
+          "output_per_million": 75,
+          "cache_read_input_per_million": 1.25,
+          "cache_write_input_per_million": 15.625
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-08-07",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 12.5,
+        "output": 75,
+        "cache_read": 1.25,
+        "cache_write": 15.625
+      },
+      "limit": {
+        "context": 400000,
+        "input": 272000,
+        "output": 128000
+      },
+      "knowledge": "2026-02-16"
     }
   },
   {
@@ -54726,6 +56191,76 @@
     }
   },
   {
+    "id": "anthropic/claude-sonnet-5.5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "openrouter",
+    "family": "claude-sonnet",
+    "created_at": "2026-09-28 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-06"
+    }
+  },
+  {
     "id": "anthropic/claude-sonnet-5:batch",
     "name": "Anthropic: Claude Sonnet 5 (batch)",
     "provider": "openrouter",
@@ -54794,6 +56329,61 @@
         "verbosity"
       ],
       "expiration_date": null
+    }
+  },
+  {
+    "id": "apodex/apodex-1.1-mini:free",
+    "name": "Apodex 1.1 Mini (free)",
+    "provider": "openrouter",
+    "family": null,
+    "created_at": "2026-10-01 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-10-01",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 262144,
+        "output": 235929
+      }
     }
   },
   {
@@ -57418,7 +59008,7 @@
     "family": "deepseek",
     "created_at": "2025-12-01 00:00:00 UTC",
     "context_window": 163840,
-    "max_output_tokens": 16384,
+    "max_output_tokens": 16000,
     "knowledge_cutoff": "2024-07-31",
     "modalities": {
       "input": [
@@ -57438,8 +59028,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.32,
-          "output_per_million": 0.89
+          "input_per_million": 0.2574,
+          "output_per_million": 1.0287
         }
       }
     },
@@ -57490,12 +59080,12 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.32,
-        "output": 0.89
+        "input": 0.2574,
+        "output": 1.0287
       },
       "limit": {
         "context": 163840,
-        "output": 16384
+        "output": 16000
       },
       "knowledge": "2025-09"
     }
@@ -57507,7 +59097,7 @@
     "family": "deepseek",
     "created_at": "2025-03-24 00:00:00 UTC",
     "context_window": 163840,
-    "max_output_tokens": 147456,
+    "max_output_tokens": 115200,
     "knowledge_cutoff": "2024-07-31",
     "modalities": {
       "input": [
@@ -57527,8 +59117,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.25,
-          "output_per_million": 1
+          "input_per_million": 0.29,
+          "output_per_million": 1.14,
+          "cache_read_input_per_million": 0.11
         }
       }
     },
@@ -57581,12 +59172,13 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.25,
-        "output": 1
+        "input": 0.29,
+        "output": 1.14,
+        "cache_read": 0.11
       },
       "limit": {
         "context": 163840,
-        "output": 147456
+        "output": 115200
       },
       "knowledge": "2024-07-31"
     }
@@ -57971,7 +59563,7 @@
     "family": "deepseek",
     "created_at": "2025-09-22 00:00:00 UTC",
     "context_window": 163840,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 147456,
     "knowledge_cutoff": "2025-03-31",
     "modalities": {
       "input": [
@@ -58053,12 +59645,11 @@
       ],
       "cost": {
         "input": 0.27,
-        "output": 1,
-        "cache_read": 0.135
+        "output": 1
       },
       "limit": {
         "context": 163840,
-        "output": 32768
+        "output": 147456
       },
       "knowledge": "2025-03-31"
     }
@@ -58091,9 +59682,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.269,
-          "output_per_million": 0.4,
-          "cache_read_input_per_million": 0.1345
+          "input_per_million": 0.28,
+          "output_per_million": 0.42,
+          "cache_read_input_per_million": 0.028
         }
       }
     },
@@ -58153,9 +59744,9 @@
         }
       ],
       "cost": {
-        "input": 0.269,
-        "output": 0.4,
-        "cache_read": 0.1345
+        "input": 0.28,
+        "output": 0.42,
+        "cache_read": 0.028
       },
       "limit": {
         "context": 163840,
@@ -58171,7 +59762,7 @@
     "family": "deepseek",
     "created_at": "2025-09-29 00:00:00 UTC",
     "context_window": 163840,
-    "max_output_tokens": 65536,
+    "max_output_tokens": 147456,
     "knowledge_cutoff": "2025-07-31",
     "modalities": {
       "input": [
@@ -58258,7 +59849,7 @@
       },
       "limit": {
         "context": 163840,
-        "output": 65536
+        "output": 147456
       },
       "knowledge": "2025-07-31"
     }
@@ -58291,9 +59882,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.04704,
-          "output_per_million": 0.09408,
-          "cache_read_input_per_million": 0.009408
+          "input_per_million": 0.028,
+          "output_per_million": 0.056,
+          "cache_read_input_per_million": 0.0056
         }
       }
     },
@@ -58366,9 +59957,9 @@
         }
       ],
       "cost": {
-        "input": 0.04704,
-        "output": 0.09408,
-        "cache_read": 0.009408
+        "input": 0.028,
+        "output": 0.056,
+        "cache_read": 0.0056
       },
       "limit": {
         "context": 1048576,
@@ -58383,7 +59974,7 @@
     "provider": "openrouter",
     "family": "deepseek-flash",
     "created_at": "2026-07-31 00:00:00 UTC",
-    "context_window": 1310720,
+    "context_window": 1048576,
     "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
@@ -58406,9 +59997,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.03,
-          "output_per_million": 0.32,
-          "cache_read_input_per_million": 0.016
+          "input_per_million": 0.0188,
+          "output_per_million": 1.28,
+          "cache_read_input_per_million": 0.0188
         }
       }
     },
@@ -58479,12 +60070,12 @@
         }
       ],
       "cost": {
-        "input": 0.03,
-        "output": 0.32,
-        "cache_read": 0.016
+        "input": 0.0188,
+        "output": 1.28,
+        "cache_read": 0.0188
       },
       "limit": {
-        "context": 1310720,
+        "context": 1048576,
         "output": 943718
       },
       "knowledge": "2025-05"
@@ -58497,7 +60088,7 @@
     "family": "deepseek-flash",
     "created_at": "2026-08-21 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 262144,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -58520,9 +60111,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.22,
-          "output_per_million": 0.66,
-          "cache_read_input_per_million": 0.007
+          "input_per_million": 0.2156,
+          "output_per_million": 0.6468,
+          "cache_read_input_per_million": 0.00686
         }
       }
     },
@@ -58592,13 +60183,13 @@
         }
       ],
       "cost": {
-        "input": 0.22,
-        "output": 0.66,
-        "cache_read": 0.007
+        "input": 0.2156,
+        "output": 0.6468,
+        "cache_read": 0.00686
       },
       "limit": {
         "context": 1048576,
-        "output": 943718
+        "output": 262144
       }
     }
   },
@@ -58630,9 +60221,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.621702,
-          "output_per_million": 1.243404,
-          "cache_read_input_per_million": 0.051809
+          "input_per_million": 0.2088,
+          "output_per_million": 0.4176,
+          "cache_read_input_per_million": 0.0174
         }
       }
     },
@@ -58704,9 +60295,9 @@
         }
       ],
       "cost": {
-        "input": 0.621702,
-        "output": 1.243404,
-        "cache_read": 0.051809
+        "input": 0.2088,
+        "output": 0.4176,
+        "cache_read": 0.0174
       },
       "limit": {
         "context": 1048576,
@@ -58722,7 +60313,7 @@
     "family": "deepseek-thinking",
     "created_at": "2026-08-12 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 384000,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -58743,9 +60334,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.34584,
-          "output_per_million": 1.03752,
-          "cache_read_input_per_million": 0.011528
+          "input_per_million": 0.22,
+          "output_per_million": 4.2,
+          "cache_read_input_per_million": 0.14
         }
       }
     },
@@ -58814,13 +60405,13 @@
         }
       ],
       "cost": {
-        "input": 0.34584,
-        "output": 1.03752,
-        "cache_read": 0.011528
+        "input": 0.22,
+        "output": 4.2,
+        "cache_read": 0.14
       },
       "limit": {
         "context": 1048576,
-        "output": 384000
+        "output": 943718
       }
     }
   },
@@ -58831,7 +60422,7 @@
     "family": "deepseek-flash",
     "created_at": "2026-09-10 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 393216,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -58854,9 +60445,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.15,
-          "output_per_million": 0.6,
-          "cache_read_input_per_million": 0.003
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.006
         }
       }
     },
@@ -58926,13 +60517,13 @@
         }
       ],
       "cost": {
-        "input": 0.15,
-        "output": 0.6,
-        "cache_read": 0.003
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.006
       },
       "limit": {
         "context": 1048576,
-        "output": 393216
+        "output": 943718
       },
       "knowledge": "2025-05"
     }
@@ -64543,7 +66134,7 @@
     "family": "ling",
     "created_at": "2026-08-27 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -64564,9 +66155,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.06,
-          "output_per_million": 0.18,
-          "cache_read_input_per_million": 0.012
+          "input_per_million": 0.042,
+          "output_per_million": 0.1232,
+          "cache_read_input_per_million": 0.0084
         }
       }
     },
@@ -64623,13 +66214,13 @@
         }
       ],
       "cost": {
-        "input": 0.06,
-        "output": 0.18,
-        "cache_read": 0.012
+        "input": 0.042,
+        "output": 0.1232,
+        "cache_read": 0.0084
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 32768
       }
     }
   },
@@ -64916,6 +66507,60 @@
         "input": 0.021,
         "output": 0.0616,
         "cache_read": 0.0042
+      },
+      "limit": {
+        "context": 262144,
+        "output": 32768
+      }
+    }
+  },
+  {
+    "id": "inclusionai/ling-3.1-flash",
+    "name": "Ling 3.1 Flash",
+    "provider": "openrouter",
+    "family": "ling",
+    "created_at": "2026-10-02 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-10-02",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0
       },
       "limit": {
         "context": 262144,
@@ -66689,7 +68334,7 @@
     "family": "muse",
     "created_at": "2026-08-10 00:00:00 UTC",
     "context_window": 131072,
-    "max_output_tokens": 16384,
+    "max_output_tokens": 117964,
     "knowledge_cutoff": "2026-01-04",
     "modalities": {
       "input": [
@@ -66712,8 +68357,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.3,
-          "output_per_million": 1.2,
+          "input_per_million": 0.35,
+          "output_per_million": 1.5,
           "cache_read_input_per_million": 0.04
         }
       }
@@ -66782,13 +68427,13 @@
         }
       ],
       "cost": {
-        "input": 0.3,
-        "output": 1.2,
+        "input": 0.35,
+        "output": 1.5,
         "cache_read": 0.04
       },
       "limit": {
         "context": 131072,
-        "output": 16384
+        "output": 117964
       },
       "knowledge": "2026-01-04"
     }
@@ -66846,9 +68491,8 @@
       "input": [
         "text",
         "image",
-        "video",
         "pdf",
-        "audio"
+        "video"
       ],
       "output": [
         "text"
@@ -66956,8 +68600,7 @@
         "text",
         "image",
         "video",
-        "pdf",
-        "audio"
+        "pdf"
       ],
       "output": [
         "text"
@@ -67065,8 +68708,7 @@
         "text",
         "image",
         "video",
-        "pdf",
-        "audio"
+        "pdf"
       ],
       "output": [
         "text"
@@ -67174,8 +68816,7 @@
         "text",
         "image",
         "video",
-        "pdf",
-        "audio"
+        "pdf"
       ],
       "output": [
         "text"
@@ -67284,8 +68925,7 @@
         "text",
         "image",
         "video",
-        "pdf",
-        "audio"
+        "pdf"
       ],
       "output": [
         "text"
@@ -68158,7 +69798,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.4,
+          "input_per_million": 0.55,
           "output_per_million": 2.2
         }
       }
@@ -68213,7 +69853,7 @@
         }
       ],
       "cost": {
-        "input": 0.4,
+        "input": 0.55,
         "output": 2.2
       },
       "limit": {
@@ -68589,7 +70229,7 @@
     "family": "minimax",
     "created_at": "2026-03-18 00:00:00 UTC",
     "context_window": 204800,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 176947,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -68601,7 +70241,6 @@
     },
     "capabilities": [
       "function_calling",
-      "structured_output",
       "reasoning",
       "streaming",
       "tool_choice",
@@ -68610,9 +70249,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.3,
-          "output_per_million": 1.2,
-          "cache_read_input_per_million": 0.06
+          "input_per_million": 0.21,
+          "output_per_million": 0.84,
+          "cache_read_input_per_million": 0.042
         }
       }
     },
@@ -68664,17 +70303,17 @@
       "temperature": true,
       "last_updated": "2026-03-18",
       "tool_call": true,
-      "structured_output": true,
+      "structured_output": false,
       "reasoning": true,
       "reasoning_options": [],
       "cost": {
-        "input": 0.3,
-        "output": 1.2,
-        "cache_read": 0.06
+        "input": 0.21,
+        "output": 0.84,
+        "cache_read": 0.042
       },
       "limit": {
         "context": 204800,
-        "output": 131072
+        "output": 176947
       }
     }
   },
@@ -71518,7 +73157,7 @@
     "family": "kimi-thinking",
     "created_at": "2025-11-06 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 98304,
+    "max_output_tokens": 235929,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -71598,12 +73237,11 @@
       "reasoning_options": [],
       "cost": {
         "input": 0.6,
-        "output": 2.5,
-        "cache_read": 0.15
+        "output": 2.5
       },
       "limit": {
         "context": 262144,
-        "output": 98304
+        "output": 235929
       },
       "knowledge": "2024-08"
     }
@@ -71855,8 +73493,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.6562,
-          "output_per_million": 3.3,
+          "input_per_million": 0.6712,
+          "output_per_million": 3.35,
           "cache_read_input_per_million": 0.18
         }
       }
@@ -71915,8 +73553,8 @@
       "reasoning": true,
       "reasoning_options": [],
       "cost": {
-        "input": 0.6562,
-        "output": 3.3,
+        "input": 0.6712,
+        "output": 3.35,
         "cache_read": 0.18
       },
       "limit": {
@@ -71958,9 +73596,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 3,
-          "output_per_million": 15,
-          "cache_read_input_per_million": 0.3
+          "input_per_million": 0.74,
+          "output_per_million": 13,
+          "cache_read_input_per_million": 0.7
         }
       }
     },
@@ -72031,9 +73669,9 @@
         }
       ],
       "cost": {
-        "input": 3,
-        "output": 15,
-        "cache_read": 0.3
+        "input": 0.74,
+        "output": 13,
+        "cache_read": 0.7
       },
       "limit": {
         "context": 1048576,
@@ -72266,6 +73904,133 @@
       "limit": {
         "context": 262144,
         "output": 131072
+      }
+    }
+  },
+  {
+    "id": "nex-agi/nex-n2.5-mini",
+    "name": "Nex-N2.5-Mini",
+    "provider": "openrouter",
+    "family": "agi",
+    "created_at": "2026-09-08 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.025,
+          "output_per_million": 0.1,
+          "cache_read_input_per_million": 0.0025
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-09-08",
+      "tool_call": false,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "medium",
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.025,
+        "output": 0.1,
+        "cache_read": 0.0025
+      },
+      "limit": {
+        "context": 262144,
+        "output": 235929
+      }
+    }
+  },
+  {
+    "id": "nex-agi/nex-n2.5-pro",
+    "name": "Nex-N2.5-Pro",
+    "provider": "openrouter",
+    "family": "agi",
+    "created_at": "2026-09-08 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 235929,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.075,
+          "output_per_million": 0.25,
+          "cache_read_input_per_million": 0.015
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-09-08",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "medium",
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.075,
+        "output": 0.25,
+        "cache_read": 0.015
+      },
+      "limit": {
+        "context": 262144,
+        "output": 235929
       }
     }
   },
@@ -73071,7 +74836,7 @@
     "family": "nemotron",
     "created_at": "2026-06-04 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 182520,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -73092,9 +74857,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.6,
-          "output_per_million": 2.4,
-          "cache_read_input_per_million": 0.12
+          "input_per_million": 0.5,
+          "output_per_million": 2.2,
+          "cache_read_input_per_million": 0.1
         }
       }
     },
@@ -73163,13 +74928,13 @@
         }
       ],
       "cost": {
-        "input": 0.6,
-        "output": 2.4,
-        "cache_read": 0.12
+        "input": 0.5,
+        "output": 2.2,
+        "cache_read": 0.1
       },
       "limit": {
         "context": 262144,
-        "output": 182520
+        "output": 16384
       }
     }
   },
@@ -73502,8 +75267,8 @@
     "provider": "openrouter",
     "family": "nemotron",
     "created_at": "2026-08-11 00:00:00 UTC",
-    "context_window": 1000000,
-    "max_output_tokens": 235929,
+    "context_window": 262144,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -73524,9 +75289,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.07,
-          "output_per_million": 0.2,
-          "cache_read_input_per_million": 0.04
+          "input_per_million": 0.0595,
+          "output_per_million": 0.17,
+          "cache_read_input_per_million": 0.02975
         }
       }
     },
@@ -73586,13 +75351,13 @@
         }
       ],
       "cost": {
-        "input": 0.07,
-        "output": 0.2,
-        "cache_read": 0.04
+        "input": 0.0595,
+        "output": 0.17,
+        "cache_read": 0.02975
       },
       "limit": {
-        "context": 1000000,
-        "output": 235929
+        "context": 262144,
+        "output": 131072
       }
     }
   },
@@ -79387,16 +81152,16 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 2,
-          "output_per_million": 10,
-          "cache_read_input_per_million": 0.2,
-          "cache_write_input_per_million": 2.5
-        },
-        "long_context": {
           "input_per_million": 4,
-          "output_per_million": 15,
+          "output_per_million": 20,
           "cache_read_input_per_million": 0.4,
           "cache_write_input_per_million": 5
+        },
+        "long_context": {
+          "input_per_million": 8,
+          "output_per_million": 30,
+          "cache_read_input_per_million": 0.8,
+          "cache_write_input_per_million": 10
         },
         "long_context_threshold": 272000
       }
@@ -79458,16 +81223,16 @@
         }
       ],
       "cost": {
-        "input": 2,
-        "output": 10,
-        "cache_read": 0.2,
-        "cache_write": 2.5,
+        "input": 4,
+        "output": 20,
+        "cache_read": 0.4,
+        "cache_write": 5,
         "tiers": [
           {
-            "input": 4,
-            "output": 15,
-            "cache_read": 0.4,
-            "cache_write": 5,
+            "input": 8,
+            "output": 30,
+            "cache_read": 0.8,
+            "cache_write": 10,
             "tier": {
               "type": "context",
               "size": 272000
@@ -79475,10 +81240,10 @@
           }
         ],
         "context_over_200k": {
-          "input": 4,
-          "output": 15,
-          "cache_read": 0.4,
-          "cache_write": 5
+          "input": 8,
+          "output": 30,
+          "cache_read": 0.8,
+          "cache_write": 10
         }
       },
       "limit": {
@@ -81305,6 +83070,196 @@
     }
   },
   {
+    "id": "openai/gpt-6.1-sol",
+    "name": "GPT-6.1 Sol",
+    "provider": "openrouter",
+    "family": "gpt-sol",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-04-30",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.1,
+          "cache_write_input_per_million": 2.5
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "tiers": [
+          {
+            "input": 4,
+            "output": 15,
+            "cache_read": 0.2,
+            "cache_write": 5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.2,
+          "cache_write": 5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-04-30"
+    }
+  },
+  {
+    "id": "openai/gpt-6.1-sol-pro",
+    "name": "GPT-6.1 Sol Pro",
+    "provider": "openrouter",
+    "family": "gpt",
+    "created_at": "2026-09-29 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "pdf",
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.1,
+          "cache_write_input_per_million": 2.5
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-29",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "tiers": [
+          {
+            "input": 4,
+            "output": 15,
+            "cache_read": 0.2,
+            "cache_write": 5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4,
+          "output": 15,
+          "cache_read": 0.2,
+          "cache_write": 5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "output": 128000
+      }
+    }
+  },
+  {
     "id": "openai/gpt-audio",
     "name": "GPT Audio",
     "provider": "openrouter",
@@ -82004,7 +83959,7 @@
     "family": "gpt-oss",
     "created_at": "2025-08-05 00:00:00 UTC",
     "context_window": 131072,
-    "max_output_tokens": 65536,
+    "max_output_tokens": 117964,
     "knowledge_cutoff": "2024-06-30",
     "modalities": {
       "input": [
@@ -82025,8 +83980,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.15,
-          "output_per_million": 0.6,
+          "input_per_million": 0.037,
+          "output_per_million": 0.17,
           "cache_read_input_per_million": 0.075
         }
       }
@@ -82094,13 +84049,12 @@
         }
       ],
       "cost": {
-        "input": 0.15,
-        "output": 0.6,
-        "cache_read": 0.075
+        "input": 0.037,
+        "output": 0.17
       },
       "limit": {
         "context": 131072,
-        "output": 65536
+        "output": 117964
       }
     }
   },
@@ -82207,7 +84161,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.018,
-          "output_per_million": 0.09
+          "output_per_million": 0.09,
+          "cache_read_input_per_million": 0.009
         }
       }
     },
@@ -82274,7 +84229,8 @@
       ],
       "cost": {
         "input": 0.018,
-        "output": 0.09
+        "output": 0.09,
+        "cache_read": 0.009
       },
       "limit": {
         "context": 131072,
@@ -85286,7 +87242,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.075,
-          "output_per_million": 0.5
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.0375
         }
       }
     },
@@ -85354,7 +87311,8 @@
       ],
       "cost": {
         "input": 0.075,
-        "output": 0.5
+        "output": 0.5,
+        "cache_read": 0.0375
       },
       "limit": {
         "context": 262144,
@@ -86670,7 +88628,7 @@
     "family": "qwen",
     "created_at": "2025-07-29 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": "2025-06-30",
     "modalities": {
       "input": [
@@ -86690,8 +88648,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.3
+          "input_per_million": 0.04815,
+          "output_per_million": 0.19305
         }
       }
     },
@@ -86743,12 +88701,12 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.1,
-        "output": 0.3
+        "input": 0.04815,
+        "output": 0.19305
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 32000
       },
       "knowledge": "2025-06-30"
     }
@@ -88129,7 +90087,7 @@
     "family": "qwen",
     "created_at": "2025-09-01 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": "2025-09-30",
     "modalities": {
       "input": [
@@ -88209,7 +90167,7 @@
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 32768
       },
       "knowledge": "2025-04"
     }
@@ -89126,7 +91084,7 @@
     "family": "qwen",
     "created_at": "2026-02-23 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 16384,
+    "max_output_tokens": 235929,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -89151,9 +91109,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.3125,
-          "output_per_million": 1.25,
-          "cache_read_input_per_million": 0.15625
+          "input_per_million": 0.15,
+          "output_per_million": 1,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -89215,13 +91173,13 @@
         }
       ],
       "cost": {
-        "input": 0.3125,
-        "output": 1.25,
-        "cache_read": 0.15625
+        "input": 0.15,
+        "output": 1,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 262144,
-        "output": 16384
+        "output": 235929
       }
     }
   },
@@ -89784,7 +91742,7 @@
     "family": "qwen",
     "created_at": "2026-04-22 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 262140,
+    "max_output_tokens": 81920,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -89810,7 +91768,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.32,
-          "output_per_million": 2.7,
+          "output_per_million": 3.2,
           "cache_read_input_per_million": 0.15
         }
       }
@@ -89874,12 +91832,11 @@
       ],
       "cost": {
         "input": 0.32,
-        "output": 2.7,
-        "cache_read": 0.15
+        "output": 3.2
       },
       "limit": {
         "context": 262144,
-        "output": 262140
+        "output": 81920
       }
     }
   },
@@ -90479,7 +92436,7 @@
       },
       "limit": {
         "context": 1000000,
-        "input": 991000,
+        "input": 991808,
         "output": 65536
       }
     }
@@ -94988,9 +96945,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.834,
-          "output_per_million": 2.501,
-          "cache_read_input_per_million": 0.042
+          "input_per_million": 0.7506,
+          "output_per_million": 2.2509,
+          "cache_read_input_per_million": 0.0378
         }
       }
     },
@@ -95053,9 +97010,9 @@
         }
       ],
       "cost": {
-        "input": 0.834,
-        "output": 2.501,
-        "cache_read": 0.042
+        "input": 0.7506,
+        "output": 2.2509,
+        "cache_read": 0.0378
       },
       "limit": {
         "context": 1048576,
@@ -95430,8 +97387,8 @@
     "provider": "openrouter",
     "family": "ling",
     "created_at": "2026-07-15 00:00:00 UTC",
-    "context_window": 1048576,
-    "max_output_tokens": 471859,
+    "context_window": 524288,
+    "max_output_tokens": 262144,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -95454,9 +97411,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1,
+          "input_per_million": 0.95,
           "output_per_million": 4.05,
-          "cache_read_input_per_million": 0.17
+          "cache_read_input_per_million": 0.16
         }
       }
     },
@@ -95523,13 +97480,13 @@
         }
       ],
       "cost": {
-        "input": 1,
+        "input": 0.95,
         "output": 4.05,
-        "cache_read": 0.17
+        "cache_read": 0.16
       },
       "limit": {
-        "context": 1048576,
-        "output": 471859
+        "context": 524288,
+        "output": 262144
       }
     }
   },
@@ -95539,7 +97496,7 @@
     "provider": "openrouter",
     "family": "ling",
     "created_at": "2026-07-30 00:00:00 UTC",
-    "context_window": 1048576,
+    "context_window": 524288,
     "max_output_tokens": 262144,
     "knowledge_cutoff": null,
     "modalities": {
@@ -95637,7 +97594,7 @@
         "cache_read": 0.1
       },
       "limit": {
-        "context": 1048576,
+        "context": 524288,
         "output": 262144
       }
     }
@@ -95919,6 +97876,58 @@
       },
       "limit": {
         "context": 262144,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "unbiased/pareto-26.10-preview",
+    "name": "Pareto 26.10 Preview",
+    "provider": "openrouter",
+    "family": null,
+    "created_at": "2026-10-01 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.8,
+          "output_per_million": 3.2,
+          "cache_read_input_per_million": 0.03
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-01",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": false,
+      "cost": {
+        "input": 0.8,
+        "output": 3.2,
+        "cache_read": 0.03
+      },
+      "limit": {
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -97458,14 +99467,14 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.6,
-          "output_per_million": 4.8,
-          "cache_read_input_per_million": 0.4
+          "input_per_million": 2,
+          "output_per_million": 6,
+          "cache_read_input_per_million": 0.5
         },
         "long_context": {
-          "input_per_million": 3.2,
-          "output_per_million": 9.6,
-          "cache_read_input_per_million": 0.8
+          "input_per_million": 4,
+          "output_per_million": 12,
+          "cache_read_input_per_million": 1
         },
         "long_context_threshold": 200000
       }
@@ -97528,14 +99537,14 @@
         }
       ],
       "cost": {
-        "input": 1.6,
-        "output": 4.8,
-        "cache_read": 0.4,
+        "input": 2,
+        "output": 6,
+        "cache_read": 0.5,
         "tiers": [
           {
-            "input": 3.2,
-            "output": 9.6,
-            "cache_read": 0.8,
+            "input": 4,
+            "output": 12,
+            "cache_read": 1,
             "tier": {
               "type": "context",
               "size": 200000
@@ -97543,9 +99552,9 @@
           }
         ],
         "context_over_200k": {
-          "input": 3.2,
-          "output": 9.6,
-          "cache_read": 0.8
+          "input": 4,
+          "output": 12,
+          "cache_read": 1
         }
       },
       "limit": {
@@ -98153,7 +100162,7 @@
     "provider": "openrouter",
     "family": "mimo",
     "created_at": "2026-09-22 00:00:00 UTC",
-    "context_window": 1048576,
+    "context_window": 1050000,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -98248,7 +100257,7 @@
         "cache_read": 0.0028
       },
       "limit": {
-        "context": 1048576,
+        "context": 1050000,
         "output": 131072
       }
     }
@@ -98259,7 +100268,7 @@
     "provider": "openrouter",
     "family": "mimo",
     "created_at": "2026-09-22 00:00:00 UTC",
-    "context_window": 1048576,
+    "context_window": 1050000,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -98354,7 +100363,7 @@
         "cache_read": 0.0036
       },
       "limit": {
-        "context": 1048576,
+        "context": 1050000,
         "output": 131072
       }
     }
@@ -98869,7 +100878,7 @@
         "standard": {
           "input_per_million": 0.3,
           "output_per_million": 0.9,
-          "cache_read_input_per_million": 0.055
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -98928,7 +100937,7 @@
       "cost": {
         "input": 0.3,
         "output": 0.9,
-        "cache_read": 0.055
+        "cache_read": 0.05
       },
       "limit": {
         "context": 131072,
@@ -99361,9 +101370,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.9646,
-          "output_per_million": 3.0316,
-          "cache_read_input_per_million": 0.17914
+          "input_per_million": 1.4,
+          "output_per_million": 4.4,
+          "cache_read_input_per_million": 0.26
         }
       }
     },
@@ -99426,9 +101435,9 @@
         }
       ],
       "cost": {
-        "input": 0.9646,
-        "output": 3.0316,
-        "cache_read": 0.17914
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26
       },
       "limit": {
         "context": 204800,
@@ -99443,7 +101452,7 @@
     "family": "glm",
     "created_at": "2026-06-13 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -99465,9 +101474,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.6496,
-          "output_per_million": 2.0416,
-          "cache_read_input_per_million": 0.12064
+          "input_per_million": 0.41,
+          "output_per_million": 3.99,
+          "cache_read_input_per_million": 0.26
         }
       }
     },
@@ -99539,13 +101548,13 @@
         }
       ],
       "cost": {
-        "input": 0.6496,
-        "output": 2.0416,
-        "cache_read": 0.12064
+        "input": 0.41,
+        "output": 3.99,
+        "cache_read": 0.26
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 943718
       }
     }
   },
@@ -99555,8 +101564,8 @@
     "provider": "openrouter",
     "family": "glm",
     "created_at": "2026-08-14 00:00:00 UTC",
-    "context_window": 1310720,
-    "max_output_tokens": 943717,
+    "context_window": 1048576,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -99578,9 +101587,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.4,
-          "output_per_million": 4.4,
-          "cache_read_input_per_million": 0.26
+          "input_per_million": 0.22,
+          "output_per_million": 3.39,
+          "cache_read_input_per_million": 0.176
         }
       }
     },
@@ -99647,13 +101656,13 @@
         }
       ],
       "cost": {
-        "input": 1.4,
-        "output": 4.4,
-        "cache_read": 0.26
+        "input": 0.22,
+        "output": 3.39,
+        "cache_read": 0.176
       },
       "limit": {
-        "context": 1310720,
-        "output": 943717
+        "context": 1048576,
+        "output": 943718
       }
     }
   },
@@ -99663,8 +101672,8 @@
     "provider": "openrouter",
     "family": "glm-flash",
     "created_at": "2026-08-26 00:00:00 UTC",
-    "context_window": 1310720,
-    "max_output_tokens": 128000,
+    "context_window": 1048576,
+    "max_output_tokens": 943717,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -99690,9 +101699,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.045,
-          "output_per_million": 0.14,
-          "cache_read_input_per_million": 0.01
+          "input_per_million": 0.15,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -99761,13 +101770,13 @@
         }
       ],
       "cost": {
-        "input": 0.045,
-        "output": 0.14,
-        "cache_read": 0.01
+        "input": 0.15,
+        "output": 0.5,
+        "cache_read": 0.03
       },
       "limit": {
-        "context": 1310720,
-        "output": 128000
+        "context": 1048576,
+        "output": 943717
       }
     }
   },
@@ -100605,15 +102614,12 @@
       "provider_id": "openrouter",
       "open_weights": false,
       "attachment": true,
-      "temperature": false,
+      "temperature": true,
       "last_updated": "2026-04-27",
       "tool_call": true,
       "structured_output": true,
       "reasoning": true,
       "reasoning_options": [
-        {
-          "type": "toggle"
-        },
         {
           "type": "effort",
           "values": [
@@ -100668,8 +102674,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.5,
+          "input_per_million": 0.02,
+          "output_per_million": 0.6,
           "cache_read_input_per_million": 0.01
         }
       }
@@ -100740,8 +102746,8 @@
         }
       ],
       "cost": {
-        "input": 0.1,
-        "output": 0.5,
+        "input": 0.02,
+        "output": 0.6,
         "cache_read": 0.01
       },
       "limit": {
@@ -100778,9 +102784,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.2528,
-          "output_per_million": 1.9584,
-          "cache_read_input_per_million": 0.08832
+          "input_per_million": 0.22,
+          "output_per_million": 4.2,
+          "cache_read_input_per_million": 0.14
         }
       }
     },
@@ -100849,9 +102855,9 @@
         }
       ],
       "cost": {
-        "input": 0.2528,
-        "output": 1.9584,
-        "cache_read": 0.08832
+        "input": 0.22,
+        "output": 4.2,
+        "cache_read": 0.14
       },
       "limit": {
         "context": 1048576,
@@ -100865,7 +102871,7 @@
     "provider": "openrouter",
     "family": "deepseek",
     "created_at": "2026-08-01 00:00:00 UTC",
-    "context_window": 1310720,
+    "context_window": 1048576,
     "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
@@ -100888,9 +102894,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.03,
-          "output_per_million": 0.32,
-          "cache_read_input_per_million": 0.016
+          "input_per_million": 0.0188,
+          "output_per_million": 1.28,
+          "cache_read_input_per_million": 0.0188
         }
       }
     },
@@ -100961,12 +102967,12 @@
         }
       ],
       "cost": {
-        "input": 0.03,
-        "output": 0.32,
-        "cache_read": 0.016
+        "input": 0.0188,
+        "output": 1.28,
+        "cache_read": 0.0188
       },
       "limit": {
-        "context": 1310720,
+        "context": 1048576,
         "output": 943718
       }
     }
@@ -101249,9 +103255,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.2,
-          "output_per_million": 10.5346,
-          "cache_read_input_per_million": 0.3
+          "input_per_million": 0.73,
+          "output_per_million": 13,
+          "cache_read_input_per_million": 0.45
         }
       }
     },
@@ -101322,9 +103328,9 @@
         }
       ],
       "cost": {
-        "input": 1.2,
-        "output": 10.5346,
-        "cache_read": 0.3
+        "input": 0.73,
+        "output": 13,
+        "cache_read": 0.45
       },
       "limit": {
         "context": 1048576,
@@ -101727,13 +103733,13 @@
         "standard": {
           "input_per_million": 2,
           "output_per_million": 10,
-          "cache_read_input_per_million": 0.2,
+          "cache_read_input_per_million": 0.1,
           "cache_write_input_per_million": 2.5
         },
         "long_context": {
           "input_per_million": 4,
           "output_per_million": 15,
-          "cache_read_input_per_million": 0.4,
+          "cache_read_input_per_million": 0.2,
           "cache_write_input_per_million": 5
         },
         "long_context_threshold": 272000
@@ -101786,7 +103792,6 @@
         {
           "type": "effort",
           "values": [
-            "none",
             "low",
             "medium",
             "high",
@@ -101798,13 +103803,13 @@
       "cost": {
         "input": 2,
         "output": 10,
-        "cache_read": 0.2,
+        "cache_read": 0.1,
         "cache_write": 2.5,
         "tiers": [
           {
             "input": 4,
             "output": 15,
-            "cache_read": 0.4,
+            "cache_read": 0.2,
             "cache_write": 5,
             "tier": {
               "type": "context",
@@ -101815,7 +103820,7 @@
         "context_over_200k": {
           "input": 4,
           "output": 15,
-          "cache_read": 0.4,
+          "cache_read": 0.2,
           "cache_write": 5
         }
       },
@@ -101987,14 +103992,14 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.6,
-          "output_per_million": 4.8,
-          "cache_read_input_per_million": 0.4
+          "input_per_million": 2,
+          "output_per_million": 6,
+          "cache_read_input_per_million": 0.5
         },
         "long_context": {
-          "input_per_million": 3.2,
-          "output_per_million": 9.6,
-          "cache_read_input_per_million": 0.8
+          "input_per_million": 4,
+          "output_per_million": 12,
+          "cache_read_input_per_million": 1
         },
         "long_context_threshold": 200000
       }
@@ -102057,14 +104062,14 @@
         }
       ],
       "cost": {
-        "input": 1.6,
-        "output": 4.8,
-        "cache_read": 0.4,
+        "input": 2,
+        "output": 6,
+        "cache_read": 0.5,
         "tiers": [
           {
-            "input": 3.2,
-            "output": 9.6,
-            "cache_read": 0.8,
+            "input": 4,
+            "output": 12,
+            "cache_read": 1,
             "tier": {
               "type": "context",
               "size": 200000
@@ -102072,9 +104077,9 @@
           }
         ],
         "context_over_200k": {
-          "input": 3.2,
-          "output": 9.6,
-          "cache_read": 0.8
+          "input": 4,
+          "output": 12,
+          "cache_read": 1
         }
       },
       "limit": {
@@ -102089,8 +104094,8 @@
     "provider": "openrouter",
     "family": "glm-flash",
     "created_at": "2026-08-27 00:00:00 UTC",
-    "context_window": 1310720,
-    "max_output_tokens": 128000,
+    "context_window": 1048576,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -102116,9 +104121,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.045,
-          "output_per_million": 0.14,
-          "cache_read_input_per_million": 0.01
+          "input_per_million": 0.035,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.035
         }
       }
     },
@@ -102187,13 +104192,13 @@
         }
       ],
       "cost": {
-        "input": 0.045,
-        "output": 0.14,
-        "cache_read": 0.01
+        "input": 0.035,
+        "output": 0.5,
+        "cache_read": 0.035
       },
       "limit": {
-        "context": 1310720,
-        "output": 128000
+        "context": 1048576,
+        "output": 131072
       }
     }
   },
@@ -102203,7 +104208,7 @@
     "provider": "openrouter",
     "family": "glm",
     "created_at": "2026-08-19 00:00:00 UTC",
-    "context_window": 1310720,
+    "context_window": 1048576,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -102226,9 +104231,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.5614,
-          "output_per_million": 1.7644,
-          "cache_read_input_per_million": 0.10426
+          "input_per_million": 0.12,
+          "output_per_million": 4,
+          "cache_read_input_per_million": 0.08
         }
       }
     },
@@ -102295,12 +104300,12 @@
         }
       ],
       "cost": {
-        "input": 0.5614,
-        "output": 1.7644,
-        "cache_read": 0.10426
+        "input": 0.12,
+        "output": 4,
+        "cache_read": 0.08
       },
       "limit": {
-        "context": 1310720,
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -106779,6 +108784,76 @@
         "output": 128000
       },
       "knowledge": "2026-01-31"
+    }
+  },
+  {
+    "id": "claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "vertexai",
+    "family": "claude-sonnet",
+    "created_at": "2026-09-28 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 10,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "google-vertex",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-09-28",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.2,
+        "cache_write": 2.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2026-06"
     }
   },
   {
@@ -111889,6 +113964,44 @@
       "attachment": true,
       "temperature": false,
       "last_updated": "2026-05-30",
+      "tool_call": false,
+      "reasoning": false,
+      "limit": {
+        "context": 1024,
+        "output": 0
+      }
+    }
+  },
+  {
+    "id": "grok-imagine-video-1.5-lite",
+    "name": "Grok Imagine Video 1.5 Lite",
+    "provider": "xai",
+    "family": "grok",
+    "created_at": "2026-10-01 00:00:00 UTC",
+    "context_window": 1024,
+    "max_output_tokens": 0,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "video"
+      ]
+    },
+    "capabilities": [
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "xai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-10-01",
       "tool_call": false,
       "reasoning": false,
       "limit": {

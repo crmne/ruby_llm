@@ -40,7 +40,7 @@ module RubyLLM
           super(payload, merge_mcp_filters(tools))
         end
 
-        def format_assistant_items(message)
+        def format_assistant_items(message, replay_search: true)
           super.flat_map do |item|
             data = Support::Utils.deep_symbolize_keys(item)
             next item unless data[:type] && !Protocols::Responses::Chat::CLIENT_OUTPUT_ITEM_TYPES.include?(data[:type])

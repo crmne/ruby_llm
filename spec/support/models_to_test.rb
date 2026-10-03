@@ -92,6 +92,12 @@ thinking_models = [
 ].freeze
 THINKING_MODELS = filter_local_providers(thinking_models).freeze
 
+tool_search_models = [
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :openai, model: 'gpt-5.4' }
+].freeze
+TOOL_SEARCH_MODELS = filter_local_providers(tool_search_models).freeze
+
 MULTIMODAL_TOOL_RESULT_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning', pdf: false },

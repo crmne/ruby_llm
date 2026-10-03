@@ -371,6 +371,17 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.tools }.to raise_error(ArgumentError, /Two tools are named echo/)
   end
 
+  it 'refuses a deferred tool and an MCP tool with the same name' do
+    echo = Class.new(RubyLLM::Tool) do
+      def self.tool_name = 'echo'
+      def execute(text:) = text
+    end
+
+    chat.with_tools(echo, defer: true).with_mcp(files)
+
+    expect { chat.tools }.to raise_error(ArgumentError, /Two tools are named echo/)
+  end
+
   it 'disconnects servers with nil' do
     chat.with_mcp(files).with_mcp(nil)
 
