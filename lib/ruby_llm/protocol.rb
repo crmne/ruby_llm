@@ -632,11 +632,12 @@ module RubyLLM
       payload[:tools] = Array(payload[:tools]) + entries
     end
 
-    def track_usage(operation, on_finish: nil)
+    def track_usage(operation, on_finish: nil, model_id: nil)
       @usage_tracker = Accounting::Usage::Tracker.new(
         operation:,
         provider: @provider,
         model: @model,
+        model_id:,
         config: @config,
         on_finish:
       )

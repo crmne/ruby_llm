@@ -26,7 +26,7 @@ module RubyLLM
           payloads = (input.is_a?(Array) ? input : [input]).map do |text|
             render_moderation_payload(text, attachments, provider_options)
           end
-          track_usage(:moderation) do
+          track_usage(:moderation, model_id: guardrail_model_id) do
             responses = payloads.map do |payload|
               response = post_moderation(url, payload)
               result = parse_moderation_result(response)
@@ -38,6 +38,10 @@ module RubyLLM
         end
 
         private
+
+        def guardrail_model_id
+          "#{@config.bedrock_guardrail_id}:#{@config.bedrock_guardrail_version}"
+        end
 
         def parse_moderation_responses(responses)
           RubyLLM::Moderation.new(

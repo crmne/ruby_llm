@@ -95,6 +95,20 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
                                                     input_tokens: 133)
   end
 
+  it 'writes a row for a guardrail moderation, naming the guardrail and version it ran' do
+    RubyLLM.config.bedrock_guardrail_id = 'test-guardrail'
+    RubyLLM.config.bedrock_guardrail_version = '1'
+    stub_request(:post, %r{/guardrail/test-guardrail/version/1/apply\z})
+      .to_return(json_response({ action: 'NONE', assessments: [], usage: { contentPolicyUnits: 1 } }))
+
+    result = RubyLLM.moderate('Review this.', provider: :bedrock, owner:)
+
+    expect(result.raw['usage']).to eq('contentPolicyUnits' => 1)
+    expect(rows_for(owner).sole).to have_attributes(operation: 'moderation', provider: 'bedrock',
+                                                    model: 'test-guardrail:1', status: 'succeeded',
+                                                    total_cost: nil)
+  end
+
   it 'writes a row when a video or research job finishes, attributed to the owner at submission' do
     provider = instance_double(RubyLLM::Providers::Gemini, slug: 'gemini')
     video_protocol = instance_double(RubyLLM::Protocols::Gemini, config: RubyLLM.config, provider:)

@@ -163,10 +163,11 @@ module RubyLLM
 
         attr_reader :entries
 
-        def initialize(operation:, provider:, model:, config:, on_finish: nil)
+        def initialize(operation:, provider:, model:, config:, on_finish: nil, model_id: nil)
           @operation = operation.to_sym
           @provider = provider
           @model_info = model
+          @model_id = model_id
           @config = config
           @on_finish = on_finish
           @entries = []
@@ -174,7 +175,7 @@ module RubyLLM
         end
 
         def start
-          entry = Entry.new(operation: @operation, provider: @provider.slug, model: @model_info&.id,
+          entry = Entry.new(operation: @operation, provider: @provider.slug, model: @model_id || @model_info&.id,
                             owner: Usage.owner)
           @entries << entry
           @pending << entry

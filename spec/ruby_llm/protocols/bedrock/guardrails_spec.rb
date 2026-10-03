@@ -34,7 +34,8 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Guardrails do
     expect(result.raw).to eq(JSON.parse(JSON.generate(blocked)))
     expect(result.tokens.to_h).to eq({})
     expect(result.cost.total).to be_nil
-    expect(result.ruby_llm_usage_entries).to contain_exactly(have_attributes(model: nil, status: :succeeded))
+    expect(result.ruby_llm_usage_entries).to contain_exactly(have_attributes(model: 'test-guardrail:1',
+                                                                             status: :succeeded))
     expect(RubyLLM::Models).not_to have_received(:find)
     expect(request).to have_been_requested.once
   end
@@ -51,7 +52,7 @@ RSpec.describe RubyLLM::Protocols::Bedrock::Guardrails do
     expect(result.id).to be_nil
     expect(result.ruby_llm_usage_entries.map(&:status)).to eq(%i[succeeded succeeded])
     usage = capture.events.filter_map { |name, payload| payload if name == 'usage.ruby_llm' }
-    expect(usage).to all(include(model: nil, status: :succeeded))
+    expect(usage).to all(include(model: 'test-guardrail:1', status: :succeeded))
     expect(usage.length).to eq(2)
   end
 

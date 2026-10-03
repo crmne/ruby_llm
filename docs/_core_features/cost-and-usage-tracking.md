@@ -221,7 +221,7 @@ current_user.ruby_llm_usages.sum(:total_cost)
 current_user.ruby_llm_usages.where(created_at: Time.current.all_month).group(:operation).sum(:total_cost)
 ```
 
-Writing a row never breaks the operation that billed it. If the insert fails, RubyLLM logs a warning and returns the result. Attempts without a model, such as a moderation through a provider's configured resource, are instrumented but not written, because every ledger row names its model.
+Writing a row never breaks the operation that billed it. If the insert fails, RubyLLM logs a warning and returns the result. Every row names what the provider ran and billed in its `model` column: the model ID, or for an operation without one, the provider's own resource, such as the hosted agent of a research task or the ID and version of a Bedrock guardrail (`my-guardrail:1`).
 
 ## Keeping Registry Pricing Fresh
 
