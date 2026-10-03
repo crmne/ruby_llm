@@ -90,7 +90,17 @@ RSpec.describe RubyLLM::Protocol::RequestShapes do
       ]
     end
     let(:protocols) do
-      [RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config))]
+      gemini = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      [
+        RubyLLM::Protocols::Gemini.new(gemini),
+        RubyLLM::Protocols::Interactions.new(gemini),
+        RubyLLM::Protocols::Anthropic.new(RubyLLM::Providers::Anthropic.new(RubyLLM.config)),
+        RubyLLM::Protocols::ChatCompletions.new(provider),
+        RubyLLM::Protocols::Responses.new(provider),
+        RubyLLM::Protocols::Cohere.new(RubyLLM::Providers::Cohere.new(RubyLLM.config)),
+        RubyLLM::Protocols::Converse.new(RubyLLM::Providers::Bedrock.new(RubyLLM.config)),
+        RubyLLM::Protocols::Mistral::Conversations.new(RubyLLM::Providers::Mistral.new(RubyLLM.config))
+      ]
     end
 
     it 'describe what they can and never raise' do

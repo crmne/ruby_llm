@@ -8,6 +8,7 @@ module RubyLLM
       include Anthropic::Embeddings
       include Anthropic::Media
       include Anthropic::Models
+      include Anthropic::RequestShapes
       include Anthropic::Streaming
       include Anthropic::Tools
 

@@ -9,6 +9,7 @@ module RubyLLM
         include Conversations::Chat
         include Conversations::Streaming
         include Conversations::Images
+        include Conversations::RequestShapes
 
         public :render
 

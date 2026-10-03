@@ -32,6 +32,16 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  it 'describes a refused compaction' do
+    refuse_requests
+    chat = secret_chat(provider: :openai, model: model_for(:openai))
+
+    expect { chat.compact }.to raise_error(RubyLLM::BadRequestError) do |error|
+      expect(error.request_shape.turns.first.to_s).to eq('#0 user: text (15 chars), image/png (15941 bytes)')
+      expect(error.request_shape.tool_names).to be_empty
+    end
+  end
+
   it 'describes the request behind any provider error' do
     refuse_requests(status: 500)
 
@@ -54,6 +64,18 @@ RSpec.describe RubyLLM::Chat do
 
     expect { chat.complete { |_chunk| nil } }.to raise_error(RubyLLM::Error) do |error|
       expect(error.request_shape.turns.map(&:to_s)).to eq(turns)
+    end
+  end
+
+  it 'describes a stream that ends with a failed response event' do
+    failed = { type: 'response.failed', response: { status: 'failed', output: [], model: model_for(:openai),
+                                                    error: { code: 'invalid_image', message: 'Invalid image.' } } }
+    stub_request(:post, /.*/)
+      .to_return(stream.merge(body: "event: response.failed\ndata: #{JSON.generate(failed)}\n\n"))
+    chat = secret_chat(provider: :openai, model: model_for(:openai))
+
+    expect { chat.complete { |_chunk| nil } }.to raise_error(RubyLLM::BadRequestError, 'Invalid image.') do |error|
+      expect(error.request_shape.turn_count).to eq(7)
     end
   end
 

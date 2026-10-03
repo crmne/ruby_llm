@@ -10,6 +10,7 @@ module RubyLLM
       include Responses::Approvals
       include Responses::Chat
       include Responses::Media
+      include Responses::RequestShapes
       include Responses::Streaming
       include Responses::Tools
 

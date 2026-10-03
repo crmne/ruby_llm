@@ -8,6 +8,7 @@ module RubyLLM
 
       include Converse::Chat
       include Converse::Media
+      include Converse::RequestShapes
       include Converse::Streaming
 
       # Nova 2 models execute built-in tools server-side when the request

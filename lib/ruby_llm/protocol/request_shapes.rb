@@ -65,8 +65,18 @@ module RubyLLM
         parts.flatten.compact.any?(&:result?) ? :tool : :user
       end
 
+      def shape_instructions(text)
+        text.nil? ? [] : [shape_text(text)]
+      end
+
       def shape_text(text, kind: :text, signed: false)
         PartSpec.new(kind:, measure: shape_length(text), signed:, without_data: kind == :text && text.nil?)
+      end
+
+      def shape_summary(summary, signed: false)
+        parts = shape_list(summary)
+        measure = parts.sum { |part| shape_length(shape_hash(part)['text']).to_i } unless parts.empty?
+        PartSpec.new(kind: :thinking, measure:, signed:)
       end
 
       def shape_tool_call(name, arguments, id: nil, signed: false)
@@ -106,6 +116,14 @@ module RubyLLM
         shape_media(kind, source: :file, mime_type:)
       end
 
+      # A URL field can hold a data URI instead of a link.
+      def shape_url(url, kind: nil, mime_type: nil)
+        return shape_media(kind, source: :url, mime_type:) unless url.is_a?(String) && url.start_with?('data:')
+
+        header, data = url.split(',', 2)
+        shape_inline(data, kind:, mime_type: header.delete_prefix('data:').split(';').first)
+      end
+
       def shape_media_kind(mime_type)
         type = mime_type.to_s
         return :image if Files::MimeType.image?(type)
@@ -113,6 +131,11 @@ module RubyLLM
         return :video if Files::MimeType.video?(type)
 
         :document
+      end
+
+      def shape_tool_name(tool)
+        tool = shape_hash(tool)
+        tool['name'] || tool['type']
       end
 
       # Thinking settings are short words and numbers, such as an effort or

@@ -8,6 +8,7 @@ module RubyLLM
       include ChatCompletions::Embeddings
       include ChatCompletions::Models
       include ChatCompletions::Moderation
+      include ChatCompletions::RequestShapes
       include ChatCompletions::Streaming
       include ChatCompletions::Tools
       include ChatCompletions::Images

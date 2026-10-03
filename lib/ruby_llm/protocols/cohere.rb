@@ -16,6 +16,7 @@ module RubyLLM
       include Cohere::Streaming
       include Cohere::Tools
       include Cohere::Transcription
+      include ChatCompletions::RequestShapes
     end
   end
 end

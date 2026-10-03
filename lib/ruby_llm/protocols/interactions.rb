@@ -6,6 +6,7 @@ module RubyLLM
     class Interactions < Protocol
       include Interactions::Chat
       include Interactions::Content
+      include Interactions::RequestShapes
       include Interactions::Tools
       include Interactions::Streaming
       include Interactions::Transcription
