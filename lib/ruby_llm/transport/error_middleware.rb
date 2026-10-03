@@ -82,7 +82,9 @@ module RubyLLM
           /rate limit/i,
           /per minute/i,
           /per hour/i,
-          /per day/i
+          /per day/i,
+          /quota exceeded/i,
+          /wait before trying again/i
         ].freeze
 
         OVERLOAD_PATTERNS = [

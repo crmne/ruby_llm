@@ -198,6 +198,27 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::RateLimitError)
     end
 
+    it 'keeps 429 errors about token quotas as RateLimitError' do
+      messages = [
+        'You exceeded your current quota, please check your plan and billing details. ' \
+        "\n* Quota exceeded for metric: generativelanguage.googleapis.com/" \
+        'generate_content_free_tier_input_token_count, ' \
+        "limit: 250000, model: gemini-2.5-flash\nPlease retry in 39.844676573s.",
+        'Quota exceeded for aiplatform.googleapis.com/online_prediction_input_tokens_per_minute_per_base_model ' \
+        'with base model: anthropic-claude-haiku-4-5. Please submit a quota increase request.',
+        'Too many tokens, please wait before trying again.'
+      ]
+
+      messages.each do |message|
+        provider = instance_double(RubyLLM::Provider, parse_error: message)
+        response = Struct.new(:status, :body).new(429, '{}')
+
+        expect do
+          described_class.parse_error(provider: provider, response: response)
+        end.to raise_error(RubyLLM::RateLimitError, message)
+      end
+    end
+
     it 'maps context-length-like 400 errors to ContextLengthExceededError' do
       msg = "This model's maximum context length is 8192 tokens."
       response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
