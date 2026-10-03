@@ -44,7 +44,7 @@ module RubyLLM
       end
 
       def request(operation, payload, event:)
-        return workflow(operation, payload) if operation.include?('workflow')
+        return workflow(operation, payload) if %w[invoke_workflow ruby_llm.workflow_step].include?(operation)
         return tool(payload) if operation == 'execute_tool'
 
         {

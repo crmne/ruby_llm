@@ -82,6 +82,26 @@ Specs tagged `:live` talk to provider APIs through VCR cassettes; everything els
 
 Always check cassettes for leaked API keys before committing.
 
+### OpenTelemetry conformance
+
+Install [OpenTelemetry Weaver](https://github.com/open-telemetry/weaver/releases/tag/v0.26.1), then run:
+
+```bash
+bundle exec rake opentelemetry:check
+# Or select a local executable:
+WEAVER=/path/to/weaver bundle exec rake opentelemetry:check
+```
+
+This runs the tracing unit, Rails, and recorded provider specs, then checks
+the exported span attributes against a pinned official GenAI registry.
+The test registry adds RubyLLM's three workflow identity attributes.
+Weaver reports the GenAI attributes as development conventions; violations
+fail the task. SDK assertions separately check span kinds, names, parents,
+context cleanup, errors, and streaming lifetimes.
+
+The provider specs use VCR. With credentials in `.env`, missing cassettes
+record real calls; otherwise existing cassettes replay without API access.
+
 ## Documentation
 
 The site builds three versions from the same repository:

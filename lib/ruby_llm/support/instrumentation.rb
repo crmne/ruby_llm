@@ -16,9 +16,11 @@ module RubyLLM
         workflow_context = current_workflow
         payload = payload.merge(workflow_context) if workflow_context
         instrumenter = (config || RubyLLM.config).instrumenter
+        subscribers = @subscribers
+        return dispatch(instrumenter, name, payload, &block) if subscribers.empty?
 
         dispatch = -> { dispatch(instrumenter, name, payload, &block) }
-        @subscribers.reverse_each do |subscriber|
+        subscribers.reverse_each do |subscriber|
           inner = dispatch
           dispatch = -> { subscriber.instrument(name, payload, &inner) }
         end

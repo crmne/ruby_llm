@@ -1,34 +1,19 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'opentelemetry-sdk'
+require_relative '../support/open_telemetry'
 require 'open3'
 
 RSpec.describe RubyLLM::OpenTelemetry do
   include_context 'with configured RubyLLM'
 
-  let(:exporter) { OpenTelemetry::SDK::Trace::Export::InMemorySpanExporter.new }
-  let(:provider) { OpenTelemetry::SDK::Trace::TracerProvider.new }
+  include_context 'with OpenTelemetry tracing'
+
   let(:model) { model_for(:openai, :temperature) }
   let(:response) do
     RubyLLM::Message.new(role: :assistant, content: 'private response', model: model, finish_reason: :stop,
                          input_tokens: 10, output_tokens: 5, cache_read_tokens: 3, cache_write_tokens: 2,
                          thinking_tokens: 1)
-  end
-
-  before do
-    provider.add_span_processor(OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(exporter))
-    allow(OpenTelemetry).to receive(:tracer_provider).and_return(provider)
-    described_class.enable
-  end
-
-  after do
-    described_class.disable
-    provider.shutdown
-  end
-
-  def spans
-    exporter.finished_spans
   end
 
   def stub_chat(context = RubyLLM)
@@ -272,7 +257,116 @@ RSpec.describe RubyLLM::OpenTelemetry do
     expect(spans.map(&:parent_span_id)).to eq([OpenTelemetry::Trace::INVALID_SPAN_ID] * 2)
   end
 
+  it 'restores the parent when a streaming callback raises' do
+    chat = stub_chat
+    chunk = RubyLLM::Chunk.new(role: :assistant, content: 'hello')
+    allow(chat.provider).to receive(:complete).and_yield(chunk)
+    error = RuntimeError.new('callback failed')
+    provider.tracer('application').in_span('request') do |parent|
+      expect { chat.ask('hello') { raise error } }.to raise_error(error)
+      expect(OpenTelemetry::Trace.current_span).to equal(parent)
+    end
+
+    expect(spans.first.attributes['error.type']).to eq('RuntimeError')
+    expect(spans.first.status.code).to eq(OpenTelemetry::Trace::Status::ERROR)
+  end
+
+  it 'finishes an active span after tracing is disabled' do
+    RubyLLM.instrument('chat.ruby_llm', model:, provider: 'openai') do
+      described_class.disable
+      stub_chat.ask('untraced')
+      expect(spans).to be_empty
+    end
+
+    expect(spans.size).to eq(1)
+  end
+
+  it 'continues to notify a custom instrumenter after tracing is disabled' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    chat = stub_chat(context)
+    chat.ask('traced')
+    described_class.disable
+    chat.ask('untraced')
+
+    expect(instrumenter.events.count { |name, _payload| name == 'chat.ruby_llm' }).to eq(2)
+    expect(spans.size).to eq(1)
+  end
+
+  it 'allows application work to run when the sampler drops the trace' do
+    dropped = OpenTelemetry::SDK::Trace::TracerProvider.new(sampler: OpenTelemetry::SDK::Trace::Samplers::ALWAYS_OFF)
+    allow(OpenTelemetry).to receive(:tracer_provider).and_return(dropped)
+
+    expect(stub_chat.ask('hello')).to eq(response)
+    expect(spans).to be_empty
+  ensure
+    dropped.shutdown
+  end
+
+  it 'closes a span even when recording its response attributes fails' do
+    tracer = provider.tracer('ruby_llm', RubyLLM::VERSION)
+    allow(tracer).to receive(:start_span).and_wrap_original do |original, *args, **kwargs|
+      original.call(*args, **kwargs).tap do |span|
+        allow(span).to receive(:add_attributes).and_raise(StandardError, 'exporter failure')
+      end
+    end
+    allow(RubyLLM.logger).to receive(:warn)
+
+    expect(stub_chat.ask('hello')).to eq(response)
+    expect(spans.size).to eq(1)
+  end
+
   %i[threads fibers].each do |mode|
+    it "traces a complete HTTP chat and overlapping nested tools using #{mode}" do
+      chat_model = model
+      key = OpenTelemetry::Context.create_key('test-context')
+      observed = Queue.new
+      stub_const('TelemetryNestedChat', Class.new(RubyLLM::Tool) do
+        parameter :label
+
+        define_method(:execute) do |label:|
+          before = OpenTelemetry::Trace.current_span.context.span_id
+          sleep 0.01
+          RubyLLM.chat(model: chat_model, protocol: :chat_completions).ask(label)
+          observed << [before, OpenTelemetry::Trace.current_span.context.span_id, OpenTelemetry::Context.current.value(key)]
+          label
+        end
+      end)
+      stub_request(:post, 'https://api.openai.com/v1/chat/completions').to_return do |request|
+        body = JSON.parse(request.body)
+        message = { role: 'assistant', content: 'done' }
+        if body['tools'] && body['messages'].last['role'] == 'user'
+          message[:tool_calls] = %w[alpha beta].map do |label|
+            { id: label, type: 'function',
+              function: { name: 'telemetry_nested_chat', arguments: { label: }.to_json } }
+          end
+        end
+        finish_reason = message[:tool_calls] ? 'tool_calls' : 'stop'
+        { headers: { 'Content-Type' => 'application/json' },
+          body: { model: chat_model, choices: [{ message:, finish_reason: }],
+                  usage: { prompt_tokens: 4, completion_tokens: 2 } }.to_json }
+      end
+      OpenTelemetry::Context.with_current(OpenTelemetry::Context.current.set_value(key, 'preserved')) do
+        RubyLLM.workflow('nested tools') do
+          chat = RubyLLM.chat(model:, protocol: :chat_completions).with_tools(TelemetryNestedChat)
+                        .with_tool_options(concurrency: mode)
+          expect(chat.ask('Run both tools').content).to eq('done')
+        end
+      end
+
+      workflow = spans.find { |span| span.name == 'invoke_workflow nested tools' }
+      tools = spans.select { |span| span.name == 'execute_tool telemetry_nested_chat' }
+      expect(spans.size).to eq(7)
+      expect(tools.map(&:parent_span_id)).to eq([workflow.span_id] * 2)
+      expect(tools.map(&:start_timestamp).max).to be < tools.map(&:end_timestamp).min
+      tools.each do |tool|
+        expect(spans.count { |span| span.parent_span_id == tool.span_id }).to eq(1)
+      end
+      observations = Array.new(observed.size) { observed.pop }
+      expect(observations).to match_array(tools.map { |tool| [tool.span_id, tool.span_id, 'preserved'] })
+      expect(OpenTelemetry::Context.current.value(key)).to be_nil
+    end
+
     it "parents concurrent tools and nested calls to their workflow step using #{mode}" do
       calls = 2.times.to_h do |index|
         [index, RubyLLM::ToolCall.new(id: "call_#{index}", name: 'lookup', arguments: {})]
