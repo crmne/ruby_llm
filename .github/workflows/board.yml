@@ -15,19 +15,11 @@ permissions:
   pull-requests: write
   actions: write
 
-concurrency:
-  group: board
-  cancel-in-progress: false
-
+# Copilot Triage's own workflow does the rest, and updates with its v0 tag.
 jobs:
   sweep:
-    if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: crmne/copilot-triage@v0
-        with:
-          mode: sweep
-          project-token: ${{ secrets.TRIAGE_PROJECT_TOKEN }}
-          triage-workflow: issue-assessment.yml
-          dry-run: ${{ inputs.dry_run || false }}
+    uses: crmne/copilot-triage/.github/workflows/sweep.yml@v0
+    secrets: inherit
+    with:
+      dry_run: ${{ inputs.dry_run || false }}
+      triage_workflow: issue-assessment.yml
