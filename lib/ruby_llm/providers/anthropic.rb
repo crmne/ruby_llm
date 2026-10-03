@@ -4,6 +4,9 @@ module RubyLLM
   module Providers
     # Anthropic Claude API integration.
     class Anthropic < Provider
+      SONNET_55_MODEL_IDS = %w[claude-sonnet-5-5 anthropic.claude-sonnet-5-5].freeze
+      private_constant :SONNET_55_MODEL_IDS
+
       protocol :anthropic, Protocols::Anthropic, batches: Protocols::Anthropic::Batches
       protocol :files, Protocols::Anthropic::Files
 
@@ -27,6 +30,14 @@ module RubyLLM
       class << self
         def capabilities
           Anthropic::Capabilities
+        end
+
+        def between_tools_off?(model_id) # :nodoc:
+          SONNET_55_MODEL_IDS.include?(model_id.to_s)
+        end
+
+        def thinking_off_control(model_id) # :nodoc:
+          { enabled: false } if between_tools_off?(model_id)
         end
 
         def configuration_options

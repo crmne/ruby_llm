@@ -28,6 +28,14 @@ module RubyLLM
         Bedrock::Capabilities
       end
 
+      def self.between_tools_off?(model_id) # :nodoc:
+        Providers::Anthropic.between_tools_off?(model_id)
+      end
+
+      def self.thinking_off_control(model_id) # :nodoc:
+        { enabled: false } if between_tools_off?(model_id)
+      end
+
       def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
         Models.resolve_registry_id(model_id, models, config)
       end
