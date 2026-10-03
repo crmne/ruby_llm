@@ -52,6 +52,8 @@ module RubyLLM
       end
 
       def model_vendor(model_id)
+        return if model_id.to_s.include?(':application-inference-profile/')
+
         foundation_model_id(model_id)[/\A[^.]+(?=\.)/]
       end
 

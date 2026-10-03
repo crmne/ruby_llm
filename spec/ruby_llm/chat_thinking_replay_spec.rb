@@ -182,6 +182,13 @@ RSpec.describe RubyLLM::Chat do
 
       expect(assistant_content(gpt, message).first).to have_key(:reasoningContent)
     end
+
+    it 'keeps thinking from an application inference profile whose id has a dot' do
+      profile = 'arn:aws:bedrock:us-west-2:123456789012:application-inference-profile/team.prod'
+      message = produced_by('bedrock', profile, claude_thinking)
+
+      expect(assistant_content(gpt, message).first).to have_key(:reasoningContent)
+    end
   end
 
   it 'leaves the transcript untouched' do
