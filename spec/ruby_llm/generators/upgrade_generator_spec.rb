@@ -78,6 +78,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
                          "'ocr', 'rerank')"
 
     ActiveRecord::Base.transaction do
+      connection.delete('DELETE FROM ruby_llm_usages')
       connection.add_check_constraint(:ruby_llm_usages, earlier_operations)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
