@@ -64,7 +64,7 @@ module RubyLLM
 
           {
             server_tool_calls: calls,
-            raw_content: @saw_server_part ? @stream_parts : nil
+            raw_content: @saw_server_part ? without_search_suggestions(@stream_parts) : nil
           }
         end
 

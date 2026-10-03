@@ -424,6 +424,56 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2)
     end
 
+    it 'puts the search suggestions on the live search call only' do
+      suggestions = '<style>.container { display: flex; }</style><div class="container">Ruby 4.0.7</div>'
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{
+                                     'content' => { 'parts' => [{ 'text' => 'Ruby 4.0.7' }] },
+                                     'groundingMetadata' => {
+                                       'searchEntryPoint' => { 'renderedContent' => suggestions },
+                                       'webSearchQueries' => ['ruby 4.0.7 released']
+                                     }
+                                   }],
+                                   'usageMetadata' => {}
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+      search = message.server_tool_calls.find { |call| call.type == 'google_search' }
+
+      expect(search.search_suggestions).to eq(suggestions)
+      expect(JSON.generate(search.to_h)).not_to include('container')
+    end
+
+    it 'drops search suggestions from the parts it keeps for replay' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{
+                                     'content' => { 'parts' => [
+                                       { 'thoughtSignature' => 'sig-1',
+                                         'toolCall' => { 'toolType' => 'GOOGLE_SEARCH_WEB', 'id' => 'call_1',
+                                                         'args' => { 'queries' => ['latest stable ruby version'] } } },
+                                       { 'thoughtSignature' => 'sig-2',
+                                         'toolResponse' => {
+                                           'toolType' => 'GOOGLE_SEARCH_WEB', 'id' => 'call_1',
+                                           'response' => { 'search_suggestions' => '<style></style>' }
+                                         } },
+                                       { 'executableCode' => { 'language' => 'PYTHON', 'code' => 'print(4)' } },
+                                       { 'codeExecutionResult' => { 'outcome' => 'OUTCOME_OK', 'output' => "4\n" } },
+                                       { 'text' => 'Ruby 4.0.7 is the latest.' }
+                                     ] }
+                                   }],
+                                   'usageMetadata' => {}
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.raw_content[1]).to eq(
+        'thoughtSignature' => 'sig-2',
+        'toolResponse' => { 'toolType' => 'GOOGLE_SEARCH_WEB', 'id' => 'call_1', 'response' => {} }
+      )
+      expect(message.raw_content.values_at(0, 2, 3, 4)).to eq(response.body.dig('candidates', 0, 'content', 'parts')
+                                                                           .values_at(0, 2, 3, 4))
+    end
+
     it 'counts no web searches without grounding' do
       response = instance_double(Faraday::Response, body: {
                                    'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Hi' }] } }],

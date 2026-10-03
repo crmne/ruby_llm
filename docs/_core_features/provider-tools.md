@@ -18,6 +18,7 @@ After reading this guide, you will know:
 
 * How to enable provider-executed tools with `with_provider_tools`.
 * How to read results, citations, and usage.
+* How to show Google's search suggestions with a grounded answer.
 * How to connect a search store or MCP server.
 * How to approve remote tool calls and resume them in Rails.
 
@@ -119,6 +120,27 @@ Search results use the same [Citation objects]({% link _core_features/citations.
 Streaming and follow-up questions use the normal `ask` API. Read the completed message for the full result list. Some services omit intermediate tool records or results; their answer and citations can still be available. OpenRouter MCP currently omits tool names and results from streamed records.
 
 Providers can charge for each tool use as well as for the tokens in the results. `tokens.server_tool_use` counts the uses, such as `{"web_search_requests" => 2}`; see [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
+
+### Google Search Suggestions
+
+Google requires apps that ground answers with Google Search to show its search suggestions with the answer. On Gemini and Vertex AI, `search_suggestions` holds them as HTML:
+
+```ruby
+response = chat.with_provider_tools(:web_search).ask "What changed in Ruby 4.0?"
+suggestions = response.server_tool_calls.filter_map(&:search_suggestions).join
+```
+
+Show the HTML as Google sends it, without changes, below the answer. Streamed answers carry it on the final chunk. In Rails, send it to the page along with the answer, for example from the job that runs the chat:
+
+```ruby
+response = chat.ask(content)
+suggestions = response.server_tool_calls.filter_map(&:search_suggestions).join
+if suggestions.present?
+  Turbo::StreamsChannel.broadcast_append_to chat, target: "message_#{chat.messages.last.id}", html: suggestions
+end
+```
+
+RubyLLM never stores search suggestions. Google's terms allow storing them only "for the minimum time necessary to comply with applicable law or regulations", so persisted chats keep the answer, its citations, and its search queries, but not the suggestions. A reloaded conversation shows the answer without them; display them from the live response.
 
 ## Search Your Documents
 

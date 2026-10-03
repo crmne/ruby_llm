@@ -39,22 +39,30 @@ module RubyLLM
     # conversation is sent back to the provider.
     attr_reader :raw
 
+    # The HTML of the search suggestions the provider requires you to show
+    # with a grounded answer, such as Google's for Google Search grounding,
+    # or +nil+. Only the live response carries them: #to_h leaves them out,
+    # so a persisted chat never stores them.
+    attr_reader :search_suggestions
+
     def self.from_h(data) # :nodoc:
       data = Support::Utils.deep_symbolize_keys(data)
       new(type: data[:type], name: data[:name], id: data[:id], input: data[:input],
           result: data[:result], raw: data[:raw])
     end
 
-    def initialize(type:, raw:, name: nil, id: nil, input: nil, result: nil) # :nodoc:
+    def initialize(type:, raw:, name: nil, id: nil, input: nil, result: nil, search_suggestions: nil) # :nodoc:
       @type = type
       @name = name
       @id = id
       @input = input
       @result = result
       @raw = raw
+      @search_suggestions = search_suggestions
     end
 
-    # Returns the call's attributes as a Hash, omitting +nil+ values.
+    # Returns the call's attributes as a Hash, omitting +nil+ values and
+    # #search_suggestions.
     def to_h
       {
         type: type,

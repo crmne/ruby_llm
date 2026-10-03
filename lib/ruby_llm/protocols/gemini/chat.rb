@@ -199,7 +199,7 @@ module RubyLLM
             ),
             tool_calls: tool_calls,
             server_tool_calls: extract_server_tool_calls(data, parts),
-            raw_content: parts.any? { |part| server_tool_part?(part) } ? parts : nil,
+            raw_content: parts.any? { |part| server_tool_part?(part) } ? without_search_suggestions(parts) : nil,
             input_tokens: input_tokens(data),
             output_tokens: calculate_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
@@ -248,6 +248,18 @@ module RubyLLM
           part.key?('executableCode') || part.key?('codeExecutionResult')
         end
 
+        # Google's terms forbid storing search suggestions, and Gemini takes
+        # a replayed search result without them.
+        def without_search_suggestions(parts)
+          parts.map do |part|
+            tool_response = part['toolResponse']
+            response = tool_response&.dig('response')
+            next part unless response.is_a?(Hash) && response.key?('search_suggestions')
+
+            part.merge('toolResponse' => tool_response.merge('response' => response.except('search_suggestions')))
+          end
+        end
+
         def extract_server_tool_calls(data, parts)
           calls = parts.select { |part| server_tool_part?(part) }.map do |part|
             ServerToolCall.new(
@@ -268,7 +280,9 @@ module RubyLLM
           queries = candidate.dig('groundingMetadata', 'webSearchQueries')
           if queries&.any?
             calls << ServerToolCall.new(type: 'google_search', input: { 'queries' => queries },
-                                        raw: { 'webSearchQueries' => queries })
+                                        raw: { 'webSearchQueries' => queries },
+                                        search_suggestions: candidate.dig('groundingMetadata', 'searchEntryPoint',
+                                                                          'renderedContent'))
           end
 
           url_metadata = candidate['urlContextMetadata']

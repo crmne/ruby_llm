@@ -312,6 +312,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
         expect(response.tokens.server_tool_use).to eq('web_search_requests' => 3)
+        expect(response.server_tool_calls.filter_map(&:search_suggestions).join).to include('<style>')
       end
 
       it 'streams the grounding and counts the searches it ran' do
@@ -324,6 +325,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
         expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+        expect(chunks.flat_map(&:server_tool_calls).filter_map(&:search_suggestions).join).to include('<style>')
       end
     end
 

@@ -53,6 +53,42 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     expect(final_chunk.tokens.server_tool_use).to eq('web_search_requests' => 1)
   end
 
+  it 'streams the search suggestions on the live search call only' do
+    suggestions = '<style>.container { display: flex; }</style><div class="container">Ruby 4.0.7</div>'
+    chunk = test_obj.send(:build_chunk, {
+                            'candidates' => [{
+                              'content' => { 'parts' => [{ 'text' => 'Ruby 4.0.7' }] },
+                              'finishReason' => 'STOP',
+                              'groundingMetadata' => {
+                                'searchEntryPoint' => { 'renderedContent' => suggestions },
+                                'webSearchQueries' => ['"Ruby 4.0.7" released']
+                              }
+                            }]
+                          })
+    search = chunk.server_tool_calls.find { |call| call.type == 'google_search' }
+
+    expect(search.search_suggestions).to eq(suggestions)
+    expect(JSON.generate(search.to_h)).not_to include('container')
+  end
+
+  it 'drops search suggestions from the streamed parts it keeps for replay' do
+    test_obj.send(:build_chunk, {
+                    'candidates' => [{ 'content' => { 'parts' => [
+                      { 'thoughtSignature' => 'sig-2',
+                        'toolResponse' => { 'toolType' => 'GOOGLE_SEARCH_WEB', 'id' => 'call_1',
+                                            'response' => { 'search_suggestions' => '<style></style>' } } },
+                      { 'executableCode' => { 'language' => 'PYTHON', 'code' => 'print(4)' } }
+                    ] } }]
+                  })
+    chunk = test_obj.send(:build_chunk, {
+                            'candidates' => [{ 'content' => { 'parts' => [{ 'text' => '4' }] },
+                                               'finishReason' => 'STOP' }]
+                          })
+
+    expect(chunk.raw_content.first.dig('toolResponse', 'response')).to eq({})
+    expect(chunk.raw_content.size).to eq(3)
+  end
+
   it 'preserves raw finishReason on chunks' do
     data = {
       'candidates' => [
