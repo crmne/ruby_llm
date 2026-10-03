@@ -20,13 +20,18 @@ module RubyLLM
       # owner. A ledger that cannot store such rows yet is skipped, and a
       # failed write is logged so it never breaks the operation that billed
       # it. A savepoint keeps a failed insert from aborting the caller's
-      # transaction.
+      # transaction, and a thread that held no connection gives back the
+      # one it borrowed.
       def self.record(entry)
-        return unless entry.model && ledger_available?
+        return unless entry.model
 
-        attributes = attributes_for(entry)
-        attributes[:owner] = entry.owner if column_names.include?('owner_id')
-        transaction(requires_new: true) { create!(attributes) }
+        connection_pool.with_connection do
+          next unless ledger_available?
+
+          attributes = attributes_for(entry)
+          attributes[:owner] = entry.owner if column_names.include?('owner_id')
+          transaction(requires_new: true) { create!(attributes) }
+        end
       rescue StandardError => e
         RubyLLM.logger.warn("RubyLLM could not record #{entry.operation} usage: #{e.class}: #{e.message}")
         nil

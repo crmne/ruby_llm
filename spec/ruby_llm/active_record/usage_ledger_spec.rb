@@ -161,6 +161,16 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     expect(rows_for(owner)).to be_empty
   end
 
+  it 'returns the connection a thread borrowed to write its row' do
+    entry = RubyLLM::Accounting::Usage::Entry.new(operation: :embedding, provider: :openai, model: embedding_model,
+                                                  status: :succeeded, owner:)
+
+    Thread.new { described_class.record(entry) }.join
+
+    expect(rows_for(owner).count).to eq(1)
+    expect(ActiveRecord::Base.connection_pool.connections.count { |c| c.in_use? && !c.owner.alive? }).to eq(0)
+  end
+
   it 'skips attempts without a model, which the ledger cannot store' do
     entry = RubyLLM::Accounting::Usage::Entry.new(operation: :moderation, provider: :bedrock, model: nil,
                                                   status: :succeeded, owner:)
