@@ -21,6 +21,26 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     end
   end
 
+  def reported_errors
+    reports = []
+    subscriber = Object.new
+    subscriber.define_singleton_method(:report) { |error, **| reports << error }
+    Rails.error.subscribe(subscriber)
+    yield
+    reports
+  ensure
+    Rails.error.unsubscribe(subscriber)
+  end
+
+  it 'leaves an error a tool thread raised for the caller to report' do
+    reports = reported_errors do
+      expect { described_class.run(:threads, tool_calls) { raise ArgumentError, 'tool blew up' } }
+        .to raise_error(ArgumentError, 'tool blew up')
+    end
+
+    expect(reports).to be_empty
+  end
+
   def run_rounds(count)
     count.times do
       described_class.run(:fibers, tool_calls,
@@ -44,6 +64,15 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
       Rails.application.executor.wrap { run_rounds(3) }
 
       expect(abandoned_connections).to eq(0)
+    end
+
+    it 'leaves an error a tool fiber raised for the caller to report' do
+      reports = reported_errors do
+        expect { described_class.run(:fibers, tool_calls) { raise ArgumentError, 'tool blew up' } }
+          .to raise_error(ArgumentError, 'tool blew up')
+      end
+
+      expect(reports).to be_empty
     end
 
     it 'returns the connections a fiber job leases while persisting results' do

@@ -9,11 +9,15 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     calls = executor_calls
 
     Object.new.tap do |object|
-      object.define_singleton_method(:wrap) do |&block|
-        calls << true
-        block.call
+      object.define_singleton_method(:run!) do
+        calls << :run
+        Object.new.tap { |execution| execution.define_singleton_method(:complete!) { calls << :complete } }
       end
     end
+  end
+
+  def executor_events
+    Array.new(executor_calls.size) { executor_calls.pop }.tally
   end
 
   def stub_rails_executor(executor)
@@ -31,7 +35,7 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     results = described_class.run(:threads, tool_calls) { |tool_call| tool_call }
 
     expect(results).to eq([%i[first first], %i[second second]])
-    expect(executor_calls.size).to eq(2)
+    expect(executor_events).to eq(run: 2, complete: 2)
   end
 
   it 'reports threaded tool call results as they finish' do
@@ -86,7 +90,7 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     end
 
     expect(results).to eq([%i[first first], %i[second second]])
-    expect(executor_calls.size).to eq(2)
+    expect(executor_events).to eq(run: 2, complete: 2)
   end
 
   it 'wraps the fiber that collects results outside a reactor when each fiber has its own execution state' do
@@ -94,7 +98,7 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
 
     with_isolation(:fiber) { described_class.run(:fibers, tool_calls) { |tool_call| tool_call } }
 
-    expect(executor_calls.size).to eq(3)
+    expect(executor_events).to eq(run: 3, complete: 3)
   end
 
   it 'runs fiber tool calls in the execution state they share with the caller' do

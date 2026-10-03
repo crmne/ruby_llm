@@ -100,12 +100,18 @@ module RubyLLM
       # state of its own: the block runs as its own unit of work, so its
       # connections return to the pool. A fiber sharing the caller's state
       # must not start one, whose completion resets the caller's Current
-      # attributes.
-      def isolated(caller_context, &)
+      # attributes. Unlike wrap, run! reports no errors: they reach the
+      # caller, whose own executor reports what nothing rescues.
+      def isolated(caller_context)
         executor = rails_executor
         return yield unless executor && !execution_context.equal?(caller_context)
 
-        executor.wrap(&)
+        execution = executor.run!
+        begin
+          yield
+        ensure
+          execution.complete!
+        end
       end
 
       def execution_context
