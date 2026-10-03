@@ -54,6 +54,9 @@ module RubyLLM
           error = error_data['error']
           return [nil, error.to_s] unless error.is_a?(Hash)
 
+          code = error['code']
+          return [code, error['message']] if code.is_a?(Integer) && code.between?(400, 599)
+
           case error['type']
           when 'server_error'
             [500, error['message']]

@@ -105,7 +105,7 @@ module RubyLLM
         end
 
         def parse_completion_body(data, raw:)
-          raise Error.new(data.dig('error', 'message'), response: raw) if data.dig('error', 'message')
+          raise_stream_error(JSON.generate(data), data, nil) if data.dig('error', 'message')
 
           message_data = data.dig('choices', 0, 'message')
           raise no_completion_message_error(data, raw) unless message_data

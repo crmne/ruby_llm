@@ -442,4 +442,34 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(provider.send(:inject_cache_control, ['plain'])).to eq(['plain'])
     end
   end
+
+  describe 'errors reported with a 200 status' do
+    include_context 'with configured RubyLLM'
+
+    let(:chat) { RubyLLM.chat(model: model_for(:openrouter), provider: :openrouter) }
+
+    def respond_with(body, content_type)
+      stub_request(:post, 'https://openrouter.ai/api/v1/chat/completions')
+        .to_return(status: 200, body:, headers: { 'Content-Type' => content_type })
+    end
+
+    it 'raises the error an event reports in the middle of a stream by its code' do
+      respond_with(<<~SSE, 'text/event-stream')
+        data: {"id":"gen-1","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Hel"}}]}
+
+        data: {"id":"gen-1","object":"chat.completion.chunk","error":{"code":502,"message":"Provider returned error"},"choices":[{"index":0,"delta":{"content":""},"finish_reason":"error"}]}
+
+      SSE
+
+      expect { chat.ask('Hello') { |_chunk| nil } }
+        .to raise_error(RubyLLM::ServiceUnavailableError, 'Provider returned error')
+    end
+
+    it 'raises the error a response body reports by its code' do
+      respond_with({ id: 'gen-1', error: { code: 429, message: 'Provider returned error' } }.to_json,
+                   'application/json')
+
+      expect { chat.ask('Hello') }.to raise_error(RubyLLM::RateLimitError, 'Provider returned error')
+    end
+  end
 end

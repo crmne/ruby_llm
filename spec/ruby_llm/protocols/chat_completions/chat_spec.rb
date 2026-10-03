@@ -509,9 +509,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   describe '.parse_completion_body error and usage handling' do
     it 'raises the error the provider reported' do
       body = { 'error' => { 'message' => 'model overloaded' } }
-      response = instance_double(Faraday::Response, body: body)
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      protocol = RubyLLM::Protocols::ChatCompletions.new(RubyLLM::Providers::OpenAI.new(config))
 
-      expect { described_class.parse_completion_body(body, raw: response) }.to raise_error(
+      expect { protocol.send(:parse_completion_body, body, raw: nil) }.to raise_error(
         RubyLLM::Error, 'model overloaded'
       )
     end

@@ -76,6 +76,16 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
       expect(message).to eq('Internal error')
     end
 
+    it 'reads the HTTP status from a numeric code' do
+      status, message = protocol.send(
+        :parse_streaming_error,
+        { error: { code: 502, message: 'Provider returned error' } }.to_json
+      )
+
+      expect(status).to eq(502)
+      expect(message).to eq('Provider returned error')
+    end
+
     it 'falls back to a 400 for other typed error objects' do
       status, message = protocol.send(
         :parse_streaming_error,
