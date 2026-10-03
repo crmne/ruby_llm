@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_003_130_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_003_140_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -133,8 +133,8 @@ ActiveRecord::Schema[7.1].define(version: 20_261_003_130_000) do
   end
 
   create_table 'ruby_llm_usages', force: :cascade do |t|
-    t.string 'chat_type', null: false
-    t.integer 'chat_id', null: false
+    t.string 'chat_type'
+    t.integer 'chat_id'
     t.string 'message_type'
     t.integer 'message_id'
     t.string 'operation', null: false
@@ -155,8 +155,11 @@ ActiveRecord::Schema[7.1].define(version: 20_261_003_130_000) do
     t.decimal 'total_cost', precision: 16, scale: 10
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.string 'owner_type'
+    t.integer 'owner_id'
     t.index %w[chat_type chat_id], name: 'index_ruby_llm_usages_on_chat'
     t.index %w[message_type message_id], name: 'index_ruby_llm_usages_on_message'
+    t.index %w[owner_type owner_id], name: 'index_ruby_llm_usages_on_owner'
     t.index ['status'], name: 'index_ruby_llm_usages_on_status'
   end
 

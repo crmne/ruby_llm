@@ -53,6 +53,42 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     end
   end
 
+  it 'frees the usage ledger from chats and adds its owner on an app that ran the earlier 2.1 upgrade' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      connection.remove_reference(:ruby_llm_usages, :owner, polymorphic: true, index: true)
+      connection.change_column_null(:ruby_llm_usages, :chat_type, false, 'Chat')
+      connection.change_column_null(:ruby_llm_usages, :chat_id, false, 0)
+      expect(connection.columns(:ruby_llm_usages).find { |column| column.name == 'chat_id' }.null).to be(false)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      columns = connection.columns(:ruby_llm_usages).index_by(&:name)
+      expect(columns.values_at('chat_type', 'chat_id').map(&:null)).to eq([true, true])
+      expect(columns).to include('owner_type', 'owner_id')
+      expect(connection.index_exists?(:ruby_llm_usages, %i[owner_type owner_id])).to be(true)
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  it 'lets the operation constraint of a 2.0 schema accept every operation' do
+    upgrade = migration_class
+    earlier_operations = "operation IN ('chat', 'embedding', 'moderation', 'image', 'speech', 'transcription', " \
+                         "'ocr', 'rerank')"
+
+    ActiveRecord::Base.transaction do
+      connection.add_check_constraint(:ruby_llm_usages, earlier_operations)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      expressions = connection.check_constraints(:ruby_llm_usages).map(&:expression)
+      expect(expressions.size).to eq(1)
+      expect(expressions.first).to include(*RubyLLM::Accounting::Usage::Entry::OPERATIONS.map { |op| "'#{op}'" })
+      raise ActiveRecord::Rollback
+    end
+  end
+
   it 'leaves an up-to-date schema alone' do
     expect { ActiveRecord::Migration.suppress_messages { migration_class.migrate(:up) } }.not_to raise_error
   end

@@ -44,6 +44,17 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     end
   end
 
+  it 'leaves the usage chat optional and adds an indexed owner' do
+    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+    generator.create_migration_files
+    migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_create_ruby_llm_records.rb')).sole)
+    usages = migration[/create_table :ruby_llm_usages.*?^    end$/m]
+
+    expect(usages).to include('t.references :chat, polymorphic: true, type: :bigint, index: false')
+    expect(usages).to include('t.references :owner, polymorphic: true, type: :bigint, index: false')
+    expect(usages).to include('t.index [ :owner_type, :owner_id ]')
+  end
+
   [nil, :uuid, :integer].each do |primary_key_type|
     context "with #{primary_key_type || 'default'} primary keys" do
       before do
@@ -65,7 +76,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
               expect(migrations).to include("create_table :#{table}, id: :#{key_type} do |t|")
             end
           references = migrations.lines.grep(/t.references/)
-          expect(references.size).to eq(7)
+          expect(references.size).to eq(8)
           expect(references).to all(include("type: :#{key_type}"))
         end
       end

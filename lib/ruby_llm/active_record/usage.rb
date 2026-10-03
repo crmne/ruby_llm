@@ -6,8 +6,9 @@ module RubyLLM
     class Usage < Record # :nodoc:
       self.table_name = 'ruby_llm_usages'
 
-      belongs_to :chat, polymorphic: true
+      belongs_to :chat, polymorphic: true, optional: true
       belongs_to :message, polymorphic: true, optional: true
+      belongs_to :owner, polymorphic: true, optional: true
 
       validates :operation, inclusion: { in: ::RubyLLM::Accounting::Usage::Entry::OPERATIONS.map(&:to_s) }
       validates :status, inclusion: { in: ::RubyLLM::Accounting::Usage::Entry::STATUSES.map(&:to_s) }

@@ -76,8 +76,9 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
     end
 
     create_table :ruby_llm_usages, id: :<%= reference_type %> do |t|
-      t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
+      t.references :chat, polymorphic: true, type: :<%= reference_type %>, index: false
       t.references :message, polymorphic: true, type: :<%= reference_type %>, index: false
+      t.references :owner, polymorphic: true, type: :<%= reference_type %>, index: false
       t.string :operation, null: false
       t.string :provider, null: false
       t.string :model, null: false
@@ -102,6 +103,7 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
 
       t.index [ :chat_type, :chat_id ]
       t.index [ :message_type, :message_id ]
+      t.index [ :owner_type, :owner_id ]
       t.index :status
       t.check_constraint "operation<%= '::text' if postgresql? %> IN (<%= usage_operations_sql %>)"
       t.check_constraint "status<%= '::text' if postgresql? %> IN (<%= usage_statuses_sql %>)"

@@ -39,6 +39,25 @@ class <%= 'upgrade_ruby_llm_to_2_1'.camelize %> < ActiveRecord::Migration<%= mig
 <% end -%>
     end
 
+    if columns(:ruby_llm_usages).any? { |column| column.name == "chat_id" && !column.null }
+      change_column_null :ruby_llm_usages, :chat_type, true
+      change_column_null :ruby_llm_usages, :chat_id, true
+    end
+
+    unless column_exists?(:ruby_llm_usages, :owner_id)
+      add_reference :ruby_llm_usages, :owner, polymorphic: true, type: :<%= reference_type %>, index: true
+    end
+
+    reversible do |direction|
+      direction.up do
+        operations = check_constraints(:ruby_llm_usages).find { |constraint| constraint.expression.include?("operation") }
+        if operations && [<%= usage_operations_sql %>].any? { |operation| !operations.expression.include?("'#{operation}'") }
+          remove_check_constraint :ruby_llm_usages, name: operations.name
+          add_check_constraint :ruby_llm_usages, "operation<%= '::text' if postgresql? %> IN (<%= usage_operations_sql %>)"
+        end
+      end
+    end
+
     unless table_exists?(:ruby_llm_provider_files)
       create_table :ruby_llm_provider_files, id: :<%= reference_type %> do |t|
         t.string :blob_key, null: false
