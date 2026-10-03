@@ -32,6 +32,15 @@ RSpec.describe RubyLLM::Providers::Azure::Videos do
     end
   end
 
+  describe '#parse_video_request' do
+    it 'reads the requested seconds and the frame size' do
+      payload = protocol.render_video_payload('a cat', model: 'sora-2',
+                                                       provider_options: { width: 480, height: 480, n_seconds: 5 })
+
+      expect(protocol.parse_video_request(payload)).to eq(duration: 5, resolution: '480x480')
+    end
+  end
+
   describe '#parse_video_job' do
     it 'reads the job id from the created job' do
       response = instance_double(

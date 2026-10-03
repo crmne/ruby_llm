@@ -207,6 +207,21 @@ RubyLLM.animate(
 )
 ```
 
+Whatever the provider calls them, the job keeps the duration and resolution you asked for:
+
+```ruby
+job = RubyLLM.animate_later(
+  "A calm ocean wave at sunset",
+  model: "{{ site.models.gemini_video_extension }}",
+  provider_options: { parameters: { durationSeconds: 8, resolution: "1080p" } }
+)
+
+job.duration   # => 8
+job.resolution # => "1080p"
+```
+
+Both are `nil` when the request leaves them to the provider's default.
+
 ## Polling and Timeouts
 
 While waiting, `animate` polls the job on an interval and gives up after a timeout, both configurable:

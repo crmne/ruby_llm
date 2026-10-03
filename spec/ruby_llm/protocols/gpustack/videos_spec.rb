@@ -54,6 +54,12 @@ RSpec.describe RubyLLM::Protocols::GPUStack::Videos do
     expect(payload[:extra_params]).to eq('{"foo":1}')
   end
 
+  it 'reads the requested seconds and size' do
+    payload = protocol.render_video_payload('A street', model:, provider_options: { seconds: '4', size: '1280x720' })
+
+    expect(protocol.parse_video_request(payload)).to eq(duration: 4, resolution: '1280x720')
+  end
+
   it 'preserves ordered multiple references and sends remote references inline' do
     stub_request(:get, 'https://media.test/first.png')
       .to_return(body: 'first image', headers: { 'Content-Type' => 'image/png' })

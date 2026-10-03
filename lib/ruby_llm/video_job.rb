@@ -27,6 +27,15 @@ module RubyLLM
     # The provider's raw response from the last submit or poll.
     attr_reader :raw
 
+    # The clip length in seconds the request asked for, or +nil+ when it
+    # left the length to the provider's default.
+    attr_reader :duration
+
+    # The resolution the request asked for, as the provider spells it,
+    # such as <tt>"720p"</tt> or <tt>"1280x720"</tt>, or +nil+ when it left
+    # the resolution to the provider's default.
+    attr_reader :resolution
+
     # Submits a video generation job and returns a VideoJob without
     # waiting for the result. Most code calls this through
     # RubyLLM.animate_later. Takes the same arguments as Video.animate.
@@ -70,7 +79,8 @@ module RubyLLM
       end
     end
 
-    def initialize(id:, protocol:, model: nil, status: :pending, raw: nil, error: nil, reported_cost: nil) # :nodoc:
+    def initialize(id:, protocol:, model: nil, status: :pending, raw: nil, error: nil, # :nodoc:
+                   reported_cost: nil, duration: nil, resolution: nil)
       @id = id
       @protocol = protocol
       @model = model
@@ -78,6 +88,8 @@ module RubyLLM
       @raw = raw
       @error = error
       @reported_cost = reported_cost
+      @duration = duration
+      @resolution = resolution
       @usage_owner = Accounting::Usage.owner
       record_usage
     end

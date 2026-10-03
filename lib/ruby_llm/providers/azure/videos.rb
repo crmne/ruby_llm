@@ -17,11 +17,16 @@ module RubyLLM
           { model: model, prompt: prompt }.merge(provider_options)
         end
 
-        def parse_video_job(response, model:)
+        def parse_video_job(response, model:, **request)
           id = response.body['id']
           raise Error.new('Azure did not return a video generation job', response:) unless id
 
-          VideoJob.new(id: id, protocol: self, model: model, raw: response.body)
+          VideoJob.new(id: id, protocol: self, model: model, raw: response.body, **request)
+        end
+
+        def video_request_settings(request)
+          width, height = request.values_at(:width, :height)
+          { duration: request[:n_seconds], resolution: ("#{width}x#{height}" if width && height) }
         end
 
         def video_job_url(job)

@@ -18,11 +18,16 @@ module RubyLLM
           Support::Utils.deep_merge({ instances: [instance] }, provider_options)
         end
 
-        def parse_video_job(response, model:)
+        def parse_video_job(response, model:, **request)
           name = response.body['name']
           raise Error.new('Gemini did not return a video generation operation', response:) unless name
 
-          VideoJob.new(id: name, protocol: self, model: model, raw: response.body)
+          VideoJob.new(id: name, protocol: self, model: model, raw: response.body, **request)
+        end
+
+        def video_request_settings(request)
+          parameters = request[:parameters] || {}
+          { duration: parameters[:durationSeconds], resolution: parameters[:resolution] }
         end
 
         def render_video_extension_payload(prompt, extend:, provider_options: {}, **)

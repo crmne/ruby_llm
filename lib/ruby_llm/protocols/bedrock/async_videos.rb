@@ -22,11 +22,15 @@ module RubyLLM
           @connection.post(url, JSON.generate(payload), idempotent: false)
         end
 
-        def parse_video_job(response, model:)
+        def parse_video_job(response, model:, **request)
           id = response.body['invocationArn']
           raise Error.new('Bedrock did not return a video invocation ARN', response:) unless id
 
-          VideoJob.new(id: id, protocol: self, model: model, raw: response.body)
+          VideoJob.new(id: id, protocol: self, model: model, raw: response.body, **request)
+        end
+
+        def video_request_settings(request)
+          super(request[:modelInput])
         end
 
         def video_job_url(job)

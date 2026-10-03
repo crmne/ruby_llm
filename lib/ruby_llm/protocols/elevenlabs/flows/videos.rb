@@ -52,8 +52,12 @@ module RubyLLM
             end
           end
 
-          def parse_video_job(response, model:)
-            VideoJob.new(id: response.body.fetch('id'), protocol: self, model:, raw: response.body)
+          def parse_video_job(response, model:, **request)
+            VideoJob.new(id: response.body.fetch('id'), protocol: self, model:, raw: response.body, **request)
+          end
+
+          def video_request_settings(request)
+            { duration: request[:duration_secs], resolution: request[:resolution] }
           end
 
           def video_job_url(job)

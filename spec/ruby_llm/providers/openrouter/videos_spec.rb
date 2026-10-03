@@ -43,6 +43,18 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Videos do
     end
   end
 
+  describe '#parse_video_request' do
+    it 'reads the requested duration and resolution, or the size in pixels' do
+      payload = protocol.render_video_payload('a wave', model: 'x-ai/grok-imagine-video',
+                                                        provider_options: { duration: 1, resolution: '480p' })
+      sized = protocol.render_video_payload('a wave', model: 'x-ai/grok-imagine-video',
+                                                      provider_options: { size: '1280x720' })
+
+      expect(protocol.parse_video_request(payload)).to eq(duration: 1, resolution: '480p')
+      expect(protocol.parse_video_request(sized)).to eq(duration: nil, resolution: '1280x720')
+    end
+  end
+
   describe '#parse_video_job' do
     it 'reads the job id and status from the accepted job' do
       response = instance_double(

@@ -118,6 +118,13 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Flows do
     expect(request).to have_been_requested.once
   end
 
+  it 'reads the requested duration and resolution' do
+    payload = protocol.render_video_payload('A ruby turns', model: video_model,
+                                                            provider_options: { duration_secs: 6, resolution: '1080p' })
+
+    expect(protocol.parse_video_request(payload)).to eq(duration: 6, resolution: '1080p')
+  end
+
   it 'maps reference video input and leaves model support to ElevenLabs' do
     source = RubyLLM::UploadedFile.new(id: 'asset_video', provider: :elevenlabs, filename: 'scene.mp4',
                                        mime_type: 'video/mp4')

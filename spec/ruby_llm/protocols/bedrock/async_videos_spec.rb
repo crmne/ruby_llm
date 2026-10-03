@@ -121,6 +121,15 @@ RSpec.describe RubyLLM::Protocols::Bedrock::AsyncVideos do
     expect(request).to have_been_requested.once
   end
 
+  it 'keeps the duration and resolution requested in the model input on the job' do
+    stub_request(:post, endpoint).to_return_json(body: { invocationArn: job_id })
+
+    job = context.animate_later('A boat turns', model:, provider: :bedrock,
+                                                provider_options: { duration: '9s', resolution: '720p' })
+
+    expect(job).to have_attributes(duration: 9, resolution: '720p')
+  end
+
   describe 'output prefix normalization' do
     [
       ['s3://test-bucket/videos', 's3://test-bucket/videos/'],

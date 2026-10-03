@@ -39,6 +39,19 @@ RSpec.describe RubyLLM::Protocols::Gemini::Videos do
     end
   end
 
+  describe '#parse_video_request' do
+    it 'reads the requested duration and resolution from the parameters' do
+      payload = protocol.render_video_payload(
+        'a hummingbird', model: 'veo-3.1-fast-generate-preview',
+                         provider_options: { 'parameters' => { 'durationSeconds' => 8, 'resolution' => '1080p' } }
+      )
+
+      expect(protocol.parse_video_request(payload)).to eq(duration: 8, resolution: '1080p')
+      expect(protocol.parse_video_request(instances: [{ prompt: 'a hummingbird' }]))
+        .to eq(duration: nil, resolution: nil)
+    end
+  end
+
   describe '#parse_video_job' do
     it 'reads the long-running operation name as the job id' do
       response = instance_double(

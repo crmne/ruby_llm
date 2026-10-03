@@ -34,11 +34,11 @@ module RubyLLM
           { model: model, prompt: prompt, video: video_reference(video) }.merge(provider_options)
         end
 
-        def parse_video_job(response, model:)
+        def parse_video_job(response, model:, **request)
           id = response.body['request_id']
           raise Error.new('xAI did not return a video request id', response:) unless id
 
-          VideoJob.new(id: id, protocol: self, model: model, raw: response.body)
+          VideoJob.new(id: id, protocol: self, model: model, raw: response.body, **request)
         end
 
         def video_job_url(job)

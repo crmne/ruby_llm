@@ -51,6 +51,18 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
   end
 
   describe '#parse_video_job' do
+    it 'keeps the requested duration and resolution on the job' do
+      context = RubyLLM.context { |config| config.xai_api_key = 'test' }
+      stub_request(:post, 'https://api.x.ai/v1/videos/generations')
+        .to_return(status: 200, body: { request_id: 'request-1' }.to_json,
+                   headers: { 'Content-Type' => 'application/json' })
+
+      job = context.animate_later('a calm ocean wave', model: 'grok-imagine-video', provider: :xai,
+                                                       provider_options: { 'duration' => 5, resolution: '720p' })
+
+      expect(job).to have_attributes(id: 'request-1', duration: 5, resolution: '720p')
+    end
+
     it 'reads the request id' do
       response = instance_double(Faraday::Response, body: { 'request_id' => '4482fadb-85bb-9591-9900-d3cc54d84fb8' })
 

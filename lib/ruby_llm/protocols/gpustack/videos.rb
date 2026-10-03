@@ -23,12 +23,16 @@ module RubyLLM
           end
         end
 
-        def parse_video_job(response, model:)
+        def parse_video_job(response, model:, **request)
           body = response.body
           id = body['id']
           raise Error.new('GPUStack did not return a video job id', response:) unless id
 
-          VideoJob.new(id: id, protocol: self, model: body['model'] || model, **video_job_state(body))
+          VideoJob.new(id: id, protocol: self, model: body['model'] || model, **video_job_state(body), **request)
+        end
+
+        def video_request_settings(request)
+          { duration: request[:seconds], resolution: request[:size] }
         end
 
         def video_job_url(job)

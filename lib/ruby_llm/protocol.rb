@@ -327,9 +327,28 @@ module RubyLLM
         url = video_request_url(payload)
       end
       response = post_video(url, payload)
-      parse_video_job(response, model:)
+      parse_video_job(response, model:, **parse_video_request(payload))
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support video generation"
+    end
+
+    # Returns the duration in seconds and the resolution a rendered video
+    # request asked for, so the VideoJob keeps them. Protocols whose API
+    # names them differently override video_request_settings.
+    def parse_video_request(payload)
+      settings = video_request_settings(Support::Utils.deep_symbolize_keys(payload))
+      { duration: parse_video_seconds(settings[:duration]), resolution: settings[:resolution] }
+    end
+
+    def video_request_settings(request)
+      request.slice(:duration, :resolution)
+    end
+
+    def parse_video_seconds(value)
+      return value unless value.is_a?(String)
+
+      seconds = value.delete_suffix('s')
+      Integer(seconds, exception: false) || Float(seconds, exception: false)
     end
 
     def post_video(url, payload)
