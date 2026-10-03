@@ -19,11 +19,11 @@ RSpec.describe RubyLLM::OpenTelemetry do
   before do
     provider.add_span_processor(OpenTelemetry::SDK::Trace::Export::SimpleSpanProcessor.new(exporter))
     allow(OpenTelemetry).to receive(:tracer_provider).and_return(provider)
-    described_class.install
+    described_class.enable
   end
 
   after do
-    described_class.uninstall
+    described_class.disable
     provider.shutdown
   end
 
@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::OpenTelemetry do
       require 'ruby_llm'
       require 'opentelemetry-api'
       provider = OpenTelemetry.tracer_provider
-      RubyLLM::OpenTelemetry.install
+      RubyLLM::OpenTelemetry.enable
       result = RubyLLM.instrument('chat.ruby_llm', provider: 'openai') { :ok }
       abort 'changed return value' unless result == :ok
       abort 'configured SDK' if defined?(OpenTelemetry::SDK)
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::OpenTelemetry do
   it 'reports a useful error when the optional API is missing' do
     allow(described_class).to receive(:require).with('opentelemetry-api').and_raise(LoadError)
 
-    expect { described_class.install }.to raise_error(LoadError, /opentelemetry-api.*Gemfile/)
+    expect { described_class.enable }.to raise_error(LoadError, /opentelemetry-api.*Gemfile/)
   end
 
   it 'traces a chat under the application span without capturing content' do
@@ -105,10 +105,10 @@ RSpec.describe RubyLLM::OpenTelemetry do
     ActiveSupport::Notifications.unsubscribe(subscription)
   end
 
-  it 'installs once and uninstalls without shutting down the application provider' do
-    described_class.install
+  it 'enables once and disables without shutting down the application provider' do
+    described_class.enable
     stub_chat.ask('first')
-    described_class.uninstall
+    described_class.disable
     stub_chat.ask('second')
     provider.tracer('application').in_span('still running') { nil }
 

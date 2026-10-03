@@ -2,7 +2,7 @@
 
 module RubyLLM
   # Optional OpenTelemetry tracing through RubyLLM's instrumentation events.
-  # Configure your application's SDK and exporters before calling .install.
+  # Configure your application's SDK and exporters before calling .enable.
   class OpenTelemetry
     @mutex = Mutex.new
 
@@ -10,7 +10,7 @@ module RubyLLM
       # Enables tracing without replacing the configured instrumenter.
       # Requires the optional opentelemetry-api gem. Repeated calls are harmless.
       # The application owns the tracer provider, SDK, and exporters.
-      def install
+      def enable
         require 'opentelemetry-api'
         @mutex.synchronize do
           @subscriber ||= new
@@ -23,7 +23,7 @@ module RubyLLM
 
       # Disables tracing for new operations without shutting down the SDK.
       # Operations already running finish their spans normally.
-      def uninstall
+      def disable
         @mutex.synchronize { Support::Instrumentation.unsubscribe(@subscriber) if @subscriber }
         nil
       end

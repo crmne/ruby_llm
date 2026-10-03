@@ -168,7 +168,7 @@ loader.setup
 # and attempts that produced no message. Provider-reported costs take
 # precedence over estimates; unknown usage and prices remain +nil+.
 # RubyLLM.with_usage_owner attributes the usage of operations to a record.
-# OpenTelemetry.install enables optional tracing alongside existing subscribers.
+# OpenTelemetry.enable enables optional tracing alongside existing subscribers.
 # Your application configures the OpenTelemetry SDK and exporters.
 #
 # RubyLLM.workflow groups instrumentation from ordinary Ruby code into

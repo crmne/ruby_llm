@@ -104,12 +104,12 @@ OpenTelemetry::SDK.configure do |config|
   # Configure your application's exporters and other instrumentation here.
 end
 
-RubyLLM::OpenTelemetry.install
+RubyLLM::OpenTelemetry.enable
 ```
 
-RubyLLM only requires `opentelemetry-api` when you call `install`. The SDK includes that dependency. If another part of your application already configures an SDK, keep that setup and call `RubyLLM::OpenTelemetry.install` afterward. RubyLLM does not configure, start, flush, or shut down an SDK or exporter. Requiring RubyLLM alone does not load OpenTelemetry.
+RubyLLM only requires `opentelemetry-api` when you call `enable`. The SDK includes that dependency. If another part of your application already configures an SDK, keep that setup and call `RubyLLM::OpenTelemetry.enable` afterward. RubyLLM does not configure, start, flush, or shut down an SDK or exporter. Requiring RubyLLM alone does not load OpenTelemetry.
 
-Installation is process-wide and safe to repeat. It also covers existing chats and isolated contexts. Your `config.instrumenter`, Rails notifications, and custom subscribers continue to receive their existing events and payloads. Call `RubyLLM::OpenTelemetry.uninstall` to stop tracing new operations. Spans already running still finish.
+Enabling tracing is process-wide and safe to repeat. It also covers existing chats and isolated contexts. Your `config.instrumenter`, Rails notifications, and custom subscribers continue to receive their existing events and payloads. Call `RubyLLM::OpenTelemetry.disable` to stop tracing new operations. Spans already running still finish.
 
 ### Spans and Context
 
