@@ -46,6 +46,13 @@ module RubyLLM
           keys.map { |key| ":#{key}" }.join(', ')
         end
 
+        # extra_content carries Gemini's thought signatures on Google's
+        # OpenAI-compatible endpoints, and Mistral refuses any field it does
+        # not define.
+        def format_tool_calls(tool_calls)
+          super&.map { |call| call.except(:extra_content) }
+        end
+
         def build_tool_choice(tool_choice)
           return 'any' if tool_choice == :required
 

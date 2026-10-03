@@ -152,6 +152,17 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
+  describe '#format_tool_calls' do
+    it 'leaves out the thought signature Gemini puts on a call' do
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Paris' },
+                                   thought_signature: 'gemini-signature')
+
+      expect(provider.send(:format_tool_calls, { 'call_1' => call })).to eq(
+        [{ id: 'call_1', type: 'function', function: { name: 'weather', arguments: '{"city":"Paris"}' } }]
+      )
+    end
+  end
+
   describe '#build_tool_choice' do
     it 'maps required tool choice to the Mistral any mode' do
       expect(provider.send(:build_tool_choice, :required)).to eq('any')
