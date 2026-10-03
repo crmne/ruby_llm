@@ -738,7 +738,24 @@ module RubyLLM
       return error if error.is_a?(String)
 
       nested_message = error['message'] if error.is_a?(Hash)
-      [nested_message, part['message'], part['detail']].find { |message| message.is_a?(String) }
+      [nested_message, part['message'], part['detail']].find { |message| message.is_a?(String) } ||
+        validation_detail_message(part['detail'])
+    end
+
+    # FastAPI and vLLM return 422 as detail: [{loc:, msg:}]. A detail object
+    # is handled by TypeSafe; this is the array shape.
+    def validation_detail_message(detail)
+      return unless detail.is_a?(Array)
+
+      messages = detail.filter_map { |error| format_validation_error(error) }
+      messages.join('; ') unless messages.empty?
+    end
+
+    def format_validation_error(error)
+      return unless error.is_a?(Hash)
+
+      text = [Array(error['loc']).join('.'), error['msg']].compact.reject(&:empty?).join(': ')
+      text unless text.empty?
     end
 
     def ensure_configured!
