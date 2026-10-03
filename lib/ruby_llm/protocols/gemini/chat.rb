@@ -155,7 +155,7 @@ module RubyLLM
         end
 
         def format_parts(msg)
-          if msg.role == :assistant && msg.raw_content
+          if msg.role == :assistant && msg.raw_content.is_a?(Array)
             msg.raw_content
           elsif msg.tool_call?
             format_tool_call(msg)

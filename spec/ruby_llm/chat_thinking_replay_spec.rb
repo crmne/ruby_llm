@@ -68,6 +68,16 @@ RSpec.describe RubyLLM::Chat do
     expect(payload[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: 'Done.' }])
   end
 
+  it 'sends generateContent the answer of an Interactions turn, not the interaction' do
+    state = { 'response' => { 'object' => 'interaction', 'status' => 'completed', 'steps' => [] } }
+    message = produced_by('gemini', model_for(:gemini, :mcp), raw_content: state)
+    chat = RubyLLM.chat(model: model_for(:gemini, :mcp), provider: :gemini, protocol: :interactions)
+
+    payload = replay(chat.with_model(model_for(:gemini, :mcp), provider: :gemini), message)
+
+    expect(payload[:contents][1]).to eq(role: 'model', parts: [{ text: 'Done.' }])
+  end
+
   it 'drops Anthropic server tool blocks when the chat moves to OpenAI' do
     blocks = [
       { 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search', 'input' => { 'query' => 'Ruby' } },
