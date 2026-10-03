@@ -137,6 +137,8 @@ This assumes your `Recording` model has an `audio` attachment and a `transcript`
 
 When you call `ask`, RubyLLM saves the user message, calls the provider, and saves the assistant's response. For streaming, it creates the assistant record before the first chunk arrives, giving Turbo Streams a stable target. A failed request removes its empty placeholder.
 
+A process that dies mid-request removes nothing: its placeholder stays blank, and a tool call it was running keeps no result. RubyLLM leaves blank assistant messages out of every request, so the chat still works. When it resumes, `complete` runs the unfinished calls of the latest round again. A call in a round the conversation has moved past reaches the model with an error saying it did not finish. Your records stay as they are. Write tools so running them twice is safe; see [Durable Agents]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
+
 Allow assistant messages to have empty content. Streaming begins before text arrives, and tool calls can be valid responses without text. A blanket `validates :content, presence: true` on `Message` prevents these flows.
 
 ## Going further

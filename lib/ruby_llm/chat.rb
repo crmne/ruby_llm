@@ -29,7 +29,8 @@ module RubyLLM
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
     PAUSED = Object.new.freeze
-    private_constant :THINKING_OPTIONS, :PAUSED
+    UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
+    private_constant :THINKING_OPTIONS, :PAUSED, :UNFINISHED_TOOL_RESULT
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -261,6 +262,8 @@ module RubyLLM
     # Returns whether the chat has no pending response or tool execution:
     # nothing is staged, or the model answered without requesting tools.
     def complete?
+      return false if pending_tool_response
+
       last = last_non_system_message
       case last&.role
       when nil then true
@@ -1295,9 +1298,43 @@ module RubyLLM
     # the original attachments while each provider's upload is memoized on
     # them. An attachment's store keeps its uploads for later processes.
     def preprocessed_messages(list = messages)
+      list = request_history(list)
       return list unless @provider
 
       @provider.preprocess_messages(list, model: @model, protocol: @protocol)
+    end
+
+    # A process that dies mid-round leaves a blank assistant placeholder,
+    # or tool calls without results, and providers refuse both. A request
+    # leaves blank messages out and answers the calls of a round the
+    # conversation moved past as unfinished. The latest round stays as it
+    # is: the loop runs its calls or waits on them.
+    def request_history(list)
+      kept = list.reject { |message| blank_response?(message) }
+      answered = kept.filter_map { |message| message.tool_call_id if message.tool_result? }
+      current = latest_response(kept)
+      kept.slice_before { |message| !message.tool_result? }.flat_map do |response, *results|
+        abandoned = response.tool_call? && !response.equal?(current)
+        [response, *results, *(abandoned ? unfinished_results(response, answered) : [])]
+      end
+    end
+
+    def unfinished_results(response, answered)
+      response.tool_calls.values.reject { |tool_call| answered.include?(tool_call.id) }
+              .map { |tool_call| unfinished_result(tool_call) }
+    end
+
+    def unfinished_result(tool_call)
+      (remote_refusal(tool_call) if tool_call.remote?) ||
+        Message.new(role: :tool, content: UNFINISHED_TOOL_RESULT, tool_call_id: tool_call.id)
+    end
+
+    # A provider-executed call is closed with the refusal its provider
+    # expects. Another provider takes it as an ordinary tool call.
+    def remote_refusal(tool_call)
+      @provider.tool_approval_response(tool_call, approved: false, model: @model, protocol: @protocol)
+    rescue Error
+      nil
     end
 
     def provider_completion(usage_recorder:, stream_tracker: nil, &)
@@ -1706,8 +1743,22 @@ module RubyLLM
     end
 
     def pending_tool_response
-      response = messages.reverse.find { |message| message.role != :system && !message.tool_result? }
+      response = latest_response(messages)
       response if response&.tool_call? && pending_tool_calls(response).any?
+    end
+
+    # A blank response answers nothing, so it never hides the round before
+    # it, as the placeholder of a process that died after a tool finished.
+    def latest_response(list)
+      list.reverse.find do |message|
+        message.role != :system && !message.tool_result? && !blank_response?(message)
+      end
+    end
+
+    def blank_response?(message)
+      message.role == :assistant && !message.tool_call? && message.content.to_s.strip.empty? &&
+        message.attachments.empty? && message.thinking.nil? && message.server_tool_calls.empty? &&
+        message.raw_content.nil? && message.raw_reasoning.nil?
     end
 
     def pending_tool_calls(response)
