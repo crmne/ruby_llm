@@ -510,15 +510,25 @@ module RubyLLM
 
     private
 
-    # A thinking signature or a provider-shaped content block is opaque to
-    # every provider but the one that issued it, so a message another
-    # provider produced replays without them. A message with no known
-    # producer replays as it is.
+    # A thinking signature or a provider-shaped content block belongs to the
+    # model that produced it, and one provider can serve models that do not
+    # read each other's, so a message another model produced replays
+    # without them. A message with no known producer replays as it is.
     def foreign_native_content?(message)
       return false unless message.role == :assistant && carries_native_content?(message)
 
-      producer = producer_slug(message)
-      !producer.nil? && producer != @provider.slug
+      producer = producing_entry(message)
+      !producer.nil? && (producer.provider != @provider.slug || !current_model?(producer.model))
+    end
+
+    # Usage records the id a chat resolved its model to, and a message built
+    # by hand may name the model by an alias of it.
+    def current_model?(model_id)
+      return true if @model.nil? || model_id == @model.id
+
+      RubyLLM.models.find(model_id, provider: @provider.slug, config: @config).id == @model.id
+    rescue ModelNotFoundError
+      false
     end
 
     def carries_native_content?(message)
@@ -530,7 +540,11 @@ module RubyLLM
     # Only a usage entry names the producer: a model id alone can belong
     # to several providers.
     def producer_slug(message)
-      message.ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider
+      producing_entry(message)&.provider
+    end
+
+    def producing_entry(message)
+      message.ruby_llm_usage_entries.reverse.find(&:succeeded?)
     end
 
     # A thinking signature can be another provider's opaque blob, and a
