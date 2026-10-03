@@ -5,6 +5,10 @@ module RubyLLM
     module Mistral
       class Conversations
         module Chat # :nodoc:
+          SERVER_TOOL_USAGE_NAMES = {
+            'code_interpreter' => 'code_execution', 'document_library' => 'file_search'
+          }.freeze
+
           module_function
 
           def completion_url
@@ -150,8 +154,14 @@ module RubyLLM
             input = usage['prompt_tokens'] && (usage['prompt_tokens'] + usage.fetch('connector_tokens', 0).to_i)
             {
               input_tokens: input,
-              output_tokens: usage['completion_tokens'], server_tool_use: usage['connectors']
+              output_tokens: usage['completion_tokens'], server_tool_use: parse_connector_usage(usage['connectors'])
             }
+          end
+
+          def parse_connector_usage(connectors)
+            connectors.to_h.transform_keys do |connector|
+              "#{SERVER_TOOL_USAGE_NAMES.fetch(connector, connector)}_requests"
+            end
           end
         end
       end

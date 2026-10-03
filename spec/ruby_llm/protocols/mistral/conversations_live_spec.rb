@@ -12,6 +12,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations, :live do
     expect(response.server_tool_calls).to include(have_attributes(name: 'web_search'))
     expect(response.citations).to include(have_attributes(url: a_string_including('ruby-lang.org')))
     expect(response.tokens.input).to be_positive
+    expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
     expect(chat.ask('What version was that announcement for?').content).to include('3.4')
   end
 
@@ -32,7 +33,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations, :live do
     expect(chunks.filter_map(&:content).join).to eq(response.content)
     expect(response.content).to include('703')
     expect(response.server_tool_calls).to include(have_attributes(name: 'code_interpreter'))
-    expect(response.tokens.server_tool_use).to include('code_interpreter' => 1)
+    expect(response.tokens.server_tool_use).to eq('code_execution_requests' => 1)
     expect(response.tokens.output).to be_positive
     expect(chat.ask('What was the result?').content).to include('703')
   end
@@ -62,6 +63,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations, :live do
     expect(response.content).to match(/saffron/i)
     expect(response.content).to match(/seven|7/i)
     expect(response.server_tool_calls).to include(have_attributes(name: 'document_library'))
+    expect(response.tokens.server_tool_use).to include('file_search_requests' => 1)
   ensure
     connection.delete("libraries/#{library_id}") if library_id
   end

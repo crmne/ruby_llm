@@ -94,7 +94,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations do
                     'total_tokens' => 125, 'connectors' => { 'web_search' => 1 } } }
     message = protocol.send(:parse_completion_body, data, raw: nil)
     expect(message.content).to eq('Ruby docs')
-    expect(message.tokens).to have_attributes(input: 120, output: 5)
+    expect(message.tokens).to have_attributes(input: 120, output: 5, server_tool_use: { 'web_search_requests' => 1 })
     expect(message.citations.first).to have_attributes(title: 'Ruby', start_index: 9, end_index: 9)
     expect(message.server_tool_calls.first).to have_attributes(name: 'web_search', result: { 'result' => 'Ruby docs' })
     expect(message.raw_content).to eq(data['outputs'])
@@ -148,11 +148,13 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations do
       { 'type' => 'message.output.delta', 'output_index' => 1, 'content_index' => 0, 'id' => 'msg', 'content' => 'Tw' },
       { 'type' => 'message.output.delta', 'output_index' => 1, 'content_index' => 0, 'id' => 'msg', 'content' => 'o' },
       { 'type' => 'conversation.response.done',
-        'usage' => { 'prompt_tokens' => 10, 'completion_tokens' => 2, 'connector_tokens' => 1 } }
+        'usage' => { 'prompt_tokens' => 10, 'completion_tokens' => 2, 'connector_tokens' => 1,
+                     'connectors' => { 'code_interpreter' => 1 } } }
     ]
     chunks = events.map { |event| protocol.send(:build_chunk, event) }
     expect(chunks.filter_map(&:content).join).to eq('Two')
-    expect(chunks.last.tokens).to have_attributes(input: 11, output: 2)
+    expect(chunks.last.tokens).to have_attributes(input: 11, output: 2,
+                                                  server_tool_use: { 'code_execution_requests' => 1 })
     expect(chunks.last.server_tool_calls.first.input).to eq('{"code":"1+1"}')
     expect(chunks.last.raw_content.last['content']).to eq([{ 'type' => 'text', 'text' => 'Two' }])
   end
