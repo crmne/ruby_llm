@@ -1145,9 +1145,12 @@ module RubyLLM
 
       RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
         result = provider_completion(usage_recorder: method(:record_usage_entry), stream_tracker:, &block)
+        event[:response_tokens] = result.tokens
         record_out_of_band_usage(result) if usage_entries.length == entries_before
         record_generated_message(result, usage_start, streaming: block_given?)
         record_completion_event(event, result)
+      ensure
+        event[:response_tokens] ||= Tokens.aggregate(usage_entries[entries_before..].map(&:tokens))
       end
       result
     end

@@ -20,11 +20,14 @@ module RubyLLM
       def run_with_threads(tool_calls, on_result:, &execute)
         caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
+        instrumentation_context = Support::Instrumentation.capture_context
         queue = Queue.new
         threads = tool_calls.each_value.with_index.map do |tool_call, index|
           thread = Thread.new do
             Support::Instrumentation.with_workflow(workflow_context) do
-              queue << capture_result(index, tool_call, caller_context, execute)
+              Support::Instrumentation.with_context(instrumentation_context) do
+                queue << capture_result(index, tool_call, caller_context, execute)
+              end
             end
           end
           thread.report_on_exception = false
@@ -50,6 +53,7 @@ module RubyLLM
 
         caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
+        instrumentation_context = Support::Instrumentation.capture_context
         # Inside a reactor, Sync runs the block in the calling fiber, so
         # results persist with the caller's execution state and connection.
         Sync do |task|
@@ -58,7 +62,9 @@ module RubyLLM
             tasks = tool_calls.each_value.with_index.map do |tool_call, index|
               task.async do
                 Support::Instrumentation.with_workflow(workflow_context) do
-                  queue << capture_result(index, tool_call, caller_context, execute)
+                  Support::Instrumentation.with_context(instrumentation_context) do
+                    queue << capture_result(index, tool_call, caller_context, execute)
+                  end
                 end
               end
             end

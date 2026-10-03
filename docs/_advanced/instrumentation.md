@@ -16,6 +16,7 @@ After reading this guide, you will know:
 
 *   How to subscribe to RubyLLM events in Rails.
 *   How to connect RubyLLM instrumentation outside Rails.
+*   How to enable optional OpenTelemetry tracing.
 *   Which events RubyLLM emits.
 *   Which payload fields may contain sensitive application data.
 
@@ -81,6 +82,70 @@ end
 ```
 
 You can also set `instrumenter` on a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
+
+## OpenTelemetry
+
+Add OpenTelemetry to your application's bundle to trace RubyLLM calls alongside the rest of your application:
+
+```ruby
+# Gemfile
+gem "opentelemetry-sdk"
+# Add the exporter gems your application uses.
+```
+
+Configure your SDK and exporters in your application's initializer, then enable RubyLLM tracing:
+
+```ruby
+require "ruby_llm"
+require "opentelemetry/sdk"
+
+OpenTelemetry::SDK.configure do |config|
+  config.service_name = "my-app"
+  # Configure your application's exporters and other instrumentation here.
+end
+
+RubyLLM::OpenTelemetry.install
+```
+
+RubyLLM only requires `opentelemetry-api` when you call `install`. The SDK includes that dependency. If another part of your application already configures an SDK, keep that setup and call `RubyLLM::OpenTelemetry.install` afterward. RubyLLM does not configure, start, flush, or shut down an SDK or exporter. Requiring RubyLLM alone does not load OpenTelemetry.
+
+Installation is process-wide and safe to repeat. It also covers existing chats and isolated contexts. Your `config.instrumenter`, Rails notifications, and custom subscribers continue to receive their existing events and payloads. Call `RubyLLM::OpenTelemetry.uninstall` to stop tracing new operations. Spans already running still finish.
+
+### Spans and Context
+
+Model calls become client spans. Tool execution and workflows become internal spans. They inherit the current OpenTelemetry context, so instrumented HTTP requests and calls made inside a tool can appear beneath the RubyLLM span. Streaming spans stay open through the final response or an error. Transport retries stay within the model call; each fallback model gets its own span.
+
+Use a workflow to group a conversation's model calls and tools:
+
+```ruby
+RubyLLM.workflow("Answer question") do |workflow|
+  workflow.step("Generate answer") do
+    RubyLLM.chat.ask("What is the capital of France?")
+  end
+end
+```
+
+RubyLLM propagates trace context through its own thread and fiber tool concurrency. For threads, jobs, and tasks your application starts, propagate context with your application's OpenTelemetry instrumentation.
+
+The adapter follows the [official GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai/tree/main/docs/gen-ai), which are currently in development. It uses `gen_ai.provider.name`, request and response models, request settings, finish reasons, and reported token usage. Cached input is included in `gen_ai.usage.input_tokens`; cache reads and writes are also recorded separately. Unknown counts remain absent, and reported zeroes remain zeroes. Errors set the span status to error and use the Ruby exception class as `error.type`.
+
+| RubyLLM operation | Span operation |
+| --- | --- |
+| Chat, including calls through agents and Rails records | `chat` |
+| Embeddings | `embeddings` |
+| Images and speech | `generate_content`, with `gen_ai.output.type` |
+| Transcription, OCR, reranking, moderation, judgment | `transcription`, `ocr`, `rerank`, `moderation`, `judgment` |
+| Tool execution | `execute_tool` |
+| Workflows | `invoke_workflow` |
+| Workflow steps | `ruby_llm.workflow_step` (an internal span) |
+
+Operations without a predefined GenAI name use the RubyLLM names shown above. Workflow and step IDs use `ruby_llm.workflow.*` attributes; they are not conversation IDs. The integration does not create spans for usage notifications, raw transport events, batches, model refreshes, compaction, tokenization, video, or research jobs. It provides tracing, not metrics or log export.
+
+### Exported Data
+
+The adapter exports an explicit set of metadata fields. It does not export prompts, instructions, messages, generated content, embeddings, tool arguments or results, arbitrary metadata, provider options, credentials, or exception messages and stack traces. Model names, tool names, workflow names and IDs, and tool call IDs are included. Choose workflow names and IDs suitable for your telemetry destination.
+
+The original instrumentation payloads still contain application data for your existing subscribers. Their export policy remains under your control.
 
 ## Workflows and Steps
 
@@ -217,5 +282,7 @@ This event fires once for every finished physical attempt. Its payload contains 
 ## Payloads
 
 Payloads include the Ruby objects needed by observability adapters, but message content, tool arguments, and provider responses may be sensitive. Only export or log those fields when your application policy allows it.
+
+`chat.ruby_llm` also includes `response_tokens`, the usage for that model call before earlier fallback attempts are attached to the returned message. On failure it contains any usage recorded for that call. The existing `tokens` field retains its response-level meaning.
 
 Non-Rails instrumenters control their own error payload behavior. If your instrumenter records exceptions, keep those payloads consistent with the rest of your observability stack.

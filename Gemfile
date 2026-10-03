@@ -22,6 +22,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'json', '< 3'
   gem 'json_schemer'
   gem 'nokogiri'
+  gem 'opentelemetry-sdk', '~> 1.0'
   gem 'overcommit', '>= 0.66'
   gem 'pry', '>= 0.14'
   gem 'rails'
