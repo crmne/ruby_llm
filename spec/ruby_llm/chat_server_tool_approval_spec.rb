@@ -56,6 +56,14 @@ RSpec.describe RubyLLM::Chat do
       expect(executions).to be_empty
       expect(chat.complete).to equal(final_message)
     end
+
+    it "raises a RubyLLM error for a server #{approved ? 'approval' : 'denial'} after a move to another provider" do
+      stage(remote_call)
+      chat.with_model(model_for(:anthropic), provider: :anthropic)
+      approved ? chat.approve(remote_call) : chat.deny(remote_call)
+
+      expect { chat.run_tools }.to raise_error(RubyLLM::Error, /Anthropic doesn't support remote tool approvals/)
+    end
   end
 
   it 'runs local calls in a mixed round before parking for the server decision' do

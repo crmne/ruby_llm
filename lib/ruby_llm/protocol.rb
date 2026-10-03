@@ -93,6 +93,8 @@ module RubyLLM
     def tool_approval_response(tool_call, approved:)
       Message.new(role: :tool, content: approved ? 'Approved' : 'Denied', tool_call_id: tool_call.id,
                   raw_content: render_tool_approval_response(tool_call, approved:))
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support remote tool approvals"
     end
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
