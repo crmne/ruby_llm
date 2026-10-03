@@ -4,8 +4,9 @@ module RubyLLM
   # Error is the base class for provider-operation errors raised by
   # RubyLLM, including API, network, capability, and provider response-shape
   # failures. When an HTTP response is available, it wraps that response and
-  # normalizes the message across providers. Subclasses map common HTTP
-  # status codes: BadRequestError (400), UnauthorizedError (401),
+  # normalizes the message across providers. When the provider refuses a
+  # conversation, #request_shape describes what it was sent. Subclasses map
+  # common HTTP status codes: BadRequestError (400), UnauthorizedError (401),
   # PaymentRequiredError (402), ForbiddenError (403), RateLimitError (429),
   # ServerError (500), ServiceUnavailableError (502 to 504), and
   # OverloadedError (529).
@@ -27,6 +28,13 @@ module RubyLLM
     # available. Its +status+ and +body+ carry the provider's reply.
     attr_reader :response
 
+    # The Protocol that rendered the request the error answered, which
+    # reads its payload back for #request_shape.
+    attr_accessor :request_protocol # :nodoc:
+
+    # The payload request_protocol rendered for the request.
+    attr_accessor :request_payload # :nodoc:
+
     def self.default_message # :nodoc:
       nil
     end
@@ -36,6 +44,24 @@ module RubyLLM
     def initialize(message = nil, response: nil)
       @response = response
       super(message || response&.body || self.class.default_message)
+    end
+
+    # Returns a RequestShape describing the conversation request the error
+    # answered: each turn's parts and their sizes, never their contents,
+    # and the problems providers are known to refuse. Returns +nil+ for
+    # errors raised before a request goes out, such as an unsupported
+    # attachment, and for operations that send no conversation, such as
+    # embeddings.
+    #
+    #   rescue RubyLLM::BadRequestError => e
+    #     Rails.logger.error("#{e.message}\n#{e.request_shape}")
+    #     Rails.error.report(e, context: { request_shape: e.request_shape&.to_h })
+    #
+    def request_shape
+      return unless request_protocol
+      return @request_shape if defined?(@request_shape)
+
+      @request_shape = request_protocol.request_shape(request_payload)
     end
   end
 

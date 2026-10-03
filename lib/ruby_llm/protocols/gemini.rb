@@ -11,6 +11,7 @@ module RubyLLM
       include Gemini::Videos
       include Gemini::Media
       include Gemini::Models
+      include Gemini::RequestShapes
       include Gemini::Streaming
       include Gemini::Tools
       include Gemini::Speech

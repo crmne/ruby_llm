@@ -70,6 +70,41 @@ RSpec.describe RubyLLM::Error do
     end
   end
 
+  describe '#request_shape' do
+    include_context 'with configured RubyLLM'
+
+    let(:protocol) { RubyLLM::Protocols::Gemini.new(RubyLLM::Providers::Gemini.new(RubyLLM.config)) }
+    let(:error) do
+      RubyLLM::BadRequestError.new('Invalid request', response: Faraday::Env.from(status: 400)).tap do |error|
+        error.request_protocol = protocol
+        error.request_payload = { contents: [{ role: 'user', parts: [{ text: 'secret question' }] }] }
+      end
+    end
+
+    it 'describes the request through the protocol that rendered it' do
+      expect(error.request_shape.turns.map(&:to_s)).to eq(['#0 user: text (15 chars)'])
+    end
+
+    it 'describes nothing when no protocol rendered the request' do
+      expect(RubyLLM::BadRequestError.new('Invalid request').request_shape).to be_nil
+    end
+
+    it 'reads the payload once' do
+      allow(protocol).to receive(:parse_request_shape).and_call_original
+      2.times { error.request_shape }
+
+      expect(protocol).to have_received(:parse_request_shape).once
+    end
+
+    it 'leaves the message and inspect as they were' do
+      error.request_shape
+
+      expect(error.message).to eq('Invalid request')
+      expect(error.inspect).to eq('#<RubyLLM::BadRequestError: Invalid request>')
+      expect(error.full_message(highlight: false)).not_to include('secret')
+    end
+  end
+
   describe RubyLLM::ToolCallParseError do
     it 'stores the finish reason when available' do
       error = described_class.new(finish_reason: 'length')

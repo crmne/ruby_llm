@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to chat with open-weight models on Hetzner.
 * How to build an agent's configuration from its inputs.
 * How to keep RubyLLM's tables on a secondary database.
+* How to see what a provider received when it rejects a request.
 * How upgrades work from 2.1 on.
 
 RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
@@ -208,6 +209,10 @@ end
 ```
 
 See [Rails Advanced Configuration]({% link _advanced/rails-advanced-config.md %}).
+
+## Request Shapes in Errors
+
+When a provider rejects a conversation without saying why, `error.request_shape` lists each turn's parts and their sizes, never their contents, and the problems providers are known to refuse, such as a part with no data. See [Describing a Rejected Request]({% link _advanced/error-handling.md %}#describing-a-rejected-request).
 
 ## Upgrades, One Release at a Time
 

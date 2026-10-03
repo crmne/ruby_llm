@@ -37,6 +37,7 @@ module RubyLLM
   class Protocol
     include Streaming
     include BinaryStreaming
+    include RequestShapes
 
     # The Provider this protocol talks through.
     attr_reader :provider
@@ -109,11 +110,15 @@ module RubyLLM
                   stream: block_given?
       )
 
+      # The caller's block can raise the error of another operation it ran.
+      yielding = false
       track_usage(:chat, on_finish: usage_recorder) do
         if block_given?
           stream_response(payload, headers) do |chunk|
             @usage_tracker.observe(chunk)
+            yielding = true
             yield chunk
+            yielding = false
           end
         else
           sync_response payload, headers
@@ -121,6 +126,9 @@ module RubyLLM
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support chat"
+    rescue Error => e
+      claim_error(e, payload) unless yielding
+      raise
     end
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
@@ -211,6 +219,9 @@ module RubyLLM
       parse_count_tokens_response post_count_tokens(payload)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support token counting"
+    rescue Error => e
+      claim_error(e, payload)
+      raise
     end
 
     def list_models
@@ -236,6 +247,9 @@ module RubyLLM
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support manual compaction"
+    rescue Error => e
+      claim_error(e, payload)
+      raise
     end
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
@@ -483,6 +497,33 @@ module RubyLLM
       @provider.parse_error(response)
     end
 
+    # Returns a RequestShape describing +payload+, a conversation request
+    # this protocol rendered, as JSON parsed back with String keys.
+    # Error#request_shape asks for it when the request fails. The default
+    # returns +nil+; protocols that render conversations override it,
+    # naming each turn's role and measuring its parts:
+    #
+    #   def parse_request_shape(payload)
+    #     turns = payload['messages'].each_with_index.map do |message, index|
+    #       text = RubyLLM::RequestShape::Part.new(kind: :text, size: message['content'].length)
+    #       RubyLLM::RequestShape::Turn.new(index:, role: message['role'], parts: [text])
+    #     end
+    #     RubyLLM::RequestShape.new(turns:)
+    #   end
+    #
+    def parse_request_shape(_payload)
+      nil
+    end
+
+    # A description must not raise inside the rescue that asks for it.
+    def request_shape(payload) # :nodoc:
+      payload = JSON.parse(JSON.generate(payload), allow_duplicate_key: true)
+      parse_request_shape(payload) if payload.is_a?(Hash)
+    rescue StandardError => e
+      RubyLLM.logger.debug { "#{self.class} could not describe its request: #{e.class}" }
+      nil
+    end
+
     def preprocess_message(message)
       return message.without_native_content if foreign_native_content?(message)
       return message unless auto_upload_large_files?
@@ -509,6 +550,14 @@ module RubyLLM
     end
 
     private
+
+    # An error raised before the request went out answers no request.
+    def claim_error(error, payload)
+      return if error.request_protocol || error.response.nil? || payload.nil?
+
+      error.request_protocol = self
+      error.request_payload = payload
+    end
 
     # A thinking signature or a provider-shaped content block belongs to the
     # model that produced it, and one provider can serve models that do not

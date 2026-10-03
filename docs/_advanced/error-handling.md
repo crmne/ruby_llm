@@ -17,6 +17,7 @@ After reading this guide, you will know:
 *   RubyLLM's error hierarchy.
 *   How to rescue specific types of errors.
 *   How to access details from the original API response.
+*   How to see the shape of a request a provider rejected.
 *   How errors are handled during streaming.
 *   How to fall back to another model when a provider has a transient failure.
 *   Best practices for handling errors within Tools.
@@ -121,6 +122,47 @@ rescue RubyLLM::ForbiddenError => e
   # puts "Full Response Body: #{e.response&.body}" # For deep debugging
 end
 ```
+
+## Describing a Rejected Request
+
+Some providers reject a conversation without saying what is wrong with it, answering with little more than "Request contains an invalid argument." `request_shape` shows you the shape of what the provider received, and the problems RubyLLM finds in it:
+
+```ruby
+begin
+  chat.ask "What's due today?"
+rescue RubyLLM::BadRequestError => e
+  Rails.logger.error("#{e.message}\n#{e.request_shape}")
+  raise
+end
+```
+
+```text
+Request contains an invalid argument.
+gemini, gemini-2.5-flash, model call 1 of the turn
+payload keys: contents, systemInstruction, generationConfig, tools
+thinking: includeThoughts true, thinkingBudget -1
+instructions: text (240 chars)
+#0 user: text (17 chars)
+#1 model: call find_tasks (args 40 chars), signed
+#2 user: result find_tasks (6859 chars)
+#3 model: thinking (no text), signed, text (1075 chars)
+#4 user: text (31 chars)
+tools: find_tasks, add_task
+tool round at #1: 1 call, 1 result, paired
+problem at #3, part 0: thinking part carries no data
+```
+
+The first lines name the provider and model, say which model call of the turn the request was, and list the payload's top-level keys and its thinking settings. Then comes one line per turn, numbered the way providers number turns in their error messages and named with the payload's own roles. Each part shows its size in characters, or in bytes for inline media. A tool result names the call it answers, and `signed` marks a part that carries a thinking signature.
+
+The last lines are what RubyLLM found: each tool round with its calls and results, and the problems providers are known to refuse, such as a part with no data, calls and results that do not pair up, or a step without the signature its provider requires. Here, turn 3 sends a thinking part that holds a signature and nothing else. A tool result that answers no call shows the id of the call it names, the only id a shape ever shows.
+
+The shape holds no text, tool arguments, tool results, signatures, URLs, or file data, so you can send it to your error tracker. `to_h` has the same keys every time:
+
+```ruby
+Rails.error.report(e, context: { request_shape: e.request_shape&.to_h })
+```
+
+A long conversation keeps its first 10 and last 50 turns, and `omitted_turns` counts the rest, while problems cover every turn. An error raised for a conversation request has a `request_shape`, including token counts and compaction. It is `nil` for errors raised before anything is sent, such as an unsupported attachment, and for operations that send no conversation, such as embeddings.
 
 ## Error Handling During Streaming
 
