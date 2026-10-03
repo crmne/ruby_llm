@@ -55,13 +55,17 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     end
 
     it 'replays reasoning, tool calls, and tool outputs as items' do
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate)
+      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: 'gpt-5-nano',
+                                                    status: :succeeded)
       messages = [
         RubyLLM::Message.new(role: :user, content: 'weather?'),
         RubyLLM::Message.new(
           role: :assistant,
           content: '',
           thinking: RubyLLM::Thinking.new(signature: 'ENCRYPTED'),
-          tool_calls: { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {}) }
+          tool_calls: { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {}) },
+          usage_entries: [usage]
         ),
         RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1')
       ]

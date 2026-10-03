@@ -345,7 +345,7 @@ module RubyLLM
           return msg.raw_content if msg.raw_content
 
           items = []
-          items << format_reasoning_item(msg.thinking) if msg.thinking&.signature
+          items << format_reasoning_item(msg.thinking) if own_signature(msg)
           items << { role: 'assistant', content: format_output_content(msg) } unless empty_content?(msg.content)
           items.concat(format_function_call_items(msg.tool_calls)) if msg.tool_call?
           items

@@ -154,6 +154,25 @@ RSpec.describe RubyLLM::Chat do
     expect(payload[:contents][1][:parts]).to eq([{ text: 'Done.', thoughtSignature: 'gemini-signature' }])
   end
 
+  it 'sends the Responses API no reasoning whose producer is unknown' do
+    message = RubyLLM::Message.new(role: :assistant, content: 'Done.', model: model_for(:anthropic),
+                                   thinking: RubyLLM::Thinking.build(text: 'Adding.', signature: 'anthropic-signature'))
+    chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
+
+    payload = replay(chat, message)
+
+    expect(payload[:input][1]).to eq(role: 'assistant', content: [{ type: 'output_text', text: 'Done.' }])
+  end
+
+  it 'sends the Responses API back the reasoning it produced' do
+    message = produced_by('openai', model_for(:openai), RubyLLM::Thinking.build(signature: 'openai-encrypted-content'))
+    chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
+
+    payload = replay(chat, message)
+
+    expect(payload[:input][1]).to eq(type: 'reasoning', summary: [], encrypted_content: 'openai-encrypted-content')
+  end
+
   it 'keeps thinking for the provider that produced it' do
     thinking = RubyLLM::Thinking.build(text: 'Let me think.', signature: 'anthropic-signature')
     message = produced_by('anthropic', model_for(:anthropic), thinking)

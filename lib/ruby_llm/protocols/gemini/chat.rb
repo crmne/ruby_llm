@@ -176,13 +176,6 @@ module RubyLLM
           thinking.text ? [{ thought: true, text: thinking.text }, *parts] : parts
         end
 
-        # A thinking signature can be another provider's opaque blob. Only usage
-        # names the provider that produced a message, so Gemini gets its own back.
-        def own_signature(msg)
-          signature = msg.thinking.signature
-          signature if signature && producer_slug(msg) == @provider.slug
-        end
-
         # Gemini signs the last part of an answer. An answer without parts gets
         # the empty text part a stream ends with: Gemini refuses a part without data.
         def sign_last_part(parts, signature)

@@ -533,6 +533,14 @@ module RubyLLM
       message.ruby_llm_usage_entries.reverse.find(&:succeeded?)&.provider
     end
 
+    # A thinking signature can be another provider's opaque blob, and a
+    # message restored without its usage could come from anyone, so a
+    # protocol that verifies signatures gets back only its own.
+    def own_signature(message)
+      signature = message.thinking&.signature
+      signature if signature && producer_slug(message) == @provider.slug
+    end
+
     def resolve_provider_tools_for_request(entries)
       return nil if entries.nil? || entries.empty?
 
