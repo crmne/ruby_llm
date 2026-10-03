@@ -188,6 +188,19 @@ RSpec.describe RubyLLM::Protocols::Interactions do
       .to raise_error(RubyLLM::Error, /unsupported action/)
   end
 
+  it 'continues a tool round another protocol began without an empty answer step' do
+    call = RubyLLM::ToolCall.new(id: 'call_1', name: 'multiply', arguments: { 'left' => 17, 'right' => 19 })
+    chat.add_message(role: :user, content: 'Multiply 17 by 19')
+    chat.add_message(role: :assistant, content: nil, tool_calls: { call.id => call })
+    chat.add_message(role: :tool, content: '323', tool_call_id: call.id)
+
+    expect(chat.render[:input]).to eq(
+      [{ type: 'user_input', content: [{ type: 'text', text: 'Multiply 17 by 19' }] },
+       { type: 'function_call', id: 'call_1', name: 'multiply', arguments: { 'left' => 17, 'right' => 19 } },
+       { type: 'function_result', call_id: 'call_1', name: 'multiply', result: [{ type: 'text', text: '323' }] }]
+    )
+  end
+
   describe 'stream errors' do
     def stream_failing_with(code, message)
       events = <<~SSE
@@ -215,6 +228,15 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     it 'falls back to a server error for a code it does not know' do
       expect { stream_failing_with('brand_new_code', 'Failed') }.to raise_error(RubyLLM::ServerError, 'Failed')
     end
+  end
+
+  it 'sends the result of a tool that returned nothing as an empty list' do
+    calls = { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'multiply', arguments: {}) }
+    message = RubyLLM::Message.new(role: :tool, content: '', tool_call_id: 'call_1')
+
+    expect(protocol.send(:render_interaction_result, message, calls)).to eq(
+      type: 'function_result', call_id: 'call_1', name: 'multiply', result: []
+    )
   end
 
   it 'accumulates local function argument deltas after an empty object in the initial step' do

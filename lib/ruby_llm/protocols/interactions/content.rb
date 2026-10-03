@@ -11,7 +11,7 @@ module RubyLLM
         module_function
 
         def render_interaction_content(text, attachments)
-          parts = text.nil? ? [] : [{ type: 'text', text: text.to_s }]
+          parts = text.to_s.empty? ? [] : [{ type: 'text', text: text.to_s }]
           parts + attachments.map { |attachment| render_interaction_attachment(attachment) }
         end
 

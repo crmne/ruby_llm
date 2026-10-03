@@ -77,10 +77,8 @@ module RubyLLM
 
         def render_interaction_message(message)
           steps = []
-          if message.content || message.attachments.any?
-            steps << { type: message.role == :assistant ? 'model_output' : 'user_input',
-                       content: render_interaction_content(message.content, message.attachments) }
-          end
+          content = render_interaction_content(message.content, message.attachments)
+          steps << { type: message.role == :assistant ? 'model_output' : 'user_input', content: } if content.any?
           message.tool_calls&.each_value do |call|
             steps << { type: 'function_call', id: call.id, name: call.name, arguments: call.arguments }
           end
