@@ -28,6 +28,7 @@ module RubyLLM
             output_tokens: extract_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
+            server_tool_use: parse_server_tool_use(data),
             finish_reason: normalize_finish_reason(
               data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
             ),

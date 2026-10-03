@@ -1,0 +1,174 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Search the web: what
+        is the latest stable Ruby version? Cite your source."}]}],"generationConfig":{},"tools":[{"google_search":{}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Sat, 03 Oct 2026 01:27:33 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=7522
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"The
+        latest stable version of Ruby is **Ruby \"}],\"role\": \"model\"},\"index\":
+        0}],\"usageMetadata\": {\"promptTokenCount\": 17,\"totalTokenCount\": 408,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 17}],\"thoughtsTokenCount\": 391,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"4.0.7**, which was
+        released on **September 15, 2026**\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 17,\"totalTokenCount\": 408,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 17}],\"thoughtsTokenCount\": 391,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \". \\n\\nIf you are
+        maintaining a codebase on older release branches, the latest stable versions
+        for those branches are:\\n*\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 17,\"totalTokenCount\": 408,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 17}],\"thoughtsTokenCount\": 391,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \" **Ruby 3.4.11**
+        (on the 3.4.x branch)\\n\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 17,\"totalTokenCount\": 408,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 17}],\"thoughtsTokenCount\": 391,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"* **Ruby 3.3.12**
+        (on the 3.3.x branch, which is\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 17,\"totalTokenCount\": 408,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 17}],\"thoughtsTokenCount\": 391,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \" currently in its
+        security maintenance phase)\\n\\n**Sources:**\\n* Official Ruby Lang announcement
+        for **\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        17,\"totalTokenCount\": 408,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        17}],\"thoughtsTokenCount\": 391,\"serviceTier\": \"standard\"},\"modelVersion\":
+        \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"Ruby 4.0.7**.\\n*
+        Official Ruby Lang Downloads Page.\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 17,\"totalTokenCount\": 408,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 17}],\"thoughtsTokenCount\": 391,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"\",\"thoughtSignature\":
+        \"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\"}],\"role\":
+        \"model\"},\"finishReason\": \"STOP\",\"index\": 0,\"groundingMetadata\":
+        {\"searchEntryPoint\": {\"renderedContent\": \"\\u003cstyle\\u003e\\n.container
+        {\\n  align-items: center;\\n  border-radius: 8px;\\n  display: flex;\\n  font-family:
+        Google Sans, Roboto, sans-serif;\\n  font-size: 14px;\\n  line-height: 20px;\\n
+        \ padding: 8px 12px;\\n}\\n.chip {\\n  display: inline-block;\\n  border:
+        solid 1px;\\n  border-radius: 16px;\\n  min-width: 14px;\\n  padding: 5px
+        16px;\\n  text-align: center;\\n  user-select: none;\\n  margin: 0 8px;\\n
+        \ -webkit-tap-highlight-color: transparent;\\n}\\n.carousel {\\n  overflow:
+        auto;\\n  scrollbar-width: none;\\n  white-space: nowrap;\\n  margin-right:
+        -12px;\\n}\\n.headline {\\n  display: flex;\\n  margin-right: 4px;\\n}\\n.gradient-container
+        {\\n  position: relative;\\n}\\n.gradient {\\n  position: absolute;\\n  transform:
+        translate(3px, -9px);\\n  height: 36px;\\n  width: 9px;\\n}\\n@media (prefers-color-scheme:
+        light) {\\n  .container {\\n    background-color: #fafafa;\\n    box-shadow:
+        0 0 0 1px #0000000f;\\n  }\\n  .headline-label {\\n    color: #1f1f1f;\\n
+        \ }\\n  .chip {\\n    background-color: #ffffff;\\n    border-color: #d2d2d2;\\n
+        \   color: #5e5e5e;\\n    text-decoration: none;\\n  }\\n  .chip:hover {\\n
+        \   background-color: #f2f2f2;\\n  }\\n  .chip:focus {\\n    background-color:
+        #f2f2f2;\\n  }\\n  .chip:active {\\n    background-color: #d8d8d8;\\n    border-color:
+        #b6b6b6;\\n  }\\n  .logo-dark {\\n    display: none;\\n  }\\n  .gradient {\\n
+        \   background: linear-gradient(90deg, #fafafa 15%, #fafafa00 100%);\\n  }\\n}\\n@media
+        (prefers-color-scheme: dark) {\\n  .container {\\n    background-color: #1f1f1f;\\n
+        \   box-shadow: 0 0 0 1px #ffffff26;\\n  }\\n  .headline-label {\\n    color:
+        #fff;\\n  }\\n  .chip {\\n    background-color: #2c2c2c;\\n    border-color:
+        #3c4043;\\n    color: #fff;\\n    text-decoration: none;\\n  }\\n  .chip:hover
+        {\\n    background-color: #353536;\\n  }\\n  .chip:focus {\\n    background-color:
+        #353536;\\n  }\\n  .chip:active {\\n    background-color: #464849;\\n    border-color:
+        #53575b;\\n  }\\n  .logo-light {\\n    display: none;\\n  }\\n  .gradient
+        {\\n    background: linear-gradient(90deg, #1f1f1f 15%, #1f1f1f00 100%);\\n
+        \ }\\n}\\n\\u003c/style\\u003e\\n\\u003cdiv class=\\\"container\\\"\\u003e\\n
+        \ \\u003cdiv class=\\\"headline\\\"\\u003e\\n    \\u003csvg class=\\\"logo-light\\\"
+        width=\\\"18\\\" height=\\\"18\\\" viewBox=\\\"9 9 35 35\\\" fill=\\\"none\\\"
+        xmlns=\\\"http://www.w3.org/2000/svg\\\"\\u003e\\n      \\u003cpath fill-rule=\\\"evenodd\\\"
+        clip-rule=\\\"evenodd\\\" d=\\\"M42.8622 27.0064C42.8622 25.7839 42.7525 24.6084
+        42.5487 23.4799H26.3109V30.1568H35.5897C35.1821 32.3041 33.9596 34.1222 32.1258
+        35.3448V39.6864H37.7213C40.9814 36.677 42.8622 32.2571 42.8622 27.0064V27.0064Z\\\"
+        fill=\\\"#4285F4\\\"/\\u003e\\n      \\u003cpath fill-rule=\\\"evenodd\\\"
+        clip-rule=\\\"evenodd\\\" d=\\\"M26.3109 43.8555C30.9659 43.8555 34.8687 42.3195
+        37.7213 39.6863L32.1258 35.3447C30.5898 36.3792 28.6306 37.0061 26.3109 37.0061C21.8282
+        37.0061 18.0195 33.9811 16.6559 29.906H10.9194V34.3573C13.7563 39.9841 19.5712
+        43.8555 26.3109 43.8555V43.8555Z\\\" fill=\\\"#34A853\\\"/\\u003e\\n      \\u003cpath
+        fill-rule=\\\"evenodd\\\" clip-rule=\\\"evenodd\\\" d=\\\"M16.6559 29.8904C16.3111
+        28.8559 16.1074 27.7588 16.1074 26.6146C16.1074 25.4704 16.3111 24.3733 16.6559
+        23.3388V18.8875H10.9194C9.74388 21.2072 9.06992 23.8247 9.06992 26.6146C9.06992
+        29.4045 9.74388 32.022 10.9194 34.3417L15.3864 30.8621L16.6559 29.8904V29.8904Z\\\"
+        fill=\\\"#FBBC05\\\"/\\u003e\\n      \\u003cpath fill-rule=\\\"evenodd\\\"
+        clip-rule=\\\"evenodd\\\" d=\\\"M26.3109 16.2386C28.85 16.2386 31.107 17.1164
+        32.9095 18.8091L37.8466 13.8719C34.853 11.082 30.9659 9.3736 26.3109 9.3736C19.5712
+        9.3736 13.7563 13.245 10.9194 18.8875L16.6559 23.3388C18.0195 19.2636 21.8282
+        16.2386 26.3109 16.2386V16.2386Z\\\" fill=\\\"#EA4335\\\"/\\u003e\\n    \\u003c/svg\\u003e\\n
+        \   \\u003csvg class=\\\"logo-dark\\\" width=\\\"18\\\" height=\\\"18\\\"
+        viewBox=\\\"0 0 48 48\\\" xmlns=\\\"http://www.w3.org/2000/svg\\\"\\u003e\\n
+        \     \\u003ccircle cx=\\\"24\\\" cy=\\\"23\\\" fill=\\\"#FFF\\\" r=\\\"22\\\"/\\u003e\\n
+        \     \\u003cpath d=\\\"M33.76 34.26c2.75-2.56 4.49-6.37 4.49-11.26 0-.89-.08-1.84-.29-3H24.01v5.99h8.03c-.4
+        2.02-1.5 3.56-3.07 4.56v.75l3.91 2.97h.88z\\\" fill=\\\"#4285F4\\\"/\\u003e\\n
+        \     \\u003cpath d=\\\"M15.58 25.77A8.845 8.845 0 0 0 24 31.86c1.92 0 3.62-.46
+        4.97-1.31l4.79 3.71C31.14 36.7 27.65 38 24 38c-5.93 0-11.01-3.4-13.45-8.36l.17-1.01
+        4.06-2.85h.8z\\\" fill=\\\"#34A853\\\"/\\u003e\\n      \\u003cpath d=\\\"M15.59
+        20.21a8.864 8.864 0 0 0 0 5.58l-5.03 3.86c-.98-2-1.53-4.25-1.53-6.64 0-2.39.55-4.64
+        1.53-6.64l1-.22 3.81 2.98.22 1.08z\\\" fill=\\\"#FBBC05\\\"/\\u003e\\n      \\u003cpath
+        d=\\\"M24 14.14c2.11 0 4.02.75 5.52 1.98l4.36-4.36C31.22 9.43 27.81 8 24 8c-5.93
+        0-11.01 3.4-13.45 8.36l5.03 3.85A8.86 8.86 0 0 1 24 14.14z\\\" fill=\\\"#EA4335\\\"/\\u003e\\n
+        \   \\u003c/svg\\u003e\\n    \\u003cdiv class=\\\"gradient-container\\\"\\u003e\\u003cdiv
+        class=\\\"gradient\\\"\\u003e\\u003c/div\\u003e\\u003c/div\\u003e\\n  \\u003c/div\\u003e\\n
+        \ \\u003cdiv class=\\\"carousel\\\"\\u003e\\n\\u003ca class=\\\"chip\\\" href=\\\"https://www.google.com/search?q=%22Ruby+4.0.7%22+released&client=app-vertex-grounding&safesearch=active\\\"\\u003e&quot;Ruby
+        4.0.7&quot; released\\u003c/a\\u003e\\n  \\u003c/div\\u003e\\n\\u003c/div\\u003e\"},\"groundingChunks\":
+        [{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5IHLYXTvjMygmnzygiy7ejjYhvuGoz7QaX6y6DJWnVoXP5yY7Cix10TiG41IFkZluV3b8IM_7U2E24qrJFyOrkXACzBVx0MvT2oMsGNhNfPcbKOMsGSmqApV2Esxx9eVaw73KNVfm_RH740lceeRX2gjA1KK_\",\"title\":
+        \"ruby-lang.org\"}},{\"web\": {\"uri\": \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoLVa3npJ1d4uYUR2WS4FzIVpLYbFAdFnmELBtESsGXWHzOCZU7eRM31DA8DPEXXo3A218PgTtwXX918aFlKU9QVa0bcnq1Pvv6DAZhJLOAxa9AYE8B3jkK5r88g==\",\"title\":
+        \"ruby-lang.org\"}}],\"groundingSupports\": [{\"segment\": {\"endIndex\":
+        97,\"text\": \"The latest stable version of Ruby is **Ruby 4.0.7**, which
+        was released on **September 15, 2026**\"},\"groundingChunkIndices\": [0]},{\"segment\":
+        {\"startIndex\": 243,\"endIndex\": 252,\"text\": \"x branch)\"},\"groundingChunkIndices\":
+        [1]},{\"segment\": {\"startIndex\": 283,\"endIndex\": 346,\"text\": \"x branch,
+        which is currently in its security maintenance phase)\"},\"groundingChunkIndices\":
+        [1]},{\"segment\": {\"startIndex\": 348,\"endIndex\": 413,\"text\": \"**Sources:**\\n*
+        Official Ruby Lang announcement for **Ruby 4.0.7**\"},\"groundingChunkIndices\":
+        [0]},{\"segment\": {\"startIndex\": 415,\"endIndex\": 450,\"text\": \"* Official
+        Ruby Lang Downloads Page\"},\"groundingChunkIndices\": [1]}],\"webSearchQueries\":
+        [\"\\\"Ruby 4.0.7\\\" released\"]}}],\"usageMetadata\": {\"promptTokenCount\":
+        408,\"candidatesTokenCount\": 171,\"totalTokenCount\": 1420,\"cachedContentTokenCount\":
+        118,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 408}],\"cacheTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 118}],\"thoughtsTokenCount\": 841,\"serviceTier\":
+        \"standard\"},\"modelVersion\": \"gemini-3.5-flash\",\"responseId\": \"_lnAat3HEfq8nsEPyaKF-Qs\"}\r\n\r\n"
+  recorded_at: Sat, 03 Oct 2026 01:27:34 GMT
+recorded_with: VCR 6.4.0

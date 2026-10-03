@@ -163,6 +163,8 @@ search_cost = searches * PRICE_PER_SEARCH
 
 Unless the provider reports the price of a request, `cost.total` prices tokens only, so add the search cost to it. OpenRouter, Perplexity, and xAI report the price with their tool charges included, and `cost.total` already uses it.
 
+On Gemini and Vertex AI, `web_search_requests` counts the distinct queries Google Search grounding ran. Gemini 3 models bill each query, but Gemini 2.5 and older bill once per grounded prompt, so price a response from those models with any searches as one charge.
+
 ## Rails Persistence
 
 With `acts_as_chat`, RubyLLM writes finished attempts to `ruby_llm_usages` immediately. This happens before the message callback, so cancellation cannot erase usage merely because no assistant message was saved.

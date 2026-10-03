@@ -204,12 +204,21 @@ module RubyLLM
             output_tokens: calculate_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
+            server_tool_use: parse_server_tool_use(data),
             finish_reason: normalize_finish_reason(
               data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
             ),
             model: data['modelVersion'] || @model&.id,
             raw: raw
           )
+        end
+
+        # Gemini 3 bills each distinct, non-empty query a grounding ran.
+        def parse_server_tool_use(data)
+          searches = Array(data['candidates']).sum do |candidate|
+            Array(candidate.dig('groundingMetadata', 'webSearchQueries')).reject(&:empty?).uniq.size
+          end
+          { 'web_search_requests' => searches }
         end
 
         def input_tokens(data)

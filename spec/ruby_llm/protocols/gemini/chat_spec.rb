@@ -407,6 +407,34 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
   end
 
   describe '#parse_completion_response' do
+    it 'counts each distinct web search query the grounding ran' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{
+                                     'content' => { 'parts' => [{ 'text' => 'Ruby 4.0.7' }] },
+                                     'groundingMetadata' => {
+                                       'webSearchQueries' => ['ruby 4.0.7 released', 'ruby releases', '',
+                                                              'ruby releases']
+                                     }
+                                   }],
+                                   'usageMetadata' => { 'promptTokenCount' => 534, 'candidatesTokenCount' => 313 }
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens.server_tool_use).to eq('web_search_requests' => 2)
+    end
+
+    it 'counts no web searches without grounding' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Hi' }] } }],
+                                   'usageMetadata' => { 'promptTokenCount' => 3, 'candidatesTokenCount' => 1 }
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens.server_tool_use).to be_nil
+    end
+
     it 'normalizes finishReason' do
       response = instance_double(
         Faraday::Response,

@@ -139,7 +139,7 @@ chat.before_request { |payload| Rails.logger.debug(payload) }
 
 ## Read Tool Use by Its New Names
 
-`tokens.server_tool_use` now uses the same names on every provider and leaves out tools that did not run, so a response that used no provider tools returns `nil` even when the provider reported zero counts. Web searches are `web_search_requests` everywhere, and OpenAI, Azure, and Perplexity now report theirs. See [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
+`tokens.server_tool_use` now uses the same names on every provider and leaves out tools that did not run, so a response that used no provider tools returns `nil` even when the provider reported zero counts. Web searches are `web_search_requests` everywhere, and OpenAI, Azure, Gemini, Vertex AI, and Perplexity now report theirs. See [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
 
 Two providers reported other counters in 2.0:
 

@@ -37,6 +37,22 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     expect(chunk.tokens.cache_read).to eq(6)
   end
 
+  it 'counts the web searches the final chunk grounds on' do
+    text_chunk = test_obj.send(:build_chunk,
+                               { 'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Ruby' }] } }] })
+    final_chunk = test_obj.send(:build_chunk, {
+                                  'candidates' => [{
+                                    'content' => { 'parts' => [{ 'text' => ' 4.0.7' }] },
+                                    'finishReason' => 'STOP',
+                                    'groundingMetadata' => { 'webSearchQueries' => ['"Ruby 4.0.7" released'] }
+                                  }],
+                                  'usageMetadata' => { 'promptTokenCount' => 408, 'candidatesTokenCount' => 171 }
+                                })
+
+    expect(text_chunk.tokens.server_tool_use).to be_nil
+    expect(final_chunk.tokens.server_tool_use).to eq('web_search_requests' => 1)
+  end
+
   it 'preserves raw finishReason on chunks' do
     data = {
       'candidates' => [
