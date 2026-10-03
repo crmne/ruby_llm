@@ -17,7 +17,7 @@ module RubyLLM
         def format_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
           return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
-          return { reasoning_config: { type: 'disabled' } } if thinking.enabled == false
+          return disabled_reasoning_fields(model) if thinking.enabled == false
           return format_adaptive_reasoning_fields(thinking) if adaptive_thinking?(thinking, model)
 
           effort = thinking.effort.to_s
@@ -25,6 +25,19 @@ module RubyLLM
           return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
 
           format_effort_fields(effort, model) unless effort.empty?
+        end
+
+        def disabled_reasoning_fields(model)
+          return { thinking: { type: 'between_tools' } } if between_tools_off?(model)
+
+          { reasoning_config: { type: 'disabled' } }
+        end
+
+        def between_tools_off?(model)
+          return false unless model.respond_to?(:provider_class)
+
+          provider = model.provider_class
+          provider.respond_to?(:between_tools_off?) && provider.between_tools_off?(model.id)
         end
 
         # Models that publish a reasoning_config enum, such as OpenAI's GPT
