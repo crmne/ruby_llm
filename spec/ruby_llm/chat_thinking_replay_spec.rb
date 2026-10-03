@@ -71,6 +71,42 @@ RSpec.describe RubyLLM::Chat do
     expect(message.tool_calls['call-1'].thought_signature).to eq('gemini-signature')
   end
 
+  it 'signs a call another provider made with the placeholder Gemini documents' do
+    call = RubyLLM::ToolCall.new(id: 'call-1', name: 'lookup', arguments: {})
+    thinking = RubyLLM::Thinking.build(signature: 'openai-encrypted-content')
+    message = produced_by('openai', model_for(:openai), thinking, tool_calls: { 'call-1' => call })
+    chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
+    chat.add_message(role: :user, content: 'Hi')
+    chat.add_message(message)
+    chat.add_message(role: :tool, content: 'Found it.', tool_call_id: 'call-1')
+
+    payload = chat.with_model(model_for(:gemini), provider: :gemini).render
+
+    expect(payload[:contents][1][:parts]).to eq(
+      [{ text: 'Done.' },
+       { functionCall: { name: 'lookup', args: {} }, thoughtSignature: 'skip_thought_signature_validator' }]
+    )
+  end
+
+  it 'sends Gemini no answer signature whose producer is unknown' do
+    message = RubyLLM::Message.new(role: :assistant, content: 'Done.', model: model_for(:openai),
+                                   thinking: RubyLLM::Thinking.build(signature: 'openai-encrypted-content'))
+    chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
+
+    payload = replay(chat, message)
+
+    expect(payload[:contents][1][:parts]).to eq([{ text: 'Done.' }])
+  end
+
+  it 'sends Gemini back the answer signature it produced' do
+    message = produced_by('gemini', model_for(:gemini), RubyLLM::Thinking.build(signature: 'gemini-signature'))
+    chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
+
+    payload = replay(chat, message)
+
+    expect(payload[:contents][1][:parts]).to eq([{ text: 'Done.', thoughtSignature: 'gemini-signature' }])
+  end
+
   it 'keeps thinking for the provider that produced it' do
     thinking = RubyLLM::Thinking.build(text: 'Let me think.', signature: 'anthropic-signature')
     message = produced_by('anthropic', model_for(:anthropic), thinking)
