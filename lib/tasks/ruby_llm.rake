@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 namespace :ruby_llm do
+  desc 'Run app/evals evaluations (optionally select an evaluation and case)'
+  task :eval, %i[evaluation case] do |_task, args|
+    Rake::Task[:environment].invoke if Rake::Task.task_defined?(:environment)
+    require 'ruby_llm'
+    require 'tasks/ruby_llm/evaluations'
+
+    RubyLLM::Tasks::Evaluations.run(args[:evaluation], only: args[:case])
+  end
+
   desc 'Load the selected model registry into the database'
   task load_models: :environment do
     # Rails 8.1 loads ActiveRecord::Base lazily, so outside a runner or console

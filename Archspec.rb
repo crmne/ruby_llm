@@ -18,6 +18,12 @@ runtime.cannot_reference_constants 'RubyLLM::Generators', 'Rails::Generators'
 # User-facing objects and orchestration. These are nouns like Chat, Batch,
 # UploadedFile, Embedding, Image, Message, Tool, and Content.
 component :domain, in: %w[
+  lib/ruby_llm/evaluation.rb
+  lib/ruby_llm/evaluation/**/*.rb
+  lib/ruby_llm/evaluation_case.rb
+  lib/ruby_llm/evaluation_result.rb
+  lib/ruby_llm/evaluation_trial.rb
+  lib/ruby_llm/evaluation_report.rb
   lib/ruby_llm/agent.rb
   lib/ruby_llm/attachment.rb
   lib/ruby_llm/batch.rb

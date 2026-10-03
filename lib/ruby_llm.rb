@@ -36,6 +36,7 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
   'perplexity' => 'Perplexity',
+  'rspec' => 'RSpec',
   'ruby_llm' => 'RubyLLM',
   'typesafe' => 'TypeSafe',
   'vertexai' => 'VertexAI',
@@ -143,6 +144,12 @@ loader.setup
 # are selected separately from model IDs.
 #
 # == Typed judgments
+#
+# Evaluation defines a dataset, semantic criteria, and Ruby assertions in a
+# reusable class. Implement Evaluation#perform to return a value, Message,
+# Chat, or Agent, and call Evaluation.run to collect an EvaluationReport.
+# Evaluators can use a chat model, an Agent, or a Judge. Dataset files are
+# discovered under app/evals, following the evaluation's class name.
 #
 # Judge defines reusable probability, choice, and score questions. Its +judge+
 # method evaluates supplied text, structured data, or images passed as +with:+
