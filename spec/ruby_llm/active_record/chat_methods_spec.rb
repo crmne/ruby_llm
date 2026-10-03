@@ -394,6 +394,21 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.cost.total).to be_within(0.0001).of(0.3)
     end
 
+    it 'keeps the provider tool uses of each attempt' do
+      chat = Chat.create!(model: model_id)
+      message = chat.messages.create!(role: :assistant, content: 'done')
+      [2, 1].each do |searches|
+        tokens = RubyLLM::Tokens.new(input: 10, output: 5, server_tool_use: { 'web_search_requests' => searches })
+        entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'openai', model: model_id,
+                                                      status: :succeeded, tokens:)
+        chat.send(:persist_usage_entry, entry)
+      end
+      chat.ruby_llm_usages.update_all(message_id: message.id, message_type: 'Message')
+
+      expect(Chat.find(chat.id).tokens.server_tool_use).to eq('web_search_requests' => 3)
+      expect(Message.find(message.id).tokens.server_tool_use).to eq('web_search_requests' => 3)
+    end
+
     it 'reports an empty cost for a chat that never ran' do
       chat = Chat.create!(model: model_id)
 

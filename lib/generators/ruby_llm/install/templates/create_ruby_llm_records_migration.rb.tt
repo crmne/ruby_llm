@@ -87,6 +87,11 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.integer :cache_read_tokens
       t.integer :cache_write_tokens
       t.integer :thinking_tokens
+<% if postgresql? %>
+      t.jsonb :server_tool_use
+<% else %>
+      t.json :server_tool_use
+<% end %>
       t.decimal :input_cost, precision: 16, scale: 10
       t.decimal :output_cost, precision: 16, scale: 10
       t.decimal :cache_read_cost, precision: 16, scale: 10

@@ -31,6 +31,14 @@ class <%= 'upgrade_ruby_llm_to_2_1'.camelize %> < ActiveRecord::Migration<%= mig
 <% end -%>
     end
 
+    unless column_exists?(:ruby_llm_usages, :server_tool_use)
+<% if postgresql? -%>
+      add_column :ruby_llm_usages, :server_tool_use, :jsonb
+<% else -%>
+      add_column :ruby_llm_usages, :server_tool_use, :json
+<% end -%>
+    end
+
     unless table_exists?(:ruby_llm_provider_files)
       create_table :ruby_llm_provider_files, id: :<%= reference_type %> do |t|
         t.string :blob_key, null: false

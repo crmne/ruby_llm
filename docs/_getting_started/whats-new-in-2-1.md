@@ -211,7 +211,7 @@ See [Rails Advanced Configuration]({% link _advanced/rails-advanced-config.md %}
 
 ## Upgrades, One Release at a Time
 
-From 2.1 on, each release ships the upgrade from the release before it. `bin/rails generate ruby_llm:upgrade` in 2.1 adds the MCP credentials table, columns for tool calls waiting on input or a task and for the results MCP Apps render, and a table where chats remember the provider uploads of their stored files. Applications on 1.x upgrade to 2.0 first. See [Upgrading]({% link _reference/upgrading.md %}).
+From 2.1 on, each release ships the upgrade from the release before it. `bin/rails generate ruby_llm:upgrade` in 2.1 adds the MCP credentials table, columns for tool calls waiting on input or a task and for the results MCP Apps render, a table where chats remember the provider uploads of their stored files, and a column where usage keeps the provider tool uses of each attempt. Applications on 1.x upgrade to 2.0 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.1
 

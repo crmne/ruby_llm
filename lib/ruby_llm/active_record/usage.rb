@@ -21,7 +21,8 @@ module RubyLLM
           output: output_tokens,
           cache_read: cache_read_tokens,
           cache_write: cache_write_tokens,
-          thinking: thinking_tokens
+          thinking: thinking_tokens,
+          server_tool_use: (self[:server_tool_use] if has_attribute?(:server_tool_use))
         )
       end
 

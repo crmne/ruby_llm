@@ -24,6 +24,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       connection.drop_table(:ruby_llm_mcp_credentials)
       connection.remove_column(:ruby_llm_tool_calls, :mcp_state)
       connection.remove_column(:ruby_llm_tool_calls, :mcp_result)
+      connection.remove_column(:ruby_llm_usages, :server_tool_use)
       connection.drop_table(:ruby_llm_provider_files)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
@@ -31,6 +32,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.table_exists?(:ruby_llm_mcp_credentials)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :mcp_state)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :mcp_result)).to be(true)
+      expect(connection.column_exists?(:ruby_llm_usages, :server_tool_use)).to be(true)
       expect(connection.index_exists?(:ruby_llm_provider_files, %i[blob_key provider account], unique: true))
         .to be(true)
       raise ActiveRecord::Rollback

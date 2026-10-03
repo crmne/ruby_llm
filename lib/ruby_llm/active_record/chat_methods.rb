@@ -736,6 +736,7 @@ module RubyLLM
           thinking_cost: cost.thinking,
           total_cost: cost.total
         }
+        attributes[:server_tool_use] = tokens.server_tool_use if Usage.column_names.include?('server_tool_use')
         record = ruby_llm_usages.create!(attributes)
         usage_records_by_entry[entry] = record
       end
