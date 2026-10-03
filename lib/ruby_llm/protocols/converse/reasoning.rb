@@ -89,11 +89,11 @@ module RubyLLM
         end
 
         def reasoning_budget(thinking, effort, model, max_output_tokens)
-          return thinking.budget if thinking.budget.is_a?(Integer)
+          return ensure_budget_under_max!(thinking.budget, max_output_tokens, model) if thinking.budget.is_a?(Integer)
           return nil if effort.empty? || effort == 'none'
 
           schema = reasoning_budget_schema(model)
-          schema && effort_budget_tokens(effort, schema, max_output_tokens)
+          schema && effort_budget_tokens(effort, schema, max_output_tokens, model)
         end
 
         def reasoning_budget_schema(model)
@@ -140,14 +140,33 @@ module RubyLLM
         # Models that take a budget reject reasoning_effort, so effort has to become a budget.
         # Bedrock names the levels of an enumerated budget after the efforts they stand for;
         # otherwise the effort spans the range the schema allows.
-        def effort_budget_tokens(effort, schema, max_output_tokens)
+        def effort_budget_tokens(effort, schema, max_output_tokens, model = nil)
           budget = enumerated_budget(effort, schema) || ranged_budget(effort, schema)
           return nil unless budget
 
           minimum = schema[:minimum].is_a?(Integer) ? schema[:minimum] : MINIMUM_BUDGET_TOKENS
-          return [budget, minimum].max unless max_output_tokens
+          budget = [budget, minimum].max
+          return budget unless max_output_tokens
 
-          budget.clamp(minimum, [max_output_tokens - 1, minimum].max)
+          if minimum >= max_output_tokens
+            raise ArgumentError, budget_over_max_message(minimum, max_output_tokens, model)
+          end
+
+          budget.clamp(minimum, max_output_tokens - 1)
+        end
+
+        def ensure_budget_under_max!(budget, max_output_tokens, model)
+          return budget unless max_output_tokens && budget >= max_output_tokens
+
+          raise ArgumentError, budget_over_max_message(budget, max_output_tokens, model)
+        end
+
+        def budget_over_max_message(budget, max_output_tokens, model)
+          format(
+            'Thinking budget %<budget>d is not less than max_tokens %<max_tokens>d for %<id>s. ' \
+            'Bedrock rejects budget_tokens >= max_tokens.',
+            budget: budget, max_tokens: max_output_tokens, id: model&.id
+          )
         end
 
         def enumerated_budget(effort, schema)

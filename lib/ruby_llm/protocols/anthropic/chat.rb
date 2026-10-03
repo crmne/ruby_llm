@@ -492,7 +492,7 @@ module RubyLLM
         def thinking_mode(thinking, model, effort, max_tokens)
           return { type: 'adaptive' } if thinking.enabled == true
 
-          budget = thinking.budget || effort_budget(effort, model, max_tokens)
+          budget = resolved_thinking_budget(thinking, model, effort, max_tokens)
           mode = if budget
                    { type: 'enabled', budget_tokens: budget }
                  elsif adaptive_thinking?(thinking, effort, model)
@@ -511,14 +511,39 @@ module RubyLLM
           model.reasoning_option(:effort) && !model.reasoning_option(:budget_tokens)
         end
 
+        def resolved_thinking_budget(thinking, model, effort, max_tokens)
+          return ensure_budget_under_max!(thinking.budget, max_tokens, model) if thinking.budget
+
+          effort_budget(effort, model, max_tokens)
+        end
+
         def effort_budget(effort, model, max_tokens)
           return nil unless effort && model.reasoning_option(:budget_tokens)
 
           budget = EFFORT_BUDGETS.fetch(effort, EFFORT_BUDGETS['high'])
           minimum = [model.reasoning_option(:budget_tokens)[:min].to_i, 1].max
-          return [budget, minimum].max unless max_tokens
+          budget = [budget, minimum].max
+          return budget unless max_tokens
 
-          budget.clamp(minimum, [max_tokens - 1, minimum].max)
+          # Keep the model minimum. A budget that cannot also sit under max_tokens
+          # is rejected locally; Anthropic rejects budget_tokens >= max_tokens.
+          raise ArgumentError, budget_over_max_message(minimum, max_tokens, model) if minimum >= max_tokens
+
+          budget.clamp(minimum, max_tokens - 1)
+        end
+
+        def ensure_budget_under_max!(budget, max_tokens, model)
+          return budget unless budget.is_a?(Integer) && max_tokens && budget >= max_tokens
+
+          raise ArgumentError, budget_over_max_message(budget, max_tokens, model)
+        end
+
+        def budget_over_max_message(budget, max_tokens, model)
+          format(
+            'Thinking budget %<budget>d is not less than max_tokens %<max_tokens>d for %<id>s. ' \
+            'Anthropic rejects budget_tokens >= max_tokens.',
+            budget: budget, max_tokens: max_tokens, id: model.id
+          )
         end
 
         def thinking_off_type(model)

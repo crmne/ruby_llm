@@ -398,7 +398,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       )
     end
 
-    def render_payload(model_id:, thinking:, schema: nil, reasoning_options: [])
+    def render_payload(model_id:, thinking:, schema: nil, reasoning_options: [], max_output_tokens: nil)
       model = RubyLLM::Model.new(
         id: model_id,
         provider: 'anthropic',
@@ -412,6 +412,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         model: model,
         stream: false,
         schema: schema,
+        max_output_tokens: max_output_tokens,
         thinking: thinking
       )
     end
@@ -468,6 +469,40 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(low[:output_config]).to eq(effort: 'low')
     end
 
+    it 'rejects an effort budget that cannot fit under max_tokens' do
+      expect do
+        render_payload(
+          model_id: 'claude-haiku-4-5',
+          thinking: RubyLLM::Thinking::Config.new(effort: :low),
+          reasoning_options: [budget_option],
+          max_output_tokens: 100
+        )
+      end.to raise_error(ArgumentError, /budget 1024 is not less than max_tokens 100/)
+    end
+
+    it 'rejects an explicit budget that is not less than max_tokens' do
+      expect do
+        render_payload(
+          model_id: 'claude-haiku-4-5',
+          thinking: RubyLLM::Thinking::Config.new(budget: 5000),
+          reasoning_options: [budget_option],
+          max_output_tokens: 100
+        )
+      end.to raise_error(ArgumentError, /budget 5000 is not less than max_tokens 100/)
+    end
+
+    it 'sends an explicit budget that fits under max_tokens' do
+      payload = render_payload(
+        model_id: 'claude-haiku-4-5',
+        thinking: RubyLLM::Thinking::Config.new(budget: 5000),
+        reasoning_options: [budget_option],
+        max_output_tokens: 6000
+      )
+
+      expect(payload[:max_tokens]).to eq(6000)
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 5000)
+    end
+
     it 'keeps the effort budget under the max_output_tokens of the request' do
       model = RubyLLM::Model.new(
         id: 'claude-opus-4-5',
@@ -518,7 +553,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       payload = render_payload(
         model_id: 'claude-opus-4-5',
         thinking: RubyLLM::Thinking::Config.new(effort: :high, budget: 4096),
-        reasoning_options: [effort_option(:low, :medium, :high), budget_option]
+        reasoning_options: [effort_option(:low, :medium, :high), budget_option],
+        max_output_tokens: 8192
       )
 
       expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 4096)
@@ -540,7 +576,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       payload = render_payload(
         model_id: 'claude-sonnet-4-6',
         thinking: RubyLLM::Thinking::Config.new(budget: 4096, display: :summarized),
-        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option]
+        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option],
+        max_output_tokens: 8192
       )
 
       expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 4096, display: 'summarized')

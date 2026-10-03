@@ -337,13 +337,11 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         )
       end
 
-      it 'sends the smallest budget when max_output_tokens leaves no room and lets Bedrock decide' do
-        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high),
-                                 max_output_tokens: 500)
-
-        expect(payload[:additionalModelRequestFields]).to eq(
-          reasoning_config: { type: 'enabled', budget_tokens: 1024 }
-        )
+      it 'rejects an effort budget that cannot fit under max_output_tokens' do
+        expect do
+          render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high),
+                         max_output_tokens: 500)
+        end.to raise_error(ArgumentError, /budget 1024 is not less than max_tokens 500/)
       end
 
       it 'still clamps under max_output_tokens when the model states no minimum' do
@@ -356,12 +354,19 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         )
       end
 
-      it 'leaves a budget the caller chose alone' do
-        payload = render_payload(model: enumerated_budget_model, thinking: thinking(budget: 40_000),
-                                 max_output_tokens: 500)
+      it 'rejects an explicit budget that is not less than max_output_tokens' do
+        expect do
+          render_payload(model: enumerated_budget_model, thinking: thinking(budget: 5000),
+                         max_output_tokens: 100)
+        end.to raise_error(ArgumentError, /budget 5000 is not less than max_tokens 100/)
+      end
+
+      it 'sends an explicit budget that fits under max_output_tokens' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(budget: 5000),
+                                 max_output_tokens: 8000)
 
         expect(payload[:additionalModelRequestFields]).to eq(
-          reasoning_config: { type: 'enabled', budget_tokens: 40_000 }
+          reasoning_config: { type: 'enabled', budget_tokens: 5000 }
         )
       end
 
