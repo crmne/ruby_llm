@@ -113,10 +113,14 @@ module RubyLLM
           Message.new(role: :assistant, content: content[:text], attachments: content[:attachments],
                       citations: content[:citations], thinking: parse_interaction_thinking(steps),
                       tool_calls: calls, server_tool_calls: parse_interaction_server_calls(steps),
-                      raw_content: { 'response' => data },
+                      raw_content: kept_interaction(data, steps),
                       model: model, raw: raw, cost: cost,
                       finish_reason: interaction_finish_reason(data['status'], calls),
                       **parse_interaction_usage(data['usage'] || {}))
+        end
+
+        def kept_interaction(data, steps)
+          { 'response' => data.merge('steps' => steps.map { |step| without_search_suggestions(step) }) }
         end
 
         def interaction_finish_reason(status, calls)

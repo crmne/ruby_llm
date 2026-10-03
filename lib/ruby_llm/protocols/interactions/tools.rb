@@ -43,9 +43,24 @@ module RubyLLM
             type = step['type'].to_s
             next unless type.end_with?('_call', '_result') && !type.start_with?('function_')
 
-            ServerToolCall.new(type: type, id: step['id'] || step['call_id'], name: step['name'],
-                               input: step['arguments'], result: step['result'], raw: step)
+            kept = without_search_suggestions(step)
+            ServerToolCall.new(type: type, id: kept['id'] || kept['call_id'], name: kept['name'],
+                               input: kept['arguments'], result: kept['result'], raw: kept,
+                               search_suggestions: search_suggestions(step))
           end
+        end
+
+        # Google's terms forbid storing search suggestions, and a replayed
+        # google_search_result keeps the shape it needs without them.
+        def without_search_suggestions(step)
+          return step unless step['type'] == 'google_search_result'
+
+          step.merge('result' => Array(step['result']).map { |item| item.except('search_suggestions') })
+        end
+
+        def search_suggestions(step)
+          suggestions = Array(step['result']).filter_map { |item| item['search_suggestions'] if item.is_a?(Hash) }
+          suggestions.join unless suggestions.empty?
         end
       end
     end

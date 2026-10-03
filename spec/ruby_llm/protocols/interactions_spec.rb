@@ -179,6 +179,33 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chunks.last.tokens).to have_attributes(input: 46, output: 15)
   end
 
+  describe 'Google Search' do
+    def search_steps(suggestions)
+      [
+        { 'id' => 'call_1', 'signature' => 'call-signature', 'type' => 'google_search_call',
+          'arguments' => { 'queries' => ['latest stable Ruby version'] }, 'search_type' => 'web_search' },
+        { 'call_id' => 'call_1', 'signature' => 'result-signature', 'type' => 'google_search_result',
+          'result' => [{ 'search_suggestions' => suggestions }], 'is_error' => false },
+        { 'signature' => 'thought-signature', 'type' => 'thought' },
+        { 'type' => 'model_output', 'content' => [{ 'type' => 'text', 'text' => 'Ruby 4.0.7 is the latest.' }] }
+      ]
+    end
+
+    it 'shows the suggestions on the live result and replays the step without them' do
+      suggestions = '<style>.container { display: flex; }</style><div class="container">Ruby 4.0.7</div>'
+      searched = search_steps(suggestions)
+      message = protocol.send(:parse_completion_body, body.merge('steps' => searched), raw: nil)
+      result = message.server_tool_calls.find { |call| call.type == 'google_search_result' }
+
+      expect(result.search_suggestions).to eq(suggestions)
+      expect(JSON.generate(message.server_tool_calls.map(&:to_h))).not_to include('container')
+      expect(JSON.generate(message.raw_content)).not_to include('container')
+      chat.add_message(role: :user, content: 'Which Ruby is the latest?')
+      chat.add_message(message)
+      expect(chat.ask_later('Thanks').render[:input]).to include(searched.first, searched[1].merge('result' => [{}]))
+    end
+  end
+
   it 'rejects failed or truncated streams and unsupported required actions' do
     allow(protocol).to receive(:stream_events).and_return(instance_double(Faraday::Response))
     expect { protocol.send(:stream_response, {}) { |_chunk| nil } }.to raise_error(RubyLLM::Error, /ended before/)
@@ -315,6 +342,18 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(message.server_tool_calls).to include(have_attributes(type: 'mcp_server_tool_result'))
     expect(message.tokens.input).to be_positive
     expect(message.raw_content.dig('response', 'steps')).to include(include('signature'))
+  end
+
+  it 'streams a Google Search answer with suggestions it does not keep for replay', :live do
+    chunks = []
+    message = chat.with_provider_tools(:web_search)
+                  .ask('Search the web: what is the latest stable Ruby version? Answer in one sentence.') do |chunk|
+      chunks << chunk
+    end
+
+    expect(chunks.flat_map(&:server_tool_calls).filter_map(&:search_suggestions).join).to include('<style>')
+    expect(message.server_tool_calls.filter_map(&:search_suggestions).join).to include('<style>')
+    expect(JSON.generate(message.raw_content)).not_to include('search_suggestions')
   end
 
   it 'executes local tools and returns JSON Schema output through Interactions', :live do

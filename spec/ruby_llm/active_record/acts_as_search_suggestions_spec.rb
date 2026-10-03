@@ -24,4 +24,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
     expect(stored_text(chat)).not_to include(*suggestion_markers)
     expect(Message.find(chat.messages.last.id).server_tool_calls.map(&:search_suggestions)).to all(be_nil)
   end
+
+  it 'replays a searched Gemini interaction from its record without the suggestions' do
+    chat = Chat.create!(model: model_for(:gemini, :mcp), provider: :gemini)
+    chat.protocol = :interactions
+    response = chat.with_provider_tools(:web_search).ask(question)
+
+    expect(response.server_tool_calls.filter_map(&:search_suggestions).join).to include('gradient-container')
+    expect(stored_text(chat)).not_to include(*suggestion_markers)
+
+    restored = Chat.find(chat.id)
+    restored.protocol = :interactions
+    payloads = []
+    followup = restored.with_provider_tools(:web_search).before_request { |payload| payloads << payload }
+                       .ask('In which year was that version released? Answer with the year only.')
+    replayed = payloads.first[:input].find { |step| step['type'] == 'google_search_result' }
+
+    expect(replayed).to include('call_id', 'signature', 'result' => [{}])
+    expect(followup.content).to match(/20\d\d/)
+  end
 end
