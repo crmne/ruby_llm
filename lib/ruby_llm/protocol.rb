@@ -517,7 +517,7 @@ module RubyLLM
 
     # A description must not raise inside the rescue that asks for it.
     def request_shape(payload) # :nodoc:
-      payload = JSON.parse(JSON.generate(payload), allow_duplicate_key: true)
+      payload = Support::Utils.deep_stringify_keys(payload)
       parse_request_shape(payload) if payload.is_a?(Hash)
     rescue StandardError => e
       RubyLLM.logger.debug { "#{self.class} could not describe its request: #{e.class}" }
