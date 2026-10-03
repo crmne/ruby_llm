@@ -174,8 +174,11 @@ module RubyLLM
       Cost.new(tokens:, model: model_info, category: :images, input_details: input_tokens_details)
     end
 
-    # Returns the registry Model for #model, or +nil+ if the model id
-    # is missing or not in the registry.
+    attr_writer :model_info # :nodoc:
+
+    # Returns the image's Model from its provider's registry, falling back
+    # to the requested model when the response ID is unknown. Images built
+    # without a request look up #model, or return +nil+ if unknown.
     def model_info
       return unless model
 

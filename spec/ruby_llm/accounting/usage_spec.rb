@@ -210,6 +210,82 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     end
   end
 
+  describe 'provider-specific operation pricing' do
+    def priced_model(id, provider, rate)
+      price = { standard: { input_per_million: rate, output_per_million: rate * 4 } }
+      pricing = %i[text_tokens audio_tokens embeddings images].to_h { |category| [category, price] }
+      RubyLLM::Model.new(id:, provider:, pricing:)
+    end
+
+    def track(operation, result, provider:, other:)
+      id = Array(result).first.model
+      model = priced_model(id, provider, 1.0)
+      allow(RubyLLM).to receive(:models).and_return(RubyLLM::Models.new([priced_model(id, other, 0.5), model]))
+      tracker = RubyLLM::Accounting::Usage::Tracker.new(
+        operation:, provider: instance_double(RubyLLM::Provider, slug: provider), model:, config: RubyLLM.config
+      )
+      entry = tracker.start
+      tracker.succeed(result)
+      [entry, model]
+    end
+
+    it 'prices a transcription with the model of the provider that transcribed it' do
+      result = RubyLLM::Transcription.new(text: 'ok', model: model_for(:vertexai, :transcription),
+                                          input_tokens: 1000, output_tokens: 500)
+
+      entry, model = track(:transcription, result, provider: 'vertexai', other: 'gemini')
+
+      expect(result.model_info).to eq(model)
+      expect(entry.cost.total).to be_within(1e-12).of(0.003)
+      expect(result.cost.total).to eq(entry.cost.total)
+    end
+
+    it 'prices an embedding with the model of the provider that embedded it' do
+      result = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: model_for(:gemini, :embedding), input_tokens: 1000)
+
+      entry, model = track(:embedding, result, provider: 'vertexai', other: 'gemini')
+
+      expect(result.model_info).to eq(model)
+      expect(entry.cost.total).to be_within(1e-12).of(0.001)
+      expect(result.cost.total).to eq(entry.cost.total)
+    end
+
+    it 'prices speech with the model of the provider that generated it' do
+      result = RubyLLM::Speech.new(data: 'audio', model: model_for(:azure, :azure_speech),
+                                   input_tokens: 1000, output_tokens: 500)
+
+      entry, model = track(:speech, result, provider: 'azure', other: 'openai')
+
+      expect(result.model_info).to eq(model)
+      expect(entry.cost.total).to be_within(1e-12).of(0.003)
+      expect(result.cost.total).to eq(entry.cost.total)
+    end
+
+    it 'prices every image with the model of the provider that generated it' do
+      images = [
+        RubyLLM::Image.new(data: 'aW1hZ2U=', model: model_for(:vertexai, :image),
+                           usage: { 'input_tokens' => 1000, 'output_tokens' => 500 }),
+        RubyLLM::Image.new(data: 'aW1hZ2U=', model: model_for(:vertexai, :image))
+      ]
+
+      entry, model = track(:image, images, provider: 'vertexai', other: 'gemini')
+
+      expect(images.map(&:model_info)).to eq([model, model])
+      expect(entry.cost.total).to be_within(1e-12).of(0.003)
+      expect(images.first.cost.total).to eq(entry.cost.total)
+    end
+
+    it 'prices a rerank with the model of the provider that ranked it' do
+      result = RubyLLM::Rerank.new(results: [], model: model_for(:cohere, :rerank), input_tokens: 1000)
+
+      entry, model = track(:rerank, result, provider: 'custom', other: 'cohere')
+
+      expect(result.model_info).to eq(model)
+      expect(entry.cost.total).to be_within(1e-12).of(0.001)
+      expect(result.cost.total).to eq(entry.cost.total)
+    end
+  end
+
   it 'recognizes an exact cost even when token counts are unavailable' do
     entry = RubyLLM::Accounting::Usage::Entry.new(
       operation: :chat,
