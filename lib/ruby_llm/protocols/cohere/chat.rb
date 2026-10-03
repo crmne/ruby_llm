@@ -107,6 +107,8 @@ module RubyLLM
         end
 
         def parse_completion_body(data, raw:)
+          raise_failed_generation(nil, response: raw) if data['finish_reason'] == 'ERROR'
+
           message_data = data['message'] || {}
           blocks = Array(message_data['content'])
           content, offsets = extract_text(blocks)
@@ -123,6 +125,12 @@ module RubyLLM
             raw: raw,
             **usage_tokens(data['usage'] || {})
           )
+        end
+
+        # Cohere answers a generation that failed on its side with an ERROR
+        # finish reason instead of an error status.
+        def raise_failed_generation(message, response: nil)
+          raise ServerError.new(message || 'The generation failed due to an internal error', response:)
         end
 
         # Cohere reports what the model processed under tokens and what it

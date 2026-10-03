@@ -112,6 +112,18 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
       expect(chunks.filter_map(&:content).join).to eq('LLMs stand')
     end
 
+    it 'raises a generation that ended in an error' do
+      events = sse(
+        '{"delta":{"message":{"role":"assistant"}},"id":"29f14a5a","type":"message-start"}',
+        '{"delta":{"message":{"content":{"text":"","type":"text"}}},"index":0,"type":"content-start"}',
+        '{"delta":{"message":{"content":{"text":"LL"}}},"index":0,"type":"content-delta"}',
+        '{"index":0,"type":"content-end"}',
+        '{"delta":{"error":"Internal error during generation","finish_reason":"ERROR"},"type":"message-end"}'
+      )
+
+      expect { stream(events) }.to raise_error(RubyLLM::ServerError, 'Internal error during generation')
+    end
+
     it 'accumulates streamed tool calls' do
       response, = stream(
         sse(

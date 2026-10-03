@@ -90,6 +90,21 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
     expect(batch.statuses).to eq(%i[succeeded failed])
   end
 
+  it 'counts a generation that ended in an error as a failed request' do
+    failed = { 'finish_reason' => 'ERROR', 'message' => { 'role' => 'assistant', 'content' => [] } }
+    answered = { 'finish_reason' => 'COMPLETE',
+                 'message' => { 'role' => 'assistant', 'content' => [{ 'type' => 'text', 'text' => 'Hi.' }] } }
+    stub_datasets([{ 'custom_id' => '0', 'error' => '', 'body' => failed },
+                   { 'custom_id' => '1', 'error' => '', 'body' => answered }])
+    response = batch_data(model:, count: 2)
+    stub_request(:get, 'https://api.cohere.com/v2/batches/batch_ruby').to_return_json(body: { batch: response })
+
+    batch = RubyLLM::Batch.find('batch_ruby', provider: :cohere, context:)
+
+    expect(batch.results.map { |message| message&.content }).to eq([nil, 'Hi.'])
+    expect(batch.statuses).to eq(%i[failed succeeded])
+  end
+
   it 'normalizes batch-only tool, image and thinking fields without changing a chat render' do
     image = { type: 'image_url', image_url: { url: 'https://example.test/ruby.png' } }
     body = {

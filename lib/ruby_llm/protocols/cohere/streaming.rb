@@ -13,6 +13,7 @@ module RubyLLM
 
         def build_chunk(data)
           type = data['type']
+          raise_failed_generation(data.dig('delta', 'error')) if data.dig('delta', 'finish_reason') == 'ERROR'
           track_content_lengths(data, type)
 
           Chunk.new(

@@ -159,6 +159,13 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
 
       expect(protocol.send(:parse_completion_body, body, raw: nil).tokens.cache_read).to eq(12)
     end
+
+    it 'raises a generation that ended in an error' do
+      body['finish_reason'] = 'ERROR'
+
+      expect { protocol.send(:parse_completion_body, body, raw: nil) }
+        .to raise_error(RubyLLM::ServerError, 'The generation failed due to an internal error')
+    end
   end
 
   describe 'thinking and tool calls' do
