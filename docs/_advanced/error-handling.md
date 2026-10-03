@@ -263,7 +263,7 @@ Retries are driven by error classification (exception types), not raw HTTP statu
 Retries are attempted for:
 
 *   Network timeouts (`Timeout::Error`, `Faraday::TimeoutError`, `Errno::ETIMEDOUT`)
-*   Connection failures (`Faraday::ConnectionFailed`)
+*   Connection failures (`Faraday::ConnectionFailed`, `Faraday::SSLError`)
 *   Rate limit errors (`RubyLLM::RateLimitError`, often HTTP 429)
 *   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 500, 502, 503, 504, 529)
 

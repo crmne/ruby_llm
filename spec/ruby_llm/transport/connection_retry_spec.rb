@@ -129,6 +129,17 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(stub).to have_been_requested.twice
     end
 
+    it 'retries a chat completion whose TLS connection fails' do
+      stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+             .to_raise(OpenSSL::SSL::SSLError.new('SSL_connect returned=1 errno=0 state=error: unexpected eof'))
+             .then.to_return(status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}')
+
+      response = provider.connection.post('chat/completions', {})
+
+      expect(response.status).to eq(200)
+      expect(stub).to have_been_requested.twice
+    end
+
     [429, 500, 503, 529].each do |status|
       it "honors millisecond retry delays for HTTP #{status}" do
         stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
@@ -185,6 +196,15 @@ RSpec.describe RubyLLM::Transport::Connection do
              .to_timeout.then.to_return(created_batch)
 
       expect { provider.create_batch(requests) }.to raise_error(Faraday::ConnectionFailed)
+      expect(stub).to have_been_requested.once
+    end
+
+    it 'submits a batch once when the first attempt fails with a TLS error' do
+      stub = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+             .to_raise(OpenSSL::SSL::SSLError.new('SSL_read: unexpected eof while reading'))
+             .then.to_return(created_batch)
+
+      expect { provider.create_batch(requests) }.to raise_error(Faraday::SSLError)
       expect(stub).to have_been_requested.once
     end
   end

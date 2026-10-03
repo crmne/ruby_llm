@@ -36,6 +36,11 @@ module RubyLLM
         Models.models_dev_alias(...)
       end
 
+      def initialize(config) # :nodoc:
+        super
+        @connection = signed_connection(api_base)
+      end
+
       def protocol_for(model, operation: nil, **)
         return protocols[:guardrails] if operation == :moderate
 
@@ -62,7 +67,7 @@ module RubyLLM
       end
 
       def mantle_connection
-        @mantle_connection ||= Transport::Connection.new(self, @config, api_base: mantle_api_base)
+        @mantle_connection ||= signed_connection(mantle_api_base, service: Bedrock::Mantle::SIGNING_SERVICE)
       end
 
       def api_base
@@ -85,7 +90,7 @@ module RubyLLM
       end
 
       def agent_connection # :nodoc:
-        @agent_connection ||= Transport::Connection.new(self, @config, api_base: agent_api_base)
+        @agent_connection ||= signed_connection(agent_api_base)
       end
 
       def rerank_model_arn(model_id) # :nodoc:
@@ -192,6 +197,16 @@ module RubyLLM
       end
 
       private
+
+      # Signs each attempt as it is sent, so a retry never replays a
+      # signature that expired while the previous attempt waited.
+      def signed_connection(base_url, service: 'bedrock')
+        signer = lambda do |env|
+          signed = sign_headers(env.method.to_s.upcase, env.url.request_uri, env.body.to_s, base_url:, service:)
+          { 'X-Amz-Security-Token' => nil }.merge(signed)
+        end
+        Transport::Connection.new(self, @config, api_base: base_url, signer:)
+      end
 
       def voxtral_transcription?(operation, model_id)
         operation == :transcribe && model_id == 'mistral.voxtral-small-24b-2507'

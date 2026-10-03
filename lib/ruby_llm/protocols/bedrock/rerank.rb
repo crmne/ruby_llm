@@ -57,10 +57,7 @@ module RubyLLM
         end
 
         def post_rerank(payload)
-          body = JSON.generate(payload)
-          @provider.agent_connection.post('/rerank', body, usage: @usage_tracker) do |request|
-            request.headers.merge!(@provider.sign_headers('POST', '/rerank', body, base_url: @provider.agent_api_base))
-          end
+          @provider.agent_connection.post('/rerank', JSON.generate(payload), usage: @usage_tracker)
         end
 
         def parse_rerank_pages(pages, model:, documents:)

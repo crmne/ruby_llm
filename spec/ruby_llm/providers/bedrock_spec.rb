@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'aws-eventstream'
 
 RSpec.describe RubyLLM::Providers::Bedrock do
   let(:credentials_class) { Struct.new(:access_key_id, :secret_access_key, :session_token, keyword_init: true) }
@@ -309,6 +310,167 @@ RSpec.describe RubyLLM::Providers::Bedrock do
 
       expect(request).to have_been_requested
       expect(JSON).to have_received(:generate).once
+    end
+  end
+
+  describe 'retried requests' do
+    let(:context) do
+      RubyLLM.context do |config|
+        config.bedrock_api_key = 'key'
+        config.bedrock_secret_key = 'secret'
+        config.bedrock_region = 'us-east-1'
+        config.max_retries = 1
+        config.retry_interval = 0
+        config.retry_interval_randomness = 0
+      end
+    end
+    let(:clock) { { now: Time.utc(2026, 10, 2, 14, 12, 2) } }
+    let(:attempts) { [] }
+
+    before { allow(Time).to receive(:now) { clock[:now] } }
+
+    def runtime
+      'https://bedrock-runtime.us-east-1.amazonaws.com'
+    end
+
+    def provider
+      described_class.new(context.config)
+    end
+
+    def json_reply(body)
+      { status: 200, headers: { 'Content-Type' => 'application/json' }, body: body.to_json }
+    end
+
+    def converse_reply
+      json_reply(output: { message: { role: 'assistant', content: [{ text: 'Hi' }] } },
+                 stopReason: 'end_turn', usage: { inputTokens: 3, outputTokens: 1 })
+    end
+
+    # The first attempt times out once SigV4's five-minute window has passed.
+    def time_out_once_then(response)
+      lambda do |request|
+        attempts << request
+        return response if attempts.size > 1
+
+        clock[:now] += 360
+        raise Net::ReadTimeout
+      end
+    end
+
+    def signature(method, path, body, **)
+      provider.sign_headers(method, path, body.to_s, **)['Authorization']
+    end
+
+    def amz_dates
+      attempts.map { |attempt| attempt.headers['X-Amz-Date'] }
+    end
+
+    def event(type, payload)
+      Aws::EventStream::Encoder.new.encode_message(
+        Aws::EventStream::Message.new(
+          headers: { ':event-type' => Aws::EventStream::HeaderValue.new(value: type, type: 'string'),
+                     ':message-type' => Aws::EventStream::HeaderValue.new(value: 'event', type: 'string') },
+          payload: StringIO.new(payload.to_json)
+        )
+      )
+    end
+
+    it 'signs a chat retry when it is sent, over the body it sends' do
+      chat = context.chat(model: model_for(:bedrock), provider: :bedrock)
+      path = "/model/#{chat.model.id}/converse"
+      stub_request(:post, "#{runtime}#{path}").to_return(time_out_once_then(converse_reply))
+
+      expect(chat.ask('Hello').content).to eq('Hi')
+
+      expect(amz_dates).to eq(%w[20261002T141202Z 20261002T141802Z])
+      expect(attempts.last.headers['Authorization']).to eq(signature('POST', path, attempts.last.body))
+      expect(attempts.first.headers['Authorization']).not_to eq(attempts.last.headers['Authorization'])
+    end
+
+    it 'signs a converse-stream retry when it is sent' do
+      chat = context.chat(model: model_for(:bedrock), provider: :bedrock)
+      path = "/model/#{chat.model.id}/converse-stream"
+      events = [event('contentBlockDelta', { contentBlockIndex: 0, delta: { text: 'Hi' } }),
+                event('messageStop', { stopReason: 'end_turn' }),
+                event('metadata', { usage: { inputTokens: 3, outputTokens: 1 } })].join
+      stub_request(:post, "#{runtime}#{path}").to_return(
+        time_out_once_then(status: 200, body: events,
+                           headers: { 'Content-Type' => 'application/vnd.amazon.eventstream' })
+      )
+
+      chunks = []
+      chat.ask('Hello') { |chunk| chunks << chunk.content }
+
+      expect(chunks.join).to eq('Hi')
+      expect(amz_dates).to eq(%w[20261002T141202Z 20261002T141802Z])
+      expect(attempts.last.headers['Authorization']).to eq(signature('POST', path, attempts.last.body))
+    end
+
+    it 'signs a count-tokens retry when it is sent' do
+      chat = context.chat(model: model_for(:bedrock), provider: :bedrock)
+      path = "/model/#{chat.model.id}/count-tokens"
+      stub_request(:post, "#{runtime}#{path}").to_return(time_out_once_then(json_reply(inputTokens: 7)))
+
+      expect(chat.count_tokens('Hello')).to eq(7)
+
+      expect(amz_dates).to eq(%w[20261002T141202Z 20261002T141802Z])
+      expect(attempts.last.headers['Authorization']).to eq(signature('POST', path, attempts.last.body))
+    end
+
+    it 'drops a session token the retry is no longer signed with' do
+      sts = credentials(access_key_id: 'key', secret_access_key: 'secret', session_token: 'sts-token')
+      static = credentials(access_key_id: 'key', secret_access_key: 'secret', session_token: nil)
+      recorded = attempts
+      provider = Object.new
+      provider.define_singleton_method(:credentials) { recorded.empty? ? sts : static }
+      context.config.bedrock_credential_provider = provider
+      chat = context.chat(model: model_for(:bedrock), provider: :bedrock)
+      stub_request(:post, "#{runtime}/model/#{chat.model.id}/converse").to_return(time_out_once_then(converse_reply))
+
+      chat.ask('Hello')
+
+      expect(attempts.map { |attempt| attempt.headers['X-Amz-Security-Token'] }).to eq(['sts-token', nil])
+      expect(attempts.last.headers['Authorization']).to include('SignedHeaders=host;x-amz-content-sha256;x-amz-date,')
+    end
+
+    it 'signs an escaped inference profile ARN path the way the request sends it' do
+      arn = 'arn:aws:bedrock:us-east-1:123456789012:application-inference-profile/abc123'
+      path = "/model/#{arn.gsub('/', '%2F')}/converse"
+      stub_request(:post, "#{runtime}#{path}").to_return(time_out_once_then(converse_reply))
+
+      context.chat(model: arn, provider: :bedrock, assume_model_exists: true).ask('Hello')
+
+      expect(amz_dates).to eq(%w[20261002T141202Z 20261002T141802Z])
+      expect(attempts.last.headers['Authorization']).to eq(signature('POST', path, attempts.last.body))
+    end
+
+    it 'signs a mantle retry for the bedrock-mantle service' do
+      reply = json_reply(id: 'msg_1', type: 'message', role: 'assistant', model: 'anthropic.claude-sonnet-5',
+                         content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn',
+                         usage: { input_tokens: 3, output_tokens: 1 })
+      stub_request(:post, "#{provider.mantle_api_base}/anthropic/v1/messages").to_return(time_out_once_then(reply))
+
+      context.chat(model: 'anthropic.claude-sonnet-5', provider: :bedrock).ask('Hello')
+
+      expect(amz_dates).to eq(%w[20261002T141202Z 20261002T141802Z])
+      expect(attempts.last.headers['Authorization']).to eq(
+        signature('POST', '/anthropic/v1/messages', attempts.last.body,
+                  base_url: provider.mantle_api_base, service: 'bedrock-mantle')
+      )
+      expect(attempts.last.headers['Anthropic-Version']).to eq('2023-06-01')
+    end
+
+    it 'signs a video status retry when it is sent' do
+      job_id = 'arn:aws:bedrock:us-east-1:123456789012:async-invoke/abc123'
+      path = "/async-invoke/#{URI.encode_www_form_component(job_id)}"
+      stub_request(:get, "#{runtime}#{path}").to_return(time_out_once_then(json_reply(status: 'InProgress')))
+      model = RubyLLM.models.find(model_for(:bedrock, :bedrock_video), provider: :bedrock)
+      protocol = RubyLLM::Protocols::Bedrock::AsyncVideos.new(provider, model)
+
+      expect(RubyLLM::VideoJob.new(id: job_id, protocol:, model: model.id).refresh).to be_pending
+
+      expect(amz_dates).to eq(%w[20261002T141202Z 20261002T141802Z])
+      expect(attempts.last.headers['Authorization']).to eq(signature('GET', path, ''))
     end
   end
 end

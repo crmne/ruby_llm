@@ -29,7 +29,7 @@ module RubyLLM
             signed_post(count_tokens_url, payload)
           end
 
-          def mantle_headers(url, body)
+          def mantle_headers
             super.merge('anthropic-version' => ANTHROPIC_VERSION)
           end
         end

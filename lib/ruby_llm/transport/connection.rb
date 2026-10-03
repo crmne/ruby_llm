@@ -4,6 +4,7 @@ require 'faraday'
 require 'faraday/multipart'
 require 'faraday/retry'
 require 'ruby_llm/transport/error_middleware'
+require 'ruby_llm/transport/signing_middleware'
 require 'ruby_llm/transport/usage_middleware'
 require 'timeout'
 
@@ -62,10 +63,11 @@ module RubyLLM
         connection
       end
 
-      def initialize(provider, config, api_base: nil, headers: {})
+      def initialize(provider, config, api_base: nil, headers: {}, signer: nil)
         @provider = provider
         @config = config
         @headers = headers
+        @signer = signer
         @settings = settings_for(api_base || provider.api_base)
         @stream_settings = @settings.dup.tap { |settings| settings.stream = true }.freeze
         connection
@@ -164,11 +166,14 @@ module RubyLLM
         ).freeze
       end
 
-      # Credentials and the provider that parses errors travel with each
-      # request, because the Faraday connection is shared across contexts.
+      # Credentials, the signer, and the provider that parses errors travel
+      # with each request, because the Faraday connection is shared across
+      # contexts.
       def prepare(request)
         request.headers.merge!(@headers).merge!(@provider.headers)
-        (request.options.context ||= {})[ErrorMiddleware::PROVIDER_KEY] = @provider
+        context = request.options.context ||= {}
+        context[ErrorMiddleware::PROVIDER_KEY] = @provider
+        context[SigningMiddleware::CONTEXT_KEY] = @signer if @signer
       end
 
       def self.setup_timeout(faraday, settings)
@@ -220,6 +225,7 @@ module RubyLLM
       def self.setup_middleware(faraday, settings)
         faraday.request :multipart
         faraday.request :json
+        faraday.use :llm_signing
         faraday.use JsonResponse
         faraday.adapter(settings.adapter)
         faraday.use :llm_errors
@@ -237,6 +243,7 @@ module RubyLLM
           Timeout::Error,
           Faraday::TimeoutError,
           Faraday::ConnectionFailed,
+          Faraday::SSLError,
           Faraday::RetriableResponse,
           RubyLLM::RateLimitError,
           RubyLLM::ServerError,

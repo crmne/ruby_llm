@@ -85,10 +85,7 @@ module RubyLLM
         end
 
         def post_moderation(url, payload)
-          body = JSON.generate(payload)
-          @connection.post(url, body, usage: @usage_tracker) do |request|
-            request.headers.merge!(@provider.sign_headers('POST', url, body))
-          end
+          @connection.post(url, JSON.generate(payload), usage: @usage_tracker)
         end
 
         def parse_moderation_result(response)
