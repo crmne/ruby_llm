@@ -55,15 +55,12 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     around { |example| with_isolation(:fiber) { example.run } }
 
     it 'returns the connections results leased inside a reactor' do
-      in_reactor { Rails.application.executor.wrap { run_rounds(3) } }
-
-      expect(abandoned_connections).to eq(0)
+      expect { in_reactor { Rails.application.executor.wrap { run_rounds(3) } } }
+        .not_to(change { abandoned_connections })
     end
 
     it 'returns the connections results leased outside a reactor' do
-      Rails.application.executor.wrap { run_rounds(3) }
-
-      expect(abandoned_connections).to eq(0)
+      expect { Rails.application.executor.wrap { run_rounds(3) } }.not_to(change { abandoned_connections })
     end
 
     it 'leaves an error a tool fiber raised for the caller to report' do
@@ -88,6 +85,7 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
         calls = Array.new(3) { RubyLLM::ToolCall.new(id: "call_#{SecureRandom.hex(4)}", name: 'count_chats') }
         RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls.to_h { |call| [call.id, call] })
       end
+      abandoned_before = abandoned_connections
 
       in_reactor do
         Rails.application.executor.wrap do
@@ -102,7 +100,7 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
         end
       end
 
-      expect(abandoned_connections).to eq(0)
+      expect(abandoned_connections).to eq(abandoned_before)
     end
   end
 
