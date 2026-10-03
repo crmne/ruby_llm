@@ -33,22 +33,12 @@ permissions:
   discussions: write
   pull-requests: write
 
+# Copilot Triage's own workflow does the rest, and updates with its v0 tag.
 jobs:
-  assess:
-    if: vars.COPILOT_ISSUE_ASSESSMENT_ENABLED == 'true' && (github.event.sender.type != 'Bot' || github.event_name == 'issues' || github.event_name == 'pull_request_review')
-    # On the job, so a bot comment's skipped run never replaces a queued one.
-    concurrency:
-      group: >-
-        assessment-${{ github.event.discussion && 'discussion' || inputs.kind || 'issue' }}-${{ github.event.issue.number || github.event.discussion.number || github.event.pull_request.number || inputs.number }}-${{ github.event.discussion && (github.event.comment.parent_id || github.event.comment.id) || 'report' }}
-      cancel-in-progress: false
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: crmne/copilot-triage@v0
-        with:
-          copilot-token: ${{ secrets.COPILOT_GITHUB_TOKEN }}
-          fallback-api-key: ${{ secrets.OPENROUTER_API_KEY }}
-          project-token: ${{ secrets.TRIAGE_PROJECT_TOKEN }}
-          kind: ${{ inputs.kind || (github.event.discussion && 'discussion' || (github.event.pull_request || github.event.issue.pull_request) && 'pull_request' || 'issue') }}
-          number: ${{ inputs.number || github.event.issue.number || github.event.discussion.number || github.event.pull_request.number }}
-          dry-run: ${{ inputs.dry_run || false }}
+  triage:
+    uses: crmne/copilot-triage/.github/workflows/assess.yml@v0
+    secrets: inherit
+    with:
+      kind: ${{ inputs.kind || '' }}
+      number: ${{ inputs.number || '' }}
+      dry_run: ${{ inputs.dry_run || false }}
