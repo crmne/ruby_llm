@@ -52,6 +52,14 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(response.status).to eq(529)
   end
 
+  it 'keeps the error body and the request when the adapter has set no status yet' do
+    pending_env = Faraday::Env.from(request_body: '{"stream":true}')
+
+    response = test_obj.send(:build_stream_error_response, parsed_error, pending_env, 400)
+
+    expect(response).to have_attributes(status: 400, body: parsed_error, request_body: '{"stream":true}')
+  end
+
   it 'stores parsed streaming errors on the response env before raising' do
     failed_env = Faraday::Env.from(status: 429)
 

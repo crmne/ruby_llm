@@ -183,7 +183,8 @@ module RubyLLM
         if faraday_1? || env.nil?
           Struct.new(:body, :status).new(parsed_data, error_status)
         else
-          env.merge(body: parsed_data, status: error_status)
+          # Faraday writes body into the request until a status is set.
+          env.merge(status: error_status, body: parsed_data)
         end
       end
 
