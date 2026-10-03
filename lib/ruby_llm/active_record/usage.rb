@@ -16,6 +16,50 @@ module RubyLLM
 
       scope :chronological, -> { order(created_at: :asc, id: :asc) }
 
+      # Writes an entry that belongs to no chat record, attributed to its
+      # owner. A ledger that cannot store such rows yet is skipped, and a
+      # failed write is logged so it never breaks the operation that billed
+      # it. A savepoint keeps a failed insert from aborting the caller's
+      # transaction.
+      def self.record(entry)
+        return unless entry.model && ledger_available?
+
+        attributes = attributes_for(entry)
+        attributes[:owner] = entry.owner if column_names.include?('owner_id')
+        transaction(requires_new: true) { create!(attributes) }
+      rescue StandardError => e
+        RubyLLM.logger.warn("RubyLLM could not record #{entry.operation} usage: #{e.class}: #{e.message}")
+        nil
+      end
+
+      def self.ledger_available?
+        table_exists? && columns_hash['chat_id']&.null
+      end
+
+      def self.attributes_for(entry)
+        tokens = entry.tokens
+        cost = entry.cost
+        attributes = {
+          operation: entry.operation,
+          provider: entry.provider,
+          model: entry.model,
+          status: entry.status,
+          input_tokens: tokens.input,
+          output_tokens: tokens.output,
+          cache_read_tokens: tokens.cache_read,
+          cache_write_tokens: tokens.cache_write,
+          thinking_tokens: tokens.thinking,
+          input_cost: cost.input,
+          output_cost: cost.output,
+          cache_read_cost: cost.cache_read,
+          cache_write_cost: cost.cache_write,
+          thinking_cost: cost.thinking,
+          total_cost: cost.total
+        }
+        attributes[:server_tool_use] = tokens.server_tool_use if column_names.include?('server_tool_use')
+        attributes
+      end
+
       def tokens
         RubyLLM::Tokens.new(
           input: input_tokens,

@@ -81,6 +81,8 @@ module RubyLLM
     # +model+ is not given. Pass +provider:+ and <tt>assume_model_exists: true</tt>
     # to use a model that is not in the registry. An explicitly selected
     # provider may instead use a configured resource without a model.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     #
     #   RubyLLM.moderate("User message")
     #   RubyLLM.moderate(["First comment", "Second comment"]).results
@@ -93,7 +95,8 @@ module RubyLLM
                       assume_model_exists: false,
                       context: nil,
                       provider_options: {},
-                      metadata: nil)
+                      metadata: nil,
+                      owner: nil)
       attachments = Attachment.wrap(with)
       raise ArgumentError, 'must provide input text, image attachment, or both' if input.nil? && attachments.empty?
 
@@ -116,7 +119,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('moderation.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.moderate(input, model:, with: attachments, provider_options:)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.moderate(input, model:, with: attachments, provider_options:)
+        end
         event[:result] = result
         event[:flagged] = result.flagged?
         event[:tokens] = result.tokens

@@ -380,10 +380,17 @@ module RubyLLM
         status: :succeeded,
         tokens: result.tokens,
         cost: @provider.batch_cost(result.tokens, model:, category:),
-        message: result.is_a?(Message) ? result : nil
+        message: result.is_a?(Message) ? result : nil,
+        owner: Accounting::Usage.owner
       )
       result.ruby_llm_usage_entries = [entry]
-      Accounting::Usage.instrument(entry, config: @provider.config) if instrument
+      return unless instrument
+
+      if operation == :chat
+        Accounting::Usage.instrument(entry, config: @provider.config)
+      else
+        Accounting::Usage.report(entry, config: @provider.config)
+      end
     end
 
     # A plain answer is the chat's last message once it arrives. A tool-call

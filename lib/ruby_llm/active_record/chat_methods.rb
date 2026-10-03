@@ -717,28 +717,7 @@ module RubyLLM
       private
 
       def persist_usage_entry(entry)
-        tokens = entry.tokens
-        cost = entry.cost
-        attributes = {
-          operation: entry.operation,
-          provider: entry.provider,
-          model: entry.model,
-          status: entry.status,
-          input_tokens: tokens.input,
-          output_tokens: tokens.output,
-          cache_read_tokens: tokens.cache_read,
-          cache_write_tokens: tokens.cache_write,
-          thinking_tokens: tokens.thinking,
-          input_cost: cost.input,
-          output_cost: cost.output,
-          cache_read_cost: cost.cache_read,
-          cache_write_cost: cost.cache_write,
-          thinking_cost: cost.thinking,
-          total_cost: cost.total
-        }
-        attributes[:server_tool_use] = tokens.server_tool_use if Usage.column_names.include?('server_tool_use')
-        record = ruby_llm_usages.create!(attributes)
-        usage_records_by_entry[entry] = record
+        usage_records_by_entry[entry] = ruby_llm_usages.create!(Usage.attributes_for(entry))
       end
 
       def link_usage_entries(message)

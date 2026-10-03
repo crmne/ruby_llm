@@ -1400,7 +1400,7 @@ module RubyLLM
 
     def record_usage_entry(entry)
       usage_entries << entry
-      @usage_recorder&.call(entry)
+      @usage_recorder ? @usage_recorder.call(entry) : Accounting::Usage.record(entry)
       entry
     end
 
@@ -1416,7 +1416,8 @@ module RubyLLM
         status: :succeeded,
         tokens: response.tokens,
         cost: response.cost,
-        message: response
+        message: response,
+        owner: Accounting::Usage.owner
       )
       response.ruby_llm_usage_entries = [entry]
       Accounting::Usage.instrument(entry, config: @config)

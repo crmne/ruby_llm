@@ -29,6 +29,7 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/acts_as'
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
           RubyLLM.config.mcp_credential_store ||= RubyLLM::ActiveRecord::MCPCredential
+          RubyLLM::Accounting::Usage.ledger ||= RubyLLM::ActiveRecord::Usage
         end
       end
 

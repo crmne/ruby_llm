@@ -166,6 +166,7 @@ loader.setup
 # Tokens and Cost report usage and pricing. Chat totals include retries
 # and attempts that produced no message. Provider-reported costs take
 # precedence over estimates; unknown usage and prices remain +nil+.
+# RubyLLM.with_usage_owner attributes the usage of operations to a record.
 # RubyLLM.workflow groups instrumentation from ordinary Ruby code into
 # named Workflow steps.
 #
@@ -232,6 +233,23 @@ module RubyLLM
     # unchanged.
     def workflow(name, id: nil, metadata: nil, &)
       Workflow.new(name, id:, metadata:, config: config).run(&)
+    end
+
+    # Attributes the usage of every operation inside the block to +owner+,
+    # such as a user or an account record, and returns the block's value.
+    # In Rails, the usage ledger stores the owner on rows that belong to no
+    # chat record; everywhere, the +usage.ruby_llm+ event carries it as
+    # +owner+. An operation's own +owner:+ keyword wins, and nested blocks
+    # restore the outer owner when they end. Each fiber and thread keeps its
+    # own owner, and fibers and threads started inside the block inherit it.
+    #
+    #   RubyLLM.with_usage_owner(current_user) do
+    #     RubyLLM.transcribe("memo.m4a")
+    #     RubyLLM.paint("a paper boat in the rain")
+    #   end
+    #
+    def with_usage_owner(owner, &)
+      Accounting::Usage.with_owner(owner, &)
     end
 
     # Creates a Chat conversation. Arguments are forwarded to Chat.new:

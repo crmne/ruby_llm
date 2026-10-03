@@ -99,6 +99,8 @@ module RubyLLM
     # in the provider's request vocabulary and merges them into the
     # request as-is. +metadata:+ is not sent to the provider; it is
     # attached to the emitted +embedding.ruby_llm+ instrumentation event.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     def self.embed(text,
                    model: nil,
                    provider: nil,
@@ -109,7 +111,8 @@ module RubyLLM
                    title: nil,
                    with: nil,
                    provider_options: {},
-                   metadata: nil)
+                   metadata: nil,
+                   owner: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_embedding_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -134,7 +137,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('embedding.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.embed(text, model:, dimensions:, task_type:, title:, with:, provider_options:)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.embed(text, model:, dimensions:, task_type:, title:, with:, provider_options:)
+        end
         event[:result] = result
         event[:response_model] = result.model
         event[:tokens] = result.tokens

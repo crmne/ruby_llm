@@ -41,6 +41,8 @@ module RubyLLM
     # the given zero-based page indexes. +provider_options:+ merges options
     # into the request in the provider's own vocabulary, such as Mistral's
     # +include_image_base64:+ or +table_format:+.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     #
     #   RubyLLM.ocr("report.pdf")
     #   RubyLLM.ocr("https://example.com/scan.png")
@@ -55,7 +57,8 @@ module RubyLLM
                  context: nil,
                  pages: nil,
                  provider_options: {},
-                 metadata: nil)
+                 metadata: nil,
+                 owner: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_ocr_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -71,7 +74,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('ocr.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.ocr(file, model:, pages:, provider_options:)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.ocr(file, model:, pages:, provider_options:)
+        end
         event[:result] = result
         event[:response_model] = result.model
         result

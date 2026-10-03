@@ -172,7 +172,7 @@ RubyLLM emits these events:
 *   `workflow.ruby_llm` - one named workflow block and its correlation ID
 *   `workflow_step.ruby_llm` - one named code region within a workflow
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
-*   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, and cost
+*   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, cost, and owner
 *   `batch.ruby_llm` - one batch submission operation
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result

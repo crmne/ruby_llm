@@ -43,6 +43,8 @@ module RubyLLM
     # request vocabulary and merges them into the request as-is.
     # +context:+ supplies a Context whose configuration replaces the
     # global one. +metadata:+ is included in the instrumentation payload.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     #
     #   image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-2")
     #
@@ -67,7 +69,8 @@ module RubyLLM
                    with: nil,
                    mask: nil,
                    provider_options: {},
-                   metadata: nil)
+                   metadata: nil,
+                   owner: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_image_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -88,7 +91,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
+        end
         images = Support::Utils.to_safe_array(result)
         event[:result] = result
         event[:response_model] = images.first&.model

@@ -6,19 +6,55 @@ module RubyLLM
   module Accounting # :nodoc:
     # Internal accounting for physical provider attempts.
     class Usage # :nodoc: all
-      def self.instrument(entry, config:) # :nodoc:
-        RubyLLM.instrument(
-          'usage.ruby_llm',
-          {
-            operation: entry.operation,
-            provider: entry.provider,
-            model: entry.model,
-            status: entry.status,
-            tokens: entry.tokens,
-            cost: entry.cost
-          },
-          config:
-        )
+      OWNER_KEY = :ruby_llm_usage_owner
+
+      class << self
+        # Persists finished entries that no chat records, when the
+        # application provides a store, such as the Rails usage ledger.
+        attr_accessor :ledger
+
+        # The owner lives in fiber storage, which isolates concurrent
+        # fibers and threads and is inherited by those started inside it.
+        def owner
+          Fiber[OWNER_KEY]
+        end
+
+        def with_owner(owner)
+          previous = Fiber[OWNER_KEY]
+          Fiber[OWNER_KEY] = owner
+          yield
+        ensure
+          Fiber[OWNER_KEY] = previous
+        end
+
+        def owned_by(owner, &)
+          owner.nil? ? yield : with_owner(owner, &)
+        end
+
+        def record(entry)
+          ledger&.record(entry)
+        end
+
+        def report(entry, config:)
+          record(entry)
+          instrument(entry, config:)
+        end
+
+        def instrument(entry, config:)
+          RubyLLM.instrument(
+            'usage.ruby_llm',
+            {
+              operation: entry.operation,
+              provider: entry.provider,
+              model: entry.model,
+              status: entry.status,
+              tokens: entry.tokens,
+              cost: entry.cost,
+              owner: entry.owner
+            },
+            config:
+          )
+        end
       end
 
       # Shared storage for result objects carrying attempt accounting.
@@ -51,7 +87,7 @@ module RubyLLM
         OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank judgment].freeze
         STATUSES = %i[pending succeeded failed cancelled].freeze
 
-        attr_reader :operation, :provider, :model, :status, :tokens
+        attr_reader :operation, :provider, :model, :status, :tokens, :owner
         attr_accessor :message
 
         include Support::Inspectable
@@ -60,7 +96,8 @@ module RubyLLM
           { operation: operation, provider: provider, model: model, status: status, tokens: tokens }
         end
 
-        def initialize(operation:, provider:, model:, status: :pending, tokens: nil, cost: nil, message: nil)
+        def initialize(operation:, provider:, model:, status: :pending, tokens: nil, cost: nil, message: nil,
+                       owner: nil)
           @operation = operation.to_sym
           @provider = provider.to_s
           @model = model&.to_s
@@ -68,6 +105,7 @@ module RubyLLM
           @tokens = tokens || Tokens.new
           @cost = cost
           @message = message
+          @owner = owner
           validate!
         end
 
@@ -136,7 +174,8 @@ module RubyLLM
         end
 
         def start
-          entry = Entry.new(operation: @operation, provider: @provider.slug, model: @model_info&.id)
+          entry = Entry.new(operation: @operation, provider: @provider.slug, model: @model_info&.id,
+                            owner: Usage.owner)
           @entries << entry
           @pending << entry
           entry
@@ -231,12 +270,12 @@ module RubyLLM
           )
           entry.finish(status:, tokens:, cost:)
           @pending.delete(entry)
-          @on_finish&.call(entry)
-          instrument(entry)
-        end
-
-        def instrument(entry)
-          Accounting::Usage.instrument(entry, config: @config)
+          if @on_finish
+            @on_finish.call(entry)
+            Accounting::Usage.instrument(entry, config: @config)
+          else
+            Accounting::Usage.report(entry, config: @config)
+          end
         end
 
         def attach_to_result(result)

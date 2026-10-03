@@ -70,7 +70,7 @@ module RubyLLM
     end
 
     def self.judge(input, questions:, with: nil, model: nil, provider: nil, context: nil, # :nodoc:
-                   assume_model_exists: false, provider_options: {}, metadata: nil)
+                   assume_model_exists: false, provider_options: {}, metadata: nil, owner: nil)
       config = context&.config || RubyLLM.config
       attachments = Attachment.wrap(with, config:)
       validate_input!(input, attachments)
@@ -93,7 +93,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('judgment.ruby_llm', payload, config:) do |event|
-        result = provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.judge(input, questions:, model:, with: attachments, provider_options:)
+        end
         event[:result] = result
         event[:tokens] = result.tokens
         event[:cost] = result.cost

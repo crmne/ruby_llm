@@ -24,6 +24,7 @@ After reading this guide, you will know:
 * How to price token usage yourself with `cost_for` and `Cost.aggregate`.
 * How to price provider tools billed per use, such as web search.
 * How costs are recorded in Rails and how to keep registry pricing fresh.
+* How to attribute the usage of one-shot operations to a user or account.
 
 ## Reading Tokens and Costs
 
@@ -181,6 +182,47 @@ chat.cost.total
 
 The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Each usage row records the operation, provider, model, status, token buckets, cost components, and timestamps in normalized numeric columns, so ordinary SQL sums and period queries work directly against `ruby_llm_usages`. A JSON `server_tool_use` column keeps the attempt's [tool use counts](#pricing-tool-use). Costs are frozen at completion, so a later `RubyLLM.models.refresh` that changes registry pricing leaves recorded usage untouched. The 2.0 upgrade moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
 
+### One-Shot Operations
+
+Operations outside a chat record their attempts in the same ledger. `RubyLLM.transcribe`, `embed`, `paint`, `speak`, `moderate`, `ocr`, `rerank`, and `judge` each write a row for every attempt the provider may have billed, including failed and blocked ones. These rows have no chat. A chat without a record, such as `RubyLLM.chat` in a service object, records its rows the same way.
+
+Pass `owner:` to attribute an operation's usage to a record, such as the user who asked for it:
+
+```ruby
+RubyLLM.transcribe("memo.m4a", owner: current_user)
+RubyLLM.embed(document.body, owner: current_user.account)
+```
+
+To attribute everything a block of code does, wrap it in `RubyLLM.with_usage_owner`:
+
+```ruby
+class ProcessUploadJob < ApplicationJob
+  def perform(upload)
+    RubyLLM.with_usage_owner(upload.user) do
+      transcript = RubyLLM.transcribe(upload.file_path)
+      RubyLLM.embed(transcript.text)
+    end
+  end
+end
+```
+
+An operation's `owner:` wins over the block's owner, and a nested block restores the outer owner when it ends. Each fiber and thread keeps its own owner, and fibers and threads started inside the block inherit it. Without an owner, RubyLLM still writes the row, unattributed.
+
+Rows of an `acts_as_chat` record belong to that chat and have no owner, even inside the block: the chat already says whose conversation it was. A chat record's rows are written once, by the chat.
+
+To query an owner's spend, declare the association on the owner's model:
+
+```ruby
+class User < ApplicationRecord
+  has_many :ruby_llm_usages, as: :owner, class_name: "RubyLLM::ActiveRecord::Usage", dependent: :nullify
+end
+
+current_user.ruby_llm_usages.sum(:total_cost)
+current_user.ruby_llm_usages.where(created_at: Time.current.all_month).group(:operation).sum(:total_cost)
+```
+
+Writing a row never breaks the operation that billed it. If the insert fails, RubyLLM logs a warning and returns the result. Attempts without a model, such as a moderation through a provider's configured resource, are instrumented but not written, because every ledger row names its model.
+
 ## Keeping Registry Pricing Fresh
 
 Because recorded costs are frozen at completion, stale registry pricing only affects new attempts, never usage you have already saved. To keep new costs accurate, refresh the registry on a schedule. A daily job is a good default; providers change prices infrequently.
@@ -218,7 +260,14 @@ ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
 end
 ```
 
-The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. It does not expose RubyLLM's internal persistence record.
+The payload contains `operation`, `provider`, `model`, `status`, `tokens`, `cost`, and `owner`, the record given as [`owner:` or through `RubyLLM.with_usage_owner`](#one-shot-operations). It does not expose RubyLLM's internal persistence record. Without Active Record, subscribe to this event to attribute spend yourself:
+
+```ruby
+ActiveSupport::Notifications.subscribe("usage.ruby_llm") do |event|
+  owner = event.payload[:owner]
+  Spend.add(owner, event.payload[:cost].total) if owner && event.payload[:cost].total
+end
+```
 
 `status` is `succeeded`, `failed`, or `cancelled`. `tokens` and `cost` use the same value objects returned by responses. They are always present; individual fields are `nil` when the provider did not report enough information. A failed or cancelled attempt may contain the token counts observed before it stopped.
 

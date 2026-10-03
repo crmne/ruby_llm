@@ -98,6 +98,8 @@ module RubyLLM
     # +:segment+ or +:character+; unsupported granularities raise ArgumentError.
     # +provider_options:+ takes options in the provider's request vocabulary
     # and merges them into the rendered request as-is.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     #
     # Given a block, the transcript streams: each TranscriptionChunk is
     # yielded as it arrives and the completed Transcription is still
@@ -126,6 +128,7 @@ module RubyLLM
                         speaker_references: nil,
                         provider_options: {},
                         metadata: nil,
+                        owner: nil,
                         &block)
       config = context&.config || RubyLLM.config
       model ||= config.default_transcription_model
@@ -145,9 +148,11 @@ module RubyLLM
       }
 
       RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.transcribe(audio_file, model:, language:, format:, timestamps:, speaker_names:,
-                                                          speaker_references:, provider_options:, prompt:,
-                                                          temperature:, &block)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.transcribe(audio_file, model:, language:, format:, timestamps:, speaker_names:,
+                                                   speaker_references:, provider_options:, prompt:,
+                                                   temperature:, &block)
+        end
         event[:result] = result
         event[:response_model] = result.model
         event[:tokens] = result.tokens

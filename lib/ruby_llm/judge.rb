@@ -135,7 +135,8 @@ module RubyLLM
 
     # Judges the supplied input and returns a Judgment. Accepts model and
     # provider overrides, images as +with:+, an isolated +context:+,
-    # +provider_options:+, and instrumentation +metadata:+. Additional
+    # +provider_options:+, instrumentation +metadata:+, and a usage +owner:+,
+    # as RubyLLM.with_usage_owner describes. Additional
     # +questions:+ are a Hash keyed by question name, with +type:+,
     # +instructions:+, and +criteria:+ (probability), +options:+ (choice), or
     # +levels:+ (score). The block supplies input only. Input may be omitted
@@ -144,14 +145,14 @@ module RubyLLM
     #   RubyLLM.judge("Please help today",
     #     questions: { urgent: { type: :probability, instructions: "Is this urgent?" } })
     #   Receipt.judge(with: "receipt.png")
-    def judge(input = nil, questions: {}, with: nil, context: nil, metadata: nil, **options, &block)
+    def judge(input = nil, questions: {}, with: nil, context: nil, metadata: nil, owner: nil, **options, &block)
       raise ArgumentError, 'Pass judgment input or a block, not both' if !input.nil? && block
 
       data = resolve_data(block || input)
       definitions = resolve_questions(questions)
       settings = self.class.model.merge(provider_options: self.class.provider_options).merge(options)
       settings = settings.transform_values { |value| resolve_data(value) }
-      Judgment.judge(data, questions: definitions, with:, context:, metadata:, **settings)
+      Judgment.judge(data, questions: definitions, with:, context:, metadata:, owner:, **settings)
     end
 
     private

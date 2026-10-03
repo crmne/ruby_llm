@@ -54,6 +54,8 @@ module RubyLLM
     # that is not in the registry. +provider_options:+ takes options in the
     # provider's request vocabulary, such as +instructions:+ and +speed:+
     # for OpenAI, and merges them into the request as-is.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     #
     #   speech = RubyLLM.speak "Hello, welcome to RubyLLM!"
     #   speech.save "welcome.mp3"
@@ -82,6 +84,7 @@ module RubyLLM
                    context: nil,
                    provider_options: {},
                    metadata: nil,
+                   owner: nil,
                    &block)
       config = context&.config || RubyLLM.config
       model ||= config.default_speech_model
@@ -105,7 +108,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('speech.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.speak(input, model:, voice:, format:, provider_options:, &block)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.speak(input, model:, voice:, format:, provider_options:, &block)
+        end
         event[:result] = result
         event[:response_model] = result.model
         event[:voice] = result.voice

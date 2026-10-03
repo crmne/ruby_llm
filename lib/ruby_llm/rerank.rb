@@ -66,6 +66,8 @@ module RubyLLM
     # provider-specific and have no cross-provider default. +top_n:+
     # limits how many results come back. +provider_options:+ merges
     # options into the request in the provider's vocabulary.
+    # +owner:+ attributes the usage to a record, such as a user, and wins
+    # over RubyLLM.with_usage_owner.
     #
     #   RubyLLM.rerank "what is ruby", docs, model: "voyageai/rerank-2.5-lite", provider: :openrouter
     #
@@ -76,7 +78,8 @@ module RubyLLM
                     context: nil,
                     top_n: nil,
                     provider_options: {},
-                    metadata: nil)
+                    metadata: nil,
+                    owner: nil)
       config = context&.config || RubyLLM.config
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
                                                        config: config)
@@ -96,7 +99,9 @@ module RubyLLM
       }
 
       RubyLLM.instrument('rerank.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.rerank(query, documents, model:, top_n:, provider_options:)
+        result = Accounting::Usage.owned_by(owner) do
+          provider_instance.rerank(query, documents, model:, top_n:, provider_options:)
+        end
         event[:result] = result
         event[:tokens] = result.tokens
         event[:cost] = result.cost

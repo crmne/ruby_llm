@@ -210,13 +210,17 @@ end
 
 See [Rails Advanced Configuration]({% link _advanced/rails-advanced-config.md %}).
 
+## Usage Beyond Chats
+
+In Rails, one-shot operations such as `RubyLLM.transcribe` and `RubyLLM.embed` write to the usage ledger too, attributed with `owner: current_user` or `RubyLLM.with_usage_owner(current_user) { ... }`. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
+
 ## Request Shapes in Errors
 
 When a provider rejects a conversation without saying why, `error.request_shape` lists each turn's parts and their sizes, never their contents, and the problems providers are known to refuse, such as a part with no data. See [Describing a Rejected Request]({% link _advanced/error-handling.md %}#describing-a-rejected-request).
 
 ## Upgrades, One Release at a Time
 
-From 2.1 on, each release ships the upgrade from the release before it. `bin/rails generate ruby_llm:upgrade` in 2.1 adds the MCP credentials table, columns for tool calls waiting on input or a task and for the results MCP Apps render, a table where chats remember the provider uploads of their stored files, and a column where usage keeps the provider tool uses of each attempt. Applications on 1.x upgrade to 2.0 first. See [Upgrading]({% link _reference/upgrading.md %}).
+From 2.1 on, each release ships the upgrade from the release before it. `bin/rails generate ruby_llm:upgrade` in 2.1 adds the MCP credentials table, columns for tool calls waiting on input or a task and for the results MCP Apps render, a table where chats remember the provider uploads of their stored files, a column where usage keeps the provider tool uses of each attempt, and an owner for usage outside a chat. Applications on 1.x upgrade to 2.0 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.1
 
