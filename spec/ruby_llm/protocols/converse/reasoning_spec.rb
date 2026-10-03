@@ -45,6 +45,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Reasoning do
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :low))).to eq(reasoning_effort: 'low')
     end
 
+    it 'turns regional Sonnet 5.5 thinking off with between_tools' do
+      %w[us.anthropic.claude-sonnet-5-5 global.anthropic.claude-sonnet-5-5
+         eu.anthropic.claude-sonnet-5-5].each do |id|
+        model = instance_double(RubyLLM::Model, id: id, provider_class: RubyLLM::Providers::Bedrock)
+
+        expect(reasoning_fields(RubyLLM::Thinking::Config.new(enabled: false), model: model))
+          .to eq(thinking: { type: 'between_tools' })
+      end
+    end
+
     it 'falls back to a token budget' do
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(budget: 2048))).to eq(
         reasoning_config: { type: 'enabled', budget_tokens: 2048 }

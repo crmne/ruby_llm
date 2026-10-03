@@ -23,6 +23,20 @@ RSpec.describe RubyLLM::Thinking::Controls do
       expect(RubyLLM::Thinking::Config.disabled.resolve(model).enabled).to be(false)
     end
 
+    it 'uses the between_tools off control for regional Sonnet 5.5 ids' do
+      %w[us.anthropic.claude-sonnet-5-5 global.anthropic.claude-sonnet-5-5
+         eu.anthropic.claude-sonnet-5-5].each do |id|
+        model = model_for(
+          id,
+          provider: 'bedrock',
+          reasoning_options: [{ type: 'effort', values: %w[low medium high xhigh max] }]
+        )
+
+        expect(described_class.new(model).disable).to eq(enabled: false)
+        expect(RubyLLM::Thinking::Config.disabled.resolve(model).enabled).to be(false)
+      end
+    end
+
     it 'uses the same off control on Vertex AI and the Bedrock Mantle id' do
       vertex = model_for(
         'claude-sonnet-5-5',
