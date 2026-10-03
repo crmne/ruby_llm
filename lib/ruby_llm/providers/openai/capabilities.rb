@@ -35,6 +35,30 @@ module RubyLLM
           omni-moderation-2024-09-26
           omni-moderation-latest
         ].freeze
+        # The Responses API models OpenAI lists as supporting tool search
+        # (gpt-5.4 and later): https://developers.openai.com/api/docs/guides/tools-tool-search
+        TOOL_SEARCH_MODELS = %w[
+          gpt-5.4
+          gpt-5.4-2026-03-05
+          gpt-5.4-mini
+          gpt-5.4-mini-2026-03-17
+          gpt-5.4-nano
+          gpt-5.4-nano-2026-03-17
+          gpt-5.4-pro
+          gpt-5.4-pro-2026-03-05
+          gpt-5.5
+          gpt-5.5-2026-04-23
+          gpt-5.5-pro
+          gpt-5.5-pro-2026-04-23
+          gpt-5.6
+          gpt-5.6-luna
+          gpt-5.6-sol
+          gpt-5.6-terra
+          gpt-6-astra
+          gpt-6-luna
+          gpt-6-sol
+          gpt-6.1-sol
+        ].freeze
         TRANSCRIPTION_MODELS = %w[
           gpt-live-transcribe
           gpt-realtime-whisper
@@ -54,7 +78,8 @@ module RubyLLM
           'reasoning' => (CODEX_MODELS + DEEP_RESEARCH_MODELS).freeze,
           'transcription' => TRANSCRIPTION_MODELS,
           'citations' => SEARCH_MODELS,
-          'judgment' => JUDGMENT_MODELS
+          'judgment' => JUDGMENT_MODELS,
+          'tool_search' => TOOL_SEARCH_MODELS
         }.freeze
 
         def self.augment(capabilities, model_id:, **)

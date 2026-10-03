@@ -509,6 +509,14 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(reports).to eq([[call.id, 'Working', 0.5]])
     end
 
+    it 'defers tools registered with defer: true' do
+      stub_const('DeferredTool', Class.new(RubyLLM::Tool) { def execute = 'done' })
+      chat = Chat.create!(model: model_id).with_tools(DeferredTool, defer: true)
+
+      expect(chat.to_llm.tools.keys).to eq([:deferred])
+      expect(chat.to_llm.instance_variable_get(:@deferred_tool_names).keys).to include(:deferred)
+    end
+
     it 'persists completions added out of band' do
       chat = Chat.create!(model: model_id)
       response = RubyLLM::Message.new(role: :assistant, content: 'Batch response')

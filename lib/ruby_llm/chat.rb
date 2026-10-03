@@ -24,6 +24,7 @@ module RubyLLM
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
     include Support::Inspectable
+    include ToolSearch
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
@@ -123,6 +124,7 @@ module RubyLLM
       @usage_entries = []
       @tools = {}
       @mcp = MCP::Collection.new
+      @deferred_tool_names = {}
       @provider_tools = []
       @tool_prefs = { choice: nil, calls: nil }
       @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
@@ -445,16 +447,24 @@ module RubyLLM
     #   chat.with_tools(Weather, Search)
     #   chat.with_tools(Weather).with_tool_options(choice: :required)
     #
+    # With <tt>defer: true</tt> the tools' definitions stay out of the
+    # model's context until the provider's tool search loads the ones it
+    # needs; on providers and models without tool search they are sent as
+    # ordinary tools. <tt>defer: false</tt> overrides a tool declared
+    # Tool.deferred.
+    #
+    #   chat.with_tools(*files.tools, defer: true)
+    #
     # To replace the registered tools, clear them first:
     #
     #   chat.with_tools(nil).with_tools(NewTool)
     #
-    def with_tools(*tools)
-      @tools.clear if tools == [nil]
-      tools.flatten.compact.each do |tool|
-        tool_instance = tool.is_a?(Class) ? tool.new : tool
-        @tools[tool_instance.name.to_sym] = tool_instance
+    def with_tools(*tools, defer: nil)
+      if tools == [nil]
+        @tools.clear
+        @deferred_tool_names.clear
       end
+      tools.flatten.compact.each { |tool| register_tool(tool, defer: defer) }
       self
     end
 
@@ -913,7 +923,7 @@ module RubyLLM
       @provider.count_tokens(
         preprocessed_messages(request_messages),
         model: @model,
-        tools: tools,
+        tools: effective_tools,
         tool_prefs: @tool_prefs,
         thinking: resolved_thinking,
         schema: @schema,
@@ -1010,7 +1020,7 @@ module RubyLLM
     def render
       @provider.render(
         preprocessed_messages,
-        tools: tools,
+        tools: effective_tools,
         provider_tools: @provider_tools,
         tool_prefs: @tool_prefs,
         temperature: @temperature,
@@ -1354,7 +1364,7 @@ module RubyLLM
       replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
         @provider.complete(
           sent_messages,
-          tools: tools,
+          tools: effective_tools,
           provider_tools: @provider_tools,
           tool_prefs: @tool_prefs,
           temperature: @temperature,

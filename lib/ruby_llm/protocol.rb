@@ -98,6 +98,10 @@ module RubyLLM
       raise Error, "#{@provider.name} doesn't support remote tool approvals"
     end
 
+    def supports_deferred_tools? # :nodoc:
+      false
+    end
+
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                  usage_recorder: nil, provider_tools: [], compaction: nil, end_user: nil, &)
@@ -134,6 +138,7 @@ module RubyLLM
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                stream: false, provider_tools: [], compaction: nil, end_user: nil)
+      resolution = resolve_provider_tools_for_request(provider_tools)
       payload = render_payload(
         messages,
         tools: tools,
@@ -145,12 +150,13 @@ module RubyLLM
         schema: schema,
         thinking: thinking,
         citations: citations,
-        caching: caching
+        caching: caching,
+        provider_tools: resolution ? resolution.tools : []
       )
       payload = apply_end_user(payload, end_user) if end_user
       payload = apply_compaction(payload, compaction) if compaction
       payload = Support::Utils.deep_merge(payload, provider_options)
-      payload = apply_provider_tools(payload, provider_tools)
+      payload = apply_provider_tools(payload, resolution)
       apply_before_request_hooks(payload, before_request)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support chat"
@@ -544,7 +550,7 @@ module RubyLLM
     end
 
     def preprocess_message(message)
-      return message.without_native_content if foreign_native_content?(message)
+      return without_foreign_native_content(message) if foreign_native_content?(message)
       return message unless auto_upload_large_files?
       return message unless message.role == :user
       return message if message.attachments.empty?
@@ -599,6 +605,17 @@ module RubyLLM
       false
     end
 
+    # Another model of this provider gets the raw content any of its models
+    # reads, such as a tool search, and none of the producing model's own.
+    def without_foreign_native_content(message)
+      portable = portable_raw_content(message) if producer_slug(message) == @provider.slug
+      message.without_native_content(raw_content: portable)
+    end
+
+    def portable_raw_content(_message)
+      nil
+    end
+
     def carries_native_content?(message)
       return true if message.thinking || message.raw_reasoning || message.raw_content
 
@@ -636,8 +653,7 @@ module RubyLLM
       RubyLLM::Tools::ProviderTools.resolve(entries, aliases: aliases, owner: @provider.name)
     end
 
-    def apply_provider_tools(payload, entries)
-      resolution = resolve_provider_tools_for_request(entries)
+    def apply_provider_tools(payload, resolution)
       return payload unless resolution
 
       payload = Support::Utils.deep_merge(payload, resolution.payload) unless resolution.payload.empty?

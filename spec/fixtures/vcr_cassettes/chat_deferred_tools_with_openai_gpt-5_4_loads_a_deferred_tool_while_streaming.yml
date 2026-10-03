@@ -1,0 +1,210 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is the weather
+        in Berlin right now? Use your tools."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather_lookup","description":"Looks
+        up the current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"function","name":"stock_price","description":"Looks
+        up the current price of a stock ticker","parameters":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker
+        symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"tool_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 29 Sep 2026 20:38:59 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1209'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '15000'
+      X-Ratelimit-Limit-Tokens:
+      - '40000000'
+      X-Ratelimit-Remaining-Requests:
+      - '14999'
+      X-Ratelimit-Remaining-Tokens:
+      - '39999117'
+      X-Ratelimit-Reset-Requests:
+      - 4ms
+      X-Ratelimit-Reset-Tokens:
+      - 1ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","response":{"id":"resp_0b0751aa9137fcad016abc21e2980887d083c073b0888d87e0","object":"response","created_at":1790714338,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.4-2026-03-05","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"current_turn","effort":"none","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","defer_loading":true,"description":"Looks up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","defer_loading":true,"description":"Looks up the current price of a stock ticker","name":"stock_price","output_schema":null,"parameters":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false},{"type":"tool_search","description":null,"parameters":null}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","response":{"id":"resp_0b0751aa9137fcad016abc21e2980887d083c073b0888d87e0","object":"response","created_at":1790714338,"status":"in_progress","access_programs":null,"background":false,"completed_at":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.4-2026-03-05","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"current_turn","effort":"none","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","defer_loading":true,"description":"Looks up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","defer_loading":true,"description":"Looks up the current price of a stock ticker","name":"stock_price","output_schema":null,"parameters":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false},{"type":"tool_search","description":null,"parameters":null}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"tsc_0b0751aa9137fcad016abc21e41a8887d082aa17b72bbd8eee","type":"tool_search_call","status":"in_progress","arguments":{},"call_id":null,"execution":"server"},"output_index":0,"sequence_number":2}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"tsc_0b0751aa9137fcad016abc21e41a8887d082aa17b72bbd8eee","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},"output_index":0,"sequence_number":3}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"tso_0b0751aa9137fcad016abc21e43fb887d08e70c5913c9afe3f","type":"tool_search_output","status":"in_progress","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},"output_index":1,"sequence_number":4}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"tso_0b0751aa9137fcad016abc21e43fb887d08e70c5913c9afe3f","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},"output_index":1,"sequence_number":5}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","type":"function_call","status":"in_progress","arguments":"","call_id":"call_wyz3527DKDuRT4d8NrlUGKo7","name":"weather_lookup","namespace":"weather_lookup"},"output_index":2,"sequence_number":6}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","delta":"{\"","item_id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","obfuscation":"B4RyciYrg1kZcY","output_index":2,"sequence_number":7}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","delta":"city","item_id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","obfuscation":"hjs1PeK05w62","output_index":2,"sequence_number":8}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","delta":"\":\"","item_id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","obfuscation":"pxDrHxsyoO164","output_index":2,"sequence_number":9}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","delta":"Berlin","item_id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","obfuscation":"tXfLg3s1Ck","output_index":2,"sequence_number":10}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","delta":"\"}","item_id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","obfuscation":"tLGKDpqqP0dtJ9","output_index":2,"sequence_number":11}
+
+        event: response.function_call_arguments.done
+        data: {"type":"response.function_call_arguments.done","arguments":"{\"city\":\"Berlin\"}","item_id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","output_index":2,"sequence_number":12}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_wyz3527DKDuRT4d8NrlUGKo7","name":"weather_lookup","namespace":"weather_lookup"},"output_index":2,"sequence_number":13}
+
+        event: response.completed
+        data: {"type":"response.completed","response":{"id":"resp_0b0751aa9137fcad016abc21e2980887d083c073b0888d87e0","object":"response","created_at":1790714338,"status":"completed","access_programs":null,"background":false,"completed_at":1790714340,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5.4-2026-03-05","moderation":null,"output":[{"id":"tsc_0b0751aa9137fcad016abc21e41a8887d082aa17b72bbd8eee","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_0b0751aa9137fcad016abc21e43fb887d08e70c5913c9afe3f","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_wyz3527DKDuRT4d8NrlUGKo7","name":"weather_lookup","namespace":"weather_lookup"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"24h","reasoning":{"context":"current_turn","effort":"none","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tool_usage":{"image_gen":{"input_tokens":0,"input_tokens_details":{"image_tokens":0,"text_tokens":0},"output_tokens":0,"output_tokens_details":{"image_tokens":0,"text_tokens":0},"total_tokens":0},"web_search":{"num_requests":0}},"tools":[{"type":"function","defer_loading":true,"description":"Looks up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","defer_loading":true,"description":"Looks up the current price of a stock ticker","name":"stock_price","output_schema":null,"parameters":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false},{"type":"tool_search","description":null,"parameters":null}],"top_logprobs":0,"top_p":0.98,"truncation":"disabled","usage":{"input_tokens":597,"input_tokens_details":{"cache_write_tokens":0,"cached_tokens":0},"output_tokens":39,"output_tokens_details":{"reasoning_tokens":20},"total_tokens":636},"user":null,"metadata":{}},"sequence_number":14}
+
+  recorded_at: Tue, 29 Sep 2026 20:39:00 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is the weather
+        in Berlin right now? Use your tools."},{"id":"tsc_0b0751aa9137fcad016abc21e41a8887d082aa17b72bbd8eee","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_0b0751aa9137fcad016abc21e43fb887d08e70c5913c9afe3f","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
+        up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_0b0751aa9137fcad016abc21e4b21887d08aac6da67d4a6cb5","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_wyz3527DKDuRT4d8NrlUGKo7","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_wyz3527DKDuRT4d8NrlUGKo7","output":"Sunny
+        and 22°C in Berlin"}],"stream":true,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather_lookup","description":"Looks
+        up the current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"function","name":"stock_price","description":"Looks
+        up the current price of a stock ticker","parameters":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker
+        symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"tool_search"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 29 Sep 2026 20:39:01 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '191'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '15000'
+      X-Ratelimit-Limit-Tokens:
+      - '40000000'
+      X-Ratelimit-Remaining-Requests:
+      - '14999'
+      X-Ratelimit-Remaining-Tokens:
+      - '39998910'
+      X-Ratelimit-Reset-Requests:
+      - 4ms
+      X-Ratelimit-Reset-Tokens:
+      - 1ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZXZlbnQ6IHJlc3BvbnNlLmNyZWF0ZWQKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2UuY3JlYXRlZCIsInJlc3BvbnNlIjp7ImlkIjoicmVzcF8wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTE4ZTQ4N2QwOThmODAwMzY5Y2FmMjk3YyIsIm9iamVjdCI6InJlc3BvbnNlIiwiY3JlYXRlZF9hdCI6MTc5MDcxNDM0MSwic3RhdHVzIjoiaW5fcHJvZ3Jlc3MiLCJhY2Nlc3NfcHJvZ3JhbXMiOm51bGwsImJhY2tncm91bmQiOmZhbHNlLCJjb21wbGV0ZWRfYXQiOm51bGwsImVycm9yIjpudWxsLCJmcmVxdWVuY3lfcGVuYWx0eSI6MC4wLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtb2RlbCI6ImdwdC01LjQtMjAyNi0wMy0wNSIsIm1vZGVyYXRpb24iOm51bGwsIm91dHB1dCI6W10sInBhcmFsbGVsX3Rvb2xfY2FsbHMiOnRydWUsInByZXNlbmNlX3BlbmFsdHkiOjAuMCwicHJldmlvdXNfcmVzcG9uc2VfaWQiOm51bGwsInByb21wdF9jYWNoZV9rZXkiOm51bGwsInByb21wdF9jYWNoZV9yZXRlbnRpb24iOiIyNGgiLCJyZWFzb25pbmciOnsiY29udGV4dCI6ImN1cnJlbnRfdHVybiIsImVmZm9ydCI6Im5vbmUiLCJtb2RlIjoic3RhbmRhcmQiLCJzdW1tYXJ5IjpudWxsfSwic2FmZXR5X2lkZW50aWZpZXIiOm51bGwsInNlcnZpY2VfdGllciI6ImF1dG8iLCJzdG9yZSI6ZmFsc2UsInRlbXBlcmF0dXJlIjoxLjAsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In0sInZlcmJvc2l0eSI6Im1lZGl1bSJ9LCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29sX3VzYWdlIjp7ImltYWdlX2dlbiI6eyJpbnB1dF90b2tlbnMiOjAsImlucHV0X3Rva2Vuc19kZXRhaWxzIjp7ImltYWdlX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjowLCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsiaW1hZ2VfdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6MH0sIndlYl9zZWFyY2giOnsibnVtX3JlcXVlc3RzIjowfX0sInRvb2xzIjpbeyJ0eXBlIjoiZnVuY3Rpb24iLCJkZWZlcl9sb2FkaW5nIjp0cnVlLCJkZXNjcmlwdGlvbiI6Ikxvb2tzIHVwIHRoZSBjdXJyZW50IHByaWNlIG9mIGEgc3RvY2sgdGlja2VyIiwibmFtZSI6InN0b2NrX3ByaWNlIiwib3V0cHV0X3NjaGVtYSI6bnVsbCwicGFyYW1ldGVycyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJ0aWNrZXIiOnsidHlwZSI6InN0cmluZyIsImRlc2NyaXB0aW9uIjoiVGlja2VyIHN5bWJvbCJ9fSwicmVxdWlyZWQiOlsidGlja2VyIl0sImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjpmYWxzZSwic3RyaWN0Ijp0cnVlfSwic3RyaWN0IjpmYWxzZX0seyJ0eXBlIjoidG9vbF9zZWFyY2giLCJkZXNjcmlwdGlvbiI6bnVsbCwicGFyYW1ldGVycyI6bnVsbH0seyJ0eXBlIjoibmFtZXNwYWNlIiwiZGVzY3JpcHRpb24iOiJMb29rcyB1cCB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBhIGNpdHkiLCJuYW1lIjoid2VhdGhlcl9sb29rdXAiLCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwiZGVzY3JpcHRpb24iOiJMb29rcyB1cCB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBhIGNpdHkiLCJuYW1lIjoid2VhdGhlcl9sb29rdXAiLCJvdXRwdXRfc2NoZW1hIjpudWxsLCJwYXJhbWV0ZXJzIjp7InR5cGUiOiJvYmplY3QiLCJwcm9wZXJ0aWVzIjp7ImNpdHkiOnsidHlwZSI6InN0cmluZyIsImRlc2NyaXB0aW9uIjoiQ2l0eSBuYW1lIn19LCJyZXF1aXJlZCI6WyJjaXR5Il0sImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjpmYWxzZSwic3RyaWN0Ijp0cnVlfSwic3RyaWN0IjpmYWxzZX1dfV0sInRvcF9sb2dwcm9icyI6MCwidG9wX3AiOjAuOTgsInRydW5jYXRpb24iOiJkaXNhYmxlZCIsInVzYWdlIjpudWxsLCJ1c2VyIjpudWxsLCJtZXRhZGF0YSI6e319LCJzZXF1ZW5jZV9udW1iZXIiOjB9CgpldmVudDogcmVzcG9uc2UuaW5fcHJvZ3Jlc3MKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2UuaW5fcHJvZ3Jlc3MiLCJyZXNwb25zZSI6eyJpZCI6InJlc3BfMGIwNzUxYWE5MTM3ZmNhZDAxNmFiYzIxZTUxOGU0ODdkMDk4ZjgwMDM2OWNhZjI5N2MiLCJvYmplY3QiOiJyZXNwb25zZSIsImNyZWF0ZWRfYXQiOjE3OTA3MTQzNDEsInN0YXR1cyI6ImluX3Byb2dyZXNzIiwiYWNjZXNzX3Byb2dyYW1zIjpudWxsLCJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjpudWxsLCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAuMCwiaW5jb21wbGV0ZV9kZXRhaWxzIjpudWxsLCJpbnN0cnVjdGlvbnMiOm51bGwsIm1heF9vdXRwdXRfdG9rZW5zIjpudWxsLCJtYXhfdG9vbF9jYWxscyI6bnVsbCwibW9kZWwiOiJncHQtNS40LTIwMjYtMDMtMDUiLCJtb2RlcmF0aW9uIjpudWxsLCJvdXRwdXQiOltdLCJwYXJhbGxlbF90b29sX2NhbGxzIjp0cnVlLCJwcmVzZW5jZV9wZW5hbHR5IjowLjAsInByZXZpb3VzX3Jlc3BvbnNlX2lkIjpudWxsLCJwcm9tcHRfY2FjaGVfa2V5IjpudWxsLCJwcm9tcHRfY2FjaGVfcmV0ZW50aW9uIjoiMjRoIiwicmVhc29uaW5nIjp7ImNvbnRleHQiOiJjdXJyZW50X3R1cm4iLCJlZmZvcnQiOiJub25lIiwibW9kZSI6InN0YW5kYXJkIiwic3VtbWFyeSI6bnVsbH0sInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJzZXJ2aWNlX3RpZXIiOiJhdXRvIiwic3RvcmUiOmZhbHNlLCJ0ZW1wZXJhdHVyZSI6MS4wLCJ0ZXh0Ijp7ImZvcm1hdCI6eyJ0eXBlIjoidGV4dCJ9LCJ2ZXJib3NpdHkiOiJtZWRpdW0ifSwidG9vbF9jaG9pY2UiOiJhdXRvIiwidG9vbF91c2FnZSI6eyJpbWFnZV9nZW4iOnsiaW5wdXRfdG9rZW5zIjowLCJpbnB1dF90b2tlbnNfZGV0YWlscyI6eyJpbWFnZV90b2tlbnMiOjAsInRleHRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7ImltYWdlX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjB9LCJ3ZWJfc2VhcmNoIjp7Im51bV9yZXF1ZXN0cyI6MH19LCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwiZGVmZXJfbG9hZGluZyI6dHJ1ZSwiZGVzY3JpcHRpb24iOiJMb29rcyB1cCB0aGUgY3VycmVudCBwcmljZSBvZiBhIHN0b2NrIHRpY2tlciIsIm5hbWUiOiJzdG9ja19wcmljZSIsIm91dHB1dF9zY2hlbWEiOm51bGwsInBhcmFtZXRlcnMiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnsidGlja2VyIjp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IlRpY2tlciBzeW1ib2wifX0sInJlcXVpcmVkIjpbInRpY2tlciJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInN0cmljdCI6dHJ1ZX0sInN0cmljdCI6ZmFsc2V9LHsidHlwZSI6InRvb2xfc2VhcmNoIiwiZGVzY3JpcHRpb24iOm51bGwsInBhcmFtZXRlcnMiOm51bGx9LHsidHlwZSI6Im5hbWVzcGFjZSIsImRlc2NyaXB0aW9uIjoiTG9va3MgdXAgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBjaXR5IiwibmFtZSI6IndlYXRoZXJfbG9va3VwIiwidG9vbHMiOlt7InR5cGUiOiJmdW5jdGlvbiIsImRlc2NyaXB0aW9uIjoiTG9va3MgdXAgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBjaXR5IiwibmFtZSI6IndlYXRoZXJfbG9va3VwIiwib3V0cHV0X3NjaGVtYSI6bnVsbCwicGFyYW1ldGVycyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJjaXR5Ijp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IkNpdHkgbmFtZSJ9fSwicmVxdWlyZWQiOlsiY2l0eSJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInN0cmljdCI6dHJ1ZX0sInN0cmljdCI6ZmFsc2V9XX1dLCJ0b3BfbG9ncHJvYnMiOjAsInRvcF9wIjowLjk4LCJ0cnVuY2F0aW9uIjoiZGlzYWJsZWQiLCJ1c2FnZSI6bnVsbCwidXNlciI6bnVsbCwibWV0YWRhdGEiOnt9fSwic2VxdWVuY2VfbnVtYmVyIjoxfQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF9pdGVtLmFkZGVkCmRhdGE6IHsidHlwZSI6InJlc3BvbnNlLm91dHB1dF9pdGVtLmFkZGVkIiwiaXRlbSI6eyJpZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsInR5cGUiOiJtZXNzYWdlIiwic3RhdHVzIjoiaW5fcHJvZ3Jlc3MiLCJjb250ZW50IjpbXSwicGhhc2UiOiJmaW5hbF9hbnN3ZXIiLCJyb2xlIjoiYXNzaXN0YW50In0sIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjoyfQoKZXZlbnQ6IHJlc3BvbnNlLmNvbnRlbnRfcGFydC5hZGRlZApkYXRhOiB7InR5cGUiOiJyZXNwb25zZS5jb250ZW50X3BhcnQuYWRkZWQiLCJjb250ZW50X2luZGV4IjowLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwib3V0cHV0X2luZGV4IjowLCJwYXJ0Ijp7InR5cGUiOiJvdXRwdXRfdGV4dCIsImFubm90YXRpb25zIjpbXSwibG9ncHJvYnMiOltdLCJ0ZXh0IjoiIn0sInNlcXVlbmNlX251bWJlciI6M30KCmV2ZW50OiByZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YQpkYXRhOiB7InR5cGUiOiJyZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YSIsImNvbnRlbnRfaW5kZXgiOjAsImRlbHRhIjoiVGhlIiwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib2JmdXNjYXRpb24iOiJ1V09Ec0t5RTlsS0NYIiwib3V0cHV0X2luZGV4IjowLCJzZXF1ZW5jZV9udW1iZXIiOjR9CgpldmVudDogcmVzcG9uc2Uub3V0cHV0X3RleHQuZGVsdGEKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2Uub3V0cHV0X3RleHQuZGVsdGEiLCJjb250ZW50X2luZGV4IjowLCJkZWx0YSI6IiBjdXJyZW50IiwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib2JmdXNjYXRpb24iOiJtTElGWmtudSIsIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjo1fQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhCmRhdGE6IHsidHlwZSI6InJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhIiwiY29udGVudF9pbmRleCI6MCwiZGVsdGEiOiIgd2VhdGhlciIsIml0ZW1faWQiOiJtc2dfMGIwNzUxYWE5MTM3ZmNhZDAxNmFiYzIxZTU4OGE0ODdkMDlkYTJkMTYxNzIyMTBjYmMiLCJsb2dwcm9icyI6W10sIm9iZnVzY2F0aW9uIjoiREp5aURWVkYiLCJvdXRwdXRfaW5kZXgiOjAsInNlcXVlbmNlX251bWJlciI6Nn0KCmV2ZW50OiByZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YQpkYXRhOiB7InR5cGUiOiJyZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YSIsImNvbnRlbnRfaW5kZXgiOjAsImRlbHRhIjoiIGluIiwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib2JmdXNjYXRpb24iOiJMSEMxY3FOSlB6c3dhIiwib3V0cHV0X2luZGV4IjowLCJzZXF1ZW5jZV9udW1iZXIiOjd9CgpldmVudDogcmVzcG9uc2Uub3V0cHV0X3RleHQuZGVsdGEKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2Uub3V0cHV0X3RleHQuZGVsdGEiLCJjb250ZW50X2luZGV4IjowLCJkZWx0YSI6IiBCZXJsaW4iLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwibG9ncHJvYnMiOltdLCJvYmZ1c2NhdGlvbiI6IjRXNFg4TzkwZyIsIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjo4fQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhCmRhdGE6IHsidHlwZSI6InJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhIiwiY29udGVudF9pbmRleCI6MCwiZGVsdGEiOiIgaXMiLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwibG9ncHJvYnMiOltdLCJvYmZ1c2NhdGlvbiI6IlE1SHA0dVNYdDZiWUkiLCJvdXRwdXRfaW5kZXgiOjAsInNlcXVlbmNlX251bWJlciI6OX0KCmV2ZW50OiByZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YQpkYXRhOiB7InR5cGUiOiJyZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YSIsImNvbnRlbnRfaW5kZXgiOjAsImRlbHRhIjoiIHN1bm55IiwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib2JmdXNjYXRpb24iOiI2aUFZS0w3UUx2Iiwib3V0cHV0X2luZGV4IjowLCJzZXF1ZW5jZV9udW1iZXIiOjEwfQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhCmRhdGE6IHsidHlwZSI6InJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhIiwiY29udGVudF9pbmRleCI6MCwiZGVsdGEiOiIgYW5kIiwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib2JmdXNjYXRpb24iOiJlaktTNEpKaDV2NHYiLCJvdXRwdXRfaW5kZXgiOjAsInNlcXVlbmNlX251bWJlciI6MTF9CgpldmVudDogcmVzcG9uc2Uub3V0cHV0X3RleHQuZGVsdGEKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2Uub3V0cHV0X3RleHQuZGVsdGEiLCJjb250ZW50X2luZGV4IjowLCJkZWx0YSI6IiAiLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwibG9ncHJvYnMiOltdLCJvYmZ1c2NhdGlvbiI6ImowbEdMNGJHeERCdFhsQSIsIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjoxMn0KCmV2ZW50OiByZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YQpkYXRhOiB7InR5cGUiOiJyZXNwb25zZS5vdXRwdXRfdGV4dC5kZWx0YSIsImNvbnRlbnRfaW5kZXgiOjAsImRlbHRhIjoiMjIiLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwibG9ncHJvYnMiOltdLCJvYmZ1c2NhdGlvbiI6IjZMOTBtMWRNWUZIdk1TIiwib3V0cHV0X2luZGV4IjowLCJzZXF1ZW5jZV9udW1iZXIiOjEzfQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhCmRhdGE6IHsidHlwZSI6InJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhIiwiY29udGVudF9pbmRleCI6MCwiZGVsdGEiOiLCsEMiLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwibG9ncHJvYnMiOltdLCJvYmZ1c2NhdGlvbiI6ImM0elRXN3VhU2NKaE4xIiwib3V0cHV0X2luZGV4IjowLCJzZXF1ZW5jZV9udW1iZXIiOjE0fQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhCmRhdGE6IHsidHlwZSI6InJlc3BvbnNlLm91dHB1dF90ZXh0LmRlbHRhIiwiY29udGVudF9pbmRleCI6MCwiZGVsdGEiOiIuIiwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib2JmdXNjYXRpb24iOiJDOXQ5THlZc1Q4dzJkaHEiLCJvdXRwdXRfaW5kZXgiOjAsInNlcXVlbmNlX251bWJlciI6MTV9CgpldmVudDogcmVzcG9uc2Uub3V0cHV0X3RleHQuZG9uZQpkYXRhOiB7InR5cGUiOiJyZXNwb25zZS5vdXRwdXRfdGV4dC5kb25lIiwiY29udGVudF9pbmRleCI6MCwiaXRlbV9pZCI6Im1zZ18wYjA3NTFhYTkxMzdmY2FkMDE2YWJjMjFlNTg4YTQ4N2QwOWRhMmQxNjE3MjIxMGNiYyIsImxvZ3Byb2JzIjpbXSwib3V0cHV0X2luZGV4IjowLCJzZXF1ZW5jZV9udW1iZXIiOjE2LCJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgc3VubnkgYW5kIDIywrBDLiJ9CgpldmVudDogcmVzcG9uc2UuY29udGVudF9wYXJ0LmRvbmUKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2UuY29udGVudF9wYXJ0LmRvbmUiLCJjb250ZW50X2luZGV4IjowLCJpdGVtX2lkIjoibXNnXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1ODhhNDg3ZDA5ZGEyZDE2MTcyMjEwY2JjIiwib3V0cHV0X2luZGV4IjowLCJwYXJ0Ijp7InR5cGUiOiJvdXRwdXRfdGV4dCIsImFubm90YXRpb25zIjpbXSwibG9ncHJvYnMiOltdLCJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgc3VubnkgYW5kIDIywrBDLiJ9LCJzZXF1ZW5jZV9udW1iZXIiOjE3fQoKZXZlbnQ6IHJlc3BvbnNlLm91dHB1dF9pdGVtLmRvbmUKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2Uub3V0cHV0X2l0ZW0uZG9uZSIsIml0ZW0iOnsiaWQiOiJtc2dfMGIwNzUxYWE5MTM3ZmNhZDAxNmFiYzIxZTU4OGE0ODdkMDlkYTJkMTYxNzIyMTBjYmMiLCJ0eXBlIjoibWVzc2FnZSIsInN0YXR1cyI6ImNvbXBsZXRlZCIsImNvbnRlbnQiOlt7InR5cGUiOiJvdXRwdXRfdGV4dCIsImFubm90YXRpb25zIjpbXSwibG9ncHJvYnMiOltdLCJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgc3VubnkgYW5kIDIywrBDLiJ9XSwicGhhc2UiOiJmaW5hbF9hbnN3ZXIiLCJyb2xlIjoiYXNzaXN0YW50In0sIm91dHB1dF9pbmRleCI6MCwic2VxdWVuY2VfbnVtYmVyIjoxOH0KCmV2ZW50OiByZXNwb25zZS5jb21wbGV0ZWQKZGF0YTogeyJ0eXBlIjoicmVzcG9uc2UuY29tcGxldGVkIiwicmVzcG9uc2UiOnsiaWQiOiJyZXNwXzBiMDc1MWFhOTEzN2ZjYWQwMTZhYmMyMWU1MThlNDg3ZDA5OGY4MDAzNjljYWYyOTdjIiwib2JqZWN0IjoicmVzcG9uc2UiLCJjcmVhdGVkX2F0IjoxNzkwNzE0MzQxLCJzdGF0dXMiOiJjb21wbGV0ZWQiLCJhY2Nlc3NfcHJvZ3JhbXMiOm51bGwsImJhY2tncm91bmQiOmZhbHNlLCJjb21wbGV0ZWRfYXQiOjE3OTA3MTQzNDEsImVycm9yIjpudWxsLCJmcmVxdWVuY3lfcGVuYWx0eSI6MC4wLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtb2RlbCI6ImdwdC01LjQtMjAyNi0wMy0wNSIsIm1vZGVyYXRpb24iOm51bGwsIm91dHB1dCI6W3siaWQiOiJtc2dfMGIwNzUxYWE5MTM3ZmNhZDAxNmFiYzIxZTU4OGE0ODdkMDlkYTJkMTYxNzIyMTBjYmMiLCJ0eXBlIjoibWVzc2FnZSIsInN0YXR1cyI6ImNvbXBsZXRlZCIsImNvbnRlbnQiOlt7InR5cGUiOiJvdXRwdXRfdGV4dCIsImFubm90YXRpb25zIjpbXSwibG9ncHJvYnMiOltdLCJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgc3VubnkgYW5kIDIywrBDLiJ9XSwicGhhc2UiOiJmaW5hbF9hbnN3ZXIiLCJyb2xlIjoiYXNzaXN0YW50In1dLCJwYXJhbGxlbF90b29sX2NhbGxzIjp0cnVlLCJwcmVzZW5jZV9wZW5hbHR5IjowLjAsInByZXZpb3VzX3Jlc3BvbnNlX2lkIjpudWxsLCJwcm9tcHRfY2FjaGVfa2V5IjpudWxsLCJwcm9tcHRfY2FjaGVfcmV0ZW50aW9uIjoiMjRoIiwicmVhc29uaW5nIjp7ImNvbnRleHQiOiJjdXJyZW50X3R1cm4iLCJlZmZvcnQiOiJub25lIiwibW9kZSI6InN0YW5kYXJkIiwic3VtbWFyeSI6bnVsbH0sInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3RvcmUiOmZhbHNlLCJ0ZW1wZXJhdHVyZSI6MS4wLCJ0ZXh0Ijp7ImZvcm1hdCI6eyJ0eXBlIjoidGV4dCJ9LCJ2ZXJib3NpdHkiOiJtZWRpdW0ifSwidG9vbF9jaG9pY2UiOiJhdXRvIiwidG9vbF91c2FnZSI6eyJpbWFnZV9nZW4iOnsiaW5wdXRfdG9rZW5zIjowLCJpbnB1dF90b2tlbnNfZGV0YWlscyI6eyJpbWFnZV90b2tlbnMiOjAsInRleHRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7ImltYWdlX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjB9LCJ3ZWJfc2VhcmNoIjp7Im51bV9yZXF1ZXN0cyI6MH19LCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwiZGVmZXJfbG9hZGluZyI6dHJ1ZSwiZGVzY3JpcHRpb24iOiJMb29rcyB1cCB0aGUgY3VycmVudCBwcmljZSBvZiBhIHN0b2NrIHRpY2tlciIsIm5hbWUiOiJzdG9ja19wcmljZSIsIm91dHB1dF9zY2hlbWEiOm51bGwsInBhcmFtZXRlcnMiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnsidGlja2VyIjp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IlRpY2tlciBzeW1ib2wifX0sInJlcXVpcmVkIjpbInRpY2tlciJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInN0cmljdCI6dHJ1ZX0sInN0cmljdCI6ZmFsc2V9LHsidHlwZSI6InRvb2xfc2VhcmNoIiwiZGVzY3JpcHRpb24iOm51bGwsInBhcmFtZXRlcnMiOm51bGx9LHsidHlwZSI6Im5hbWVzcGFjZSIsImRlc2NyaXB0aW9uIjoiTG9va3MgdXAgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBjaXR5IiwibmFtZSI6IndlYXRoZXJfbG9va3VwIiwidG9vbHMiOlt7InR5cGUiOiJmdW5jdGlvbiIsImRlc2NyaXB0aW9uIjoiTG9va3MgdXAgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgYSBjaXR5IiwibmFtZSI6IndlYXRoZXJfbG9va3VwIiwib3V0cHV0X3NjaGVtYSI6bnVsbCwicGFyYW1ldGVycyI6eyJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJjaXR5Ijp7InR5cGUiOiJzdHJpbmciLCJkZXNjcmlwdGlvbiI6IkNpdHkgbmFtZSJ9fSwicmVxdWlyZWQiOlsiY2l0eSJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInN0cmljdCI6dHJ1ZX0sInN0cmljdCI6ZmFsc2V9XX1dLCJ0b3BfbG9ncHJvYnMiOjAsInRvcF9wIjowLjk4LCJ0cnVuY2F0aW9uIjoiZGlzYWJsZWQiLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjYzNSwiaW5wdXRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MTYsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjo2NTF9LCJ1c2VyIjpudWxsLCJtZXRhZGF0YSI6e319LCJzZXF1ZW5jZV9udW1iZXIiOjE5fQoK
+  recorded_at: Tue, 29 Sep 2026 20:39:01 GMT
+recorded_with: VCR 6.4.0

@@ -222,7 +222,7 @@ module RubyLLM
 
       ##
       # :method: with_tools
-      # :call-seq: with_tools(*tools)
+      # :call-seq: with_tools(*tools, defer: nil)
       #
       # Applies Chat#with_tools and returns this record.
 

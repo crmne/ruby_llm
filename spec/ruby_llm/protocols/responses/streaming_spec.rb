@@ -9,6 +9,15 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     protocol.send(:build_chunk, data)
   end
 
+  it 'keeps the raw output when a streamed function_call carries a tool-search namespace' do
+    item = { 'type' => 'function_call', 'call_id' => 'c1', 'name' => 'weather_lookup', 'arguments' => '{}',
+             'namespace' => 'weather_lookup' }
+    response = { 'output' => [item], 'status' => 'completed' }
+    chunk = build_chunk({ 'type' => 'response.completed', 'response' => response })
+
+    expect(chunk.raw_content).to eq([item])
+  end
+
   it 'streams output text deltas as content' do
     chunk = build_chunk({ 'type' => 'response.output_text.delta', 'delta' => 'Hel' })
 

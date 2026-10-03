@@ -95,6 +95,7 @@ module RubyLLM
       @schema
       @context
       @chat_model
+      @tools_defer
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG,
                      :PASSTHROUGH_OPTIONS, :THINKING_OPTIONS, :GUARDED_OPERATIONS,
@@ -135,9 +136,15 @@ module RubyLLM
       #   tools SearchDocs, LookupAccount
       #   tools { [TodoTool.new(chat: chat)] }
       #
-      def tools(*tools, &block)
+      # +defer:+ is passed on to Chat#with_tools, so the tools stay out of
+      # the model's context until the provider's tool search loads them.
+      #
+      #   tools SearchDocs, LookupAccount, defer: true
+      #
+      def tools(*tools, defer: nil, &block)
         return @tools || [] if tools.empty? && !block_given?
 
+        @tools_defer = defer
         @tools = block_given? ? block : tools.flatten
       end
 
@@ -723,7 +730,7 @@ module RubyLLM
 
       def apply_tools(chat, runtime)
         tools_to_apply = Array(evaluate(tools, runtime)).compact
-        chat.with_tools(*tools_to_apply) if tools_to_apply.any?
+        chat.with_tools(*tools_to_apply, defer: @tools_defer) if tools_to_apply.any?
 
         servers = Array(evaluate(mcp, runtime)).compact
         chat.with_mcp(*servers) if servers.any?
@@ -949,7 +956,7 @@ module RubyLLM
 
     ##
     # :method: with_tools
-    # :call-seq: with_tools(*tools)
+    # :call-seq: with_tools(*tools, defer: nil)
     #
     # Delegates to Chat#with_tools. See that method for arguments and return values.
 

@@ -33,7 +33,7 @@ module RubyLLM
           texts.empty? ? super : texts.join("\n")
         end
 
-        def format_assistant_items(message)
+        def format_assistant_items(message, replay_search: true)
           items = super
           return items if message.raw_content || message.thinking&.text.to_s.empty? || message.thinking.signature
 

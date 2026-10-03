@@ -16,14 +16,15 @@ module RubyLLM
 
         # rubocop:disable-next Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
-                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil, provider_tools: [])
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
+          replay_search = Tools.replay_search?(tools, provider_tools)
           # store: false leaves the provider holding no state, so reasoning has
           # to ride back in the response. xAI only encrypts it when asked.
           payload = {
             model: model.id,
-            input: format_input(messages, caching:),
+            input: format_input(messages, caching:, replay_search:),
             instructions: format_instructions(messages, caching:),
             stream: stream,
             store: false,
@@ -34,7 +35,7 @@ module RubyLLM
           payload[:max_output_tokens] = max_output_tokens unless max_output_tokens.nil?
 
           if tools.any?
-            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+            payload[:tools] = format_tools(tools, provider_tools:)
             payload[:tool_choice] = build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
             payload[:parallel_tool_calls] = tool_prefs[:calls] == :many unless tool_prefs[:calls].nil?
           end
@@ -68,7 +69,7 @@ module RubyLLM
             ),
             tool_calls: parse_pending_tool_calls(output, response: raw, finish_reason: finish_reason),
             server_tool_calls: server_tool_calls,
-            raw_content: server_tool_calls.any? ? output : nil,
+            raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
@@ -105,6 +106,26 @@ module RubyLLM
         end
 
         CLIENT_OUTPUT_ITEM_TYPES = %w[message reasoning function_call].freeze
+        TOOL_SEARCH_ITEM_TYPES = %w[tool_search_call tool_search_output].freeze
+
+        PORTABLE_OUTPUT_ITEM_TYPES = (%w[message function_call] + TOOL_SEARCH_ITEM_TYPES).freeze
+
+        def keep_raw_output?(output, server_tool_calls)
+          server_tool_calls.any? || output.any? { |item| namespaced_call?(item) }
+        end
+
+        def namespaced_call?(item)
+          item['type'] == 'function_call' && !item['namespace'].nil?
+        end
+
+        def portable_raw_content(message)
+          items = message.raw_content
+          return unless items.is_a?(Array)
+          return unless items.any? { |item| TOOL_SEARCH_ITEM_TYPES.include?(item['type']) || namespaced_call?(item) }
+
+          kept = items.reject { |item| item['type'] == 'reasoning' }
+          kept if kept.all? { |item| PORTABLE_OUTPUT_ITEM_TYPES.include?(item['type']) }
+        end
 
         # Output items beyond text, reasoning, and function calls record
         # provider-executed tool steps (web_search_call, code_interpreter_call,
@@ -278,7 +299,7 @@ module RubyLLM
           instructions.empty? ? nil : instructions.join("\n\n")
         end
 
-        def format_input(messages, caching: nil)
+        def format_input(messages, caching: nil, replay_search: true)
           system_items = []
           messages.each_with_object([]) do |message, input|
             next if message.role == :system && !system_input_item?(message, caching:)
@@ -287,7 +308,7 @@ module RubyLLM
             if raw.is_a?(Hash) && raw['object'] == 'response.compaction'
               input.replace(system_items + raw.fetch('output'))
             else
-              items = [format_item(message, caching:)].flatten(1)
+              items = [format_item(message, caching:, replay_search:)].flatten(1)
               system_items.concat(items) if message.role == :system
               input.concat(items)
             end
@@ -298,7 +319,7 @@ module RubyLLM
           msg.role == :system && ((caching != false && msg.cache_until_here?) || msg.attachments.any?)
         end
 
-        def format_item(msg, caching: nil)
+        def format_item(msg, caching: nil, replay_search: true)
           case msg.role
           when :system
             item = { role: 'system', content: format_content(msg.content, msg.attachments) }
@@ -306,7 +327,7 @@ module RubyLLM
           when :tool
             format_tool_items(msg)
           when :assistant
-            format_assistant_items(msg)
+            format_assistant_items(msg, replay_search:)
           else
             item = { role: 'user', content: format_content(msg.content, msg.attachments) }
             caching != false && msg.cache_until_here? ? inject_cache_breakpoint(item) : item
@@ -348,10 +369,14 @@ module RubyLLM
           items
         end
 
-        def format_assistant_items(msg)
+        def format_assistant_items(msg, replay_search: true)
           # Turns that used server tools replay their output items verbatim,
           # reasoning and tool results included, as stateless chaining expects.
-          return msg.raw_content if msg.raw_content
+          if msg.raw_content
+            return msg.raw_content if replay_search
+
+            return msg.raw_content.reject { |item| TOOL_SEARCH_ITEM_TYPES.include?(item['type']) }
+          end
 
           items = []
           items << format_reasoning_item(msg.thinking) if own_signature(msg)
