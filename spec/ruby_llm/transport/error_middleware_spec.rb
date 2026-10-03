@@ -234,6 +234,24 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end
     end
 
+    it 'maps a 413 that calls the request too large to ContextLengthExceededError' do
+      msg = 'failed to process LLM request: request was too large'
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: Faraday::Env.from(status: 413))
+      end.to raise_error(RubyLLM::ContextLengthExceededError, msg)
+    end
+
+    it 'keeps any other 413 a plain error' do
+      msg = 'File exceeds the maximum upload size.'
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: Faraday::Env.from(status: 413))
+      end.to raise_error(an_instance_of(RubyLLM::Error), msg)
+    end
+
     it 'maps context-length-like 400 errors to ContextLengthExceededError' do
       msg = "This model's maximum context length is 8192 tokens."
       response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))

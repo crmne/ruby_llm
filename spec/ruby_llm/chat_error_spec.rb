@@ -84,7 +84,10 @@ RSpec.describe RubyLLM::Chat, :live do
             end
           end
 
-          error_class = provider == :gpustack ? RubyLLM::ContextLengthExceededError : RubyLLM::Error
+          # Azure answers with a token rate limit, Ollama Cloud with a 500, and
+          # Perplexity with "invalid request", none of which names the cause.
+          unnamed = %i[azure ollama_cloud perplexity].include?(provider)
+          error_class = unnamed ? RubyLLM::Error : RubyLLM::ContextLengthExceededError
           expect { chat.ask('Hi') }.to raise_error(error_class) do |e|
             # Basic error format checks
             expect(e.message).not_to look_like_json

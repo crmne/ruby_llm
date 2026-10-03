@@ -68,7 +68,7 @@ module RubyLLM
           /context window/i,
           /exceeds?.*context size/i,
           /maximum context/i,
-          /request too large/i,
+          /request (?:was )?too large/i,
           /too many tokens/i,
           /token count exceeds/i,
           /input[_\s-]?token/i,
@@ -115,6 +115,8 @@ module RubyLLM
             raise PaymentRequiredError.new(message, response:)
           when 403
             raise_forbidden(message, response)
+          when 413
+            raise_too_large(message, response)
           when 429
             raise RateLimitError.new(message, response:) if rate_limited?(message)
             raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
@@ -147,6 +149,12 @@ module RubyLLM
           raise UnauthorizedError.new(message, response:) if authentication_failed?(message)
 
           raise ForbiddenError.new(message, response:)
+        end
+
+        def raise_too_large(message, response)
+          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
+
+          raise Error.new(message, response:)
         end
 
         def context_length_exceeded?(message)
