@@ -92,6 +92,20 @@ RSpec.describe RubyLLM::Protocols::Gemini::FileTranscription do
     expect(result.tokens.input).to be_nil
   end
 
+  it 'raises with the block reason when Vertex blocks a dedicated transcription' do
+    model = model_for(:vertexai, :dedicated_transcription)
+    blocked = { 'promptFeedback' => { 'blockReason' => 'PROHIBITED_CONTENT' },
+                'usageMetadata' => { 'promptTokenCount' => 119, 'totalTokenCount' => 119 }, 'modelVersion' => model }
+    silent = { 'candidates' => [{ 'content' => { 'role' => 'model', 'parts' => [] }, 'finishReason' => 'STOP' }],
+               'usageMetadata' => { 'promptTokenCount' => 119, 'totalTokenCount' => 119 }, 'modelVersion' => model }
+
+    expect do
+      transcription.send(:parse_transcription_response, instance_double(Faraday::Response, body: blocked), model:)
+    end.to raise_error(RubyLLM::ContentFilterError, 'Gemini blocked the transcription: PROHIBITED_CONTENT')
+    expect(transcription.send(:parse_transcription_response, instance_double(Faraday::Response, body: silent),
+                              model:).text).to eq('')
+  end
+
   it 'leaves combining custom vocabulary with diarization to Gemini' do
     payload = interactions.send(:render_transcription_payload, RubyLLM::Attachment.new(audio_path),
                                 model: model_for(:gemini, :dedicated_transcription), language: nil,

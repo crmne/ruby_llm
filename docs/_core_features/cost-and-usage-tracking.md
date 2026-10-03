@@ -69,7 +69,7 @@ transcription.cost.total
 
 RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; see [Pricing Tool Use](#pricing-tool-use) for tools billed per use, such as web search.
 
-Chat responses resolve model pricing within the provider you called, even when another provider uses the same model ID. If the response names a model that is unknown for that provider, RubyLLM uses the requested model. `response.model_info` returns that resolved model; `response.model` keeps the ID returned by the provider.
+Chat responses and one-shot results resolve model pricing within the provider you called, even when another provider uses the same model ID. A transcription on Vertex AI uses Vertex AI's prices, not the Gemini API's. If the response names a model that is unknown for that provider, RubyLLM uses the requested model. `response.model_info` returns that resolved model; `response.model` keeps the ID returned by the provider.
 
 When the provider reports a request's price, `cost.total` uses that amount instead of a registry estimate. Component costs such as `cost.input` still use registry pricing. The same rule applies to [batch costs]({% link _advanced/batches.md %}#cost-and-usage).
 

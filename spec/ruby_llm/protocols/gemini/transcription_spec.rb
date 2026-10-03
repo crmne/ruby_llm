@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
-  let(:protocol) { Object.new.tap { |object| object.extend(described_class) } }
+  let(:protocol) { Object.new.tap { |object| object.extend(RubyLLM::Protocols::Gemini::Chat, described_class) } }
   let(:audio) { RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__)) }
 
   describe '#render_transcription_payload' do
@@ -44,6 +44,12 @@ RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
   end
 
   describe '#parse_transcription_response' do
+    let(:usage) do
+      { 'promptTokenCount' => 133, 'totalTokenCount' => 133,
+        'promptTokensDetails' => [{ 'modality' => 'TEXT', 'tokenCount' => 14 },
+                                  { 'modality' => 'AUDIO', 'tokenCount' => 119 }] }
+    end
+
     def parse(body)
       protocol.send(:parse_transcription_response, Struct.new(:body).new(body), model: 'gemini-2.5-flash')
     end
@@ -62,8 +68,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
       expect(transcription.tokens.output).to eq(4)
     end
 
-    it 'leaves the text nil when the response carries no candidate' do
-      expect(parse({}).text).to be_nil
+    it 'leaves the text nil when the response is not a JSON object' do
       expect(parse('not a hash').text).to be_nil
     end
 
@@ -77,6 +82,52 @@ RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
 
       expect(transcription.tokens.input).to be_nil
       expect(transcription.tokens.output).to be_nil
+    end
+
+    it 'raises with the block reason when Gemini blocks the audio prompt' do
+      body = { 'promptFeedback' => { 'blockReason' => 'SAFETY' }, 'usageMetadata' => usage,
+               'modelVersion' => 'gemini-3.8-flash', 'responseId' => 'b2WsavzrBt3ZxN8PmJyl6Aw' }
+
+      expect { parse(body) }
+        .to raise_error(RubyLLM::ContentFilterError, 'Gemini blocked the transcription: SAFETY') do |error|
+          expect(error.response.body).to eq(body)
+        end
+    end
+
+    it 'raises with the finish reason when Gemini blocks the transcript' do
+      body = {
+        'candidates' => [{
+          'finishReason' => 'SAFETY', 'index' => 0,
+          'safetyRatings' => [
+            { 'category' => 'HARM_CATEGORY_HATE_SPEECH', 'probability' => 'NEGLIGIBLE' },
+            { 'category' => 'HARM_CATEGORY_HARASSMENT', 'probability' => 'MEDIUM', 'blocked' => true }
+          ]
+        }],
+        'usageMetadata' => usage, 'modelVersion' => 'gemini-3.8-flash'
+      }
+
+      expect { parse(body) }.to raise_error(RubyLLM::ContentFilterError, 'Gemini blocked the transcription: SAFETY')
+    end
+
+    it 'raises when Gemini returns no candidates' do
+      expect { parse({ 'usageMetadata' => usage, 'modelVersion' => 'gemini-3.8-flash' }) }
+        .to raise_error(RubyLLM::ContentFilterError, 'Gemini blocked the transcription')
+    end
+
+    it 'returns an empty transcript for silent audio' do
+      body = { 'candidates' => [{ 'content' => { 'role' => 'model', 'parts' => [{ 'text' => '' }] },
+                                  'finishReason' => 'STOP', 'index' => 0 }],
+               'usageMetadata' => usage, 'modelVersion' => 'gemini-3.8-flash' }
+
+      expect(parse(body).text).to eq('')
+    end
+
+    it 'keeps the text a blocked transcript already carries' do
+      body = { 'candidates' => [{ 'content' => { 'role' => 'model', 'parts' => [{ 'text' => 'Guten Tag' }] },
+                                  'finishReason' => 'SAFETY', 'index' => 0 }],
+               'usageMetadata' => usage, 'modelVersion' => 'gemini-3.8-flash' }
+
+      expect(parse(body).text).to eq('Guten Tag')
     end
   end
 end

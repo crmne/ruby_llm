@@ -472,7 +472,8 @@ module RubyLLM
 
         def build_thinking_payload(thinking, model, max_tokens)
           return nil unless thinking&.enabled?
-          return { thinking: { type: 'disabled' } } if thinking.enabled == false
+
+          return { thinking: { type: thinking_off_type(model) } } if thinking.enabled == false
 
           effort = resolve_effort(thinking)
           return nil if effort == 'none'
@@ -518,6 +519,14 @@ module RubyLLM
           return [budget, minimum].max unless max_tokens
 
           budget.clamp(minimum, [max_tokens - 1, minimum].max)
+        end
+
+        def thinking_off_type(model)
+          between_tools_off?(model.id) ? 'between_tools' : 'disabled'
+        end
+
+        def between_tools_off?(model_id)
+          @provider.class.respond_to?(:between_tools_off?) && @provider.class.between_tools_off?(model_id)
         end
 
         def resolve_effort(thinking)

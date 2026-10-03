@@ -377,6 +377,27 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   describe '.render_payload with thinking' do
     let(:user_message) { RubyLLM::Message.new(role: :user, content: 'Hello') }
 
+    def render_off_payload(model_id, provider_class: RubyLLM::Providers::Anthropic,
+                           thinking: RubyLLM::Thinking::Config.new(enabled: false))
+      model = RubyLLM::Model.new(
+        id: model_id,
+        provider: 'anthropic',
+        metadata: { reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)] }
+      )
+      protocol = RubyLLM::Protocols::Anthropic.allocate
+      protocol.instance_variable_set(:@provider, provider_class.allocate)
+
+      protocol.send(
+        :render_payload,
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        thinking: thinking
+      )
+    end
+
     def render_payload(model_id:, thinking:, schema: nil, reasoning_options: [])
       model = RubyLLM::Model.new(
         id: model_id,
@@ -553,6 +574,52 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(payload).not_to have_key(:thinking)
       expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'sends disabled thinking when the model accepts it' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-5',
+        thinking: RubyLLM::Thinking::Config.new(enabled: false),
+        reasoning_options: [{ type: 'toggle' }, effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'disabled')
+    end
+
+    it 'sends between_tools when turning thinking off on Sonnet 5.5' do
+      payload = render_off_payload('claude-sonnet-5-5')
+
+      expect(payload[:thinking]).to eq(type: 'between_tools')
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'sends between_tools for the Bedrock Mantle Sonnet 5.5 id' do
+      payload = render_off_payload(
+        'anthropic.claude-sonnet-5-5',
+        provider_class: RubyLLM::Providers::Bedrock
+      )
+
+      expect(payload[:thinking]).to eq(type: 'between_tools')
+    end
+
+    it 'does not treat accidental claude-sonnet-5-5 suffixes as Sonnet 5.5' do
+      payload = render_off_payload('evilclaude-sonnet-5-5')
+
+      expect(payload[:thinking]).to eq(type: 'disabled')
+    end
+
+    it 'resolves with_thinking(false) to between_tools on Sonnet 5.5' do
+      model = RubyLLM::Model.new(
+        id: 'claude-sonnet-5-5',
+        provider: 'anthropic',
+        metadata: { reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)] }
+      )
+      thinking = RubyLLM::Thinking::Config.disabled.resolve(model)
+
+      payload = render_off_payload('claude-sonnet-5-5', thinking: thinking)
+
+      expect(thinking.enabled).to be(false)
+      expect(payload[:thinking]).to eq(type: 'between_tools')
     end
   end
 
@@ -743,6 +810,21 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'asks for adaptive thinking to carry a display without a budget' do
       expect(build(RubyLLM::Thinking::Config.new(display: :summarized))).to eq(
         thinking: { type: 'adaptive', display: 'summarized' }
+      )
+    end
+
+    it 'sends disabled for models that still accept it' do
+      expect(build(RubyLLM::Thinking::Config.new(enabled: false))).to eq(
+        thinking: { type: 'disabled' }
+      )
+    end
+
+    it 'sends between_tools for Claude Sonnet 5.5' do
+      sonnet = RubyLLM::Model.new(id: 'claude-sonnet-5-5', provider: 'anthropic')
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::Anthropic.allocate)
+
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(enabled: false), sonnet, 4096)).to eq(
+        thinking: { type: 'between_tools' }
       )
     end
   end

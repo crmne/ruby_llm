@@ -26,6 +26,14 @@ module RubyLLM
           VertexAI::Capabilities
         end
 
+        def between_tools_off?(model_id) # :nodoc:
+          Providers::Anthropic.between_tools_off?(model_id)
+        end
+
+        def thinking_off_control(model_id) # :nodoc:
+          { enabled: false } if between_tools_off?(model_id)
+        end
+
         def models_dev_alias(...)
           VertexAI::Models.models_dev_alias(...)
         end

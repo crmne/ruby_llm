@@ -22,6 +22,7 @@ After reading this guide, you will know:
 * Which provider limits now raise the provider's error.
 * Where to read the request a chat sends.
 * How provider tool use is counted.
+* Which blocked transcriptions now raise an error.
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
@@ -58,7 +59,7 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code, except to move Perplexity chat off Sonar, to rescue provider errors where RubyLLM used to check a provider's limits, to stop reading request bodies from raw responses, and to read tool use counts by their new names.
+2.1 does not require changes to your code, except to move Perplexity chat off Sonar, to rescue provider errors where RubyLLM used to check a provider's limits, to stop reading request bodies from raw responses, to read tool use counts by their new names, and to rescue blocked Gemini transcriptions.
 
 ## Move Perplexity Chat to Presets
 
@@ -148,6 +149,10 @@ Three providers reported other counters in 2.0:
 | xAI | `num_server_side_tools_used` and `num_sources_used` | One count per tool, such as `web_search_requests` and `x_search_requests` |
 | OpenRouter Responses | `tool_calls_requested` and `tool_calls_executed` as well | Only per-tool counts such as `web_search_requests`, since those totals span every tool |
 | Mistral Conversations | Connector names, such as `web_search` and `code_interpreter` | `web_search_requests` and `code_execution_requests` |
+
+## Rescue Blocked Transcriptions
+
+`RubyLLM.transcribe` with a Gemini model on Gemini or Vertex AI returned an empty transcript in 2.0 when Google's safety filters blocked the audio. It now raises `RubyLLM::ContentFilterError`, whose message names the block reason. If you check for an empty transcript to detect a block, rescue the error instead. See [Blocked Transcriptions]({% link _core_features/audio-transcription.md %}#blocked-transcriptions).
 
 ## Upgrade the Rails Schema
 

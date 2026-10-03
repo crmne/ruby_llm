@@ -20,6 +20,7 @@ After reading this guide, you will know:
 *   How to improve accuracy with language hints and prompts.
 *   How to access segments and timestamps.
 *   How to stream a transcript as it is produced.
+*   How to handle a transcription the provider blocks.
 
 ## Basic Transcription
 
@@ -226,6 +227,21 @@ puts notes.content
 ```
 
 For fields your application can process, add a schema with [Structured Output]({% link _core_features/structured-output.md %}). To make an audio summary, pass the notes to `RubyLLM.speak` and save the result.
+
+## Blocked Transcriptions
+
+Gemini's safety filters can block a transcription, even of ordinary speech. Rescue `RubyLLM::ContentFilterError` to try another model:
+
+```ruby
+begin
+  transcription = RubyLLM.transcribe("interview.mp3", model: "{{ site.models.gemini_current }}")
+rescue RubyLLM::ContentFilterError => e
+  Rails.logger.warn(e.message)
+  transcription = RubyLLM.transcribe("interview.mp3", model: "{{ site.models.default_transcription }}")
+end
+```
+
+The message names the reason the provider gave, as in `Gemini blocked the transcription: SAFETY`. RubyLLM raises instead of returning an empty transcript, so a blocked recording never looks like a silent one. Silent audio still returns an empty `transcription.text`.
 
 ## Longer Recordings and Errors
 

@@ -137,6 +137,8 @@ module RubyLLM
       Cost.new(tokens:, model: model_info, category: :audio_tokens)
     end
 
+    attr_writer :model_info # :nodoc:
+
     def model_info # :nodoc:
       @model_info ||= RubyLLM.models.find(model)
     rescue ModelNotFoundError

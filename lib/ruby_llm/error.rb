@@ -163,6 +163,12 @@ module RubyLLM
     end
   end
 
+  # Raised when the provider's content filters block a transcription and
+  # no transcript comes back. The message names the provider's reason,
+  # such as +SAFETY+. Chat responses report a block through
+  # Message#content_filtered? instead of raising.
+  class ContentFilterError < Error; end
+
   # Raised for HTTP 529 responses when the provider is temporarily
   # overloaded.
   class OverloadedError < Error

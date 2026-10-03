@@ -167,8 +167,9 @@ module RubyLLM
         def succeed(result)
           # A request that produced several results, like a multi-image
           # generation, is billed once: the first result carries the call.
-          billed = result.is_a?(Array) ? result.first : result
-          billed.model_info = message_model(billed) if billed.is_a?(Message)
+          results = result.is_a?(Array) ? result : [result]
+          results.each { |item| item.model_info = result_model(item) if item.respond_to?(:model_info=) }
+          billed = results.first
           pending = @pending.dup
           if pending.empty?
             attach_to_result(billed)
@@ -193,10 +194,10 @@ module RubyLLM
 
         private
 
-        def message_model(message)
-          return @model_info if message.model.nil? || message.model == @model_info&.id
+        def result_model(result)
+          return @model_info if result.model.nil? || result.model == @model_info&.id
 
-          RubyLLM.models.find(message.model, provider: @provider.slug, config: @config)
+          RubyLLM.models.find(result.model, provider: @provider.slug, config: @config)
         rescue ModelNotFoundError
           @model_info
         end
