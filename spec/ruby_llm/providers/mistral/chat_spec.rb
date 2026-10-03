@@ -3,7 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Mistral::Chat do
-  let(:provider) { RubyLLM::Providers::Mistral::ChatCompletions.allocate }
+  let(:provider) do
+    RubyLLM::Providers::Mistral::ChatCompletions.allocate.tap do |protocol|
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::Mistral.allocate)
+    end
+  end
 
   let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
@@ -174,23 +178,39 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
   end
 
   describe '#build_thinking_blocks' do
+    def answer(thinking, producer: 'mistral')
+      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: producer,
+                                                    model: 'magistral-small-latest', status: :succeeded)
+      RubyLLM::Message.new(role: :assistant, content: 'Done', thinking:, usage_entries: producer ? [usage] : nil)
+    end
+
     it 'is empty without thinking' do
-      expect(provider.send(:build_thinking_blocks, nil)).to eq([])
-      expect(provider.send(:build_thinking_blocks, RubyLLM::Thinking.new)).to eq([])
+      expect(provider.send(:build_thinking_blocks, answer(nil))).to eq([])
+      expect(provider.send(:build_thinking_blocks, answer(RubyLLM::Thinking.new))).to eq([])
     end
 
     it 'wraps thinking text in a text block' do
       thinking = RubyLLM::Thinking.new(text: 'why', signature: 'sig')
 
-      expect(provider.send(:build_thinking_blocks, thinking)).to eq(
+      expect(provider.send(:build_thinking_blocks, answer(thinking))).to eq(
         [{ type: 'thinking', thinking: [{ type: 'text', text: 'why' }], signature: 'sig' }]
       )
     end
 
     it 'sends a signature-only block' do
-      expect(provider.send(:build_thinking_blocks, RubyLLM::Thinking.new(signature: 'sig'))).to eq(
+      expect(provider.send(:build_thinking_blocks, answer(RubyLLM::Thinking.new(signature: 'sig')))).to eq(
         [{ type: 'thinking', signature: 'sig' }]
       )
+    end
+
+    it 'sends no signature Mistral did not produce' do
+      thinking = RubyLLM::Thinking.new(text: 'why', signature: 'anthropic-signature')
+
+      expect(provider.send(:build_thinking_blocks, answer(thinking, producer: nil))).to eq(
+        [{ type: 'thinking', thinking: [{ type: 'text', text: 'why' }] }]
+      )
+      expect(provider.send(:build_thinking_blocks, answer(RubyLLM::Thinking.new(signature: 'sig'), producer: nil)))
+        .to eq([])
     end
   end
 

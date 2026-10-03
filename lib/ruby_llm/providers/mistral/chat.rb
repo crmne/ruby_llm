@@ -70,7 +70,7 @@ module RubyLLM
           formatted_content = super
           return formatted_content unless msg.role == :assistant && msg.thinking
 
-          content_blocks = build_thinking_blocks(msg.thinking)
+          content_blocks = build_thinking_blocks(msg)
           append_formatted_content(content_blocks, formatted_content)
 
           content_blocks
@@ -80,17 +80,14 @@ module RubyLLM
           {}
         end
 
-        def build_thinking_blocks(thinking)
-          return [] unless thinking
+        def build_thinking_blocks(msg)
+          text = msg.thinking&.text
+          signature = own_signature(msg)
 
-          if thinking.text
-            [{
-              type: 'thinking',
-              thinking: [{ type: 'text', text: thinking.text }],
-              signature: thinking.signature
-            }.compact]
-          elsif thinking.signature
-            [{ type: 'thinking', signature: thinking.signature }]
+          if text
+            [{ type: 'thinking', thinking: [{ type: 'text', text: }], signature: }.compact]
+          elsif signature
+            [{ type: 'thinking', signature: }]
           else
             []
           end
