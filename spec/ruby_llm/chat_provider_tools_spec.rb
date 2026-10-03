@@ -339,7 +339,18 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to include('web_search_requests')
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+      end
+
+      it 'streams searches and counts them' do
+        chunks = []
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.') do |chunk|
+          chunks << chunk
+        end
+
+        expect(chunks).not_to be_empty
+        expect(response.content).to be_present
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
       end
     end
 

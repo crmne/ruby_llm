@@ -138,6 +138,24 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(chunk.tokens.reported_cost).to eq(9.54e-07)
     end
 
+    it 'counts the web searches the final usage chunk reports' do
+      chunk = provider.send(
+        :build_chunk,
+        {
+          'model' => 'openai/gpt-5.2',
+          'choices' => [],
+          'usage' => {
+            'prompt_tokens' => 10_977,
+            'completion_tokens' => 367,
+            'cost' => 0.04031575,
+            'server_tool_use_details' => { 'web_search_requests' => 2 }
+          }
+        }
+      )
+
+      expect(chunk.tokens.server_tool_use).to eq('web_search_requests' => 2)
+    end
+
     it 'appends streamed reasoning text to its detail in place' do
       delta = lambda do |text|
         detail = { 'type' => 'reasoning.text', 'index' => 0, 'text' => text }
