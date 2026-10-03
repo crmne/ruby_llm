@@ -18,13 +18,12 @@ module RubyLLM
           }]
         end
 
-        def format_tool_call(msg) # rubocop:disable Metrics/PerceivedComplexity
+        # Gemini signs only the first of parallel calls, so each call goes back
+        # with its own signature or none, never one another part carried.
+        def format_tool_call(msg)
           parts = []
 
           parts.concat(Media.format_content(msg.content, msg.attachments)) if msg.content && !msg.content.empty?
-
-          fallback_signature = msg.thinking&.signature
-          used_fallback = false
 
           msg.tool_calls.each_value do |tool_call|
             part = {
@@ -33,13 +32,7 @@ module RubyLLM
                 args: tool_call.arguments
               }
             }
-
-            signature = tool_call.thought_signature
-            if signature.nil? && fallback_signature && !used_fallback
-              signature = fallback_signature
-              used_fallback = true
-            end
-            part[:thoughtSignature] = signature if signature
+            part[:thoughtSignature] = tool_call.thought_signature if tool_call.thought_signature
             parts << part
           end
 

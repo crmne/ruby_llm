@@ -48,6 +48,20 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
       expect(result[1][:functionCall]).to eq(name: 'weather', args: { 'latitude' => '52.5200' })
       expect(result[2][:functionCall]).to eq(name: 'best_language_to_learn', args: {})
     end
+
+    it 'sends parallel calls back in order with only the first one signed, as Gemini returned them' do
+      parts = [
+        { 'functionCall' => { 'name' => 'weather', 'args' => { 'city' => 'Zurich' } }, 'thoughtSignature' => 'sig' },
+        { 'functionCall' => { 'name' => 'local_time', 'args' => { 'city' => 'Zurich' } } },
+        { 'functionCall' => { 'name' => 'weather', 'args' => { 'city' => 'Paris' } } },
+        { 'functionCall' => { 'name' => 'local_time', 'args' => { 'city' => 'Paris' } } }
+      ]
+      message = RubyLLM::Protocols::Gemini.allocate.send(
+        :parse_completion_body, { 'candidates' => [{ 'content' => { 'parts' => parts } }] }, raw: nil
+      )
+
+      expect(JSON.parse(JSON.generate(test_obj.format_tool_call(message)))).to eq(parts)
+    end
   end
 
   describe '#format_tool_result' do
