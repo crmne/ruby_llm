@@ -236,7 +236,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
         expect(response.server_tool_calls.map(&:type)).to include('web_search_tool_result')
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to include('web_search_requests')
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
         expect(response.raw_content).to be_an(Array)
       end
 
@@ -253,6 +253,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
+        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
         expect(response.raw_content).to be_an(Array)
 
         followup = chat.ask('Thanks. Now just say OK.')

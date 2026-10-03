@@ -118,7 +118,7 @@ Search results use the same [Citation objects]({% link _core_features/citations.
 
 Streaming and follow-up questions use the normal `ask` API. Read the completed message for the full result list. Some services omit intermediate tool records or results; their answer and citations can still be available. OpenRouter MCP currently omits tool names and results from streamed records.
 
-Providers can charge for tool use as well as the tokens in the results. `tokens.server_tool_use` contains reported per-use counters; see [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
+Providers can charge for each tool use as well as for the tokens in the results. `tokens.server_tool_use` counts the uses, such as `{"web_search_requests" => 2}`; see [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
 
 ## Search Your Documents
 

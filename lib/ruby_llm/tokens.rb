@@ -36,10 +36,16 @@ module RubyLLM
     # does not report them.
     attr_reader :thinking
 
-    # The provider's server-tool usage counters as a Hash, such as
-    # <tt>{"web_search_requests" => 2}</tt>, or +nil+ if the provider did
-    # not report any. Counters are provider-shaped and billed per use, not
-    # in tokens.
+    # How many times each provider-executed tool ran, as a Hash of String
+    # keys and Integer counts, or +nil+ if the provider reported none.
+    # Web searches are <tt>"web_search_requests"</tt> on every provider
+    # that reports them. Other tools follow the same form, such as
+    # <tt>"web_fetch_requests"</tt> and <tt>"code_execution_requests"</tt>.
+    # Tools that did not run are left out. Providers bill these per use,
+    # not in tokens.
+    #
+    #   response.tokens.server_tool_use # => {"web_search_requests" => 2}
+    #
     attr_reader :server_tool_use
 
     # The exact cost of the call in US dollars as reported by the
@@ -54,7 +60,8 @@ module RubyLLM
     #   tokens = RubyLLM::Tokens.new(input: 100, output: 20)
     #   RubyLLM.models.find("gpt-5.6").cost_for(tokens).total
     #
-    # +server_tool_use:+ holds provider tool-usage counters;
+    # +server_tool_use:+ counts the provider-executed tools that ran, keyed
+    # as #server_tool_use describes;
     # +reported_cost:+ holds the provider's total price in US dollars.
     def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil,
                    server_tool_use: nil, reported_cost: nil)
@@ -63,7 +70,7 @@ module RubyLLM
       @cache_read = cache_read
       @cache_write = cache_write
       @thinking = thinking
-      @server_tool_use = server_tool_use
+      @server_tool_use = tools_used(server_tool_use)
       @reported_cost = reported_cost
     end
 
@@ -120,6 +127,13 @@ module RubyLLM
         thinking: thinking,
         server_tool_use: server_tool_use
       }.compact
+    end
+
+    private
+
+    def tools_used(counts)
+      used = counts.to_h.to_h { |tool, count| [tool.to_s, count.to_i] }.select { |_, count| count.positive? }
+      used unless used.empty?
     end
   end
 end

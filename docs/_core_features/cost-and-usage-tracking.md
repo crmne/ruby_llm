@@ -22,6 +22,7 @@ After reading this guide, you will know:
 * What each token bucket counts.
 * How the internal usage ledger accounts for retries, fallbacks, and cancellations.
 * How to price token usage yourself with `cost_for` and `Cost.aggregate`.
+* How to price provider tools billed per use, such as web search.
 * How costs are recorded in Rails and how to keep registry pricing fresh.
 
 ## Reading Tokens and Costs
@@ -66,7 +67,7 @@ transcription.tokens.output
 transcription.cost.total
 ```
 
-RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
+RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; see [Pricing Tool Use](#pricing-tool-use) for tools billed per use, such as web search.
 
 Chat responses resolve model pricing within the provider you called, even when another provider uses the same model ID. If the response names a model that is unknown for that provider, RubyLLM uses the requested model. `response.model_info` returns that resolved model; `response.model` keeps the ID returned by the provider.
 
@@ -139,6 +140,28 @@ cost.total
 ```
 
 If pricing is incomplete for tokens that were used, the affected cost and `cost.total` return `nil`.
+
+## Pricing Tool Use
+
+Providers bill some [provider tools]({% link _core_features/provider-tools.md %}) per use instead of per token. A web search costs the same whether it returns two results or ten. Read how many times each tool ran from `tokens.server_tool_use`:
+
+```ruby
+response = chat.with_provider_tools(:web_search).ask "What changed in Rails this week?"
+response.tokens.server_tool_use # => {"web_search_requests" => 2}
+```
+
+Web searches are `web_search_requests` on every provider that reports them. Other tools follow the same form, such as `web_fetch_requests` and `code_execution_requests`. Tools that did not run are left out, so a response that used none returns `nil`. `chat.tokens.server_tool_use` sums the whole conversation, retries included.
+
+Price the searches at your provider's published rate:
+
+```ruby
+PRICE_PER_SEARCH = 0.01 # US dollars, from your provider's price list
+
+searches = response.tokens.server_tool_use.to_h.fetch("web_search_requests", 0)
+search_cost = searches * PRICE_PER_SEARCH
+```
+
+Unless the provider reports the price of a request, `cost.total` prices tokens only, so add the search cost to it. OpenRouter, Perplexity, and xAI report the price with their tool charges included, and `cost.total` already uses it.
 
 ## Rails Persistence
 
