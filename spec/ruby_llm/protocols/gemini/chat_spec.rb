@@ -191,6 +191,30 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       )
     end
 
+    it 'signs the first unsigned call of each step in the current turn only' do
+      calls = lambda do |*ids, signature: nil|
+        ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'lookup', arguments: {}, thought_signature: signature)] }
+      end
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Question?'),
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls.call('a')),
+        RubyLLM::Message.new(role: :tool, content: 'A', tool_call_id: 'a'),
+        RubyLLM::Message.new(role: :assistant, content: 'Answer.'),
+        RubyLLM::Message.new(role: :user, content: 'Again?'),
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls.call('b', 'c')),
+        RubyLLM::Message.new(role: :tool, content: 'B', tool_call_id: 'b'),
+        RubyLLM::Message.new(role: :tool, content: 'C', tool_call_id: 'c'),
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls.call('d', signature: 'sig')),
+        RubyLLM::Message.new(role: :tool, content: 'D', tool_call_id: 'd')
+      ]
+
+      steps = test_obj.send(:format_messages, messages).select { |content| content[:role] == 'model' }
+
+      expect(steps.map { |step| step[:parts].map { |part| part[:thoughtSignature] } }).to eq(
+        [[nil], [nil], ['skip_thought_signature_validator', nil], ['sig']]
+      )
+    end
+
     it 'does not send finish_reason back to the provider' do
       messages = [RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'max_tokens')]
 

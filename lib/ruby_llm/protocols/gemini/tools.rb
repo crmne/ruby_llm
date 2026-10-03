@@ -10,6 +10,10 @@ module RubyLLM
       module Tools
         MULTIMODAL_FUNCTION_RESPONSE_GENERATION = Gem::Version.new('3')
 
+        # The signature Google documents for a function call Gemini did not
+        # make, such as one from another provider. Vertex AI accepts no other.
+        PLACEHOLDER_SIGNATURE = 'skip_thought_signature_validator'
+
         def format_tools(tools)
           return [] if tools.empty?
 
@@ -87,6 +91,15 @@ module RubyLLM
         end
 
         private
+
+        # Gemini 3 refuses a step of the current turn whose first function
+        # call carries no signature.
+        def sign_step(parts)
+          first_call = parts.find { |part| part.key?(:functionCall) }
+          return parts if first_call.nil? || first_call.key?(:thoughtSignature)
+
+          parts.map { |part| part.equal?(first_call) ? part.merge(thoughtSignature: PLACEHOLDER_SIGNATURE) : part }
+        end
 
         # functionResponse.parts only accepts inline bytes, and pre-Gemini 3 models reject it
         def partition_tool_result_attachments(attachments)

@@ -176,8 +176,16 @@ module RubyLLM
           thinking = msg.thinking if msg.role == :assistant
           return parts unless thinking
 
-          parts = sign_last_part(parts, thinking.signature) if thinking.signature
+          signature = own_signature(msg)
+          parts = sign_last_part(parts, signature) if signature
           thinking.text ? [{ thought: true, text: thinking.text }, *parts] : parts
+        end
+
+        # A thinking signature can be another provider's opaque blob. Only usage
+        # names the provider that produced a message, so Gemini gets its own back.
+        def own_signature(msg)
+          signature = msg.thinking.signature
+          signature if signature && producer_slug(msg) == @provider.slug
         end
 
         # Gemini signs the last part of an answer. An answer without parts gets
@@ -370,6 +378,7 @@ module RubyLLM
             @messages = messages
             @index = 0
             @tool_call_names = {}
+            @turn_start = messages.rindex { |message| message.role == :user }
           end
 
           def format
@@ -437,10 +446,19 @@ module RubyLLM
           end
 
           def build_standard_message(message)
+            parts = @provider.send(:format_parts, message)
+            parts = @provider.send(:sign_step, parts) if message.tool_call? && current_turn?
+
             {
               role: @provider.send(:format_role, message.role),
-              parts: @provider.send(:format_parts, message)
+              parts: parts
             }
+          end
+
+          # Gemini checks signatures only in the current turn, which starts at
+          # the last user message.
+          def current_turn?
+            @turn_start.nil? || @index > @turn_start
           end
 
           def format_tool_result(message, tool_name)
