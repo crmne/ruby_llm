@@ -726,6 +726,12 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.parse_error(response_for(body))).to include('body.messages: field required')
     end
 
+    it 'stringifies a numeric msg in a FastAPI detail array' do
+      body = { 'detail' => [{ 'loc' => %w[body messages], 'msg' => 422 }] }
+
+      expect(provider.parse_error(response_for(body))).to eq('body.messages: 422')
+    end
+
     it 'joins a list of errors' do
       body = [{ 'error' => 'first' }, { 'error' => { 'message' => 'second' } }]
 
