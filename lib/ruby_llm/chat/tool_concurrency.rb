@@ -18,13 +18,13 @@ module RubyLLM
       end
 
       def run_with_threads(tool_calls, on_result:, &execute)
-        executor = rails_executor
+        caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
         queue = Queue.new
         threads = tool_calls.each_value.with_index.map do |tool_call, index|
           thread = Thread.new do
             Support::Instrumentation.with_workflow(workflow_context) do
-              queue << capture_result(index, tool_call, executor, execute)
+              queue << capture_result(index, tool_call, caller_context, execute)
             end
           end
           thread.report_on_exception = false
@@ -48,22 +48,26 @@ module RubyLLM
           raise LoadError, "The 'async' gem version 2.0 or newer is required for concurrent tool execution with fibers."
         end
 
-        executor = rails_executor
+        caller_context = execution_context
         workflow_context = Support::Instrumentation.current_workflow
-        Async do |task|
-          queue = Async::Queue.new
-          tasks = tool_calls.each_value.with_index.map do |tool_call, index|
-            task.async do
-              Support::Instrumentation.with_workflow(workflow_context) do
-                queue << capture_result(index, tool_call, executor, execute)
+        # Inside a reactor, Sync runs the block in the calling fiber, so
+        # results persist with the caller's execution state and connection.
+        Sync do |task|
+          isolated(caller_context) do
+            queue = Async::Queue.new
+            tasks = tool_calls.each_value.with_index.map do |tool_call, index|
+              task.async do
+                Support::Instrumentation.with_workflow(workflow_context) do
+                  queue << capture_result(index, tool_call, caller_context, execute)
+                end
               end
             end
-          end
 
-          collect_results(queue, tasks.size, on_result:)
-        ensure
-          tasks&.each(&:wait)
-        end.wait
+            collect_results(queue, tasks.size, on_result:)
+          ensure
+            tasks&.each(&:wait)
+          end
+        end
       end
 
       def collect_results(queue, count, on_result:)
@@ -85,27 +89,35 @@ module RubyLLM
         results
       end
 
-      def capture_result(index, tool_call, rails_executor, execute)
-        tool_call, value = run_tool_call(tool_call, rails_executor, execute)
+      def capture_result(index, tool_call, caller_context, execute)
+        value = isolated(caller_context) { execute.call(tool_call) }
         Result.new(index:, tool_call:, value:)
       rescue Exception => e # rubocop:disable Lint/RescueException
         Result.new(index:, tool_call:, error: e)
       end
 
-      def run_tool_call(tool_call, rails_executor, execute)
-        if rails_executor
-          rails_executor.wrap { [tool_call, execute.call(tool_call)] }
-        else
-          [tool_call, execute.call(tool_call)]
-        end
+      # Rails gives a thread, and a fiber under fiber isolation, execution
+      # state of its own: the block runs as its own unit of work, so its
+      # connections return to the pool. A fiber sharing the caller's state
+      # must not start one, whose completion resets the caller's Current
+      # attributes.
+      def isolated(caller_context, &)
+        executor = rails_executor
+        return yield unless executor && !execution_context.equal?(caller_context)
+
+        executor.wrap(&)
+      end
+
+      def execution_context
+        defined?(ActiveSupport::IsolatedExecutionState) ? ActiveSupport::IsolatedExecutionState.context : Thread.current
       end
 
       def rails_executor
         defined?(Rails) && Rails.respond_to?(:application) && Rails.application&.executor
       end
 
-      private_class_method :run_with_threads, :run_with_fibers, :collect_results, :capture_result, :run_tool_call,
-                           :rails_executor
+      private_class_method :run_with_threads, :run_with_fibers, :collect_results, :capture_result, :isolated,
+                           :execution_context, :rails_executor
     end
   end
 end

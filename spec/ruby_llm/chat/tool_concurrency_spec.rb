@@ -70,13 +70,52 @@ RSpec.describe RubyLLM::Chat::ToolConcurrency do
     expect(Array.new(2) { observed_contexts.pop }).to all(eq(workflow_context))
   end
 
-  it 'wraps fiber tool calls with the Rails executor' do
+  def with_isolation(level)
+    previous = ActiveSupport::IsolatedExecutionState.isolation_level
+    ActiveSupport::IsolatedExecutionState.isolation_level = level
+    yield
+  ensure
+    ActiveSupport::IsolatedExecutionState.isolation_level = previous
+  end
+
+  it 'wraps fiber tool calls with the Rails executor when each fiber has its own execution state' do
     stub_rails_executor(executor)
 
-    results = described_class.run(:fibers, tool_calls) { |tool_call| tool_call }
+    results = with_isolation(:fiber) do
+      in_reactor { described_class.run(:fibers, tool_calls) { |tool_call| tool_call } }
+    end
 
     expect(results).to eq([%i[first first], %i[second second]])
     expect(executor_calls.size).to eq(2)
+  end
+
+  it 'wraps the fiber that collects results outside a reactor when each fiber has its own execution state' do
+    stub_rails_executor(executor)
+
+    with_isolation(:fiber) { described_class.run(:fibers, tool_calls) { |tool_call| tool_call } }
+
+    expect(executor_calls.size).to eq(3)
+  end
+
+  it 'runs fiber tool calls in the execution state they share with the caller' do
+    stub_rails_executor(executor)
+
+    results = with_isolation(:thread) { described_class.run(:fibers, tool_calls) { |tool_call| tool_call } }
+
+    expect(results).to eq([%i[first first], %i[second second]])
+    expect(executor_calls).to be_empty
+  end
+
+  it 'reports fiber tool call results in the calling fiber inside a reactor' do
+    reporters = []
+    on_result = ->(*) { reporters << Fiber.current }
+
+    caller = in_reactor do
+      described_class.run(:fibers, tool_calls, on_result:) { |tool_call| tool_call }
+      Fiber.current
+    end
+
+    expect(reporters).to eq([caller, caller])
   end
 
   it 'reports fiber tool call results as they finish' do

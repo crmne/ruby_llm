@@ -219,6 +219,25 @@ Rails chat records use the same settings.
 With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
 for all tool results before asking the model for the next response.
 
+In Rails, a tool call on another thread, or on another fiber when `config.active_support.isolation_level` is `:fiber`, runs as its own unit of work, as Rails expects of any work on another thread. It checks out its own database connection and doesn't see the caller's `Current` attributes. Give the tool what it needs when you create it:
+
+```ruby
+class SearchDocuments < RubyLLM::Tool
+  description "Searches the account's documents"
+  parameter :query, description: "Search query"
+
+  def initialize(account:)
+    @account = account
+  end
+
+  def execute(query:)
+    @account.documents.search(query).map(&:title)
+  end
+end
+
+chat.with_tools(SearchDocuments.new(account: Current.account)).with_tool_options(concurrency: :fibers)
+```
+
 ## Accessing the Current Tool Call
 
 A tool sometimes needs to know which invocation triggered it, for example to attribute an audit log entry or an outbound API call to the exact tool call. Declare an optional `tool_call:` keyword on `execute` and RubyLLM fills it with the executing `ToolCall`:
