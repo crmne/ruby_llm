@@ -56,6 +56,43 @@ RSpec.describe RubyLLM::Chat do
     expect(payload[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: 'Done.' }])
   end
 
+  it 'drops the interaction a Gemini answer carries when the chat moves to Anthropic' do
+    state = { 'response' => { 'object' => 'interaction', 'status' => 'completed',
+                              'steps' => [{ 'type' => 'model_output', 'content' => [{ 'type' => 'text',
+                                                                                      'text' => 'Done.' }] }] } }
+    message = produced_by('gemini', model_for(:gemini, :mcp), raw_content: state)
+    chat = RubyLLM.chat(model: model_for(:gemini, :mcp), provider: :gemini, protocol: :interactions)
+
+    payload = replay(chat.with_model(model_for(:anthropic), provider: :anthropic), message)
+
+    expect(payload[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: 'Done.' }])
+  end
+
+  it 'drops Anthropic server tool blocks when the chat moves to OpenAI' do
+    blocks = [
+      { 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search', 'input' => { 'query' => 'Ruby' } },
+      { 'type' => 'web_search_tool_result', 'tool_use_id' => 'srvtoolu_1', 'content' => [] },
+      { 'type' => 'text', 'text' => 'Done.' }
+    ]
+    message = produced_by('anthropic', model_for(:anthropic), raw_content: blocks)
+    chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+
+    payload = replay(chat.with_model(model_for(:openai), provider: :openai), message)
+
+    expect(payload[:input][1]).to eq(role: 'assistant', content: [{ type: 'output_text', text: 'Done.' }])
+  end
+
+  it 'keeps the server tool blocks of the provider that produced them' do
+    blocks = [{ 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search', 'input' => {} },
+              { 'type' => 'text', 'text' => 'Done.' }]
+    message = produced_by('anthropic', model_for(:anthropic), raw_content: blocks)
+    chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+
+    payload = replay(chat, message)
+
+    expect(payload[:messages][1]).to eq(role: 'assistant', content: blocks)
+  end
+
   it 'drops Gemini tool call thought signatures when the chat moves to a Chat Completions provider' do
     call = RubyLLM::ToolCall.new(id: 'call-1', name: 'lookup', arguments: {}, thought_signature: 'gemini-signature')
     message = produced_by('gemini', model_for(:gemini), tool_calls: { 'call-1' => call })

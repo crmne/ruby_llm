@@ -482,7 +482,7 @@ module RubyLLM
     end
 
     def preprocess_message(message)
-      return message.without_thinking if foreign_thinking?(message)
+      return message.without_native_content if foreign_native_content?(message)
       return message unless auto_upload_large_files?
       return message unless message.role == :user
       return message if message.attachments.empty?
@@ -508,18 +508,19 @@ module RubyLLM
 
     private
 
-    # A thinking signature is opaque to every provider but the one that
-    # issued it, so a message another provider produced replays without
-    # its thinking. A message with no known producer replays as it is.
-    def foreign_thinking?(message)
-      return false unless message.role == :assistant && carries_thinking?(message)
+    # A thinking signature or a provider-shaped content block is opaque to
+    # every provider but the one that issued it, so a message another
+    # provider produced replays without them. A message with no known
+    # producer replays as it is.
+    def foreign_native_content?(message)
+      return false unless message.role == :assistant && carries_native_content?(message)
 
       producer = producer_slug(message)
       !producer.nil? && producer != @provider.slug
     end
 
-    def carries_thinking?(message)
-      return true if message.thinking || message.raw_reasoning
+    def carries_native_content?(message)
+      return true if message.thinking || message.raw_reasoning || message.raw_content
 
       message.tool_call? && message.tool_calls.each_value.any?(&:thought_signature)
     end
