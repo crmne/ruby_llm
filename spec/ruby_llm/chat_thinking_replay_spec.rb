@@ -185,14 +185,24 @@ RSpec.describe RubyLLM::Chat do
     )
   end
 
-  it 'keeps thinking whose producer is unknown' do
+  it 'sends Claude no thinking whose producer is unknown' do
     message = RubyLLM::Message.new(role: :assistant, content: 'Done.',
-                                   thinking: RubyLLM::Thinking.build(signature: 'signature'))
+                                   thinking: RubyLLM::Thinking.build(text: 'Adding.', signature: 'gemini-signature'))
     chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
 
     payload = replay(chat, message)
 
-    expect(payload[:messages][1][:content].first).to eq(type: 'redacted_thinking', data: 'signature')
+    expect(payload[:messages][1]).to eq(role: 'assistant', content: [{ type: 'text', text: 'Done.' }])
+  end
+
+  it 'keeps the thinking blocks of a Claude answer whose producer is unknown' do
+    blocks = [{ 'type' => 'thinking', 'thinking' => 'Let me think.', 'signature' => 'anthropic-signature' }]
+    message = RubyLLM::Message.new(role: :assistant, content: 'Done.', raw_reasoning: { 'anthropic' => blocks })
+    chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+
+    payload = replay(chat, message)
+
+    expect(payload[:messages][1][:content].first).to eq(blocks.first)
   end
 
   it 'does not guess the producer from a model id several providers serve' do

@@ -399,24 +399,16 @@ module RubyLLM
           blocks = msg.raw_reasoning['anthropic'] if msg.raw_reasoning.is_a?(Hash)
           return Support::Utils.deep_dup(blocks) if blocks
 
-          [build_thinking_block(msg.thinking)].compact
+          [build_thinking_block(msg)].compact
         end
 
-        def build_thinking_block(thinking)
-          return nil unless thinking
+        # Claude takes a thinking block back only with the signature it issued.
+        def build_thinking_block(msg)
+          signature = own_signature(msg) if msg.thinking
+          return unless signature
 
-          if thinking.text
-            {
-              type: 'thinking',
-              thinking: thinking.text,
-              signature: thinking.signature
-            }.compact
-          elsif thinking.signature
-            {
-              type: 'redacted_thinking',
-              data: thinking.signature
-            }
-          end
+          text = msg.thinking.text
+          text ? { type: 'thinking', thinking: text, signature: } : { type: 'redacted_thinking', data: signature }
         end
 
         def append_formatted_content(content_blocks, msg, citations: false)

@@ -580,41 +580,55 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
+  def claude_answer(thinking, producer: 'anthropic', **attributes)
+    usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: producer, model: 'claude-haiku-4-5',
+                                                  status: :succeeded)
+    RubyLLM::Message.new(role: :assistant, content: 'hi', thinking:, usage_entries: producer ? [usage] : nil,
+                         **attributes)
+  end
+
+  def anthropic_protocol
+    RubyLLM::Protocols::Anthropic.allocate.tap do |protocol|
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::Anthropic.allocate)
+    end
+  end
+
   describe '.build_thinking_block' do
-    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+    let(:protocol) { anthropic_protocol }
 
     it 'is nil without thinking' do
-      expect(protocol.send(:build_thinking_block, nil)).to be_nil
+      expect(protocol.send(:build_thinking_block, claude_answer(nil))).to be_nil
     end
 
     it 'sends thinking text with its signature' do
       thinking = RubyLLM::Thinking.new(text: 'why', signature: 'sig')
 
-      expect(protocol.send(:build_thinking_block, thinking)).to eq(
+      expect(protocol.send(:build_thinking_block, claude_answer(thinking))).to eq(
         type: 'thinking', thinking: 'why', signature: 'sig'
       )
     end
 
-    it 'omits a missing signature' do
-      expect(protocol.send(:build_thinking_block, RubyLLM::Thinking.new(text: 'why'))).to eq(
-        type: 'thinking', thinking: 'why'
+    it 'sends a signature-only block as redacted thinking' do
+      expect(protocol.send(:build_thinking_block, claude_answer(RubyLLM::Thinking.new(signature: 'sig')))).to eq(
+        type: 'redacted_thinking', data: 'sig'
       )
     end
 
-    it 'sends a signature-only block as redacted thinking' do
-      expect(protocol.send(:build_thinking_block, RubyLLM::Thinking.new(signature: 'sig'))).to eq(
-        type: 'redacted_thinking', data: 'sig'
-      )
+    it 'sends no block without a signature Claude issued' do
+      unsigned = claude_answer(RubyLLM::Thinking.new(text: 'why'))
+      unknown = claude_answer(RubyLLM::Thinking.new(text: 'why', signature: 'gemini-signature'), producer: nil)
+
+      expect(protocol.send(:build_thinking_block, unsigned)).to be_nil
+      expect(protocol.send(:build_thinking_block, unknown)).to be_nil
     end
   end
 
   describe '.prepend_thinking_blocks' do
-    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+    let(:protocol) { anthropic_protocol }
 
     it 'puts the stored thinking block first' do
       blocks = [{ type: 'text', text: 'hi' }]
-      message = RubyLLM::Message.new(role: :assistant, content: 'hi',
-                                     thinking: RubyLLM::Thinking.new(text: 'why'))
+      message = claude_answer(RubyLLM::Thinking.new(text: 'why', signature: 'sig'))
 
       result = protocol.send(:prepend_thinking_blocks, blocks, message)
 
@@ -630,18 +644,17 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   end
 
   describe 'thinking replay' do
-    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+    let(:protocol) { anthropic_protocol }
 
     it 'replays a stored thinking block even when the request asks for no thinking' do
-      message = RubyLLM::Message.new(
-        role: :assistant, content: '',
-        tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'weather', arguments: {}) },
-        thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+      message = claude_answer(
+        RubyLLM::Thinking.new(text: 'why', signature: 'sig'),
+        tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'weather', arguments: {}) }
       )
 
       formatted = protocol.send(:format_message, message, thinking: nil)
 
-      expect(formatted[:content].map { |block| block[:type] }).to eq(%w[thinking tool_use])
+      expect(formatted[:content].map { |block| block[:type] }).to eq(%w[thinking text tool_use])
     end
 
     it 'keeps a display-omitted thinking block as thinking, not redacted data' do
@@ -651,7 +664,9 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         signature: protocol.send(:extract_thinking_signature, blocks)
       )
 
-      expect(protocol.send(:build_thinking_block, thinking)).to eq(type: 'thinking', thinking: '', signature: 'sig')
+      expect(protocol.send(:build_thinking_block, claude_answer(thinking))).to eq(
+        type: 'thinking', thinking: '', signature: 'sig'
+      )
     end
   end
 
