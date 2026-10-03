@@ -188,6 +188,35 @@ RSpec.describe RubyLLM::Protocols::Interactions do
       .to raise_error(RubyLLM::Error, /unsupported action/)
   end
 
+  describe 'stream errors' do
+    def stream_failing_with(code, message)
+      events = <<~SSE
+        event: interaction.created
+        data: {"event_type":"interaction.created","interaction":{"id":"interaction1","status":"in_progress"}}
+
+        event: error
+        data: {"event_type":"error","error":{"code":"#{code}","message":"#{message}"}}
+
+      SSE
+      stub_request(:post, 'https://generativelanguage.googleapis.com/v1beta/interactions')
+        .to_return(status: 200, body: events, headers: { 'Content-Type' => 'text/event-stream' })
+
+      chat.ask('Hello') { |_chunk| nil }
+    end
+
+    it 'raises the error class the code of an error event documents' do
+      { 'rate_limit_exceeded' => RubyLLM::RateLimitError, 'invalid_request' => RubyLLM::BadRequestError,
+        'service_unavailable' => RubyLLM::ServiceUnavailableError, 'deadline_exceeded' => RubyLLM::ServiceUnavailableError,
+        'permission_denied' => RubyLLM::ForbiddenError }.each do |code, error_class|
+        expect { stream_failing_with(code, 'Failed') }.to raise_error(error_class, 'Failed')
+      end
+    end
+
+    it 'falls back to a server error for a code it does not know' do
+      expect { stream_failing_with('brand_new_code', 'Failed') }.to raise_error(RubyLLM::ServerError, 'Failed')
+    end
+  end
+
   it 'accumulates local function argument deltas after an empty object in the initial step' do
     events = [
       { 'event_type' => 'step.start', 'index' => 0,

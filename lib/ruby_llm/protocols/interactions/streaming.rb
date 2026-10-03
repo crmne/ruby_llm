@@ -4,6 +4,13 @@ module RubyLLM
   module Protocols
     class Interactions
       module Streaming # :nodoc:
+        ERROR_STATUSES = {
+          'invalid_request' => 400, 'failed_precondition' => 400, 'authentication' => 401,
+          'payment_required' => 402, 'permission_denied' => 403, 'not_found' => 404,
+          'rate_limit_exceeded' => 429, 'quota_exceeded' => 429, 'too_many_requests' => 429,
+          'api_error' => 500, 'service_unavailable' => 503, 'deadline_exceeded' => 504
+        }.freeze
+
         module_function
 
         def stream_response(payload, additional_headers = {})
@@ -76,6 +83,14 @@ module RubyLLM
             step.merge('arguments' => parse_interaction_arguments(step['arguments']))
           end
           @interaction_response.merge('steps' => steps)
+        end
+
+        def parse_streaming_error(data)
+          error = JSON.parse(data)
+          error = error['error'] if error.is_a?(Hash)
+          return super unless error.is_a?(Hash)
+
+          [ERROR_STATUSES.fetch(error['code'], 500), error['message']]
         end
 
         def final_interaction_chunk
