@@ -65,6 +65,29 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     expect(rendered_content(message)).to eq([{ 'text' => 'Done.' }])
   end
 
+  describe 'an answer without native thinking blocks' do
+    let(:thinking) { RubyLLM::Thinking.build(text: 'Adding.', signature: 'sig') }
+
+    before { protocol.instance_variable_set(:@provider, RubyLLM::Providers::Bedrock.allocate) }
+
+    it 'rebuilds the thinking Bedrock produced' do
+      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'bedrock', model: model_for(:bedrock),
+                                                    status: :succeeded)
+      message = RubyLLM::Message.new(role: :assistant, content: 'Done.', thinking:, usage_entries: [usage])
+
+      expect(rendered_content(message)).to eq(
+        [{ 'reasoningContent' => { 'reasoningText' => { 'text' => 'Adding.', 'signature' => 'sig' } } },
+         { 'text' => 'Done.' }]
+      )
+    end
+
+    it 'sends no thinking whose producer is unknown' do
+      message = RubyLLM::Message.new(role: :assistant, content: 'Done.', thinking:)
+
+      expect(rendered_content(message)).to eq([{ 'text' => 'Done.' }])
+    end
+  end
+
   it 'preserves thinking supplied on a block start' do
     protocol.send(:build_chunk, { 'contentBlockStart' => { 'contentBlockIndex' => 0, 'start' => blocks.first } })
     chunk = protocol.send(:build_chunk, { 'messageStop' => { 'stopReason' => 'end_turn' } })

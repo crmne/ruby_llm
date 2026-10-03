@@ -205,9 +205,13 @@ module RubyLLM
           blocks
         end
 
+        # Reasoning rebuilt from thinking text goes back only to the provider
+        # that produced it: Claude refuses another provider's signature, and
+        # a block without one.
         def format_thinking_blocks(msg)
           blocks = msg.raw_reasoning['converse'] if msg.raw_reasoning.is_a?(Hash)
           return Support::Utils.deep_dup(blocks) if blocks
+          return [] unless msg.thinking && producer_slug(msg) == @provider.slug
 
           [format_thinking_block(msg.thinking)].compact
         end
