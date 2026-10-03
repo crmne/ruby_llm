@@ -2,7 +2,7 @@
 layout: models
 title: Models
 llms: false
-description: Browse 1786 AI models across 17 remote providers, with capabilities, context limits, and pricing.
+description: Browse 1788 AI models across 17 remote providers, with capabilities, context limits, and pricing.
 canonical_url: https://rubyllm.com/available-models/
 redirect_from:
   - /guides/available-models
@@ -12,8 +12,8 @@ redirect_from:
   <header class="catalog-header">
     <div>
       <h1>Models</h1>
-      <p class="catalog-description"><strong>1,786 models</strong> across <strong>17 providers</strong>. Find the capabilities you need and compare what they cost.</p>
-      <p class="catalog-updated">Updated <time datetime="2026-09-25">2026-09-25</time></p>
+      <p class="catalog-description"><strong>1,788 models</strong> across <strong>17 providers</strong>. Find the capabilities you need and compare what they cost.</p>
+      <p class="catalog-updated">Updated <time datetime="2026-10-03">2026-10-03</time></p>
     </div>
     <div class="catalog-usage">
       <div class="catalog-command">
@@ -39,7 +39,7 @@ redirect_from:
 
   <div class="catalog-results-header">
     <h2 data-catalog-heading>All providers</h2>
-    <p data-catalog-count role="status">1,786 models</p>
+    <p data-catalog-count role="status">1,788 models</p>
   </div>
   <p class="catalog-pricing-note">Prices are USD per million text tokens at standard rates. Cache rates appear below input prices when listed. A dash means the value is not listed.</p>
 
@@ -7251,6 +7251,26 @@ redirect_from:
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;eleven_v3_conversational&quot;,&quot;name&quot;:&quot;Eleven v3 Conversational&quot;,&quot;provider&quot;:&quot;ElevenLabs&quot;,&quot;capabilities&quot;:[&quot;Speech generation&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Audio output&quot;],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
           <th scope="row"><span class="catalog-model-name">Eleven v3 Conversational</span><code>eleven_v3_conversational</code></th>
+          <td>ElevenLabs</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> audio</span></td>
+          <td><div class="catalog-capabilities"><span>Speech generation</span></div></td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;eleven_v4&quot;,&quot;name&quot;:&quot;Eleven v4&quot;,&quot;provider&quot;:&quot;ElevenLabs&quot;,&quot;capabilities&quot;:[&quot;Speech generation&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Audio output&quot;],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Eleven v4</span><code>eleven_v4</code></th>
+          <td>ElevenLabs</td>
+          <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> audio</span></td>
+          <td><div class="catalog-capabilities"><span>Speech generation</span></div></td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+          <td class="catalog-numeric">—</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;eleven_v4_turbo&quot;,&quot;name&quot;:&quot;Eleven v4 Turbo&quot;,&quot;provider&quot;:&quot;ElevenLabs&quot;,&quot;capabilities&quot;:[&quot;Speech generation&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Audio output&quot;],&quot;context&quot;:null,&quot;output&quot;:null,&quot;input_price&quot;:null,&quot;output_price&quot;:null&#125;">
+          <th scope="row"><span class="catalog-model-name">Eleven v4 Turbo</span><code>eleven_v4_turbo</code></th>
           <td>ElevenLabs</td>
           <td class="catalog-modalities"><span><b>In</b> text</span><span><b>Out</b> audio</span></td>
           <td><div class="catalog-capabilities"><span>Speech generation</span></div></td>

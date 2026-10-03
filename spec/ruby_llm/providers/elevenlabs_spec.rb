@@ -29,6 +29,14 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
     end
   end
 
+  describe 'bundled catalog' do
+    it 'knows the Eleven v4 speech models' do
+      models = %w[eleven_v4 eleven_v4_turbo].map { |id| RubyLLM.models.find(id, provider: :elevenlabs) }
+
+      expect(models).to all(have_attributes(provider: 'elevenlabs', capabilities: ['speech_generation']))
+    end
+  end
+
   describe 'operation routing' do
     it 'refuses to chat' do
       chat = RubyLLM.chat(model: 'eleven_v3', provider: :elevenlabs)
