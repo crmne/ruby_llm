@@ -7,6 +7,19 @@ module RubyLLM
     class Anthropic
       # Streaming methods of the Anthropic API integration
       module Streaming
+        ERROR_STATUSES = {
+          'invalid_request_error' => 400,
+          'authentication_error' => 401,
+          'billing_error' => 402,
+          'permission_error' => 403,
+          'not_found_error' => 404,
+          'request_too_large' => 413,
+          'rate_limit_error' => 429,
+          'api_error' => 500,
+          'timeout_error' => 504,
+          'overloaded_error' => 529
+        }.freeze
+
         private
 
         def stream_response(payload, additional_headers = {}, &)
@@ -159,12 +172,7 @@ module RubyLLM
           error = error_data['error']
           return [500, error.to_s] unless error.is_a?(Hash)
 
-          case error['type']
-          when 'overloaded_error'
-            [529, error['message']]
-          else
-            [500, error['message']]
-          end
+          [ERROR_STATUSES.fetch(error['type'], 500), error['message']]
         end
       end
     end

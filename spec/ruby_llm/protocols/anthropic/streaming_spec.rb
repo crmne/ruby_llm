@@ -78,14 +78,28 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
       expect(message).to eq('Overloaded')
     end
 
-    it 'falls back to a 500 for other typed error objects' do
+    it 'gives each documented error type its HTTP status' do
+      statuses = {
+        'invalid_request_error' => 400, 'authentication_error' => 401, 'billing_error' => 402,
+        'permission_error' => 403, 'not_found_error' => 404, 'request_too_large' => 413,
+        'rate_limit_error' => 429, 'api_error' => 500, 'timeout_error' => 504, 'overloaded_error' => 529
+      }
+
+      parsed = statuses.keys.to_h do |type|
+        [type, protocol.send(:parse_streaming_error, { type: 'error', error: { type:, message: 'Failed' } }.to_json)]
+      end
+
+      expect(parsed).to eq(statuses.transform_values { |status| [status, 'Failed'] })
+    end
+
+    it 'falls back to a 500 for an error type it does not know' do
       status, message = protocol.send(
         :parse_streaming_error,
-        { type: 'error', error: { type: 'invalid_request_error', message: 'Bad request' } }.to_json
+        { type: 'error', error: { type: 'brand_new_error', message: 'Failed' } }.to_json
       )
 
       expect(status).to eq(500)
-      expect(message).to eq('Bad request')
+      expect(message).to eq('Failed')
     end
 
     it 'handles a string error value' do
@@ -100,6 +114,34 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
 
     it 'ignores a body that parses to a bare JSON string' do
       expect(protocol.send(:parse_streaming_error, '"model unavailable (type: error)"')).to be_nil
+    end
+  end
+
+  describe 'stream errors' do
+    def stream_failing_with(type, message)
+      events = <<~SSE
+        event: message_start
+        data: {"type":"message_start","message":{"id":"msg_1","type":"message","role":"assistant","content":[],"model":"#{model_for(:anthropic)}","usage":{"input_tokens":12,"output_tokens":1}}}
+
+        event: error
+        data: {"type":"error","error":{"type":"#{type}","message":"#{message}"}}
+
+      SSE
+      stub_request(:post, %r{api\.anthropic\.com/v1/messages})
+        .to_return(status: 200, body: events, headers: { 'Content-Type' => 'text/event-stream' })
+
+      RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).ask('Hello') { |_chunk| nil }
+    end
+
+    it 'raises a rate limit reported in an error event' do
+      message = 'This request would exceed the rate limit for your organization of 50,000 input tokens per minute.'
+
+      expect { stream_failing_with('rate_limit_error', message) }.to raise_error(RubyLLM::RateLimitError, message)
+    end
+
+    it 'raises a refused request reported in an error event as a bad request' do
+      expect { stream_failing_with('invalid_request_error', 'messages: at least one message is required') }
+        .to raise_error(RubyLLM::BadRequestError, 'messages: at least one message is required')
     end
   end
 end
