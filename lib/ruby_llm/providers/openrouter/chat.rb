@@ -85,24 +85,18 @@ module RubyLLM
           return {} unless msg.role == :assistant
           return { reasoning_details: msg.raw_reasoning } if msg.raw_reasoning.is_a?(Array)
 
-          thinking = msg.thinking
-          return {} unless thinking
+          return {} unless msg.thinking && producer_slug(msg) == @provider.slug
 
-          details = []
+          detail = reasoning_detail(msg.thinking)
+          detail ? { reasoning_details: [detail] } : {}
+        end
+
+        def reasoning_detail(thinking)
           if thinking.text
-            details << {
-              type: 'reasoning.text',
-              text: thinking.text,
-              signature: thinking.signature
-            }.compact
+            { type: 'reasoning.text', text: thinking.text, signature: thinking.signature }.compact
           elsif thinking.signature
-            details << {
-              type: 'reasoning.encrypted',
-              data: thinking.signature
-            }
+            { type: 'reasoning.encrypted', data: thinking.signature }
           end
-
-          details.empty? ? {} : { reasoning_details: details }
         end
 
         def format_message_content(msg, caching: nil)

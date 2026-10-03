@@ -346,6 +346,14 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
   end
 
   describe '#format_thinking' do
+    before { provider.instance_variable_set(:@provider, RubyLLM::Providers::OpenRouter.allocate) }
+
+    def answer(thinking, producer: 'openrouter')
+      usage = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: producer, model: 'claude-haiku-4-5',
+                                                    status: :succeeded)
+      RubyLLM::Message.new(role: :assistant, content: 'done', thinking:, usage_entries: producer ? [usage] : nil)
+    end
+
     it 'ignores native replay data from another protocol' do
       message = RubyLLM::Message.new(
         role: :assistant, content: 'done',
@@ -361,9 +369,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'sends reasoning text with its signature' do
-      message = RubyLLM::Message.new(
-        role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
-      )
+      message = answer(RubyLLM::Thinking.new(text: 'why', signature: 'sig'))
 
       expect(provider.send(:format_thinking, message)).to eq(
         reasoning_details: [{ type: 'reasoning.text', text: 'why', signature: 'sig' }]
@@ -371,13 +377,24 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'sends a signature-only block as encrypted reasoning' do
-      message = RubyLLM::Message.new(
-        role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(signature: 'sig')
-      )
+      message = answer(RubyLLM::Thinking.new(signature: 'sig'))
 
       expect(provider.send(:format_thinking, message)).to eq(
         reasoning_details: [{ type: 'reasoning.encrypted', data: 'sig' }]
       )
+    end
+
+    it 'sends no reasoning whose producer is unknown' do
+      message = answer(RubyLLM::Thinking.new(text: 'why', signature: 'gemini-signature'), producer: nil)
+
+      expect(provider.send(:format_thinking, message)).to eq({})
+    end
+
+    it 'sends the reasoning details OpenRouter returned whoever is known to have produced them' do
+      details = [{ 'type' => 'reasoning.text', 'text' => 'why', 'signature' => 'sig', 'index' => 0 }]
+      message = RubyLLM::Message.new(role: :assistant, content: 'done', raw_reasoning: details)
+
+      expect(provider.send(:format_thinking, message)).to eq(reasoning_details: details)
     end
   end
 

@@ -206,8 +206,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'does not guess the producer from a model id several providers serve' do
-    message = RubyLLM::Message.new(role: :assistant, content: 'Done.', model: model_for(:anthropic),
-                                   thinking: RubyLLM::Thinking.build(signature: 'signature'))
+    message = produced_by('openrouter', model_for(:anthropic), RubyLLM::Thinking.build(signature: 'signature'))
     chat = RubyLLM.chat(model: model_for(:openrouter), provider: :openrouter)
 
     payload = replay(chat, message)
