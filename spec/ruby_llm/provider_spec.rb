@@ -720,6 +720,12 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.parse_error(response_for({ 'detail' => 'detail field' }))).to eq('detail field')
     end
 
+    it 'reads a FastAPI detail array of validation errors' do
+      body = { 'detail' => [{ 'loc' => %w[body messages], 'msg' => 'field required' }] }
+
+      expect(provider.parse_error(response_for(body))).to include('body.messages: field required')
+    end
+
     it 'joins a list of errors' do
       body = [{ 'error' => 'first' }, { 'error' => { 'message' => 'second' } }]
 
