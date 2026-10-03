@@ -184,7 +184,7 @@ The ledger is internal to RubyLLM; your application still owns only its Chat and
 
 ### One-Shot Operations
 
-Operations outside a chat record their attempts in the same ledger. `RubyLLM.transcribe`, `embed`, `paint`, `speak`, `moderate`, `ocr`, `rerank`, and `judge` each write a row for every attempt the provider may have billed, including failed and blocked ones. A video or research job writes one row when it finishes: a video's cost stays unknown because providers report none, and a research row names the hosted agent in its `model` column. These rows have no chat. A chat without a record, such as `RubyLLM.chat` in a service object, records its rows the same way.
+Operations outside a chat record their attempts in the same ledger. `RubyLLM.transcribe`, `embed`, `paint`, `speak`, `moderate`, `ocr`, `rerank`, and `judge` each write a row for every attempt the provider may have billed, including failed and blocked ones. A video or research job writes one row when it finishes, with the cost the provider reported. A video's cost stays unknown when its provider reports none, and a research row names the hosted agent in its `model` column. These rows have no chat. A chat without a record, such as `RubyLLM.chat` in a service object, records its rows the same way.
 
 Pass `owner:` to attribute an operation's usage to a record, such as the user who asked for it:
 

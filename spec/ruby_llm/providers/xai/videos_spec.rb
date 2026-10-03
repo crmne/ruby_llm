@@ -145,7 +145,7 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
       response = instance_double(Faraday::Response, body: body)
 
       state = protocol.parse_video_job_status(response, job: job)
-      expect(state).to eq(status: :completed, raw: body)
+      expect(state).to include(status: :completed, raw: body)
 
       video = protocol.download_video(
         RubyLLM::VideoJob.new(id: '4482fadb', protocol: protocol, status: :completed, raw: body)
@@ -154,6 +154,20 @@ RSpec.describe RubyLLM::Providers::XAI::Videos do
       expect(video.duration).to eq(1)
       expect(video.model).to eq('grok-imagine-video')
       expect(video.mime_type).to eq('video/mp4')
+    end
+
+    it 'reports the cost xAI billed in USD ticks as the job and usage cost' do
+      body = { 'status' => 'done', 'video' => { 'url' => 'https://vidgen.x.ai/clip.mp4', 'duration' => 1 },
+               'model' => 'grok-imagine-video', 'usage' => { 'cost_in_usd_ticks' => 500_000_000 }, 'progress' => 100 }
+      allow(provider.connection).to receive(:get).with('videos/4482fadb')
+                                                 .and_return(instance_double(Faraday::Response, body:))
+      allow(RubyLLM::Accounting::Usage).to receive(:report)
+
+      job.refresh
+
+      expect(job.cost.total).to be_within(1e-12).of(0.05)
+      expect(RubyLLM::Accounting::Usage).to have_received(:report)
+        .with(having_attributes(operation: :video, cost: having_attributes(total: job.cost.total)), config: anything)
     end
 
     it 'fails on failed and expired statuses' do

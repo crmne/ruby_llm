@@ -5,6 +5,8 @@ module RubyLLM
     class XAI
       # Grok Imagine generation, editing, and extension jobs.
       module Videos
+        include XAI::ReportedCost
+
         def video_url
           'videos/generations'
         end
@@ -45,11 +47,12 @@ module RubyLLM
 
         def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
           body = response.body
-          case body['status']
-          when 'done' then { status: :completed, raw: body }
-          when 'failed', 'expired' then { status: :failed, raw: body, error: body['error'] || body['status'] }
-          else { status: :pending, raw: body }
-          end
+          state = case body['status']
+                  when 'done' then { status: :completed }
+                  when 'failed', 'expired' then { status: :failed, error: body['error'] || body['status'] }
+                  else { status: :pending }
+                  end
+          state.merge({ raw: body, reported_cost: reported_cost(body['usage'] || {}) }.compact)
         end
 
         def download_video(job)

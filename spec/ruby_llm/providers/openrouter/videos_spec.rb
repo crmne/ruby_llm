@@ -79,7 +79,23 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Videos do
       }
       response = instance_double(Faraday::Response, body: body)
 
-      expect(protocol.parse_video_job_status(response, job: job)).to eq(status: :completed, raw: body)
+      expect(protocol.parse_video_job_status(response, job: job)).to eq(status: :completed, raw: body,
+                                                                        reported_cost: 0.05)
+    end
+
+    it 'reports the cost OpenRouter billed as the job and usage cost' do
+      body = { 'id' => 'abc123', 'generation_id' => 'gen-1234567890-abcdef', 'status' => 'completed',
+               'unsigned_urls' => ['https://openrouter.ai/api/v1/videos/abc123/content?index=0'],
+               'usage' => { 'cost' => 0.25, 'is_byok' => false } }
+      allow(provider.connection).to receive(:get).with('videos/abc123')
+                                                 .and_return(instance_double(Faraday::Response, body:))
+      allow(RubyLLM::Accounting::Usage).to receive(:report)
+
+      job.refresh
+
+      expect(job.cost.total).to eq(0.25)
+      expect(RubyLLM::Accounting::Usage).to have_received(:report)
+        .with(having_attributes(operation: :video, cost: having_attributes(total: 0.25)), config: anything)
     end
 
     it 'fails with the reported error' do

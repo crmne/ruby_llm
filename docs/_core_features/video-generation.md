@@ -57,6 +57,15 @@ video.save("hummingbird.mp4")
 
 `refresh` updates the job state and does nothing after completion. Read `job.video` when `job.completed?` is true. It is `nil` while pending and raises `RubyLLM::Error` if rendering failed. Use `job.wait` when you want RubyLLM to handle polling.
 
+A finished job carries the cost the provider billed for it:
+
+```ruby
+job.wait
+job.cost.total # => 0.05
+```
+
+`job.cost` returns a `RubyLLM::Cost`. Its total is `nil` while the job is pending and when the provider reports no price; xAI and OpenRouter report one.
+
 ## Animating a Still Image
 
 Models that support image-to-video take a reference image through `with:`, the same option chats and image generation use for attachments:
@@ -225,7 +234,7 @@ job.wait(timeout: 900, interval: 10)
 *   `video.mime_type`: the MIME type, such as `"video/mp4"`.
 *   `video.duration`: the clip length in seconds, when the provider reports it.
 *   `video.model`: the id of the model that rendered the clip.
-*   `video.raw`: the provider's raw job response, for provider-specific fields such as reported cost.
+*   `video.raw`: the provider's raw job response, for provider-specific fields.
 
 Save hosted videos before their URLs expire. `save` and `to_blob` work with either URLs or inline data:
 

@@ -70,13 +70,14 @@ module RubyLLM
       end
     end
 
-    def initialize(id:, protocol:, model: nil, status: :pending, raw: nil, error: nil) # :nodoc:
+    def initialize(id:, protocol:, model: nil, status: :pending, raw: nil, error: nil, reported_cost: nil) # :nodoc:
       @id = id
       @protocol = protocol
       @model = model
       @status = status
       @raw = raw
       @error = error
+      @reported_cost = reported_cost
       @usage_owner = Accounting::Usage.owner
       record_usage
     end
@@ -111,8 +112,20 @@ module RubyLLM
       @status = state.fetch(:status)
       @raw = state[:raw]
       @error = state[:error]
+      @reported_cost = state[:reported_cost]
       record_usage
       self
+    end
+
+    # Returns the Cost the provider reported for the job. Its total is
+    # +nil+ while the job is pending or when the provider reports no
+    # price.
+    #
+    #   job.wait
+    #   job.cost.total # => 0.05
+    #
+    def cost
+      Cost.new(tokens: Tokens.new(reported_cost: @reported_cost))
     end
 
     # Polls the job until it finishes, then returns self. Raises Error
@@ -153,7 +166,7 @@ module RubyLLM
 
       @usage_recorded = true
       entry = Accounting::Usage::Entry.new(operation: :video, provider: @protocol.provider.slug, model:,
-                                           status: completed? ? :succeeded : :failed, owner: @usage_owner)
+                                           status: completed? ? :succeeded : :failed, cost:, owner: @usage_owner)
       Accounting::Usage.report(entry, config: @protocol.config)
     end
 

@@ -34,9 +34,9 @@ module RubyLLM
         def parse_video_job_status(response, job:) # rubocop:disable Lint/UnusedMethodArgument
           body = response.body
           status = job_status(body)
-          state = { status: status, raw: body }
+          state = { status: status, raw: body, reported_cost: reported_cost(body['usage'] || {}) }
           state[:error] = body['error'] || body['status'] if status == :failed
-          state
+          state.compact
         end
 
         def download_video(job)
