@@ -68,8 +68,11 @@ module RubyLLM
         return { effort: :none } if model.reasoning_option_values(:effort).include?('none')
 
         budget = model.reasoning_option(:budget_tokens)
-        return { budget: 0 } if budget && budget[:min].is_a?(Numeric) && budget[:min] <= 0
-        return { enabled: false } if model.reasoning_option(:toggle) || budget
+        return { budget: 0 } if zero_budget?(budget)
+        # Gemini renders enabled: false as thinkingBudget 0. A positive minimum
+        # with no toggle is not an off switch there; other providers still
+        # accept enabled: false for a budget-only model.
+        return { enabled: false } if model.reasoning_option(:toggle) || budget_disables?(budget)
 
         model.provider_class&.thinking_off_control(model.id)
       end
@@ -100,6 +103,20 @@ module RubyLLM
         return unless minimum.is_a?(Numeric)
 
         [minimum, 1].max
+      end
+
+      def zero_budget?(budget)
+        budget && budget[:min].is_a?(Numeric) && budget[:min] <= 0
+      end
+
+      def budget_disables?(budget)
+        budget && !gemini_budget_model?
+      end
+
+      # Vertex AI also hosts Claude, which turns thinking off without a zero budget.
+      def gemini_budget_model?
+        provider = model.provider.to_s
+        provider == 'gemini' || (provider == 'vertexai' && model.id.to_s.start_with?('gemini'))
       end
 
       def reasoning_model?

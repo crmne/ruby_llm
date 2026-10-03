@@ -39,6 +39,34 @@ RSpec.describe RubyLLM::Thinking::Controls do
       expect(described_class.new(bedrock).disable).to eq(enabled: false)
     end
 
+    it 'refuses to turn thinking off on Gemini 2.5 Pro' do
+      %w[gemini vertexai].each do |provider|
+        model = RubyLLM.models.find('gemini-2.5-pro', provider: provider)
+
+        expect(described_class.new(model).disable).to be_nil
+        expect { RubyLLM::Thinking::Config.disabled.resolve(model) }
+          .to raise_error(ArgumentError, %r{does not know how to disable thinking for #{provider}/gemini-2\.5-pro})
+      end
+    end
+
+    it 'still turns Gemini 2.5 Flash off with a zero budget and Flash Lite off with its toggle' do
+      flash = RubyLLM.models.find('gemini-2.5-flash', provider: :gemini)
+      lite = RubyLLM.models.find('gemini-2.5-flash-lite', provider: :gemini)
+      vertex_lite = RubyLLM.models.find('gemini-2.5-flash-lite', provider: :vertexai)
+
+      expect(described_class.new(flash).disable).to eq(budget: 0)
+      expect(described_class.new(lite).disable).to eq(enabled: false)
+      expect(described_class.new(vertex_lite).disable).to eq(enabled: false)
+    end
+
+    it 'still turns thinking off for budget-only models outside the Gemini protocol' do
+      haiku = RubyLLM.models.find('claude-haiku-4-5', provider: :anthropic)
+      vertex_haiku = RubyLLM.models.find('claude-haiku-4-5', provider: :vertexai)
+
+      expect(described_class.new(haiku).disable).to eq(enabled: false)
+      expect(described_class.new(vertex_haiku).disable).to eq(enabled: false)
+    end
+
     it 'still raises when neither the registry nor the provider exposes an off control' do
       model = model_for(
         'magistral-small',

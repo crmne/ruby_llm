@@ -254,6 +254,30 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         includeThoughts: true, thinkingBudget: 1024
       )
     end
+
+    it 'refuses to send thinkingBudget 0 for Gemini 2.5 Pro' do
+      thinking = RubyLLM::Thinking::Config.new(enabled: false)
+
+      %w[gemini vertexai].each do |provider|
+        model = RubyLLM.models.find('gemini-2.5-pro', provider: provider)
+
+        expect { test_obj.send(:build_thinking_config, model, thinking) }
+          .to raise_error(ArgumentError, /cannot turn thinking off with thinkingBudget 0/)
+        expect do
+          test_obj.send(:render_payload, [RubyLLM::Message.new(role: :user, content: 'Hi')],
+                        tools: {}, temperature: nil, model: model, thinking: thinking)
+        end.to raise_error(ArgumentError, /thinkingBudget 0/)
+      end
+    end
+
+    it 'sends thinkingBudget 0 for Gemini 2.5 Flash Lite, which has a toggle' do
+      model = RubyLLM.models.find('gemini-2.5-flash-lite', provider: :gemini)
+      thinking = RubyLLM::Thinking::Config.new(enabled: false)
+
+      expect(test_obj.send(:build_thinking_config, model, thinking)).to eq(
+        includeThoughts: false, thinkingBudget: 0
+      )
+    end
   end
 
   describe '#format_role' do

@@ -107,8 +107,8 @@ module RubyLLM
           response.body['totalTokens']
         end
 
-        def build_thinking_config(_model, thinking)
-          return { includeThoughts: false, thinkingBudget: 0 } if thinking.enabled == false
+        def build_thinking_config(model, thinking)
+          return disabled_thinking_config(model) if thinking.enabled == false
 
           config = { includeThoughts: true }
 
@@ -117,6 +117,35 @@ module RubyLLM
           config[:thinkingBudget] = -1 if thinking.enabled == true
 
           config
+        end
+
+        # thinkingBudget 0 turns thinking off only when the model allows it.
+        # Gemini 2.5 Pro's minimum is 128 and it has no toggle, so Google
+        # rejects 0. Flash Lite has a toggle and still uses 0.
+        def disabled_thinking_config(model)
+          budget = thinking_budget_option(model)
+          if positive_budget_minimum?(budget) && !thinking_toggle?(model)
+            raise ArgumentError, format(
+              '%<id>s cannot turn thinking off with thinkingBudget 0. ' \
+              'The minimum budget is %<minimum>d and the model has no toggle.',
+              id: model.id,
+              minimum: budget[:min].to_i
+            )
+          end
+
+          { includeThoughts: false, thinkingBudget: 0 }
+        end
+
+        def thinking_budget_option(model)
+          model.reasoning_option(:budget_tokens) if model.respond_to?(:reasoning_option)
+        end
+
+        def positive_budget_minimum?(budget)
+          budget && budget[:min].is_a?(Numeric) && budget[:min].positive?
+        end
+
+        def thinking_toggle?(model)
+          model.respond_to?(:reasoning_option) && model.reasoning_option(:toggle)
         end
 
         def supports_provider_file_references?
