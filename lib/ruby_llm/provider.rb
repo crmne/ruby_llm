@@ -754,8 +754,15 @@ module RubyLLM
     def format_validation_error(error)
       return unless error.is_a?(Hash)
 
-      text = [Array(error['loc']).join('.'), error['msg']].compact.reject(&:empty?).join(': ')
+      text = [Array(error['loc']).join('.'), validation_error_text(error['msg'])].compact.reject(&:empty?).join(': ')
       text unless text.empty?
+    end
+
+    def validation_error_text(value)
+      return if value.nil?
+      return value if value.is_a?(String)
+
+      value.to_s
     end
 
     def ensure_configured!
