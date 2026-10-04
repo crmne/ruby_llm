@@ -183,6 +183,8 @@ RubyLLM emits these events:
 
 *   `workflow.ruby_llm` - one named workflow block and its correlation ID
 *   `workflow_step.ruby_llm` - one named code region within a workflow
+*   `evaluation.ruby_llm` - one evaluation run, its progress counts, and completed report
+*   `evaluation_trial.ruby_llm` - one completed evaluation case and repetition, including its trial result
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
 *   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, cost, and owner
 *   `batch.ruby_llm` - one batch submission operation
@@ -201,6 +203,8 @@ RubyLLM emits these events:
 *   `models.refresh.ruby_llm` - model registry refresh metadata
 
 Operations that expose normalized usage (`chat`, `embedding`, `image`, `moderation`, `rerank`, `speech`, and `transcription`) include `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it. Batch, OCR, and video events expose their operation-specific result and lifecycle fields instead.
+
+See [Building a UI for Evaluations]({% link _advanced/evaluation-running.md %}#building-a-ui) for evaluation progress, run IDs, and report payloads.
 
 ### Usage Events
 

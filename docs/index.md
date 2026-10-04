@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'Build AI features in Ruby and Rails with chats, tools, agents, structured output, images, audio, and video across 19 providers.'
+description: 'Build and evaluate AI features in Ruby and Rails with chats, tools, agents, images, audio, and video across 19 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -263,6 +263,43 @@ WeatherAssistant.new.ask "What's the weather in Berlin?"
 
 </div>
     </div>
+
+    <div id="evaluations" class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Evaluate your agents</h3>
+        <p class="home-step-desc">Keep scenarios in <code>app/evals/weather_evaluation.yml</code>. Evaluate the whole conversation with model criteria and Ruby assertions. Run the same cases from Ruby, RSpec, Minitest, or Rake, with tokens and costs in every report.</p>
+        <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class WeatherEvaluation < RubyLLM::Evaluation
+  evaluation :grounded, "The answer agrees with the weather tool results"
+
+  def perform(input)
+    agent = WeatherAssistant.new
+    agent.ask(input)
+    agent
+  end
+
+  def assertions
+    assert_includes tool_calls.map(&:name), "weather"
+  end
+end
+
+WeatherEvaluation.run
+```
+{: .home-code-card }
+
+```yaml
+cases:
+  - name: berlin
+    inputs: What's the weather in Berlin?
+```
+{: .home-code-card }
+
+</div>
+    </div>
   </div>
 </section>
 
@@ -270,7 +307,7 @@ WeatherAssistant.new.ask "What's the weather in Berlin?"
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      Agents, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
+      Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
     </p>
   </div>
 

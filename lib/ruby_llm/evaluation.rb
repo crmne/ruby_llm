@@ -94,21 +94,32 @@ module RubyLLM
       # Executes fresh instances for every case and repetition and returns an Evaluation::Report.
       # A supplied dataset overrides discovery for this run. Configuration errors raise;
       # task, assertion, and evaluator failures are recorded per case.
-      def run(dataset: nil, only: nil, repetitions: 1)
+      # Yields each completed Trial before starting the next. Exceptions from the block propagate.
+      # Supply id to correlate reports and instrumentation with an application record or job.
+      def run(dataset: nil, only: nil, repetitions: 1, id: nil)
         validate_run(repetitions)
+        id = (id || SecureRandom.uuid).to_s
+        raise ArgumentError, 'An evaluation run id cannot be empty' if id.empty?
+
         cases = self.cases(dataset:, only:)
         groups = evaluation_groups
         definitions = Judge::Data.copy(groups.flat_map do |backend, criteria|
           criteria.map { |criterion| criterion.merge(evaluator: backend.description) }
         end)
         started_at = Time.now.utc
-        id = SecureRandom.uuid
-        trials = cases.flat_map do |test_case|
-          Array.new(repetitions) do |index|
-            new.run_case(test_case, index + 1, groups, run_id: id)
+        name = self.name || 'Anonymous evaluation'
+        payload = { evaluation_id: id, evaluation_name: name,
+                    total: cases.size * repetitions, completed: 0, started_at: }
+        RubyLLM.instrument('evaluation.ruby_llm', payload) do |event|
+          trials = cases.flat_map do |test_case|
+            Array.new(repetitions) do |index|
+              trial = run_trial(test_case, index + 1, groups, event)
+              yield trial if block_given?
+              trial
+            end
           end
+          event[:report] = Report.new(name:, trials:, id:, started_at:, definitions:)
         end
-        Report.new(name: name || 'Anonymous evaluation', trials:, id:, started_at:, definitions:)
       end
 
       def definitions # :nodoc:
@@ -120,6 +131,15 @@ module RubyLLM
       end
 
       private
+
+      def run_trial(test_case, repetition, groups, run)
+        payload = run.slice(:evaluation_id, :evaluation_name, :total).merge(case: test_case.name, repetition:)
+        RubyLLM.instrument('evaluation_trial.ruby_llm', payload) do |event|
+          trial = new.run_case(test_case, repetition, groups, run_id: run[:evaluation_id])
+          event[:completed] = run[:completed] += 1
+          event[:trial] = trial
+        end
+      end
 
       def validate_run(repetitions)
         raise ArgumentError, 'Define perform(input) in your evaluation' if instance_method(:perform).owner == Evaluation

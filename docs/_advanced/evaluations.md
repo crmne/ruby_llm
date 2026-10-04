@@ -78,5 +78,5 @@ A case describes one scenario. Its `inputs` can be a question, several turns, a 
 * [Datasets]({% link _advanced/evaluation-datasets.md %}): file formats, references, and application data.
 * [Conversations and Tools]({% link _advanced/evaluation-conversations.md %}): multiple turns, existing transcripts, and tool traces.
 * [Evaluators]({% link _advanced/evaluation-evaluators.md %}): configured agents, structured output, and decision models.
-* [Running and Reports]({% link _advanced/evaluation-running.md %}): assertions, RSpec, Minitest, Rake, tokens, and costs.
+* [Running and Reports]({% link _advanced/evaluation-running.md %}): assertions, RSpec, Minitest, Rake, tokens, costs, and UI progress.
 * [Examples]({% link _advanced/evaluation-examples.md %}): complete classes and datasets you can put in your application.

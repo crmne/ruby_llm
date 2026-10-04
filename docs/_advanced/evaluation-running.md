@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * How to use assertions and lifecycle hooks.
 * How to run the same cases in RSpec, Minitest, and Rake.
 * How to inspect reports and standard RubyLLM usage accounting.
+* How to show progress and save results in your application's UI.
 
 ## Ruby Assertions and Fixtures
 
@@ -102,6 +103,66 @@ Reports contain case data, frozen evidence, criterion definitions, actual evalua
 * `error`: Application execution, evidence conversion, cleanup, or an evaluator failed.
 
 `pass_rate` uses every trial as its denominator, including errors and unassessed cases. `passed?` requires every trial to pass. Empty datasets are rejected. The runner executes sequentially; repetitions create fresh cases rather than retrying failures until they pass.
+
+## Building a UI
+
+Pass a block to receive each completed trial while the run is in progress:
+
+```ruby
+report = SupportEvaluation.run do |trial|
+  puts "#{trial.test_case.name}: #{trial.status}"
+end
+```
+
+The block receives the same frozen `Evaluation::Trial` stored in the final report, after assertions, model assessments, and teardown. Failed and errored trials are yielded too. The next trial starts when your block returns. Its return value is ignored. An exception from the block stops the run and propagates to the caller.
+
+Run evaluations in a background job and persist each trial as it arrives. This example uses application-owned `evaluation_run` and trial records with JSON columns:
+
+```ruby
+cases = SupportEvaluation.cases
+evaluation_run.update!(total: cases.size)
+
+report = SupportEvaluation.run(dataset: cases, id: evaluation_run.id) do |trial|
+  evaluation_run.trials.create!(
+    case_name: trial.test_case.name,
+    repetition: trial.repetition,
+    data: trial.to_h
+  )
+end
+
+evaluation_run.update!(report: report.to_h)
+```
+
+Broadcast saved trials through your application's Turbo Streams or WebSocket setup. `trial.to_h` includes the case, evidence, status, evaluator explanations, errors, duration, tokens, and costs. It excludes the live application object returned by `perform`. `report.to_h` adds run identity, criterion definitions, and summary counts. RubyLLM does not require an evaluation database schema or a UI framework.
+
+For a progress bar, the total is the number of selected cases multiplied by `repetitions`. Loading cases first and passing them to `run` keeps the UI's total and the execution dataset consistent. Use `only:` when listing cases to apply the same selection. Supply a unique `id:` for each run attempt; it becomes `report.id` and the workflow ID on the task and evaluator requests. Without it, RubyLLM generates a UUID.
+
+### Observing Runs
+
+Dashboard libraries can subscribe through the existing [instrumentation API]({% link _advanced/instrumentation.md %}) without changing evaluation classes or their callers. In Rails:
+
+```ruby
+ActiveSupport::Notifications.subscribe("evaluation_trial.ruby_llm") do |event|
+  payload = event.payload
+  Rails.logger.info(
+    evaluation_id: payload[:evaluation_id],
+    completed: payload[:completed],
+    total: payload[:total],
+    status: payload[:trial].status
+  )
+end
+```
+
+Both events carry `evaluation_id`, `evaluation_name`, `completed`, and `total`:
+
+| Event | Additional payload | When Rails delivers it |
+| --- | --- | --- |
+| `evaluation_trial.ruby_llm` | `case` (the case name), `repetition`, `trial` | After one trial, before the progress block |
+| `evaluation.ruby_llm` | `started_at`, `report` | When the run finishes |
+
+`completed` counts trials, including failures and errors. Trial progress is one-based and includes repetitions. These are ordinary instrumented blocks, so Rails supplies durations and exception details. If a progress block interrupts the run, the run event retains the completed count and exception, but has no final `report`. Configuration errors raise before either event starts.
+
+Progress is reported between trials. Token streaming and tool activity within a trial remain available through the ordinary Chat callbacks and instrumentation. Your application owns job scheduling, run state, and storage; store completed trials as they arrive if you need to keep partial results after interruption.
 
 ## Tokens, Costs, and the Usage Ledger
 
