@@ -21,6 +21,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   # Older Rails versions need JSON 2; the Rails 8.1 appraisal also tests JSON 3.
   gem 'json', '< 3'
   gem 'json_schemer'
+  gem 'minitest', '>= 5', '< 7'
   gem 'nokogiri'
   gem 'opentelemetry-sdk', '~> 1.0'
   gem 'overcommit', '>= 0.66'

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'forwardable'
-
 module RubyLLM
   # Defines reusable evaluations with a dataset, semantic criteria, and Ruby assertions.
   # Datasets default to app/evals/<class_name>.yml, .yaml, .json, or .jsonl.
@@ -15,8 +13,6 @@ module RubyLLM
   #
   #   SupportEvaluation.run.save("tmp/support.json")
   class Evaluation
-    extend Forwardable
-
     CORRECTNESS = 'The answer agrees with the expected output'
     private_constant :CORRECTNESS
 
@@ -233,7 +229,8 @@ module RubyLLM
     #   assert(condition, message = nil)
     #
     # Asserts that condition is truthy. Delegates to Minitest::Assertions and
-    # records its assertion count. The other Minitest assert_* and refute_*
+    # records its assertion count. Requires the minitest gem, which Rails
+    # applications already include. The other Minitest assert_* and refute_*
     # methods use the same contract. Call these from #assertions.
 
     # :method: refute
@@ -255,7 +252,15 @@ module RubyLLM
     # Asserts that the collection includes value. See #assert.
 
     # :stopdoc:
-    def_delegators :assertion_context, *Assertions.instance_methods.grep(/\A(?:assert_|refute_|assert\z|refute\z)/)
+    def method_missing(name, ...)
+      return super unless Assertions::METHOD.match?(name) && assertion_context.respond_to?(name)
+
+      assertion_context.public_send(name, ...)
+    end
+
+    def respond_to_missing?(name, include_private = nil)
+      Assertions.method?(name) || super
+    end
 
     def run_case(test_case, repetition, groups, run_id:) # :nodoc:
       Runner.new(self, test_case, repetition, groups, run_id:).run
@@ -274,6 +279,10 @@ module RubyLLM
 
     def assertion_context # :nodoc:
       @assertion_context ||= Assertions.new
+    end
+
+    def assertion_count # :nodoc:
+      @assertion_context&.assertions.to_i
     end
     # :startdoc:
   end

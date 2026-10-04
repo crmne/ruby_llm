@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Running and Reports
+title: Running Evaluations
 parent: Evaluations
 nav_order: 4
 description: Run evaluations from Rake, RSpec, Minitest, or Ruby and read their results, tokens, and costs
@@ -36,7 +36,7 @@ class SupportEvaluation < RubyLLM::Evaluation
 end
 ```
 
-You can use `assert`, `refute`, `assert_equal`, `assert_includes`, `assert_match`, and every other method from `Minitest::Assertions`. The first failing assertion fails the case and stops that case's assertions. Model grading and later cases still run.
+You can use `assert`, `refute`, `assert_equal`, `assert_includes`, `assert_match`, and every other method from `Minitest::Assertions`. They come from the `minitest` gem, which Rails applications already include. In plain Ruby, add `gem "minitest"` to your Gemfile. The first failing assertion fails the case and stops that case's assertions. Model grading and later cases still run.
 
 These values are available inside `assertions`:
 

@@ -29,7 +29,7 @@ module RubyLLM
         duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
         Trial.new(test_case: @test_case, repetition: @repetition, result: @instance.result,
                   output: @evidence&.output, evidence: @evidence&.data, evaluations: @evaluations,
-                  assertion_count: @instance.assertion_context.assertions,
+                  assertion_count: @instance.assertion_count,
                   assertion_failure: @assertion_failure,
                   error: @error, duration:, task_usage: @usage[:task], evaluator_usage: @usage[:evaluator])
       ensure
@@ -60,7 +60,7 @@ module RubyLLM
         @instance.setup
         @evidence = @instance.execute
         @instance.assertions
-      rescue ::Minitest::Assertion => e
+      rescue Assertions::Failure => e
         @assertion_failure = e
       rescue StandardError => e
         @error = e

@@ -93,7 +93,7 @@ For an upgrade, read the complete matching upgrade guide before editing migratio
 Specs check code; evaluations check how often the model gets the answer right (2.1). Put a `RubyLLM::Evaluation` subclass and its dataset in `app/evals`, named after the class (`support_evaluation.rb` and `support_evaluation.yml`). `perform(input)` runs the application and returns a string, Message, Chat, or Agent. Each case has `name`, `inputs`, and usually `expected_output`.
 
 - Without declared criteria, a model checks each answer against `expected_output`, which every case must then supply. `evaluation :name, "statement"` declares criteria and replaces that default; `evaluation :correctness` without a description keeps it.
-- `assertions` uses Minitest assertions with `output`, `tool_calls`, `messages`, `input`, `expected_output`, and `metadata`. Assertions do not turn off grading; `evaluator false` does.
+- `assertions` uses Minitest assertions with `output`, `tool_calls`, `messages`, `input`, `expected_output`, and `metadata`. Assertions do not turn off grading; `evaluator false` does. Outside Rails, assertions need `gem "minitest"`.
 - Choose the grader with `evaluator model: ...`, an Agent class, or a Judge class with `evaluation :name, minimum: 0.8`.
 - Run with `bin/rails "ruby_llm:eval[SupportEvaluation]"`, `SupportEvaluation.run`, or `evaluates SupportEvaluation` in RSpec or Minitest after extending `RubyLLM::Evaluation::RSpec` or `RubyLLM::Evaluation::Minitest`. Model grading costs money on every run, so keep graded evaluations out of the default test run unless the application records requests.
 
