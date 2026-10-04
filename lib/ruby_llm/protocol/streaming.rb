@@ -6,9 +6,16 @@ require 'json'
 module RubyLLM
   class Protocol
     module Streaming # :nodoc: all
-      StreamState = Struct.new(:parser, :buffer) do
+      StreamState = Struct.new(:parser, :buffer, :json_body) do
         def initialize
-          super(Transport::EventStreamParser.new, +'')
+          super
+          reset
+        end
+
+        def reset
+          self.parser = Transport::EventStreamParser.new
+          self.buffer = +''
+          self.json_body = nil
         end
       end
 
@@ -32,13 +39,15 @@ module RubyLLM
       # parsed event Hash. Returns the Faraday response.
       def stream_events(url, payload, additional_headers = {}, &block)
         progress = {}
-        on_data = build_on_data_handler(progress) do |data|
+        fallback_state = StreamState.new
+        on_data = build_on_data_handler(progress, fallback_state: fallback_state) do |data|
           block.call(data) if data.is_a?(Hash)
         end
 
         @connection.post url, payload, usage: @usage_tracker, stream: true do |req|
           req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
           (req.options.context ||= {})[Transport::Connection::STREAM_PROGRESS_KEY] = progress
+          req.options.context[Transport::ErrorMiddleware::STREAM_RESET_KEY] = fallback_state.method(:reset)
           if faraday_1?
             req.options[:on_data] = on_data
           else
@@ -59,12 +68,9 @@ module RubyLLM
         Faraday::VERSION.start_with?('1')
       end
 
-      # Parser state lives on the env so every retry attempt starts fresh;
-      # ErrorMiddleware clears it per attempt. Faraday v1 passes no env to
-      # on_data, so it falls back to one state for the whole request.
-      def build_on_data_handler(progress = {}, &handler)
-        fallback_state = StreamState.new
-
+      # Some adapters omit the env, so ErrorMiddleware also resets the
+      # request's fallback state before each attempt.
+      def build_on_data_handler(progress = {}, fallback_state: StreamState.new, &handler)
         FaradayHandlers.build(
           faraday_v1: faraday_1?,
           on_chunk: lambda { |chunk, env|
@@ -85,33 +91,26 @@ module RubyLLM
       def process_stream_chunk(chunk, state, env, progress, &)
         RubyLLM.logger.debug { "Received chunk: #{chunk}" } if RubyLLM.config.log_stream_debug
 
-        if error_chunk?(chunk)
-          handle_error_chunk(chunk, env)
-        elsif json_error_payload?(chunk)
-          handle_json_error_chunk(chunk, env)
+        if json_body?(chunk, state)
+          handle_json_body(chunk, state, env)
         else
           handle_sse(chunk, state.parser, env, progress, &)
         end
       end
 
-      # An error event split across network reads reaches here in pieces, so only
-      # a whole one takes this shortcut; the rest go to the parser, which buffers
-      # them until the event is complete.
-      def error_chunk?(chunk)
-        chunk.start_with?('event: error') && chunk.end_with?("\n\n")
+      # Adapters cut reads anywhere, so a read inside an event can start with
+      # "{". Only the first bytes of a body can open a bare JSON error.
+      def json_body?(chunk, state)
+        state.json_body = chunk.lstrip.start_with?('{') if state.json_body.nil? && !chunk.strip.empty?
+        state.json_body
       end
 
-      def json_error_payload?(chunk)
-        chunk.lstrip.start_with?('{') && chunk.include?('"error"')
-      end
-
-      def handle_json_error_chunk(chunk, env)
-        parse_error_from_json(chunk, env, 'Failed to parse JSON error chunk')
-      end
-
-      def handle_error_chunk(chunk, env)
-        error_data = chunk.split("\n")[1]&.delete_prefix('data: ')
-        parse_error_from_json(error_data, env, 'Failed to parse error chunk') if error_data
+      def handle_json_body(chunk, state, env)
+        state.buffer << chunk
+        parsed = JSON.parse(state.buffer)
+        raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
+      rescue JSON::ParserError
+        RubyLLM.logger.debug { "Accumulating JSON body chunk: #{chunk}" }
       end
 
       def handle_failed_response(chunk, buffer, env)
