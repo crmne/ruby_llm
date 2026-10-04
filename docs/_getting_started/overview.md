@@ -38,6 +38,7 @@ The conversation API provides:
 * **Messages and attachments** for text, images, audio, and documents the model supports.
 * **Streaming** to display a response as it arrives.
 * **Tools** that let the model call your Ruby code, with optional human approval before execution.
+* **MCP servers** whose tools a chat or agent can use, described in a Ruby class. See [MCP]({% link _core_features/mcp.md %}).
 * **Structured output** for results you read as a Hash through `response.parsed`.
 * **Agents** that put a model, instructions, tools, and other settings in a reusable Ruby class.
 * **Loop control** to generate a response, run tools, or advance one step at a time.
@@ -156,6 +157,8 @@ response.cost.total
 The accounting follows provider attempts, so a successful answer can include the cost of earlier failed attempts. Unknown costs stay unknown. In Rails, the usage ledger keeps those attempts separately from messages. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 
 [Instrumentation]({% link _advanced/instrumentation.md %}) lets you observe calls across chats, tools, and individual operations. `RubyLLM.workflow` groups events from ordinary Ruby code into a named workflow.
+
+[OpenTelemetry]({% link _advanced/opentelemetry.md %}) sends those calls to your tracing backend as spans. [Evaluations]({% link _advanced/evaluations.md %}) run your agents against a dataset of cases and grade each answer, from Rake, RSpec, or Minitest.
 
 ### Background Work and Provider Resources
 

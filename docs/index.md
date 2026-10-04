@@ -295,7 +295,7 @@ cases:
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
+      Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking, OpenTelemetry tracing, and Rails integration to bring them into your app.
     </p>
   </div>
 

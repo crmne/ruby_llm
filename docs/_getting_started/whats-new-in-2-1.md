@@ -2,7 +2,7 @@
 layout: default
 title: What's New in 2.1
 nav_order: 4
-description: Connect to MCP servers, ask typed judgments, and give agents their own configuration in RubyLLM 2.1.
+description: Connect to MCP servers, ask typed judgments, evaluate your agents, and trace them with OpenTelemetry in RubyLLM 2.1.
 ---
 
 # {{ page.title }}
@@ -16,13 +16,15 @@ After reading this guide, you will know:
 * How to connect your chats and agents to MCP servers.
 * How to show what a slow tool is doing while it runs.
 * How to ask typed judgments with TypeSafe's Jev models.
+* How to evaluate your agents against a dataset.
+* How to trace RubyLLM with OpenTelemetry.
 * How to chat with open-weight models on Hetzner.
 * How to build an agent's configuration from its inputs.
 * How to keep RubyLLM's tables on a secondary database.
 * How to see what a provider received when it rejects a request.
 * How upgrades work from 2.1 on.
 
-RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
+RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, evaluations, OpenTelemetry tracing, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
 
 ## Faster by Default
 
@@ -167,6 +169,43 @@ judgment.department.choice
 Judges use `config.default_judgment_model` unless you override the model. They accept structured input, reusable definitions, and runtime procs. Choice and score answers include full distributions and confidence so your application can choose how to act. See [Judgments]({% link _core_features/judgments.md %}).
 
 TypeSafe joins the built-in providers, bringing the total to eighteen. Use its hosted Jev models or a [Jev-compatible local server]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) through the same judgment API. OpenAI's `{{ site.models.openai_judgment }}` answers the same questions through OpenAI Decisions, including questions about [images]({% link _core_features/judgments.md %}#images) passed with `with:`.
+
+## Evaluations
+
+Find out how often your agent gets the answer right. Write a class that runs your agent and a dataset of cases with reference answers:
+
+```ruby
+# app/evals/support_evaluation.rb
+class SupportEvaluation < RubyLLM::Evaluation
+  def perform(input)
+    SupportAgent.new.ask(input)
+  end
+end
+```
+
+```yaml
+# app/evals/support_evaluation.yml
+cases:
+  - name: unopened_return
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, unopened items can be returned within 30 days.
+```
+
+```sh
+bin/rails "ruby_llm:eval[SupportEvaluation]"
+```
+
+RubyLLM checks each answer against the reference with a model, and accepts different wording with the same meaning. Declare your own criteria, grade with an Agent or a Judge, add Ruby assertions on tool calls, and run the same cases as RSpec or Minitest tests. Reports include every verdict with its reason, plus the tokens and cost of the run. See [Evaluations]({% link _advanced/evaluations.md %}).
+
+## OpenTelemetry
+
+Send model calls, tool runs, and workflows to your tracing backend as spans that follow the OpenTelemetry GenAI conventions:
+
+```ruby
+RubyLLM::OpenTelemetry.enable
+```
+
+RubyLLM uses the SDK and exporters your application configures, and exports metadata such as models, token counts, and finish reasons, never prompts or responses. See [OpenTelemetry]({% link _advanced/opentelemetry.md %}).
 
 ## Hetzner
 
