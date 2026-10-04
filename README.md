@@ -161,39 +161,55 @@ response.parsed
 
 ## Evaluate your agents
 
-Keep repeatable scenarios in a dataset. Assess the answers and tool calls with model criteria and ordinary Ruby assertions, then run the same evaluation from Ruby, RSpec, Minitest, or Rake.
+Keep questions and expected answers in a dataset. Check your agent's responses with model criteria and ordinary Ruby assertions, then run the same evaluation from Ruby, RSpec, Minitest, or Rake.
 
 Evaluations are available on `main`. Follow the [development installation guide](https://rubyllm.com/next/getting-started/) to try them.
 
+`app/agents/support_agent.rb`
+
 ```ruby
-# app/evals/weather_evaluation.rb
-class WeatherEvaluation < RubyLLM::Evaluation
-  evaluation :grounded, "The answer agrees with the weather tool results"
+class SupportAgent < RubyLLM::Agent
+  instructions "Accept returns of unopened items within 30 days."
+end
+```
+
+`app/evals/support_evaluation.rb`
+
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  evaluation :correctness, "The answer agrees with the expected output"
 
   def perform(input)
-    agent = WeatherAssistant.new
-    agent.ask(input)
-    agent
+    SupportAgent.new.ask(input)
   end
 
   def assertions
-    assert_includes tool_calls.map(&:name), "weather"
+    refute_empty output
   end
 end
+```
 
-report = WeatherEvaluation.run
+`app/evals/support_evaluation.yml`
+
+```yaml
+cases:
+  - name: within_return_window
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, unopened items can be returned within 30 days.
+  - name: past_return_window
+    inputs: Can I return an unopened item after 45 days?
+    expected_output: No, the 30-day return window has passed.
+```
+
+Run the evaluation:
+
+```ruby
+report = SupportEvaluation.run
 report.passed?
 report.cost.total
 ```
 
-```yaml
-# app/evals/weather_evaluation.yml
-cases:
-  - name: berlin
-    inputs: What's the weather in Berlin?
-```
-
-Return the agent to evaluate the whole conversation. Use a configured evaluator agent or a judgment model when you need a different reviewer. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
+The model evaluator checks meaning, so answers can use different wording. Use a configured evaluator agent or a judgment model when you need a different reviewer. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
 
 ## A complete AI framework for Ruby
 
