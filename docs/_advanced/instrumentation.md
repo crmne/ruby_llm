@@ -207,7 +207,7 @@ RubyLLM emits these events:
 
 Operations that expose normalized usage (`chat`, `embedding`, `image`, `moderation`, `rerank`, `speech`, and `transcription`) include `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it. Batch, OCR, and video events expose their operation-specific result and lifecycle fields instead.
 
-See [Progress and Monitoring]({% link _advanced/evaluation-progress.md %}) for evaluation progress, run IDs, and report payloads.
+See [Evaluation Progress and Monitoring]({% link _advanced/evaluation-progress.md %}) for evaluation progress, run IDs, and report payloads.
 
 ### Usage Events
 

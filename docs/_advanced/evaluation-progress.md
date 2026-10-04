@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Progress and Monitoring
+title: Evaluation Progress and Monitoring
 parent: Evaluations
 nav_order: 5
 description: Show evaluation progress in your application, save trials as they finish, and trace runs

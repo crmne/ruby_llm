@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Conversations and Tools
+title: Evaluating Conversations and Tools
 parent: Evaluations
 nav_order: 2
 description: Evaluate multi-turn conversations, saved transcripts, tool calls, and your own result objects
@@ -81,7 +81,7 @@ def assertions
 end
 ```
 
-See [Running and Reports]({% link _advanced/evaluation-running.md %}#assertions) for the other values available in assertions.
+See [Running Evaluations]({% link _advanced/evaluation-running.md %}#assertions) for the other values available in assertions.
 
 ## What the Evaluator Sees
 

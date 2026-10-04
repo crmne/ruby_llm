@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Datasets
+title: Evaluation Datasets
 parent: Evaluations
 nav_order: 1
 description: Define evaluation cases in YAML, JSON, JSONL, or application code
@@ -93,7 +93,7 @@ end
 
 Keys are strings, as they are in the file. Name the parameter whatever reads best: `question`, `document`, or `scenario`. Each case gets its own copy of the inputs, so `perform` can modify it freely.
 
-A list of user turns is also a valid input. See [Conversations and Tools]({% link _advanced/evaluation-conversations.md %}).
+A list of user turns is also a valid input. See [Evaluating Conversations and Tools]({% link _advanced/evaluation-conversations.md %}).
 
 ## Cases from Your Application
 

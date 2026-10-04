@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Examples
+title: Evaluation Examples
 parent: Evaluations
 nav_order: 6
 description: Complete evaluations for formatting, grounded answers, and safe tool use that you can adapt
@@ -133,4 +133,4 @@ cases:
 
 The assertions check what the agent did, both in its tool calls and in the database. The criterion checks what it told the customer. Run it with `EVAL_REPETITIONS=5` to see whether the agent holds the line every time, not only once.
 
-To continue a conversation over several turns or grade transcripts you already saved, see [Conversations and Tools]({% link _advanced/evaluation-conversations.md %}).
+To continue a conversation over several turns or grade transcripts you already saved, see [Evaluating Conversations and Tools]({% link _advanced/evaluation-conversations.md %}).

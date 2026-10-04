@@ -96,9 +96,9 @@ RubyLLM finds the dataset by class name. `SupportEvaluation` uses `app/evals/sup
 
 ## Continue the Guide
 
-* [Datasets]({% link _advanced/evaluation-datasets.md %}): file formats, structured inputs, and cases from your database.
-* [Conversations and Tools]({% link _advanced/evaluation-conversations.md %}): several turns, saved transcripts, and tool calls.
+* [Evaluation Datasets]({% link _advanced/evaluation-datasets.md %}): file formats, structured inputs, and cases from your database.
+* [Evaluating Conversations and Tools]({% link _advanced/evaluation-conversations.md %}): several turns, saved transcripts, and tool calls.
 * [Evaluators]({% link _advanced/evaluation-evaluators.md %}): your own criteria, models, Agents, and Judges.
-* [Running and Reports]({% link _advanced/evaluation-running.md %}): assertions, RSpec, Minitest, Rake, tokens, and costs.
-* [Progress and Monitoring]({% link _advanced/evaluation-progress.md %}): progress in your UI, notifications, and traces.
-* [Examples]({% link _advanced/evaluation-examples.md %}): complete evaluations to adapt.
+* [Running Evaluations]({% link _advanced/evaluation-running.md %}): assertions, RSpec, Minitest, Rake, tokens, and costs.
+* [Evaluation Progress and Monitoring]({% link _advanced/evaluation-progress.md %}): progress in your UI, notifications, and traces.
+* [Evaluation Examples]({% link _advanced/evaluation-examples.md %}): complete evaluations to adapt.

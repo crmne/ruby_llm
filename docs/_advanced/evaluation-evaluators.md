@@ -75,7 +75,7 @@ class TitleFormattingEvaluation < RubyLLM::Evaluation
 end
 ```
 
-`evaluator false` removes the grading request, and it cannot be combined with `evaluation` declarations. Any model calls your application makes in `perform` still run. Assertions on their own do not turn off grading: without `evaluator false`, the default correctness check runs too. See [Running and Reports]({% link _advanced/evaluation-running.md %}#assertions) for the assertion methods.
+`evaluator false` removes the grading request, and it cannot be combined with `evaluation` declarations. Any model calls your application makes in `perform` still run. Assertions on their own do not turn off grading: without `evaluator false`, the default correctness check runs too. See [Running Evaluations]({% link _advanced/evaluation-running.md %}#assertions) for the assertion methods.
 
 ## Choosing a Model
 
@@ -128,7 +128,7 @@ Every evaluator receives the same JSON evidence for a case:
 | Key | Contents |
 | --- | --- |
 | `inputs` | The case's inputs |
-| `actual` | What `perform` returned, converted as described in [Conversations and Tools]({% link _advanced/evaluation-conversations.md %}#what-the-evaluator-sees) |
+| `actual` | What `perform` returned, converted as described in [Evaluating Conversations and Tools]({% link _advanced/evaluation-conversations.md %}#what-the-evaluator-sees) |
 | `expected_output` | The reference answer, when the case has one |
 | `metadata` | The case's metadata |
 
