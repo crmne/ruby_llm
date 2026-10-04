@@ -58,6 +58,15 @@ RSpec.describe RubyLLM::Providers::Ollama do
       expect(models.first.modalities.to_h).to eq(input: %w[text], output: %w[embeddings])
     end
 
+    it 'reads decision models as judgment models' do
+      model = protocol.parse_list_models_response(
+        response_for('clef-flash:latest'), 'ollama', details: { 'clef-flash:latest' => %w[decision] }
+      ).first
+
+      expect(model.type).to eq(:judgment)
+      expect(model.capabilities).to eq(%w[judgment])
+    end
+
     it 'asks /api/show about every listed model' do
       provider = described_class.new(RubyLLM.config)
       connection = instance_double(RubyLLM::Transport::Connection)
@@ -78,6 +87,46 @@ RSpec.describe RubyLLM::Providers::Ollama do
       allow(connection).to receive(:post).and_raise(RubyLLM::BadRequestError.new(nil, response: nil))
 
       expect(described_class::ChatCompletions.new(provider).list_models.first.supports?(:vision)).to be(false)
+    end
+  end
+
+  describe 'judgments' do
+    let(:provider) { described_class.new(RubyLLM.config) }
+    let(:model) { RubyLLM::Model.new(id: 'clef-flash', provider: 'ollama') }
+    let(:protocol) { described_class::SystemOne.new(provider, model) }
+    let(:questions) do
+      { 'urgent' => RubyLLM::Judge::Question.new(:urgent, type: :probability, instructions: 'Urgent?') }
+    end
+
+    it 'routes judgments through System One and chats through Chat Completions' do
+      expect(provider.send(:resolve_protocol, nil, model, operation: :judge)).to eq(described_class::SystemOne)
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(described_class::ChatCompletions)
+    end
+
+    it 'posts to systemone under the OpenAI-compatible base' do
+      expect(protocol.send(:judgment_url)).to eq('systemone')
+    end
+
+    it 'sends images as base64 alongside the state' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.png', __dir__))
+      payload = protocol.send(:render_judgment_payload, 'Look', questions:, model: 'clef-flash', with: [image])
+
+      expect(payload[:state]).to eq('Look')
+      expect(payload[:images]).to eq([image.encoded])
+      expect(payload[:questions]['urgent']).to eq(type: 'noul', instructions: 'Urgent?')
+    end
+
+    it 'leaves images out when there are none' do
+      payload = protocol.send(:render_judgment_payload, 'Help', questions:, model: 'clef-flash')
+
+      expect(payload).not_to have_key(:images)
+    end
+
+    it 'rejects attachments that are not images' do
+      text = RubyLLM::Attachment.new(StringIO.new('notes'), filename: 'notes.txt')
+
+      expect { protocol.send(:render_judgment_payload, 'Help', questions:, model: 'clef-flash', with: [text]) }
+        .to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
   end
 end

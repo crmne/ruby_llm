@@ -32,7 +32,7 @@ judgment = Urgency.judge("Please refund the duplicate charge today.")
 judgment.urgent.probability # => 0.96
 ```
 
-Configure your [TypeSafe API key]({% link _getting_started/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. Judges use `config.default_judgment_model`, not the default chat model.
+Configure your [TypeSafe API key]({% link _getting_started/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. To judge on your own machine, run a decision model such as Clef with [Ollama](#local-decision-models). Judges use `config.default_judgment_model`, not the default chat model.
 
 Each call judges the input you supply. It does not retain conversation history. Put a conversation in the input when you want the questions to consider it.
 
@@ -140,7 +140,7 @@ DocumentType.judge("Scanned by the mail room", with: "scan.png").type.choice
 DocumentType.judge(with: document.scan).type.choice
 ```
 
-`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}`. Other attachment types, and models that judge text only, raise `RubyLLM::UnsupportedAttachmentError`.
+`with:` accepts the same files, URLs, and Active Storage attachments as chat. Images need a model that accepts them, such as `{{ site.models.openai_judgment }}` or Clef on Ollama. Other attachment types, and models that judge text only, raise `RubyLLM::UnsupportedAttachmentError`.
 
 ## Structured Questions and Dynamic Values
 
@@ -238,6 +238,27 @@ end
 The built-in default is `{{ site.models.judgment }}`. A Judge class can override it with a `model` declaration, and a call can override either setting with `model:`. Pass `model: nil` to use the configured default again.
 
 When you pass an isolated `context:`, its default replaces the global default. The class and per-call overrides still take precedence. See [Default Models]({% link _getting_started/configuration.md %}#default-models).
+
+### Local Decision Models
+
+Ollama runs decision models such as Cloudflare's Clef on your own hardware, so the data you judge never leaves it. Pull a model:
+
+```sh
+ollama pull clef-flash
+```
+
+Then pick it with the Ollama provider:
+
+```ruby
+class Urgency < RubyLLM::Judge
+  model "clef-flash", provider: :ollama
+  probability :urgent, "Does this need attention today?"
+end
+
+Urgency.judge("Please refund the duplicate charge today.").urgent.probability
+```
+
+`clef-flash` (9B) is built for low latency; `clef` (27B) is the larger model. Both accept images through `with:`. Clef needs a current Ollama release. `RubyLLM.models.refresh` lists your local decision models as judgment models. Set `ollama_api_base` as described in [Provider Setup]({% link _getting_started/configuration-providers.md %}#api-keys).
 
 ## Configuration and Usage
 

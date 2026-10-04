@@ -59,6 +59,7 @@ module RubyLLM
 
         def build_capabilities(reported)
           return [] if reported.include?('embedding')
+          return %w[judgment] if reported.include?('decision')
 
           derived = CAPABILITY_MAP.filter_map { |native, capability| capability if reported.include?(native) }
           model_capabilities + derived
@@ -66,6 +67,7 @@ module RubyLLM
 
         def build_modalities(reported)
           return { input: %w[text], output: %w[embeddings] } if reported.include?('embedding')
+          return { input: %w[text], output: %w[judgment] } if reported.include?('decision')
 
           input = %w[text]
           input << 'image' if reported.include?('vision')

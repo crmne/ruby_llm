@@ -168,7 +168,7 @@ judgment.department.choice
 
 Judges use `config.default_judgment_model` unless you override the model. They accept structured input, reusable definitions, and runtime procs. Choice and score answers include full distributions and confidence so your application can choose how to act. See [Judgments]({% link _core_features/judgments.md %}).
 
-TypeSafe joins the built-in providers, bringing the total to eighteen. Use its hosted Jev models or a [Jev-compatible local server]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) through the same judgment API. OpenAI's `{{ site.models.openai_judgment }}` answers the same questions through OpenAI Decisions, including questions about [images]({% link _core_features/judgments.md %}#images) passed with `with:`.
+TypeSafe joins the built-in providers, bringing the total to eighteen. Use its hosted Jev models or a [Jev-compatible local server]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) through the same judgment API. OpenAI's `{{ site.models.openai_judgment }}` answers the same questions through OpenAI Decisions, including questions about [images]({% link _core_features/judgments.md %}#images) passed with `with:`. To judge locally, run Cloudflare's Clef through [Ollama]({% link _core_features/judgments.md %}#local-decision-models) with `provider: :ollama`.
 
 ## Evaluations
 
