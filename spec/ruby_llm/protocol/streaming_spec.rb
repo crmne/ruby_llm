@@ -240,6 +240,20 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(yielded).to be_empty
   end
 
+  it 'ignores a bare JSON body whose error is null' do
+    yielded = []
+    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+
+    expect { handler.call('{"status":"completed","error":null}', 0, env) }.not_to raise_error
+    expect(yielded).to be_empty
+  end
+
+  it 'ignores a bare JSON body that only mentions an error' do
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect { handler.call('{"detail":{"error":"Service busy"}}', 0, env) }.not_to raise_error
+  end
+
   it 'raises the error an SSE error event carries' do
     handler = test_obj.send(:handle_stream) { |_chunk| nil }
 

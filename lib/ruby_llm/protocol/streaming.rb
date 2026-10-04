@@ -110,7 +110,7 @@ module RubyLLM
       def handle_json_body(chunk, state, env)
         state.buffer << chunk
         parsed = JSON.parse(state.buffer)
-        raise_stream_error(state.buffer, parsed, env) if state.buffer.include?('"error"')
+        raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
       rescue JSON::ParserError
         RubyLLM.logger.debug { "Accumulating JSON body chunk: #{chunk}" }
       end
