@@ -19,24 +19,12 @@ After reading this guide, you will know:
 
 ## Your First Evaluation
 
-Define an evaluation for one application behavior. `perform` runs your application. Each `evaluation` declares a semantic criterion. `assertions` checks conditions in Ruby.
+Define an evaluation for one application behavior. `perform` runs your application. RubyLLM checks whether the answer agrees with the dataset's expected output.
 
 ```ruby
 class SupportEvaluation < RubyLLM::Evaluation
-  evaluation :correctness,
-    "The answer agrees with the expected output"
-
-  evaluation :relevance,
-    "The answer addresses the customer's question"
-
   def perform(input)
-    agent = SupportAgent.new
-    agent.ask(input)
-    agent
-  end
-
-  def assertions
-    refute_empty output
+    SupportAgent.new.ask(input)
   end
 end
 
@@ -44,7 +32,7 @@ report = SupportEvaluation.run
 puts report
 ```
 
-Without an `evaluator` declaration, RubyLLM uses your configured default chat model with its built-in evaluation Agent. It requests a verdict and a short justification for each criterion. The built-in prompt accepts equivalent answers and treats instructions inside candidate answers as evidence, not grading instructions.
+Without an `evaluator` declaration, RubyLLM uses your configured default chat model with its built-in evaluation Agent. It requests a verdict and a short justification. The built-in prompt accepts equivalent answers and treats instructions inside candidate answers as evidence, not grading instructions.
 
 Create `app/evals/support_evaluation.yml` beside `support_evaluation.rb`:
 
@@ -59,6 +47,10 @@ cases:
 
 Plain Ruby resolves `app/evals` from the working directory. Rails resolves it from the application root. A namespaced class such as `Support::AnswerEvaluation` uses `app/evals/support/answer_evaluation.yml`.
 
+Default correctness requires `expected_output` on every selected case. Missing references raise before your application or evaluator runs. Declare `evaluation` criteria to replace the default, or use `evaluation :correctness` to include the built-in comparison alongside other criteria. See [Evaluators]({% link _advanced/evaluation-evaluators.md %}) for overrides and decision models.
+
+You can also define `assertions` to check conditions in Ruby. Assertions run alongside model grading. For assertions-only evaluations, set `evaluator false` as shown in [Examples]({% link _advanced/evaluation-examples.md %}).
+
 ## Inputs, Output, and Expected Output
 
 The dataset supplies the question. Your application produces the response. The reference describes what a correct response should say.
@@ -67,7 +59,7 @@ The dataset supplies the question. Your application produces the response. The r
 | --- | --- | --- |
 | `inputs` | A dataset case, passed to `perform` | The customer's return question |
 | `output` | Extracted from what `perform` returns | The response your agent actually produced |
-| `expected_output` | An optional reference in the dataset | The correct return policy |
+| `expected_output` | The reference used by default correctness | The correct return policy |
 
 You do not put the actual response in a normal application dataset. `perform` produces it during the run. There is no required field called `answer`.
 

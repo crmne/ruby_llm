@@ -256,7 +256,7 @@ class SupportAgent < RubyLLM::Agent
   instructions "Accept returns of unopened items within 30 days."
 end
 ```
-{: .home-code-card data-title="app/agents/support_agent.rb" }
+{: .home-code-card }
 
 </div>
     </div>
@@ -264,21 +264,15 @@ end
     <div id="evaluations" class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Evaluate your agents</h3>
-        <p class="home-step-desc">Compare answers against a dataset with model criteria and Ruby assertions. Run the same cases from Ruby, RSpec, Minitest, or Rake.</p>
+        <p class="home-step-desc">Run your agent against a dataset of questions and expected answers. RubyLLM checks correctness by default. Use the same evaluation from Ruby, RSpec, Minitest, or Rake.</p>
         <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
 class SupportEvaluation < RubyLLM::Evaluation
-  evaluation :correctness, "The answer agrees with the expected output"
-
   def perform(input)
     SupportAgent.new.ask(input)
-  end
-
-  def assertions
-    refute_empty output
   end
 end
 ```
@@ -291,8 +285,6 @@ cases:
     expected_output: Yes, unopened items can be returned within 30 days.
 ```
 {: .home-code-card data-title="app/evals/support_evaluation.yml" }
-
-Run it with `SupportEvaluation.run`.
 
 </div>
     </div>

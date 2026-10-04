@@ -22,6 +22,8 @@ Create `app/evals/title_formatting_evaluation.rb`:
 
 ```ruby
 class TitleFormattingEvaluation < RubyLLM::Evaluation
+  evaluator false
+
   def perform(title)
     title.strip.delete_prefix('"').delete_suffix('"')
   end
@@ -54,6 +56,8 @@ Create `app/evals/tool_selection_evaluation.rb`:
 
 ```ruby
 class ToolSelectionEvaluation < RubyLLM::Evaluation
+  evaluator false
+
   def perform(input)
     RubyLLM::ToolCall.new(id: 'candidate', name: input.fetch('name'), arguments: input.fetch('arguments'))
   end

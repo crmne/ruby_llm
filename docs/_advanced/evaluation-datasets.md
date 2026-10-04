@@ -19,7 +19,7 @@ After reading this guide, you will know:
 
 ## Datasets
 
-Each case has a unique `name` and `inputs`. `expected_output` and `metadata` are optional. Inputs and reference answers can be strings, numbers, booleans, arrays, objects, or null. An explicit null reference differs from an omitted reference.
+Each case has a unique `name` and `inputs`. Default correctness also requires `expected_output`. Custom criteria and assertions-only evaluations can omit it. `metadata` is optional. Inputs and reference answers can be strings, numbers, booleans, arrays, objects, or null. An explicit null reference differs from an omitted reference.
 
 The data fields follow Pydantic Evals' case format. Evaluator declarations in external files are not imported; declare them in Ruby. Put labels used to measure the evaluator's accuracy in a separate file. All case metadata is visible to the evaluator. Case names identify reports and tests; they are not sent to the evaluator.
 
@@ -77,4 +77,4 @@ A list of user turns is also a valid input. See [Conversations and Tools]({% lin
 
 Use `expected_output` when you have a reviewed answer or structured result. Semantic evaluators can accept equivalent wording. Ruby's `assert_equal expected_output, output` requires equality.
 
-Some properties need no reference answer. You can check that an agent cites its sources, does not execute an unapproved change, or asks for missing information using criteria and Ruby assertions alone. Keep any additional reference evidence in `metadata`; it is visible to evaluators.
+Some properties need no reference answer. Declare custom criteria to check that an agent cites its sources, does not execute an unapproved change, or asks for missing information. For Ruby assertions alone, set `evaluator false`. Keep any additional reference evidence in `metadata`; it is visible to evaluators.

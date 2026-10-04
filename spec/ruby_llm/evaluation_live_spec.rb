@@ -22,6 +22,21 @@ RSpec.describe RubyLLM::Evaluation, :live do
   let(:dataset) { 'spec/fixtures/evaluations/answer_evaluation.yml' }
   let(:expected_statuses) { %i[passed passed failed passed failed passed failed failed] }
 
+  it 'grades labeled answers with implicit correctness and only a perform method' do
+    skip_without_cassette_or_key('OPENAI_API_KEY')
+    evaluation = Class.new(described_class) do
+      def perform(input)
+        input.fetch('answer')
+      end
+    end
+    evaluation.evaluator(model: model_for(:openai))
+    report = evaluation.run(dataset:)
+
+    expect(report.map(&:status)).to eq(expected_statuses), report.to_h.to_json
+    expect(report.first.evaluations.first.name).to eq(:correctness)
+    expect(report.first.evaluator_cost.total).to be > 0
+  end
+
   it 'separates correct answers, paraphrases, factual errors, and injected grading instructions' do
     skip_without_cassette_or_key('OPENAI_API_KEY')
     evaluation = Class.new(answer_evaluation)

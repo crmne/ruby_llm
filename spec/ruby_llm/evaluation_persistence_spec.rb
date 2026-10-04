@@ -10,6 +10,8 @@ RSpec.describe RubyLLM::Evaluation do
     record.messages.create!(role: 'user', content: 'Hello')
     record.messages.create!(role: 'assistant', content: 'Welcome', finish_reason: 'stop')
     evaluation = Class.new(described_class) do
+      evaluator false
+
       def perform(input)
         Chat.find(input)
       end

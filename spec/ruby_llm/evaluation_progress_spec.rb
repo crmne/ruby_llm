@@ -13,6 +13,8 @@ RSpec.describe RubyLLM::Evaluation do
   end
   let(:evaluation) do
     Class.new(described_class) do
+      evaluator false
+
       def perform(input)
         input.upcase
       end

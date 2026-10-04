@@ -10,6 +10,8 @@ RSpec.describe RubyLLM::Evaluation do
     <<~RUBY
       require 'ruby_llm'
       class FormattingEvaluation < RubyLLM::Evaluation
+        evaluator false
+
         def perform(input)
           input.upcase
         end

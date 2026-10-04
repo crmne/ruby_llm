@@ -26,6 +26,12 @@ After reading this guide, you will know:
 
 This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
 
+## Evaluations from Earlier Development Builds
+
+If you tried evaluations on `main` before the default correctness check was added, set `evaluator false` on assertions-only classes to keep them free of grading requests. Defining `assertions` alone no longer disables model grading.
+
+Classes without declared criteria or configured Judge questions now compare their result with `expected_output`. Every selected case must supply that field. Explicit criteria keep their existing behavior; `evaluation :correctness` without instructions selects the built-in comparison. See [Evaluators]({% link _advanced/evaluation-evaluators.md %}) for defaults and overrides.
+
 ## One Release at a Time
 
 Each release ships the upgrade steps for the changes since the previous release. When a release changes the Rails schema, `bin/rails generate ruby_llm:upgrade` generates the migrations that take your database from the previous release to the current one. The next release replaces that generator with its own.

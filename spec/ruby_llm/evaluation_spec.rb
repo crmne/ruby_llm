@@ -10,6 +10,8 @@ RSpec.describe RubyLLM::Evaluation do
   end
   let(:evaluation) do
     Class.new(described_class) do
+      evaluator false
+
       def perform(input)
         input.upcase
       end
@@ -56,6 +58,8 @@ RSpec.describe RubyLLM::Evaluation do
 
   it 'isolates input mutations and instance state across cases and repetitions' do
     evaluation = Class.new(described_class) do
+      evaluator false
+
       def perform(input)
         @counter = @counter.to_i + 1
         input << @counter
@@ -117,6 +121,7 @@ RSpec.describe RubyLLM::Evaluation do
     expect { evaluation.run(dataset: []) }.to raise_error(ArgumentError, /empty/)
     expect { evaluation.run(dataset: cases * 2) }.to raise_error(ArgumentError, /unique/)
     evaluation.evaluation(:correct)
+    evaluation.evaluator(model: model_for(:openai))
     expect { evaluation.run(dataset: cases) }.to raise_error(ArgumentError, /Missing instructions/)
   end
 

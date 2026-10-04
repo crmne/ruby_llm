@@ -22,6 +22,8 @@ After reading this guide, you will know:
 
 The assertion methods delegate to Minitest::Assertions. Use `assert`, `refute`, `assert_equal`, `assert_includes`, `assert_operator`, `assert_nil`, and the other Minitest assertions. A failure ends the assertion method for that case, while model criteria and later cases still run.
 
+Assertions do not disable default correctness. Set `evaluator false` on the class when you want to run only Ruby assertions.
+
 ```ruby
 def assertions
   assert_equal expected_output, output
@@ -59,7 +61,7 @@ For plain Minitest, inherit from `Minitest::Test`. Load the evaluation class as 
 
 Both integrations accept `dataset:`, `only:`, and `repetitions:`. They use the same runner as `SupportEvaluation.run`, and failures include the case name, assertion message, and evaluator explanation. Evaluations run inside the test framework's ordinary setup and teardown. Declaring the tests loads their dataset but makes no model requests.
 
-Assertions-only evaluations need no model. Semantic evaluations make the same requests when called from tests as they do from Ruby or Rake. Use your existing recording setup or run those tests in a separate live suite.
+With `evaluator false`, assertions-only evaluations make no grading requests. Default correctness and explicit semantic evaluations make the same requests when called from tests as they do from Ruby or Rake. Use your existing recording setup or run those tests in a separate live suite.
 
 ## Running from Rake
 

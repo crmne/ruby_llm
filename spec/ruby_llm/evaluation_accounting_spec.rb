@@ -76,6 +76,30 @@ RSpec.describe RubyLLM::Evaluation do
     expect(trial.tokens.input).to eq(105)
   end
 
+  it 'keeps task usage when model grading is disabled' do
+    model = task_model
+    evaluation = Class.new(described_class) do
+      evaluator false
+
+      define_method(:perform) do |input|
+        RubyLLM.chat(model:, provider: :anthropic).ask(input)
+      end
+
+      def assertions
+        refute_empty output
+      end
+    end
+    report = evaluation.run(dataset: cases)
+
+    expect(report).to be_passed
+    expect(report.first.evaluations).to be_empty
+    expect(report.first.evaluator_tokens.input).to be_nil
+    expect(report.tokens.to_h).to eq(report.first.task_tokens.to_h)
+    expect(report.cost.total).to eq(report.first.task_cost.total)
+    expect(report.tokens.input).to eq(9)
+    expect(WebMock).not_to have_requested(:post, 'https://api.openai.com/v1/chat/completions')
+  end
+
   it 'excludes a returned conversation history that was billed before the run' do
     chat = RubyLLM.chat(model: task_model, provider: :anthropic)
     chat.ask('Earlier question')

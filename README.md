@@ -161,7 +161,7 @@ response.parsed
 
 ## Evaluate your agents
 
-Keep questions and expected answers in a dataset. Check your agent's responses with model criteria and ordinary Ruby assertions, then run the same evaluation from Ruby, RSpec, Minitest, or Rake.
+Keep questions and expected answers in a dataset. RubyLLM checks correctness by default. Run the same evaluation from Ruby, RSpec, Minitest, or Rake.
 
 Evaluations are available on `main`. Follow the [development installation guide](https://rubyllm.com/next/getting-started/) to try them.
 
@@ -177,14 +177,8 @@ end
 
 ```ruby
 class SupportEvaluation < RubyLLM::Evaluation
-  evaluation :correctness, "The answer agrees with the expected output"
-
   def perform(input)
     SupportAgent.new.ask(input)
-  end
-
-  def assertions
-    refute_empty output
   end
 end
 ```
@@ -209,7 +203,7 @@ report.passed?
 report.cost.total
 ```
 
-The model evaluator checks meaning, so answers can use different wording. Use a configured evaluator agent or a judgment model when you need a different reviewer. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
+The model evaluator checks meaning, so answers can use different wording. Declare your own criteria, add Ruby assertions, or choose a configured evaluator agent or judgment model. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
 
 ## A complete AI framework for Ruby
 

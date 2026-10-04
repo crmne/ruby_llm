@@ -5,24 +5,20 @@ require 'forwardable'
 module RubyLLM
   # Defines reusable evaluations with a dataset, semantic criteria, and Ruby assertions.
   # Datasets default to app/evals/<class_name>.yml, .yaml, .json, or .jsonl.
+  # Without declared criteria, evaluates correctness against each case's expected_output.
   #
   #   class SupportEvaluation < RubyLLM::Evaluation
-  #     evaluation :correctness, "The answer agrees with the expected output"
-  #
   #     def perform(input)
-  #       agent = SupportAgent.new
-  #       agent.ask(input)
-  #       agent
-  #     end
-  #
-  #     def assertions
-  #       assert output.length.positive?, "The answer must not be empty"
+  #       SupportAgent.new.ask(input)
   #     end
   #   end
   #
   #   SupportEvaluation.run.save("tmp/support.json")
   class Evaluation
     extend Forwardable
+
+    CORRECTNESS = 'The answer agrees with the expected output'
+    private_constant :CORRECTNESS
 
     class << self
       def inherited(subclass) # :nodoc:
@@ -46,15 +42,22 @@ module RubyLLM
       # Sets the default evaluator: a model, Agent class, or Judge class.
       # Model keywords accept provider, protocol, and context as Chat does.
       # Without a declaration, uses the default chat model and built-in reviewer.
+      # Pass false to disable model grading and run only Ruby assertions.
       def evaluator(target = nil, **options)
-        return @evaluator ||= Evaluator.new if target.nil? && options.empty?
+        if target.nil? && options.empty?
+          @evaluator = Evaluator.new if @evaluator.nil?
+          return @evaluator
+        end
+        raise ArgumentError, 'A disabled evaluator cannot have model options' if target == false && options.any?
 
-        @evaluator = Evaluator.new(target, **options)
+        @evaluator = target == false ? false : Evaluator.new(target, **options)
       end
 
       # Declares a semantic criterion. A minimum applies to a native probability or score;
       # without one, numeric decisions are measured but do not count as passes.
       # Omit instructions to set a minimum on a question already defined by a Judge.
+      # Declared criteria replace implicit correctness. Use evaluation :correctness
+      # without instructions to include the built-in reference comparison explicitly.
       # Supply evaluator to override the class evaluator for this criterion.
       def evaluation(name, instructions = nil, minimum: nil, evaluator: nil)
         validate_criterion(name, minimum)
@@ -102,7 +105,7 @@ module RubyLLM
         raise ArgumentError, 'An evaluation run id cannot be empty' if id.empty?
 
         cases = self.cases(dataset:, only:)
-        groups = evaluation_groups
+        groups = evaluation_groups(cases)
         definitions = Judge::Data.copy(groups.flat_map do |backend, criteria|
           criteria.map { |criterion| criterion.merge(evaluator: backend.description) }
         end)
@@ -143,6 +146,9 @@ module RubyLLM
 
       def validate_run(repetitions)
         raise ArgumentError, 'Define perform(input) in your evaluation' if instance_method(:perform).owner == Evaluation
+        if evaluator == false && definitions.any?
+          raise ArgumentError, 'Cannot declare semantic evaluations with evaluator false'
+        end
         return if repetitions.is_a?(Integer) && repetitions.positive?
 
         raise ArgumentError, 'Repetitions must be a positive Integer'
@@ -155,21 +161,36 @@ module RubyLLM
         raise ArgumentError, 'Minimum must be a finite number'
       end
 
-      def evaluation_groups
+      def evaluation_groups(cases)
+        return {} unless evaluator
+
         all = evaluator.question_names.to_h do |name|
           [name, { name:, instructions: nil, minimum: nil }]
         end.merge(definitions)
+        all[:correctness] = { name: :correctness, instructions: nil, minimum: nil } if all.empty?
         groups = all.values.group_by { |definition| definition[:evaluator] || evaluator }
-        groups.each { |backend, criteria| criteria.each { |criterion| validate_instructions(backend, criterion) } }
-        groups
+        groups.to_h do |backend, criteria|
+          [backend, criteria.map { |criterion| prepare_criterion(backend, criterion, cases) }]
+        end
       end
 
-      def validate_instructions(backend, criterion)
+      def prepare_criterion(backend, criterion, cases)
         existing = backend.question_names.include?(criterion[:name])
         raise ArgumentError, "Duplicate Judge question: #{criterion[:name]}" if existing && criterion[:instructions]
-        return if existing || !criterion[:instructions].to_s.empty?
+        return criterion if existing || !criterion[:instructions].to_s.empty?
+
+        if criterion[:name] == :correctness && criterion[:instructions].nil?
+          return criterion.merge(instructions: correctness_instructions(cases))
+        end
 
         raise ArgumentError, "Missing instructions: #{criterion[:name]}"
+      end
+
+      def correctness_instructions(cases)
+        missing = cases.reject(&:expected_output?).map(&:name)
+        raise ArgumentError, "Correctness requires expected_output for cases: #{missing.join(', ')}" if missing.any?
+
+        CORRECTNESS
       end
     end
 
