@@ -3,7 +3,7 @@ layout: default
 title: Conversations and Tools
 parent: Evaluations
 nav_order: 2
-description: Evaluate full conversations, tool use, approval states, and custom traces
+description: Evaluate multi-turn conversations, saved transcripts, tool calls, and your own result objects
 ---
 
 # {{ page.title }}
@@ -13,13 +13,14 @@ description: Evaluate full conversations, tool use, approval states, and custom 
 
 After reading this guide, you will know:
 
-* How to evaluate several turns in one scenario.
-* How to review existing conversations.
-* What evidence an evaluator receives for each return type.
+* How to evaluate several turns in one case.
+* How to grade a conversation you already saved.
+* What the evaluator sees for each kind of result.
+* How to evaluate your own result objects.
 
 ## Evaluate Several Turns
 
-A dataset case can contain a whole scenario. Create `app/evals/returns_conversation_evaluation.yml`:
+Agents often go wrong on the second message, not the first. A case can hold a whole conversation. Create `app/evals/returns_conversation_evaluation.yml`:
 
 ```yaml
 cases:
@@ -30,44 +31,35 @@ cases:
     expected_output: Sale items cannot be returned, even within 30 days.
 ```
 
-Run each turn on the same agent, then return it:
+Ask each turn on the same agent and return the agent:
 
 ```ruby
 class ReturnsConversationEvaluation < RubyLLM::Evaluation
-  evaluation :policy,
-    "The assistant applies the return policy to the whole conversation and corrects its advice after the follow-up"
+  evaluation :correctness
+  evaluation :corrects_itself,
+    "After the follow-up, the assistant withdraws its earlier advice that the item can be returned"
 
   def perform(questions)
     agent = ReturnsAgent.new
-    questions.each do |question|
-      agent.ask(question)
-    end
+    questions.each { |question| agent.ask(question) }
     agent
-  end
-
-  def assertions
-    user_turns = messages.count do |message|
-      message.role == :user
-    end
-    assert_equal 2, user_turns
-    refute_empty output
   end
 end
 ```
 
-The evaluator receives both user turns, both assistant responses, and any intervening tool requests and tool results. `expected_output` here describes the correct final advice. A criterion can assess the final advice, an earlier turn, or the sequence of actions. It should say which behavior matters.
+Because `perform` returns the agent, the evaluator sees both user turns, both answers, and every tool call and result in between. `expected_output` describes the correct final advice. Write each criterion so it says which part of the conversation matters: the final answer, an earlier turn, or the order of actions.
 
-`perform` is ordinary Ruby. You can branch on an earlier response, approve or deny a proposed change, run several agents, or assert against an application's side effects. Return the conversation or structured trace that contains the evidence for your criteria. The runner does not impose a one-question, one-answer shape.
+`perform` is ordinary Ruby. It can branch on an earlier answer, approve or deny a tool call, run several agents, or change application state. Return whatever holds the evidence your criteria need.
 
-## Evaluate an Existing Conversation
+## Grade a Saved Conversation
 
-For a Rails application that owns its chat records, a case can identify an existing transcript:
+To grade conversations your application already had, without asking the agent again, put the record ID in the case:
 
 ```yaml
 cases:
-  - name: reviewed_conversation
+  - name: refund_request_42
     inputs: 42
-    expected_output: The assistant should request approval before posting.
+    expected_output: The assistant asks for approval before issuing the refund.
 ```
 
 ```ruby
@@ -76,34 +68,57 @@ def perform(chat_id)
 end
 ```
 
-This assesses the recorded conversation without asking the application agent again. Only new evaluator requests contribute to the run's cost. Access records through your application's normal authorization and tenancy rules.
+Only the grading requests cost anything. Load records through your application's usual authorization and tenancy rules.
 
-## Returning Evidence
+## Assert on Tool Calls
 
-Return the object you want assessed from `perform`:
-
-| Result | Evidence supplied to the evaluator |
-| --- | --- |
-| Chat or Agent | Retained messages, tool calls and results, answer, and completion state |
-| Message | Content, citations, attachments, and tool calls in that message |
-| ToolCall | Tool name and arguments, without executing the call |
-| String, number, boolean, array, or hash | The value and its structure |
-| Image, Speech, or Video | Media supplied as attachments |
-| Embedding, Transcription, OCR, Rerank, or Moderation | The operation's public result fields |
-| Object with `to_h` | Its recursively converted representation |
-
-Persisted chat and message records use the existing `to_llm` conversion. An Agent returned by `perform` supplies evidence; it does not become the evaluator or give the evaluator its tools.
-
-Returning a standalone Message does not pull in its conversation. Return the Chat or Agent when you need the transcript. Compacted messages are not reconstructed. Pending approvals and unfinished conversations keep their recorded state; a latest assistant message is not necessarily a completed answer.
-
-Media is passed to the evaluator through RubyLLM's attachment API. Unsupported formats produce an evaluator error. The runner never executes returned tools or continues returned conversations. Ordinary strings are never interpreted as file paths.
-
-For a custom application object, provide an adapter:
+`tool_calls` lists every tool call in the returned conversation. Use it to check what the agent did, alongside what it said:
 
 ```ruby
-adapt Invoice do |invoice|
-  invoice.attributes.slice("total", "currency")
+def assertions
+  assert_includes tool_calls.map(&:name), "lookup_order"
+  refute_includes tool_calls.map(&:name), "issue_refund"
 end
 ```
 
-Unsupported objects raise a recorded evidence-conversion error. The runner does not grade an object's `inspect` string.
+See [Running and Reports]({% link _advanced/evaluation-running.md %}#assertions) for the other values available in assertions.
+
+## What the Evaluator Sees
+
+The evidence depends on what `perform` returns:
+
+| `perform` returns | The evaluator sees |
+| --- | --- |
+| Chat, Agent, or chat record | Every retained message, tool call, and tool result, plus whether the conversation finished |
+| Message | Its content, citations, attachments, and tool calls |
+| ToolCall | The tool name and arguments |
+| String, number, boolean, array, or Hash | The value itself |
+| Image, Speech, or Video | The media, as attachments |
+| Embedding, Transcription, OCR, Rerank, or Moderation result | The result's public fields |
+| Any object with `to_h` | Its Hash representation |
+
+A few rules follow from this:
+
+* A Message alone does not include the rest of its conversation. Return the Chat or Agent when earlier turns matter.
+* A conversation waiting for approval, or one that never finished, is graded as it stands. Its last message may not be a final answer.
+* Messages removed by compaction are not restored.
+* RubyLLM never runs returned tool calls or continues a returned conversation.
+* Strings are graded as text, never opened as file paths.
+
+## Evaluate Your Own Objects
+
+For an object without a useful `to_h`, tell the evaluation how to describe it with `adapt` in the class body:
+
+```ruby
+class InvoiceEvaluation < RubyLLM::Evaluation
+  adapt Invoice do |invoice|
+    invoice.attributes.slice("total", "currency")
+  end
+
+  def perform(input)
+    InvoiceDrafter.call(input)
+  end
+end
+```
+
+`result` in assertions is still the original Invoice. An object RubyLLM cannot convert makes the case end with an error. It is never graded from its `inspect` string.

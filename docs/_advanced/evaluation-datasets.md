@@ -3,7 +3,7 @@ layout: default
 title: Datasets
 parent: Evaluations
 nav_order: 1
-description: Define reusable evaluation scenarios in YAML, JSON, JSONL, or application code
+description: Define evaluation cases in YAML, JSON, JSONL, or application code
 ---
 
 # {{ page.title }}
@@ -13,43 +13,61 @@ description: Define reusable evaluation scenarios in YAML, JSON, JSONL, or appli
 
 After reading this guide, you will know:
 
-* How to name and discover datasets.
-* How to pass structured inputs and optional references.
-* How to load reviewed examples from your application.
+* Which fields a case has.
+* Which file formats RubyLLM loads and where it finds them.
+* How to pass structured inputs to `perform`.
+* How to build cases from your database.
 
-## Datasets
+## Cases
 
-Each case has a unique `name` and `inputs`. Default correctness also requires `expected_output`. Custom criteria and assertions-only evaluations can omit it. `metadata` is optional. Inputs and reference answers can be strings, numbers, booleans, arrays, objects, or null. An explicit null reference differs from an omitted reference.
+A dataset is a list of cases. Each case describes one scenario:
 
-The data fields follow Pydantic Evals' case format. Evaluator declarations in external files are not imported; declare them in Ruby. Put labels used to measure the evaluator's accuracy in a separate file. All case metadata is visible to the evaluator. Case names identify reports and tests; they are not sent to the evaluator.
-
-Discovery accepts `.yml`, `.yaml`, `.json`, and `.jsonl`. Multiple matching files raise an error. YAML and JSON accept either a `cases` object as above or an array of cases. JSONL contains one case per line. YAML loads without Ruby object tags or aliases.
-
-Override discovery with a path:
-
-```ruby
-dataset "evals/support_regressions.json"
+```yaml
+cases:
+  - name: unopened_return
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, unopened items can be returned within 30 days.
+    metadata:
+      category: returns
 ```
 
-Or return cases from application code:
+| Field | Required | Purpose |
+| --- | --- | --- |
+| `name` | Yes | Identifies the case in reports and tests. Must be unique. |
+| `inputs` | Yes | The value passed to `perform`. |
+| `expected_output` | For correctness | The reference answer. |
+| `metadata` | No | Extra context, such as a category or the source documents. |
+
+The evaluator sees `inputs`, `expected_output`, and `metadata`, but not `name`. Values can be strings, numbers, booleans, arrays, objects, or null.
+
+`expected_output` is required by the default correctness check. An evaluation with its own [criteria]({% link _advanced/evaluation-evaluators.md %}) or with only Ruby assertions can leave it out. An explicit `null` is a reference answer of null, which is different from leaving the field out.
+
+## File Formats
+
+RubyLLM looks for a file named after the class with one of these extensions: `.yml`, `.yaml`, `.json`, or `.jsonl`. Having more than one raises an error.
+
+YAML and JSON files contain either a `cases` key, as above, or a bare array of cases. JSONL files contain one case per line:
+
+```json
+{"name": "unopened_return", "inputs": "Can I return an unopened item?", "expected_output": "Yes, within 30 days."}
+{"name": "sale_item", "inputs": "Can I return a sale item?", "expected_output": "No, sale items are final."}
+```
+
+YAML is loaded safely, without Ruby object tags or aliases.
+
+The case fields match Pydantic Evals, so you can reuse cases written for it. Evaluators are declared in Ruby, so a file that declares evaluators raises an error.
+
+To use a different file, pass its path:
 
 ```ruby
-dataset do
-  ReviewedAnswer.all.map do |answer|
-    RubyLLM::Evaluation::Case.new(
-      name: answer.id,
-      inputs: answer.question,
-      expected_output: answer.reviewed_answer
-    )
-  end
+class SupportEvaluation < RubyLLM::Evaluation
+  dataset "evals/support_regressions.json"
 end
 ```
 
-You can also pass `dataset:` to `run`. The runner loads the dataset once and creates a fresh evaluation instance and mutable copy of the input for each case and repetition. Reference evidence remains frozen.
-
 ## Structured Inputs
 
-`inputs` is one value passed to `perform`. It can contain several fields:
+`inputs` is a single value, but that value can hold several fields:
 
 ```yaml
 cases:
@@ -61,20 +79,42 @@ cases:
     expected_output: The item can be returned within 30 days.
 ```
 
-Your method chooses how to use that data:
+`perform` receives the Hash and decides how to use it:
 
 ```ruby
 def perform(input)
-  ReturnsAgent.new.ask(JSON.generate(input))
+  ReturnsAgent.new.ask(<<~PROMPT)
+    #{input["question"]}
+    Days since purchase: #{input["days_since_purchase"]}
+    Unopened: #{input["unopened"]}
+  PROMPT
 end
 ```
 
-The method parameter can have any Ruby name, such as `question`, `document`, or `scenario`. Inside `assertions`, `input` exposes that case's inputs. The plural `inputs` in dataset files is the portable field name, not a requirement to provide multiple arguments.
+Keys are strings, as they are in the file. Name the parameter whatever reads best: `question`, `document`, or `scenario`. Each case gets its own copy of the inputs, so `perform` can modify it freely.
 
 A list of user turns is also a valid input. See [Conversations and Tools]({% link _advanced/evaluation-conversations.md %}).
 
-## References Are Optional
+## Cases from Your Application
 
-Use `expected_output` when you have a reviewed answer or structured result. Semantic evaluators can accept equivalent wording. Ruby's `assert_equal expected_output, output` requires equality.
+When the cases live in your database, return them from a block:
 
-Some properties need no reference answer. Declare custom criteria to check that an agent cites its sources, does not execute an unapproved change, or asks for missing information. For Ruby assertions alone, set `evaluator false`. Keep any additional reference evidence in `metadata`; it is visible to evaluators.
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  dataset do
+    ReviewedAnswer.all.map do |answer|
+      RubyLLM::Evaluation::Case.new(
+        name: "reviewed_answer_#{answer.id}",
+        inputs: answer.question,
+        expected_output: answer.reviewed_answer
+      )
+    end
+  end
+end
+```
+
+You can also pass `dataset:` to `run` for a single run. RubyLLM loads the dataset once per run.
+
+## Answers That Need No Reference
+
+Some properties have no single correct answer: an agent cites its sources, asks for missing information, or never issues a refund without approval. Leave out `expected_output` and declare a [criterion]({% link _advanced/evaluation-evaluators.md %}#writing-your-own-criteria) that describes the behavior instead. Put any supporting material, such as the documents the answer should rely on, in `metadata` so the evaluator can see it.
