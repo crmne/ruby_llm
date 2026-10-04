@@ -93,8 +93,6 @@ module RubyLLM
 
         if json_body?(chunk, state)
           handle_json_body(chunk, state, env)
-        elsif error_chunk?(chunk)
-          handle_error_chunk(chunk, env)
         else
           handle_sse(chunk, state.parser, env, progress, &)
         end
@@ -113,18 +111,6 @@ module RubyLLM
         raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
       rescue JSON::ParserError
         RubyLLM.logger.debug { "Accumulating JSON body chunk: #{chunk}" }
-      end
-
-      # An error event split across network reads reaches here in pieces, so only
-      # a whole one takes this shortcut; the rest go to the parser, which buffers
-      # them until the event is complete.
-      def error_chunk?(chunk)
-        chunk.start_with?('event: error') && chunk.end_with?("\n\n")
-      end
-
-      def handle_error_chunk(chunk, env)
-        error_data = chunk.split("\n")[1]&.delete_prefix('data: ')
-        parse_error_from_json(error_data, env, 'Failed to parse error chunk') if error_data
       end
 
       def handle_failed_response(chunk, buffer, env)
