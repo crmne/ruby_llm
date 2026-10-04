@@ -67,8 +67,8 @@ module RubyLLM
         response = (judge_class || Judge).judge(data, questions:, with: attachments, **settings)
         evidence = Evidence.new(response).data
         results = definitions.map do |definition|
-          EvaluationResult.new(name: definition[:name], value: response.fetch(definition[:name]),
-                               minimum: definition[:minimum], model: response.model, evidence:)
+          Result.new(name: definition[:name], value: response.fetch(definition[:name]),
+                     minimum: definition[:minimum], model: response.model, evidence:)
         end
         [results, response.cost]
       end
@@ -108,8 +108,8 @@ module RubyLLM
         definitions.map do |definition|
           verdict = values.fetch(definition[:name].to_s)
           value = verdict_values.fetch(verdict.fetch('verdict'))
-          EvaluationResult.new(name: definition[:name], value:, reason: verdict.fetch('reason'),
-                               model: agent.messages.last.model, evidence:)
+          Result.new(name: definition[:name], value:, reason: verdict.fetch('reason'),
+                     model: agent.messages.last.model, evidence:)
         end
       end
 

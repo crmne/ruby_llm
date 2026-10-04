@@ -70,8 +70,8 @@ RSpec.describe RubyLLM::Evaluation, :live do
       end
     end
     evaluation.evaluator(reviewer)
-    report = evaluation.run(dataset: [RubyLLM::EvaluationCase.new(name: 'policy',
-                                                                  inputs: 'Sale items are refundable.')])
+    report = evaluation.run(dataset: [RubyLLM::Evaluation::Case.new(name: 'policy',
+                                                                    inputs: 'Sale items are refundable.')])
 
     expect(report.first.status).to eq(:failed), report.to_h.to_json
     messages = report.first.evaluations.first.evidence.fetch(:messages)
@@ -107,8 +107,8 @@ RSpec.describe RubyLLM::Evaluation, :live do
       agent.ask(input)
       agent
     end
-    report = evaluation.run(dataset: [RubyLLM::EvaluationCase.new(name: 'conversation',
-                                                                  inputs: 'Can I return my order?')])
+    report = evaluation.run(dataset: [RubyLLM::Evaluation::Case.new(name: 'conversation',
+                                                                    inputs: 'Can I return my order?')])
 
     expect(report).to be_passed, report.to_h.to_json
     expect(report.first.result).to be_a(RubyLLM::Agent)

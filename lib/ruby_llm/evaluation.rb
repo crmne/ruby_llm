@@ -91,7 +91,7 @@ module RubyLLM
         loaded.select { |test_case| names.include?(test_case.name) }
       end
 
-      # Executes fresh instances for every case and repetition and returns an EvaluationReport.
+      # Executes fresh instances for every case and repetition and returns an Evaluation::Report.
       # A supplied dataset overrides discovery for this run. Configuration errors raise;
       # task, assertion, and evaluator failures are recorded per case.
       def run(dataset: nil, only: nil, repetitions: 1)
@@ -108,7 +108,7 @@ module RubyLLM
             new.run_case(test_case, index + 1, groups, run_id: id)
           end
         end
-        EvaluationReport.new(name: name || 'Anonymous evaluation', trials:, id:, started_at:, definitions:)
+        Report.new(name: name || 'Anonymous evaluation', trials:, id:, started_at:, definitions:)
       end
 
       def definitions # :nodoc:

@@ -147,7 +147,7 @@ loader.setup
 #
 # Evaluation defines a dataset, semantic criteria, and Ruby assertions in a
 # reusable class. Implement Evaluation#perform to return a value, Message,
-# Chat, or Agent, and call Evaluation.run to collect an EvaluationReport.
+# Chat, or Agent, and call Evaluation.run to collect an Evaluation::Report.
 # Evaluators can use a chat model, an Agent, or a Judge. Dataset files are
 # discovered under app/evals, following the evaluation's class name.
 #

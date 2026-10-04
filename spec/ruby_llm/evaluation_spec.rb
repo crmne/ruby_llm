@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Evaluation do
   include_context 'with configured RubyLLM'
 
   let(:cases) do
-    [RubyLLM::EvaluationCase.new(name: 'greeting', inputs: 'hello', expected_output: 'HELLO')]
+    [RubyLLM::Evaluation::Case.new(name: 'greeting', inputs: 'hello', expected_output: 'HELLO')]
   end
   let(:evaluation) do
     Class.new(described_class) do
@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Evaluation do
   end
 
   it 'records failed assertions and continues to later cases' do
-    cases << RubyLLM::EvaluationCase.new(name: 'bad', inputs: 'wrong', expected_output: 'RIGHT')
+    cases << RubyLLM::Evaluation::Case.new(name: 'bad', inputs: 'wrong', expected_output: 'RIGHT')
     report = evaluation.run(dataset: cases)
 
     expect(report.map(&:status)).to eq(%i[passed failed])
@@ -44,7 +44,7 @@ RSpec.describe RubyLLM::Evaluation do
   end
 
   it 'lists and selects named cases without executing the application during discovery' do
-    cases << RubyLLM::EvaluationCase.new(name: 'second', inputs: 'bye', expected_output: 'BYE')
+    cases << RubyLLM::Evaluation::Case.new(name: 'second', inputs: 'bye', expected_output: 'BYE')
     expect(evaluation.cases(dataset: cases, only: 'second')).to eq([cases.last])
     report = evaluation.run(dataset: cases, only: 'second')
 
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Evaluation do
         assert_equal [1], output
       end
     end
-    original = RubyLLM::EvaluationCase.new(name: 'mutable', inputs: [])
+    original = RubyLLM::Evaluation::Case.new(name: 'mutable', inputs: [])
     report = evaluation.run(dataset: [original], repetitions: 3)
 
     expect(report.map(&:output)).to eq([[1], [1], [1]])
@@ -169,7 +169,7 @@ RSpec.describe RubyLLM::Evaluation do
 
   it 'preserves false, zero, and explicit nil reference answers' do
     [false, 0, nil].each do |expected|
-      test_case = RubyLLM::EvaluationCase.new(name: 'value', inputs: expected, expected_output: expected)
+      test_case = RubyLLM::Evaluation::Case.new(name: 'value', inputs: expected, expected_output: expected)
       evaluation.define_method(:perform) { |input| input }
       evaluation.define_method(:assertions) do
         expected_output.nil? ? assert_nil(output) : assert_equal(expected_output, output)
@@ -178,7 +178,7 @@ RSpec.describe RubyLLM::Evaluation do
       expect(test_case).to be_expected_output
       expect(test_case.to_h).to have_key(:expected_output)
     end
-    expect(RubyLLM::EvaluationCase.new(name: 'no_reference', inputs: nil)).not_to be_expected_output
+    expect(RubyLLM::Evaluation::Case.new(name: 'no_reference', inputs: nil)).not_to be_expected_output
   end
 
   it 'saves reports with failed cases and serializable evidence' do

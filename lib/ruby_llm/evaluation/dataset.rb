@@ -11,7 +11,7 @@ module RubyLLM
       def load(source, name:)
         source = rows(source, name:)
         cases = source.map do |row|
-          row.is_a?(EvaluationCase) ? row : EvaluationCase.new(**row.transform_keys(&:to_sym))
+          row.is_a?(Case) ? row : Case.new(**row.transform_keys(&:to_sym))
         end
         raise ArgumentError, 'A dataset cannot be empty' if cases.empty?
         raise ArgumentError, 'Dataset case names must be unique' unless cases.map(&:name).uniq.size == cases.size

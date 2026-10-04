@@ -80,7 +80,7 @@ Or return cases from application code:
 ```ruby
 dataset do
   ReviewedAnswer.all.map do |answer|
-    RubyLLM::EvaluationCase.new(
+    RubyLLM::Evaluation::Case.new(
       name: answer.id,
       inputs: answer.question,
       expected_output: answer.reviewed_answer

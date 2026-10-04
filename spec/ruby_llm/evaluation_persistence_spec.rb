@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Evaluation do
         assert_equal %i[user assistant], messages.map(&:role)
       end
     end
-    cases = [RubyLLM::EvaluationCase.new(name: 'persisted', inputs: record.id)]
+    cases = [RubyLLM::Evaluation::Case.new(name: 'persisted', inputs: record.id)]
     report = evaluation.run(dataset: cases)
 
     expect(report).to be_passed, report.to_h.to_json

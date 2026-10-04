@@ -22,12 +22,12 @@ module RubyLLM
           teardown
         end
         duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
-        EvaluationTrial.new(test_case: @test_case, repetition: @repetition, result: @instance.result,
-                            output: @evidence&.output, evidence: @evidence&.data, evaluations: @evaluations,
-                            assertion_count: @instance.assertion_context.assertions,
-                            assertion_failure: @assertion_failure,
-                            error: @error, duration:, task_cost: result_cost,
-                            evaluator_cost: Cost.aggregate(@costs, complete: @evaluations.none?(&:error)))
+        Trial.new(test_case: @test_case, repetition: @repetition, result: @instance.result,
+                  output: @evidence&.output, evidence: @evidence&.data, evaluations: @evaluations,
+                  assertion_count: @instance.assertion_context.assertions,
+                  assertion_failure: @assertion_failure,
+                  error: @error, duration:, task_cost: result_cost,
+                  evaluator_cost: Cost.aggregate(@costs, complete: @evaluations.none?(&:error)))
       end
 
       private
@@ -57,7 +57,7 @@ module RubyLLM
           @evaluations.concat(results)
           @costs << cost
         rescue StandardError => e
-          @evaluations.concat(criteria.map { |criterion| EvaluationResult.new(name: criterion[:name], error: e) })
+          @evaluations.concat(criteria.map { |criterion| Result.new(name: criterion[:name], error: e) })
           @costs << Cost.new(complete: false)
         end
       end

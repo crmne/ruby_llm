@@ -20,10 +20,6 @@ runtime.cannot_reference_constants 'RubyLLM::Generators', 'Rails::Generators'
 component :domain, in: %w[
   lib/ruby_llm/evaluation.rb
   lib/ruby_llm/evaluation/**/*.rb
-  lib/ruby_llm/evaluation_case.rb
-  lib/ruby_llm/evaluation_result.rb
-  lib/ruby_llm/evaluation_trial.rb
-  lib/ruby_llm/evaluation_report.rb
   lib/ruby_llm/agent.rb
   lib/ruby_llm/attachment.rb
   lib/ruby_llm/batch.rb

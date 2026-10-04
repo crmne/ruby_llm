@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::EvaluationResult do
+RSpec.describe RubyLLM::Evaluation::Result do
   it 'preserves boolean verdicts without turning a failure into an error' do
     expect(described_class.new(name: :correct, value: true)).to be_passed
     expect(described_class.new(name: :correct, value: false).status).to eq(:failed)

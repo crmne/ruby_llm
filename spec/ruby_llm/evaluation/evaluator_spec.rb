@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Evaluation::Evaluator do
   include_context 'with configured RubyLLM'
 
-  let(:cases) { [RubyLLM::EvaluationCase.new(name: 'answer', inputs: 'hello', expected_output: 'HELLO')] }
+  let(:cases) { [RubyLLM::Evaluation::Case.new(name: 'answer', inputs: 'hello', expected_output: 'HELLO')] }
   let(:model) { model_for(:openai) }
   let(:requests) { [] }
   let(:verdicts) { { correct: { verdict: 'pass', reason: 'Matches the reference.' } } }
