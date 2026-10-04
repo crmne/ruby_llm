@@ -66,11 +66,10 @@ module RubyLLM
         end
         response = (judge_class || Judge).judge(data, questions:, with: attachments, **settings)
         evidence = Evidence.new(response).data
-        results = definitions.map do |definition|
+        definitions.map do |definition|
           Result.new(name: definition[:name], value: response.fetch(definition[:name]),
                      minimum: definition[:minimum], model: response.model, evidence:)
         end
-        [results, response.cost]
       end
 
       def review(data, definitions, attachments)
@@ -82,7 +81,7 @@ module RubyLLM
         response = agent.ask(JSON.generate(data), with: attachments)
         raise Error, 'Evaluator stopped before completing its assessment' unless agent.complete?
 
-        [parse_results(response.parsed, definitions, agent), agent.cost]
+        parse_results(response.parsed, definitions, agent)
       end
 
       def review_agent(definitions)

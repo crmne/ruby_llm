@@ -6,6 +6,7 @@ module RubyLLM
     class Report
       include Enumerable
       include Support::Inspectable
+      include Accounting::Usage::Result
 
       # Returns the evaluation class name.
       attr_reader :name
@@ -21,6 +22,7 @@ module RubyLLM
       def initialize(name:, trials:, id:, started_at:, definitions:) # :nodoc:
         @name = name
         @trials = trials.freeze
+        @ruby_llm_usage_entries = trials.flat_map(&:ruby_llm_usage_entries).freeze
         @id = id
         @started_at = started_at
         @definitions = Judge::Data.copy(definitions)
@@ -30,6 +32,16 @@ module RubyLLM
       # Yields each trial, or returns an Enumerator.
       def each(&)
         trials.each(&)
+      end
+
+      # Returns the Tokens aggregate across every case and repetition.
+      def tokens
+        ruby_llm_usage_tokens
+      end
+
+      # Returns the Cost aggregate across every case and repetition.
+      def cost
+        ruby_llm_usage_cost
       end
 
       # Returns trial counts keyed by status.
@@ -50,7 +62,8 @@ module RubyLLM
 
       # Returns all trial evidence, measurements, and run identity as a Hash.
       def to_h
-        { id:, name:, started_at: started_at.iso8601, definitions:, counts:, pass_rate:, trials: trials.map(&:to_h) }
+        { id:, name:, started_at: started_at.iso8601, definitions:, counts:, pass_rate:,
+          tokens: tokens.to_h, cost: cost.to_h, trials: trials.map(&:to_h) }
       end
 
       # Writes a JSON report and returns the supplied path.
