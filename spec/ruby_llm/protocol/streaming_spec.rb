@@ -240,6 +240,25 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(yielded).to be_empty
   end
 
+  it 'rejects an oversized bare JSON body before retaining it' do
+    stub_const('RubyLLM::Protocol::Streaming::MAX_JSON_BODY_BYTES', 32)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect { handler.call(%({"detail":"#{'x' * 32}), 0, env) }
+      .to raise_error(RubyLLM::Error, /JSON response exceeds 32 bytes/)
+    expect(env[:streaming_state].buffer).to be_empty
+  end
+
+  it 'limits the accumulated JSON bytes across network reads' do
+    stub_const('RubyLLM::Protocol::Streaming::MAX_JSON_BODY_BYTES', 32)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+    handler.call('{"detail":"', 0, env)
+
+    expect { handler.call('é' * 11, 0, env) }
+      .to raise_error(RubyLLM::Error, /JSON response exceeds 32 bytes/)
+    expect(env[:streaming_state].buffer).to eq('{"detail":"')
+  end
+
   it 'ignores a bare JSON body whose error is null' do
     yielded = []
     handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }

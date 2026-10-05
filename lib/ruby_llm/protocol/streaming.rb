@@ -6,6 +6,8 @@ require 'json'
 module RubyLLM
   class Protocol
     module Streaming # :nodoc: all
+      MAX_JSON_BODY_BYTES = 1024 * 1024
+
       StreamState = Struct.new(:parser, :buffer, :json_body) do
         def initialize
           super
@@ -106,11 +108,15 @@ module RubyLLM
       end
 
       def handle_json_body(chunk, state, env)
+        if state.buffer.bytesize + chunk.bytesize > MAX_JSON_BODY_BYTES
+          raise Error, "Streaming JSON response exceeds #{MAX_JSON_BODY_BYTES} bytes"
+        end
+
         state.buffer << chunk
         parsed = JSON.parse(state.buffer)
         raise_stream_error(state.buffer, parsed, env) if parsed.is_a?(Hash) && parsed['error']
       rescue JSON::ParserError
-        RubyLLM.logger.debug { "Accumulating JSON body chunk: #{chunk}" }
+        RubyLLM.logger.debug { 'Waiting for the remaining JSON response bytes' }
       end
 
       def handle_failed_response(chunk, buffer, env)
