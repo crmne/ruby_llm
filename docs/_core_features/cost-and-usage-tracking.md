@@ -24,7 +24,7 @@ After reading this guide, you will know:
 * How to price token usage yourself with `cost_for` and `Cost.aggregate`.
 * How to price provider tools billed per use, such as web search.
 * How costs are recorded in Rails and how to keep registry pricing fresh.
-* How to attribute the usage of one-shot operations to a user or account.
+* How to attribute chat and one-shot usage to a user or account.
 
 ## Reading Tokens and Costs
 
@@ -208,7 +208,15 @@ end
 
 An operation's `owner:` wins over the block's owner, and a nested block restores the outer owner when it ends. Each fiber and thread keeps its own owner, and fibers and threads started inside the block inherit it. Without an owner, RubyLLM still writes the row, unattributed.
 
-Rows of an `acts_as_chat` record belong to that chat and have no owner, even inside the block: the chat already says whose conversation it was. A chat record's rows are written once, by the chat.
+Rows of an `acts_as_chat` record keep both their chat association and the scoped owner. In a shared conversation, wrap each turn to record who caused its attempts, including failed or cancelled attempts that produce no message:
+
+```ruby
+RubyLLM.with_usage_owner(current_user) do
+  chat.ask("Summarize the latest reviews.")
+end
+```
+
+The chat writes each row once. Its owner also applies to independent model calls made by tools inside the block. Re-enter the scope when a background job resumes the work. Existing rows keep their recorded owner; RubyLLM does not infer one from your chat or message models.
 
 To query an owner's spend, declare the association on the owner's model:
 

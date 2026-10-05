@@ -59,7 +59,7 @@ RSpec.describe RubyLLM::Evaluation do
       expect(report).to be_passed
       expect(rows.map(&:operation)).to eq(%w[chat judgment])
       expect(rows.last).to have_attributes(owner:, chat_id: nil)
-      expect(rows.first).to have_attributes(chat_id: persisted ? chat.id : nil, owner_id: persisted ? nil : owner.id)
+      expect(rows.first).to have_attributes(chat_id: persisted ? chat.id : nil, owner:)
       expect(report.tokens.to_h).to eq(input_tokens: 20, output_tokens: 3)
       expect(report.tokens.to_h).to eq(RubyLLM::Tokens.aggregate(rows.map(&:tokens)).to_h)
       expect(report.first.task_cost.total).to be_within(1e-10).of(rows.first.cost.total)

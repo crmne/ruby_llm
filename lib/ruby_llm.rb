@@ -262,9 +262,9 @@ module RubyLLM
 
     # Attributes the usage of every operation inside the block to +owner+,
     # such as a user or an account record, and returns the block's value.
-    # In Rails, the usage ledger stores the owner on rows that belong to no
-    # chat record; everywhere, the +usage.ruby_llm+ event carries it as
-    # +owner+. An operation's own +owner:+ keyword wins, and nested blocks
+    # In Rails, the usage ledger stores the owner alongside any chat and
+    # message associations; everywhere, the +usage.ruby_llm+ event carries
+    # it as +owner+. An operation's own +owner:+ keyword wins, and nested blocks
     # restore the outer owner when they end. Each fiber and thread keeps its
     # own owner, and fibers and threads started inside the block inherit it.
     #

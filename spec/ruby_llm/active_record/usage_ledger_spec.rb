@@ -36,6 +36,13 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     RubyLLM.embed('Ruby', model: embedding_model, provider: :openai, **)
   end
 
+  def stub_chat_reply
+    reply = { id: 'msg_1', type: 'message', role: 'assistant', model: model_for(:anthropic),
+              content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn',
+              usage: { input_tokens: 9, output_tokens: 2 } }
+    stub_request(:post, 'https://api.anthropic.com/v1/messages').to_return(json_response(reply))
+  end
+
   def rows_for(record)
     described_class.where(owner: record).order(:id)
   end
@@ -130,23 +137,59 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
               ['research', 'agent-id', 'succeeded', 0.42]])
   end
 
-  it 'leaves the rows of a persisted chat to the chat, written once' do
-    reply = { id: 'msg_1', type: 'message', role: 'assistant', model: model_for(:anthropic),
-              content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn',
-              usage: { input_tokens: 9, output_tokens: 2 } }
-    stub_request(:post, 'https://api.anthropic.com/v1/messages').to_return(json_response(reply))
+  it 'writes a persisted chat attempt once, linked to both its chat and owner' do
+    stub_chat_reply
     chat = Chat.create!(model: model_for(:anthropic))
 
     expect { RubyLLM.with_usage_owner(owner) { chat.ask('Hello') } }.to change(described_class, :count).by(1)
 
-    expect(chat.ruby_llm_usages.sole).to have_attributes(operation: 'chat', owner_id: nil, input_tokens: 9)
+    expect(chat.reload.ruby_llm_usages.sole).to have_attributes(operation: 'chat', chat:, owner:,
+                                                                message: chat.messages.last, input_tokens: 9)
+  end
+
+  it 'keeps the owner of each turn when different people use the same chat' do
+    stub_chat_reply
+    chat = Chat.create!(model: model_for(:anthropic))
+    other = Chat.create!(model: model_for(:anthropic))
+
+    RubyLLM.with_usage_owner(owner) { chat.ask('Hello') }
+    RubyLLM.with_usage_owner(other) { chat.reload.ask('Hello again') }
+    chat.reload.ask('Goodbye')
+
+    expect(chat.reload.ruby_llm_usages.map(&:owner)).to eq([owner, other, nil])
+  end
+
+  it 'keeps the owner of a failed chat attempt that produced no message' do
+    stub_request(:post, 'https://api.anthropic.com/v1/messages')
+      .to_return(json_response({ error: { type: 'api_error', message: 'Boom' } }, status: 500))
+    chat = Chat.create!(model: model_for(:anthropic))
+
+    expect { RubyLLM.with_usage_owner(owner) { chat.ask('Hello') } }.to raise_error(RubyLLM::ServerError)
+
+    expect(chat.reload.ruby_llm_usages.sole).to have_attributes(owner:, status: 'failed', message: nil)
+  end
+
+  it 'keeps the owner of a cancelled chat attempt with partial usage' do
+    chat = Chat.create!(model: model_for(:anthropic))
+    provider = chat.to_llm.provider
+    allow(provider).to receive(:complete) do |_messages, usage_recorder:, **|
+      tracker = RubyLLM::Accounting::Usage::Tracker.new(operation: :chat, provider:, model: chat.model.to_llm,
+                                                        config: RubyLLM.config, on_finish: usage_recorder)
+      entry = tracker.start
+      tracker.observe_tokens(RubyLLM::Tokens.new(input: 9, output: 1))
+      error = RubyLLM::CancelledError.new('Cancelled')
+      tracker.fail_attempt(entry, error)
+      raise error
+    end
+
+    expect { RubyLLM.with_usage_owner(owner) { chat.ask('Hello') } }.to raise_error(RubyLLM::CancelledError)
+
+    expect(chat.reload.ruby_llm_usages.sole).to have_attributes(owner:, status: 'cancelled', message: nil,
+                                                                input_tokens: 9, output_tokens: 1)
   end
 
   it 'attributes the rows of a chat without a record to the owner' do
-    reply = { id: 'msg_1', type: 'message', role: 'assistant', model: model_for(:anthropic),
-              content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn',
-              usage: { input_tokens: 9, output_tokens: 2 } }
-    stub_request(:post, 'https://api.anthropic.com/v1/messages').to_return(json_response(reply))
+    stub_chat_reply
 
     RubyLLM.with_usage_owner(owner) { RubyLLM.chat(model: model_for(:anthropic)).ask('Hello') }
 

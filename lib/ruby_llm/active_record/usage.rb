@@ -28,9 +28,7 @@ module RubyLLM
         connection_pool.with_connection do
           next unless ledger_available?
 
-          attributes = attributes_for(entry)
-          attributes[:owner] = entry.owner if column_names.include?('owner_id')
-          transaction(requires_new: true) { create!(attributes) }
+          transaction(requires_new: true) { create!(attributes_for(entry)) }
         end
       rescue StandardError => e
         RubyLLM.logger.warn("RubyLLM could not record #{entry.operation} usage: #{e.class}: #{e.message}")
@@ -62,6 +60,7 @@ module RubyLLM
           total_cost: cost.total
         }
         attributes[:server_tool_use] = tokens.server_tool_use if column_names.include?('server_tool_use')
+        attributes[:owner] = entry.owner if column_names.include?('owner_id')
         attributes
       end
 

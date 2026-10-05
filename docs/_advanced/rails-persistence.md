@@ -155,10 +155,11 @@ An entry links to the message it produced when there is one. A failed retry or a
 
 Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. The 2.0 runtime reads this ledger only; the 2.0 upgrade moves 1.16 message tokens into it before removing the old columns.
 
-One-shot operations write to the same ledger, with no chat. Attribute them to a record with `owner:` or `RubyLLM.with_usage_owner`, and query an owner's spend through its own association:
+Attribute each chat attempt to a record with `RubyLLM.with_usage_owner`. Its usage rows keep both the chat and owner associations. One-shot operations write to the same ledger, with no chat, and also accept `owner:`. Query an owner's spend through its own association:
 
 ```ruby
 RubyLLM.with_usage_owner(current_user) do
+  chat.ask("Summarize the latest reviews.")
   RubyLLM.transcribe("memo.m4a")
   RubyLLM.paint("a paper boat in the rain", owner: current_user.account)
 end
