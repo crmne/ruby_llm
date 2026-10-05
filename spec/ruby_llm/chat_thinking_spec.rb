@@ -2,7 +2,9 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat, :live do
+RSpec.describe RubyLLM::Chat do
+  include_context 'with configured RubyLLM'
+
   describe '#with_thinking' do
     it 'uses the registered model controls without options' do
       payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
@@ -122,7 +124,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  describe 'thinking display' do
+  describe 'thinking display', :live do
     context "with anthropic/#{model_for(:anthropic, :adaptive_thinking)}" do
       it 'returns readable thinking with display summarized' do
         chat = RubyLLM.chat(model: model_for(:anthropic, :adaptive_thinking), provider: :anthropic)
@@ -139,7 +141,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  context 'with extended thinking' do
+  context 'with extended thinking', :live do
     question = <<~QUESTION.strip
       If a magic mirror shows your future self, but only if you ask a question it cannot answer truthfully, what question do you ask to see your future, and what would the mirror reveal about the answer it gives?
     QUESTION
@@ -219,7 +221,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  describe 'Mistral hybrid reasoning' do
+  describe 'Mistral hybrid reasoning', :live do
     let(:chat) { RubyLLM.chat(model: model_for(:mistral), provider: :mistral).with_thinking(effort: :high) }
 
     it 'separates thinking from final content' do
@@ -254,7 +256,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  describe 'DeepSeek thinking control' do
+  describe 'DeepSeek thinking control', :live do
     it 'disables thinking for effort none' do
       chat = RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek).with_thinking(effort: :none)
 
@@ -301,7 +303,7 @@ RSpec.describe RubyLLM::Chat, :live do
       )
     end
 
-    it 'returns reasoning content blocks' do
+    it 'returns reasoning content blocks', :live do
       chat = RubyLLM.chat(model: model_for(:bedrock), provider: :bedrock).with_thinking(effort: :low)
 
       response = chat.ask('What is 15 * 23? Answer with just the number.')
@@ -341,7 +343,7 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:messages].last[:reasoning_details]).to eq(details)
     end
 
-    it 'replays reasoning_details across tool calls and turns' do
+    it 'replays reasoning_details across tool calls and turns', :live do
       response = chat.ask('What is the weather in Berlin? Use the reasoning_weather tool.')
 
       expect(response.content).to be_present
@@ -353,7 +355,7 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(second.content).to be_present
     end
 
-    it 'accumulates reasoning_details while streaming tool calls' do
+    it 'accumulates reasoning_details while streaming tool calls', :live do
       response = chat.ask('What is the weather in Berlin? Use the reasoning_weather tool.') { |_chunk| } # rubocop:disable Lint/EmptyBlock
 
       expect(response.content).to be_present
@@ -363,7 +365,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
-  describe 'Gemini token accounting' do
+  describe 'Gemini token accounting', :live do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
       chat = RubyLLM.chat(model: model_for(:gemini), provider: :gemini)
       response = chat.ask('What is 2+2? Think step by step.')

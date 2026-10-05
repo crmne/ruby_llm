@@ -271,7 +271,7 @@ TEST_MODELS = {
     { provider: :azure, model: 'gpt-5-nano', protocol: :responses, approval: true },
     { provider: :gemini, model: 'gemini-3.8-flash', protocol: :interactions, approval: false }
   ],
-  always_thinking: [{ provider: :mistral, model: 'magistral-small' }],
+  always_thinking: [{ provider: :mistral, model: 'magistral-medium-latest' }],
   thinking_signatures: [
     { provider: :gemini, model: 'gemini-3.1-pro-preview' },
     { provider: :vertexai, model: 'gemini-3.1-pro-preview' }

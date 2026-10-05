@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Thinking::Controls do
 
     it 'still raises when neither the registry nor the provider exposes an off control' do
       model = model_for(
-        'magistral-small',
+        'magistral-medium-latest',
         provider: 'mistral',
         reasoning_options: []
       )
