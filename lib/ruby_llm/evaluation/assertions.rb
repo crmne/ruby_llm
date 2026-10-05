@@ -6,7 +6,7 @@ module RubyLLM
       METHOD = /\A(?:assert|refute)(?:_|\z)/
 
       # Matches Minitest assertion failures without loading Minitest.
-      module Failure
+      module Failure # :nodoc:
         def self.===(error)
           defined?(::Minitest::Assertion) && error.is_a?(::Minitest::Assertion)
         end
