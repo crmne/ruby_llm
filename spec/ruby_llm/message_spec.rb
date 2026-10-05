@@ -81,6 +81,43 @@ RSpec.describe RubyLLM::Message do
       expect(rebuilt.to_h).to eq(original.to_h)
     end
 
+    context 'with signature-only thinking' do
+      let(:original) do
+        described_class.new(role: :assistant, content: 'Done.',
+                            thinking: RubyLLM::Thinking.new(signature: 'opaque-signature'))
+      end
+
+      it 'preserves thinking without text through a Hash round trip' do
+        rebuilt = described_class.new(original.to_h)
+
+        expect(rebuilt.thinking).to have_attributes(text: nil, signature: 'opaque-signature')
+        expect(rebuilt.to_h).to eq(original.to_h)
+      end
+
+      it 'preserves thinking without text through a JSON round trip' do
+        attributes = JSON.parse(JSON.generate(original.to_h)).transform_keys(&:to_sym)
+        rebuilt = described_class.new(attributes)
+
+        expect(rebuilt.thinking).to have_attributes(text: nil, signature: 'opaque-signature')
+        expect(rebuilt.to_h).to eq(original.to_h)
+      end
+    end
+
+    it 'preserves an empty thinking text with its signature' do
+      original = described_class.new(role: :assistant, content: 'Done.',
+                                     thinking: RubyLLM::Thinking.new(text: '', signature: 'opaque-signature'))
+
+      expect(described_class.new(original.to_h).thinking)
+        .to have_attributes(text: '', signature: 'opaque-signature')
+    end
+
+    it 'preserves thinking text without a signature' do
+      original = described_class.new(role: :assistant, content: 'Done.',
+                                     thinking: RubyLLM::Thinking.new(text: 'Checking.'))
+
+      expect(described_class.new(original.to_h).thinking).to have_attributes(text: 'Checking.', signature: nil)
+    end
+
     it 'rebuilds tool calls, thinking, and citations as value objects' do
       original = described_class.new(
         role: :assistant,
@@ -128,6 +165,40 @@ RSpec.describe RubyLLM::Message do
 
         expect(rebuilt.to_h).to eq(original.to_h)
       end
+    end
+  end
+
+  describe '#thinking' do
+    it 'builds thinking from a signature without text' do
+      message = described_class.new(role: :assistant, content: 'Done.', thinking_signature: 'opaque-signature')
+
+      expect(message.thinking).to have_attributes(text: nil, signature: 'opaque-signature')
+    end
+
+    [nil, ''].each do |signature|
+      it "keeps thinking absent when its text is nil and its signature is #{signature.inspect}" do
+        message = described_class.new(role: :assistant, content: 'Done.', thinking: nil,
+                                      thinking_signature: signature)
+
+        expect(message.thinking).to be_nil
+      end
+    end
+
+    it 'keeps an existing thinking object and its signature' do
+      thinking = RubyLLM::Thinking.new(signature: 'original-signature')
+      message = described_class.new(role: :assistant, content: 'Done.', thinking:,
+                                    thinking_signature: 'other-signature')
+
+      expect(message.thinking).to be(thinking)
+      expect(message.thinking.signature).to eq('original-signature')
+    end
+
+    it 'keeps the signature supplied inside a thinking Hash' do
+      message = described_class.new(role: :assistant, content: 'Done.',
+                                    thinking: { 'signature' => 'original-signature' },
+                                    thinking_signature: 'other-signature')
+
+      expect(message.thinking).to have_attributes(text: nil, signature: 'original-signature')
     end
   end
 

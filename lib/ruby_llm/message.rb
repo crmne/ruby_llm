@@ -300,7 +300,8 @@ module RubyLLM
 
     def coerce_thinking(thinking, signature)
       case thinking
-      when nil, Thinking then thinking
+      when Thinking then thinking
+      when nil then Thinking.build(signature: signature)
       when Hash then Thinking.build(**thinking.transform_keys(&:to_sym).slice(:text, :signature))
       else Thinking.build(text: thinking.to_s, signature: signature)
       end

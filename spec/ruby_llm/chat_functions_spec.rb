@@ -438,6 +438,20 @@ RSpec.describe RubyLLM::Chat do
       )
     end
 
+    it 'restores signature-only thinking from a JSON transcript' do
+      source = described_class.new
+      source.add_message(role: :user, content: 'Hello')
+      source.add_message(role: :assistant, content: 'Done.',
+                         thinking: RubyLLM::Thinking.new(signature: 'opaque-signature'))
+      chat = described_class.new
+
+      attributes = JSON.parse(JSON.generate(source.messages.map(&:to_h)))
+      chat.messages = attributes.map { |message| message.transform_keys(&:to_sym) }
+
+      expect(chat.messages.last.thinking).to have_attributes(text: nil, signature: 'opaque-signature')
+      expect(chat.messages.map(&:to_h)).to eq(source.messages.map(&:to_h))
+    end
+
     it 'does not use the assigned array as backing storage' do
       chat = described_class.new
       assigned = [RubyLLM::Message.new(role: :user, content: 'Hello')]
