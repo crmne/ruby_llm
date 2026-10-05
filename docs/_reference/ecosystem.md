@@ -67,6 +67,8 @@ See its setup instructions for model downloads, hardware acceleration, and the R
 
 [OpenTelemetry RubyLLM Instrumentation](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm) exports traces for RubyLLM calls and tools to OpenTelemetry-compatible backends.
 
+RubyLLM also includes its own tracing. See [OpenTelemetry]({% link _advanced/opentelemetry.md %}).
+
 See its documentation for supported versions, exporters, and event coverage.
 
 ## RubyLLM::Tribunal

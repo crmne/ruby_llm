@@ -1,0 +1,289 @@
+# frozen_string_literal: true
+
+module RubyLLM
+  # Defines reusable evaluations with a dataset, semantic criteria, and Ruby assertions.
+  # Datasets default to app/evals/<class_name>.yml, .yaml, .json, or .jsonl.
+  # Without declared criteria, evaluates correctness against each case's expected_output.
+  #
+  #   class SupportEvaluation < RubyLLM::Evaluation
+  #     def perform(input)
+  #       SupportAgent.new.ask(input)
+  #     end
+  #   end
+  #
+  #   SupportEvaluation.run.save("tmp/support.json")
+  class Evaluation
+    CORRECTNESS = 'The answer agrees with the expected output'
+    private_constant :CORRECTNESS
+
+    class << self
+      def inherited(subclass) # :nodoc:
+        super
+        subclass.instance_variable_set(:@dataset, @dataset)
+        subclass.instance_variable_set(:@evaluator, @evaluator)
+        subclass.instance_variable_set(:@definitions, definitions.dup)
+        subclass.instance_variable_set(:@adapters, adapters.dup)
+      end
+
+      # Sets the dataset path, enumerable of cases, or block returning cases.
+      # With no argument, returns the configured source. The default is discovered by class name.
+      def dataset(source = nil, &block)
+        return @dataset if source.nil? && !block
+
+        raise ArgumentError, 'Pass a dataset or a block, not both' if source && block
+
+        @dataset = block || source
+      end
+
+      # Sets the default evaluator: a model, Agent class, or Judge class.
+      # Model keywords accept provider, protocol, and context as Chat does.
+      # Without a declaration, uses the default chat model and built-in reviewer.
+      # Pass false to disable model grading and run only Ruby assertions.
+      def evaluator(target = nil, **options)
+        if target.nil? && options.empty?
+          @evaluator = Evaluator.new if @evaluator.nil?
+          return @evaluator
+        end
+        raise ArgumentError, 'A disabled evaluator cannot have model options' if target == false && options.any?
+
+        @evaluator = target == false ? false : Evaluator.new(target, **options)
+      end
+
+      # Declares a semantic criterion. A minimum applies to a native probability or score;
+      # without one, numeric decisions are measured but do not count as passes.
+      # Omit instructions to set a minimum on a question already defined by a Judge.
+      # Declared criteria replace implicit correctness. Use evaluation :correctness
+      # without instructions to include the built-in reference comparison explicitly.
+      # Supply evaluator to override the class evaluator for this criterion.
+      def evaluation(name, instructions = nil, minimum: nil, evaluator: nil)
+        validate_criterion(name, minimum)
+        name = name.to_sym
+        @declared_names ||= []
+        raise ArgumentError, "Duplicate evaluation: #{name}" if @declared_names.include?(name)
+
+        @declared_names << name
+        backend = Evaluator.new(evaluator) if evaluator
+        definitions[name] = { name:, instructions: instructions&.dup&.freeze, minimum:, evaluator: backend }.freeze
+      end
+
+      # Converts a custom result into evaluation evidence. The original stays available as result.
+      #
+      #   adapt Invoice do |invoice|
+      #     invoice.attributes.slice("total", "currency")
+      #   end
+      def adapt(type, &block)
+        raise ArgumentError, 'An adapter needs a class and a block' unless type.is_a?(Module) && block
+
+        adapters[type] = block
+      end
+
+      # Returns the dataset cases without running the application or its evaluators.
+      # Supply only to select one or more case names, raising when any name is missing.
+      def cases(dataset: nil, only: nil)
+        loaded = Dataset.load(dataset || self.dataset, name: name)
+        return loaded if only.nil?
+
+        names = Array(only).map(&:to_s)
+        missing = names - loaded.map(&:name)
+        raise ArgumentError, "Unknown evaluation cases: #{missing.join(', ')}" if missing.any? || names.empty?
+
+        loaded.select { |test_case| names.include?(test_case.name) }
+      end
+
+      # Executes fresh instances for every case and repetition and returns an Evaluation::Report.
+      # A supplied dataset overrides discovery for this run. Configuration errors raise;
+      # task, assertion, and evaluator failures are recorded per case.
+      # Yields each completed Trial before starting the next. Exceptions from the block propagate.
+      # Supply id to correlate reports and instrumentation with an application record or job.
+      def run(dataset: nil, only: nil, repetitions: 1, id: nil)
+        validate_run(repetitions)
+        id = (id || SecureRandom.uuid).to_s
+        raise ArgumentError, 'An evaluation run id cannot be empty' if id.empty?
+
+        cases = self.cases(dataset:, only:)
+        groups = evaluation_groups(cases)
+        definitions = Judge::Data.copy(groups.flat_map do |backend, criteria|
+          criteria.map { |criterion| criterion.merge(evaluator: backend.description) }
+        end)
+        started_at = Time.now.utc
+        name = self.name || 'Anonymous evaluation'
+        payload = { evaluation_id: id, evaluation_name: name,
+                    total: cases.size * repetitions, completed: 0, started_at: }
+        RubyLLM.instrument('evaluation.ruby_llm', payload) do |event|
+          trials = cases.flat_map do |test_case|
+            Array.new(repetitions) do |index|
+              trial = run_trial(test_case, index + 1, groups, event)
+              yield trial if block_given?
+              trial
+            end
+          end
+          event[:report] = Report.new(name:, trials:, id:, started_at:, definitions:)
+        end
+      end
+
+      def definitions # :nodoc:
+        @definitions ||= {}
+      end
+
+      def adapters # :nodoc:
+        @adapters ||= {}
+      end
+
+      private
+
+      def run_trial(test_case, repetition, groups, run)
+        payload = run.slice(:evaluation_id, :evaluation_name, :total).merge(case: test_case.name, repetition:)
+        RubyLLM.instrument('evaluation_trial.ruby_llm', payload) do |event|
+          trial = new.run_case(test_case, repetition, groups, run_id: run[:evaluation_id])
+          event[:completed] = run[:completed] += 1
+          event[:trial] = trial
+        end
+      end
+
+      def validate_run(repetitions)
+        raise ArgumentError, 'Define perform(input) in your evaluation' if instance_method(:perform).owner == Evaluation
+        if evaluator == false && definitions.any?
+          raise ArgumentError, 'Cannot declare semantic evaluations with evaluator false'
+        end
+        return if repetitions.is_a?(Integer) && repetitions.positive?
+
+        raise ArgumentError, 'Repetitions must be a positive Integer'
+      end
+
+      def validate_criterion(name, minimum)
+        raise ArgumentError, 'An evaluation name cannot be empty' if name.to_s.empty?
+        return if minimum.nil? || (minimum.is_a?(Numeric) && minimum.finite?)
+
+        raise ArgumentError, 'Minimum must be a finite number'
+      end
+
+      def evaluation_groups(cases)
+        return {} unless evaluator
+
+        all = evaluator.question_names.to_h do |name|
+          [name, { name:, instructions: nil, minimum: nil }]
+        end.merge(definitions)
+        all[:correctness] = { name: :correctness, instructions: nil, minimum: nil } if all.empty?
+        groups = all.values.group_by { |definition| definition[:evaluator] || evaluator }
+        groups.to_h do |backend, criteria|
+          [backend, criteria.map { |criterion| prepare_criterion(backend, criterion, cases) }]
+        end
+      end
+
+      def prepare_criterion(backend, criterion, cases)
+        existing = backend.question_names.include?(criterion[:name])
+        raise ArgumentError, "Duplicate Judge question: #{criterion[:name]}" if existing && criterion[:instructions]
+        return criterion if existing || !criterion[:instructions].to_s.empty?
+
+        if criterion[:name] == :correctness && criterion[:instructions].nil?
+          return criterion.merge(instructions: correctness_instructions(cases))
+        end
+
+        raise ArgumentError, "Missing instructions: #{criterion[:name]}"
+      end
+
+      def correctness_instructions(cases)
+        missing = cases.reject(&:expected_output?).map(&:name)
+        raise ArgumentError, "Correctness requires expected_output for cases: #{missing.join(', ')}" if missing.any?
+
+        CORRECTNESS
+      end
+    end
+
+    # Returns the current case's input, reference output, and metadata, respectively.
+    attr_reader :input, :expected_output, :metadata
+    # Returns the original value returned by perform.
+    attr_reader :result
+
+    # Runs the application under evaluation. Override in your evaluation class.
+    def perform(_input)
+      raise NotImplementedError, 'Define perform(input) in your evaluation'
+    end
+
+    # Runs Ruby assertions after perform. Override to use assert, refute, and the Minitest assertion family.
+    def assertions; end
+
+    # Runs before perform on each fresh case instance. Override for application fixtures.
+    def setup; end
+
+    # Runs after each case, even when setup, perform, or an assertion fails.
+    def teardown; end
+
+    # Returns the primary answer or value extracted from result.
+    def output
+      @evidence.output
+    end
+
+    # Returns retained messages from a Chat, Agent, or Message result.
+    def messages
+      @evidence.messages
+    end
+
+    # Returns tool calls recorded in the returned conversation or message.
+    def tool_calls
+      @evidence.tool_calls
+    end
+
+    # :method: assert
+    # :call-seq:
+    #   assert(condition, message = nil)
+    #
+    # Asserts that condition is truthy. Delegates to Minitest::Assertions and
+    # records its assertion count. Requires the minitest gem, which Rails
+    # applications already include. The other Minitest assert_* and refute_*
+    # methods use the same contract. Call these from #assertions.
+
+    # :method: refute
+    # :call-seq:
+    #   refute(condition, message = nil)
+    #
+    # Asserts that condition is false or nil. See #assert.
+
+    # :method: assert_equal
+    # :call-seq:
+    #   assert_equal(expected, actual, message = nil)
+    #
+    # Asserts equality through Minitest::Assertions. See #assert.
+
+    # :method: assert_includes
+    # :call-seq:
+    #   assert_includes(collection, value, message = nil)
+    #
+    # Asserts that the collection includes value. See #assert.
+
+    # :stopdoc:
+    def method_missing(name, ...)
+      return super unless Assertions::METHOD.match?(name) && assertion_context.respond_to?(name)
+
+      assertion_context.public_send(name, ...)
+    end
+
+    def respond_to_missing?(name, include_private = nil)
+      Assertions.method?(name) || super
+    end
+
+    def run_case(test_case, repetition, groups, run_id:) # :nodoc:
+      Runner.new(self, test_case, repetition, groups, run_id:).run
+    end
+
+    def prepare(test_case) # :nodoc:
+      @input = JSON.parse(JSON.generate(test_case.inputs))
+      @expected_output = test_case.expected_output
+      @metadata = test_case.metadata
+    end
+
+    def execute # :nodoc:
+      @result = perform(input)
+      @evidence = Evidence.new(result, adapters: self.class.adapters)
+    end
+
+    def assertion_context # :nodoc:
+      @assertion_context ||= Assertions.new
+    end
+
+    def assertion_count # :nodoc:
+      @assertion_context&.assertions.to_i
+    end
+    # :startdoc:
+  end
+end

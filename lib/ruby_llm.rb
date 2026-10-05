@@ -36,6 +36,7 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
   'perplexity' => 'Perplexity',
+  'rspec' => 'RSpec',
   'ruby_llm' => 'RubyLLM',
   'typesafe' => 'TypeSafe',
   'vertexai' => 'VertexAI',
@@ -142,6 +143,26 @@ loader.setup
 # returns a ResearchJob for polling and cancellation. Hosted agent identities
 # are selected separately from model IDs.
 #
+# == Evaluations
+#
+# Evaluation runs your application against a dataset of cases and grades each
+# result. Implement Evaluation#perform to return a value, Message, Chat, or
+# Agent. Without declared criteria, a model checks each result against the
+# case's +expected_output+. Evaluations can also use an Agent or a Judge as
+# their evaluator, and Ruby assertions. Datasets live under app/evals, named
+# after the class:
+#
+#   class SupportEvaluation < RubyLLM::Evaluation
+#     def perform(input)
+#       SupportAgent.new.ask(input)
+#     end
+#   end
+#   SupportEvaluation.run.passed?
+#
+# Evaluation.run returns an Evaluation::Report with each trial's verdicts,
+# tokens, and cost. The +ruby_llm:eval+ Rake task, Evaluation::RSpec, and
+# Evaluation::Minitest run the same cases from the command line and tests.
+#
 # == Typed judgments
 #
 # Judge defines reusable probability, choice, and score questions. Its +judge+
@@ -190,7 +211,7 @@ loader.setup
 # Approvals and cancellation survive requests and processes.
 #
 # Your application owns chats and messages; RubyLLM owns usage, tool calls,
-# models, and batches. ActiveRecord::Record configures their shared database
+# models, batches, MCP credentials, and provider files. ActiveRecord::Record configures their shared database
 # connection. Agent can create and reload your chat records through
 # Agent.chat_model. Individual operations also work directly in Rails
 # services and jobs.

@@ -1,0 +1,455 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"{\"inputs\":\"Sale
+        items are refundable.\",\"metadata\":{},\"actual\":\"Sale items are refundable.\"}"}],"instructions":"Always
+        call evaluation_policy before assessing policy compliance. Judge only against
+        the policy returned by that tool.\n\nAssess these criteria independently:\n{\"policy\":\"The
+        answer complies with the store return policy\"}","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"evaluation_policy","description":"Read
+        the current synthetic store return policy.","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"policy":{"type":"object","properties":{"verdict":{"type":"string","enum":["pass","fail","unknown"]},"reason":{"type":"string"}},"required":["verdict","reason"],"additionalProperties":false}},"required":["policy"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 03 Oct 2026 21:36:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2172'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0017932931826599016ac1756bac0487d28afe5cea515ed1ea",
+          "object": "response",
+          "created_at": 1791063403,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1791063405,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Always call evaluation_policy before assessing policy compliance. Judge only against the policy returned by that tool.\n\nAssess these criteria independently:\n{\"policy\":\"The answer complies with the store return policy\"}",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0017932931826599016ac1756bf6c087d2ab8ccc6725d49184",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqwXVtmZMJo0-vmemmjg0FkAUWTTa33n5TbTD8IhYQ35oaILHTo2R3xRPxvA0YDGVLwcXZ_isNICbZJGNyFzRtxHBo5idGdPLnis17UroHLxQ9v55OPDmZLV7YCu9Pw3iMSFRXEVQflZXE75XqepLkfIqtVy3CE-2ObkXsZgKP_jxHYfzMILaHlmTpSGJ43aAKlg0G5oYol7yc0zzupUBk2gsfn8M4kcFh_EpOyNHV3yklMU_9FVQRbhJeGfOzpoMiEnoJ1oU1ZbVFfgIapZUPzzyem0qUJeH28vZ_cD3AWI9ZXsJypG1qh3bEoTDxdFFIyrF3_rMKqcLpCo7iHi5O1lgJYwRKMkGo6U9JScUwLSUFTPp_pfHfgjyPSaJooEfhBhWWRcL8TEel7dp2VZSy6mG9jel27N7fyEoWFh-w_9vCDXFjx_PI8PAskux1DjF0yuq5DYSR-42ZskLlBi4_1zKhuIc4Xl7EEePY3p7bUKyOOJR4IRy2eoJqruWv1tCDx1UXmWq_I4igH5j5u6wPi6q62PwiWT2G7Ybuxpi9zN0VCpGrBEl1tzVu5atohYMUi5A4LFcfq7lWpUWnZKGi1uM6QK20H7xLKMprYo7tRzAbWXmU93G9RDLeZdRini_L69ogzEa09mjMOsSD1oKGrs1WeOT236Zf4sCtcxRx9mtd5CqUnbo_-JJGQz4ZSQQP-oOxlkjMQg_tdk5SRVudLIFlV41LemfpwN08x6c0lSxJyBH8iZb2S5_r28kStyrNWnfh4us9PmJHMlTN6zfx3aoXLq1NCF7DLvcUxBoBCP04YuTpt6sXJ3wDv_KtDyJ7dSs9UcxZry4D_Apjlzrg6Qvi3JQtclSO13itYWDPGvQx6Vk9hf5pyI1Vc7hij2Z1tkfpINPmeLQxZcGfxpWn2t6j-WKHvQVLxIV7IgTsnRzGlsgsCFlcG65MrU72h3ralWDewK_i_4no6-Hr3pquglaPTlcnv95WtEoqxRH9LVB4e8zjqm3u4lficgb-xmgFXHqnPTmDGdEvUuLG6mc4psa1lGx4u6TbaXBchjVTfPaq3i8XSdYjSGvfTbfhQKHOGwr_OD21yY94pOHmfy5e0WckVvj5QrHxcoyzJig0Js9bXfyQZ14HiBleqBbqXmWDxhSmwTgT-xp0Sshe42jWJfj4zXIEIpMnWyEnU5E8DsoMLHvc_1FR0G_HTKroPpKan5xG90B6Deg6M95OJkfGc35jUeOrNLfqF2S1rkAZQUjuQ3uymj-UFrVWK2A7mQzMWj2soMcooUJThd6k0_82PknhdaKE_x3tOINlkuZiMBdVBWZmgIWqy3FXspBusuBbuppaZ1v-SUJkYu7BpFe_FnbU5utwcB0FO1IqJn3gDQ-G7ZdPjT9C-S7_7BPkWf-qbbjBuej2NzY4cHPwjqL52IhUUVEydhIr4M0wQNG9lJRiTNnXUUnfRqFzMYKyfBeraXKdsicYk0ihvSIkGfQfRC4_kFP6mtcrjhnqCP0tP20cHuzGSSM4hBj8b-zp8TCxj3hkEIhskTuheBITMmyzkCrDmJSWvK-k-Q41fQI-8QrHkTshNl4nj-FKhQunxnj3-Tz-PXVAT3VZoZZtmPSBlwBTY_F230R7ZkDA_BbewOtuV-V3CAJwgeJymD9uRksR3IT0GKvq5Fv1paTUWF7zHKFMJQlYVUKKLDNMFSXzEFvgG3EV3YZNhV2IrIVfmE7fd4us26IF3d25H_UYtrfjSEzT42pmDzVlPF-BGcKycbbjmtP-uyZh1JvUE9w2zkbgEdbBb_VlQR-dP5SRQoJ3Lu9eESKwUHt73dKn0dR9Pifbqyzrn7mOiuMKHXwPdFym3i7Urvi0jyQ6BnK7MXZ7OwIwQvWO4pRxM85SF88A86BUV9g5nPzo6uSU7ZgtnA-NpLua0fHv8_1MzbBqI2yudMfgb5oqLEq8qEuYCfOK1NQnq-dexQNJvZCqMZwhf2hDy_v0v132dLxa0nhEozgkl6BkVZ49rSw1nAXlxAEMvoEtAO6_Tcd63eEv6CW-_P-EcEdSD9zLWs8_KTxraKXIXAJgHwnE5eNJ9SMlr4OnJzHyzy5BjTJGMeZjYHekGOWYjV_PuTEwUrDJ92rpbGpLO7Npska84mgg9IOVAaMhvN3CbwyBDfaHH9-gPv66uMJeqDFDqVQ5BupxglRGdA_EEYz-eH7Nw3kaVR16PJZHKB4RQSkBsL0byEuTk19uVrowx48MfqK83vXQU2XdGdQGP51rR-evIhto6ULh2Z3q1EIKT6-5f6W-eQtyZCdDjR4cW0eS7dgZqoHp42A-oabi17MjDTTl2NthdvouPj1xPexnN17yfVGO0WwPXygiMP0Amjptcv0Ww0UABaOgcivhjVMGvK3w4AQBGplpgophdS2TyLKyNk4Zx83CruMIhyBVforVJltV3nJSqOTltjrEgB0dOhvcw6U6M84SYa70J8t7BWDW08FQL5HIIzUZu8KmGx3RMTtP_jYZduNKxyzk6IICSl7hBEt6K6bsk_jcwOjeKNFZj_u3nU98Fumoxows388BlYy1DkH6_a2Do2X05V1-kmbLNGoOvRZjAoV6mydrbeHF3tU_OfQFQfO5TkZKdv6pkUHkuLJPVVnS7VF65TWcWQKcDbCh5KqoXN_kgD03RtZxzmnYwtOJ3aCenm5BrvAX34kKu88tiQbFn4hNCs0XOowkXcb9llKR4DmPtk6e3b9VTFBsxCSIRyjWF21VMsBra3LU2RVe5mvL1C09IXdJ6JUt41_fTBJUpI--1infvg5d-_oJHAAo8hgP2OOsktjgLTnMMCnnhTeg6Dn4OVsiloEwbg5aLM5kNmcW9J5_77cWCANI4oaJnULlHHfu3AYuIFcElxkqulS6_sZQrjmxk3X3t8N4i06YTiNSz6YklEhBCBVGJaoAfwIvnLqd4bwYhMYQNWpv-vDeeWmwA_XqFE5q3cGm--f2EGUfoIAcGVklankqVxX6YWGqusryRBWdxIfxYjr3xgcxN9y2JJnqU7l2XYGgcmmzhXZOAJfTQ4XwQ6khEe8JUJo0wkDFxBhTZpZe8DSLom3OjbFk1GCAtV1te733DS6uki-DIlhTVJxmZGBIh7XSMoj4eKLYbrOH-WFGhER2PLGmM2MEHjRg9UbC9zL-eG--NKtkr4ICb5U=",
+              "summary": []
+            },
+            {
+              "id": "fc_0017932931826599016ac1756db88087d292335f84e2f25ad9",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_DljPrVfilgIumU1X2sfD3h1x",
+              "name": "evaluation_policy"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "verdict": {
+                        "type": "string",
+                        "enum": [
+                          "pass",
+                          "fail",
+                          "unknown"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "verdict",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "policy"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Read the current synthetic store return policy.",
+              "name": "evaluation_policy",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 144,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 306,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 450
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sat, 03 Oct 2026 21:36:45 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"{\"inputs\":\"Sale
+        items are refundable.\",\"metadata\":{},\"actual\":\"Sale items are refundable.\"}"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqwXVtmZMJo0-vmemmjg0FkAUWTTa33n5TbTD8IhYQ35oaILHTo2R3xRPxvA0YDGVLwcXZ_isNICbZJGNyFzRtxHBo5idGdPLnis17UroHLxQ9v55OPDmZLV7YCu9Pw3iMSFRXEVQflZXE75XqepLkfIqtVy3CE-2ObkXsZgKP_jxHYfzMILaHlmTpSGJ43aAKlg0G5oYol7yc0zzupUBk2gsfn8M4kcFh_EpOyNHV3yklMU_9FVQRbhJeGfOzpoMiEnoJ1oU1ZbVFfgIapZUPzzyem0qUJeH28vZ_cD3AWI9ZXsJypG1qh3bEoTDxdFFIyrF3_rMKqcLpCo7iHi5O1lgJYwRKMkGo6U9JScUwLSUFTPp_pfHfgjyPSaJooEfhBhWWRcL8TEel7dp2VZSy6mG9jel27N7fyEoWFh-w_9vCDXFjx_PI8PAskux1DjF0yuq5DYSR-42ZskLlBi4_1zKhuIc4Xl7EEePY3p7bUKyOOJR4IRy2eoJqruWv1tCDx1UXmWq_I4igH5j5u6wPi6q62PwiWT2G7Ybuxpi9zN0VCpGrBEl1tzVu5atohYMUi5A4LFcfq7lWpUWnZKGi1uM6QK20H7xLKMprYo7tRzAbWXmU93G9RDLeZdRini_L69ogzEa09mjMOsSD1oKGrs1WeOT236Zf4sCtcxRx9mtd5CqUnbo_-JJGQz4ZSQQP-oOxlkjMQg_tdk5SRVudLIFlV41LemfpwN08x6c0lSxJyBH8iZb2S5_r28kStyrNWnfh4us9PmJHMlTN6zfx3aoXLq1NCF7DLvcUxBoBCP04YuTpt6sXJ3wDv_KtDyJ7dSs9UcxZry4D_Apjlzrg6Qvi3JQtclSO13itYWDPGvQx6Vk9hf5pyI1Vc7hij2Z1tkfpINPmeLQxZcGfxpWn2t6j-WKHvQVLxIV7IgTsnRzGlsgsCFlcG65MrU72h3ralWDewK_i_4no6-Hr3pquglaPTlcnv95WtEoqxRH9LVB4e8zjqm3u4lficgb-xmgFXHqnPTmDGdEvUuLG6mc4psa1lGx4u6TbaXBchjVTfPaq3i8XSdYjSGvfTbfhQKHOGwr_OD21yY94pOHmfy5e0WckVvj5QrHxcoyzJig0Js9bXfyQZ14HiBleqBbqXmWDxhSmwTgT-xp0Sshe42jWJfj4zXIEIpMnWyEnU5E8DsoMLHvc_1FR0G_HTKroPpKan5xG90B6Deg6M95OJkfGc35jUeOrNLfqF2S1rkAZQUjuQ3uymj-UFrVWK2A7mQzMWj2soMcooUJThd6k0_82PknhdaKE_x3tOINlkuZiMBdVBWZmgIWqy3FXspBusuBbuppaZ1v-SUJkYu7BpFe_FnbU5utwcB0FO1IqJn3gDQ-G7ZdPjT9C-S7_7BPkWf-qbbjBuej2NzY4cHPwjqL52IhUUVEydhIr4M0wQNG9lJRiTNnXUUnfRqFzMYKyfBeraXKdsicYk0ihvSIkGfQfRC4_kFP6mtcrjhnqCP0tP20cHuzGSSM4hBj8b-zp8TCxj3hkEIhskTuheBITMmyzkCrDmJSWvK-k-Q41fQI-8QrHkTshNl4nj-FKhQunxnj3-Tz-PXVAT3VZoZZtmPSBlwBTY_F230R7ZkDA_BbewOtuV-V3CAJwgeJymD9uRksR3IT0GKvq5Fv1paTUWF7zHKFMJQlYVUKKLDNMFSXzEFvgG3EV3YZNhV2IrIVfmE7fd4us26IF3d25H_UYtrfjSEzT42pmDzVlPF-BGcKycbbjmtP-uyZh1JvUE9w2zkbgEdbBb_VlQR-dP5SRQoJ3Lu9eESKwUHt73dKn0dR9Pifbqyzrn7mOiuMKHXwPdFym3i7Urvi0jyQ6BnK7MXZ7OwIwQvWO4pRxM85SF88A86BUV9g5nPzo6uSU7ZgtnA-NpLua0fHv8_1MzbBqI2yudMfgb5oqLEq8qEuYCfOK1NQnq-dexQNJvZCqMZwhf2hDy_v0v132dLxa0nhEozgkl6BkVZ49rSw1nAXlxAEMvoEtAO6_Tcd63eEv6CW-_P-EcEdSD9zLWs8_KTxraKXIXAJgHwnE5eNJ9SMlr4OnJzHyzy5BjTJGMeZjYHekGOWYjV_PuTEwUrDJ92rpbGpLO7Npska84mgg9IOVAaMhvN3CbwyBDfaHH9-gPv66uMJeqDFDqVQ5BupxglRGdA_EEYz-eH7Nw3kaVR16PJZHKB4RQSkBsL0byEuTk19uVrowx48MfqK83vXQU2XdGdQGP51rR-evIhto6ULh2Z3q1EIKT6-5f6W-eQtyZCdDjR4cW0eS7dgZqoHp42A-oabi17MjDTTl2NthdvouPj1xPexnN17yfVGO0WwPXygiMP0Amjptcv0Ww0UABaOgcivhjVMGvK3w4AQBGplpgophdS2TyLKyNk4Zx83CruMIhyBVforVJltV3nJSqOTltjrEgB0dOhvcw6U6M84SYa70J8t7BWDW08FQL5HIIzUZu8KmGx3RMTtP_jYZduNKxyzk6IICSl7hBEt6K6bsk_jcwOjeKNFZj_u3nU98Fumoxows388BlYy1DkH6_a2Do2X05V1-kmbLNGoOvRZjAoV6mydrbeHF3tU_OfQFQfO5TkZKdv6pkUHkuLJPVVnS7VF65TWcWQKcDbCh5KqoXN_kgD03RtZxzmnYwtOJ3aCenm5BrvAX34kKu88tiQbFn4hNCs0XOowkXcb9llKR4DmPtk6e3b9VTFBsxCSIRyjWF21VMsBra3LU2RVe5mvL1C09IXdJ6JUt41_fTBJUpI--1infvg5d-_oJHAAo8hgP2OOsktjgLTnMMCnnhTeg6Dn4OVsiloEwbg5aLM5kNmcW9J5_77cWCANI4oaJnULlHHfu3AYuIFcElxkqulS6_sZQrjmxk3X3t8N4i06YTiNSz6YklEhBCBVGJaoAfwIvnLqd4bwYhMYQNWpv-vDeeWmwA_XqFE5q3cGm--f2EGUfoIAcGVklankqVxX6YWGqusryRBWdxIfxYjr3xgcxN9y2JJnqU7l2XYGgcmmzhXZOAJfTQ4XwQ6khEe8JUJo0wkDFxBhTZpZe8DSLom3OjbFk1GCAtV1te733DS6uki-DIlhTVJxmZGBIh7XSMoj4eKLYbrOH-WFGhER2PLGmM2MEHjRg9UbC9zL-eG--NKtkr4ICb5U="},{"type":"function_call","call_id":"call_DljPrVfilgIumU1X2sfD3h1x","name":"evaluation_policy","arguments":"{}"},{"type":"function_call_output","call_id":"call_DljPrVfilgIumU1X2sfD3h1x","output":"Sale
+        items cannot be returned. Unopened full-price items can be returned within
+        30 days."}],"instructions":"Always call evaluation_policy before assessing
+        policy compliance. Judge only against the policy returned by that tool.\n\nAssess
+        these criteria independently:\n{\"policy\":\"The answer complies with the
+        store return policy\"}","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"evaluation_policy","description":"Read
+        the current synthetic store return policy.","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"policy":{"type":"object","properties":{"verdict":{"type":"string","enum":["pass","fail","unknown"]},"reason":{"type":"string"}},"required":["verdict","reason"],"additionalProperties":false}},"required":["policy"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 03 Oct 2026 21:36:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2292'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0222c1f0c0a197b6016ac1756e0f9087d2a0774557d8ad9737",
+          "object": "response",
+          "created_at": 1791063406,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1791063408,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Always call evaluation_policy before assessing policy compliance. Judge only against the policy returned by that tool.\n\nAssess these criteria independently:\n{\"policy\":\"The answer complies with the store return policy\"}",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0222c1f0c0a197b6016ac1756e707487d281403606f2434dbf",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqwXVwN13sTPEGY01X8SUvOwiH6dv5-S2ad3LMD6_hpDf_ZZ2CZD84Vcqr00h3h5rs2hVE6x7MlMLn3wtS_oafZmAlmWvV-fCGKRFDS5_5Ex9E0axhoVi_6TAHFmFkLG056aQrVOZ4kX1BVLhkNv6yBDbAeIWAEXzRSaa5Rmu57KMBHiM1Amh4s0S1szzpSc4vxlyRDdx92zhwC927J-WNfBAkCyjkW-8c4UnLAiIPfW5HfTGngUnCHjpoZLIKBuBbqSqnB6vkGB9El-jrtYoE1pJ-eCEAJ2zYkQ0zPmZOSgBjoJFjPCOZ055cfWOPvXd_FabxTL21zB9aO5rYwj28BBOuLke4f8wwjUryHBpt0ZU_YrPA2XVwc8vFZ--QJiTp4uHG9btEGZzHhPIhtP1fz5sMnwzsAKjwDpUmE-31BEkB7A8ahkvNJqv3MytHGmUzPpZ-SjH-gU1ZSJshdatsnpt_vhgbcNLzeCBt-SSu8Jt0sRrIoUV3pLzMClNHV4RboEes48wS7N4BvSIyXtblTsg_IBvzI8z_bPCq82WqXHi_DqqQvOrhZlYWMylUvlW1fXAUX2ozNOi6OV2MGfYLNn5R6R4gmEMweqQ92rtqbIadzyWP4Ca3MPJwq611OIx2x_PyOM773_wtRSs4x06OGoUYlXl8m7PKtoWXPNX61s6rljefdyutMTkDgjEAWfosk5OQAuxP9unbDgYaqAFxobMgeDyWXLXCiGw3tltfAyNPtwaze59XvXCYj04P4-SoxsJAF_M3EgcrVrhkm0eojD1aYAJ-fus_Go3K17I9PWJLkc9Fo8MhjQVy51sG8tSUHgeQVOyEiaoG7_s1DB9UvdjufGKlyk_xHP1kJNdAauZIWJGiMV9Ic9TrjCh0twQ93JaGFgmhtRqgD1fzUL_fOp2I4-bFHRQ8uqP8hg6hNcU44NirUSAVm1PPHdZiBjbwGUeyiUZTCmApFZXNqtD7XtuZZIhAcvAcimf9cYBHaDJNuz27QFe4fcPccZUpmktfWGn-86aufs9bX_Z6BWfnxA1Ac9En-F04LybVaA8xqRl6cdAzptoeIBuTFvoURXeDXjSenJwjJucwB1v0zJBjrQoFQ127T0J2uxFesWtNstoNsmOlRmVOxRzYWG6MfnILtKCEOJ6LZE6ONguefBLPytXyFkqpdTWWnbopy8mxGUm1Z2QfeSXdx83LXO4WYazXmMjPuA6ob1bdHXKW03iSqYYyPhg35CONu_DaMRuOojalir8OAyQaYDuwfvLgt-kWe1lXbVGdqN9OgifneLaw-dSslu_mEA0lMnYcgtVPWIIx6izph0xAExMD8SQJO130qA5DOoauyc60PY4Bzyzi7ST1Jxvuh6lLB7WMtrQyXfy7jDtO0yxyhfec7vZPEF2maqQiDED4D7UMuZpXPoRX1kNL8TFlZR-ZkqWwWX0eAxnnWgVfydxAy6VopbCja6QTRErhQxDp63sN21AeZmv9u6J2zjB0x4OzmYI0WYpwr-6bJe7eka8kGIrgQgp0_S9flW3KDqmO6JNKCMkfv1LG_a3s6OZzB64EJhvJZYPbHn8lJdhDvSnDndgV8OjjpcpwhbBNKRvyM3oC7Bec1XVth-aO_TL68EYC4Tl4jlUahjNaQrt3Rl5hsnA5TOW91YImRq_Y5kQLRCKZrjZXBhNjwEGpkZ6Tja5pULYZtA7rwJFNYuKYibmpSQs-MV-CNv1r9CJ-Q_wyys2K0WInb5p4thPRJUG3Nf4SPrFX_xrrmvjEI50nqE432epFYQ--O4j8BRK4IyyLiB0R3g5kwFs2GY7nSuCcsa1eWqsvntiArdDB1gaasurNYgqKDiTn6P4cU0OprO7-OCskY3GNdREfqC26R-8VigjEawEteTRsK8bmnOSvgpFvSBoegTpBGMm5BrcqSTZxalk8m7s-eEj7PA2ID1AZHxxEGF4oY5SuM8QmUKudho4UQBxXrtwCp29wSBbc-5B7lyBwJNHsNlNqmNuLsb4UqiKMULUCgklHEM4vWuwbyx4JE4bdviFtoRK7jpTU1p5gGS1FTybAl1efatzs45hC0nt_lLlemoe29DL1nlHhvdAHFdH7ya3f-RALJSMoHH1a4rk5NGAHKj1vYai7_JCNiMaqhEq0GQFxNT_Pa7vFgqSioRXNQDHiOQ0EW6uHEG-jSpbR5ZaBWlXC3VKnHcfmGvu2719EbyUNuQCVeW1__b1foW1rbrtgtu-GeCjkAMTsRCs1Eq9614Yyis3pPIS_Nt0tK7BShnI5qlWg-Mj6QeNgizIRBaek_TQ4sOZNOb6_X1jEe6Upaap-ho8dyC386FjeHzCmYkNHzHEx8i_-CzmLntR4UhI1k0NhiBZlvdnFY_VW78TriFZm-WkKbPtMDI6HFoBCSW8v054vasx1_UIEJobkqX3gJHhnjmflLsIqOE_HLKOPOOlW_p7ligux_wyWGR1ANi63xRiGiuLlT-CjlYQn0H09kjQ_8aUM2_VAQpK_6ahKKd7HMoff29jrdMlYnnth9Uk7Fz-s5k5IOoPQwSmPz5oPQz_RJCjnlMf_02eprd3GIn4LGtZvW26Wiv8jLUSF9yrgLpA2Dn9SD7zil1XavZDgg5cu4suFoaftdf95khlNI8ylOoGb9ux_MV92ncuMijKYKSCDkYGBfiNrNH8q1HaPD7Gdor7qbrkewtF7re7HpfahCNH0uu0CxNrnwAwjGbR_PuM2pm_t2DeDk9lZAr4waeAhC9K5CcOxG0dcIjGptwf2P9B8H9OYFb7Zwe9pFSrNq6_8JV2nq9J09XHnasHw0oplSB6_JZIWzsmPSoq1KxlH_MvYB5dlkBCY3PJMWJQ0QeXExacWzg5GKb0P4DeHPU7vLPIME4eqBRFZBDQR4hhtmsFibUmZiSyzErlNKfnbqiT5vmZMFKP1cgqJp1qP71CnZsH9mNxuCVC00qb61vlvq44zcVUOfBf1nTPBh9O-fG03BKWOSIhphH1UNbtTNCMlNzaXCbNYxV8Fn4-nlPqMn6N13ByfRNrze2O1UB6sZIPLo7qSxPqYO2wmexcon2Wgy6MN17PvGymSDLqjbt8ylerK_-zSagCTdn6BQVEpBnSquGo1wRvPzzZK5K2J6-9t6PetyY_ps3_6xb8WiieGL18oOSCGR1RNcvtlSvjWKObUXy4=",
+              "summary": []
+            },
+            {
+              "id": "msg_0222c1f0c0a197b6016ac17570184487d2b0ad9f72cb32070c",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"policy\":{\"verdict\":\"fail\",\"reason\":\"Policy states that sale items cannot be returned; the provided answer claims sale items are refundable.\"}}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "verdict": {
+                        "type": "string",
+                        "enum": [
+                          "pass",
+                          "fail",
+                          "unknown"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "verdict",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "policy"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Read the current synthetic store return policy.",
+              "name": "evaluation_policy",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 478,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 344,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 822
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sat, 03 Oct 2026 21:36:48 GMT
+recorded_with: VCR 6.4.0

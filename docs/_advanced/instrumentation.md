@@ -183,6 +183,8 @@ RubyLLM emits these events:
 
 *   `workflow.ruby_llm` - one named workflow block and its correlation ID
 *   `workflow_step.ruby_llm` - one named code region within a workflow
+*   `evaluation.ruby_llm` - one evaluation run, its progress counts, and completed report
+*   `evaluation_trial.ruby_llm` - one completed evaluation case and repetition, including its trial result
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
 *   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, cost, and owner
 *   `batch.ruby_llm` - one batch submission operation
@@ -192,15 +194,20 @@ RubyLLM emits these events:
 *   `image.ruby_llm` - image generation model, prompt, size, and result
 *   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video
 *   `video_job.ruby_llm` - one video job submission with model, prompt, and the provider's job id
+*   `research_job.ruby_llm` - one hosted research job submission with the provider's job id
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
 *   `ocr.ruby_llm` - OCR model, provider options, and extracted document result
 *   `rerank.ruby_llm` - reranking model, query, document count, result, token usage, and cost
 *   `judgment.ruby_llm` - judgment model, question count, attachment count, result, token usage, cost, and application metadata
 *   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage
+*   `tokenization.ruby_llm` - tokenization model and result
+*   `compaction.ruby_llm` - one provider-side compaction of a chat's history
 *   `models.refresh.ruby_llm` - model registry refresh metadata
 
 Operations that expose normalized usage (`chat`, `embedding`, `image`, `moderation`, `rerank`, `speech`, and `transcription`) include `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it. Batch, OCR, and video events expose their operation-specific result and lifecycle fields instead.
+
+See [Evaluation Progress and Monitoring]({% link _advanced/evaluation-progress.md %}) for evaluation progress, run IDs, and report payloads.
 
 ### Usage Events
 

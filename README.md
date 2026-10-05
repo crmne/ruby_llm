@@ -159,9 +159,55 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 response.parsed
 ```
 
+## Evaluate your agents
+
+Keep questions and expected answers in a dataset. RubyLLM checks correctness by default. Run the same evaluation from Ruby, RSpec, Minitest, or Rake.
+
+Evaluations are available on `main`. Follow the [development installation guide](https://rubyllm.com/next/getting-started/) to try them.
+
+`app/agents/support_agent.rb`
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  instructions "Accept returns of unopened items within 30 days."
+end
+```
+
+`app/evals/support_evaluation.rb`
+
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  def perform(input)
+    SupportAgent.new.ask(input)
+  end
+end
+```
+
+`app/evals/support_evaluation.yml`
+
+```yaml
+cases:
+  - name: within_return_window
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, unopened items can be returned within 30 days.
+  - name: past_return_window
+    inputs: Can I return an unopened item after 45 days?
+    expected_output: No, the 30-day return window has passed.
+```
+
+Run the evaluation:
+
+```ruby
+report = SupportEvaluation.run
+report.passed?
+report.cost.total
+```
+
+The model evaluator checks meaning, so answers can use different wording. Declare your own criteria, add Ruby assertions, or choose a configured evaluator agent or judgment model. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
+
 ## A complete AI framework for Ruby
 
-Agents, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
+Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
 * **Vision:** Analyze images and videos
@@ -179,6 +225,7 @@ Agents, workflows, RAG, images, audio, and video. Built in, with usage tracking 
 * **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
 * **Provider tools:** Web search, code execution, and MCP connectors with `with_provider_tools`
 * **Agents:** Reusable assistants with `RubyLLM::Agent`
+* **Evaluations (main):** Reusable datasets, model criteria, and Ruby assertions with [`RubyLLM::Evaluation`](https://rubyllm.com/next/evaluations/)
 * **Prompt templates:** ERB prompts in `app/prompts`, rendered with `RubyLLM.render_prompt`
 * **Workflows:** Correlate multi-agent runs in your telemetry with `RubyLLM.workflow`
 * **Structured output:** Define a Ruby schema and read the result with `response.parsed`

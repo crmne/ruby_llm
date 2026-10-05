@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'Build AI features in Ruby and Rails with chats, tools, agents, structured output, images, audio, and video across 19 providers.'
+description: 'Build and evaluate AI features in Ruby and Rails with chats, tools, agents, images, audio, and video across 19 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -245,21 +245,46 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Define an agent</h3>
-        <p class="home-step-desc">Give an agent its model, instructions, and tools in a Ruby class. Create an instance whenever you need it.</p>
+        <p class="home-step-desc">Give an agent its model and instructions in a Ruby class. Create an instance whenever you need it.</p>
         <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
-class WeatherAssistant < RubyLLM::Agent
+class SupportAgent < RubyLLM::Agent
   model "{{ site.models.default_chat }}"
-  instructions "Be concise and always use tools for weather."
-  tools Weather
+  instructions "Accept returns of unopened items within 30 days."
 end
-
-WeatherAssistant.new.ask "What's the weather in Berlin?"
 ```
 {: .home-code-card }
+
+</div>
+    </div>
+
+    <div id="evaluations" class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Evaluate your agents</h3>
+        <p class="home-step-desc">Run your agent against a dataset of questions and expected answers. RubyLLM checks correctness by default. Use the same evaluation from Ruby, RSpec, Minitest, or Rake.</p>
+        <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  def perform(input)
+    SupportAgent.new.ask(input)
+  end
+end
+```
+{: .home-code-card data-title="app/evals/support_evaluation.rb" }
+
+```yaml
+cases:
+  - name: within_return_window
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, unopened items can be returned within 30 days.
+```
+{: .home-code-card data-title="app/evals/support_evaluation.yml" }
 
 </div>
     </div>
@@ -270,7 +295,7 @@ WeatherAssistant.new.ask "What's the weather in Berlin?"
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      Agents, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
+      Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking, OpenTelemetry tracing, and Rails integration to bring them into your app.
     </p>
   </div>
 
