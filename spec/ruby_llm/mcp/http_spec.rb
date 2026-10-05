@@ -75,6 +75,85 @@ RSpec.describe RubyLLM::MCP::HTTP do
     expect(a_request(:post, url).with(headers: { 'Mcp-Name' => encoded })).to have_been_made
   end
 
+  describe 'nested mirrored parameters through MCP' do
+    let(:mcp) { RubyLLM.mcp(url:, name: 'query') }
+    let(:definition) do
+      { name: 'query', inputSchema: { type: 'object', properties: {
+        routing: { type: 'object', properties: { region: { type: 'string', 'x-mcp-header' => 'Region' } } }
+      } } }
+    end
+    let(:definitions) { [definition] }
+
+    before do
+      stub_method('server/discover', result: discover_result)
+      stub_method('tools/list', result: { resultType: 'complete', tools: definitions, ttlMs: 0, cacheScope: 'public' })
+      stub_method('tools/call', result: { content: [{ type: 'text', text: 'ok' }] })
+    end
+
+    after { mcp.close }
+
+    it 'sends the nested argument header without changing the request body' do
+      expect(mcp.call(:query, routing: { 'region' => 'us-west1' }).text).to eq('ok')
+
+      headers = { 'Mcp-Method' => 'tools/call', 'Mcp-Param-Region' => 'us-west1' }
+      sent = a_request(:post, url).with(headers:) do |request|
+        JSON.parse(request.body).dig('params', 'arguments') == { 'routing' => { 'region' => 'us-west1' } }
+      end
+      expect(sent).to have_been_made.once
+    end
+
+    ['Hello, 世界', ' padded ', "line1\nline2", '=?base64?literal?='].each do |value|
+      it "encodes the nested value #{value.inspect} with the existing HTTP sentinel" do
+        mcp.call(:query, routing: { region: value })
+
+        encoded = "=?base64?#{Base64.strict_encode64(value)}?="
+        expect(a_request(:post, url).with(headers: { 'Mcp-Param-Region' => encoded })).to have_been_made.once
+      end
+    end
+
+    it 'mirrors fixed nested arguments when a shaped tool is called' do
+      mcp_class = RubyLLM::MCP.define(url:, name: 'query')
+      mcp_class.tool :query, fixed_arguments: { routing: { region: 'us-west1' } }
+      shaped = mcp_class.new
+
+      expect(shaped.tools.first.call.text).to eq('ok')
+      expect(a_request(:post, url).with(headers: { 'Mcp-Param-Region' => 'us-west1' })).to have_been_made.once
+    ensure
+      shaped&.close
+    end
+
+    context 'with an invalid nested declaration' do
+      let(:definitions) do
+        invalid = JSON.parse(JSON.generate(definition))
+        invalid['name'] = 'invalid_query'
+        invalid.dig('inputSchema', 'properties', 'routing', 'properties', 'region')['x-mcp-header'] = 'Bad Name'
+        [definition, invalid]
+      end
+
+      it 'excludes the invalid tool, logs its name, and leaves a valid tool callable' do
+        allow(RubyLLM.logger).to receive(:warn).and_call_original
+
+        expect(mcp.tools.map(&:server_name)).to eq(['query'])
+        expect(RubyLLM.logger).to have_received(:warn) do |&message|
+          expect(message.call).to include('invalid_query', 'invalid x-mcp-header')
+        end
+        expect(mcp.call(:query, routing: { region: 'us-west1' }).text).to eq('ok')
+      end
+    end
+
+    context 'with an annotation reached through an array' do
+      let(:definitions) do
+        [{ name: 'invalid_query', inputSchema: { type: 'object', properties: {
+          routes: { type: 'array', items: definition[:inputSchema][:properties][:routing] }
+        } } }]
+      end
+
+      it 'excludes the tool from the list offered to the model' do
+        expect(mcp.tools).to be_empty
+      end
+    end
+  end
+
   it 'reads responses sent as an event stream and yields their notifications' do
     stub_method('server/discover', result: discover_result)
     stub_method('tools/call', headers: { 'Content-Type' => 'text/event-stream' }, body: lambda { |request|
