@@ -881,6 +881,20 @@ module RubyLLM
       add_callback(:before_request, &)
     end
 
+    # Registers a callback that replaces an attachment the current protocol
+    # cannot render. Returns +self+. The callback receives an Attachment and
+    # returns a replacement Attachment, or +nil+ to keep the existing error.
+    # Callbacks run in registration order until one returns a replacement.
+    # The transcript keeps the original file, even when the model changes.
+    #
+    #   chat.on_unsupported_attachment do |attachment|
+    #     text = TextExtraction.call(attachment)
+    #     Attachment.new(StringIO.new(text), filename: 'extracted.txt') if text
+    #   end
+    def on_unsupported_attachment(&)
+      add_callback(:unsupported_attachment, &)
+    end
+
     # Yields each Message in the conversation. Returns an Enumerator when
     # no block is given. Chat includes Enumerable, so the usual collection
     # methods are available.
@@ -1314,7 +1328,21 @@ module RubyLLM
       list = request_history(list)
       return list unless @provider
 
-      @provider.preprocess_messages(list, model: @model, protocol: @protocol)
+      @provider.preprocess_messages(list, model: @model, protocol: @protocol,
+                                          unsupported_attachment: unsupported_attachment_handler)
+    end
+
+    def unsupported_attachment_handler
+      callbacks = @callbacks[:unsupported_attachment]
+      return if callbacks.empty?
+
+      lambda do |attachment|
+        callbacks.each do |callback|
+          replacement = callback.call(attachment)
+          return replacement unless replacement.nil?
+        end
+        nil
+      end
     end
 
     # A process that dies mid-round leaves a blank assistant placeholder,

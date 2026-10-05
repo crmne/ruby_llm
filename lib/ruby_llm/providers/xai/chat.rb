@@ -10,6 +10,12 @@ module RubyLLM
           role.to_s
         end
 
+        def supported_attachment?(attachment)
+          Protocols::ChatCompletions::Media.supported_attachment?(
+            attachment, document_attachments: :none, audio_attachments: false
+          )
+        end
+
         def format_content(content, attachments = [])
           Protocols::ChatCompletions::Media.format_content(
             content,

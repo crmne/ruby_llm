@@ -11,6 +11,10 @@ module RubyLLM
           role.to_s
         end
 
+        def supported_attachment?(attachment)
+          Perplexity::Media.supported_attachment?(attachment)
+        end
+
         def format_content(content, attachments = [])
           Perplexity::Media.format_content(content, attachments)
         end

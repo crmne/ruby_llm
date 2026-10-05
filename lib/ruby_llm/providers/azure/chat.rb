@@ -9,6 +9,10 @@ module RubyLLM
           azure_endpoint(:chat)
         end
 
+        def supported_attachment?(attachment)
+          Azure::Media.supported_attachment?(attachment)
+        end
+
         def format_content(content, attachments = [])
           Media.format_content(content, attachments)
         end

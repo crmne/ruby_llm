@@ -80,13 +80,17 @@ module RubyLLM
         # cites tool output against. A tool that attaches files sends its
         # text and each attachment as blocks, so the model reads what the
         # tool fetched rather than only the sentence describing it.
+        def supported_message_attachment?(message, attachment)
+          message.role == :tool ? attachment.text? : supported_attachment?(attachment)
+        end
+
         def format_tool_result_content(msg)
           search_results = RubyLLM::SearchResults.from_content(msg.content)
           return document_blocks(search_results) if search_results
           return msg.content.to_s if msg.attachments.empty?
 
           [Media.format_text(msg.content.to_s)] + msg.attachments.map do |attachment|
-            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.type == :text
+            raise UnsupportedAttachmentError, attachment.mime_type unless supported_message_attachment?(msg, attachment)
 
             Media.format_text(attachment.for_llm)
           end

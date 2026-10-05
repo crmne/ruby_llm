@@ -10,6 +10,10 @@ module RubyLLM
       module Media
         module_function
 
+        def supported_attachment?(attachment)
+          %i[image audio video pdf text].include?(attachment.type)
+        end
+
         def format_content(content, attachments = [])
           parts = []
           parts << format_text(content) if content
@@ -22,11 +26,11 @@ module RubyLLM
         end
 
         def format_content_attachment(attachment)
+          raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
+
           case attachment.type
           when :text
             format_text_file(attachment)
-          when :document, :unknown
-            raise UnsupportedAttachmentError, attachment.mime_type
           else
             format_attachment(attachment)
           end

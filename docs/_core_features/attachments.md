@@ -137,6 +137,27 @@ response = chat.ask "Which region had the highest revenue?", with: "sales.xlsx"
 Providers without native document support raise `RubyLLM::UnsupportedAttachmentError`. Convert those files to PDF or text first.
 {: .note }
 
+### Converting Unsupported Attachments
+
+Register a converter when you want the same conversation to work across protocols with different document formats:
+
+```ruby
+require "stringio"
+
+chat.on_unsupported_attachment do |attachment|
+  text = TextExtraction.call(attachment)
+  RubyLLM::Attachment.new(StringIO.new(text), filename: "extracted.txt") if text
+end
+
+chat.ask "Summarize this report.", with: "report.docx"
+```
+
+`TextExtraction` is your application's converter. The callback receives the original `RubyLLM::Attachment` and returns a replacement attachment. Return `nil` when you cannot convert it; RubyLLM keeps the protocol's existing error. A replacement must itself be supported. Errors from your converter propagate to the caller.
+
+Callbacks run in registration order until one returns a replacement. They run while preparing each request, including `render`, so cache expensive conversions in your application. The conversation keeps the original attachment. Switching to a protocol that supports the original file sends that file without calling the converter. Persisted chats and agents use the same callback.
+
+This handles formats the protocol cannot send. A model can still reject an attachment the protocol can represent; that API error does not trigger the callback.
+
 ### Choosing the Media Resolution
 
 Small print and dense tables need more detail than a photo of a cat. Build the attachment yourself and set `resolution:` to control how many tokens the model spends on it:

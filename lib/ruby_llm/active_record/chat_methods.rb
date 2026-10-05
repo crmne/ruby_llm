@@ -216,6 +216,7 @@ module RubyLLM
         with_max_output_tokens with_thinking with_citations with_caching
         with_end_user with_compaction
         with_provider_options with_headers with_schema
+        on_unsupported_attachment
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
         before_fallback after_fallback
       ].freeze
@@ -322,6 +323,12 @@ module RubyLLM
       # :call-seq: with_schema(schema)
       #
       # Applies Chat#with_schema and returns this record.
+
+      ##
+      # :method: on_unsupported_attachment
+      # :call-seq: on_unsupported_attachment(&block)
+      #
+      # Applies Chat#on_unsupported_attachment and returns this record.
 
       ##
       # :method: before_request

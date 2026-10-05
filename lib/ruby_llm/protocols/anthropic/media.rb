@@ -7,11 +7,17 @@ module RubyLLM
       module Media
         module_function
 
+        def supported_attachment?(attachment)
+          attachment.provider_file? || %i[image pdf text].include?(attachment.type)
+        end
+
         def format_content(content, attachments = [], citations: false)
           parts = []
           parts << format_text(content) unless content.nil? || content.empty?
 
           attachments.each do |attachment|
+            raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
+
             if attachment.provider_file?
               parts << format_provider_file(attachment, citations: citations)
               next
@@ -24,8 +30,6 @@ module RubyLLM
               parts << format_pdf(attachment, citations: citations)
             when :text
               parts << (citations ? format_text_document(attachment) : format_text_file(attachment))
-            else
-              raise UnsupportedAttachmentError, attachment.mime_type
             end
           end
 

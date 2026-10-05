@@ -11,6 +11,10 @@ module RubyLLM
 
         module_function
 
+        def supported_attachment?(attachment)
+          %i[image text].include?(attachment.type)
+        end
+
         # Cohere user messages accept only text and image_url blocks. Text
         # attachments become citable documents when citations are on, so they
         # are pulled out of the message and left out of the content blocks.
@@ -19,13 +23,13 @@ module RubyLLM
           parts << format_text(content) if content
 
           attachments.each do |attachment|
+            raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
+
             case attachment.type
             when :image
               parts << format_image(attachment)
             when :text
               parts << format_text(attachment.for_llm) unless citations
-            else
-              raise UnsupportedAttachmentError, attachment.mime_type
             end
           end
 

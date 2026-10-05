@@ -7,6 +7,24 @@ RSpec.describe RubyLLM::Protocol do
 
   let(:model) { instance_double(RubyLLM::Model, id: 'test-model') }
 
+  it 'uploads a replacement only after the application converts the unsupported attachment' do
+    provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+    protocol = RubyLLM::Protocols::Gemini.new(provider, model)
+    document = RubyLLM::Attachment.new(StringIO.new('office document'), filename: 'report.docx')
+    replacement = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'report.pdf')
+    allow(replacement).to receive(:byte_size).and_return(60 * 1024 * 1024)
+    uploaded = RubyLLM::UploadedFile.new(id: 'files/converted', provider: 'gemini', filename: 'report.pdf',
+                                         mime_type: 'application/pdf', uri: 'https://example.test/files/converted')
+    allow(provider).to receive(:upload_file).with(replacement).and_return(uploaded)
+    message = RubyLLM::Message.new(role: :user, content: 'Read this.', attachments: [document])
+
+    processed = protocol.preprocess_message(message, unsupported_attachment: ->(_) { replacement })
+
+    expect(processed.attachments.first.provider_file_id).to eq('files/converted')
+    expect(provider).to have_received(:upload_file).with(replacement).once
+    expect(message.attachments).to eq([document])
+  end
+
   it 'uploads oversized Gemini attachments and stores a provider-file attachment' do
     provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
     protocol = RubyLLM::Protocols::Gemini.new(provider, model)

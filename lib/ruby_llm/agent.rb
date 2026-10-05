@@ -77,6 +77,7 @@ module RubyLLM
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
       before_fallback after_fallback
+      on_unsupported_attachment
       cancel approve deny answer decline cache_until_here
     ].freeze
 
@@ -617,8 +618,7 @@ module RubyLLM
         [input_values, chat_options]
       end
 
-      # :nodoc:
-      def apply_configuration(
+      def apply_configuration( # :nodoc:
         chat,
         input_values:,
         persist_instructions:,
@@ -1055,6 +1055,12 @@ module RubyLLM
     # :call-seq: with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
     #
     # Delegates to Chat#with_fallbacks. See that method for arguments and return values.
+
+    ##
+    # :method: on_unsupported_attachment
+    # :call-seq: on_unsupported_attachment(&block)
+    #
+    # Delegates to Chat#on_unsupported_attachment. See that method for arguments and return values.
 
     ##
     # :method: before_request

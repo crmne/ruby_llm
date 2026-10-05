@@ -435,6 +435,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe 'delegation to the underlying chat' do
+    it 'replaces unsupported attachments for rendering while persisting the original' do
+      chat = Chat.create!(model: model_for(:anthropic), provider: :anthropic)
+      document = RubyLLM::Attachment.new(StringIO.new('office document'), filename: 'report.docx')
+      replacement = RubyLLM::Attachment.new(StringIO.new('Extracted report'), filename: 'report.txt')
+      expect(chat.on_unsupported_attachment { replacement }).to be(chat)
+      chat.ask_later('Summarize this.', with: document)
+
+      expect(chat.render.to_json).to include('Extracted report')
+      stored = Chat.find(chat.id).to_llm.messages.last.attachments.first
+      expect(stored.filename).to eq('report.docx')
+      expect(stored.content).to eq('office document')
+    end
+
     it 'forwards generate, step, run_tools and complete?' do
       chat = Chat.create!(model: model_id)
       llm = chat.to_llm

@@ -8,6 +8,10 @@ module RubyLLM
       module Media
         module_function
 
+        def supported_attachment?(attachment)
+          attachment.video? || Protocols::ChatCompletions::Media.supported_attachment?(attachment)
+        end
+
         def format_content(content, attachments = [])
           Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
             if attachment.type == :video

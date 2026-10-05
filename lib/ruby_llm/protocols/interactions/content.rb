@@ -15,11 +15,18 @@ module RubyLLM
           parts + attachments.map { |attachment| render_interaction_attachment(attachment) }
         end
 
+        def supported_attachment?(attachment)
+          attachment.text? || !interaction_attachment_type(attachment).nil?
+        end
+
         def render_interaction_attachment(attachment)
+          unless supported_attachment?(attachment)
+            raise ArgumentError, "Gemini Interactions does not support #{attachment.mime_type} input"
+          end
+
           return { type: 'text', text: attachment.content } if attachment.text?
 
           type = interaction_attachment_type(attachment)
-          raise ArgumentError, "Gemini Interactions does not support #{attachment.mime_type} input" unless type
 
           part = { type: type, mime_type: attachment.mime_type }
           if attachment.provider_file?

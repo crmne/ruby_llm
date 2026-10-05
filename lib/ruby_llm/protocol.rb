@@ -549,16 +549,22 @@ module RubyLLM
       nil
     end
 
-    def preprocess_message(message)
-      return without_foreign_native_content(message) if foreign_native_content?(message)
-      return message unless auto_upload_large_files?
-      return message unless message.role == :user
+    def preprocess_message(message, unsupported_attachment: nil)
+      message = without_foreign_native_content(message) if foreign_native_content?(message)
       return message if message.attachments.empty?
 
-      uploaded = message.attachments.map { |attachment| preprocess_attachment(attachment) }
-      return message if uploaded == message.attachments
+      upload = message.role == :user && auto_upload_large_files?
+      prepared = message.attachments.map do |attachment|
+        replacement = replace_unsupported_attachment(attachment, unsupported_attachment, message)
+        upload ? preprocess_attachment(replacement) : replacement
+      end
+      return message if prepared == message.attachments
 
-      message.with_attachments(uploaded)
+      message.with_attachments(prepared)
+    end
+
+    def supported_attachment?(_attachment) # :nodoc:
+      true
     end
 
     # A provider can delete a file RubyLLM uploaded for an attachment. When
@@ -704,6 +710,23 @@ module RubyLLM
       return attachment unless upload_large_attachment?(attachment)
 
       Attachment.new(provider_upload(attachment), resolution: attachment.resolution, config: @config)
+    end
+
+    def supported_message_attachment?(_message, attachment)
+      supported_attachment?(attachment)
+    end
+
+    def replace_unsupported_attachment(attachment, handler, message)
+      return attachment if handler.nil? || supported_message_attachment?(message, attachment)
+
+      replacement = handler.call(attachment)
+      return attachment if replacement.nil?
+      unless replacement.is_a?(Attachment)
+        raise ArgumentError, 'on_unsupported_attachment must return a RubyLLM::Attachment or nil'
+      end
+      raise UnsupportedAttachmentError, replacement.mime_type unless supported_message_attachment?(message, replacement)
+
+      replacement
     end
 
     # Uploads are memoized per provider on the attachment itself, so a chat

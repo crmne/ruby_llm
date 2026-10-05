@@ -209,9 +209,9 @@ module RubyLLM
       preprocessing_protocol(protocol, model).supports_deferred_tools?
     end
 
-    def preprocess_messages(messages, model:, protocol: nil) # :nodoc:
+    def preprocess_messages(messages, model:, protocol: nil, unsupported_attachment: nil) # :nodoc:
       preprocessor = preprocessing_protocol(protocol, model)
-      messages.map { |message| preprocessor.preprocess_message(message) }
+      messages.map { |message| preprocessor.preprocess_message(message, unsupported_attachment:) }
     end
 
     def discard_missing_uploads(messages, error, model:, protocol: nil) # :nodoc:

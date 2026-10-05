@@ -61,6 +61,12 @@ module RubyLLM
         def format_document(document)
           raise UnsupportedAttachmentError, document.mime_type
         end
+
+        def supported_attachment?(attachment)
+          return attachment.image? if attachment.provider_file?
+
+          %i[image text].include?(attachment.type)
+        end
       end
     end
   end

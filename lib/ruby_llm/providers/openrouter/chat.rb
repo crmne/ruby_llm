@@ -34,6 +34,10 @@ module RubyLLM
           end
         end
 
+        def supported_attachment?(attachment)
+          OpenRouter::Media.supported_attachment?(attachment)
+        end
+
         def format_content(content, attachments = [])
           OpenRouter::Media.format_content(content, attachments)
         end

@@ -7,8 +7,14 @@ module RubyLLM
       module Media
         module_function
 
+        def supported_attachment?(attachment)
+          %i[image audio text].include?(attachment.type)
+        end
+
         def format_content(content, attachments = [])
           Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
+            raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
+
             case attachment.type
             when :image
               format_image(attachment)
@@ -16,8 +22,6 @@ module RubyLLM
               Protocols::ChatCompletions::Media.format_audio(attachment)
             when :text
               Protocols::ChatCompletions::Media.format_text_file(attachment)
-            else
-              raise UnsupportedAttachmentError, attachment.mime_type
             end
           end
         end
