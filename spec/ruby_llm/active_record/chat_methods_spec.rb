@@ -71,7 +71,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       Chat.cache do
         Chat.where(id: chat.id).pick(:cancelled)
-        Thread.new { Chat.where(id: chat.id).update_all(cancelled: true) }.join
+        Thread.new do
+          Chat.connection_pool.with_connection { Chat.where(id: chat.id).update_all(cancelled: true) }
+        end.join
 
         expect(chat.send(:consume_persisted_cancellation_request)).to eq(:cancelled)
       end
