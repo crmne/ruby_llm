@@ -47,6 +47,8 @@ To move across several releases, upgrade to each one in turn. Deploy it, run its
 
 ## Update the Gem
 
+RubyLLM 2.1 requires Ruby 3.2 or later. Ruby 3.1 reached its end of life in March 2025, and Rails 8 already requires 3.2.
+
 Require 2.1 in your `Gemfile`, so the update stops at this release:
 
 ```ruby

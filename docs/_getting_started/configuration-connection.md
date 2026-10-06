@@ -163,8 +163,7 @@ end
 
 `log_regexp_timeout` notes:
 - Applies to regex filters used in request/response debug logging
-- Supported on Ruby `3.2+` (uses `Regexp.timeout`)
-- On Ruby `<3.2`, RubyLLM warns if set and continues without timeout
+- Uses `Regexp.timeout`
 - Helps bound regex execution time when debug logs contain very large payloads
 
 Built-in debug log redaction:

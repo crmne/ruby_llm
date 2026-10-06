@@ -16,13 +16,18 @@ After reading this guide, you will know:
 * How to connect your chats and agents to MCP servers.
 * How to show what a slow tool is doing while it runs.
 * How to give a model hundreds of tools without sending them all.
+* How to switch providers in the middle of a conversation.
+* How to send files a provider cannot read, and choose how much detail an image gets.
+* How to share pieces between prompt templates.
 * How to ask typed judgments with TypeSafe's Jev models.
 * How to evaluate your agents against a dataset.
 * How to trace RubyLLM with OpenTelemetry.
 * How to chat with open-weight models on Hetzner.
+* How to name Azure deployments and keep their pricing.
+* What changed for Perplexity chat.
 * How to build an agent's configuration from its inputs.
 * How to keep RubyLLM's tables on a secondary database.
-* How to see what a provider received when it rejects a request.
+* Which provider errors you can now rescue by their class.
 * How upgrades work from 2.1 on.
 
 RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, evaluations, OpenTelemetry tracing, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
@@ -158,6 +163,58 @@ chat.ask "Which open issues mention the flaky login spec?"
 
 `with_tools`, the agent `tools` and `mcp` macros, and Rails chat records take the same `defer:` option, and tool and MCP classes declare it with `defer`. Anthropic and OpenAI's Responses API search natively; other providers receive deferred tools as ordinary tools, so the same code runs everywhere. See [Tool Search]({% link _core_features/tool-search.md %}).
 
+## Switching Providers Mid-Conversation
+
+A conversation can move to another model or provider at any point, even in the middle of a tool round:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}").with_provider_tools(:web_search)
+chat.ask "What changed in the latest Ruby release?"
+
+chat.with_model("{{ site.models.openai_current }}")
+chat.ask "Which of those changes affect Rails apps?"
+```
+
+Thinking signatures, provider tool steps, compaction, and other provider-shaped content now go back only to the model that produced them. Another model receives the same conversation as text and tool calls, so it never sees blocks it cannot read. This matters inside one provider too: Bedrock, Vertex AI, Azure, and OpenRouter serve model families that refuse each other's reasoning. Gemini continues a tool round another provider began, such as a call that waited for an approval while the user switched models.
+
+A worker that dies mid-turn no longer leaves a conversation providers refuse. Requests leave out the blank reply it saved, and calls from a round the conversation has moved past reach the model as unfinished. See [Understanding the Persistence Flow]({% link _advanced/rails.md %}#understanding-the-persistence-flow).
+
+## Files a Provider Cannot Read
+
+Some protocols cannot send every file type, such as a Word document. Convert those files yourself, and RubyLLM sends your replacement while the conversation keeps the original:
+
+```ruby
+chat.convert_unsupported_attachments do |attachment|
+  text = TextExtraction.call(attachment)
+  RubyLLM::Attachment.new(StringIO.new(text), filename: "extracted.txt") if text
+end
+
+chat.ask "Summarize this report.", with: "report.docx"
+```
+
+The block runs only for files the current protocol cannot send, once per file. Switch to a provider that reads the original, and it gets the original. See [Converting Unsupported Attachments]({% link _core_features/attachments.md %}#converting-unsupported-attachments).
+
+Small print needs more detail than a photo. Set `resolution:` on an attachment to trade tokens for detail, from `:low` to `:ultra_high`, or `:original` for the image as it is:
+
+```ruby
+page = RubyLLM::Attachment.new("page-3.png", resolution: :original)
+chat.ask "What is the revenue figure?", with: page
+```
+
+Gemini, OpenAI, and Azure translate it to their own settings, other providers ignore it, and Rails keeps it with the stored file. See [Choosing the Media Resolution]({% link _core_features/attachments.md %}#choosing-the-media-resolution).
+
+## Prompt Partials
+
+Prompt templates render partials the way Action View does, so instructions can share pieces:
+
+```erb
+<%# app/prompts/work_assistant/instructions.txt.erb %>
+<%= render "tone", display_name: display_name %>
+<%= render "shared/safety" %>
+```
+
+A bare name looks next to the current prompt, a path looks in the prompt roots, and `local_assigns` reads optional locals. See [Partials]({% link _core_features/prompt-rendering.md %}#partials).
+
 ## Typed Judgments
 
 Define questions about your application data and read probabilities, choices, and scores:
@@ -229,6 +286,24 @@ RubyLLM.chat(model: "Qwen3.8-27B", provider: :hetzner).ask("Hello from Hetzner")
 
 Set `hetzner_api_key` to a token from the Hetzner Console. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#hetzner).
 
+## Azure Deployments
+
+Azure models now come with pricing and context windows from models.dev, so Azure chats report their cost. When a deployment name differs from the model it deploys, declare it, and the chat takes that model's pricing, limits, and capabilities:
+
+```ruby
+RubyLLM.configure do |config|
+  config.azure_deployments = { "gpt-4o-global" => "gpt-4o" }
+end
+
+RubyLLM.chat(model: "gpt-4o-global", provider: :azure)
+```
+
+GPT-6 deployments run on the Responses API. See [Azure Deployments]({% link _getting_started/configuration-providers.md %}#azure-deployments).
+
+## Perplexity on the Agent API
+
+Perplexity retires Sonar on September 27, 2026, so Perplexity chat now runs on its Agent API through presets such as `fast` and `high`. Chats that name a Sonar model keep working with the preset Perplexity recommends and a deprecation warning. See [Move Perplexity Chat to Presets]({% link _reference/upgrading.md %}#move-perplexity-chat-to-presets).
+
 ## Agent Configuration
 
 An agent can now build its configuration for each chat from its inputs, so every tenant can bring its own credentials or endpoint. A `context` block without arguments runs when the chat is built:
@@ -263,9 +338,20 @@ See [Rails Advanced Configuration]({% link _advanced/rails-advanced-config.md %}
 
 ## Usage Beyond Chats
 
-In Rails, one-shot operations such as `RubyLLM.transcribe` and `RubyLLM.embed` write to the usage ledger too, attributed with `owner: current_user` or `RubyLLM.with_usage_owner(current_user) { ... }`. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
+In Rails, one-shot operations such as `RubyLLM.transcribe` and `RubyLLM.embed` write to the usage ledger too, attributed with `owner: current_user` or `RubyLLM.with_usage_owner(current_user) { ... }`. Video and research jobs write a row when they finish, with the cost xAI and OpenRouter report for videos. See [One-Shot Operations]({% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations).
 
-## Request Shapes in Errors
+Provider tool use is counted the same way everywhere. `tokens.server_tool_use` reports `web_search_requests` on every provider that runs searches, including OpenAI, Gemini, and Perplexity, and Rails keeps the counts with each usage row so you can price them from your own records. See [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
+
+## Errors You Can Rescue
+
+Providers report the same problem in different ways, and RubyLLM now raises the same class for each:
+
+* A rejected API key raises `RubyLLM::UnauthorizedError` on every provider, including Gemini, xAI, and Bedrock, which answer with a 400 or a 403.
+* An Anthropic account out of credit raises `RubyLLM::PaymentRequiredError`.
+* A 400 that says the servers are overloaded raises `RubyLLM::OverloadedError`, so retries and fallbacks treat it as capacity.
+* Token quota 429s raise `RubyLLM::RateLimitError`, and a request too large for the model raises `RubyLLM::ContextLengthExceededError`.
+
+Retries follow a provider's `retry-after-ms`, and Bedrock retries sign their requests again, so a slow first attempt no longer ends in an expired signature.
 
 When a provider rejects a conversation without saying why, `error.request_shape` lists each turn's parts and their sizes, never their contents, and the problems providers are known to refuse, such as a part with no data. See [Describing a Rejected Request]({% link _advanced/error-handling.md %}#describing-a-rejected-request).
 
@@ -275,7 +361,7 @@ From 2.1 on, each release ships the upgrade from the release before it. `bin/rai
 
 ## Try 2.1
 
-Install RubyLLM 2.1:
+RubyLLM 2.1 requires Ruby 3.2 or later. Install it:
 
 ```sh
 bundle add ruby_llm --version "~> 2.1.0"
