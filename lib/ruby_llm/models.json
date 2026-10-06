@@ -25,7 +25,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -99,7 +98,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -173,8 +171,7 @@
       "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls",
-      "tool_search"
+      "parallel_tool_calls"
     ],
     "pricing": {
       "text_tokens": {
@@ -241,7 +238,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -309,8 +305,7 @@
       "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls",
-      "tool_search"
+      "parallel_tool_calls"
     ],
     "pricing": {
       "text_tokens": {
@@ -385,7 +380,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -462,7 +456,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -540,7 +533,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -615,7 +607,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -690,7 +681,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -765,7 +755,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -839,8 +828,7 @@
       "reasoning",
       "vision",
       "tool_choice",
-      "parallel_tool_calls",
-      "tool_search"
+      "parallel_tool_calls"
     ],
     "pricing": {
       "text_tokens": {
@@ -907,7 +895,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -976,7 +963,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -1054,7 +1040,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -1132,7 +1117,6 @@
       "vision",
       "tool_choice",
       "parallel_tool_calls",
-      "tool_search",
       "batch",
       "citations"
     ],
@@ -9922,7 +9906,15 @@
       "reasoning",
       "vision"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 6,
+          "cache_read_input_per_million": 0.5
+        }
+      }
+    },
     "metadata": {
       "object": "model",
       "lifecycle_status": "preview",
@@ -9948,11 +9940,41 @@
           ]
         }
       ],
+      "cost": {
+        "input": 1.25,
+        "output": 6,
+        "cache_read": 0.5
+      },
       "limit": {
         "context": 200000,
         "output": 128000
       },
       "knowledge": "2026-02-01"
+    }
+  },
+  {
+    "id": "grok-4.7",
+    "name": "grok-4.7",
+    "provider": "azure",
+    "family": null,
+    "created_at": "2026-10-05 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "lifecycle_status": "generally-available",
+      "inference_retires_at": 1822694400
     }
   },
   {
@@ -11887,6 +11909,38 @@
       "object": "model",
       "lifecycle_status": "generally-available",
       "inference_retires_at": 1797292800
+    }
+  },
+  {
+    "id": "amazon.nova-2-5-sonic",
+    "name": "Nova 2.5 Sonic",
+    "provider": "bedrock",
+    "family": "Nova",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio",
+        "text"
+      ],
+      "output": [
+        "audio",
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-2-5-sonic",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
     }
   },
   {
@@ -27323,6 +27377,50 @@
     }
   },
   {
+    "id": "us.zai.glm-5.3",
+    "name": "GLM 5.3",
+    "provider": "bedrock",
+    "family": "GLM 5.3",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Z.AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/zai.glm-5.3",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoning_config\":{\"type\":\"enum\",\"default\":\"max\",\"enum\":[\"none\",\"low\",\"medium\",\"high\",\"xhigh\",\"max\"]}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 128000,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      }
+    }
+  },
+  {
     "id": "writer.palmyra-vision-7b",
     "name": "Writer Palmyra Vision 7B",
     "provider": "bedrock",
@@ -35094,6 +35192,7 @@
         "es-US",
         "et",
         "et-EE",
+        "eu",
         "fa",
         "fi",
         "fr",
@@ -39809,6 +39908,33 @@
     }
   },
   {
+    "id": "gemini-nano-banana-2.1",
+    "name": "Nano Banana 2.1",
+    "provider": "gemini",
+    "family": null,
+    "created_at": null,
+    "context_window": 65536,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "version": "3.0",
+      "description": "Gemini Nano Banana 2.1.",
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens",
+        "batchGenerateContent"
+      ]
+    }
+  },
+  {
     "id": "gemini-omni-1.1-flash",
     "name": "Gemini Omni 1.1 Flash",
     "provider": "gemini",
@@ -40999,7 +41125,7 @@
     "provider": "mistral",
     "family": "glm",
     "created_at": "2026-06-13 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -41059,7 +41185,7 @@
         "cache_read": 0.14
       },
       "limit": {
-        "context": 1000000,
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -41258,7 +41384,7 @@
     "provider": "mistral",
     "family": "mistral-small",
     "created_at": "2026-03-16 00:00:00 UTC",
-    "context_window": 256000,
+    "context_window": 262144,
     "max_output_tokens": 256000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -41319,7 +41445,7 @@
         "cache_read": 0.015
       },
       "limit": {
-        "context": 256000,
+        "context": 262144,
         "output": 256000
       },
       "knowledge": "2025-06"
@@ -41401,12 +41527,13 @@
     "provider": "mistral",
     "family": "ministral",
     "created_at": "2024-10-01 00:00:00 UTC",
-    "context_window": 128000,
+    "context_window": 131072,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image"
       ],
       "output": [
         "text"
@@ -41414,6 +41541,7 @@
     },
     "capabilities": [
       "function_calling",
+      "vision",
       "tool_choice",
       "parallel_tool_calls",
       "fine_tuning"
@@ -41436,7 +41564,7 @@
       "source": "models.dev",
       "provider_id": "mistral",
       "open_weights": true,
-      "attachment": false,
+      "attachment": true,
       "temperature": true,
       "last_updated": "2024-10-04",
       "tool_call": true,
@@ -41446,7 +41574,7 @@
         "output": 0.04
       },
       "limit": {
-        "context": 128000,
+        "context": 131072,
         "output": 128000
       },
       "knowledge": "2024-10"
@@ -41458,12 +41586,13 @@
     "provider": "mistral",
     "family": "ministral",
     "created_at": "2024-10-01 00:00:00 UTC",
-    "context_window": 128000,
+    "context_window": 131072,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image"
       ],
       "output": [
         "text"
@@ -41471,6 +41600,7 @@
     },
     "capabilities": [
       "function_calling",
+      "vision",
       "tool_choice",
       "parallel_tool_calls",
       "fine_tuning"
@@ -41493,7 +41623,7 @@
       "source": "models.dev",
       "provider_id": "mistral",
       "open_weights": true,
-      "attachment": false,
+      "attachment": true,
       "temperature": true,
       "last_updated": "2024-10-04",
       "tool_call": true,
@@ -41503,7 +41633,7 @@
         "output": 0.04
       },
       "limit": {
-        "context": 128000,
+        "context": 131072,
         "output": 128000
       },
       "knowledge": "2024-10"
@@ -41515,12 +41645,13 @@
     "provider": "mistral",
     "family": "ministral",
     "created_at": "2024-10-01 00:00:00 UTC",
-    "context_window": 128000,
+    "context_window": 262144,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image"
       ],
       "output": [
         "text"
@@ -41528,6 +41659,7 @@
     },
     "capabilities": [
       "function_calling",
+      "vision",
       "tool_choice",
       "parallel_tool_calls",
       "fine_tuning"
@@ -41550,7 +41682,7 @@
       "source": "models.dev",
       "provider_id": "mistral",
       "open_weights": true,
-      "attachment": false,
+      "attachment": true,
       "temperature": true,
       "last_updated": "2024-10-04",
       "tool_call": true,
@@ -41560,7 +41692,7 @@
         "output": 0.1
       },
       "limit": {
-        "context": 128000,
+        "context": 262144,
         "output": 128000
       },
       "knowledge": "2024-10"
@@ -41572,12 +41704,13 @@
     "provider": "mistral",
     "family": "ministral",
     "created_at": "2024-10-01 00:00:00 UTC",
-    "context_window": 128000,
+    "context_window": 262144,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image"
       ],
       "output": [
         "text"
@@ -41585,6 +41718,7 @@
     },
     "capabilities": [
       "function_calling",
+      "vision",
       "tool_choice",
       "parallel_tool_calls",
       "fine_tuning"
@@ -41607,7 +41741,7 @@
       "source": "models.dev",
       "provider_id": "mistral",
       "open_weights": true,
-      "attachment": false,
+      "attachment": true,
       "temperature": true,
       "last_updated": "2024-10-04",
       "tool_call": true,
@@ -41617,7 +41751,7 @@
         "output": 0.1
       },
       "limit": {
-        "context": 128000,
+        "context": 262144,
         "output": 128000
       },
       "knowledge": "2024-10"
@@ -41954,6 +42088,150 @@
         "output": 262144
       },
       "knowledge": "2024-11"
+    }
+  },
+  {
+    "id": "mistral-large-4",
+    "name": "Mistral Large 4",
+    "provider": "mistral",
+    "family": "mistral-large",
+    "created_at": "2026-10-06 00:00:00 UTC",
+    "context_window": 524288,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "tool_choice",
+      "parallel_tool_calls"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.68,
+          "output_per_million": 2.09,
+          "cache_read_input_per_million": 0.07
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai",
+      "description": "Official mistral-large-4 Mistral AI model",
+      "aliases": [
+        "mistral-large-4-0"
+      ],
+      "source": "models.dev",
+      "provider_id": "mistral",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-06",
+      "status": "beta",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.68,
+        "output": 2.09,
+        "cache_read": 0.07
+      },
+      "limit": {
+        "context": 524288,
+        "output": 262144
+      }
+    }
+  },
+  {
+    "id": "mistral-large-4-0",
+    "name": "Mistral Large 4",
+    "provider": "mistral",
+    "family": "mistral-large",
+    "created_at": "2026-10-06 00:00:00 UTC",
+    "context_window": 524288,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "tool_choice",
+      "parallel_tool_calls"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.68,
+          "output_per_million": 2.09,
+          "cache_read_input_per_million": 0.07
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai",
+      "description": "Official mistral-large-4 Mistral AI model",
+      "aliases": [
+        "mistral-large-4"
+      ],
+      "source": "models.dev",
+      "provider_id": "mistral",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-06",
+      "status": "beta",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.68,
+        "output": 2.09,
+        "cache_read": 0.07
+      },
+      "limit": {
+        "context": 524288,
+        "output": 262144
+      }
     }
   },
   {
@@ -42965,7 +43243,7 @@
     "provider": "mistral",
     "family": "mistral-small",
     "created_at": "2026-03-16 00:00:00 UTC",
-    "context_window": 256000,
+    "context_window": 262144,
     "max_output_tokens": 256000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -43026,7 +43304,7 @@
         "cache_read": 0.015
       },
       "limit": {
-        "context": 256000,
+        "context": 262144,
         "output": 256000
       },
       "knowledge": "2025-06"
@@ -43038,7 +43316,7 @@
     "provider": "mistral",
     "family": "mistral-small",
     "created_at": "2026-03-16 00:00:00 UTC",
-    "context_window": 256000,
+    "context_window": 262144,
     "max_output_tokens": 256000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -43099,7 +43377,7 @@
         "cache_read": 0.015
       },
       "limit": {
-        "context": 256000,
+        "context": 262144,
         "output": 256000
       },
       "knowledge": "2025-06"
@@ -43111,7 +43389,7 @@
     "provider": "mistral",
     "family": "mistral-small",
     "created_at": "2026-03-16 00:00:00 UTC",
-    "context_window": 256000,
+    "context_window": 262144,
     "max_output_tokens": 256000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -43172,7 +43450,7 @@
         "cache_read": 0.015
       },
       "limit": {
-        "context": 256000,
+        "context": 262144,
         "output": 256000
       },
       "knowledge": "2025-06"
@@ -43908,7 +44186,7 @@
     "provider": "mistral",
     "family": "voxtral",
     "created_at": "2025-07-15 00:00:00 UTC",
-    "context_window": 32000,
+    "context_window": 32768,
     "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -43953,7 +44231,7 @@
         "output": 0.3
       },
       "limit": {
-        "context": 32000,
+        "context": 32768,
         "output": 32000
       }
     }
@@ -43964,7 +44242,7 @@
     "provider": "mistral",
     "family": "voxtral",
     "created_at": "2025-07-15 00:00:00 UTC",
-    "context_window": 32000,
+    "context_window": 32768,
     "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -44009,7 +44287,7 @@
         "output": 0.3
       },
       "limit": {
-        "context": 32000,
+        "context": 32768,
         "output": 32000
       }
     }
@@ -44020,7 +44298,7 @@
     "provider": "mistral",
     "family": "glm",
     "created_at": "2026-08-14 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -44080,7 +44358,7 @@
         "cache_read": 0.14
       },
       "limit": {
-        "context": 1000000,
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -44091,7 +44369,7 @@
     "provider": "mistral",
     "family": "glm",
     "created_at": "2026-06-13 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -44151,7 +44429,7 @@
         "cache_read": 0.14
       },
       "limit": {
-        "context": 1000000,
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -44162,7 +44440,7 @@
     "provider": "mistral",
     "family": "glm",
     "created_at": "2026-08-14 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -44222,7 +44500,7 @@
         "cache_read": 0.14
       },
       "limit": {
-        "context": 1000000,
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -44233,7 +44511,7 @@
     "provider": "mistral",
     "family": "glm",
     "created_at": "2026-08-14 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
@@ -44293,7 +44571,7 @@
         "cache_read": 0.14
       },
       "limit": {
-        "context": 1000000,
+        "context": 1048576,
         "output": 131072
       }
     }
@@ -48783,7 +49061,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48879,7 +49156,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -48974,7 +49250,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49047,7 +49322,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49120,7 +49394,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49193,7 +49466,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49265,7 +49537,6 @@
       "function_calling",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49352,7 +49623,6 @@
       "function_calling",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49441,7 +49711,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49537,7 +49806,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49633,7 +49901,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49722,7 +49989,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49811,7 +50077,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -49911,7 +50176,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -50013,7 +50277,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -50115,7 +50378,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -50217,7 +50479,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -50319,7 +50580,6 @@
       "reasoning",
       "vision",
       "judgment",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -50421,7 +50681,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -50523,7 +50782,6 @@
       "structured_output",
       "reasoning",
       "vision",
-      "tool_search",
       "tool_choice",
       "parallel_tool_calls"
     ],
@@ -59931,8 +60189,7 @@
       "structured_output",
       "reasoning",
       "streaming",
-      "tool_choice",
-      "predicted_outputs"
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -59964,14 +60221,9 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
         "max_tokens",
-        "min_p",
-        "presence_penalty",
         "reasoning",
-        "repetition_penalty",
         "response_format",
-        "seed",
         "stop",
         "structured_outputs",
         "temperature",
@@ -60225,9 +60477,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.03,
-          "output_per_million": 1.28,
-          "cache_read_input_per_million": 0.03
+          "input_per_million": 0.033,
+          "output_per_million": 1.408,
+          "cache_read_input_per_million": 0.033
         }
       }
     },
@@ -60300,9 +60552,9 @@
         }
       ],
       "cost": {
-        "input": 0.03,
-        "output": 1.28,
-        "cache_read": 0.03
+        "input": 0.033,
+        "output": 1.408,
+        "cache_read": 0.033
       },
       "limit": {
         "context": 1048576,
@@ -60340,9 +60592,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0152,
-          "output_per_million": 1.28,
-          "cache_read_input_per_million": 0.0152
+          "input_per_million": 0.00605,
+          "output_per_million": 1.408,
+          "cache_read_input_per_million": 0.00605
         }
       }
     },
@@ -60413,9 +60665,9 @@
         }
       ],
       "cost": {
-        "input": 0.0152,
-        "output": 1.28,
-        "cache_read": 0.0152
+        "input": 0.00605,
+        "output": 1.408,
+        "cache_read": 0.00605
       },
       "limit": {
         "context": 1048576,
@@ -60656,7 +60908,7 @@
     "family": "deepseek-thinking",
     "created_at": "2026-08-12 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 393216,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -60677,9 +60929,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.45,
-          "output_per_million": 5,
-          "cache_read_input_per_million": 0.4
+          "input_per_million": 0.66,
+          "output_per_million": 1.98,
+          "cache_read_input_per_million": 0.022
         }
       }
     },
@@ -60698,7 +60950,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "max_completion_tokens": 393216,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -60748,13 +61000,13 @@
         }
       ],
       "cost": {
-        "input": 0.45,
-        "output": 5,
-        "cache_read": 0.4
+        "input": 0.66,
+        "output": 1.98,
+        "cache_read": 0.022
       },
       "limit": {
         "context": 1048576,
-        "output": 943718
+        "output": 393216
       }
     }
   },
@@ -60788,9 +61040,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.3,
-          "output_per_million": 1.2,
-          "cache_read_input_per_million": 0.006
+          "input_per_million": 0.0182,
+          "output_per_million": 1.32,
+          "cache_read_input_per_million": 0.0165
         }
       }
     },
@@ -60860,9 +61112,9 @@
         }
       ],
       "cost": {
-        "input": 0.3,
-        "output": 1.2,
-        "cache_read": 0.006
+        "input": 0.0182,
+        "output": 1.32,
+        "cache_read": 0.0165
       },
       "limit": {
         "context": 1048576,
@@ -64941,6 +65193,108 @@
     }
   },
   {
+    "id": "google/gemini-nano-banana-2.1",
+    "name": "Nano Banana 2.1",
+    "provider": "openrouter",
+    "family": "nano-banana",
+    "created_at": "2026-10-06 00:00:00 UTC",
+    "context_window": 65536,
+    "max_output_tokens": 58982,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "image",
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming",
+      "tool_choice",
+      "image_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
+        }
+      }
+    },
+    "metadata": {
+      "description": "Nano Banana 2.1 (Gemini Nano Banana 2.1) is Google's image generation and editing model on the Flash tier, succeeding Nano Banana 2 and Nano Banana Pro. It improves product recontextualization,...",
+      "architecture": {
+        "modality": "text+image->text+image",
+        "input_modalities": [
+          "image",
+          "text"
+        ],
+        "output_modalities": [
+          "image",
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 58982,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "seed",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-06",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        },
+        {
+          "type": "effort",
+          "values": [
+            "minimal",
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.5,
+        "output": 7.5
+      },
+      "limit": {
+        "context": 65536,
+        "output": 58982
+      }
+    }
+  },
+  {
     "id": "google/gemma-2-27b-it",
     "name": "Gemma 2 27B",
     "provider": "openrouter",
@@ -65329,9 +65683,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09,
-          "output_per_million": 0.3,
-          "cache_read_input_per_million": 0.05
+          "input_per_million": 0.0765,
+          "output_per_million": 0.255,
+          "cache_read_input_per_million": 0.0425
         }
       }
     },
@@ -65393,9 +65747,9 @@
         }
       ],
       "cost": {
-        "input": 0.09,
-        "output": 0.3,
-        "cache_read": 0.05
+        "input": 0.0765,
+        "output": 0.255,
+        "cache_read": 0.0425
       },
       "limit": {
         "context": 262144,
@@ -68291,8 +68645,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.32
+          "input_per_million": 0.22,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.11
         }
       }
     },
@@ -68345,8 +68700,9 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.1,
-        "output": 0.32
+        "input": 0.22,
+        "output": 0.5,
+        "cache_read": 0.11
       },
       "limit": {
         "context": 131072,
@@ -68385,7 +68741,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.1875,
-          "output_per_million": 0.6525
+          "output_per_million": 0.6525,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -68439,7 +68796,8 @@
       "reasoning": false,
       "cost": {
         "input": 0.1875,
-        "output": 0.6525
+        "output": 0.6525,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 1048576,
@@ -68632,7 +68990,7 @@
     "family": "muse",
     "created_at": "2026-08-10 00:00:00 UTC",
     "context_window": 131072,
-    "max_output_tokens": 117964,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": "2026-01-04",
     "modalities": {
       "input": [
@@ -68655,8 +69013,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.35,
-          "output_per_million": 1.5,
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
           "cache_read_input_per_million": 0.04
         }
       }
@@ -68677,7 +69035,7 @@
       },
       "top_provider": {
         "context_length": 131072,
-        "max_completion_tokens": 117964,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -68723,13 +69081,13 @@
         }
       ],
       "cost": {
-        "input": 0.35,
-        "output": 1.5,
+        "input": 0.3,
+        "output": 1.2,
         "cache_read": 0.04
       },
       "limit": {
         "context": 131072,
-        "output": 117964
+        "output": 16384
       },
       "knowledge": "2026-01-04"
     }
@@ -71938,6 +72296,109 @@
     }
   },
   {
+    "id": "mistralai/mistral-large-4-0",
+    "name": "Mistral Large 4",
+    "provider": "openrouter",
+    "family": "mistral-large",
+    "created_at": "2026-10-06 00:00:00 UTC",
+    "context_window": 524288,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming",
+      "tool_choice"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.68,
+          "output_per_million": 2.09,
+          "cache_read_input_per_million": 0.07
+        }
+      }
+    },
+    "metadata": {
+      "description": "Mistral Large 4 is a frontier multimodal (text and image input) model from Mistral AI built for reasoning, coding, and agentic workloads. It offers a 512K-token context window with up...",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Mistral",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 524288,
+        "max_completion_tokens": 262144,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_logprobs",
+        "top_p"
+      ],
+      "expiration_date": null,
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-06",
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "high"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.68,
+        "output": 2.09,
+        "cache_read": 0.07
+      },
+      "limit": {
+        "context": 524288,
+        "output": 262144
+      }
+    }
+  },
+  {
     "id": "mistralai/mistral-medium-3",
     "name": "Mistral Medium 3",
     "provider": "openrouter",
@@ -73987,9 +74448,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.67,
-          "output_per_million": 14,
-          "cache_read_input_per_million": 0.22
+          "input_per_million": 0.69,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.23
         }
       }
     },
@@ -74060,9 +74521,9 @@
         }
       ],
       "cost": {
-        "input": 0.67,
-        "output": 14,
-        "cache_read": 0.22
+        "input": 0.69,
+        "output": 15,
+        "cache_read": 0.23
       },
       "limit": {
         "context": 1048576,
@@ -76222,7 +76683,7 @@
       "top_provider": {
         "context_length": 16385,
         "max_completion_tokens": 4096,
-        "is_moderated": false
+        "is_moderated": true
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -88971,7 +89432,7 @@
     "family": "qwen",
     "created_at": "2025-07-21 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": "2025-06-30",
     "modalities": {
       "input": [
@@ -88991,9 +89452,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0875,
-          "output_per_million": 0.35,
-          "cache_read_input_per_million": 0.0175
+          "input_per_million": 0.09,
+          "output_per_million": 0.55
         }
       }
     },
@@ -89012,7 +89472,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 235929,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -89046,13 +89506,12 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.0875,
-        "output": 0.35,
-        "cache_read": 0.0175
+        "input": 0.09,
+        "output": 0.55
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 16384
       },
       "knowledge": "2025-06-30"
     }
@@ -89250,7 +89709,7 @@
     "family": "qwen",
     "created_at": "2025-07-29 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 32000,
+    "max_output_tokens": 235929,
     "knowledge_cutoff": "2025-06-30",
     "modalities": {
       "input": [
@@ -89270,8 +89729,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.04815,
-          "output_per_million": 0.19305
+          "input_per_million": 0.1,
+          "output_per_million": 0.3
         }
       }
     },
@@ -89289,8 +89748,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 128000,
-        "max_completion_tokens": 32000,
+        "context_length": 262144,
+        "max_completion_tokens": 235929,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -89323,12 +89782,12 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.04815,
-        "output": 0.19305
+        "input": 0.1,
+        "output": 0.3
       },
       "limit": {
         "context": 262144,
-        "output": 32000
+        "output": 235929
       },
       "knowledge": "2025-06-30"
     }
@@ -91709,7 +92168,7 @@
     "family": "qwen",
     "created_at": "2026-02-23 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -91734,9 +92193,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.15,
-          "output_per_million": 1,
-          "cache_read_input_per_million": 0.05
+          "input_per_million": 0.08,
+          "output_per_million": 0.75,
+          "cache_read_input_per_million": 0.04
         }
       }
     },
@@ -91757,7 +92216,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 235929,
+        "max_completion_tokens": 32768,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -91798,13 +92257,13 @@
         }
       ],
       "cost": {
-        "input": 0.15,
-        "output": 1,
-        "cache_read": 0.05
+        "input": 0.08,
+        "output": 0.75,
+        "cache_read": 0.04
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 32768
       }
     }
   },
@@ -91815,7 +92274,7 @@
     "family": "qwen",
     "created_at": "2026-02-15 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 81920,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -91840,9 +92299,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.55,
-          "output_per_million": 3.5,
-          "cache_read_input_per_million": 0.225
+          "input_per_million": 0.45,
+          "output_per_million": 3,
+          "cache_read_input_per_million": 0.22
         }
       }
     },
@@ -91863,7 +92322,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 235929,
+        "max_completion_tokens": 81920,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -91904,13 +92363,13 @@
         }
       ],
       "cost": {
-        "input": 0.55,
-        "output": 3.5,
-        "cache_read": 0.225
+        "input": 0.45,
+        "output": 3,
+        "cache_read": 0.22
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 81920
       }
     }
   },
@@ -92393,7 +92852,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.32,
-          "output_per_million": 2.7,
+          "output_per_million": 3.25,
           "cache_read_input_per_million": 0.03
         }
       }
@@ -92457,7 +92916,7 @@
       ],
       "cost": {
         "input": 0.32,
-        "output": 2.7,
+        "output": 3.25,
         "cache_read": 0.03
       },
       "limit": {
@@ -93513,111 +93972,6 @@
       "limit": {
         "context": 1000000,
         "output": 131072
-      }
-    }
-  },
-  {
-    "id": "qwen/qwen3.8-27b:free",
-    "name": "Qwen3.8 27B (free)",
-    "provider": "openrouter",
-    "family": "qwen",
-    "created_at": "2026-08-14 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 235929,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "vision",
-      "video",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0,
-          "output_per_million": 0
-        }
-      }
-    },
-    "metadata": {
-      "description": "Qwen3.8 27B is an open-weight dense vision-language model from Qwen. It is suited for coding, professional workflows, research, multimodal interaction, and long-running agent tasks, with flexible thinking that can be...",
-      "architecture": {
-        "modality": "text+image+video->text",
-        "input_modalities": [
-          "text",
-          "image",
-          "video"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 235929,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "presence_penalty",
-        "reasoning",
-        "reasoning_effort",
-        "repetition_penalty",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ],
-      "expiration_date": null,
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": true,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2026-08-14",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": true,
-      "reasoning_options": [
-        {
-          "type": "toggle"
-        },
-        {
-          "type": "effort",
-          "values": [
-            "low",
-            "medium",
-            "xhigh"
-          ]
-        }
-      ],
-      "cost": {
-        "input": 0,
-        "output": 0
-      },
-      "limit": {
-        "context": 262144,
-        "output": 235929
       }
     }
   },
@@ -96741,105 +97095,6 @@
     }
   },
   {
-    "id": "stealth/space-bunny-alpha",
-    "name": "Space Bunny Alpha",
-    "provider": "openrouter",
-    "family": "alpha",
-    "created_at": "2026-09-23 00:00:00 UTC",
-    "context_window": 1000000,
-    "max_output_tokens": 524288,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "video"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "reasoning",
-      "vision",
-      "video",
-      "streaming",
-      "tool_choice"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0,
-          "output_per_million": 0
-        }
-      }
-    },
-    "metadata": {
-      "description": "Space Bunny Alpha is an anonymous large model with blazing-fast inference, strong coding capabilities and native multimodal input support. It delivers adjustable reasoning effort, and a 1M-token context window. Space...",
-      "architecture": {
-        "modality": "text+image+video->text",
-        "input_modalities": [
-          "text",
-          "image",
-          "video"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 1000000,
-        "max_completion_tokens": 524288,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "include_reasoning",
-        "max_tokens",
-        "reasoning",
-        "reasoning_effort",
-        "response_format",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ],
-      "expiration_date": "2026-10-05",
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2026-09-23",
-      "tool_call": true,
-      "structured_output": false,
-      "reasoning": true,
-      "reasoning_options": [
-        {
-          "type": "effort",
-          "values": [
-            "low",
-            "medium",
-            "high",
-            "xhigh",
-            "max"
-          ]
-        }
-      ],
-      "cost": {
-        "input": 0,
-        "output": 0
-      },
-      "limit": {
-        "context": 1000000,
-        "output": 524288
-      }
-    }
-  },
-  {
     "id": "stepfun/step-3.5-flash",
     "name": "Step 3.5 Flash",
     "provider": "openrouter",
@@ -97120,6 +97375,90 @@
     }
   },
   {
+    "id": "tencent/hy-image-v3.5-preview",
+    "name": "Tencent: Hy Image 3.5 Preview",
+    "provider": "openrouter",
+    "family": "tencent",
+    "created_at": "2026-10-05 20:26:57 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Hy Image 3.5 Preview is a unified image generation and editing model from Tencent. It handles text-to-image, image-to-image, and multi-turn editing through one endpoint, taking up to 20 reference images...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "1.5K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "1:4",
+            "2:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:1",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 20
+        },
+        "seed": {
+          "type": "boolean"
+        },
+        "size": {
+          "type": "boolean"
+        }
+      },
+      "expiration_date": null
+    }
+  },
+  {
     "id": "tencent/hy-mt2-1.8b",
     "name": "Hy-MT2-1.8B",
     "provider": "openrouter",
@@ -97372,9 +97711,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.132,
-          "output_per_million": 0.528,
-          "cache_read_input_per_million": 0.033
+          "input_per_million": 0.0825,
+          "output_per_million": 0.33,
+          "cache_read_input_per_million": 0.020625
         }
       }
     },
@@ -97439,9 +97778,9 @@
         }
       ],
       "cost": {
-        "input": 0.132,
-        "output": 0.528,
-        "cache_read": 0.033
+        "input": 0.0825,
+        "output": 0.33,
+        "cache_read": 0.020625
       },
       "limit": {
         "context": 262144,
@@ -97571,9 +97910,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.834,
-          "output_per_million": 2.501,
-          "cache_read_input_per_million": 0.042
+          "input_per_million": 0.7506,
+          "output_per_million": 2.2509,
+          "cache_read_input_per_million": 0.0378
         }
       }
     },
@@ -97638,9 +97977,9 @@
         }
       ],
       "cost": {
-        "input": 0.834,
-        "output": 2.501,
-        "cache_read": 0.042
+        "input": 0.7506,
+        "output": 2.2509,
+        "cache_read": 0.0378
       },
       "limit": {
         "context": 1048576,
@@ -102276,7 +102615,7 @@
     "family": "glm",
     "created_at": "2026-06-13 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -102298,9 +102637,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0224,
-          "output_per_million": 16,
-          "cache_read_input_per_million": 0.0224
+          "input_per_million": 0.19,
+          "output_per_million": 8,
+          "cache_read_input_per_million": 0.18
         }
       }
     },
@@ -102372,13 +102711,13 @@
         }
       ],
       "cost": {
-        "input": 0.0224,
-        "output": 16,
-        "cache_read": 0.0224
+        "input": 0.19,
+        "output": 8,
+        "cache_read": 0.18
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 943718
       }
     }
   },
@@ -102389,7 +102728,7 @@
     "family": "glm",
     "created_at": "2026-08-14 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -102411,9 +102750,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.4,
-          "output_per_million": 4.4,
-          "cache_read_input_per_million": 0.14
+          "input_per_million": 0.07,
+          "output_per_million": 7,
+          "cache_read_input_per_million": 0.065
         }
       }
     },
@@ -102432,7 +102771,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -102480,13 +102819,13 @@
         }
       ],
       "cost": {
-        "input": 1.4,
-        "output": 4.4,
-        "cache_read": 0.14
+        "input": 0.07,
+        "output": 7,
+        "cache_read": 0.065
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 943718
       }
     }
   },
@@ -103499,9 +103838,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.003,
-          "output_per_million": 2.4,
-          "cache_read_input_per_million": 0.003
+          "input_per_million": 0.0182,
+          "output_per_million": 1.32,
+          "cache_read_input_per_million": 0.0165
         }
       }
     },
@@ -103520,8 +103859,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "context_length": 1040000,
+        "max_completion_tokens": 393216,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -103571,9 +103910,9 @@
         }
       ],
       "cost": {
-        "input": 0.003,
-        "output": 2.4,
-        "cache_read": 0.003
+        "input": 0.0182,
+        "output": 1.32,
+        "cache_read": 0.0165
       },
       "limit": {
         "context": 1048576,
@@ -103588,7 +103927,7 @@
     "family": "deepseek",
     "created_at": "2026-09-14 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 393216,
+    "max_output_tokens": 384000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -103609,9 +103948,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.1901,
-          "output_per_million": 4.2,
-          "cache_read_input_per_million": 0.19
+          "input_per_million": 0.4,
+          "output_per_million": 4.3,
+          "cache_read_input_per_million": 0.033
         }
       }
     },
@@ -103680,13 +104019,13 @@
         }
       ],
       "cost": {
-        "input": 0.1901,
-        "output": 4.2,
-        "cache_read": 0.19
+        "input": 0.4,
+        "output": 4.3,
+        "cache_read": 0.033
       },
       "limit": {
         "context": 1048576,
-        "output": 393216
+        "output": 384000
       }
     }
   },
@@ -103719,9 +104058,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0152,
-          "output_per_million": 1.28,
-          "cache_read_input_per_million": 0.0152
+          "input_per_million": 0.00605,
+          "output_per_million": 1.408,
+          "cache_read_input_per_million": 0.00605
         }
       }
     },
@@ -103792,9 +104131,9 @@
         }
       ],
       "cost": {
-        "input": 0.0152,
-        "output": 1.28,
-        "cache_read": 0.0152
+        "input": 0.00605,
+        "output": 1.408,
+        "cache_read": 0.00605
       },
       "limit": {
         "context": 1048576,
@@ -104080,9 +104419,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.66,
-          "output_per_million": 13,
-          "cache_read_input_per_million": 0.45
+          "input_per_million": 0.69,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.23
         }
       }
     },
@@ -104153,9 +104492,9 @@
         }
       ],
       "cost": {
-        "input": 0.66,
-        "output": 13,
-        "cache_read": 0.45
+        "input": 0.69,
+        "output": 15,
+        "cache_read": 0.23
       },
       "limit": {
         "context": 1048576,
@@ -104925,7 +105264,7 @@
     "family": "glm-flash",
     "created_at": "2026-08-27 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -104951,9 +105290,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0352,
-          "output_per_million": 0.5,
-          "cache_read_input_per_million": 0.0232
+          "input_per_million": 0.0396,
+          "output_per_million": 0.6875,
+          "cache_read_input_per_million": 0.0396
         }
       }
     },
@@ -104974,7 +105313,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -105022,13 +105361,13 @@
         }
       ],
       "cost": {
-        "input": 0.0352,
-        "output": 0.5,
-        "cache_read": 0.0232
+        "input": 0.0396,
+        "output": 0.6875,
+        "cache_read": 0.0396
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 943718
       }
     }
   },
@@ -105039,7 +105378,7 @@
     "family": "glm",
     "created_at": "2026-08-19 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 943718,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -105061,9 +105400,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.03,
-          "output_per_million": 12,
-          "cache_read_input_per_million": 0.03
+          "input_per_million": 0.07,
+          "output_per_million": 7,
+          "cache_read_input_per_million": 0.065
         }
       }
     },
@@ -105130,13 +105469,13 @@
         }
       ],
       "cost": {
-        "input": 0.03,
-        "output": 12,
-        "cache_read": 0.03
+        "input": 0.07,
+        "output": 7,
+        "cache_read": 0.065
       },
       "limit": {
         "context": 1048576,
-        "output": 131072
+        "output": 943718
       }
     }
   },
@@ -112378,6 +112717,32 @@
       "launch_stage": "GA",
       "supported_actions": null,
       "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-live-2.5-flash-native-audio@default"
+    }
+  },
+  {
+    "id": "gemini-nano-banana-2.1",
+    "name": "gemini-nano-banana-2.1",
+    "provider": "vertexai",
+    "family": "gemini",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "version_id": "default",
+      "open_source_category": null,
+      "launch_stage": "GA",
+      "supported_actions": null,
+      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-nano-banana-2.1@default"
     }
   },
   {
