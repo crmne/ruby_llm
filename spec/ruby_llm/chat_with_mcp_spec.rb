@@ -371,15 +371,45 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.tools }.to raise_error(ArgumentError, /Two tools are named echo/)
   end
 
-  it 'refuses a deferred tool and an MCP tool with the same name' do
-    echo = Class.new(RubyLLM::Tool) do
-      def self.tool_name = 'echo'
-      def execute(text:) = text
+  describe 'deferred tools' do
+    def rendered(chat)
+      chat.render[:tools].to_h { |tool| [tool[:name], tool[:defer_loading]] }
     end
 
-    chat.with_tools(echo, defer: true).with_mcp(files)
+    it 'defers every tool of a server connected with defer: true' do
+      chat.with_mcp(files, defer: true)
 
-    expect { chat.tools }.to raise_error(ArgumentError, /Two tools are named echo/)
+      expect(chat.deferred_tools.keys).to eq(chat.tools.keys)
+      expect(rendered(chat)).to include('echo' => true, 'add' => true, 'tool_search_tool_bm25' => nil)
+    end
+
+    it 'defers the tools a server class declares' do
+      files_class.defer :echo
+
+      expect(chat.with_mcp(files).deferred_tools.keys).to eq([:echo])
+    end
+
+    it 'offers declared tools up front with defer: false' do
+      files_class.defer
+
+      expect(chat.with_mcp(files, defer: false).deferred_tools).to be_empty
+    end
+
+    it 'forgets deferrals when the servers are disconnected' do
+      chat.with_mcp(files, defer: true).with_mcp(nil).with_mcp(files)
+
+      expect(chat.deferred_tools).to be_empty
+    end
+
+    it 'connects deferred servers declared on an agent' do
+      server = files
+      agent = Class.new(RubyLLM::Agent) do
+        model model_for(:anthropic)
+        mcp server, defer: true
+      end
+
+      expect(agent.chat.deferred_tools.keys).to include(:echo, :add)
+    end
   end
 
   it 'disconnects servers with nil' do

@@ -15,6 +15,7 @@ After reading this guide, you will know:
 * What got faster, and how to keep connections open between calls.
 * How to connect your chats and agents to MCP servers.
 * How to show what a slow tool is doing while it runs.
+* How to give a model hundreds of tools without sending them all.
 * How to ask typed judgments with TypeSafe's Jev models.
 * How to evaluate your agents against a dataset.
 * How to trace RubyLLM with OpenTelemetry.
@@ -145,6 +146,17 @@ end
 ```
 
 MCP server tools report their progress through the same callback. It works with concurrent tool execution, on agents, and on Rails chat records. See [Reporting Progress]({% link _core_features/tool-execution.md %}#reporting-progress).
+
+## Tool Search
+
+A few MCP servers can put hundreds of tool definitions in front of the model on every turn. Defer them, and the model searches for the tools it needs instead:
+
+```ruby
+chat.with_mcp(GitHub, Linear, defer: true)
+chat.ask "Which open issues mention the flaky login spec?"
+```
+
+`with_tools`, the agent `tools` and `mcp` macros, and Rails chat records take the same `defer:` option, and tool and MCP classes declare it with `defer`. Anthropic and OpenAI's Responses API search natively; other providers receive deferred tools as ordinary tools, so the same code runs everywhere. See [Tool Search]({% link _core_features/tool-search.md %}).
 
 ## Typed Judgments
 

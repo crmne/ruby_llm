@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     base = instance_double(RubyLLM::Tool, name: name, description: "#{name} desc",
                                           parameters_schema: nil, declared_parameters: {},
                                           provider_options: provider_options)
-    deferred ? RubyLLM::Tool::Registration.new(base, deferred: true) : base
+    deferred ? RubyLLM::Tool::Deferred.new(base) : base
   end
 
   let(:search_use) do
@@ -25,7 +25,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       expect(described_class.function_for(tool('a', deferred: false))).not_to have_key(:defer_loading)
     end
 
-    it 'emits defer_loading: true for a deferred Registration' do
+    it 'emits defer_loading: true for a deferred tool' do
       expect(described_class.function_for(tool('a', deferred: true))[:defer_loading]).to be(true)
     end
 
@@ -36,17 +36,21 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
   end
 
-  describe '.format_tools' do
-    it 'does not append the native search primitive when nothing is deferred' do
-      formatted = described_class.format_tools({ a: tool('a', deferred: false), b: tool('b', deferred: false) })
-      expect(formatted.map { |t| t[:name] }).to contain_exactly('a', 'b')
-      expect(formatted.map { |t| t[:type] }).not_to include('tool_search_tool_bm25_20251119')
+  describe '.apply_tool_search' do
+    def payload_tools(*tools)
+      payload = { tools: tools.map { |t| described_class.function_for(t) }, messages: [] }
+      described_class.apply_tool_search(payload)[:tools]
     end
 
-    it 'appends the native BM25 search primitive exactly once when any tool is deferred' do
-      formatted = described_class.format_tools({ a: tool('a', deferred: false), b: tool('b', deferred: true) })
-      expect(formatted.last).to eq(described_class::NATIVE_TOOL_SEARCH)
-      expect(formatted.count { |t| t[:type] == 'tool_search_tool_bm25_20251119' }).to eq(1)
+    it 'does not add the search tool when nothing is deferred' do
+      expect(payload_tools(tool('a', deferred: false)).map { |t| t[:name] }).to eq(%w[a])
+    end
+
+    it 'adds the BM25 search tool once when any tool is deferred' do
+      tools = payload_tools(tool('a', deferred: false), tool('b', deferred: true))
+
+      expect(tools.last).to eq(described_class::NATIVE_TOOL_SEARCH)
+      expect(tools.count { |t| t[:type] == 'tool_search_tool_bm25_20251119' }).to eq(1)
     end
   end
 
@@ -98,62 +102,24 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
         .to eq(%w[text server_tool_use tool_search_tool_result server_tool_use tool_use])
     end
 
-    it 'drops only the search pair when the request no longer carries deferred tools' do
-      formatted = protocol.send(:format_message, message, replay_search: false)
-      expect(types(formatted)).to eq(%w[text server_tool_use tool_use])
-      expect(formatted[:content][1]['name']).to eq('web_search')
+    def replayed(tools)
+      payload = { tools:, messages: [protocol.send(:format_message, message)] }
+      described_class.apply_tool_search(payload)[:messages].first
     end
 
-    it 'leaves the message raw_content untouched when stripping' do
-      protocol.send(:format_message, message, replay_search: false)
+    it 'drops only the search pair when the request declares no search tool' do
+      formatted = replayed([{ name: 'a' }])
+
+      expect(types(formatted)).to eq(%w[text server_tool_use tool_use])
+      expect(formatted[:content][1]['name']).to eq('web_search')
       expect(message.raw_content.size).to eq(5)
     end
 
-    describe 'from render_payload' do
-      let(:model) do
-        instance_double(RubyLLM::Model, id: 'claude-haiku-4-5', max_output_tokens: 100,
-                                        supports?: false, reasoning_option: nil)
-      end
+    it 'keeps the pair while a deferred tool or a configured search tool is declared' do
+      regex = { type: 'tool_search_tool_regex_20251119', name: 'tool_search_tool_regex' }
 
-      def replayed_types(tools, provider_tools: [])
-        payload = RubyLLM::Protocols::Anthropic::Chat.render_payload([message], tools: tools, temperature: nil,
-                                                                                model: model, provider_tools:)
-        payload[:messages].first[:content].map { |b| b['type'] }
-      end
-
-      it 'keeps the pair while a deferred tool is rendered and strips it otherwise' do
-        expect(replayed_types({ a: tool('a', deferred: true) })).to include('tool_search_tool_result')
-        expect(replayed_types({ a: tool('a', deferred: false) })).not_to include('tool_search_tool_result')
-      end
-
-      it 'keeps the pair while a tool-search provider tool is configured' do
-        regex = { type: 'tool_search_tool_regex_20251119', name: 'tool_search_tool_regex' }
-        web_search = { type: 'web_search_20260318', name: 'web_search' }
-
-        expect(replayed_types({}, provider_tools: [regex])).to include('tool_search_tool_result')
-        expect(replayed_types({}, provider_tools: [web_search])).not_to include('tool_search_tool_result')
-      end
-    end
-  end
-
-  describe '#supports_deferred_tools?' do
-    def protocol_for(model)
-      protocol = RubyLLM::Protocols::Anthropic.allocate
-      allow(protocol).to receive(:model).and_return(model)
-      protocol
-    end
-
-    it 'follows the model tool_search capability' do
-      supported = RubyLLM::Model.new(id: 'claude-haiku-4-5', provider: 'anthropic',
-                                     capabilities: %w[function_calling tool_search])
-      unsupported = RubyLLM::Model.new(id: 'claude-opus-4-1', provider: 'anthropic', capabilities: %w[function_calling])
-
-      expect(protocol_for(supported).supports_deferred_tools?).to be(true)
-      expect(protocol_for(unsupported).supports_deferred_tools?).to be(false)
-    end
-
-    it 'is false without a model' do
-      expect(protocol_for(nil).supports_deferred_tools?).to be(false)
+      expect(types(replayed([{ name: 'a', defer_loading: true }]))).to include('tool_search_tool_result')
+      expect(types(replayed([regex]))).to include('tool_search_tool_result')
     end
   end
 
@@ -165,7 +131,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     before do
       stub_const('WeatherLookupTool', Class.new(RubyLLM::Tool) do
         description 'Looks up the current weather for a city.'
-        deferred
+        defer
         parameter :city, description: 'City name'
         def execute(city:) = "weather in #{city}"
       end)

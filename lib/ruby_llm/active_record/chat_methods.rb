@@ -229,7 +229,7 @@ module RubyLLM
 
       ##
       # :method: with_mcp
-      # :call-seq: with_mcp(*servers)
+      # :call-seq: with_mcp(*servers, defer: nil)
       #
       # Applies Chat#with_mcp and returns this record.
 
@@ -469,6 +469,12 @@ module RubyLLM
       # Delegates to Chat#tools. See that method for arguments and return values.
 
       ##
+      # :method: deferred_tools
+      # :call-seq: deferred_tools
+      #
+      # Delegates to Chat#deferred_tools. See that method for arguments and return values.
+
+      ##
       # :method: mcp
       # :call-seq: mcp
       #
@@ -520,8 +526,8 @@ module RubyLLM
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
-        schema provider_tools temperature thinking tool_options tools mcp waiting? awaiting_input? pending_inputs
-        awaiting_tasks? pending_tasks add_completion count_tokens each render
+        schema provider_tools temperature thinking tool_options tools deferred_tools mcp waiting? awaiting_input?
+        pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 
       ##

@@ -223,17 +223,15 @@ RSpec.describe RubyLLM::Agent do
     it 'defers the declared tools on the chat it builds' do
       chat = agent_with_tools(echo_tool, defer: true).chat
 
-      expect(chat.tools.keys).to eq([:echo])
-      expect(chat.instance_variable_get(:@deferred_tool_names).keys).to include(:echo)
+      expect(chat.deferred_tools.keys).to eq([:echo])
     end
 
     it 'registers them as ordinary tools by default' do
-      expect(agent_with_tools(echo_tool).chat.instance_variable_get(:@deferred_tool_names).keys).to be_empty
+      expect(agent_with_tools(echo_tool).chat.deferred_tools).to be_empty
     end
 
     it 'inherits the setting' do
-      chat = Class.new(agent_with_tools(echo_tool, defer: true)).chat
-      expect(chat.instance_variable_get(:@deferred_tool_names).keys).to include(:echo)
+      expect(Class.new(agent_with_tools(echo_tool, defer: true)).chat.deferred_tools.keys).to eq([:echo])
     end
   end
 

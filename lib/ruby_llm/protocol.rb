@@ -98,10 +98,6 @@ module RubyLLM
       raise Error, "#{@provider.name} doesn't support remote tool approvals"
     end
 
-    def supports_deferred_tools? # :nodoc:
-      false
-    end
-
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                  usage_recorder: nil, provider_tools: [], compaction: nil, end_user: nil, &)
@@ -138,7 +134,6 @@ module RubyLLM
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                stream: false, provider_tools: [], compaction: nil, end_user: nil)
-      resolution = resolve_provider_tools_for_request(provider_tools)
       payload = render_payload(
         messages,
         tools: tools,
@@ -150,13 +145,13 @@ module RubyLLM
         schema: schema,
         thinking: thinking,
         citations: citations,
-        caching: caching,
-        provider_tools: resolution ? resolution.tools : []
+        caching: caching
       )
       payload = apply_end_user(payload, end_user) if end_user
       payload = apply_compaction(payload, compaction) if compaction
       payload = Support::Utils.deep_merge(payload, provider_options)
-      payload = apply_provider_tools(payload, resolution)
+      payload = apply_provider_tools(payload, provider_tools)
+      payload = apply_tool_search(payload)
       apply_before_request_hooks(payload, before_request)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support chat"
@@ -659,7 +654,8 @@ module RubyLLM
       RubyLLM::Tools::ProviderTools.resolve(entries, aliases: aliases, owner: @provider.name)
     end
 
-    def apply_provider_tools(payload, resolution)
+    def apply_provider_tools(payload, entries)
+      resolution = resolve_provider_tools_for_request(entries)
       return payload unless resolution
 
       payload = Support::Utils.deep_merge(payload, resolution.payload) unless resolution.payload.empty?
@@ -671,6 +667,10 @@ module RubyLLM
     # entry shape comes from the alias table or the caller's raw Hash.
     def merge_server_tool_entries(payload, entries)
       payload[:tools] = Array(payload[:tools]) + entries
+    end
+
+    def apply_tool_search(payload)
+      payload
     end
 
     def track_usage(operation, on_finish: nil, model_id: nil)

@@ -83,8 +83,8 @@ module RubyLLM
 
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
-      model provider messages tools mcp provider_tools tool_options provider_options headers schema concurrency
-      caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
+      model provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers schema
+      concurrency caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
     ].freeze
@@ -97,6 +97,7 @@ module RubyLLM
       @context
       @chat_model
       @tools_defer
+      @mcp_defer
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG,
                      :PASSTHROUGH_OPTIONS, :THINKING_OPTIONS, :GUARDED_OPERATIONS,
@@ -137,8 +138,7 @@ module RubyLLM
       #   tools SearchDocs, LookupAccount
       #   tools { [TodoTool.new(chat: chat)] }
       #
-      # +defer:+ is passed on to Chat#with_tools, so the tools stay out of
-      # the model's context until the provider's tool search loads them.
+      # Pass +defer:+ as Chat#with_tools takes it:
       #
       #   tools SearchDocs, LookupAccount, defer: true
       #
@@ -157,9 +157,14 @@ module RubyLLM
       #   mcp Files
       #   mcp { [Linear.new(user: user), Files] }
       #
-      def mcp(*servers, &block)
+      # Pass +defer:+ as Chat#with_mcp takes it:
+      #
+      #   mcp GitHub, defer: true
+      #
+      def mcp(*servers, defer: nil, &block)
         return @mcp || [] if servers.empty? && !block_given?
 
+        @mcp_defer = defer
         @mcp = block_given? ? block : servers.flatten
       end
 
@@ -733,7 +738,7 @@ module RubyLLM
         chat.with_tools(*tools_to_apply, defer: @tools_defer) if tools_to_apply.any?
 
         servers = Array(evaluate(mcp, runtime)).compact
-        chat.with_mcp(*servers) if servers.any?
+        chat.with_mcp(*servers, defer: @mcp_defer) if servers.any?
 
         options = evaluate(tool_options, runtime)
         chat.with_tool_options(**options) if options && !options.empty?
@@ -962,7 +967,7 @@ module RubyLLM
 
     ##
     # :method: with_mcp
-    # :call-seq: with_mcp(*servers)
+    # :call-seq: with_mcp(*servers, defer: nil)
     #
     # Delegates to Chat#with_mcp. See that method for arguments and return values.
 
@@ -1169,6 +1174,12 @@ module RubyLLM
     # :call-seq: tools
     #
     # Delegates to Chat#tools. See that method for arguments and return values.
+
+    ##
+    # :method: deferred_tools
+    # :call-seq: deferred_tools
+    #
+    # Delegates to Chat#deferred_tools. See that method for arguments and return values.
 
     ##
     # :method: mcp

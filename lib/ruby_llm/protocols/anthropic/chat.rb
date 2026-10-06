@@ -35,18 +35,15 @@ module RubyLLM
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
-                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil,
-                           provider_tools: [])
+                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages, caching:)
-          replay_search = Tools.replay_search?(tools, provider_tools)
 
           build_base_payload(chat_messages, model, stream, thinking, citations: citations, caching:,
-                                                                     max_output_tokens:,
-                                                                     replay_search:).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:, provider_tools:)
+                                                                     max_output_tokens:).tap do |payload|
+            add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:)
             payload[:cache_control] = prompt_cache_control(caching) if caching
           end
         end
@@ -67,7 +64,7 @@ module RubyLLM
             thinking: thinking,
             citations: citations,
             caching: caching
-          ).slice(*COUNT_TOKENS_KEYS)
+          ).then { |payload| Tools.apply_tool_search(payload) }.slice(*COUNT_TOKENS_KEYS)
         end
 
         def parse_count_tokens_response(response)
@@ -98,10 +95,10 @@ module RubyLLM
         end
 
         def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil,
-                               max_output_tokens: nil, replay_search: true)
+                               max_output_tokens: nil)
           payload = {
             model: model.id,
-            messages: format_messages(chat_messages, thinking:, citations:, caching:, replay_search:),
+            messages: format_messages(chat_messages, thinking:, citations:, caching:),
             stream: stream,
             max_tokens: max_output_tokens || model.max_output_tokens || DEFAULT_MAX_OUTPUT_TOKENS
           }
@@ -111,7 +108,7 @@ module RubyLLM
           payload
         end
 
-        def format_messages(messages, thinking: nil, citations: false, caching: nil, replay_search: true)
+        def format_messages(messages, thinking: nil, citations: false, caching: nil)
           rendered = []
           tool_result_blocks = []
 
@@ -127,7 +124,7 @@ module RubyLLM
               tool_result_blocks = []
             end
 
-            formatted = format_message(msg, thinking:, citations:, caching:, replay_search:)
+            formatted = format_message(msg, thinking:, citations:, caching:)
             rendered << formatted unless formatted[:content].empty?
           end
 
@@ -135,10 +132,9 @@ module RubyLLM
           rendered
         end
 
-        def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil,
-                                provider_tools: [])
+        def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil)
           if tools.any?
-            payload[:tools] = Tools.format_tools(tools, provider_tools:)
+            payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
             unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
               payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
             end
@@ -340,9 +336,9 @@ module RubyLLM
         # Stored thinking blocks replay whether or not this request asks for
         # thinking: Claude emits them on its own and requires them back on
         # tool-use turns.
-        def format_message(msg, thinking: nil, citations: false, caching: nil, replay_search: true) # rubocop:disable Lint/UnusedMethodArgument
+        def format_message(msg, thinking: nil, citations: false, caching: nil) # rubocop:disable Lint/UnusedMethodArgument
           if msg.role == :assistant && msg.raw_content
-            format_raw_assistant_message(msg, caching:, replay_search:)
+            format_raw_assistant_message(msg, caching:)
           elsif msg.tool_call?
             format_tool_call_with_thinking(msg, caching:)
           elsif msg.tool_result?
@@ -352,9 +348,6 @@ module RubyLLM
           end
         end
 
-        # Turns that used server tools replay their provider-shaped blocks
-        # verbatim: the API requires the tool_use/result blocks and their
-        # citations back exactly as returned.
         def portable_raw_content(message)
           blocks = message.raw_content
           return unless blocks.is_a?(Array) && blocks.any? { |block| Tools.tool_search_block?(block) }
@@ -363,9 +356,11 @@ module RubyLLM
           kept if kept.all? { |block| PORTABLE_BLOCK_TYPES.include?(block['type']) || Tools.tool_search_block?(block) }
         end
 
-        def format_raw_assistant_message(msg, caching: nil, replay_search: true)
+        # Turns that used server tools replay their provider-shaped blocks
+        # verbatim: the API requires the tool_use/result blocks and their
+        # citations back exactly as returned.
+        def format_raw_assistant_message(msg, caching: nil)
           blocks = msg.raw_content.dup
-          blocks.reject! { |block| Tools.tool_search_block?(block) } unless replay_search
           inject_cache_control(blocks, caching:) if cache_boundary?(msg, caching:)
 
           { role: 'assistant', content: blocks }

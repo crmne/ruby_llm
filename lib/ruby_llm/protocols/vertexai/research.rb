@@ -76,7 +76,7 @@ module RubyLLM
                     else
                       RubyLLM::Tools::ProviderTools.normalize(Array(provider_tools), {})
                     end
-          apply_provider_tools(payload, resolve_provider_tools_for_request(entries)).merge(options)
+          apply_provider_tools(payload, entries).merge(options)
         end
 
         def render_research_options(provider_options)

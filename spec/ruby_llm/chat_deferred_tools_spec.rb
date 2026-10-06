@@ -5,156 +5,90 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
-  def define_tools!
+  before do
     stub_const('RegularTool', Class.new(RubyLLM::Tool) { description 'plain tool' })
     stub_const('HeavyTool', Class.new(RubyLLM::Tool) do
       description 'heavy deferred tool'
-      deferred
+      defer
       def execute = 'heavy ran'
     end)
-    stub_const('OtherTool', Class.new(RubyLLM::Tool) { description 'another tool' })
   end
 
-  before { define_tools! }
+  let(:chat) { described_class.new(model: model_for(:anthropic), provider: :anthropic) }
 
-  def anthropic_chat
-    described_class.new(model: 'claude-haiku-4-5', provider: :anthropic)
+  def rendered_tools(chat)
+    chat.render[:tools].map { |tool| tool.slice(:name, :type, :defer_loading) }
   end
 
-  def old_anthropic_chat
-    described_class.new(model: 'claude-opus-4-1', provider: :anthropic, assume_model_exists: true)
-  end
+  describe '#deferred_tools' do
+    it 'returns the tools declared with Tool.defer' do
+      chat.with_tools(RegularTool, HeavyTool)
 
-  def deferred_names(chat)
-    chat.instance_variable_get(:@deferred_tool_names).keys
-  end
-
-  def chat_completions_chat
-    described_class.new(model: 'gpt-5.4', provider: :openai, protocol: :chat_completions)
-  end
-
-  describe '#with_tools' do
-    it 'lists every registered tool, deferred or not' do
-      chat = anthropic_chat.with_tools(RegularTool, HeavyTool)
       expect(chat.tools.keys).to eq(%i[regular heavy])
-      expect(deferred_names(chat)).to eq([:heavy])
+      expect(chat.deferred_tools.keys).to eq([:heavy])
+      expect(chat.deferred_tools[:heavy]).to be(chat.tools[:heavy])
     end
 
-    it 'defers a tool declared deferred' do
-      chat = anthropic_chat.with_tools(HeavyTool)
-      expect(deferred_names(chat)).to include(:heavy)
+    it 'defers every tool registered with defer: true' do
+      chat.with_tools(RegularTool, HeavyTool, defer: true)
+
+      expect(chat.deferred_tools.keys).to eq(%i[regular heavy])
     end
 
-    it 'defers any tool with defer: true' do
-      chat = anthropic_chat.with_tools(RegularTool, HeavyTool, OtherTool, defer: true)
-      expect(deferred_names(chat)).to match_array(%i[regular heavy other])
+    it 'offers a deferred class up front with defer: false' do
+      chat.with_tools(HeavyTool, defer: false)
+
+      expect(chat.deferred_tools).to be_empty
     end
 
-    it 'treats a truthy defer: as true' do
-      chat = anthropic_chat.with_tools(OtherTool, defer: 1)
-      expect(deferred_names(chat)).to include(:other)
+    it 'follows the latest registration of a name' do
+      chat.with_tools(RegularTool, defer: true).with_tools(RegularTool)
+
+      expect(chat.deferred_tools).to be_empty
     end
 
-    it 'overrides a deferred class with defer: false' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: false)
-      expect(chat.tools.keys).to eq([:heavy])
-      expect(deferred_names(chat)).to be_empty
-    end
+    it 'forgets deferrals when the tools are cleared' do
+      chat.with_tools(RegularTool, defer: true).with_tools(nil).with_tools(RegularTool)
 
-    it 'lets the latest registration of a name decide' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: true).with_tools(HeavyTool, defer: false)
-      expect(chat.tools.keys).to eq([:heavy])
-      expect(deferred_names(chat)).to be_empty
-
-      chat.with_tools(HeavyTool, defer: true)
-      expect(chat.tools.keys).to eq([:heavy])
-      expect(deferred_names(chat)).to include(:heavy)
-    end
-
-    it 'records defer intent on a provider without tool search' do
-      chat = chat_completions_chat.with_tools(HeavyTool, defer: true)
-      expect(deferred_names(chat)).to include(:heavy)
-    end
-
-    it 'registers a tool without deferred? when defer is not requested' do
-      duck = Object.new
-      def duck.name = 'duck'
-
-      expect { anthropic_chat.with_tools(duck) }.not_to raise_error
-    end
-
-    it 'clears the deferred tools along with the rest on nil' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: true).with_tools(RegularTool)
-      chat.with_tools(nil)
-      expect(chat.tools).to be_empty
-      expect(deferred_names(chat)).to be_empty
+      expect(chat.deferred_tools).to be_empty
     end
   end
 
-  describe '#effective_tools' do
-    it 'returns the tools unchanged when nothing is deferred' do
-      chat = anthropic_chat.with_tools(RegularTool)
-      expect(chat.send(:effective_tools)).to eq(chat.tools)
+  describe 'requests' do
+    it 'marks deferred tools and adds the search tool' do
+      chat.with_tools(RegularTool, HeavyTool)
+
+      expect(rendered_tools(chat)).to eq([{ name: 'regular' }, { name: 'heavy', defer_loading: true },
+                                          { name: 'tool_search_tool_bm25', type: 'tool_search_tool_bm25_20251119' }])
     end
 
-    it 'wraps deferred tools in a deferred Registration on a model with tool search' do
-      chat = anthropic_chat.with_tools(RegularTool).with_tools(HeavyTool, defer: true)
-      effective = chat.send(:effective_tools)
+    it 'does not gate deferral on the model catalog' do
+      chat.with_model(model_for(:anthropic), provider: :vertexai).with_tools(HeavyTool)
+      allow(chat.model).to receive(:supports?).and_raise('Must not gate on model metadata')
 
-      expect(effective.keys).to eq(%i[regular heavy])
-      expect(effective[:heavy]).to be_a(RubyLLM::Tool::Registration)
-      expect(effective[:heavy].deferred?).to be(true)
-      expect(effective[:regular]).not_to be_a(RubyLLM::Tool::Registration)
+      expect(rendered_tools(chat).first).to include(defer_loading: true)
     end
 
-    it 'sends deferred tools as ordinary tools on a model without tool search, without logging' do
-      allow(RubyLLM.logger).to receive(:warn)
-      chat = old_anthropic_chat.with_tools(HeavyTool, OtherTool, defer: true)
+    it 'sends deferred tools as ordinary tools on a protocol without tool search' do
+      chat.with_model(model_for(:gemini), provider: :gemini).with_tools(HeavyTool)
 
-      effective = chat.send(:effective_tools)
-
-      expect(effective.keys).to eq(%i[heavy other])
-      expect(effective.values).to all(be_a(RubyLLM::Tool))
-      expect(effective.values).not_to include(a_kind_of(RubyLLM::Tool::Registration))
-      expect(RubyLLM.logger).not_to have_received(:warn)
+      expect(chat.render.to_json).not_to include('defer_loading')
+      expect(chat.deferred_tools.keys).to eq([:heavy])
     end
 
-    it 'sends them as ordinary tools on a protocol without tool search' do
-      chat = chat_completions_chat.with_tools(HeavyTool, defer: true)
-      expect(chat.send(:effective_tools)[:heavy]).not_to be_a(RubyLLM::Tool::Registration)
-    end
+    it 'keeps a search tool configured through provider tools instead of adding another' do
+      regex = { type: 'tool_search_tool_regex_20251119', name: 'tool_search_tool_regex' }
+      chat.with_tools(HeavyTool).with_provider_tools(regex)
 
-    it 'follows the current model across #with_model switches' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: true)
-      expect(chat.send(:effective_tools)[:heavy]).to be_a(RubyLLM::Tool::Registration)
-
-      chat.with_model('claude-opus-4-1', provider: :anthropic, assume_model_exists: true)
-      expect(chat.send(:effective_tools)[:heavy]).not_to be_a(RubyLLM::Tool::Registration)
-
-      chat.with_model('claude-haiku-4-5', provider: :anthropic)
-      expect(chat.send(:effective_tools)[:heavy]).to be_a(RubyLLM::Tool::Registration)
+      expect(rendered_tools(chat).last).to eq(regex)
+      expect(rendered_tools(chat).count { |tool| tool[:type].to_s.start_with?('tool_search') }).to eq(1)
     end
   end
 
-  describe 'tool choice' do
-    it 'accepts a deferred tool as a named choice' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: true)
-      expect { chat.with_tool_options(choice: :heavy) }.not_to raise_error
-      expect(chat.tool_prefs[:choice]).to eq(:heavy)
-    end
+  it 'executes a deferred tool the model calls' do
+    chat.with_tools(HeavyTool)
+    tool_call = RubyLLM::ToolCall.new(id: 't1', name: 'heavy', arguments: {})
 
-    it 'still rejects unknown tool names' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: true)
-      expect { chat.with_tool_options(choice: :missing) }.to raise_error(RubyLLM::InvalidToolChoiceError)
-    end
-  end
-
-  describe 'dispatch' do
-    it 'executes a deferred tool the model calls' do
-      chat = anthropic_chat.with_tools(HeavyTool, defer: true)
-      tool_call = RubyLLM::ToolCall.new(id: 't1', name: 'heavy', arguments: {})
-
-      expect(chat.send(:execute_tool, tool_call)).to eq('heavy ran')
-    end
+    expect(chat.send(:execute_tool, tool_call)).to eq('heavy ran')
   end
 end

@@ -47,8 +47,8 @@ module RubyLLM
     UNKNOWN_TOOL_ERRORS = [-32_601, -32_602].freeze
 
     SETTINGS = %i[
-      @url @command @directory @env @headers @bearer_token @timeout @input_names
-      @only @except @prefix @tool_declarations @approvals @callbacks @oauth @input_requests @extensions @log_level
+      @url @command @directory @env @headers @bearer_token @timeout @input_names @only @except @prefix
+      @tool_declarations @approvals @deferrals @callbacks @oauth @input_requests @extensions @log_level
     ].freeze
     private_constant :SETTINGS, :INPUT_ROUNDS, :INPUT_REQUESTS, :INLINE_SETTINGS, :EXTENSIONS, :POLL_INTERVAL,
                      :LOG_LEVELS, :UNKNOWN_TOOL_ERRORS
@@ -320,6 +320,22 @@ module RubyLLM
 
       def approvals # :nodoc:
         @approvals || []
+      end
+
+      # Keeps the named server tools out of the model's context until the
+      # provider's tool search loads them. Without names, every tool of the
+      # server is deferred. Chat#with_mcp with +defer:+ overrides it per
+      # chat.
+      #
+      #   defer :search_code, :list_workflows
+      #   defer
+      #
+      def defer(*names)
+        @deferrals = deferrals + [names.flatten.map(&:to_s)]
+      end
+
+      def deferrals # :nodoc:
+        @deferrals || []
       end
 
       # Registers a callback for the progress the server reports while it
@@ -609,6 +625,16 @@ module RubyLLM
         next false unless names.empty? || names.include?(tool.server_name)
 
         condition.nil? || (condition.is_a?(Proc) ? instance_exec(tool, &condition) : tool.public_send(condition))
+      end
+    end
+
+    # Returns whether +tool+, one of this MCP's tools, is deferred
+    # according to ::defer or a Tool class's own Tool.defer.
+    def defers?(tool) # :nodoc:
+      return true if tool.class.deferred?
+
+      self.class.deferrals.any? do |names|
+        names.empty? || (tool.respond_to?(:server_name) && names.include?(tool.server_name))
       end
     end
 

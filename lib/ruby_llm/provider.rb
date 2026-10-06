@@ -205,10 +205,6 @@ module RubyLLM
       )
     end
 
-    def supports_deferred_tools?(model, protocol: nil) # :nodoc:
-      preprocessing_protocol(protocol, model).supports_deferred_tools?
-    end
-
     def preprocess_messages(messages, model:, protocol: nil, unsupported_attachment: nil) # :nodoc:
       preprocessor = preprocessing_protocol(protocol, model)
       messages.map { |message| preprocessor.preprocess_message(message, unsupported_attachment:) }

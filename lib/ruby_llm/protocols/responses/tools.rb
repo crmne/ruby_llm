@@ -25,24 +25,28 @@ module RubyLLM
           RubyLLM::Support::Utils.deep_merge(definition, tool.provider_options)
         end
 
-        def format_tools(tools, provider_tools: [])
-          formatted = tools.map { |_, tool| tool_for(tool) }
-          if formatted.any? { |entry| entry[:defer_loading] } && !search_tool_configured?(provider_tools)
-            formatted << NATIVE_TOOL_SEARCH.dup
-          end
-          formatted
-        end
-
         def deferred?(tool)
-          tool.is_a?(RubyLLM::Tool::Registration) && tool.deferred?
+          tool.is_a?(RubyLLM::Tool::Deferred)
         end
 
-        def replay_search?(tools, provider_tools)
-          tools.values.any? { |tool| deferred?(tool) } || search_tool_configured?(provider_tools)
+        # The API requires a search tool next to deferred tools, and rejects
+        # search items in the input of a request that declares none.
+        def apply_tool_search(payload)
+          tools = Array(payload[:tools])
+          return payload if tools.any? { |tool| search_tool?(tool) }
+          return payload.merge(tools: tools + [NATIVE_TOOL_SEARCH.dup]) if defers_loading?(tools)
+
+          payload.merge(input: payload[:input].reject do |item|
+            Chat::TOOL_SEARCH_ITEM_TYPES.include?(item[:type] || item['type'])
+          end)
         end
 
-        def search_tool_configured?(provider_tools)
-          provider_tools.any? { |entry| (entry[:type] || entry['type']) == NATIVE_TOOL_SEARCH[:type] }
+        def defers_loading?(tools)
+          tools.any? { |tool| tool[:defer_loading] || tool['defer_loading'] }
+        end
+
+        def search_tool?(tool)
+          (tool[:type] || tool['type']) == NATIVE_TOOL_SEARCH[:type]
         end
 
         def build_tool_choice(tool_choice)

@@ -125,6 +125,8 @@ The first call adds `CurrentTime` to the existing tools. The second replaces the
 
 For controlling which tools the model may use, how many calls it can make in one turn, concurrent execution, model compatibility, and callbacks, see [Controlling Tool Execution]({% link _core_features/tool-execution.md %}).
 
+With dozens of tools, pass `defer: true` and let the model search for the ones it needs. See [Tool Search]({% link _core_features/tool-search.md %}).
+
 ## The Tool Execution Flow
 
 One `ask` call handles the conversation loop:
@@ -183,5 +185,6 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging)
 
 *   [Tool Parameters]({% link _core_features/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
 *   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, approval, concurrency, and callbacks.
+*   [Tool Search]({% link _core_features/tool-search.md %}) - Keep large tool sets out of the model's context until it searches for them.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) - The conversational core that tools plug into.
 *   [Error Handling]({% link _advanced/error-handling.md %}) - Recover from failures across the whole stack.

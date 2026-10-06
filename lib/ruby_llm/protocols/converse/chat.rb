@@ -39,8 +39,7 @@ module RubyLLM
 
         # rubocop:disable-next Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
-                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil,
-                           provider_tools: [])
+                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           tool_prefs ||= {}
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }

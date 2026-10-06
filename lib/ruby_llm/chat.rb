@@ -124,7 +124,8 @@ module RubyLLM
       @usage_entries = []
       @tools = {}
       @mcp = MCP::Collection.new
-      @deferred_tool_names = {}
+      @tool_deferrals = {}
+      @mcp_deferrals = {}
       @provider_tools = []
       @tool_prefs = { choice: nil, calls: nil }
       @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
@@ -448,13 +449,12 @@ module RubyLLM
     #   chat.with_tools(Weather, Search)
     #   chat.with_tools(Weather).with_tool_options(choice: :required)
     #
-    # With <tt>defer: true</tt> the tools' definitions stay out of the
+    # Pass <tt>defer: true</tt> to keep the tools' definitions out of the
     # model's context until the provider's tool search loads the ones it
-    # needs; on providers and models without tool search they are sent as
-    # ordinary tools. <tt>defer: false</tt> overrides a tool declared
-    # Tool.deferred.
+    # needs, or <tt>defer: false</tt> to offer a tool declared with
+    # Tool.defer up front. See #deferred_tools.
     #
-    #   chat.with_tools(*files.tools, defer: true)
+    #   chat.with_tools(*Catalog.tools, defer: true)
     #
     # To replace the registered tools, clear them first:
     #
@@ -463,9 +463,14 @@ module RubyLLM
     def with_tools(*tools, defer: nil)
       if tools == [nil]
         @tools.clear
-        @deferred_tool_names.clear
+        @tool_deferrals.clear
       end
-      tools.flatten.compact.each { |tool| register_tool(tool, defer: defer) }
+      tools.flatten.compact.each do |tool|
+        tool = tool.new if tool.is_a?(Class)
+        name = tool.name.to_sym
+        @tools[name] = tool
+        @tool_deferrals[name] = defer.nil? ? tool.class.deferred? : defer
+      end
       self
     end
 
@@ -487,6 +492,17 @@ module RubyLLM
       end
     end
 
+    # Returns the tools whose definitions stay out of the model's context
+    # until the provider's tool search loads them, as a Hash like #tools.
+    # Providers without tool search receive them as ordinary tools.
+    #
+    #   chat.with_tools(Weather).with_mcp(GitHub, defer: true)
+    #   chat.deferred_tools.keys # => [:search_issues, :create_issue, ...]
+    #
+    def deferred_tools
+      tools.slice(*deferred_tool_names)
+    end
+
     # Connects MCP servers, each an MCP instance or class, and gives the
     # model their tools. The servers are contacted when the chat first
     # needs their tools. Pass +nil+ to disconnect them all. Returns +self+.
@@ -494,11 +510,23 @@ module RubyLLM
     #   chat.with_mcp(Linear.new(user: current_user), Files)
     #   chat.mcp.linear
     #
-    def with_mcp(*servers)
+    # Pass <tt>defer: true</tt> to keep every tool of these servers out of
+    # the model's context until the provider's tool search loads it, or
+    # <tt>defer: false</tt> to offer them up front despite MCP.defer. See
+    # #deferred_tools.
+    #
+    #   chat.with_mcp(GitHub, defer: true)
+    #
+    def with_mcp(*servers, defer: nil)
       if servers == [nil]
         @mcp = MCP::Collection.new
+        @mcp_deferrals.clear
       else
-        servers.flatten.compact.each { |server| @mcp << (server.is_a?(Class) ? server.new : server) }
+        servers.flatten.compact.each do |server|
+          server = server.new if server.is_a?(Class)
+          @mcp << server
+          @mcp_deferrals[server.name.to_sym] = defer
+        end
       end
       self
     end
@@ -940,7 +968,7 @@ module RubyLLM
       @provider.count_tokens(
         preprocessed_messages(request_messages),
         model: @model,
-        tools: effective_tools,
+        tools: request_tools,
         tool_prefs: @tool_prefs,
         thinking: resolved_thinking,
         schema: @schema,
@@ -1037,7 +1065,7 @@ module RubyLLM
     def render
       @provider.render(
         preprocessed_messages,
-        tools: effective_tools,
+        tools: request_tools,
         provider_tools: @provider_tools,
         tool_prefs: @tool_prefs,
         temperature: @temperature,
@@ -1391,7 +1419,7 @@ module RubyLLM
       replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
         @provider.complete(
           sent_messages,
-          tools: effective_tools,
+          tools: request_tools,
           provider_tools: @provider_tools,
           tool_prefs: @tool_prefs,
           temperature: @temperature,

@@ -274,6 +274,17 @@ requires_approval if: ->(tool) { tool.name.start_with?("delete") }
 
 Without names, every tool needs approval. `if:` takes a tool predicate or a lambda that receives the tool.
 
+### Deferring Tools
+
+A server with many tools fills the model's context before it reads your question. Defer them, and the model searches for the ones it needs:
+
+```ruby
+defer :search_code, :list_workflows
+defer
+```
+
+Without names, every tool is deferred. See [Tool Search]({% link _core_features/tool-search.md %}).
+
 Every name you declare must exist on the server. When a server stops offering one, RubyLLM raises `RubyLLM::ConfigurationError` as the tools load, instead of silently changing what the model sees.
 
 ## Using Servers in Chats
@@ -293,7 +304,7 @@ chat.mcp[:files]  # => #<Files ...>
 chat.with_mcp(nil)
 ```
 
-Two tools with the same name raise an `ArgumentError` when the chat collects its tools.
+Two tools with the same name raise an `ArgumentError` when the chat collects its tools. Pass `defer: true` to `with_mcp` to defer every tool of the servers you connect; see [Tool Search]({% link _core_features/tool-search.md %}).
 
 ### Agents
 

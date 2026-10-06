@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
     base = instance_double(RubyLLM::Tool, name: name, description: "#{name} desc",
                                           parameters_schema: { 'type' => 'object' },
                                           declared_parameters: {}, provider_options: {})
-    deferred ? RubyLLM::Tool::Registration.new(base, deferred: true) : base
+    deferred ? RubyLLM::Tool::Deferred.new(base) : base
   end
 
   describe '.tool_for' do
@@ -15,21 +15,25 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
       expect(described_class.tool_for(tool('a', deferred: false))).not_to have_key(:defer_loading)
     end
 
-    it 'emits defer_loading: true for a deferred Registration' do
+    it 'emits defer_loading: true for a deferred tool' do
       expect(described_class.tool_for(tool('a', deferred: true))[:defer_loading]).to be(true)
     end
   end
 
-  describe '.format_tools' do
-    it 'does not append the tool_search tool when nothing is deferred' do
-      formatted = described_class.format_tools({ a: tool('a', deferred: false) })
-      expect(formatted.map { |t| t[:type] }).not_to include('tool_search')
+  describe '.apply_tool_search' do
+    def payload_tools(*tools)
+      described_class.apply_tool_search({ tools: tools.map { |t| described_class.tool_for(t) }, input: [] })[:tools]
     end
 
-    it 'appends the native tool_search tool once when any function is deferred' do
-      formatted = described_class.format_tools({ a: tool('a', deferred: false), b: tool('b', deferred: true) })
-      expect(formatted.last).to eq({ type: 'tool_search' })
-      expect(formatted.count { |t| t[:type] == 'tool_search' }).to eq(1)
+    it 'does not add the tool_search tool when nothing is deferred' do
+      expect(payload_tools(tool('a', deferred: false)).map { |t| t[:type] }).not_to include('tool_search')
+    end
+
+    it 'adds the tool_search tool once when any function is deferred' do
+      tools = payload_tools(tool('a', deferred: false), tool('b', deferred: true))
+
+      expect(tools.last).to eq({ type: 'tool_search' })
+      expect(tools.count { |t| t[:type] == 'tool_search' }).to eq(1)
     end
   end
 
@@ -97,31 +101,18 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
       expect(types).to eq(%w[tool_search_call tool_search_output function_call])
     end
 
-    it 'omits the search items when the request no longer carries deferred tools, keeping the namespaced call' do
-      replayed = protocol.send(:format_assistant_items, message, replay_search: false)
-
-      expect(replayed).to eq([items.last])
-      expect(replayed.first['namespace']).to eq('weather_lookup')
+    def replayed(tools)
+      payload = { tools:, input: protocol.send(:format_assistant_items, message) }
+      described_class.apply_tool_search(payload)[:input]
     end
 
-    describe 'from render_payload' do
-      let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5.4', supports?: false, reasoning_option: nil) }
+    it 'omits the search items when the request declares no search tool, keeping the namespaced call' do
+      expect(replayed([{ type: 'function', name: 'a' }])).to eq([items.last])
+    end
 
-      def replayed_types(tools, provider_tools: [])
-        payload = protocol.send(:render_payload, [message],
-                                tools: tools, temperature: nil, model: model, provider_tools: provider_tools)
-        payload[:input].map { |item| item['type'] }
-      end
-
-      it 'keeps the search items while a deferred tool is rendered and strips them otherwise' do
-        expect(replayed_types({ a: tool('a', deferred: true) })).to include('tool_search_call')
-        expect(replayed_types({ a: tool('a', deferred: false) })).not_to include('tool_search_call')
-      end
-
-      it 'keeps the search items while the tool_search provider tool is configured' do
-        expect(replayed_types({}, provider_tools: [{ type: 'tool_search' }])).to include('tool_search_call')
-        expect(replayed_types({}, provider_tools: [{ type: 'web_search' }])).not_to include('tool_search_call')
-      end
+    it 'keeps the search items while a deferred tool or the tool_search tool is declared' do
+      expect(replayed([{ type: 'function', name: 'a', defer_loading: true }]).size).to eq(3)
+      expect(replayed([{ type: 'tool_search' }]).size).to eq(3)
     end
   end
 
@@ -133,7 +124,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
     before do
       stub_const('WeatherLookupTool', Class.new(RubyLLM::Tool) do
         description 'Looks up the current weather for a city.'
-        deferred
+        defer
         parameter :city, description: 'City name'
         def execute(city:) = "weather in #{city}"
       end)
