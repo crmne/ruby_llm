@@ -120,6 +120,8 @@ module RubyLLM
       end
 
       def handle_failed_response(chunk, buffer, env)
+        return if buffer.bytesize + chunk.bytesize > MAX_JSON_BODY_BYTES
+
         buffer << chunk
         error_data = JSON.parse(buffer)
         raise_stream_error(buffer, error_data, env)

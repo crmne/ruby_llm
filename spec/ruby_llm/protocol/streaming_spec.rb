@@ -259,6 +259,16 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(env[:streaming_state].buffer).to eq('{"detail":"')
   end
 
+  it 'stops retaining a failed response body past the limit, leaving its status to raise' do
+    stub_const('RubyLLM::Protocol::Streaming::MAX_JSON_BODY_BYTES', 32)
+    failed_env = Faraday::Env.from(status: 502)
+    buffer = +'<html>'
+
+    test_obj.send(:handle_failed_response, 'x' * 32, buffer, failed_env)
+
+    expect(buffer).to eq('<html>')
+  end
+
   it 'ignores a bare JSON body whose error is null' do
     yielded = []
     handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
