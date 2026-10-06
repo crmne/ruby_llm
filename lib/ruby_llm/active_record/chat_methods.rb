@@ -724,7 +724,11 @@ module RubyLLM
       private
 
       def persist_usage_entry(entry)
-        usage_records_by_entry[entry] = ruby_llm_usages.create!(Usage.attributes_for(entry))
+        usage_records_by_entry[entry] = Usage.transaction(requires_new: true) do
+          ruby_llm_usages.create!(Usage.attributes_for(entry))
+        end
+      rescue StandardError => e
+        RubyLLM.logger.warn("RubyLLM could not record #{entry.operation} usage: #{e.class}: #{e.message}")
       end
 
       def link_usage_entries(message)

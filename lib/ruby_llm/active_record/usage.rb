@@ -60,7 +60,7 @@ module RubyLLM
           total_cost: cost.total
         }
         attributes[:server_tool_use] = tokens.server_tool_use if column_names.include?('server_tool_use')
-        attributes[:owner] = entry.owner if column_names.include?('owner_id')
+        attributes[:owner] = entry.owner if entry.owner.is_a?(::ActiveRecord::Base) && column_names.include?('owner_id')
         attributes
       end
 

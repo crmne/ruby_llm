@@ -196,6 +196,31 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     expect(rows_for(owner).sole).to have_attributes(operation: 'chat', chat_id: nil, output_tokens: 2)
   end
 
+  it 'writes unattributed rows for an owner that is not a record' do
+    stub_chat_reply
+    stub_embedding
+    chat = Chat.create!(model: model_for(:anthropic))
+
+    RubyLLM.with_usage_owner('user-42') do
+      expect(chat.ask('Hello').content).to eq('Hi')
+      embed
+    end
+
+    expect(described_class.order(:id).last(2).map { |row| [row.operation, row.owner_id] })
+      .to eq([['chat', nil], ['embedding', nil]])
+  end
+
+  it 'logs a failed chat row write and returns the reply' do
+    stub_chat_reply
+    chat = Chat.create!(model: model_for(:anthropic))
+    allow(described_class).to receive(:new).and_raise(ActiveRecord::StatementInvalid, 'disk full')
+    allow(RubyLLM.logger).to receive(:warn)
+
+    expect(chat.ask('Hello').content).to eq('Hi')
+    expect(chat.reload.messages.map(&:role)).to eq(%w[user assistant])
+    expect(RubyLLM.logger).to have_received(:warn).with(/could not record chat usage.*disk full/)
+  end
+
   it 'logs a failed write and returns the result of the operation' do
     stub_embedding
     allow(described_class).to receive(:create!).and_raise(ActiveRecord::StatementInvalid, 'disk full')

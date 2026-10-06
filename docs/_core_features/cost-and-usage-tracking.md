@@ -206,7 +206,7 @@ class ProcessUploadJob < ApplicationJob
 end
 ```
 
-An operation's `owner:` wins over the block's owner, and a nested block restores the outer owner when it ends. Each fiber and thread keeps its own owner, and fibers and threads started inside the block inherit it. Without an owner, RubyLLM still writes the row, unattributed.
+An operation's `owner:` wins over the block's owner, and a nested block restores the outer owner when it ends. Each fiber and thread keeps its own owner, and fibers and threads started inside the block inherit it. Without an owner, RubyLLM still writes the row, unattributed. An owner that is not an Active Record record, such as a user ID String, reaches the [`usage.ruby_llm` event](#instrumentation) but leaves the row unattributed.
 
 Rows of an `acts_as_chat` record keep both their chat association and the scoped owner. In a shared conversation, wrap each turn to record who caused its attempts, including failed or cancelled attempts that produce no message:
 
