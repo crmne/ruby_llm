@@ -28,6 +28,18 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.last.attachments).to eq([document])
   end
 
+  it 'converts an attachment once and reuses the replacement on later requests' do
+    calls = 0
+    chat.on_unsupported_attachment do
+      calls += 1
+      RubyLLM::Attachment.new(StringIO.new('Extracted report'), filename: 'report.txt')
+    end
+
+    2.times { expect(chat.render.to_json).to include('Extracted report') }
+
+    expect(calls).to eq(1)
+  end
+
   it 'keeps the existing error when callbacks return nil' do
     chat.on_unsupported_attachment { nil }
 

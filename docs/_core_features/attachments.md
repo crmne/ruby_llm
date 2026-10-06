@@ -154,7 +154,7 @@ chat.ask "Summarize this report.", with: "report.docx"
 
 `TextExtraction` is your application's converter. The callback receives the original `RubyLLM::Attachment` and returns a replacement attachment. Return `nil` when you cannot convert it; RubyLLM keeps the protocol's existing error. A replacement must itself be supported. Errors from your converter propagate to the caller.
 
-Callbacks run in registration order until one returns a replacement. They run while preparing each request, including `render`, so cache expensive conversions in your application. The conversation keeps the original attachment. Switching to a protocol that supports the original file sends that file without calling the converter. Persisted chats and agents use the same callback.
+Callbacks run in registration order until one returns a replacement. A chat converts each attachment once and reuses the replacement, including its provider upload, on later requests. A persisted chat loaded in another process converts again, so cache expensive conversions in your application. The conversation keeps the original attachment. Switching to a protocol that supports the original file sends that file without calling the converter. Persisted chats and agents use the same callback.
 
 This handles formats the protocol cannot send. A model can still reject an attachment the protocol can represent; that API error does not trigger the callback.
 

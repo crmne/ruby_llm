@@ -139,6 +139,7 @@ module RubyLLM
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
+      @attachment_replacements = {}.compare_by_identity
       @cancelled = false
       @cancellation_checker = nil
       @tool_call_decisions = {}
@@ -886,6 +887,8 @@ module RubyLLM
     # returns a replacement Attachment, or +nil+ to keep the existing error.
     # Callbacks run in registration order until one returns a replacement.
     # The transcript keeps the original file, even when the model changes.
+    # The chat converts each attachment once and reuses the replacement,
+    # and its upload, on later requests.
     #
     #   chat.on_unsupported_attachment do |attachment|
     #     text = TextExtraction.call(attachment)
@@ -1337,11 +1340,7 @@ module RubyLLM
       return if callbacks.empty?
 
       lambda do |attachment|
-        callbacks.each do |callback|
-          replacement = callback.call(attachment)
-          return replacement unless replacement.nil?
-        end
-        nil
+        @attachment_replacements[attachment] ||= callbacks.lazy.filter_map { |handler| handler.call(attachment) }.first
       end
     end
 

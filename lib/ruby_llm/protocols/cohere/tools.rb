@@ -76,14 +76,14 @@ module RubyLLM
           }
         end
 
-        # Search results become document content blocks, the shape Cohere
-        # cites tool output against. A tool that attaches files sends its
-        # text and each attachment as blocks, so the model reads what the
-        # tool fetched rather than only the sentence describing it.
         def supported_message_attachment?(message, attachment)
           message.role == :tool ? attachment.text? : supported_attachment?(attachment)
         end
 
+        # Search results become document content blocks, the shape Cohere
+        # cites tool output against. A tool that attaches files sends its
+        # text and each attachment as blocks, so the model reads what the
+        # tool fetched rather than only the sentence describing it.
         def format_tool_result_content(msg)
           search_results = RubyLLM::SearchResults.from_content(msg.content)
           return document_blocks(search_results) if search_results
