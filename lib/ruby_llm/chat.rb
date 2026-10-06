@@ -910,19 +910,19 @@ module RubyLLM
       add_callback(:before_request, &)
     end
 
-    # Registers a callback that replaces an attachment the current protocol
-    # cannot render. Returns +self+. The callback receives an Attachment and
+    # Converts attachments the current protocol cannot render with the
+    # given block. Returns +self+. The block receives an Attachment and
     # returns a replacement Attachment, or +nil+ to keep the existing error.
-    # Callbacks run in registration order until one returns a replacement.
+    # Blocks run in registration order until one returns a replacement.
     # The transcript keeps the original file, even when the model changes.
     # The chat converts each attachment once and reuses the replacement,
     # and its upload, on later requests.
     #
-    #   chat.on_unsupported_attachment do |attachment|
+    #   chat.convert_unsupported_attachments do |attachment|
     #     text = TextExtraction.call(attachment)
     #     Attachment.new(StringIO.new(text), filename: 'extracted.txt') if text
     #   end
-    def on_unsupported_attachment(&)
+    def convert_unsupported_attachments(&)
       add_callback(:unsupported_attachment, &)
     end
 

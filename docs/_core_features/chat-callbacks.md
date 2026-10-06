@@ -20,9 +20,9 @@ After reading this guide, you will know:
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
 
-Use callbacks to update a UI, log tool activity, or observe model fallbacks. Lifecycle events use the same `before_` and `after_` naming as Rails callbacks.
+Use callbacks to update a UI, log tool activity, or observe model fallbacks. They use the same `before_` and `after_` naming as Rails callbacks.
 
-To replace files a protocol cannot send, register `on_unsupported_attachment`. See [Converting Unsupported Attachments]({% link _core_features/attachments.md %}#converting-unsupported-attachments) for its return values and how it preserves the original conversation.
+To replace files a protocol cannot send, use `convert_unsupported_attachments`. See [Converting Unsupported Attachments]({% link _core_features/attachments.md %}#converting-unsupported-attachments) for its return values and how it preserves the original conversation.
 
 ## Message Events
 

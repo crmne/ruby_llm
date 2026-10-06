@@ -722,7 +722,7 @@ module RubyLLM
       replacement = handler.call(attachment)
       return attachment if replacement.nil?
       unless replacement.is_a?(Attachment)
-        raise ArgumentError, 'on_unsupported_attachment must return a RubyLLM::Attachment or nil'
+        raise ArgumentError, 'convert_unsupported_attachments must return a RubyLLM::Attachment or nil'
       end
       raise UnsupportedAttachmentError, replacement.mime_type unless supported_message_attachment?(message, replacement)
 

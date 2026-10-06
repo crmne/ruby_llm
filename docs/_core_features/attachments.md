@@ -144,7 +144,7 @@ Register a converter when you want the same conversation to work across protocol
 ```ruby
 require "stringio"
 
-chat.on_unsupported_attachment do |attachment|
+chat.convert_unsupported_attachments do |attachment|
   text = TextExtraction.call(attachment)
   RubyLLM::Attachment.new(StringIO.new(text), filename: "extracted.txt") if text
 end

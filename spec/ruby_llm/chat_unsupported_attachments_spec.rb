@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Chat do
 
   it 'uses a replacement for the request while keeping the original transcript' do
     received = []
-    expect(chat.on_unsupported_attachment do |attachment|
+    expect(chat.convert_unsupported_attachments do |attachment|
       received << attachment
       replacement
     end).to be(chat)
@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Chat do
 
   it 'converts an attachment once and reuses the replacement on later requests' do
     calls = 0
-    chat.on_unsupported_attachment do
+    chat.convert_unsupported_attachments do
       calls += 1
       RubyLLM::Attachment.new(StringIO.new('Extracted report'), filename: 'report.txt')
     end
@@ -41,22 +41,22 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'keeps the existing error when callbacks return nil' do
-    chat.on_unsupported_attachment { nil }
+    chat.convert_unsupported_attachments { nil }
 
     expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError)
   end
 
   it 'uses the first replacement from callbacks registered in order' do
     calls = []
-    chat.on_unsupported_attachment do
+    chat.convert_unsupported_attachments do
       calls << :first
       nil
     end
-    chat.on_unsupported_attachment do
+    chat.convert_unsupported_attachments do
       calls << :second
       replacement
     end
-    chat.on_unsupported_attachment { raise 'Already replaced' }
+    chat.convert_unsupported_attachments { raise 'Already replaced' }
 
     chat.render
 
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Chat do
 
   it 'does not call the handler when the new provider can render the original' do
     calls = []
-    chat.on_unsupported_attachment do
+    chat.convert_unsupported_attachments do
       calls << :replace
       replacement
     end
@@ -81,14 +81,14 @@ RSpec.describe RubyLLM::Chat do
     image = RubyLLM::Attachment.new(File.expand_path('../fixtures/ruby.png', __dir__))
     chat.messages = [RubyLLM::Message.new(role: :user, content: 'Describe this.', attachments: [image])]
     allow(chat.model).to receive(:modalities).and_raise('Must not gate on model metadata')
-    chat.on_unsupported_attachment { raise 'Images are renderable' }
+    chat.convert_unsupported_attachments { raise 'Images are renderable' }
 
     expect(chat.render.to_json).to include('image')
   end
 
   it 'rejects a replacement the same protocol cannot render without calling the handler again' do
     calls = 0
-    chat.on_unsupported_attachment do
+    chat.convert_unsupported_attachments do
       calls += 1
       document
     end
@@ -98,20 +98,20 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'requires a replacement attachment rather than interpreting a string as a path' do
-    chat.on_unsupported_attachment { '/etc/passwd' }
+    chat.convert_unsupported_attachments { '/etc/passwd' }
 
     expect { chat.render }.to raise_error(ArgumentError, /RubyLLM::Attachment or nil/)
   end
 
   it 'propagates errors from the application callback' do
-    chat.on_unsupported_attachment { raise 'Extraction failed' }
+    chat.convert_unsupported_attachments { raise 'Extraction failed' }
 
     expect { chat.render }.to raise_error(RuntimeError, 'Extraction failed')
   end
 
   it 'allows the same callback through an agent' do
     agent = Class.new(RubyLLM::Agent).new(chat: chat)
-    expect(agent.on_unsupported_attachment { replacement }).to be(chat)
+    expect(agent.convert_unsupported_attachments { replacement }).to be(chat)
 
     expect(agent.render.to_json).to include('Extracted report')
   end
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Chat do
     chat.messages = [RubyLLM::Message.new(role: :tool, content: 'Report image', tool_call_id: 'call_report',
                                           attachments: [image])]
     received = []
-    chat.on_unsupported_attachment do |attachment|
+    chat.convert_unsupported_attachments do |attachment|
       received << attachment
       replacement
     end
@@ -135,7 +135,7 @@ RSpec.describe RubyLLM::Chat do
   it 'sends converted Office documents through Anthropic', :live do
     skip_without_cassette_or_key('ANTHROPIC_API_KEY')
     chat.messages = []
-    chat.on_unsupported_attachment do
+    chat.convert_unsupported_attachments do
       RubyLLM::Attachment.new(StringIO.new('The project codename is CEDAR881.'), filename: 'report.txt')
     end
 
