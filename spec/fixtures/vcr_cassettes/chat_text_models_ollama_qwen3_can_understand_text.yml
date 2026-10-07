@@ -25,38 +25,34 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:07:18 GMT
-      Transfer-Encoding:
-      - chunked
+      - Wed, 07 Oct 2026 13:05:30 GMT
+      Content-Length:
+      - '1798'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-331","object":"chat.completion","created":1789682838,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the following plain text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a simple text file with no formatting, encoding, or additional structure.
-        The content is a single sentence stating that \"Ruby is the best.\" The MIME
-        type `text/plain` confirms it is unformatted text.","reasoning":"Okay, let
-        me try to figure out what''s in this file. The user provided a file named
-        ''ruby.txt'' with a MIME type of text/plain. The content given is \"Ruby is
-        the best.\" So, first, I need to confirm what exactly is in the file.\n\nSince
-        the MIME type is text/plain, it''s a plain text file. That means it''s just
-        regular text without any formatting or special characters. The content is
-        straightforward: the sentence \"Ruby is the best.\" \n\nI should check if
-        there''s any hidden context or if the user is asking for something specific.
-        The filename mentions Ruby, which could refer to the programming language.
-        But the content is a simple statement. Maybe the user wants to know if there''s
-        more to the file or if there''s a particular aspect they should focus on.\n\nWait,
-        the user is asking \"What''s in this file?\" So they just want to know the
-        content. The answer would be the text provided. But maybe they''re testing
-        if I can recognize the MIME type and confirm it''s plain text. Alternatively,
-        they might be expecting an explanation about Ruby, the programming language,
-        but the file content is just a sentence.\n\nI should make sure not to overcomplicate
-        it. The file contains the text \"Ruby is the best.\" as stated. There''s no
-        additional information or hidden data. Unless there''s a trick here, but given
-        the simple content, it''s likely just the sentence. I should present the answer
-        clearly, stating the content and confirming the MIME type.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":36,"prompt_tokens_details":{"cached_tokens":3},"completion_tokens":378,"total_tokens":414}}
+      string: '{"id":"chatcmpl-782","object":"chat.completion","created":1791378330,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
+        is a plain text file with no additional formatting or hidden content. The
+        text is a simple statement, likely expressing a preference for the Ruby programming
+        language.","reasoning":"Okay, let''s see. The user is asking what''s in the
+        file called ruby.txt. The file content is given as \"Ruby is the best.\" with
+        MIME type text/plain.\n\nFirst, I need to confirm that the file is a plain
+        text file. The MIME type text/plain indicates that the content is plain text,
+        not binary or any other format. So the content should be readable as is.\n\nThe
+        actual content of the file is the sentence \"Ruby is the best.\" That''s straightforward.
+        There''s no additional formatting or hidden characters mentioned. Since it''s
+        a text file, there''s no need to decode anything special. The user probably
+        wants to know the contents of the file, which is just that sentence.\n\nI
+        should also consider if there''s any context or hidden meaning. The phrase
+        \"Ruby is the best\" could be a subjective statement, maybe from a fan of
+        the Ruby programming language. But unless the user is asking for analysis
+        beyond the content, the answer should just state the content.\n\nNo other
+        information is provided about the file, so the answer is simply the text inside
+        the file. No need to infer anything else unless the user asks for interpretation.
+        Since the question is straightforward, the response should be direct.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":36,"prompt_tokens_details":{"cached_tokens":4},"completion_tokens":302,"total_tokens":338}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:07:18 GMT
+  recorded_at: Wed, 07 Oct 2026 13:05:30 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -65,48 +61,41 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the following plain text:\n\n```\nRuby is the best.\n```\n\nIt is
-        a simple text file with no formatting, encoding, or additional structure.
-        The content is a single sentence stating that \"Ruby is the best.\" The MIME
-        type `text/plain` confirms it is unformatted text.","reasoning":"Okay, let
-        me try to figure out what''s in this file. The user provided a file named
-        ''ruby.txt'' with a MIME type of text/plain. The content given is \"Ruby is
-        the best.\" So, first, I need to confirm what exactly is in the file.\n\nSince
-        the MIME type is text/plain, it''s a plain text file. That means it''s just
-        regular text without any formatting or special characters. The content is
-        straightforward: the sentence \"Ruby is the best.\" \n\nI should check if
-        there''s any hidden context or if the user is asking for something specific.
-        The filename mentions Ruby, which could refer to the programming language.
-        But the content is a simple statement. Maybe the user wants to know if there''s
-        more to the file or if there''s a particular aspect they should focus on.\n\nWait,
-        the user is asking \"What''s in this file?\" So they just want to know the
-        content. The answer would be the text provided. But maybe they''re testing
-        if I can recognize the MIME type and confirm it''s plain text. Alternatively,
-        they might be expecting an explanation about Ruby, the programming language,
-        but the file content is just a sentence.\n\nI should make sure not to overcomplicate
-        it. The file contains the text \"Ruby is the best.\" as stated. There''s no
-        additional information or hidden data. Unless there''s a trick here, but given
-        the simple content, it''s likely just the sentence. I should present the answer
-        clearly, stating the content and confirming the MIME type.\n","reasoning_content":"Okay,
-        let me try to figure out what''s in this file. The user provided a file named
-        ''ruby.txt'' with a MIME type of text/plain. The content given is \"Ruby is
-        the best.\" So, first, I need to confirm what exactly is in the file.\n\nSince
-        the MIME type is text/plain, it''s a plain text file. That means it''s just
-        regular text without any formatting or special characters. The content is
-        straightforward: the sentence \"Ruby is the best.\" \n\nI should check if
-        there''s any hidden context or if the user is asking for something specific.
-        The filename mentions Ruby, which could refer to the programming language.
-        But the content is a simple statement. Maybe the user wants to know if there''s
-        more to the file or if there''s a particular aspect they should focus on.\n\nWait,
-        the user is asking \"What''s in this file?\" So they just want to know the
-        content. The answer would be the text provided. But maybe they''re testing
-        if I can recognize the MIME type and confirm it''s plain text. Alternatively,
-        they might be expecting an explanation about Ruby, the programming language,
-        but the file content is just a sentence.\n\nI should make sure not to overcomplicate
-        it. The file contains the text \"Ruby is the best.\" as stated. There''s no
-        additional information or hidden data. Unless there''s a trick here, but given
-        the simple content, it''s likely just the sentence. I should present the answer
-        clearly, stating the content and confirming the MIME type.\n"},{"role":"user","content":[{"type":"text","text":"and
+        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
+        text file with no additional formatting or hidden content. The text is a simple
+        statement, likely expressing a preference for the Ruby programming language.","reasoning":"Okay,
+        let''s see. The user is asking what''s in the file called ruby.txt. The file
+        content is given as \"Ruby is the best.\" with MIME type text/plain.\n\nFirst,
+        I need to confirm that the file is a plain text file. The MIME type text/plain
+        indicates that the content is plain text, not binary or any other format.
+        So the content should be readable as is.\n\nThe actual content of the file
+        is the sentence \"Ruby is the best.\" That''s straightforward. There''s no
+        additional formatting or hidden characters mentioned. Since it''s a text file,
+        there''s no need to decode anything special. The user probably wants to know
+        the contents of the file, which is just that sentence.\n\nI should also consider
+        if there''s any context or hidden meaning. The phrase \"Ruby is the best\"
+        could be a subjective statement, maybe from a fan of the Ruby programming
+        language. But unless the user is asking for analysis beyond the content, the
+        answer should just state the content.\n\nNo other information is provided
+        about the file, so the answer is simply the text inside the file. No need
+        to infer anything else unless the user asks for interpretation. Since the
+        question is straightforward, the response should be direct.\n","reasoning_content":"Okay,
+        let''s see. The user is asking what''s in the file called ruby.txt. The file
+        content is given as \"Ruby is the best.\" with MIME type text/plain.\n\nFirst,
+        I need to confirm that the file is a plain text file. The MIME type text/plain
+        indicates that the content is plain text, not binary or any other format.
+        So the content should be readable as is.\n\nThe actual content of the file
+        is the sentence \"Ruby is the best.\" That''s straightforward. There''s no
+        additional formatting or hidden characters mentioned. Since it''s a text file,
+        there''s no need to decode anything special. The user probably wants to know
+        the contents of the file, which is just that sentence.\n\nI should also consider
+        if there''s any context or hidden meaning. The phrase \"Ruby is the best\"
+        could be a subjective statement, maybe from a fan of the Ruby programming
+        language. But unless the user is asking for analysis beyond the content, the
+        answer should just state the content.\n\nNo other information is provided
+        about the file, so the answer is simply the text inside the file. No need
+        to infer anything else unless the user asks for interpretation. Since the
+        question is straightforward, the response should be direct.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -126,59 +115,39 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:07:23 GMT
+      - Wed, 07 Oct 2026 13:05:33 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-980","object":"chat.completion","created":1789682843,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains structured XML data with the following content:\n\n```xml\n\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\n```\n\n### Key details:\n- **MIME Type**:
-        `application/xml` (indicates it is an XML document).\n- **Structure**: The
-        content is enclosed within an XML tag `\u003ctruism\u003e`, which likely denotes
-        a statement or assertion. The tag is properly closed with `\u003c/truism\u003e`.\n-
-        **Content**: The text \"Ruby is the best\" is embedded within the `\u003ctruism\u003e`
-        tag, reflecting the same message as the plain text file but in a structured
-        format.\n\n### Comparison to `ruby.txt`:\n- **`ruby.txt`** is unformatted
-        plain text.\n- **`ruby.xml`** uses XML syntax to wrap the content in a tag,
-        making it machine-readable and suitable for structured data.","reasoning":"Okay,
-        the user is asking about the contents of another file called ruby.xml. Let
-        me look at the provided information. The file has a MIME type of application/xml,
-        which means it''s an XML file. The content inside is a \u003ctruism\u003e
-        tag with the text \"Ruby is the best\".\n\nFirst, I need to confirm what XML
-        is. XML is a markup language that defines a set of rules for encoding documents
-        in a format that is both human-readable and machine-readable. It''s often
-        used for storing and transporting data.\n\nThe file name is ruby.xml, so the
-        user might be comparing it to the previous ruby.txt file. In the previous
-        case, it was plain text with no markup. Now, this XML file uses tags to structure
-        the data. The \u003ctruism\u003e tag probably indicates that the content is
-        a statement or a belief, in this case, promoting Ruby as the best.\n\nI should
-        note that XML files typically have a structure with opening and closing tags.
-        However, in this example, the \u003ctruism\u003e tag is not properly closed.
-        The original content shows \"\u003ctruism\u003eRuby is the best\u003c/truism\u003e\",
-        which is correct. Wait, looking back, the user provided the file content as
-        \u003ctruism\u003eRuby is the best\u003c/truism\u003e, which actually does
-        have proper opening and closing tags. So the XML is well-formed here.\n\nThe
-        user might be interested in understanding the difference between the two files.
-        The first was plain text, the second is structured XML. They might be learning
-        about different file formats or working with data that''s being stored in
-        various formats. The user could be a developer or a student studying file
-        types and data structures.\n\nI should explain the structure of the XML file,
-        mention the MIME type, and note that the content is enclosed within the \u003ctruism\u003e
-        tags. Also, highlight that XML allows for more structured data compared to
-        plain text. Maybe the user is trying to understand how data is organized in
-        different formats, or they might be working on a project that involves parsing
-        XML files.\n\nIt''s also possible that the user is checking if the XML is
-        valid. Since the tags are properly closed, it''s valid. However, if there
-        were any errors, like unclosed tags or incorrect syntax, that would be a problem.
-        But in this case, everything seems correct.\n\nI should make sure to mention
-        the MIME type again, as it''s important for how the file is interpreted by
-        software. Application/xml tells the system that this is an XML document, which
-        affects how it''s processed or displayed.\n\nIn summary, the answer should
-        outline the content of the XML file, its structure, the MIME type, and perhaps
-        compare it to the previous text file to show the difference in format and
-        structure.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":29},"completion_tokens":736,"total_tokens":878}}
+      string: '{"id":"chatcmpl-588","object":"chat.completion","created":1791378333,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains a single XML element with the following structure:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\n### Key details:\n1. **MIME Type**:
+        `application/xml` indicates this is an XML file.\n2. **Content**: \n   - The
+        `\u003ctruism\u003e` tag is a custom (non-standard) XML element, possibly
+        used to encapsulate a statement or quote.\n   - The text inside is the same
+        as in `ruby.txt`: \"Ruby is the best\".\n3. **No hidden data**: The file is
+        straightforward XML with no additional metadata or encoding beyond the tag.\n\nThis
+        file is essentially a simple XML wrapper around the same phrase as the plain
+        text file.","reasoning":"Okay, let me take a look at this. The user provided
+        another file named ruby.xml with MIME type application/xml. The content is
+        a \u003ctruism\u003e tag containing \"Ruby is the best\". \n\nFirst, I need
+        to figure out what this file contains. Since it''s XML, the structure is important.
+        The \u003ctruism\u003e tag isn''t a standard XML element, so maybe it''s a
+        custom tag used in some context. The text inside is the same as the previous
+        file but enclosed in this tag.\n\nI should check if there''s any specific
+        meaning to the \u003ctruism\u003e tag. Maybe it''s part of a specific application
+        or framework that uses this tag for storing statements. The user might be
+        testing if I recognize that the content is similar but formatted differently.\n\nAlso,
+        the user previously asked about ruby.txt, and now they''re asking about ruby.xml.
+        They might be comparing the two files or checking if I can handle different
+        MIME types. I should mention the structure of the XML file, note the custom
+        tag, and explain the content within it. It''s possible the user is interested
+        in how XML differs from plain text here, or if there''s any hidden data. But
+        since the MIME type is XML, the content is just the XML structure with the
+        truism tag. No other hidden content is present. I should make sure to point
+        out the XML structure and the presence of the custom tag.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":128,"prompt_tokens_details":{"cached_tokens":29},"completion_tokens":439,"total_tokens":567}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:07:23 GMT
+  recorded_at: Wed, 07 Oct 2026 13:05:33 GMT
 recorded_with: VCR 6.4.0

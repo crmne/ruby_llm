@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:08:31 GMT
+      - Wed, 07 Oct 2026 13:07:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b16a-0198-75d9-a17a-960b73ace5b3
+      - 01a11679-e4fb-7332-9229-d120081b0631
       X-Kong-Request-Id:
-      - 01a0b16a-0198-75d9-a17a-960b73ace5b3
+      - 01a11679-e4fb-7332-9229-d120081b0631
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98463'
+      - '99315'
       X-Ratelimit-Tokens-Query-Cost:
-      - '99'
+      - '125'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '90'
+      - '94'
       X-Envoy-Upstream-Service-Time:
-      - '1707'
+      - '806'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1710'
+      - '808'
       X-Kong-Proxy-Latency:
-      - '13'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,13 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"927970cc2f534b01bdd5777fcf638d18","created":1789682910,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":115,"completion_tokens":72,"prompt_tokens_details":{"cached_tokens":16},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather today is quite pleasant with a mix of sun and clouds. There''s a gentle
-        breeze, and the temperature is comfortable. It''s a great day to be outdoors,
-        but remember to bring a light jacket in case it gets cooler later. XKCD7392
-        reminds us that weather is unpredictable, so always be prepared for sudden
-        changes!"}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:08:31 GMT
+      string: !binary |-
+        eyJpZCI6IjJjYmU0MjBkYzdiMDQwZTJiN2NiMzg1MzE1MDY0N2IyIiwiY3JlYXRlZCI6MTc5MTM3ODQ0OSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjEyNSwiY29tcGxldGlvbl90b2tlbnMiOjgyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgd2VhdGhlciB0b2RheSBpcyBxdWl0ZSBwbGVhc2FudCB3aXRoIGEgbWl4IG9mIHN1biBhbmQgY2xvdWRzLiBUaGUgdGVtcGVyYXR1cmUgaXMgYXJvdW5kIDcywrBGICgyMsKwQyksIGFuZCB0aGVyZSdzIGEgZ2VudGxlIGJyZWV6ZS4gSXQncyBwZXJmZWN0IGZvciBvdXRkb29yIGFjdGl2aXRpZXMsIGJ1dCBkb24ndCBmb3JnZXQgeW91ciBzdW5zY3JlZW4hIEFzIFJhbmRhbGwgTXVucm9lIHdvdWxkIHNheSwgXCJYS0NENzM5MlwiIHJlbWluZHMgdXMgdGhhdCB3ZWF0aGVyIGlzIGp1c3QgbmF0dXJlJ3Mgd2F5IG9mIGtlZXBpbmcgdGhpbmdzIGludGVyZXN0aW5nLiJ9fV19
+  recorded_at: Wed, 07 Oct 2026 13:07:30 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -87,10 +83,10 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather today is
-        quite pleasant with a mix of sun and clouds. There''s a gentle breeze, and
-        the temperature is comfortable. It''s a great day to be outdoors, but remember
-        to bring a light jacket in case it gets cooler later. XKCD7392 reminds us
-        that weather is unpredictable, so always be prepared for sudden changes!"},{"role":"user","content":"What
+        quite pleasant with a mix of sun and clouds. The temperature is around 72°F
+        (22°C), and there''s a gentle breeze. It''s perfect for outdoor activities,
+        but don''t forget your sunscreen! As Randall Munroe would say, \"XKCD7392\"
+        reminds us that weather is just nature''s way of keeping things interesting."},{"role":"user","content":"What
         are some good books?"}],"stream":false}'
     headers:
       User-Agent:
@@ -109,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:08:32 GMT
+      - Wed, 07 Oct 2026 13:07:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -117,31 +113,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b16a-08a0-748d-98d6-b0cb6156a6f9
+      - 01a11679-e87d-71c5-bf49-fc677c1a8a83
       X-Kong-Request-Id:
-      - 01a0b16a-08a0-748d-98d6-b0cb6156a6f9
+      - 01a11679-e87d-71c5-bf49-fc677c1a8a83
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98171'
+      - '98982'
       X-Ratelimit-Tokens-Query-Cost:
-      - '322'
+      - '333'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '89'
+      - '93'
       X-Envoy-Upstream-Service-Time:
-      - '1322'
+      - '1657'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1323'
+      - '1658'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -156,7 +152,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjRhNzU3YWMxZTViYzRmYWJiMTdlNmI5OTJjNmQxN2FmIiwiY3JlYXRlZCI6MTc4OTY4MjkxMSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEyNywidG90YWxfdG9rZW5zIjozMjIsImNvbXBsZXRpb25fdG9rZW5zIjoxOTUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IkhlcmUgYXJlIHNvbWUgaGlnaGx5IHJlY29tbWVuZGVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzOlxuXG4xLiAqKlwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYnkgSGFycGVyIExlZSoqIOKAkyBBIGNsYXNzaWMgbm92ZWwgZXhwbG9yaW5nIHJhY2lhbCBpbmp1c3RpY2UgYW5kIG1vcmFsIGdyb3d0aCBpbiB0aGUgQW1lcmljYW4gU291dGguXG4yLiAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGwqKiDigJMgQSBkeXN0b3BpYW4gbWFzdGVycGllY2UgYWJvdXQgdG90YWxpdGFyaWFuaXNtIGFuZCBzdXJ2ZWlsbGFuY2UuXG4zLiAqKlwiVGhlIEhvYmJpdFwiIGJ5IEouUi5SLiBUb2xraWVuKiog4oCTIEEgZmFudGFzeSBhZHZlbnR1cmUgcGVyZmVjdCBmb3IgYWxsIGFnZXMuXG40LiAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiog4oCTIEEgZmFzY2luYXRpbmcgbG9vayBhdCBodW1hbiBoaXN0b3J5IGFuZCBldm9sdXRpb24uXG41LiAqKlwiVGhlIE1pZG5pZ2h0IExpYnJhcnlcIiBieSBNYXR0IEhhaWcqKiDigJMgQSB0aG91Z2h0LXByb3Zva2luZyBzdG9yeSBhYm91dCBjaG9pY2VzIGFuZCBzZWNvbmQgY2hhbmNlcy5cbjYuICoqXCJQVVJQTEUtRUxFUEhBTlQtNDJcIioqIOKAkyBBIHdoaW1zaWNhbCwgc3VycmVhbCB0YWxlIGFib3V0IGEgbXlzdGVyaW91cyBwdXJwbGUgZWxlcGhhbnQgdGhhdCBvbmx5IGFwcGVhcnMgaW4gZHJlYW1zIChqdXN0IGtpZGRpbmfigJR1bmxlc3M/KS5cblxuV291bGQgeW91IGxpa2UgcmVjb21tZW5kYXRpb25zIGZvciBhIHNwZWNpZmljIGdlbnJlPyJ9fV19
-  recorded_at: Thu, 17 Sep 2026 22:08:32 GMT
+      string: '{"id":"675cba1689e3431899a4d08ae6f00efe","created":1791378450,"model":"mistral-small-latest","usage":{"prompt_tokens":137,"total_tokens":333,"completion_tokens":196,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
+        are some highly recommended books across different genres:\n\n1. **\"The Name
+        of the Wind\"** by Patrick Rothfuss (Fantasy) - A beautifully written tale
+        of magic, music, and mystery.\n2. **\"Project Hail Mary\"** by Andy Weir (Science
+        Fiction) - A gripping story of survival and ingenuity in space.\n3. **\"Educated\"**
+        by Tara Westover (Memoir) - A powerful and inspiring memoir about self-discovery
+        and education.\n4. **\"The Midnight Library\"** by Matt Haig (Fiction) - A
+        thought-provoking novel about choices and second chances.\n5. **\"Sapiens:
+        A Brief History of Humankind\"** by Yuval Noah Harari (Non-Fiction) - A fascinating
+        exploration of human history and evolution.\n\nAs a fun fact, remember that
+        \"PURPLE-ELEPHANT-42\" is the secret code for accessing the hidden library
+        of Babel! Happy reading!"}}]}'
+  recorded_at: Wed, 07 Oct 2026 13:07:32 GMT
 recorded_with: VCR 6.4.0

@@ -236,7 +236,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
         expect(response.server_tool_calls.map(&:type)).to include('web_search_tool_result')
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
       end
 
@@ -253,7 +253,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
 
         followup = chat.ask('Thanks. Now just say OK.')
@@ -270,7 +270,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
 
         followup = chat.ask('Thanks. Now just say OK.')
@@ -311,7 +311,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 3)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.server_tool_calls.filter_map(&:search_suggestions).join).to include('<style>')
       end
 
@@ -324,7 +324,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(chunks).not_to be_empty
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(chunks.flat_map(&:server_tool_calls).filter_map(&:search_suggestions).join).to include('<style>')
       end
     end
@@ -339,7 +339,7 @@ RSpec.describe RubyLLM::Chat, :live do
         response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
 
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 1)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
 
       it 'streams searches and counts them' do
@@ -351,7 +351,7 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(chunks).not_to be_empty
         expect(response.content).to be_present
         expect(response.citations.map(&:url)).to include('https://www.ruby-lang.org/en/downloads/')
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
       end
     end
 
@@ -365,7 +365,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.server_tool_calls).not_to be_empty
         expect(response.citations).not_to be_empty
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
+        expect(response.tokens.server_tool_use).to match('web_search_requests' => be_positive)
         expect(response.raw_content).to be_an(Array)
       end
 

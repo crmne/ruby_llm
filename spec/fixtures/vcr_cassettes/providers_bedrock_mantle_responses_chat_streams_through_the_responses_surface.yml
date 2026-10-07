@@ -8,17 +8,17 @@ http_interactions:
       string: '{"model":"openai.gpt-oss-20b","input":[{"role":"user","content":"Count
         from 1 to 5."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221554Z
+      - 20261007T125903Z
       X-Amz-Content-Sha256:
       - cbf3696d10214f5c50a9bca4dcc815b609f32c3d2122a8724949d2e40ceee1fc
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
-      User-Agent:
-      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:15:55 GMT
+      - Wed, 07 Oct 2026 12:59:05 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -51,38 +51,50 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"response":{"background":false,"created_at":1789683355.0,"error":null,"id":"resp_vqwdcwutj7dxj2cbjsr4js5v3cl6ilfthaqpmob3nvdgpf2xar3q","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
+        data: {"response":{"background":false,"created_at":1791377945.0,"error":null,"id":"resp_vortbuv57jll5vw24un6o2dvrbelfdp4woxqntewonznqtvea5hq","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":0,"type":"response.created"}
 
-        data: {"response":{"background":false,"created_at":1789683355.0,"error":null,"id":"resp_vqwdcwutj7dxj2cbjsr4js5v3cl6ilfthaqpmob3nvdgpf2xar3q","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
+        data: {"response":{"background":false,"created_at":1791377945.0,"error":null,"id":"resp_vortbuv57jll5vw24un6o2dvrbelfdp4woxqntewonznqtvea5hq","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[],"parallel_tool_calls":true,"service_tier":"auto","status":"in_progress","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled"},"sequence_number":1,"type":"response.in_progress"}
 
-        data: {"item":{"id":"msg_9163e812568a108a","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
+        data: {"item":{"id":"msg_bef042c66ecd5f41","status":"in_progress","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":2,"type":"response.output_item.added"}
 
-        data: {"content_index":0,"item_id":"msg_9163e812568a108a","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
+        data: {"content_index":0,"item_id":"msg_bef042c66ecd5f41","output_index":0,"part":{"text":"","type":"reasoning_text"},"sequence_number":3,"type":"response.reasoning_part.added"}
 
-        data: {"content_index":0,"delta":"The user wants \"Count from 1 to 5.\" Simple. We just output \"1 2 3 4 5\" or maybe list them each line. The instruction \"Count from 1 to 5.\" We'll respond. Let's","item_id":"msg_9163e812568a108a","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
+        data: {"content_index":0,"delta":"The user says: \"Count from 1 to 5.\" They just want a simple sequence.\n\nWe","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":4,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"delta":" keep it concise.","item_id":"msg_9163e812568a108a","output_index":0,"sequence_number":5,"type":"response.reasoning_text.delta"}
+        data: {"content_index":0,"delta":" should respond with 1 2 3 4 5. Possibly each number on","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":5,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_9163e812568a108a","output_index":0,"sequence_number":6,"text":"The user wants \"Count from 1 to 5.\" Simple. We just output \"1 2 3 4 5\" or maybe list them each line. The instruction \"Count from 1 to 5.\" We'll respond. Let's keep it concise.","type":"response.reasoning_text.done"}
+        data: {"content_index":0,"delta":" a line or space separated. We'll just do \"1, ","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":6,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":0,"item_id":"msg_9163e812568a108a","output_index":0,"part":{"text":"The user wants \"Count from 1 to 5.\" Simple. We just output \"1 2 3 4 5\" or maybe list them each line. The instruction \"Count from 1 to 5.\" We'll respond. Let's keep it concise.","type":"reasoning_text"},"sequence_number":7,"type":"response.reasoning_part.done"}
+        data: {"content_index":0,"delta":"2, 3, 4, 5\". Or \"1","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":7,"type":"response.reasoning_text.delta"}
 
-        data: {"item":{"content":[{"text":"The user wants \"Count from 1 to 5.\" Simple. We just output \"1 2 3 4 5\" or maybe list them each line. The instruction \"Count from 1 to 5.\" We'll respond. Let's keep it concise.","type":"reasoning_text"}],"id":"msg_9163e812568a108a","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":8,"type":"response.output_item.done"}
+        data: {"content_index":0,"delta":" 2 3 4 5\". There is no trick.\n\nGiven the","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":8,"type":"response.reasoning_text.delta"}
 
-        data: {"item":{"content":[],"id":"msg_b8d72f1ae2c1973f","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":9,"type":"response.output_item.added"}
+        data: {"content_index":0,"delta":" simple instruction, we must provide that.\n\nI will produce","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":9,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":1,"item_id":"msg_b8d72f1ae2c1973f","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":10,"type":"response.content_part.added"}
+        data: {"content_index":0,"delta":": \"1, 2, 3, 4, 5\" or \"1 2","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":10,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":1,"delta":"1, 2, 3, 4, 5","item_id":"msg_b8d72f1ae2c1973f","logprobs":[],"output_index":1,"sequence_number":11,"type":"response.output_text.delta"}
+        data: {"content_index":0,"delta":" 3 4 5\". My answer: \"1 2 3 4 5\".","item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":11,"type":"response.reasoning_text.delta"}
 
-        data: {"content_index":1,"item_id":"msg_b8d72f1ae2c1973f","logprobs":[],"output_index":1,"sequence_number":12,"text":"1, 2, 3, 4, 5","type":"response.output_text.done"}
+        data: {"content_index":0,"item_id":"msg_bef042c66ecd5f41","output_index":0,"sequence_number":12,"text":"The user says: \"Count from 1 to 5.\" They just want a simple sequence.\n\nWe should respond with 1 2 3 4 5. Possibly each number on a line or space separated. We'll just do \"1, 2, 3, 4, 5\". Or \"1 2 3 4 5\". There is no trick.\n\nGiven the simple instruction, we must provide that.\n\nI will produce: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". My answer: \"1 2 3 4 5\".","type":"response.reasoning_text.done"}
 
-        data: {"content_index":1,"item_id":"msg_b8d72f1ae2c1973f","output_index":1,"part":{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"},"sequence_number":13,"type":"response.content_part.done"}
+        data: {"content_index":0,"item_id":"msg_bef042c66ecd5f41","output_index":0,"part":{"text":"The user says: \"Count from 1 to 5.\" They just want a simple sequence.\n\nWe should respond with 1 2 3 4 5. Possibly each number on a line or space separated. We'll just do \"1, 2, 3, 4, 5\". Or \"1 2 3 4 5\". There is no trick.\n\nGiven the simple instruction, we must provide that.\n\nI will produce: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". My answer: \"1 2 3 4 5\".","type":"reasoning_text"},"sequence_number":13,"type":"response.reasoning_part.done"}
 
-        data: {"item":{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"}],"id":"msg_b8d72f1ae2c1973f","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":14,"type":"response.output_item.done"}
+        data: {"item":{"content":[{"text":"The user says: \"Count from 1 to 5.\" They just want a simple sequence.\n\nWe should respond with 1 2 3 4 5. Possibly each number on a line or space separated. We'll just do \"1, 2, 3, 4, 5\". Or \"1 2 3 4 5\". There is no trick.\n\nGiven the simple instruction, we must provide that.\n\nI will produce: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". My answer: \"1 2 3 4 5\".","type":"reasoning_text"}],"id":"msg_bef042c66ecd5f41","status":"completed","summary":[],"type":"reasoning"},"output_index":0,"sequence_number":14,"type":"response.output_item.done"}
 
-        data: {"response":{"background":false,"created_at":1789683355.0,"error":null,"id":"resp_vqwdcwutj7dxj2cbjsr4js5v3cl6ilfthaqpmob3nvdgpf2xar3q","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The user wants \"Count from 1 to 5.\" Simple. We just output \"1 2 3 4 5\" or maybe list them each line. The instruction \"Count from 1 to 5.\" We'll respond. Let's keep it concise.","type":"reasoning_text"}],"id":"msg_9163e812568a108a","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1, 2, 3, 4, 5","type":"output_text"}],"id":"msg_b8d72f1ae2c1973f","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":77,"output_tokens_details":{"reasoning_tokens":55},"total_tokens":152}},"sequence_number":15,"type":"response.completed"}
+        data: {"item":{"content":[],"id":"msg_a18a6df10c6ce1c0","role":"assistant","status":"in_progress","type":"message"},"output_index":1,"sequence_number":15,"type":"response.output_item.added"}
 
-  recorded_at: Thu, 17 Sep 2026 22:15:55 GMT
+        data: {"content_index":1,"item_id":"msg_a18a6df10c6ce1c0","output_index":1,"part":{"annotations":[],"logprobs":[],"text":"","type":"output_text"},"sequence_number":16,"type":"response.content_part.added"}
+
+        data: {"content_index":1,"delta":"1 2 3 4 5","item_id":"msg_a18a6df10c6ce1c0","logprobs":[],"output_index":1,"sequence_number":17,"type":"response.output_text.delta"}
+
+        data: {"content_index":1,"item_id":"msg_a18a6df10c6ce1c0","logprobs":[],"output_index":1,"sequence_number":18,"text":"1 2 3 4 5","type":"response.output_text.done"}
+
+        data: {"content_index":1,"item_id":"msg_a18a6df10c6ce1c0","output_index":1,"part":{"annotations":[],"text":"1 2 3 4 5","type":"output_text"},"sequence_number":19,"type":"response.content_part.done"}
+
+        data: {"item":{"content":[{"annotations":[],"text":"1 2 3 4 5","type":"output_text"}],"id":"msg_a18a6df10c6ce1c0","role":"assistant","status":"completed","type":"message"},"output_index":1,"sequence_number":20,"type":"response.output_item.done"}
+
+        data: {"response":{"background":false,"created_at":1791377945.0,"error":null,"id":"resp_vortbuv57jll5vw24un6o2dvrbelfdp4woxqntewonznqtvea5hq","incomplete_details":null,"instructions":null,"metadata":null,"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The user says: \"Count from 1 to 5.\" They just want a simple sequence.\n\nWe should respond with 1 2 3 4 5. Possibly each number on a line or space separated. We'll just do \"1, 2, 3, 4, 5\". Or \"1 2 3 4 5\". There is no trick.\n\nGiven the simple instruction, we must provide that.\n\nI will produce: \"1, 2, 3, 4, 5\" or \"1 2 3 4 5\". My answer: \"1 2 3 4 5\".","type":"reasoning_text"}],"id":"msg_bef042c66ecd5f41","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"1 2 3 4 5","type":"output_text"}],"id":"msg_a18a6df10c6ce1c0","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"auto","status":"completed","temperature":1.0,"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":75,"input_tokens_details":{"cached_tokens":0},"output_tokens":154,"output_tokens_details":{"reasoning_tokens":136},"total_tokens":229}},"sequence_number":21,"type":"response.completed"}
+
+  recorded_at: Wed, 07 Oct 2026 12:59:07 GMT
 recorded_with: VCR 6.4.0
 ...

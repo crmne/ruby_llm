@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:25:23 GMT
+      - Wed, 07 Oct 2026 13:03:09 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -42,79 +42,79 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:25:23Z'
+      - '2026-10-07T13:03:09Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:25:23Z'
+      - '2026-10-07T13:03:09Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:25:23Z'
+      - '2026-10-07T13:03:09Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:25:23Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T13:03:09Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-53ae27dbc68fd1d6006baefd6a6deec3-5d220fb646bce208-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-86076e56679ad047c53d86db4db3cbe7-aa0862d5bad5d948-01
-      Vary:
-      - Accept-Encoding
-      X-Robots-Tag:
-      - none
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9o9mKjcKkRRBEMBxm63","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":587,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":26,"service_tier":"standard","inference_geo":"not_available"}}               }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvTR6HSKpiZ9BD6w22m","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":587,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":25,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}    }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}           }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}     }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}      }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}   }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0    }
+        data: {"type":"content_block_stop","index":0              }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":587,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}            }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":587,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}          }
 
         event: message_stop
-        data: {"type":"message_stop"             }
+        data: {"type":"message_stop"              }
 
-  recorded_at: Thu, 17 Sep 2026 22:25:23 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:10 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
     headers:
@@ -136,7 +136,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:25:24 GMT
+      - Wed, 07 Oct 2026 13:03:10 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -150,41 +150,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:25:24Z'
+      - '2026-10-07T13:03:10Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:25:24Z'
+      - '2026-10-07T13:03:10Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:25:24Z'
+      - '2026-10-07T13:03:10Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:25:24Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T13:03:10Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-99e81952baca56126eccb003a4a588a9-502e157d4fe44053-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-19e45b96e9bda07b5c3c57f3e56e0a09-14a1492d39daf304-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Vary:
       - Accept-Encoding
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -195,47 +195,44 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9o9pSWQbAh3Z8wQXTRF","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":641,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":2,"service_tier":"standard","inference_geo":"not_available"}}            }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvTUK19SSwprRYorW4a","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":641,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}        }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}      }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}       }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The programming"}     }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The"}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" language returned"}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" best programming language to"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" is"}           }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" learn is **"}         }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" **"}           }
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Ruby**."}     }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Ruby**."}               }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0     }
+        data: {"type":"content_block_stop","index":0         }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":641,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":11}          }
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":641,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":13}           }
 
         event: message_stop
-        data: {"type":"message_stop"            }
+        data: {"type":"message_stop"  }
 
-  recorded_at: Thu, 17 Sep 2026 22:25:24 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:10 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        programming language returned is **Ruby**."}]},{"role":"user","content":[{"type":"text","text":"Call
+        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
+        best programming language to learn is **Ruby**."}]},{"role":"user","content":[{"type":"text","text":"Call
         best_language_to_learn again and repeat the programming language it returns."}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
@@ -258,7 +255,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:25:25 GMT
+      - Wed, 07 Oct 2026 13:03:11 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -272,41 +269,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:25:24Z'
+      - '2026-10-07T13:03:10Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:25:24Z'
+      - '2026-10-07T13:03:10Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:25:24Z'
+      - '2026-10-07T13:03:10Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:25:24Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T13:03:10Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-87539977ddb9e4321c63801422b2939c-7174fe2c1501ae1f-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-11dd02ecf0dfe85292dc844c340f80aa-41f11dabfff2cc81-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Vary:
       - Accept-Encoding
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -317,36 +314,36 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9o9s8FBBYzVRTPdqhDz","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":672,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":25,"service_tier":"standard","inference_geo":"not_available"}}          }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvTWft8oBR5JKCNZN7S","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":674,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":25,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}    }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01FJTVxGA4qBMGCWfoU1c8xT","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}            }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"toolu_01RFkTV1Uwe9k6DcGo72re52","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}             }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}            }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":""}           }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0              }
+        data: {"type":"content_block_stop","index":0           }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":672,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}  }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":674,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":41}       }
 
         event: message_stop
-        data: {"type":"message_stop"}
+        data: {"type":"message_stop"   }
 
-  recorded_at: Thu, 17 Sep 2026 22:25:25 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:11 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01A4PDAJsnq2ryibCp3mCYmN","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
-        programming language returned is **Ruby**."}]},{"role":"user","content":[{"type":"text","text":"Call
-        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01FJTVxGA4qBMGCWfoU1c8xT","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01FJTVxGA4qBMGCWfoU1c8xT","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01HYLVrMr6jM7YUK4GpZb5N5","content":[{"type":"text","text":"Ruby"}]}]},{"role":"assistant","content":[{"type":"text","text":"The
+        best programming language to learn is **Ruby**."}]},{"role":"user","content":[{"type":"text","text":"Call
+        best_language_to_learn again and repeat the programming language it returns."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01RFkTV1Uwe9k6DcGo72re52","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01RFkTV1Uwe9k6DcGo72re52","content":[{"type":"text","text":"Ruby"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must use tools whenever possible."}]}'
     headers:
@@ -368,7 +365,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:25:25 GMT
+      - Wed, 07 Oct 2026 13:03:11 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -382,43 +379,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:25:25Z'
+      - '2026-10-07T13:03:11Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:25:25Z'
+      - '2026-10-07T13:03:11Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:25:25Z'
+      - '2026-10-07T13:03:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:25:25Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T13:03:11Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-f79082d339776af2aac4145c47d4276d-3390c9d9358aa1d3-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-09c3f748b7b970b202a6b7f84fdc6bc3-b3744b2444cb2308-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Vary:
       - Accept-Encoding
-      Server-Timing:
-      - x-originResponse;dur=252
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -429,26 +424,32 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9o9uoijVjvxhfFKjnqE","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":726,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":8,"service_tier":"standard","inference_geo":"not_available"}}        }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvTZjvubQB9FQQgyd9C","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":728,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":4,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}}
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}           }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The programming language returned is **Ruby**."} }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"The best programming language"}       }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" to learn is **"}            }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"Ruby**."}      }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0           }
+        data: {"type":"content_block_stop","index":0}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":726,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":11}   }
+        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":728,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":13}    }
 
         event: message_stop
-        data: {"type":"message_stop"    }
+        data: {"type":"message_stop"            }
 
-  recorded_at: Thu, 17 Sep 2026 22:25:25 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:11 GMT
 recorded_with: VCR 6.4.0
 ...

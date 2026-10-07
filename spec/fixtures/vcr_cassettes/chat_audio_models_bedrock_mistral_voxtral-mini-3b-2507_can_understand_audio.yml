@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221059Z
+      - 20261007T131852Z
       X-Amz-Content-Sha256:
       - e332214329c25809eed50d50370151ebe46f670aa85d6861b8475f443d4a96be
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,11 +29,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:02 GMT
+      - Wed, 07 Oct 2026 13:18:56 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '2028'
+      - '3953'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
@@ -47,8 +47,53 @@ http_interactions:
       Access-Control-Expose-Headers:
       - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwibWVzc2FnZSI6eyJjb250ZW50IjoiVGhlIHNlbnRlbmNlIHlvdSd2ZSBwcm92aWRlZCwgXCJSdWJ5IGlzIGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgZm9yIGRldmVsb3BlciBoYXBwaW5lc3MsXCIgc3RhdGVzIHRoYXQgUnVieSBpcyBhIHNwZWNpZmljIHByb2dyYW1taW5nIGxhbmd1YWdlIHRoYXQgaGFzIGJlZW4gY3JlYXRlZCB0byBwcm9kdWNlIFwiaGFwcGluZXNzXCIgYW1vbmcgZGV2ZWxvcGVycyB3aG8gdXNlIGl0LiBIZXJl4oCZcyBhIGJyZWFrZG93bjpcblxuLSAqKlJ1YnkqKjogVGhpcyByZWZlcnMgdG8gUnVieSBhcyBhIHByb2dyYW1taW5nIGxhbmd1YWdlLlxuLSAqKmRlc2lnbmVkKio6IFRoaXMgaW5kaWNhdGVzIHRoYXQgUnVieSBpcyBhIGNyZWF0ZWQgb3IgZGVzaWduZWQgcHJvZHVjdC5cbi0gKipmb3IgZGV2ZWxvcGVyIGhhcHBpbmVzcyoqOiBUaGlzIHNwZWNpZmllcyB0aGUgZ29hbCBvZiBSdWJ5LCB3aGljaCBpcyB0byBtYWtlIGRldmVsb3BlcnMgZmVlbCBoYXBwaWVyLCBtb3JlIHNhdGlzZmllZCwgb3IgbW9yZSBjb21mb3J0YWJsZS5cblxuVGhlIGNsYWltIGlzIGFib3V0IFJ1YnkncyBwaGlsb3NvcGh5IGJlaGluZCBpdHMgZGVzaWduLiBUaGUgaWRlYSBvZiBcImRldmVsb3BlciBoYXBwaW5lc3NcIiBzdWdnZXN0cyB0aGF0IFJ1YnkgYWltcyB0byBiZSBpbnR1aXRpdmUgYW5kIHVzZXItZnJpZW5kbHksIG1pbmltaXppbmcgdGhlIGxlYXJuaW5nIGN1cnZlIGFuZCBlZmZvcnQgcmVxdWlyZWQgdG8gd3JpdGUgYW5kIGRlYnVnIGNvZGUgaW4gUnVieS4gVGhpcyBpcyBvZnRlbiBlbXBoYXNpemVkIHRocm91Z2ggUnVieSdzIG9wZW4sIHdlbGNvbWluZywgYW5kIGNvbGxhYm9yYXRpdmUgY29tbXVuaXR5LCBhcyB3ZWxsIGFzIGl0cyBjbGVhbiwgZWFzeS10by1yZWFkIHN5bnRheC5cblxuIyMjIEtleSBQb2ludHMgYWJvdXQgUnVieSdzIEZvY3VzIG9uIERldmVsb3BlciBIYXBwaW5lc3M6XG4xLiAqKkNpdmlsaXR5IGFuZCBFbGVnYW5jZSoqOiBPbmUgb2YgdGhlIGNvcmUgdGVuZXRzIG9mIFJ1YnkgaXMgY2l2aWxpdHkgYW5kIGVsZWdhbmNlIGluIGJvdGggdGhlIGxhbmd1YWdlJ3MgZmVhdHVyZXMgYW5kIHRoZSBhdHRpdHVkZSBvZiBpdHMgY29tbXVuaXR5LlxuMi4gKipQcm90b3R5cGljYWwgU3VwcG9ydCoqOiBTaWduaWZpY2FudCBmb2N1cyBpcyBnaXZlbiB0byBzdXBwb3J0aW5nIFJ1YnkncyBwb3B1bGFyaXR5IGFzIHBsYXRmb3JtcyBsaWtlIFJ1Ynkgb24gUmFpbHMsIGEgd2ViIGFwcGxpY2F0aW9uIGZyYW1ld29yaywgYWNjb21tb2RhdGluZyBlbXBoYXNpcyBvbiByYXBpZCBkZXZlbG9wbWVudCBtZXJnZS5cbjMuICoqTWF0dXJpdHkqKjogUnVieSBoYXMgYSBzdHJvbmcgaGlzdG9yeSBhbmQgaXMgcmVjb2duaXplZCBmb3IgYmVpbmcgcm9idXN0IGFuZCBtYXR1cmUgZXZlbiBhcyBuZXdlciBsYW5ndWFnZXMgZW1lcmdlLlxuXG5UaGlzIGFwcHJvYWNoIHRvIGRldmVsb3BlciBoYXBwaW5lc3MgdHJhbnNsYXRlcyBpbnRvIHRoZSBkZXNpZ24gY2hvaWNlcyB3aXRoIFJ1YnksIG1ha2luZyBpdCBvbmUgb2YgdGhlIG1vcmUgYmVsb3ZlZCBwcm9ncmFtbWluZyBsYW5ndWFnZXMgZm9yIG1hbnkgcHJvZmVzc2lvbmFsIGRldmVsb3BlcnMgd29ybGR3aWRlLCBlc3BlY2lhbGx5IGluIHRoZSBjb250ZXh0IG9mIHdlYiBkZXZlbG9wbWVudC4iLCJyZWZ1c2FsIjpudWxsLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc4OTY4MzA2MSwiaWQiOiJjaGF0Y21wbC0xMzlmNTVkNi1iZmZlLTQ4NjMtOGJjOS02ODFkN2E2NzAyZmEiLCJtb2RlbCI6Im1pc3RyYWwudm94dHJhbC1taW5pLTNiLTI1MDciLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0IiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjMyMywicHJvbXB0X3Rva2VucyI6Mzg0LCJ0b3RhbF90b2tlbnMiOjcwN319
-  recorded_at: Thu, 17 Sep 2026 22:11:02 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
+        statement you''ve provided is one perspective often presented about Ruby,
+        but it''s important to delve deeper into the who, what, where, when, why,
+        and how to truly understand its purpose and impact. Here''s a detailed breakdown:\n\n**What
+        being said?**\nRuby is known as a high-level, multi-paradigm, dynamic, interpreted
+        code-based programming language. It was designed and developed in Japan by
+        Yukihiro \"Matz\" Matsumoto in the mid-1990s as an object-oriented language
+        inspired by Perl and Smalltalk.\n\nThe idea that Ruby was designed \"for developer
+        happiness\" comes from the philosophy behind Matz''s design choices and the
+        community''s core values:\n\n1. **Natural, readable code**: Ruby syntax is
+        clean, readable, and close to natural language. This makes it easier to understand
+        and write code, even for those who are new to programming.\n\n2. **Dynamic,
+        duck typing**: Ruby doesn''t require explicit type declarations or constant-checking.
+        Instead, it relies on \"duck typing,\" where the presence and behavior of
+        a method are what determines the type. This encourages flexibility and experimention.\n\n3.
+        **Community-centric**: The Ruby community has a strong focus on collaboration,
+        inclusivity, and knowledge sharing. This, along with open source tools and
+        libraries, contributes to a positive and supportive developer experience.
+        *(Community values, such as \"F(r)eck You (and Yo(y)) Boo(t),\" were popularized
+        to highlight this culture.)*\n\n**Who or which community, what for?**\nThe
+        primary users of Ruby are developers who need affordable, malleable, and high-performance
+        solutions. Despite its popularity, Ruby faces some hurdles, such as performance
+        issues under heavy load and a volatility in its ecosystem, as seen with the
+        shift away from Rails 3.\n\n**Use-cases where Ruby shines**\n- **Web application
+        development**: Ruby on Rails (or \"Rails\"), specifically, is often used due
+        to its convention over configuration approach and its rapid development capabilities.\n-
+        **Scripting and automation**: Thanks to Ruby''s flexibility, it''s used for
+        scripting, automation, and quick prototyping.\n- **Startups**: Due to its
+        clean syntax and well-defined communities, some startups choose to use Ruby
+        or its web framework, Ruby on Rails, for development.\n- **Education**: Ruby
+        programs are popular due to their simplicity, making them ideal for teaching
+        people programming basics.\n\n**Is this a narrow appreciation of the concept?**\nThere
+        might be certain nuances_LEFT out, such as compatibility issues mentioned
+        above. But Ruby''s main focus is on user happiness through excellent syntax,
+        powerful libraries, disciplined community practices, and developer ergonomics.\n\n**Why
+        appreciate its community and focus on \"happiness?\"**\nThe word \"happiness\"
+        in the context of \"dev happiness\" is metaphorical. Matz considered well-written
+        code more engaging, productive, and pleasant; he identified developer happiness
+        with intuitive design, which encourages more refactorings, friendships, and
+        contributions, ultimately helping to maintain, grow, and adopt it more widely.\n\n**How
+        is this beneficial for the language in the long term?**\nThe development community
+        involved in any language tends to influence its usage and evolution. A community
+        driven by contributor satisfaction and empathy fosters self-motivation, enhances
+        development speed, and resists version-control decay, which might otherwise
+        deteriorate over time. This in turn could make collaborative resources easier
+        to find and design, creating an ideal study for software design, methodology,
+        and culture.","refusal":null,"role":"assistant"}}],"created":1791379133,"id":"chatcmpl-8161a1ad-ec5c-4773-99d8-c0d919cd47e1","model":"mistral.voxtral-mini-3b-2507","object":"chat.completion","service_tier":"default","usage":{"completion_tokens":722,"prompt_tokens":384,"total_tokens":1106}}'
+  recorded_at: Wed, 07 Oct 2026 13:18:56 GMT
 recorded_with: VCR 6.4.0

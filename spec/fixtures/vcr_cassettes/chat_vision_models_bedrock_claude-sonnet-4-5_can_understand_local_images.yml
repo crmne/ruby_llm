@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220848Z
+      - 20261007T130705Z
       X-Amz-Content-Sha256:
       - d41c783d2a3e558d5aed2e01edbd778c8c2b0d628da0bd3a2a9f8760c2d0d9bb
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,25 +29,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:08:53 GMT
+      - Wed, 07 Oct 2026 13:07:09 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '918'
+      - '727'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - dcbdef5a-e629-44a6-a55b-da5e8d84c94c
+      - 807e3a93-7eb1-4917-b861-4731bff31d2d
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":5081},"output":{"message":{"content":[{"text":"This
-        image shows a stylized illustration of a **ruby gemstone**. It features:\n\n-
-        A rich, deep red color with darker crimson tones\n- Multiple facets cut into
-        the gem, showing geometric planes and angles\n- Glossy, reflective surfaces
-        with highlights that give it dimension and shine\n- A classic gemstone cut
-        style, likely representing a brilliant or mixed cut\n- Shading that creates
-        depth and makes it appear three-dimensional\n\nThis type of icon is commonly
-        used to represent the Ruby programming language, valuable gems in applications
-        or games, or premium/luxury features in software interfaces."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":43,"outputTokens":129,"serverToolUsage":{},"totalTokens":172}}'
-  recorded_at: Thu, 17 Sep 2026 22:08:53 GMT
+      string: '{"metrics":{"latencyMs":3610},"output":{"message":{"content":[{"text":"This
+        image shows a stylized ruby gemstone icon. It features a red, faceted gem
+        with multiple angular cuts and surfaces that create depth and dimension. The
+        gem has a glossy, polished appearance with highlights and shading that give
+        it a three-dimensional look. This type of icon is commonly associated with
+        the Ruby programming language, serving as its logo and visual identifier in
+        software development contexts."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":43,"outputTokens":83,"serverToolUsage":{},"totalTokens":126}}'
+  recorded_at: Wed, 07 Oct 2026 13:07:09 GMT
 recorded_with: VCR 6.4.0

@@ -11,15 +11,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221758Z
+      - 20261007T130411Z
       X-Amz-Content-Sha256:
       - f2126a7e3f1a48d49a1d6bf4100b66630b4e2175a327d634757b2a9095944515
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:18:00 GMT
+      - Wed, 07 Oct 2026 13:04:12 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,31 +38,31 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c8d35beb-96e0-4289-b96f-2bcc72e59f34
+      - eafe93a6-af57-4247-9a95-bd86355868f2
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":626},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_pOwDv4SbmJpjtdCfsEHO9N"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_mZphi8TOkXvJ5DeYniTXHy"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_rszOgTxHxy0FzVfki7jiw8"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":946,"outputTokens":37,"serverToolUsage":{},"totalTokens":983}}'
-  recorded_at: Thu, 17 Sep 2026 22:18:00 GMT
+      string: '{"metrics":{"latencyMs":583},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_L1TWwLF65XC2MwMzq9CWUz"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_SNU2T1gg4OUHs8oOijItMB"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_onUFucUXNHgfv4HNgrzXKt"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":946,"outputTokens":37,"serverToolUsage":{},"totalTokens":983}}'
+  recorded_at: Wed, 07 Oct 2026 13:04:12 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"Roll the dice 3 times"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_pOwDv4SbmJpjtdCfsEHO9N","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_mZphi8TOkXvJ5DeYniTXHy","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_rszOgTxHxy0FzVfki7jiw8","name":"dice_roll","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_pOwDv4SbmJpjtdCfsEHO9N","content":[{"text":"{\"roll\":1}"}]}},{"toolResult":{"toolUseId":"tooluse_mZphi8TOkXvJ5DeYniTXHy","content":[{"text":"{\"roll\":2}"}]}},{"toolResult":{"toolUseId":"tooluse_rszOgTxHxy0FzVfki7jiw8","content":[{"text":"{\"roll\":3}"}]}}]}],"system":[{"text":"You
+      string: '{"messages":[{"role":"user","content":[{"text":"Roll the dice 3 times"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_L1TWwLF65XC2MwMzq9CWUz","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_SNU2T1gg4OUHs8oOijItMB","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_onUFucUXNHgfv4HNgrzXKt","name":"dice_roll","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_L1TWwLF65XC2MwMzq9CWUz","content":[{"text":"{\"roll\":1}"}]}},{"toolResult":{"toolUseId":"tooluse_SNU2T1gg4OUHs8oOijItMB","content":[{"text":"{\"roll\":2}"}]}},{"toolResult":{"toolUseId":"tooluse_onUFucUXNHgfv4HNgrzXKt","content":[{"text":"{\"roll\":3}"}]}}]}],"system":[{"text":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221800Z
+      - 20261007T130412Z
       X-Amz-Content-Sha256:
-      - 45c4cfd24cdf62f9e5fc12efcb61de7a6c3128ddc44d7d139c1a7d953608c9b9
+      - e927598401754c30eaac3bb10bb21f75016791bf28428fdb5e250c49a97d40de
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -73,18 +73,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:18:01 GMT
+      - Wed, 07 Oct 2026 13:04:13 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '263'
+      - '320'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ef5b1b7e-cec8-473d-98bd-09b07d463ee4
+      - 856fd965-6969-4b06-a632-7cae90a45246
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":544},"output":{"message":{"content":[{"text":"The
-        three dice rolls resulted in **1**, **2**, and **3**."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":1045,"outputTokens":19,"serverToolUsage":{},"totalTokens":1064}}'
-  recorded_at: Thu, 17 Sep 2026 22:18:01 GMT
+      string: '{"metrics":{"latencyMs":520},"output":{"message":{"content":[{"text":"The
+        three dice rolls resulted in the following values:\n\n1. **1**\n2. **2**\n3.
+        **3**\n\nYour total sum is **6**."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":1045,"outputTokens":35,"serverToolUsage":{},"totalTokens":1080}}'
+  recorded_at: Wed, 07 Oct 2026 13:04:13 GMT
 recorded_with: VCR 6.4.0

@@ -29,39 +29,37 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '897'
+      - '924'
       Date:
-      - Thu, 17 Sep 2026 22:20:45 GMT
+      - Wed, 07 Oct 2026 13:40:45 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 49bc6962fe8e38069c02b3d608d3d030/10741882164159217837
+      - 61934bf92298902b1a2cd59f5eeeb2d3/15541901510756002090
       Traceparent:
-      - 00-49bc6962fe8e38069c02b3d608d3d030-9512d4ea55d080ad-00
+      - 00-61934bf92298902b1a2cd59f5eeeb2d3-d7afed145ab7e92a-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-932","object":"chat.completion","created":1789683645,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+      string: '{"id":"chatcmpl-895","object":"chat.completion","created":1791380445,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
         user wants to call the object_params tool with window start 2025-01-01 and
-        end 2025-01-02 and include the result. So we need to invoke the function with
-        appropriate parameters.\n\nWe have tool: functions.object_params with param
-        window: Record\u003cstring, any\u003e. We should pass window: { start: \"2025-01-01\",
-        end: \"2025-01-02\" }. Then output result.","tool_calls":[{"id":"call_jxmctxmy","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens":143,"total_tokens":302}}
+        end 2025-01-02 and include the result. So we need to use the function. According
+        to tool definition, namespace functions, function object_params takes a param
+        object with window: Record\u003cstring, any\u003e. So we need to pass window
+        with start and end fields.\n\nWe then output the result. So call function.","tool_calls":[{"id":"call_cywq12ab","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":138,"total_tokens":297,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:45 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:45 GMT
 recorded_with: VCR 6.4.0

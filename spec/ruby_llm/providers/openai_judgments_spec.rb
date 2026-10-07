@@ -80,7 +80,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
       expect(result[:frustration].score).to be_between(0, 2)
       expect(result[:frustration].probabilities.keys).to eq([0, 1, 2])
       expect(result.tokens.input).to be_positive
-      expect(result.tokens.output).to be_positive
+      expect(result.tokens.output).to eq(result.raw.body.fetch('usage').fetch('output_tokens'))
       expect(result.model).to start_with('gpt-6-luna')
     end
 

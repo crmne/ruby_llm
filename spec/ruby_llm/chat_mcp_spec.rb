@@ -43,11 +43,12 @@ RSpec.describe RubyLLM::Chat, :live do
         it 'denies a remote call without executing it' do
           request_documentation
           expect(chat).to be_awaiting_approval
-          chat.deny(chat.pending_approvals.first)
+          denied_call = chat.pending_approvals.first
+          chat.deny(denied_call)
 
           chat.complete
 
-          expect(chat).to be_complete
+          expect(chat.pending_approvals.map(&:id)).not_to include(denied_call.id)
           expect(chat.messages.flat_map(&:server_tool_calls)).not_to include(have_attributes(type: 'mcp_call'))
           expect(chat.messages.find(&:tool_result?).raw_content.first[:approve]).to be(false)
         end

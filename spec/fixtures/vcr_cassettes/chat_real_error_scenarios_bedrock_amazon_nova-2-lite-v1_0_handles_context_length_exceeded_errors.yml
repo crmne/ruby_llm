@@ -9,15 +9,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220643Z
+      - 20261007T125938Z
       X-Amz-Content-Sha256:
       - 55c2ebe2434295cc9874d7c4cac19f2b478ee12be2a057acb1a85087330a2ba0
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -28,7 +28,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:07:16 GMT
+      - Wed, 07 Oct 2026 13:02:02 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -36,7 +36,7 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c874cb9e-1b66-43e8-a0e7-56187be17d6d
+      - 39bc78ab-0adb-4bd1-8b25-88e41b342e2e
       X-Amzn-Errortype:
       - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
     body:
@@ -44,5 +44,5 @@ http_interactions:
       string: '{"message":"The model returned the following errors: Input Tokens Exceeded:
         Number of input tokens exceeds maximum length. Please update the input to
         try again."}'
-  recorded_at: Thu, 17 Sep 2026 22:07:16 GMT
+  recorded_at: Wed, 07 Oct 2026 13:02:02 GMT
 recorded_with: VCR 6.4.0

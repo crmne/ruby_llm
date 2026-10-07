@@ -10,7 +10,7 @@ http_interactions:
         action today","false":null}}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,19 +25,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 21 Sep 2026 16:06:36 GMT
-      Server:
-      - istio-envoy
-      Content-Length:
-      - '234'
+      - Wed, 07 Oct 2026 12:57:52 GMT
       Content-Type:
       - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - "<COOKIE>"
       X-Typesafe-Request-Id:
-      - req_01a0c4b8248a7a3183dbe7703b914cdd
-      X-Envoy-Upstream-Service-Time:
-      - '62'
+      - req_01a116711704755d9ac8afbc2dd3d00e
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
-      encoding: UTF-8
-      string: '{"model":"jev-1.13.0","answers":{"department":{"type":"choice","choice":"billing","confidence":1.0,"probabilities":{"billing":1.0,"technical":0.0}},"urgent":{"type":"noul","noul":0.46}},"usage":{"input_tokens":320,"output_tokens":48}}'
-  recorded_at: Mon, 21 Sep 2026 16:06:37 GMT
+      encoding: ASCII-8BIT
+      string: '{"model":"jev-1.13.0","answers":{"department":{"type":"choice","choice":"billing","confidence":1.0,"probabilities":{"technical":0.0,"billing":1.0}},"urgent":{"type":"noul","noul":0.46}},"usage":{"input_tokens":320,"output_tokens":48}}'
+  recorded_at: Wed, 07 Oct 2026 12:57:52 GMT
 recorded_with: VCR 6.4.0

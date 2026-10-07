@@ -27,24 +27,32 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:20:23 GMT
+      - Wed, 07 Oct 2026 13:40:25 GMT
       Content-Length:
-      - '1249'
+      - '1847'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-88","object":"chat.completion","created":1789683623,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to call the any-of params tool for the task \"Review PR\"
-        with status \"pending\" and report the result. Let me check the tools provided.\n\nThe
-        available tool has a function that takes a task and a status. The status uses
-        anyOf, which allows either a string \"pending\" or \"done\", or null. Since
-        the user specified \"pending\", that''s valid. The task is \"Review PR\".
-        \n\nSo I need to structure the tool call with the task as a string and status
-        as \"pending\". The function name is any_of_params. Let me make sure the JSON
-        is correct. The arguments should be {\"task\": \"Review PR\", \"status\":
-        \"pending\"}. \n\nYes, that fits the schema. No errors here. I''ll output
-        the tool_call with these parameters.\n","tool_calls":[{"id":"call_pidngxey","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":200,"total_tokens":386}}
+      string: '{"id":"chatcmpl-490","object":"chat.completion","created":1791380425,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let''s see. The user wants me to call the any-of params tool for the task
+        \"Review PR\" with status \"pending\" and report the result.\n\nFirst, I need
+        to understand the tool''s structure. The function provided has parameters
+        where the status can be either a string from the enum [\"pending\", \"done\"]
+        or null. The task is a string. Since the user specified \"pending\", which
+        is in the enum, that''s valid. The task is \"Review PR\".\n\nSo, the function
+        call should include both task and status. The status here is \"pending\",
+        which is one of the allowed values. I need to structure the JSON arguments
+        correctly. The task is a string, and status is also a string. \n\nWait, the
+        anyOf in the status field allows either a string (with enum values) or null.
+        Since the user provided \"pending\", which is valid, I don''t need to use
+        null. So the arguments should be {\"task\": \"Review PR\", \"status\": \"pending\"}.\n\nI
+        should make sure that the JSON is properly formatted. Let me double-check
+        the function signature. The function''s parameters are task (string) and status
+        (anyOf: string enum or null). So yes, including both parameters with the given
+        values is correct. \n\nNo other parameters are needed. The user didn''t mention
+        any other fields, so just task and status. Alright, that''s all. The tool
+        call should be correct.\n","tool_calls":[{"id":"call_fx72gfdg","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":328,"total_tokens":514}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:23 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:25 GMT
 recorded_with: VCR 6.4.0

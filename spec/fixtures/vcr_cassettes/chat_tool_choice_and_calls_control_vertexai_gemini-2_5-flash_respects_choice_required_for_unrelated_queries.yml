@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 17 Sep 2026 22:28:36 GMT
       Pragma:
       - no-cache
+      Date:
+      - Wed, 07 Oct 2026 13:58:46 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:28:36 GMT
+  recorded_at: Wed, 07 Oct 2026 13:58:46 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -91,7 +91,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:28:37 GMT
+      - Wed, 07 Oct 2026 13:58:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,22 +117,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CpACAY89a19LD9q2XaiTTP0ivJE/r5EjvqQ8DVleVv7mZVNR4TFzY1ZVqHBIqdBE5nZ3QudX1ezsWW/RSzmEhwMR/b/cSOVi/N2vJ32/Y4wPNyP0qcLQO3c6L/0kgU6deI82oqzy6GS9cfyX0lm/3Ukno3ASWZfeTtbyD6iUrCacLAX4vlFDduGHDNVM7tNPUISZaISpEczS/4zaSGIJWu2iDcxPPuPXx3qv5dOLJKbQNjANV/WtPLN3aA7rDopIZyIf1qjDilqqEagoCvNxeHT7vTuPPNdAm3TaMnSns1k5juIq2Zw7NvswuAX64yQYCJUEcBWfbuer7AsnOnyTcNKivpfU+DH+WFbkYisyNPuoydY="
+                    "thoughtSignature": "CvACAY89a1/4eT8DLngEJ06ERmh2rHTPucUr9PIAiP/cxS33/DrzHmg43AoUbSZ/IBxDBDV/wkKIYn1DBCrLXHwN3Tx4SDzDGUsuxPzfQRlVFCPZaOE+toqBvM0XHeW0yEHbSfhqr+k740cpVjHu1lFUpeAHlviDhv72mF4h2Klpz08lT1dSnRaRWxSVMdOnGF2hODVr41eqEg8sBc747xqMeGrzViX/WZ7I0BYhedZvqQejogEphSfgG4z3kaRYBa31/sN3n+02Igknj7Rh9pu6MgBQu+HazDLdjMahROjaVQByVT1iZliPUtyY9bo/UrSSujebDt6aHPjaKnf0z9DpD1dKbihRFSdHZR26H5KL0nzjnBSIOmJjGl6j7Ps5/7O3U3FCKdNFi3fO0kKVJ7GJHpIsB1nBy6e91CKUnHpwW8HFj2PTzvC2CqwoJwLSQfVcclB0knaBqGayBFyJUVPwf+CPZOwutjRMSsNtxKyi7hw="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.86087299795711747
+              "avgLogprobs": -0.68974276149974145
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 40,
             "candidatesTokenCount": 17,
-            "totalTokenCount": 105,
+            "totalTokenCount": 116,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -146,20 +146,20 @@ http_interactions:
                 "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 48
+            "thoughtsTokenCount": 59
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:28:36.314150Z",
-          "responseId": "lGmsaqaWE_acusEP8pGA2AE"
+          "createTime": "2026-10-07T13:58:46.206958Z",
+          "responseId": "FlDGau7QDKvIhcIPncSPiQ4"
         }
-  recorded_at: Thu, 17 Sep 2026 22:28:37 GMT
+  recorded_at: Wed, 07 Oct 2026 13:58:47 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}},"thoughtSignature":"CpACAY89a19LD9q2XaiTTP0ivJE/r5EjvqQ8DVleVv7mZVNR4TFzY1ZVqHBIqdBE5nZ3QudX1ezsWW/RSzmEhwMR/b/cSOVi/N2vJ32/Y4wPNyP0qcLQO3c6L/0kgU6deI82oqzy6GS9cfyX0lm/3Ukno3ASWZfeTtbyD6iUrCacLAX4vlFDduGHDNVM7tNPUISZaISpEczS/4zaSGIJWu2iDcxPPuPXx3qv5dOLJKbQNjANV/WtPLN3aA7rDopIZyIf1qjDilqqEagoCvNxeHT7vTuPPNdAm3TaMnSns1k5juIq2Zw7NvswuAX64yQYCJUEcBWfbuer7AsnOnyTcNKivpfU+DH+WFbkYisyNPuoydY="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CvACAY89a1/4eT8DLngEJ06ERmh2rHTPucUr9PIAiP/cxS33/DrzHmg43AoUbSZ/IBxDBDV/wkKIYn1DBCrLXHwN3Tx4SDzDGUsuxPzfQRlVFCPZaOE+toqBvM0XHeW0yEHbSfhqr+k740cpVjHu1lFUpeAHlviDhv72mF4h2Klpz08lT1dSnRaRWxSVMdOnGF2hODVr41eqEg8sBc747xqMeGrzViX/WZ7I0BYhedZvqQejogEphSfgG4z3kaRYBa31/sN3n+02Igknj7Rh9pu6MgBQu+HazDLdjMahROjaVQByVT1iZliPUtyY9bo/UrSSujebDt6aHPjaKnf0z9DpD1dKbihRFSdHZR26H5KL0nzjnBSIOmJjGl6j7Ps5/7O3U3FCKdNFi3fO0kKVJ7GJHpIsB1nBy6e91CKUnHpwW8HFj2PTzvC2CqwoJwLSQfVcclB0knaBqGayBFyJUVPwf+CPZOwutjRMSsNtxKyi7hw="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"maxOutputTokens":4096},"systemInstruction":{"parts":[{"text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -188,7 +188,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:28:37 GMT
+      - Wed, 07 Oct 2026 13:58:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -203,43 +203,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "The fall of the Western Roman Empire is traditionally dated to 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the decline of the Roman Empire was a gradual process that occurred over several centuries.\n"
-                  }
-                ]
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.091043570946002822
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 145,
-            "candidatesTokenCount": 58,
-            "totalTokenCount": 203,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 145
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 58
-              }
-            ]
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:28:37.214031Z",
-          "responseId": "lWmsao-IDfLMmNAPxeyOsQw"
-        }
-  recorded_at: Thu, 17 Sep 2026 22:28:37 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgZmFsbCBvZiBSb21lIGlzIGdlbmVyYWxseSBjb25zaWRlcmVkIHRvIGhhdmUgb2NjdXJyZWQgaW4gNDc2IENFIHdoZW4gdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIHdhcyBkZXBvc2VkLlxuXG5CeSB0aGUgd2F5LCB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBvZiAxMCBrbS9oLlxuIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuMTUxOTk2NDUwOTA5MTEzNDgKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxNTYsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA1OSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTUsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTU2CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA1OQogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTAtMDdUMTM6NTg6NDcuNDgzMjYxWiIsCiAgInJlc3BvbnNlSWQiOiAiRjFER2FyMl9IWnlKMVBJUF9zNmZxQWsiCn0K
+  recorded_at: Wed, 07 Oct 2026 13:58:48 GMT
 recorded_with: VCR 6.4.0

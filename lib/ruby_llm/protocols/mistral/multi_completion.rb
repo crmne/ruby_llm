@@ -55,14 +55,24 @@ module RubyLLM
           end.to_h
           calls = messages.flat_map { |message| Array(message['tool_calls']) }
           pending = multi_pending_calls(calls, results, raw:)
+          attachments = content[:attachments] + parse_multi_images(calls, results)
           usage = data['usage'] || {}
           Message.new(role: :assistant, content: content[:text], thinking: Thinking.build(text: content[:thinking]),
-                      attachments: content[:attachments], citations: content[:citations],
+                      attachments: attachments.uniq(&:source), citations: content[:citations],
                       tool_calls: parse_tool_calls(pending, response: raw, finish_reason: :tool_calls),
                       server_tool_calls: parse_multi_steps(calls, results), raw_content: messages,
                       input_tokens: input_tokens(usage), output_tokens: output_tokens(usage),
                       cache_read_tokens: cache_read_tokens(usage), model: data['model'], raw: raw,
                       finish_reason: normalize_finish_reason(data.dig('choices', 0, 'finish_reason')))
+        end
+
+        def parse_multi_images(calls, results)
+          calls.filter_map do |call|
+            result = results[call['id']]
+            next unless result && call.dig('metadata', 'tool_type') == 'image'
+
+            parse_generated_image(result['content'])
+          end
         end
 
         def parse_multi_steps(calls, results)

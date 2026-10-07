@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:29 GMT
+      - Wed, 07 Oct 2026 13:00:01 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -32,19 +32,19 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b168-2ac3-70a2-9b56-cf8074218d12
+      - 01a11673-0a3e-7f5c-aca0-595a845ebbec
       X-Kong-Request-Id:
-      - 01a0b168-2ac3-70a2-9b56-cf8074218d12
+      - 01a11673-0a3e-7f5c-aca0-595a845ebbec
       X-Envoy-Upstream-Service-Time:
-      - '559'
+      - '695'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '561'
+      - '697'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '15'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -61,71 +61,71 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: conversation.response.started
-        data: {"type":"conversation.response.started","created_at":"2026-09-17T22:06:29.630902Z","conversation_id":"conv_01a0b1682ae876b4a41cfd6e073be587"}
+        data: {"type":"conversation.response.started","created_at":"2026-10-07T13:00:01.152318Z","conversation_id":"conv_01a116730a6b7769b58d3a49be73f14c"}
 
         event: tool.execution.started
-        data: {"type":"tool.execution.started","created_at":"2026-09-17T22:06:29.634885Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","model":"mistral-small-latest","name":"code_interpreter","arguments":"","function":"code_interpreter"}
+        data: {"type":"tool.execution.started","created_at":"2026-10-07T13:00:01.155597Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","model":"mistral-small-latest","name":"code_interpreter","arguments":"","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.645336Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":"{\"code","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.165955Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":"{\"code","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.659781Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":"\": \"# Multip","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.184406Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":"\": \"# Multip","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.675293Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":"lying 37","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.201682Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":"lying 37","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.689994Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":" by 19","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.222031Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":" by 19","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.704944Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":" using","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.240599Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":" using","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.720897Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":" Python\\nresult =","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.257612Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":" Python\\nresult =","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.736320Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":" 37 *","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.278647Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":" 37 *","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.751362Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":" 19\\n","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.293436Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":" 19\\n","function":"code_interpreter"}
 
         event: tool.execution.delta
-        data: {"type":"tool.execution.delta","created_at":"2026-09-17T22:06:29.771968Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","arguments":"result\"}","function":"code_interpreter"}
+        data: {"type":"tool.execution.delta","created_at":"2026-10-07T13:00:01.315838Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","arguments":"result\"}","function":"code_interpreter"}
 
         event: tool.execution.done
-        data: {"type":"tool.execution.done","created_at":"2026-09-17T22:06:34.019237Z","output_index":0,"id":"tool_exec_01a0b1682d027764bcd26e5868948147","name":"code_interpreter","function":"code_interpreter","info":{"result":[{"type":"text","text":"703\n"}],"code":"# Multiplying 37 by 19 using Python\nresult = 37 * 19\nresult","code_output":"703\n"}}
+        data: {"type":"tool.execution.done","created_at":"2026-10-07T13:00:02.722423Z","output_index":0,"id":"tool_exec_01a116730d03776a8281e22604a99ab0","name":"code_interpreter","function":"code_interpreter","info":{"result":[{"type":"text","text":"703\n"}],"code":"# Multiplying 37 by 19 using Python\nresult = 37 * 19\nresult","code_output":"703\n"}}
 
         event: message.output.delta
-        data: {"type":"message.output.delta","created_at":"2026-09-17T22:06:34.202233Z","output_index":1,"id":"msg_01a0b1683eda73e09a6dce6207e0a155","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"The"}
+        data: {"type":"message.output.delta","created_at":"2026-10-07T13:00:02.921956Z","output_index":1,"id":"msg_01a1167313e97169bdd30012d0ac401d","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"The"}
 
         event: message.output.delta
-        data: {"type":"message.output.delta","created_at":"2026-09-17T22:06:34.215386Z","output_index":1,"id":"msg_01a0b1683eda73e09a6dce6207e0a155","content_index":0,"model":"mistral-small-latest","role":"assistant","content":" result"}
+        data: {"type":"message.output.delta","created_at":"2026-10-07T13:00:02.936237Z","output_index":1,"id":"msg_01a1167313e97169bdd30012d0ac401d","content_index":0,"model":"mistral-small-latest","role":"assistant","content":" result"}
 
         event: message.output.delta
-        data: {"type":"message.output.delta","created_at":"2026-09-17T22:06:34.230555Z","output_index":1,"id":"msg_01a0b1683eda73e09a6dce6207e0a155","content_index":0,"model":"mistral-small-latest","role":"assistant","content":" of multiplying 3"}
+        data: {"type":"message.output.delta","created_at":"2026-10-07T13:00:02.955589Z","output_index":1,"id":"msg_01a1167313e97169bdd30012d0ac401d","content_index":0,"model":"mistral-small-latest","role":"assistant","content":" of multiplying 3"}
 
         event: message.output.delta
-        data: {"type":"message.output.delta","created_at":"2026-09-17T22:06:34.251372Z","output_index":1,"id":"msg_01a0b1683eda73e09a6dce6207e0a155","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"7 by 1"}
+        data: {"type":"message.output.delta","created_at":"2026-10-07T13:00:02.971737Z","output_index":1,"id":"msg_01a1167313e97169bdd30012d0ac401d","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"7 by 1"}
 
         event: message.output.delta
-        data: {"type":"message.output.delta","created_at":"2026-09-17T22:06:34.265635Z","output_index":1,"id":"msg_01a0b1683eda73e09a6dce6207e0a155","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"9 is **7"}
+        data: {"type":"message.output.delta","created_at":"2026-10-07T13:00:02.991179Z","output_index":1,"id":"msg_01a1167313e97169bdd30012d0ac401d","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"9 is **7"}
 
         event: message.output.delta
-        data: {"type":"message.output.delta","created_at":"2026-09-17T22:06:34.283666Z","output_index":1,"id":"msg_01a0b1683eda73e09a6dce6207e0a155","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"03**."}
+        data: {"type":"message.output.delta","created_at":"2026-10-07T13:00:03.008715Z","output_index":1,"id":"msg_01a1167313e97169bdd30012d0ac401d","content_index":0,"model":"mistral-small-latest","role":"assistant","content":"03**."}
 
         event: conversation.response.done
-        data: {"type":"conversation.response.done","created_at":"2026-09-17T22:06:34.289784Z","usage":{"prompt_tokens":234,"completion_tokens":53,"total_tokens":293,"connector_tokens":6,"connectors":{"code_interpreter":1}}}
+        data: {"type":"conversation.response.done","created_at":"2026-10-07T13:00:03.011190Z","usage":{"prompt_tokens":234,"completion_tokens":53,"total_tokens":293,"connector_tokens":6,"connectors":{"code_interpreter":1}}}
 
-  recorded_at: Thu, 17 Sep 2026 22:06:34 GMT
+  recorded_at: Wed, 07 Oct 2026 13:00:03 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/conversations
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","inputs":[{"type":"message.input","role":"user","content":"Use
-        Python to multiply 37 by 19."},{"type":"function.call","tool_call_id":"5ee61c490","name":"code_interpreter","arguments":"{\"code\":
-        \"# Multiplying 37 by 19 using Python\\nresult = 37 * 19\\nresult\"}"},{"type":"function.result","tool_call_id":"5ee61c490","result":"[{\"type\":\"text\",\"text\":\"703\\n\"}]"},{"type":"message.output","content":[{"type":"text","text":"The
+        Python to multiply 37 by 19."},{"type":"function.call","tool_call_id":"78f50088d","name":"code_interpreter","arguments":"{\"code\":
+        \"# Multiplying 37 by 19 using Python\\nresult = 37 * 19\\nresult\"}"},{"type":"function.result","tool_call_id":"78f50088d","result":"[{\"type\":\"text\",\"text\":\"703\\n\"}]"},{"type":"message.output","content":[{"type":"text","text":"The
         result of multiplying 37 by 19 is **703**."}],"model":"mistral-small-latest","role":"assistant"},{"type":"message.input","role":"user","content":"What
         was the result?"}],"instructions":"","completion_args":{},"tools":[{"type":"code_interpreter"}],"store":false,"stream":false}'
     headers:
@@ -145,7 +145,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:35 GMT
+      - Wed, 07 Oct 2026 13:00:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -153,23 +153,23 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b168-3f8b-745e-ad6b-76b149e4cc42
+      - 01a11673-14e4-7c90-99ce-7881a342a500
       X-Kong-Request-Id:
-      - 01a0b168-3f8b-745e-ad6b-76b149e4cc42
+      - 01a11673-14e4-7c90-99ce-7881a342a500
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '81887'
+      - '80041'
       X-Envoy-Upstream-Service-Time:
-      - '672'
+      - '823'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '674'
+      - '826'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '19'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -184,8 +184,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"object":"conversation.response","conversation_id":"conv_01a0b1683fb87088ade49ca99f15fc01","outputs":[{"object":"entry","type":"message.output","created_at":"2026-09-17T22:06:34.970026Z","completed_at":"2026-09-17T22:06:35.030072Z","model":"mistral-small-latest","id":"msg_01a0b16841d977adb69dde87348598f2","role":"assistant","content":"The
+      string: '{"object":"conversation.response","conversation_id":"conv_01a11673150f7369888c2301d43320f7","outputs":[{"object":"entry","type":"message.output","created_at":"2026-10-07T13:00:03.911925Z","completed_at":"2026-10-07T13:00:03.977223Z","model":"mistral-small-latest","id":"msg_01a1167317c7717e82d493058f5b595c","role":"assistant","content":"The
         result of multiplying 37 by 19 is **703**."}],"usage":{"prompt_tokens":310,"completion_tokens":18,"total_tokens":328},"guardrails":null}'
-  recorded_at: Thu, 17 Sep 2026 22:06:35 GMT
+  recorded_at: Wed, 07 Oct 2026 13:00:04 GMT
 recorded_with: VCR 6.4.0
 ...

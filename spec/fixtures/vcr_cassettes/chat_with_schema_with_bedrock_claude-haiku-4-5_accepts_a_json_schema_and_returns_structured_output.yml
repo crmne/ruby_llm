@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220733Z
+      - 20261007T125925Z
       X-Amz-Content-Sha256:
       - a87561e69b895503dafa53c61a295cf180506dc3c52d59b07ffd858994574c4b
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:07:36 GMT
+      - Wed, 07 Oct 2026 12:59:29 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d247f060-45d0-41dc-8bed-9ff96379c4cf
+      - cf3880ef-79bd-4935-8626-b8edb1a22bff
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1593},"output":{"message":{"content":[{"text":"{\"name\":\"John\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":181,"outputTokens":12,"serverToolUsage":{},"totalTokens":193}}'
-  recorded_at: Thu, 17 Sep 2026 22:07:36 GMT
+      string: '{"metrics":{"latencyMs":2000},"output":{"message":{"content":[{"text":"{\"name\":\"John\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":181,"outputTokens":12,"serverToolUsage":{},"totalTokens":193}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:29 GMT
 recorded_with: VCR 6.4.0

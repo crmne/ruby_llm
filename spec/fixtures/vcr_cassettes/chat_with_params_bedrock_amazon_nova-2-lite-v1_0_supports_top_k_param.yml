@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221414Z
+      - 20261007T125931Z
       X-Amz-Content-Sha256:
       - 853ef830b358b0bc6e27e877a4c0319d69f5cb0021cee1adc54e4312a4fca7f0
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:14:15 GMT
+      - Wed, 07 Oct 2026 12:59:32 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,10 +37,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 84ce2037-d23d-4810-a9ad-e54169c4381a
+      - e1204dff-6ce5-4b2d-831d-761d56b722d1
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":302},"output":{"message":{"content":[{"text":"
+      string: '{"metrics":{"latencyMs":468},"output":{"message":{"content":[{"text":"
         \"result\": 8 }"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":68,"outputTokens":8,"serverToolUsage":{},"totalTokens":76}}'
-  recorded_at: Thu, 17 Sep 2026 22:14:15 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:32 GMT
 recorded_with: VCR 6.4.0

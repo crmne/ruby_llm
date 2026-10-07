@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Accept-Encoding:
@@ -21,21 +21,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 21 Sep 2026 16:06:37 GMT
-      Server:
-      - istio-envoy
-      Content-Length:
-      - '311'
+      - Wed, 07 Oct 2026 12:57:53 GMT
       Content-Type:
       - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - "<COOKIE>"
       X-Typesafe-Request-Id:
-      - req_01a0c4b827797addaad26625c2485f45
-      X-Envoy-Upstream-Service-Time:
-      - '11'
+      - req_01a116711a4d7778ae2de757319413bd
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"models":[{"name":"jev-latest","description":"The latest iteration
         of TypeSafe''s System One Model: Jev","release_date":"2026-09-10T18:38:01.391457+00:00"},{"name":"jev-preview","description":"A
         preview version of `jev-latest`: should be better in most ways","release_date":"2026-09-10T18:39:06.057655+00:00"}]}'
-  recorded_at: Mon, 21 Sep 2026 16:06:38 GMT
+  recorded_at: Wed, 07 Oct 2026 12:57:53 GMT
 recorded_with: VCR 6.4.0

@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:21:49 GMT
+      - Wed, 07 Oct 2026 13:42:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,7 +43,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1789683708-xvDSR6Vt8yvcBEWpdblW
+      - gen-1791380530-F9sTcKjOY4StoDQwfoLl
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -61,10 +61,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1789683708-xvDSR6Vt8yvcBEWpdblW\",\"object\":\"chat.completion\",\"created\":1789683708,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01PVF6kjPyYxSetZbqHqZviG\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}},{\"type\":\"function\",\"index\":1,\"id\":\"toolu_bdrk_0119jhpXUrKwhHiXRL2UGF4S\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]}}],\"usage\":{\"prompt_tokens\":701,\"completion_tokens\":98,\"total_tokens\":799,\"cost\":0.001191,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001191,\"upstream_inference_prompt_cost\":0.000701,\"upstream_inference_completions_cost\":0.00049},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Thu, 17 Sep 2026 22:21:49 GMT
+      string: "\n         \n{\"id\":\"gen-1791380530-F9sTcKjOY4StoDQwfoLl\",\"object\":\"chat.completion\",\"created\":1791380530,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01Dm2RsY7avxXPPzvpiXtdCe\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}},{\"type\":\"function\",\"index\":1,\"id\":\"toolu_bdrk_01MkmSENmwxcDW5NiSMfge81\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]}}],\"usage\":{\"prompt_tokens\":701,\"completion_tokens\":98,\"total_tokens\":799,\"cost\":0.001191,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001191,\"upstream_inference_prompt_cost\":0.000701,\"upstream_inference_completions_cost\":0.00049},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Wed, 07 Oct 2026 13:42:13 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -72,8 +72,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01PVF6kjPyYxSetZbqHqZviG","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"toolu_bdrk_0119jhpXUrKwhHiXRL2UGF4S","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01PVF6kjPyYxSetZbqHqZviG"},{"role":"tool","content":"Ruby","tool_call_id":"toolu_bdrk_0119jhpXUrKwhHiXRL2UGF4S"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01Dm2RsY7avxXPPzvpiXtdCe","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"toolu_bdrk_01MkmSENmwxcDW5NiSMfge81","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01Dm2RsY7avxXPPzvpiXtdCe"},{"role":"tool","content":"Ruby","tool_call_id":"toolu_bdrk_01MkmSENmwxcDW5NiSMfge81"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:21:50 GMT
+      - Wed, 07 Oct 2026 13:42:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,7 +109,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1789683709-7LSCYYvCvOCeqSp3XOy4
+      - gen-1791380533-dgs84kjVT5gJ81A2w85e
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -128,6 +128,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3ODk2ODM3MDktN0xTQ1lZdkN2T0NlcVNwM1hPeTQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzg5NjgzNzA5LCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB0aGUgaW5mb3JtYXRpb24geW91IHJlcXVlc3RlZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbjoqKlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKDU5wrBGKVxuLSBXaW5kOiAxMCBrbS9oXG5cbioqQmVzdCBMYW5ndWFnZSB0byBMZWFybjoqKlxuQWNjb3JkaW5nIHRvIHRoZSBhdmFpbGFibGUgZGF0YSwgKipSdWJ5KiogaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIFJ1YnkgaXMgYSB2ZXJzYXRpbGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Uga25vd24gZm9yIGl0cyByZWFkYWJpbGl0eSwgZWxlZ2FudCBzeW50YXgsIGFuZCBwcm9kdWN0aXZpdHkuIEl0J3MgZ3JlYXQgZm9yIHdlYiBkZXZlbG9wbWVudCAoZXNwZWNpYWxseSB3aXRoIFJhaWxzKSwgc2NyaXB0aW5nLCBhbmQgYXV0b21hdGlvbi4iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjg5MywiY29tcGxldGlvbl90b2tlbnMiOjk5LCJ0b3RhbF90b2tlbnMiOjk5MiwiY29zdCI6MC4wMDEzODgsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDEzODgsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA4OTMsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMDQ5NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
-  recorded_at: Thu, 17 Sep 2026 22:21:51 GMT
+        CiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3OTEzODA1MzMtZGdzODRralZUNWdKODFBMnc4NWUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkxMzgwNTMzLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkdyZWF0ISBIZXJlJ3MgdGhlIGluZm9ybWF0aW9uIHlvdSByZXF1ZXN0ZWQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW46Kipcbi0gQ3VycmVudCB0ZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZCBzcGVlZDogMTAga20vaFxuXG4qKkJlc3QgTGFuZ3VhZ2UgdG8gTGVhcm46KipcbkFjY29yZGluZyB0byB0aGUgdG9vbCwgKipSdWJ5KiogaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIFJ1YnkgaXMgYSBwb3B1bGFyIHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIGlzIHdpZGVseSB1c2VkIGluIHdlYiBkZXZlbG9wbWVudCwgcGFydGljdWxhcmx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6ODkzLCJjb21wbGV0aW9uX3Rva2VucyI6ODgsInRvdGFsX3Rva2VucyI6OTgxLCJjb3N0IjowLjAwMTMzMywiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMTMzMywidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDg5MywidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwNDR9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Wed, 07 Oct 2026 13:42:14 GMT
 recorded_with: VCR 6.4.0

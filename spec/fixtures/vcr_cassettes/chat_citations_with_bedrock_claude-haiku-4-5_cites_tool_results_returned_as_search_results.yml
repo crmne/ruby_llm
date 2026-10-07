@@ -12,15 +12,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221132Z
+      - 20261007T125929Z
       X-Amz-Content-Sha256:
       - b26bb050654d27c05eded33cf8e1f4caeb39bc5c074305ed76f43d85920209f5
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:33 GMT
+      - Wed, 07 Oct 2026 12:59:30 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,13 +39,13 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e7d0f972-a9ab-4813-badf-9d817372cc13
+      - 46892eef-f70b-427f-afab-5a23579ac795
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":798},"output":{"message":{"content":[{"text":"I''ll
+      string: '{"metrics":{"latencyMs":689},"output":{"message":{"content":[{"text":"I''ll
         search the knowledge base for information about who created Ruby."},{"toolUse":{"input":{"query":"who
-        created Ruby programming language"},"name":"knowledge_base","toolUseId":"tooluse_aT5iyFyzrCLt4F4QBBVhHF","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":592,"outputTokens":71,"serverToolUsage":{},"totalTokens":663}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:33 GMT
+        created Ruby programming language"},"name":"knowledge_base","toolUseId":"tooluse_iM6LymaHg472fa7gnxNEXa","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":592,"outputTokens":71,"serverToolUsage":{},"totalTokens":663}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:30 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
@@ -53,8 +53,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Who created Ruby? Search
         the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"text":"I''ll
-        search the knowledge base for information about who created Ruby."},{"toolUse":{"toolUseId":"tooluse_aT5iyFyzrCLt4F4QBBVhHF","name":"knowledge_base","input":{"query":"who
-        created Ruby programming language"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_aT5iyFyzrCLt4F4QBBVhHF","content":[{"searchResult":{"source":"https://example.com/ruby-facts","title":"Ruby
+        search the knowledge base for information about who created Ruby."},{"toolUse":{"toolUseId":"tooluse_iM6LymaHg472fa7gnxNEXa","name":"knowledge_base","input":{"query":"who
+        created Ruby programming language"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_iM6LymaHg472fa7gnxNEXa","content":[{"searchResult":{"source":"https://example.com/ruby-facts","title":"Ruby
         Facts","content":[{"text":"The Ruby programming language was created by Yukihiro
         Matsumoto in 1993."}],"citations":{"enabled":true}}}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"knowledge_base","description":"Searches
         the company knowledge base","inputSchema":{"json":{"type":"object","properties":{"query":{"type":"string","description":"What
@@ -62,15 +62,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221133Z
+      - 20261007T125930Z
       X-Amz-Content-Sha256:
-      - e302189e3c21cd7ea9459425d963334ba2a821f601817c8564123e1c6f2b83ad
+      - b30f9851176aea8b9ae4091b924113d80b69c2699742cacd562cbac69c19cf64
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:34 GMT
+      - Wed, 07 Oct 2026 12:59:31 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -89,11 +89,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 57b8e9fd-135d-4681-8cdf-8bcc4e846157
+      - e778d275-df98-4a9e-bf45-8bdcde1186e6
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":628},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"searchResultLocation":{"end":1,"searchResultIndex":0,"start":0}},"source":"https://example.com/ruby-facts","sourceContent":[{"text":"The
+      string: '{"metrics":{"latencyMs":691},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"searchResultLocation":{"end":1,"searchResultIndex":0,"start":0}},"source":"https://example.com/ruby-facts","sourceContent":[{"text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993."}],"title":"Ruby
         Facts"}],"content":[{"text":"Ruby was created by Yukihiro Matsumoto in 1993."}]}}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":1266,"outputTokens":36,"serverToolUsage":{},"totalTokens":1302}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:35 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:32 GMT
 recorded_with: VCR 6.4.0

@@ -28,20 +28,20 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:20:25 GMT
+      - Wed, 07 Oct 2026 13:40:26 GMT
       Content-Length:
-      - '1053'
+      - '1056'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-600","object":"chat.completion","created":1789683625,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-331","object":"chat.completion","created":1791380426,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the object params tool with a window starting on
         2025-01-01 and ending on 2025-01-02. Let me check the function definition
         again. The function requires a window object with start and end in ISO format.
-        The parameters are start and end, both required. So I need to structure the
-        arguments as a JSON object with the window containing those dates. Let me
-        make sure the dates are in the correct format, YYYY-MM-DD. Yes, 2025-01-01
-        and 2025-01-02 are valid. I''ll format the tool call accordingly.\n","tool_calls":[{"id":"call_i647jrfz","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":197,"total_tokens":402}}
+        The parameters are provided, so I need to structure the JSON correctly. The
+        start is \"2025-01-01\" and the end is \"2025-01-02\". I''ll format the arguments
+        as a JSON object inside the tool_call tags. Make sure the keys are \"start\"
+        and \"end\" and the values are strings. That should do it.\n","tool_calls":[{"id":"call_o25d9xcg","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":200,"total_tokens":405}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:25 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:26 GMT
 recorded_with: VCR 6.4.0

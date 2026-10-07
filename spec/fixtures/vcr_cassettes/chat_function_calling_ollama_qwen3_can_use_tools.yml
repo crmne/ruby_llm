@@ -27,46 +27,47 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:06:32 GMT
+      - Wed, 07 Oct 2026 13:02:37 GMT
       Content-Length:
-      - '1074'
+      - '1115'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-297","object":"chat.completion","created":1789682792,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-865","object":"chat.completion","created":1791378157,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        (52.5200, 13.4050). Let me check the tools available. There''s a weather function
-        that takes latitude and longitude as strings. I need to make sure to format
-        the arguments correctly. The function expects latitude and longitude as separate
-        parameters, both strings. So I''ll structure the tool call with those values.
-        Let me double-check the parameters: latitude is 52.5200, longitude is 13.4050.
-        Everything looks good. Time to return the tool call in the specified JSON
-        format.\n","tool_calls":[{"id":"call_lz4vn5jy","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":176,"total_tokens":371}}
+        52.5200 latitude and 13.4050 longitude. Let me check the tools available.
+        There''s a function called weather that takes latitude and longitude as strings.
+        I need to make sure to format the tool call correctly. The parameters should
+        be in a JSON object with the keys \"latitude\" and \"longitude\". Let me verify
+        the values are strings, not numbers. Yep, the example shows them as strings.
+        So the tool call should have the name \"weather\" and the arguments with those
+        coordinates. I''ll structure the JSON accordingly.\n","tool_calls":[{"id":"call_czxc2wsw","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"prompt_tokens_details":{"cached_tokens":1},"completion_tokens":174,"total_tokens":369}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:06:32 GMT
+  recorded_at: Wed, 07 Oct 2026 13:02:37 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_lz4vn5jy","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_czxc2wsw","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        (52.5200, 13.4050). Let me check the tools available. There''s a weather function
-        that takes latitude and longitude as strings. I need to make sure to format
-        the arguments correctly. The function expects latitude and longitude as separate
-        parameters, both strings. So I''ll structure the tool call with those values.
-        Let me double-check the parameters: latitude is 52.5200, longitude is 13.4050.
-        Everything looks good. Time to return the tool call in the specified JSON
-        format.\n","reasoning_content":"Okay, the user is asking for the weather in
-        Berlin, and they provided the coordinates (52.5200, 13.4050). Let me check
-        the tools available. There''s a weather function that takes latitude and longitude
-        as strings. I need to make sure to format the arguments correctly. The function
-        expects latitude and longitude as separate parameters, both strings. So I''ll
-        structure the tool call with those values. Let me double-check the parameters:
-        latitude is 52.5200, longitude is 13.4050. Everything looks good. Time to
-        return the tool call in the specified JSON format.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_lz4vn5jy"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        52.5200 latitude and 13.4050 longitude. Let me check the tools available.
+        There''s a function called weather that takes latitude and longitude as strings.
+        I need to make sure to format the tool call correctly. The parameters should
+        be in a JSON object with the keys \"latitude\" and \"longitude\". Let me verify
+        the values are strings, not numbers. Yep, the example shows them as strings.
+        So the tool call should have the name \"weather\" and the arguments with those
+        coordinates. I''ll structure the JSON accordingly.\n","reasoning_content":"Okay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 latitude and 13.4050 longitude. Let me check the tools available.
+        There''s a function called weather that takes latitude and longitude as strings.
+        I need to make sure to format the tool call correctly. The parameters should
+        be in a JSON object with the keys \"latitude\" and \"longitude\". Let me verify
+        the values are strings, not numbers. Yep, the example shows them as strings.
+        So the tool call should have the name \"weather\" and the arguments with those
+        coordinates. I''ll structure the JSON accordingly.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_czxc2wsw"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -87,12 +88,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:06:34 GMT
+      - Wed, 07 Oct 2026 13:02:39 GMT
       Content-Length:
-      - '1054'
+      - '995'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY1NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODk2ODI3OTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBhZGRpdGlvbmFsIGRldGFpbHMhIPCfjKbvuI8iLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzIGFuZCBnb3QgdGhlIHJlc3BvbnNlOiAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgc3RhcnQgYnkgY29uZmlybWluZyB0aGUgbG9jYXRpb24sIG1heWJlIG1lbnRpb24gQmVybGluIGJyaWVmbHkuIFRoZW4gc3RhdGUgdGhlIHRlbXBlcmF0dXJlIGFuZCB3aW5kIHNwZWVkLiBLZWVwIGl0IHN0cmFpZ2h0Zm9yd2FyZCBhbmQgZnJpZW5kbHkuIE1ha2Ugc3VyZSB0aGUgdW5pdHMgYXJlIGNsZWFyLiBNYXliZSBhZGQgYSBub3RlIGFib3V0IHRoZSB3ZWF0aGVyIGJlaW5nIG1pbGQgb3Igc29tZXRoaW5nLCBidXQgc2luY2UgdGhlIHVzZXIgZGlkbid0IGFzayBmb3IgYSBkZXNjcmlwdGlvbiwganVzdCB0aGUgZmFjdHMuIEFscmlnaHQsIHRoYXQgc2hvdWxkIGNvdmVyIGl0LlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0MTMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTZ9LCJjb21wbGV0aW9uX3Rva2VucyI6MTc2LCJ0b3RhbF90b2tlbnMiOjU4OX19Cg==
-  recorded_at: Thu, 17 Sep 2026 22:06:34 GMT
+        eyJpZCI6ImNoYXRjbXBsLTEyNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzNzgxNTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kIGF0ICoqMTAga20vaCoqLiDimIHvuI/wn4ys77iPIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBnaXZlbiBjb29yZGluYXRlcy4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcyBhbmQgZ290IHRoZSByZXNwb25zZTogMTXCsEMgYW5kIFdpbmQgYXQgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIHN0YXJ0IGJ5IHN0YXRpbmcgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4uIE1lbnRpb24gdGhlIHRlbXBlcmF0dXJlIGZpcnN0LCB0aGVuIHRoZSB3aW5kIHNwZWVkLiBLZWVwIGl0IGNvbmNpc2UgYW5kIGZyaWVuZGx5LiBNYWtlIHN1cmUgdG8gdXNlIHRoZSBkZWdyZWVzIHN5bWJvbCBhbmQgdGhlIHdpbmQgdW5pdCBjb3JyZWN0bHkuIEFsc28sIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgaW5mbyBuZWVkZWQsIGJ1dCB0aGUgcmVzcG9uc2Ugc2VlbXMgc3RyYWlnaHRmb3J3YXJkLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBjb3ZlciBpdC5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDExLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTk2fSwiY29tcGxldGlvbl90b2tlbnMiOjE2MywidG90YWxfdG9rZW5zIjo1NzR9fQo=
+  recorded_at: Wed, 07 Oct 2026 13:02:39 GMT
 recorded_with: VCR 6.4.0

@@ -5,17 +5,17 @@ http_interactions:
     uri: https://api.cohere.com/v1/datasets?keep_original_file=true&name=ruby-llm-test.jsonl&type=embed-input
     body:
       encoding: UTF-8
-      string: "-------------RubyMultipartPost-a669ef6b02ac4a8aaaf15411e8fd0383\r\nContent-Disposition:
+      string: "-------------RubyMultipartPost-39d4584ea4cc4e72f02252a4d0d230ea\r\nContent-Disposition:
         form-data; name=\"data\"; filename=\"ruby-llm-test.jsonl\"\r\nContent-Length:
         33\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"text\":\"Ruby
-        makes AI useful.\"}\n\r\n-------------RubyMultipartPost-a669ef6b02ac4a8aaaf15411e8fd0383--\r\n"
+        makes AI useful.\"}\n\r\n-------------RubyMultipartPost-39d4584ea4cc4e72f02252a4d0d230ea--\r\n"
     headers:
       User-Agent:
       - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
-      - multipart/form-data; boundary=-----------RubyMultipartPost-a669ef6b02ac4a8aaaf15411e8fd0383
+      - multipart/form-data; boundary=-----------RubyMultipartPost-39d4584ea4cc4e72f02252a4d0d230ea
       Content-Length:
       - '334'
       Accept-Encoding:
@@ -40,24 +40,24 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       Date:
-      - Thu, 17 Sep 2026 22:06:15 GMT
+      - Wed, 07 Oct 2026 12:59:00 GMT
       Content-Length:
       - '35'
       X-Envoy-Upstream-Service-Time:
-      - '350'
+      - '183'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"ruby-llm-test-jsonl-x479yx"}'
-  recorded_at: Thu, 17 Sep 2026 22:06:15 GMT
+      string: '{"id":"ruby-llm-test-jsonl-a2p4yn"}'
+  recorded_at: Wed, 07 Oct 2026 12:59:00 GMT
 - request:
     method: get
-    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-x479yx
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
     body:
       encoding: US-ASCII
       string: ''
@@ -90,63 +90,9 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       Date:
-      - Thu, 17 Sep 2026 22:06:16 GMT
+      - Wed, 07 Oct 2026 12:59:01 GMT
       X-Envoy-Upstream-Service-Time:
-      - '121'
-      Server:
-      - envoy
-      Via:
-      - 1.1 google
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"dataset":{"id":"ruby-llm-test-jsonl-x479yx", "name":"ruby-llm-test.jsonl",
-        "created_at":"2026-09-17T22:06:15.344794Z", "updated_at":"2026-09-17T22:06:15.344794Z",
-        "dataset_type":"embed-input", "validation_status":"processing", "dataset_parts":[{"id":"5c8dc1a2-a150-425f-987e-82e921bd29bb",
-        "name":"ruby-llm-test.jsonl", "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220615Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
-        "size_bytes":334, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220615Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host"}]}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:16 GMT
-- request:
-    method: get
-    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-x479yx
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
-      Content-Type:
-      - application/json
-      Expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      Grpc-Metadata-Content-Type:
-      - application/grpc
-      Pragma:
-      - no-cache
-      Vary:
-      - Origin
-      X-Accel-Expires:
-      - '0'
-      Date:
-      - Thu, 17 Sep 2026 22:06:16 GMT
-      X-Envoy-Upstream-Service-Time:
-      - '134'
+      - '146'
       Server:
       - envoy
       Via:
@@ -157,15 +103,15 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"dataset":{"id":"ruby-llm-test-jsonl-x479yx", "name":"ruby-llm-test.jsonl",
-        "created_at":"2026-09-17T22:06:15.344794Z", "updated_at":"2026-09-17T22:06:15.344794Z",
-        "dataset_type":"embed-input", "validation_status":"processing", "dataset_parts":[{"id":"5c8dc1a2-a150-425f-987e-82e921bd29bb",
-        "name":"ruby-llm-test.jsonl", "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220616Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
-        "size_bytes":334, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220616Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host"}]}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:16 GMT
+      string: '{"dataset":{"id":"ruby-llm-test-jsonl-a2p4yn", "name":"ruby-llm-test.jsonl",
+        "created_at":"2026-10-07T12:59:00.532080Z", "updated_at":"2026-10-07T12:59:00.532080Z",
+        "dataset_type":"embed-input", "validation_status":"processing", "dataset_parts":[{"id":"b0c77874-ae49-4e52-bc13-1e936d28c2ac",
+        "name":"ruby-llm-test.jsonl", "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125900Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "size_bytes":334, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125900Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host"}]}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:01 GMT
 - request:
     method: get
-    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-x479yx
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
     body:
       encoding: US-ASCII
       string: ''
@@ -198,9 +144,63 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       Date:
-      - Thu, 17 Sep 2026 22:06:17 GMT
+      - Wed, 07 Oct 2026 12:59:01 GMT
       X-Envoy-Upstream-Service-Time:
-      - '144'
+      - '143'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"dataset":{"id":"ruby-llm-test-jsonl-a2p4yn", "name":"ruby-llm-test.jsonl",
+        "created_at":"2026-10-07T12:59:00.532080Z", "updated_at":"2026-10-07T12:59:00.532080Z",
+        "dataset_type":"embed-input", "validation_status":"processing", "dataset_parts":[{"id":"b0c77874-ae49-4e52-bc13-1e936d28c2ac",
+        "name":"ruby-llm-test.jsonl", "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125901Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "size_bytes":334, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125901Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host"}]}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:01 GMT
+- request:
+    method: get
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Grpc-Metadata-Content-Type:
+      - application/grpc
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      Date:
+      - Wed, 07 Oct 2026 12:59:02 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '123'
       Server:
       - envoy
       Via:
@@ -211,17 +211,17 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"dataset":{"id":"ruby-llm-test-jsonl-x479yx", "name":"ruby-llm-test.jsonl",
-        "created_at":"2026-09-17T22:06:15.344794Z", "updated_at":"2026-09-17T22:06:15.344794Z",
+      string: '{"dataset":{"id":"ruby-llm-test-jsonl-a2p4yn", "name":"ruby-llm-test.jsonl",
+        "created_at":"2026-10-07T12:59:00.532080Z", "updated_at":"2026-10-07T12:59:00.532080Z",
         "dataset_type":"embed-input", "validation_status":"processing", "schema":"{\"name\":\"cohere.embed_input\",\"type\":\"record\",\"fields\":[{\"name\":\"text\",\"type\":\"string\"}]}",
-        "dataset_parts":[{"id":"5c8dc1a2-a150-425f-987e-82e921bd29bb", "name":"ruby-llm-test.avro",
-        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220617Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
-        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220617Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "dataset_parts":[{"id":"b0c77874-ae49-4e52-bc13-1e936d28c2ac", "name":"ruby-llm-test.avro",
+        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125902Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125902Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
         "samples":["{\"text\":\"Ruby makes AI useful.\"}"]}]}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:17 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:02 GMT
 - request:
     method: get
-    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-x479yx
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
     body:
       encoding: US-ASCII
       string: ''
@@ -254,9 +254,65 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       Date:
-      - Thu, 17 Sep 2026 22:06:19 GMT
+      - Wed, 07 Oct 2026 12:59:04 GMT
       X-Envoy-Upstream-Service-Time:
-      - '168'
+      - '164'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"dataset":{"id":"ruby-llm-test-jsonl-a2p4yn", "name":"ruby-llm-test.jsonl",
+        "created_at":"2026-10-07T12:59:00.532080Z", "updated_at":"2026-10-07T12:59:00.532080Z",
+        "dataset_type":"embed-input", "validation_status":"processing", "schema":"{\"name\":\"cohere.embed_input\",\"type\":\"record\",\"fields\":[{\"name\":\"text\",\"type\":\"string\"}]}",
+        "dataset_parts":[{"id":"b0c77874-ae49-4e52-bc13-1e936d28c2ac", "name":"ruby-llm-test.avro",
+        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125903Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125903Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "samples":["{\"text\":\"Ruby makes AI useful.\"}"]}]}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:04 GMT
+- request:
+    method: get
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Grpc-Metadata-Content-Type:
+      - application/grpc
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      Date:
+      - Wed, 07 Oct 2026 12:59:05 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '113'
       Server:
       - envoy
       Via:
@@ -267,17 +323,17 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"dataset":{"id":"ruby-llm-test-jsonl-x479yx", "name":"ruby-llm-test.jsonl",
-        "created_at":"2026-09-17T22:06:15.344794Z", "updated_at":"2026-09-17T22:06:15.344794Z",
+      string: '{"dataset":{"id":"ruby-llm-test-jsonl-a2p4yn", "name":"ruby-llm-test.jsonl",
+        "created_at":"2026-10-07T12:59:00.532080Z", "updated_at":"2026-10-07T12:59:00.532080Z",
         "dataset_type":"embed-input", "validation_status":"validated", "schema":"{\"name\":\"cohere.embed_input\",\"type\":\"record\",\"fields\":[{\"name\":\"text\",\"type\":\"string\"}]}",
-        "dataset_parts":[{"id":"5c8dc1a2-a150-425f-987e-82e921bd29bb", "name":"ruby-llm-test.avro",
-        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220618Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
-        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220619Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "dataset_parts":[{"id":"b0c77874-ae49-4e52-bc13-1e936d28c2ac", "name":"ruby-llm-test.avro",
+        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125905Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125905Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
         "samples":["{\"text\":\"Ruby makes AI useful.\"}"]}]}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:19 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:05 GMT
 - request:
     method: get
-    uri: https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220619Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host
+    uri: https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125905Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host
     body:
       encoding: US-ASCII
       string: ''
@@ -296,19 +352,19 @@ http_interactions:
       Content-Type:
       - application/octet-stream
       X-Guploader-Uploadid:
-      - AJjja9Yn6lslIwHR1nMEqmvCa7n67vMa7AMfZDraShgRpUgB38bQbI789YcXbszJOlw37FZlXgBj4oA
+      - AP6rU80TZxSjsbx3bedIeIbiQhcJ5PEt8Uay4Jp3C-rUFn5TsUtZCCDJ2lsRGrnsxEXZpq6iSDJpH5E
       Expires:
-      - Thu, 17 Sep 2026 22:06:19 GMT
+      - Wed, 07 Oct 2026 12:59:05 GMT
       Date:
-      - Thu, 17 Sep 2026 22:06:19 GMT
+      - Wed, 07 Oct 2026 12:59:05 GMT
       Cache-Control:
       - private, max-age=0
       Last-Modified:
-      - Thu, 17 Sep 2026 22:06:15 GMT
+      - Wed, 07 Oct 2026 12:59:00 GMT
       Etag:
       - '"dd6345dce0e3c7b2d800c73af4fd8705"'
       X-Goog-Generation:
-      - '1789682775570647'
+      - '1791377940637725'
       X-Goog-Metageneration:
       - '1'
       X-Goog-Stored-Content-Encoding:
@@ -333,10 +389,10 @@ http_interactions:
       string: '{"text":"Ruby makes AI useful."}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:06:19 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:05 GMT
 - request:
     method: get
-    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-x479yx
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
     body:
       encoding: US-ASCII
       string: ''
@@ -369,9 +425,9 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       Date:
-      - Thu, 17 Sep 2026 22:06:19 GMT
+      - Wed, 07 Oct 2026 12:59:06 GMT
       X-Envoy-Upstream-Service-Time:
-      - '126'
+      - '165'
       Server:
       - envoy
       Via:
@@ -382,17 +438,17 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"dataset":{"id":"ruby-llm-test-jsonl-x479yx", "name":"ruby-llm-test.jsonl",
-        "created_at":"2026-09-17T22:06:15.344794Z", "updated_at":"2026-09-17T22:06:15.344794Z",
+      string: '{"dataset":{"id":"ruby-llm-test-jsonl-a2p4yn", "name":"ruby-llm-test.jsonl",
+        "created_at":"2026-10-07T12:59:00.532080Z", "updated_at":"2026-10-07T12:59:00.532080Z",
         "dataset_type":"embed-input", "validation_status":"validated", "schema":"{\"name\":\"cohere.embed_input\",\"type\":\"record\",\"fields\":[{\"name\":\"text\",\"type\":\"string\"}]}",
-        "dataset_parts":[{"id":"5c8dc1a2-a150-425f-987e-82e921bd29bb", "name":"ruby-llm-test.avro",
-        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220619Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
-        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-x479yx/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20260917T220619Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "dataset_parts":[{"id":"b0c77874-ae49-4e52-bc13-1e936d28c2ac", "name":"ruby-llm-test.avro",
+        "url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.avro?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125905Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
+        "size_bytes":525, "num_rows":1, "original_url":"https://storage.googleapis.com/cohere-production-user-datasets/dataset-api-temp/bc6b8efc-0429-45bd-b854-bcecb8f82fa6/e4289f0c-1e52-427a-8b3c-1acc58ddd5f9/ruby-llm-test-jsonl-a2p4yn/000_ruby-llm-test.jsonl?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=FILTERED_CREDENTIAL&X-Goog-Date=20261007T125905Z&X-Goog-Expires=43199&X-Goog-Signature=FILTERED_SIGNATURE&X-Goog-SignedHeaders=host",
         "samples":["{\"text\":\"Ruby makes AI useful.\"}"]}]}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:19 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:06 GMT
 - request:
     method: delete
-    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-x479yx
+    uri: https://api.cohere.com/v1/datasets/ruby-llm-test-jsonl-a2p4yn
     body:
       encoding: US-ASCII
       string: ''
@@ -425,11 +481,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       Date:
-      - Thu, 17 Sep 2026 22:06:20 GMT
+      - Wed, 07 Oct 2026 12:59:06 GMT
       Content-Length:
       - '2'
       X-Envoy-Upstream-Service-Time:
-      - '77'
+      - '76'
       Server:
       - envoy
       Via:
@@ -439,5 +495,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "{}"
-  recorded_at: Thu, 17 Sep 2026 22:06:20 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:06 GMT
 recorded_with: VCR 6.4.0

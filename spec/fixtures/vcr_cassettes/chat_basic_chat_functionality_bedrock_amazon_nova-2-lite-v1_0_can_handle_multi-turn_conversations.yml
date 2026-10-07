@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220650Z
+      - 20261007T125943Z
       X-Amz-Content-Sha256:
       - 7cdce4469486510945b0d56d8a6dc5cdbcc21a8fdf3564f9a6ffe3c2768debe2
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,20 +29,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:54 GMT
+      - Wed, 07 Oct 2026 12:59:45 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1728'
+      - '1292'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - de66b2ae-4b3c-4966-ae77-a33095b210a9
+      - '0598efc9-3a90-4cb6-9c12-d25eef9cd397'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MjcxNH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3JlYXRvciBvZiB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgKipSdWJ5KiogaXMgKipZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8qKi5cblxuIyMjIEJhY2tncm91bmQ6XG4tICoqRnVsbCBOYW1lKio6IFl1a2loaXJvIE1hdHN1bW90b1xuLSAqKk5pY2tuYW1lKio6IE1hdHpcbi0gKipOYXRpb25hbGl0eSoqOiBKYXBhbmVzZVxuLSAqKkRhdGUgb2YgQmlydGgqKjogQXByaWwgMTQsIDE5NjVcblxuIyMjIEFib3V0IFJ1Ynk6XG4tICoqUnVieSoqIGlzIGEgZHluYW1pYywgb3Blbi1zb3VyY2UsIG11bHRpLXBhcmFkaWdtIHByb2dyYW1taW5nIGxhbmd1YWdlLlxuLSBJdCB3YXMgKipjcmVhdGVkIGluIDE5OTMqKiBieSBZdWtpaGlybyBNYXRzdW1vdG8uXG4tIE1hdHN1bW90byBhaW1lZCB0byBidWlsZCBhIGxhbmd1YWdlIHRoYXQgd2FzICoqZnJpZW5kbHksIHBvd2VyZnVsLCBhbmQgZWFzeSB0byB1c2UqKiwgaW5jb3Jwb3JhdGluZyBpZGVhcyBmcm9tIFBlcmwsIFB5dGhvbiwgTGlzcCwgYW5kIEVpZmZlbCwgYW1vbmcgb3RoZXJzLlxuXG4jIyMgV2h5IFwiTWF0elwiP1xuLSBcIk1hdHpcIiBpcyB0aGUgY29tbW9ubHkgdXNlZCBuaWNrbmFtZSBpbiB0aGUgUnVieSBjb21tdW5pdHkuIEl0IGNvbWVzIGZyb20gdGhlIGZpcnN0IGxldHRlcnMgb2YgaGlzIG5hbWU6ICoqTSoqYXRzdW1vdG8gKipZKip1a2loaXJvICoqYSoqbmQgKip0KipoZSAqKnoqKiBzb3VuZCBpbiBoaXMgbmFtZSDigJQgdGhvdWdoIHRoZSBleGFjdCBldHltb2xvZ3kgdmFyaWVzLCBpdCdzIHdpZGVseSBhY2NlcHRlZCBhcyBoaXMgaW5mb3JtYWwgbmFtZSBhbW9uZyBkZXZlbG9wZXJzLlxuXG4jIyMgTWF0c3Vtb3RvJ3MgUGhpbG9zb3BoeTpcbk1hdHN1bW90byBpcyB3ZWxsLWtub3duIGZvciBoaXMgcGhpbG9zb3BoeSBvZiBsYW5ndWFnZSBkZXNpZ24sIHN1bW1hcml6ZWQgYnkgdGhlIHByaW5jaXBsZTogIFxuPiAqXCJQcm9ncmFtbWVyIGhhcHBpbmVzcyBpcyBwYXJhbW91bnQuXCIqXG5cbkhlIGRlc2lnbmVkIFJ1YnkgdG8gYmUgYSBsYW5ndWFnZSB0aGF0IGZlZWxzIG5hdHVyYWwgYW5kIHBsZWFzYW50IHRvIHVzZSwgZW1waGFzaXppbmcgZGV2ZWxvcGVyIHByb2R1Y3Rpdml0eSBhbmQgam95LlxuXG4jIyMgTGVnYWN5OlxuLSBSdWJ5IGJlY2FtZSBlc3BlY2lhbGx5IHBvcHVsYXIgaW4gdGhlIDIwMDBzIGFuZCAyMDEwcywgZXNwZWNpYWxseSB3aXRoIHRoZSByaXNlIG9mIHRoZSAqKlJ1Ynkgb24gUmFpbHMqKiB3ZWIgZnJhbWV3b3JrLlxuLSBNYXRzdW1vdG8gY29udGludWVzIHRvIGJlIGFuIGFjdGl2ZSBjb250cmlidXRvciB0byB0aGUgUnVieSBsYW5ndWFnZSBhbmQgaXRzIGNvbW11bml0eSwgb2Z0ZW4gcGFydGljaXBhdGluZyBpbiBSdWJ5IGRldmVsb3BtZW50IGRpc2N1c3Npb25zIGFuZCBkZWNpc2lvbnMuXG5cblNvLCBpbiBzaG9ydDogIFxuPiAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGlzIHRoZSBjcmVhdG9yIG9mIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjU2LCJvdXRwdXRUb2tlbnMiOjM0NCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjQwMH19
-  recorded_at: Thu, 17 Sep 2026 22:06:54 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTkxNn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3JlYXRvciBvZiB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgKipSdWJ5KiogaXMgKipZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8qKi5cblxuIyMjIEJhY2tncm91bmQ6XG4tICoqRnVsbCBOYW1lKio6IFl1a2loaXJvIE1hdHN1bW90b1xuLSAqKk5pY2tuYW1lKio6IE1hdHpcbi0gKipOYXRpb25hbGl0eSoqOiBKYXBhbmVzZVxuLSAqKkRhdGUgb2YgQmlydGgqKjogQXByaWwgMTQsIDE5NjVcblxuIyMjIENvbnRyaWJ1dGlvbjpcbll1a2loaXJvIE1hdHN1bW90byBiZWdhbiBkZXZlbG9waW5nIFJ1YnkgaW4gKipGZWJydWFyeSAxOTkzKiouIEhlIHJlbGVhc2VkIHRoZSBmaXJzdCB2ZXJzaW9uIG9mIFJ1YnkgKHZlcnNpb24gMC45NSkgaW4gKipEZWNlbWJlciAxOTk1KiouIEhpcyBnb2FsIHdhcyB0byBjcmVhdGUgYSBwcm9ncmFtbWluZyBsYW5ndWFnZSB0aGF0IHdhczpcbi0gKipGcmllbmRseSBhbmQgZWFzeSB0byB1c2UqKlxuLSAqKkVsYXN0aWMqKiAoZmxleGlibGUgYW5kIGFkYXB0YWJsZSlcbi0gKipEZWxpZ2h0ZnVsKiogdG8gdGhlIHByb2dyYW1tZXIgKGhlIHdhbnRlZCBkZXZlbG9wZXJzIHRvIGVuam95IHVzaW5nIHRoZSBsYW5ndWFnZSlcblxuTWF0eiBpcyB3aWRlbHkgcmVzcGVjdGVkIGluIHRoZSBwcm9ncmFtbWluZyBjb21tdW5pdHkgZm9yIGhpcyB2aXNpb24gYW5kIGxlYWRlcnNoaXAgaW4gdGhlIFJ1YnkgbGFuZ3VhZ2UuIEhlIGNvbnRpbnVlcyB0byBiZSBhIGNlbnRyYWwgZmlndXJlIGluIHRoZSBSdWJ5IGNvbW11bml0eSwgZ3VpZGluZyBpdHMgZGV2ZWxvcG1lbnQgYW5kIHBoaWxvc29waHkuXG5cbiMjIyBSdWJ54oCZcyBJbmZsdWVuY2U6XG5SdWJ5IGdhaW5lZCBtYXNzaXZlIHBvcHVsYXJpdHkgZHVlIHRvIHRoZSByaXNlIG9mIHRoZSAqKlJ1Ynkgb24gUmFpbHMqKiB3ZWIgZnJhbWV3b3JrLCBjcmVhdGVkIGJ5ICoqRGF2aWQgSGVpbmVtZWllciBIYW5zc29uKiogaW4gMjAwNS4gV2hpbGUgUmFpbHMgcGxheWVkIGEgaHVnZSByb2xlIGluIHBvcHVsYXJpemluZyBSdWJ5LCB0aGUgbGFuZ3VhZ2UgaXRzZWxmIHdhcyB0aGUgZm91bmRhdGlvbiBidWlsdCBieSBNYXRzdW1vdG8uIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6NTYsIm91dHB1dFRva2VucyI6MjQxLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6Mjk3fX0=
+  recorded_at: Wed, 07 Oct 2026 12:59:45 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -52,37 +52,31 @@ http_interactions:
         of the programming language Ruby?"}]},{"role":"assistant","content":[{"text":"The
         creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**.\n\n###
         Background:\n- **Full Name**: Yukihiro Matsumoto\n- **Nickname**: Matz\n-
-        **Nationality**: Japanese\n- **Date of Birth**: April 14, 1965\n\n### About
-        Ruby:\n- **Ruby** is a dynamic, open-source, multi-paradigm programming language.\n-
-        It was **created in 1993** by Yukihiro Matsumoto.\n- Matsumoto aimed to build
-        a language that was **friendly, powerful, and easy to use**, incorporating
-        ideas from Perl, Python, Lisp, and Eiffel, among others.\n\n### Why \"Matz\"?\n-
-        \"Matz\" is the commonly used nickname in the Ruby community. It comes from
-        the first letters of his name: **M**atsumoto **Y**ukihiro **a**nd **t**he
-        **z** sound in his name — though the exact etymology varies, it''s widely
-        accepted as his informal name among developers.\n\n### Matsumoto''s Philosophy:\nMatsumoto
-        is well-known for his philosophy of language design, summarized by the principle:  \n>
-        *\"Programmer happiness is paramount.\"*\n\nHe designed Ruby to be a language
-        that feels natural and pleasant to use, emphasizing developer productivity
-        and joy.\n\n### Legacy:\n- Ruby became especially popular in the 2000s and
-        2010s, especially with the rise of the **Ruby on Rails** web framework.\n-
-        Matsumoto continues to be an active contributor to the Ruby language and its
-        community, often participating in Ruby development discussions and decisions.\n\nSo,
-        in short:  \n> **Yukihiro \"Matz\" Matsumoto** is the creator of the Ruby
-        programming language."}]},{"role":"user","content":[{"text":"What year did
-        he create Ruby?"}]}],"inferenceConfig":{}}'
+        **Nationality**: Japanese\n- **Date of Birth**: April 14, 1965\n\n### Contribution:\nYukihiro
+        Matsumoto began developing Ruby in **February 1993**. He released the first
+        version of Ruby (version 0.95) in **December 1995**. His goal was to create
+        a programming language that was:\n- **Friendly and easy to use**\n- **Elastic**
+        (flexible and adaptable)\n- **Delightful** to the programmer (he wanted developers
+        to enjoy using the language)\n\nMatz is widely respected in the programming
+        community for his vision and leadership in the Ruby language. He continues
+        to be a central figure in the Ruby community, guiding its development and
+        philosophy.\n\n### Ruby’s Influence:\nRuby gained massive popularity due to
+        the rise of the **Ruby on Rails** web framework, created by **David Heinemeier
+        Hansson** in 2005. While Rails played a huge role in popularizing Ruby, the
+        language itself was the foundation built by Matsumoto."}]},{"role":"user","content":[{"text":"What
+        year did he create Ruby?"}]}],"inferenceConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220654Z
+      - 20261007T125945Z
       X-Amz-Content-Sha256:
-      - 115246bd1118eb321f26ab6e1110cfc4619356b5ecddc020fe15abe452e8c02f
+      - 9c0d88c646289959f3c31a157ffa7d845d9668808dee07252ee1c9b6489d52ad
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -93,26 +87,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:56 GMT
+      - Wed, 07 Oct 2026 12:59:46 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '883'
+      - '496'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 7a5c9eac-630f-4472-9dd8-5f791450f6e5
+      - ac8fdf3c-9e90-4bcc-b49a-614a73e8d905
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1333},"output":{"message":{"content":[{"text":"Yukihiro
-        \"Matz\" Matsumoto created the Ruby programming language in **1993**.\n\n###
-        Key Details:\n- **First Public Release**: While Ruby was created in 1993,
-        the first public release was in **1995**.\n- **Inspiration**: Matsumoto began
-        designing Ruby over many years before its official release, drawing inspiration
-        from other programming languages like Perl, Python, Lisp, and Eiffel.\n- **Motivation**:
-        He wanted to build a language that focused on **programmer happiness**, making
-        development more enjoyable and expressive.\n\nRuby has since become a widely
-        used language, especially popular for web development after the advent of
-        the **Ruby on Rails** framework in 2005."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":409,"outputTokens":138,"serverToolUsage":{},"totalTokens":547}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:56 GMT
+      string: '{"metrics":{"latencyMs":612},"output":{"message":{"content":[{"text":"Yukihiro
+        \"Matz\" Matsumoto began creating the Ruby programming language in **February
+        1993**. \n\nThe first public release of Ruby, version 0.95, was made available
+        in **December 1995**. So while development started in 1993, the language was
+        officially introduced to the public in late 1995."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":308,"outputTokens":71,"serverToolUsage":{},"totalTokens":379}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:46 GMT
 recorded_with: VCR 6.4.0

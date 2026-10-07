@@ -28,9 +28,11 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:16:19 GMT
+      - Wed, 07 Oct 2026 12:59:06 GMT
       Server:
       - istio-envoy
+      Vary:
+      - Origin
       X-Ms-Aoai-Configured-Data-Retention-Days:
       - '30'
       Skip-Error-Remapping:
@@ -66,7 +68,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 0234afd5-6d34-4f71-8a57-0988c1ecd3a1
+      - 5a36f659-7d9f-416e-846b-9b463d76df42
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -77,12 +79,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0750a336156f3835016aac66b393dc8196882ecc6bd253f409",
+          "id": "resp_09438a51de0724eb016ac6421adb448193825c3f41dce40e70",
           "object": "response",
-          "created_at": 1789683379,
+          "created_at": 1791377946,
           "status": "completed",
           "background": false,
-          "completed_at": 1789683380,
+          "completed_at": 1791377947,
           "content_filters": [
             {
               "blocked": false,
@@ -121,11 +123,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
@@ -163,7 +165,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0750a336156f3835016aac66b4651481968ff0886973e9efc8",
+              "id": "msg_09438a51de0724eb016ac6421b43ec81939fbcdebcae0cfb3e",
               "type": "message",
               "status": "completed",
               "content": [
@@ -237,5 +239,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:16:20 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:07 GMT
 recorded_with: VCR 6.4.0

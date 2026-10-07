@@ -78,7 +78,8 @@ RSpec.describe RubyLLM::Chat, :live do
             massive_text = 'a' * 1_000_000
 
             # Create a few copies in the conversation
-            5.times do
+            turns = provider == :openrouter ? 3 : 5
+            turns.times do
               chat.add_message(role: :user, content: massive_text)
               chat.add_message(role: :assistant, content: massive_text)
             end

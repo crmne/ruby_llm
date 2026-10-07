@@ -38,11 +38,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - c6fc0520d9639327b3c01f0c7b26526b
+      - fc9d0123c58354ed8b3ae652143802e7
       Date:
-      - Thu, 17 Sep 2026 22:06:31 GMT
+      - Wed, 07 Oct 2026 12:59:16 GMT
       X-Envoy-Upstream-Service-Time:
-      - '178'
+      - '203'
       Server:
       - envoy
       Via:
@@ -55,58 +55,37 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"193fa0b1-fcd4-4b28-9705-8694b14b5467","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"a9543150-0943-42e9-9423-01ca47024425","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Sure"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"1"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"!"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Here"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 2"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'s"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" counting"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" from"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 1"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":","}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" 3"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":":"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"\n\n1"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"  \n2"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"  \n3"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
 
         event: content-end
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":18},"tokens":{"input_tokens":502,"output_tokens":22},"cached_tokens":448}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":8},"tokens":{"input_tokens":502,"output_tokens":11},"cached_tokens":448}}}
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:06:32 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:17 GMT
 recorded_with: VCR 6.4.0
 ...

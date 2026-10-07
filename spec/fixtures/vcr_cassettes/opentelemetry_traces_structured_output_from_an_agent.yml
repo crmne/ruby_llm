@@ -9,7 +9,7 @@ http_interactions:
         six times seven?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 03 Oct 2026 20:47:30 GMT
+      - Wed, 07 Oct 2026 12:59:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '735'
+      - '411'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -58,13 +58,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '4999'
+      - '4995'
       X-Ratelimit-Remaining-Tokens:
-      - '1999946'
+      - '1999164'
       X-Ratelimit-Reset-Requests:
-      - 12ms
+      - 60ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 25ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0215221cc085ca92016ac169e22d0087d2a26dda463c31f4e7",
+          "id": "resp_0e30d82d6e75a3f9016ac6423d7a7087d2a6b92c5a1be9a594",
           "object": "response",
-          "created_at": 1791060450,
+          "created_at": 1791377981,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791060450,
+          "completed_at": 1791377981,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -95,7 +95,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0215221cc085ca92016ac169e2d3a087d2956bd9075a8cfd6e",
+              "id": "msg_0e30d82d6e75a3f9016ac6423dc7ec87d28999b82e1c9fb615",
               "type": "message",
               "status": "completed",
               "content": [
@@ -182,5 +182,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Sat, 03 Oct 2026 20:47:30 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:41 GMT
 recorded_with: VCR 6.4.0

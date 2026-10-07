@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221553Z
+      - 20261007T125902Z
       X-Amz-Content-Sha256:
       - 0ec0f7ea930f1c52df60039a174fc23067e9d1df302db82f99dfd56849f38b6c
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,11 +29,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:15:54 GMT
+      - Wed, 07 Oct 2026 12:59:03 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1068'
+      - '1043'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
@@ -48,9 +48,8 @@ http_interactions:
       - x-amzn-requestid,x-request-id,date,x-amzn-usage-reservation-quota,x-amzn-usage-reservation-remaining-quota,x-amzn-usage-reservation-spillover
     body:
       encoding: UTF-8
-      string: '{"background":false,"created_at":1789683353.0,"error":null,"id":"resp_bj5objcg2oxp3l3helhofvxivz7hda5n5tyqc2oz3kpedud3d2hq","incomplete_details":null,"instructions":null,"metadata":{},"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"User
-        says: \"Say OK and nothing else.\" So I must reply only \"OK\" (case likely
-        okay). The instruction: Say OK and nothing else. So reply with \"OK\".\n\nWe
-        have to obey.","type":"reasoning_text"}],"id":"msg_9c18cb098e7157d6","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"OK","type":"output_text"}],"id":"msg_a3304a258eca35d7","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"default","status":"completed","temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":73,"input_tokens_details":{"cached_tokens":0},"output_tokens":54,"output_tokens_details":{"reasoning_tokens":44},"total_tokens":127}}'
-  recorded_at: Thu, 17 Sep 2026 22:15:54 GMT
+      string: '{"background":false,"created_at":1791377942.0,"error":null,"id":"resp_gsjahy46rcotq4z2jon75d4wgo3gtbp35hprrek5nkoe3tbaawhq","incomplete_details":null,"instructions":null,"metadata":{},"model":"openai.gpt-oss-20b","object":"response","output":[{"content":[{"text":"The
+        user wants \"Say OK and nothing else.\" So the assistant should just respond
+        with \"OK\". No extra text, no comments. That is straightforward.","type":"reasoning_text"}],"id":"msg_8c9039029176bbfe","status":"completed","summary":[],"type":"reasoning"},{"content":[{"annotations":[],"text":"OK","type":"output_text"}],"id":"msg_8fdbaff6bbb7dfea","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"service_tier":"default","status":"completed","temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":73,"input_tokens_details":{"cached_tokens":0},"output_tokens":42,"output_tokens_details":{"reasoning_tokens":32},"total_tokens":115}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:03 GMT
 recorded_with: VCR 6.4.0

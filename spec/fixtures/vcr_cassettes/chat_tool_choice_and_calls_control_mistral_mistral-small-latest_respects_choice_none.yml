@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:35 GMT
+      - Wed, 07 Oct 2026 13:57:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,31 +35,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b17b-7b68-7ff5-ad48-918648d83361
+      - 01a116a7-8176-7ca3-b79e-a6adaa2b73f6
       X-Kong-Request-Id:
-      - 01a0b17b-7b68-7ff5-ad48-918648d83361
+      - 01a116a7-8176-7ca3-b79e-a6adaa2b73f6
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99770'
+      - '99843'
       X-Ratelimit-Tokens-Query-Cost:
-      - '163'
+      - '157'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '99'
       X-Envoy-Upstream-Service-Time:
-      - '773'
+      - '770'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '774'
+      - '771'
       X-Kong-Proxy-Latency:
-      - '15'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,12 +74,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c7e9c77fc5bc478796121e650964b698","created":1789684054,"model":"mistral-small-latest","usage":{"prompt_tokens":40,"total_tokens":163,"completion_tokens":123,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I
-        can''t fetch real-time weather data, but you can check the current weather
-        in Berlin (coordinates: 52.5200, 13.4050) using a reliable weather service
-        like:\n\n- [Weather.com](https://weather.com)\n- [AccuWeather](https://www.accuweather.com)\n-
-        [OpenWeatherMap](https://openweathermap.org)\n- [Google Weather](https://www.google.com/search?q=weather+Berlin)\n\nFor
-        the most accurate and up-to-date information, I recommend checking one of
-        these sources directly."}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:27:35 GMT
+      string: '{"id":"0d3cfac4380b4e0ea9bc569666010e26","created":1791381438,"model":"mistral-small-latest","usage":{"prompt_tokens":40,"total_tokens":157,"completion_tokens":117,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I
+        can''t check real-time weather data, but you can easily find the current weather
+        in Berlin (coordinates: 52.5200, 13.4050) by using a weather service like:\n\n-
+        [Weather.com](https://weather.com)\n- [AccuWeather](https://www.accuweather.com)\n-
+        [OpenWeatherMap](https://openweathermap.org)\n- [Weather Underground](https://www.wunderground.com)\n\nJust
+        search for \"Berlin weather\" or use the coordinates directly on these sites."}}]}'
+  recorded_at: Wed, 07 Oct 2026 13:57:19 GMT
 recorded_with: VCR 6.4.0

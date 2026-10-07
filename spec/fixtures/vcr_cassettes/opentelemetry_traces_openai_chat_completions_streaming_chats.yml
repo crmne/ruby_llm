@@ -9,7 +9,7 @@ http_interactions:
         with just the word hello."}],"stream":true,"max_completion_tokens":128,"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 03 Oct 2026 20:34:46 GMT
+      - Wed, 07 Oct 2026 12:59:37 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '267'
+      - '243'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -60,11 +60,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '4999'
+      - '4998'
       X-Ratelimit-Remaining-Tokens:
-      - '1999985'
+      - '1999975'
       X-Ratelimit-Reset-Requests:
-      - 12ms
+      - 24ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -76,16 +76,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-EV0jOasBXV0pc4apd6KZdFM6yZ8cc","object":"chat.completion.chunk","created":1791059686,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_e8fb32e41b","choices":[{"index":0,"delta":{"role":"assistant","content":"","refusal":null},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"jeIad8dd"}
+        data: {"id":"chatcmpl-EWLX7lTiKe4Y799aNvnNOm5rwCOv8","object":"chat.completion.chunk","created":1791377977,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_9b878b2ce4","choices":[{"index":0,"delta":{"role":"assistant","content":"","refusal":null},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"bKuO72Ex"}
 
-        data: {"id":"chatcmpl-EV0jOasBXV0pc4apd6KZdFM6yZ8cc","object":"chat.completion.chunk","created":1791059686,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_e8fb32e41b","choices":[{"index":0,"delta":{"content":"hello"},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"NP4SG"}
+        data: {"id":"chatcmpl-EWLX7lTiKe4Y799aNvnNOm5rwCOv8","object":"chat.completion.chunk","created":1791377977,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_9b878b2ce4","choices":[{"index":0,"delta":{"content":"hello"},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"906YN"}
 
-        data: {"id":"chatcmpl-EV0jOasBXV0pc4apd6KZdFM6yZ8cc","object":"chat.completion.chunk","created":1791059686,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_e8fb32e41b","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}],"usage":null,"obfuscation":"LEuH"}
+        data: {"id":"chatcmpl-EWLX7lTiKe4Y799aNvnNOm5rwCOv8","object":"chat.completion.chunk","created":1791377977,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_9b878b2ce4","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}],"usage":null,"obfuscation":"LC2g"}
 
-        data: {"id":"chatcmpl-EV0jOasBXV0pc4apd6KZdFM6yZ8cc","object":"chat.completion.chunk","created":1791059686,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_e8fb32e41b","choices":[],"usage":{"prompt_tokens":14,"completion_tokens":1,"total_tokens":15,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}},"obfuscation":"dH40hhfURT"}
+        data: {"id":"chatcmpl-EWLX7lTiKe4Y799aNvnNOm5rwCOv8","object":"chat.completion.chunk","created":1791377977,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_9b878b2ce4","choices":[],"usage":{"prompt_tokens":14,"completion_tokens":1,"total_tokens":15,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}},"obfuscation":"Wr1EbrSDpR"}
 
         data: [DONE]
 
-  recorded_at: Sat, 03 Oct 2026 20:34:46 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:37 GMT
 recorded_with: VCR 6.4.0
 ...

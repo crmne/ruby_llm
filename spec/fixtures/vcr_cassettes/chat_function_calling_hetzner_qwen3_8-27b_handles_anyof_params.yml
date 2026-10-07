@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,11 +27,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 24 Sep 2026 19:01:08 GMT
+      - Wed, 07 Oct 2026 13:57:33 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1044'
+      - '1039'
       Connection:
       - keep-alive
       Vary:
@@ -44,9 +44,9 @@ http_interactions:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":72,"total_tokens":454,"completion_tokens_details":{"reasoning_tokens":30},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-9956a78bd8bd060c","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user is asking
+      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":70,"total_tokens":452,"completion_tokens_details":{"reasoning_tokens":28},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-9f3b0dfce8891ef9","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user is requesting
         to call the any_of_params tool with task \"Review PR\" and status \"pending\".
-        Let me try making that call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-076e1025-963b-472b-a95b-ff7962f1a3d7","object":"chat.completion","created":1790276362,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Thu, 24 Sep 2026 19:01:08 GMT
+        Let''s execute that.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-00810a0c-89b3-4bde-9269-6d191e2a0dfd","object":"chat.completion","created":1791381336,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 07 Oct 2026 13:57:33 GMT
 recorded_with: VCR 6.4.0

@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 07 Oct 2026 13:22:39 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Thu, 17 Sep 2026 22:23:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:23:46 GMT
+  recorded_at: Wed, 07 Oct 2026 13:22:39 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:23:54 GMT
+      - Wed, 07 Oct 2026 13:22:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,44 +110,44 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Here are the descriptions for each file:\n\n---\n\n### Image Description\n\nThe image displays a stylized, three-dimensional representation of a red gemstone, commonly known as a ruby. It features multiple facets that create a glossy, reflective surface, varying in color from deep crimson to brighter red, with prominent white highlights indicating depth and shine. The overall shape is an elongated oval, and it is widely recognized as the logo for the Ruby programming language.\n\n---\n\n### PDF Summary\n\nThe PDF document is titled \"Sample PDF\" and includes the subtitle \"This is a simple PDF file. Fun fun fun.\" The main content of the PDF consists entirely of four distinct paragraphs of standard placeholder text (Lorem ipsum). The document has a very basic, clean layout, presenting only text without any images, graphics, or complex formatting elements. Its apparent purpose is to serve as a generic text-based PDF example."
+                    "text": "Here's the description of the image and the summary of the PDF:\n\n---\n\n**Image Description:**\nThe image displays a stylized, shiny red gemstone or jewel. It is depicted with numerous facets that reflect light, creating highlights and shadows, giving it a three-dimensional, brilliant appearance. The overall shape is an irregular oval, wider at the top and tapering slightly towards the bottom. The icon is widely recognized as the logo for the Ruby programming language.\n\n---\n\n**PDF Summary:**\nThe PDF is titled \"Sample PDF\" and includes the subtitle \"This is a simple PDF file. Fun fun fun.\" The main body of the document consists entirely of standard Lorem Ipsum placeholder text, which is dummy text used in publishing and graphic design to demonstrate the visual form of a document without relying on meaningful content. Therefore, the PDF contains no substantive information beyond its title and subtitle, and serves as a visual example of a document layout."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.5043080647786458
+              "avgLogprobs": -0.69082237929894175
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 530,
-            "candidatesTokenCount": 180,
-            "totalTokenCount": 1456,
+            "candidatesTokenCount": 189,
+            "totalTokenCount": 863,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 14
+                "modality": "IMAGE",
+                "tokenCount": 258
               },
               {
                 "modality": "DOCUMENT",
                 "tokenCount": 258
               },
               {
-                "modality": "IMAGE",
-                "tokenCount": 258
+                "modality": "TEXT",
+                "tokenCount": 14
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 180
+                "tokenCount": 189
               }
             ],
-            "thoughtsTokenCount": 746
+            "thoughtsTokenCount": 144
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:23:46.833663Z",
-          "responseId": "cmisav_wMvzbusEPrtzsuQk"
+          "createTime": "2026-10-07T13:22:39.628751Z",
+          "responseId": "n0fGao-wJvXZzPsPssTNqAY"
         }
-  recorded_at: Thu, 17 Sep 2026 22:23:54 GMT
+  recorded_at: Wed, 07 Oct 2026 13:22:45 GMT
 recorded_with: VCR 6.4.0

@@ -12,15 +12,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222607Z
+      - 20261007T135027Z
       X-Amz-Content-Sha256:
       - 30c5f4bdcb25d623b0a0169c9258998619f881f7948d59cff67fc228e84fca22
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:26:08 GMT
+      - Wed, 07 Oct 2026 13:50:28 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,35 +39,35 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 5d131b9c-29d9-4a55-b1d1-757d200eb369
+      - c70cd766-e126-4705-817f-c513e677824b
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":481},"output":{"message":{"content":[{"toolUse":{"input":{"query":"test
-        data"},"name":"content_returning","toolUseId":"tooluse_wxP12BduggFmEHGkuCm2b3"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":939,"outputTokens":26,"serverToolUsage":{},"totalTokens":965}}'
-  recorded_at: Thu, 17 Sep 2026 22:26:08 GMT
+      string: '{"metrics":{"latencyMs":879},"output":{"message":{"content":[{"toolUse":{"input":{"query":"test
+        data"},"name":"content_returning","toolUseId":"tooluse_z9YUIJHO9s5DS1H8INTbOy"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":939,"outputTokens":26,"serverToolUsage":{},"totalTokens":965}}'
+  recorded_at: Wed, 07 Oct 2026 13:50:28 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Process this query:
-        test data"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_wxP12BduggFmEHGkuCm2b3","name":"content_returning","input":{"query":"test
-        data"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_wxP12BduggFmEHGkuCm2b3","content":[{"text":"Processed:
+        test data"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_z9YUIJHO9s5DS1H8INTbOy","name":"content_returning","input":{"query":"test
+        data"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_z9YUIJHO9s5DS1H8INTbOy","content":[{"text":"Processed:
         test data"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"content_returning","description":"Returns
         a processed string result","inputSchema":{"json":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222608Z
+      - 20261007T135028Z
       X-Amz-Content-Sha256:
-      - bcf5c1bf53f7734008ddaba0b5d87c87563c08b271ab83f34e018ca97707cd53
+      - 2309836c618a62fb1b55d8167a8a125bcea24f6419520875a65fcba2c642a6c4
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -78,18 +78,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:26:09 GMT
+      - Wed, 07 Oct 2026 13:50:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '286'
+      - '280'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 16476e93-fb01-4f9a-9bf7-f0a2b2b0e286
+      - 2a0155fc-3a81-4e4d-9729-68587b1cd0ec
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":471},"output":{"message":{"content":[{"text":"The
-        processed result for your query \"test data\" is:\n\n**Processed: test data**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":996,"outputTokens":21,"serverToolUsage":{},"totalTokens":1017}}'
-  recorded_at: Thu, 17 Sep 2026 22:26:09 GMT
+      string: '{"metrics":{"latencyMs":451},"output":{"message":{"content":[{"text":"The
+        query has been processed successfully. Result: **Processed: test data**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":996,"outputTokens":16,"serverToolUsage":{},"totalTokens":1012}}'
+  recorded_at: Wed, 07 Oct 2026 13:50:29 GMT
 recorded_with: VCR 6.4.0

@@ -26,13 +26,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:14:58 GMT
+      - Wed, 07 Oct 2026 13:12:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Anthropic-Ratelimit-Batch-Requests-Limit:
+      - '500000'
+      Anthropic-Ratelimit-Batch-Requests-Remaining:
+      - '499999'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -40,28 +44,28 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Server:
       - cloudflare
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=556
-      Cf-Cache-Status:
-      - DYNAMIC
+      - x-originResponse;dur=368
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01DkoN2fsq6RvqjE7YmnxEAj","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-09-17T22:14:58.066202+00:00","expires_at":"2026-09-18T22:14:58.066202+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
-  recorded_at: Thu, 17 Sep 2026 22:14:58 GMT
+      string: '{"id":"msgbatch_01SgG8Yhqg9ZJ6B7Q3SrTSBJ","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-10-07T13:12:25.790920+00:00","expires_at":"2026-10-08T13:12:25.790920+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Wed, 07 Oct 2026 13:12:25 GMT
 - request:
     method: post
-    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01DkoN2fsq6RvqjE7YmnxEAj/cancel
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01SgG8Yhqg9ZJ6B7Q3SrTSBJ/cancel
     body:
       encoding: UTF-8
       string: "{}"
@@ -84,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:14:58 GMT
+      - Wed, 07 Oct 2026 13:12:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -98,7 +102,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Server:
       - cloudflare
       Vary:
@@ -106,7 +110,7 @@ http_interactions:
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Server-Timing:
-      - x-originResponse;dur=126
+      - x-originResponse;dur=148
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -115,6 +119,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msgbatch_01DkoN2fsq6RvqjE7YmnxEAj","type":"message_batch","processing_status":"canceling","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-09-17T22:14:58.066202+00:00","expires_at":"2026-09-18T22:14:58.066202+00:00","archived_at":null,"cancel_initiated_at":"2026-09-17T22:14:58.333286+00:00","results_url":null}'
-  recorded_at: Thu, 17 Sep 2026 22:14:58 GMT
+      string: '{"id":"msgbatch_01SgG8Yhqg9ZJ6B7Q3SrTSBJ","type":"message_batch","processing_status":"canceling","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-10-07T13:12:25.790920+00:00","expires_at":"2026-10-08T13:12:25.790920+00:00","archived_at":null,"cancel_initiated_at":"2026-10-07T13:12:26.608527+00:00","results_url":null}'
+  recorded_at: Wed, 07 Oct 2026 13:12:26 GMT
 recorded_with: VCR 6.4.0

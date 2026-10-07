@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221129Z
+      - 20261007T125925Z
       X-Amz-Content-Sha256:
       - 868612d3eca967b58ce7dbb156a6a7ce87173cbb7729faa33d7a987cccd61680
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,25 +29,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:32 GMT
+      - Wed, 07 Oct 2026 12:59:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1286'
+      - '1364'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b50c1edd-28d2-46ed-a0fb-be57071afdcb
+      - 3b9aa4aa-d7c4-4239-b2e5-ce3025b084d9
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1785},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"documentPage":{"documentIndex":0,"end":2,"start":1}},"sourceContent":[{"text":"Sample
+      string: '{"metrics":{"latencyMs":1873},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"documentPage":{"documentIndex":0,"end":2,"start":1}},"sourceContent":[{"text":"Sample
         PDF\r\nThis is a simple PDF file. "}],"title":"sample"}],"content":[{"text":"The
-        document is a simple PDF file."}]}},{"text":" "},{"citationsContent":{"citations":[{"location":{"documentPage":{"documentIndex":0,"end":2,"start":1}},"sourceContent":[{"text":"Sample
-        PDF\r\nThis is a simple PDF file. Fun fun fun.\r\n"}],"title":"sample"}],"content":[{"text":"It
-        contains the title \"Sample PDF\" followed by \"This is a simple PDF file.
-        Fun fun fun.\""}]}},{"text":" The rest of the document consists of "},{"citationsContent":{"citations":[{"location":{"documentPage":{"documentIndex":0,"end":2,"start":1}},"sourceContent":[{"text":"Lorem
+        document is a simple PDF file"}]}},{"text":" that "},{"citationsContent":{"citations":[{"location":{"documentPage":{"documentIndex":0,"end":2,"start":1}},"sourceContent":[{"text":"Sample
+        PDF\r\nThis is a simple PDF file. Fun fun fun.\r\n"}],"title":"sample"}],"content":[{"text":"contains
+        the title \"Sample PDF\" and states \"Fun fun fun.\""}]}},{"text":" The rest
+        of the document consists of "},{"citationsContent":{"citations":[{"location":{"documentPage":{"documentIndex":0,"end":2,"start":1}},"sourceContent":[{"text":"Lorem
         ipsum dolor sit amet, consectetuer adipiscing elit. "}],"title":"sample"}],"content":[{"text":"Lorem
-        ipsum placeholder text"}]}},{"text":", which is commonly used as dummy content
-        in design and publishing."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":4248,"outputTokens":110,"serverToolUsage":{},"totalTokens":4358}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:32 GMT
+        ipsum placeholder text starting with \"Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit.\""}]}},{"text":" and continuing with various paragraphs of
+        standard Lorem ipsum filler text throughout the page."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":4248,"outputTokens":126,"serverToolUsage":{},"totalTokens":4374}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:29 GMT
 recorded_with: VCR 6.4.0

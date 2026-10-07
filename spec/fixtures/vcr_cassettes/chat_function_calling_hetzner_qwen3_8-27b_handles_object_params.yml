@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,11 +28,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 24 Sep 2026 18:56:18 GMT
+      - Wed, 07 Oct 2026 13:39:44 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1115'
+      - '1095'
       Connection:
       - keep-alive
       Vary:
@@ -45,10 +45,9 @@ http_interactions:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":408,"completion_tokens":113,"total_tokens":521,"completion_tokens_details":{"reasoning_tokens":55},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b8c22841e91b2757","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":408,"completion_tokens":110,"total_tokens":518,"completion_tokens_details":{"reasoning_tokens":52},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a3427102ab0f7856","type":"function","function":{"name":"object_params","arguments":"{\"window\":
         {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}],"reasoning":"The
-        user is asking to call the object_params tool with window start 2025-01-01
-        and end 2025-01-02, and include the result.\n\nLet''s call the function with
-        the specified parameters.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-2ff75868-f5ce-4a28-8be9-86c8c0e2ddbd","object":"chat.completion","created":1790276168,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Thu, 24 Sep 2026 18:56:18 GMT
+        user wants to call the object_params tool specifying window start as 2025-01-01
+        and end as 2025-01-02, and include the result. Let''s execute that tool call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-d7e1a89b-9a44-4e48-867f-bc46bf1d78a5","object":"chat.completion","created":1791380298,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 07 Oct 2026 13:39:44 GMT
 recorded_with: VCR 6.4.0

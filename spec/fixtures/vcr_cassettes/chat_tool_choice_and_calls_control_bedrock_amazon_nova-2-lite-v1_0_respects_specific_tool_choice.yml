@@ -13,15 +13,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222708Z
+      - 20261007T135655Z
       X-Amz-Content-Sha256:
       - 47ae638a575679bdb20b5bdecae55de311ec5e2a98b80ec2db370fb0d436a0f7
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:10 GMT
+      - Wed, 07 Oct 2026 13:56:56 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -40,34 +40,34 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - cc070472-fd86-4d35-a5d5-b68239e037ad
+      - f3b45658-d36e-4f7d-b4d6-f423714cfa49
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":721},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"41.8902","longitude":"12.4922"},"name":"weather","toolUseId":"tooluse_KyxcGG2DIJ1CET5ofkJLwH"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":974,"outputTokens":42,"serverToolUsage":{},"totalTokens":1016}}'
-  recorded_at: Thu, 17 Sep 2026 22:27:10 GMT
+      string: '{"metrics":{"latencyMs":659},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"41.9028","longitude":"12.4964"},"name":"weather","toolUseId":"tooluse_1MsDqTHDXDHIzokm3SynLu"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":974,"outputTokens":42,"serverToolUsage":{},"totalTokens":1016}}'
+  recorded_at: Wed, 07 Oct 2026 13:56:56 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the fall of
-        Rome?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_KyxcGG2DIJ1CET5ofkJLwH","name":"weather","input":{"latitude":"41.8902","longitude":"12.4922"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_KyxcGG2DIJ1CET5ofkJLwH","content":[{"text":"Current
-        weather at 41.8902, 12.4922: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        Rome?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1MsDqTHDXDHIzokm3SynLu","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1MsDqTHDXDHIzokm3SynLu","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222710Z
+      - 20261007T135656Z
       X-Amz-Content-Sha256:
-      - 451ab11ccb6dfe50083a53c807af92cb017be521320f55b68bbac70fc49c2d02
+      - 1909910436fe28f2dc1899d24ba6e8440bbbba5f4bf5ada2d1e7837c6832eb56
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -78,18 +78,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:12 GMT
+      - Wed, 07 Oct 2026 13:56:58 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '947'
+      - '895'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d8360eba-11ca-4483-8d5c-f21bd23d3f90
+      - a1b3f1fc-528c-4dc0-8137-3a998b99794d
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTU3Mn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJJIHVuZGVyc3RhbmQgeW91J3JlIGFza2luZyBhYm91dCB0aGUgXCJmYWxsIG9mIFJvbWUsXCIgYnV0IEkgbm90aWNlIHlvdSd2ZSB0cmlnZ2VyZWQgYSB3ZWF0aGVyIHRvb2wgZm9yIFJvbWUncyBjb29yZGluYXRlcyAoNDEuODkwMiwgMTIuNDkyMiksIHdoaWNoIGN1cnJlbnRseSBzaG93cyAqKjE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaCoqLiBcblxuSG93ZXZlciwgdGhlIGZhbGwgb2YgUm9tZSByZWZlcnMgdG8gaGlzdG9yaWNhbCBldmVudHMuIENvdWxkIHlvdSBjbGFyaWZ5IHdoaWNoIFwiZmFsbFwiIHlvdSdyZSBhc2tpbmcgYWJvdXQ/XG5cbjEuICoqRmFsbCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgKDQ3NiBDRSkqKiAtIFdoZW4gUm9tdWx1cyBBdWd1c3R1bHVzIHdhcyBkZXBvc2VkIGJ5IE9kb2FjZXJcbjIuICoqU2FjayBvZiBSb21lICg0MTAgQ0UpKiogLSBXaGVuIEFsYXJpYyBhbmQgdGhlIFZpc2lnb3RocyBsb290ZWQgdGhlIGNpdHlcbjMuICoqRmFsbCBvZiB0aGUgRWFzdGVybiBSb21hbiAoQnl6YW50aW5lKSBFbXBpcmUgKDE0NTMgQ0UpKiogLSBXaGVuIENvbnN0YW50aW5vcGxlIGZlbGwgdG8gdGhlIE90dG9tYW5zXG5cblBsZWFzZSBzcGVjaWZ5IHdoaWNoIGhpc3RvcmljYWwgZXZlbnQgeW91J3JlIGludGVyZXN0ZWQgaW4sIGFuZCBJJ2xsIHByb3ZpZGUgYSBkZXRhaWxlZCBleHBsYW5hdGlvbiBvZiBjYXVzZXMsIGtleSBldmVudHMsIGFuZCBjb25zZXF1ZW5jZXMuIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MTA2Niwib3V0cHV0VG9rZW5zIjoxNzYsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMjQyfX0=
-  recorded_at: Thu, 17 Sep 2026 22:27:12 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTA5Mn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJJdCBsb29rcyBsaWtlIHlvdSdyZSBhc2tpbmcgYWJvdXQgdGhlIFwiZmFsbCBvZiBSb21lLFwiIGJ1dCB5b3VyIG1lc3NhZ2UgaXMgYSBiaXQgYW1iaWd1b3VzLiBDb3VsZCB5b3UgY2xhcmlmeSB3aGF0IHlvdSBtZWFuIGJ5IHRoaXM/IEFyZSB5b3UgcmVmZXJyaW5nIHRvOlxuXG4xLiAqKlRoZSBmYWxsIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSoqICh0cmFkaXRpb25hbGx5IGRhdGVkIHRvIDQ3NiBDRSB3aGVuIFJvbXVsdXMgQXVndXN0dWx1cyB3YXMgZGVwb3NlZClcbjIuICoqVGhlIGZhbGwgb2YgdGhlIEVhc3Rlcm4gUm9tYW4vQnl6YW50aW5lIEVtcGlyZSoqICh3aGljaCBlbmRlZCBpbiAxNDUzIENFIHdoZW4gQ29uc3RhbnRpbm9wbGUgZmVsbCB0byB0aGUgT3R0b21hbnMpXG4zLiAqKkEgc3BlY2lmaWMgaGlzdG9yaWNhbCBldmVudCBvciBtZXRhcGhvcioqIHJlbGF0ZWQgdG8gUm9tZT9cbjQuICoqT3Igd2VyZSB5b3UgYWN0dWFsbHkgYXNraW5nIGFib3V0IGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zIGluIFJvbWU/KiogKEkganVzdCBjaGVja2VkIGFuZCBpdCdzIGN1cnJlbnRseSAxNcKwQyB3aXRoIDEwIGttL2ggd2luZHMpXG5cblBsZWFzZSBwcm92aWRlIG1vcmUgY29udGV4dCBzbyBJIGNhbiBnaXZlIHlvdSB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgaGVscGZ1bCBpbmZvcm1hdGlvbiEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjoxMDY2LCJvdXRwdXRUb2tlbnMiOjE1Nywic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjEyMjN9fQ==
+  recorded_at: Wed, 07 Oct 2026 13:56:58 GMT
 recorded_with: VCR 6.4.0

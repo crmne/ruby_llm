@@ -14,15 +14,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221736Z
+      - 20261007T130346Z
       X-Amz-Content-Sha256:
       - ad7b8f69936d024afea8b77e86e1ce7d0877e695f4bfac28fa2a959d630f33bd
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:17:39 GMT
+      - Wed, 07 Oct 2026 13:03:48 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,19 +41,19 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1782ebde-cb5d-4593-a60e-09f486d73e4a
+      - 57e973f9-4d60-4035-8a39-8795bb4fd676
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2354},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_SMboK8FwwS5s00w9KHJDFP","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_y1KfKubN2aSbTGqLksvnZV","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
-  recorded_at: Thu, 17 Sep 2026 22:17:39 GMT
+      string: '{"metrics":{"latencyMs":1860},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_EHKJrImPLVJBTy3ExdAijB","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_dL6AHDv7KJu97GHEfRLPcI","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
+  recorded_at: Wed, 07 Oct 2026 13:03:48 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_SMboK8FwwS5s00w9KHJDFP","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_y1KfKubN2aSbTGqLksvnZV","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_SMboK8FwwS5s00w9KHJDFP","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_y1KfKubN2aSbTGqLksvnZV","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_EHKJrImPLVJBTy3ExdAijB","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_dL6AHDv7KJu97GHEfRLPcI","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_EHKJrImPLVJBTy3ExdAijB","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_dL6AHDv7KJu97GHEfRLPcI","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}},{"toolSpec":{"name":"best_language_to_learn","description":"Gets
@@ -61,15 +61,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221739Z
+      - 20261007T130348Z
       X-Amz-Content-Sha256:
-      - 6689c2e03ff9c206a1c92cc3dd866ebfab6a93fbdd7c068a67b0d213b86517cd
+      - b1237e93064f49fa8a0e83228a6aa98a10d91328de651a383d321a6b538fff5a
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -80,18 +80,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:17:41 GMT
+      - Wed, 07 Oct 2026 13:03:51 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '423'
+      - '436'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 81b4eb39-4e11-4149-97d3-c22316848636
+      - 63a25d6f-85e6-4290-8e4d-8491d72cbec5
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTk1M30sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKjE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaCoqLlxuXG5UaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKiEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImNhY2hlUmVhZElucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVSZWFkSW5wdXRUb2tlbnMiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlV3JpdGVJbnB1dFRva2VucyI6MCwiaW5wdXRUb2tlbnMiOjg5Mywib3V0cHV0VG9rZW5zIjozNCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjkyN319
-  recorded_at: Thu, 17 Sep 2026 22:17:41 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTc3NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJIZXJlJ3Mgd2hhdCBJIGZvdW5kOlxuXG4qKldlYXRoZXIgaW4gQmVybGluOioqXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cbioqQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKiBSdWJ5In1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjo4OTMsIm91dHB1dFRva2VucyI6NDEsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjo5MzR9fQ==
+  recorded_at: Wed, 07 Oct 2026 13:03:51 GMT
 recorded_with: VCR 6.4.0

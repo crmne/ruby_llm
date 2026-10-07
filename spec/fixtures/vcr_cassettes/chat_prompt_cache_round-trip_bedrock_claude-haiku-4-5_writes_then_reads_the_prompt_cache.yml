@@ -430,15 +430,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221537Z
+      - 20261007T125921Z
       X-Amz-Content-Sha256:
       - b28ee68496701a84e08f8c6fe8322cd7444750c2b032a39d53c01a3fe793bcc5
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -449,7 +449,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:15:39 GMT
+      - Wed, 07 Oct 2026 12:59:23 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -457,11 +457,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 3a91fc8d-423b-4c85-96cd-73c234a9ddd0
+      - e8579bad-fa77-49e5-926c-60560ac1ef89
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":651},"output":{"message":{"content":[{"text":"OK"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheDetails":[{"inputTokens":7358,"ttl":"5m"}],"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":7358,"cacheWriteInputTokens":7358,"inputTokens":3,"outputTokens":4,"serverToolUsage":{},"totalTokens":7365}}'
-  recorded_at: Thu, 17 Sep 2026 22:15:39 GMT
+      string: '{"metrics":{"latencyMs":690},"output":{"message":{"content":[{"text":"OK"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheDetails":[{"inputTokens":7358,"ttl":"5m"}],"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":7358,"cacheWriteInputTokens":7358,"inputTokens":3,"outputTokens":4,"serverToolUsage":{},"totalTokens":7365}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:23 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
@@ -892,15 +892,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221539Z
+      - 20261007T125923Z
       X-Amz-Content-Sha256:
       - b28ee68496701a84e08f8c6fe8322cd7444750c2b032a39d53c01a3fe793bcc5
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -911,7 +911,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:15:40 GMT
+      - Wed, 07 Oct 2026 12:59:25 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -919,9 +919,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1ab20534-1afb-4e2a-99cc-b441920fc616
+      - bb3ee31f-ca7f-4824-8f5b-2359f86eceda
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":634},"output":{"message":{"content":[{"text":"OK"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":7358,"cacheReadInputTokens":7358,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":3,"outputTokens":4,"serverToolUsage":{},"totalTokens":7365}}'
-  recorded_at: Thu, 17 Sep 2026 22:15:40 GMT
+      string: '{"metrics":{"latencyMs":865},"output":{"message":{"content":[{"text":"OK"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":7358,"cacheReadInputTokens":7358,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":3,"outputTokens":4,"serverToolUsage":{},"totalTokens":7365}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:25 GMT
 recorded_with: VCR 6.4.0

@@ -10,17 +10,17 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Accept:
+      - application/vnd.amazon.eventstream
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220629Z
+      - 20261007T125914Z
       X-Amz-Content-Sha256:
       - a210bad4f1be23caac7cde3599d1be9cf8b32efe76950291d789d54da33dbdd2
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:30 GMT
+      - Wed, 07 Oct 2026 12:59:15 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -37,12 +37,12 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 0f7c2245-6473-4a60-9974-030b61c9d1a9
+      - 92c844dd-1151-445e-9eca-f3668fc3647e
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAAAmwAAAFJGkfmwCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDRCIsInJvbGUiOiJhc3Npc3RhbnQifbCidJ0AAACjAAAAV6eq/ngLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiMSJ9LCJwIjoiYWJjZGVmZ2hpIn2tQvhdAAAAsQAAAFe9ijqaCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiwgMiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1In1cNzihAAAA0AAAAFcZ2GRnCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiwgMyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWiJ96gTVLgAAAK4AAABWKD0KXws6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUCJ9jZ6LOgAAAJEAAABRlSiwqws6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3AiLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifV9fyi4AAADXAAAATs+TELcLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjo5NjF9LCJwIjoiYWIiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6NTgsIm91dHB1dFRva2VucyI6MTAsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjo2OH19VsxjYg==
-  recorded_at: Thu, 17 Sep 2026 22:06:30 GMT
+        AAAAuAAAAFLA8KxkCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU2Iiwicm9sZSI6ImFzc2lzdGFudCJ9yKXkMgAAAMkAAABXdCiRlAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIxLCAyLCAifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUCJ9bXnAMQAAAL8AAABXArqE+ws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLIn3o05pEAAAAtwAAAFZFzf+sCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZIn1MsdSRAAAAhQAAAFEASIHpCzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZCIsInN0b3BSZWFzb24iOiJlbmRfdHVybiJ9HPrdBQAAANwAAABOuEMhpgs6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjMxNX0sInAiOiJhYmNkZWZnIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjU4LCJvdXRwdXRUb2tlbnMiOjEwLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6Njh9fWKl9u8=
+  recorded_at: Wed, 07 Oct 2026 12:59:15 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -53,15 +53,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220630Z
+      - 20261007T125915Z
       X-Amz-Content-Sha256:
       - a210bad4f1be23caac7cde3599d1be9cf8b32efe76950291d789d54da33dbdd2
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -72,7 +72,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:31 GMT
+      - Wed, 07 Oct 2026 12:59:16 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -80,10 +80,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 24c6c8b5-f6fd-4f23-8a2e-b7194414abcb
+      - 8bf2f53a-9ab2-4295-b166-5c49d24410ec
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":501},"output":{"message":{"content":[{"text":"1,
+      string: '{"metrics":{"latencyMs":427},"output":{"message":{"content":[{"text":"1,
         2, 3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":58,"outputTokens":10,"serverToolUsage":{},"totalTokens":68}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:31 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:16 GMT
 recorded_with: VCR 6.4.0

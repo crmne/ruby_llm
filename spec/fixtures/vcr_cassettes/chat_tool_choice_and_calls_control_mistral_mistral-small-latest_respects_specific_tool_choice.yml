@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:37 GMT
+      - Wed, 07 Oct 2026 13:57:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,15 +35,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b17b-839b-77d9-b543-ae9f70e176e5
+      - 01a116a7-89f6-7913-974d-d15c8e673f64
       X-Kong-Request-Id:
-      - 01a0b17b-839b-77d9-b543-ae9f70e176e5
+      - 01a116a7-89f6-7913-974d-d15c8e673f64
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99075'
+      - '99292'
       X-Ratelimit-Tokens-Query-Cost:
       - '172'
       X-Ratelimit-Limit-Req-Minute:
@@ -51,15 +51,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '309'
+      - '314'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '309'
+      - '315'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,17 +74,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"962b0bc75a724126aa7047dfc74f3266","created":1789684057,"model":"mistral-small-latest","usage":{"prompt_tokens":144,"total_tokens":172,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"0HgnqnB3e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"f6ba0b51c2624862a9ec4da9f5c2328b","created":1791381441,"model":"mistral-small-latest","usage":{"prompt_tokens":144,"total_tokens":172,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"9SVCy5Yr8","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"41.9028\", \"longitude\": \"12.4964\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:27:37 GMT
+  recorded_at: Wed, 07 Oct 2026 13:57:21 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"0HgnqnB3e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"0HgnqnB3e"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"9SVCy5Yr8","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"9SVCy5Yr8"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -105,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:39 GMT
+      - Wed, 07 Oct 2026 13:57:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,31 +113,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b17b-8523-7233-9150-b4ee76ccb8f2
+      - 01a116a7-8b78-77d4-849f-89999fe7888a
       X-Kong-Request-Id:
-      - 01a0b17b-8523-7233-9150-b4ee76ccb8f2
+      - 01a116a7-8b78-77d4-849f-89999fe7888a
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98724'
+      - '99102'
       X-Ratelimit-Tokens-Query-Cost:
-      - '352'
+      - '190'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '95'
       X-Envoy-Upstream-Service-Time:
-      - '2184'
+      - '940'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2185'
+      - '941'
       X-Kong-Proxy-Latency:
-      - '15'
+      - '25'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -153,6 +153,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjUxMWZiYjE1NGViMzQ1NDZiZTIzMzM2NWYxMTM4YzgyIiwiY3JlYXRlZCI6MTc4OTY4NDA1OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIwNCwidG90YWxfdG9rZW5zIjozNTIsImNvbXBsZXRpb25fdG9rZW5zIjoxNDgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSDigJxGYWxsIG9mIFJvbWXigJ0gaXNu4oCZdCBhIHNpbmdsZSBldmVudCBidXQgYSBsb25nLCBkcmF3bi1vdXQgcHJvY2VzcyB0aGF0IGhpc3RvcmlhbnMgdXN1YWxseSBkYXRlIGZyb20gdGhlIGxhdGUgNHRoIGNlbnR1cnkgdG8gdGhlIG1pZGRsZSBvZiB0aGUgNnRoIGNlbnR1cnkuIFRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSBmaW5hbGx5IGNvbGxhcHNlZCBpbiA0NzYgQ0Ugd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgZGVwb3NlZCB0aGUgbGFzdCB3ZXN0ZXJuIGVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgYW5kIGRlY2xhcmVkIGhpbXNlbGYgS2luZyBvZiBJdGFseS4gVGhlIEVhc3Rlcm4gUm9tYW4gKEJ5emFudGluZSkgRW1waXJlIHN1cnZpdmVkIHVudGlsIDE0NTMsIHdoZW4gQ29uc3RhbnRpbm9wbGUgZmVsbCB0byB0aGUgT3R0b21hbnMuXG5cblNvLCBpbiBzaG9ydDogdGhlIGZhbGwgb2YgUm9tZSByZWZlcnMgdG8gdGhlIGVuZCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgaW4gdGhlIDV0aCBjZW50dXJ5LCBub3QgdGhlIGltbWVkaWF0ZSBkaXNhcHBlYXJhbmNlIG9mIFJvbWFuIGNpdmlsaXphdGlvbiwgd2hpY2ggY29udGludWVkIGluIHRoZSBFYXN0IGZvciBhbm90aGVyIHRob3VzYW5kIHllYXJzLiJ9fV19
-  recorded_at: Thu, 17 Sep 2026 22:27:39 GMT
+        eyJpZCI6IjI2NGIxZGM0N2FjODQ2YTM5OWU0ZTdhMGNmMzU2NzE4IiwiY3JlYXRlZCI6MTc5MTM4MTQ0MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIwNCwidG90YWxfdG9rZW5zIjozMTgsImNvbXBsZXRpb25fdG9rZW5zIjoxMTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMjh9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIOKAnEZhbGwgb2YgUm9tZeKAnSBpcyBhIHNob3J0aGFuZCBmb3IgdGhlIGdyYWR1YWwgZGlzaW50ZWdyYXRpb24gb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlIG92ZXIgc2V2ZXJhbCBjZW50dXJpZXMsIGN1bG1pbmF0aW5nIGluIHRoZSBhYmRpY2F0aW9uIG9mIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gRW1wZXJvciwgUm9tdWx1cyBBdWd1c3R1bHVzLCBpbiA0NzYgQ0UuIEhpc3RvcmlhbnMgdXN1YWxseSBkYXRlIHRoZSBlbmQgb2YgdGhlIFdlc3Rlcm4gRW1waXJlIHRvIHRoYXQgeWVhciwgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgZGVwb3NlZCBSb211bHVzIEF1Z3VzdHVsdXMgYW5kIGRlY2xhcmVkIGhpbXNlbGYgS2luZyBvZiBJdGFseS4gVGhlIEVhc3Rlcm4gUm9tYW4gKEJ5emFudGluZSkgRW1waXJlIGNvbnRpbnVlZCBmb3IgYW5vdGhlciB0aG91c2FuZCB5ZWFycyB1bnRpbCB0aGUgZmFsbCBvZiBDb25zdGFudGlub3BsZSBpbiAxNDUzLiJ9fV19
+  recorded_at: Wed, 07 Oct 2026 13:57:22 GMT
 recorded_with: VCR 6.4.0

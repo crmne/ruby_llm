@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221159Z
+      - 20261007T131955Z
       X-Amz-Content-Sha256:
       - cd6a3cf3ac52b505f4e1f864bd38e8b91c754cc5e659a3dccc1f9d40447eb21e
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,35 +29,31 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:12:09 GMT
+      - Wed, 07 Oct 2026 13:20:03 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1698'
+      - '1386'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 9125a94b-2f1d-49b2-b248-1f5ff3d1cbc1
+      - 5b1338ab-93bf-4b2d-ba83-39daac745494
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":8891},"output":{"message":{"content":[{"text":"#
-        Image Description\n\nThe image shows a stylized ruby gemstone icon. It features
-        a three-dimensional representation of a cut ruby in a rich, deep red color
-        with glossy highlights that give it a polished, reflective appearance. The
-        gem is rendered with facets that create depth and dimension, with lighter
-        red and pink highlights suggesting light reflection on its surfaces. This
-        is the Ruby programming language logo, which uses a gemstone design that reflects
-        the language''s name.\n\n# PDF Summary\n\nThe PDF is titled \"Sample PDF\"
-        and is a test/demonstration document. It begins with the subtitle \"This is
-        a simple PDF file. Fun fun fun.\"\n\nThe document consists primarily of Lorem
-        Ipsum placeholder text - standard dummy text used in publishing and design.
-        The content is organized into four paragraphs of Latin-derived filler text
-        that includes various phrases like:\n\n- \"Lorem ipsum dolor sit amet, consectetuer
-        adipiscing elit...\"\n- Descriptions of various mundane actions and states
-        using pseudo-Latin words\n- References to body parts, emotions, and general
-        activities in Latin-style language\n\nThe PDF serves as a basic sample file,
-        likely used for testing PDF readers, demonstrating file formats, or as a placeholder
-        document. It contains no substantive information, but rather demonstrates
-        the visual layout and text rendering capabilities of the PDF format."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":2730,"outputTokens":279,"serverToolUsage":{},"totalTokens":3009}}'
-  recorded_at: Thu, 17 Sep 2026 22:12:09 GMT
+      string: '{"metrics":{"latencyMs":7368},"output":{"message":{"content":[{"text":"#
+        Image Description\n\nThe image shows the Ruby programming language logo. It
+        features a stylized, three-dimensional gemstone (ruby) rendered in rich red
+        tones with glossy highlights and reflective surfaces. The gem has multiple
+        facets creating a crystalline appearance, with lighter red and white highlights
+        that give it depth and a polished, lustrous quality. The logo is set against
+        a white background.\n\n---\n\n# PDF Summary\n\nThe PDF is titled \"Sample
+        PDF\" and describes itself as \"a simple PDF file. Fun fun fun.\"\n\nThe document
+        consists primarily of Lorem Ipsum placeholder text - standard dummy text used
+        in publishing and design. The content is organized in four paragraphs of Latin-derived
+        filler text that includes words and phrases like \"Lorem ipsum dolor sit amet,
+        consectetuer adipiscing elit\" and continues with various Latin-sounding passages.\n\nThis
+        appears to be a test or sample document used for demonstration purposes, containing
+        no meaningful content but rather serving as a placeholder to show formatting,
+        layout, or PDF functionality."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":2730,"outputTokens":217,"serverToolUsage":{},"totalTokens":2947}}'
+  recorded_at: Wed, 07 Oct 2026 13:20:03 GMT
 recorded_with: VCR 6.4.0

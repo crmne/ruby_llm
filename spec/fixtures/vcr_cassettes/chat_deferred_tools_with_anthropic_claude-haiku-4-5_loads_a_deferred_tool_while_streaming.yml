@@ -15,7 +15,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 20:38:47 GMT
+      - Wed, 07 Oct 2026 12:59:50 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -44,35 +44,35 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-29T20:38:47Z'
+      - '2026-10-07T12:59:49Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-29T20:38:47Z'
+      - '2026-10-07T12:59:49Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '20000'
+      - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '19999'
+      - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-29T20:38:47Z'
+      - '2026-10-07T12:59:49Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-29T20:38:47Z'
+      - '2026-10-07T12:59:49Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-282f71e5029a6f44d1364c39d230b800-1def968cbac4f6a2-01
+      - 00-f37d17a3054608fd8c3e3701fae3afb3-d31506b0dd0f2bdb-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
       Vary:
@@ -89,117 +89,126 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CfYNjHJPD4Pwy17YRqqZh","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":704,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":3,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null} }
+        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvChMuLo5FARuaojncG","type":"message","role":"assistant","content":[],"container":null,"stop_reason":null,"stop_sequence":null,"stop_details":null,"usage":{"input_tokens":704,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":4,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}              }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}        }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}           }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I'll search"}             }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I'll search for"}   }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" for tools"}             }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" a"}  }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" that"} }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" tool"}           }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" that"}           }
 
         event: content_block_delta
         data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" can help"}    }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" me get the current weather in"}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you get the current"} }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Berlin."}          }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" weather in"}       }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" Berlin."}         }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0 }
+        data: {"type":"content_block_stop","index":0}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":1,"content_block":{"type":"server_tool_use","id":"srvtoolu_01UJbK3KRaHTXY1oBDCEr3Xd","name":"tool_search_tool_bm25","input":{}}    }
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"server_tool_use","id":"srvtoolu_01CkHWj2epQZtcveBfL19Wjn","name":"tool_search_tool_bm25","input":{}}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}              }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"query"}   }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"query"}        }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\": \"cur"}               }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\": \"cur"}           }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"rent we"}          }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"rent we"}        }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"ather B"}             }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"ather B"}       }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"erlin\"}"}              }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"erlin\"}"}     }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":1    }
+        data: {"type":"content_block_stop","index":1         }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":2,"content_block":{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01UJbK3KRaHTXY1oBDCEr3Xd","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}}          }
+        data: {"type":"content_block_start","index":2,"content_block":{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01CkHWj2epQZtcveBfL19Wjn","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}}     }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":2       }
+        data: {"type":"content_block_stop","index":2             }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":3,"content_block":{"type":"text","text":""}    }
+        data: {"type":"content_block_start","index":3,"content_block":{"type":"text","text":""}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":"Great"}         }
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":"Perfect"}  }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":"! I found a"}}
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":"! I found"}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" weather lookup"}        }
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" a weather"}              }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" tool."}              }
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" lookup"}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" Let me use"}   }
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" tool."}           }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" it to get the current weather"} }
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" Let me get"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" in Berlin."}   }
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" the current weather in"}             }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":3,"delta":{"type":"text_delta","text":" Berlin for you."}   }
 
         event: content_block_stop
         data: {"type":"content_block_stop","index":3   }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":4,"content_block":{"type":"tool_use","id":"toolu_01XmG5yEPpv53uAfgShCyRHZ","name":"weather_lookup","input":{},"caller":{"type":"direct"}}              }
+        data: {"type":"content_block_start","index":4,"content_block":{"type":"tool_use","id":"toolu_01BrWExVr9viGbjsZJrj8XQL","name":"weather_lookup","input":{},"caller":{"type":"direct"}}      }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":""}             }
+        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":""}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":"{\"city\""}           }
+        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":"{\"city\""}    }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":": \"Berl"}              }
+        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":": \"Berl"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":"in\"}"}              }
+        data: {"type":"content_block_delta","index":4,"delta":{"type":"input_json_delta","partial_json":"in\"}"} }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":4             }
+        data: {"type":"content_block_stop","index":4        }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":1661,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":153,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}}              }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"container":null},"usage":{"input_tokens":1662,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":153,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}}               }
 
         event: message_stop
         data: {"type":"message_stop"          }
 
-  recorded_at: Tue, 29 Sep 2026 20:38:48 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:51 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -207,10 +216,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
         is the weather in Berlin right now? Use your tools."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search for tools that can help me get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_01UJbK3KRaHTXY1oBDCEr3Xd","name":"tool_search_tool_bm25","input":{"query":"current
-        weather Berlin"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01UJbK3KRaHTXY1oBDCEr3Xd","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Great!
-        I found a weather lookup tool. Let me use it to get the current weather in
-        Berlin."},{"type":"tool_use","id":"toolu_01XmG5yEPpv53uAfgShCyRHZ","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01XmG5yEPpv53uAfgShCyRHZ","content":[{"type":"text","text":"Sunny
+        search for a tool that can help you get the current weather in Berlin."},{"type":"server_tool_use","id":"srvtoolu_01CkHWj2epQZtcveBfL19Wjn","name":"tool_search_tool_bm25","input":{"query":"current
+        weather Berlin"}},{"type":"tool_search_tool_result","tool_use_id":"srvtoolu_01CkHWj2epQZtcveBfL19Wjn","content":{"type":"tool_search_tool_search_result","tool_references":[{"type":"tool_reference","tool_name":"weather_lookup"},{"type":"tool_reference","tool_name":"stock_price"}]}},{"type":"text","text":"Perfect!
+        I found a weather lookup tool. Let me get the current weather in Berlin for
+        you."},{"type":"tool_use","id":"toolu_01BrWExVr9viGbjsZJrj8XQL","name":"weather_lookup","input":{"city":"Berlin"},"caller":{"type":"direct"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01BrWExVr9viGbjsZJrj8XQL","content":[{"type":"text","text":"Sunny
         and 22°C in Berlin"}]}]}],"stream":true,"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
         up the current weather for a city","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Looks
@@ -220,7 +229,7 @@ http_interactions:
       Accept-Encoding:
       - identity
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -235,7 +244,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 20:38:49 GMT
+      - Wed, 07 Oct 2026 12:59:51 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -249,50 +258,50 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-29T20:38:48Z'
+      - '2026-10-07T12:59:51Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-29T20:38:48Z'
+      - '2026-10-07T12:59:51Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '20000'
+      - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '19999'
+      - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-29T20:38:48Z'
+      - '2026-10-07T12:59:51Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-29T20:38:48Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T12:59:51Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-709fa8849f8e8a903ad532d2cb94575a-9cb2dad4aa3b320c-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-62e165009ce9f5dd4a3e11eeea30aa52-6de07b8eca4ac3c8-01
-      Vary:
-      - Accept-Encoding
-      X-Robots-Tag:
-      - none
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsibW9kZWwiOiJjbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxIiwiaWQiOiJtc2dfMDExQ2ZZTmpRNHZuUnFpRFNaZWlKODJBIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6W10sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOm51bGwsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMDUzLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9LCJkaWFnbm9zdGljcyI6bnVsbH0gICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19zdGFydApkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX3N0YXJ0IiwiaW5kZXgiOjAsImNvbnRlbnRfYmxvY2siOnsidHlwZSI6InRleHQiLCJ0ZXh0IjoiIn0gICAgICAgIH0KCmV2ZW50OiBwaW5nCmRhdGE6IHsidHlwZSI6ICJwaW5nIn0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiVGhlIn0gICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgY3VycmVudCJ9IH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdlYXRoZXIgaW4gQmVybGluIGlzICoqIn0gICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJzdW5ueSBhbmQgMjLCsEMifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIqKiAoYXBwcm94aW1hdGVseSJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgNzLCsEYpLiJ9ICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX3N0b3AKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdG9wIiwiaW5kZXgiOjAgICAgICAgICAgICAgICB9CgpldmVudDogbWVzc2FnZV9kZWx0YQpkYXRhOiB7InR5cGUiOiJtZXNzYWdlX2RlbHRhIiwiZGVsdGEiOnsic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwiY29udGFpbmVyIjpudWxsfSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMDUzLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJvdXRwdXRfdG9rZW5zIjoyNH0gIH0KCmV2ZW50OiBtZXNzYWdlX3N0b3AKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdG9wIiAgICAgICAgICAgICAgfQoK
-  recorded_at: Tue, 29 Sep 2026 20:38:49 GMT
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsibW9kZWwiOiJjbGF1ZGUtaGFpa3UtNC01LTIwMjUxMDAxIiwiaWQiOiJtc2dfMDExQ2ZudkNxTWQ4c2tqUmd0WGI4YVRBIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6W10sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOm51bGwsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMDUzLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MSwic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9LCJkaWFnbm9zdGljcyI6bnVsbH0gICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9ICAgICAgICAgICAgICB9CgpldmVudDogcGluZwpkYXRhOiB7InR5cGUiOiAicGluZyJ9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IlRoZSJ9ICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiJ9ICAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBpcyAqKiJ9ICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6InN1bm55In0gICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiKiogd2l0aCJ9ICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGEgdGVtcGVyYXR1cmUgb2YgKioifSAgICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiMjLCsEMqKiJ9ICAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiAoYXBwcm94aW1hdGVseSJ9ICAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiA3MsKwRiJ9ICAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IikuIEl0J3MgYSJ9ICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIG5pY2UifSAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBkYXkifSAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIhIn0gICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19zdG9wCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfc3RvcCIsImluZGV4IjowICAgICAgfQoKZXZlbnQ6IG1lc3NhZ2VfZGVsdGEKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9kZWx0YSIsImRlbHRhIjp7InN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsImNvbnRhaW5lciI6bnVsbH0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MTA1MywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6MzR9ICAgICB9CgpldmVudDogbWVzc2FnZV9zdG9wCmRhdGE6IHsidHlwZSI6Im1lc3NhZ2Vfc3RvcCIgICAgICAgICAgICAgIH0KCg==
+  recorded_at: Wed, 07 Oct 2026 12:59:52 GMT
 recorded_with: VCR 6.4.0

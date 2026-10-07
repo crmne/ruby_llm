@@ -11,15 +11,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222931Z
+      - 20261007T134451Z
       X-Amz-Content-Sha256:
       - 492c55fa0e1dac838f7bf9d0f874e52dc3952099bbfa619155cdd8e3d0d5cb41
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:29:32 GMT
+      - Wed, 07 Oct 2026 13:44:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,33 +38,33 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - af572e1a-04e2-4086-a7d5-46a263bf5373
+      - 26b41600-1f59-4272-896e-1ede9486b547
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":431},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"file_fetch","toolUseId":"tooluse_nXek7fIvJ0PC3VIeYZbVec"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":935,"outputTokens":14,"serverToolUsage":{},"totalTokens":949}}'
-  recorded_at: Thu, 17 Sep 2026 22:29:32 GMT
+      string: '{"metrics":{"latencyMs":417},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"file_fetch","toolUseId":"tooluse_zoGcokLeGDE6LbNf3mFZgu"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":935,"outputTokens":14,"serverToolUsage":{},"totalTokens":949}}'
+  recorded_at: Wed, 07 Oct 2026 13:44:52 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Call file_fetch to
-        get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_nXek7fIvJ0PC3VIeYZbVec","name":"file_fetch","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_nXek7fIvJ0PC3VIeYZbVec","content":[{"text":"Fetched
+        get ruby.txt, then repeat the contents of the attached file."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_zoGcokLeGDE6LbNf3mFZgu","name":"file_fetch","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_zoGcokLeGDE6LbNf3mFZgu","content":[{"text":"Fetched
         the file."},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222932Z
+      - 20261007T134452Z
       X-Amz-Content-Sha256:
-      - 8c79b484272bf7e3d20e1f039ac2a9a2d5c0a13aadc7ac83cdebd22862e0e185
+      - 056d8c0820c27fd955ec27d75cb981ae5bebfdf400030ee5527759b7188d13be
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -75,7 +75,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:29:34 GMT
+      - Wed, 07 Oct 2026 13:44:53 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -83,10 +83,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 84dac2d8-24b4-441b-9fc3-dc5f96183119
+      - 7136cdf9-5f72-45fb-b3a6-43d3115087a7
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":539},"output":{"message":{"content":[{"text":"The
-        contents of `ruby.txt` are:\n\n**Ruby is the best.**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":997,"outputTokens":18,"serverToolUsage":{},"totalTokens":1015}}'
-  recorded_at: Thu, 17 Sep 2026 22:29:34 GMT
+      string: '{"metrics":{"latencyMs":546},"output":{"message":{"content":[{"text":"The
+        contents of `ruby.txt` are:\n\n**Ruby is the best.**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":997,"outputTokens":16,"serverToolUsage":{},"totalTokens":1013}}'
+  recorded_at: Wed, 07 Oct 2026 13:44:53 GMT
 recorded_with: VCR 6.4.0

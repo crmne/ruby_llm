@@ -9,15 +9,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220646Z
+      - 20261007T125940Z
       X-Amz-Content-Sha256:
       - c1f28bcaee1077b285985eb19952d44ca4723ecf1286b46c8a0fcab38095fd74
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -28,21 +28,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:48 GMT
+      - Wed, 07 Oct 2026 12:59:41 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '519'
+      - '361'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 9efd210f-828a-4116-9694-f4f616ddcce0
+      - 917fbf47-bffd-4d5f-9412-5b179cb89cbc
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1013},"output":{"message":{"content":[{"text":"2
-        + 2 equals **4**.\n\nThis is a basic arithmetic operation where you''re adding
-        two numbers together. When you add 2 and 2, you combine the quantities, resulting
-        in a total of 4. \n\nIf you''re exploring this in a different context (like
-        binary, or as part of a larger math problem), feel free to share more details!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":53,"outputTokens":75,"serverToolUsage":{},"totalTokens":128}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:48 GMT
+      string: '{"metrics":{"latencyMs":487},"output":{"message":{"content":[{"text":"The
+        answer to the question \"What''s 2 + 2?\" is **4**. \n\nThis is a basic arithmetic
+        operation where you add the number 2 to another number 2, resulting in 4."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":53,"outputTokens":45,"serverToolUsage":{},"totalTokens":98}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:41 GMT
 recorded_with: VCR 6.4.0

@@ -31,7 +31,11 @@ module RubyLLM
 
             usage = parse_conversation_usage(data['usage'] || {}).transform_keys(&:to_s)
             attachments.each_with_index.map do |attachment, index|
-              bytes = @provider.download_file(attachment.provider_file_id)
+              bytes = if attachment.provider_file?
+                        @provider.download_file(attachment.provider_file_id)
+                      else
+                        attachment.content
+                      end
               Image.new(data: Base64.strict_encode64(bytes), mime_type: RubyLLM::Files::MimeType.for(StringIO.new(bytes)),
                         model: model, usage: index.zero? ? usage : {})
             end

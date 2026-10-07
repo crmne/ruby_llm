@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Thu, 17 Sep 2026 22:11:50 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 07 Oct 2026 12:59:41 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:11:50 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:41 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:11:53 GMT
+      - Wed, 07 Oct 2026 12:59:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,7 +110,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The latest stable version of Ruby is 4.0.7."
+                    "text": "The latest stable version of Ruby is 4.0.7.\n\nRuby 4.0 was released on December 25, 2025, and is currently under normal maintenance. Ruby 3.4, released on December 25, 2024, is also under normal maintenance, while Ruby 3.3, released on December 25, 2023, is in security maintenance. Ruby 3.2 reached its end-of-life in March 2026, and Ruby 3.3 moved to security-only maintenance at the same time. Users on Ruby 3.2 are advised to upgrade immediately, and those on Ruby 3.3 should plan their upgrade to Ruby 3.4 or 4.0."
                   }
                 ]
               },
@@ -118,40 +118,92 @@ http_interactions:
               "groundingMetadata": {
                 "webSearchQueries": [
                   "latest stable version of Ruby",
-                  "Ruby stable release"
+                  "Ruby releases"
                 ],
                 "searchEntryPoint": {
-                  "renderedContent": "\u003cstyle\u003e\n.container {\n  align-items: center;\n  border-radius: 8px;\n  display: flex;\n  font-family: Google Sans, Roboto, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  padding: 8px 12px;\n}\n.chip {\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 16px;\n  min-width: 14px;\n  padding: 5px 16px;\n  text-align: center;\n  user-select: none;\n  margin: 0 8px;\n  -webkit-tap-highlight-color: transparent;\n}\n.carousel {\n  overflow: auto;\n  scrollbar-width: none;\n  white-space: nowrap;\n  margin-right: -12px;\n}\n.headline {\n  display: flex;\n  margin-right: 4px;\n}\n.gradient-container {\n  position: relative;\n}\n.gradient {\n  position: absolute;\n  transform: translate(3px, -9px);\n  height: 36px;\n  width: 9px;\n}\n@media (prefers-color-scheme: light) {\n  .container {\n    background-color: #fafafa;\n    box-shadow: 0 0 0 1px #0000000f;\n  }\n  .headline-label {\n    color: #1f1f1f;\n  }\n  .chip {\n    background-color: #ffffff;\n    border-color: #d2d2d2;\n    color: #5e5e5e;\n    text-decoration: none;\n  }\n  .chip:hover {\n    background-color: #f2f2f2;\n  }\n  .chip:focus {\n    background-color: #f2f2f2;\n  }\n  .chip:active {\n    background-color: #d8d8d8;\n    border-color: #b6b6b6;\n  }\n  .logo-dark {\n    display: none;\n  }\n  .gradient {\n    background: linear-gradient(90deg, #fafafa 15%, #fafafa00 100%);\n  }\n}\n@media (prefers-color-scheme: dark) {\n  .container {\n    background-color: #1f1f1f;\n    box-shadow: 0 0 0 1px #ffffff26;\n  }\n  .headline-label {\n    color: #fff;\n  }\n  .chip {\n    background-color: #2c2c2c;\n    border-color: #3c4043;\n    color: #fff;\n    text-decoration: none;\n  }\n  .chip:hover {\n    background-color: #353536;\n  }\n  .chip:focus {\n    background-color: #353536;\n  }\n  .chip:active {\n    background-color: #464849;\n    border-color: #53575b;\n  }\n  .logo-light {\n    display: none;\n  }\n  .gradient {\n    background: linear-gradient(90deg, #1f1f1f 15%, #1f1f1f00 100%);\n  }\n}\n\u003c/style\u003e\n\u003cdiv class=\"container\"\u003e\n  \u003cdiv class=\"headline\"\u003e\n    \u003csvg class=\"logo-light\" width=\"18\" height=\"18\" viewBox=\"9 9 35 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M42.8622 27.0064C42.8622 25.7839 42.7525 24.6084 42.5487 23.4799H26.3109V30.1568H35.5897C35.1821 32.3041 33.9596 34.1222 32.1258 35.3448V39.6864H37.7213C40.9814 36.677 42.8622 32.2571 42.8622 27.0064V27.0064Z\" fill=\"#4285F4\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 43.8555C30.9659 43.8555 34.8687 42.3195 37.7213 39.6863L32.1258 35.3447C30.5898 36.3792 28.6306 37.0061 26.3109 37.0061C21.8282 37.0061 18.0195 33.9811 16.6559 29.906H10.9194V34.3573C13.7563 39.9841 19.5712 43.8555 26.3109 43.8555V43.8555Z\" fill=\"#34A853\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.6559 29.8904C16.3111 28.8559 16.1074 27.7588 16.1074 26.6146C16.1074 25.4704 16.3111 24.3733 16.6559 23.3388V18.8875H10.9194C9.74388 21.2072 9.06992 23.8247 9.06992 26.6146C9.06992 29.4045 9.74388 32.022 10.9194 34.3417L15.3864 30.8621L16.6559 29.8904V29.8904Z\" fill=\"#FBBC05\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 16.2386C28.85 16.2386 31.107 17.1164 32.9095 18.8091L37.8466 13.8719C34.853 11.082 30.9659 9.3736 26.3109 9.3736C19.5712 9.3736 13.7563 13.245 10.9194 18.8875L16.6559 23.3388C18.0195 19.2636 21.8282 16.2386 26.3109 16.2386V16.2386Z\" fill=\"#EA4335\"/\u003e\n    \u003c/svg\u003e\n    \u003csvg class=\"logo-dark\" width=\"18\" height=\"18\" viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"\u003e\n      \u003ccircle cx=\"24\" cy=\"23\" fill=\"#FFF\" r=\"22\"/\u003e\n      \u003cpath d=\"M33.76 34.26c2.75-2.56 4.49-6.37 4.49-11.26 0-.89-.08-1.84-.29-3H24.01v5.99h8.03c-.4 2.02-1.5 3.56-3.07 4.56v.75l3.91 2.97h.88z\" fill=\"#4285F4\"/\u003e\n      \u003cpath d=\"M15.58 25.77A8.845 8.845 0 0 0 24 31.86c1.92 0 3.62-.46 4.97-1.31l4.79 3.71C31.14 36.7 27.65 38 24 38c-5.93 0-11.01-3.4-13.45-8.36l.17-1.01 4.06-2.85h.8z\" fill=\"#34A853\"/\u003e\n      \u003cpath d=\"M15.59 20.21a8.864 8.864 0 0 0 0 5.58l-5.03 3.86c-.98-2-1.53-4.25-1.53-6.64 0-2.39.55-4.64 1.53-6.64l1-.22 3.81 2.98.22 1.08z\" fill=\"#FBBC05\"/\u003e\n      \u003cpath d=\"M24 14.14c2.11 0 4.02.75 5.52 1.98l4.36-4.36C31.22 9.43 27.81 8 24 8c-5.93 0-11.01 3.4-13.45 8.36l5.03 3.85A8.86 8.86 0 0 1 24 14.14z\" fill=\"#EA4335\"/\u003e\n    \u003c/svg\u003e\n    \u003cdiv class=\"gradient-container\"\u003e\u003cdiv class=\"gradient\"\u003e\u003c/div\u003e\u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdiv class=\"carousel\"\u003e\n    \u003ca class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQS96azR5mZE5rmL2Tl28QGrrCAeTNYGh1Fy1egqGT6Anz0UWJcLsQfdiKNN4wlRWLeWu-aYPqHeB0CtrPFj-jeaxd0H5thWnmVTQ-poG9d_rWh3M8Q0P4Jt2TUYMqDFASwPwJ5Iok18N_UWSRFveet8N_CNXQ6ikounJ84r4npWUWQELmxY98xW3Q-85LC_oGA-OhDoo=\"\u003eRuby stable release\u003c/a\u003e\n    \u003ca class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8IC9JWA9LT6b26EL0V7M0bU7fSBz_j_2N0khS09zAG14xo8199GoeApiseTiMGWHL5RYo6jgkDRbpYZFFjXoJTnjFWhh5c3QSzaGvpnu7q1BWdkLOdWGy98x5XABnThLvjEvuLefkGi-XQOZuxtuRBjBhMClGmUpJiYwXBPfcpS4LdGt3LkXeMvQA_nkYJsSCiSsunR_NNVBAv2atoX04\"\u003elatest stable version of Ruby\u003c/a\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n"
+                  "renderedContent": "\u003cstyle\u003e\n.container {\n  align-items: center;\n  border-radius: 8px;\n  display: flex;\n  font-family: Google Sans, Roboto, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  padding: 8px 12px;\n}\n.chip {\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 16px;\n  min-width: 14px;\n  padding: 5px 16px;\n  text-align: center;\n  user-select: none;\n  margin: 0 8px;\n  -webkit-tap-highlight-color: transparent;\n}\n.carousel {\n  overflow: auto;\n  scrollbar-width: none;\n  white-space: nowrap;\n  margin-right: -12px;\n}\n.headline {\n  display: flex;\n  margin-right: 4px;\n}\n.gradient-container {\n  position: relative;\n}\n.gradient {\n  position: absolute;\n  transform: translate(3px, -9px);\n  height: 36px;\n  width: 9px;\n}\n@media (prefers-color-scheme: light) {\n  .container {\n    background-color: #fafafa;\n    box-shadow: 0 0 0 1px #0000000f;\n  }\n  .headline-label {\n    color: #1f1f1f;\n  }\n  .chip {\n    background-color: #ffffff;\n    border-color: #d2d2d2;\n    color: #5e5e5e;\n    text-decoration: none;\n  }\n  .chip:hover {\n    background-color: #f2f2f2;\n  }\n  .chip:focus {\n    background-color: #f2f2f2;\n  }\n  .chip:active {\n    background-color: #d8d8d8;\n    border-color: #b6b6b6;\n  }\n  .logo-dark {\n    display: none;\n  }\n  .gradient {\n    background: linear-gradient(90deg, #fafafa 15%, #fafafa00 100%);\n  }\n}\n@media (prefers-color-scheme: dark) {\n  .container {\n    background-color: #1f1f1f;\n    box-shadow: 0 0 0 1px #ffffff26;\n  }\n  .headline-label {\n    color: #fff;\n  }\n  .chip {\n    background-color: #2c2c2c;\n    border-color: #3c4043;\n    color: #fff;\n    text-decoration: none;\n  }\n  .chip:hover {\n    background-color: #353536;\n  }\n  .chip:focus {\n    background-color: #353536;\n  }\n  .chip:active {\n    background-color: #464849;\n    border-color: #53575b;\n  }\n  .logo-light {\n    display: none;\n  }\n  .gradient {\n    background: linear-gradient(90deg, #1f1f1f 15%, #1f1f1f00 100%);\n  }\n}\n\u003c/style\u003e\n\u003cdiv class=\"container\"\u003e\n  \u003cdiv class=\"headline\"\u003e\n    \u003csvg class=\"logo-light\" width=\"18\" height=\"18\" viewBox=\"9 9 35 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M42.8622 27.0064C42.8622 25.7839 42.7525 24.6084 42.5487 23.4799H26.3109V30.1568H35.5897C35.1821 32.3041 33.9596 34.1222 32.1258 35.3448V39.6864H37.7213C40.9814 36.677 42.8622 32.2571 42.8622 27.0064V27.0064Z\" fill=\"#4285F4\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 43.8555C30.9659 43.8555 34.8687 42.3195 37.7213 39.6863L32.1258 35.3447C30.5898 36.3792 28.6306 37.0061 26.3109 37.0061C21.8282 37.0061 18.0195 33.9811 16.6559 29.906H10.9194V34.3573C13.7563 39.9841 19.5712 43.8555 26.3109 43.8555V43.8555Z\" fill=\"#34A853\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.6559 29.8904C16.3111 28.8559 16.1074 27.7588 16.1074 26.6146C16.1074 25.4704 16.3111 24.3733 16.6559 23.3388V18.8875H10.9194C9.74388 21.2072 9.06992 23.8247 9.06992 26.6146C9.06992 29.4045 9.74388 32.022 10.9194 34.3417L15.3864 30.8621L16.6559 29.8904V29.8904Z\" fill=\"#FBBC05\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 16.2386C28.85 16.2386 31.107 17.1164 32.9095 18.8091L37.8466 13.8719C34.853 11.082 30.9659 9.3736 26.3109 9.3736C19.5712 9.3736 13.7563 13.245 10.9194 18.8875L16.6559 23.3388C18.0195 19.2636 21.8282 16.2386 26.3109 16.2386V16.2386Z\" fill=\"#EA4335\"/\u003e\n    \u003c/svg\u003e\n    \u003csvg class=\"logo-dark\" width=\"18\" height=\"18\" viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"\u003e\n      \u003ccircle cx=\"24\" cy=\"23\" fill=\"#FFF\" r=\"22\"/\u003e\n      \u003cpath d=\"M33.76 34.26c2.75-2.56 4.49-6.37 4.49-11.26 0-.89-.08-1.84-.29-3H24.01v5.99h8.03c-.4 2.02-1.5 3.56-3.07 4.56v.75l3.91 2.97h.88z\" fill=\"#4285F4\"/\u003e\n      \u003cpath d=\"M15.58 25.77A8.845 8.845 0 0 0 24 31.86c1.92 0 3.62-.46 4.97-1.31l4.79 3.71C31.14 36.7 27.65 38 24 38c-5.93 0-11.01-3.4-13.45-8.36l.17-1.01 4.06-2.85h.8z\" fill=\"#34A853\"/\u003e\n      \u003cpath d=\"M15.59 20.21a8.864 8.864 0 0 0 0 5.58l-5.03 3.86c-.98-2-1.53-4.25-1.53-6.64 0-2.39.55-4.64 1.53-6.64l1-.22 3.81 2.98.22 1.08z\" fill=\"#FBBC05\"/\u003e\n      \u003cpath d=\"M24 14.14c2.11 0 4.02.75 5.52 1.98l4.36-4.36C31.22 9.43 27.81 8 24 8c-5.93 0-11.01 3.4-13.45 8.36l5.03 3.85A8.86 8.86 0 0 1 24 14.14z\" fill=\"#EA4335\"/\u003e\n    \u003c/svg\u003e\n    \u003cdiv class=\"gradient-container\"\u003e\u003cdiv class=\"gradient\"\u003e\u003c/div\u003e\u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdiv class=\"carousel\"\u003e\n    \u003ca class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH17N7sD34qO1xywgdzmttrsothidWvlCOZV5XIRzuoTPAmmxU8z6LLmnK5zyIvpNPMDlM6or6bTuLnPbuJJ2T44ZCoox6UJ8_KwEo4Djk86LND60KqOUI9YUy9z-bxVP1b5ExkCV5svHCbgm2ZKAmPGXuBQgVnF1033mFzPPG2OA3-WviGFBxAk4qy8JRv7LU=\"\u003eRuby releases\u003c/a\u003e\n    \u003ca class=\"chip\" href=\"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFV8GSlcset2d4koC9qcm4GuHkHabEnn_fVKuDb3ywVv3jih1hmDQq83J9eQ9KC3701xYy_bRkCZOn-T2Dq5xT_6RMh_PwdagQsM4MvTddFYZ19BVcRWvuyRbKE4d2mquCuhIF6o_TruzRdQTAyX55dhFDTTTeEoo1dbymdcFbGEHH2AyzaxsLCviZl3_xyv6tO-DyF4E9HK6NPdOHGKpGc\"\u003elatest stable version of Ruby\u003c/a\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n"
                 },
                 "groundingChunks": [
                   {
                     "web": {
-                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-XN-wFYZR78gsMtiPv16J5ktlxW7pUI1ZyfknC0TAhx4-qJgpBDNeuMJn30p2QzHhtfgU9uFe44ZR0MsCqcVKCilhLq_0aKcMKMDrOxaISUnBxzIk9Yv_6lEIMG1ABevjHQ==",
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0ngNiTw1DVi-MgtW8AhGgq4X2P035TpEa083JvYOBxRe4uOqp6QiK4anccLtYQ8sw5n1cC3vJvkIKQ0erUBTf8I0BqNfKbHSNmtOzlCNzwgWaCzq4xclQZ4VbDP8Jqu1jfQ==",
                       "title": "ruby-lang.org",
                       "domain": "ruby-lang.org"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGmWPVFuz1B3bgdiWegDjqX3Z7ULyl0ArKilrSr6kzJ8x8fdAMUz8DClydl1OtkYsj-q2WjYjRj4OtJHk6ljwU4mA1aeaP-ItfzHaDbeq2RWU8ks1JHu7XOJqiPNcmmKTDshuoPSnE3nlC47A==",
+                      "title": "ruby-lang.org",
+                      "domain": "ruby-lang.org"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGcMGQwcWeCHJkZwdg3kRpndIlxBjF-qUQCao-86rv3b1ASp9Y5qsVGUxEIcQaPZNAC1j-qXrLbT15i_k3D4XcB4_93wkqG2TM9RQAvlsxPA8AqbwqsrRUKzdXNuaxi0JVOw6mG5RakO2cOekvRnt-JMTjv4mo6GKCw8GVKXsCAgXFL8tcPHTFwIxxPjAfLQWk8v1ivRqgmB4sx-i4kzWSK30=",
+                      "title": "dev.to",
+                      "domain": "dev.to"
                     }
                   }
                 ],
                 "groundingSupports": [
                   {
                     "segment": {
-                      "startIndex": 41,
                       "endIndex": 43,
-                      "text": "7."
+                      "text": "The latest stable version of Ruby is 4.0.7."
                     },
                     "groundingChunkIndices": [
                       0
                     ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 45,
+                      "endIndex": 131,
+                      "text": "Ruby 4.0 was released on December 25, 2025, and is currently under normal maintenance."
+                    },
+                    "groundingChunkIndices": [
+                      1
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 132,
+                      "endIndex": 281,
+                      "text": "Ruby 3.4, released on December 25, 2024, is also under normal maintenance, while Ruby 3.3, released on December 25, 2023, is in security maintenance."
+                    },
+                    "groundingChunkIndices": [
+                      1
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 282,
+                      "endIndex": 395,
+                      "text": "Ruby 3.2 reached its end-of-life in March 2026, and Ruby 3.3 moved to security-only maintenance at the same time."
+                    },
+                    "groundingChunkIndices": [
+                      2
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 396,
+                      "endIndex": 517,
+                      "text": "Users on Ruby 3.2 are advised to upgrade immediately, and those on Ruby 3.3 should plan their upgrade to Ruby 3.4 or 4.0."
+                    },
+                    "groundingChunkIndices": [
+                      2
+                    ]
                   }
-                ],
-                "retrievalMetadata": {}
+                ]
               }
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 9,
-            "candidatesTokenCount": 14,
-            "totalTokenCount": 368,
+            "candidatesTokenCount": 195,
+            "totalTokenCount": 693,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -162,21 +214,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 14
+                "tokenCount": 195
               }
             ],
-            "toolUsePromptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 62
-              }
-            ],
-            "toolUsePromptTokenCount": 62,
-            "thoughtsTokenCount": 283
+            "thoughtsTokenCount": 489
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:11:50.638664Z",
-          "responseId": "pmWsasj9Jrz_kbwP-qyIuAc"
+          "createTime": "2026-10-07T12:59:42.039132Z",
+          "responseId": "PkLGatyxAqHnmLAPo5-W8Aw"
         }
-  recorded_at: Thu, 17 Sep 2026 22:11:53 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:47 GMT
 recorded_with: VCR 6.4.0

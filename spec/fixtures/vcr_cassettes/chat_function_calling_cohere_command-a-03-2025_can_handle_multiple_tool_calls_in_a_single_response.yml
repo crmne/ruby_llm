@@ -44,11 +44,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f4450678565146046048beae1967640a
+      - 5bc3598bfd244e1c3461d43b21398d58
       Date:
-      - Thu, 17 Sep 2026 22:18:23 GMT
+      - Wed, 07 Oct 2026 13:04:35 GMT
       X-Envoy-Upstream-Service-Time:
-      - '919'
+      - '901'
       Server:
       - envoy
       Via:
@@ -59,9 +59,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f73a435e-94c1-49d0-a841-8790b1ad1e5a","message":{"role":"assistant","tool_plan":"I
-        will roll the dice 3 times.","tool_calls":[{"id":"dice_roll_j5evsr3ghybz","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_bkj2xqp2pgcb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_eqzwx8xebt5r","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":57,"output_tokens":21},"tokens":{"input_tokens":1490,"output_tokens":95},"cached_tokens":992}}'
-  recorded_at: Thu, 17 Sep 2026 22:18:23 GMT
+      string: '{"id":"e962fa8f-7388-408f-8fce-d7ce5b99ec89","message":{"role":"assistant","tool_plan":"I
+        will roll the dice 3 times.","tool_calls":[{"id":"dice_roll_as32jts1jhqz","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_7030wjvq5399","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_83c0b7t3det1","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":57,"output_tokens":21},"tokens":{"input_tokens":1490,"output_tokens":95},"cached_tokens":992}}'
+  recorded_at: Wed, 07 Oct 2026 13:04:35 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -69,7 +69,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"type":"text","text":"Roll
-        the dice 3 times"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"dice_roll_j5evsr3ghybz","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_bkj2xqp2pgcb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_eqzwx8xebt5r","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","tool_call_id":"dice_roll_j5evsr3ghybz","content":"{\"roll\":1}"},{"role":"tool","tool_call_id":"dice_roll_bkj2xqp2pgcb","content":"{\"roll\":2}"},{"role":"tool","tool_call_id":"dice_roll_eqzwx8xebt5r","content":"{\"roll\":3}"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"dice_roll_as32jts1jhqz","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_7030wjvq5399","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"dice_roll_83c0b7t3det1","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","tool_call_id":"dice_roll_as32jts1jhqz","content":"{\"roll\":1}"},{"role":"tool","tool_call_id":"dice_roll_7030wjvq5399","content":"{\"roll\":2}"},{"role":"tool","tool_call_id":"dice_roll_83c0b7t3det1","content":"{\"roll\":3}"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
@@ -98,7 +98,7 @@ http_interactions:
       Num-Chars:
       - '7868'
       Num-Tokens:
-      - '93'
+      - '91'
       Pragma:
       - no-cache
       Vary:
@@ -106,11 +106,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 0b0b58158c89c703b49ab59e10f98f2e
+      - 06d3b0b1a5b9ac62923227923481fde9
       Date:
-      - Thu, 17 Sep 2026 22:18:24 GMT
+      - Wed, 07 Oct 2026 13:04:39 GMT
       X-Envoy-Upstream-Service-Time:
-      - '707'
+      - '3994'
       Server:
       - envoy
       Via:
@@ -121,7 +121,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"012f9651-0b68-4e31-829b-4a51b89dd9ad","message":{"role":"assistant","content":[{"type":"text","text":"I
-        rolled the dice three times and got the following results:\n- 1\n- 2\n- 3"}],"citations":[{"start":63,"end":64,"text":"1","sources":[{"type":"tool","id":"dice_roll_j5evsr3ghybz:0","tool_output":{"roll":"1"}}],"type":"TEXT_CONTENT"},{"start":67,"end":68,"text":"2","sources":[{"type":"tool","id":"dice_roll_bkj2xqp2pgcb:0","tool_output":{"roll":"2"}}],"type":"TEXT_CONTENT"},{"start":71,"end":72,"text":"3","sources":[{"type":"tool","id":"dice_roll_eqzwx8xebt5r:0","tool_output":{"roll":"3"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":69,"output_tokens":24},"tokens":{"input_tokens":1703,"output_tokens":57},"cached_tokens":1456}}'
-  recorded_at: Thu, 17 Sep 2026 22:18:24 GMT
+      string: '{"id":"3b666724-a04a-47c9-ba4f-cd45c5d1cfab","message":{"role":"assistant","content":[{"type":"text","text":"Here
+        are the results of the three dice rolls:\n- 1\n- 2\n- 3"}],"citations":[{"start":48,"end":49,"text":"1","sources":[{"type":"tool","id":"dice_roll_as32jts1jhqz:0","tool_output":{"roll":"1"}}],"type":"TEXT_CONTENT"},{"start":52,"end":53,"text":"2","sources":[{"type":"tool","id":"dice_roll_7030wjvq5399:0","tool_output":{"roll":"2"}}],"type":"TEXT_CONTENT"},{"start":56,"end":57,"text":"3","sources":[{"type":"tool","id":"dice_roll_83c0b7t3det1:0","tool_output":{"roll":"3"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":69,"output_tokens":22},"tokens":{"input_tokens":1703,"output_tokens":55},"cached_tokens":112}}'
+  recorded_at: Wed, 07 Oct 2026 13:04:39 GMT
 recorded_with: VCR 6.4.0

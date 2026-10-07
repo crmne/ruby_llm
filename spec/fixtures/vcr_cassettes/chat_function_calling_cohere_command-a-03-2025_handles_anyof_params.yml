@@ -37,7 +37,7 @@ http_interactions:
       Num-Chars:
       - '7019'
       Num-Tokens:
-      - '131'
+      - '132'
       Pragma:
       - no-cache
       Vary:
@@ -45,11 +45,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 817fa4239e83803472daf3ff84ffe2fd
+      - 47234d10526de0cc7bdf5ce22717989d
       Date:
-      - Thu, 17 Sep 2026 22:18:26 GMT
+      - Wed, 07 Oct 2026 13:04:41 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1190'
+      - '781'
       Server:
       - envoy
       Via:
@@ -60,9 +60,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c5abc319-d5c7-4df3-b14b-7b46a809fcae","message":{"role":"assistant","tool_plan":"I
-        will call the any-of params tool for task \"Review PR\" with status \"pending\"
-        and report the result.","tool_calls":[{"id":"any_of_params_yce6v1490vc2","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":40},"tokens":{"input_tokens":1508,"output_tokens":72},"cached_tokens":992}}'
-  recorded_at: Thu, 17 Sep 2026 22:18:26 GMT
+      string: '{"id":"4cb05ab5-057b-44a7-8e8b-e4d7e137e2ab","message":{"role":"assistant","tool_plan":"I
+        will use the any_of_params tool to find the result for the task \"Review PR\"
+        with status \"pending\".","tool_calls":[{"id":"any_of_params_jycf76aj9trn","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":41},"tokens":{"input_tokens":1508,"output_tokens":73},"cached_tokens":992}}'
+  recorded_at: Wed, 07 Oct 2026 13:04:41 GMT
 recorded_with: VCR 6.4.0

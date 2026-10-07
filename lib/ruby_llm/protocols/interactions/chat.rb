@@ -76,8 +76,13 @@ module RubyLLM
         end
 
         def render_interaction_history(steps)
+          answered = interaction_answered_calls(steps)
           steps.map do |step|
-            step['type'].to_s.start_with?('mcp_server_') ? step.except('signature') : step
+            if step['type'].to_s.start_with?('mcp_server_') || answered.include?(step['id'] || step['call_id'])
+              step.except('signature')
+            else
+              step
+            end
           end
         end
 
@@ -107,7 +112,8 @@ module RubyLLM
           steps = data.fetch('steps', [])
           content = parse_interaction_content(steps)
           calls = parse_interaction_calls(steps)
-          if data['status'] == 'requires_action' && calls.empty?
+          status = interaction_status(data, calls, steps)
+          if status == 'requires_action' && calls.empty?
             raise Error.new('Gemini interaction requires an unsupported action', response: raw)
           end
 
@@ -116,9 +122,16 @@ module RubyLLM
                       tool_calls: calls, server_tool_calls: parse_interaction_server_calls(steps),
                       raw_content: kept_interaction(data, steps),
                       model: model, raw: raw, cost: cost,
-                      finish_reason: interaction_finish_reason(data['status'], calls),
+                      finish_reason: interaction_finish_reason(status, calls),
                       server_tool_use: parse_interaction_server_tool_use(data['usage'] || {}),
                       **parse_interaction_usage(data['usage'] || {}))
+        end
+
+        def interaction_status(data, calls, steps)
+          return data['status'] unless data['status'] == 'requires_action' && calls.empty?
+          return data['status'] if interaction_answered_calls(steps).empty?
+
+          steps.any? { |step| step['type'] == 'model_output' } ? 'completed' : data['status']
         end
 
         def parse_interaction_server_tool_use(usage)

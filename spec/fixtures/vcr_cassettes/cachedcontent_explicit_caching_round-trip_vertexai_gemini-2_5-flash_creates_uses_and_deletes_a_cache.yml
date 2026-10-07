@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Thu, 17 Sep 2026 22:15:21 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 07 Oct 2026 12:59:13 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:15:21 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:13 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents
@@ -887,7 +887,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:23 GMT
+      - Wed, 07 Oct 2026 12:59:15 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -904,80 +904,23 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "name": "projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/3576698959944482816",
+          "name": "projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/7884941931136942080",
           "model": "projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash",
-          "createTime": "2026-09-17T22:15:22.650140Z",
-          "updateTime": "2026-09-17T22:15:22.650140Z",
-          "expireTime": "2026-09-17T22:20:22.595744Z",
+          "createTime": "2026-10-07T12:59:14.590827Z",
+          "updateTime": "2026-10-07T12:59:14.590827Z",
+          "expireTime": "2026-10-07T13:04:14.528334Z",
           "usageMetadata": {
-            "totalTokenCount": 9602
+            "totalTokenCount": 9601
           }
         }
-  recorded_at: Thu, 17 Sep 2026 22:15:23 GMT
-- request:
-    method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.3
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Thu, 17 Sep 2026 22:15:24 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Thu, 17 Sep 2026 22:15:24 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:15 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"In one short sentence,
-        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/3576698959944482816"}'
+        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/7884941931136942080"}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -1001,7 +944,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:25 GMT
+      - Wed, 07 Oct 2026 12:59:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -1024,48 +967,47 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The RubyLLM release engineering handbook outlines required checks for every change before release, including cassette hygiene, provider wire format drift, backwards compatibility, and documentation accuracy."
+                    "text": "The RubyLLM release engineering handbook describes essential quality gates for changes, including cassette hygiene, provider wire format drift, backwards compatibility, and documentation accuracy."
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.539832353591919
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 9613,
-            "candidatesTokenCount": 32,
+            "promptTokenCount": 9612,
+            "candidatesTokenCount": 30,
             "totalTokenCount": 9674,
-            "cachedContentTokenCount": 9602,
+            "cachedContentTokenCount": 9601,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 9613
+                "tokenCount": 9612
               }
             ],
             "cacheTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 9602
+                "tokenCount": 9601
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 32
+                "tokenCount": 30
               }
             ],
-            "thoughtsTokenCount": 29
+            "thoughtsTokenCount": 32
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:15:24.801732Z",
-          "responseId": "fGasasT3MJWemPUP1O6IgAc"
+          "createTime": "2026-10-07T12:59:15.798560Z",
+          "responseId": "I0LGauDeMNismLAP2dSZ8AE"
         }
-  recorded_at: Thu, 17 Sep 2026 22:15:25 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:17 GMT
 - request:
     method: delete
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/3576698959944482816
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/56641835022/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/7884941931136942080
     body:
       encoding: US-ASCII
       string: ''
@@ -1090,7 +1032,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:26 GMT
+      - Wed, 07 Oct 2026 12:59:17 GMT
       Server:
       - ESF
       X-Xss-Protection:
@@ -1106,5 +1048,5 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "{}\n"
-  recorded_at: Thu, 17 Sep 2026 22:15:26 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:18 GMT
 recorded_with: VCR 6.4.0

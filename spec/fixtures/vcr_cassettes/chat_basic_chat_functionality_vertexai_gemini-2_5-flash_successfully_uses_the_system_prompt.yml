@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 07 Oct 2026 13:11:06 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
-      Date:
-      - Thu, 17 Sep 2026 22:10:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -51,12 +51,12 @@ http_interactions:
       string: |-
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
+          "expires_in": 3598,
           "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:10:44 GMT
+  recorded_at: Wed, 07 Oct 2026 13:11:06 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:10:50 GMT
+      - Wed, 07 Oct 2026 13:11:15 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,17 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I'd be happy to! To give you the most accurate and relevant weather report, I need a little more information.\n\nCould you please tell me your **current location** (city, state/region, or even a zip/postal code) and what **timeframe** you're interested in (e.g., current weather, today's forecast, a weekly outlook)?\n\nWeather is incredibly dynamic and varies greatly from one place to another, and even hour to hour. Once I have those details, I can tell you about temperature, precipitation, wind, and more specific conditions for your area. For instance, knowing if you're in a desert, near a coast, or in a mountainous region drastically changes the expected conditions.\n\nI'm ready to fetch the data for you once I know where you are! XKCD7392."
+                    "text": "I'd be happy to tell you about the weather!\n\nHowever, to give you accurate, up-to-the-minute details, I'll need to know your location. Could you tell me what city and state/country you're interested in, or perhaps a zip/postal code?\n\nOnce I have a location, I can tell you things like:\n*   **Current temperature** and what it feels like\n*   **Current conditions** (e.g., sunny, cloudy, rainy, snowy, foggy)\n*   **Humidity**\n*   **Wind speed** and direction\n*   **Chances of precipitation**\n*   **Hourly and daily forecasts** (highs, lows, expected conditions for the next several days)\n\nIn the meantime, you can easily check the weather on most smartphones, dedicated weather apps (like AccuWeather, The Weather Channel, Google Weather), or by simply typing \"weather [your location]\" into a search engine. These services provide real-time updates and detailed forecasts, leveraging vast networks of weather stations, satellites, and sophisticated computer models.\n\nThe constant effort to model and predict atmospheric conditions is an incredibly intricate science, aiming to provide you with the most reliable information possible, even for short-term forecasts. XKCD7392"
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -2.8926802548495205
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 176,
-            "totalTokenCount": 1176,
+            "candidatesTokenCount": 268,
+            "totalTokenCount": 1426,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -132,14 +131,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 176
+                "tokenCount": 268
               }
             ],
-            "thoughtsTokenCount": 975
+            "thoughtsTokenCount": 1133
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:10:45.002752Z",
-          "responseId": "ZWWsasAV5ruY9Q-S6sKgBg"
+          "createTime": "2026-10-07T13:11:06.167179Z",
+          "responseId": "6kTGaouaCoeHstMP_PzwkAI"
         }
-  recorded_at: Thu, 17 Sep 2026 22:10:50 GMT
+  recorded_at: Wed, 07 Oct 2026 13:11:15 GMT
 recorded_with: VCR 6.4.0

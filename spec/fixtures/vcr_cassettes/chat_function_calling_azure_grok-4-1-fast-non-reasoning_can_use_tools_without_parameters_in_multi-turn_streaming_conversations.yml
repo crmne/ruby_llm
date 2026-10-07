@@ -28,7 +28,7 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Thu, 17 Sep 2026 22:25:26 GMT
+      - Wed, 07 Oct 2026 13:03:32 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -44,15 +44,15 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-2f9d447326bf47e4f1f5f7361ac467df-0f799201000af129-00
+      - 00-788c79893a9fd6a566755cea4fc61377-bac80bf40007a42d-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 16abb166-5fe3-4748-b9e4-ecaf19dd950b
+      - b0950e24-6fd5-4cf7-8512-6bbe1ba7a485
       Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
+      - d20260811001727-9adb392a
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -64,9 +64,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '48'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '2'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -86,7 +86,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 16abb166-5fe3-4748-b9e4-ecaf19dd950b
+      - b0950e24-6fd5-4cf7-8512-6bbe1ba7a485
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -96,15 +96,15 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"8d0662cf-7aee-4dfd-be68-8bed60d182bd","object":"chat.completion.chunk","created":1789683926,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_33345723","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"71fce4bb-442e-4846-b162-ba8419d49131","object":"chat.completion.chunk","created":1791378213,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_05947234","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"8d0662cf-7aee-4dfd-be68-8bed60d182bd","object":"chat.completion.chunk","created":1789683926,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"71fce4bb-442e-4846-b162-ba8419d49131","object":"chat.completion.chunk","created":1791378213,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id": "8d0662cf-7aee-4dfd-be68-8bed60d182bd", "object": "chat.completion.chunk", "created": 1789683926, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 212, "completion_tokens": 18, "total_tokens": 230, "prompt_tokens_details": {"text_tokens": 212, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 359}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+        data: {"id": "71fce4bb-442e-4846-b162-ba8419d49131", "object": "chat.completion.chunk", "created": 1791378213, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 212, "completion_tokens": 18, "total_tokens": 230, "prompt_tokens_details": {"text_tokens": 212, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 159}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:25:26 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:33 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -112,7 +112,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_33345723","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_33345723"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_05947234","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_05947234"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -133,7 +133,7 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Thu, 17 Sep 2026 22:25:27 GMT
+      - Wed, 07 Oct 2026 13:03:33 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -149,15 +149,15 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-b7887eb04be740d8a413b5b70f17bf81-ab4235bff4ad8446-01
+      - 00-3386d2e9cc1a256eef3f967b26d864b1-bac80bf40007a439-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - b7887eb0-4be7-40d8-a413-b5b70f17bf81
+      - 4f8d2909-b9ae-47db-83ca-76afc0524faf
       Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
+      - d20260811001727-9adb392a
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -169,9 +169,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '48'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '2'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -191,7 +191,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - b7887eb0-4be7-40d8-a413-b5b70f17bf81
+      - 4f8d2909-b9ae-47db-83ca-76afc0524faf
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -201,15 +201,15 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"cc8a9405-5e16-4d53-ad23-3348c4fc08b7","object":"chat.completion.chunk","created":1789683927,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"Ruby","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"9ee25d4d-a4c1-4fae-8b7b-b894e30fb9df","object":"chat.completion.chunk","created":1791378213,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"Ruby","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"cc8a9405-5e16-4d53-ad23-3348c4fc08b7","object":"chat.completion.chunk","created":1789683927,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"9ee25d4d-a4c1-4fae-8b7b-b894e30fb9df","object":"chat.completion.chunk","created":1791378213,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id": "cc8a9405-5e16-4d53-ad23-3348c4fc08b7", "object": "chat.completion.chunk", "created": 1789683927, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 242, "completion_tokens": 1, "total_tokens": 243, "prompt_tokens_details": {"text_tokens": 242, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 380}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+        data: {"id": "9ee25d4d-a4c1-4fae-8b7b-b894e30fb9df", "object": "chat.completion.chunk", "created": 1791378213, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 242, "completion_tokens": 1, "total_tokens": 243, "prompt_tokens_details": {"text_tokens": 242, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 380}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:25:28 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:33 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -217,7 +217,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_33345723","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_33345723"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_05947234","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_05947234"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
         best_language_to_learn again and repeat the programming language it returns."}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
     headers:
@@ -239,7 +239,7 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Thu, 17 Sep 2026 22:25:28 GMT
+      - Wed, 07 Oct 2026 13:03:34 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -255,15 +255,15 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-1a6904d9b411a9a4664205d2b34786d5-302967e7003fc462-00
+      - 00-fab9e2fb29d69fdde9c856b78618790e-54beaf3200042781-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - fc6e9631-520f-4dad-b338-523682ca17f6
+      - 3358f28d-d33a-49f4-a94f-7c89121905c9
       Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
+      - d20260811001727-9adb392a
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -275,9 +275,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '48'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '2'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -297,7 +297,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - fc6e9631-520f-4dad-b338-523682ca17f6
+      - 3358f28d-d33a-49f4-a94f-7c89121905c9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -307,15 +307,15 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"27e3bfb9-84d5-4d71-90bc-e3831484ad09","object":"chat.completion.chunk","created":1789683928,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_73428778","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"78e23462-bf59-449a-817a-b72dc405ccda","object":"chat.completion.chunk","created":1791378214,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"id":"call_11326191","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"27e3bfb9-84d5-4d71-90bc-e3831484ad09","object":"chat.completion.chunk","created":1789683928,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"78e23462-bf59-449a-817a-b72dc405ccda","object":"chat.completion.chunk","created":1791378214,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id": "27e3bfb9-84d5-4d71-90bc-e3831484ad09", "object": "chat.completion.chunk", "created": 1789683928, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 269, "completion_tokens": 18, "total_tokens": 287, "prompt_tokens_details": {"text_tokens": 269, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 410}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+        data: {"id": "78e23462-bf59-449a-817a-b72dc405ccda", "object": "chat.completion.chunk", "created": 1791378214, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 269, "completion_tokens": 18, "total_tokens": 287, "prompt_tokens_details": {"text_tokens": 269, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 410}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:25:29 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:34 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -323,8 +323,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_33345723","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_33345723"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
-        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_73428778","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_73428778"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_05947234","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_05947234"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_11326191","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_11326191"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -345,7 +345,7 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Thu, 17 Sep 2026 22:25:29 GMT
+      - Wed, 07 Oct 2026 13:03:35 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -361,15 +361,15 @@ http_interactions:
       X-Ms-Rai-Invoked:
       - 'true'
       Traceparent:
-      - 00-33598713362435795d4c633fc0611c2e-302967e7003fc480-00
+      - 00-d93a994cf808f768507dcb7b1516f05f-bac80bf40007a475-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 23c5567f-b51d-4bab-ad9a-29c3b9a93db6
+      - 26c4a928-f900-4b57-bd17-e20dfdd17eb3
       Azureml-Model-Session:
-      - d20260810234415-1ce5aa48
+      - d20260811001727-9adb392a
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -381,9 +381,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '47'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '3'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -403,7 +403,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 23c5567f-b51d-4bab-ad9a-29c3b9a93db6
+      - 26c4a928-f900-4b57-bd17-e20dfdd17eb3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -413,14 +413,14 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"f124f02b-1620-4b4d-8c31-ef0927df819b","object":"chat.completion.chunk","created":1789683929,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"Ruby","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"71198fec-e06f-4798-b327-081662f9146c","object":"chat.completion.chunk","created":1791378215,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"Ruby","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"f124f02b-1620-4b4d-8c31-ef0927df819b","object":"chat.completion.chunk","created":1789683929,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+        data: {"id":"71198fec-e06f-4798-b327-081662f9146c","object":"chat.completion.chunk","created":1791378215,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id": "f124f02b-1620-4b4d-8c31-ef0927df819b", "object": "chat.completion.chunk", "created": 1789683929, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 299, "completion_tokens": 1, "total_tokens": 300, "prompt_tokens_details": {"text_tokens": 299, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 437}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
+        data: {"id": "71198fec-e06f-4798-b327-081662f9146c", "object": "chat.completion.chunk", "created": 1791378215, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 299, "completion_tokens": 1, "total_tokens": 300, "prompt_tokens_details": {"text_tokens": 299, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 437}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:25:29 GMT
+  recorded_at: Wed, 07 Oct 2026 13:03:35 GMT
 recorded_with: VCR 6.4.0
 ...

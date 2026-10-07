@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 17 Sep 2026 22:06:41 GMT
+      - Wed, 07 Oct 2026 12:59:43 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c717cd7127807e79ba721c1b2589e065
+      - 9582836dc29774afd0846469e3ac7486
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,19 +47,20 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f78b8961c072a74b343a9ceb2c2ef020.cloudfront.net (CloudFront)
+      - 1.1 39bfdef5214f9c839a46e8b9d63b9046.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - 9mljkIb4dNUF5K0N7bpoLl8STARwsrtERsoh00amYycKxbcqdw1l-w==
+      - 7CA1JNQV5jRkt8De7KWC79aTMXw0nSO47YuQ4B1CztUEJOclNfwEgw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2d2e19aa-c714-49b4-81c0-e881926b091c","object":"chat.completion","created":1789682801,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the text:\n\n**Ruby is the best.**","reasoning_content":"We
-        need answer user asks \"What''s in this file?\" with file attached ruby.txt
-        content \"Ruby is the best.\" Need respond. Should mention file name and contents.
-        Simple. Need maybe exactly. No tools. Be concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":59,"completion_tokens":64,"total_tokens":123,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":46},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":59},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Thu, 17 Sep 2026 22:06:42 GMT
+      string: '{"id":"701f3e75-eee3-4ce9-a0d5-4216e5eea817","object":"chat.completion","created":1791377983,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the text:\n\n`Ruby is the best.`","reasoning_content":"We
+        need answer user asks \"What''s in this file?\" with file name ruby.txt mime_type
+        text/plain content \"Ruby is the best.\" Need respond. Simple. Could quote
+        content. Need maybe mention file contains text: \"Ruby is the best.\" final.
+        Ensure no extra. "},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":59,"completion_tokens":78,"total_tokens":137,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":59},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":59},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Wed, 07 Oct 2026 12:59:44 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -68,13 +69,14 @@ http_interactions:
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the text:\n\n**Ruby is the best.**","reasoning_content":"We need
-        answer user asks \"What''s in this file?\" with file attached ruby.txt content
-        \"Ruby is the best.\" Need respond. Should mention file name and contents.
-        Simple. Need maybe exactly. No tools. Be concise.","reasoning":"We need answer
-        user asks \"What''s in this file?\" with file attached ruby.txt content \"Ruby
-        is the best.\" Need respond. Should mention file name and contents. Simple.
-        Need maybe exactly. No tools. Be concise."},{"role":"user","content":[{"type":"text","text":"and
+        contains the text:\n\n`Ruby is the best.`","reasoning_content":"We need answer
+        user asks \"What''s in this file?\" with file name ruby.txt mime_type text/plain
+        content \"Ruby is the best.\" Need respond. Simple. Could quote content. Need
+        maybe mention file contains text: \"Ruby is the best.\" final. Ensure no extra.
+        ","reasoning":"We need answer user asks \"What''s in this file?\" with file
+        name ruby.txt mime_type text/plain content \"Ruby is the best.\" Need respond.
+        Simple. Could quote content. Need maybe mention file contains text: \"Ruby
+        is the best.\" final. Ensure no extra. "},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -100,7 +102,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 17 Sep 2026 22:06:42 GMT
+      - Wed, 07 Oct 2026 12:59:45 GMT
       Server:
       - elb
       Vary:
@@ -108,7 +110,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 7cf6d0ef46f1c693e4e93451464886de
+      - 3523e05d0be0a1ae049ad44e660d80aa
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -116,19 +118,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 d9ce3c90781cc87845c80393506fb47c.cloudfront.net (CloudFront)
+      - 1.1 1444224b4b97d67af7507c4e96f65844.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL50-P1
       X-Amz-Cf-Id:
-      - mW0A_hYrPBuCmPSgK5wFhvHBNW4MxyXPV8p9vB092C3zPTokXknEQg==
+      - BYuzGelrrv-4PowDEMVFqfn90jwj7_wC_dORWj5fGjNCDLuiUaJpsA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0f27859f-9085-47c6-b330-9a78b770f45c","object":"chat.completion","created":1789682802,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains XML with a single root element:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\nSo the text content is: **Ruby is the best**
-        (without a period).","reasoning_content":"We need answer. Need parse. User
-        asks \"and in this one?\" with file ruby.xml content <truism>Ruby is the best</truism>.
-        Need say it''s XML containing a root element truism with text \"Ruby is the
-        best\". Maybe note no period. Need be concise. Ensure no issue. final."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":117,"completion_tokens":118,"total_tokens":235,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":68},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":117},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Thu, 17 Sep 2026 22:06:43 GMT
+      string: !binary |-
+        eyJpZCI6IjdjNjdkYjcwLWY1ZjItNDcyNC04Njc4LTZhMzlkYTFkNzkwNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzNzc5ODQsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmaWxlIGBydWJ5LnhtbGAgY29udGFpbnMgYW4gWE1MIGVsZW1lbnQ6XG5cbmBgYHhtbFxuPHRydWlzbT5SdWJ5IGlzIHRoZSBiZXN0PC90cnVpc20+XG5gYGBcblxuU28gaXRzIGNvbnRlbnQgaXMgdGhlIHRleHQgKirigJxSdWJ5IGlzIHRoZSBiZXN04oCdKiogaW5zaWRlIGEgYDx0cnVpc20+YCB0YWcuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJXZSBuZWVkIGFuc3dlci4gVXNlciBhc2tzIFwiYW5kIGluIHRoaXMgb25lP1wiIHJlZmVyZW5jaW5nIHJ1YnkueG1sLiBOZWVkIGRlc2NyaWJlIGNvbnRlbnRzLiBXZSBuZWVkIHBhcnNlLiBGaWxlIG5hbWUgcnVieS54bWwgbWltZSBhcHBsaWNhdGlvbi94bWwsIGNvbnRlbnQ6IDx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPi4gU28gaXQncyBhbiBYTUwgZG9jdW1lbnQgd2l0aCByb290IGVsZW1lbnQgPHRydWlzbT4gY29udGFpbmluZyB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiLiBObyBwZXJpb2QuIE5lZWQgYW5zd2VyLiBFbnN1cmUgbm90IG92ZXJjb21wbGljYXRlLiBNYXliZSBtZW50aW9uIFhNTC4gV2UgY2FuIGFuc3dlcjogSXQgY29udGFpbnMgYW4gWE1MIGVsZW1lbnQgbmFtZWQgYHRydWlzbWAgd2l0aCB0aGUgdGV4dCBgUnVieSBpcyB0aGUgYmVzdGAuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTE4LCJjb21wbGV0aW9uX3Rva2VucyI6MTY1LCJ0b3RhbF90b2tlbnMiOjI4MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjExMn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjExOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImFlYjU2NDAxY2E3NGUxMjc4MjFjNGY5MTI2ZGNiNjY5In0=
+  recorded_at: Wed, 07 Oct 2026 12:59:46 GMT
 recorded_with: VCR 6.4.0

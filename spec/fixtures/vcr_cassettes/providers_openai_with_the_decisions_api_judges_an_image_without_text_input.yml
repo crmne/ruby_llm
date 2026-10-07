@@ -10,7 +10,7 @@ http_interactions:
         is the dominant color?","choices":[{"value":"red"},{"value":"blue"},{"value":"green"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,30 +25,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 17:32:24 GMT
+      - Wed, 07 Oct 2026 12:59:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4998'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999291'
+      X-Ratelimit-Reset-Requests:
+      - 24ms
+      X-Ratelimit-Reset-Tokens:
+      - 21ms
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - CF-Ray
-      - x-request-id,retry-after
-      Server-Timing:
-      - total;dur=136.286, ingress;dur=2.112, prepare;dur=4.756, auth;dur=0.262, model_routing;dur=0.035,
-        router_admission;dur=5.379, router_token_count;dur=5.100, fanout;dur=129.279,
-        render_max;dur=0.131, setup_max;dur=0.236, inference_max;dur=123.263, native_ttft_max;dur=120.649,
-        native_ttlt_max;dur=120.649, cross_cluster_network_max;dur=52.098, iapi_ttft_max;dur=65.000,
-        batcher_ttft_max;dur=17.000, lb_routing_max;dur=0.674, model_prepare;dur=0.264,
-        inference_batch_wall;dur=123.847, response_assembly;dur=0.024, prepare_other;dur=4.459,
-        app_other;dur=0.183
+      - x-request-id,retry-after,server-timing-total
+      Server-Timing-Total:
+      - '1021.668'
       Openai-Processing-Ms:
-      - '136'
+      - '1021'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -69,6 +75,6 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"logo","probability":1.0},{"type":"choice","name":"color","choice":"red","probabilities":[{"value":"red","probability":1.0},{"value":"blue","probability":0.0},{"value":"green","probability":0.0}],"confidence":1.0}],"usage":{"input_tokens":246,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":2,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":248}}'
-  recorded_at: Tue, 29 Sep 2026 17:32:24 GMT
+      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"logo","probability":0.95},{"type":"choice","name":"color","choice":"red","probabilities":[{"value":"red","probability":1.0},{"value":"blue","probability":0.0},{"value":"green","probability":0.0}],"confidence":1.0}],"usage":{"input_tokens":279,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":279}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:04 GMT
 recorded_with: VCR 6.4.0

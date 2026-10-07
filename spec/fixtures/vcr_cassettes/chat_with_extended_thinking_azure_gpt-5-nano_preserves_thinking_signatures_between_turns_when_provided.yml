@@ -24,19 +24,21 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '1505'
+      - '1506'
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:07:44 GMT
+      - Wed, 07 Oct 2026 13:00:37 GMT
       Server:
       - istio-envoy
+      Vary:
+      - Origin
       Azureai-Fe-Is-Streaming:
       - 'False'
       Azureai-Fe-Offer-Type:
       - paygo
       Azureml-Model-Session:
-      - d20260814000315-6ca70d11
+      - d20260926101645-1849bd90
       Skip-Error-Remapping:
       - 'true'
       X-Accel-Buffering:
@@ -70,7 +72,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 95797d7d-dd58-480f-bc46-49129eea8f9a
+      - cfdc57c5-ae3a-4709-bcba-72346ccea870
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -79,10 +81,10 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"detected":false,"filtered":false},"protected_material_text":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"8","refusal":null,"role":"assistant"}}],"created":1789682864,"id":"chatcmpl-EPEYaLc5MeYZnZNHt8yA8HcNTKiZF","model":"gpt-5-nano-2025-08-07","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"routing":{"serving_pipereplica":"d20260814000315-6ca70d11-default-r2-dp0-default"},"service_tier":"default","system_fingerprint":null,"usage":{"completion_tokens":74,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":64,"rejected_prediction_tokens":0},"latency_checkpoint":{"engine_tbt_ms":5,"engine_ttft_ms":32,"engine_ttlt_ms":501,"pre_inference_ms":87,"service_tbt_ms":5,"service_ttft_ms":518,"service_ttlt_ms":1049,"user_visible_ttft_ms":431},"prompt_tokens":14,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":88}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"detected":false,"filtered":false},"protected_material_text":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"8","refusal":null,"role":"assistant"}}],"created":1791378038,"id":"chatcmpl-EWLY602CC5U2KVcJpJ0J35OAGRhAT","model":"gpt-5-nano-2025-08-07","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"routing":{"serving_pipereplica":"d20260926101645-1849bd90-default-r0-dp0-default"},"service_tier":"default","system_fingerprint":null,"usage":{"completion_tokens":74,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":64,"rejected_prediction_tokens":0},"latency_checkpoint":{"engine_tbt_ms":8,"engine_ttft_ms":25,"engine_ttlt_ms":1049,"pre_inference_ms":92,"service_tbt_ms":8,"service_ttft_ms":395,"service_ttlt_ms":1416,"user_visible_ttft_ms":303},"prompt_tokens":14,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":88}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:07:45 GMT
+  recorded_at: Wed, 07 Oct 2026 13:00:39 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -108,19 +110,21 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '1509'
+      - '1511'
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:07:45 GMT
+      - Wed, 07 Oct 2026 13:00:39 GMT
       Server:
       - istio-envoy
+      Vary:
+      - Origin
       Azureai-Fe-Is-Streaming:
       - 'False'
       Azureai-Fe-Offer-Type:
       - paygo
       Azureml-Model-Session:
-      - d20260814000315-6ca70d11
+      - d20260926101645-1849bd90
       Skip-Error-Remapping:
       - 'true'
       X-Accel-Buffering:
@@ -154,7 +158,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 03b4a91a-57bd-4738-8074-789d7af8e533
+      - a7ecb91c-a1c0-4b5e-87ce-fca3d47ab48a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -163,8 +167,8 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"detected":false,"filtered":false},"protected_material_text":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"16","refusal":null,"role":"assistant"}}],"created":1789682866,"id":"chatcmpl-EPEYczDndBmnCPedGiRsYsZ66KfMx","model":"gpt-5-nano-2025-08-07","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"routing":{"serving_pipereplica":"d20260814000315-6ca70d11-default-r2-dp0-default"},"service_tier":"default","system_fingerprint":null,"usage":{"completion_tokens":138,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":128,"rejected_prediction_tokens":0},"latency_checkpoint":{"engine_tbt_ms":5,"engine_ttft_ms":20,"engine_ttlt_ms":997,"pre_inference_ms":66,"service_tbt_ms":5,"service_ttft_ms":470,"service_ttlt_ms":1443,"user_visible_ttft_ms":404},"prompt_tokens":31,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":169}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"detected":false,"filtered":false},"protected_material_text":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"16","refusal":null,"role":"assistant"}}],"created":1791378039,"id":"chatcmpl-EWLY7a9b2Uf6VcKT1ymYTKigEWSE0","model":"gpt-5-nano-2025-08-07","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"routing":{"serving_pipereplica":"d20260926101645-1849bd90-default-r2-dp0-default"},"service_tier":"default","system_fingerprint":null,"usage":{"completion_tokens":202,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":192,"rejected_prediction_tokens":0},"latency_checkpoint":{"engine_tbt_ms":6,"engine_ttft_ms":27,"engine_ttlt_ms":1321,"pre_inference_ms":106,"service_tbt_ms":6,"service_ttft_ms":413,"service_ttlt_ms":1702,"user_visible_ttft_ms":308},"prompt_tokens":31,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":233}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:07:47 GMT
+  recorded_at: Wed, 07 Oct 2026 13:00:42 GMT
 recorded_with: VCR 6.4.0

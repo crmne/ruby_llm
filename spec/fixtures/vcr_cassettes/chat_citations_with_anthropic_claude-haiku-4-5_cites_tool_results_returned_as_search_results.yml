@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:27 GMT
+      - Wed, 07 Oct 2026 12:59:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,41 +40,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:11:27Z'
+      - '2026-10-07T12:59:22Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:11:27Z'
+      - '2026-10-07T12:59:22Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:11:26Z'
+      - '2026-10-07T12:59:22Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:11:27Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T12:59:22Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-abf73660b93c10a8fce12f2cbdbf4d47-afd936ea8b132a51-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-0d08ff31fd8f33f64894602d7cdec117-55738e5f9d0193ae-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -83,19 +83,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9n66ujV8vUdW6bBAvB1","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        search the knowledge base for information about who created Ruby."},{"type":"tool_use","id":"toolu_01BbvsZ2EdJCfQSdAHGCAMGE","name":"knowledge_base","input":{"query":"who
-        created Ruby"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":592,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":69,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:27 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvAeg8GB4w1gMURCTpA","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01MrxpVymM4tJFWnSPtNQ6ZW","name":"knowledge_base","input":{"query":"Ruby
+        creator who created Ruby"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":592,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":58,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 07 Oct 2026 12:59:22 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Who
-        created Ruby? Search the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        search the knowledge base for information about who created Ruby."},{"type":"tool_use","id":"toolu_01BbvsZ2EdJCfQSdAHGCAMGE","name":"knowledge_base","input":{"query":"who
-        created Ruby"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01BbvsZ2EdJCfQSdAHGCAMGE","content":[{"type":"search_result","source":"https://example.com/ruby-facts","title":"Ruby
+        created Ruby? Search the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01MrxpVymM4tJFWnSPtNQ6ZW","name":"knowledge_base","input":{"query":"Ruby
+        creator who created Ruby"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01MrxpVymM4tJFWnSPtNQ6ZW","content":[{"type":"search_result","source":"https://example.com/ruby-facts","title":"Ruby
         Facts","content":[{"type":"text","text":"The Ruby programming language was
         created by Yukihiro Matsumoto in 1993."}],"citations":{"enabled":true}}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"knowledge_base","description":"Searches
         the company knowledge base","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"What
@@ -119,7 +117,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:28 GMT
+      - Wed, 07 Oct 2026 12:59:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -131,41 +129,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:11:27Z'
+      - '2026-10-07T12:59:23Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:11:27Z'
+      - '2026-10-07T12:59:23Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:11:27Z'
+      - '2026-10-07T12:59:22Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:11:27Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T12:59:23Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-3de7b3627a5663cbc43670e9fdc040ea-7097da6b6a298dce-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-0944205bbfd92d4697de4023be484afe-0c9db8c0ebef1c4f-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -174,9 +172,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9n6AGeKNYt2FohvzDFC","type":"message","role":"assistant","content":[{"citations":[{"type":"search_result_location","cited_text":"The
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvAiezMnfeD1W18wNw9","type":"message","role":"assistant","content":[{"citations":[{"type":"search_result_location","cited_text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993.","source":"https://example.com/ruby-facts","title":"Ruby
         Facts","search_result_index":0,"start_block_index":0,"end_block_index":1}],"type":"text","text":"Ruby
-        was created by Yukihiro Matsumoto in 1993."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1264,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":36,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:28 GMT
+        was created by Yukihiro Matsumoto in 1993."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1253,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":36,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 07 Oct 2026 12:59:23 GMT
 recorded_with: VCR 6.4.0

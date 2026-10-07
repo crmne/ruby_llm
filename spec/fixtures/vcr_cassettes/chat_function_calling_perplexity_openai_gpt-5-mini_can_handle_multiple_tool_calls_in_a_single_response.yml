@@ -26,13 +26,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 25 Sep 2026 08:38:47 GMT
+      - Wed, 07 Oct 2026 13:43:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -40,39 +43,36 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1790325528'
+      - '1791380611'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1790325522,"created_at":1790325522,"error":null,"frequency_penalty":0,"id":"resp_7b679465-3812-436c-bae3-d7ab6544d819","incomplete_details":null,"instructions":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","id":"fc_2e13d051-dc19-446d-be2f-2c35090b0af1","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00103,"total_cost":0.00105},"input_tokens":91,"input_tokens_details":{"cached_tokens":0},"output_tokens":515,"output_tokens_details":{"reasoning_tokens":448},"total_tokens":606},"user":null}
+      string: '{"background":false,"completed_at":1791380605,"created_at":1791380605,"error":null,"frequency_penalty":0,"id":"resp_a51b6aec-860a-4443-8563-be5a43330dbc","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","id":"fc_8e19cfa8-9baf-43f5-ac0d-9116ddfb4968","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00078,"total_cost":0.0008},"input_tokens":91,"input_tokens_details":{"cached_tokens":0},"output_tokens":391,"output_tokens_details":{"reasoning_tokens":320},"total_tokens":482},"user":null}
 
         '
-  recorded_at: Fri, 25 Sep 2026 08:38:47 GMT
+  recorded_at: Wed, 07 Oct 2026 13:43:30 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
-        the dice 3 times"},{"type":"function_call","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","output":"{\"roll\":1}"}],"instructions":"You
+        the dice 3 times"},{"type":"function_call","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","output":"{\"roll\":1}"}],"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -92,7 +92,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 25 Sep 2026 08:38:48 GMT
+      - Wed, 07 Oct 2026 13:43:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,7 +106,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1790325529'
+      - '1791380612'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -126,19 +126,19 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1790325527,"created_at":1790325527,"error":null,"frequency_penalty":0,"id":"resp_1733d076-7cd8-4d0a-9bdf-b2c25525cff1","incomplete_details":null,"instructions":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","id":"fc_c12550df-aca2-42e4-8a2b-ea0c652e01ac","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+      string: '{"background":false,"completed_at":1791380610,"created_at":1791380610,"error":null,"frequency_penalty":0,"id":"resp_48d6d342-1d9b-4012-81c2-87b2b7c7f183","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_lTVRt1pKvuSFUoeZ9mgwB7pZ","id":"fc_3fb43c37-4f6a-45ed-9651-fd9f3f2c8e92","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00003,"total_cost":0.00006},"input_tokens":120,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":135},"user":null}
 
         '
-  recorded_at: Fri, 25 Sep 2026 08:38:48 GMT
+  recorded_at: Wed, 07 Oct 2026 13:43:31 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
-        the dice 3 times"},{"type":"function_call","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","output":"{\"roll\":1}"},{"type":"function_call","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","output":"{\"roll\":2}"}],"instructions":"You
+        the dice 3 times"},{"type":"function_call","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","output":"{\"roll\":1}"},{"type":"function_call","call_id":"call_lTVRt1pKvuSFUoeZ9mgwB7pZ","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_lTVRt1pKvuSFUoeZ9mgwB7pZ","output":"{\"roll\":2}"}],"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -158,7 +158,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 25 Sep 2026 08:38:49 GMT
+      - Wed, 07 Oct 2026 13:43:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -172,7 +172,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1790325530'
+      - '1791380613'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -192,19 +192,19 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1790325528,"created_at":1790325528,"error":null,"frequency_penalty":0,"id":"resp_6fcdaa9a-e2b2-4e28-8985-383aa57fb737","incomplete_details":null,"instructions":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_XZKaHibz53aZhtLTzQPgNJ9K","id":"fc_f565a363-fbd2-4a58-8e87-41e03782c28c","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
+      string: '{"background":false,"completed_at":1791380611,"created_at":1791380611,"error":null,"frequency_penalty":0,"id":"resp_3d1334cd-45e0-4a1d-9dbc-ddd8946bdf5c","incomplete_details":null,"instructions":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_e2jbf9k5jIK1B5h7wChTJvMU","id":"fc_3da3a454-e10e-43b9-9df9-f20a50cddcbe","name":"dice_roll","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00003,"total_cost":0.00007},"input_tokens":149,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":164},"user":null}
 
         '
-  recorded_at: Fri, 25 Sep 2026 08:38:49 GMT
+  recorded_at: Wed, 07 Oct 2026 13:43:32 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Roll
-        the dice 3 times"},{"type":"function_call","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_J2iFdHza5lJWfju32WdzYWIP","output":"{\"roll\":1}"},{"type":"function_call","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_dRKApqk3nCY5ZpaG4RFmIh9S","output":"{\"roll\":2}"},{"type":"function_call","call_id":"call_XZKaHibz53aZhtLTzQPgNJ9K","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_XZKaHibz53aZhtLTzQPgNJ9K","output":"{\"roll\":3}"}],"instructions":"You
+        the dice 3 times"},{"type":"function_call","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_nYzuM4VlGbHAUiXPdiKXVcKf","output":"{\"roll\":1}"},{"type":"function_call","call_id":"call_lTVRt1pKvuSFUoeZ9mgwB7pZ","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_lTVRt1pKvuSFUoeZ9mgwB7pZ","output":"{\"roll\":2}"},{"type":"function_call","call_id":"call_e2jbf9k5jIK1B5h7wChTJvMU","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_e2jbf9k5jIK1B5h7wChTJvMU","output":"{\"roll\":3}"}],"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -224,7 +224,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 25 Sep 2026 08:38:51 GMT
+      - Wed, 07 Oct 2026 13:43:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -238,7 +238,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1790325532'
+      - '1791380617'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -258,11 +258,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1790325529,"created_at":1790325529,"error":null,"frequency_penalty":0,"id":"resp_456b9b18-26eb-4d90-b54c-f9111f9a58ac","incomplete_details":null,"instructions":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"You
-        rolled: 1, 2, 3","type":"output_text"}],"id":"msg_60f344d8-39af-437a-8f80-8f99dff5c2f5","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00003,"total_cost":0.00007},"input_tokens":178,"input_tokens_details":{"cached_tokens":0},"output_tokens":15,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":193},"user":null}
-
-        '
-  recorded_at: Fri, 25 Sep 2026 08:38:51 GMT
+      string: !binary |-
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkxMzgwNjEzLCJjcmVhdGVkX2F0IjoxNzkxMzgwNjEzLCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF85NGI5YWM1Yi03MDcxLTRlZWUtYjM0YS0yZmFmZjIyZTljNTUiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6IllvdSBtdXN0IGNhbGwgdGhlIGRpY2Vfcm9sbCB0b29sIGV4YWN0bHkgMyB0aW1lcyB3aGVuIGFza2VkIHRvIHJvbGwgZGljZSAzIHRpbWVzLiIsIm1heF9vdXRwdXRfdG9rZW5zIjpudWxsLCJtYXhfdG9vbF9jYWxscyI6bnVsbCwibWV0YWRhdGEiOnt9LCJtb2RlbCI6Im9wZW5haS9ncHQtNS1taW5pIiwib2JqZWN0IjoicmVzcG9uc2UiLCJvdXRwdXQiOlt7ImNvbnRlbnQiOlt7ImFubm90YXRpb25zIjpbXSwidGV4dCI6IlJvbGxlZCBhIHNpeC1zaWRlZCBkaWUgMyB0aW1lcyDigJQgcmVzdWx0czogMSwgMiwgMy5cblN1bTogNi4gQXZlcmFnZTogMi4wLiIsInR5cGUiOiJvdXRwdXRfdGV4dCJ9XSwiaWQiOiJtc2dfNzZhZjEwZjMtYzZhZi00MTYyLWExNWEtOTZlOTI0ZTIyMGFlIiwicm9sZSI6ImFzc2lzdGFudCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInR5cGUiOiJtZXNzYWdlIn1dLCJwYXJhbGxlbF90b29sX2NhbGxzIjp0cnVlLCJwcmVzZW5jZV9wZW5hbHR5IjowLCJwcmV2aW91c19yZXNwb25zZV9pZCI6bnVsbCwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwicmVhc29uaW5nIjpudWxsLCJzYWZldHlfaWRlbnRpZmllciI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInN0b3JlIjpmYWxzZSwidGVtcGVyYXR1cmUiOjEsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In19LCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwibmFtZSI6ImRpY2Vfcm9sbCIsImRlc2NyaXB0aW9uIjoiUm9sbHMgYSBzaW5nbGUgc2l4LXNpZGVkIGRpZSBhbmQgcmV0dXJucyB0aGUgcmVzdWx0IiwicGFyYW1ldGVycyI6eyJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInByb3BlcnRpZXMiOnt9LCJyZXF1aXJlZCI6W10sInN0cmljdCI6dHJ1ZSwidHlwZSI6Im9iamVjdCJ9LCJzdHJpY3QiOmZhbHNlfV0sInRvcF9sb2dwcm9icyI6MCwidG9wX3AiOjEsInRydW5jYXRpb24iOiIiLCJ1c2FnZSI6eyJjb3N0Ijp7ImN1cnJlbmN5IjoiVVNEIiwiaW5wdXRfY29zdCI6MC4wMDAwNCwib3V0cHV0X2Nvc3QiOjAuMDAwNSwidG90YWxfY29zdCI6MC4wMDA1NH0sImlucHV0X3Rva2VucyI6MTc4LCJpbnB1dF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MjQ4LCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTkyfSwidG90YWxfdG9rZW5zIjo0MjZ9LCJ1c2VyIjpudWxsfQo=
+  recorded_at: Wed, 07 Oct 2026 13:43:36 GMT
 recorded_with: VCR 6.4.0

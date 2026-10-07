@@ -21,13 +21,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:22:37 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
+      - Wed, 07 Oct 2026 13:44:09 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:22:37 GMT
+  recorded_at: Wed, 07 Oct 2026 13:44:09 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:22:38 GMT
+      - Wed, 07 Oct 2026 13:44:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -121,18 +121,17 @@ http_interactions:
                         ]
                       }
                     },
-                    "thoughtSignature": "CrIDAY89a1+hNxJnM7Hz1q4+ufYUYue5817ciCAGAmFVKhPB9dyzX4jZve8o99ZT11ZfnqNAFY08Y8mCR9K8It7L9gCt8YeHWIWIJ6TnLVeRKUcIy9z4mwj3V4Brk+cXjvO+0kj2bc8mBgZN0K65poWFbimv/Uw25zzbPl7wYpfOuz978BaQmI8W+SR6YlD85rsM4lidpz7qmIF6q2XX33CzRYFAw5q7mLxC2A2ZmyAtRmiHkXSweIwRTGJcY17QVFqw+dXUBQsfWENsWf89FAIrElHa3Ucnd236pKZqTwqqGswUaOQGBy7Q5N8XtNgE23PIDIk+khVjZ3BI31xXYSXpxMO4YqNVt09WdvRKpw7o9kFAbkWo40XBDQvJas6+F5eyPXfe8ytVc5x+P/2tdffzRijFPVx4evjdBYpCIA7ZT1q/bVBMk2V1Z6wsOWq6Uu666S6bRarliq81VtE/dU3yolaY6BNtU+OawV1oZTYJZ7p2LVd1NfH0SDJJqA6nyYnKlRQG15yi51G6mGkaZnS8Y/kzue418Y0qfbZeLQO6XEsagwQ0WTzCFMdSNRFkpw74B7c="
+                    "thoughtSignature": "AY89a18dQ0RPeszit4bop0DV56E0qGLzw/ftYlMKoMQ8Ic3uBezrIzL1IsXrefu/FODnpmMyt9SzISJfzOHPH/xy4B/GIQKlTx/KF+m2LMxQK2zvBrEQVkeRapq3rVhiv/sWHzq6oAJ7GndfLqpsWV0xnyPQ98JxS58FH0TNCVVne4grMlSz3q2pi+gAT7a+EXEJU7ygNFfwZ0w4/jT2UxOYxOO08ai0YHn2ya7C9DB+IlUNN8yJU4nH2xO4MskXL91j1TPRAspU5+jxcJzp0Nb1zQzpG3Vwz7aVTm30B9mNcU6FK2Bq4AclAa3o08osfpeJDcGnzU/MbI4GMbqQLimXzSnJSQC18U+LrB/ehJvuvOv902e3nl3p2srFINj3mHzAWNjbLqYCpMYykU4="
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -4.5325193405151367
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 27,
-            "candidatesTokenCount": 6,
-            "totalTokenCount": 130,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 104,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -143,14 +142,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 6
+                "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 97
+            "thoughtsTokenCount": 60
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:22:37.248153Z",
-          "responseId": "LWisatmSD4y12cAP-brbiQQ"
+          "createTime": "2026-10-07T13:44:09.889989Z",
+          "responseId": "qUzGaoWpNoChmPUPsq3fuQU"
         }
-  recorded_at: Thu, 17 Sep 2026 22:22:38 GMT
+  recorded_at: Wed, 07 Oct 2026 13:44:10 GMT
 recorded_with: VCR 6.4.0

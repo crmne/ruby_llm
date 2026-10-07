@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:23:43 GMT
+      - Wed, 07 Oct 2026 13:44:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1010'
+      - '1524'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -78,15 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0f7e6f0a2a163537016aac686e618487d2a578dc4a8aef9fb6",
+          "id": "resp_08d35fbecf467ffc016ac64cc61a7c87d29fa4a509c1778a28",
           "object": "response",
-          "created_at": 1789683822,
+          "created_at": 1791380678,
           "status": "completed",
+          "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1789683823,
+          "completed_at": 1791380679,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -97,11 +98,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0f7e6f0a2a163537016aac686f270887d283c99c0d12a3aeed",
+              "id": "fc_08d35fbecf467ffc016ac64cc732b487d29ceb60b170a8d80d",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_Ym766kTJvH5JWqT69IXocnb0",
+              "call_id": "call_FDhzb8prh3CilSXzlckz90c6",
               "name": "weather"
             }
           ],
@@ -191,14 +192,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:23:43 GMT
+  recorded_at: Wed, 07 Oct 2026 13:44:39 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6","input":[{"role":"user","content":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_Ym766kTJvH5JWqT69IXocnb0","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_Ym766kTJvH5JWqT69IXocnb0","output":"Current
+        in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_FDhzb8prh3CilSXzlckz90c6","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_FDhzb8prh3CilSXzlckz90c6","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -220,7 +221,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:23:45 GMT
+      - Wed, 07 Oct 2026 13:44:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -244,7 +245,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1422'
+      - '1129'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -271,15 +272,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0c46645e02af2fc2016aac686f9e7887d29e3dad98c3e5b0f0",
+          "id": "resp_020e50b6bbc9115f016ac64cc7d79487d291ebe797b9e11f92",
           "object": "response",
-          "created_at": 1789683823,
+          "created_at": 1791380679,
           "status": "completed",
+          "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1789683824,
+          "completed_at": 1791380680,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -290,7 +292,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0c46645e02af2fc2016aac68707fa087d2b42a829883c79cf0",
+              "id": "msg_020e50b6bbc9115f016ac64cc8644087d2a29461849c10964f",
               "type": "message",
               "status": "completed",
               "content": [
@@ -391,5 +393,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:23:45 GMT
+  recorded_at: Wed, 07 Oct 2026 13:44:41 GMT
 recorded_with: VCR 6.4.0

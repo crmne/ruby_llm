@@ -26,41 +26,39 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '668'
+      - '708'
       Date:
-      - Thu, 17 Sep 2026 22:07:35 GMT
+      - Wed, 07 Oct 2026 13:05:42 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - dff504e592689a482c72c535574f6c2e/764278374699522179
+      - 2d6df5150891ca929fd8b95806b8d0e6/5188650716313445044
       Traceparent:
-      - 00-dff504e592689a482c72c535574f6c2e-0a9b4321e97a5883-00
+      - 00-2d6df5150891ca929fd8b95806b8d0e6-4801ca55f97062b4-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-584","object":"chat.completion","created":1789682855,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"chatcmpl-76","object":"chat.completion","created":1791378342,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
         file **ruby.txt** contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
         user asks: \"What''s in this file?\" and provides a file named ruby.txt with
-        content: \"Ruby is the best.\" We need to output the content. Probably just
-        print the content. There''s no restriction. So respond with the content of
-        the file."},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":81,"total_tokens":173}}
+        content: \"Ruby is the best.\" The assistant should respond with the content.
+        Likely we should output the content of the file exactly. Since it''s a simple
+        request. We''ll respond with the file content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":88,"total_tokens":180,"prompt_tokens_details":{"cached_tokens":48}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:07:35 GMT
+  recorded_at: Wed, 07 Oct 2026 13:05:43 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -71,12 +69,13 @@ http_interactions:
         is the best.</file>"}]},{"role":"assistant","content":"The file **ruby.txt**
         contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
         user asks: \"What''s in this file?\" and provides a file named ruby.txt with
-        content: \"Ruby is the best.\" We need to output the content. Probably just
-        print the content. There''s no restriction. So respond with the content of
-        the file.","reasoning_content":"The user asks: \"What''s in this file?\" and
-        provides a file named ruby.txt with content: \"Ruby is the best.\" We need
-        to output the content. Probably just print the content. There''s no restriction.
-        So respond with the content of the file."},{"role":"user","content":[{"type":"text","text":"and
+        content: \"Ruby is the best.\" The assistant should respond with the content.
+        Likely we should output the content of the file exactly. Since it''s a simple
+        request. We''ll respond with the file content.","reasoning_content":"The user
+        asks: \"What''s in this file?\" and provides a file named ruby.txt with content:
+        \"Ruby is the best.\" The assistant should respond with the content. Likely
+        we should output the content of the file exactly. Since it''s a simple request.
+        We''ll respond with the file content."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -97,39 +96,36 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '709'
+      - '593'
       Date:
-      - Thu, 17 Sep 2026 22:07:36 GMT
+      - Wed, 07 Oct 2026 13:05:43 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - 213ff56fd70b5829ec29e89776b7a540/15724197458555292812
       Traceparent:
-      - 00-213ff56fd70b5829ec29e89776b7a540-da3792473749cc8c-00
+      - 00-e4edba0a829a5f46980291d5a862477b-039cbe81cb65b911-00
+      X-Cloud-Trace-Context:
+      - e4edba0a829a5f46980291d5a862477b/260292343153146129
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-73","object":"chat.completion","created":1789682856,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"chatcmpl-723","object":"chat.completion","created":1791378343,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
         file **ruby.xml** contains this XML markup:\n\n```xml\n\u003ctruism\u003eRuby
         is the best\u003c/truism\u003e\n```","reasoning":"User asks what''s in the
-        file ruby.xml which contains an XML snippet: \u003ctruism\u003eRuby is the
-        best\u003c/truism\u003e. Need to answer with its content. Provide the content
-        as formatted. Possibly also explain it''s XML with a single element."},"finish_reason":"stop"}],"usage":{"prompt_tokens":152,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens":86,"total_tokens":238}}
+        file; we need to output its content. Provide raw content or description. Probably
+        show the XML content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":152,"completion_tokens":63,"total_tokens":215,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:07:36 GMT
+  recorded_at: Wed, 07 Oct 2026 13:05:43 GMT
 recorded_with: VCR 6.4.0

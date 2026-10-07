@@ -34,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:27:32 GMT
+      - Wed, 07 Oct 2026 13:57:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=792
+      - gfet4t7; dur=886
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -61,11 +61,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "41.9028",
-                        "longitude": "12.4964"
+                        "longitude": "52.5200",
+                        "latitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CqcCAWkUfROXXIOoxZurscKFVFEEE5c8JWMSCT57Y5eek8muxurb9Klv8FMenapoL6ZTC/K3cKk+Fph22VwdXS2bCVb+/wi88+idnmA01BpCi+QjFTK0+r77qHphL6om0FM9aTv3NlljlmN5XpN9EilL9lncpwgKE+V84OfxiNgY0rVP/6LOqOXBpRg+y9Ez39PkzmrvAvx+wHKOE//9w7QMZ7nbQvdebJGZPBSdFabb2Jr6KDPvpfaT/yZG9UkTjMWKtT2NSZTkztHN56XZuis5U9lk0Vb4wyGiOOESwxzoTblAsg1AY0yRk8ltr+rXY2I2JKWi9xDyF4/jIcde6KSIF3eSqYx1wfk5Gw1G0gvSTidiVx8V54ehagPPV8wrWzy0jYCY+P7DyA=="
+                    "thoughtSignature": "CroCAWkUfRPvD6mA4Hnf0nkdRItpR1wYX8N3maRgkMqRlCYLfimR3bo9hTQ1t+EjdBiX6Zh2YZ2hUNrET6y24MtyyEF0troVLrNlLEDIWqG154z+ZSQqw0wqvUn0c+igJ/qX+WmHnyu7zbC1UIx90ZMF51ftCavDhRC4V+IKq3tqgLUdkKxu96suxoTB5zzD9GS7RUBKMQPFYyYKz44Vmg3gb3w/weXTc4HzvMC19kAg3/tUW7v4mW0p5u4HFHqA1W8YYdMFCMH514TCi29ZqMkp/w7gXrKELea0yimLQOxeWGdCJFHLubWQDTkaZ80uh8tmiFRvhNvm/crbsuU5djFgVPsUIvcNe0DEpuJk7o7gxMFJkWfNpBFF1i8UGZ39AJiST4NOSmd/KAG1npc9T+g8Al2/YhV+no4DkYU="
                   }
                 ],
                 "role": "model"
@@ -78,27 +78,27 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 85,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 167,
+            "totalTokenCount": 168,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 85
               }
             ],
-            "thoughtsTokenCount": 52,
+            "thoughtsTokenCount": 53,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "VGmsavKGAp2RvdIPh6HGuAw"
+          "responseId": "vU_Gavi_FuCinsEPs-KLkAY"
         }
-  recorded_at: Thu, 17 Sep 2026 22:27:32 GMT
+  recorded_at: Wed, 07 Oct 2026 13:57:18 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CqcCAWkUfROXXIOoxZurscKFVFEEE5c8JWMSCT57Y5eek8muxurb9Klv8FMenapoL6ZTC/K3cKk+Fph22VwdXS2bCVb+/wi88+idnmA01BpCi+QjFTK0+r77qHphL6om0FM9aTv3NlljlmN5XpN9EilL9lncpwgKE+V84OfxiNgY0rVP/6LOqOXBpRg+y9Ez39PkzmrvAvx+wHKOE//9w7QMZ7nbQvdebJGZPBSdFabb2Jr6KDPvpfaT/yZG9UkTjMWKtT2NSZTkztHN56XZuis5U9lk0Vb4wyGiOOESwxzoTblAsg1AY0yRk8ltr+rXY2I2JKWi9xDyF4/jIcde6KSIF3eSqYx1wfk5Gw1G0gvSTidiVx8V54ehagPPV8wrWzy0jYCY+P7DyA=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"52.5200","latitude":"13.4050"}},"thoughtSignature":"CroCAWkUfRPvD6mA4Hnf0nkdRItpR1wYX8N3maRgkMqRlCYLfimR3bo9hTQ1t+EjdBiX6Zh2YZ2hUNrET6y24MtyyEF0troVLrNlLEDIWqG154z+ZSQqw0wqvUn0c+igJ/qX+WmHnyu7zbC1UIx90ZMF51ftCavDhRC4V+IKq3tqgLUdkKxu96suxoTB5zzD9GS7RUBKMQPFYyYKz44Vmg3gb3w/weXTc4HzvMC19kAg3/tUW7v4mW0p5u4HFHqA1W8YYdMFCMH514TCi29ZqMkp/w7gXrKELea0yimLQOxeWGdCJFHLubWQDTkaZ80uh8tmiFRvhNvm/crbsuU5djFgVPsUIvcNe0DEpuJk7o7gxMFJkWfNpBFF1i8UGZ39AJiST4NOSmd/KAG1npc9T+g8Al2/YhV+no4DkYU="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 13.4050, 52.5200: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:27:33 GMT
+      - Wed, 07 Oct 2026 13:57:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=951
+      - gfet4t7; dur=567
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -151,7 +151,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The fall of Rome is a complex historical event with many contributing factors, including economic problems, political instability, overexpansion, and external invasions. The traditional date given for the fall of the Western Roman Empire is 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the Eastern Roman Empire (also known as the Byzantine Empire) continued to thrive for many centuries after this.\n\nWould you like to know more about a specific aspect of the fall of Rome, such as the economic causes or the role of barbarian invasions?\n"
+                    "text": "I cannot answer that question with the available tools. My knowledge is limited to getting current weather information."
                   }
                 ],
                 "role": "model"
@@ -162,8 +162,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 172,
-            "candidatesTokenCount": 121,
-            "totalTokenCount": 293,
+            "candidatesTokenCount": 20,
+            "totalTokenCount": 192,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -173,7 +173,7 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "VGmsau72OLbZvdIP5p_viA8"
+          "responseId": "vk_GauXWE7-vkdUPzI68cQ"
         }
-  recorded_at: Thu, 17 Sep 2026 22:27:33 GMT
+  recorded_at: Wed, 07 Oct 2026 13:57:18 GMT
 recorded_with: VCR 6.4.0

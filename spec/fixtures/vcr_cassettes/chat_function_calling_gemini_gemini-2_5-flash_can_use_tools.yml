@@ -35,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:06:24 GMT
+      - Wed, 07 Oct 2026 12:59:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -45,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=700
+      - gfet4t7; dur=839
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -62,11 +62,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CvkBAWkUfRO7mD5aTRnIOmMhWN5uEcG0KwoWROofDk6WOfgNOD62vYuqqvtr3UsVNHTZqs9XB30Gei2t3HDq3qRAnLzfFtN3R3VVmeXuVjS79IFY47kc+9RQssWLPKHdpARNVjGkCPAJFjyesmcGsFD6ynztNPC+PDxGf6nXMKc/6zM4biid71Q4PBw4pzxXvUkxFaDK4djD+H+SPfiGQTvsfDXo+p7S44/M1hhvmuPIC49pMOeCt2JI4RnncA0lLfpfBhwZvGLP/GZC0OGp3UEKym4bSHB4GOjcNR6lLyLhJYJK20SKTkUPFQvopBTaK6uJFhGh4ODhzKUt"
+                    "thoughtSignature": "CvkBAWkUfRPcAzom0/9TtHcWBgOBX7Qx//90gBDR56g6I4vgiobDWHEixjQZLktgQD5E0p5g36KwgaEEX5nXLRL5nu8lv878eWALqP5xGzsc+uaGRqdthbTubdB9Gx0P6wvu3wKt9B455ufef3uu3dl1dIPF05WIwXiHgOWzQ2ybo4bNwnC1kYiJqXCzxjicGcRirMjHLT/0136fPxNVTkqTga+TDyAxcwUXiLOOYTuMi8dtvRh9BfprRMQ7vumI2Vk6l2wal+kThlcT4KozKHdNN+KLfMPSwQ+CU+DKXRopiNkIkVmv+ym/hcdlZxv+0nux+CmwtRD7CziZ"
                   }
                 ],
                 "role": "model"
@@ -90,16 +90,16 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "X2SsatvdJriXvdIPhJ6diQ8"
+          "responseId": "KULGauevKren3boP6-CJmA4"
         }
-  recorded_at: Thu, 17 Sep 2026 22:06:24 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:22 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}},"thoughtSignature":"CvkBAWkUfRO7mD5aTRnIOmMhWN5uEcG0KwoWROofDk6WOfgNOD62vYuqqvtr3UsVNHTZqs9XB30Gei2t3HDq3qRAnLzfFtN3R3VVmeXuVjS79IFY47kc+9RQssWLPKHdpARNVjGkCPAJFjyesmcGsFD6ynztNPC+PDxGf6nXMKc/6zM4biid71Q4PBw4pzxXvUkxFaDK4djD+H+SPfiGQTvsfDXo+p7S44/M1hhvmuPIC49pMOeCt2JI4RnncA0lLfpfBhwZvGLP/GZC0OGp3UEKym4bSHB4GOjcNR6lLyLhJYJK20SKTkUPFQvopBTaK6uJFhGh4ODhzKUt"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CvkBAWkUfRPcAzom0/9TtHcWBgOBX7Qx//90gBDR56g6I4vgiobDWHEixjQZLktgQD5E0p5g36KwgaEEX5nXLRL5nu8lv878eWALqP5xGzsc+uaGRqdthbTubdB9Gx0P6wvu3wKt9B455ufef3uu3dl1dIPF05WIwXiHgOWzQ2ybo4bNwnC1kYiJqXCzxjicGcRirMjHLT/0136fPxNVTkqTga+TDyAxcwUXiLOOYTuMi8dtvRh9BfprRMQ7vumI2Vk6l2wal+kThlcT4KozKHdNN+KLfMPSwQ+CU+DKXRopiNkIkVmv+ym/hcdlZxv+0nux+CmwtRD7CziZ"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -129,7 +129,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:06:24 GMT
+      - Wed, 07 Oct 2026 12:59:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -139,7 +139,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=573
+      - gfet4t7; dur=545
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -147,6 +147,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBvZiAxMCBrbS9oLiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTkwLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjEsCiAgICAidG90YWxUb2tlbkNvdW50IjogMjExLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxOTAKICAgICAgfQogICAgXSwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiWUdTc2FvYXRHX1BwbnNFUHhQZktzUVEiCn0K
-  recorded_at: Thu, 17 Sep 2026 22:06:24 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBvZiAxMCBrbS9oLiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTkwLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjEsCiAgICAidG90YWxUb2tlbkNvdW50IjogMjExLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxOTAKICAgICAgfQogICAgXSwKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiS2tMR2F2dlZKZWExeE44UDNKMlQ0UUkiCn0K
+  recorded_at: Wed, 07 Oct 2026 12:59:23 GMT
 recorded_with: VCR 6.4.0

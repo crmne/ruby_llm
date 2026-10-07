@@ -24,23 +24,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:14:03 GMT
+      - Wed, 07 Oct 2026 12:59:19 GMT
       Content-Length:
-      - '1051'
+      - '961'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-243","object":"chat.completion","created":1789683243,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+      string: '{"id":"chatcmpl-750","object":"chat.completion","created":1791377959,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
         8}","reasoning":"Okay, the user is asking for the square root of 64. Let me
-        think. Square root of a number is a value that, when multiplied by itself,
-        gives the original number. So, what number multiplied by itself equals 64?\n\nWell,
-        8 times 8 is 64. So the square root of 64 should be 8. But wait, isn''t there
-        also a negative root? Because (-8) times (-8) is also 64. However, when people
-        ask for the square root, they usually refer to the principal (positive) root.
-        So the answer is 8.\n\nThe user wants the answer in a JSON object with the
-        key \"result\". So I need to structure it as {\"result\": 8}. Let me double-check
-        to make sure I didn''t make a mistake. Yep, 8 squared is 64. Alright, that''s
-        correct.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_tokens_details":{"cached_tokens":5},"completion_tokens":199,"total_tokens":230}}
+        think. Square root means a number that, when multiplied by itself, gives the
+        original number. So, what number times itself is 64? Well, 8 times 8 is 64.
+        Wait, but there''s also -8, because negative times negative is positive. However,
+        when people ask for the square root, they usually mean the principal (positive)
+        root. So the answer should be 8. Let me confirm. Yes, the square root symbol
+        typically denotes the principal root. So the result is 8. I need to present
+        this as a JSON object with the key ''result''. Alright, that''s straightforward.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":159,"total_tokens":190}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:14:03 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:19 GMT
 recorded_with: VCR 6.4.0

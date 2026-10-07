@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:45 GMT
+      - Wed, 07 Oct 2026 12:59:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,22 +41,22 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3238
+      - gfet4t7; dur=3501
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"requires_action","usage":{"total_tokens":137,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":53,"raw_prompt_token":156,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":53}]}]},"created":"2026-09-17T22:15:45Z","updated":"2026-09-17T22:15:45Z","service_tier":"standard","steps":[{"signature":"EqkCCqYCAWkUfRMj5qGOcLAbe1FlLtIOVn89qustNJyz6kRGf2sNzjr5N82HHIKr9YCAHAh+od13sQDQocklNzjhe4lTPzf62FrJc9LHzJgNUnidumY/JpYPJesh3bm/QRbG/AsYC0lmItpVF5dS8LqXlNyjrutn9R8Q1ecNtQKISkrfPdpRNn/HaN9jWdBQxzZuAEmb+u+ugEzGx4LwceiBnsm6ZjqjBmPP/MXkPcYG6jbZAlXC4krfCWsWiXwuBUeYwqGxneiYmBDNxjeOfgEZY9BbqbMsYd2d5hTCiZoa85mu4cKb1th/QoxFSpOxHG7b5iSuxcvXNk3ToLnQ2yyySz2YiDn3z8UvSBqxu0NbxPry+IvuKqVfW4ws2oWQ2nw79RegpGX5ovjf","type":"thought"},{"id":"call_192248","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}}],"object":"interaction","model":"gemini-3.8-flash"}'
-  recorded_at: Thu, 17 Sep 2026 22:15:45 GMT
+      string: '{"status":"requires_action","usage":{"total_tokens":122,"total_input_tokens":66,"input_tokens_by_modality":[{"modality":"text","tokens":66}],"total_cached_tokens":0,"total_output_tokens":17,"total_tool_use_tokens":0,"total_thought_tokens":39,"raw_prompt_token":156,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":39}]}],"non_grounding_model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":156}],"candidates_tokens_details":[{"modality":"text","tokens":23}],"thoughts_tokens_details":[{"modality":"text","tokens":39}]}]},"created":"2026-10-07T12:59:28Z","updated":"2026-10-07T12:59:28Z","service_tier":"standard","steps":[{"signature":"EuMBCuABAWkUfRMyWqZC6g+eY4Nw4W+Etn98AZtxBU1UOR7SODnJUxhGQA9yQWFnB7lox7DQd24u/9Fnz2+pqUp9eolcPfW5MEEF19uSKtqSjUlk/NYMjSqxyT/DLrgczrxTJ8DL6e71hQIL9TI64KekT0netevg27YQ1VbE8z6g0k8sVwa24KSjLR+KF/+7dFPPgGDrwzeBnYDTCNMzD5SO0sLcz80kN3ngEpm7YBtGpi99a5dJV80W7GN8T8C0b6lVzxlXiWIOcUAPYGO8rlY2Nk4kvOglVNPUid9l9EDZ5W4Rvpw=","type":"thought"},{"id":"call_512835","signature":"EuMBCuABAWkUfRMyWqZC6g+eY4Nw4W+Etn98AZtxBU1UOR7SODnJUxhGQA9yQWFnB7lox7DQd24u/9Fnz2+pqUp9eolcPfW5MEEF19uSKtqSjUlk/NYMjSqxyT/DLrgczrxTJ8DL6e71hQIL9TI64KekT0netevg27YQ1VbE8z6g0k8sVwa24KSjLR+KF/+7dFPPgGDrwzeBnYDTCNMzD5SO0sLcz80kN3ngEpm7YBtGpi99a5dJV80W7GN8T8C0b6lVzxlXiWIOcUAPYGO8rlY2Nk4kvOglVNPUid9l9EDZ5W4Rvpw=","type":"function_call","name":"multiply","arguments":{"right":7,"left":13}}],"object":"interaction","model":"gemini-3.8-flash"}'
+  recorded_at: Wed, 07 Oct 2026 12:59:28 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/interactions
     body:
       encoding: UTF-8
       string: '{"model":"gemini-3.8-flash","input":[{"type":"user_input","content":[{"type":"text","text":"Use
-        multiply to calculate 13 times 7 and return the answer."}]},{"signature":"EqkCCqYCAWkUfRMj5qGOcLAbe1FlLtIOVn89qustNJyz6kRGf2sNzjr5N82HHIKr9YCAHAh+od13sQDQocklNzjhe4lTPzf62FrJc9LHzJgNUnidumY/JpYPJesh3bm/QRbG/AsYC0lmItpVF5dS8LqXlNyjrutn9R8Q1ecNtQKISkrfPdpRNn/HaN9jWdBQxzZuAEmb+u+ugEzGx4LwceiBnsm6ZjqjBmPP/MXkPcYG6jbZAlXC4krfCWsWiXwuBUeYwqGxneiYmBDNxjeOfgEZY9BbqbMsYd2d5hTCiZoa85mu4cKb1th/QoxFSpOxHG7b5iSuxcvXNk3ToLnQ2yyySz2YiDn3z8UvSBqxu0NbxPry+IvuKqVfW4ws2oWQ2nw79RegpGX5ovjf","type":"thought"},{"id":"call_192248","type":"function_call","name":"multiply","arguments":{"left":13,"right":7}},{"type":"function_result","call_id":"call_192248","name":"multiply","result":[{"type":"text","text":"91"}]}],"stream":false,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
+        multiply to calculate 13 times 7 and return the answer."}]},{"signature":"EuMBCuABAWkUfRMyWqZC6g+eY4Nw4W+Etn98AZtxBU1UOR7SODnJUxhGQA9yQWFnB7lox7DQd24u/9Fnz2+pqUp9eolcPfW5MEEF19uSKtqSjUlk/NYMjSqxyT/DLrgczrxTJ8DL6e71hQIL9TI64KekT0netevg27YQ1VbE8z6g0k8sVwa24KSjLR+KF/+7dFPPgGDrwzeBnYDTCNMzD5SO0sLcz80kN3ngEpm7YBtGpi99a5dJV80W7GN8T8C0b6lVzxlXiWIOcUAPYGO8rlY2Nk4kvOglVNPUid9l9EDZ5W4Rvpw=","type":"thought"},{"id":"call_512835","signature":"EuMBCuABAWkUfRMyWqZC6g+eY4Nw4W+Etn98AZtxBU1UOR7SODnJUxhGQA9yQWFnB7lox7DQd24u/9Fnz2+pqUp9eolcPfW5MEEF19uSKtqSjUlk/NYMjSqxyT/DLrgczrxTJ8DL6e71hQIL9TI64KekT0netevg27YQ1VbE8z6g0k8sVwa24KSjLR+KF/+7dFPPgGDrwzeBnYDTCNMzD5SO0sLcz80kN3ngEpm7YBtGpi99a5dJV80W7GN8T8C0b6lVzxlXiWIOcUAPYGO8rlY2Nk4kvOglVNPUid9l9EDZ5W4Rvpw=","type":"function_call","name":"multiply","arguments":{"right":7,"left":13}},{"type":"function_result","call_id":"call_512835","name":"multiply","result":[{"type":"text","text":"91"}]}],"stream":false,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
         two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}],"response_format":{"type":"text","mime_type":"application/json","schema":{"type":"object","properties":{"answer":{"type":"integer"}},"required":["answer"]}}}'
     headers:
       User-Agent:
@@ -81,7 +81,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:47 GMT
+      - Wed, 07 Oct 2026 12:59:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -91,14 +91,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1391
+      - gfet4t7; dur=2378
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"status":"completed","usage":{"total_tokens":190,"total_input_tokens":145,"input_tokens_by_modality":[{"modality":"text","tokens":145}],"total_cached_tokens":0,"total_output_tokens":10,"total_tool_use_tokens":0,"total_thought_tokens":35,"raw_prompt_token":247,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":247}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":35}]}]},"created":"2026-09-17T22:15:47Z","updated":"2026-09-17T22:15:47Z","service_tier":"standard","steps":[{"signature":"EuQBCuEBAWkUfROxBs6BZNzI0IFVlA2gZ4m4UCNDwN9oItK1VRkmF39kSkDJ3lKiZZvAzw7xVi9PlFIqVhIV5lLCfkuW9wLz21bpFiKTkxDuPsdZrSJ62/YuZDrH/oXaiuUJlMFGma+ukckG/hWBQ7qPHW+sCYm0edZjIeRT18RuCRpmdK5T+huLgINayE5SjL1Wd4fcSh2YyoIOx8RjpI4aUtfpfozw3plv2J5TkTVFTVd/7h74nE7dGdHl9+f9xdtQcDQd2m3sioHyZgr1iwOnRSOxKeGJIaNC3PHCHQU/OioR0Ceb","type":"thought"},{"content":[{"text":"{\n  \"answer\":
+      string: '{"status":"completed","usage":{"total_tokens":173,"total_input_tokens":128,"input_tokens_by_modality":[{"modality":"text","tokens":128}],"total_cached_tokens":0,"total_output_tokens":11,"total_tool_use_tokens":0,"total_thought_tokens":34,"raw_prompt_token":233,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":233}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":34}]}],"non_grounding_model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":233}],"candidates_tokens_details":[{"modality":"text","tokens":18}],"thoughts_tokens_details":[{"modality":"text","tokens":34}]}]},"created":"2026-10-07T12:59:31Z","updated":"2026-10-07T12:59:31Z","service_tier":"standard","steps":[{"signature":"EuABCt0BAWkUfROp4irYmlvVipb5CuCUYUuGRkwVQd/Y24soN28avA0yKFAvvzCrD5si16IQTBw3X/Nvyz6AxY+8ikJ3qOg2nHxE+xrjMPR2ScHDP6lBUBXVKTE00hM5ucz3xTjEY8FlUtoU4aoBHzUs6YkMD/QXHmB35jdbbRVbU4jx4LSRNt4t/sGeN323wvO6orG5cxyL74JqhE8upDlKoqoiEKsMDQtEYL83HA8CM/uGBEcz8T0ggfm4nxfnJQb5KYFHk5Z7BLgBovKkyoAV6s+lmG4UIGOrrkLPGaSKqkc=","type":"thought"},{"content":[{"text":"{\n  \"answer\":
         91\n}","type":"text"}],"type":"model_output"}],"object":"interaction","model":"gemini-3.8-flash"}'
-  recorded_at: Thu, 17 Sep 2026 22:15:47 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:31 GMT
 recorded_with: VCR 6.4.0

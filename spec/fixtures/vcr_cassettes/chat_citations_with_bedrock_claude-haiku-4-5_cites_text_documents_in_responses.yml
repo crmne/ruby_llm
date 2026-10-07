@@ -14,15 +14,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221128Z
+      - 20261007T125924Z
       X-Amz-Content-Sha256:
       - 22614e7063da74342d608158f9c221f1c0069f4083edb9504bdcac3a38eee1d8
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -33,19 +33,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:29 GMT
+      - Wed, 07 Oct 2026 12:59:25 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '598'
+      - '623'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 51c1175f-733f-4735-8299-8abef6812a91
+      - c778fba8-4eb9-41e2-a9f6-43eb80861188
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":623},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"documentChar":{"documentIndex":0,"end":73,"start":0}},"sourceContent":[{"text":"The
-        Ruby programming language was created by Yukihiro Matsumoto in 1993. "}],"title":"facts"}],"content":[{"text":"Ruby
-        was created by Yukihiro Matsumoto in 1993."}]}}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":672,"outputTokens":36,"serverToolUsage":{},"totalTokens":708}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:29 GMT
+      string: '{"metrics":{"latencyMs":699},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"documentChar":{"documentIndex":0,"end":73,"start":0}},"sourceContent":[{"text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. "}],"title":"facts"}],"content":[{"text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993."}]}}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":672,"outputTokens":39,"serverToolUsage":{},"totalTokens":711}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:25 GMT
 recorded_with: VCR 6.4.0

@@ -25,67 +25,37 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:20:00 GMT
+      - Wed, 07 Oct 2026 13:40:07 GMT
       Content-Length:
-      - '1609'
+      - '873'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-297","object":"chat.completion","created":1789683600,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the tools provided.\n\nLooking
-        at the tools section, there''s a function called best_language_to_learn with
-        no parameters. The description says it gets the best language to learn, but
-        there''s no input needed. So I don''t need to ask for any arguments. I should
-        just call that function. \n\nWait, the function''s object is empty, so no
-        arguments are required. The user didn''t specify any particular criteria,
-        like their goals or current skills. Since the tool doesn''t require any inputs,
-        I can directly invoke it. \n\nI need to make sure I''m using the correct syntax
-        for the tool call. The example shows JSON inside tool_call tags. The function
-        name is best_language_to_learn and the arguments are an empty object. So the
-        tool call should be a JSON object with name and empty arguments. \n\nLet me
-        structure that properly. The response should be within tool_call tags, with
-        the name and arguments as specified. No errors here, since the function doesn''t
-        need any parameters. Alright, that''s all I need to do.\n","tool_calls":[{"id":"call_co46z543","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":256,"total_tokens":395}}
+      string: '{"id":"chatcmpl-287","object":"chat.completion","created":1791380407,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the tools provided. The tool is listed as a function with
+        no parameters. So I need to call that function without any arguments. The
+        response should just trigger the function call. No parameters are needed here.
+        Let me make sure I format the tool_call correctly in JSON inside the XML tags.\n","tool_calls":[{"id":"call_aykzu6uw","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":139,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":102,"total_tokens":241}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:00 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:07 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_co46z543","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the tools provided.\n\nLooking
-        at the tools section, there''s a function called best_language_to_learn with
-        no parameters. The description says it gets the best language to learn, but
-        there''s no input needed. So I don''t need to ask for any arguments. I should
-        just call that function. \n\nWait, the function''s object is empty, so no
-        arguments are required. The user didn''t specify any particular criteria,
-        like their goals or current skills. Since the tool doesn''t require any inputs,
-        I can directly invoke it. \n\nI need to make sure I''m using the correct syntax
-        for the tool call. The example shows JSON inside tool_call tags. The function
-        name is best_language_to_learn and the arguments are an empty object. So the
-        tool call should be a JSON object with name and empty arguments. \n\nLet me
-        structure that properly. The response should be within tool_call tags, with
-        the name and arguments as specified. No errors here, since the function doesn''t
-        need any parameters. Alright, that''s all I need to do.\n","reasoning_content":"Okay,
-        the user wants to know which programming language they should learn using
-        the best_language_to_learn tool. Let me check the tools provided.\n\nLooking
-        at the tools section, there''s a function called best_language_to_learn with
-        no parameters. The description says it gets the best language to learn, but
-        there''s no input needed. So I don''t need to ask for any arguments. I should
-        just call that function. \n\nWait, the function''s object is empty, so no
-        arguments are required. The user didn''t specify any particular criteria,
-        like their goals or current skills. Since the tool doesn''t require any inputs,
-        I can directly invoke it. \n\nI need to make sure I''m using the correct syntax
-        for the tool call. The example shows JSON inside tool_call tags. The function
-        name is best_language_to_learn and the arguments are an empty object. So the
-        tool call should be a JSON object with name and empty arguments. \n\nLet me
-        structure that properly. The response should be within tool_call tags, with
-        the name and arguments as specified. No errors here, since the function doesn''t
-        need any parameters. Alright, that''s all I need to do.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_co46z543"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"call_aykzu6uw","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the tools provided. The tool is listed as a function with
+        no parameters. So I need to call that function without any arguments. The
+        response should just trigger the function call. No parameters are needed here.
+        Let me make sure I format the tool_call correctly in JSON inside the XML tags.\n","reasoning_content":"Okay,
+        the user wants to know which language to learn using the best_language_to_learn
+        tool. Let me check the tools provided. The tool is listed as a function with
+        no parameters. So I need to call that function without any arguments. The
+        response should just trigger the function call. No parameters are needed here.
+        Let me make sure I format the tool_call correctly in JSON inside the XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_aykzu6uw"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -104,27 +74,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:20:01 GMT
+      - Wed, 07 Oct 2026 13:40:08 GMT
       Content-Length:
-      - '1365'
+      - '783'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-854","object":"chat.completion","created":1789683601,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        best language to learn is **Ruby**. It is known for its simplicity, readability,
-        and productivity, making it an excellent choice for both beginners and experienced
-        developers. Ruby''s elegant syntax and focus on developer happiness make it
-        ideal for building web applications (e.g., with Ruby on Rails) and scripting.
-        Would you like guidance on how to get started with Ruby?","reasoning":"Okay,
-        the user asked which language to learn, and the tool returned Ruby. I need
-        to present this answer clearly. Let me start by stating that the best language
-        to learn is Ruby. Then, I should explain why Ruby is a good choice. Maybe
-        mention its simplicity and readability, which make it great for beginners.
-        Also, Ruby''s versatility in web development with frameworks like Rails could
-        be a plus. I should keep the explanation concise but informative. Let me check
-        if there''s anything else the user might need, like resources or next steps,
-        but since they didn''t ask for more, just providing the answer and a brief
-        rationale should be enough.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":408,"prompt_tokens_details":{"cached_tokens":140},"completion_tokens":209,"total_tokens":617}}
-
-        '
-  recorded_at: Thu, 17 Sep 2026 22:20:01 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTkzNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzODA0MDgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLCBhY2NvcmRpbmcgdG8gdGhlIHRvb2wncyByZXNwb25zZS4g8J+QjSIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIHdoaWNoIGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBjb25maXJtIHRoYXQgUnVieSBpcyB0aGUgY29ycmVjdCByZXNwb25zZSBmcm9tIHRoZSB0b29sLiBTaW5jZSB0aGVyZSBhcmUgbm8gcGFyYW1ldGVycyBpbnZvbHZlZCwgdGhlIGFuc3dlciBpcyBzdHJhaWdodGZvcndhcmQuIEknbGwgc3RhdGUgdGhhdCB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LCBiYXNlZCBvbiB0aGUgdG9vbCdzIHJlc3BvbnNlLiBLZWVwIGl0IHNpbXBsZSBhbmQgZGlyZWN0LlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNDB9LCJjb21wbGV0aW9uX3Rva2VucyI6OTksInRvdGFsX3Rva2VucyI6MzUzfX0K
+  recorded_at: Wed, 07 Oct 2026 13:40:08 GMT
 recorded_with: VCR 6.4.0

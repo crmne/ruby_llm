@@ -25,51 +25,99 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:29:49 GMT
-      Content-Length:
-      - '1164'
+      - Wed, 07 Oct 2026 13:47:31 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-300","object":"chat.completion","created":1789684189,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-932","object":"chat.completion","created":1791380851,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
-        repeat the contents of that file. Let me start by checking the tools provided.
-        The tool listed is file_fetch, which is supposed to fetch a sample text file
-        named ruby.txt. The parameters for file_fetch don''t seem to require any arguments,
-        as the arguments section is empty. So, I just need to invoke file_fetch without
-        any parameters. Once I get the file, I should read its contents and output
-        them back to the user. Let me make sure I''m using the correct function name
-        and that there are no typos. Alright, the function is called file_fetch, and
-        the file name is ruby.txt. I''ll structure the tool call accordingly.\n","tool_calls":[{"id":"call_ued6pu7l","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":122},"completion_tokens":170,"total_tokens":312}}
+        repeat the contents of that file. Let me start by checking the available tools.
+        The tools section mentions a function called file_fetch which fetches a sample
+        text file named ruby.txt. The parameters for this function are not specified,
+        but since it''s supposed to fetch the file, maybe it doesn''t require any
+        arguments. \n\nFirst, I need to make sure I call the file_fetch function correctly.
+        The user said to call it to get ruby.txt, so the function might return the
+        content of the file. Once I have the content, I need to repeat it back to
+        the user. \n\nWait, the function''s parameters are listed as object \u003cnil\u003e
+        \u003cnil\u003e [] {} which might indicate that there are no parameters needed.
+        So I can call file_fetch without any arguments. Then, the response from the
+        function would be the content of ruby.txt. After fetching, I should output
+        the content as the answer.\n\nLet me structure the steps: first, call file_fetch,
+        then take the result and present it. Since the user wants the contents repeated,
+        I just need to pass the fetched content directly. I should make sure that
+        the tool call is correctly formatted in JSON within the tool_call tags. Then,
+        once the function returns the content, I can wrap it in a tool_response tag.
+        \n\nWait, but in the initial instructions, the assistant is supposed to call
+        the function and then provide the answer. So the first step is to generate
+        the tool_call for file_fetch. Then, once that''s processed, the tool_response
+        would contain the file''s content, which I can then relay to the user. \n\nSo
+        the correct approach is to first output the tool_call JSON for file_fetch,
+        then after receiving the content, output the content as the final answer.
+        The user''s instruction says to call file_fetch and then repeat the contents,
+        so the answer should be the content of ruby.txt after fetching.\n","tool_calls":[{"id":"call_jtzn3x4w","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":142,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":419,"total_tokens":561}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:29:49 GMT
+  recorded_at: Wed, 07 Oct 2026 13:47:31 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_ued6pu7l","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"call_jtzn3x4w","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
-        repeat the contents of that file. Let me start by checking the tools provided.
-        The tool listed is file_fetch, which is supposed to fetch a sample text file
-        named ruby.txt. The parameters for file_fetch don''t seem to require any arguments,
-        as the arguments section is empty. So, I just need to invoke file_fetch without
-        any parameters. Once I get the file, I should read its contents and output
-        them back to the user. Let me make sure I''m using the correct function name
-        and that there are no typos. Alright, the function is called file_fetch, and
-        the file name is ruby.txt. I''ll structure the tool call accordingly.\n","reasoning_content":"Okay,
+        repeat the contents of that file. Let me start by checking the available tools.
+        The tools section mentions a function called file_fetch which fetches a sample
+        text file named ruby.txt. The parameters for this function are not specified,
+        but since it''s supposed to fetch the file, maybe it doesn''t require any
+        arguments. \n\nFirst, I need to make sure I call the file_fetch function correctly.
+        The user said to call it to get ruby.txt, so the function might return the
+        content of the file. Once I have the content, I need to repeat it back to
+        the user. \n\nWait, the function''s parameters are listed as object <nil>
+        <nil> [] {} which might indicate that there are no parameters needed. So I
+        can call file_fetch without any arguments. Then, the response from the function
+        would be the content of ruby.txt. After fetching, I should output the content
+        as the answer.\n\nLet me structure the steps: first, call file_fetch, then
+        take the result and present it. Since the user wants the contents repeated,
+        I just need to pass the fetched content directly. I should make sure that
+        the tool call is correctly formatted in JSON within the tool_call tags. Then,
+        once the function returns the content, I can wrap it in a tool_response tag.
+        \n\nWait, but in the initial instructions, the assistant is supposed to call
+        the function and then provide the answer. So the first step is to generate
+        the tool_call for file_fetch. Then, once that''s processed, the tool_response
+        would contain the file''s content, which I can then relay to the user. \n\nSo
+        the correct approach is to first output the tool_call JSON for file_fetch,
+        then after receiving the content, output the content as the final answer.
+        The user''s instruction says to call file_fetch and then repeat the contents,
+        so the answer should be the content of ruby.txt after fetching.\n","reasoning_content":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
-        repeat the contents of that file. Let me start by checking the tools provided.
-        The tool listed is file_fetch, which is supposed to fetch a sample text file
-        named ruby.txt. The parameters for file_fetch don''t seem to require any arguments,
-        as the arguments section is empty. So, I just need to invoke file_fetch without
-        any parameters. Once I get the file, I should read its contents and output
-        them back to the user. Let me make sure I''m using the correct function name
-        and that there are no typos. Alright, the function is called file_fetch, and
-        the file name is ruby.txt. I''ll structure the tool call accordingly.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"call_ued6pu7l"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call_ued6pu7l:"},{"type":"text","text":"<file name=''ruby.txt''
+        repeat the contents of that file. Let me start by checking the available tools.
+        The tools section mentions a function called file_fetch which fetches a sample
+        text file named ruby.txt. The parameters for this function are not specified,
+        but since it''s supposed to fetch the file, maybe it doesn''t require any
+        arguments. \n\nFirst, I need to make sure I call the file_fetch function correctly.
+        The user said to call it to get ruby.txt, so the function might return the
+        content of the file. Once I have the content, I need to repeat it back to
+        the user. \n\nWait, the function''s parameters are listed as object <nil>
+        <nil> [] {} which might indicate that there are no parameters needed. So I
+        can call file_fetch without any arguments. Then, the response from the function
+        would be the content of ruby.txt. After fetching, I should output the content
+        as the answer.\n\nLet me structure the steps: first, call file_fetch, then
+        take the result and present it. Since the user wants the contents repeated,
+        I just need to pass the fetched content directly. I should make sure that
+        the tool call is correctly formatted in JSON within the tool_call tags. Then,
+        once the function returns the content, I can wrap it in a tool_response tag.
+        \n\nWait, but in the initial instructions, the assistant is supposed to call
+        the function and then provide the answer. So the first step is to generate
+        the tool_call for file_fetch. Then, once that''s processed, the tool_response
+        would contain the file''s content, which I can then relay to the user. \n\nSo
+        the correct approach is to first output the tool_call JSON for file_fetch,
+        then after receiving the content, output the content as the final answer.
+        The user''s instruction says to call file_fetch and then repeat the contents,
+        so the answer should be the content of ruby.txt after fetching.\n"},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_jtzn3x4w"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_jtzn3x4w:"},{"type":"text","text":"<file name=''ruby.txt''
         mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -89,30 +137,37 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:29:51 GMT
-      Content-Length:
-      - '1646'
+      - Wed, 07 Oct 2026 13:47:34 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-121","object":"chat.completion","created":1789684191,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        contents of ruby.txt are: Ruby is the best.","reasoning":"Okay, the user asked
-        me to call the file_fetch function to get ruby.txt and then repeat the contents
-        of the attached file. Let me start by checking if I have the correct function
-        available. The tools provided include a file_fetch function that fetches a
-        sample text file named ruby.txt. \n\nFirst, I need to make sure I call the
-        file_fetch function correctly. The function doesn''t require any arguments,
-        so the tool call should be straightforward. I''ll generate the tool call with
-        empty arguments as specified.\n\nOnce the file is fetched, the response indicates
-        that the file was successfully retrieved. The attachment provided is a file
-        named ruby.txt with the content \"Ruby is the best.\" The MIME type is text/plain,
-        which means it''s a plain text file. \n\nNow, I need to repeat the contents
-        of the file. The user wants the contents to be repeated, so I should read
-        the content from the file and output it. Since the file content is \"Ruby
-        is the best.\", I''ll simply echo that back to the user. \n\nI should make
-        sure there are no errors in the process. The function call was successful,
-        and the file content is correctly retrieved. There''s no need for additional
-        steps here. The final response should just be the content of the file as specified.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":212,"prompt_tokens_details":{"cached_tokens":135},"completion_tokens":275,"total_tokens":487}}
+      string: '{"id":"chatcmpl-836","object":"chat.completion","created":1791380854,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        contents of ruby.txt are:  \n**Ruby is the best.**","reasoning":"Okay, the
+        user asked me to call the file_fetch function to get ruby.txt and then repeat
+        the contents of the attached file. Let me start by checking if I have the
+        correct function available. The tools provided include a file_fetch function
+        that fetches a sample text file named ruby.txt. \n\nFirst, I need to make
+        sure I call the file_fetch function. The user''s initial message instructed
+        me to do that. The function doesn''t require any arguments, so the tool call
+        should be straightforward. I''ll generate the tool call with the function
+        name and empty arguments.\n\nAfter fetching the file, the response from the
+        tool indicates that the file was successfully retrieved. The user then provided
+        an attachment with the file name ruby.txt, mime type text/plain, and the content
+        \"Ruby is the best.\" Now, I need to repeat the contents of this file. Since
+        the file is already fetched, I can directly access its content. \n\nI should
+        check if there are any other steps required. The user''s instruction was to
+        first call file_fetch and then repeat the file''s contents. Since the file
+        is already fetched and the content is provided, the next step is to output
+        the content. I need to make sure that the response is clear and correctly
+        presents the file''s content. \n\nI should also verify that there are no errors
+        in the process. The tool response showed a success message, so the file is
+        available. The content is straightforward, so there''s no need for additional
+        processing. Just outputting the content as is should fulfill the user''s request.
+        \n\nFinally, I''ll format the response to clearly state that the contents
+        of ruby.txt are being repeated, followed by the actual content. This ensures
+        the user knows the answer is directly from the file they requested.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":213,"prompt_tokens_details":{"cached_tokens":135},"completion_tokens":372,"total_tokens":585}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:29:51 GMT
+  recorded_at: Wed, 07 Oct 2026 13:47:34 GMT
 recorded_with: VCR 6.4.0

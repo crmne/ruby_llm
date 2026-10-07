@@ -27,53 +27,47 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '689'
+      - '576'
       Date:
-      - Thu, 17 Sep 2026 22:26:19 GMT
+      - Wed, 07 Oct 2026 13:55:54 GMT
       Server:
       - Google Frontend
-      X-Cloud-Trace-Context:
-      - ac18c5d1505a92bf223c1de4d2c82c1c/4370183865141203263
       Traceparent:
-      - 00-ac18c5d1505a92bf223c1de4d2c82c1c-3ca6031234e2913f-00
+      - 00-5dbbe3e4de9dd0924fb46ba279f96d5f-37ec6198a6fc046c-00
+      X-Cloud-Trace-Context:
+      - 5dbbe3e4de9dd0924fb46ba279f96d5f/4029703074854208620
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-585","object":"chat.completion","created":1789683979,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to process the query \"test data\". The developer says: Process this
-        query: test data. Likely we should call the function content_returning with
-        query \"test data\". Let''s do that.","tool_calls":[{"id":"call_imjxcsbv","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":133,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens":71,"total_tokens":204}}
+      string: '{"id":"chatcmpl-514","object":"chat.completion","created":1791381354,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to process the query \"test data\". Use function content_returning.","tool_calls":[{"id":"call_tss107e5","index":0,"type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":133,"completion_tokens":46,"total_tokens":179,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:26:19 GMT
+  recorded_at: Wed, 07 Oct 2026 13:55:54 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Process
-        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_imjxcsbv","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"}}],"reasoning":"We need to process the query \"test data\". The developer
-        says: Process this query: test data. Likely we should call the function content_returning
-        with query \"test data\". Let''s do that.","reasoning_content":"We need to
-        process the query \"test data\". The developer says: Process this query: test
-        data. Likely we should call the function content_returning with query \"test
-        data\". Let''s do that."},{"role":"tool","content":"Processed: test data","tool_call_id":"call_imjxcsbv"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"call_tss107e5","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning":"We need to process the query \"test data\". Use function
+        content_returning.","reasoning_content":"We need to process the query \"test
+        data\". Use function content_returning."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"call_tss107e5"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -94,33 +88,33 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '407'
+      - '354'
       Date:
-      - Thu, 17 Sep 2026 22:26:20 GMT
+      - Wed, 07 Oct 2026 13:55:54 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 5fa1fc3c695730c859cf3af568142c40/8263955773012785743
+      - a5f845f08eab1fac92db5dd3e4007f50/10173940207928306962
       Traceparent:
-      - 00-5fa1fc3c695730c859cf3af568142c40-72af77fdc1f73a4f-00
+      - 00-a5f845f08eab1fac92db5dd3e4007f50-8d3118b71ba16d12-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTgxMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODk2ODM5ODAsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJl4oCZcyB0aGUgcHJvY2Vzc2VkIHJlc3VsdCBvZiB5b3VyIHF1ZXJ5OlxuXG4qKlByb2Nlc3NlZDoqKiB0ZXN0IGRhdGEifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIxNiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE3Nn0sImNvbXBsZXRpb25fdG9rZW5zIjoxOCwidG90YWxfdG9rZW5zIjoyMzR9fQo=
-  recorded_at: Thu, 17 Sep 2026 22:26:20 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-156","object":"chat.completion","created":1791381354,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Processed:
+        test data"},"finish_reason":"stop"}],"usage":{"prompt_tokens":191,"completion_tokens":8,"total_tokens":199,"prompt_tokens_details":{"cached_tokens":144}}}
+
+        '
+  recorded_at: Wed, 07 Oct 2026 13:55:54 GMT
 recorded_with: VCR 6.4.0

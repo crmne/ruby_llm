@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:13:49 GMT
+      - Wed, 07 Oct 2026 12:59:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,7 +50,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5012'
+      - '3704'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -62,11 +62,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999691'
+      - '1999914'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 9ms
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -77,15 +77,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_04445ed136d35fed016aac6618980c87d29b3a75c3370c0b45",
+          "id": "resp_083574f31652cac5016ac6423aa1ec87d29d03257b86ef124f",
           "object": "response",
-          "created_at": 1789683224,
+          "created_at": 1791377978,
           "status": "completed",
+          "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1789683229,
+          "completed_at": 1791377982,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -96,7 +97,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcpl_04445ed136d35fed016aac6618a4f087d28d234349c3755bd2",
+              "id": "mcpl_083574f31652cac5016ac6423abb9c87d28832a6fbd9a78609",
               "type": "mcp_list_tools",
               "server_label": "docs",
               "tools": [
@@ -104,14 +105,26 @@ http_interactions:
                   "annotations": {
                     "read_only": true
                   },
-                  "description": "Search official Microsoft/Azure documentation to find the most relevant and trustworthy content for a user's query. This tool returns up to 10 high-quality content chunks (each max 500 tokens), extracted from Microsoft Learn and other official sources. Each result includes the article title, URL, and a self-contained content excerpt optimized for fast retrieval and reasoning. Always use this tool to quickly ground your answers in accurate, first-party Microsoft/Azure knowledge.\n\n## Follow-up Pattern\nTo ensure completeness, use microsoft_docs_fetch when high-value pages are identified by search. The fetch tool complements search by providing the full detail. This is a required step for comprehensive results.",
+                  "description": "Search official Microsoft/Azure documentation for the most relevant and trustworthy content.\nReturns up to 10 high-quality content chunks with title, URL, and excerpt.\n\n## Usage:\nAlways use this tool first to ground answers in official Microsoft/Azure knowledge when facing Microsoft/Azure related questions, then use microsoft_docs_fetch for complete page content when needed.",
                   "input_schema": {
                     "type": "object",
                     "properties": {
                       "query": {
                         "description": "a query or topic about Microsoft/Azure products, services, platforms, developer tools, frameworks, or APIs",
-                        "type": "string",
+                        "type": [
+                          "string",
+                          "null"
+                        ],
                         "default": null
+                      },
+                      "SessionId": {
+                        "description": "The logical session identifier provided by tools/list; use its default value on every Microsoft Learn tool call",
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "default": "044c457c-7d14-4d0d-bc4e-4de7a2996610",
+                        "const": "044c457c-7d14-4d0d-bc4e-4de7a2996610"
                       }
                     }
                   },
@@ -120,14 +133,14 @@ http_interactions:
               ]
             },
             {
-              "id": "rs_04445ed136d35fed016aac66195dec87d2b5a9961d4b9f4ba2",
+              "id": "rs_083574f31652cac5016ac6423b307c87d2b1a1478da3da2ab7",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABqrGYdj4xPX0CgUZxpDDN3j7fnTJBcN17gDzzJ83VRR78G7-13K21Re0nJWOb3XB5eFrfKjGpBPXtzNxIRpCsGF-CKlDKX8Gge7kUH_I2ejVydLCTAKLppQ5Pgy4ZudarJuP7I2pnZQVt6c1WDxvo7T93mlHvGnKoY2-3YsyOstqftnnRsPVAke0R9HqqBioCGr8lO5hxD3iMtUiX3F2M1dlTnEIyet-QcGLdCiVKshL5r2UWPyBzHqqr8i81d12BzY6QG54KBfHqilybLjQqzdbB4h89tKaY1VV9fpSnB1t_kCz_MxuLX-grAi_SzBvzrG_Zlb6_IjEEAuZcgXv_XuD9Aje0qluBjUQJc_J0h5O2ONAgxtA1WKDCxrMgQyageHfEPIBDnvZ3MXqY43Nr15vDNBhfhjoErDnVjylInvJsWyPl8li7E8q2hpWfagy-vKxIJ024G7qlg8-xolBQQ0IzWWHK--MQmPbPB2NKzU3w3sb5VyYJM1JO_qpvuKy2mBdxuOxwLXL5MV0k4W7Tvbwq0yfS-BEHYNQN29f8sd9fb6hXG536BveC8xf2rtnXknhj0kpshGRFhRzezp6YD8l02g7h4zb-i-g-nHfVc5964OrUyp54eaf25LDQ_isPv53_qVBb8QJcqajh0TYbOSqExToUZxtX-8fZYg2QoXqC0EFzQx4yCvOXxA-KzsV4qsl4A_SnkDGw3zK-jXFgWBnllr7Td5TF28pEL41SveOMT-BdTBAa6ZHg7ouXAwU8GshD04SmS0yYfJ0HP_1DhYsyTHGNXrTz2yNZM6gQZxDjo9l9KJ0W3ATHYraUMhts8LT9JPDOS50XBrYZbyNnp2CHk15GDYXK1HARY_a2XYOI7uz1GhIfsk8DPIL-N-yCMBmt4TkxWLygoqYPbhIn8IeTi5aBjBZGpjFbBxnqNBT_0z23ZnyJ_h5u3CwZnC3xjrSe9u4g-XUUiuni7jh_jGxM8MR4yFD7_kPVe3RMcStsUQ7pY0bPvqZXmJ9lfVv7DdYyQGtiwC07zfqs1t4y6Nr8cj2A2-0ZFY3Q6ehpwLJFAm6X1ugoCNwwayWGCXs1Gl8NzqFfccR7cBmklYpp-E-WyHjBjh2HcBtvpB9rq-rw-fz6zZqabIbwipkC2Vh9BRNqmUxp_Unj5Idl3s9HBHJBVyT3j5jq5NSXDtTsq9nD8ZWebLJsot2P-G83_Db3dAbHatK-w0ODU2N0FV4e13iOj0DkThsbfYSU5E1-J2N6-TC8ig7d3NhA4Nn60CbTS18hRLBV9xFE09WntQVm_G00QfYofFPxKZ9ctnVWmFow3XBeIQIZRF_EQ0cVTHiPvhGgXHbTReHmSPcvWSmW_kJ7YEF1LPeKfvllpjrpw-4f_FHU9veh0v36mubB3lUxyvSpXR4yIf0wARBg5KQdyboIgR5opSeCeewrhUyinRG9F2KIk3qtQt7VHV6ST1brc15zM4ZCz3j5tj-CuTPkEa89TmNCOPtsY2nYdujDSLY0uaZdxIPwHRLil8SSEblOmDHvkYGOtti03nNIGS-zLUkRXzJNt4ohQfopsirPzv_IU5B5A1iNjgieuPE7mdsCovf4uiSd655Bf_utiPC4QCPMFJ2bHjVjdngTPXa9_dDZlxt6NjsnvkQ0UMAhmkWDJTY7tOAyFuwaPIo0g-znweHOTcIuI4QOjWVwFmRlUE4AesSEXt0_3PlaS2InZCItyUTGpFn6o6rb55pdiXQz32fU7K8Zhy52Sf2GqmqP2NFcbibjEIQAScg7tj_zijZuJOWb6DkJN1hmjzlFm7Wn6jv4lEvJIogFYB8vRpLb3dylJVica9WOCEjWmAwk1jwaNG33CJ_RxsbrB1q_TYxbCCmTTiU_s9Sm9eFuQ-Q3o936rWsd0Upuo5NVLhwx_IATjTXceEot_0w3ukMtYYstcB3pDFw5RI4LjQz30bUnMrYZCi8BJ1M65aI2vGqgD1ng4lGL2Tu9zCCiXRK_ivC-vuL8wuq9SFrBxRsNcXvaX4v1OmS8At1MlFvQOyB54et4mj1M3Iilg28veBtb2EKQb9acslUJzdQGn7rciF9ErmcnF1EMFmbp5vGbfb-CQp1axJsvRINVvRjIQ_Ibu71dFp1SAw8g1koag5xYYbKJLo0DE49SYkUPnecKdvpnoXcKiXELqo_6nj6s96waECe0mmXAbBWJbKc0MpWPu9daILdytaePlEt4KnVWbt3fPjBi7akPAxXEClINuCt5Sv7JNEOpib7bWL7kh5_5-NDNgFbnqnHUnJFVRl_ZY2epygx1JyDnn40F1MoeuVlQ2vJt0K3XotC2w9qR25STU7PDFdH-m3IzIRZHthLWJGuIoaPWuvtc8bDuc8NZbHV2MbyLTt42D5444789lGLt2MXfMSjm-xQDtryilCCYDjduhUlld9ith8niFYVO0kAfMSK2xtEQc_FrgC0qLnXaa2sUwa1ncKQ1haN8_F95w-TRbRJV2R_c6hss5C-ieZWCxH7uuqKCiSG0qOGG6K4I1tONcVfL4tonVlGteLbKSC7ynQtE8KBLNxfkullywIHa2a7SDmV2z3MzAZD0CAeFh13ZkFtjXK7sXMc_-T97ftWD-BE-jcxdx3jpzzW0WucnIUI-d7Qresmca5VhRGJ8h37Tfes12jbF3BB73APyS4WJH59QqYr38dcxorQUnqHIJ5FuNo4Q6gMW1jGPRm6zTf7ZXqscLEbmym_uJX52YPVmpMrqcTOX3rc8RQN3cERkh7Mi18_tNvBqAkNlPW6cMgehRrRAlKZ7knQEIbRB-h4XKaV2wf3Fn_u-4guPlS4PFhwqHr-uV2Cain5D42ORJERs6bvAvWx9u7YImNUIPCK3R0YY4R2Ci8JqTQSVqugPCYIE3uYfddzA8AE2Pefg8Z2HKeduHiDPiWwntwSWK7DF9YubegNqwF2-BDLA0DnljVaa2X7bjrs1wpUViij47gZCaB-t68ah-14_xU8oi5_byPZ2HlkMIimJX26O1SG6xGTOGmbkACnaiSVWtzwIGVKBHNXfQ6JkXfBHjIzaOBfSVgOTMgGLwfMgV6B-jlGCmKlzRqHFaybBeYFfZnUk9XybVt8VmTZkcdlAMhl-FRRSS5jl-fpkqC1EJrcdJQunweSs9d6EaVuF56LgDDgJKOLuKPsFoSx6hFaYokm6cMnOlcj6v1MNCvaoRCNZuednbIFrDpOeWKOE-NAXcOHFhcavYAoYDmddZrfanHLj3qhyqmgU1fUTGNxd11ubZOPKdtDJnubPS2rmAExv3CBqiWdfLreuxOCCJci6RFNuwVC0h2GkbPLsKrnhvmUQAMy9Wu58K_Aix_3uP4hLBxLMrKeSBAi2qVzcmr3urdDSu61zQZxmu6U_yZvZEbdunwGqJXVUjgVj65Kpk5pCyAvKp4tAKC_fVGElUqaPvCe1cCfuJVy6i5-6NM7BrMQOTdt5PYwieGYna2fJ7dcloHgvP_mcEAUDaNs_fGwNNLmloh0coc5uHC4H9NvIp8zwTR11oKPLc-bcDtHmrSj8cM87SmICWp47E9MoWbukOToDR2wqkNombiwfCkwexPDejSoXW8NzzPPMp4DlM4EwHb7fBNmDTRPJRkxAV4d9_KgdjZ5zq--NF8C3lR11OUjo6yER0GktR6mE9lVFvN_zyFcInqO14-DPWryw_-brsdQLTdarTkBcQ-kos1mpLPBLr8GkA4BL15Y3F0W0kZn0dYXdrnbQxomU1XkcXIT_B2Y8pqUnT84j-SbQxMgt9tpSsCP6y6e31etAWR-Vzdu_tCZ-m2CuIDUpWdquKjYAo2SQrLo-ye9G3plf4UHn75IEAXQtJ9LQz3JFI8TurWx87XyN_QEQ2NnDa-nU1MpsYNRu8e2z9e87xL-oG3HpJom8zp4l3FNn0mcHs1v8Mvr5B6fJTnIk8gPXhzTBHS6AVIDNbC6hWbF7_ejm8CILsX6sPiuBACWsl91JeV4PYxyTpO6I-ANNPb83G_Y1cO8JpYHG_8zejrJaJI4XCgcWpaEyz1L1LE6uNlU_RdjKHpNjFjmc82jZxkz3BLT5tKQ33l7TwvU1YOi4Cei9_pD1amRLMT0tto6ZBVY-XHgp8DgrW8nw0UHqcVb2HNSDpll0chm-Bu4RHZR3Ew4UyEMJtZmWoWkJ3keuyjCWeebEOtS_I_QM92iRB8GFcGwHCt5-82DDSJ4NknZvz1KNlvMIzGSFoZdhXx8WcsgEgF3j7sjPVM7M3NVXJWdazw-zkwNkL_wAS5-d9V770YgUC4HXvjfQTfWzP-vT51pgCMQY64iz2PKs5cnDY01nO701r-79Vg4apcNUzwEN3Q1wQ_6CPkdgZk7UyAJ6QM6sT0uu28Kc6Xv2FZpmPkUalb28R_f-nx6v4-nlzK8dWGTO0Z_bz5Q3efX1mjKwoND6iv2zoN2ROuyE7_XDJVOEfBSr8GSy_7waV32Vh9qHR-qSKFpDjHDfVddFIsgybo-NQ6IZoeHy0EUH1UbuHfRP52E5_wl5KipYU6aKxcc6PMvfIKwfO6SfEg-Kc9qxkUANM4RBf0IbiJNGCuXrm9adpBNmtLEyKYtw_w9zRGzGK6u22hFlzQTRfaIa2c3YjBevBE-B6CAxD6CvkzQLSN0aZsp4xaLQUkmfhlOIW2BAQ2Xm_D8ul0UJxSscRluNO4XbruA==",
+              "encrypted_content": "gAAAAABqxkI-3w55KoQPBmqvPh9aibWxVOP9DDwmhykX14uayMHVAyNuWLR0DX0Phaio9_Zfwj2dVTAYEi9zjPnx5mhGUPOctIoM_3e80Gie1MgOtkhl-dHD1x-5O0PIWtSY7xhk6UgSSLANXY0HaPjZqhd_ZTFcNYoyi7ZAZsgtabZa3OqMt-yZ9BN87BwCS3eaaYITG2-Ig5r-YoBe8AUNKNMjOOtdIngzvP3Z4qwDB8kbzsajam21gP3ixcFqMH31y5LhwUYlykvqxdeM6eWN_b4zcAtV2x67ADDCfXma_1YTEz7Yx-BGzDT6KOse7SpoN7Rf_fPO98jy2_kyM9FW1C-a9VsmG7-WMGRhX16xabPi__nav3DlzfUkZqz9129_p3oU_EhKP2fLN-WvzGcKN0eSYy_jVc6rGaTCZXxoF0YYjJn98fYmaqZih3OQiZYwxHmlmdmxpA-DzSPD3SQg-ygz1m9aaCPEOoLvaSmnqdTyyMgtQmdJP8gEuBR-vTpDQbMDt0lq016NIxNRpA4M5GehWxfw0TotIkY2gbMTDCPKbS1VGI1x4MiwBbkvjI16UuXiLdnaQOLYduI1hGXxRAaTXBHEte1-c03TryyQII_N-AMdUN6PPDPwdeHfzFv_Jfui5rs0lHQpsXQ3ZwidEZgLqKzpf0y4Sw7v8EwSPGhJuGibw0YzXx1AaHoi0Gs8CDrlC46irRThU68be_8PjoeX7kML03vXj6P6Itq8WPE2c6Yn7eqPUKRQIrJzGJOblQ-bOyIXV_nOYA3iMrzVwLiNLaL9PjlkGC3jV-zHF4ztE6HFNCCobsQk16xSg6Jp3Fl4BUbR6Jo6S8XHXkEqS_lJLxBAurQo6dtzyAT8dNw7lljjT2ZdhT5OqxKaV74AhTfqVtOYk2R_zXwiuEaYwZgws8DFGffMmHrLFO1NqUn1uRHJ6WsRfi_LqDU9L0QmpwRsa3C8SeEc2ux0fSM1pHZi4VDAYphthMoNR1UC3cNRaf6QFf5ywkltDTrik_HKOdytFCiwbtXABeEC5u3ZobQqDgKjhnlfKJA5YKW_nSIiCe5BSRYaUsd1WopBmdP-Tstiiesx2-GPe_nbjGvotKA6YLEKaJrfDrc0QjdiK1shqiwEFSLd-RYR4RT6XXrrLict2O5NxJlcFC5Kuf3TOtEsw6avTKch77oUahizfoa88OOec9ZGzlpe9pKDIuuWi9CbDKFSgEvJEAiufOdgKXR6HBUcW1m3caymGMknk-7z4NZUHugSf2DtB8Zw5BkeZyhZ2iBg5lGzhQz9s4y6sD7EMOzLpwohwq82b0SzjNqwD1DFzOXq78quCikbX0IJTbWlrej21kK4ZFxnXavxjV5sJkaPSHIT_dYe57Q-9HTyXgdhq4WpLn2X9kLuGrtFeXmXj6z0r7wW3OhDp6EMyha0fDYdMc8BfXOPN5jURd5x3LD3a83HEYRlISxY8OwgmDVnQ4LjgsfPvsa7mEjk1c4-LPhOXwTh3HyhT_UbT2tqgwgNx8H3_R7d6yT-L5tn7Gg9w6LR2HEL5J7Q6WB1tnQFLCjNsqG_5hPhwSlmxNeZh4LxyKCjJEPI594bre1whUBRaIQIwkLHLb1WUv0xBko3Q94sLBbV6qSzVHpNKvvfGMzslxsSIKtIlEu9mPDVsgEpvo7qxtBPfzz-mgZ7vqdvOcr60F7cLm8Phl4j6wFavm96gdNm1pfUZ-Nr9ohPN5YE6QJXARCxUGl5V07Cd0SVr61Dfy9IJdTbXArd1fMwGoZjS7HuE8ewztbRb_9Hr1yBN5BXcvIR1mcwvLOsKs3oWJbahsgeTOUVg4iiVLb7fQfCkHoWx0bhoYHED1_Jt6MqwQfamfvL5WNimQFlqoEvZadAKPTWWb0x7My0gtr0ROJpaUJVi3VhUH1vj4ueD4IEJdg_11TP29fEqgP8zuEW16bnE6Ia8JIz8TGe1yaMm6e9f7ffl9Gfrtl5mtmnLAA6UCUrquCrhYgcLvFFL9Pvl6uMQI2IlBF9DT9sOFDsulLSls5HAqSjTp37wdzhl-ugqWychKQ0D6PhOJxyg4khC7bM5xUNOQ5E5kKq54hOjkIFpJUGjIZU8C1cNrRJfEfU3FIwBu4lWsSOJ1vWARoWYZHQjnEzrU3xoY0PD6mNylQr88leSZJLpVnxySjEEdJ8OurX7H8BZ2i3W4WdaRO_FY1WQr_ZkTLHPNFY0dk4mdnepjkrlVJiFfoVNFmbjEO53grKpXxU_O6pRDDrMarcdlSDg95ICGjC91FxgVeXHHbRy8yEBuMRd_NQKPbQIEdAhUnE3MMzgHwqBOCfXawKkk2xJ6dZYR9XZ0qO6C_ch3wVZg4wlUdvR7BJRp0mbijDglvU_E4om_APZCKoFl4V_pAhVkCXfM9ofyk5J-RWYRRiovrpQRXT0gtmTU7rJ0mSH4CitWUUdhP57FVYOg61kwL-pftiPo-fulwoGTcpCA1iRdQwQ3FRvVZN2gCoIecRjxbrRS7-89TC1gCHPMV4ryQApI9VJoIP5FLil-CeXUvCJLJHuiwWANQyF1falbTlBy2mT-wmXhmcSnLGjI7mx8V4siL71o4b2SMemTvNN2-IzaeGmfAzDywxImper1PcWjbTmVxG6NGAPWWal9tbW8D069yG2JZoQLxBtoIlQb7NmHI76iMNTc_eMYnNG4_5LZu34XEXHJGWoKyNDUj5Yf_7eyJLurt2VknIGZOvNgBXsDAq7Z1pmwiKpykqS_hIHX_TlNQ6839N5BJdhZRprqhKx1aM0hcm6CLmIqoS6jDV_ujeyQUyl2GcJeJapqHLnfMRSCsHU2UriWwcMeozhqrWAgcQcEhc6wTfcXOIFLVW-3b17o93B2ZcN_3erxCoY1mDRIydHAlg-J_Sfo7qXpXsbNstfM6lP0pw2MxwfGBPFCG-AhkC7diKTPWhsNz2jrAeiLDrdpYvtd9Fzw4XK8FkDhC-oewpzqS9_JPRS0L7hejAn0upvF9dkl3WYf0yGNjgpHqV-lAImU4UCrdY35TNdf0g2I7BDLPYEaZKH2YAA5zzyZWXvRjGz6EN01kG5K18",
               "summary": []
             },
             {
-              "id": "mcpr_04445ed136d35fed016aac661d830c87d285e65ed670a3824d",
+              "id": "mcpr_083574f31652cac5016ac6423e3df887d2a34c2cf425efeaf0",
               "type": "mcp_approval_request",
               "arguments": "{\"query\":\"Azure Blob Storage\"}",
               "name": "microsoft_docs_search",
@@ -191,41 +204,38 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 313,
+            "input_tokens": 334,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 533,
+            "output_tokens": 310,
             "output_tokens_details": {
-              "reasoning_tokens": 448
+              "reasoning_tokens": 256
             },
-            "total_tokens": 846
+            "total_tokens": 644
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:13:49 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:42 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Search Microsoft
-        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_04445ed136d35fed016aac6618a4f087d28d234349c3755bd2","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
-        official Microsoft/Azure documentation to find the most relevant and trustworthy
-        content for a user''s query. This tool returns up to 10 high-quality content
-        chunks (each max 500 tokens), extracted from Microsoft Learn and other official
-        sources. Each result includes the article title, URL, and a self-contained
-        content excerpt optimized for fast retrieval and reasoning. Always use this
-        tool to quickly ground your answers in accurate, first-party Microsoft/Azure
-        knowledge.\n\n## Follow-up Pattern\nTo ensure completeness, use microsoft_docs_fetch
-        when high-value pages are identified by search. The fetch tool complements
-        search by providing the full detail. This is a required step for comprehensive
-        results.","input_schema":{"type":"object","properties":{"query":{"description":"a
+        documentation for Azure Blob Storage, then give one short sentence about it."},{"id":"mcpl_083574f31652cac5016ac6423abb9c87d28832a6fbd9a78609","type":"mcp_list_tools","server_label":"docs","tools":[{"annotations":{"read_only":true},"description":"Search
+        official Microsoft/Azure documentation for the most relevant and trustworthy
+        content.\nReturns up to 10 high-quality content chunks with title, URL, and
+        excerpt.\n\n## Usage:\nAlways use this tool first to ground answers in official
+        Microsoft/Azure knowledge when facing Microsoft/Azure related questions, then
+        use microsoft_docs_fetch for complete page content when needed.","input_schema":{"type":"object","properties":{"query":{"description":"a
         query or topic about Microsoft/Azure products, services, platforms, developer
-        tools, frameworks, or APIs","type":"string","default":null}}},"name":"microsoft_docs_search"}]},{"id":"rs_04445ed136d35fed016aac66195dec87d2b5a9961d4b9f4ba2","type":"reasoning","content":[],"encrypted_content":"gAAAAABqrGYdj4xPX0CgUZxpDDN3j7fnTJBcN17gDzzJ83VRR78G7-13K21Re0nJWOb3XB5eFrfKjGpBPXtzNxIRpCsGF-CKlDKX8Gge7kUH_I2ejVydLCTAKLppQ5Pgy4ZudarJuP7I2pnZQVt6c1WDxvo7T93mlHvGnKoY2-3YsyOstqftnnRsPVAke0R9HqqBioCGr8lO5hxD3iMtUiX3F2M1dlTnEIyet-QcGLdCiVKshL5r2UWPyBzHqqr8i81d12BzY6QG54KBfHqilybLjQqzdbB4h89tKaY1VV9fpSnB1t_kCz_MxuLX-grAi_SzBvzrG_Zlb6_IjEEAuZcgXv_XuD9Aje0qluBjUQJc_J0h5O2ONAgxtA1WKDCxrMgQyageHfEPIBDnvZ3MXqY43Nr15vDNBhfhjoErDnVjylInvJsWyPl8li7E8q2hpWfagy-vKxIJ024G7qlg8-xolBQQ0IzWWHK--MQmPbPB2NKzU3w3sb5VyYJM1JO_qpvuKy2mBdxuOxwLXL5MV0k4W7Tvbwq0yfS-BEHYNQN29f8sd9fb6hXG536BveC8xf2rtnXknhj0kpshGRFhRzezp6YD8l02g7h4zb-i-g-nHfVc5964OrUyp54eaf25LDQ_isPv53_qVBb8QJcqajh0TYbOSqExToUZxtX-8fZYg2QoXqC0EFzQx4yCvOXxA-KzsV4qsl4A_SnkDGw3zK-jXFgWBnllr7Td5TF28pEL41SveOMT-BdTBAa6ZHg7ouXAwU8GshD04SmS0yYfJ0HP_1DhYsyTHGNXrTz2yNZM6gQZxDjo9l9KJ0W3ATHYraUMhts8LT9JPDOS50XBrYZbyNnp2CHk15GDYXK1HARY_a2XYOI7uz1GhIfsk8DPIL-N-yCMBmt4TkxWLygoqYPbhIn8IeTi5aBjBZGpjFbBxnqNBT_0z23ZnyJ_h5u3CwZnC3xjrSe9u4g-XUUiuni7jh_jGxM8MR4yFD7_kPVe3RMcStsUQ7pY0bPvqZXmJ9lfVv7DdYyQGtiwC07zfqs1t4y6Nr8cj2A2-0ZFY3Q6ehpwLJFAm6X1ugoCNwwayWGCXs1Gl8NzqFfccR7cBmklYpp-E-WyHjBjh2HcBtvpB9rq-rw-fz6zZqabIbwipkC2Vh9BRNqmUxp_Unj5Idl3s9HBHJBVyT3j5jq5NSXDtTsq9nD8ZWebLJsot2P-G83_Db3dAbHatK-w0ODU2N0FV4e13iOj0DkThsbfYSU5E1-J2N6-TC8ig7d3NhA4Nn60CbTS18hRLBV9xFE09WntQVm_G00QfYofFPxKZ9ctnVWmFow3XBeIQIZRF_EQ0cVTHiPvhGgXHbTReHmSPcvWSmW_kJ7YEF1LPeKfvllpjrpw-4f_FHU9veh0v36mubB3lUxyvSpXR4yIf0wARBg5KQdyboIgR5opSeCeewrhUyinRG9F2KIk3qtQt7VHV6ST1brc15zM4ZCz3j5tj-CuTPkEa89TmNCOPtsY2nYdujDSLY0uaZdxIPwHRLil8SSEblOmDHvkYGOtti03nNIGS-zLUkRXzJNt4ohQfopsirPzv_IU5B5A1iNjgieuPE7mdsCovf4uiSd655Bf_utiPC4QCPMFJ2bHjVjdngTPXa9_dDZlxt6NjsnvkQ0UMAhmkWDJTY7tOAyFuwaPIo0g-znweHOTcIuI4QOjWVwFmRlUE4AesSEXt0_3PlaS2InZCItyUTGpFn6o6rb55pdiXQz32fU7K8Zhy52Sf2GqmqP2NFcbibjEIQAScg7tj_zijZuJOWb6DkJN1hmjzlFm7Wn6jv4lEvJIogFYB8vRpLb3dylJVica9WOCEjWmAwk1jwaNG33CJ_RxsbrB1q_TYxbCCmTTiU_s9Sm9eFuQ-Q3o936rWsd0Upuo5NVLhwx_IATjTXceEot_0w3ukMtYYstcB3pDFw5RI4LjQz30bUnMrYZCi8BJ1M65aI2vGqgD1ng4lGL2Tu9zCCiXRK_ivC-vuL8wuq9SFrBxRsNcXvaX4v1OmS8At1MlFvQOyB54et4mj1M3Iilg28veBtb2EKQb9acslUJzdQGn7rciF9ErmcnF1EMFmbp5vGbfb-CQp1axJsvRINVvRjIQ_Ibu71dFp1SAw8g1koag5xYYbKJLo0DE49SYkUPnecKdvpnoXcKiXELqo_6nj6s96waECe0mmXAbBWJbKc0MpWPu9daILdytaePlEt4KnVWbt3fPjBi7akPAxXEClINuCt5Sv7JNEOpib7bWL7kh5_5-NDNgFbnqnHUnJFVRl_ZY2epygx1JyDnn40F1MoeuVlQ2vJt0K3XotC2w9qR25STU7PDFdH-m3IzIRZHthLWJGuIoaPWuvtc8bDuc8NZbHV2MbyLTt42D5444789lGLt2MXfMSjm-xQDtryilCCYDjduhUlld9ith8niFYVO0kAfMSK2xtEQc_FrgC0qLnXaa2sUwa1ncKQ1haN8_F95w-TRbRJV2R_c6hss5C-ieZWCxH7uuqKCiSG0qOGG6K4I1tONcVfL4tonVlGteLbKSC7ynQtE8KBLNxfkullywIHa2a7SDmV2z3MzAZD0CAeFh13ZkFtjXK7sXMc_-T97ftWD-BE-jcxdx3jpzzW0WucnIUI-d7Qresmca5VhRGJ8h37Tfes12jbF3BB73APyS4WJH59QqYr38dcxorQUnqHIJ5FuNo4Q6gMW1jGPRm6zTf7ZXqscLEbmym_uJX52YPVmpMrqcTOX3rc8RQN3cERkh7Mi18_tNvBqAkNlPW6cMgehRrRAlKZ7knQEIbRB-h4XKaV2wf3Fn_u-4guPlS4PFhwqHr-uV2Cain5D42ORJERs6bvAvWx9u7YImNUIPCK3R0YY4R2Ci8JqTQSVqugPCYIE3uYfddzA8AE2Pefg8Z2HKeduHiDPiWwntwSWK7DF9YubegNqwF2-BDLA0DnljVaa2X7bjrs1wpUViij47gZCaB-t68ah-14_xU8oi5_byPZ2HlkMIimJX26O1SG6xGTOGmbkACnaiSVWtzwIGVKBHNXfQ6JkXfBHjIzaOBfSVgOTMgGLwfMgV6B-jlGCmKlzRqHFaybBeYFfZnUk9XybVt8VmTZkcdlAMhl-FRRSS5jl-fpkqC1EJrcdJQunweSs9d6EaVuF56LgDDgJKOLuKPsFoSx6hFaYokm6cMnOlcj6v1MNCvaoRCNZuednbIFrDpOeWKOE-NAXcOHFhcavYAoYDmddZrfanHLj3qhyqmgU1fUTGNxd11ubZOPKdtDJnubPS2rmAExv3CBqiWdfLreuxOCCJci6RFNuwVC0h2GkbPLsKrnhvmUQAMy9Wu58K_Aix_3uP4hLBxLMrKeSBAi2qVzcmr3urdDSu61zQZxmu6U_yZvZEbdunwGqJXVUjgVj65Kpk5pCyAvKp4tAKC_fVGElUqaPvCe1cCfuJVy6i5-6NM7BrMQOTdt5PYwieGYna2fJ7dcloHgvP_mcEAUDaNs_fGwNNLmloh0coc5uHC4H9NvIp8zwTR11oKPLc-bcDtHmrSj8cM87SmICWp47E9MoWbukOToDR2wqkNombiwfCkwexPDejSoXW8NzzPPMp4DlM4EwHb7fBNmDTRPJRkxAV4d9_KgdjZ5zq--NF8C3lR11OUjo6yER0GktR6mE9lVFvN_zyFcInqO14-DPWryw_-brsdQLTdarTkBcQ-kos1mpLPBLr8GkA4BL15Y3F0W0kZn0dYXdrnbQxomU1XkcXIT_B2Y8pqUnT84j-SbQxMgt9tpSsCP6y6e31etAWR-Vzdu_tCZ-m2CuIDUpWdquKjYAo2SQrLo-ye9G3plf4UHn75IEAXQtJ9LQz3JFI8TurWx87XyN_QEQ2NnDa-nU1MpsYNRu8e2z9e87xL-oG3HpJom8zp4l3FNn0mcHs1v8Mvr5B6fJTnIk8gPXhzTBHS6AVIDNbC6hWbF7_ejm8CILsX6sPiuBACWsl91JeV4PYxyTpO6I-ANNPb83G_Y1cO8JpYHG_8zejrJaJI4XCgcWpaEyz1L1LE6uNlU_RdjKHpNjFjmc82jZxkz3BLT5tKQ33l7TwvU1YOi4Cei9_pD1amRLMT0tto6ZBVY-XHgp8DgrW8nw0UHqcVb2HNSDpll0chm-Bu4RHZR3Ew4UyEMJtZmWoWkJ3keuyjCWeebEOtS_I_QM92iRB8GFcGwHCt5-82DDSJ4NknZvz1KNlvMIzGSFoZdhXx8WcsgEgF3j7sjPVM7M3NVXJWdazw-zkwNkL_wAS5-d9V770YgUC4HXvjfQTfWzP-vT51pgCMQY64iz2PKs5cnDY01nO701r-79Vg4apcNUzwEN3Q1wQ_6CPkdgZk7UyAJ6QM6sT0uu28Kc6Xv2FZpmPkUalb28R_f-nx6v4-nlzK8dWGTO0Z_bz5Q3efX1mjKwoND6iv2zoN2ROuyE7_XDJVOEfBSr8GSy_7waV32Vh9qHR-qSKFpDjHDfVddFIsgybo-NQ6IZoeHy0EUH1UbuHfRP52E5_wl5KipYU6aKxcc6PMvfIKwfO6SfEg-Kc9qxkUANM4RBf0IbiJNGCuXrm9adpBNmtLEyKYtw_w9zRGzGK6u22hFlzQTRfaIa2c3YjBevBE-B6CAxD6CvkzQLSN0aZsp4xaLQUkmfhlOIW2BAQ2Xm_D8ul0UJxSscRluNO4XbruA==","summary":[]},{"id":"mcpr_04445ed136d35fed016aac661d830c87d285e65ed670a3824d","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
-        Blob Storage\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_04445ed136d35fed016aac661d830c87d285e65ed670a3824d","approve":true}],"instructions":"Use
+        tools, frameworks, or APIs","type":["string","null"],"default":null},"SessionId":{"description":"The
+        logical session identifier provided by tools/list; use its default value on
+        every Microsoft Learn tool call","type":["string","null"],"default":"044c457c-7d14-4d0d-bc4e-4de7a2996610","const":"044c457c-7d14-4d0d-bc4e-4de7a2996610"}}},"name":"microsoft_docs_search"}]},{"id":"rs_083574f31652cac5016ac6423b307c87d2b1a1478da3da2ab7","type":"reasoning","content":[],"encrypted_content":"gAAAAABqxkI-3w55KoQPBmqvPh9aibWxVOP9DDwmhykX14uayMHVAyNuWLR0DX0Phaio9_Zfwj2dVTAYEi9zjPnx5mhGUPOctIoM_3e80Gie1MgOtkhl-dHD1x-5O0PIWtSY7xhk6UgSSLANXY0HaPjZqhd_ZTFcNYoyi7ZAZsgtabZa3OqMt-yZ9BN87BwCS3eaaYITG2-Ig5r-YoBe8AUNKNMjOOtdIngzvP3Z4qwDB8kbzsajam21gP3ixcFqMH31y5LhwUYlykvqxdeM6eWN_b4zcAtV2x67ADDCfXma_1YTEz7Yx-BGzDT6KOse7SpoN7Rf_fPO98jy2_kyM9FW1C-a9VsmG7-WMGRhX16xabPi__nav3DlzfUkZqz9129_p3oU_EhKP2fLN-WvzGcKN0eSYy_jVc6rGaTCZXxoF0YYjJn98fYmaqZih3OQiZYwxHmlmdmxpA-DzSPD3SQg-ygz1m9aaCPEOoLvaSmnqdTyyMgtQmdJP8gEuBR-vTpDQbMDt0lq016NIxNRpA4M5GehWxfw0TotIkY2gbMTDCPKbS1VGI1x4MiwBbkvjI16UuXiLdnaQOLYduI1hGXxRAaTXBHEte1-c03TryyQII_N-AMdUN6PPDPwdeHfzFv_Jfui5rs0lHQpsXQ3ZwidEZgLqKzpf0y4Sw7v8EwSPGhJuGibw0YzXx1AaHoi0Gs8CDrlC46irRThU68be_8PjoeX7kML03vXj6P6Itq8WPE2c6Yn7eqPUKRQIrJzGJOblQ-bOyIXV_nOYA3iMrzVwLiNLaL9PjlkGC3jV-zHF4ztE6HFNCCobsQk16xSg6Jp3Fl4BUbR6Jo6S8XHXkEqS_lJLxBAurQo6dtzyAT8dNw7lljjT2ZdhT5OqxKaV74AhTfqVtOYk2R_zXwiuEaYwZgws8DFGffMmHrLFO1NqUn1uRHJ6WsRfi_LqDU9L0QmpwRsa3C8SeEc2ux0fSM1pHZi4VDAYphthMoNR1UC3cNRaf6QFf5ywkltDTrik_HKOdytFCiwbtXABeEC5u3ZobQqDgKjhnlfKJA5YKW_nSIiCe5BSRYaUsd1WopBmdP-Tstiiesx2-GPe_nbjGvotKA6YLEKaJrfDrc0QjdiK1shqiwEFSLd-RYR4RT6XXrrLict2O5NxJlcFC5Kuf3TOtEsw6avTKch77oUahizfoa88OOec9ZGzlpe9pKDIuuWi9CbDKFSgEvJEAiufOdgKXR6HBUcW1m3caymGMknk-7z4NZUHugSf2DtB8Zw5BkeZyhZ2iBg5lGzhQz9s4y6sD7EMOzLpwohwq82b0SzjNqwD1DFzOXq78quCikbX0IJTbWlrej21kK4ZFxnXavxjV5sJkaPSHIT_dYe57Q-9HTyXgdhq4WpLn2X9kLuGrtFeXmXj6z0r7wW3OhDp6EMyha0fDYdMc8BfXOPN5jURd5x3LD3a83HEYRlISxY8OwgmDVnQ4LjgsfPvsa7mEjk1c4-LPhOXwTh3HyhT_UbT2tqgwgNx8H3_R7d6yT-L5tn7Gg9w6LR2HEL5J7Q6WB1tnQFLCjNsqG_5hPhwSlmxNeZh4LxyKCjJEPI594bre1whUBRaIQIwkLHLb1WUv0xBko3Q94sLBbV6qSzVHpNKvvfGMzslxsSIKtIlEu9mPDVsgEpvo7qxtBPfzz-mgZ7vqdvOcr60F7cLm8Phl4j6wFavm96gdNm1pfUZ-Nr9ohPN5YE6QJXARCxUGl5V07Cd0SVr61Dfy9IJdTbXArd1fMwGoZjS7HuE8ewztbRb_9Hr1yBN5BXcvIR1mcwvLOsKs3oWJbahsgeTOUVg4iiVLb7fQfCkHoWx0bhoYHED1_Jt6MqwQfamfvL5WNimQFlqoEvZadAKPTWWb0x7My0gtr0ROJpaUJVi3VhUH1vj4ueD4IEJdg_11TP29fEqgP8zuEW16bnE6Ia8JIz8TGe1yaMm6e9f7ffl9Gfrtl5mtmnLAA6UCUrquCrhYgcLvFFL9Pvl6uMQI2IlBF9DT9sOFDsulLSls5HAqSjTp37wdzhl-ugqWychKQ0D6PhOJxyg4khC7bM5xUNOQ5E5kKq54hOjkIFpJUGjIZU8C1cNrRJfEfU3FIwBu4lWsSOJ1vWARoWYZHQjnEzrU3xoY0PD6mNylQr88leSZJLpVnxySjEEdJ8OurX7H8BZ2i3W4WdaRO_FY1WQr_ZkTLHPNFY0dk4mdnepjkrlVJiFfoVNFmbjEO53grKpXxU_O6pRDDrMarcdlSDg95ICGjC91FxgVeXHHbRy8yEBuMRd_NQKPbQIEdAhUnE3MMzgHwqBOCfXawKkk2xJ6dZYR9XZ0qO6C_ch3wVZg4wlUdvR7BJRp0mbijDglvU_E4om_APZCKoFl4V_pAhVkCXfM9ofyk5J-RWYRRiovrpQRXT0gtmTU7rJ0mSH4CitWUUdhP57FVYOg61kwL-pftiPo-fulwoGTcpCA1iRdQwQ3FRvVZN2gCoIecRjxbrRS7-89TC1gCHPMV4ryQApI9VJoIP5FLil-CeXUvCJLJHuiwWANQyF1falbTlBy2mT-wmXhmcSnLGjI7mx8V4siL71o4b2SMemTvNN2-IzaeGmfAzDywxImper1PcWjbTmVxG6NGAPWWal9tbW8D069yG2JZoQLxBtoIlQb7NmHI76iMNTc_eMYnNG4_5LZu34XEXHJGWoKyNDUj5Yf_7eyJLurt2VknIGZOvNgBXsDAq7Z1pmwiKpykqS_hIHX_TlNQ6839N5BJdhZRprqhKx1aM0hcm6CLmIqoS6jDV_ujeyQUyl2GcJeJapqHLnfMRSCsHU2UriWwcMeozhqrWAgcQcEhc6wTfcXOIFLVW-3b17o93B2ZcN_3erxCoY1mDRIydHAlg-J_Sfo7qXpXsbNstfM6lP0pw2MxwfGBPFCG-AhkC7diKTPWhsNz2jrAeiLDrdpYvtd9Fzw4XK8FkDhC-oewpzqS9_JPRS0L7hejAn0upvF9dkl3WYf0yGNjgpHqV-lAImU4UCrdY35TNdf0g2I7BDLPYEaZKH2YAA5zzyZWXvRjGz6EN01kG5K18","summary":[]},{"id":"mcpr_083574f31652cac5016ac6423e3df887d2a34c2cf425efeaf0","type":"mcp_approval_request","arguments":"{\"query\":\"Azure
+        Blob Storage\"}","name":"microsoft_docs_search","server_label":"docs"},{"type":"mcp_approval_response","approval_request_id":"mcpr_083574f31652cac5016ac6423e3df887d2a34c2cf425efeaf0","approve":true}],"instructions":"Use
         microsoft_docs_search exactly once when asked for documentation. Do not retry
         a denied call.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"mcp","allowed_tools":["microsoft_docs_search"],"require_approval":"always","server_url":"https://learn.microsoft.com/api/mcp","server_label":"docs"}]}'
     headers:
@@ -245,7 +255,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:13:54 GMT
+      - Wed, 07 Oct 2026 12:59:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -269,7 +279,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4323'
+      - '5808'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -281,11 +291,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999840'
+      - '1999760'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 4ms
+      - 7ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -296,15 +306,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_04445ed136d35fed016aac661e477c87d2bf67427e0f11e7d0",
+          "id": "resp_083574f31652cac5016ac6423ede4887d2a27777539f564697",
           "object": "response",
-          "created_at": 1789683230,
+          "created_at": 1791377982,
           "status": "completed",
+          "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1789683234,
+          "completed_at": 1791377988,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -315,10 +326,10 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "mcp_04445ed136d35fed016aac661e79f887d28667733b5f53dbde",
+              "id": "mcp_083574f31652cac5016ac6423f0ab487d2b5308ef156ecf2c2",
               "type": "mcp_call",
               "status": "completed",
-              "approval_request_id": "mcpr_04445ed136d35fed016aac661d830c87d285e65ed670a3824d",
+              "approval_request_id": "mcpr_083574f31652cac5016ac6423e3df887d2a34c2cf425efeaf0",
               "arguments": "{\"query\":\"Azure Blob Storage\"}",
               "error": null,
               "name": "microsoft_docs_search",
@@ -326,14 +337,14 @@ http_interactions:
               "server_label": "docs"
             },
             {
-              "id": "rs_04445ed136d35fed016aac661f614487d2ba2b430080cdf088",
+              "id": "rs_083574f31652cac5016ac6423fe87087d2a007a7721e1166fb",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABqrGYiQvaUcO8X8K2rF7qurgNa2ZsMV8p4Rey4vQpbjeBxUqNWwTyZVPCEP7Q97Te7uDUlCvVg59pnwvqe3FSWew4GbkkhZrfyCiAEe6j37P3729oUcIZFUiy9_rIx3S7jg1ivSxPYdoBe1CdCR3EqxPrTnZRvybxDtP62zsU2GIRYv3mnlGilCArsLl-LDWQKpKEJWrEckLcPjXiuaMuhON1uPGJbSz5KEPxH_oXcxs1he5njJ7VlCFVPYOC4cDCRdsScXqNJ6BkW5cPscVMvyHzoKZqy8H7qvOk8safNBVeAnnK_6yWDGgofSDDrISKITP3hjIwcUjh_wDUVkp_K5iicjSJCiU6frWAGsWqKOR_hQRnGsVM0FW0yvZrR7UWXzWXskiEDO1PziS3saH6cichr70TncPjkROeYuNd8H4Lot3BvrkAFUXIeD6GG4DiFmXUmn2nPssOwpP1aZmo5wkyBIvwej-LwEa_YxZi5QS-PhJDmnvnx9g2hXtNStt4ps8Xb5t4hZmAeDC0MxVM1E0lLPWiG9FiviVI9ZhmXaJ1RnGUJ0aGoSc5P0QCkPXjwg5Kp_2U6FXOsZtJtpYfJfUkMGAo7pSwq93Z7tI1iR8xwtVvNgL9OqmwnQD2VJRT78cpprRS2MsqbeAFr80DYQ4lfvIyose3vWhANroaYbvYhDdlkUIQjXhDL1QRUBBXApmOqPLPorloWfv5wE_L-mOT8rnwL-DwST3LCNQ18uETOcV9VPYrytpxO4AT4AXqe-tEC4e2nWMbYn_T4BixftKGCQmGpNUJ9ZYH28ZtrrnYb_xFif43ty-ppqtv6g_AqZxoJ_KVhREVvv1O39jCAORW480wh99aw13Zgmb934eAK15XagrJ4OOAd558tgKkAqUAptULMzxDvzgaX4RTThNjND6olgSBpceWh8HcmeVxCD5Sle_EvFvfgS_NFFCuAK3tMe6kcHIkrDu_26d6q8JW7XV6WuLqoC8tee5PnBsvck9qttL2q8OrsMEZhrVybbXv4r6PDD5mwXYqujt4-EU16aM-66vh7p-iukGEZTOww8A4DOMOXLv6GJmh8kQ-KMzg0fX3a16UY3ZpQ8p3JDSVJ5x1n1FdoYAuHlRQGFBV96-jz4iKwt_hOpcZhe1CG-mo4Vs-y4OBG8RA68ANzUXGg2IbDVyf9sGOrN1qExMhADsq9SQpxC_w6rYSQoIKNYcFouH_2A6LLnl84WqsZVNQHUHxh9TgdubtUCL1cs7P3y-tZJz-YDPRXGUFcZDk8IMRhV4RZAwOviqlVpveeYQ3Ql85OCKjtnm_z9qYWRfKQT-jMBrWJ5pLCT2zE2QCleAlNJgzcZ4Z1gFTKdZyIHqvw95eZOPx0AeokxwfZ7jwr-Uwrvn9gAPRcoUhUOph7BH3Fd04M5e_QRy6Wm1hd0dJy0Lt51AKcWll09O8ydlHwiDS6sgs8wMctkF1Auq-bfcqVJmM7b9SniZ8rkjumzceeSD_0su6QkZpNwt_yg3F6mFRSNFWjwrO8XJKgQor-0FM0Wh6Bgcd-V9Wjm_qHsYQKF55r8CIhqxWe3kb9-UQAcT_Lriis4m3x7QumVn5hh1Yh8vMSenhh5UuG-LEPGbEYe6KzUua53izNv0SUbZ3QaNgZCnQShJBhVJURVFSIsFdUgaQ8ipYS8AwnG98SdzdIvzGIs1HAfBGaPD_SSHpT7lr1uMJfohMVvmLTdvly_4_FYoJ4S981BaSS0R4GVoUjEiiEhCXxJ02b16pHQ7Q1re1phXPcFSX8CpYzRex1M5pr6mn3jcDedCm-54E2Hs1mYYZfQ_xjaaN2wZ_kHGKTs7MhwAFklh1Cw_zpXKPCai-ay26zw3Q38kSZ82To-k5aONXTO1Mh6cIM_l0u2cIGllHRn47ZSsWXlk_R0I8U4T0TIxsMjiZSRFlu6OA2drmTV_pDkYKivRZgYBzXmwfEl2zCRezidU1hs89KdvWE-rjFINGhd0kxa3V0tem65WRNCbcMyuGugh1Lw76795pOHMZcIrRIlsawwnkwEHalfLufxDe1ubsUKU5N3BRv-gpKh8Kfl1SpKT2JsweD3lGgmo3G2zgFVvWXl_bJW9BA1WVH1qQGavMaN26SFi5GawE7OT-02YVqnoF2KvnO-VZz9slDyxZk0uPvi_Y5yWez0s6JI2_V2no8IaT4aYw3XkKjzVtSlf4PzSFkjXhhcSGFa24N9r4WXDwf7GY-Fd0TZ2r-TTppui7CelRp5YOG9UHwqzxv_ZDrd5tir1fuKwkAV7NnFcK70vgn1FKRi0uFAlwxf6O2L1RPdHaZlOquYkQDYMIzOyRrff23Ai0L08I8G98Wy-jPqUxv1R_TXIw9YWrNu1SRA_gC8XQjdPgl11YyjdmF2CUieMPJSYnPz782gZAKuUXCpxSl0wRapdeYw6HLJ7h7phcOBhs4mj5JgJz3X-ykeJ_9tkzOPWfQVPoKgqbyRmlOJCYiVrh33eZVuVYEHr2Tif_Ky94tFecX5eOBUk7xrXHUHhGbXkyPvzA3MkkwAgVVJlKmL4JSfAAHDjCa-A-ZkigcuvUmYNCcMlwuxjA9QOrd_0BwUAFdUBmTg3huir3HkUG9LcqDxnL1GVjaCMorB1rZQ7WZ-4KAyFyTOHz3Qy2pyPMbJfp_NaEreCrD3IuCjDMbm1nWWfvJ49c8NEn43JueS-u1vJU0XDDbwT5ZzVuTs1uoEYSHaBifr7_77CG5WUp2aYpnoF4sJUckQVmSa4x29cMNk8iAo8zMoFcHELyGd_n9vz4KqRKWhXkWsHPXrGg2rAQZV8lhbGEE0RerjZE6sZqb3Oxwoonde_d26uMfMGVU9oRCKu7bxgwNiwI7evaDw8lUJb9gn4JmNLZWqdUrF4di0kQKuRMC6YkMBqLLCS25Z_8wK-N2NEZlUOvuzxEyUe54dWQgEgC1SKPUtu_txOS8bEsFzo_y3nwCVAYUTho48Fzn17WrEUovAvvIjmpTzMwLXh4cZrsklOPSD2F8XZzX2EMiwB1DuWAtL1uD1P7cXj65ifCK5z1S4hLuJIYc6pPo7EMavkaGkSk0uHjv2xGHnk0fNZOOjIppP892cazYu8jxEBxPh5Uce3YgmMGf5-SOlEvUiPYmmfROoJGlh64KqLFM-HEipdFOos0ieu01yzQQ1evcVLjqksDEFQMP9YNMQWhai08NSyY5NfMNYFMeCOucatTkNhwtpMjTNvzInOPXeqYdTh27f1DYt3_--LaXMj4mf8rEJzMFajAy93Z114Te7zd_rdUDH619m6_G777Tugg78K-HPpwupZyA7Y_QMdulmTKuXIKoWCB9wMpOqL-ktXdMgz9mFFZEkZSQbKRPCGt4l7hxsHFx1YI5AtkyLOeKP8PqxQNz_NF9uFHMthaWZ-GC-zGCWU3xXJW_0f4oAugxwWDgvj4EY67o7sVevhaU-jS5HgJV7VUYslHFiFi6N0F7X3CcmaBewfq4UqEaFtXXGfJYMEoY-ldPUGHkPjA7kfg_tLW-8D_0BZE5H7kfytuL3Tmhcujk4qVFGWsQMrtJipYrXEE8cgBV2AUnSyLnQk-ceiTgWwR5Ja1Va4sGSEZUfUaU6pWIJicZjwOrvdwtUD8Q_bPNFmSmodNWPOHqVMeTMHTQbhbYncUHiZn2euO6qp25KWWkqU0xABMROJH5XBWHTDROAg3MQthtldqjZM-m",
+              "encrypted_content": "gAAAAABqxkJEm2FEc5lToZuZLW9-mgQ-m-YqPTFNm3kFbss9N28oCKnOIahMGlrY8hEJZiEaI-NuBs-xwAMFZEoI1uARvwYX62CnqkosZeeafibBubg-8KkoOCSJssnQGAKQujB70pvUfuUuI7Aa-5nIQ0VyIX9TftwNsAZxYBxFjb4hmA0XExJ5dypFZbFIP9U_fb6k7gsxxiqXa6VMhBO0Ps2kvhh-ZdKDDh9hYTEQ0BGmioL06qO3AxxjGc4nUJajcUpmc3hKogdsVOOKbWa5qCzuFUx2v-1-UFMeUAIKFN7r3OekcUJCiC7h2DpUAfbygvCw3bgcoyRCYslMY2OkpjXUpxzPFSfaXenZwQslXeFGae7ggs6mvHB4nheW0KnQZb4sflAlBQ_eciBHQFOkbfX6JAnVtQA3u-N35D56wH5AopkooxMxRpmaeRc1ZcoJyiHCRYs2p2pxIOmtpmkjJEGC-Xk-isdLkkzmRgIEtKDh24jMVC-ZuqGFMrUQbJO9OfqT0AwhW3bJCDOMITfnx1c-8qQqcW6kY1e3kkRVUVqpFWsa4_YSPG2LjwtuBlpSeSBD84nkXUexcEghtd401_qUyypFx_kFL3eMNy2rHEShEGIr9gaxONJkgRfyRcC7Wd10V4eNyvYzbe0RviVdJdQWPQZ2bQ3hesqtFRtCzdDjC8gLzGwkf6SWmVvuBjKCwfW5yx6TgZOwGdyM22E_rLccDB28PlFgZT8IBVUEmoH8yETKdHmOvBODNlAxbMlVcTG8Exb0vukIUgOqg9vmyeiVblkHycCyewymjayXi76VehfTH0HMFYwFmRbZWrpZXD6XJbxYI_lTZKNLxU18PnpSNcPyZ2HLD-NAWaF8ViFa4qDQRElVvoh9ZGw78_27ixALjCHqkoa5ZZwiNtfafNsYesVMyhnqN98-a9XcfuLc_o4rcUB2nJBRmqpE5D9feAQykuiNeTzFgN-9fyLWLvzeSfY0cf7wddoR94ArvkHKjeOGnnvJy--gph6o1k0Zo0AVPDc_4kHoh_67Iz3Y7WkiVHjZhzjbdQ9k3r8HDAv-iVOdpvMMvuJs17TuN8TZCHHSQotPTGRxhl1LCo-rP7Sn2YV1pHAmMKcJGQvFhXQt56feiZFlnX8Rcm6YNeJa7nz2r0iQ8Ci55__lKx72JCOH1EUnerMO73pPkpaJDblxxzaaHxglmu8aKPMB80A0g3480N_nDD4kjOglakyH7AX0W8ElcLhSFDyWl_U-7M8Kf7ao2d1ccC7GW98iJRvE9Mu23_6Cloqy7vdAQm5bcqwL99CHb0Ti_aHrV3wsKbQkurQhYn2jvdvOytxoWJ6nJlgawOemHOyRG9U9MKiZz2j7xNJLiXs02x8wNvhyWcPFGpbY0t7nU9b8Yoy2ROSjXNEbS-de7WcSAa8f09F20badg2bdF3XFHV1NTayJesYoEcMsMUZL62kOUCZO53r0UGO0Lhw2G5_MVhG8yTZnSs1grbbyOX7Qj3iV8dOkdzjIgg2uATv1jLVJ0m_qPzTchhmEyaflYw3hqUrIP4gymfnKvXZ1XgX-cb9ygKK8OSxBfhzMkz9Zt7x5EY5KHMi5d-7jM8SQSCChhMaGyOIov2l4i-UM4b8Vyao4XSPJIMOT--XaVE4WfpkSmls2tGAM4Ejxgb6qGYYwXrRPpyxCFH3M2QRLBzBBz4r3zYrcOTk4fO-RKe91UMT2Pf2tei0Weacu4nGC1kP-MNZKxoXj63vvRyCgbgBD1xwXzkbKqXrrwfrxtu0WztWSiRZT3emoeBWaj_DwlA1f0rXEjSL2Ymp3FOYZ29OzIeIDXIaGrmgi8SbBw5PYiOZApjLoQsyE5LNL-HSCujOZd7bEzbwCUkXOB3J55zmctodQDiBPSPHgTxnajJT-wKdo_bWngjSJyC3K99s3pPoEqd-DhBO2GLDGJA4lrSkGUIYFxQ2ZTH9PnTgW1gkvxazCmmWz28lZaRyhVfOoiBJT4J7T3DLjKayoLs3HSYmRt9RRXY3EGGMJqiTdw-VfyTpLAeIiIJFjvL8JimA_ojcUZotdaVfwoasjBc1uF7HFNFDna62UhirmDy3j7YbH8ms9ycg1pQEbOJfRNCcnZei5S-2hV33osAK4LXewwEh4T0jd1bhm_tUMGjARvFr7Mb8lYmHwngTlB7th28lRFJ-U8TEZEaRZSIpouOlupqATmmsPmcaRZFA7I-ppqYrLfujrWo9YE5G3L0XJHdhQfk138XifpeB3oQIHuJNc34-k3RUd2_axgP-Bhz27wMWUh0Wh3_0xlj43ybTNpEoRblbVIxR6LdHtPNHvCLT0lipDf7ZHHGkPf8GSAxSiKia23DNqPVeOIAroR23OBMLUgWp7dr925_hYkWOpj7tzYjJHBo3acg69B_RRNJOr6Uwto4shWX0zEiMzfvi7-h7OdaOS0YKYNDCnR-H_6R340V0q1uA4uqLNdVQWfX7tTbgfPvAWlWFEb_kkkaKQEkV81TG7nPy-YpAfRMj_4kIoiBFVoIoNjeFwSRx4pGRxZzrbVVr49feJAzhHqJ70cvp6ZlHYPMX2Yp65dGR-5OCLI4U_28mHTU1uqGw5Rfm2eZ8qw_yHQLCik1q_NJj5rRibBPLR8trWnZ1ts_X_xDsT_uPjknDFDnc8FZ9gY-ygkACnVvGzyP7e9ZOGD-BLWBd0R6vXbwQokHg1hdz-fp03vDsVc6yHrZZ8hk7lDLqEbjCn6TY4VAJi8QED-etAEBLcN88PaMEaa2fabm7aKkgFHkf-uT2SNo9AAA5TAtMF36AnkQvDl_OKgHnNJMEcU0970-WdW6JoJxOrMH3O-XYX56gxB-n6XM4_bblkX-lZEwSwmvoPXAfKQYJU2_sa8tGwGddqSsn2yu0KMpbJNtfTTEmWZUYirF07EdEQi6RcxoyMNP-6zZLFgfV-nBBjcf6NbTJHPMwv1q4IQZr9bbJZqhl9zPylAgSOTUmCnmHpWyWO64V799o934RDzvXdwNTHSbTTIDitT3pBLtXpb0Gsad8myj6HXmEfOD-f5ds1Cwqa-yevl9sE2dL_SpJNkXLwya9V_CW7dFa6lQs6iT1_799Zjx8biSt0_UHrJvuBAvacWDdXxrbieU8KaRqscd1SSFwz5lWSnq_9faalhwdewiFxG7tx7hvkXKE5jPY-oXFNYCrucjdIO_OrdRo02ovVhVQdOZDC6cEtPXHGVxvVqJAUWpGEv8fRNk9pu4cFUOveAyeu8EcEn3VvHvRfpVsnphrD23d2dRuJip9mswU-hfUe05bbOOB1lmnesBDZU8DTcE0jSWphH3VnNF_w9lubktFqZVy-A9H3H9YsVy-USxLEeGqJyW9FEaFydad5eUYorx6Ddf0-1GD882R_h68NCORK_JHyL2LgROVQAXbGuzj-qac_o4BRXEgqdLGaDbTroXhpjwZCSmOuZN95KrzZ-Q-6tVpTKSOeefpP33_FS5zZHdlM9-7VmchwPaFM9NSIEk7vElK24xD74uBcf3hWvIT06sq132T2_v2OBSxUvps96RB57Saoq_WAAXFpVgq1n4NkLhfXPxvnDV0QMuB95NXu5w9SXujpC0_0yglW3FHqOFrQ83U38ZPzppGt0lSMvz8_oq-2Doq1ZhYxQyiMwP2O-D1uj9xnAieiOaNFn_RrrhzptCzKU3Df_Ue71cK2fWGcUjB0dK2qiLselKftxR3HC-xXGzvmvs6UDAH7Mj2C3frj0L3yfRXbR5BUTLTd18jSmWD2RHOFzOdtSRyxk7sncOotic3tXG_kS71vhlHHUgm5T6zsBNu2UHU0mxxSElO8zu9X5mG_6AljMqpxPzhl7rl92qyMKDaTrkztPYYCaUixOIev6rkJ2pr6eAZyYkb3SxZo2o7NZAhipJnRRLA23bCkA-QP6EOCJ2pq0vfVKYTIKtrLkbGL2Sm9_Ib-O6biFn3IaC5kk_yLeHSHRQhhSAEzo8CvR4wz1arne-27fvff9o9HdG-N7D-G_QdGm-p06Lm7YqVVupLfeliAGjWGp3t2MveS_f6RyvQWHFpm3PmhSvxBh6nr5W9iFPgMu7JTdk1oWc_VjZKLGqEhSu2kYAGedCpMruVqfoikl7t0TvU_qqoENz_RlAamp4GcxoLYwk3FghMQMPnRk_Zh-pNOS0NWAedZWbQ-9vOB_aJOHxkmgKHEaRnl2tHGMSHgSWMUgvce3rjYNDSeEWSv8h-pRpHds3qMYq6mc-Ch9Q==",
               "summary": []
             },
             {
-              "id": "msg_04445ed136d35fed016aac6621e7d887d2b6c262ae545d127a",
+              "id": "msg_083574f31652cac5016ac6424456b087d28a8cc986fc4d978a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -341,7 +352,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Azure Blob Storage is Microsoft\u2019s cloud-based object storage service optimized for storing massive amounts of unstructured data."
+                  "text": "Azure Blob Storage is Microsoft's object storage service for the cloud, optimized for storing massive amounts of unstructured data."
                 }
               ],
               "role": "assistant"
@@ -404,19 +415,19 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 6066,
+            "input_tokens": 5863,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 384,
+            "output_tokens": 464,
             "output_tokens_details": {
-              "reasoning_tokens": 320
+              "reasoning_tokens": 384
             },
-            "total_tokens": 6450
+            "total_tokens": 6327
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:13:54 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:48 GMT
 recorded_with: VCR 6.4.0

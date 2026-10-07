@@ -13,7 +13,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 20:38:54 GMT
+      - Wed, 07 Oct 2026 12:59:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,21 +52,21 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1404'
+      - '1313'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '15000'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '14999'
+      - '4997'
       X-Ratelimit-Remaining-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 4ms
+      - 36ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -79,16 +79,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_07be66b486ddde65016abc21dd1dd087d0bdf5eff60d4490eb",
+          "id": "resp_0e74dec955023983016ac6424b45d887d2a9c53af63b2387a1",
           "object": "response",
-          "created_at": 1790714333,
+          "created_at": 1791377995,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1790714334,
+          "completed_at": 1791377996,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -99,7 +99,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "tsc_07be66b486ddde65016abc21ddc1a087d085c0a7ad5a9af158",
+              "id": "tsc_0e74dec955023983016ac6424bdcfc87d2a417307cf3183518",
               "type": "tool_search_call",
               "status": "completed",
               "arguments": {
@@ -111,7 +111,7 @@ http_interactions:
               "execution": "server"
             },
             {
-              "id": "tso_07be66b486ddde65016abc21dde35487d094fc370b3ba0073f",
+              "id": "tso_0e74dec955023983016ac6424c01a487d2ae050e0961ecb9a0",
               "type": "tool_search_output",
               "status": "completed",
               "call_id": null,
@@ -142,11 +142,11 @@ http_interactions:
               ]
             },
             {
-              "id": "fc_07be66b486ddde65016abc21de3ef487d08f64a274709b0b87",
+              "id": "fc_0e74dec955023983016ac6424c693887d29e32d5d0e09ac079",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"city\":\"Berlin\"}",
-              "call_id": "call_6OX0a4LmdTrqiXzfGTcHCAbY",
+              "call_id": "call_xXOPlVilm2bRwTNHDwmc2lxb",
               "name": "weather_lookup",
               "namespace": "weather_lookup"
             }
@@ -260,16 +260,16 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 29 Sep 2026 20:38:54 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:56 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is the weather
-        in Berlin right now? Use your tools."},{"id":"tsc_07be66b486ddde65016abc21ddc1a087d085c0a7ad5a9af158","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_07be66b486ddde65016abc21dde35487d094fc370b3ba0073f","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
+        in Berlin right now? Use your tools."},{"id":"tsc_0e74dec955023983016ac6424bdcfc87d2a417307cf3183518","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_0e74dec955023983016ac6424c01a487d2ae050e0961ecb9a0","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
         up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_07be66b486ddde65016abc21de3ef487d08f64a274709b0b87","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_6OX0a4LmdTrqiXzfGTcHCAbY","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_6OX0a4LmdTrqiXzfGTcHCAbY","output":"Sunny
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_0e74dec955023983016ac6424c693887d29e32d5d0e09ac079","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_xXOPlVilm2bRwTNHDwmc2lxb","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_xXOPlVilm2bRwTNHDwmc2lxb","output":"Sunny
         and 22°C in Berlin"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather_lookup","description":"Looks
         up the current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"function","name":"stock_price","description":"Looks
@@ -277,7 +277,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -292,7 +292,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 20:38:55 GMT
+      - Wed, 07 Oct 2026 12:59:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -316,21 +316,21 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '709'
+      - '908'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '15000'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '14999'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 4ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -343,16 +343,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_07be66b486ddde65016abc21deb03c87d0b06c714c53ab5840",
+          "id": "resp_0e74dec955023983016ac6424cd3dc87d2989ac0769e962e8b",
           "object": "response",
-          "created_at": 1790714334,
+          "created_at": 1791377996,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1790714335,
+          "completed_at": 1791377997,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -363,7 +363,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_07be66b486ddde65016abc21df2d3887d0a267f0c3d00faf7a",
+              "id": "msg_0e74dec955023983016ac6424d7dcc87d283beec14759212fa",
               "type": "message",
               "status": "completed",
               "content": [
@@ -371,7 +371,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The current weather in Berlin is sunny and 22\u00b0C."
+                  "text": "It\u2019s currently sunny and 22\u00b0C in Berlin."
                 }
               ],
               "phase": "final_answer",
@@ -484,35 +484,34 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 16,
+            "output_tokens": 15,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 651
+            "total_tokens": 650
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 29 Sep 2026 20:38:55 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:57 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is the weather
-        in Berlin right now? Use your tools."},{"id":"tsc_07be66b486ddde65016abc21ddc1a087d085c0a7ad5a9af158","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_07be66b486ddde65016abc21dde35487d094fc370b3ba0073f","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
+        in Berlin right now? Use your tools."},{"id":"tsc_0e74dec955023983016ac6424bdcfc87d2a417307cf3183518","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_0e74dec955023983016ac6424c01a487d2ae050e0961ecb9a0","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
         up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_07be66b486ddde65016abc21de3ef487d08f64a274709b0b87","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_6OX0a4LmdTrqiXzfGTcHCAbY","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_6OX0a4LmdTrqiXzfGTcHCAbY","output":"Sunny
-        and 22°C in Berlin"},{"role":"assistant","content":[{"type":"output_text","text":"The
-        current weather in Berlin is sunny and 22°C."}]},{"role":"user","content":"And
-        in Paris?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather_lookup","description":"Looks
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_0e74dec955023983016ac6424c693887d29e32d5d0e09ac079","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_xXOPlVilm2bRwTNHDwmc2lxb","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_xXOPlVilm2bRwTNHDwmc2lxb","output":"Sunny
+        and 22°C in Berlin"},{"role":"assistant","content":[{"type":"output_text","text":"It’s
+        currently sunny and 22°C in Berlin."}]},{"role":"user","content":"And in Paris?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather_lookup","description":"Looks
         up the current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"function","name":"stock_price","description":"Looks
         up the current price of a stock ticker","parameters":{"type":"object","properties":{"ticker":{"type":"string","description":"Ticker
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -527,7 +526,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 20:38:57 GMT
+      - Wed, 07 Oct 2026 12:59:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -551,21 +550,21 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1549'
+      - '798'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '15000'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '14999'
+      - '4998'
       X-Ratelimit-Remaining-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 4ms
+      - 24ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -578,16 +577,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_07be66b486ddde65016abc21dfa4b087d0b8d4f37791500493",
+          "id": "resp_0e74dec955023983016ac6424dfafc87d294073874e99a463c",
           "object": "response",
-          "created_at": 1790714335,
+          "created_at": 1791377998,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1790714337,
+          "completed_at": 1791377998,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -598,11 +597,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_07be66b486ddde65016abc21e0ec3087d0ba62a4ac4fa5dcf6",
+              "id": "fc_0e74dec955023983016ac6424e9c0087d2a45d1a4808bbf18f",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"city\":\"Paris\"}",
-              "call_id": "call_v9leSSOOIl44IQIM8DnSH3P1",
+              "call_id": "call_d1QtInzaByq2dFtuaaiGMaJG",
               "name": "weather_lookup",
               "namespace": "weather_lookup"
             }
@@ -708,7 +707,7 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 661,
+            "input_tokens": 660,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
@@ -717,24 +716,23 @@ http_interactions:
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 680
+            "total_tokens": 679
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 29 Sep 2026 20:38:57 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:58 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is the weather
-        in Berlin right now? Use your tools."},{"id":"tsc_07be66b486ddde65016abc21ddc1a087d085c0a7ad5a9af158","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_07be66b486ddde65016abc21dde35487d094fc370b3ba0073f","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
+        in Berlin right now? Use your tools."},{"id":"tsc_0e74dec955023983016ac6424bdcfc87d2a417307cf3183518","type":"tool_search_call","status":"completed","arguments":{"paths":["weather_lookup"]},"call_id":null,"execution":"server"},{"id":"tso_0e74dec955023983016ac6424c01a487d2ae050e0961ecb9a0","type":"tool_search_output","status":"completed","call_id":null,"execution":"server","tools":[{"type":"function","defer_loading":true,"description":"Looks
         up the current weather for a city","name":"weather_lookup","output_schema":null,"parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
-        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_07be66b486ddde65016abc21de3ef487d08f64a274709b0b87","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_6OX0a4LmdTrqiXzfGTcHCAbY","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_6OX0a4LmdTrqiXzfGTcHCAbY","output":"Sunny
-        and 22°C in Berlin"},{"role":"assistant","content":[{"type":"output_text","text":"The
-        current weather in Berlin is sunny and 22°C."}]},{"role":"user","content":"And
-        in Paris?"},{"id":"fc_07be66b486ddde65016abc21e0ec3087d0ba62a4ac4fa5dcf6","type":"function_call","status":"completed","arguments":"{\"city\":\"Paris\"}","call_id":"call_v9leSSOOIl44IQIM8DnSH3P1","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_v9leSSOOIl44IQIM8DnSH3P1","output":"Sunny
+        name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]},{"id":"fc_0e74dec955023983016ac6424c693887d29e32d5d0e09ac079","type":"function_call","status":"completed","arguments":"{\"city\":\"Berlin\"}","call_id":"call_xXOPlVilm2bRwTNHDwmc2lxb","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_xXOPlVilm2bRwTNHDwmc2lxb","output":"Sunny
+        and 22°C in Berlin"},{"role":"assistant","content":[{"type":"output_text","text":"It’s
+        currently sunny and 22°C in Berlin."}]},{"role":"user","content":"And in Paris?"},{"id":"fc_0e74dec955023983016ac6424e9c0087d2a45d1a4808bbf18f","type":"function_call","status":"completed","arguments":"{\"city\":\"Paris\"}","call_id":"call_d1QtInzaByq2dFtuaaiGMaJG","name":"weather_lookup","namespace":"weather_lookup"},{"type":"function_call_output","call_id":"call_d1QtInzaByq2dFtuaaiGMaJG","output":"Sunny
         and 22°C in Paris"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather_lookup","description":"Looks
         up the current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"function","name":"stock_price","description":"Looks
@@ -742,7 +740,7 @@ http_interactions:
         symbol"}},"required":["ticker"],"additionalProperties":false,"strict":true},"strict":false,"defer_loading":true},{"type":"tool_search"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -757,7 +755,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 20:38:58 GMT
+      - Wed, 07 Oct 2026 12:59:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -781,21 +779,21 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '949'
+      - '661'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '15000'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '14999'
+      - '4997'
       X-Ratelimit-Remaining-Tokens:
-      - '40000000'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 4ms
+      - 36ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -808,16 +806,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_07be66b486ddde65016abc21e154a487d0973541d5ce349df6",
+          "id": "resp_0e74dec955023983016ac6424f02e487d298753b500cb84810",
           "object": "response",
-          "created_at": 1790714337,
+          "created_at": 1791377999,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1790714338,
+          "completed_at": 1791377999,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -828,7 +826,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_07be66b486ddde65016abc21e1dcfc87d0af19adfde21d96f1",
+              "id": "msg_0e74dec955023983016ac6424f878c87d28aae008c319e81d4",
               "type": "message",
               "status": "completed",
               "content": [
@@ -944,7 +942,7 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 699,
+            "input_tokens": 698,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
@@ -953,10 +951,10 @@ http_interactions:
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 714
+            "total_tokens": 713
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 29 Sep 2026 20:38:58 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:59 GMT
 recorded_with: VCR 6.4.0

@@ -8,6 +8,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations::Images do
   let(:model) { RubyLLM.models.find(model_for(:mistral), provider: :mistral) }
   let(:provider) { RubyLLM::Providers::Mistral.new(RubyLLM.config) }
   let(:protocol) { RubyLLM::Providers::Mistral::Conversations.new(provider, model) }
+  let(:bytes) { "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00".b }
 
   it 'routes paint through Conversations while preserving the default chat protocol' do
     expect(provider.protocol_for(model, operation: :paint)).to eq(RubyLLM::Providers::Mistral::Conversations)
@@ -21,7 +22,6 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations::Images do
     data = { 'outputs' => [{ 'type' => 'message.output', 'content' => [
       { 'type' => 'tool_file', 'tool' => 'image_generation', 'file_id' => 'generated', 'file_type' => 'png' }
     ] }], 'usage' => { 'prompt_tokens' => 10, 'completion_tokens' => 3, 'connector_tokens' => 5 } }
-    bytes = "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00".b
     allow(provider.connection).to receive(:get).with('files/generated/content').and_return(
       instance_double(Faraday::Response, body: bytes)
     )
@@ -29,6 +29,20 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations::Images do
     expect(image.to_blob).to eq(bytes)
     expect(image.mime_type).to eq('image/jpeg')
     expect(image.tokens).to have_attributes(input: 15, output: 3)
+  end
+
+  it 'downloads generated image URLs from hosted tool results' do
+    data = { 'outputs' => [
+      { 'type' => 'tool.execution', 'name' => 'image_generation', 'function' => 'generate_image',
+        'info' => { 'result' => '{"url":"https://example.com/generated.jpg"}' } },
+      { 'type' => 'message.output', 'content' => 'Here is your image.' }
+    ] }
+    stub_request(:get, 'https://example.com/generated.jpg').to_return(body: bytes)
+
+    image = protocol.parse_image_response(instance_double(Faraday::Response, body: data), model: model.id)
+
+    expect(image.to_blob).to eq(bytes)
+    expect(image.mime_type).to eq('image/jpeg')
   end
 
   it 'rejects image controls that the hosted tool cannot honor' do

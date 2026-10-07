@@ -30,9 +30,11 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:16:20 GMT
+      - Wed, 07 Oct 2026 12:59:07 GMT
       Server:
       - istio-envoy
+      Vary:
+      - Origin
       X-Ms-Aoai-Configured-Data-Retention-Days:
       - '30'
       Skip-Error-Remapping:
@@ -68,7 +70,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 9ae110a8-1e48-4a19-a472-2a220a6565b9
+      - a419b5e0-8cb2-4721-8a1d-28361df6daea
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -79,12 +81,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_029b93eeae4ba205016aac66b4b0dc81959d91f0b984d029a5",
+          "id": "resp_0a3157b9ab2cb2aa016ac6421bbf3081909da42e85478031fd",
           "object": "response",
-          "created_at": 1789683380,
+          "created_at": 1791377947,
           "status": "completed",
           "background": false,
-          "completed_at": 1789683381,
+          "completed_at": 1791377950,
           "content_filters": [
             {
               "blocked": false,
@@ -123,11 +125,11 @@ http_interactions:
               "source_type": "completion",
               "content_filter_raw": [],
               "content_filter_results": {
-                "protected_material_code": {
+                "protected_material_text": {
                   "detected": false,
                   "filtered": false
                 },
-                "protected_material_text": {
+                "protected_material_code": {
                   "detected": false,
                   "filtered": false
                 },
@@ -165,11 +167,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_029b93eeae4ba205016aac66b556808195959f387b65ca7474",
+              "id": "fc_0a3157b9ab2cb2aa016ac6421d44448190a526e1f277a0f2a4",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"city\":\"Berlin\"}",
-              "call_id": "call_yPTQRmZCGOlSuEvhfauc68pl",
+              "call_id": "call_baJ6r7zxJ32VGtdTS3nRYEIE",
               "name": "azure_weather"
             }
           ],
@@ -254,14 +256,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:16:21 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:10 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_yPTQRmZCGOlSuEvhfauc68pl","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_yPTQRmZCGOlSuEvhfauc68pl","output":"Current
+        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_baJ6r7zxJ32VGtdTS3nRYEIE","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_baJ6r7zxJ32VGtdTS3nRYEIE","output":"Current
         weather in Berlin: 15C, wind 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"azure_weather","description":"Gets
         current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
@@ -286,9 +288,11 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:16:20 GMT
+      - Wed, 07 Oct 2026 12:59:09 GMT
       Server:
       - istio-envoy
+      Vary:
+      - Origin
       X-Ms-Aoai-Configured-Data-Retention-Days:
       - '30'
       Skip-Error-Remapping:
@@ -324,7 +328,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 6360b18a-3a72-41b6-8bc1-e8c9d80ef541
+      - f5d6d85e-e457-4f32-b7db-990ea9572865
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -335,12 +339,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_01f8728a66045cc5016aac66b5a1fc8190b82eb6fc16a20de7",
+          "id": "resp_084b313823101d17016ac6421e6cd881958624f80af2b11fa0",
           "object": "response",
-          "created_at": 1789683381,
+          "created_at": 1791377950,
           "status": "completed",
           "background": false,
-          "completed_at": 1789683382,
+          "completed_at": 1791377951,
           "content_filters": [
             {
               "blocked": false,
@@ -421,7 +425,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_01f8728a66045cc5016aac66b61d388190a5b6fbb7d5261e5f",
+              "id": "msg_084b313823101d17016ac6421ee5908195a4148d077e92905a",
               "type": "message",
               "status": "completed",
               "content": [
@@ -517,5 +521,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 17 Sep 2026 22:16:22 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:11 GMT
 recorded_with: VCR 6.4.0

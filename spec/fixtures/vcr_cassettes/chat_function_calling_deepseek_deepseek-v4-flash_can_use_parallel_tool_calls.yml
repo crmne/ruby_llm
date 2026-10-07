@@ -35,7 +35,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 17 Sep 2026 22:18:28 GMT
+      - Wed, 07 Oct 2026 13:04:42 GMT
       Server:
       - elb
       Vary:
@@ -43,7 +43,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - d31a2fdb349a5efb94fe497093c73cae
+      - 25b72127517104a34b1af7036c7340a3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,17 +51,18 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 db3cc869e0dda88ce4fa37dee230e06e.cloudfront.net (CloudFront)
+      - 1.1 826a57ac22bb182622bb767d7ed86c26.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P4
       X-Amz-Cf-Id:
-      - SYyTkXfdQvva5uFJIYgvtgbXA_bFa-wkZ9NsIBseJW5-4IYViGW56A==
+      - osaC9nGpRj3TxARiZJX3BX7uRHmIMsuFyyhRhD94sf-xmhxhwHkWVw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"556fd45f-231f-49ac-a193-d868d995a2ea","object":"chat.completion","created":1789683508,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        check both for you.","reasoning_content":"","tool_calls":[{"index":0,"id":"call_00_ET_71lsS3Q7gEDY6Hes6vRZ9887","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_ET_hGoy1ON5Azs19LjjBmQZ3479","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":423,"completion_tokens":82,"total_tokens":505,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":0},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":167},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Thu, 17 Sep 2026 22:18:28 GMT
+      string: '{"id":"9bddd2eb-2b82-4165-8c4d-c15cfa8edd43","object":"chat.completion","created":1791378282,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"We
+        need answer. Need call both tools in parallel. Weather Berlin lat/long. best
+        language. Then summarize.","tool_calls":[{"index":0,"id":"call_00_OOHtZuNTphQWtEgW94829321","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_vt71H25WETDIOXO6Kv2i8726","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":423,"completion_tokens":99,"total_tokens":522,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":23},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":167},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Wed, 07 Oct 2026 13:04:43 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -69,8 +70,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"I''ll check both for you.","tool_calls":[{"id":"call_00_ET_71lsS3Q7gEDY6Hes6vRZ9887","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_ET_hGoy1ON5Azs19LjjBmQZ3479","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":""},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_ET_71lsS3Q7gEDY6Hes6vRZ9887"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_ET_hGoy1ON5Azs19LjjBmQZ3479"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_OOHtZuNTphQWtEgW94829321","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_vt71H25WETDIOXO6Kv2i8726","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"We
+        need answer. Need call both tools in parallel. Weather Berlin lat/long. best
+        language. Then summarize.","reasoning":"We need answer. Need call both tools
+        in parallel. Weather Berlin lat/long. best language. Then summarize."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_OOHtZuNTphQWtEgW94829321"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_vt71H25WETDIOXO6Kv2i8726"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -98,7 +102,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 17 Sep 2026 22:18:28 GMT
+      - Wed, 07 Oct 2026 13:04:43 GMT
       Server:
       - elb
       Vary:
@@ -106,7 +110,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a19d86539006fffa13d3a0988464d95a
+      - 8b07a37a166290646c00e44b96a99778
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -114,14 +118,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b14aacfdf690e6766b147237ecffcc36.cloudfront.net (CloudFront)
+      - 1.1 15481055cb1364f3b30d596d04a295f6.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P3
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - 3CVMymSuJp7G7Ukh0uWtERQ1J4k0aMmp_PSlIoyuNBgW6spZRvykLg==
+      - aMCg-013mG1RB3xkYtOCekj1iG2JnPy30Uxol5WTT3oCfDVF3iCKRQ==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImRjYTE4MDE5LTM0ODMtNDJlNi05ODY1LTEzYzNiODI2MDYxMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODk2ODM1MDgsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUncyB3aGF0IEkgZm91bmQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOioqXG4tIDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IGxhbmd1YWdlIHRvIGxlYXJuOioqIFJ1YnlcblxuU28gQmVybGluIGlzIGVuam95aW5nIGEgbWlsZCAxNcKwQyB3aXRoIGxpZ2h0IHdpbmRzIOKAlCBwbGVhc2FudCBlbm91Z2ggZm9yIGEgd2FsayBhcm91bmQgdGhlIGNpdHkuIEFuZCBhcHBhcmVudGx5IHRoZSBsYW5ndWFnZSB3b3J0aCBwaWNraW5nIHVwIHJpZ2h0IG5vdyBpcyBSdWJ5LCB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKHdoaWNoIGlzIGEgZnVuIGNvaW5jaWRlbmNlLCBzaW5jZSB0aGUgdG9vbCBkaWRuJ3QgbWVhbiBHZXJtYW4hKS5cblxuTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBtZSB0byBjaGVjayB0aGUgd2VhdGhlciBzb21ld2hlcmUgZWxzZSBvciBkaWcgaW50byBhbnl0aGluZyBmdXJ0aGVyLiIsInJlYXNvbmluZ19jb250ZW50IjoiIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTUyLCJjb21wbGV0aW9uX3Rva2VucyI6MTI3LCJ0b3RhbF90b2tlbnMiOjY3OSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjM4NH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjozODQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTY4fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiYWViNTY0MDFjYTc0ZTEyNzgyMWM0ZjkxMjZkY2I2NjkifQ==
-  recorded_at: Thu, 17 Sep 2026 22:18:29 GMT
+        eyJpZCI6IjQ3NjI4ZTYyLWYyYzItNDNiNy1hZDNmLWQ3MDdlZWJkOGM5NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzNzgyODMsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ii0gKipCZXJsaW4gd2VhdGhlciAoNTIuNTIwMCwgMTMuNDA1MCk6KiogMTXCsEMgd2l0aCB3aW5kIGF0IDEwIGttL2guXG4tICoqQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKiBSdWJ5LiIsInJlYXNvbmluZ19jb250ZW50IjoiTmVlZCByZXNwb25kLiBNZW50aW9uIHdlYXRoZXIgQmVybGluOiAxNcKwQywgd2luZCAxMCBrbS9oLiBCZXN0IGxhbmd1YWdlIHRvIGxlYXJuIHBlciB0b29sOiBSdWJ5LiBNYXliZSBub3RlIFwiYmFzZWQgb24gdG9vbFwiLiBBbHNvIGNvdWxkIGRpc3Rpbmd1aXNoIHByb2dyYW1taW5nIGxhbmd1YWdlIHZzIGh1bWFuIGxhbmd1YWdlIGFtYmlndWl0eT8gVG9vbCByZXR1cm5lZCBSdWJ5LCBhIHByb2dyYW1taW5nIGxhbmd1YWdlLiBBbnN3ZXIgY29uY2lzZS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NjksImNvbXBsZXRpb25fdG9rZW5zIjo5NCwidG90YWxfdG9rZW5zIjo2NjMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjozODR9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjU1fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjM4NCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxODV9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJhZWI1NjQwMWNhNzRlMTI3ODIxYzRmOTEyNmRjYjY2OSJ9
+  recorded_at: Wed, 07 Oct 2026 13:04:45 GMT
 recorded_with: VCR 6.4.0

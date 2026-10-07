@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:08:07 GMT
+      - Wed, 07 Oct 2026 13:00:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,15 +32,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b169-ac2a-73d8-80aa-e56101b52f1b
+      - 01a11673-271c-75b1-b1c4-c8d7dddda082
       X-Kong-Request-Id:
-      - 01a0b169-ac2a-73d8-80aa-e56101b52f1b
+      - 01a11673-271c-75b1-b1c4-c8d7dddda082
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98795'
+      - '80700'
       X-Ratelimit-Tokens-Query-Cost:
       - '29'
       X-Ratelimit-Limit-Req-Minute:
@@ -48,15 +48,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '247'
+      - '472'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '248'
+      - '473'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '84'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,7 +71,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ff71cedb81434476afd27e44436a0b7c","created":1789682887,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":29,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"a410a33259754425bf5c34dd1e3581ad","created":1791378008,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":29,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"Alice\", \"age\": 28}"}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:08:07 GMT
+  recorded_at: Wed, 07 Oct 2026 13:00:08 GMT
 recorded_with: VCR 6.4.0

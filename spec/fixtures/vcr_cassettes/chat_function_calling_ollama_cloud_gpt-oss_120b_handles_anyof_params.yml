@@ -28,37 +28,36 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '652'
+      - '704'
       Date:
-      - Thu, 17 Sep 2026 22:20:44 GMT
+      - Wed, 07 Oct 2026 13:40:44 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-83a690cbcf8691d93de78706cfd86908-754654b9f560660a-00
       X-Cloud-Trace-Context:
-      - 83a690cbcf8691d93de78706cfd86908/8450534908469732874
+      - 955ddb82c9a7d19a9eb3105e9cc9a47c/17010284789199902747
+      Traceparent:
+      - 00-955ddb82c9a7d19a9eb3105e9cc9a47c-ec10abe4347d981b-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-838","object":"chat.completion","created":1789683644,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to call the any_of_params tool in functions namespace with status \"pending\"
-        and task \"Review PR\". Then report the result.","tool_calls":[{"id":"call_kmq2dgmi","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens":65,"total_tokens":227}}
+      string: '{"id":"chatcmpl-608","object":"chat.completion","created":1791380444,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to call the function any_of_params with task \"Review PR\" and status
+        \"pending\". The tool signature expects parameters: status: string | null,
+        task: string. Use function call.","tool_calls":[{"id":"call_d4fq0m88","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":77,"total_tokens":239,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:44 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:44 GMT
 recorded_with: VCR 6.4.0

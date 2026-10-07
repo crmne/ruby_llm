@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:10 GMT
+      - Wed, 07 Oct 2026 13:19:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,17 +32,17 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b16c-746f-7ca9-86af-c9d2b93fb56b
+      - 01a11684-8d1b-7c44-9aef-9c62181f4a7f
       X-Kong-Request-Id:
-      - 01a0b16c-746f-7ca9-86af-c9d2b93fb56b
+      - 01a11684-8d1b-7c44-9aef-9c62181f4a7f
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '200000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '199844'
+      - '199872'
       X-Ratelimit-Tokens-Query-Cost:
-      - '55'
+      - '24'
       X-Ratelimit-Limit-Audio-Seconds-Minute:
       - '2000'
       X-Ratelimit-Remaining-Audio-Seconds-Minute:
@@ -54,15 +54,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '358'
       X-Envoy-Upstream-Service-Time:
-      - '733'
+      - '393'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '757'
+      - '413'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '15'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -77,10 +77,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"37e2806be3124176a67e9a160dab11c4","created":1789683070,"model":"voxtral-small-latest","usage":{"prompt_audio_seconds":4,"prompt_tokens":9,"total_tokens":430,"completion_tokens":46,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":375},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        text is a quote from the official Ruby website, which describes the Ruby programming
-        language as being designed with the goal of making developers happy. This
-        implies that Ruby is intended to be an enjoyable and efficient language to
-        work with."}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:11:10 GMT
+      string: '{"id":"c88e33ade485406ab0fc835e95c85c1f","created":1791379148,"model":"voxtral-small-latest","usage":{"prompt_audio_seconds":4,"prompt_tokens":9,"total_tokens":399,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":375},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
+        is a programming language designed with the goal of making developers happy."}}]}'
+  recorded_at: Wed, 07 Oct 2026 13:19:08 GMT
 recorded_with: VCR 6.4.0

@@ -46,11 +46,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 8bf8ace3e562160e246cb0cf1519b90c
+      - 4d3c8e7d40d942cea1f25bc124ade9b2
       Date:
-      - Thu, 17 Sep 2026 22:27:14 GMT
+      - Wed, 07 Oct 2026 13:56:59 GMT
       X-Envoy-Upstream-Service-Time:
-      - '665'
+      - '654'
       Server:
       - envoy
       Via:
@@ -61,9 +61,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"6197fa91-fb44-450a-a612-2f948709021a","message":{"role":"assistant","tool_plan":"I
-        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_netb1adjv47h","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":106,"output_tokens":36},"tokens":{"input_tokens":1568,"output_tokens":50},"cached_tokens":112}}'
-  recorded_at: Thu, 17 Sep 2026 22:27:14 GMT
+      string: '{"id":"547069f6-1cf8-45e9-932d-ff1f097f662b","message":{"role":"assistant","tool_plan":"I
+        will use one or more of the available tools to find the answer","tool_calls":[{"id":"weather_90y85ra7yv52","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":106,"output_tokens":36},"tokens":{"input_tokens":1568,"output_tokens":50},"cached_tokens":112}}'
+  recorded_at: Wed, 07 Oct 2026 13:56:59 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -71,7 +71,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."}]},{"role":"user","content":[{"type":"text","text":"When
-        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_netb1adjv47h","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_netb1adjv47h","content":"Current
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_90y85ra7yv52","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_90y85ra7yv52","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -103,7 +103,7 @@ http_interactions:
       Num-Chars:
       - '7719'
       Num-Tokens:
-      - '175'
+      - '184'
       Pragma:
       - no-cache
       Vary:
@@ -111,22 +111,22 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 750402f60703ad859ed55c4de05f0311
+      - 92c9d11dd3c7a83c3854148bf28ffb9b
       Date:
-      - Thu, 17 Sep 2026 22:27:16 GMT
+      - Wed, 07 Oct 2026 13:57:00 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1250'
+      - '764'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Ijk1NDYwZGUxLWM0Y2EtNDEzOS1iN2Y0LTFiZmQwMDA5ZWM0YiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSdtIHVuYWJsZSB0byBhbnN3ZXIgeW91ciBxdWVzdGlvbi4gVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzLiJ9XSwiY2l0YXRpb25zIjpbeyJzdGFydCI6ODAsImVuZCI6MTA0LCJ0ZXh0IjoiMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzLiIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyX25ldGIxYWRqdjQ3aDowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA1Mi41MjAwLCAxMy40MDUwOiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxNDMsIm91dHB1dF90b2tlbnMiOjMyfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTY4Nywib3V0cHV0X3Rva2VucyI6NDR9LCJjYWNoZWRfdG9rZW5zIjoxMTJ9fQ==
-  recorded_at: Thu, 17 Sep 2026 22:27:16 GMT
+        eyJpZCI6ImEzNmYyYTY5LTYxYjYtNGI4Ni1iMWI5LTBhMzhmZTdlMWJjZSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkknbSBzb3JyeSwgSSdtIG5vdCBhYmxlIHRvIGFuc3dlciB5b3VyIHF1ZXN0aW9uLiBJIGNhbiB0ZWxsIHlvdSB0aGF0IHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDLCB3aXRoIHdpbmQgc3BlZWRzIG9mIDEwIGttL2guIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0IjoxMDIsImVuZCI6MTM2LCJ0ZXh0IjoiMTXCsEMsIHdpdGggd2luZCBzcGVlZHMgb2YgMTAga20vaC4iLCJzb3VyY2VzIjpbeyJ0eXBlIjoidG9vbCIsImlkIjoid2VhdGhlcl85MHk4NXJhN3l2NTI6MCIsInRvb2xfb3V0cHV0Ijp7ImNvbnRlbnQiOiJDdXJyZW50IHdlYXRoZXIgYXQgNTIuNTIwMCwgMTMuNDA1MDogMTXCsEMsIFdpbmQ6IDEwIGttL2gifX1dLCJ0eXBlIjoiVEVYVF9DT05URU5UIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MTQzLCJvdXRwdXRfdG9rZW5zIjo0MX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjE2ODcsIm91dHB1dF90b2tlbnMiOjUzfSwiY2FjaGVkX3Rva2VucyI6OTkyfX0=
+  recorded_at: Wed, 07 Oct 2026 13:57:00 GMT
 recorded_with: VCR 6.4.0

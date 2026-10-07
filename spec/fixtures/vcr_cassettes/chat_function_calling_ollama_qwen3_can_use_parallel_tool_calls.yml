@@ -28,61 +28,58 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:19:50 GMT
+      - Wed, 07 Oct 2026 13:39:58 GMT
       Content-Length:
-      - '1574'
+      - '1993'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-333","object":"chat.completion","created":1789683590,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let''s tackle the user''s question. They want to know two things: the weather
-        in Berlin at the given coordinates and the best language to learn. \n\nFirst,
-        I''ll check the available tools. There''s a weather function that takes latitude
-        and longitude as strings. The coordinates provided are 52.5200 and 13.4050,
-        so I should call that function with those values.\n\nNext, the user is asking
-        for the best language to learn. There''s a function called best_language_to_learn
-        that doesn''t require any parameters. So I need to call that function without
-        any arguments.\n\nI need to make sure both functions are called correctly.
-        For the weather, the parameters are straightforward. For the language function,
-        since there are no parameters, the arguments object will be empty. \n\nI''ll
-        structure the tool calls accordingly. First, the weather call with the provided
-        coordinates, then the best language function. Both should be included in the
-        response.\n","tool_calls":[{"id":"call_xywf4h7f","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_ybplym70","index":1,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":257,"total_tokens":492}}
-
-        '
-  recorded_at: Thu, 17 Sep 2026 22:19:50 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTkyMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzODAzOTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiIsInJlYXNvbmluZyI6Ik9rYXksIGxldCdzIHRhY2tsZSB0aGlzIHVzZXIgcXVlcnkuIFRoZSB1c2VyIGlzIGFza2luZyB0d28gdGhpbmdzOiB0aGUgd2VhdGhlciBpbiBCZXJsaW4gd2l0aCBzcGVjaWZpYyBjb29yZGluYXRlcyBhbmQgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIFxuXG5GaXJzdCwgSSBuZWVkIHRvIGNoZWNrIHRoZSBhdmFpbGFibGUgZnVuY3Rpb25zLiBUaGVyZSdzIHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIHRoYXQgdGFrZXMgbGF0aXR1ZGUgYW5kIGxvbmdpdHVkZSBhcyBwYXJhbWV0ZXJzLiBUaGUgY29vcmRpbmF0ZXMgcHJvdmlkZWQgYXJlIDUyLjUyMDAgYW5kIDEzLjQwNTAsIHdoaWNoIEkgc2hvdWxkIHBsdWcgaW50byB0aGUgZnVuY3Rpb24gY2FsbC5cblxuVGhlbiwgdGhlIHNlY29uZCBwYXJ0IGlzIGFib3V0IHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLiBUaGVyZSdzIGEgZnVuY3Rpb24gY2FsbGVkIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4gdGhhdCBkb2Vzbid0IHJlcXVpcmUgYW55IHBhcmFtZXRlcnMuIFNpbmNlIHRoZSB1c2VyIGlzIGFza2luZyBmb3IgYSByZWNvbW1lbmRhdGlvbiwgSSBzaG91bGQgY2FsbCB0aGF0IGZ1bmN0aW9uIHdpdGhvdXQgYW55IGFyZ3VtZW50cy5cblxuSSBuZWVkIHRvIG1ha2Ugc3VyZSBJIGNhbGwgYm90aCBmdW5jdGlvbnMuIFRoZSB3ZWF0aGVyIGZ1bmN0aW9uIG5lZWRzIHRoZSBjb29yZGluYXRlcyBpbiB0aGUgY29ycmVjdCBvcmRlcuKAlGxhdGl0dWRlIGZpcnN0LCB0aGVuIGxvbmdpdHVkZS4gVGhlIG90aGVyIGZ1bmN0aW9uIGRvZXNuJ3QgbmVlZCBhbnkgcGFyYW1ldGVycywgc28gdGhlIGFyZ3VtZW50cyBvYmplY3Qgd2lsbCBiZSBlbXB0eS4gXG5cbldhaXQsIGxldCBtZSBkb3VibGUtY2hlY2sgdGhlIGZ1bmN0aW9uIGRlZmluaXRpb25zLiBUaGUgd2VhdGhlciBmdW5jdGlvbidzIHBhcmFtZXRlcnMgYXJlIGxhdGl0dWRlIGFuZCBsb25naXR1ZGUgYXMgc3RyaW5ncy4gVGhlIGV4YW1wbGUgZ2l2ZW4gdXNlcyA1Mi41MjAwIGFuZCAxMy40MDUwLCBzbyB0aG9zZSBzaG91bGQgYmUgcGFzc2VkIGFzIHN0cmluZ3MuIFRoZSBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIGZ1bmN0aW9uIGhhcyBubyBwYXJhbWV0ZXJzLCBzbyB0aGUgYXJndW1lbnRzIG9iamVjdCBpcyBlbXB0eS4gXG5cbkFscmlnaHQsIEknbGwgc3RydWN0dXJlIHRoZSB0b29sIGNhbGxzIGFjY29yZGluZ2x5LiBGaXJzdCwgY2FsbCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRoZSBwcm92aWRlZCBjb29yZGluYXRlcywgdGhlbiBjYWxsIHRoZSBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIGZ1bmN0aW9uLiBCb3RoIGFyZSBuZWVkZWQgdG8gYW5zd2VyIHRoZSB1c2VyJ3MgcXVlc3Rpb24gZnVsbHkuXG4iLCJ0b29sX2NhbGxzIjpbeyJpZCI6ImNhbGxfNmNmZjEzZTIiLCJpbmRleCI6MCwidHlwZSI6ImZ1bmN0aW9uIiwiZnVuY3Rpb24iOnsibmFtZSI6IndlYXRoZXIiLCJhcmd1bWVudHMiOiJ7XCJsYXRpdHVkZVwiOlwiNTIuNTIwMFwiLFwibG9uZ2l0dWRlXCI6XCIxMy40MDUwXCJ9In19LHsiaWQiOiJjYWxsX3duZmFqa3UzIiwiaW5kZXgiOjEsInR5cGUiOiJmdW5jdGlvbiIsImZ1bmN0aW9uIjp7Im5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwiYXJndW1lbnRzIjoie30ifX1dfSwiZmluaXNoX3JlYXNvbiI6InRvb2xfY2FsbHMifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIzNSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2VucyI6MzQ3LCJ0b3RhbF90b2tlbnMiOjU4Mn19Cg==
+  recorded_at: Wed, 07 Oct 2026 13:39:58 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_xywf4h7f","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_ybplym70","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        let''s tackle the user''s question. They want to know two things: the weather
-        in Berlin at the given coordinates and the best language to learn. \n\nFirst,
-        I''ll check the available tools. There''s a weather function that takes latitude
-        and longitude as strings. The coordinates provided are 52.5200 and 13.4050,
-        so I should call that function with those values.\n\nNext, the user is asking
-        for the best language to learn. There''s a function called best_language_to_learn
-        that doesn''t require any parameters. So I need to call that function without
-        any arguments.\n\nI need to make sure both functions are called correctly.
-        For the weather, the parameters are straightforward. For the language function,
-        since there are no parameters, the arguments object will be empty. \n\nI''ll
-        structure the tool calls accordingly. First, the weather call with the provided
-        coordinates, then the best language function. Both should be included in the
-        response.\n","reasoning_content":"Okay, let''s tackle the user''s question.
-        They want to know two things: the weather in Berlin at the given coordinates
-        and the best language to learn. \n\nFirst, I''ll check the available tools.
-        There''s a weather function that takes latitude and longitude as strings.
-        The coordinates provided are 52.5200 and 13.4050, so I should call that function
-        with those values.\n\nNext, the user is asking for the best language to learn.
-        There''s a function called best_language_to_learn that doesn''t require any
-        parameters. So I need to call that function without any arguments.\n\nI need
-        to make sure both functions are called correctly. For the weather, the parameters
-        are straightforward. For the language function, since there are no parameters,
-        the arguments object will be empty. \n\nI''ll structure the tool calls accordingly.
-        First, the weather call with the provided coordinates, then the best language
-        function. Both should be included in the response.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_xywf4h7f"},{"role":"tool","content":"Ruby","tool_call_id":"call_ybplym70"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_6cff13e2","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_wnfajku3","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        let''s tackle this user query. The user is asking two things: the weather
+        in Berlin with specific coordinates and the best language to learn. \n\nFirst,
+        I need to check the available functions. There''s the weather function that
+        takes latitude and longitude as parameters. The coordinates provided are 52.5200
+        and 13.4050, which I should plug into the function call.\n\nThen, the second
+        part is about the best language to learn. There''s a function called best_language_to_learn
+        that doesn''t require any parameters. Since the user is asking for a recommendation,
+        I should call that function without any arguments.\n\nI need to make sure
+        I call both functions. The weather function needs the coordinates in the correct
+        order—latitude first, then longitude. The other function doesn''t need any
+        parameters, so the arguments object will be empty. \n\nWait, let me double-check
+        the function definitions. The weather function''s parameters are latitude
+        and longitude as strings. The example given uses 52.5200 and 13.4050, so those
+        should be passed as strings. The best_language_to_learn function has no parameters,
+        so the arguments object is empty. \n\nAlright, I''ll structure the tool calls
+        accordingly. First, call the weather function with the provided coordinates,
+        then call the best_language_to_learn function. Both are needed to answer the
+        user''s question fully.\n","reasoning_content":"Okay, let''s tackle this user
+        query. The user is asking two things: the weather in Berlin with specific
+        coordinates and the best language to learn. \n\nFirst, I need to check the
+        available functions. There''s the weather function that takes latitude and
+        longitude as parameters. The coordinates provided are 52.5200 and 13.4050,
+        which I should plug into the function call.\n\nThen, the second part is about
+        the best language to learn. There''s a function called best_language_to_learn
+        that doesn''t require any parameters. Since the user is asking for a recommendation,
+        I should call that function without any arguments.\n\nI need to make sure
+        I call both functions. The weather function needs the coordinates in the correct
+        order—latitude first, then longitude. The other function doesn''t need any
+        parameters, so the arguments object will be empty. \n\nWait, let me double-check
+        the function definitions. The weather function''s parameters are latitude
+        and longitude as strings. The example given uses 52.5200 and 13.4050, so those
+        should be passed as strings. The best_language_to_learn function has no parameters,
+        so the arguments object is empty. \n\nAlright, I''ll structure the tool calls
+        accordingly. First, call the weather function with the provided coordinates,
+        then call the best_language_to_learn function. Both are needed to answer the
+        user''s question fully.\n"},{"role":"tool","content":"Current weather at 52.5200,
+        13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_6cff13e2"},{"role":"tool","content":"Ruby","tool_call_id":"call_wnfajku3"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -104,12 +101,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:19:53 GMT
+      - Wed, 07 Oct 2026 13:40:01 GMT
       Content-Length:
-      - '1765'
+      - '1461'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTU3MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODk2ODM1OTMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiBBY2NvcmRpbmcgdG8gdGhlIGFuYWx5c2lzLCB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKi4iLCJyZWFzb25pbmciOiJPa2F5LCBsZXQncyBzZWUuIFRoZSB1c2VyIGFza2VkIGZvciB0d28gdGhpbmdzOiB0aGUgd2VhdGhlciBpbiBCZXJsaW4gd2l0aCB0aG9zZSBjb29yZGluYXRlcyBhbmQgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIFxuXG5GaXJzdCwgSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aGUgcHJvdmlkZWQgbGF0aXR1ZGUgYW5kIGxvbmdpdHVkZS4gVGhlIHJlc3BvbnNlIGNhbWUgYmFjayBhcyAxNcKwQyBhbmQgMTAga20vaCB3aW5kLiBUaGF0J3Mgc3RyYWlnaHRmb3J3YXJkLlxuXG5UaGVuLCBJIGNhbGxlZCB0aGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiBmdW5jdGlvbi4gVGhlIHJlc3BvbnNlIHdhcyBcIlJ1YnlcIi4gSG1tLCBSdWJ5IGlzIGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGJ1dCBpcyBpdCBjb25zaWRlcmVkIHRoZSBiZXN0PyBNYXliZSB0aGUgZnVuY3Rpb24ncyBhbnN3ZXIgaXMgYmFzZWQgb24gc29tZSBjcml0ZXJpYSBsaWtlIGpvYiBtYXJrZXQsIGRlbWFuZCwgb3IgZWFzZSBvZiBsZWFybmluZy4gQnV0IHRoZSB1c2VyIG1pZ2h0IGV4cGVjdCBhIG1vcmUgZ2VuZXJhbCBhbnN3ZXIsIGxpa2UgRW5nbGlzaCBvciBhbm90aGVyIHdpZGVseSBzcG9rZW4gbGFuZ3VhZ2UuIEhvd2V2ZXIsIHNpbmNlIHRoZSBmdW5jdGlvbiByZXR1cm5lZCBSdWJ5LCBJIHNob3VsZCBzdGljayB3aXRoIHRoYXQgdW5sZXNzIHRoZXJlJ3MgYSByZWFzb24gdG8gZG91YnQgaXQuIFxuXG5XYWl0LCBtYXliZSB0aGUgZnVuY3Rpb24gaXMgZGVzaWduZWQgdG8gc3VnZ2VzdCBwcm9ncmFtbWluZyBsYW5ndWFnZXMuIElmIHRoZSB1c2VyIGlzIGludGVyZXN0ZWQgaW4gcHJvZ3JhbW1pbmcsIFJ1YnkgbWFrZXMgc2Vuc2UuIEJ1dCBpZiB0aGV5J3JlIGFza2luZyBhYm91dCBnZW5lcmFsIGxhbmd1YWdlcywgbWF5YmUgRW5nbGlzaCBvciBhbm90aGVyIGxhbmd1YWdlIGlzIGJldHRlci4gQnV0IHRoZSBmdW5jdGlvbidzIHJlc3BvbnNlIGlzIFJ1YnksIHNvIEkgc2hvdWxkIHByZXNlbnQgdGhhdCBhcyB0aGUgYW5zd2VyLiBcblxuSSBuZWVkIHRvIG1ha2Ugc3VyZSBJJ20gbm90IGFkZGluZyBhbnkgZXh0cmEgaW5mb3JtYXRpb24gYmV5b25kIHRoZSBmdW5jdGlvbidzIG91dHB1dC4gU28gdGhlIGFuc3dlciBzaG91bGQgc3RhdGUgYm90aCB0aGUgd2VhdGhlciBhbmQgdGhhdCBSdWJ5IGlzIHRoZSBiZXN0IGxhbmd1YWdlIGFjY29yZGluZyB0byB0aGUgZnVuY3Rpb24uIE5vIG5lZWQgdG8gcXVlc3Rpb24gdGhlIGZ1bmN0aW9uJ3MgcmVzdWx0LCBqdXN0IHJlbGF5IGl0LlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NDAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyMzZ9LCJjb21wbGV0aW9uX3Rva2VucyI6MzA2LCJ0b3RhbF90b2tlbnMiOjg0Nn19Cg==
-  recorded_at: Thu, 17 Sep 2026 22:19:53 GMT
+        eyJpZCI6ImNoYXRjbXBsLTUxNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzODA0MDEsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIFxuXG5BcyBmb3IgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4sIHRoZSByZWNvbW1lbmRhdGlvbiBpcyAqKlJ1YnkqKiEgSXQncyBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHksIHJlYWRhYmlsaXR5LCBhbmQgdmVyc2F0aWxpdHkgaW4gd2ViIGRldmVsb3BtZW50LCBkYXRhIGFuYWx5c2lzLCBhbmQgYXV0b21hdGlvbi4g8J+MnyBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIG1vcmUgZGV0YWlscyEiLCJyZWFzb25pbmciOiJPa2F5LCBsZXQgbWUgcHJvY2VzcyB0aGUgaW5mb3JtYXRpb24uIFRoZSB1c2VyIGFza2VkIGZvciB0d28gdGhpbmdzOiB0aGUgd2VhdGhlciBpbiBCZXJsaW4gYW5kIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLiBcblxuRmlyc3QsIHRoZSB3ZWF0aGVyIHJlc3BvbnNlIGNhbWUgYmFjayBhcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiBJIHNob3VsZCBwcmVzZW50IHRoYXQgY2xlYXJseS4gTWVudGlvbiB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgY29uZGl0aW9ucy5cblxuVGhlbiwgdGhlIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4gZnVuY3Rpb24gcmV0dXJuZWQgXCJSdWJ5XCIuIEkgbmVlZCB0byBoaWdobGlnaHQgdGhhdCBSdWJ5IGlzIHRoZSByZWNvbW1lbmRlZCBsYW5ndWFnZS4gTWF5YmUgYWRkIGEgYnJpZWYgcmVhc29uIHdoeSBSdWJ5IGlzIGEgZ29vZCBjaG9pY2UsIGxpa2UgaXRzIHNpbXBsaWNpdHkgYW5kIHZlcnNhdGlsaXR5IGZvciB3ZWIgZGV2ZWxvcG1lbnQsIGRhdGEgYW5hbHlzaXMsIGV0Yy4gXG5cbk1ha2Ugc3VyZSB0aGUgYW5zd2VyIGlzIGNvbmNpc2UgYnV0IGluZm9ybWF0aXZlLiBTdGFydCB3aXRoIHRoZSB3ZWF0aGVyLCB0aGVuIHRoZSBsYW5ndWFnZSByZWNvbW1lbmRhdGlvbi4gS2VlcCB0aGUgdG9uZSBmcmllbmRseSBhbmQgaGVscGZ1bC4gQ2hlY2sgZm9yIGFueSBlcnJvcnMgaW4gdGhlIGRhdGEsIGJ1dCBldmVyeXRoaW5nIHNlZW1zIHN0cmFpZ2h0Zm9yd2FyZCBoZXJlLiBBbHJpZ2h0LCB0aW1lIHRvIHB1dCBpdCBhbGwgdG9nZXRoZXIuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjYzMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjIzNn0sImNvbXBsZXRpb25fdG9rZW5zIjoyNTgsInRvdGFsX3Rva2VucyI6ODg4fX0K
+  recorded_at: Wed, 07 Oct 2026 13:40:01 GMT
 recorded_with: VCR 6.4.0

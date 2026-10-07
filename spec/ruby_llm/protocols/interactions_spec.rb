@@ -79,6 +79,28 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(chat.render[:input].last).to include(type: 'function_result', call_id: 'local1', name: 'multiply')
   end
 
+  it 'does not execute function calls already answered by the provider' do
+    answered = steps.map do |step|
+      step.merge('type' => { 'mcp_server_tool_call' => 'function_call',
+                             'mcp_server_tool_result' => 'function_result' }.fetch(step['type'], step['type']))
+    end
+    data = body.merge('status' => 'requires_action', 'steps' => answered)
+    message = protocol.send(:parse_completion_body, data, raw: nil)
+    expect(message).not_to be_tool_call
+    expect(message.finish_reason).to eq(:stop)
+    expect(message.server_tool_calls.map(&:type)).to eq(%w[function_call function_result])
+    expect(message.raw_content.dig('response', 'steps')).to eq(answered)
+    chat.add_message(message)
+    replay = chat.ask_later('Continue').render[:input]
+    expect(replay.first(2)).to eq(answered.first(2).map { |step| step.except('signature') })
+    expect(replay[2]['signature']).to eq('thought-signature')
+
+    answered[1] = answered[1].merge('call_id' => 'different-call')
+    message = protocol.send(:parse_completion_body, data, raw: nil)
+    expect(message.tool_calls.keys).to eq(['remote1'])
+    expect(message.finish_reason).to eq(:tool_calls)
+  end
+
   it 'replays edited history and signed results after serialization without a remote cursor' do
     chat.ask_later('Remember violet')
     chat.add_message(protocol.send(:parse_completion_body, body, raw: nil))
@@ -333,8 +355,9 @@ RSpec.describe RubyLLM::Protocols::Interactions do
   it 'executes a remote MCP tool and replays its signed results through stateless chat', :live do
     chat.with_provider_tools(mcp: { name: 'microsoft_learn', url: 'https://learn.microsoft.com/api/mcp' })
     message = chat.ask('Use the Microsoft Learn MCP search tool to find the Azure Functions overview. Reply briefly.')
-    expect(message.server_tool_calls).to include(have_attributes(type: 'mcp_server_tool_call'))
-    expect(message.server_tool_calls).to include(have_attributes(type: 'mcp_server_tool_result'))
+    expect(message.server_tool_calls).to include(have_attributes(type: match(/\A(?:mcp_server_tool|function)_call\z/)))
+    expect(message.server_tool_calls)
+      .to include(have_attributes(type: match(/\A(?:mcp_server_tool|function)_result\z/)))
     expect(message).not_to be_tool_call
     expect(message.content).to match(/functions/i)
     expect(chat.ask('What Microsoft service did you look up? Answer using the previous results.').content)
@@ -349,7 +372,8 @@ RSpec.describe RubyLLM::Protocols::Interactions do
       chunks << chunk
     end
     expect(chunks.filter_map(&:content).join).to eq(message.content)
-    expect(message.server_tool_calls).to include(have_attributes(type: 'mcp_server_tool_result'))
+    expect(message.server_tool_calls)
+      .to include(have_attributes(type: match(/\A(?:mcp_server_tool|function)_result\z/)))
     expect(message.tokens.input).to be_positive
     expect(message.raw_content.dig('response', 'steps')).to include(include('signature'))
   end

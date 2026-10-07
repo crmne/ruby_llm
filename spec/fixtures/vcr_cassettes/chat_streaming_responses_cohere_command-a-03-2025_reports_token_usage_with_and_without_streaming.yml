@@ -38,11 +38,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - a493f616c68bf23aa52c350f9310e00a
+      - 6c0090f4f6ceacec2051033e3b6a61db
       Date:
-      - Thu, 17 Sep 2026 22:06:32 GMT
+      - Wed, 07 Oct 2026 12:59:17 GMT
       X-Envoy-Upstream-Service-Time:
-      - '121'
+      - '155'
       Server:
       - envoy
       Via:
@@ -55,7 +55,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"45c2610d-6d95-4124-a8b9-b6e00372ea96","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"8cafba82-8348-4c3f-a1ea-17f5b5a7d5bb","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -83,7 +83,7 @@ http_interactions:
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:06:32 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:17 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -126,23 +126,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 21b2f87b738e99bfc7f73d22349bb460
+      - cadfeff87bea05ca76aa19fa41de9f5b
       Date:
-      - Thu, 17 Sep 2026 22:06:33 GMT
+      - Wed, 07 Oct 2026 12:59:18 GMT
       X-Envoy-Upstream-Service-Time:
-      - '236'
+      - '377'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5e8eb089-20eb-4680-a519-e3b84ac4817c","message":{"role":"assistant","content":[{"type":"text","text":"1,
+      string: '{"id":"41375a07-b28f-4745-844c-d34734a45839","message":{"role":"assistant","content":[{"type":"text","text":"1,
         2, 3"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":7},"tokens":{"input_tokens":507,"output_tokens":11},"cached_tokens":448}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:33 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:18 GMT
 recorded_with: VCR 6.4.0
 ...

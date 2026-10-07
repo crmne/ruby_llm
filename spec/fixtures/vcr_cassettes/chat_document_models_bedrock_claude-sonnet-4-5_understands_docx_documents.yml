@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222354Z
+      - 20261007T132245Z
       X-Amz-Content-Sha256:
       - c7f83bb84982facc77c2b1b9a530024e0bf26aba67d5915de608a52cb5f88055
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:23:56 GMT
+      - Wed, 07 Oct 2026 13:22:47 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 316051b0-d07c-4381-bd80-f250a5570ed8
+      - e1a82de4-3829-467a-9b1e-b8bacbbe457e
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1477},"output":{"message":{"content":[{"text":"BLUE-LANTERN-42"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":97,"outputTokens":11,"serverToolUsage":{},"totalTokens":108}}'
-  recorded_at: Thu, 17 Sep 2026 22:23:56 GMT
+      string: '{"metrics":{"latencyMs":1851},"output":{"message":{"content":[{"text":"BLUE-LANTERN-42"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":97,"outputTokens":11,"serverToolUsage":{},"totalTokens":108}}'
+  recorded_at: Wed, 07 Oct 2026 13:22:47 GMT
 recorded_with: VCR 6.4.0

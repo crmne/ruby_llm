@@ -16,7 +16,7 @@ http_interactions:
         or hostile"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,30 +31,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 29 Sep 2026 17:32:23 GMT
+      - Wed, 07 Oct 2026 13:24:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999571'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 12ms
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - CF-Ray
-      - x-request-id,retry-after
-      Server-Timing:
-      - total;dur=104.923, ingress;dur=1.129, prepare;dur=1.469, auth;dur=0.138, model_routing;dur=0.015,
-        router_admission;dur=0.979, router_token_count;dur=0.772, fanout;dur=102.214,
-        render_max;dur=0.019, setup_max;dur=0.183, inference_max;dur=100.980, native_ttft_max;dur=98.726,
-        native_ttlt_max;dur=98.726, cross_cluster_network_max;dur=58.151, iapi_ttft_max;dur=38.000,
-        batcher_ttft_max;dur=18.000, lb_routing_max;dur=0.744, model_prepare;dur=0.203,
-        inference_batch_wall;dur=101.215, response_assembly;dur=0.019, prepare_other;dur=1.316,
-        app_other;dur=0.116
+      - x-request-id,retry-after,server-timing-total
+      Server-Timing-Total:
+      - '712.830'
       Openai-Processing-Ms:
-      - '105'
+      - '712'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -75,6 +81,6 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"urgent","probability":1.0},{"type":"choice","name":"department","choice":"billing","probabilities":[{"value":"billing","probability":1.0},{"value":"technical","probability":0.0},{"value":"other","probability":0.0}],"confidence":1.0},{"type":"score","name":"frustration","score":1.0,"probabilities":[{"value":0,"label":"0","probability":0.0},{"value":1,"label":"1","probability":1.0},{"value":2,"label":"2","probability":0.0}],"confidence":1.0}],"usage":{"input_tokens":396,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":3,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":399}}'
-  recorded_at: Tue, 29 Sep 2026 17:32:23 GMT
+      string: '{"model":"gpt-6-luna","answers":[{"type":"predicate","name":"urgent","probability":1.0},{"type":"choice","name":"department","choice":"billing","probabilities":[{"value":"billing","probability":1.0},{"value":"technical","probability":0.0},{"value":"other","probability":0.0}],"confidence":1.0},{"type":"score","name":"frustration","score":0.68,"probabilities":[{"value":0,"label":"0","probability":0.32},{"value":1,"label":"1","probability":0.68},{"value":2,"label":"2","probability":0.0}],"confidence":0.52}],"usage":{"input_tokens":428,"input_tokens_details":{"cached_tokens":0,"cache_write_tokens":0},"output_tokens":0,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":428}}'
+  recorded_at: Wed, 07 Oct 2026 13:24:38 GMT
 recorded_with: VCR 6.4.0

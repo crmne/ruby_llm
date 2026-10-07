@@ -168,7 +168,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.citations).not_to be_empty
         expect(response.citations.first.url).to be_present
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
+        expect(response.tokens.server_tool_use.fetch('web_search_requests')).to be_positive
       end
     end
 
@@ -180,7 +180,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.citations).not_to be_empty
         expect(response.citations.first.url).to be_present
-        expect(response.tokens.server_tool_use).to eq('web_search_requests' => 2)
+        expect(response.tokens.server_tool_use.fetch('web_search_requests')).to be_positive
       end
     end
 

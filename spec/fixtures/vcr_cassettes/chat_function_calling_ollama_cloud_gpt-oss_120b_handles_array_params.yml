@@ -28,37 +28,35 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '682'
+      - '706'
       Date:
-      - Thu, 17 Sep 2026 22:20:43 GMT
+      - Wed, 07 Oct 2026 13:40:43 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-165cbc11cb0f860dea936bb66ffee723-2b9acbfc4d6a709f-00
+      - 00-9fae797eef99c4897a7ebb93bcbdadcf-75288efedc1e55e2-00
       X-Cloud-Trace-Context:
-      - 165cbc11cb0f860dea936bb66ffee723/3142047974535360671
+      - 9fae797eef99c4897a7ebb93bcbdadcf/8442154726771807714
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-176","object":"chat.completion","created":1789683643,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to call the array_params tool with tags [\"red\",\"blue\"] and then respond
-        with the combined tags. Probably the tool combines them? Not sure what it
-        does. We''ll just invoke.","tool_calls":[{"id":"call_ubvq9lw2","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"prompt_tokens_details":{"cached_tokens":64},"completion_tokens":75,"total_tokens":222}}
+      string: '{"id":"chatcmpl-371","object":"chat.completion","created":1791380443,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to call the array_params tool with tags [\"red\",\"blue\"] and
+        tell the combined tags. So we need to invoke the function. Use the function
+        call with name \"array_params\" and pass tags array.","tool_calls":[{"id":"call_e15tee09","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":81,"total_tokens":228,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:43 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:43 GMT
 recorded_with: VCR 6.4.0

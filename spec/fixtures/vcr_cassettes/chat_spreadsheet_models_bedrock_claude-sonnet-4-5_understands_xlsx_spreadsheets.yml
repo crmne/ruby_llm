@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T222401Z
+      - 20261007T132254Z
       X-Amz-Content-Sha256:
       - d22d93e1d7052eabc90cf6d6c2e45efdc530e69bb987c6af4adf13b15bd420da
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:24:03 GMT
+      - Wed, 07 Oct 2026 13:22:56 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - db0147e5-f7a7-41df-9d85-ced9be76fe2f
+      - 774a8dcb-7b3b-47db-96a1-ed2eb7b55721
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1712},"output":{"message":{"content":[{"text":"ORCHID-97"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":128,"outputTokens":8,"serverToolUsage":{},"totalTokens":136}}'
-  recorded_at: Thu, 17 Sep 2026 22:24:03 GMT
+      string: '{"metrics":{"latencyMs":1845},"output":{"message":{"content":[{"text":"ORCHID-97"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":128,"outputTokens":8,"serverToolUsage":{},"totalTokens":136}}'
+  recorded_at: Wed, 07 Oct 2026 13:22:56 GMT
 recorded_with: VCR 6.4.0

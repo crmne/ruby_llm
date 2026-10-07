@@ -46,6 +46,24 @@ RSpec.describe RubyLLM::Protocols::Mistral::MultiCompletion do
     expect(message.tool_calls.values.first).not_to be_remote
   end
 
+  it 'returns generated images when the assistant only links to the hosted tool result' do
+    messages.last['content'] = 'Your image: https://example.com/image.jpg'
+
+    message = protocol.send(:parse_completion_body, body(messages), raw: nil)
+
+    expect(message.attachments.map { |attachment| attachment.source.to_s }).to eq(['https://example.com/image.jpg'])
+    expect(message.content).to eq('Your image: https://example.com/image.jpg')
+  end
+
+  it 'does not treat URLs from local tools as generated images' do
+    call.delete('metadata')
+    messages.last['content'] = 'Here is a link.'
+
+    message = protocol.send(:parse_completion_body, body(messages), raw: nil)
+
+    expect(message.attachments).to be_empty
+  end
+
   it 'refuses to execute an unfinished hosted call as a local tool' do
     expect { protocol.send(:parse_completion_body, body([messages.first]), raw: nil) }
       .to raise_error(RubyLLM::Error, /unfinished hosted tool/)

@@ -11,8 +11,21 @@ module RubyLLM
           output.select { |entry| entry['type'] == 'message.output' }.each do |entry|
             parse_conversation_parts(entry['content'], result)
           end
+          result[:attachments].concat(output.filter_map do |entry|
+            next unless entry['type'] == 'tool.execution' && entry['name'] == 'image_generation'
+
+            parse_generated_image(entry.dig('info', 'result'))
+          end)
+          result[:attachments].uniq!(&:source)
           result[:thinking] = nil if result[:thinking].empty?
           result
+        end
+
+        def parse_generated_image(result)
+          return unless result
+
+          url = JSON.parse(result)['url']
+          Attachment.new(url, config: @config) if url
         end
 
         def parse_conversation_parts(content, result)

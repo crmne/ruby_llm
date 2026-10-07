@@ -25,104 +25,86 @@ http_interactions:
     headers:
       Content-Type:
       - text/event-stream
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Date:
-      - Thu, 17 Sep 2026 22:06:47 GMT
+      - Wed, 07 Oct 2026 13:10:09 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-34077fc24308e881c7c668235d216034-086f18b6a683d35a-00
       X-Cloud-Trace-Context:
-      - 34077fc24308e881c7c668235d216034/607731647475077978
+      - d30aed2dd062d3eda5cb51e9c1a1a8ff/6989622937419426025
+      Traceparent:
+      - 00-d30aed2dd062d3eda5cb51e9c1a1a8ff-610021076acea8e9-00
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"The user"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378609,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"The user says"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" says"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378609,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":": \"Reply with exactly:"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":": \"Reply with exactly:"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378609,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 1, 2,"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 1, 2,"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 3\". They want the"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 3\". So"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" response to be exactly \""},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" we need to output exactly \""},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"1, 2, "},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"1, 2, "},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"3\". Probably"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"3\". No extra spaces"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" they want that"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"?"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" string"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" The"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":". Must"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" phrase includes spaces"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" not"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" after commas. The"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" add anything"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" instruction"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" else. So output exactly"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":": \"Reply with exactly:"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" \"1, 2,"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 1, 2,"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 3\". Ensure"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" 3\". So we should"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" no extra whitespace"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" output exactly that string. Ensure"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" or punctuation"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" no extra punctuation"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"."},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":","},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" Probably"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" no extra"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" just"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" newline? Usually"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" that."},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" a"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"1, 2"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" newline is okay but"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":", 3"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" content"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" should"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
 
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" be exactly \""},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"1, 2, "},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"3\". We'll"},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" output that."},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"1, 2, "},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
-
-        data: {"id":"chatcmpl-865","object":"chat.completion.chunk","created":1789682807,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":79,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":118,"total_tokens":197}}
+        data: {"id":"chatcmpl-548","object":"chat.completion.chunk","created":1791378610,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":79,"completion_tokens":86,"total_tokens":165,"prompt_tokens_details":{"cached_tokens":48}}}
 
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:06:47 GMT
+  recorded_at: Wed, 07 Oct 2026 13:10:10 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -148,40 +130,37 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Set-Cookie:
-      - "<COOKIE>"
       X-Build-Commit:
-      - 06e177d7ef1d1dfcdc87907f62fdef4363abe1ab
+      - aca5aad1d053bda171888c526b817e0c61227261
       X-Build-Time:
-      - '2026-09-17T14:37:26-07:00'
+      - '2026-10-06T19:15:30-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '680'
+      - '633'
       Date:
-      - Thu, 17 Sep 2026 22:06:48 GMT
+      - Wed, 07 Oct 2026 13:10:11 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-009a82d4dd4f641357bbfbdfe498ec9a-0983e4f8fbc69908-00
+      - 00-09a253347cf07b901233fb70ec804925-fcbd47d90cd542b4-00
       X-Cloud-Trace-Context:
-      - '009a82d4dd4f641357bbfbdfe498ec9a/685643326317566216'
+      - '09a253347cf07b901233fb70ec804925/18211791465704932020'
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-842","object":"chat.completion","created":1789682808,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"1,
-        2, 3","reasoning":"The user says: \"Reply with exactly: 1, 2, 3\". So we need
-        to output exactly \"1, 2, 3\". No extra spaces? The phrase includes spaces
-        after commas. The instruction: \"Reply with exactly: 1, 2, 3\". So we should
-        output exactly that string. Ensure no extra punctuation or newline? Probably
-        just \"1, 2, 3\". We''ll output that."},"finish_reason":"stop"}],"usage":{"prompt_tokens":79,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":108,"total_tokens":187}}
+      string: '{"id":"chatcmpl-782","object":"chat.completion","created":1791378611,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"1,
+        2, 3","reasoning":"The user says: \"Reply with exactly: 1, 2, 3\". They want
+        the assistant to output exactly \"1, 2, 3\". Probably they want that string.
+        Must ensure no extra spaces or newlines? The phrase \"exactly: 1, 2, 3\".
+        So output \"1, 2, 3\". No extra punctuation. Should be exactly that."},"finish_reason":"stop"}],"usage":{"prompt_tokens":79,"completion_tokens":101,"total_tokens":180,"prompt_tokens_details":{"cached_tokens":48}}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:06:48 GMT
+  recorded_at: Wed, 07 Oct 2026 13:10:11 GMT
 recorded_with: VCR 6.4.0
 ...

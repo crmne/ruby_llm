@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:48 GMT
+      - Wed, 07 Oct 2026 12:59:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1492
+      - gfet4t7; dur=1967
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -50,22 +50,22 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |+
         event: interaction.created
-        data: {"interaction":{"id":"","status":"in_progress","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.created"}
+        data: {"interaction":{"object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.created"}
 
         event: interaction.status_update
-        data: {"interaction_id":"","status":"in_progress","event_type":"interaction.status_update"}
+        data: {"status":"in_progress","event_type":"interaction.status_update"}
 
         event: step.start
         data: {"index":0,"step":{"type":"thought"},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":0,"delta":{"signature":"EvYBCvMBAWkUfRNsDPqvMultX0t7wZxmUGdlLwwpAzwznJis6QVB7SB8wkoR25JFfnfvIB4lLCR3U3SGIrGVIhDsOzuk5vZUHsk4T1AiqY2AFrlNti5k21/YRsXvUrfzt8KhMzyngRCp5U+7APrIM2lzBYMELWLLvxDgpn5RCUSLSTalGZmFS8ZqNmQVadVR0UEDv0Ao5xsdTbXEPRhgKSoUfwaWGGO5RO47Q6N67fwbRjVt8Qg06QdwipbU+UoEDURAogj5HWyBLxDg2jbfBrlZFdbGogE1RjZ4fZnvpxNaPm9BQ9IEDHjfQnJe6OSdYmrDFmPhGEep","type":"thought_signature"},"event_type":"step.delta"}
+        data: {"index":0,"delta":{"signature":"EoACCv0BAWkUfRNALj3jDZi7Sp2tKgmtPBI2NgK6G2GgqqsJxrtKgnBH3H+JU19af1K6FstQsPshyl0XTFf6uhINOV0mFhUjY7ZT1T9kY9tP31hdE1IuvpjOR4cquD1VF1wRWWFHwT7e+NHaY8D+XlSEAzMlEptECJhGPAWJoFp9/HRk7fFvHrNOXvh2i6AX02SofD1L2CMEzTX7sKhKU7gQzV2k4tzal/aP2WtuDb8TU6sUV+byCTyxNOhk68aE+LpCR/4ZSZlEh55yfsnNe5LMBj/imXR4t8j0QCdUcA+tK11vX2LKs/+USRgDwjVb4MG6WK6/C5h9HSizR24NF4htvA==","type":"thought_signature"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":0,"event_type":"step.stop"}
 
         event: step.start
-        data: {"index":1,"step":{"id":"call_137459","type":"function_call","name":"multiply","arguments":{}},"event_type":"step.start"}
+        data: {"index":1,"step":{"id":"call_531317","signature":"AWkUfRNALj3jDZi7Sp2tKgmtPBI2NgK6G2GgqqsJxrtKgnBH3H+JU19af1K6FstQsPshyl0XTFf6uhINOV0mFhUjY7ZT1T9kY9tP31hdE1IuvpjOR4cquD1VF1wRWWFHwT7e+NHaY8D+XlSEAzMlEptECJhGPAWJoFp9/HRk7fFvHrNOXvh2i6AX02SofD1L2CMEzTX7sKhKU7gQzV2k4tzal/aP2WtuDb8TU6sUV+byCTyxNOhk68aE+LpCR/4ZSZlEh55yfsnNe5LMBj/imXR4t8j0QCdUcA+tK11vX2LKs/+USRgDwjVb4MG6WK6/C5h9HSizR24NF4htvA==","type":"function_call","name":"multiply","arguments":{}},"event_type":"step.start"}
 
         event: step.delta
         data: {"index":1,"delta":{"arguments":"{\"right\":19,\"left\":17}","type":"arguments_delta"},"event_type":"step.delta"}
@@ -74,19 +74,19 @@ http_interactions:
         data: {"index":1,"event_type":"step.stop"}
 
         event: interaction.completed
-        data: {"interaction":{"id":"","status":"requires_action","usage":{"total_tokens":123,"total_input_tokens":68,"input_tokens_by_modality":[{"modality":"text","tokens":68}],"total_cached_tokens":0,"total_output_tokens":18,"total_tool_use_tokens":0,"total_thought_tokens":37,"raw_prompt_token":107,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":107}],"candidates_tokens_details":[{"modality":"text","tokens":24}],"thoughts_tokens_details":[{"modality":"text","tokens":37}]}]},"created":"2026-09-17T22:15:49Z","updated":"2026-09-17T22:15:49Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
+        data: {"interaction":{"status":"requires_action","usage":{"total_tokens":126,"total_input_tokens":67,"input_tokens_by_modality":[{"modality":"text","tokens":67}],"total_cached_tokens":0,"total_output_tokens":18,"total_tool_use_tokens":0,"total_thought_tokens":41,"raw_prompt_token":107,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":107}],"candidates_tokens_details":[{"modality":"text","tokens":24}],"thoughts_tokens_details":[{"modality":"text","tokens":41}]}],"non_grounding_model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":107}],"candidates_tokens_details":[{"modality":"text","tokens":24}],"thoughts_tokens_details":[{"modality":"text","tokens":41}]}]},"created":"2026-10-07T12:59:33Z","updated":"2026-10-07T12:59:33Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
 
         event: done
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:15:49 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:33 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/interactions
     body:
       encoding: UTF-8
       string: '{"model":"gemini-3.8-flash","input":[{"type":"user_input","content":[{"type":"text","text":"Use
-        multiply to calculate 17 times 19. State the result."}]},{"type":"thought","signature":"EvYBCvMBAWkUfRNsDPqvMultX0t7wZxmUGdlLwwpAzwznJis6QVB7SB8wkoR25JFfnfvIB4lLCR3U3SGIrGVIhDsOzuk5vZUHsk4T1AiqY2AFrlNti5k21/YRsXvUrfzt8KhMzyngRCp5U+7APrIM2lzBYMELWLLvxDgpn5RCUSLSTalGZmFS8ZqNmQVadVR0UEDv0Ao5xsdTbXEPRhgKSoUfwaWGGO5RO47Q6N67fwbRjVt8Qg06QdwipbU+UoEDURAogj5HWyBLxDg2jbfBrlZFdbGogE1RjZ4fZnvpxNaPm9BQ9IEDHjfQnJe6OSdYmrDFmPhGEep"},{"id":"call_137459","type":"function_call","name":"multiply","arguments":{"right":19,"left":17}},{"type":"function_result","call_id":"call_137459","name":"multiply","result":[{"type":"text","text":"323"}]}],"stream":true,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
+        multiply to calculate 17 times 19. State the result."}]},{"type":"thought","signature":"EoACCv0BAWkUfRNALj3jDZi7Sp2tKgmtPBI2NgK6G2GgqqsJxrtKgnBH3H+JU19af1K6FstQsPshyl0XTFf6uhINOV0mFhUjY7ZT1T9kY9tP31hdE1IuvpjOR4cquD1VF1wRWWFHwT7e+NHaY8D+XlSEAzMlEptECJhGPAWJoFp9/HRk7fFvHrNOXvh2i6AX02SofD1L2CMEzTX7sKhKU7gQzV2k4tzal/aP2WtuDb8TU6sUV+byCTyxNOhk68aE+LpCR/4ZSZlEh55yfsnNe5LMBj/imXR4t8j0QCdUcA+tK11vX2LKs/+USRgDwjVb4MG6WK6/C5h9HSizR24NF4htvA=="},{"id":"call_531317","signature":"AWkUfRNALj3jDZi7Sp2tKgmtPBI2NgK6G2GgqqsJxrtKgnBH3H+JU19af1K6FstQsPshyl0XTFf6uhINOV0mFhUjY7ZT1T9kY9tP31hdE1IuvpjOR4cquD1VF1wRWWFHwT7e+NHaY8D+XlSEAzMlEptECJhGPAWJoFp9/HRk7fFvHrNOXvh2i6AX02SofD1L2CMEzTX7sKhKU7gQzV2k4tzal/aP2WtuDb8TU6sUV+byCTyxNOhk68aE+LpCR/4ZSZlEh55yfsnNe5LMBj/imXR4t8j0QCdUcA+tK11vX2LKs/+USRgDwjVb4MG6WK6/C5h9HSizR24NF4htvA==","type":"function_call","name":"multiply","arguments":{"right":19,"left":17}},{"type":"function_result","call_id":"call_531317","name":"multiply","result":[{"type":"text","text":"323"}]}],"stream":true,"store":false,"system_instruction":"","generation_config":{},"tools":[{"type":"function","name":"multiply","description":"Multiply
         two numbers","parameters":{"type":"object","properties":{"left":{"type":"integer"},"right":{"type":"integer"}},"required":["left","right"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
@@ -111,7 +111,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:15:50 GMT
+      - Wed, 07 Oct 2026 12:59:35 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -121,7 +121,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1310
+      - gfet4t7; dur=2229
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -130,16 +130,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |+
         event: interaction.created
-        data: {"interaction":{"id":"","status":"in_progress","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.created"}
+        data: {"interaction":{"object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.created"}
 
         event: interaction.status_update
-        data: {"interaction_id":"","status":"in_progress","event_type":"interaction.status_update"}
+        data: {"status":"in_progress","event_type":"interaction.status_update"}
 
         event: step.start
         data: {"index":0,"step":{"type":"thought"},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":0,"delta":{"signature":"EqoBCqcBAWkUfRMjjh7oMwKGpLhMn441YmdHMg7SMy8rzgoBVJ+qfjREMFeHbaWb71r1ZtLa7y/m6yG1cqR8nj7Pj8icTBYaLz9zOhSqM4RIylFoTQCTZwu2ZDC69CTYCLHG4yywya5vHeqyR22w5brn+BnY2J9eZSGQwlaQIg5PvAGBk5zeG/zQ7+JyLuVNIVGPSm4QkUGPwQXTYedT+1Bf3WAjuxpcpb/wEL4=","type":"thought_signature"},"event_type":"step.delta"}
+        data: {"index":0,"delta":{"signature":"EqUBCqIBAWkUfRNLhEoOZ4mF7bDfEObBhCtwqcxw1SOMdON0msprJcgDiYAqnKMyyAhBuyLCS+HSDre0en1pePXe2l+Z9vMd/0/uAEvcG01IvEv4cjjZ7B1HxbZJtuGQiE93Gf3UTbTfQLJikoqBCg6SxmU65XjP7448zRxPfwopJV+1frkeFNNFZZjwn3eTDs7Ubry1V6gNw6WVxwIKOLY7+AhDh8uS","type":"thought_signature"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":0,"event_type":"step.stop"}
@@ -148,20 +148,17 @@ http_interactions:
         data: {"index":1,"step":{"type":"model_output"},"event_type":"step.start"}
 
         event: step.delta
-        data: {"index":1,"delta":{"text":"The result of ","type":"text"},"event_type":"step.delta"}
-
-        event: step.delta
         data: {"index":1,"delta":{"text":"17 times 19 is 323.","type":"text"},"event_type":"step.delta"}
 
         event: step.stop
         data: {"index":1,"event_type":"step.stop"}
 
         event: interaction.completed
-        data: {"interaction":{"id":"","status":"completed","usage":{"total_tokens":162,"total_input_tokens":132,"input_tokens_by_modality":[{"modality":"text","tokens":132}],"total_cached_tokens":0,"total_output_tokens":16,"total_tool_use_tokens":0,"total_thought_tokens":14,"raw_prompt_token":184,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":184}],"candidates_tokens_details":[{"modality":"text","tokens":20}],"thoughts_tokens_details":[{"modality":"text","tokens":14}]}]},"created":"2026-09-17T22:15:50Z","updated":"2026-09-17T22:15:50Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
+        data: {"interaction":{"status":"completed","usage":{"total_tokens":160,"total_input_tokens":132,"input_tokens_by_modality":[{"modality":"text","tokens":132}],"total_cached_tokens":0,"total_output_tokens":12,"total_tool_use_tokens":0,"total_thought_tokens":16,"raw_prompt_token":188,"model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":188}],"candidates_tokens_details":[{"modality":"text","tokens":16}],"thoughts_tokens_details":[{"modality":"text","tokens":16}]}],"non_grounding_model_invocation_token_counts":[{"prompt_tokens_details":[{"modality":"text","tokens":188}],"candidates_tokens_details":[{"modality":"text","tokens":16}],"thoughts_tokens_details":[{"modality":"text","tokens":16}]}]},"created":"2026-10-07T12:59:35Z","updated":"2026-10-07T12:59:35Z","service_tier":"standard","object":"interaction","model":"gemini-3.8-flash"},"event_type":"interaction.completed"}
 
         event: done
         data: [DONE]
 
-  recorded_at: Thu, 17 Sep 2026 22:15:50 GMT
+  recorded_at: Wed, 07 Oct 2026 12:59:35 GMT
 recorded_with: VCR 6.4.0
 ...

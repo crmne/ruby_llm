@@ -42,11 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - c23eed69e81f49b6ee81e2e79037eb9b
+      - 85766edb9e607d24422a4642e1d975ed
       Date:
-      - Thu, 17 Sep 2026 22:08:43 GMT
+      - Wed, 07 Oct 2026 13:01:43 GMT
       X-Envoy-Upstream-Service-Time:
-      - '386'
+      - '874'
       Server:
       - envoy
       Via:
@@ -57,11 +57,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"6f501df3-495b-4c22-8ae4-da1e02aeda46","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+      string: '{"id":"977b2293-45d7-474d-a3a5-304323b494b1","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
         user is asking for the sum of 5 and 3. Since this is a straightforward arithmetic
         problem, I don''t need to use any tools. I can calculate the result directly."},{"type":"text","text":"The
         sum of 5 and 3 is 8."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":50},"tokens":{"input_tokens":1394,"output_tokens":55,"reasoning_tokens":38},"cached_tokens":1344}}'
-  recorded_at: Thu, 17 Sep 2026 22:08:43 GMT
+  recorded_at: Wed, 07 Oct 2026 13:01:43 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -98,7 +98,7 @@ http_interactions:
       Num-Chars:
       - '6876'
       Num-Tokens:
-      - '254'
+      - '192'
       Pragma:
       - no-cache
       Vary:
@@ -106,33 +106,30 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 959fe143755ec973bf51f22f788aed20
+      - 33018a7ea25f4267e8e99b0c737819f6
       Date:
-      - Thu, 17 Sep 2026 22:08:45 GMT
+      - Wed, 07 Oct 2026 13:01:45 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1739'
+      - '1521'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3266812a-4d81-4c44-a3c8-e1cd3ca79dc8","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
+      string: '{"id":"d41c69e5-35bb-4d87-90c9-93c189290ce9","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
         the user first asked, \"What is 5 + 3?\" and I responded with the sum, which
-        is 8. Now they''re asking to multiply that result by 2. Let me make sure I
-        understand the flow here.\n\nFirst, I need to confirm the previous answer
-        to ensure accuracy. 5 plus 3 is definitely 8. Then, multiplying 8 by 2 should
-        be straightforward. \n\nI should check if there''s any ambiguity in the user''s
-        request. The phrase \"that\" refers to the previous result, which is 8. So,
-        no confusion there. \n\nNext, perform the multiplication: 8 * 2. Let me calculate
-        that. 8 times 2 is 16. \n\nIs there any need to use external tools here? Since
-        it''s a simple arithmetic operation, I can compute it directly without any
-        tool calls. \n\nTherefore, the final answer should be 16. I''ll present that
-        clearly to the user."},{"type":"text","text":"The result of multiplying 8
-        (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":228},"tokens":{"input_tokens":1431,"output_tokens":233,"reasoning_tokens":206},"cached_tokens":1360}}'
-  recorded_at: Thu, 17 Sep 2026 22:08:45 GMT
+        is 8. Now they''re asking to multiply that result by 2. So the next step is
+        to take 8 and multiply by 2. Let me verify the previous answer to make sure
+        it''s correct. 5 plus 3 is indeed 8. Then multiplying 8 by 2 gives 16. I should
+        check if there''s any possible misunderstanding here. The user says \"that,\"
+        referring to the previous result, so there''s no ambiguity. The calculation
+        is straightforward. No tools are needed here since it''s a simple arithmetic
+        operation. I can directly provide the answer."},{"type":"text","text":"The
+        result of multiplying 8 (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":166},"tokens":{"input_tokens":1431,"output_tokens":171,"reasoning_tokens":144},"cached_tokens":1344}}'
+  recorded_at: Wed, 07 Oct 2026 13:01:45 GMT
 recorded_with: VCR 6.4.0

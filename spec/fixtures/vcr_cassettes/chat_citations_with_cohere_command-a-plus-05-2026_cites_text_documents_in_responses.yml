@@ -38,7 +38,7 @@ http_interactions:
       Num-Chars:
       - '2465'
       Num-Tokens:
-      - '118'
+      - '163'
       Pragma:
       - no-cache
       Vary:
@@ -46,11 +46,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 37a6f59e8535ab01d9e1946d9d60fc1a
+      - d38b36b4520bed154a0bb0a01bb87722
       Date:
-      - Thu, 17 Sep 2026 22:11:56 GMT
+      - Wed, 07 Oct 2026 12:59:51 GMT
       X-Envoy-Upstream-Service-Time:
-      - '259'
+      - '559'
       Server:
       - envoy
       Via:
@@ -61,11 +61,14 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"52612fab-7147-464d-9578-82626e516c2e","message":{"role":"assistant","content":[{"type":"thinking","thinking":"I
-        found the document that contains the information needed. The document states
-        that Ruby was created by Yukihiro Matsumoto in 1993. This directly answers
-        the user''s question."},{"type":"text","text":"Based on the document provided,
-        Ruby was created by Yukihiro Matsumoto in 1993."}],"citations":[{"start":52,"end":70,"text":"Yukihiro
+      string: '{"id":"357de0ec-7770-4ab3-b1bc-970e576a08a9","message":{"role":"assistant","content":[{"type":"thinking","thinking":"I
+        found the document that contains the answer to the user''s question. The document
+        states: \"The Ruby programming language was created by Yukihiro Matsumoto
+        in 1993.\" This directly answers both parts of the question - who created
+        Ruby (Yukihiro Matsumoto) and when (1993)."},{"type":"text","text":"Based
+        on the document provided, Ruby was created by Yukihiro Matsumoto in 1993.
+        The document specifically states: \"The Ruby programming language was created
+        by Yukihiro Matsumoto in 1993.\""}],"citations":[{"start":52,"end":70,"text":"Yukihiro
         Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
         was designed to make programmers happy and productive. Ruby on Rails is a
@@ -74,6 +77,11 @@ http_interactions:
         Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
         was designed to make programmers happy and productive. Ruby on Rails is a
         popular web framework built with Ruby. RubyLLM is a Ruby library for working
-        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":67,"output_tokens":51},"tokens":{"input_tokens":510,"output_tokens":75,"reasoning_tokens":33},"cached_tokens":144}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:56 GMT
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1},{"start":114,"end":188,"text":"\"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993.\"","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
+        was designed to make programmers happy and productive. Ruby on Rails is a
+        popular web framework built with Ruby. RubyLLM is a Ruby library for working
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":67,"output_tokens":96},"tokens":{"input_tokens":510,"output_tokens":129,"reasoning_tokens":57},"cached_tokens":144}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:51 GMT
 recorded_with: VCR 6.4.0

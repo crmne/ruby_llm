@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221254Z
+      - 20261007T130034Z
       X-Amz-Content-Sha256:
       - a28e1d7f145ec6abf9e71788a74513f7e39e26432272e2faecb469dc1e7c3457
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,22 +29,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:12:57 GMT
+      - Wed, 07 Oct 2026 13:00:37 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1277'
+      - '1346'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - cc547a68-23de-4e3b-aa3a-29339e1ec266
+      - 879a1048-f928-48f9-bc7c-0ca7665a9b24
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2409},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
-        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_58qzyNYI061vPyqljcsb-Q","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_58qzyNYI061vPyqljcsb-Q","type":"nova_grounding_result"}},{"text":"The
-        latest stable Ruby version is **4.0.7**"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"github.com","url":"https://github.com/ruby/ruby/releases"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"http://www.ruby-lang.org/en/news/"}}}]}},{"text":".
-        \n\nRuby 4.0.7 is the newest stable release as of September 15, 2026. Key
-        recent releases include Ruby 4.0.6, Ruby 3.4.10, and Ruby 3.3.12, which are
-        also available for download"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"github.com","url":"https://github.com/ruby/ruby/releases"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":100,"serverToolUsage":{},"totalTokens":241}}'
-  recorded_at: Thu, 17 Sep 2026 22:12:57 GMT
+      string: '{"metrics":{"latencyMs":2347},"output":{"message":{"content":[{"toolUse":{"input":{"query":"latest
+        stable Ruby version"},"name":"nova_grounding","toolUseId":"tooluse_FaGh1fjGQr84USyIA1rUDw","type":"server_tool_use"}},{"toolResult":{"content":[{"text":"[HIDDEN]"}],"status":"success","toolUseId":"tooluse_FaGh1fjGQr84USyIA1rUDw","type":"nova_grounding_result"}},{"text":"The
+        latest stable Ruby version is **4.0.7**, released on September 15, 2026. This
+        version is the most recent update to the Ruby 4.0 series, which began with
+        the initial release of Ruby 4.0.0 on December 25, 2025. Ruby 4.0.7 includes
+        bug fixes and improvements, continuing the evolution of Ruby''s performance
+        and features, including enhancements like ZJIT (a next-generation JIT compiler)
+        and Ruby Box (definition isolation)"},{"citationsContent":{"citations":[{"location":{"web":{"domain":"ruby-lang.org","url":"https://www.ruby-lang.org/en/downloads/releases/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"issoh.co.jp","url":"https://www.issoh.co.jp/tech/details/10592/"}}}]}},{"citationsContent":{"citations":[{"location":{"web":{"domain":"github.com","url":"https://github.com/ruby/ruby/releases"}}}]}},{"text":"."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":141,"outputTokens":155,"serverToolUsage":{},"totalTokens":296}}'
+  recorded_at: Wed, 07 Oct 2026 13:00:37 GMT
 recorded_with: VCR 6.4.0

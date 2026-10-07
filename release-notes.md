@@ -25,6 +25,8 @@ bundle add ruby_llm --version 2.1.0
 
 ## Fixed
 
+- **Keep images returned by Mistral's hosted tools.** Generated images remain available as attachments and through `paint` when the assistant links to the image instead of returning an image content block. By @crmne.
+- **Continue Gemini MCP conversations without repeating completed tools.** Interactions recognizes provider-executed function calls and replays their results with the signatures the API accepts. By @crmne.
 - **Resume conversations across providers and interrupted jobs.** Native reasoning and signatures replay only to their originating model, Gemini can continue another provider's tool round, and interrupted history no longer sends blank replies or invalid unfinished rounds. By @crmne. ([ab4a4f06](https://github.com/crmne/ruby_llm/commit/ab4a4f06), [065fe1f8](https://github.com/crmne/ruby_llm/commit/065fe1f8), [6f8d01f5](https://github.com/crmne/ruby_llm/commit/6f8d01f5))
 - **Rescue provider failures consistently.** Rejected credentials, exhausted credit, token limits, rate limits, and overloads map to specific RubyLLM errors. Retries honor millisecond delays, refresh Bedrock signatures, and retry TLS failures. Buffered streaming errors stay bounded and preserve validation details. By @crmne, @parterburn, and @tonic20. (#991, #1024, [cbfad65d](https://github.com/crmne/ruby_llm/commit/cbfad65d), [6c8b1b84](https://github.com/crmne/ruby_llm/commit/6c8b1b84), [6f16112c](https://github.com/crmne/ruby_llm/commit/6f16112c), [ca9a6c22](https://github.com/crmne/ruby_llm/commit/ca9a6c22))
 - **Thinking controls reach Bedrock and Sonnet correctly.** Converse uses each model's reasoning format, and `with_thinking(false)` works with Claude Sonnet 5.5, including regional model IDs. By @tonic20, @afurm, and @crmne; thanks @davidalejandroaguilar. (#1025, #1023, #1016)
@@ -39,6 +41,7 @@ bundle add ruby_llm --version 2.1.0
 - **Some cost estimates and exported costs remain incomplete.** One-hour Anthropic cache writes use the shorter cache-write price (#1042). Exporting and restoring a plain-Ruby message can lose a provider-reported cost (#1045). Rails retains its stored billed amount.
 - **Prompt-cache reuse can fall after reloads or mixed system instructions.** PostgreSQL/MySQL can reorder persisted tool arguments (#1040), and Responses can reorder cache-marked and unmarked system messages (#1039).
 - **OpenRouter streamed citations are missing.** The non-streamed response retains them (#1043).
+- **Gemini's dedicated transcription endpoint currently rejects requests.** The service returns "Thinking is not enabled for this model" even without thinking options. The Vertex AI transcription path works. See the [upstream report](https://discuss.ai.google.dev/t/gemini-3-5-transcribe-returns-400-thinking-is-not-enabled-for-this-model-without-thinking-configuration/187295).
 - **MCP Apps need a UI supplied by your application.** RubyLLM exposes app resources and retained results, not a browser host. The conformance baseline also excludes the older-server elicitation-defaults scenario.
 - **Provider access still determines availability.** Hetzner Inference is experimental, and hosted tools, media, and judgments depend on the selected service and account.
 

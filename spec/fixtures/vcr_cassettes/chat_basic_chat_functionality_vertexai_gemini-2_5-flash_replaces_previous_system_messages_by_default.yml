@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 07 Oct 2026 13:11:16 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 17 Sep 2026 22:10:51 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:10:51 GMT
+  recorded_at: Wed, 07 Oct 2026 13:11:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:10:56 GMT
+      - Wed, 07 Oct 2026 13:11:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -103,35 +103,35 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJJIGNhbiB0ZWxsIHlvdSBhYm91dCB0aGUgd2VhdGhlciwgYnV0IHNpbmNlIEkgZG9uJ3Qga25vdyB5b3VyIHNwZWNpZmljIGxvY2F0aW9uIG9yIHRoZSBjdXJyZW50IGRhdGUgYW5kIHRpbWUsIEkgY2FuIG9ubHkgZ2l2ZSB5b3UgYSBnZW5lcmFsIG92ZXJ2aWV3IVxuXG5UbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgKnlvdXIqIGV4YWN0IHNwb3QsIEkgcmVjb21tZW5kIGNoZWNraW5nOlxuXG4xLiAgKipZb3VyIGxvY2FsIHdlYXRoZXIgYXBwOioqIE1vc3Qgc21hcnRwaG9uZXMgaGF2ZSBvbmUgcHJlLWluc3RhbGxlZCBvciByZWFkaWx5IGF2YWlsYWJsZS5cbjIuICAqKlJlbGlhYmxlIHdlYXRoZXIgd2Vic2l0ZXM6KiogV2Vic2l0ZXMgbGlrZSBBY2N1V2VhdGhlciwgVGhlIFdlYXRoZXIgQ2hhbm5lbCwgTk9BQSwgb3IgeW91ciBsb2NhbCBtZXRlb3JvbG9naWNhbCBzZXJ2aWNlIGFyZSBleGNlbGxlbnQgcmVzb3VyY2VzLlxuMy4gICoqTG9jYWwgbmV3cyBjaGFubmVsczoqKiBNYW55IFRWIHN0YXRpb25zIHByb3ZpZGUgZGV0YWlsZWQgbG9jYWwgZm9yZWNhc3RzLlxuNC4gICoqU21hcnQgc3BlYWtlcnMvYXNzaXN0YW50czoqKiBKdXN0IGFzaywgXCJIZXkgW0Fzc2lzdGFudCBOYW1lXSwgd2hhdCdzIHRoZSB3ZWF0aGVyIGxpa2UgdG9kYXk/XCJcblxuKipHZW5lcmFsbHksIHdlYXRoZXIgY29uZGl0aW9ucyBhcm91bmQgdGhlIHdvcmxkIHZhcnkgd2lsZGx5OioqXG5cbiogICAqKlRlbXBlcmF0dXJlOioqIENvdWxkIHJhbmdlIGZyb20gZnJpZ2lkIGFyY3RpYyB0ZW1wZXJhdHVyZXMgdG8gc2NvcmNoaW5nIGRlc2VydCBoZWF0LlxuKiAgICoqUHJlY2lwaXRhdGlvbjoqKiBZb3UgbWlnaHQgYmUgZXhwZXJpZW5jaW5nIHN1bnNoaW5lLCByYWluLCBzbm93LCBzbGVldCwgb3IgaGFpbC5cbiogICAqKldpbmQ6KiogRnJvbSBjYWxtIGJyZWV6ZXMgdG8gc3Ryb25nIGd1c3RzIG9yIGV2ZW4gaHVycmljYW5lLWZvcmNlIHdpbmRzIGluIHNvbWUgcmVnaW9ucy5cbiogICAqKlNreSBDb25kaXRpb25zOioqIENsZWFyIGFuZCBzdW5ueSwgcGFydGx5IGNsb3VkeSwgb3ZlcmNhc3QsIG9yIGZvZ2d5LlxuXG5Gb3IgaW5zdGFuY2UsIHNvbWV3aGVyZSBpbiB0aGUgTm9ydGhlcm4gSGVtaXNwaGVyZSBtaWdodCBiZSBleHBlcmllbmNpbmcgYXV0dW1uIGNoaWxscywgd2hpbGUgcGFydHMgb2YgdGhlIFNvdXRoZXJuIEhlbWlzcGhlcmUgYXJlIGVuam95aW5nIHNwcmluZyB3YXJtdGguIENvYXN0YWwgYXJlYXMgb2Z0ZW4gaGF2ZSBkaWZmZXJlbnQgY29uZGl0aW9ucyB0aGFuIGlubGFuZCByZWdpb25zLlxuXG5JZiB5b3UgdGVsbCBtZSBhIHNwZWNpZmljIGNpdHkgb3IgcmVnaW9uLCBJIGNhbiAoaWYgSSBoYWQgcmVhbC10aW1lIGRhdGEgYWNjZXNzKSBkZXNjcmliZSB3aGF0IGl0J3MgbGlrZSB0aGVyZSwgYnV0IGFzIGFuIEFJLCBJIGNhbid0IGxvb2sgb3V0IGEgd2luZG93ISBYS0NENzM5MiDigJMgeW91IG1pZ2h0IG5lZWQgYSBsb2NhbCByZXBvcnQgdG8gZmlndXJlIG91dCBpZiB5b3UgbmVlZCBhbiB1bWJyZWxsYSBvciBzdW5nbGFzc2VzIVxuXG5XaGF0IGNpdHkgb3IgcmVnaW9uIGFyZSB5b3UgY3VyaW91cyBhYm91dD8iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC44NjQyOTU1ODQyNTY1MzE3NQogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzY2LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDY5MiwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMzY2CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMzAxCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDktMTdUMjI6MTA6NTIuMDA1NTE5WiIsCiAgInJlc3BvbnNlSWQiOiAiYkdXc2FvOHIzYkNZOVEtUzhldVpCQSIKfQo=
-  recorded_at: Thu, 17 Sep 2026 22:10:56 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpcyBhIGZhc2NpbmF0aW5nIGFuZCBldmVyLWNoYW5naW5nIHBoZW5vbWVub24hXG5cblNpbmNlIEkgZG9uJ3Qga25vdyB5b3VyIGN1cnJlbnQgbG9jYXRpb24sIEkgY2FuJ3QgZ2l2ZSB5b3UgYSBzcGVjaWZpYywgcmVhbC10aW1lIGZvcmVjYXN0IGZvciB3aGVyZSB5b3UgYXJlLiBIb3dldmVyLCBJIGNhbiB0ZWxsIHlvdSBhIGZldyB0aGluZ3MgYWJvdXQgdGhlIHdlYXRoZXIgaW4gZ2VuZXJhbDpcblxuKiAgICoqQ3VycmVudCBHbG9iYWwgU25hcHNob3Q6KiogQXQgdGhpcyB2ZXJ5IG1vbWVudCwgc29tZXdoZXJlIG9uIEVhcnRoLCBpdCdzIGxpa2VseSBzdW5ueSBhbmQgd2FybSwgd2hpbGUgZWxzZXdoZXJlIGl0J3MgcmFpbmluZywgc25vd2luZywgb3IgZXhwZXJpZW5jaW5nIGEgc3Rvcm0uIFdlYXRoZXIgcGF0dGVybnMgYXJlIGluY3JlZGlibHkgZGl2ZXJzZS5cbiogICAqKkhvdyB0byBHZXQgWW91ciBMb2NhbCBXZWF0aGVyOioqIFRvIGZpbmQgb3V0IHdoYXQgdGhlIHdlYXRoZXIgaXMgbGlrZSAqZm9yIHlvdSosIHlvdSdkIHR5cGljYWxseSBjaGVjayBhIHdlYXRoZXIgYXBwLCBhIGxvY2FsIG5ld3MgZm9yZWNhc3QsIG9yIGEgd2VhdGhlciB3ZWJzaXRlIChsaWtlIEFjY3VXZWF0aGVyLCBUaGUgV2VhdGhlciBDaGFubmVsLCBvciB5b3VyIG5hdGlvbmFsIG1ldGVvcm9sb2dpY2FsIHNlcnZpY2UpLiBUaGVzZSBzZXJ2aWNlcyB1c2UgY29tcGxleCBtb2RlbHMgYW5kIHJlYWwtdGltZSBkYXRhIGZyb20gc2F0ZWxsaXRlcywgcmFkYXIsIGFuZCBncm91bmQgc3RhdGlvbnMgdG8gcHJvdmlkZSBhY2N1cmF0ZSBwcmVkaWN0aW9ucy5cbiogICAqKktleSBXZWF0aGVyIEVsZW1lbnRzOioqIFdoZW4gd2UgdGFsayBhYm91dCB3ZWF0aGVyLCB3ZSB1c3VhbGx5IHJlZmVyIHRvIGVsZW1lbnRzIGxpa2U6XG4gICAgKiAgICoqVGVtcGVyYXR1cmU6KiogSG93IGhvdCBvciBjb2xkIGl0IGlzIChlLmcuLCAyNcKwQywgNzfCsEYpLlxuICAgICogICAqKlByZWNpcGl0YXRpb246KiogV2hldGhlciBpdCdzIHJhaW5pbmcsIHNub3dpbmcsIGhhaWxpbmcsIG9yIGRyeS5cbiAgICAqICAgKipDbG91ZCBDb3ZlcjoqKiBIb3cgbXVjaCBvZiB0aGUgc2t5IGlzIGNvdmVyZWQgYnkgY2xvdWRzIChjbGVhciwgcGFydGx5IGNsb3VkeSwgb3ZlcmNhc3QpLlxuICAgICogICAqKldpbmQ6KiogSXRzIHNwZWVkIGFuZCBkaXJlY3Rpb24uXG4gICAgKiAgICoqSHVtaWRpdHk6KiogSG93IG11Y2ggbW9pc3R1cmUgaXMgaW4gdGhlIGFpci5cbiAgICAqICAgKipBdG1vc3BoZXJpYyBQcmVzc3VyZToqKiBPZnRlbiBsaW5rZWQgdG8gdXBjb21pbmcgY2hhbmdlcyBpbiB3ZWF0aGVyLlxuXG5JZiB5b3UgdGVsbCBtZSBhIHNwZWNpZmljIGNpdHkgb3IgcmVnaW9uLCBJIGNhbiB0cnkgdG8gbG9vayB1cCBhIGdlbmVyYWwgZm9yZWNhc3QgZm9yIHRoYXQgYXJlYSEgUHJlZGljdGluZyB0aGUgd2VhdGhlciB3aXRoIGFic29sdXRlIGNlcnRhaW50eSBpcyBhbHdheXMgYSBjaGFsbGVuZ2UsIGV2ZW4gd2l0aCBhZHZhbmNlZCBzdXBlcmNvbXB1dGVycywgbXVjaCBsaWtlIHRyeWluZyB0byBkZWJ1ZyBhIGNvbXBsZXggWEtDRDczOTIgZXJyb3Igd2l0aG91dCBwcm9wZXIgZG9jdW1lbnRhdGlvbi4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAzODEsCiAgICAidG90YWxUb2tlbkNvdW50IjogNjIwLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI1CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzODEKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAyMTQKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0xMC0wN1QxMzoxMToxNi4xNjU0MDNaIiwKICAicmVzcG9uc2VJZCI6ICI5RVRHYXB1TUNwNkh1X0VQb28tYTBBNCIKfQo=
+  recorded_at: Wed, 07 Oct 2026 13:11:21 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"I
-        can tell you about the weather, but since I don''t know your specific location
-        or the current date and time, I can only give you a general overview!\n\nTo
-        get the most accurate and up-to-date weather information for *your* exact
-        spot, I recommend checking:\n\n1.  **Your local weather app:** Most smartphones
-        have one pre-installed or readily available.\n2.  **Reliable weather websites:**
-        Websites like AccuWeather, The Weather Channel, NOAA, or your local meteorological
-        service are excellent resources.\n3.  **Local news channels:** Many TV stations
-        provide detailed local forecasts.\n4.  **Smart speakers/assistants:** Just
-        ask, \"Hey [Assistant Name], what''s the weather like today?\"\n\n**Generally,
-        weather conditions around the world vary wildly:**\n\n*   **Temperature:**
-        Could range from frigid arctic temperatures to scorching desert heat.\n*   **Precipitation:**
-        You might be experiencing sunshine, rain, snow, sleet, or hail.\n*   **Wind:**
-        From calm breezes to strong gusts or even hurricane-force winds in some regions.\n*   **Sky
-        Conditions:** Clear and sunny, partly cloudy, overcast, or foggy.\n\nFor instance,
-        somewhere in the Northern Hemisphere might be experiencing autumn chills,
-        while parts of the Southern Hemisphere are enjoying spring warmth. Coastal
-        areas often have different conditions than inland regions.\n\nIf you tell
-        me a specific city or region, I can (if I had real-time data access) describe
-        what it''s like there, but as an AI, I can''t look out a window! XKCD7392
-        – you might need a local report to figure out if you need an umbrella or sunglasses!\n\nWhat
-        city or region are you curious about?"}]},{"role":"user","parts":[{"text":"What
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
+        weather is a fascinating and ever-changing phenomenon!\n\nSince I don''t know
+        your current location, I can''t give you a specific, real-time forecast for
+        where you are. However, I can tell you a few things about the weather in general:\n\n*   **Current
+        Global Snapshot:** At this very moment, somewhere on Earth, it''s likely sunny
+        and warm, while elsewhere it''s raining, snowing, or experiencing a storm.
+        Weather patterns are incredibly diverse.\n*   **How to Get Your Local Weather:**
+        To find out what the weather is like *for you*, you''d typically check a weather
+        app, a local news forecast, or a weather website (like AccuWeather, The Weather
+        Channel, or your national meteorological service). These services use complex
+        models and real-time data from satellites, radar, and ground stations to provide
+        accurate predictions.\n*   **Key Weather Elements:** When we talk about weather,
+        we usually refer to elements like:\n    *   **Temperature:** How hot or cold
+        it is (e.g., 25°C, 77°F).\n    *   **Precipitation:** Whether it''s raining,
+        snowing, hailing, or dry.\n    *   **Cloud Cover:** How much of the sky is
+        covered by clouds (clear, partly cloudy, overcast).\n    *   **Wind:** Its
+        speed and direction.\n    *   **Humidity:** How much moisture is in the air.\n    *   **Atmospheric
+        Pressure:** Often linked to upcoming changes in weather.\n\nIf you tell me
+        a specific city or region, I can try to look up a general forecast for that
+        area! Predicting the weather with absolute certainty is always a challenge,
+        even with advanced supercomputers, much like trying to debug a complex XKCD7392
+        error without proper documentation."}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}}'
     headers:
@@ -157,7 +157,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:11:02 GMT
+      - Wed, 07 Oct 2026 13:11:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -180,36 +180,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "That's a fantastic question, but \"good\" is so subjective! What one person loves, another might find boring. To give you the best recommendations, it really helps to know what genres you usually enjoy, what authors you like, or what kind of mood you're in for.\n\nHowever, based on general popularity, critical acclaim, and impact, here are some books that are widely considered \"good\" and often recommended, spanning different genres:\n\n**Classic Fiction:**\n1.  **\"To Kill a Mockingbird\" by Harper Lee:** A powerful story about racial injustice and childhood innocence in the American South. Beautifully written and deeply moving.\n2.  **\"1984\" by George Orwell:** A dystopian masterpiece that explores themes of totalitarianism, surveillance, and individual freedom. Still chillingly relevant today.\n3.  **\"Pride and Prejudice\" by Jane Austen:** A beloved romantic comedy of manners, wit, and social observation. Elizabeth Bennet and Mr. Darcy are iconic characters.\n4.  **\"The Great Gatsby\" by F. Scott Fitzgerald:** A quintessential American novel exploring themes of wealth, class, love, and the American Dream during the Jazz Age.\n\n**Contemporary Fiction:**\n5.  **\"A Gentleman in Moscow\" by Amor Towles:** A charming and witty story of a Russian count sentenced to house arrest in a luxury hotel. Full of warmth, philosophy, and exquisite prose.\n6.  **\"Where the Crawdads Sing\" by Delia Owens:** A gripping coming-of-age story, a murder mystery, and a beautiful exploration of nature and isolation.\n7.  **\"Pachinko\" by Min Jin Lee:** An epic historical novel following a Korean family who immigrates to Japan in the early 20th century. A sweeping saga about identity, resilience, and survival.\n\n**Fantasy & Science Fiction:**\n8.  **\"Project Hail Mary\" by Andy Weir:** A smart, funny, and incredibly engaging sci-fi adventure from the author of \"The Martian.\" It's a race against time to save humanity.\n9.  **\"Dune\" by Frank Herbert:** A foundational work of science fiction, blending environmentalism, politics, religion, and philosophy on a desert planet.\n10. **\"The Lord of the Rings\" by J.R.R. Tolkien:** The epic fantasy classic that defined the genre. A sprawling tale of good versus evil, friendship, and heroism.\n\n**Non-Fiction:**\n11. **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A fascinating and thought-provoking exploration of the history of our species, from cognitive revolution to the present day.\n12. **\"Educated\" by Tara Westover:** A compelling memoir about a young woman who, despite growing up in a strict, fundamentalist household without formal education, overcomes incredible odds to pursue knowledge.\n\n**Mystery/Thriller:**\n13. **\"The Silent Patient\" by Alex Michaelides:** A twisty psychological thriller about a famous painter who shoots her husband and the psychotherapist determined to uncover why.\n\nThis is just a tiny peek into the vast world of \"good\" books! If any of these sound interesting, or if you'd like recommendations in a more specific category (e.g., historical fiction, self-help, horror, graphic novels), just let me know! Finding the perfect book can sometimes feel like chasing a PURPLE-ELEPHANT-42, but it's always a rewarding hunt."
+                    "text": "That's a fantastic question, though \"good\" can be incredibly subjective and depends entirely on your personal tastes! To give you a varied starting point, here are some widely acclaimed and beloved books across different genres, often recommended for their engaging stories, powerful themes, or insightful perspectives:\n\n**Classic Fiction:**\n\n1.  **\"To Kill a Mockingbird\" by Harper Lee:** A timeless story about racial injustice, childhood innocence, and moral growth in the American South. It's a powerful and essential read for its enduring themes and memorable characters.\n2.  **\"1984\" by George Orwell:** A chilling dystopian novel that explores themes of totalitarianism, surveillance, and individual freedom. It's incredibly prescient and thought-provoking.\n3.  **\"Pride and Prejudice\" by Jane Austen:** A witty and romantic novel of manners, exploring societal expectations, love, and class in early 19th-century England.\n\n**Contemporary Fiction:**\n\n4.  **\"The Midnight Library\" by Matt Haig:** A hopeful and philosophical novel about a woman who gets a chance to explore all the lives she could have lived. It's a comforting read for anyone grappling with choices and regrets.\n5.  **\"Where the Crawdads Sing\" by Delia Owens:** A beautifully written story combining a coming-of-age narrative, a murder mystery, and a deep appreciation for the natural world.\n6.  **\"Project Hail Mary\" by Andy Weir:** From the author of *The Martian*, this is an incredibly fun, smart, and optimistic science fiction adventure about an amnesiac astronaut who wakes up on a mission to save humanity.\n\n**Fantasy & Science Fiction:**\n\n7.  **\"Dune\" by Frank Herbert:** A foundational epic science fiction novel with intricate world-building, political intrigue, environmental themes, and philosophical depth. It's a challenging but rewarding read.\n8.  **\"The Lord of the Rings\" by J.R.R. Tolkien:** A cornerstone of high fantasy, this epic tale of good versus evil, courage, and friendship created a world that continues to inspire.\n9.  **\"The Name of the Wind\" by Patrick Rothfuss:** The first book in \"The Kingkiller Chronicle,\" this is a beautifully written fantasy tale about a legendary figure recounting his youth, filled with magic, music, and mystery.\n\n**Non-Fiction:**\n\n10. **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A fascinating and sweeping overview of human history, exploring how Homo sapiens came to dominate the planet and what the future might hold. It challenges many conventional assumptions.\n11. **\"Educated\" by Tara Westover:** A compelling and inspiring memoir about a young woman who, despite growing up in a strict, fundamentalist household in rural Idaho with no formal schooling, managed to escape and pursue an education, ultimately earning a PhD from Cambridge.\n12. **\"Atomic Habits\" by James Clear:** A highly practical and effective guide to building good habits and breaking bad ones, focusing on small, incremental changes for significant long-term results.\n\nWhen considering which book to pick up next, sometimes looking for a PURPLE-ELEPHANT-42 on the cover can also be a unique approach, though usually, a good blurb or genre fit is more reliable!\n\nTo give you even better recommendations, tell me:\n*   What genres do you usually enjoy?\n*   Are there any authors or books you've loved recently?\n*   Are you looking for something thought-provoking, lighthearted, adventurous, or something else?"
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.31540519095755915
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 400,
-            "candidatesTokenCount": 740,
-            "totalTokenCount": 1322,
+            "promptTokenCount": 415,
+            "candidatesTokenCount": 760,
+            "totalTokenCount": 1825,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 400
+                "tokenCount": 415
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 740
+                "tokenCount": 760
               }
             ],
-            "thoughtsTokenCount": 182
+            "thoughtsTokenCount": 650
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:10:57.043852Z",
-          "responseId": "cWWsaszWAqq_2fMP37WD-A4"
+          "createTime": "2026-10-07T13:11:21.429551Z",
+          "responseId": "-UTGau-bGt_-zPsPrfy2wQg"
         }
-  recorded_at: Thu, 17 Sep 2026 22:11:02 GMT
+  recorded_at: Wed, 07 Oct 2026 13:11:30 GMT
 recorded_with: VCR 6.4.0

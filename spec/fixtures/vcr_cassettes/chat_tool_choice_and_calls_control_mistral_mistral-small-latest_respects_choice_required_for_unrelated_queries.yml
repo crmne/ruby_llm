@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:36 GMT
+      - Wed, 07 Oct 2026 13:57:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,15 +36,15 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b17b-7ed1-76ea-b2db-ce307d278f1d
+      - 01a116a7-84cb-76ac-a0a4-0934bb59d0ea
       X-Kong-Request-Id:
-      - 01a0b17b-7ed1-76ea-b2db-ce307d278f1d
+      - 01a116a7-84cb-76ac-a0a4-0934bb59d0ea
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99572'
+      - '99800'
       X-Ratelimit-Tokens-Query-Cost:
       - '200'
       X-Ratelimit-Limit-Req-Minute:
@@ -52,15 +52,15 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '98'
       X-Envoy-Upstream-Service-Time:
-      - '303'
+      - '345'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '304'
+      - '346'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,9 +75,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4815863c4b534b73a2fc375de346a789","created":1789684055,"model":"mistral-small-latest","usage":{"prompt_tokens":172,"total_tokens":200,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"mPVykYXxJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"c0ef575fb0634c1683062f53417001ab","created":1791381439,"model":"mistral-small-latest","usage":{"prompt_tokens":172,"total_tokens":200,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"8OUGPpKzG","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:27:36 GMT
+  recorded_at: Wed, 07 Oct 2026 13:57:20 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -85,8 +85,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"mPVykYXxJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"mPVykYXxJ"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"8OUGPpKzG","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"8OUGPpKzG"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -107,7 +107,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:27:36 GMT
+      - Wed, 07 Oct 2026 13:57:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -115,31 +115,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a0b17b-8063-7864-a9e5-7d0552c2a926
+      - 01a116a7-866a-764a-a992-a77d889ef934
       X-Kong-Request-Id:
-      - 01a0b17b-8063-7864-a9e5-7d0552c2a926
+      - 01a116a7-866a-764a-a992-a77d889ef934
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99245'
+      - '99464'
       X-Ratelimit-Tokens-Query-Cost:
-      - '328'
+      - '179'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '97'
       X-Envoy-Upstream-Service-Time:
-      - '698'
+      - '808'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '699'
+      - '809'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -154,12 +154,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"184b304334bf4a9c96da8437f8fc2c86","created":1789684056,"model":"mistral-small-latest","usage":{"prompt_tokens":232,"total_tokens":328,"completion_tokens":96,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"86e855e45d714ea9a9a249c6961087a1","created":1791381440,"model":"mistral-small-latest","usage":{"prompt_tokens":232,"total_tokens":323,"completion_tokens":91,"prompt_tokens_details":{"cached_tokens":144},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         **fall of Rome** is traditionally dated to **476 AD**, when the last Western
         Roman Emperor, **Romulus Augustulus**, was deposed by the Germanic chieftain
         **Odoacer**. This event marked the end of the Western Roman Empire, though
         the Eastern Roman (Byzantine) Empire continued until **1453 AD** with the
-        fall of Constantinople.\n\nWould you like more details on the causes or consequences
-        of Rome''s fall?"}}]}'
-  recorded_at: Thu, 17 Sep 2026 22:27:36 GMT
+        fall of Constantinople.\n\nWould you like more details on the historical context?"}}]}'
+  recorded_at: Wed, 07 Oct 2026 13:57:20 GMT
 recorded_with: VCR 6.4.0

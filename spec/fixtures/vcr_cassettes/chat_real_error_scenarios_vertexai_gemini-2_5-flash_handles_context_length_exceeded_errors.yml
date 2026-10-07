@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 07 Oct 2026 13:04:08 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Thu, 17 Sep 2026 22:20:01 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:20:01 GMT
+  recorded_at: Wed, 07 Oct 2026 13:04:08 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 17 Sep 2026 22:20:28 GMT
+      - Wed, 07 Oct 2026 13:04:36 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -105,9 +105,9 @@ http_interactions:
         {
           "error": {
             "code": 400,
-            "message": "The input token count (1250074) exceeds the maximum number of tokens allowed (1048576).",
+            "message": "The input token count exceeds the maximum number of tokens allowed 1048576.",
             "status": "INVALID_ARGUMENT"
           }
         }
-  recorded_at: Thu, 17 Sep 2026 22:20:28 GMT
+  recorded_at: Wed, 07 Oct 2026 13:04:36 GMT
 recorded_with: VCR 6.4.0

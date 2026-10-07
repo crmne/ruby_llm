@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221102Z
+      - 20261007T131856Z
       X-Amz-Content-Sha256:
       - cfa1a61e9831d27f7ba08ada9c46ca2e63d303d5d7ef3081850cf17f1f0c1eef
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,11 +29,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:03 GMT
+      - Wed, 07 Oct 2026 13:18:58 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '636'
+      - '1292'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
@@ -49,9 +49,17 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
-        sentence mentions Ruby being described as a \"programming language **designed
-        for developer happiness**.\" Author Yukihiro \"Matz\" Matsumoto created this
-        language in the mid-90s as Ruby was designed to combine \"programmer friendliness\"
-        along with power and flexibility.","refusal":null,"role":"assistant"}}],"created":1789683063,"id":"chatcmpl-8da3790c-b053-46a9-9f63-a2772f2b6976","model":"mistral.voxtral-mini-3b-2507","object":"chat.completion","service_tier":"default","usage":{"completion_tokens":60,"prompt_tokens":384,"total_tokens":444}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:04 GMT
+        text describes Ruby, a programming language, with the phrase **\"designed
+        for developer happiness\".** Here is a step-by-step breakdown of what it means:\n\n-
+        **Ruby is a programming language**: It is one of a plethora of languages used
+        by people who build software and is crucial for generating software applications.\n-
+        **\"Designed for developer happiness\"**: This is an attribute given by somebody
+        describing Ruby, suggesting that it was created emphasizing the emotional
+        satisfaction and state of mind of programmers when using this language. The
+        term \"designer\" in this context appears to be \"designed by\" favoring preferences
+        of developers specifically.\n\nTo interpret this statement, one would likely
+        consider the experience of working with Ruby as being enjoyable, engaging,
+        and easier to use compared to other coding environments, but this is a subjective
+        perspective that differs considerably among developers.","refusal":null,"role":"assistant"}}],"created":1791379137,"id":"chatcmpl-8d9f0276-e71d-4b77-838e-01f199f959ed","model":"mistral.voxtral-mini-3b-2507","object":"chat.completion","service_tier":"default","usage":{"completion_tokens":170,"prompt_tokens":384,"total_tokens":554}}'
+  recorded_at: Wed, 07 Oct 2026 13:18:58 GMT
 recorded_with: VCR 6.4.0

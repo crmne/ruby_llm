@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220621Z
+      - 20261007T125923Z
       X-Amz-Content-Sha256:
       - a9dbd69cf4c00854fe18d001865cc469f86660ff6143010b1e1cdb98ebedf358
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,20 +29,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:23 GMT
+      - Wed, 07 Oct 2026 12:59:25 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '678'
+      - '632'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 99a66a4a-deec-49b7-9975-63af5f7d6453
+      - c6c2d8a5-3651-4f55-8771-4e35a9e91ab2
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTAyOX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiIjIyMgQ29udGVudHMgb2YgYHJ1YnkudHh0YFxuXG5UaGUgZmlsZSBgcnVieS50eHRgIGNvbnRhaW5zIHRoZSBmb2xsb3dpbmcgcGxhaW4gdGV4dDpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0LlxuYGBgXG5cbiMjIyMgQnJlYWtkb3duOlxuLSAqKkZpbGUgTmFtZToqKiBgcnVieS50eHRgXG4tICoqTUlNRSBUeXBlOioqIGB0ZXh0L3BsYWluYCAoaW5kaWNhdGVzIGl0J3MgYSBzaW1wbGUgdGV4dCBmaWxlIHdpdGggbm8gZm9ybWF0dGluZylcbi0gKipDb250ZW50OioqIEEgc2luZ2xlIGxpbmUgb2YgdGV4dCBleHByZXNzaW5nIGEgcG9zaXRpdmUgb3BpbmlvbiBhYm91dCB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZS5cblxuVGhpcyBpcyBhIHZlcnkgc2hvcnQgYW5kIHN0cmFpZ2h0Zm9yd2FyZCBmaWxlIHdpdGggbm8gYWRkaXRpb25hbCBzdHJ1Y3R1cmUsIGNvZGUsIG9yIGRhdGHigJRqdXN0IGEgcGxhaW4gc3RhdGVtZW50LiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjcxLCJvdXRwdXRUb2tlbnMiOjEwNiwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjE3N319
-  recorded_at: Thu, 17 Sep 2026 22:06:23 GMT
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1175},"output":{"message":{"content":[{"text":"###
+        Contents of `ruby.txt`\n\nThe file `ruby.txt` contains the following plain
+        text:\n\n```\nRuby is the best.\n```\n\n#### Breakdown:\n- **File Name:**
+        `ruby.txt`\n- **MIME Type:** `text/plain` (indicating it''s a simple text
+        file with no formatting)\n- **Content:** A single line of text expressing
+        a positive opinion about the Ruby programming language.\n\nThis is a very
+        short and straightforward file with only one sentence."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":71,"outputTokens":96,"serverToolUsage":{},"totalTokens":167}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:25 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -52,24 +57,24 @@ http_interactions:
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"assistant","content":[{"text":"###
         Contents of `ruby.txt`\n\nThe file `ruby.txt` contains the following plain
         text:\n\n```\nRuby is the best.\n```\n\n#### Breakdown:\n- **File Name:**
-        `ruby.txt`\n- **MIME Type:** `text/plain` (indicates it''s a simple text file
-        with no formatting)\n- **Content:** A single line of text expressing a positive
-        opinion about the Ruby programming language.\n\nThis is a very short and straightforward
-        file with no additional structure, code, or data—just a plain statement."}]},{"role":"user","content":[{"text":"and
+        `ruby.txt`\n- **MIME Type:** `text/plain` (indicating it''s a simple text
+        file with no formatting)\n- **Content:** A single line of text expressing
+        a positive opinion about the Ruby programming language.\n\nThis is a very
+        short and straightforward file with only one sentence."}]},{"role":"user","content":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"inferenceConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220623Z
+      - 20261007T125925Z
       X-Amz-Content-Sha256:
-      - e9f72880f1c3a47a00c2a8834d456253d934a22f5a585cfdfbc7b1b742cdbcb0
+      - f38e12187f5a0361fbdccb3d13144cd06f12c6054221682e9662b91ff4279848
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -80,18 +85,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:24 GMT
+      - Wed, 07 Oct 2026 12:59:27 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '983'
+      - '715'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 0e4dd3b1-7d82-4172-8e7f-009752f7c04b
+      - 4249b444-f1f6-4d7a-860f-9a0f1bad3d9b
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTEzNn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiIjIyMgQ29udGVudHMgb2YgYHJ1YnkueG1sYFxuXG5UaGUgZmlsZSBgcnVieS54bWxgIGNvbnRhaW5zIHRoZSBmb2xsb3dpbmcgWE1MIHN0cnVjdHVyZTpcblxuYGBgeG1sXG48dHJ1aXNtPlJ1YnkgaXMgdGhlIGJlc3Q8L3RydWlzbT5cbmBgYFxuXG4jIyMjIEJyZWFrZG93bjpcbi0gKipGaWxlIE5hbWU6KiogYHJ1YnkueG1sYFxuLSAqKk1JTUUgVHlwZToqKiBgYXBwbGljYXRpb24veG1sYCAoaW5kaWNhdGVzIHRoaXMgaXMgYW4gWE1MLWZvcm1hdHRlZCBmaWxlKVxuLSAqKkNvbnRlbnQ6KipcbiAgLSBUaGUgWE1MIGRvY3VtZW50IGNvbnNpc3RzIG9mIGEgc2luZ2xlIGVsZW1lbnQgbmFtZWQgYDx0cnVpc20+YC5cbiAgLSBJbnNpZGUgdGhpcyBlbGVtZW50LCB0aGUgdGV4dCBjb250ZW50IGlzOiBgUnVieSBpcyB0aGUgYmVzdGAuXG5cbiMjIyMjIFN0cnVjdHVyZSBEZXRhaWxzOlxuLSAqKlJvb3QgRWxlbWVudDoqKiBgPHRydWlzbT5gIOKAkyBUaGlzIGlzIHRoZSBvbmx5IGVsZW1lbnQgaW4gdGhlIFhNTCBkb2N1bWVudCBhbmQgc2VydmVzIGFzIHRoZSBjb250YWluZXIgZm9yIHRoZSB0ZXh0LlxuLSAqKlRleHQgQ29udGVudDoqKiBgUnVieSBpcyB0aGUgYmVzdGAg4oCTIFRoaXMgaXMgdGhlIHZhbHVlIGVuY2xvc2VkIHdpdGhpbiB0aGUgYDx0cnVpc20+YCB0YWdzLlxuXG5UaGlzIFhNTCBmaWxlIGlzIG1pbmltYWwgYW5kIGNvbnZleXMgdGhlIHNhbWUgbWVzc2FnZSBhcyB0aGUgYHJ1YnkudHh0YCBmaWxlIGJ1dCBpbiBhIHN0cnVjdHVyZWQgWE1MIGZvcm1hdC4ifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjoyMTAsIm91dHB1dFRva2VucyI6MTg5LCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6Mzk5fX0=
-  recorded_at: Thu, 17 Sep 2026 22:06:24 GMT
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":894},"output":{"message":{"content":[{"text":"###
+        Contents of `ruby.xml`\n\nThe file `ruby.xml` contains the following XML data:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```\n\n#### Breakdown:\n- **File Name:** `ruby.xml`\n-
+        **MIME Type:** `application/xml` (indicating it''s an XML file)\n- **Content:**
+        \n  - The XML structure consists of a single element `<truism>` with the text
+        content `\"Ruby is the best\"`.\n\nThis XML file is also very simple, containing
+        one node (`<truism>`) that encapsulates the same statement found in the `ruby.txt`
+        file."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":200,"outputTokens":127,"serverToolUsage":{},"totalTokens":327}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:27 GMT
 recorded_with: VCR 6.4.0

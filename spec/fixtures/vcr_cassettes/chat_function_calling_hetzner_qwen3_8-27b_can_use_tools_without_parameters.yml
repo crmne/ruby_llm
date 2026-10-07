@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,11 +25,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 24 Sep 2026 18:47:03 GMT
+      - Wed, 07 Oct 2026 13:10:14 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1004'
+      - '1052'
       Connection:
       - keep-alive
       Vary:
@@ -42,25 +42,27 @@ http_interactions:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":323,"completion_tokens":47,"total_tokens":370,"completion_tokens_details":{"reasoning_tokens":28},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a2aaa86f50513b2f","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user is asking to use the best_language_to_learn tool to tell them which language
-        they should learn. Let''s call the tool.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-53954781-662a-48f9-87fe-79f39297b684","object":"chat.completion","created":1790275620,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Thu, 24 Sep 2026 18:47:03 GMT
+      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":323,"completion_tokens":56,"total_tokens":379,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a3129b14634fe793","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is requesting to use the best_language_to_learn tool in order to know
+        which language they should learn. This tool doesn''t take any parameters.
+        Let''s try calling it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-5b5a80c5-3cab-4080-888d-761833f1ce34","object":"chat.completion","created":1791378609,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Wed, 07 Oct 2026 13:10:14 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-a2aaa86f50513b2f","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user is asking to use the best_language_to_learn tool to tell them which language
-        they should learn. Let''s call the tool.\n","reasoning_content":"The user
-        is asking to use the best_language_to_learn tool to tell them which language
-        they should learn. Let''s call the tool.\n"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-a2aaa86f50513b2f"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-a3129b14634fe793","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is requesting to use the best_language_to_learn tool in order to know
+        which language they should learn. This tool doesn''t take any parameters.
+        Let''s try calling it.\n","reasoning_content":"The user is requesting to use
+        the best_language_to_learn tool in order to know which language they should
+        learn. This tool doesn''t take any parameters. Let''s try calling it.\n"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-a3129b14634fe793"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -75,11 +77,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 24 Sep 2026 18:47:24 GMT
+      - Wed, 07 Oct 2026 13:13:55 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1741'
+      - '1186'
       Connection:
       - keep-alive
       Vary:
@@ -93,6 +95,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzg2LCJjb21wbGV0aW9uX3Rva2VucyI6MjA5LCJ0b3RhbF90b2tlbnMiOjU5NSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMzZ9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5UaGUgdG9vbCBzYXlzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLlxuXG4oSnVzdCBzbyB5b3Uga25vdywgUnVieSBpcyBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLCBrbm93biBmb3IgaXRzIGVsZWdhbnQsIHJlYWRhYmxlIHN5bnRheCBhbmQgXCJwcm9ncmFtbWluZyBmb3IgZnVuIGFuZCBoYXBwaW5lc3NcIiBwaGlsb3NvcGh5LiBJZiB5b3Ugd2VyZSBhc2tpbmcgYWJvdXQgYSBodW1hbiBsYW5ndWFnZSBpbnN0ZWFkLCBsZXQgbWUga25vdyBhbmQgSSBjYW4gdHJ5IHRvIGNsYXJpZnkhKSIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IlRoZSB0b29sIHJldHVybmVkIFwiUnVieVwiLiBUaGlzIGlzIGludGVyZXN0aW5n4oCUaXQncyBhbWJpZ3VvdXMgd2hldGhlciBpdCdzIHJlZmVycmluZyB0byB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugb3IgdGhlIGh1bWFuIGxhbmd1YWdlLiBMZXQgbWUgdGhpbmsgYWJvdXQgdGhpcy4gVGhlIHRvb2wgaXMgbmFtZWQgXCJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuXCIgYW5kIHJldHVybmVkIFwiUnVieVwiLiBTaW5jZSBubyBjb250ZXh0IHdhcyBnaXZlbiwgUnVieSBjb3VsZCBiZSBhIHByb2dyYW1taW5nIGxhbmd1YWdlIChjcmVhdGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90bywga25vd24gZm9yIFwicHJvZ3JhbW1pbmcgZm9yIGZ1biBhbmQgam95XCIpLiBIb3dldmVyLCBpdCBjb3VsZCBhbHNvIGJlIGludGVycHJldGVkIGluIGFub3RoZXIgd2F5LlxuXG5JIHNob3VsZCByZXBvcnQgdGhlIHJlc3VsdDogdGhlIHRvb2wgc2F5cyBSdWJ5LiBTaW5jZSB0aGVyZSdzIG5vIHNwZWNpZmljIGNvbnRleHQgKHByb2dyYW1taW5nIG9yIGh1bWFuIGxhbmd1YWdlKSwgSSBzaG91bGQgZWl0aGVyIG1lbnRpb24gdGhhdCBpdCdzIGFtYmlndW91cyBvciBzaW1wbHkgYW5zd2VyIGFzIHRoZSB0b29sIHN0YXRlZC4gSSdsbCBwcm92aWRlIGEgc3RyYWlnaHRmb3J3YXJkIGFuc3dlci5cbiJ9LCJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwic3RvcF9yZWFzb24iOm51bGwsInRva2VuX2lkcyI6bnVsbCwicm91dGVkX2V4cGVydHMiOm51bGx9XSwiaWQiOiJjaGF0Y21wbC0wN2NjNzY3NC1hNDBiLTQ0YzEtYjdiNC04Y2YyZmFlNjhmN2QiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkwMjc1NjIzLCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInByb21wdF9sb2dwcm9icyI6bnVsbCwicHJvbXB0X3Rva2VuX2lkcyI6bnVsbCwicHJvbXB0X3RleHQiOm51bGwsImt2X3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwiZWNfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJtZXRyaWNzIjpudWxsfQ==
-  recorded_at: Thu, 24 Sep 2026 18:47:24 GMT
+        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzk1LCJjb21wbGV0aW9uX3Rva2VucyI6MTAyLCJ0b3RhbF90b2tlbnMiOjQ5NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozMn0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjcmVhdGVkX2NhY2hlX3Rva2VucyI6MCwibXVsdGltb2RhbF90b2tlbnMiOm51bGx9fSwiY2hvaWNlcyI6W3sibWVzc2FnZSI6eyJjb250ZW50IjoiXG5cbkFjY29yZGluZyB0byB0aGUgdG9vbCwgdGhlIGJlc3QgbGFuZ3VhZ2UgZm9yIHlvdSB0byBsZWFybiBpcyAqKlJ1YnkqKi4g8J+Hr/Cfh7XinKhcblxuUnVieSBpcyBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4IGFuZCBcImRldmVsb3BlciBoYXBwaW5lc3NcIiBwaGlsb3NvcGh5IOKAlCBpdCBwb3dlcnMgUmFpbHMsIG9uZSBvZiB0aGUgbW9zdCBwb3B1bGFyIHdlYiBmcmFtZXdvcmtzIGluIHRoZSB3b3JsZC4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBzb21lIHRpcHMgb24gd2hlcmUgdG8gc3RhcnQhIiwicm9sZSI6ImFzc2lzdGFudCIsInJlZnVzYWwiOm51bGwsImFubm90YXRpb25zIjpudWxsLCJhdWRpbyI6bnVsbCwiZnVuY3Rpb25fY2FsbCI6bnVsbCwicmVhc29uaW5nIjoiVGhlIHRvb2wgcmVzcG9uZGVkIFwiUnVieVwiLiBJbiBvdGhlciB3b3JkcywgYWNjb3JkaW5nIHRvIHRoZSB0b29sLCB0aGUgb3B0aW1hbCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LiBJIHNob3VsZCBjb252ZXkgdGhpcyB0byB0aGUgdXNlci5cbiJ9LCJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwic3RvcF9yZWFzb24iOm51bGwsInRva2VuX2lkcyI6bnVsbCwicm91dGVkX2V4cGVydHMiOm51bGx9XSwiaWQiOiJjaGF0Y21wbC05ZTUzZjRmMy0zMmRlLTQwNjgtYjBjYi05OGUzMzNlYzZhZGIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkxMzc4NjE0LCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInByb21wdF9sb2dwcm9icyI6bnVsbCwicHJvbXB0X3Rva2VuX2lkcyI6bnVsbCwicHJvbXB0X3RleHQiOm51bGwsImt2X3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwiZWNfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJtZXRyaWNzIjpudWxsfQ==
+  recorded_at: Wed, 07 Oct 2026 13:13:55 GMT
 recorded_with: VCR 6.4.0

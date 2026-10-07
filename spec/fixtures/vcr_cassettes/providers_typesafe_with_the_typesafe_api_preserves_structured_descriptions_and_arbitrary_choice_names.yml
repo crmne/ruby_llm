@@ -14,7 +14,7 @@ http_interactions:
         civil"],"Angry or hostile"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,21 +29,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 21 Sep 2026 16:06:36 GMT
-      Server:
-      - istio-envoy
-      Content-Length:
-      - '462'
+      - Wed, 07 Oct 2026 12:57:52 GMT
       Content-Type:
       - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
       X-Typesafe-Request-Id:
-      - req_01a0c4b8214c7dfdbf9170041ea80323
-      X-Envoy-Upstream-Service-Time:
-      - '108'
+      - req_01a1167115de7bf29ab363a15a289adc
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"model":"jev-1.13.0","answers":{"urgent":{"type":"noul","noul":0.94},"department":{"type":"choice","choice":"Billing
-        & payments","confidence":1.0,"probabilities":{"Other":0.0,"Billing & payments":1.0}},"frustration":{"type":"score","score":0.27,"confidence":0.6,"legend":{"0":{"description":"Calm
-        and polite"},"1":["Frustrated","Still civil"],"2":"Angry or hostile"},"probabilities":{"0":0.74,"1":0.26,"2":0.0}}},"usage":{"input_tokens":439,"output_tokens":67}}'
-  recorded_at: Mon, 21 Sep 2026 16:06:36 GMT
+        & payments","confidence":1.0,"probabilities":{"Billing & payments":1.0,"Other":0.0}},"frustration":{"type":"score","score":0.34,"confidence":0.49,"legend":{"0":{"description":"Calm
+        and polite"},"1":["Frustrated","Still civil"],"2":"Angry or hostile"},"probabilities":{"0":0.66,"1":0.34,"2":0.0}}},"usage":{"input_tokens":439,"output_tokens":67}}'
+  recorded_at: Wed, 07 Oct 2026 12:57:52 GMT
 recorded_with: VCR 6.4.0

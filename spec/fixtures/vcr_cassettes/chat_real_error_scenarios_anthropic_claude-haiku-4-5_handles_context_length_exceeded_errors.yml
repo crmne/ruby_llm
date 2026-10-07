@@ -25,7 +25,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:06:35 GMT
+      - Wed, 07 Oct 2026 12:59:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,24 +34,22 @@ http_interactions:
       - keep-alive
       X-Should-Retry:
       - 'false'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-72f1f101690f9772528086e10b60d91a-ee9c7fcc79fbc2be-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-8f19e10d2e430a6d9760599939d847e8-8a7a3d6df67c5dd8-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
-      Server-Timing:
-      - x-originResponse;dur=3153
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -61,6 +59,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"type":"error","error":{"type":"invalid_request_error","message":"prompt
-        is too long: 3333404 tokens > 200000 maximum"},"request_id":"req_011Cf9miQgTB35ERR67D39ZJ"}'
-  recorded_at: Thu, 17 Sep 2026 22:06:35 GMT
+        is too long: 3333404 tokens > 200000 maximum"},"request_id":"req_011CfnvAAK4VFxQW9cWQK31N"}'
+  recorded_at: Wed, 07 Oct 2026 12:59:25 GMT
 recorded_with: VCR 6.4.0

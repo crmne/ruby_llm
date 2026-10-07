@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Thu, 17 Sep 2026 22:28:38 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - Wed, 07 Oct 2026 14:01:50 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 17 Sep 2026 22:28:38 GMT
+  recorded_at: Wed, 07 Oct 2026 14:01:50 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:28:39 GMT
+      - Wed, 07 Oct 2026 14:01:52 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,21 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "Rome_latitude",
-                        "longitude": "Rome_longitude"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CrQCAY89a1/oIRY9nPiZJAz9+EDUs43pL3NY4NpPoy/DL7wQmJku0hMtVSw6H5KxC7GjXzFPLsakiBn9a4VdIAkm1YKgMnqUfPpJkgUusmpK32zeEwJkNOC3UD7obaQVzrKjjl8CWHulT9SJs7gtVuGbobRWVr9azfyTuCEmAWyqQtW8S91nF6eKLnZvG8Mo5NqkLbJKKSSYcEvxW+81OY2xNcn1Jaf6VijXhU3aWveV3qjv6XfmYPNKgdFsg/AishR9Mmdf5aHlgVRxLhDPGXZLnzz+kESWAuX1Fd/i/FvetoY22cjJvkC9KadMss4zPMF52kf9V39MpLmvSN0yXOs4jANCWeJpguPOiH34Eaem8aiQMtRoAVTYkCLWo1amuxqCBCDXC6j1p6MtHqj8OnEUMCVfLm8="
+                    "thoughtSignature": "AY89a18i51Tn9p0EJ61Fn4aFpJYO/DNzwYp853p7YBag98nnZ3Y6pb3zAGMPpT3wybPBno50mR4X1ji1wSjHPHjoEF/ECFU3xpGuiuRI/BRQmb8lBNMN1YohtzM/RSzLpy5RZeeW5TlSbvC3WO6xyQaCzMjkpd3RIydngo7aD5/GmI0yTQimIPW5TFg7dyH7tP32L+diuZPgu94qgpWOqdqY43tEA/m8YvvscX62j61pyX6cl7dfjKdJISGqj5pLJoNlXfG7L5+EVkkgLUET9Y2ViO68+VzlXLKGf/uH1UfKSVWDtQ2DfmogUixhTbd8zgtliU97NqApQVc+0T1f4Qt0owaBNWqeLDYy95uT8q2UtfOiHEjnajEcgBaN0dVYi2UbDLRn4EPI6B8voBE39qH94tfKyH0JKjul7EXF3H4msl1rGPaekXp+fEtu"
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -2.2310723198784723
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 15,
-            "candidatesTokenCount": 9,
-            "totalTokenCount": 75,
+            "candidatesTokenCount": 28,
+            "totalTokenCount": 88,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,23 +140,23 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 9
+                "tokenCount": 28
               }
             ],
-            "thoughtsTokenCount": 51
+            "thoughtsTokenCount": 45
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:28:38.957189Z",
-          "responseId": "lmmsaoW2OrDFhu0PpbvI8Qk"
+          "createTime": "2026-10-07T14:01:50.878707Z",
+          "responseId": "zlDGavPQNYPEmNAP8OrS-A0"
         }
-  recorded_at: Thu, 17 Sep 2026 22:28:39 GMT
+  recorded_at: Wed, 07 Oct 2026 14:01:52 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"Rome_latitude","longitude":"Rome_longitude"}},"thoughtSignature":"CrQCAY89a1/oIRY9nPiZJAz9+EDUs43pL3NY4NpPoy/DL7wQmJku0hMtVSw6H5KxC7GjXzFPLsakiBn9a4VdIAkm1YKgMnqUfPpJkgUusmpK32zeEwJkNOC3UD7obaQVzrKjjl8CWHulT9SJs7gtVuGbobRWVr9azfyTuCEmAWyqQtW8S91nF6eKLnZvG8Mo5NqkLbJKKSSYcEvxW+81OY2xNcn1Jaf6VijXhU3aWveV3qjv6XfmYPNKgdFsg/AishR9Mmdf5aHlgVRxLhDPGXZLnzz+kESWAuX1Fd/i/FvetoY22cjJvkC9KadMss4zPMF52kf9V39MpLmvSN0yXOs4jANCWeJpguPOiH34Eaem8aiQMtRoAVTYkCLWo1amuxqCBCDXC6j1p6MtHqj8OnEUMCVfLm8="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at Rome_latitude, Rome_longitude: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"AY89a18i51Tn9p0EJ61Fn4aFpJYO/DNzwYp853p7YBag98nnZ3Y6pb3zAGMPpT3wybPBno50mR4X1ji1wSjHPHjoEF/ECFU3xpGuiuRI/BRQmb8lBNMN1YohtzM/RSzLpy5RZeeW5TlSbvC3WO6xyQaCzMjkpd3RIydngo7aD5/GmI0yTQimIPW5TFg7dyH7tP32L+diuZPgu94qgpWOqdqY43tEA/m8YvvscX62j61pyX6cl7dfjKdJISGqj5pLJoNlXfG7L5+EVkkgLUET9Y2ViO68+VzlXLKGf/uH1UfKSVWDtQ2DfmogUixhTbd8zgtliU97NqApQVc+0T1f4Qt0owaBNWqeLDYy95uT8q2UtfOiHEjnajEcgBaN0dVYi2UbDLRn4EPI6B8voBE39qH94tfKyH0JKjul7EXF3H4msl1rGPaekXp+fEtu"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}]}'
@@ -184,7 +183,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Sep 2026 22:28:44 GMT
+      - Wed, 07 Oct 2026 14:01:53 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -207,35 +206,34 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The fall of Rome is a complex historical event with many contributing factors, and historians debate its exact causes and timeline. Generally, it refers to the decline and collapse of the Western Roman Empire. Here's a brief overview of some key aspects:\n\n**Traditional Date:** The commonly accepted date for the fall of the Western Roman Empire is 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer.\n\n**Key Factors Contributing to the Fall:**\n\n*   **Economic Problems:** Inflation, heavy taxation, disruption of trade by barbarian raids, and a decline in agricultural output weakened the Roman economy.\n*   **Military Overstretch and Barbarian Invasions:** The vast Roman Empire became increasingly difficult to defend. Constant pressure from various Germanic tribes (Goths, Vandals, Huns, etc.) along the borders led to costly wars and ultimately successful invasions.\n*   **Political Instability and Corruption:** Frequent changes in emperors, civil wars, and corruption within the government weakened central authority and led to a lack of effective leadership.\n*   **Social and Cultural Changes:** A decline in civic virtue, increasing social inequality, and the rise of Christianity (which some historians argue diverted loyalty from the state) are also cited as contributing factors.\n*   **Division of the Empire:** The division of the Roman Empire into Western and Eastern (Byzantine) halves in 395 CE meant that resources and attention were often split, further weakening the West.\n\n**It's important to note:**\n\n*   The Eastern Roman Empire (Byzantine Empire) continued to thrive for another thousand years, with its capital at Constantinople.\n*   The \"fall\" was a gradual process, not a sudden event, spanning several centuries.\n*   Historians continue to debate the relative importance of these factors and whether it was a \"fall\" or a \"transformation.\"\n\nWould you like to know more about a specific aspect of the fall of Rome, such as the role of a particular barbarian group or economic factors?\n"
+                    "text": "The fall of Rome is a complex historical event that isn't something I can look up with my current tools. My capabilities are limited to providing current weather information. Is there something else I can help you with?"
                   }
                 ]
               },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.18746535208771978
+              "finishReason": "STOP"
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 105,
-            "candidatesTokenCount": 423,
-            "totalTokenCount": 528,
+            "promptTokenCount": 117,
+            "candidatesTokenCount": 43,
+            "totalTokenCount": 160,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 105
+                "tokenCount": 117
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 423
+                "tokenCount": 43
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-09-17T22:28:39.776374Z",
-          "responseId": "l2msaraxL9mwmNAPi-OPgQY"
+          "createTime": "2026-10-07T14:01:52.368229Z",
+          "responseId": "0FDGauW8FqmyusEPsNiHwAY"
         }
-  recorded_at: Thu, 17 Sep 2026 22:28:44 GMT
+  recorded_at: Wed, 07 Oct 2026 14:01:53 GMT
 recorded_with: VCR 6.4.0

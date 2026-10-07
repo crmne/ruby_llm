@@ -23,11 +23,18 @@ module RubyLLM
         end
 
         def parse_interaction_calls(steps)
-          steps.select { |step| step['type'] == 'function_call' }.to_h do |step|
+          answered = interaction_answered_calls(steps)
+          steps.select { |step| step['type'] == 'function_call' && !answered.include?(step['id']) }.to_h do |step|
             [step.fetch('id'), ToolCall.new(id: step.fetch('id'), name: step.fetch('name'),
                                             arguments: parse_interaction_arguments(step['arguments']),
                                             thought_signature: step['signature'])]
           end
+        end
+
+        def interaction_answered_calls(steps)
+          calls = steps.filter_map { |step| step['id'] if step['type'] == 'function_call' }
+          results = steps.filter_map { |step| step['call_id'] if step['type'] == 'function_result' }
+          calls & results
         end
 
         def parse_interaction_arguments(arguments)
@@ -39,9 +46,11 @@ module RubyLLM
         end
 
         def parse_interaction_server_calls(steps)
+          answered = interaction_answered_calls(steps)
           steps.filter_map do |step|
             type = step['type'].to_s
-            next unless type.end_with?('_call', '_result') && !type.start_with?('function_')
+            next unless type.end_with?('_call', '_result')
+            next if type.start_with?('function_') && !answered.include?(step['id'] || step['call_id'])
 
             kept = without_search_suggestions(step)
             ServerToolCall.new(type: type, id: kept['id'] || kept['call_id'], name: kept['name'],

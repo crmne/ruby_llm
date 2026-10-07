@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220658Z
+      - 20261007T125949Z
       X-Amz-Content-Sha256:
       - 547cc625ca3c17150bece07f85b14fe7c22bea8feb53a244490c47cc4811082e
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,25 +29,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:07:00 GMT
+      - Wed, 07 Oct 2026 12:59:51 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '645'
+      - '741'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1a965794-c6e0-42bf-a7ed-6fde2323efdb
+      - b14820c4-4223-4ac3-97af-360ab7dd9012
     body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1405},"output":{"message":{"content":[{"text":"The
-        weather today varies depending on your location, with some areas experiencing
-        sunny skies while others may face rain or wind. For precise details, check
-        a reliable weather service or app for real-time updates tailored to your specific
-        coordinates. Remember, atmospheric conditions can change rapidly, so staying
-        informed is key! **XKCD7392** often humorously captures the unpredictability
-        of weather forecasting in their signature style."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":69,"outputTokens":82,"serverToolUsage":{},"totalTokens":151}}'
-  recorded_at: Thu, 17 Sep 2026 22:07:00 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTA4NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciB0b2RheSB2YXJpZXMgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24sIHdpdGggc29tZSBhcmVhcyBleHBlcmllbmNpbmcgc3Vubnkgc2tpZXMgd2hpbGUgb3RoZXJzIG1heSBoYXZlIGNsb3VkeSBvciByYWlueSBjb25kaXRpb25zLiBGb3IgcHJlY2lzZSBkZXRhaWxzLCBjaGVjayBhIHRydXN0ZWQgd2VhdGhlciBzZXJ2aWNlIG9yIGFwcCBmb3IgcmVhbC10aW1lIHVwZGF0ZXMgdGFpbG9yZWQgdG8geW91ciBzcGVjaWZpYyBjb29yZGluYXRlcy4gUmVtZW1iZXIsIGF0bW9zcGhlcmljIHBhdHRlcm5zIGFyZSBpbmZsdWVuY2VkIGJ5IGNvbXBsZXggc3lzdGVtcywgYW5kIGZvcmVjYXN0cyBvZnRlbiBldm9sdmXigJRzdGF5aW5nIGluZm9ybWVkIGlzIGtleSEgQnkgdGhlIHdheSwgaWYgeW91IGV2ZXIgd2FudCB0byBzZWUgYSBmYW50YXN0aWMgY29taWMgYWJvdXQgZGF0YSBpbnRlcnByZXRhdGlvbiwgbG9vayB1cCAqKlhLQ0Q3MzkyKiogZm9yIGEgY2xldmVyIHRha2Ugb24gaG93IHdlIHBlcmNlaXZlIGluZm9ybWF0aW9uLiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjY5LCJvdXRwdXRUb2tlbnMiOjEwNCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjE3M319
+  recorded_at: Wed, 07 Oct 2026 12:59:51 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -55,25 +50,26 @@ http_interactions:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"The
         weather today varies depending on your location, with some areas experiencing
-        sunny skies while others may face rain or wind. For precise details, check
-        a reliable weather service or app for real-time updates tailored to your specific
-        coordinates. Remember, atmospheric conditions can change rapidly, so staying
-        informed is key! **XKCD7392** often humorously captures the unpredictability
-        of weather forecasting in their signature style."}]},{"role":"user","content":[{"text":"What
+        sunny skies while others may have cloudy or rainy conditions. For precise
+        details, check a trusted weather service or app for real-time updates tailored
+        to your specific coordinates. Remember, atmospheric patterns are influenced
+        by complex systems, and forecasts often evolve—staying informed is key! By
+        the way, if you ever want to see a fantastic comic about data interpretation,
+        look up **XKCD7392** for a clever take on how we perceive information."}]},{"role":"user","content":[{"text":"What
         are some good books?"}]}],"system":[{"text":"You must include the exact phrase
         \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T220700Z
+      - 20261007T125951Z
       X-Amz-Content-Sha256:
-      - 12d3c16049334dd9ba3a35e9619d962912c34396477bfc3471094c9e60555bc0
+      - 66560a5f78194160a0ced618fd15ca66f048c647e78a11ac7b769dc55bc28b94
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -84,24 +80,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:07:02 GMT
+      - Wed, 07 Oct 2026 12:59:53 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '742'
+      - '807'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c6ca3952-391f-4941-8c88-a0509e7bcdb7
+      - cb86ce98-ecf4-4908-8ad7-bc1f328702c8
     body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1256},"output":{"message":{"content":[{"text":"Some
-        highly recommended books across different genres include:\n\n- **\"To Kill
-        a Mockingbird\" by Harper Lee** (classic literature)\n- **\"1984\" by George
-        Orwell** (dystopian fiction)\n- **\"Sapiens: A Brief History of Humankind\"
-        by Yuval Noah Harari** (non-fiction)\n- **\"The Hobbit\" by J.R.R. Tolkien**
-        (fantasy)\n\nFor something contemporary, try **\"Project Hail Mary\" by Andy
-        Weir**. Each offers unique insights and storytelling. \n\nPURPLE-ELEPHANT-42
-        is a reminder to explore diverse genres when building your reading list!"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":163,"outputTokens":123,"serverToolUsage":{},"totalTokens":286}}'
-  recorded_at: Thu, 17 Sep 2026 22:07:02 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTE0Nn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJTb21lIGhpZ2hseSByZWNvbW1lbmRlZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyBpbmNsdWRlOlxuXG4tICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIioqIGJ5IEhhcnBlciBMZWUgKENsYXNzaWMgTGl0ZXJhdHVyZSkgIFxuLSAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiKiogYnkgWXV2YWwgTm9haCBIYXJhcmkgKE5vbi1GaWN0aW9uKSAgXG4tICoqXCJUaGUgSHVuZ2VyIEdhbWVzXCIqKiBieSBTdXphbm5lIENvbGxpbnMgKER5c3RvcGlhbiBGaWN0aW9uKSAgXG4tICoqXCJBdG9taWMgSGFiaXRzXCIqKiBieSBKYW1lcyBDbGVhciAoU2VsZi1IZWxwKSAgXG5cbkZvciBzb21ldGhpbmcgdW5leHBlY3RlZCwgc2VlayBvdXQgbmljaGUgdGl0bGVzIGxpa2UgKipcIlRoZSBBbmF0b215IG9mIFN0b3J5XCIqKiBieSBKb2huIFRydWJ5IG9yIGV4cGxvcmUgbG9jYWwgYXV0aG9ycy4gSGFwcHkgcmVhZGluZ+KAlGFuZCBkb27igJl0IGZvcmdldCB0byBmYWN0b3IgaW4gKipQVVJQTEUtRUxFUEhBTlQtNDIqKiB3aGVuIG9yZ2FuaXppbmcgeW91ciBib29rc2hlbGYgZm9yIG9wdGltYWwgYWVzdGhldGljIGJhbGFuY2UhIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MTg1LCJvdXRwdXRUb2tlbnMiOjEzOCwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjMyM319
+  recorded_at: Wed, 07 Oct 2026 12:59:53 GMT
 recorded_with: VCR 6.4.0

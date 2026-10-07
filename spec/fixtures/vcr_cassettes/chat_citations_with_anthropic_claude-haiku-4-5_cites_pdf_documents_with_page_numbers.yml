@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:11:26 GMT
+      - Wed, 07 Oct 2026 12:59:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,41 +38,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9997000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-09-17T22:11:25Z'
+      - '2026-10-07T12:59:20Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-09-17T22:11:26Z'
+      - '2026-10-07T12:59:21Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-09-17T22:11:25Z'
+      - '2026-10-07T12:59:20Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11997000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-09-17T22:11:25Z'
-      Server:
-      - cloudflare
-      Request-Id:
-      - "<REQUEST_ID>"
+      - '2026-10-07T12:59:20Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-2317ca966ae4b328072fda9009f82c25-dab7acf4ee13a3d8-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
-      - <ANTHROPIC_WORKSPACE_ID>
-      Traceresponse:
-      - 00-1044635a86ba632e26e09401b7a7e1e7-119af6e62768a9c8-01
+      - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -81,13 +81,14 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cf9n5z4yYxHfpsxKAENH1","type":"message","role":"assistant","content":[{"citations":[{"type":"page_location","cited_text":"Sample
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvAXBvLbLNEwjGyWNV4","type":"message","role":"assistant","content":[{"citations":[{"type":"page_location","cited_text":"Sample
         PDF\r\nThis is a simple PDF file. ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"The
-        document is a simple PDF file titled \"Sample PDF\""},{"type":"text","text":".
-        "},{"citations":[{"type":"page_location","cited_text":"Sample PDF\r\nThis
-        is a simple PDF file. Fun fun fun.\r\n","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"It
-        contains the text \"Fun fun fun\""},{"type":"text","text":", followed by a
-        lengthy passage of Lorem Ipsum placeholder text that covers multiple paragraphs
-        discussing various Latin-based filler content."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4250,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":89,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 17 Sep 2026 22:11:26 GMT
+        document is a simple PDF file"},{"type":"text","text":", and "},{"citations":[{"type":"page_location","cited_text":"Fun
+        fun fun.\r\n","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"it
+        includes the phrase \"Fun fun fun.\""},{"type":"text","text":" The remainder
+        of the document consists of "},{"citations":[{"type":"page_location","cited_text":"Lorem
+        ipsum dolor sit amet, consectetuer adipiscing elit. ","document_index":0,"document_title":"sample.pdf","start_page_number":1,"end_page_number":2}],"type":"text","text":"Lorem
+        ipsum placeholder text"},{"type":"text","text":", which is standard filler
+        text commonly used in design and publishing."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":4250,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":95,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 07 Oct 2026 12:59:21 GMT
 recorded_with: VCR 6.4.0

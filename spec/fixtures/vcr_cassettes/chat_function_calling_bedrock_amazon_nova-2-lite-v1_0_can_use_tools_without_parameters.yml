@@ -11,15 +11,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221746Z
+      - 20261007T130356Z
       X-Amz-Content-Sha256:
       - 33f1826a5118c1a033a139b7b2c3347330fbfe9c92d7b7178e56946c3efdb54e
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:17:46 GMT
+      - Wed, 07 Oct 2026 13:03:57 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,31 +38,31 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 46b886eb-423a-47c4-9ac9-92768cf22475
+      - 38a4ee82-fd9d-4f29-8452-2a10337dc16f
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":460},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_psysjh796wT4tsZoMabg60"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":934,"outputTokens":18,"serverToolUsage":{},"totalTokens":952}}'
-  recorded_at: Thu, 17 Sep 2026 22:17:47 GMT
+      string: '{"metrics":{"latencyMs":420},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_JZJcWhcxXyTZp2L9RRTWEa"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":934,"outputTokens":18,"serverToolUsage":{},"totalTokens":952}}'
+  recorded_at: Wed, 07 Oct 2026 13:03:57 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Use the best_language_to_learn
-        tool to tell me which language to learn."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_psysjh796wT4tsZoMabg60","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_psysjh796wT4tsZoMabg60","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        tool to tell me which language to learn."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_JZJcWhcxXyTZp2L9RRTWEa","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_JZJcWhcxXyTZp2L9RRTWEa","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221747Z
+      - 20261007T130357Z
       X-Amz-Content-Sha256:
-      - b5b518d3616ccf204fe7b4eaef56ee03df95c69a9e30f46dd506a246266d491e
+      - 2672ff1aa0318050881e968dfe64df3472e6f487aec5fe8c6835d5b9f3cdf5f6
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -73,25 +73,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:17:48 GMT
+      - Wed, 07 Oct 2026 13:04:00 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '790'
+      - '2510'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 655f9ae0-b707-45b1-89c8-6a61491419a4
+      - 6ee04498-f6b6-4bca-8fbd-b17920c2e185
     body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":913},"output":{"message":{"content":[{"text":"Based
-        on the analysis from the best_language_to_learn tool, **Ruby** is the recommended
-        language for you to learn.\n\nRuby is a versatile and elegant programming
-        language that emphasizes developer productivity and fun. It''s known for its
-        clean syntax and is particularly well-suited for:\n\n- **Web development**
-        (via frameworks like Ruby on Rails)\n- **Scripting and automation**\n- **Data
-        processing**\n- **Building web applications quickly**\n\nThe language has
-        a strong, supportive community and is widely used in the tech industry, making
-        it a valuable addition to your skillset."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":982,"outputTokens":115,"serverToolUsage":{},"totalTokens":1097}}'
-  recorded_at: Thu, 17 Sep 2026 22:17:48 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MzAzM30sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJCYXNlZCBvbiB0aGUgYW5hbHlzaXMgZnJvbSB0aGUgYGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm5gIHRvb2wsICoqUnVieSoqIGlzIHJlY29tbWVuZGVkIGFzIHRoZSBiZXN0IGxhbmd1YWdlIGZvciB5b3UgdG8gbGVhcm4uXG5cblJ1YnkgaXMgYSB2ZXJzYXRpbGUsIGR5bmFtaWMgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Uga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIEl0IHdhcyBvcmlnaW5hbGx5IGRlc2lnbmVkIHdpdGggYSBmb2N1cyBvbiBwcm9ncmFtbWluZyBlbGVnYW5jZSBhbmQgZGV2ZWxvcGVyIGhhcHBpbmVzcy4gSGVyZSBhcmUgc29tZSBrZXkgcmVhc29ucyB3aHkgbGVhcm5pbmcgUnVieSBtaWdodCBiZSBhIGdyZWF0IGNob2ljZSBmb3IgeW91OlxuXG4jIyMgV2h5IExlYXJuIFJ1Ynk/XG5cbjEuICoqRWFzZSBvZiBMZWFybmluZyoqICBcbiAgIFJ1YnkncyBzeW50YXggaXMgY2xlYW4sIHJlYWRhYmxlLCBhbmQgaW50dWl0aXZlLCBtYWtpbmcgaXQgYW4gZXhjZWxsZW50IGNob2ljZSBmb3IgYmVnaW5uZXJzLiBJdHMgZGVzaWduIHBoaWxvc29waHkgZW1waGFzaXplcyBkZXZlbG9wZXIgcHJvZHVjdGl2aXR5IGFuZCBoYXBwaW5lc3MsIHdoaWNoIG1lYW5zIHlvdeKAmWxsIHNwZW5kIGxlc3MgdGltZSB3cmVzdGxpbmcgd2l0aCB0aGUgbGFuZ3VhZ2UgYW5kIG1vcmUgdGltZSBidWlsZGluZyB0aGluZ3MuXG5cbjIuICoqUnVieSBvbiBSYWlscyAoUmFpbHMpKiogIFxuICAgUnVieSBpcyBtb3N0IGZhbW91cyBmb3IgYmVpbmcgdGhlIGxhbmd1YWdlIGJlaGluZCAqKlJ1Ynkgb24gUmFpbHMqKiwgb25lIG9mIHRoZSBtb3N0IHBvcHVsYXIgZnVsbC1zdGFjayB3ZWIgZGV2ZWxvcG1lbnQgZnJhbWV3b3Jrcy4gUmFpbHMgZm9sbG93cyB0aGUgKipDb252ZW50aW9uIG92ZXIgQ29uZmlndXJhdGlvbioqIGFuZCAqKkRvbid0IFJlcGVhdCBZb3Vyc2VsZioqIChEUlkpIHByaW5jaXBsZXMsIHdoaWNoIGFsbG93IGRldmVsb3BlcnMgdG8gYnVpbGQgcm9idXN0IHdlYiBhcHBsaWNhdGlvbnMgcXVpY2tseS5cblxuMy4gKipTdHJvbmcgQ29tbXVuaXR5ICYgRWNvc3lzdGVtKiogIFxuICAgUnVieSBoYXMgYSB2aWJyYW50LCBzdXBwb3J0aXZlIGNvbW11bml0eSB0aGF0IGNvbnRyaWJ1dGVzIHRvIGEgd2VhbHRoIG9mIGdlbXMgKFJ1YnnigJlzIHZlcnNpb24gb2YgcGFja2FnZXMvbGlicmFyaWVzKS4gVGhpcyBtYWtlcyBpdCBlYXN5IHRvIGZpbmQgdG9vbHMgYW5kIGxpYnJhcmllcyBmb3IgYWxtb3N0IGFueSB0YXNrLlxuXG40LiAqKlZlcnNhdGlsaXR5KiogIFxuICAgV2hpbGUgUnVieSBpcyBiZXN0IGtub3duIGZvciB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBSYWlscywgaXTigJlzIGFsc28gdXNlZCBpbjpcbiAgIC0gU2NyaXB0aW5nIGFuZCBhdXRvbWF0aW9uXG4gICAtIERhdGEgYW5hbHlzaXNcbiAgIC0gQnVpbGRpbmcgQVBJc1xuICAgLSBDcmVhdGluZyBkZXNrdG9wIGFwcGxpY2F0aW9uc1xuICAgLSBEZXZPcHMgdG9vbHNcblxuNS4gKipHcmVhdCBmb3IgU3RhcnR1cHMgJiBJbm5vdmF0aW9uKiogIFxuICAgTWFueSBzdWNjZXNzZnVsIGNvbXBhbmllcyBhbmQgc3RhcnR1cHMg4oCUIGluY2x1ZGluZyBHaXRIdWIsIFNob3BpZnksIGFuZCBBaXJibmIg4oCUIHdlcmUgYnVpbHQgd2l0aCBSdWJ5IG9uIFJhaWxzLiBMZWFybmluZyBSdWJ5IGdpdmVzIHlvdSBhY2Nlc3MgdG8gcmVhbC13b3JsZCBwcm9qZWN0cyBhbmQgam9iIG9wcG9ydHVuaXRpZXMgaW4gYSB0aHJpdmluZyBpbmR1c3RyeS5cblxuIyMjIEdldHRpbmcgU3RhcnRlZFxuXG4tICoqT25saW5lIENvdXJzZXMqKjogUGxhdGZvcm1zIGxpa2UgVWRlbXksIENvdXJzZXJhLCBhbmQgQ29kZWNhZGVteSBoYXZlIGV4Y2VsbGVudCBSdWJ5IGFuZCBSYWlscyBjb3Vyc2VzLlxuLSAqKkJvb2tzKio6ICpcIlRoZSBXZWxsLUdyb3VuZGVkIFJ1Ynlpc3RcIiogYW5kICpcIkFnaWxlIFdlYiBEZXZlbG9wbWVudCB3aXRoIFJhaWxzXCIqIGFyZSBleGNlbGxlbnQgcmVzb3VyY2VzLlxuLSAqKlByYWN0aWNlKio6IEJ1aWxkIHNtYWxsIHByb2plY3RzIGxpa2UgYSBibG9nLCBwb3J0Zm9saW8gc2l0ZSwgb3IgdG9kbyBhcHAgdG8gc29saWRpZnkgeW91ciBza2lsbHMuXG5cbklmIHlvdSdyZSBsb29raW5nIGZvciBhIGxhbmd1YWdlIHRoYXQgd2lsbCBlbXBvd2VyIHlvdSB0byBidWlsZCBtb2Rlcm4gd2ViIGFwcGxpY2F0aW9ucyBxdWlja2x5LCB3aXRoIGEgc3VwcG9ydGl2ZSBjb21tdW5pdHkgYW5kIHN0cm9uZyBqb2IgbWFya2V0LCAqKlJ1YnkgaXMgYW4gZXhjZWxsZW50IGNob2ljZSoqLiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjk4Miwib3V0cHV0VG9rZW5zIjo0NTYsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxNDM4fX0=
+  recorded_at: Wed, 07 Oct 2026 13:04:00 GMT
 recorded_with: VCR 6.4.0

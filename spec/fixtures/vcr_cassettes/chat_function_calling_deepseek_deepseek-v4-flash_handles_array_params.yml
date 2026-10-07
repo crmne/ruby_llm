@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 17 Sep 2026 22:18:46 GMT
+      - Wed, 07 Oct 2026 13:05:03 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - ced92e6c977f33fb838f5f149a08e419
+      - 1380cf8e506ba1416e275e8b3e809320
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,15 +49,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 3ee0a52a6fdc977d833d7647d462c266.cloudfront.net (CloudFront)
+      - 1.1 55f2c8fde3c0e9b0f88eeb33b26fe360.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P2
       X-Amz-Cf-Id:
-      - Jf1IGga6hJswlsJBm_PRlqnMx40POARwCbLH-NwzD4EXs_FAP7nP1Q==
+      - SNvEERTlmONfISOLokF0Fy40RxuTw5msO083gCktCxCp8TE-sCP1Vw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"06d165f3-6bdd-4fee-b7d0-05bb22cfa19e","object":"chat.completion","created":1789683526,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        user wants me to call the array_params tool with tags [\"red\",\"blue\"].","tool_calls":[{"index":0,"id":"call_00_j5DOh7dzNSuYjhCemMB20041","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":332,"completion_tokens":60,"total_tokens":392,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":17},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":204},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Thu, 17 Sep 2026 22:18:47 GMT
+      string: '{"id":"b965adaa-b997-4a36-a276-d201e7210d41","object":"chat.completion","created":1791378303,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user wants me to call the array_params tool with tags [\"red\",\"blue\"] and
+        report the combined tags.\n\nLet me make the call.","tool_calls":[{"index":0,"id":"call_00_6IPcUpI2l1AhTpyNB63Q8393","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":332,"completion_tokens":72,"total_tokens":404,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":29},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":332},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Wed, 07 Oct 2026 13:05:04 GMT
 recorded_with: VCR 6.4.0

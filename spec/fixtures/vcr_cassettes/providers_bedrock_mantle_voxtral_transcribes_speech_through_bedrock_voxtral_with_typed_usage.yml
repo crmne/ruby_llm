@@ -10,15 +10,15 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.3
+      Content-Type:
+      - application/json
       X-Amz-Date:
-      - 20260917T221559Z
+      - 20261007T125900Z
       X-Amz-Content-Sha256:
       - 9395d28b256d6d5cffa81299c23e69b585638f0b4c03d3e2080bc4eee6be0299
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock-mantle/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
-      Content-Type:
-      - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:16:01 GMT
+      - Wed, 07 Oct 2026 12:59:06 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -49,6 +49,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"Ruby
-        is a programming language designed for developer happiness.","refusal":null,"role":"assistant"}}],"created":1789683361,"id":"chatcmpl-b2361041-b733-432a-9523-19a4c1ffed17","model":"mistral.voxtral-small-24b-2507","object":"chat.completion","service_tier":"default","usage":{"completion_tokens":11,"prompt_tokens":392,"total_tokens":403}}'
-  recorded_at: Thu, 17 Sep 2026 22:16:01 GMT
+        is a programming language designed for developer happiness.","refusal":null,"role":"assistant"}}],"created":1791377946,"id":"chatcmpl-008e2bd3-5381-48cb-a4b7-0c04608a1c7b","model":"mistral.voxtral-small-24b-2507","object":"chat.completion","service_tier":"default","usage":{"completion_tokens":11,"prompt_tokens":392,"total_tokens":403}}'
+  recorded_at: Wed, 07 Oct 2026 12:59:06 GMT
 recorded_with: VCR 6.4.0

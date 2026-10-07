@@ -26,34 +26,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Sep 2026 22:20:22 GMT
-      Transfer-Encoding:
-      - chunked
+      - Wed, 07 Oct 2026 13:40:22 GMT
+      Content-Length:
+      - '1374'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-168","object":"chat.completion","created":1789683622,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let''s see. The user wants me to call the array params tool with the tags
-        [\"red\", \"blue\"] and then tell them the combined tags.\n\nFirst, I need
-        to check the function definition provided. The tool''s function is supposed
-        to take an array of strings called tags. The parameters are defined as an
-        array, so I should structure the arguments correctly.\n\nThe user is providing
-        two tags: \"red\" and \"blue\". I need to pass these as an array in the function
-        call. The function''s JSON schema specifies that tags is an array of strings,
-        so I just need to format the arguments as {\"tags\": [\"red\", \"blue\"]}.\n\nWait,
-        the function''s parameters are described as using the array_params DSL, which
-        the user mentioned supports array parameters. So the tool should handle combining
-        the tags into a single array. The user probably expects the combined result,
-        but the function''s description doesn''t mention any processing beyond passing
-        the array. However, the user''s instruction says to call the tool with those
-        tags and then report the combined tags. Maybe the function just returns the
-        combined array, so I should call it with the provided tags and then present
-        the result.\n\nSo the correct tool call is to use the array_params function
-        with the tags array. Then, after getting the result, I should inform the user
-        that the combined tags are the ones they provided. But maybe the function
-        combines them in some way, like joining with commas or something. But since
-        the user didn''t specify, I''ll assume the function just returns the array
-        as is. So the answer would be the same as the input array.\n","tool_calls":[{"id":"call_imd4fitq","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":355,"total_tokens":517}}
+      string: '{"id":"chatcmpl-464","object":"chat.completion","created":1791380422,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the array params tool with the tags [\"red\", \"blue\"]
+        and get the combined tags. Let me check the function definition again.\n\nThe
+        function is called array_params and it takes an array of strings called tags.
+        The description says it''s for combining tags. So I need to pass the tags
+        as an array. The user provided the tags as a list, so the arguments should
+        be {\"tags\": [\"red\", \"blue\"]}. \n\nWait, the function''s parameters are
+        defined as an array, so the tool expects an array. The user''s input is already
+        in the correct format. I just need to structure the JSON call properly. Let
+        me make sure there are no typos. The function name is array_params, and the
+        arguments are a JSON object with the tags array. \n\nYes, that''s right. So
+        the tool call should be formatted correctly. I''ll return the JSON inside
+        the tool_call tags as specified.\n","tool_calls":[{"id":"call_ijq6wzxw","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"prompt_tokens_details":{"cached_tokens":2},"completion_tokens":222,"total_tokens":384}}
 
         '
-  recorded_at: Thu, 17 Sep 2026 22:20:22 GMT
+  recorded_at: Wed, 07 Oct 2026 13:40:22 GMT
 recorded_with: VCR 6.4.0
