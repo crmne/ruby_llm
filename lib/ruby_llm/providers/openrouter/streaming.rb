@@ -17,6 +17,7 @@ module RubyLLM
             role: :assistant,
             model: data['model'],
             content: delta['content'],
+            citations: extract_chunk_citations(delta, data),
             thinking: Thinking.build(
               text: extract_thinking_text(delta),
               signature: extract_thinking_signature(delta)

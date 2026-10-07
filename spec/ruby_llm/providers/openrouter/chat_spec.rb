@@ -156,6 +156,49 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(chunk.tokens.server_tool_use).to eq('web_search_requests' => 2)
     end
 
+    it 'keeps the url citations a streamed delta annotates' do
+      chunk = provider.send(
+        :build_chunk,
+        {
+          'model' => 'openai/gpt-5.2',
+          'choices' => [
+            {
+              'index' => 0,
+              'delta' => {
+                'content' => '',
+                'role' => 'assistant',
+                'annotations' => [
+                  {
+                    'type' => 'url_citation',
+                    'url_citation' => {
+                      'url' => 'https://www.ruby-lang.org/en/downloads/',
+                      'title' => 'Download Ruby | Ruby',
+                      'start_index' => 54,
+                      'end_index' => 112
+                    }
+                  }
+                ]
+              },
+              'finish_reason' => nil
+            }
+          ]
+        }
+      )
+
+      expect(chunk.citations.map(&:url)).to eq(['https://www.ruby-lang.org/en/downloads/'])
+      expect(chunk.citations.first.title).to eq('Download Ruby | Ruby')
+    end
+
+    it 'leaves citations empty on a chunk that carries none' do
+      chunk = provider.send(
+        :build_chunk,
+        { 'model' => 'openai/gpt-5.2', 'choices' => [{ 'index' => 0, 'delta' => { 'content' => 'Ruby' } }] }
+      )
+
+      expect(chunk.content).to eq('Ruby')
+      expect(chunk.citations).to be_empty
+    end
+
     it 'appends streamed reasoning text to its detail in place' do
       delta = lambda do |text|
         detail = { 'type' => 'reasoning.text', 'index' => 0, 'text' => text }
