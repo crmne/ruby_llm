@@ -3910,7 +3910,7 @@
     "metadata": {
       "object": "model",
       "lifecycle_status": "generally-available",
-      "inference_retires_at": 1794700800,
+      "inference_retires_at": 1795996800,
       "source": "models.dev",
       "provider_id": "azure",
       "open_weights": false,
@@ -3961,7 +3961,7 @@
     "metadata": {
       "object": "model",
       "lifecycle_status": "generally-available",
-      "inference_retires_at": 1794700800
+      "inference_retires_at": 1795996800
     }
   },
   {
@@ -17840,6 +17840,72 @@
     }
   },
   {
+    "id": "global.zai.glm-5.3",
+    "name": "GLM-5.3 (Global)",
+    "provider": "bedrock",
+    "family": "glm",
+    "created_at": "2026-08-14 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.68,
+          "output_per_million": 5.28,
+          "cache_read_input_per_million": 0.312,
+          "cache_write_input_per_million": 2.1
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-08-14",
+      "interleaved": true,
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.68,
+        "output": 5.28,
+        "cache_read": 0.312,
+        "cache_write": 2.1
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      }
+    }
+  },
+  {
     "id": "google.gemma-3-12b-it",
     "name": "Gemma 3 12B IT",
     "provider": "bedrock",
@@ -27378,11 +27444,11 @@
   },
   {
     "id": "us.zai.glm-5.3",
-    "name": "GLM 5.3",
+    "name": "GLM-5.3 (US)",
     "provider": "bedrock",
-    "family": "GLM 5.3",
-    "created_at": null,
-    "context_window": null,
+    "family": "glm",
+    "created_at": "2026-08-14 00:00:00 UTC",
+    "context_window": 1000000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -27394,11 +27460,21 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "reasoning"
+      "structured_output",
+      "reasoning",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.848,
+          "output_per_million": 5.808,
+          "cache_read_input_per_million": 0.3432,
+          "cache_write_input_per_million": 2.31
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Z.AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/zai.glm-5.3",
@@ -27417,6 +27493,37 @@
         "userDocumentTypesSupported": [],
         "userImageTypesSupported": [],
         "userVideoTypesSupported": []
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-08-14",
+      "interleaved": true,
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.848,
+        "output": 5.808,
+        "cache_read": 0.3432,
+        "cache_write": 2.31
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
       }
     }
   },
@@ -45793,6 +45900,35 @@
     }
   },
   {
+    "id": "mistral-large-4",
+    "name": "mistral-large-4",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-10-06 13:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision",
+      "reasoning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
     "id": "nemotron-3-nano:30b",
     "name": "nemotron-3-nano:30b",
     "provider": "ollama_cloud",
@@ -60477,9 +60613,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.033,
-          "output_per_million": 1.408,
-          "cache_read_input_per_million": 0.033
+          "input_per_million": 0.03,
+          "output_per_million": 1.28,
+          "cache_read_input_per_million": 0.03
         }
       }
     },
@@ -60552,9 +60688,9 @@
         }
       ],
       "cost": {
-        "input": 0.033,
-        "output": 1.408,
-        "cache_read": 0.033
+        "input": 0.03,
+        "output": 1.28,
+        "cache_read": 0.03
       },
       "limit": {
         "context": 1048576,
@@ -60592,9 +60728,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.00605,
-          "output_per_million": 1.408,
-          "cache_read_input_per_million": 0.00605
+          "input_per_million": 0.018,
+          "output_per_million": 1.28,
+          "cache_read_input_per_million": 0.018
         }
       }
     },
@@ -60665,9 +60801,9 @@
         }
       ],
       "cost": {
-        "input": 0.00605,
-        "output": 1.408,
-        "cache_read": 0.00605
+        "input": 0.018,
+        "output": 1.28,
+        "cache_read": 0.018
       },
       "limit": {
         "context": 1048576,
@@ -61040,9 +61176,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0182,
-          "output_per_million": 1.32,
-          "cache_read_input_per_million": 0.0165
+          "input_per_million": 0.05,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.02
         }
       }
     },
@@ -61112,9 +61248,9 @@
         }
       ],
       "cost": {
-        "input": 0.0182,
-        "output": 1.32,
-        "cache_read": 0.0165
+        "input": 0.05,
+        "output": 1.2,
+        "cache_read": 0.02
       },
       "limit": {
         "context": 1048576,
@@ -65683,9 +65819,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0765,
-          "output_per_million": 0.255,
-          "cache_read_input_per_million": 0.0425
+          "input_per_million": 0.09,
+          "output_per_million": 0.3,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -65747,9 +65883,9 @@
         }
       ],
       "cost": {
-        "input": 0.0765,
-        "output": 0.255,
-        "cache_read": 0.0425
+        "input": 0.09,
+        "output": 0.3,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 262144,
@@ -67855,96 +67991,6 @@
         }
       },
       "expiration_date": null
-    }
-  },
-  {
-    "id": "kwaipilot/kat-coder-pro-v2.5",
-    "name": "KAT-Coder-Pro V2.5",
-    "provider": "openrouter",
-    "family": "kat-coder",
-    "created_at": "2026-07-10 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 235929,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "streaming",
-      "tool_choice",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.74,
-          "output_per_million": 2.96,
-          "cache_read_input_per_million": 0.15
-        }
-      }
-    },
-    "metadata": {
-      "description": "KAT-Coder-Pro V2.5 is a flagship-level Agentic Coding model that can directly hand over an entire issue or an entire business workflow to it, allowing it to autonomously locate and make...",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 235929,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
-      "expiration_date": null,
-      "source": "models.dev",
-      "provider_id": "openrouter",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2026-07-10",
-      "tool_call": true,
-      "structured_output": true,
-      "reasoning": false,
-      "cost": {
-        "input": 0.74,
-        "output": 2.96,
-        "cache_read": 0.15
-      },
-      "limit": {
-        "context": 262144,
-        "output": 235929
-      }
     }
   },
   {
@@ -74236,9 +74282,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.95,
-          "output_per_million": 4,
-          "cache_read_input_per_million": 0.16
+          "input_per_million": 0.465,
+          "output_per_million": 2.45,
+          "cache_read_input_per_million": 0.0975
         }
       }
     },
@@ -74303,9 +74349,9 @@
         }
       ],
       "cost": {
-        "input": 0.95,
-        "output": 4,
-        "cache_read": 0.16
+        "input": 0.465,
+        "output": 2.45,
+        "cache_read": 0.0975
       },
       "limit": {
         "context": 262144,
@@ -74448,9 +74494,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.69,
+          "input_per_million": 0.62,
           "output_per_million": 15,
-          "cache_read_input_per_million": 0.23
+          "cache_read_input_per_million": 0.43
         }
       }
     },
@@ -74521,9 +74567,9 @@
         }
       ],
       "cost": {
-        "input": 0.69,
+        "input": 0.62,
         "output": 15,
-        "cache_read": 0.23
+        "cache_read": 0.43
       },
       "limit": {
         "context": 1048576,
@@ -89709,7 +89755,7 @@
     "family": "qwen",
     "created_at": "2025-07-29 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 235929,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": "2025-06-30",
     "modalities": {
       "input": [
@@ -89729,8 +89775,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.1,
-          "output_per_million": 0.3
+          "input_per_million": 0.04815,
+          "output_per_million": 0.19305
         }
       }
     },
@@ -89748,8 +89794,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 235929,
+        "context_length": 128000,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -89782,12 +89828,12 @@
       "structured_output": true,
       "reasoning": false,
       "cost": {
-        "input": 0.1,
-        "output": 0.3
+        "input": 0.04815,
+        "output": 0.19305
       },
       "limit": {
         "context": 262144,
-        "output": 235929
+        "output": 32000
       },
       "knowledge": "2025-06-30"
     }
@@ -92168,7 +92214,7 @@
     "family": "qwen",
     "created_at": "2026-02-23 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 235929,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -92193,9 +92239,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.08,
-          "output_per_million": 0.75,
-          "cache_read_input_per_million": 0.04
+          "input_per_million": 0.15,
+          "output_per_million": 1,
+          "cache_read_input_per_million": 0.05
         }
       }
     },
@@ -92216,7 +92262,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 32768,
+        "max_completion_tokens": 235929,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -92257,13 +92303,13 @@
         }
       ],
       "cost": {
-        "input": 0.08,
-        "output": 0.75,
-        "cache_read": 0.04
+        "input": 0.15,
+        "output": 1,
+        "cache_read": 0.05
       },
       "limit": {
         "context": 262144,
-        "output": 32768
+        "output": 235929
       }
     }
   },
@@ -92826,7 +92872,7 @@
     "family": "qwen",
     "created_at": "2026-04-22 00:00:00 UTC",
     "context_window": 262144,
-    "max_output_tokens": 262140,
+    "max_output_tokens": 65536,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -92851,8 +92897,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.32,
-          "output_per_million": 3.25,
+          "input_per_million": 0.3,
+          "output_per_million": 2,
           "cache_read_input_per_million": 0.03
         }
       }
@@ -92874,7 +92920,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 262140,
+        "max_completion_tokens": 65536,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -92915,13 +92961,13 @@
         }
       ],
       "cost": {
-        "input": 0.32,
-        "output": 3.25,
+        "input": 0.3,
+        "output": 2,
         "cache_read": 0.03
       },
       "limit": {
         "context": 262144,
-        "output": 262140
+        "output": 65536
       }
     }
   },
@@ -97711,9 +97757,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0825,
-          "output_per_million": 0.33,
-          "cache_read_input_per_million": 0.020625
+          "input_per_million": 0.132,
+          "output_per_million": 0.528,
+          "cache_read_input_per_million": 0.033
         }
       }
     },
@@ -97778,9 +97824,9 @@
         }
       ],
       "cost": {
-        "input": 0.0825,
-        "output": 0.33,
-        "cache_read": 0.020625
+        "input": 0.132,
+        "output": 0.528,
+        "cache_read": 0.033
       },
       "limit": {
         "context": 262144,
@@ -97910,9 +97956,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.7506,
-          "output_per_million": 2.2509,
-          "cache_read_input_per_million": 0.0378
+          "input_per_million": 0.834,
+          "output_per_million": 2.501,
+          "cache_read_input_per_million": 0.042
         }
       }
     },
@@ -97977,9 +98023,9 @@
         }
       ],
       "cost": {
-        "input": 0.7506,
-        "output": 2.2509,
-        "cache_read": 0.0378
+        "input": 0.834,
+        "output": 2.501,
+        "cache_read": 0.042
       },
       "limit": {
         "context": 1048576,
@@ -98355,7 +98401,7 @@
     "family": "ling",
     "created_at": "2026-07-15 00:00:00 UTC",
     "context_window": 524288,
-    "max_output_tokens": 262144,
+    "max_output_tokens": 471859,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -98378,9 +98424,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.95,
+          "input_per_million": 1,
           "output_per_million": 4.05,
-          "cache_read_input_per_million": 0.16
+          "cache_read_input_per_million": 0.17
         }
       }
     },
@@ -98401,7 +98447,7 @@
       },
       "top_provider": {
         "context_length": 524288,
-        "max_completion_tokens": 262144,
+        "max_completion_tokens": 471859,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -98447,13 +98493,13 @@
         }
       ],
       "cost": {
-        "input": 0.95,
+        "input": 1,
         "output": 4.05,
-        "cache_read": 0.16
+        "cache_read": 0.17
       },
       "limit": {
         "context": 524288,
-        "output": 262144
+        "output": 471859
       }
     }
   },
@@ -102512,7 +102558,7 @@
     "family": "glm",
     "created_at": "2026-04-07 00:00:00 UTC",
     "context_window": 204800,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -102533,9 +102579,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.4,
-          "output_per_million": 4.4,
-          "cache_read_input_per_million": 0.26
+          "input_per_million": 0.966,
+          "output_per_million": 3.036,
+          "cache_read_input_per_million": 0.1794
         }
       }
     },
@@ -102553,8 +102599,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 202752,
-        "max_completion_tokens": 131072,
+        "context_length": 200000,
+        "max_completion_tokens": 128000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -102598,13 +102644,13 @@
         }
       ],
       "cost": {
-        "input": 1.4,
-        "output": 4.4,
-        "cache_read": 0.26
+        "input": 0.966,
+        "output": 3.036,
+        "cache_read": 0.1794
       },
       "limit": {
         "context": 204800,
-        "output": 131072
+        "output": 128000
       }
     }
   },
@@ -102615,7 +102661,7 @@
     "family": "glm",
     "created_at": "2026-06-13 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -102637,9 +102683,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.19,
-          "output_per_million": 8,
-          "cache_read_input_per_million": 0.18
+          "input_per_million": 0.171,
+          "output_per_million": 7.2,
+          "cache_read_input_per_million": 0.162
         }
       }
     },
@@ -102711,13 +102757,13 @@
         }
       ],
       "cost": {
-        "input": 0.19,
-        "output": 8,
-        "cache_read": 0.18
+        "input": 0.171,
+        "output": 7.2,
+        "cache_read": 0.162
       },
       "limit": {
         "context": 1048576,
-        "output": 943718
+        "output": 131072
       }
     }
   },
@@ -103838,9 +103884,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0182,
-          "output_per_million": 1.32,
-          "cache_read_input_per_million": 0.0165
+          "input_per_million": 0.05,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.02
         }
       }
     },
@@ -103859,8 +103905,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1040000,
-        "max_completion_tokens": 393216,
+        "context_length": 1048576,
+        "max_completion_tokens": 943718,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -103910,9 +103956,9 @@
         }
       ],
       "cost": {
-        "input": 0.0182,
-        "output": 1.32,
-        "cache_read": 0.0165
+        "input": 0.05,
+        "output": 1.2,
+        "cache_read": 0.02
       },
       "limit": {
         "context": 1048576,
@@ -103969,7 +104015,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 393216,
+        "max_completion_tokens": 384000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -104058,9 +104104,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.00605,
-          "output_per_million": 1.408,
-          "cache_read_input_per_million": 0.00605
+          "input_per_million": 0.018,
+          "output_per_million": 1.28,
+          "cache_read_input_per_million": 0.018
         }
       }
     },
@@ -104131,9 +104177,9 @@
         }
       ],
       "cost": {
-        "input": 0.00605,
-        "output": 1.408,
-        "cache_read": 0.00605
+        "input": 0.018,
+        "output": 1.28,
+        "cache_read": 0.018
       },
       "limit": {
         "context": 1048576,
@@ -104419,9 +104465,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.69,
-          "output_per_million": 15,
-          "cache_read_input_per_million": 0.23
+          "input_per_million": 0.61,
+          "output_per_million": 13,
+          "cache_read_input_per_million": 0.45
         }
       }
     },
@@ -104492,9 +104538,9 @@
         }
       ],
       "cost": {
-        "input": 0.69,
-        "output": 15,
-        "cache_read": 0.23
+        "input": 0.61,
+        "output": 13,
+        "cache_read": 0.45
       },
       "limit": {
         "context": 1048576,
@@ -105264,7 +105310,7 @@
     "family": "glm-flash",
     "created_at": "2026-08-27 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -105290,9 +105336,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0396,
-          "output_per_million": 0.6875,
-          "cache_read_input_per_million": 0.0396
+          "input_per_million": 0.0214,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.0214
         }
       }
     },
@@ -105313,7 +105359,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 943718,
+        "max_completion_tokens": 131072,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -105361,13 +105407,13 @@
         }
       ],
       "cost": {
-        "input": 0.0396,
-        "output": 0.6875,
-        "cache_read": 0.0396
+        "input": 0.0214,
+        "output": 0.5,
+        "cache_read": 0.0214
       },
       "limit": {
         "context": 1048576,
-        "output": 943718
+        "output": 131072
       }
     }
   },
@@ -105378,7 +105424,7 @@
     "family": "glm",
     "created_at": "2026-08-19 00:00:00 UTC",
     "context_window": 1048576,
-    "max_output_tokens": 943718,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -105400,9 +105446,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.07,
-          "output_per_million": 7,
-          "cache_read_input_per_million": 0.065
+          "input_per_million": 0.063,
+          "output_per_million": 6.3,
+          "cache_read_input_per_million": 0.0585
         }
       }
     },
@@ -105469,13 +105515,13 @@
         }
       ],
       "cost": {
-        "input": 0.07,
-        "output": 7,
-        "cache_read": 0.065
+        "input": 0.063,
+        "output": 6.3,
+        "cache_read": 0.0585
       },
       "limit": {
         "context": 1048576,
-        "output": 943718
+        "output": 131072
       }
     }
   },

@@ -133,18 +133,32 @@ workflow, which validates the tag and gem version, tests the released commit,
 and publishes the gem to RubyGems and GitHub Packages. A tag push alone does
 not publish the gem.
 
-As a maintainer, push the reviewed commit to `main`, write the release notes
-in a file, and create the release using your own GitHub account:
+Commit the hand-written notes in `release-notes.md`. Start the first line
+with `RubyLLM` followed by the exact gem version and a summary. Include
+credits, known limitations, release media, and the comparison link.
+
+As a maintainer, push the reviewed commit to `main`, wait for CI, and create
+the release using your own GitHub account. Run these commands together in
+Bash so a failed check stops before GitHub creates a tag or release:
 
 ```bash
+set -euo pipefail
+bundle exec rake release:verify_notes release:verify_cassettes
 version=$(ruby -r ./lib/ruby_llm/version -e 'puts RubyLLM::VERSION')
 commit=$(git rev-parse HEAD)
+git diff --exit-code HEAD
+git fetch origin main
+git merge-base --is-ancestor "$commit" origin/main
+release_flags=()
+if ruby -rrubygems/version -e 'exit(Gem::Version.new(ARGV.fetch(0)).prerelease? ? 0 : 1)' "$version"; then
+  release_flags+=(--prerelease)
+fi
 gh release create "v$version" --target "$commit" \
-  --title "RubyLLM $version" --notes-file release-notes.md --prerelease
+  --title "RubyLLM $version" --notes-file release-notes.md "${release_flags[@]}"
 ```
 
-Use `--prerelease` for beta and release candidate versions; omit it for stable
-versions. The tag must be `v` followed by the exact gem version, and the commit
+The commands set `--prerelease` only for beta and release candidate versions.
+The tag must be `v` followed by the exact gem version, and the commit
 must be on `main`. GitHub creates the tag if it does not exist. Add `--draft`
 to review the release on GitHub before publishing it; drafts do not start gem
 publication.

@@ -36,6 +36,8 @@ RSpec.describe 'Versioned documentation site', type: :task do
     before do
       commands = [
         %w[init --quiet],
+        %w[config commit.gpgsign false],
+        %w[config tag.gpgsign false],
         ['-c', 'user.name=Docs Spec', '-c', 'user.email=docs@example.test',
          'commit', '--quiet', '--allow-empty', '-m', 'Release fixture']
       ]

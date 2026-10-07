@@ -44,6 +44,20 @@ module ReleaseTasks
 end
 
 namespace :release do # rubocop:disable Metrics/BlockLength
+  desc 'Verify the committed release notes match the gem version'
+  task :verify_notes do
+    require_relative '../lib/ruby_llm/version'
+    notes = 'release-notes.md'
+    expected = "RubyLLM #{RubyLLM::VERSION} "
+    unless File.file?(notes) && File.open(notes, &:readline).start_with?(expected)
+      abort "#{notes} must start with #{expected.inspect}"
+    end
+    sh 'git', 'ls-files', '--error-unmatch', notes
+    sh 'git', 'diff', '--exit-code', 'HEAD', '--', notes
+  rescue EOFError
+    abort "#{notes} must not be empty"
+  end
+
   desc 'Prepare for release'
   task :prepare do
     Rake::Task['release:refresh_stale_cassettes'].invoke

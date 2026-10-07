@@ -27,7 +27,7 @@ hero:
     <div class="home-hero-install home-code-grid home-code-grid--bare" markdown="1">
 
 ```sh
-{% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version 2.0.0{% endif %}
+{% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version 2.1.0{% endif %}
 ```
 {: .home-code-card }
 
@@ -420,7 +420,7 @@ RubyLLM.chat(model: "{{ site.models.openai_current }}")
     </p>
 
     <div class="home-demo-frame home-rails-demo-frame" data-demo-video>
-      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> {% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version 2.0.0{% endif %}
+      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> {% if site.docs_unreleased %}bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main{% else %}bundle add ruby_llm --version 2.1.0{% endif %}
 <span class="term-green">$</span> bin/rails generate ruby_llm:install
 <span class="term-green">$</span> bin/rails db:migrate
 <span class="term-green">$</span> bin/rails generate ruby_llm:chat_ui

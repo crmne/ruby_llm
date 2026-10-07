@@ -34,10 +34,10 @@ These guides cover unreleased changes on `main`. Install from GitHub to use them
 bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main
 ```
 {% else %}
-Add RubyLLM 2.0 with Bundler:
+Add RubyLLM 2.1 with Bundler:
 
 ```sh
-bundle add ruby_llm --version 2.0.0
+bundle add ruby_llm --version 2.1.0
 ```
 {% endif %}
 

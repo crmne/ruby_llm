@@ -98,8 +98,8 @@ jobs:
           ruby-version: "4.0"
           bundler-cache: true
 
-      - name: Verify cassettes are fresh
-        run: bundle exec rake release:verify_cassettes
+      - name: Verify release notes and cassette freshness
+        run: bundle exec rake release:verify_notes release:verify_cassettes
 
       - name: Build gem
         run: gem build ruby_llm.gemspec --output "ruby_llm-${GEM_VERSION}.gem"

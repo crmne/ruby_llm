@@ -76,4 +76,70 @@ RSpec.describe ReleaseTasks do
 
     expect(stale_paths).to contain_exactly(cassette)
   end
+
+  describe 'release:verify_notes' do
+    before do
+      git('init', '--quiet')
+      git('config', 'user.name', 'Release spec')
+      git('config', 'user.email', 'release@example.test')
+      git('config', 'commit.gpgsign', 'false')
+      git('commit', '--quiet', '--allow-empty', '-m', 'Initial commit')
+    end
+
+    it 'accepts committed notes for the current version' do
+      write_notes("RubyLLM #{RubyLLM::VERSION} adds new features.\n")
+      git('add', 'release-notes.md')
+      git('commit', '--quiet', '-m', 'Release notes')
+
+      output, status = verify_notes
+
+      expect(status).to be_success, output
+    end
+
+    it 'rejects missing notes' do
+      output, status = verify_notes
+
+      expect(status).not_to be_success
+      expect(output).to include('release-notes.md must start with')
+    end
+
+    it 'rejects empty notes' do
+      write_notes('')
+      output, status = verify_notes
+
+      expect(status).not_to be_success
+      expect(output).to include('release-notes.md must not be empty')
+    end
+
+    it 'rejects notes for another version' do
+      write_notes('RubyLLM 1.0.0 adds new features.')
+      output, status = verify_notes
+
+      expect(status).not_to be_success
+      expect(output).to include('release-notes.md must start with')
+    end
+
+    it 'rejects uncommitted notes' do
+      write_notes("RubyLLM #{RubyLLM::VERSION} adds new features.\n")
+      git('add', 'release-notes.md')
+      _output, status = verify_notes
+
+      expect(status).not_to be_success
+    end
+
+    def write_notes(text)
+      File.write(File.join(tmpdir, 'release-notes.md'), text)
+    end
+
+    def verify_notes
+      task = File.expand_path('../../tasks/release.rake', __dir__)
+      script = "load #{task.inspect}; Rake::Task['release:verify_notes'].invoke"
+      Open3.capture2e(GitEnvironment.cleared, RbConfig.ruby, '-rrake', '-e', script, chdir: tmpdir)
+    end
+
+    def git(*args)
+      output, status = Open3.capture2e(GitEnvironment.cleared, 'git', *args, chdir: tmpdir)
+      raise output unless status.success?
+    end
+  end
 end
