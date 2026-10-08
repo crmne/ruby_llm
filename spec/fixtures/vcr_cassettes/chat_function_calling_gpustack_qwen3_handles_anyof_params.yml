@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '4392'
-      Resp-Start-Time:
-      - '1789683577274'
-      Date:
-      - Thu, 17 Sep 2026 22:19:32 GMT
-      Access-Control-Allow-Origin:
-      - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1789683572882'
-      X-Envoy-Upstream-Service-Time:
-      - '4388'
+      Resp-Start-Time:
+      - '1791422392784'
+      Date:
+      - Thu, 08 Oct 2026 01:19:49 GMT
       Server:
       - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
+      Req-Cost-Time:
+      - '2905'
+      Req-Arrive-Time:
+      - '1791422389879'
+      X-Envoy-Upstream-Service-Time:
+      - '2901'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -49,38 +49,27 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        let me try to figure this out. The user wants me to call the any_of_params
-        function for a task called \"Review PR\" with status \"pending\" and then
-        report the result.\n\nFirst, I need to check the function definition. The
-        function is named any_of_params. Its parameters are task and status. The task
-        is a required string, and status is optional. The status can be either \"pending\"
-        or \"done\" as per the enum, or null. \n\nThe user specified the task as \"Review
-        PR\" and the status as \"pending\". Both are valid. Since status is optional,
-        but the user provided it, I should include it. The function requires both
-        task and status, so I need to make sure both are included. Wait, looking back,
-        the required fields are task and status. Wait, no. Wait, in the parameters,
-        the required array includes both task and status? Wait, the parameters object
-        has \"required\": [\"task\", \"status\"], but the status has an anyOf that
-        includes null. Wait, no. Let me check again. \n\nThe parameters for the function
-        are:\n- task (required, string)\n- status (optional, anyOf: either a string
-        enum [\"pending\", \"done\"] or null). But in the required array, both task
-        and status are required. Wait, that''s conflicting. Wait, the parameters object
-        has \"required\": [\"task\", \"status\"], but the status''s anyOf includes
-        null. Wait, maybe the status can be null, but the required field says status
-        is required. So the user must provide status, but it can be null. But in the
-        user''s case, they provided \"pending\", which is valid. \n\nSo the function
-        call should include both task and status. So the arguments would be {\"task\":
-        \"Review PR\", \"status\": \"pending\"}. \n\nI need to make sure that the
-        JSON is correctly formatted. The function name is any_of_params, and the arguments
-        are a JSON object with task and status. \n\nSo the tool_call should be:\n\n{\"name\":
-        \"any_of_params\", \"arguments\": {\"task\": \"Review PR\", \"status\": \"pending\"}}\n\nThen,
-        after calling the function, the result would be whatever the function returns.
-        But since the user didn''t specify the function''s return value, I just need
-        to report that the function was called with those parameters. \n\nI think
-        that''s it. Let me double-check. The user said to call the tool with status
-        \"pending\" and report the result. So the function call is correct, and the
-        result would be the function''s output, which isn''t specified here. But the
-        user probably just wants the function call made.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"},"id":"xpAfJWwB4TZUcHj9RY9b2fWnjGfXKZvL"}]}}],"created":1789683577,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":581,"prompt_tokens":223,"total_tokens":804,"prompt_tokens_details":{"cached_tokens":222}},"id":"chatcmpl-5ctozbAZPupEMAQpMEJJRrw3LVhqL3ks","timings":{"cache_n":222,"prompt_n":1,"prompt_ms":9.124,"prompt_per_token_ms":9.124,"prompt_per_second":109.60105217010083,"predicted_n":581,"predicted_ms":4317.432,"predicted_per_token_ms":7.443848275862068,"predicted_per_second":134.3391164006752}}'
-  recorded_at: Thu, 17 Sep 2026 22:19:37 GMT
+        let''s see. The user wants me to call the any_of_params function for a task
+        called \"Review PR\" with status \"pending\" and then report the result.\n\nFirst,
+        I need to check the function definition. The function is named any_of_params
+        and it requires two parameters: task and status. The task is a string, and
+        the status is an optional parameter that can be either \"pending\", \"done\",
+        or null. The anyOf in the parameters means that status can be one of those
+        three options.\n\nThe user specified the task as \"Review PR\" and the status
+        as \"pending\". Since \"pending\" is one of the allowed values in the enum,
+        that''s valid. So I need to construct the arguments for the function call
+        with these values.\n\nI should make sure that the JSON structure is correct.
+        The required parameters are task and status, even though status is optional.
+        Wait, looking back, the required array includes both task and status. Wait,
+        no. Let me check again. The parameters object has \"required\": [\"task\",
+        \"status\"], so both are required. But the status can be null. Wait, the user
+        provided \"pending\", which is allowed. So the arguments should include both
+        task and status.\n\nSo the arguments would be {\"task\": \"Review PR\", \"status\":
+        \"pending\"}. That should be valid. Then, I need to wrap this in the tool_call
+        JSON as specified. The function name is any_of_params, and the arguments are
+        the JSON object. Then, after making the call, the user wants the result reported.
+        But since I''m just simulating the function call, I''ll return the tool_call
+        XML with the correct parameters.\n","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"},"id":"akhgXynzUo9fL0sjwIBITbhDK3vs7fqA"}]}}],"created":1791422392,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":375,"prompt_tokens":223,"total_tokens":598,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-sIZLGyRG1OKFOP45ORdg417KSZD9jU0P","timings":{"cache_n":51,"prompt_n":172,"prompt_ms":42.519,"prompt_per_token_ms":0.24720348837209302,"prompt_per_second":4045.250358663186,"predicted_n":375,"predicted_ms":2846.367,"predicted_per_token_ms":7.610606951871659,"predicted_per_second":131.39556494296062}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:52 GMT
 recorded_with: VCR 6.4.0

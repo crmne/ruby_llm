@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:23:14 GMT
+      - Thu, 08 Oct 2026 01:13:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,11 +40,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999275'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1799'
+      - '1800'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
@@ -54,13 +54,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '616.3'
-      X-Metrics-Mean-Itl-Ms:
-      - '8.9'
+      - '401.4'
       X-Metrics-E2e-Ms:
-      - '2307.7'
+      - '2275.7'
       Traceparent:
-      - 00-f1bc2e6763cff357abbddb294abf0f8c-5bc7e06a0004c4db-01
+      - 00-526cff9a623a9bd6cdf9a4b7f3a22be1-d19a15e00003d8bb-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -73,19 +71,19 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1789683792,"completed_at":1789683794,"id":"cf58ee21-33d9-92c5-b419-8363f4f284cc","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_cf58ee21-33d9-92c5-b419-8363f4f284cc","summary":[{"text":"The
-        user said: \"Roll the dice 3 times\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"mFu8luIliShr5RjFy+BPDTr/R0DCDvvvkpVeCX1I1djbYh9vzu5gpnw+c2mSRGJCW5FA6XRDHg/RR4kaf3l/ZDXKEYim3bMUDtGxyVILHOXiOzkv6XD38HKsch88vsl09XFDna2DF+dTus5cwXo+aIBsqIpnm8eS05y8Saq/n9UC4jaZs18eRi86T0TlD7ynDr5ruUHleiZH+D3fXxyIwZKt8VjbWZBKxa0hOQArwOH550URL8UZtg3HALXEOfhBhtvoAoKhfrbZp4WgSR8b658A9vKz6Hs/8a0nYi5q8vP8GwItb3gED/0l2jY15P1dVpoYuWtrX0k0B8+H4697BMI2qoXjXiw+C76q43kNE1bvLSuApuR6h/xACn6fzuSJ9Jrjw19NTb5iyfyXY2q2QhUSgTld5urWN63yXKg7lHHT1wdltg1VyfbTfmtfPJ+joxfyAzPKMULMdq3bWWqKabYf6qm+mY1uCOyYvNlk2ex+fq1Vapl8BwC7H65E37QIBNpBtWhT1/uT9t7rm/R2hnNxpoE46IdNoQJL02Tzv88KRwToh8qD0qX7/1I6+MqugtBNwEm1yZgYYK6ZA3Xkl3DCKeIetEAjnoTf+VQjj5Qoc1Vfk7Rc7AW2HLp7uC3l8p1I6gPpL36pCnUXRx9KB3Rtf64RLnM7jOQr3nNl6chrVIlObGv+3raKZ9w/7RiLmKVDbnxFSNhV7q6/DJcGlRcPWR+xJjRo3v4ZYr3gAwClgHbeUGqPgZZymawcuhK7J1U+M/ntDLuY4gHBGwM+6n1IfHDJdEEMse+Vjnv414DTGlMSDbd3TiSuMaLqmG8Sc4uolQpKrR7BoOqOsCBHkWx/tDlYswQH8L/O52zXCZVab7cXdPRXKjm+0iokIiU+kGuzsc1aLj6J5Ejn+7OKva1kmSwvliL+zN7dCMLLtkr0LqyA2hGiW6IkVcOPlp7r3olWnHgWR8TITqV3sZ5PpmNK9oILZ3LZNIRPFpJet3+SRF3u1w+sk0ECmhUgR8f8WIWpXJuAJtCqghY"},{"arguments":"{}","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-0","name":"dice_roll","type":"function_call","id":"fc_cf58ee21-33d9-92c5-b419-8363f4f284cc_0","status":"completed"},{"arguments":"{}","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-1","name":"dice_roll","type":"function_call","id":"fc_cf58ee21-33d9-92c5-b419-8363f4f284cc_1","status":"completed"},{"arguments":"{}","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-2","name":"dice_roll","type":"function_call","id":"fc_cf58ee21-33d9-92c5-b419-8363f4f284cc_2","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Rolls
-        a single six-sided die and returns the result","name":"dice_roll","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":303,"input_tokens_details":{"cached_tokens":128},"output_tokens":179,"output_tokens_details":{"reasoning_tokens":164},"total_tokens":482,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6918500,"context_details":{"input_tokens":303,"output_tokens":179}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
+      string: '{"created_at":1791421980,"completed_at":1791421982,"id":"0f7fe275-5f75-9c22-a4fb-96884699fa0d","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_0f7fe275-5f75-9c22-a4fb-96884699fa0d","summary":[{"text":"Rolling
+        the dice three times.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Eiy0hJWPDhRfWlrs4zAsXONrZ7QVlOPWxLng9q5vswPhWFBvPG247B7euLmNlwRIttflSFbWZpGjEI3CoqpF2ahXseBp81LZoII6i7kgj/UgRSM4AuPFxYqva0aD4HRtaM8VVdLK7r4MLD8oE9Z0wjOx3VpRxW8ptdEkK1wplFbhJN/+uNRoprqQ9MUhtNiqEN7rTCK69Ht9rbYONzekEh7NMV7lfHCTo0iqw+Mur15IZWLZZ3lUPy47DlUqZHZ/4PHFjIEyKJlxVU84Mg6cVs4jySuCZmouBka3wHUY9ypU0zcv+3a2qGiP2enzakLiXiReX9mgg1CHHL+Qr1x0ztQG9pkRyF4SNP0E8tNG98oRRfCNxJro4mKfWNlEKc/bxVg0mix82nKdDSyjwcWUC0IRB7+0fkzTdKsVodedRg0cqGtbfugwEFmc4uqAab9MRMEHPsUHzie03Oo3fblIpSRwXJLd8xnI9395ZWyD262DK7fOuT7maBHkZ3hAUsqo72ExVpTCDRBKC7oFxl0uh9R7elzt3/i/vnC5toe2D2Jjoc0uD5rGYCLY8MzcaTZxCxvhiwCU+Jk0ui5G3OTefxlojQ1P7oTX0XvrH5m26sSVQB2IRPqA7N26asaZBI5HfdAQXOtQTfp+ES6GMdOWntjMtvUhP6/f0AVS3Qx6+MxywqWWzAJoYXcaiAN/wZCi/iY2gpvMXouRJcPTP2GZMj2hFNJOoIIAFe4iIcl7gwYMA+mvB0wOFg/yOtOXTu/3BfnkCCAHeJyDecJ7l5BluR9w6ZFHAdZFtgBDM3E0pwcTIe4lLYgSaXQDGDNWR282N1HuN2Oak6LOvXDWanD3zunSUpGMelWwr6UB7hSXJzzaML5/6NzlJdDM63tp6+aGJyjWB8eM/jzbQ1S6XSicpW/dSgBelQsaVP+Ud5yofG8I3v/5CiS+2PifTCAGC/qfjvjIkOVZi7FnCznw9rTjKo5joPQhTiNB+v62w1FnY4TmTd7G7df1FyQowHNHMH8wWPUxt5WNq4DZaLyTpdu3Y0IUwO9C0d0hySx8eFY1+gs+/M6iysMd0ofvm8adQLNvzoTsfQDg/tJg+Mvh/+brgDE2vGk9xQVn/o0Qe4sYvFd1teNMtUOVSsYB2EP68pbt1PgesG/GBBU4sNGfZZ8dqWXeCkaCvSt78qs+LwDgA+5i8Sr+StoRuNr2m2vnw1OJbCbey1XJMI3fkJt799QXPZRA"},{"arguments":"{}","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-0","name":"dice_roll","type":"function_call","id":"fc_0f7fe275-5f75-9c22-a4fb-96884699fa0d_0","status":"completed"},{"arguments":"{}","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-1","name":"dice_roll","type":"function_call","id":"fc_0f7fe275-5f75-9c22-a4fb-96884699fa0d_1","status":"completed"},{"arguments":"{}","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-2","name":"dice_roll","type":"function_call","id":"fc_0f7fe275-5f75-9c22-a4fb-96884699fa0d_2","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Rolls
+        a single six-sided die and returns the result","name":"dice_roll","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":303,"input_tokens_details":{"cached_tokens":128},"output_tokens":213,"output_tokens_details":{"reasoning_tokens":197},"total_tokens":516,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7768500,"context_details":{"input_tokens":303,"output_tokens":217}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}'
-  recorded_at: Thu, 17 Sep 2026 22:23:14 GMT
+  recorded_at: Thu, 08 Oct 2026 01:13:02 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"grok-4.3","input":[{"role":"user","content":"Roll the dice
-        3 times"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
-        user said: \"Roll the dice 3 times\"\n"}],"encrypted_content":"mFu8luIliShr5RjFy+BPDTr/R0DCDvvvkpVeCX1I1djbYh9vzu5gpnw+c2mSRGJCW5FA6XRDHg/RR4kaf3l/ZDXKEYim3bMUDtGxyVILHOXiOzkv6XD38HKsch88vsl09XFDna2DF+dTus5cwXo+aIBsqIpnm8eS05y8Saq/n9UC4jaZs18eRi86T0TlD7ynDr5ruUHleiZH+D3fXxyIwZKt8VjbWZBKxa0hOQArwOH550URL8UZtg3HALXEOfhBhtvoAoKhfrbZp4WgSR8b658A9vKz6Hs/8a0nYi5q8vP8GwItb3gED/0l2jY15P1dVpoYuWtrX0k0B8+H4697BMI2qoXjXiw+C76q43kNE1bvLSuApuR6h/xACn6fzuSJ9Jrjw19NTb5iyfyXY2q2QhUSgTld5urWN63yXKg7lHHT1wdltg1VyfbTfmtfPJ+joxfyAzPKMULMdq3bWWqKabYf6qm+mY1uCOyYvNlk2ex+fq1Vapl8BwC7H65E37QIBNpBtWhT1/uT9t7rm/R2hnNxpoE46IdNoQJL02Tzv88KRwToh8qD0qX7/1I6+MqugtBNwEm1yZgYYK6ZA3Xkl3DCKeIetEAjnoTf+VQjj5Qoc1Vfk7Rc7AW2HLp7uC3l8p1I6gPpL36pCnUXRx9KB3Rtf64RLnM7jOQr3nNl6chrVIlObGv+3raKZ9w/7RiLmKVDbnxFSNhV7q6/DJcGlRcPWR+xJjRo3v4ZYr3gAwClgHbeUGqPgZZymawcuhK7J1U+M/ntDLuY4gHBGwM+6n1IfHDJdEEMse+Vjnv414DTGlMSDbd3TiSuMaLqmG8Sc4uolQpKrR7BoOqOsCBHkWx/tDlYswQH8L/O52zXCZVab7cXdPRXKjm+0iokIiU+kGuzsc1aLj6J5Ejn+7OKva1kmSwvliL+zN7dCMLLtkr0LqyA2hGiW6IkVcOPlp7r3olWnHgWR8TITqV3sZ5PpmNK9oILZ3LZNIRPFpJet3+SRF3u1w+sk0ECmhUgR8f8WIWpXJuAJtCqghY"},{"type":"function_call","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-0","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-1","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-2","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-0","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-1","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call-6df41304-3e6f-4123-af21-6e05b0b9f471-2","output":"{\"roll\":3}"}],"instructions":"You
+        3 times"},{"type":"reasoning","summary":[{"type":"summary_text","text":"Rolling
+        the dice three times."}],"encrypted_content":"Eiy0hJWPDhRfWlrs4zAsXONrZ7QVlOPWxLng9q5vswPhWFBvPG247B7euLmNlwRIttflSFbWZpGjEI3CoqpF2ahXseBp81LZoII6i7kgj/UgRSM4AuPFxYqva0aD4HRtaM8VVdLK7r4MLD8oE9Z0wjOx3VpRxW8ptdEkK1wplFbhJN/+uNRoprqQ9MUhtNiqEN7rTCK69Ht9rbYONzekEh7NMV7lfHCTo0iqw+Mur15IZWLZZ3lUPy47DlUqZHZ/4PHFjIEyKJlxVU84Mg6cVs4jySuCZmouBka3wHUY9ypU0zcv+3a2qGiP2enzakLiXiReX9mgg1CHHL+Qr1x0ztQG9pkRyF4SNP0E8tNG98oRRfCNxJro4mKfWNlEKc/bxVg0mix82nKdDSyjwcWUC0IRB7+0fkzTdKsVodedRg0cqGtbfugwEFmc4uqAab9MRMEHPsUHzie03Oo3fblIpSRwXJLd8xnI9395ZWyD262DK7fOuT7maBHkZ3hAUsqo72ExVpTCDRBKC7oFxl0uh9R7elzt3/i/vnC5toe2D2Jjoc0uD5rGYCLY8MzcaTZxCxvhiwCU+Jk0ui5G3OTefxlojQ1P7oTX0XvrH5m26sSVQB2IRPqA7N26asaZBI5HfdAQXOtQTfp+ES6GMdOWntjMtvUhP6/f0AVS3Qx6+MxywqWWzAJoYXcaiAN/wZCi/iY2gpvMXouRJcPTP2GZMj2hFNJOoIIAFe4iIcl7gwYMA+mvB0wOFg/yOtOXTu/3BfnkCCAHeJyDecJ7l5BluR9w6ZFHAdZFtgBDM3E0pwcTIe4lLYgSaXQDGDNWR282N1HuN2Oak6LOvXDWanD3zunSUpGMelWwr6UB7hSXJzzaML5/6NzlJdDM63tp6+aGJyjWB8eM/jzbQ1S6XSicpW/dSgBelQsaVP+Ud5yofG8I3v/5CiS+2PifTCAGC/qfjvjIkOVZi7FnCznw9rTjKo5joPQhTiNB+v62w1FnY4TmTd7G7df1FyQowHNHMH8wWPUxt5WNq4DZaLyTpdu3Y0IUwO9C0d0hySx8eFY1+gs+/M6iysMd0ofvm8adQLNvzoTsfQDg/tJg+Mvh/+brgDE2vGk9xQVn/o0Qe4sYvFd1teNMtUOVSsYB2EP68pbt1PgesG/GBBU4sNGfZZ8dqWXeCkaCvSt78qs+LwDgA+5i8Sr+StoRuNr2m2vnw1OJbCbey1XJMI3fkJt799QXPZRA"},{"type":"function_call","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-0","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-1","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-2","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-0","output":"{\"roll\":1}"},{"type":"function_call_output","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-1","output":"{\"roll\":2}"},{"type":"function_call_output","call_id":"call-1d373ab4-f8b7-4d6e-be0f-c43ae2905c31-2","output":"{\"roll\":3}"}],"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -105,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Sep 2026 22:23:16 GMT
+      - Thu, 08 Oct 2026 01:13:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -119,11 +117,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999275'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1799'
+      - '1800'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
@@ -133,13 +131,11 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '246.7'
-      X-Metrics-Mean-Itl-Ms:
-      - '9.3'
+      - '254.8'
       X-Metrics-E2e-Ms:
-      - '1482.8'
+      - '1288.5'
       Traceparent:
-      - 00-91f36dcec051cdb25cfc0fee2e79430a-5ac6d56d000076c2-01
+      - 00-bb8aa86a5b10f6cb87c2f36f49a05058-0c64619300001371-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -152,10 +148,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"created_at":1789683794,"completed_at":1789683795,"id":"0e17e4d1-e221-9222-8fc6-3e23d25d1112","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_0e17e4d1-e221-9222-8fc6-3e23d25d1112","summary":[{"text":"The
-        tool calls returned:\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"/KrhRJf99SPixe9PZ2Vys61m+v1vXHhlTbLpLUA7uyOPlVgK0cqdsMhr7X2r+L63NtVYrcXtXY2wJ2Yxjyg82nRvu3q77vD1Ggd9Qwqfkt4UzCKZ/HVTaIDc1iIR8phqc1oYGSd9MhVZeFHJcbhKzobtFg3UO8LSNREO4htYkDOmhcghWbDnTUmkV2g+oAVV/WZWPdgEQCS/zgysdmtSit/F0sq6PCEu8KFsD8wqv45BzI8hUS+7OCBwSHgFeJEA3vAZEbwxBLxPyCAEP9njTaS6OY3V9aJEUcsf3FgvSCEhtp4a9K1Aq1PDgRxnkh0nUYt4X865KGTD9uIjCVbfPpR//tRoHMcEDmoYSyS6jrnk3MO89XbpYoi8s3HcZyMmDCdu3gemL/Y58YnNREfeevN95Q6ddeKGYpHFZwgI4kEuVloCZKpDp/lCybB03b+RACpF0A5wnEhbmiwFZaZs0c5gBY//VIZ/c/wcYWRrs9v55CVktc5jWs7RY5n4IbQz33d3gjumiu0hTi12e3/BvKZpGYgt/d6nxUN8DKfK"},{"content":[{"type":"output_text","text":"The
-        dice rolls are: 1, 2, 3.","logprobs":[],"annotations":[]}],"id":"msg_0e17e4d1-e221-9222-8fc6-3e23d25d1112","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Rolls
-        a single six-sided die and returns the result","name":"dice_roll","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":514,"input_tokens_details":{"cached_tokens":256},"output_tokens":113,"output_tokens_details":{"reasoning_tokens":99},"total_tokens":627,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6562000,"context_details":{"input_tokens":514,"output_tokens":113}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
+      string: '{"created_at":1791421982,"completed_at":1791421983,"id":"58eab651-926a-9074-889e-77c79aff50d0","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_58eab651-926a-9074-889e-77c79aff50d0","summary":[{"text":"The
+        first dice roll returned 1.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"RF+WpsOnbyIwhY2pEfE92WjCCSoXkuD1GzJq/r3C4H08Vthi9GPRql2EKW9B9O48wXGkOkBe5FcqiOphubodTqyttrvQxBcAeJlfTGiAQ2ShOaunOiTGtSJ1vTyLIY9IghWg8QNbjby5AgJUlDEEiv43/6gAqor5AJKFE2pQqyXqf7jEB+O7C3ZXTQU+BherJ0xWn53Cp/Xl4i+R/O+1tNsuTODWtt6S31LTiw2Hno7kmTMtBiAGa4htvtC/nu9ae5b196A+EJbeu8duoRX9OWRTR1pJM4jGdJR3sKlZPQ3ekFyCxs2meGh+qDWnZxft1re8+rpNNjH8ndIJ1UdA9IIs9GfDrJoYrTr64HViyXfcZC6mT6Cb3Oxg2sa4GHZBixin6ahMfSRwP6Xlzeuh/EsBsqX6I8Xl1fpMgCgZH7nSHlU3uAgT+L5+sBEaipL3DcRCi41L1U6sL6H6PD7w8/ZotWVp4RD7/bzwoAQJrx5ek2zO3q1x5w2rwXBieIJGSYBAv9bFbg"},{"content":[{"type":"output_text","text":"The
+        results of the three dice rolls are: 1, 2, 3.","logprobs":[],"annotations":[]}],"id":"msg_58eab651-926a-9074-889e-77c79aff50d0","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Rolls
+        a single six-sided die and returns the result","name":"dice_roll","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":547,"input_tokens_details":{"cached_tokens":256},"output_tokens":113,"output_tokens_details":{"reasoning_tokens":95},"total_tokens":660,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6974500,"context_details":{"input_tokens":547,"output_tokens":121}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}'
-  recorded_at: Thu, 17 Sep 2026 22:23:16 GMT
+  recorded_at: Thu, 08 Oct 2026 01:13:04 GMT
 recorded_with: VCR 6.4.0

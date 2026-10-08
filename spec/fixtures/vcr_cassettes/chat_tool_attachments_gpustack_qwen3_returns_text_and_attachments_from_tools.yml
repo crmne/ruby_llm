@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Arrive-Time:
+      - '1791422394909'
       Date:
-      - Thu, 17 Sep 2026 22:29:39 GMT
-      Server:
-      - istio-envoy
+      - Thu, 08 Oct 2026 01:19:54 GMT
       Access-Control-Allow-Origin:
       - ''
-      Req-Arrive-Time:
-      - '1789684179643'
       Resp-Start-Time:
-      - '1789684184620'
+      - '1791422398456'
+      X-Envoy-Upstream-Service-Time:
+      - '3543'
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '4976'
-      X-Envoy-Upstream-Service-Time:
-      - '4967'
+      - '3546'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -51,131 +51,93 @@ http_interactions:
         repeat the contents of the file. Let me start by checking the available tools.
         The tools section says there''s a function called file_fetch that fetches
         a sample text file named ruby.txt. The parameters for this function are empty,
-        so I don''t need to pass any arguments. \n\nFirst, I need to make sure I call
-        the file_fetch function correctly. Since there are no parameters required,
-        the tool call should just have the name \"file_fetch\" and an empty arguments
-        object. Once I get the file content, I need to output the contents as specified.\n\nWait,
-        but how does the system handle the file content after fetching? The user says
-        to \"repeat the contents of the attached file.\" So after fetching, I should
-        read the content and then present it. But in the tool response, I need to
-        simulate that. The example shows that after the tool call, the response includes
-        the content. So I should generate a tool response with the content of ruby.txt.
-        \n\nBut since I don''t have the actual file, I need to create a mock response.
-        The user might expect that after calling file_fetch, the system returns the
-        content. So in the tool_response, I should include the content as a JSON string.
-        Let me check the example again. The user''s example shows that after the tool
-        call, the response is a JSON object with \"content\" as a key. So I need to
-        structure the tool_response accordingly.\n\nWait, the user''s instruction
-        says to first call file_fetch, then repeat the contents. So the steps are:
-        call the function, get the content, then output it. But in the tool call,
-        I just need to call the function. The actual content retrieval is handled
-        by the tool. So the first step is to make the tool call, and then the tool
-        response will provide the content. Then, I can present that content to the
-        user.\n\nSo the first part is to generate the tool call for file_fetch. Then,
-        the tool response would include the content. But since I''m simulating this,
-        I need to create a fake tool response with the content. Let me think about
-        what the content might be. Since it''s a ruby.txt file, maybe it''s some Ruby
-        code or text. For example, maybe it''s a simple \"Hello, Ruby!\" or something
-        similar. I''ll create a sample content for the tool response.\n\nPutting it
-        all together: the first tool call is to file_fetch, then the tool response
-        includes the content. Then, the final answer would be the content repeated.
-        So the steps are:\n\n1. Call file_fetch.\n2. Receive the content in the tool
-        response.\n3. Output the content as the answer.\n\nSo the initial response
-        should be the tool call, then the tool response, then the final answer. But
-        according to the instructions, I need to first output the tool call in the
-        XML tags. Then, after the tool response, provide the final answer. So the
-        user''s message is to call file_fetch and then repeat the contents. Therefore,
-        the assistant''s first step is to make the tool call, then the tool response,
-        then the answer.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"agFDM2LR5LlRhJAuahBq4Kt1vnaNfvR3"}]}}],"created":1789684184,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":669,"prompt_tokens":166,"total_tokens":835,"prompt_tokens_details":{"cached_tokens":148}},"id":"chatcmpl-7zIbkAVPXMrTuZkzP2DwBwE4fQRkRnOp","timings":{"cache_n":148,"prompt_n":18,"prompt_ms":13.883,"prompt_per_token_ms":0.7712777777777777,"prompt_per_second":1296.5497370885255,"predicted_n":669,"predicted_ms":4930.54,"predicted_per_token_ms":7.381047904191616,"predicted_per_second":135.48211757738503}}'
-  recorded_at: Thu, 17 Sep 2026 22:29:44 GMT
+        so I don''t need to provide any arguments when calling it.\n\nFirst, I need
+        to make sure I call the file_fetch function correctly. Since there are no
+        parameters required, the tool call should just have the name \"file_fetch\"
+        and an empty arguments object. Once I call that function, it should retrieve
+        the contents of ruby.txt. \n\nAfter fetching the file, the next step is to
+        repeat the contents. But wait, how does the system handle the response after
+        the file is fetched? I assume that once the file is retrieved, the contents
+        will be available, and then I can read them and output them back to the user.
+        However, in the current setup, I need to first make the tool call to fetch
+        the file. The user''s instruction says to first call file_fetch and then repeat
+        the contents. \n\nSo, the first part is to generate the tool call. Then, once
+        the file is fetched, I can read its contents and present them. But since I''m
+        simulating the process, I need to make sure that after the tool call, the
+        response includes the file''s content. However, in the context of this problem,
+        I might just need to generate the tool call first. The user''s instruction
+        is to call file_fetch and then repeat the contents, so the assistant''s response
+        should first trigger the tool call, and then once the file is retrieved, the
+        contents are repeated.\n\nBut in the current step, I''m only supposed to generate
+        the tool call. So the correct action here is to call file_fetch with no arguments.
+        Then, once that''s done, the next step would be to read the file''s content
+        and output it. But for this query, the user is asking to first call the function,
+        so the answer should be the tool call. Therefore, I should output the tool_call
+        XML with the file_fetch function and empty arguments.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz"}]}}],"created":1791422398,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":460,"prompt_tokens":166,"total_tokens":626,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-dZohu5gcgPExMH0RQI0ufcHj0ZBav28f","timings":{"cache_n":51,"prompt_n":115,"prompt_ms":32.459,"prompt_per_token_ms":0.2822521739130435,"prompt_per_second":3542.9310822884254,"predicted_n":460,"predicted_ms":3495.414,"predicted_per_token_ms":7.615281045751635,"predicted_per_second":131.31491720294076}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:58 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"agFDM2LR5LlRhJAuahBq4Kt1vnaNfvR3","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the file. Let me start by checking the available tools.
         The tools section says there''s a function called file_fetch that fetches
         a sample text file named ruby.txt. The parameters for this function are empty,
-        so I don''t need to pass any arguments. \n\nFirst, I need to make sure I call
-        the file_fetch function correctly. Since there are no parameters required,
-        the tool call should just have the name \"file_fetch\" and an empty arguments
-        object. Once I get the file content, I need to output the contents as specified.\n\nWait,
-        but how does the system handle the file content after fetching? The user says
-        to \"repeat the contents of the attached file.\" So after fetching, I should
-        read the content and then present it. But in the tool response, I need to
-        simulate that. The example shows that after the tool call, the response includes
-        the content. So I should generate a tool response with the content of ruby.txt.
-        \n\nBut since I don''t have the actual file, I need to create a mock response.
-        The user might expect that after calling file_fetch, the system returns the
-        content. So in the tool_response, I should include the content as a JSON string.
-        Let me check the example again. The user''s example shows that after the tool
-        call, the response is a JSON object with \"content\" as a key. So I need to
-        structure the tool_response accordingly.\n\nWait, the user''s instruction
-        says to first call file_fetch, then repeat the contents. So the steps are:
-        call the function, get the content, then output it. But in the tool call,
-        I just need to call the function. The actual content retrieval is handled
-        by the tool. So the first step is to make the tool call, and then the tool
-        response will provide the content. Then, I can present that content to the
-        user.\n\nSo the first part is to generate the tool call for file_fetch. Then,
-        the tool response would include the content. But since I''m simulating this,
-        I need to create a fake tool response with the content. Let me think about
-        what the content might be. Since it''s a ruby.txt file, maybe it''s some Ruby
-        code or text. For example, maybe it''s a simple \"Hello, Ruby!\" or something
-        similar. I''ll create a sample content for the tool response.\n\nPutting it
-        all together: the first tool call is to file_fetch, then the tool response
-        includes the content. Then, the final answer would be the content repeated.
-        So the steps are:\n\n1. Call file_fetch.\n2. Receive the content in the tool
-        response.\n3. Output the content as the answer.\n\nSo the initial response
-        should be the tool call, then the tool response, then the final answer. But
-        according to the instructions, I need to first output the tool call in the
-        XML tags. Then, after the tool response, provide the final answer. So the
-        user''s message is to call file_fetch and then repeat the contents. Therefore,
-        the assistant''s first step is to make the tool call, then the tool response,
-        then the answer.\n","reasoning_content":"Okay, the user wants me to call the
-        file_fetch function to get ruby.txt and then repeat the contents of the file.
-        Let me start by checking the available tools. The tools section says there''s
-        a function called file_fetch that fetches a sample text file named ruby.txt.
-        The parameters for this function are empty, so I don''t need to pass any arguments.
-        \n\nFirst, I need to make sure I call the file_fetch function correctly. Since
-        there are no parameters required, the tool call should just have the name
-        \"file_fetch\" and an empty arguments object. Once I get the file content,
-        I need to output the contents as specified.\n\nWait, but how does the system
-        handle the file content after fetching? The user says to \"repeat the contents
-        of the attached file.\" So after fetching, I should read the content and then
-        present it. But in the tool response, I need to simulate that. The example
-        shows that after the tool call, the response includes the content. So I should
-        generate a tool response with the content of ruby.txt. \n\nBut since I don''t
-        have the actual file, I need to create a mock response. The user might expect
-        that after calling file_fetch, the system returns the content. So in the tool_response,
-        I should include the content as a JSON string. Let me check the example again.
-        The user''s example shows that after the tool call, the response is a JSON
-        object with \"content\" as a key. So I need to structure the tool_response
-        accordingly.\n\nWait, the user''s instruction says to first call file_fetch,
-        then repeat the contents. So the steps are: call the function, get the content,
-        then output it. But in the tool call, I just need to call the function. The
-        actual content retrieval is handled by the tool. So the first step is to make
-        the tool call, and then the tool response will provide the content. Then,
-        I can present that content to the user.\n\nSo the first part is to generate
-        the tool call for file_fetch. Then, the tool response would include the content.
-        But since I''m simulating this, I need to create a fake tool response with
-        the content. Let me think about what the content might be. Since it''s a ruby.txt
-        file, maybe it''s some Ruby code or text. For example, maybe it''s a simple
-        \"Hello, Ruby!\" or something similar. I''ll create a sample content for the
-        tool response.\n\nPutting it all together: the first tool call is to file_fetch,
-        then the tool response includes the content. Then, the final answer would
-        be the content repeated. So the steps are:\n\n1. Call file_fetch.\n2. Receive
-        the content in the tool response.\n3. Output the content as the answer.\n\nSo
-        the initial response should be the tool call, then the tool response, then
-        the final answer. But according to the instructions, I need to first output
-        the tool call in the XML tags. Then, after the tool response, provide the
-        final answer. So the user''s message is to call file_fetch and then repeat
-        the contents. Therefore, the assistant''s first step is to make the tool call,
-        then the tool response, then the answer.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"agFDM2LR5LlRhJAuahBq4Kt1vnaNfvR3"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call agFDM2LR5LlRhJAuahBq4Kt1vnaNfvR3:"},{"type":"text","text":"<file
+        so I don''t need to provide any arguments when calling it.\n\nFirst, I need
+        to make sure I call the file_fetch function correctly. Since there are no
+        parameters required, the tool call should just have the name \"file_fetch\"
+        and an empty arguments object. Once I call that function, it should retrieve
+        the contents of ruby.txt. \n\nAfter fetching the file, the next step is to
+        repeat the contents. But wait, how does the system handle the response after
+        the file is fetched? I assume that once the file is retrieved, the contents
+        will be available, and then I can read them and output them back to the user.
+        However, in the current setup, I need to first make the tool call to fetch
+        the file. The user''s instruction says to first call file_fetch and then repeat
+        the contents. \n\nSo, the first part is to generate the tool call. Then, once
+        the file is fetched, I can read its contents and present them. But since I''m
+        simulating the process, I need to make sure that after the tool call, the
+        response includes the file''s content. However, in the context of this problem,
+        I might just need to generate the tool call first. The user''s instruction
+        is to call file_fetch and then repeat the contents, so the assistant''s response
+        should first trigger the tool call, and then once the file is retrieved, the
+        contents are repeated.\n\nBut in the current step, I''m only supposed to generate
+        the tool call. So the correct action here is to call file_fetch with no arguments.
+        Then, once that''s done, the next step would be to read the file''s content
+        and output it. But for this query, the user is asking to first call the function,
+        so the answer should be the tool call. Therefore, I should output the tool_call
+        XML with the file_fetch function and empty arguments.\n","reasoning_content":"Okay,
+        the user wants me to call the file_fetch function to get ruby.txt and then
+        repeat the contents of the file. Let me start by checking the available tools.
+        The tools section says there''s a function called file_fetch that fetches
+        a sample text file named ruby.txt. The parameters for this function are empty,
+        so I don''t need to provide any arguments when calling it.\n\nFirst, I need
+        to make sure I call the file_fetch function correctly. Since there are no
+        parameters required, the tool call should just have the name \"file_fetch\"
+        and an empty arguments object. Once I call that function, it should retrieve
+        the contents of ruby.txt. \n\nAfter fetching the file, the next step is to
+        repeat the contents. But wait, how does the system handle the response after
+        the file is fetched? I assume that once the file is retrieved, the contents
+        will be available, and then I can read them and output them back to the user.
+        However, in the current setup, I need to first make the tool call to fetch
+        the file. The user''s instruction says to first call file_fetch and then repeat
+        the contents. \n\nSo, the first part is to generate the tool call. Then, once
+        the file is fetched, I can read its contents and present them. But since I''m
+        simulating the process, I need to make sure that after the tool call, the
+        response includes the file''s content. However, in the context of this problem,
+        I might just need to generate the tool call first. The user''s instruction
+        is to call file_fetch and then repeat the contents, so the assistant''s response
+        should first trigger the tool call, and then once the file is retrieved, the
+        contents are repeated.\n\nBut in the current step, I''m only supposed to generate
+        the tool call. So the correct action here is to call file_fetch with no arguments.
+        Then, once that''s done, the next step would be to read the file''s content
+        and output it. But for this query, the user is asking to first call the function,
+        so the answer should be the tool call. Therefore, I should output the tool_call
+        XML with the file_fetch function and empty arguments.\n"},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call 4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -194,22 +156,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1789684184626'
-      Resp-Start-Time:
-      - '1789684187277'
-      Date:
-      - Thu, 17 Sep 2026 22:29:44 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Arrive-Time:
+      - '1791422398462'
+      Date:
+      - Thu, 08 Oct 2026 01:19:58 GMT
       Req-Cost-Time:
-      - '2651'
+      - '1330'
+      Resp-Start-Time:
+      - '1791422399793'
       X-Envoy-Upstream-Service-Time:
-      - '2647'
+      - '1327'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -217,27 +179,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        contents of the file ruby.txt are:  \n**Ruby is the best.**","reasoning_content":"Okay,
-        the user asked me to call the file_fetch function to get ruby.txt and then
-        repeat the contents of the attached file. Let me start by checking if I''ve
-        already called the function.\n\nLooking back, the user''s first message included
-        the tools, and I responded by calling file_fetch with empty arguments. The
-        tool response came back with the file named ruby.txt, which has the content
-        \"Ruby is the best.\" as a text/plain file.\n\nNow, the user''s latest message
-        shows the attachment from the tool call. The file name is ruby.txt, and the
-        content is \"Ruby is the best.\" So, the next step is to repeat the contents
-        of this file. Since the file is already fetched, I don''t need to call any
-        more functions. I should just output the content provided in the tool response.
-        \n\nWait, the user might be expecting me to read the file''s content and then
-        echo it back. But in the tool response, the content is already given as \"Ruby
-        is the best.\" So I just need to present that content as the answer. Let me
-        make sure there''s no additional processing needed. The user didn''t ask for
-        any specific formatting, just to repeat the contents. Therefore, the correct
-        response is to state the content of the file as is. \n\nI should check if
-        there''s any other information in the tool response that I might have missed.
-        The MIME type is text/plain, which confirms it''s a plain text file. The content
-        is straightforward. No need for further actions. Just output the content in
-        a clear manner. Alright, I''ll proceed to present the content of ruby.txt
-        to the user.\n"}}],"created":1789684187,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":353,"prompt_tokens":253,"total_tokens":606,"prompt_tokens_details":{"cached_tokens":166}},"id":"chatcmpl-Z2aEOWPLmlgM6PiivphBnj5pVq9XPl7v","timings":{"cache_n":166,"prompt_n":87,"prompt_ms":25.701,"prompt_per_token_ms":0.2954137931034483,"prompt_per_second":3385.082292517801,"predicted_n":353,"predicted_ms":2600.335,"predicted_per_token_ms":7.387315340909091,"predicted_per_second":135.36717384490845}}'
-  recorded_at: Thu, 17 Sep 2026 22:29:47 GMT
+        contents of the attached file are:  \n**Ruby is the best.**","reasoning_content":"Okay,
+        let me see. The user asked to call file_fetch to get ruby.txt and then repeat
+        the contents. So first, I called the file_fetch function, which didn''t need
+        any arguments. The response came back with the file attached, and the content
+        is \"Ruby is the best.\" Now, the user wants me to repeat the contents of
+        the file. Since the file is already fetched, I just need to output the text
+        from the file. I should check if there''s any specific way the user wants
+        the content repeated, but since they just said \"repeat the contents,\" probably
+        just echoing the text is enough. Let me make sure there''s no additional processing
+        needed. The text is straightforward, so I''ll present it as is.\n"}}],"created":1791422399,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":170,"prompt_tokens":254,"total_tokens":424,"prompt_tokens_details":{"cached_tokens":166}},"id":"chatcmpl-ImDeValgd0Tp3aNgd6UQCKric78NIfKw","timings":{"cache_n":166,"prompt_n":88,"prompt_ms":26.133,"prompt_per_token_ms":0.2969659090909091,"prompt_per_second":3367.389890177171,"predicted_n":170,"predicted_ms":1284.058,"predicted_per_token_ms":7.597976331360947,"predicted_per_second":131.61399251435682}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:59 GMT
 recorded_with: VCR 6.4.0

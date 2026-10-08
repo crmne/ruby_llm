@@ -27,22 +27,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '1801'
-      Resp-Start-Time:
-      - '1789683579087'
-      X-Envoy-Upstream-Service-Time:
-      - '1798'
       Date:
-      - Thu, 17 Sep 2026 22:19:36 GMT
-      Req-Arrive-Time:
-      - '1789683577286'
-      Server:
-      - istio-envoy
+      - Thu, 08 Oct 2026 01:19:52 GMT
       Access-Control-Allow-Origin:
       - ''
+      Req-Arrive-Time:
+      - '1791422392797'
+      X-Envoy-Upstream-Service-Time:
+      - '2097'
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '2101'
+      Resp-Start-Time:
+      - '1791422394898'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -51,16 +51,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants me to call the object_params function with a window starting
-        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.\n\nThe
-        function requires a \"window\" object with \"start\" and \"end\" as required
-        fields. Both are ISO dates. The user provided exactly those dates, so I need
-        to structure the arguments correctly.\n\nI should format the JSON with the
-        window object containing start and end. No additional properties allowed,
-        so I''ll make sure not to include anything else. The function name is object_params,
-        so the tool_call should have that name and the arguments as specified.\n\nLet
-        me double-check the dates are in the right format. They are in YYYY-MM-DD,
-        which matches the ISO format. Alright, that''s all. Time to put it into the
-        tool_call structure.\n","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"id":"BegIRsTInNuLekEWAQ0ldjVm4sv2ohZJ"}]}}],"created":1789683579,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":236,"prompt_tokens":248,"total_tokens":484,"prompt_tokens_details":{"cached_tokens":247}},"id":"chatcmpl-WIxvWNkYvOBLWeBycKxDKI6DNJCprWN7","timings":{"cache_n":247,"prompt_n":1,"prompt_ms":8.132,"prompt_per_token_ms":8.132,"prompt_per_second":122.97097884899165,"predicted_n":236,"predicted_ms":1714.633,"predicted_per_token_ms":7.296310638297872,"predicted_per_second":137.05556815948367}}'
-  recorded_at: Thu, 17 Sep 2026 22:19:39 GMT
+        on 2025-01-01 and ending on 2025-01-02. Let me check the function definition
+        again to make sure I get the parameters right.\n\nThe function requires a
+        \"window\" object with \"start\" and \"end\" as required fields. Both are
+        strings in ISO format. The user provided exactly those dates, so I just need
+        to structure the JSON correctly. \n\nI need to make sure there are no additional
+        properties and that the dates are in the correct format. The start is \"2025-01-01\"
+        and end is \"2025-01-02\". So the arguments should be {\"window\": {\"start\":
+        \"2025-01-01\", \"end\": \"2025-01-02\"}}. \n\nI''ll format the tool_call
+        accordingly and include the result as specified. Let me double-check everything
+        before sending.\n","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"id":"NUr6Gq8eYVyVblAmgykE6ySl4EdXMp9H"}]}}],"created":1791422394,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":268,"prompt_tokens":248,"total_tokens":516,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-bisLfWPmesmWtWgCLaePS6RIx7SWtPCi","timings":{"cache_n":51,"prompt_n":197,"prompt_ms":48.301,"prompt_per_token_ms":0.24518274111675128,"prompt_per_second":4078.590505372559,"predicted_n":268,"predicted_ms":2032.247,"predicted_per_token_ms":7.6114119850187265,"predicted_per_second":131.38166768114309}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:54 GMT
 recorded_with: VCR 6.4.0

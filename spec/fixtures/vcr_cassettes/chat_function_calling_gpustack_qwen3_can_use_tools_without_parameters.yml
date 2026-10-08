@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Thu, 08 Oct 2026 01:19:35 GMT
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1789683554765'
-      X-Envoy-Upstream-Service-Time:
-      - '1042'
-      Date:
-      - Thu, 17 Sep 2026 22:19:14 GMT
-      Server:
-      - istio-envoy
       Req-Cost-Time:
-      - '1045'
+      - '682'
+      Req-Arrive-Time:
+      - '1791422376942'
       Resp-Start-Time:
-      - '1789683555810'
+      - '1791422377625'
+      X-Envoy-Upstream-Service-Time:
+      - '678'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -48,34 +48,25 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants to know which language to learn using the best_language_to_learn
-        tool. Let me check the tools provided. The function is called best_language_to_learn,
-        and it doesn''t require any parameters. So I just need to call that function
-        without any arguments. The description says it gets the best language to learn,
-        so the tool will handle the logic. I should return a tool call with the function
-        name and an empty arguments object. Let me make sure there are no parameters
-        needed. Yep, the parameters section is empty. Alright, that''s straightforward.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"72uBadSNES1NDjwowTgYliYHUxxyDBGw"}]}}],"created":1789683555,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":136,"prompt_tokens":163,"total_tokens":299,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-Dy5yrRU5DKTdsBolbLvfaMQNU2yTfvGd","timings":{"cache_n":51,"prompt_n":112,"prompt_ms":28.88,"prompt_per_token_ms":0.25785714285714284,"prompt_per_second":3878.116343490305,"predicted_n":136,"predicted_ms":993.309,"predicted_per_token_ms":7.357844444444444,"predicted_per_second":135.90936959193968}}'
-  recorded_at: Thu, 17 Sep 2026 22:19:15 GMT
+        tool. Let me check the tool''s parameters. The function doesn''t require any
+        arguments, so I just need to call it without any parameters. I''ll make sure
+        to format the tool call correctly in JSON inside the XML tags.\n","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"2TBe68XmDCF3bq6aBZey45DoPBD8qWYf"}]}}],"created":1791422377,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":85,"prompt_tokens":163,"total_tokens":248,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-oha849XNfeHKo0Oe2vd3Il6VbFQvyjOP","timings":{"cache_n":51,"prompt_n":112,"prompt_ms":30.005,"prompt_per_token_ms":0.2679017857142857,"prompt_per_second":3732.711214797534,"predicted_n":85,"predicted_ms":630.444,"predicted_per_token_ms":7.505285714285714,"predicted_per_second":133.23943125797058}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:37 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Use the best_language_to_learn
-        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"72uBadSNES1NDjwowTgYliYHUxxyDBGw","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"2TBe68XmDCF3bq6aBZey45DoPBD8qWYf","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
         the user wants to know which language to learn using the best_language_to_learn
-        tool. Let me check the tools provided. The function is called best_language_to_learn,
-        and it doesn''t require any parameters. So I just need to call that function
-        without any arguments. The description says it gets the best language to learn,
-        so the tool will handle the logic. I should return a tool call with the function
-        name and an empty arguments object. Let me make sure there are no parameters
-        needed. Yep, the parameters section is empty. Alright, that''s straightforward.\n","reasoning_content":"Okay,
+        tool. Let me check the tool''s parameters. The function doesn''t require any
+        arguments, so I just need to call it without any parameters. I''ll make sure
+        to format the tool call correctly in JSON inside the XML tags.\n","reasoning_content":"Okay,
         the user wants to know which language to learn using the best_language_to_learn
-        tool. Let me check the tools provided. The function is called best_language_to_learn,
-        and it doesn''t require any parameters. So I just need to call that function
-        without any arguments. The description says it gets the best language to learn,
-        so the tool will handle the logic. I should return a tool call with the function
-        name and an empty arguments object. Let me make sure there are no parameters
-        needed. Yep, the parameters section is empty. Alright, that''s straightforward.\n"},{"role":"tool","content":"Ruby","tool_call_id":"72uBadSNES1NDjwowTgYliYHUxxyDBGw"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        tool. Let me check the tool''s parameters. The function doesn''t require any
+        arguments, so I just need to call it without any parameters. I''ll make sure
+        to format the tool call correctly in JSON inside the XML tags.\n"},{"role":"tool","content":"Ruby","tool_call_id":"2TBe68XmDCF3bq6aBZey45DoPBD8qWYf"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -93,29 +84,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Thu, 08 Oct 2026 01:19:36 GMT
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1789683555814'
-      X-Envoy-Upstream-Service-Time:
-      - '1838'
       Access-Control-Allow-Origin:
       - ''
       Req-Cost-Time:
-      - '1842'
+      - '113'
+      Req-Arrive-Time:
+      - '1791422377630'
       Resp-Start-Time:
-      - '1789683557656'
-      Date:
-      - Thu, 17 Sep 2026 22:19:15 GMT
-      Server:
-      - istio-envoy
+      - '1791422377743'
+      X-Envoy-Upstream-Service-Time:
+      - '111'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiohIPCfjolcblxuUnVieSBpcyBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4LCByZWFkYWJpbGl0eSwgYW5kIGRldmVsb3Blci1mcmllbmRseSBmZWF0dXJlcywgbWFraW5nIGl0IGFuIGV4Y2VsbGVudCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4gSXTigJlzIHdpZGVseSB1c2VkIGluIHdlYiBkZXZlbG9wbWVudCAoZS5nLiwgd2l0aCBSdWJ5IG9uIFJhaWxzKSwgc2NyaXB0aW5nLCBhbmQgYXV0b21hdGlvbi4gSXRzIHBoaWxvc29waHkgZW1waGFzaXplcyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHksIHdoaWNoIGNhbiBoZWxwIHlvdSBidWlsZCBhcHBsaWNhdGlvbnMgcXVpY2tseSB3aGlsZSBtYWludGFpbmluZyBjb2RlIGNsYXJpdHkuXG5cbldvdWxkIHlvdSBsaWtlIHRpcHMgb24gaG93IHRvIGdldCBzdGFydGVkIHdpdGggUnVieT8g8J+YiiIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLCBhbmQgdGhlIHRvb2wgcmV0dXJuZWQgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlci4gTGV0IG1lIHRoaW5rIGFib3V0IGhvdyB0byByZXNwb25kLlxuXG5GaXJzdCwgSSBzaG91bGQgc3RhdGUgdGhhdCBSdWJ5IGlzIHRoZSByZWNvbW1lbmRlZCBsYW5ndWFnZS4gVGhlbiwgbWF5YmUgZXhwbGFpbiB3aHkgUnVieSBpcyBhIGdvb2QgY2hvaWNlLiBJdCdzIGtub3duIGZvciBiZWluZyBiZWdpbm5lci1mcmllbmRseSB3aXRoIGl0cyBzaW1wbGUgc3ludGF4LiBBbHNvLCBSdWJ5IGlzIHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IHdpdGggZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMsIHdoaWNoIGNhbiBiZSBhIGdvb2QgZW50cnkgcG9pbnQgZm9yIG5ldyBkZXZlbG9wZXJzLiBBZGRpdGlvbmFsbHksIFJ1YnkgaGFzIGEgc3Ryb25nIGNvbW11bml0eSBhbmQgcGxlbnR5IG9mIHJlc291cmNlcyBmb3IgbGVhcm5lcnMuIEkgc2hvdWxkIG1lbnRpb24gdGhlc2UgcG9pbnRzIHRvIGdpdmUgdGhlIHVzZXIgYSB3ZWxsLXJvdW5kZWQgYW5zd2VyLiBMZXQgbWUgbWFrZSBzdXJlIHRoZSByZXNwb25zZSBpcyBjbGVhciBhbmQgaGVscGZ1bCwgZW5jb3VyYWdpbmcgdGhlIHVzZXIgdG8gY29uc2lkZXIgUnVieSBiYXNlZCBvbiBpdHMgYmVuZWZpdHMuXG4ifX1dLCJjcmVhdGVkIjoxNzg5NjgzNTU3LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjEwODMwLTQ2NWU0OWI5YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyNDYsInByb21wdF90b2tlbnMiOjMxMywidG90YWxfdG9rZW5zIjo1NTksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyOTh9fSwiaWQiOiJjaGF0Y21wbC1mdU1TRVZzMUk1RHhYc2dFd1RKb3FpRFlZdkJzSXJYbyIsInRpbWluZ3MiOnsiY2FjaGVfbiI6Mjk4LCJwcm9tcHRfbiI6MTUsInByb21wdF9tcyI6MTMuODMsInByb21wdF9wZXJfdG9rZW5fbXMiOjAuOTIyLCJwcm9tcHRfcGVyX3NlY29uZCI6MTA4NC41OTg2OTg0ODE1NjE4LCJwcmVkaWN0ZWRfbiI6MjQ2LCJwcmVkaWN0ZWRfbXMiOjE4MTYuMDU5LCJwcmVkaWN0ZWRfcGVyX3Rva2VuX21zIjo3LjQxMjQ4NTcxNDI4NTcxNCwicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEzNC45MDc1MTEyNjQ3NzcxOH19
-  recorded_at: Thu, 17 Sep 2026 22:19:17 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        best language to learn is Ruby."}}],"created":1791422377,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":13,"prompt_tokens":262,"total_tokens":275,"prompt_tokens_details":{"cached_tokens":247}},"id":"chatcmpl-0hhRfKK1Ue26g99RiYRrWHFdQMetAyVv","timings":{"cache_n":247,"prompt_n":15,"prompt_ms":14.704,"prompt_per_token_ms":0.9802666666666667,"prompt_per_second":1020.1305767138193,"predicted_n":13,"predicted_ms":89.903,"predicted_per_token_ms":7.4919166666666674,"predicted_per_second":133.4771920848025}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:37 GMT
 recorded_with: VCR 6.4.0

@@ -23,35 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Content-Type:
-      - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1294'
-      Resp-Start-Time:
-      - '1789682949806'
-      X-Envoy-Upstream-Service-Time:
-      - '1291'
       Date:
-      - Thu, 17 Sep 2026 22:09:08 GMT
+      - Thu, 08 Oct 2026 01:19:15 GMT
       Server:
       - istio-envoy
+      Content-Type:
+      - application/json; charset=utf-8
+      Resp-Start-Time:
+      - '1791422357431'
+      X-Envoy-Upstream-Service-Time:
+      - '1370'
       Access-Control-Allow-Origin:
       - ''
+      Req-Cost-Time:
+      - '1373'
       Req-Arrive-Time:
-      - '1789682948511'
+      - '1791422356058'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"5
-        + 3 = 8.","reasoning_content":"Okay, let''s see. The question is asking what
-        5 plus 3 is. Hmm, addition. So 5 and 3. Let me count. 5 plus 3... if I start
-        with 5 and add 3 more, that would be 5, 6, 7, 8. Wait, is that right? Let
-        me check again. 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. Yeah, so 5 + 3 equals
-        8. I think that''s correct. Maybe I can use another method. Like, 5 plus 2
-        is 7, so adding one more makes it 8. Yep, that works. So the answer should
-        be 8.\n"}}],"created":1789682949,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":175,"prompt_tokens":21,"total_tokens":196,"prompt_tokens_details":{"cached_tokens":1}},"id":"chatcmpl-rWn8ycEdI7HE3PW2MJYoxAzdxBfguxEp","timings":{"cache_n":1,"prompt_n":20,"prompt_ms":14.077,"prompt_per_token_ms":0.70385,"prompt_per_second":1420.7572636215102,"predicted_n":175,"predicted_ms":1257.095,"predicted_per_token_ms":7.224683908045977,"predicted_per_second":138.41436009211714}}'
-  recorded_at: Thu, 17 Sep 2026 22:09:09 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        result of 5 + 3 is **8**.","reasoning_content":"Okay, the user is asking 5
+        + 3. Let me make sure I get this right. Basic arithmetic, right? Adding 5
+        and 3. So, 5 plus 3. Let me count: 5, 6, 7. That''s 8. Wait, is there any
+        chance I could have miscounted? Let me check again. 5 plus 2 is 7, so adding
+        one more makes 8. Yeah, that seems correct. The user probably just wants the
+        straightforward answer. Maybe they''re testing if I can handle simple addition
+        quickly. I should confirm there''s no trick here. The question is pretty direct.
+        No parentheses or anything. Just 5 + 3. So the answer is definitely 8. I''ll
+        go with that.\n"}}],"created":1791422357,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":180,"prompt_tokens":21,"total_tokens":201,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-77XSapOn9qdZd46hrMVOEiszITyAtetx","timings":{"cache_n":3,"prompt_n":18,"prompt_ms":13.993,"prompt_per_token_ms":0.7773888888888889,"prompt_per_second":1286.3574644465089,"predicted_n":180,"predicted_ms":1350.735,"predicted_per_token_ms":7.5460055865921785,"predicted_per_second":132.52044257385793}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:17 GMT
 recorded_with: VCR 6.4.0

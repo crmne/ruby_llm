@@ -25,22 +25,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Resp-Start-Time:
+      - '1791422389848'
+      X-Envoy-Upstream-Service-Time:
+      - '1266'
+      Req-Cost-Time:
+      - '1269'
+      Req-Arrive-Time:
+      - '1791422388578'
+      Date:
+      - Thu, 08 Oct 2026 01:19:48 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '915'
-      Req-Arrive-Time:
-      - '1789683571953'
-      Resp-Start-Time:
-      - '1789683572869'
-      X-Envoy-Upstream-Service-Time:
-      - '912'
-      Date:
-      - Thu, 17 Sep 2026 22:19:31 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -48,12 +48,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
-        and combine them. Let me check the function definition. The function takes
-        an array of strings called tags. So I need to structure the tool call with
-        those tags. I''ll make sure the JSON is correctly formatted with the tags
-        as an array. No other parameters are needed since the function only requires
-        tags. Alright, that should do it.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"},"id":"G8v3TjuXRak4VZiiptYngTUGpXRRTiWv"}]}}],"created":1789683572,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":117,"prompt_tokens":189,"total_tokens":306,"prompt_tokens_details":{"cached_tokens":188}},"id":"chatcmpl-b9ctiI3vqDxzVi3Uv5dNhGPN5WLqNiVC","timings":{"cache_n":188,"prompt_n":1,"prompt_ms":8.404,"prompt_per_token_ms":8.404,"prompt_per_second":118.99095668729177,"predicted_n":117,"predicted_ms":847.876,"predicted_per_token_ms":7.309275862068965,"predicted_per_second":136.81245842552448}}'
-  recorded_at: Thu, 17 Sep 2026 22:19:32 GMT
+        the user wants me to call the array_params function with the tags [\"red\",
+        \"blue\"] and then combine them. Let me check the function''s parameters.
+        The function requires an array of strings called \"tags\". So I need to structure
+        the tool call with those tags. I''ll make sure the JSON is correctly formatted
+        with the tags in an array. Then, after calling the function, I should present
+        the combined tags as the result. Let me verify that the function doesn''t
+        have any other required parameters. No, the required is just \"tags\" and
+        additionalProperties is false, so no extra fields. Alright, the tool call
+        should be straightforward.\n","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"},"id":"5lBXoch6HsF9Zl1ztF7OazbGKS2AM6cu"}]}}],"created":1791422389,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":161,"prompt_tokens":189,"total_tokens":350,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-PzZF7P98iQ0cMLJqZ6qlQmRiwqFaNgQu","timings":{"cache_n":3,"prompt_n":186,"prompt_ms":42.589,"prompt_per_token_ms":0.2289731182795699,"prompt_per_second":4367.324896099933,"predicted_n":161,"predicted_ms":1208.446,"predicted_per_token_ms":7.552787499999999,"predicted_per_second":132.4014478098318}}'
+  recorded_at: Thu, 08 Oct 2026 01:19:49 GMT
 recorded_with: VCR 6.4.0

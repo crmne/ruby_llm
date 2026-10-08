@@ -26,22 +26,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Resp-Start-Time:
+      - '1791422402350'
       Date:
-      - Thu, 17 Sep 2026 22:27:33 GMT
+      - Thu, 08 Oct 2026 01:20:01 GMT
+      Server:
+      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '1093'
-      Req-Arrive-Time:
-      - '1789684053708'
-      Server:
-      - istio-envoy
+      - '1271'
+      X-Envoy-Upstream-Service-Time:
+      - '1267'
       Access-Control-Allow-Origin:
       - ''
-      Resp-Start-Time:
-      - '1789684054802'
-      X-Envoy-Upstream-Service-Time:
-      - '1090'
+      Req-Arrive-Time:
+      - '1791422401078'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -51,10 +51,12 @@ http_interactions:
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"<tool_call>\n{\"name\":
         \"weather\", \"arguments\": {\"latitude\": \"52.5200\", \"longitude\": \"13.4050\"}}\n</tool_call>","reasoning_content":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 and 13.4050. I need to use the weather function here. Let me check
-        the parameters required. The function needs latitude and longitude as strings.
-        The user has given both, so I should format them into the function call. Make
-        sure to put them in the correct order and as strings. Alright, that''s all
-        I need. Let me structure the tool call.\n"}}],"created":1789684054,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":145,"prompt_tokens":231,"total_tokens":376,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-qXO9MTIswAk2H1h6bBGsHICYfy0e1N2F","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.534,"prompt_per_token_ms":8.534,"prompt_per_second":117.17834544176235,"predicted_n":145,"predicted_ms":1052.801,"predicted_per_token_ms":7.311118055555555,"predicted_per_second":136.77798558322039}}'
-  recorded_at: Thu, 17 Sep 2026 22:27:34 GMT
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\" and the values
+        are the strings provided. No other parameters are needed. Let me structure
+        the tool call accordingly.\n"}}],"created":1791422402,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":164,"prompt_tokens":231,"total_tokens":395,"prompt_tokens_details":{"cached_tokens":230}},"id":"chatcmpl-A7jFKShVhm6kFrjcMs8sD8Os6L4Rz5QM","timings":{"cache_n":230,"prompt_n":1,"prompt_ms":8.451,"prompt_per_token_ms":8.451,"prompt_per_second":118.32919181161992,"predicted_n":164,"predicted_ms":1239.485,"predicted_per_token_ms":7.604202453987729,"predicted_per_second":131.5062304102107}}'
+  recorded_at: Thu, 08 Oct 2026 01:20:02 GMT
 recorded_with: VCR 6.4.0

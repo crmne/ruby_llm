@@ -41,7 +41,6 @@ bundle add ruby_llm --version 2.1.0
 - **Some cost estimates and exported costs remain incomplete.** One-hour Anthropic cache writes use the shorter cache-write price (#1042). Exporting and restoring a plain-Ruby message can lose a provider-reported cost (#1045). Rails retains its stored billed amount.
 - **Prompt-cache reuse can fall after reloads or mixed system instructions.** PostgreSQL/MySQL can reorder persisted tool arguments (#1040), and Responses can reorder cache-marked and unmarked system messages (#1039).
 - **OpenRouter streamed citations are missing.** The non-streamed response retains them (#1043).
-- **Gemini's dedicated transcription endpoint currently rejects requests.** The service returns "Thinking is not enabled for this model" even without thinking options. The Vertex AI transcription path works. See the [upstream report](https://discuss.ai.google.dev/t/gemini-3-5-transcribe-returns-400-thinking-is-not-enabled-for-this-model-without-thinking-configuration/187295).
 - **MCP Apps need a UI supplied by your application.** RubyLLM exposes app resources and retained results, not a browser host. The conformance baseline also excludes the older-server elicitation-defaults scenario.
 - **Provider access still determines availability.** Hetzner Inference is experimental, and hosted tools, media, and judgments depend on the selected service and account.
 

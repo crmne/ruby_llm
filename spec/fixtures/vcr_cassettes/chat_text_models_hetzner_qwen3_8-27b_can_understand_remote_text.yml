@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,44 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Thu, 24 Sep 2026 07:32:43 GMT
+      - Fri, 02 Oct 2026 22:02:41 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6ab4d21b-9c6"
+      - W/"6ac02a01-9c6"
       Expires:
-      - Thu, 24 Sep 2026 18:46:45 GMT
+      - Thu, 08 Oct 2026 01:20:35 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 853A:247741:18F255:19148A:6AB56DBC
+      - 16D0:572D8:1F50B8:1FD126:6AC6ED8A
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Thu, 24 Sep 2026 18:36:45 GMT
+      - Thu, 08 Oct 2026 01:16:51 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '221'
       X-Served-By:
-      - cache-ber1080046-BER
+      - cache-ber1080042-BER
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1790275005.942594,VS0,VE111
+      - S1791422211.259403,VS0,VE0
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 26ee95b2945d57b569eb60cb60f5fcc6beeeae68
+      - 5db73da1002bb22d6785ce069ad00a708d23fb27
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 24 Sep 2026 18:36:45 GMT
+  recorded_at: Thu, 08 Oct 2026 01:16:51 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/api/v1/chat/completions
@@ -142,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.4
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -157,11 +155,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 24 Sep 2026 18:37:00 GMT
+      - Thu, 08 Oct 2026 01:17:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1676'
+      - '2273'
       Connection:
       - keep-alive
       Vary:
@@ -175,6 +173,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjA4LCJjb21wbGV0aW9uX3Rva2VucyI6MjE0LCJ0b3RhbF90b2tlbnMiOjgyMiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo2Nn0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjcmVhdGVkX2NhY2hlX3Rva2VucyI6MCwibXVsdGltb2RhbF90b2tlbnMiOm51bGx9fSwiY2hvaWNlcyI6W3sibWVzc2FnZSI6eyJjb250ZW50IjoiXG5cbkl04oCZcyB0aGUgUnVieSBsaWNlbnNlL2NvcHlyaWdodCBub3RpY2UuXG5cblRoZSBmaWxlIHNheXM6XG5cbi0gUnVieSBpcyBjb3B5cmlnaHRlZCBmcmVlIHNvZnR3YXJlIGJ5IFl1a2loaXJvIE1hdHN1bW90by5cbi0gWW91IG1heSByZWRpc3RyaWJ1dGUgYW5kL29yIG1vZGlmeSBpdCB1bmRlciBlaXRoZXI6XG4gIC0gdGhlIDItY2xhdXNlIEJTREwsIG9yXG4gIC0gdGhlIGN1c3RvbSBjb25kaXRpb25zIGxpc3RlZCBpbiB0aGUgZmlsZS5cbi0gVGhlIGxpc3RlZCBjb25kaXRpb25zIGFsbG93OlxuICAtIGNvcHlpbmcgdGhlIHNvdXJjZSBjb2RlXG4gIC0gbW9kaWZ5aW5nIGl0XG4gIC0gZGlzdHJpYnV0aW5nIGJpbmFyaWVzL29iamVjdCBjb2RlXG4gIC0gaW5jbHVkaW5nIHBhcnRzIGluIG90aGVyIHNvZnR3YXJlXG4tIFNvbWUgZmlsZXMgaW4gUnVieSBhcmUgbm90IHVuZGVyIHRoZXNlIHRlcm1zIGFuZCBoYXZlIHNlcGFyYXRlIGxpY2Vuc2VzLlxuLSBVc2VyIHNjcmlwdHMgYW5kIGRhdGEgcHJvZHVjZWQgYnkgUnVieSBiZWxvbmcgdG8gdGhlIHVzZXIsIG5vdCBSdWJ5LlxuLSBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQg4oCcQVMgSVPigJ0gd2l0aCBubyB3YXJyYW50aWVzLiIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IldlIG5lZWQgYW5zd2VyIHVzZXIncyBxdWVzdGlvbjogXCJXaGF0J3MgaW4gdGhpcyBmaWxlP1wiIFRoZXkgcHJvdmlkZWQgZmlsZSBjb250ZW50LiBOZWVkIHJlc3BvbmQgbGlrZWx5IHN1bW1hcml6ZTogSXQncyB0aGUgUnVieSBsaWNlbnNlIHRleHQsIGNvcHlyaWdodCBieSBZdWtpaGlybyBNYXRzdW1vdG8sIHJlZGlzdHJpYnV0aW9uL21vZGlmaWNhdGlvbiB0ZXJtcywgYWx0ZXJuYXRpdmVzIDItY2xhdXNlIEJTREwgb3IgbGlzdGVkIGNvbmRpdGlvbnMsIGRpc2NsYWltZXIuIEtlZXAgY29uY2lzZS4gRmluYWwgb25seSBhbnN3ZXIuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtZjQ5MGQ3MzAtODAwNS00ZDQ4LWJjMDUtMGI3NDUyODQ3Y2FlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5MDI3NTAwNSwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
-  recorded_at: Thu, 24 Sep 2026 18:37:00 GMT
+        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjA4LCJjb21wbGV0aW9uX3Rva2VucyI6MzEyLCJ0b3RhbF90b2tlbnMiOjkyMCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMTN9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5UaGlzIGZpbGUgaXMgYSBsaWNlbnNlL2NvcHlyaWdodCBub3RpY2UgZm9yIFJ1YnkuXG5cbkl0IHNheXM6XG5cbi0gUnVieSBpcyBjb3B5cmlnaHRlZCBmcmVlIHNvZnR3YXJlIGJ5IFl1a2loaXJvIE1hdHN1bW90by5cbi0gWW91IGNhbiByZWRpc3RyaWJ1dGUgYW5kL29yIG1vZGlmeSBpdCB1bmRlciB0aGUgMi1jbGF1c2UgQlNETCwgb3IgdW5kZXIgdGhlIGxpc3RlZCBjb25kaXRpb25zLlxuLSBZb3UgbWF5IGNvcHkgdGhlIHNvdXJjZSBmcmVlbHkgaWYgY29weXJpZ2h0IG5vdGljZXMgYXJlIHByZXNlcnZlZC5cbi0gWW91IG1heSBtb2RpZnkgaXQgaWYgeW91IG1lZXQgYXQgbGVhc3Qgb25lIGNvbmRpdGlvbiwgc3VjaCBhcyByZWxlYXNpbmcgbW9kaWZpY2F0aW9ucyBmcmVlbHksIGtlZXBpbmcgdGhlbSBpbnRlcm5hbCwgdXNpbmcgbm9uLXN0YW5kYXJkIG5hbWVzIGZvciBiaW5hcmllcywgb3IgYXJyYW5naW5nIGRpc3RyaWJ1dGlvbiB3aXRoIHRoZSBhdXRob3IuXG4tIFlvdSBtYXkgZGlzdHJpYnV0ZSBiaW5hcnkvb2JqZWN0IGNvZGUgaWYgeW91IG1lZXQgYXQgbGVhc3Qgb25lIGNvbmRpdGlvbiwgc3VjaCBhcyBwcm92aWRpbmcgaW5zdHJ1Y3Rpb25zIGZvciBvYnRhaW5pbmcgdGhlIG9yaWdpbmFsIGRpc3RyaWJ1dGlvbiwgaW5jbHVkaW5nIHNvdXJjZSwgdXNpbmcgbm9uLXN0YW5kYXJkIG5hbWVzLCBvciBhcnJhbmdpbmcgZGlzdHJpYnV0aW9uLlxuLSBZb3UgbWF5IGluY29ycG9yYXRlIHBhcnRzIG9mIFJ1YnkgaW50byBvdGhlciBzb2Z0d2FyZSwgYnV0IHNvbWUgZmlsZXMgbWF5IGhhdmUgZGlmZmVyZW50IGxpY2Vuc2VzLCBsaXN0ZWQgaW4gYExFR0FMYC5cbi0gVXNlci1nZW5lcmF0ZWQgc2NyaXB0cy9vdXRwdXQgYXJlIG5vdCBhdXRvbWF0aWNhbGx5IHVuZGVyIFJ1YnnigJlzIGNvcHlyaWdodC5cbi0gVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIOKAnEFTIElT4oCdIHdpdGhvdXQgd2FycmFudHkuIiwicm9sZSI6ImFzc2lzdGFudCIsInJlZnVzYWwiOm51bGwsImFubm90YXRpb25zIjpudWxsLCJhdWRpbyI6bnVsbCwiZnVuY3Rpb25fY2FsbCI6bnVsbCwicmVhc29uaW5nIjoiV2UgbmVlZCB0byBhbnN3ZXIgdXNlcidzIHF1ZXN0aW9uOiBcIldoYXQncyBpbiB0aGlzIGZpbGU/XCIgVGhleSBwcm92aWRlZCBmaWxlIG5hbWUgbGljZW5zZS50eHQgbWltZV90eXBlIHRleHQvcGxhaW4gYW5kIGNvbnRlbnQuIE5lZWQgbGlrZWx5IHN1bW1hcml6ZS4gTmVlZCBmaW5hbCBhbnN3ZXIgY29uY2lzZSBidXQgaGVscGZ1bC4gQ291bGQgc2F5IGl0J3MgUnVieSdzIGxpY2Vuc2UvY29weXJpZ2h0IG5vdGljZTogY29weXJpZ2h0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLCBmcmVlIHNvZnR3YXJlLCByZWRpc3RyaWJ1dGFibGUvbW9kaWZpYWJsZSB1bmRlciAyLWNsYXVzZSBCU0RMIG9yIGxpc3RlZCBjb25kaXRpb25zOyB0ZXJtcyBmb3IgY29weWluZywgbW9kaWZ5aW5nLCBkaXN0cmlidXRpbmcsIGluY29ycG9yYXRpbmcsIHVzZXIgc2NyaXB0cywgd2FycmFudHkgZGlzY2xhaW1lci4gTWF5YmUgbWVudGlvbiBMRUdBTCBmaWxlIGZvciB0aGlyZC1wYXJ0eSBmaWxlcy4gRW5zdXJlIG5vIGhpZGRlbiBpc3N1ZXMuIEZpbmFsIGluIEVuZ2xpc2guXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtYzYzY2MxNTktYzJiNy00ZTI4LWJjMWItYjFlODg2MjNjMWUxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5MTQyMjIxMSwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
+  recorded_at: Thu, 08 Oct 2026 01:17:01 GMT
 recorded_with: VCR 6.4.0

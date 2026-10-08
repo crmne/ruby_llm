@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Resp-Start-Time:
-      - '1789682816867'
-      Req-Cost-Time:
-      - '1426'
-      X-Envoy-Upstream-Service-Time:
-      - '1415'
       Date:
-      - Thu, 17 Sep 2026 22:06:55 GMT
-      Server:
-      - istio-envoy
+      - Thu, 08 Oct 2026 01:18:39 GMT
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
+      Resp-Start-Time:
+      - '1791422321344'
+      X-Envoy-Upstream-Service-Time:
+      - '1381'
+      Server:
+      - istio-envoy
+      Req-Cost-Time:
+      - '1384'
       Req-Arrive-Time:
-      - '1789682815441'
+      - '1791422319960'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -47,18 +47,18 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        has a MIME type of `text/plain`, indicating it''s a plain text file. There
-        are no additional contents or hidden data in the file.","reasoning_content":"Okay,
-        the user is asking what''s in the file named ruby.txt. Let me check the information
-        provided. The file has a mime type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content beyond what''s listed. Since the user might be testing
-        if I can parse the file info correctly, I need to make sure I''m not missing
-        any hidden details. The answer should state the content clearly and mention
-        the mime type as well. Let me put that together in a straightforward way.\n"}}],"created":1789682816,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":187,"prompt_tokens":34,"total_tokens":221,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-3nC8tSHBsGW4E4bIuCgmkYgiJOnt6BLA","timings":{"cache_n":3,"prompt_n":31,"prompt_ms":37.004,"prompt_per_token_ms":1.1936774193548387,"prompt_per_second":837.7472705653444,"predicted_n":187,"predicted_ms":1369.884,"predicted_per_token_ms":7.364967741935484,"predicted_per_second":135.77791988226738}}'
-  recorded_at: Thu, 17 Sep 2026 22:06:56 GMT
+        file `ruby.txt` contains the following plain text:\n\n```\nRuby is the best.\n```\n\nThe
+        MIME type `text/plain` confirms it is a simple text file with no formatting
+        or special encoding.","reasoning_content":"Okay, the user is asking what''s
+        in the file named ruby.txt. Let me check the information provided. The file
+        has a mime type of text/plain, which means it''s a plain text file. The content
+        given is \"Ruby is the best.\" So, the file contains that exact sentence.
+        I should confirm that there''s no additional content beyond what''s listed.
+        Since the user provided the file details directly, there''s no need to look
+        elsewhere. The answer should state the content clearly and mention the mime
+        type to confirm it''s a plain text file. I''ll make sure to present it in
+        a straightforward way without any extra information.\n"}}],"created":1791422321,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":175,"prompt_tokens":34,"total_tokens":209,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-UzJCcHwtMVdStbjnhvb7o18uRDO4mHw1","timings":{"cache_n":3,"prompt_n":31,"prompt_ms":64.123,"prompt_per_token_ms":2.068483870967742,"prompt_per_second":483.44587745426753,"predicted_n":175,"predicted_ms":1303.583,"predicted_per_token_ms":7.491856321839081,"predicted_per_second":133.4782672066144}}'
+  recorded_at: Thu, 08 Oct 2026 01:18:41 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -67,25 +67,25 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt has a MIME
-        type of `text/plain`, indicating it''s a plain text file. There are no additional
-        contents or hidden data in the file.","reasoning":"Okay, the user is asking
-        what''s in the file named ruby.txt. Let me check the information provided.
-        The file has a mime type of text/plain, which means it''s a plain text file.
-        The content given is \"Ruby is the best.\" So, the file is a simple text file
-        containing that exact sentence. I should confirm that there''s no additional
-        content beyond what''s listed. Since the user might be testing if I can parse
-        the file info correctly, I need to make sure I''m not missing any hidden details.
-        The answer should state the content clearly and mention the mime type as well.
-        Let me put that together in a straightforward way.\n","reasoning_content":"Okay,
-        the user is asking what''s in the file named ruby.txt. Let me check the information
+        contains the following plain text:\n\n```\nRuby is the best.\n```\n\nThe MIME
+        type `text/plain` confirms it is a simple text file with no formatting or
+        special encoding.","reasoning":"Okay, the user is asking what''s in the file
+        named ruby.txt. Let me check the information provided. The file has a mime
+        type of text/plain, which means it''s a plain text file. The content given
+        is \"Ruby is the best.\" So, the file contains that exact sentence. I should
+        confirm that there''s no additional content beyond what''s listed. Since the
+        user provided the file details directly, there''s no need to look elsewhere.
+        The answer should state the content clearly and mention the mime type to confirm
+        it''s a plain text file. I''ll make sure to present it in a straightforward
+        way without any extra information.\n","reasoning_content":"Okay, the user
+        is asking what''s in the file named ruby.txt. Let me check the information
         provided. The file has a mime type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content beyond what''s listed. Since the user might be testing
-        if I can parse the file info correctly, I need to make sure I''m not missing
-        any hidden details. The answer should state the content clearly and mention
-        the mime type as well. Let me put that together in a straightforward way.\n"},{"role":"user","content":[{"type":"text","text":"and
+        text file. The content given is \"Ruby is the best.\" So, the file contains
+        that exact sentence. I should confirm that there''s no additional content
+        beyond what''s listed. Since the user provided the file details directly,
+        there''s no need to look elsewhere. The answer should state the content clearly
+        and mention the mime type to confirm it''s a plain text file. I''ll make sure
+        to present it in a straightforward way without any extra information.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -104,22 +104,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Req-Arrive-Time:
+      - '1791422321357'
+      X-Envoy-Upstream-Service-Time:
+      - '3173'
+      Date:
+      - Thu, 08 Oct 2026 01:18:40 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Resp-Start-Time:
-      - '1789682820732'
-      Date:
-      - Thu, 17 Sep 2026 22:06:56 GMT
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '3857'
-      Req-Arrive-Time:
-      - '1789682816874'
-      X-Envoy-Upstream-Service-Time:
-      - '3853'
+      - '3177'
+      Resp-Start-Time:
+      - '1791422324535'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -128,34 +128,29 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
         file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Key Details:\n- **MIME Type**: `application/xml`
-        (indicating it''s an XML file).\n- **Structure**: A single XML element `<truism>`
-        with the text \"Ruby is the best\" as its content.\n- **Validation**: The
-        XML is well-formed (properly closed tag, no syntax errors). However, it lacks
-        a root element, which is typical for standalone XML documents. This might
-        be a simplified or fragment-like example.\n\n### Comparison to Previous File:\n-
-        Unlike `ruby.txt` (plain text), this file uses XML syntax with tags to structure
-        the content.","reasoning_content":"Okay, let''s see. The user asked about
-        the contents of a file named ruby.xml with MIME type application/xml. The
-        file content is a <truism> tag containing \"Ruby is the best\".\n\nFirst,
-        I need to confirm the MIME type. Application/xml means it''s an XML file.
-        The structure here is a simple XML document with a single <truism> element.
-        The user might be testing if I can parse XML or recognize the structure.\n\nWait,
-        the user previously asked about ruby.txt, which was plain text. Now they''re
-        asking about ruby.xml. They might be comparing the two or checking if I can
-        handle different file types. The response should mention the XML structure,
-        the tag, and the content. Also, note that the XML is well-formed? Let me check.
-        The <truism> tag is properly closed with </truism>, and the content is \"Ruby
-        is the best\". There''s no XML declaration or root element, but since it''s
-        a single element, it''s technically valid. However, in practice, XML documents
-        usually have a root element. But maybe this is a fragment or a simplified
-        example.\n\nThe user might be interested in knowing that the XML is a single
-        element with the text. They might also want to know if there''s any hidden
-        data or if the content is just the text. Since the MIME type is application/xml,
-        the content is expected to be XML. The answer should highlight the XML structure,
-        the tag, and the text inside. Also, mention that it''s a valid XML snippet,
-        even if it''s not a full document. Make sure to point out the difference from
-        the previous text file, which was plain text without any tags. The user could
-        be testing my ability to parse different MIME types and extract relevant info.\n"}}],"created":1789682820,"model":"qwen3","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":514,"prompt_tokens":125,"total_tokens":639,"prompt_tokens_details":{"cached_tokens":34}},"id":"chatcmpl-FcJ8OIX62lCTXt0nlNH4q6gOfnnH2FF1","timings":{"cache_n":34,"prompt_n":91,"prompt_ms":35.115,"prompt_per_token_ms":0.3858791208791209,"prompt_per_second":2591.485120318952,"predicted_n":514,"predicted_ms":3804.279,"predicted_per_token_ms":7.415748538011696,"predicted_per_second":134.84815388145822}}'
-  recorded_at: Thu, 17 Sep 2026 22:07:00 GMT
+        is the best</truism>\n```\n\n### Key details:\n- **MIME type**: `application/xml`
+        confirms it is an XML file.\n- **Structure**: It includes a single `<truism>`
+        element with the text \"Ruby is the best\" (note the lack of a closing `</truism>`
+        tag, which is valid in some XML contexts but typically requires a closing
+        tag for strict validity).\n- **Content**: The text mirrors the message in
+        `ruby.txt`, but wrapped in an XML `<truism>` tag.\n\nThis file is likely used
+        to embed the statement in an XML format, possibly for data exchange, configuration,
+        or markup purposes.","reasoning_content":"Okay, the user is asking about the
+        contents of another file called ruby.xml. Let me look at the previous interaction
+        to understand the context. Earlier, they had a ruby.txt file with the text
+        \"Ruby is the best.\" Now, the new file is ruby.xml with MIME type application/xml
+        and the content <truism>Ruby is the best</truism>.\n\nFirst, I need to confirm
+        the MIME type is XML, so the file is structured as XML. The user might be
+        checking if the content is properly formatted or if there are any issues.
+        They might be testing how XML files are handled or verifying data integrity.\n\nI
+        should explain that the XML file contains a single <truism> element with the
+        text \"Ruby is the best\". It''s important to mention that XML requires proper
+        syntax, like closing tags. The current content has a closing tag, so it''s
+        valid. Maybe the user is concerned about the absence of a closing tag or other
+        syntax errors. I should highlight that the structure is correct and that the
+        MIME type aligns with XML. Also, since the text is similar to the previous
+        file, the user might be comparing both files or checking for consistency.
+        I need to make sure my response is clear and addresses any potential concerns
+        they might have about the XML structure.\n"}}],"created":1791422324,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":416,"prompt_tokens":117,"total_tokens":533,"prompt_tokens_details":{"cached_tokens":34}},"id":"chatcmpl-W6tkn8mSS79EkT6NGpNLBPY4j14DOeaT","timings":{"cache_n":34,"prompt_n":83,"prompt_ms":26.634,"prompt_per_token_ms":0.32089156626506027,"prompt_per_second":3116.3174889239317,"predicted_n":416,"predicted_ms":3136.785,"predicted_per_token_ms":7.558518072289156,"predicted_per_second":132.30106621907464}}'
+  recorded_at: Thu, 08 Oct 2026 01:18:44 GMT
 recorded_with: VCR 6.4.0
