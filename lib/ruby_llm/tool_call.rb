@@ -21,7 +21,10 @@ module RubyLLM
     # The name of the tool the model wants to invoke.
     attr_reader :name
 
-    # The arguments the model supplied for the invocation, as a Hash.
+    # The arguments the model supplied for the invocation, as a Hash. Keys
+    # are ordered the way PostgreSQL +jsonb+ and MySQL +json+ store them,
+    # shorter keys first, so a call reloaded from the database renders the
+    # same request bytes and keeps the provider's prompt cache.
     attr_reader :arguments
 
     # Returns +true+ if the provider executes this call after approval.
@@ -35,7 +38,7 @@ module RubyLLM
     def initialize(id:, name:, arguments: {}, thought_signature: nil, remote: false) # :nodoc:
       @id = id
       @name = name
-      @arguments = arguments
+      @arguments = canonical_arguments(arguments)
       @thought_signature = thought_signature
       @remote = remote
     end
@@ -53,6 +56,18 @@ module RubyLLM
         remote: remote? || nil,
         thought_signature: @thought_signature
       }.compact
+    end
+
+    private
+
+    def canonical_arguments(value)
+      case value
+      when Hash
+        value.sort_by { |key, _| [key.to_s.bytesize, key.to_s] }
+             .to_h { |key, nested| [key, canonical_arguments(nested)] }
+      when Array then value.map { |item| canonical_arguments(item) }
+      else value
+      end
     end
   end
 end

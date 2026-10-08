@@ -155,4 +155,6 @@ chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```
 
+A reloaded chat renders the same request bytes as the turn that wrote it, so the next turn reuses the cached prefix. Tool call arguments keep the key order PostgreSQL `jsonb` and MySQL `json` columns store.
+
 Apps upgrading from 1.16 get `cache_until_here` from the [2.0 upgrade](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md). New apps get the column from the install generator.
