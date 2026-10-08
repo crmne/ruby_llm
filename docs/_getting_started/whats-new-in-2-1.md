@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * How to give a model hundreds of tools without sending them all.
 * How to switch providers in the middle of a conversation.
 * How to send files a provider cannot read, and choose how much detail an image gets.
+* How to give a cache boundary its own lifetime, and what a one-hour write costs.
 * How to share pieces between prompt templates.
 * How to ask typed judgments with TypeSafe's Jev models.
 * How to evaluate your agents against a dataset.
@@ -203,6 +204,18 @@ chat.ask "What is the revenue figure?", with: page
 
 Gemini, OpenAI, and Azure translate it to their own settings, other providers ignore it, and Rails keeps it with the stored file. See [Choosing the Media Resolution]({% link _core_features/attachments.md %}#choosing-the-media-resolution).
 
+## Cache Lifetimes per Boundary
+
+A stable prefix and a growing conversation often deserve different cache lifetimes. Give a boundary its own `ttl:`, and the rest of the chat keeps the lifetime from `with_caching`:
+
+```ruby
+chat = RubyLLM.chat.with_caching
+chat.with_instructions(policy).cache_until_here(ttl: "1h")
+chat.ask "Summarize today's tickets."
+```
+
+Anthropic, OpenRouter, and Bedrock Converse set the lifetime on each boundary, and Rails keeps it with the message. One-hour writes cost twice the input price on Anthropic, Claude on Vertex AI, and Bedrock. `tokens.cache_write_by_ttl` splits the writes by lifetime, and `cost.cache_write` prices each one at its own rate. See [Explicit Cache Boundaries]({% link _core_features/prompt-caching.md %}#explicit-cache-boundaries).
+
 ## Prompt Partials
 
 Prompt templates render partials the way Action View does, so instructions can share pieces:
@@ -357,7 +370,7 @@ When a provider rejects a conversation without saying why, `error.request_shape`
 
 ## Upgrades, One Release at a Time
 
-From 2.1 on, each release ships the upgrade from the release before it. `bin/rails generate ruby_llm:upgrade` in 2.1 adds the MCP credentials table, columns for tool calls waiting on input or a task and for the results MCP Apps render, a table where chats remember the provider uploads of their stored files, a column where usage keeps the provider tool uses of each attempt, and an owner for usage outside a chat. Applications on 1.x upgrade to 2.0 first. See [Upgrading]({% link _reference/upgrading.md %}).
+From 2.1 on, each release ships the upgrade from the release before it. `bin/rails generate ruby_llm:upgrade` in 2.1 adds the MCP credentials table, columns for tool calls waiting on input or a task and for the results MCP Apps render, a table where chats remember the provider uploads of their stored files, a column where usage keeps the provider tool uses of each attempt, a column where messages keep their cache lifetime, and an owner for usage outside a chat. Applications on 1.x upgrade to 2.0 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.1
 

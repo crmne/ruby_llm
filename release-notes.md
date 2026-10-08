@@ -20,17 +20,21 @@ bundle add ruby_llm --version 2.1.0
 - **Share prompt partials and configure agents per tenant.** Prompt templates render partials with locals. Runtime agent contexts can use inputs and persisted records to select credentials and endpoints. RubyLLM's supporting records can share your application's secondary database. By @kryzhovnik, @mikemikimike, and @crmne; thanks @BigBlue79. (#956, #903, [fc66b9f0](https://github.com/crmne/ruby_llm/commit/fc66b9f0))
 - **Account for operations outside persisted chats.** One-shot operations and completed video/research jobs write Rails usage rows, with owner attribution. Provider tool counts share names and persist with usage; xAI and OpenRouter video results retain reported costs. By @crmne. ([073ab733](https://github.com/crmne/ruby_llm/commit/073ab733), [9775ee90](https://github.com/crmne/ruby_llm/commit/9775ee90), [48278dfa](https://github.com/crmne/ruby_llm/commit/48278dfa), [26fe4ca2](https://github.com/crmne/ruby_llm/commit/26fe4ca2))
 - **Use Azure deployment names with model pricing.** Deployment mappings retain the underlying model's pricing and limits. Perplexity chat moves to the Agent API, with compatibility warnings for old Sonar names. By @guizaols, @Halvanhelv, and @crmne. (#987, #985, #994, #995)
+- **Give each cache boundary its own lifetime.** `cache_until_here(ttl: "1h")` keeps a stable prefix cached for an hour while the rest of the chat uses the `with_caching` default, on Anthropic, OpenRouter, and Bedrock Converse. Rails keeps the lifetime in a new `cache_ttl` message column. By @crmne; thanks @nwumnn. (#1041)
 
 ![RubyLLM 2.1 agent evaluations guide](https://raw.githubusercontent.com/crmne/ruby_llm/v2.1.0/docs/assets/images/releases/2.1-evaluations.png)
 
 ## Fixed
 
+- **Keep prompt caches warm across users and reloads.** On the Responses API, system messages keep their order and lead the request. Tool call arguments render the same bytes after a PostgreSQL or MySQL reload. By @crmne; thanks @jbradmil. (#1039, #1040)
+- **Price one-hour cache writes at their own rate.** Anthropic, Claude on Vertex AI, and Bedrock report writes by lifetime in `tokens.cache_write_by_ttl`, and `cost.cache_write` prices one-hour writes at twice the input price. By @crmne; thanks @nwumnn. (#1042)
+- **Keep citations on streamed OpenRouter answers.** By @yorzi. (#1043, #1044)
 - **Keep images returned by Mistral's hosted tools.** Generated images remain available as attachments and through `paint` when the assistant links to the image instead of returning an image content block. By @crmne.
 - **Continue Gemini MCP conversations without repeating completed tools.** Interactions recognizes provider-executed function calls and replays their results with the signatures the API accepts. By @crmne.
 - **Resume conversations across providers and interrupted jobs.** Native reasoning and signatures replay only to their originating model, Gemini can continue another provider's tool round, and interrupted history no longer sends blank replies or invalid unfinished rounds. By @crmne. ([ab4a4f06](https://github.com/crmne/ruby_llm/commit/ab4a4f06), [065fe1f8](https://github.com/crmne/ruby_llm/commit/065fe1f8), [6f8d01f5](https://github.com/crmne/ruby_llm/commit/6f8d01f5))
 - **Rescue provider failures consistently.** Rejected credentials, exhausted credit, token limits, rate limits, and overloads map to specific RubyLLM errors. Retries honor millisecond delays, refresh Bedrock signatures, and retry TLS failures. Buffered streaming errors stay bounded and preserve validation details. By @crmne, @parterburn, and @tonic20. (#991, #1024, [cbfad65d](https://github.com/crmne/ruby_llm/commit/cbfad65d), [6c8b1b84](https://github.com/crmne/ruby_llm/commit/6c8b1b84), [6f16112c](https://github.com/crmne/ruby_llm/commit/6f16112c), [ca9a6c22](https://github.com/crmne/ruby_llm/commit/ca9a6c22))
 - **Thinking controls reach Bedrock and Sonnet correctly.** Converse uses each model's reasoning format, and `with_thinking(false)` works with Claude Sonnet 5.5, including regional model IDs. By @tonic20, @afurm, and @crmne; thanks @davidalejandroaguilar. (#1025, #1023, #1016)
-- **Restore attachments and signature-only thinking from exported messages.** Serialization retains the content needed for continued conversations. By @yorzi and @crmne. (#1003, [cd145cd9](https://github.com/crmne/ruby_llm/commit/cd145cd9))
+- **Restore attachments, signature-only thinking, and reported costs from exported messages.** Serialization retains the content needed for continued conversations and the amount the provider billed. By @yorzi and @crmne. (#1003, #1045, [cd145cd9](https://github.com/crmne/ruby_llm/commit/cd145cd9))
 - **Keep batch results aligned with their inputs.** Invalid or duplicate result indices raise instead of silently assigning results to the wrong input. Thinking billed as output contributes to batch costs. By @yorzi, @marckohlbrugge, and @crmne. (#993, #1000, #967, [22c652d0](https://github.com/crmne/ruby_llm/commit/22c652d0))
 - **Send media in the format each provider accepts.** DeepSeek image attachments work with Chat Completions; GPUStack images, videos, and generation references stay inline where needed. Video polling respects its timeout. By @guizaols, @iamzayn19, and @crmne. (#972, #970, #975, #977, #978, #979)
 - **Keep Rails migrations and usage recording reliable.** PostgreSQL usage constraints cast their columns correctly, generator mappings survive class options, and usage ledger failures do not discard successful replies. By @viktorianer, @yorzi, and @crmne. (#1009, #943, [3647170a](https://github.com/crmne/ruby_llm/commit/3647170a), [94b9ab3e](https://github.com/crmne/ruby_llm/commit/94b9ab3e))
@@ -38,14 +42,11 @@ bundle add ruby_llm --version 2.1.0
 
 ## Known limitations
 
-- **Some cost estimates and exported costs remain incomplete.** One-hour Anthropic cache writes use the shorter cache-write price (#1042). Exporting and restoring a plain-Ruby message can lose a provider-reported cost (#1045). Rails retains its stored billed amount.
-- **Prompt-cache reuse can fall after reloads or mixed system instructions.** PostgreSQL/MySQL can reorder persisted tool arguments (#1040), and Responses can reorder cache-marked and unmarked system messages (#1039).
-- **OpenRouter streamed citations are missing.** The non-streamed response retains them (#1043).
 - **MCP Apps need a UI supplied by your application.** RubyLLM exposes app resources and retained results, not a browser host. The conformance baseline also excludes the older-server elicitation-defaults scenario.
 - **Provider access still determines availability.** Hetzner Inference is experimental, and hosted tools, media, and judgments depend on the selected service and account.
 
 ## Thanks
 
-Thanks to @crmne, @kieranklaassen, @kryzhovnik, @mikemikimike, @guizaols, @whatthewhat, @kalicki, @yorzi, @marckohlbrugge, @iamzayn19, @parterburn, @viktorianer, @Halvanhelv, @tonic20, and @afurm for their contributions. Thanks to @davidalejandroaguilar and @BigBlue79 for reporting thinking and agent-context issues, and to @yorzi, @nwumnn, and @jbradmil for the outstanding cost, citation, and caching reports listed above.
+Thanks to @crmne, @kieranklaassen, @kryzhovnik, @mikemikimike, @guizaols, @whatthewhat, @kalicki, @yorzi, @marckohlbrugge, @iamzayn19, @parterburn, @viktorianer, @Halvanhelv, @tonic20, and @afurm for their contributions. Thanks to @davidalejandroaguilar and @BigBlue79 for reporting thinking and agent-context issues, and to @yorzi, @nwumnn, and @jbradmil for the cost, citation, and caching reports fixed in this release.
 
 **Full changelog**: https://github.com/crmne/ruby_llm/compare/v2.0.0...v2.1.0
