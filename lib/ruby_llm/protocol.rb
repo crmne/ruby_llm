@@ -753,12 +753,16 @@ module RubyLLM
     end
 
     def missing_uploads(messages, error, scope)
-      uploads = messages.flat_map(&:attachments).filter_map do |attachment|
+      uploads = attachment_uploads(messages, scope)
+      named = uploads.select { |_, upload| names_file?(error, upload.id) }
+      named.empty? && error.response&.status == 404 ? uploads : named
+    end
+
+    def attachment_uploads(messages, scope)
+      messages.flat_map(&:attachments).uniq(&:object_id).filter_map do |attachment|
         upload = attachment.provider_uploads[scope]
         [attachment, upload] if upload
       end
-      named = uploads.select { |_, upload| names_file?(error, upload.id) }
-      named.empty? && error.response&.status == 404 ? uploads : named
     end
 
     def names_file?(error, id)

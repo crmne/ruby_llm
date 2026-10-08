@@ -156,6 +156,8 @@ chat.ask "Summarize this report.", with: "report.docx"
 
 Callbacks run in registration order until one returns a replacement. A chat converts each attachment once and reuses the replacement, including its provider upload, on later requests. A persisted chat loaded in another process converts again, so cache expensive conversions in your application. The conversation keeps the original attachment. Switching to a protocol that supports the original file sends that file without calling the converter. Persisted chats and agents use the same callback.
 
+If the provider deletes an uploaded replacement, RubyLLM uploads the cached replacement again and retries the request once. It does not call your converter again or retry after streaming has reached your application.
+
 This handles formats the protocol cannot send. A model can still reject an attachment the protocol can represent; that API error does not trigger the callback.
 
 ### Choosing the Media Resolution
