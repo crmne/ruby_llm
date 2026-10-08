@@ -234,7 +234,8 @@ module RubyLLM
     # Returns a Hash of the message's attributes, with token counts merged
     # in as +:input_tokens+, +:output_tokens+, and related keys. Omits
     # +nil+ values and empty attachment and citation lists. Includes +:cost+
-    # only when supplied explicitly, preserving unknown costs on round-trip.
+    # only when supplied explicitly, preserving unknown costs on round-trip,
+    # and +:reported_cost+ when the provider reported its own price.
     def to_h
       {
         role: role,
@@ -242,6 +243,7 @@ module RubyLLM
         attachments: list_to_h(attachments),
         model: model,
         cost: @supplied_cost && cost.to_h,
+        reported_cost: tokens.reported_cost,
         tool_calls: tool_calls&.transform_values(&:to_h),
         tool_call_id: tool_call_id,
         thinking: thinking&.text,

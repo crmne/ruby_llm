@@ -280,6 +280,39 @@ RSpec.describe RubyLLM::Message do
       expect(message.cost(model: model).total).to eq(0.005)
     end
 
+    it 'preserves the provider-reported cost through a JSON round trip' do
+      allow(RubyLLM.models).to receive(:find).and_call_original
+      allow(RubyLLM.models).to receive(:find).with('priced-model').and_return(model)
+      message = described_class.new(role: :assistant, content: 'Report', model: 'priced-model',
+                                    input_tokens: 1_000, output_tokens: 2_000, reported_cost: 0.015)
+
+      attributes = JSON.parse(JSON.generate(message.to_h)).transform_keys(&:to_sym)
+      rebuilt = described_class.new(attributes)
+
+      expect(message.to_h[:reported_cost]).to eq(0.015)
+      expect(rebuilt.cost.total).to eq(0.015)
+      expect(rebuilt.to_h).to eq(message.to_h)
+    end
+
+    it 'serializes the cost each attempt reported' do
+      entries = [0.01, 0.02].map do |reported|
+        RubyLLM::Accounting::Usage::Entry.new(
+          operation: :chat, provider: model.provider, model: model.id, status: :succeeded,
+          tokens: RubyLLM::Tokens.new(input: 1_000, output: 2_000, reported_cost: reported)
+        )
+      end
+      message = described_class.new(role: :assistant, content: 'Report', usage_entries: entries)
+
+      expect(message.to_h[:reported_cost]).to eq(0.03)
+      expect(described_class.new(message.to_h).cost.total).to eq(0.03)
+    end
+
+    it 'omits a reported cost the provider did not send' do
+      message = described_class.new(role: :assistant, content: 'Hello', input_tokens: 1_000)
+
+      expect(message.to_h).not_to have_key(:reported_cost)
+    end
+
     it 'calculates cost from the supplied model' do
       message = described_class.new(role: :assistant, content: 'Hello', input_tokens: 1_000, output_tokens: 2_000)
 
