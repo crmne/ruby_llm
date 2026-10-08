@@ -6,6 +6,10 @@ bundle add ruby_llm --version 2.1.0
 
 **Upgrading from 2.0?** Ruby 3.2 or later is required. Run the Rails upgrade generator and read the [upgrade guide](https://rubyllm.com/upgrading/) before deploying. Applications on 1.x must finish the 2.0 upgrade first. See [What's New in 2.1](https://rubyllm.com/whats-new-in-2-1/) for examples.
 
+https://github.com/user-attachments/assets/519fcb20-ab8c-4af3-9185-0953b3ba7b81
+
+Take the [three-minute tour in full quality](https://github.com/crmne/ruby_llm/releases/download/v2.1.0/rubyllm-tour-1080p60.mp4) (1080p60).
+
 ![RubyLLM 2.1 MCP client guide](https://raw.githubusercontent.com/crmne/ruby_llm/v2.1.0/docs/assets/images/releases/2.1-mcp.png)
 
 ## New

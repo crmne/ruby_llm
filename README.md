@@ -21,6 +21,8 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
+https://github.com/user-attachments/assets/519fcb20-ab8c-4af3-9185-0953b3ba7b81
+
 > [!NOTE]
 > Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 
