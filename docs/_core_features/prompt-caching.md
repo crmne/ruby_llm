@@ -49,6 +49,14 @@ Options depend on the provider and model:
 
 Leave options unset to use provider defaults. Some models support automatic caching but reject explicit lifetimes or boundaries.
 
+A longer lifetime can cost more to write. When the provider reports how many tokens it wrote at each lifetime, `response.tokens.cache_write_by_ttl` splits `cache_write` by TTL, and `response.cost.cache_write` prices each lifetime at its own rate:
+
+```ruby
+response.tokens.cache_write        # => 3072
+response.tokens.cache_write_by_ttl # => {"5m" => 1024, "1h" => 2048}
+response.cost.cache_write
+```
+
 Both `with_caching` and the Agent `caching` macro accept keyword options or a Hash. Calling either again replaces the previous cache policy.
 
 To stop RubyLLM from sending cache controls or rendering marked boundaries for later requests, pass `false`:

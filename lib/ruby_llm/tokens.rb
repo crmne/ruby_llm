@@ -15,6 +15,10 @@ module RubyLLM
   class Tokens
     include Support::Inspectable
 
+    READERS = %i[
+      input output cache_read cache_write thinking cache_write_by_ttl server_tool_use reported_cost
+    ].freeze # :nodoc:
+
     # The number of standard (non-cached) input tokens, or +nil+ if the
     # provider did not report it.
     attr_reader :input
@@ -31,6 +35,16 @@ module RubyLLM
     # The number of tokens written to the provider's prompt cache, or
     # +nil+ if the provider did not report it.
     attr_reader :cache_write
+
+    # The tokens in #cache_write split by cache lifetime, as a Hash of the
+    # TTL Strings that <tt>with_caching(ttl:)</tt> accepts and Integer
+    # counts, or +nil+ if the provider did not report a split. Lifetimes
+    # with no writes are left out. Providers that price a longer lifetime
+    # higher, such as Anthropic's one-hour cache, use it to price #cache_write.
+    #
+    #   response.tokens.cache_write_by_ttl # => {"5m" => 1024, "1h" => 2048}
+    #
+    attr_reader :cache_write_by_ttl
 
     # The number of thinking (reasoning) tokens, or +nil+ if the provider
     # does not report them.
@@ -60,17 +74,20 @@ module RubyLLM
     #   tokens = RubyLLM::Tokens.new(input: 100, output: 20)
     #   RubyLLM.models.find("gpt-5.6").cost_for(tokens).total
     #
+    # +cache_write_by_ttl:+ splits the cache writes by lifetime, keyed as
+    # #cache_write_by_ttl describes;
     # +server_tool_use:+ counts the provider-executed tools that ran, keyed
     # as #server_tool_use describes;
     # +reported_cost:+ holds the provider's total price in US dollars.
     def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil,
-                   server_tool_use: nil, reported_cost: nil)
+                   cache_write_by_ttl: nil, server_tool_use: nil, reported_cost: nil)
       @input = input
       @output = output
       @cache_read = cache_read
       @cache_write = cache_write
       @thinking = thinking
-      @server_tool_use = tools_used(server_tool_use)
+      @cache_write_by_ttl = positive_counts(cache_write_by_ttl)
+      @server_tool_use = positive_counts(server_tool_use)
       @reported_cost = reported_cost
     end
 
@@ -85,23 +102,33 @@ module RubyLLM
         reported = tokens.filter_map { |usage| usage.public_send(component) }
         [component, reported.empty? ? nil : reported.sum]
       end
-      new(**values, server_tool_use: aggregate_server_tool_use(tokens))
+      new(**values, cache_write_by_ttl: aggregate_counts(tokens, :cache_write_by_ttl),
+                    server_tool_use: aggregate_counts(tokens, :server_tool_use))
     end
 
-    def self.aggregate_server_tool_use(tokens) # :nodoc:
-      reported = tokens.filter_map(&:server_tool_use)
+    # Returns Tokens with each count +other+ reported replacing this one.
+    def merge(other) # :nodoc:
+      self.class.new(**READERS.to_h do |reader|
+        value = other.public_send(reader)
+        [reader, value.nil? ? public_send(reader) : value]
+      end)
+    end
+
+    def self.aggregate_counts(tokens, reader) # :nodoc:
+      reported = tokens.filter_map(&reader)
       return nil if reported.empty?
 
       reported.each_with_object({}) do |counters, total|
-        counters.each { |tool, count| total[tool] = total.fetch(tool, 0) + count.to_i }
+        counters.each { |key, count| total[key] = total.fetch(key, 0) + count.to_i }
       end
     end
-    private_class_method :aggregate_server_tool_use
+    private_class_method :aggregate_counts
 
     # Returns the counts as a hash with keys +:input_tokens+,
     # +:output_tokens+, +:cache_read_tokens+, +:cache_write_tokens+, and
-    # +:thinking_tokens+, omitting +nil+ counts. Includes +:server_tool_use+
-    # when reported. The provider's reported cost is available separately
+    # +:thinking_tokens+, omitting +nil+ counts. Includes
+    # +:cache_write_tokens_by_ttl+ and +:server_tool_use+ when reported.
+    # The provider's reported cost is available separately
     # through #reported_cost.
     #
     #   response.tokens.to_h
@@ -114,6 +141,7 @@ module RubyLLM
         cache_read_tokens: cache_read,
         cache_write_tokens: cache_write,
         thinking_tokens: thinking,
+        cache_write_tokens_by_ttl: cache_write_by_ttl,
         server_tool_use: server_tool_use
       }.compact
     end
@@ -125,14 +153,15 @@ module RubyLLM
         cache_read: cache_read,
         cache_write: cache_write,
         thinking: thinking,
+        cache_write_by_ttl: cache_write_by_ttl,
         server_tool_use: server_tool_use
       }.compact
     end
 
     private
 
-    def tools_used(counts)
-      used = counts.to_h.to_h { |tool, count| [tool.to_s, count.to_i] }.select { |_, count| count.positive? }
+    def positive_counts(counts)
+      used = counts.to_h.to_h { |key, count| [key.to_s, count.to_i] }.select { |_, count| count.positive? }
       used unless used.empty?
     end
   end

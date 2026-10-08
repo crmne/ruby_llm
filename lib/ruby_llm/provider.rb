@@ -499,6 +499,14 @@ module RubyLLM
         nil
       end
 
+      # Returns the multiple of the input price that a prompt cache write
+      # with lifetime +ttl+ costs on +model_id+, or +nil+ when the
+      # registry's cache-write price applies. Providers whose models.dev
+      # cache-write price covers only the default lifetime override it.
+      def cache_write_input_multiplier(_model_id, _ttl) # :nodoc:
+        nil
+      end
+
       def models_dev_alias(_model_id, _models_dev_by_key, _provider_model = nil) # :nodoc:
         nil
       end

@@ -193,7 +193,7 @@ module RubyLLM
           entry = @pending.last
           return unless entry
 
-          entry.finish(status: :pending, tokens: merge_stream_tokens(entry.tokens, tokens))
+          entry.finish(status: :pending, tokens: entry.tokens.merge(tokens))
         end
 
         def fail_attempt(entry, error)
@@ -284,18 +284,6 @@ module RubyLLM
 
         def attach_to_result(result)
           result&.ruby_llm_usage_entries = entries
-        end
-
-        def merge_stream_tokens(existing, incoming)
-          Tokens.new(
-            input: incoming.input.nil? ? existing.input : incoming.input,
-            output: incoming.output.nil? ? existing.output : incoming.output,
-            cache_read: incoming.cache_read.nil? ? existing.cache_read : incoming.cache_read,
-            cache_write: incoming.cache_write.nil? ? existing.cache_write : incoming.cache_write,
-            thinking: incoming.thinking.nil? ? existing.thinking : incoming.thinking,
-            server_tool_use: incoming.server_tool_use.nil? ? existing.server_tool_use : incoming.server_tool_use,
-            reported_cost: incoming.reported_cost.nil? ? existing.reported_cost : incoming.reported_cost
-          )
         end
       end
     end

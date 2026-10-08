@@ -50,6 +50,7 @@ module RubyLLM
             thinking_tokens: extract_thinking_tokens(data),
             cache_read_tokens: extract_cache_read_tokens(data),
             cache_write_tokens: extract_cache_write_tokens(data),
+            cache_write_tokens_by_ttl: extract_cache_write_by_ttl(data),
             server_tool_use: extract_server_tool_use(data),
             tool_calls: extract_tool_calls(data),
             finish_reason: normalize_finish_reason(data.dig('delta', 'stop_reason')),

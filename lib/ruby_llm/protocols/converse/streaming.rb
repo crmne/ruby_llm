@@ -202,6 +202,7 @@ module RubyLLM
             output_tokens: extract_output_tokens(metadata_usage, usage),
             cache_read_tokens: extract_cache_read_tokens(metadata_usage, usage),
             cache_write_tokens: extract_cache_write_tokens(metadata_usage, usage),
+            cache_write_tokens_by_ttl: Chat.cache_write_by_ttl(metadata_usage) || Chat.cache_write_by_ttl(usage),
             thinking_tokens: extract_reasoning_tokens(metadata_usage, usage),
             finish_reason: extract_finish_reason(event)
           )

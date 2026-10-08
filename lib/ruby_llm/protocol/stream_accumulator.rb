@@ -15,13 +15,7 @@ module RubyLLM
         @thinking_text = nil
         @thinking_signature = nil
         @tool_calls = {}
-        @input_tokens = nil
-        @output_tokens = nil
-        @cache_read_tokens = nil
-        @cache_write_tokens = nil
-        @thinking_tokens = nil
-        @server_tool_use = nil
-        @reported_cost = nil
+        @tokens = Tokens.new
         @server_tool_calls = []
         @raw_content = nil
         @raw_reasoning = nil
@@ -54,15 +48,7 @@ module RubyLLM
             text: @thinking_text,
             signature: @thinking_signature
           ),
-          tokens: Tokens.new(
-            input: @input_tokens,
-            output: @output_tokens,
-            cache_read: @cache_read_tokens,
-            cache_write: @cache_write_tokens,
-            thinking: @thinking_tokens,
-            server_tool_use: @server_tool_use,
-            reported_cost: @reported_cost
-          ),
+          tokens: @tokens,
           server_tool_calls: @server_tool_calls,
           raw_content: @raw_content,
           raw_reasoning: @raw_reasoning,
@@ -187,14 +173,7 @@ module RubyLLM
       end
 
       def count_tokens(chunk)
-        tokens = chunk.tokens
-        @input_tokens = tokens.input if tokens.input
-        @output_tokens = tokens.output if tokens.output
-        @cache_read_tokens = tokens.cache_read if tokens.cache_read
-        @cache_write_tokens = tokens.cache_write if tokens.cache_write
-        @thinking_tokens = tokens.thinking if tokens.thinking
-        @server_tool_use = tokens.server_tool_use if tokens.server_tool_use
-        @reported_cost = tokens.reported_cost if tokens.reported_cost
+        @tokens = @tokens.merge(chunk.tokens)
       end
 
       def handle_chunk_content(chunk)

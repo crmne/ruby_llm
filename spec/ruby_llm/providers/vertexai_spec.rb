@@ -282,6 +282,13 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     end
   end
 
+  describe '.cache_write_input_multiplier' do
+    it 'prices one-hour Claude cache writes at twice the input price' do
+      expect(described_class.cache_write_input_multiplier('claude-haiku-4-5', '1h')).to eq(2)
+      expect(described_class.cache_write_input_multiplier('gemini-2.5-flash', '1h')).to be_nil
+    end
+  end
+
   describe 'Mistral protocol dialect' do
     let(:location) { 'us-central1' }
     let(:model) { instance_double(RubyLLM::Model, id: 'mistral-medium-3', max_output_tokens: 4096) }

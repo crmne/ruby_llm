@@ -31,6 +31,23 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(message.tokens.cache_write).to eq(10)
     end
 
+    it 'splits cache writes by the lifetimes in cacheDetails' do
+      response_body = {
+        'modelId' => 'anthropic.claude-haiku-4-5',
+        'output' => { 'message' => { 'content' => [{ 'text' => 'Hi!' }] } },
+        'usage' => {
+          'inputTokens' => 3,
+          'outputTokens' => 4,
+          'cacheWriteInputTokens' => 300,
+          'cacheDetails' => [{ 'inputTokens' => 100, 'ttl' => '5m' }, { 'inputTokens' => 200, 'ttl' => '1h' }]
+        }
+      }
+
+      message = described_class.parse_completion_body(response_body, raw: nil)
+
+      expect(message.tokens.cache_write_by_ttl).to eq('5m' => 100, '1h' => 200)
+    end
+
     it 'does not subtract cache buckets or floor to zero when the cached prefix exceeds fresh input' do
       response_body = {
         'modelId' => 'anthropic.claude-sonnet-4-5-20250929-v1:0',

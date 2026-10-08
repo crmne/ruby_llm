@@ -654,6 +654,26 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(message.tokens.cache_read).to eq(21)
       expect(message.tokens.cache_write).to eq(7)
     end
+
+    it 'splits cache writes by lifetime so one-hour writes are priced as such' do
+      response_body = {
+        'model' => 'claude-sonnet-4-6',
+        'content' => [{ 'type' => 'text', 'text' => 'Hi!' }],
+        'usage' => {
+          'input_tokens' => 3,
+          'output_tokens' => 5,
+          'cache_creation_input_tokens' => 100_000,
+          'cache_creation' => { 'ephemeral_5m_input_tokens' => 0, 'ephemeral_1h_input_tokens' => 100_000 }
+        }
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+
+      message = RubyLLM::Protocols::Anthropic.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens.cache_write).to eq(100_000)
+      expect(message.tokens.cache_write_by_ttl).to eq('1h' => 100_000)
+      expect(message.cost.cache_write).to be_within(0.0000001).of(0.6)
+    end
   end
 
   def claude_answer(thinking, producer: 'anthropic', **attributes)

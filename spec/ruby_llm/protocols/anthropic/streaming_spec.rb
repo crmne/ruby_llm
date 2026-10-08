@@ -37,6 +37,25 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(chunk.tokens.thinking).to eq(7)
   end
 
+  it 'reads the cache write lifetimes from message_start usage' do
+    chunk = protocol.send(
+      :build_chunk,
+      {
+        'type' => 'message_start',
+        'message' => {
+          'model' => 'claude-sonnet-4-5',
+          'usage' => {
+            'input_tokens' => 3,
+            'cache_creation_input_tokens' => 300,
+            'cache_creation' => { 'ephemeral_5m_input_tokens' => 100, 'ephemeral_1h_input_tokens' => 200 }
+          }
+        }
+      }
+    )
+
+    expect(chunk.tokens.cache_write_by_ttl).to eq('5m' => 100, '1h' => 200)
+  end
+
   it 'appends streamed text to its content block in place' do
     delta = lambda do |text|
       { 'type' => 'content_block_delta', 'index' => 0, 'delta' => { 'type' => 'text_delta', 'text' => text } }

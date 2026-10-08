@@ -130,7 +130,9 @@ module RubyLLM
     end
 
     # Returns the cost of cache-write input tokens in US dollars, or +nil+
-    # when the token count or its pricing is unavailable.
+    # when the token count or its pricing is unavailable. Writes with a
+    # longer lifetime, reported in Tokens#cache_write_by_ttl, are priced at
+    # the provider's rate for that lifetime.
     def cache_write
       @amounts[:cache_write]
     end
@@ -199,6 +201,7 @@ module RubyLLM
 
     def missing_component?(component)
       return image_input_missing? if component == :input && detailed_image_input?
+      return cache_write_missing? if component == :cache_write && repriced_cache_writes?
       return false if component == :thinking && !thinking_priced_separately?
 
       tokens_for(component).to_i.positive? && price_for(component).nil?
@@ -206,6 +209,7 @@ module RubyLLM
 
     def amount_for(component)
       return image_input_amount if component == :input && detailed_image_input?
+      return cache_write_amount if component == :cache_write && repriced_cache_writes?
 
       token_count = tokens_for(component)
       return nil if token_count.nil?
@@ -297,6 +301,43 @@ module RubyLLM
       return RubyLLM::Model::PricingCategory.new unless pricing.respond_to?(@category)
 
       pricing.public_send(@category)
+    end
+
+    def repriced_cache_writes?
+      cache_write_multipliers.any?
+    end
+
+    def cache_write_amount
+      cache_write_parts.sum { |count, price| count * price / PER_MILLION } unless cache_write_missing?
+    end
+
+    def cache_write_missing?
+      cache_write_parts.any? { |_, price| price.nil? }
+    end
+
+    # Cache writes as [count, price] pairs: lifetimes the provider prices
+    # from the input price, then the rest at the registry's cache-write price.
+    def cache_write_parts
+      parts = cache_write_multipliers.map do |ttl, multiplier|
+        [cache_write_by_ttl[ttl], input_price && (input_price * multiplier)]
+      end
+      standard = @tokens.cache_write.to_i - parts.sum(&:first)
+      parts << [standard, price_for(:cache_write)] if standard.positive?
+      parts
+    end
+
+    def cache_write_multipliers
+      @cache_write_multipliers ||= begin
+        provider = @model.provider_class if @model.respond_to?(:provider_class)
+        cache_write_by_ttl.filter_map do |ttl, _|
+          multiplier = provider&.cache_write_input_multiplier(@model.id, ttl)
+          [ttl, multiplier] if multiplier
+        end.to_h
+      end
+    end
+
+    def cache_write_by_ttl
+      (@tokens.cache_write_by_ttl if @tokens.respond_to?(:cache_write_by_ttl)) || {}
     end
 
     def image_cost?

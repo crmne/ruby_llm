@@ -325,6 +325,7 @@ module RubyLLM
             output_tokens: usage['output_tokens'],
             cache_read_tokens: extract_cache_read_tokens(data),
             cache_write_tokens: extract_cache_write_tokens(data),
+            cache_write_tokens_by_ttl: extract_cache_write_by_ttl(data),
             thinking_tokens: thinking_tokens,
             server_tool_use: usage['server_tool_use'],
             finish_reason: normalize_finish_reason(data['stop_reason']),

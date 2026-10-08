@@ -100,6 +100,7 @@ module RubyLLM
         output: options[:output_tokens],
         cache_read: options[:cache_read_tokens],
         cache_write: options[:cache_write_tokens],
+        cache_write_by_ttl: options[:cache_write_tokens_by_ttl],
         thinking: options[:thinking_tokens],
         server_tool_use: options[:server_tool_use],
         reported_cost: options[:reported_cost]

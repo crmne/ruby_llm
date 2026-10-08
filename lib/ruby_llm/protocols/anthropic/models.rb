@@ -102,6 +102,16 @@ module RubyLLM
           breakdown.values.compact.sum
         end
 
+        def extract_cache_write_by_ttl(data)
+          breakdown = message_usage(data)['cache_creation'] || delta_usage(data)['cache_creation']
+          return unless breakdown.is_a?(Hash)
+
+          breakdown.filter_map do |key, count|
+            ttl = key[/\Aephemeral_(.+)_input_tokens\z/, 1]
+            [ttl, count] if ttl
+          end.to_h
+        end
+
         def message_usage(data)
           aggregate_usage(data.dig('message', 'usage'))
         end
@@ -121,7 +131,12 @@ module RubyLLM
 
           usage.merge(ITERATION_TOKEN_KEYS.to_h do |key|
             [key, iterations.sum { |iteration| iteration[key].to_i }]
-          end)
+          end, { 'cache_creation' => iteration_cache_creation(iterations) }.compact)
+        end
+
+        def iteration_cache_creation(iterations)
+          breakdowns = iterations.map { |iteration| iteration['cache_creation'] }.grep(Hash)
+          breakdowns.reduce { |total, breakdown| total.merge(breakdown) { |_, sum, count| sum.to_i + count.to_i } }
         end
       end
     end

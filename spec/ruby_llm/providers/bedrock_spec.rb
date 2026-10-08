@@ -31,6 +31,17 @@ RSpec.describe RubyLLM::Providers::Bedrock do
     end
   end
 
+  describe '.cache_write_input_multiplier' do
+    it 'prices one-hour Claude cache writes at twice the input price' do
+      expect(described_class.cache_write_input_multiplier('us.anthropic.claude-haiku-4-5-20251001-v1:0', '1h')).to eq(2)
+      expect(described_class.cache_write_input_multiplier('anthropic.claude-haiku-4-5', '5m')).to be_nil
+    end
+
+    it 'leaves other model families at the registry cache-write price' do
+      expect(described_class.cache_write_input_multiplier('amazon.nova-2-lite-v1:0', '1h')).to be_nil
+    end
+  end
+
   describe '.configured?' do
     it 'accepts static credentials with a region' do
       config = bedrock_config(api_key: 'static-key', secret_key: 'static-secret')

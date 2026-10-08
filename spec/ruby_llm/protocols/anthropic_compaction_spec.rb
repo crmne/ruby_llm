@@ -90,6 +90,17 @@ RSpec.describe RubyLLM::Protocols::Anthropic do
       expect(message.tokens.cache_write).to eq(20)
     end
 
+    it 'sums cache write lifetimes across iterations' do
+      usage['iterations'][0]['cache_creation'] = { 'ephemeral_5m_input_tokens' => 0, 'ephemeral_1h_input_tokens' => 30 }
+      usage['iterations'][1]['cache_creation'] = { 'ephemeral_5m_input_tokens' => 5, 'ephemeral_1h_input_tokens' => 10 }
+
+      message = protocol.send(:parse_completion_body,
+                              { 'content' => [{ 'type' => 'text', 'text' => 'Hi.' }], 'usage' => usage },
+                              raw: nil)
+
+      expect(message.tokens.cache_write_by_ttl).to eq('5m' => 5, '1h' => 40)
+    end
+
     it 'reads the top-level counts when the response lists no iterations' do
       message = protocol.send(:parse_completion_body,
                               { 'content' => [{ 'type' => 'text', 'text' => 'Hi.' }],

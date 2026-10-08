@@ -34,6 +34,10 @@ module RubyLLM
           { enabled: false } if between_tools_off?(model_id)
         end
 
+        def cache_write_input_multiplier(model_id, ttl) # :nodoc:
+          Providers::Anthropic.cache_write_input_multiplier(model_id, ttl) if model_id.to_s.start_with?('claude')
+        end
+
         def models_dev_alias(...)
           VertexAI::Models.models_dev_alias(...)
         end

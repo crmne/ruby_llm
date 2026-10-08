@@ -6,6 +6,8 @@ module RubyLLM
     class Anthropic < Provider
       SONNET_55_MODEL_IDS = %w[claude-sonnet-5-5 anthropic.claude-sonnet-5-5].freeze
       private_constant :SONNET_55_MODEL_IDS
+      CACHE_WRITE_INPUT_MULTIPLIERS = { '1h' => 2 }.freeze
+      private_constant :CACHE_WRITE_INPUT_MULTIPLIERS
 
       protocol :anthropic, Protocols::Anthropic, batches: Protocols::Anthropic::Batches
       protocol :files, Protocols::Anthropic::Files
@@ -38,6 +40,12 @@ module RubyLLM
 
         def thinking_off_control(model_id) # :nodoc:
           { enabled: false } if between_tools_off?(model_id)
+        end
+
+        # models.dev prices the five-minute cache write; Anthropic bills a
+        # one-hour write at twice the input price.
+        def cache_write_input_multiplier(_model_id, ttl) # :nodoc:
+          CACHE_WRITE_INPUT_MULTIPLIERS[ttl.to_s]
         end
 
         def configuration_options

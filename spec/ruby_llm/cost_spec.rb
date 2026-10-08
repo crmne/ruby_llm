@@ -232,6 +232,43 @@ RSpec.describe RubyLLM::Cost do
     end
   end
 
+  describe 'cache writes by lifetime' do
+    let(:claude) { RubyLLM.models.find('claude-sonnet-4-6', provider: :anthropic) }
+
+    it 'prices one-hour Anthropic cache writes at twice the input price' do
+      tokens = RubyLLM::Tokens.new(input: 0, cache_write: 100_000, cache_write_by_ttl: { '1h' => 100_000 })
+      cost = described_class.new(tokens:, model: claude)
+
+      expect(cost.cache_write).to be_within(0.0000001).of(0.6)
+    end
+
+    it 'prices five-minute writes in the same request at the registry cache-write price' do
+      tokens = RubyLLM::Tokens.new(input: 0, cache_write: 3_000, cache_write_by_ttl: { '5m' => 1_000, '1h' => 2_000 })
+      cost = described_class.new(tokens:, model: claude)
+
+      expected = ((1_000 * claude.price(:cache_write)) + (2_000 * claude.price(:input) * 2)) / 1_000_000.0
+      expect(cost.cache_write).to be_within(0.0000001).of(expected)
+      expect(cost.total).to be_within(0.0000001).of(expected)
+    end
+
+    it 'keeps the registry cache-write price for lifetimes the provider does not price separately' do
+      tokens = RubyLLM::Tokens.new(cache_write: 100, cache_write_by_ttl: { '1h' => 100 })
+      cost = described_class.new(tokens:, model:)
+
+      expect(cost.cache_write).to be_within(0.0000000001).of(0.000125)
+    end
+
+    it 'leaves the cache-write cost unknown when the input price is missing' do
+      unpriced = RubyLLM::Model.new(id: 'claude-unpriced', name: 'Claude', provider: 'anthropic',
+                                    pricing: { text_tokens: { standard: { cache_write_input_per_million: 3.75 } } })
+      tokens = RubyLLM::Tokens.new(cache_write: 100, cache_write_by_ttl: { '1h' => 100 })
+      cost = described_class.new(tokens:, model: unpriced)
+
+      expect(cost.cache_write).to be_nil
+      expect(cost.total).to be_nil
+    end
+  end
+
   describe 'provider-reported cost' do
     it 'prefers the reported cost over the registry estimate' do
       tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, reported_cost: 0.0042)

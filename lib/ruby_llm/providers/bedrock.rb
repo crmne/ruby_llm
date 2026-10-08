@@ -36,6 +36,12 @@ module RubyLLM
         { enabled: false } if between_tools_off?(model_id)
       end
 
+      def self.cache_write_input_multiplier(model_id, ttl) # :nodoc:
+        return unless Protocols::Converse::Chat.foundation_model_id(model_id).start_with?('anthropic.')
+
+        Providers::Anthropic.cache_write_input_multiplier(model_id, ttl)
+      end
+
       def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
         Models.resolve_registry_id(model_id, models, config)
       end

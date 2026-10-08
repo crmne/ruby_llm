@@ -122,6 +122,7 @@ module RubyLLM
             output_tokens: usage['outputTokens'],
             cache_read_tokens: usage['cacheReadInputTokens'],
             cache_write_tokens: usage['cacheWriteInputTokens'],
+            cache_write_tokens_by_ttl: cache_write_by_ttl(usage),
             thinking_tokens: reasoning_tokens(usage),
             finish_reason: normalize_finish_reason(data['stopReason']),
             model: data['modelId'] || @model&.id,
@@ -139,6 +140,15 @@ module RubyLLM
 
         def reasoning_tokens(usage)
           usage['reasoningTokens'] || usage.dig('outputTokensDetails', 'reasoningTokens')
+        end
+
+        def cache_write_by_ttl(usage)
+          details = usage['cacheDetails']
+          return unless details.is_a?(Array)
+
+          details.each_with_object(Hash.new(0)) do |detail, counts|
+            counts[detail['ttl']] += detail['inputTokens'].to_i if detail['ttl']
+          end
         end
 
         def format_messages(messages, caching: nil, automatic_cache_target: nil, citations: false)

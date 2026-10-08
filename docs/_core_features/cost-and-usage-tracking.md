@@ -94,6 +94,7 @@ Token counts use the same meanings across providers:
 | `tokens.output` | Billable output, including thinking when it is billed as output. |
 | `tokens.cache_read` | Input served from the prompt cache. |
 | `tokens.cache_write` | Input written to the prompt cache. |
+| `tokens.cache_write_by_ttl` | Cache writes split by lifetime, such as `{"1h" => 2048}`, when reported. |
 | `tokens.thinking` | Thinking tokens, when reported. |
 
 To measure all input activity, add the standard input, cache reads, and cache writes. A missing count is `nil`, so check for it before calculating a total.
