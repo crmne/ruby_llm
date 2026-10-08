@@ -288,30 +288,40 @@ module RubyLLM
           }
         end
 
-        # System messages marked as cache boundaries, or carrying attachments,
-        # ride along as input items, because the +instructions+ parameter is a
-        # plain string and cannot carry a breakpoint marker or a file.
+        # The +instructions+ parameter is a plain string and cannot carry a
+        # breakpoint marker or a file. When any system message needs one, every
+        # system message rides along as an input item, so their order holds.
         def format_instructions(messages, caching: nil)
-          instructions = messages.select { |msg| msg.role == :system && !system_input_item?(msg, caching:) }
-                                 .map { |msg| msg.content.to_s }
+          system = messages.select { |msg| msg.role == :system }
+          return if system.empty? || system_input_items?(system, caching:)
 
-          instructions.empty? ? nil : instructions.join("\n\n")
+          system.map { |msg| msg.content.to_s }.join("\n\n")
         end
 
         def format_input(messages, caching: nil)
-          system_items = []
-          messages.each_with_object([]) do |message, input|
-            next if message.role == :system && !system_input_item?(message, caching:)
+          system, conversation = messages.partition { |msg| msg.role == :system }
+          system_items = if system_input_items?(system, caching:)
+                           system.flat_map { |msg| [format_item(msg, caching:)].flatten(1) }
+                         else
+                           []
+                         end
 
+          system_items + format_conversation(conversation, caching:)
+        end
+
+        def format_conversation(messages, caching: nil)
+          messages.each_with_object([]) do |message, input|
             raw = message.raw_content
             if raw.is_a?(Hash) && raw['object'] == 'response.compaction'
-              input.replace(system_items + raw.fetch('output'))
+              input.replace(raw.fetch('output'))
             else
-              items = [format_item(message, caching:)].flatten(1)
-              system_items.concat(items) if message.role == :system
-              input.concat(items)
+              input.concat([format_item(message, caching:)].flatten(1))
             end
           end
+        end
+
+        def system_input_items?(messages, caching: nil)
+          messages.any? { |msg| system_input_item?(msg, caching:) }
         end
 
         def system_input_item?(msg, caching: nil)

@@ -205,6 +205,51 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         content: [{ type: 'input_text', text: 'Stable instructions', prompt_cache_breakpoint: { mode: 'explicit' } }]
       )
     end
+
+    it 'keeps unmarked system messages after the cache-bounded one they follow' do
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'Shared policy').cache_until_here,
+        RubyLLM::Message.new(role: :system, content: 'Today is Monday.'),
+        RubyLLM::Message.new(role: :user, content: 'hi')
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:instructions]).to be_nil
+      expect(payload[:input].map { |item| item[:role] }).to eq(%w[system system user])
+      expect(payload.dig(:input, 0, :content, 0, :text)).to eq('Shared policy')
+      expect(payload.dig(:input, 1, :content)).to eq('Today is Monday.')
+    end
+
+    it 'sends system messages ahead of the conversation they follow' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'hi'),
+        RubyLLM::Message.new(role: :assistant, content: 'Hello!'),
+        RubyLLM::Message.new(role: :user, content: 'again'),
+        RubyLLM::Message.new(role: :system, content: 'Shared policy').cache_until_here
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:input].map { |item| item[:role] }).to eq(%w[system user assistant user])
+    end
+
+    it 'keeps cache-bounded system messages ahead of a compaction' do
+      compaction = RubyLLM::Message.new(
+        role: :assistant, content: nil,
+        raw_content: { 'object' => 'response.compaction', 'output' => [{ 'type' => 'compaction', 'id' => 'cmp_1' }] }
+      )
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'Shared policy').cache_until_here,
+        RubyLLM::Message.new(role: :user, content: 'old question'),
+        compaction,
+        RubyLLM::Message.new(role: :user, content: 'new question')
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:input].map { |item| item[:role] || item['type'] }).to eq(%w[system compaction user])
+    end
   end
 
   describe '#parse_completion_response' do
