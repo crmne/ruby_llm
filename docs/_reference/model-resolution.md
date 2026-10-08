@@ -114,7 +114,7 @@ chat = RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock)
 chat.model.id  # => "us.anthropic.claude-haiku-4-5-20251001-v1:0"  (region prefix applied)
 ```
 
-RubyLLM only applies the prefix when a matching regional model exists in the registry, and normalizes the inference-profile form from the model's metadata. See [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) for routing the same model through a different provider.
+RubyLLM only applies the prefix when a matching regional model exists in the registry, and normalizes the inference-profile form from the model's metadata. An ID that already carries a prefix, such as `eu.` or `global.`, names the inference profile you chose, and RubyLLM uses it as given. See [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) for routing the same model through a different provider.
 
 ### Bedrock Converse and Mantle Endpoints
 

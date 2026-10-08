@@ -316,6 +316,55 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       ).to eq('us.meta.llama4-maverick-v1:0')
     end
 
+    context 'when the registry carries geography and global profiles' do
+      let(:ireland) { config_for(region: 'eu-west-1') }
+
+      it 'keeps a geography profile instead of the global one' do
+        expect(
+          described_class.resolve_registry_id(
+            'eu.anthropic.claude-sonnet-5-5', profiles_of('anthropic.claude-sonnet-5-5'), ireland
+          )
+        ).to eq('eu.anthropic.claude-sonnet-5-5')
+      end
+
+      it 'keeps a global profile instead of the geography one' do
+        expect(
+          described_class.resolve_registry_id(
+            'global.anthropic.claude-sonnet-5-5', profiles_of('anthropic.claude-sonnet-5-5'), ireland
+          )
+        ).to eq('global.anthropic.claude-sonnet-5-5')
+      end
+
+      it 'keeps a profile of another geography' do
+        expect(
+          described_class.resolve_registry_id(
+            'us.anthropic.claude-sonnet-5-5', profiles_of('anthropic.claude-sonnet-5-5'), ireland
+          )
+        ).to eq('us.anthropic.claude-sonnet-5-5')
+      end
+
+      it 'resolves a bare id to the profile of the configured geography' do
+        expect(
+          described_class.resolve_registry_id(
+            'anthropic.claude-sonnet-4-5-20250929-v1:0', profiles_of('anthropic.claude-sonnet-4-5-20250929-v1:0'),
+            ireland
+          )
+        ).to eq('eu.anthropic.claude-sonnet-4-5-20250929-v1:0')
+      end
+
+      def profiles_of(model_id)
+        RubyLLM::Models.new(
+          %w[us eu global].map do |prefix|
+            RubyLLM::Model.new(
+              id: "#{prefix}.#{model_id}",
+              provider: 'bedrock',
+              metadata: { inference_types: ['INFERENCE_PROFILE'] }
+            )
+          end
+        )
+      end
+    end
+
     it 'returns the id unchanged when the registry has no prefixed entry' do
       expect(described_class.resolve_registry_id('meta.unknown-v1:0', models, config_for)).to eq('meta.unknown-v1:0')
     end

@@ -185,6 +185,7 @@ module RubyLLM
         def resolve_registry_id(model_id, models, config)
           region = config.bedrock_region.to_s
           return model_id if region.empty?
+          return model_id if region_prefixed?(model_id)
           return model_id if mantle_model_id?(model_id)
 
           candidate = registered_profile_candidate(model_id, models, region)
@@ -197,8 +198,6 @@ module RubyLLM
         def registered_profile_candidate(model_id, models, region)
           region_prefix_candidates(region).each do |prefix|
             prefixed = prefixed_with(model_id, prefix)
-            next if prefixed == model_id
-
             candidate = models.all_including_unlisted.find { |m| m.provider == 'bedrock' && m.id == prefixed }
             return candidate if candidate
           end
