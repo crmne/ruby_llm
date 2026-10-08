@@ -1147,7 +1147,7 @@ module RubyLLM
 
     ##
     # :method: cache_until_here
-    # :call-seq: cache_until_here()
+    # :call-seq: cache_until_here(ttl: nil)
     #
     # Delegates to Chat#cache_until_here. See that method for arguments and return values.
 

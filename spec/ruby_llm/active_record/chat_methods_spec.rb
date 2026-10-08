@@ -327,6 +327,24 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.messages.where(role: 'system').sole.cache_until_here?).to be(true)
       expect(chat.to_llm.messages.sole.cache_until_here?).to be(true)
     end
+
+    it 'persists the boundary lifetime and replays it after a reload' do
+      chat = Chat.create!(model: model_id)
+
+      chat.with_instructions('Stable policy', cache_until_here: { ttl: '1h' })
+
+      expect(chat.messages.where(role: 'system').sole.cache_ttl).to eq('1h')
+      expect(Chat.find(chat.id).to_llm.messages.sole.cache_ttl).to eq('1h')
+    end
+
+    it 'clears the lifetime when the same instructions return without one' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Stable policy', cache_until_here: { ttl: '1h' })
+
+      chat.with_instructions('Stable policy', cache_until_here: true)
+
+      expect(chat.messages.where(role: 'system').sole.cache_ttl).to be_nil
+    end
   end
 
   describe '#add_message' do
@@ -365,6 +383,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.cache_until_here
 
       expect(chat.messages.last.cache_until_here?).to be(true)
+    end
+
+    it 'persists a boundary lifetime on the last persisted message' do
+      chat = Chat.create!(model: model_id)
+      chat.add_message(role: :user, content: 'Reusable prompt')
+
+      chat.cache_until_here(ttl: '1h')
+
+      expect(chat.messages.last.reload.cache_ttl).to eq('1h')
+      expect(Chat.find(chat.id).to_llm.messages.last.cache_ttl).to eq('1h')
     end
 
     it 'marks the last in-memory message when nothing is persisted' do

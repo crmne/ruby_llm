@@ -428,17 +428,21 @@ module RubyLLM
     # Sets the system instructions for the conversation, replacing any
     # existing system messages. With <tt>append: true</tt> the instructions
     # are added alongside the existing ones. With <tt>cache_until_here:
-    # true</tt> the instruction becomes an explicit prompt cache boundary.
-    # Pass +nil+ to remove all system instructions. Returns +self+.
+    # true</tt> the instruction becomes an explicit prompt cache boundary;
+    # pass <tt>cache_until_here: { ttl: "1h" }</tt> to give that boundary its
+    # own lifetime, as Message#cache_until_here describes. Pass +nil+ to
+    # remove all system instructions. Returns +self+.
     #
     #   chat.with_instructions "You are a helpful Ruby tutor."
     #   chat.with_instructions "Use exactly one short paragraph.", append: true
+    #   chat.with_instructions policy, cache_until_here: { ttl: "1h" }
     #   chat.with_instructions nil
     #
     def with_instructions(instructions, append: false, cache_until_here: false)
+      boundary = Message.cache_boundary_options(cache_until_here) if cache_until_here
       @messages.reject! { |message| message.role == :system } unless append
       @messages << Message.new(role: :system, content: instructions) unless instructions.nil?
-      @messages.last.cache_until_here if instructions && cache_until_here
+      @messages.last.cache_until_here(**boundary) if instructions && boundary
       self
     end
 
@@ -1034,14 +1038,18 @@ module RubyLLM
     end
 
     # Marks the latest message as an explicit prompt cache boundary, asking
-    # the provider to cache everything up to this point. Returns +self+.
+    # the provider to cache everything up to this point. Pass +ttl:+ to give
+    # this boundary its own cache lifetime, as Message#cache_until_here
+    # describes. Returns +self+.
+    #
+    #   chat.with_instructions(policy).cache_until_here(ttl: "1h")
     #
     # Raises ArgumentError if the chat has no messages.
-    def cache_until_here
+    def cache_until_here(ttl: nil)
       message = messages.last
       raise ArgumentError, 'No messages to cache' unless message
 
-      message.cache_until_here
+      message.cache_until_here(ttl:)
       self
     end
 

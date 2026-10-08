@@ -15,7 +15,7 @@ After reading this guide, you will know:
 
 * How to turn on provider prompt caching with `with_caching`.
 * How to mark an exact prompt prefix with `cache_until_here`.
-* How to choose cache lifetimes and read cache usage.
+* How to choose cache lifetimes, per chat or per boundary, and read cache usage.
 * How to create, reuse, and expire an explicit cache with `RubyLLM.cache`.
 * How Rails persists explicit cache boundaries.
 
@@ -101,6 +101,22 @@ chat.ask("Apply the policy to this request: #{request_text}")
 
 RubyLLM sends both controls. The provider applies its cache behavior and breakpoint limits. On supported OpenAI-compatible models, use `with_caching(mode: "explicit")` when you want only explicit breakpoints.
 
+A stable prefix and a growing conversation often deserve different lifetimes. A one-hour write costs more than a five-minute one, so give the boundary its own `ttl:` and keep the chat's shorter default for the rest:
+
+```ruby
+chat.with_caching
+chat.with_instructions(large_policy_prompt).cache_until_here(ttl: "1h")
+chat.ask("Apply the policy to this request: #{request_text}")
+```
+
+`with_instructions` accepts the same option:
+
+```ruby
+chat.with_instructions(large_policy_prompt, cache_until_here: { ttl: "1h" })
+```
+
+A boundary without `ttl:` uses the lifetime from `with_caching`. Anthropic, OpenRouter, and Bedrock Converse set a lifetime per boundary; other providers keep their request-level lifetime. Anthropic requires longer lifetimes to come before shorter ones in the prompt.
+
 Boundaries are supported by Anthropic, OpenRouter, Bedrock Converse, and selected OpenAI-compatible models. Perplexity requires its [Router protocol]({% link _core_features/chat-request-control.md %}#perplexity-router). Providers without boundary support continue to use their own caching behavior.
 
 ## Creating an Explicit Cache
@@ -153,16 +169,16 @@ Use the same model and provider when creating and using a cache.
 
 ## Rails Persistence
 
-For persisted Rails chats, explicit cache boundaries are stored on messages with `cache_until_here` and replayed with conversation history:
+For persisted Rails chats, explicit cache boundaries are stored on messages with `cache_until_here`, their lifetimes in `cache_ttl`, and both are replayed with conversation history:
 
 ```ruby
 chat = Chat.create!(model: '{{ site.models.anthropic_current }}')
-chat.with_caching(ttl: "1h")
-chat.with_instructions('Reusable analysis prompt').cache_until_here
+chat.with_caching
+chat.with_instructions('Reusable analysis prompt').cache_until_here(ttl: "1h")
 chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```
 
 A reloaded chat renders the same request bytes as the turn that wrote it, so the next turn reuses the cached prefix. Tool call arguments keep the key order PostgreSQL `jsonb` and MySQL `json` columns store.
 
-Apps upgrading from 1.16 get `cache_until_here` from the [2.0 upgrade](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md). New apps get the column from the install generator.
+Apps upgrading from 1.16 get `cache_until_here` from the [2.0 upgrade](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md), and apps on 2.0 get `cache_ttl` from the [2.1 upgrade]({% link _reference/upgrading.md %}#upgrade-the-rails-schema). New apps get both columns from the install generator.

@@ -185,7 +185,8 @@ module RubyLLM
       # +append:+ is true. Pass <tt>persist: false</tt> to apply the
       # instructions only to the in-memory chat for this record instance.
       # With <tt>cache_until_here: true</tt> the instruction becomes an
-      # explicit prompt cache boundary. Returns +self+.
+      # explicit prompt cache boundary, and <tt>cache_until_here: { ttl: "1h" }</tt>
+      # gives that boundary its own lifetime. Returns +self+.
       #
       #   chat.with_instructions "You are a Ruby expert."
       #   chat.with_instructions "Use short bullet points.", append: true
@@ -603,17 +604,19 @@ module RubyLLM
       end
 
       # Marks the latest persisted message as a prompt cache boundary, or the
-      # latest in-memory message when none is persisted yet. Returns +self+.
+      # latest in-memory message when none is persisted yet. Pass +ttl:+ to
+      # give the boundary its own cache lifetime. Returns +self+.
       #
       #   chat.with_instructions('Reusable analysis prompt').cache_until_here
+      #   chat.with_instructions('Reusable analysis prompt').cache_until_here(ttl: "1h")
       #
       # Raises ArgumentError if the chat has no messages.
-      def cache_until_here
+      def cache_until_here(ttl: nil)
         message_record = messages_association.order(:id).last
         if message_record
-          message_record.cache_until_here
+          message_record.cache_until_here(ttl:)
         elsif @chat&.messages&.any?
-          @chat.cache_until_here
+          @chat.cache_until_here(ttl:)
         else
           raise ArgumentError, 'No messages to cache'
         end
@@ -933,15 +936,17 @@ module RubyLLM
           update_persisted_system_instruction(existing.first, instructions, cache_until_here:)
         else
           clear_persisted_system_instructions
-          messages_association.create!(role: :system, content: instructions, cache_until_here: cache_until_here)
+          messages_association.create!(role: :system, content: instructions,
+                                       **cache_boundary_attributes(cache_until_here))
         end
       end
 
       # Rewriting the same instructions every turn would move the system row
       # behind the user messages and rebroadcast it each time.
       def update_persisted_system_instruction(record, instructions, cache_until_here:)
-        attributes = { content: instructions }
-        attributes[:cache_until_here] = cache_until_here if record.has_attribute?(:cache_until_here)
+        boundary = cache_boundary_attributes(cache_until_here)
+        boundary.delete(:cache_until_here) unless record.has_attribute?(:cache_until_here)
+        attributes = { content: instructions, **boundary }
         changed = attributes.any? { |column, value| record[column] != value }
         record.update!(attributes) if changed
         messages_association.reset
@@ -954,12 +959,19 @@ module RubyLLM
             messages_association.create!(
               role: :system,
               content: instructions,
-              cache_until_here: cache_until_here
+              **cache_boundary_attributes(cache_until_here)
             )
           else
             replace_persisted_system_instructions(instructions, cache_until_here:)
           end
         end
+      end
+
+      def cache_boundary_attributes(cache_until_here)
+        ttl = RubyLLM::Message.cache_boundary_options(cache_until_here)[:ttl] if cache_until_here
+        attributes = { cache_until_here: cache_until_here ? true : false }
+        attributes[:cache_ttl] = ttl if ttl || messages_association.klass.column_names.include?('cache_ttl')
+        attributes
       end
 
       def unpersisted_instructions
@@ -1027,6 +1039,7 @@ module RubyLLM
         assign_supported_attribute(attrs, :raw_reasoning, message.raw_reasoning)
         assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
+        assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)
         attrs
       end
 

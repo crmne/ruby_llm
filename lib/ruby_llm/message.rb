@@ -115,6 +115,7 @@ module RubyLLM
       @finish_reason = options[:finish_reason]&.to_sym
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
+      @cache_ttl = options[:cache_ttl] if @cache_until_here
 
       ensure_valid_role
     end
@@ -217,13 +218,30 @@ module RubyLLM
 
     # Marks this message as an explicit prompt cache boundary. Providers
     # with boundary controls use the conversation up to and including this
-    # message as the cacheable prefix. Returns +self+.
+    # message as the cacheable prefix. Pass +ttl:+ to give this boundary its
+    # own cache lifetime instead of the +ttl:+ from Chat#with_caching, on
+    # providers that set a lifetime per boundary. Returns +self+.
     #
     #   chat.add_message(role: :user, content: long_context).cache_until_here
+    #   chat.add_message(role: :user, content: handbook).cache_until_here(ttl: "1h")
     #
-    def cache_until_here
+    def cache_until_here(ttl: nil)
       @cache_until_here = true
+      @cache_ttl = ttl
       self
+    end
+
+    # Returns the cache lifetime given to this message's boundary, such as
+    # <tt>"1h"</tt>, or +nil+ when the chat's caching policy applies.
+    attr_reader :cache_ttl
+
+    def self.cache_boundary_options(value) # :nodoc:
+      return {} if value == true
+
+      options = value.transform_keys(&:to_sym) if value.is_a?(Hash)
+      return options if options && (options.keys - %i[ttl]).empty?
+
+      raise ArgumentError, "cache_until_here accepts true, false, or ttl:, got #{value.inspect}"
     end
 
     # Returns +true+ if the message carries an explicit prompt cache
@@ -255,7 +273,8 @@ module RubyLLM
         raw_reasoning: raw_reasoning,
         mcp_result: mcp_result&.dump,
         finish_reason: finish_reason,
-        cache_until_here: cache_until_here? || nil
+        cache_until_here: cache_until_here? || nil,
+        cache_ttl: cache_ttl
       }.merge(tokens.to_h).compact
     end
 

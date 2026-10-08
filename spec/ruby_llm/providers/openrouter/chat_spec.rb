@@ -252,6 +252,14 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
 
       expect(formatted.dig(0, :content, -1, :cache_control)).to eq(type: 'ephemeral', ttl: '1h')
     end
+
+    it 'uses a boundary lifetime ahead of the configured ttl' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here(ttl: '1h')
+
+      formatted = provider.send(:format_messages, [message], caching: { ttl: '5m' })
+
+      expect(formatted.dig(0, :content, -1, :cache_control)).to eq(type: 'ephemeral', ttl: '1h')
+    end
   end
 
   describe '#render_payload' do

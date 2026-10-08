@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_003_140_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_008_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 20_261_003_140_000) do
     t.json 'raw_content'
     t.json 'raw_reasoning'
     t.boolean 'cache_until_here', default: false, null: false
+    t.string 'cache_ttl'
     t.string 'finish_reason'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

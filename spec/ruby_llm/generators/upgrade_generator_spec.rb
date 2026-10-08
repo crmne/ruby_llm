@@ -26,6 +26,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       connection.remove_column(:ruby_llm_tool_calls, :mcp_result)
       connection.remove_column(:ruby_llm_usages, :server_tool_use)
       connection.drop_table(:ruby_llm_provider_files)
+      connection.remove_column(:messages, :cache_ttl)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
@@ -35,6 +36,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:ruby_llm_usages, :server_tool_use)).to be(true)
       expect(connection.index_exists?(:ruby_llm_provider_files, %i[blob_key provider account], unique: true))
         .to be(true)
+      expect(connection.column_exists?(:messages, :cache_ttl)).to be(true)
       raise ActiveRecord::Rollback
     end
   end
@@ -88,6 +90,14 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(expressions.first).to include(*RubyLLM::Accounting::Usage::Entry::OPERATIONS.map { |op| "'#{op}'" })
       raise ActiveRecord::Rollback
     end
+  end
+
+  it 'adds the boundary lifetime to a mapped message table' do
+    described_class.new(['message:ChatMessage'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+                   .create_migration_file
+    migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_upgrade_ruby_llm_to_2_1.rb')).first)
+
+    expect(migration).to include('add_column :chat_messages, :cache_ttl, :string')
   end
 
   it 'leaves an up-to-date schema alone' do

@@ -198,7 +198,9 @@ module RubyLLM
               }
             end
           end
-          blocks << converse_cache_block_for(caching) if cache_boundary?(msg, automatic_cache_target, caching:)
+          if cache_boundary?(msg, automatic_cache_target, caching:)
+            blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl)
+          end
 
           blocks
         end
@@ -269,7 +271,7 @@ module RubyLLM
           messages.flat_map do |msg|
             blocks = Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names)
             if cache_boundary?(msg, automatic_cache_target, caching:)
-              blocks + [converse_cache_block_for(caching)]
+              blocks + [converse_cache_block_for(caching, ttl: msg.cache_ttl)]
             else
               blocks
             end
@@ -290,10 +292,11 @@ module RubyLLM
           caching != false && (message.cache_until_here? || message.equal?(automatic_cache_target))
         end
 
-        def converse_cache_block_for(caching)
+        def converse_cache_block_for(caching, ttl: nil)
           options = prompt_cache_options(caching)
+          ttl ||= options[:ttl]
           point = { type: 'default' }
-          point[:ttl] = options[:ttl] if options[:ttl]
+          point[:ttl] = ttl if ttl
           { cachePoint: point }
         end
 

@@ -93,4 +93,15 @@ RSpec.describe RubyLLM::Agent do
       expect(parent.chat.messages.map(&:content)).to eq(['Parent instructions'])
     end
   end
+
+  describe 'instruction cache boundaries' do
+    it 'gives a declared boundary its own lifetime' do
+      agent = Class.new(described_class) do
+        model model_for(:anthropic), provider: :anthropic
+        instructions 'Stable policy', cache_until_here: { ttl: '1h' }
+      end
+
+      expect(agent.chat.messages.sole.cache_ttl).to eq('1h')
+    end
+  end
 end

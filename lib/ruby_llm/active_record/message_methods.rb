@@ -35,7 +35,8 @@ module RubyLLM
           mcp_result: mcp_result,
           finish_reason: optional_column(:finish_reason),
           model: entries.reverse.find(&:succeeded?)&.model,
-          cache_until_here: cache_until_here?
+          cache_until_here: cache_until_here?,
+          cache_ttl: cache_ttl
         )
       end
 
@@ -57,15 +58,25 @@ module RubyLLM
         to_llm.model_info
       end
 
-      # Marks the message as a prompt cache boundary and returns it.
-      def cache_until_here
-        update!(cache_until_here: true)
+      # Marks the message as a prompt cache boundary and returns it. Pass
+      # +ttl:+ to give the boundary its own cache lifetime, as
+      # RubyLLM::Message#cache_until_here describes.
+      def cache_until_here(ttl: nil)
+        attributes = { cache_until_here: true }
+        attributes[:cache_ttl] = ttl if ttl || has_attribute?(:cache_ttl)
+        update!(attributes)
         self
       end
 
       # Returns +true+ if the message is a prompt cache boundary.
       def cache_until_here?
         optional_column(:cache_until_here) || false
+      end
+
+      # Returns the cache lifetime given to the message's boundary, or +nil+
+      # when the chat's caching policy applies.
+      def cache_ttl
+        optional_column(:cache_ttl) if cache_until_here?
       end
 
       # Returns the reasoning the model returned as a RubyLLM::Thinking, or +nil+.

@@ -58,6 +58,10 @@ class <%= 'upgrade_ruby_llm_to_2_1'.camelize %> < ActiveRecord::Migration<%= mig
       end
     end
 
+    unless column_exists?(:<%= message_table_name %>, :cache_ttl)
+      add_column :<%= message_table_name %>, :cache_ttl, :string
+    end
+
     unless table_exists?(:ruby_llm_provider_files)
       create_table :ruby_llm_provider_files, id: :<%= reference_type %> do |t|
         t.string :blob_key, null: false

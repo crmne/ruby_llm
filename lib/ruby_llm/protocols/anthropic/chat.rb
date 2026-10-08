@@ -90,7 +90,7 @@ module RubyLLM
           # own block in the resulting array.
           system_messages.flat_map do |msg|
             blocks = Media.format_content(msg.content, msg.attachments).dup
-            cache_boundary?(msg, caching:) ? inject_cache_control(blocks, caching:) : blocks
+            cache_boundary?(msg, caching:) ? inject_cache_control(blocks, caching:, ttl: msg.cache_ttl) : blocks
           end
         end
 
@@ -115,7 +115,7 @@ module RubyLLM
           messages.each do |msg|
             if msg.tool_result?
               tool_result_blocks << Tools.format_tool_result_block(msg)
-              inject_cache_control(tool_result_blocks, caching:) if cache_boundary?(msg, caching:)
+              inject_cache_control(tool_result_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
               next
             end
 
@@ -362,7 +362,7 @@ module RubyLLM
         # citations back exactly as returned.
         def format_raw_assistant_message(msg, caching: nil)
           blocks = msg.raw_content.dup
-          inject_cache_control(blocks, caching:) if cache_boundary?(msg, caching:)
+          inject_cache_control(blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           { role: 'assistant', content: blocks }
         end
@@ -371,7 +371,7 @@ module RubyLLM
           content_blocks = msg.role == :assistant ? format_thinking_blocks(msg) : []
 
           append_formatted_content(content_blocks, msg, citations: citations)
-          inject_cache_control(content_blocks, caching:) if cache_boundary?(msg, caching:)
+          inject_cache_control(content_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           {
             role: convert_role(msg.role),
@@ -391,7 +391,7 @@ module RubyLLM
               input: tool_call.arguments
             }
           end
-          inject_cache_control(content_blocks, caching:) if cache_boundary?(msg, caching:)
+          inject_cache_control(content_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           {
             role: 'assistant',
@@ -429,22 +429,23 @@ module RubyLLM
           caching != false && message.cache_until_here?
         end
 
-        def inject_cache_control(blocks, caching: nil)
+        def inject_cache_control(blocks, caching: nil, ttl: nil)
           return blocks if blocks.empty?
 
           last = blocks.last
           return blocks if last.is_a?(Hash) && (last[:cache_control] || last['cache_control'])
           return blocks unless last.is_a?(Hash)
 
-          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching))
+          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching, ttl:))
           blocks
         end
 
-        def prompt_cache_control(caching = nil)
+        def prompt_cache_control(caching = nil, ttl: nil)
           options = prompt_cache_options(caching)
+          ttl ||= options[:ttl]
 
           { type: CACHE_CONTROL_TYPE }.tap do |control|
-            control[:ttl] = options[:ttl] if options[:ttl]
+            control[:ttl] = ttl if ttl
           end
         end
 

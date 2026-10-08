@@ -157,13 +157,13 @@ Prompt caching configuration is applied to the underlying LLM chat, and explicit
 
 ```ruby
 chat = Chat.create!(model: 'claude-sonnet-4-5')
-chat.with_caching(ttl: "1h")
-chat.with_instructions('Reusable analysis prompt').cache_until_here
+chat.with_caching
+chat.with_instructions('Reusable analysis prompt').cache_until_here(ttl: "1h")
 chat.add_message(role: :user, content: long_context).cache_until_here
 chat.ask("Today's request: #{summary}")
 ```
 
-Existing apps get `cache_until_here` and the other current persistence columns by following [Upgrading]({% link _reference/upgrading.md %}) for each release. New apps get the proper columns from the install generator.
+Existing apps get `cache_until_here`, `cache_ttl`, and the other current persistence columns by following [Upgrading]({% link _reference/upgrading.md %}) for each release. New apps get the proper columns from the install generator.
 {: .note }
 
 When the stable prefix should not be stored with the transcript, disable persistence. This is useful for an application-wide policy followed by tenant or request context:

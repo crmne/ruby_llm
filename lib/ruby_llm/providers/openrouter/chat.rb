@@ -105,10 +105,12 @@ module RubyLLM
 
         def format_message_content(msg, caching: nil)
           content = super
-          caching != false && msg.cache_until_here? ? inject_cache_control(content, caching:) : content
+          return content unless caching != false && msg.cache_until_here?
+
+          inject_cache_control(content, caching:, ttl: msg.cache_ttl)
         end
 
-        def inject_cache_control(content, caching: nil)
+        def inject_cache_control(content, caching: nil, ttl: nil)
           blocks = content.is_a?(Array) ? content.dup : [{ type: 'text', text: content }]
           return blocks if blocks.empty?
 
@@ -116,15 +118,16 @@ module RubyLLM
           return blocks unless last.is_a?(Hash)
           return blocks if last[:cache_control] || last['cache_control']
 
-          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching))
+          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching, ttl:))
           blocks
         end
 
-        def prompt_cache_control(caching = nil)
+        def prompt_cache_control(caching = nil, ttl: nil)
           options = prompt_cache_options(caching)
+          ttl ||= options[:ttl]
 
           { type: CACHE_CONTROL_TYPE }.tap do |control|
-            control[:ttl] = options[:ttl] if options[:ttl]
+            control[:ttl] = ttl if ttl
           end
         end
 

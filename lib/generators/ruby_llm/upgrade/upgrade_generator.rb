@@ -14,7 +14,10 @@ module RubyLLM
       namespace 'ruby_llm:upgrade'
       source_root File.expand_path('templates', __dir__)
 
-      desc 'Upgrades a RubyLLM 2.0 Rails schema to 2.1'
+      argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName'
+
+      desc 'Upgrades a RubyLLM 2.0 Rails schema to 2.1\n' \
+           'Usage: bin/rails g ruby_llm:upgrade [chat:ChatName] [message:MessageName]'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)

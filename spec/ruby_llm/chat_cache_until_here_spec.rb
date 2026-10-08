@@ -232,6 +232,45 @@ RSpec.describe RubyLLM::Chat, :live do
     it 'raises when the chat has no messages' do
       expect { chat.cache_until_here }.to raise_error(ArgumentError, 'No messages to cache')
     end
+
+    it 'gives the boundary its own lifetime' do
+      chat.with_instructions('Stable instructions').cache_until_here(ttl: '1h')
+
+      expect(chat.messages.last.cache_until_here?).to be true
+      expect(chat.messages.last.cache_ttl).to eq('1h')
+    end
+
+    it 'gives an instruction boundary its own lifetime from with_instructions' do
+      chat.with_instructions('Stable instructions', cache_until_here: { ttl: '1h' })
+
+      expect(chat.messages.last.cache_ttl).to eq('1h')
+    end
+
+    it 'rejects boundary options it does not know' do
+      expect { chat.with_instructions('Stable instructions', cache_until_here: { scope: 'user' }) }
+        .to raise_error(ArgumentError, /cache_until_here accepts true, false, or ttl:/)
+    end
+
+    it 'renders the boundary lifetime ahead of the chat lifetime on Anthropic' do
+      chat = RubyLLM.chat(model: model_for(:anthropic)).with_caching
+      chat.with_instructions('Stable policy').cache_until_here(ttl: '1h')
+      chat.ask_later('Long context').cache_until_here
+
+      payload = chat.render
+
+      expect(payload[:system].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
+      expect(payload.dig(:messages, -1, :content, -1, :cache_control)).to eq(type: 'ephemeral')
+      expect(payload[:cache_control]).to eq(type: 'ephemeral')
+    end
+
+    it 'keeps the lifetime when a message round-trips through to_h' do
+      message = RubyLLM::Message.new(role: :system, content: 'Stable policy').cache_until_here(ttl: '1h')
+
+      restored = RubyLLM::Message.new(message.to_h)
+
+      expect(restored.cache_until_here?).to be true
+      expect(restored.cache_ttl).to eq('1h')
+    end
   end
 
   describe 'prompt cache round-trip' do
@@ -260,6 +299,17 @@ RSpec.describe RubyLLM::Chat, :live do
         second = read_chat.ask('Reply with exactly: OK')
         expect(second.tokens.cache_read).to be_positive
       end
+    end
+
+    it "anthropic/#{model_for(:anthropic)} writes a one-hour boundary and prices it as one" do
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_caching
+      chat.with_instructions("#{cacheable_instructions}\nKeep this prefix for an hour.").cache_until_here(ttl: '1h')
+
+      response = chat.ask('Reply with exactly: OK')
+
+      expect(response.tokens.cache_write_by_ttl).to include('1h' => be_positive)
+      one_hour = response.tokens.cache_write_by_ttl['1h'] * response.model_info.price(:input) * 2 / 1_000_000.0
+      expect(response.cost.cache_write).to be >= one_hour
     end
 
     it "openai/#{model_for(:openai, :reasoning_effort)} reuses the prompt cache with a shared key" do

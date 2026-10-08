@@ -204,6 +204,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(payload.dig(:messages, 0, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
     end
 
+    it 'uses a boundary lifetime ahead of the configured ttl' do
+      system = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here(ttl: '1h')
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
+
+      payload = render_payload([system, message], caching: { ttl: '5m' })
+
+      expect(payload[:system].last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+      expect(payload.dig(:messages, 0, :content).last).to eq(cachePoint: { type: 'default', ttl: '5m' })
+    end
+
     it 'adds an automatic cachePoint to the last cacheable message when caching is enabled' do
       first = RubyLLM::Message.new(role: :user, content: 'Stable context')
       second = RubyLLM::Message.new(role: :user, content: 'Latest question')
