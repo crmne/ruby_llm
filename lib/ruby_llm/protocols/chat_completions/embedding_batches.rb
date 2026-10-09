@@ -46,7 +46,7 @@ module RubyLLM
         # back in that order and positions that are not exactly 0...N fail the
         # request rather than pairing vectors with the wrong texts.
         def valid_embedding_positions?(rows)
-          positions = rows.map { |row| row['index'] }
+          positions = rows.map { |row| row.is_a?(Hash) ? row['index'] : nil }
 
           positions.all?(Integer) && positions.sort == (0...positions.size).to_a
         end

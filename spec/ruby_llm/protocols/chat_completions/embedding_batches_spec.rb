@@ -113,6 +113,16 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::EmbeddingBatches do
       expect(embedding).to be_nil
       expect(failure).to eq(:failed)
     end
+
+    it 'fails the embedding result when a row is not a record' do
+      line = embedding_line([0.1, 0.2])
+      line['response']['body']['data'][0] = 'not a record'
+
+      _index, embedding, failure = protocol.send(:parse_batch_result, line)
+
+      expect(embedding).to be_nil
+      expect(failure).to eq(:failed)
+    end
   end
 
   def embedding_line(vectors, positions: vectors.each_index.to_a)
