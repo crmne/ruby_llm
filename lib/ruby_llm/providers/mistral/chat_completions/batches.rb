@@ -99,9 +99,13 @@ module RubyLLM
             custom_id, shape = line['custom_id'].split(':', 2)
             index = batch_result_index(custom_id)
             response = line['response']
+            body = response && response['body']
 
-            if response && response['body']
-              body = response['body']
+            if body && body['data'].is_a?(Array) && !embedding_positions?(body['data'])
+              return [index, nil, batch_failure(line['custom_id'], 'Invalid or duplicate embedding record positions')]
+            end
+
+            if body
               [index, parse_mistral_batch_body(body, shape:)]
             else
               [index, nil, batch_failure(line['custom_id'], batch_error_message(line))]
@@ -111,7 +115,17 @@ module RubyLLM
           def parse_mistral_batch_body(body, shape:)
             return parse_completion_body(body, raw: body) unless body['data'].is_a?(Array)
 
-            parse_embedding_response(Response.new(body), model: body['model'], text: shape == 'array' ? [] : nil)
+            ordered = body.merge('data' => body['data'].sort_by { |row| row['index'] })
+            parse_embedding_response(Response.new(ordered), model: body['model'], text: shape == 'array' ? [] : nil)
+          end
+
+          # A row's index names the input its vector belongs to, so rows are put
+          # back in that order and positions that are not exactly 0...N fail the
+          # request rather than pairing vectors with the wrong inputs.
+          def embedding_positions?(rows)
+            positions = rows.map { |row| row.is_a?(Hash) ? row['index'] : nil }
+
+            positions.all?(Integer) && positions.sort == (0...positions.size).to_a
           end
         end
       end

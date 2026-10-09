@@ -142,7 +142,8 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
 
   describe '#parse_batch_result' do
     it 'preserves scalar and one-element array embedding shapes after reloading a job' do
-      body = { 'model' => model_for(:mistral, :embedding), 'data' => [{ 'embedding' => [0.1, 0.2] }],
+      body = { 'model' => model_for(:mistral, :embedding),
+               'data' => [{ 'index' => 0, 'embedding' => [0.1, 0.2] }],
                'usage' => { 'prompt_tokens' => 3 } }
 
       scalar_index, scalar = protocol.send(:parse_batch_result, 'custom_id' => '0', 'response' => { 'body' => body })
@@ -159,6 +160,36 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       result = protocol.send(:parse_batch_result, 'custom_id' => '2:array', 'error' => { 'message' => 'Invalid input' })
 
       expect(result).to eq([2, nil, :failed])
+    end
+
+    it 'restores embedding rows to the order their indexes name' do
+      rows = [{ 'index' => 2, 'embedding' => [0.3] }, { 'index' => 0, 'embedding' => [0.1] },
+              { 'index' => 1, 'embedding' => [0.2] }]
+      line = { 'custom_id' => '0:array',
+               'response' => { 'body' => { 'model' => model_for(:mistral, :embedding), 'data' => rows } } }
+
+      index, embedding = protocol.send(:parse_batch_result, line)
+
+      expect(index).to eq(0)
+      expect(embedding.vectors).to eq([[0.1], [0.2], [0.3]])
+    end
+
+    [[0, 0], [0, 2], [-1, 0], [nil, 0], ['0', 1], [0.0, 1]].each do |positions|
+      it "fails only the embedding result with invalid positions #{positions.inspect}" do
+        rows = positions.each_with_index.map { |position, order| { 'index' => position, 'embedding' => [order.to_f] } }
+        line = { 'custom_id' => '0:array',
+                 'response' => { 'body' => { 'model' => model_for(:mistral, :embedding), 'data' => rows } } }
+
+        expect(protocol.send(:parse_batch_result, line)).to eq([0, nil, :failed])
+      end
+    end
+
+    it 'fails only the embedding result with a missing position' do
+      line = { 'custom_id' => '0:array',
+               'response' => { 'body' => { 'model' => model_for(:mistral, :embedding),
+                                           'data' => [{ 'embedding' => [0.1] }, { 'embedding' => [0.2] }] } } }
+
+      expect(protocol.send(:parse_batch_result, line)).to eq([0, nil, :failed])
     end
 
     it 'parses successful chat completion results' do
