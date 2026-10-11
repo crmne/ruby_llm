@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../../support/query_helpers'
 
 RSpec.describe RubyLLM::ActiveRecord::Usage do
   include_context 'with configured RubyLLM'
@@ -241,6 +242,77 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
     end
 
     expect(rows_for(owner)).to be_empty
+  end
+
+  context 'when a chat row cannot be linked to its message' do
+    before do
+      described_class.connection.execute(<<~SQL.squish)
+        CREATE TRIGGER reject_usage_link BEFORE UPDATE OF message_id ON ruby_llm_usages
+        BEGIN SELECT RAISE(ABORT, 'usage link rejected'); END
+      SQL
+      allow(RubyLLM.logger).to receive(:warn)
+    end
+
+    after { described_class.connection.execute('DROP TRIGGER reject_usage_link') }
+
+    it 'logs the failed link and returns the reply' do
+      stub_chat_reply
+      chat = Chat.create!(model: model_for(:anthropic))
+
+      expect(chat.ask('Hello').content).to eq('Hi')
+      expect(chat.reload.messages.map { |message| [message.role, message.content] })
+        .to eq([%w[user Hello], %w[assistant Hi]])
+      expect(RubyLLM.logger).to have_received(:warn).with(/could not link usage to message.*usage link rejected/)
+    end
+
+    it 'keeps the row with its chat and counts it in the chat totals' do
+      stub_chat_reply
+      chat = Chat.create!(model: model_for(:anthropic))
+
+      chat.ask('Hello')
+
+      expect(chat.reload.ruby_llm_usages.sole).to have_attributes(status: 'succeeded', message: nil,
+                                                                  input_tokens: 9, output_tokens: 2)
+      expect(Chat.find(chat.id).tokens).to have_attributes(input: 9, output: 2)
+    end
+
+    it 'rolls the failed link back to a savepoint' do
+      stub_chat_reply
+      chat = Chat.create!(model: model_for(:anthropic))
+
+      statements = QueryHelpers.matching(/SAVEPOINT/) { chat.ask('Hello') }
+
+      expect(statements).to include(a_string_starting_with('ROLLBACK TO SAVEPOINT'))
+    end
+
+    it 'keeps the tool calls of the reply and finishes the tool loop' do
+      stub_const('ClockTool', Class.new(RubyLLM::Tool) { def execute = 'noon' })
+      tool_use = { id: 'msg_0', type: 'message', role: 'assistant', model: model_for(:anthropic),
+                   content: [{ type: 'tool_use', id: 'toolu_1', name: 'clock', input: {} }],
+                   stop_reason: 'tool_use', usage: { input_tokens: 7, output_tokens: 3 } }
+      answer = tool_use.merge(content: [{ type: 'text', text: 'Hi' }], stop_reason: 'end_turn')
+      stub_request(:post, 'https://api.anthropic.com/v1/messages')
+        .to_return(json_response(tool_use), json_response(answer))
+      chat = Chat.create!(model: model_for(:anthropic))
+
+      expect(chat.with_tools(ClockTool).ask('What time is it?').content).to eq('Hi')
+      expect(chat.reload.messages.map(&:role)).to eq(%w[user assistant tool assistant])
+      expect(chat.messages.second.tool_calls.keys).to eq(['toolu_1'])
+      expect(chat.ruby_llm_usages.map(&:message_id)).to eq([nil, nil])
+    end
+
+    it 'keeps the caller transaction usable' do
+      stub_chat_reply
+      chat = Chat.create!(model: model_for(:anthropic))
+
+      later = Chat.transaction do
+        chat.ask('Hello')
+        Chat.create!(model: model_for(:anthropic))
+      end
+
+      expect(Chat.exists?(later.id)).to be(true)
+      expect(chat.reload.messages.last.content).to eq('Hi')
+    end
   end
 
   it 'returns the connection a thread borrowed to write its row' do
