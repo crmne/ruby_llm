@@ -14,6 +14,13 @@ RSpec.describe 'ruby_llm.gemspec' do
     expect(runtime_dependency('faraday').requirement).to be_satisfied_by(Gem::Version.new('1.10.3'))
   end
 
+  it 'excludes Faraday 2.0.0, which ships without its default adapter' do
+    requirement = runtime_dependency('faraday').requirement
+
+    expect(requirement).not_to be_satisfied_by(Gem::Version.new('2.0.0'))
+    expect(requirement).to be_satisfied_by(Gem::Version.new('2.14.4'))
+  end
+
   it 'keeps faraday-retry compatible with Faraday v1 and v2' do
     expect(runtime_dependency('faraday-retry').requirement.to_s).to eq('>= 1')
   end
