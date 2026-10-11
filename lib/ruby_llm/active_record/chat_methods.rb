@@ -741,10 +741,14 @@ module RubyLLM
       end
 
       def link_usage_entries(message)
-        message.ruby_llm_usage_entries.each do |entry|
-          record = usage_records_by_entry[entry]
-          record&.update!(message: @message)
+        Usage.transaction(requires_new: true) do
+          message.ruby_llm_usage_entries.each do |entry|
+            record = usage_records_by_entry[entry]
+            record&.update!(message: @message)
+          end
         end
+      rescue StandardError => e
+        RubyLLM.logger.warn("RubyLLM could not link usage to message #{@message.id}: #{e.class}: #{e.message}")
       end
 
       def usage_records_by_entry

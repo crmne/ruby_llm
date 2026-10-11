@@ -1471,7 +1471,11 @@ module RubyLLM
     end
 
     def discard_missing_uploads(error)
-      @provider.discard_missing_uploads(messages, error, model: @model, protocol: @protocol)
+      upload_messages = messages.map do |message|
+        replacements = message.attachments.filter_map { |attachment| @attachment_replacements[attachment] }
+        message.with_attachments(message.attachments + replacements)
+      end
+      @provider.discard_missing_uploads(upload_messages, error, model: @model, protocol: @protocol)
     end
 
     def record_usage_entry(entry)
