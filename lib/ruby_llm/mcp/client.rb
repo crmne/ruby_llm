@@ -6,8 +6,11 @@ module RubyLLM
     # 2026-07-28 revision and falls back to the initialize handshake for
     # servers that predate it, declaring only its extensions so those
     # servers never call back. A server that rejects 2026-07-28 while
-    # listing it gets the request once more; one that answers the handshake
-    # with a revision missing from LEGACY_VERSIONS is disconnected.
+    # listing it gets the request once more; one that rejects the
+    # discovery call without naming the versions it supports predates the
+    # revision and gets the handshake instead; one that answers the
+    # handshake with a revision missing from LEGACY_VERSIONS is
+    # disconnected.
     #
     # Servers that predate 2026-07-28 may announce that their tools,
     # prompts, or resources changed on the stream of any request. Those
@@ -22,7 +25,7 @@ module RubyLLM
       VERSION = '2026-07-28'
       LEGACY_VERSIONS = %w[2025-11-25 2025-06-18 2025-03-26 2024-11-05].freeze
       UNSUPPORTED_VERSION = -32_022
-      MODERN_ERRORS = [-32_020, -32_021, UNSUPPORTED_VERSION].freeze
+      MODERN_ERRORS = [-32_020, -32_021].freeze
       METHOD_NOT_FOUND = -32_601
       DISCOVERY_TIMEOUT = 10
       ACKNOWLEDGED = 'notifications/subscriptions/acknowledged'
@@ -103,7 +106,7 @@ module RubyLLM
         result = call('server/discover', timeout: DISCOVERY_TIMEOUT)
         result if Array(result['supportedVersions']).include?(VERSION)
       rescue Error => e
-        raise if MODERN_ERRORS.include?(e.code)
+        raise if MODERN_ERRORS.include?(e.code) || declares_versions?(e)
       end
 
       def handshake
@@ -188,8 +191,16 @@ module RubyLLM
       end
 
       def offers_version?(error)
+        modern? && error.code == UNSUPPORTED_VERSION && supported_versions(error).include?(VERSION)
+      end
+
+      def declares_versions?(error)
+        error.code == UNSUPPORTED_VERSION && supported_versions(error).any?
+      end
+
+      def supported_versions(error)
         supported = error.data['supported'] if error.data.is_a?(Hash)
-        modern? && error.code == UNSUPPORTED_VERSION && Array(supported).include?(VERSION)
+        Array(supported)
       end
 
       def message(method, params = {}, id: nil)

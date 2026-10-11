@@ -119,6 +119,18 @@ RSpec.describe RubyLLM::MCP::Client do
       end
     end
 
+    def version_reject
+      fake_server.new do |method|
+        if method == 'server/discover'
+          { 'error' => { 'code' => -32_022, 'message' => 'Unsupported protocol version' } }
+        elsif method == 'initialize'
+          handshake('2025-06-18')
+        else
+          { 'error' => { 'code' => -32_601, 'message' => 'Not found' } }
+        end
+      end
+    end
+
     it 'sends a request again when the server rejects a version it lists' do
       server = fake_server.new do |method, attempt|
         next unsupported('2026-07-28') if method == 'server/discover' && attempt == 1
@@ -144,6 +156,16 @@ RSpec.describe RubyLLM::MCP::Client do
 
       expect { described_class.new(server).server }.to raise_error(RubyLLM::MCP::Error, 'Unsupported protocol version')
       expect(server.sent).not_to include('initialize')
+    end
+
+    it 'shakes hands with a legacy server that rejects the discovery without naming versions' do
+      server = version_reject
+      mcp_client = described_class.new(server)
+
+      mcp_client.server
+
+      expect(mcp_client.version).to eq('2025-06-18')
+      expect(server.sent).to eq(['server/discover', 'initialize', 'notifications/initialized'])
     end
 
     it 'speaks every version it knows from before 2026-07-28' do
