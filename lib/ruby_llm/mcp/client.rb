@@ -7,9 +7,9 @@ module RubyLLM
     # servers that predate it, declaring only its extensions so those
     # servers never call back. A server that rejects 2026-07-28 while
     # listing it gets the request once more; one that rejects it while
-    # listing a revision from LEGACY_VERSIONS gets the handshake instead;
-    # one that answers the handshake with a revision missing from
-    # LEGACY_VERSIONS is disconnected.
+    # listing a revision from LEGACY_VERSIONS, or without listing any,
+    # gets the handshake instead; one that answers the handshake with a
+    # revision missing from LEGACY_VERSIONS is disconnected.
     #
     # Servers that predate 2026-07-28 may announce that their tools,
     # prompts, or resources changed on the stream of any request. Those
@@ -105,7 +105,7 @@ module RubyLLM
         result = call('server/discover', timeout: DISCOVERY_TIMEOUT)
         result if Array(result['supportedVersions']).include?(VERSION)
       rescue Error => e
-        raise if MODERN_ERRORS.include?(e.code) && !offers_legacy_version?(e)
+        raise if MODERN_ERRORS.include?(e.code) && !predates_revision?(e)
       end
 
       def handshake
@@ -193,8 +193,11 @@ module RubyLLM
         modern? && error.code == UNSUPPORTED_VERSION && supported_versions(error).include?(VERSION)
       end
 
-      def offers_legacy_version?(error)
-        error.code == UNSUPPORTED_VERSION && supported_versions(error).intersect?(LEGACY_VERSIONS)
+      def predates_revision?(error)
+        return false unless error.code == UNSUPPORTED_VERSION
+
+        supported = supported_versions(error)
+        supported.empty? || supported.intersect?(LEGACY_VERSIONS)
       end
 
       def supported_versions(error)
