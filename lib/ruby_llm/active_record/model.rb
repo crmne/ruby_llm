@@ -42,13 +42,13 @@ module RubyLLM
         end
 
         def save_to_database(registry = RubyLLM.models) # :nodoc:
-          transaction do
-            kept = registry.all.map do |model_info|
-              model = find_or_initialize_by(model_id: model_info.id, provider: model_info.provider)
-              model.update!(attributes_from_llm(model_info))
-              model.id
-            end
-            unlist(kept)
+          rows = registry.all.index_by { |model_info| [model_info.provider, model_info.id] }
+                         .transform_values { |model_info| attributes_from_llm(model_info) }
+          validate_incomplete(rows.values)
+
+          transaction(requires_new: true) do
+            upsert_all(rows.values, unique_by: registry_key) if rows.any?
+            unlist(pluck(:id, :provider, :model_id).reject { |_id, *key| rows.key?(key) }.map(&:first))
           end
         end
 
@@ -62,9 +62,9 @@ module RubyLLM
         # away. A row an application record points at cannot: deleting it would
         # dangle the reference. That row is stamped unlisted instead, keeping
         # the chats that use it resolvable while the application migrates them.
-        def unlist(kept_ids)
+        def unlist(dropped_ids)
           stayed = []
-          where.not(id: kept_ids).find_each do |model|
+          where(id: dropped_ids).find_each do |model|
             transaction(requires_new: true) { model.destroy! }
           rescue ::ActiveRecord::InvalidForeignKey
             model.update!(unlisted_at: Time.current) unless model.unlisted_at
@@ -88,6 +88,20 @@ module RubyLLM
           extra = names.size - UNLISTED_WARNING_LIMIT
           listing = names.first(UNLISTED_WARNING_LIMIT).join(', ')
           extra.positive? ? "#{listing}, and #{extra} more" : listing
+        end
+
+        # upsert_all skips validations. An entry missing a required value goes
+        # through them on its own, so it raises RecordInvalid as a save would.
+        def validate_incomplete(rows)
+          rows.each do |attributes|
+            new(attributes).validate! if attributes.values_at(:model_id, :provider, :name).any?(&:blank?)
+          end
+        end
+
+        # Active Record's MySQL adapter rejects a named conflict target;
+        # MySQL matches every unique index on its own.
+        def registry_key
+          %i[provider model_id] if connection_pool.with_connection(&:supports_insert_conflict_target?)
         end
 
         def attributes_from_llm(model_info)
