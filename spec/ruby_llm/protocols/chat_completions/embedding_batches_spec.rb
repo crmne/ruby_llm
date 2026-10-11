@@ -85,6 +85,60 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::EmbeddingBatches do
       expect(embedding.model).to eq('text-embedding-3-small')
       expect(embedding.tokens.input).to eq(5)
     end
+
+    it 'orders embedding rows by the index that names their input' do
+      index, embedding = protocol.send(:parse_batch_result, embedding_line([0.1, 0.2], positions: [1, 0]))
+
+      expect(index).to eq(3)
+      expect(embedding.vectors).to eq([[0.2], [0.1]])
+    end
+
+    [[0, 0], [0, 2], [-1, 0], [nil, 0], ['0', 1], [0.0, 1], [1], [0, 1, 2, 2]].each do |positions|
+      it "fails the embedding result with invalid positions #{positions.inspect}" do
+        line = embedding_line([0.1] * positions.size, positions:)
+        index, embedding, failure = protocol.send(:parse_batch_result, line)
+
+        expect(index).to eq(3)
+        expect(embedding).to be_nil
+        expect(failure).to eq(:failed)
+      end
+    end
+
+    it 'fails the embedding result when a row carries no position' do
+      line = embedding_line([0.1, 0.2])
+      line['response']['body']['data'].first.delete('index')
+
+      _index, embedding, failure = protocol.send(:parse_batch_result, line)
+
+      expect(embedding).to be_nil
+      expect(failure).to eq(:failed)
+    end
+
+    it 'fails the embedding result when a row is not a record' do
+      line = embedding_line([0.1, 0.2])
+      line['response']['body']['data'][0] = 'not a record'
+
+      _index, embedding, failure = protocol.send(:parse_batch_result, line)
+
+      expect(embedding).to be_nil
+      expect(failure).to eq(:failed)
+    end
+  end
+
+  def embedding_line(vectors, positions: vectors.each_index.to_a)
+    rows = vectors.zip(positions).map { |vector, position| { 'index' => position, 'embedding' => [vector] } }
+    {
+      'custom_id' => '3',
+      'response' => {
+        'status_code' => 200,
+        'body' => {
+          'object' => 'list',
+          'model' => 'text-embedding-3-small',
+          'data' => rows.reverse,
+          'usage' => { 'prompt_tokens' => 5, 'total_tokens' => 5 }
+        }
+      }
+    }
   end
 
   def uploaded_line
