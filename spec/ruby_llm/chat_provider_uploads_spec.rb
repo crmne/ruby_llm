@@ -177,6 +177,135 @@ RSpec.describe RubyLLM::Chat do
     expect(a_request(:post, messages_url)).to have_been_made.once
   end
 
+  describe 'converted attachments' do
+    def converted_chat
+      document = RubyLLM::Attachment.new(StringIO.new('Office document'), filename: 'report.docx')
+      replacement = notes
+      chat = described_class.new(model:)
+      converted = []
+      chat.convert_unsupported_attachments do |attachment|
+        converted << attachment
+        replacement
+      end
+      [chat, document, converted]
+    end
+
+    it 'reuses the conversion when an upload disappears after a successful turn' do
+      chat, document, converted = converted_chat
+      upload = stub_request(:post, files_url).to_return(json_response(file_body('file_new')))
+      stub_request(:post, messages_url).to_return(json_response(reply), missing('file_old'), json_response(reply))
+
+      expect(chat.ask('Read this report', with: document).content).to eq('Noted.')
+      expect(chat.ask('Continue').content).to eq('Noted.')
+
+      expect(upload).to have_been_requested.once
+      expect(sent_file('file_old')).to have_been_made.twice
+      expect(sent_file('file_new')).to have_been_made.once
+      expect(converted).to eq([document])
+      expect(chat.messages.first.attachments).to eq([document])
+      expect(store.files.values.map(&:id)).to eq(['file_new'])
+      expect(confirmed?('file_old')).to be(false)
+    end
+
+    it 'reuploads before any streamed content reaches the caller' do
+      chat, document, converted = converted_chat
+      upload = stub_request(:post, files_url).to_return(json_response(file_body('file_new')))
+      stub_request(:post, messages_url).to_return(missing('file_old', status: 400), streamed('Noted.'))
+      chunks = []
+
+      response = chat.ask('Read this report', with: document) { |chunk| chunks << chunk.content if chunk.content }
+
+      expect(response.content).to eq('Noted.')
+      expect(chunks.join).to eq('Noted.')
+      expect(upload).to have_been_requested.once
+      expect(converted).to eq([document])
+      expect(chat.messages.first.attachments).to eq([document])
+    end
+
+    it 'reuploads after a 404 that names no file' do
+      chat, document, converted = converted_chat
+      stub_request(:post, files_url).to_return(json_response(file_body('file_new')))
+      stub_request(:post, messages_url).to_return(
+        json_response({ error: { type: 'not_found_error', message: 'Not found' } }, status: 404),
+        json_response(reply)
+      )
+
+      expect(chat.ask('Read this report', with: document).content).to eq('Noted.')
+      expect(sent_file('file_new')).to have_been_made.once
+      expect(converted).to eq([document])
+    end
+
+    it 'retries a missing converted upload only once' do
+      chat, document, converted = converted_chat
+      upload = stub_request(:post, files_url).to_return(json_response(file_body('file_new')))
+      stub_request(:post, messages_url).to_return(missing('file_old'), missing('file_new'))
+
+      expect { chat.ask('Read this report', with: document) }.to raise_error(RubyLLM::Error, /file_new/)
+      expect(upload).to have_been_requested.once
+      expect(a_request(:post, messages_url)).to have_been_made.twice
+      expect(converted).to eq([document])
+    end
+
+    it 'never retries a converted upload once streaming started' do
+      chat, document, = converted_chat
+      upload = stub_request(:post, files_url)
+      stub_request(:post, messages_url)
+        .to_return(streamed('Partial', error: { type: 'not_found_error', message: 'File not found: file_old' }))
+      chunks = []
+
+      expect do
+        chat.ask('Read this report', with: document) { |chunk| chunks << chunk.content }
+      end.to raise_error(RubyLLM::Error, /file_old/)
+      expect(chunks.compact.join).to eq('Partial')
+      expect(upload).not_to have_been_requested
+      expect(a_request(:post, messages_url)).to have_been_made.once
+      expect(store.files.values.map(&:id)).to eq(['file_old'])
+    end
+
+    it 'can replace a missing upload again on a later turn' do
+      chat, document, converted = converted_chat
+      upload = stub_request(:post, files_url).to_return(json_response(file_body('file_new')),
+                                                        json_response(file_body('file_next')))
+      stub_request(:post, messages_url).to_return(missing('file_old'), json_response(reply),
+                                                  missing('file_new'), json_response(reply))
+
+      expect(chat.ask('Read this report', with: document).content).to eq('Noted.')
+      expect(chat.ask('Continue').content).to eq('Noted.')
+      expect(upload).to have_been_requested.twice
+      expect(converted).to eq([document])
+      expect(store.files.values.map(&:id)).to eq(['file_next'])
+    end
+
+    it 'preserves an unrelated upload on an original attachment' do
+      chat, document, converted = converted_chat
+      original = RubyLLM::Attachment.new(StringIO.new('Other notes long enough to upload.'), filename: 'other.txt')
+      upload = stub_request(:post, files_url).to_return(json_response(file_body('file_other')),
+                                                        json_response(file_body('file_new')))
+      stub_request(:post, messages_url).to_return(missing('file_old'), json_response(reply))
+
+      expect(chat.ask('Read these reports', with: [original, document]).content).to eq('Noted.')
+      expect(upload).to have_been_requested.twice
+      expect(sent_file('file_other')).to have_been_made.twice
+      expect(original.provider_uploads.values.map(&:id)).to eq(['file_other'])
+      expect(chat.messages.first.attachments).to eq([original, document])
+      expect(converted).to eq([document])
+    end
+
+    it 'forgets a shared replacement only once across transcript messages' do
+      chat, document, converted = converted_chat
+      other = RubyLLM::Attachment.new(StringIO.new('Other Office document'), filename: 'other.docx')
+      stub_request(:post, files_url).to_return(json_response(file_body('file_new')))
+      stub_request(:post, messages_url).to_return(json_response(reply), missing('file_old'), json_response(reply))
+      allow(store).to receive(:forget).and_call_original
+
+      expect(chat.ask('Read this report', with: document).content).to eq('Noted.')
+      expect(chat.ask('Read another report', with: other).content).to eq('Noted.')
+      expect(store).to have_received(:forget).with('file_old', provider: 'anthropic', account:).once
+      expect(converted).to eq([document, other])
+      expect(chat.messages.select { |message| message.role == :user }.map(&:attachments)).to eq([[document], [other]])
+    end
+  end
+
   describe 'compaction' do
     def xai_file(id)
       json_response({ id:, object: 'file', filename: 'report.pdf', bytes: 40, created_at: 1, purpose: 'user_data' })
