@@ -139,8 +139,20 @@ RSpec.describe RubyLLM::MCP::Client do
       expect(server.sent).to eq(['server/discover', 'server/discover'])
     end
 
-    it 'does not shake hands with a modern server that lists only older versions' do
-      server = fake_server.new { unsupported('2025-11-25') }
+    it 'shakes hands with a server that rejects the revision while listing an older one' do
+      server = fake_server.new do |method|
+        method == 'initialize' ? handshake('2025-11-25') : unsupported('2025-11-25', '2025-06-18')
+      end
+      mcp_client = described_class.new(server)
+
+      mcp_client.server
+
+      expect(mcp_client.version).to eq('2025-11-25')
+      expect(server.sent).to eq(['server/discover', 'initialize', 'notifications/initialized'])
+    end
+
+    it 'does not shake hands with a server that lists no version it speaks' do
+      server = fake_server.new { unsupported('2027-01-01') }
 
       expect { described_class.new(server).server }.to raise_error(RubyLLM::MCP::Error, 'Unsupported protocol version')
       expect(server.sent).not_to include('initialize')
