@@ -33,35 +33,35 @@ http_interactions:
       Etag:
       - W/"6ac02a01-9c6"
       Expires:
-      - Thu, 08 Oct 2026 01:20:35 GMT
+      - Sun, 11 Oct 2026 21:16:10 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 16D0:572D8:1F50B8:1FD126:6AC6ED8A
+      - 9D9C:2F48DF:4FCDA41:508CDB6:6ACBFA41
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Thu, 08 Oct 2026 01:16:51 GMT
+      - Sun, 11 Oct 2026 21:07:11 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '221'
+      - '29'
       X-Served-By:
-      - cache-ber1080042-BER
+      - cache-ber1080025-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1791422211.259403,VS0,VE0
+      - S1791752832.931019,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 5db73da1002bb22d6785ce069ad00a708d23fb27
+      - eb340b25422bafbe326e4c1f9542a64ade2fc0d6
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 08 Oct 2026 01:16:51 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:11 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/api/v1/chat/completions
@@ -155,24 +155,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 08 Oct 2026 01:17:01 GMT
+      - Sun, 11 Oct 2026 21:07:22 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '2273'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjA4LCJjb21wbGV0aW9uX3Rva2VucyI6MzEyLCJ0b3RhbF90b2tlbnMiOjkyMCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMTN9LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY3JlYXRlZF9jYWNoZV90b2tlbnMiOjAsIm11bHRpbW9kYWxfdG9rZW5zIjpudWxsfX0sImNob2ljZXMiOlt7Im1lc3NhZ2UiOnsiY29udGVudCI6IlxuXG5UaGlzIGZpbGUgaXMgYSBsaWNlbnNlL2NvcHlyaWdodCBub3RpY2UgZm9yIFJ1YnkuXG5cbkl0IHNheXM6XG5cbi0gUnVieSBpcyBjb3B5cmlnaHRlZCBmcmVlIHNvZnR3YXJlIGJ5IFl1a2loaXJvIE1hdHN1bW90by5cbi0gWW91IGNhbiByZWRpc3RyaWJ1dGUgYW5kL29yIG1vZGlmeSBpdCB1bmRlciB0aGUgMi1jbGF1c2UgQlNETCwgb3IgdW5kZXIgdGhlIGxpc3RlZCBjb25kaXRpb25zLlxuLSBZb3UgbWF5IGNvcHkgdGhlIHNvdXJjZSBmcmVlbHkgaWYgY29weXJpZ2h0IG5vdGljZXMgYXJlIHByZXNlcnZlZC5cbi0gWW91IG1heSBtb2RpZnkgaXQgaWYgeW91IG1lZXQgYXQgbGVhc3Qgb25lIGNvbmRpdGlvbiwgc3VjaCBhcyByZWxlYXNpbmcgbW9kaWZpY2F0aW9ucyBmcmVlbHksIGtlZXBpbmcgdGhlbSBpbnRlcm5hbCwgdXNpbmcgbm9uLXN0YW5kYXJkIG5hbWVzIGZvciBiaW5hcmllcywgb3IgYXJyYW5naW5nIGRpc3RyaWJ1dGlvbiB3aXRoIHRoZSBhdXRob3IuXG4tIFlvdSBtYXkgZGlzdHJpYnV0ZSBiaW5hcnkvb2JqZWN0IGNvZGUgaWYgeW91IG1lZXQgYXQgbGVhc3Qgb25lIGNvbmRpdGlvbiwgc3VjaCBhcyBwcm92aWRpbmcgaW5zdHJ1Y3Rpb25zIGZvciBvYnRhaW5pbmcgdGhlIG9yaWdpbmFsIGRpc3RyaWJ1dGlvbiwgaW5jbHVkaW5nIHNvdXJjZSwgdXNpbmcgbm9uLXN0YW5kYXJkIG5hbWVzLCBvciBhcnJhbmdpbmcgZGlzdHJpYnV0aW9uLlxuLSBZb3UgbWF5IGluY29ycG9yYXRlIHBhcnRzIG9mIFJ1YnkgaW50byBvdGhlciBzb2Z0d2FyZSwgYnV0IHNvbWUgZmlsZXMgbWF5IGhhdmUgZGlmZmVyZW50IGxpY2Vuc2VzLCBsaXN0ZWQgaW4gYExFR0FMYC5cbi0gVXNlci1nZW5lcmF0ZWQgc2NyaXB0cy9vdXRwdXQgYXJlIG5vdCBhdXRvbWF0aWNhbGx5IHVuZGVyIFJ1YnnigJlzIGNvcHlyaWdodC5cbi0gVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIOKAnEFTIElT4oCdIHdpdGhvdXQgd2FycmFudHkuIiwicm9sZSI6ImFzc2lzdGFudCIsInJlZnVzYWwiOm51bGwsImFubm90YXRpb25zIjpudWxsLCJhdWRpbyI6bnVsbCwiZnVuY3Rpb25fY2FsbCI6bnVsbCwicmVhc29uaW5nIjoiV2UgbmVlZCB0byBhbnN3ZXIgdXNlcidzIHF1ZXN0aW9uOiBcIldoYXQncyBpbiB0aGlzIGZpbGU/XCIgVGhleSBwcm92aWRlZCBmaWxlIG5hbWUgbGljZW5zZS50eHQgbWltZV90eXBlIHRleHQvcGxhaW4gYW5kIGNvbnRlbnQuIE5lZWQgbGlrZWx5IHN1bW1hcml6ZS4gTmVlZCBmaW5hbCBhbnN3ZXIgY29uY2lzZSBidXQgaGVscGZ1bC4gQ291bGQgc2F5IGl0J3MgUnVieSdzIGxpY2Vuc2UvY29weXJpZ2h0IG5vdGljZTogY29weXJpZ2h0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLCBmcmVlIHNvZnR3YXJlLCByZWRpc3RyaWJ1dGFibGUvbW9kaWZpYWJsZSB1bmRlciAyLWNsYXVzZSBCU0RMIG9yIGxpc3RlZCBjb25kaXRpb25zOyB0ZXJtcyBmb3IgY29weWluZywgbW9kaWZ5aW5nLCBkaXN0cmlidXRpbmcsIGluY29ycG9yYXRpbmcsIHVzZXIgc2NyaXB0cywgd2FycmFudHkgZGlzY2xhaW1lci4gTWF5YmUgbWVudGlvbiBMRUdBTCBmaWxlIGZvciB0aGlyZC1wYXJ0eSBmaWxlcy4gRW5zdXJlIG5vIGhpZGRlbiBpc3N1ZXMuIEZpbmFsIGluIEVuZ2xpc2guXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtYzYzY2MxNTktYzJiNy00ZTI4LWJjMWItYjFlODg2MjNjMWUxIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5MTQyMjIxMSwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
-  recorded_at: Thu, 08 Oct 2026 01:17:01 GMT
+        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2MDgsImNvbXBsZXRpb25fdG9rZW5zIjoyNDEsInRvdGFsX3Rva2VucyI6ODQ5LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjExMH0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjcmVhdGVkX2NhY2hlX3Rva2VucyI6MCwibXVsdGltb2RhbF90b2tlbnMiOm51bGx9fSwiY2hvaWNlcyI6W3sibWVzc2FnZSI6eyJjb250ZW50IjoiXG5cbkl04oCZcyBhICoqc29mdHdhcmUgbGljZW5zZSBmaWxlKiogZm9yICoqUnVieSoqLlxuXG5JdCBzdGF0ZXMgdGhhdCBSdWJ5IGlzIGNvcHlyaWdodGVkIGZyZWUgc29mdHdhcmUgYnkgKipZdWtpaGlybyBNYXRzdW1vdG8qKiwgYW5kIG1heSBiZSByZWRpc3RyaWJ1dGVkIG9yIG1vZGlmaWVkIHVuZGVyIGVpdGhlcjpcblxuLSB0aGUgKioyLWNsYXVzZSBCU0RMKiogbGljZW5zZSwgb3Jcbi0gdGhlIHNwZWNpZmljIGNvbmRpdGlvbnMgbGlzdGVkIGluIHRoZSBmaWxlLlxuXG5UaGUgbGlzdGVkIGNvbmRpdGlvbnMgY292ZXIgdGhpbmdzIGxpa2U6XG5cbi0gbWFraW5nIGFuZCBzaGFyaW5nIGNvcGllc1xuLSBtb2RpZnlpbmcgdGhlIHNvZnR3YXJlXG4tIGRpc3RyaWJ1dGluZyBiaW5hcnkvb2JqZWN0IGNvZGUgdmVyc2lvbnNcbi0gaW5jb3Jwb3JhdGluZyBwYXJ0cyBvZiBSdWJ5IGludG8gb3RoZXIgc29mdHdhcmVcbi0gY2xhcmlmeWluZyB0aGF0IHNjcmlwdHMgb3IgZGF0YSBwcm9kdWNlZCBieSB0aGUgc29mdHdhcmUgZG8gbm90IGF1dG9tYXRpY2FsbHkgYmVjb21lIFJ1YnktbGljZW5zZWRcbi0gcHJvdmlkaW5nIHRoZSBzb2Z0d2FyZSAqKuKAnEFTIElT4oCdKiogd2l0aG91dCB3YXJyYW50aWVzLiIsInJvbGUiOiJhc3Npc3RhbnQiLCJyZWZ1c2FsIjpudWxsLCJhbm5vdGF0aW9ucyI6bnVsbCwiYXVkaW8iOm51bGwsImZ1bmN0aW9uX2NhbGwiOm51bGwsInJlYXNvbmluZyI6IldlIG5lZWQgYW5zd2VyIHVzZXIncyBxdWVzdGlvbjogXCJXaGF0J3MgaW4gdGhpcyBmaWxlPzxmaWxlIC4uLj4uLi48L2ZpbGU+XCIgVGhleSBwcm92aWRlZCBmaWxlIGNvbnRlbnRzIGxpY2Vuc2UudHh0LiBOZWVkIHN1bW1hcml6ZSB3aGF0J3MgaW4gZmlsZS4gZG9uZS4gTmVlZCBmaW5hbCBhbnN3ZXIgY29uY2lzZS4gTmVlZCBtZW50aW9uIGl0J3MgYSBsaWNlbnNlIHRleHQgZm9yIFJ1YnksIGNvcHlyaWdodCBieSBZdWtpaGlybyBNYXRzdW1vdG8sIHJlZGlzdHJpYnV0aW9uL21vZGlmaWNhdGlvbiB0ZXJtcyB1bmRlciBCU0RMIG9yIGxpc3RlZCBjb25kaXRpb25zLCBpbmNsdWRlcyBwdWJsaWMgZG9tYWluL29yZ2FuaXphdGlvbi9ub25zdGFuZGFyZCBiaW5hcmllcyBhcnJhbmdlbWVudHMsIGRpc3RyaWJ1dGlvbiByZXF1aXJlbWVudHMsIG1vZGlmaWNhdGlvbiBpbmNsdXNpb24sIG91dHB1dCBub3QgYXV0b21hdGljYWxseSBjb3ZlcmVkLCBkaXNjbGFpbWVyIHdhcnJhbnR5LiBNYXliZSBhc2sgaWYgdGhleSB3YW50IHBsYWluIEVuZ2xpc2ggc3VtbWFyeS4gRW5zdXJlIG5vdCBvdmVyZG8uXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtOTgzYzJlYmYtY2M0Zi00ODg3LTk5ZDQtMTRjNmJlMzZmZGRlIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5MTc1MjgzMiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
+  recorded_at: Sun, 11 Oct 2026 21:07:22 GMT
 recorded_with: VCR 6.4.0

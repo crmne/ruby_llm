@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:58:22 GMT
+      - Sun, 11 Oct 2026 21:20:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791381501-GJyODT3AnuL44QLGrKqx
+      - gen-1791753601-WGfXmzkmoJsu3lkYjkSD
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -60,10 +60,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791381501-GJyODT3AnuL44QLGrKqx\",\"object\":\"chat.completion\",\"created\":1791381501,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01UvwmjW33WZZVfJ5wLTY8U4\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1791753601-WGfXmzkmoJsu3lkYjkSD\",\"object\":\"chat.completion\",\"created\":1791753601,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01EJMkLZJFfYH5juha4PHu3u\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":735,\"completion_tokens\":59,\"total_tokens\":794,\"cost\":0.00103,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00103,\"upstream_inference_prompt_cost\":0.000735,\"upstream_inference_completions_cost\":0.000295},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Wed, 07 Oct 2026 13:58:22 GMT
+  recorded_at: Sun, 11 Oct 2026 21:20:02 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -71,8 +71,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"Your
         location is Berlin, at latitude 52.5200 and longitude 13.4050."},{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01UvwmjW33WZZVfJ5wLTY8U4","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01UvwmjW33WZZVfJ5wLTY8U4"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01EJMkLZJFfYH5juha4PHu3u","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01EJMkLZJFfYH5juha4PHu3u"}],"stream":false,"max_tokens":4096,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -97,7 +97,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:58:23 GMT
+      - Sun, 11 Oct 2026 21:20:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -107,7 +107,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Generation-Id:
-      - gen-1791381502-h9KUN1clxMbBakAIVVhs
+      - gen-1791753602-4v7sOfNCyl6rezn9NZYZ
       Access-Control-Expose-Headers:
       - X-Generation-Id,X-Provider-Name,request-id,cf-ray
       Set-Cookie:
@@ -125,23 +125,23 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1791381502-h9KUN1clxMbBakAIVVhs\",\"object\":\"chat.completion\",\"created\":1791381502,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"The
-        Fall of Rome is a historical event that occurred gradually rather than at
-        a single moment. Here are the key dates:\\n\\n**Western Roman Empire:**\\n-
-        **476 CE** - Generally considered the \\\"official\\\" fall date. The last
+      string: "\n         \n{\"id\":\"gen-1791753602-4v7sOfNCyl6rezn9NZYZ\",\"object\":\"chat.completion\",\"created\":1791753602,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"I
+        apologize for that unnecessary function call! Your question about the fall
+        of Rome is a historical question and doesn't require weather data.\\n\\nThe
+        **Fall of Rome** is typically dated to **476 CE (Common Era)**, when the last
         Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain
-        Odoacer. This marked the end of the Western Roman Empire as a political entity.\\n\\n**However,
-        it's more complex:**\\n- The decline was gradual, occurring over several centuries
-        (roughly 200-476 CE)\\n- Key factors included military pressures from Germanic
-        tribes, economic troubles, political instability, and administrative challenges\\n-
-        Major events leading to the fall included:\\n  - The Visigoths sacking Rome
-        in 410 CE (under Alaric)\\n  - The Vandals sacking Rome in 455 CE\\n  - The
-        final collapse in 476 CE\\n\\n**Eastern Roman Empire (Byzantine Empire):**\\n-
-        The Eastern Roman Empire continued for another thousand years, not falling
-        until **1453 CE** when Constantinople was conquered by the Ottoman Turks.\\n\\nSo
-        while 476 CE is the traditional date given for the fall of Rome, historians
-        today recognize it was a long process of decline rather than a sudden collapse,
-        and Rome's influence continued in various forms long after that date.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":758,\"completion_tokens\":291,\"total_tokens\":1049,\"cost\":0.002213,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002213,\"upstream_inference_prompt_cost\":0.000758,\"upstream_inference_completions_cost\":0.001455},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Wed, 07 Oct 2026 13:58:25 GMT
+        Odoacer. This marked the formal end of the Western Roman Empire.\\n\\nHowever,
+        it's important to note that:\\n\\n1. **The Eastern Roman Empire (Byzantine
+        Empire)** continued for another thousand years, until 1453 CE when Constantinople
+        fell to the Ottoman Turks.\\n\\n2. **The decline was gradual** - Rome's fall
+        wasn't a single event but a process spanning several centuries, involving
+        political instability, economic troubles, military pressures, and the barbarian
+        invasions of the 4th and 5th centuries.\\n\\n3. **Different perspectives**
+        - Historians debate whether to emphasize 410 CE (when Visigoth Alaric sacked
+        Rome), 476 CE (the deposition of the last emperor), or other dates, depending
+        on how they define \\\"the fall.\\\"\\n\\nSo while 476 CE is the conventional
+        date, the story of Rome's decline is far more complex and nuanced than a single
+        moment in time.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":758,\"completion_tokens\":279,\"total_tokens\":1037,\"cost\":0.002153,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002153,\"upstream_inference_prompt_cost\":0.000758,\"upstream_inference_completions_cost\":0.001395},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Sun, 11 Oct 2026 21:20:05 GMT
 recorded_with: VCR 6.4.0

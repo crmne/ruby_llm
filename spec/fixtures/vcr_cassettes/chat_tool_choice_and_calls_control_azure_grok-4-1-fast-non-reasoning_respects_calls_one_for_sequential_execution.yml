@@ -32,7 +32,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:56:49 GMT
+      - Sun, 11 Oct 2026 21:18:54 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -47,16 +47,16 @@ http_interactions:
       - access-control-request-headers
       X-Ms-Rai-Invoked:
       - 'true'
-      Traceparent:
-      - 00-cc25d3a49c32341713cf4a5443e02248-49cee82d000509d3-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
+      Traceparent:
+      - 00-8b6cd4d1993dbc5473bfe1816a1e8ee4-bb3d050f000475c6-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 1b11c969-2d85-4099-ad4d-a684d2494453
+      - ae8da358-9fcf-4715-8ba4-8aef79b75a6e
       Azureml-Model-Session:
-      - d20260811001727-9adb392a
+      - d20261009040854-b7570cce
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -90,7 +90,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 1b11c969-2d85-4099-ad4d-a684d2494453
+      - ae8da358-9fcf-4715-8ba4-8aef79b75a6e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -99,8 +99,8 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"980ff86b-594e-4f3f-bdd4-0c1880d82079","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_27868205","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":307,"completion_tokens":40,"total_tokens":347,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":307,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791381411,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 07 Oct 2026 13:56:51 GMT
+      string: '{"id":"28bf45a7-707d-470a-a706-312ff4ab2c8b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_10754795","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":307,"completion_tokens":40,"total_tokens":347,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":160,"audio_tokens":0,"text_tokens":307,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791753536,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sun, 11 Oct 2026 21:18:56 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -109,8 +109,8 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
         language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_27868205","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_27868205"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_10754795","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_10754795"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -134,7 +134,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:56:51 GMT
+      - Sun, 11 Oct 2026 21:18:56 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -149,16 +149,16 @@ http_interactions:
       - access-control-request-headers
       X-Ms-Rai-Invoked:
       - 'true'
-      Traceparent:
-      - 00-19ceb72a4d57cae102415f77b93d8397-1737a4910005c354-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
+      Traceparent:
+      - 00-102d1d6de7f1b5ab1a773bc0efa6fce1-56c1ad310002c4da-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 743b4508-b410-4040-a036-47c72f03f09d
+      - eb146d5a-d84d-4c58-a01c-6a3160c7a3fb
       Azureml-Model-Session:
-      - d20260811001727-9adb392a
+      - d20261009033758-2b2efefd
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -192,7 +192,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 743b4508-b410-4040-a036-47c72f03f09d
+      - eb146d5a-d84d-4c58-a01c-6a3160c7a3fb
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -201,8 +201,8 @@ http_interactions:
       - West Europe
     body:
       encoding: UTF-8
-      string: '{"id":"42daba2d-cf73-4afd-ad8e-cfefd0df171f","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_06587571","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":383,"completion_tokens":18,"total_tokens":401,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":475,"audio_tokens":0,"text_tokens":383,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791381411,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Wed, 07 Oct 2026 13:56:51 GMT
+      string: '{"id":"f7276812-35e2-4fa6-9f50-370f65c6eca9","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_45251678","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":383,"completion_tokens":18,"total_tokens":401,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":383,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1791753537,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sun, 11 Oct 2026 21:18:57 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -211,8 +211,8 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
         language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_27868205","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_27868205"},{"role":"assistant","content":"","tool_calls":[{"id":"call_06587571","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_06587571"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_10754795","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_10754795"},{"role":"assistant","content":"","tool_calls":[{"id":"call_45251678","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_45251678"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -236,7 +236,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:56:52 GMT
+      - Sun, 11 Oct 2026 21:18:57 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
@@ -251,16 +251,16 @@ http_interactions:
       - access-control-request-headers
       X-Ms-Rai-Invoked:
       - 'true'
-      Traceparent:
-      - 00-ebb5291891d6d857b2255715e139e56a-800bf79b0006c099-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
+      Traceparent:
+      - 00-ee58bb8aba3beaf3413653e947e0366d-560cd1bc00045ce6-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 5c9a345e-644a-4e84-aadd-ee31c6b34a50
+      - a6acf5a8-7e5b-4596-8e7a-1dddd0219bae
       Azureml-Model-Session:
-      - d20260811001727-9adb392a
+      - d20261009033758-2b2efefd
       X-Ms-Inference-Retry-History:
       - '{"v":1,"entries":[{"service_id":"mir.frontdoor","layer":"regional","role":"direct","retries":0}]}'
       Azureai-Requested-Tier:
@@ -294,7 +294,7 @@ http_interactions:
       Azureai-Fe-Offer-Type:
       - paygo
       Apim-Request-Id:
-      - 5c9a345e-644a-4e84-aadd-ee31c6b34a50
+      - a6acf5a8-7e5b-4596-8e7a-1dddd0219bae
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -304,6 +304,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImRmYTQ0NTcyLWJiNjQtNDFlMy04ZjFmLWQzOGE3ZTVjMDI1YSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJbiBCZXJsaW4sIGl0J3MgY3VycmVudGx5IDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC5cblxuVGhlIGJlc3QgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgaXMgUnVieS4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQxMywiY29tcGxldGlvbl90b2tlbnMiOjIzLCJ0b3RhbF90b2tlbnMiOjQzNiwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjU1MSwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6NDEzLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3OTEzODE0MTIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
-  recorded_at: Wed, 07 Oct 2026 13:56:52 GMT
+        eyJpZCI6Ijk5NTE5Nzg4LTdiOTYtNDViZC1hZjJjLWMyZDg5ZDRmNjRjMiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJbiBCZXJsaW4gcmlnaHQgbm93LCBpdCdzIDE1wrBDIHdpdGggbGlnaHQgd2luZHMgYXQgMTAga20vaC5cblxuVGhlIGJlc3QgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgaXMgKipSdWJ5KirigJRpdCdzIGVsZWdhbnQsIHByb2R1Y3RpdmUsIGFuZCBwb3dlcnMgY29vbCBzdHVmZiBsaWtlIFJhaWxzISBcblxuKFdlYXRoZXIgc291cmNlZCBmcm9tIGxhdGVzdCBkYXRhOyBsYW5ndWFnZSBwaWNrIGlzIHN1YmplY3RpdmUgYnV0IGRhdGEtYmFja2VkLikifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQxMywiY29tcGxldGlvbl90b2tlbnMiOjU1LCJ0b3RhbF90b2tlbnMiOjQ2OCwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjU1MSwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6NDEzLCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3OTE3NTM1MzgsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Sun, 11 Oct 2026 21:18:58 GMT
 recorded_with: VCR 6.4.0

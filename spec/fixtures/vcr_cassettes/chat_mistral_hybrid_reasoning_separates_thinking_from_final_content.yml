@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:04:46 GMT
+      - Sun, 11 Oct 2026 21:13:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11677-64f5-7a50-9fc7-8750a2395054
+      - 01a12cd0-2491-7331-ad8a-b1aa02feefc3
       X-Kong-Request-Id:
-      - 01a11677-64f5-7a50-9fc7-8750a2395054
+      - 01a12cd0-2491-7331-ad8a-b1aa02feefc3
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98865'
+      - '99903'
       X-Ratelimit-Tokens-Query-Cost:
-      - '70'
+      - '97'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '98'
+      - '99'
       X-Envoy-Upstream-Service-Time:
-      - '433'
+      - '552'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '435'
+      - '553'
       X-Kong-Proxy-Latency:
-      - '16'
+      - '14'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,8 +71,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"feaf03c9a7f94264888c1ecf76368702","created":1791378285,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":70,"completion_tokens":39,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+      string: '{"id":"e18d0f03ad4648c6adc47d6424cbf6c1","created":1791753200,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
         user is asking for the product of 12 multiplied by 12. I know that 12 times
-        12 is 144."}],"closed":true},{"type":"text","text":"144"}]}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:04:46 GMT
+        12 is a basic multiplication fact. Let me calculate it:\n\n12 * 12 = 144\n\nSo,
+        the answer is 144."}],"closed":true},{"type":"text","text":"144"}]}}]}'
+  recorded_at: Sun, 11 Oct 2026 21:13:21 GMT
 recorded_with: VCR 6.4.0

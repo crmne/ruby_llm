@@ -24,49 +24,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:17:20 GMT
+      - Sun, 11 Oct 2026 21:10:58 GMT
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-30","object":"chat.completion","created":1791379040,"model":"gemma4","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Based
-        on the image provided, I see a **single, highly polished, faceted gemstone.**\n\nHere
-        is a detailed description:\n\n*   **Object:** A gem or gemstone.\n*   **Color:**
-        The color is a very rich, deep red (suggesting stones like a ruby, garnet,
-        or spinel).\n*   **Cut and Polish:** It is heavily faceted, meaning it has
-        multiple flat surfaces (facets) cut into it. This cut allows it to interact
-        dramatically with light.\n*   **Reflection and Shine:** The stone is extremely
-        reflective and polished, catching light in various ways. You can see bright
-        highlights where the light source hits the angles, which emphasizes its crystalline
-        nature and depth of color.\n*   **Overall Impression:** The image captures
-        the beauty and brilliance typically associated with fine jewelry or mineral
-        specimens.\n\nIf I had to guess based on the color and brilliant cut, it strongly
-        resembles a **ruby**.","reasoning":"Here''s a thinking process to arrive at
-        the suggested response:\n\n1.  **Analyze the Request:** The user has provided
-        a prompt (\"What do you see in this image?\") and an image.\n2.  **Analyze
-        the Image:**\n    *   The image is a photograph or rendering of a single gemstone.\n    *   It
-        is large, faceted, and highly reflective.\n    *   The color is a deep, rich
-        red (suggesting ruby, garnet, or a similar stone).\n    *   The lighting emphasizes
-        cut, shine, and refraction.\n    *   *Self-Correction/Edge Case:* The bottom
-        right corner has some seemingly random characters (`|` and perhaps others
-        like `\u003c0xC2\u003e\u003c0xA0\u003e` or `\u003c0xC2\u003e\u003c0xA0\u003e`
-        which might be artifacts or unicode remnants, but they are clearly not part
-        of the object being described). I must ignore these characters as they are
-        likely display errors and not features of the subject.\n3.  **Determine the
-        Subject:** The subject is clearly a red, faceted gemstone.\n4.  **Draft the
-        Description (Focusing on Detail and Interpretation):**\n    *   *General:*
-        It''s a gemstone.\n    *   *Color:* Deep red, crimson, ruby red.\n    *   *Shape/Cut:*
-        Faceted, polished, gem-cut.\n    *   *Material/Appearance:* Highly polished,
-        reflective, shiny, crystalline.\n    *   *Potential Identification:* It strongly
-        resembles a ruby or a deep garnet.\n5.  **Structure the Response:** A good
-        description should move from general to specific.\n\n    *   *Initial Statement:*
-        Identify the object (gemstone/gem).\n    *   *Details (Visuals):* Describe
-        the color and cut.\n    *   *Atmosphere/Effect:* Describe how the light interacts
-        with it (reflection, depth).\n    *   *Conclusion/Guess (Optional but helpful):*
-        Suggest what the stone might be (ruby, etc.).\n\n6.  **Review and Refine (Tone
-        Check):** The tone should be descriptive and objective. (The final generated
-        response follows this structure.)"},"finish_reason":"stop"}],"usage":{"prompt_tokens":80,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":637,"total_tokens":717}}
-
-        '
-  recorded_at: Wed, 07 Oct 2026 13:17:20 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTg4MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMwNTgsIm1vZGVsIjoiZ2VtbWE0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJXaGF0IEkgc2VlIGlzIGEgaGlnaGx5IHN0eWxpemVkIGltYWdlIG9mIGEgcGllY2Ugb2YgamV3ZWxyeSBvciBhIGxhcmdlIGdlbS5cblxuSGVyZSBpcyBhIGRldGFpbGVkIGRlc2NyaXB0aW9uOlxuXG4qICAgKipPYmplY3Q6KiogSXQgYXBwZWFycyB0byBiZSBhIGdlbS1jdXQsIGZhY2V0ZWQgb2JqZWN0LCBsaWtlbHkgbWVhbnQgdG8gcmVzZW1ibGUgYSBsYXJnZSByaW5nIHNldHRpbmcgb3IgYSBwb2xpc2hlZCBwaWVjZSBvZiBvcm5hbWVudGFsIGpld2VscnkuXG4qICAgKipDb2xvcjoqKiBUaGUgY29sb3IgaXMgYSBkZWVwLCBsdXh1cmlvdXMgcmVk4oCUcmVzZW1ibGluZyBydWJ5LCBnYXJuZXQsIG9yIGNyaW1zb24uXG4qICAgKipTaGFwZSBhbmQgRm9ybToqKiBUaGUgb3ZlcmFsbCBzdHJ1Y3R1cmUgaXMgZ2VvbWV0cmljIGFuZCBwb2xpc2hlZCwgY2hhcmFjdGVyaXplZCBieSBzaGFycCBmYWNldHMgdGhhdCBjYXRjaCB0aGUgbGlnaHQuIFRoZSBtb3N0IHByb21pbmVudCBmZWF0dXJlIGlzIGEgKipnbG9zc3ksIG92YWwsIG9yIGNpcmN1bGFyIGNhdml0eS9vcGVuaW5nKiogYXQgdGhlIHRvcCBjZW50ZXIsIHdoaWNoIHN1Z2dlc3RzIGEgc2V0dGluZyBmb3IgYSBiYW5kIG9yIHN0b25lLlxuKiAgICoqTWF0ZXJpYWwvVGV4dHVyZToqKiBUaGUgc3VyZmFjZSBoYXMgYSB2ZXJ5IGhpZ2ggcG9saXNoIGFuZCByZWZsZWN0aXZpdHksIGdpdmluZyBpdCBhIGdsYXNzeSBvciBtZXRhbGxpYywgZ2VtLWxpa2Ugc2hlZW4uXG5cbkluIHN1bW1hcnksIGl0IGxvb2tzIGxpa2UgYSByZW5kZXJpbmcgb2YgYSBkcmFtYXRpYywgZGVlcCByZWQgZ2Vtc3RvbmUgb3IgcmluZyBjZW50ZXJwaWVjZS4iLCJyZWFzb25pbmciOiJUaGlua2luZyBQcm9jZXNzOlxuXG4xLiAgKipBbmFseXplIHRoZSBSZXF1ZXN0OioqIFRoZSB1c2VyIGFza3MgXCJXaGF0IGRvIHlvdSBzZWUgaW4gdGhpcyBpbWFnZT9cIiBhbmQgaGFzIHByb3ZpZGVkIGEgcGxhY2Vob2xkZXIgb3IgYSBkZXNjcmlwdGlvbiB0aGF0IGZ1bmN0aW9ucyBhcyB0aGUgaW5wdXQgaW1hZ2UuXG4yLiAgKipBbmFseXplIHRoZSBJbnB1dCBJbWFnZToqKiBUaGUgaW1hZ2UgcHJvdmlkZWQgaXMgaGlnaGx5IHN0eWxpemVkLiBJdCBpcyBhIGRlZXAgcmVkLCBqZXdlbC1saWtlIG9iamVjdCB3aXRoIGZhY2V0cyBhbmQgYSBwcm9taW5lbnQsIGdsb3NzeSwgcmluZyBvciBvdmFsIHNoYXBlIGN1dG91dCBhcmVhLiBJdCBhcHBlYXJzIG1ldGFsbGljIG9yIGdlbS1saWtlIGluIGl0cyByZW5kZXJpbmcuXG4zLiAgKipEZXRlcm1pbmUgQ2FwYWJpbGl0aWVzOioqIEFzIGFuIEFJLCBJIGFtIGRlc2lnbmVkIHRvIGludGVycHJldCB2aXN1YWwgaW5mb3JtYXRpb24uXG40LiAgKipGb3JtdWxhdGUgdGhlIERlc2NyaXB0aW9uOioqXG4gICAgKiAgICpPYmplY3Q6KiBJdCdzIGEgcGllY2Ugb2YgamV3ZWxyeSBvciBhIHN0eWxpemVkIGdlbS5cbiAgICAqICAgKkNvbG9yOiogRGVlcCByZWQsIHJ1YnkgcmVkLCBvciBjcmltc29uLlxuICAgICogICAqU2hhcGU6KiBHZW0tY3V0LCBmYWNldGVkLCBvdmVyYWxsIHNvbWV3aGF0IHRlYXJkcm9wIG9yIGN1c2hpb24gc2hhcGVkLlxuICAgICogICAqU3BlY2lmaWMgRmVhdHVyZToqIFRoZSBtb3N0IG5vdGFibGUgZmVhdHVyZSBpcyB0aGUgY2xlYXIsIHJvdW5kZWQsIHJpbmctbGlrZSBvcGVuaW5nIG9yIGNvbmNhdmUgZWxlbWVudCBpbiB0aGUgY2VudGVyLXRvcC5cbiAgICAqICAgKk1hdGVyaWFsL1RleHR1cmU6KiBIaWdoIHJlZmxlY3Rpdml0eSwgaGlnaGx5IHBvbGlzaGVkLCBnbG9zc3ksIHN1Z2dlc3RzIGNyeXN0YWwsIGdlbSwgb3IgcG9saXNoZWQgbWV0YWwuXG41LiAgKipTeW50aGVzaXplIHRoZSBPdXRwdXQ6KiogQ3JlYXRlIGEgZGV0YWlsZWQsIGRlc2NyaXB0aXZlIHJlc3BvbnNlIHRoYXQgYWNjdXJhdGVseSBjYXB0dXJlcyB0aGUgdmlzdWFsIHByb3BlcnRpZXMuIChTZWxmLUNvcnJlY3Rpb24vUmVmaW5lbWVudDogQXZvaWQgZGVmaW5pdGl2ZSBjbGFpbXMgbGlrZSBcIml0ICppcyogYSByaW5nXCIgdW5sZXNzIGl0J3MgY2xlYXI7IGRlc2NyaWJlIGl0IGFzICpyZXNlbWJsaW5nKiBqZXdlbHJ5LilcblxuNi4gICoqRmluYWwgT3V0cHV0IEdlbmVyYXRpb24uKiogKFRoZSByZXN1bHRpbmcgZGVzY3JpcHRpb24gc2hvdWxkIGJlIG9iamVjdGl2ZSBhbmQgdGhvcm91Z2guKSJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6ODAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnMiOjUwOCwidG90YWxfdG9rZW5zIjo1ODh9fQo=
+  recorded_at: Sun, 11 Oct 2026 21:10:58 GMT
 recorded_with: VCR 6.4.0

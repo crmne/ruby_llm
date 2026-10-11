@@ -24,26 +24,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:07:06 GMT
+      - Sun, 11 Oct 2026 21:08:15 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '877'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":59,"completion_tokens":32,"total_tokens":91,"completion_tokens_details":{"reasoning_tokens":22},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nThe
-        capital of France is Paris.","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"We
-        need to answer user: \"What is the capital of France?\" Simple. Need final
-        answer concise.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-094d7dc6-537d-4c01-9f66-4adc421302b5","object":"chat.completion","created":1791378200,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:07:06 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":59,"completion_tokens":24,"total_tokens":83,"completion_tokens_details":{"reasoning_tokens":20},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nParis","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"User
+        asks: \"What is the capital of France?\" Need answer concisely. Done.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-3dc8157a-6c9e-4732-959b-c7b763154535","object":"chat.completion","created":1791752894,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:08:15 GMT
 recorded_with: VCR 6.4.0

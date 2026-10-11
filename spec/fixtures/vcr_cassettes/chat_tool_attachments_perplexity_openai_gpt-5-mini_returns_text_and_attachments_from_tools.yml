@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:47:51 GMT
+      - Sun, 11 Oct 2026 21:16:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1791380872'
+      - '1791753373'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -59,20 +59,20 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1791380869,"created_at":1791380869,"error":null,"frequency_penalty":0,"id":"resp_e91e6a2d-ec41-4660-a78a-51f8f8ecba06","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_VYZrjHeuBuC6UBIrvKd0yCmt","id":"fc_81ed7a56-4b27-479b-98cd-cfb04dc92745","name":"file_fetch","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
-        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00036,"total_cost":0.00038},"input_tokens":76,"input_tokens_details":{"cached_tokens":0},"output_tokens":178,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":254},"user":null}
+      string: '{"background":false,"completed_at":1791753370,"created_at":1791753370,"error":null,"frequency_penalty":0,"id":"resp_780a721f-5b5c-40e9-9563-6c887aa98e90","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{}","call_id":"call_gLBhMLMZpsI4sZAxx30QINgn","id":"fc_ea829c8d-34b6-4f85-8433-4f2ad7d623bb","name":"file_fetch","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.0002,"total_cost":0.00022},"input_tokens":76,"input_tokens_details":{"cached_tokens":0},"output_tokens":101,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":177},"user":null}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:47:51 GMT
+  recorded_at: Sun, 11 Oct 2026 21:16:12 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Call
-        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"type":"function_call","call_id":"call_VYZrjHeuBuC6UBIrvKd0yCmt","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call_VYZrjHeuBuC6UBIrvKd0yCmt","output":"Fetched
+        file_fetch to get ruby.txt, then repeat the contents of the attached file."},{"type":"function_call","call_id":"call_gLBhMLMZpsI4sZAxx30QINgn","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call_gLBhMLMZpsI4sZAxx30QINgn","output":"Fetched
         the file."},{"role":"user","content":[{"type":"input_text","text":"Attachments
-        from tool call call_VYZrjHeuBuC6UBIrvKd0yCmt:"},{"type":"input_text","text":"<file
+        from tool call call_gLBhMLMZpsI4sZAxx30QINgn:"},{"type":"input_text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
@@ -92,13 +92,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:47:54 GMT
+      - Sun, 11 Oct 2026 21:16:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -106,30 +109,27 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1791380875'
+      - '1791753375'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1791380871,"created_at":1791380871,"error":null,"frequency_penalty":0,"id":"resp_aa819590-071c-46a5-b8b1-6215944c299d","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"Ruby
-        is the best.","type":"output_text"}],"id":"msg_dfa9afa1-ffb7-441c-9dd5-1dade48235f5","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
-        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00037,"total_cost":0.00041},"input_tokens":149,"input_tokens_details":{"cached_tokens":0},"output_tokens":183,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":332},"user":null}
+      string: '{"background":false,"completed_at":1791753372,"created_at":1791753372,"error":null,"frequency_penalty":0,"id":"resp_8e27e5be-09f1-4039-b174-36f57c1df68f","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"Ruby
+        is the best.","type":"output_text"}],"id":"msg_d302d3ab-a43c-4975-9390-4b5a8a6baae0","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        a sample text file named ruby.txt","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00004,"output_cost":0.00032,"total_cost":0.00036},"input_tokens":148,"input_tokens_details":{"cached_tokens":0},"output_tokens":159,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":307},"user":null}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:47:54 GMT
+  recorded_at: Sun, 11 Oct 2026 21:16:14 GMT
 recorded_with: VCR 6.4.0

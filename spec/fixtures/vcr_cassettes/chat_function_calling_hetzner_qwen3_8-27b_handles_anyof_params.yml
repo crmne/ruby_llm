@@ -27,26 +27,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:57:33 GMT
+      - Sun, 11 Oct 2026 21:10:32 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1039'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":70,"total_tokens":452,"completion_tokens_details":{"reasoning_tokens":28},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-9f3b0dfce8891ef9","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user is requesting
-        to call the any_of_params tool with task \"Review PR\" and status \"pending\".
-        Let''s execute that.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-00810a0c-89b3-4bde-9269-6d191e2a0dfd","object":"chat.completion","created":1791381336,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:57:33 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":382,"completion_tokens":312,"total_tokens":694,"completion_tokens_details":{"reasoning_tokens":270},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-b25f1568d2a7e186","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}],"reasoning":"The user is asking
+        to call the any_of_params tool with the task \"Review PR\" and status \"pending\".\n\nLooking
+        at the function definition:\n```json\n{\n  \"additionalProperties\": false,\n  \"parameters\":
+        {\n    \"properties\": {\n      \"status\": {\n        \"anyOf\": [\n          {\n            \"enum\":
+        [\n              \"pending\",\n              \"done\"\n            ],\n            \"type\":
+        \"string\"\n          },\n          {\n            \"type\": \"null\"\n          }\n        ],\n        \"description\":
+        \"Optional task status\"\n      },\n      \"task\": {\n        \"description\":
+        \"Task description\",\n        \"type\": \"string\"\n      }\n    },\n    \"required\":
+        [\n      \"task\",\n      \"status\"\n    ],\n    \"type\": \"object\"\n  },\n  \"name\":
+        \"any_of_params\"\n}\n```\n\nNote: This tool uses the \"params\" DSL (not
+        \"arguments\"). Therefore, I need to call it using `params` instead of `arguments`.\n\nStatus
+        \"pending\" is a valid value. Let''s call the tool.\n\nSince there''s no other
+        pending work here, I''ll make just one call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-9d9f25fa-d764-4dc8-b147-2cfac05f5a95","object":"chat.completion","created":1791753025,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:10:32 GMT
 recorded_with: VCR 6.4.0

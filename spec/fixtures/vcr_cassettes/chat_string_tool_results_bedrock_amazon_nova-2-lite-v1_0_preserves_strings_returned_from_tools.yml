@@ -15,7 +15,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T135027Z
+      - 20261011T211757Z
       X-Amz-Content-Sha256:
       - 30c5f4bdcb25d623b0a0169c9258998619f881f7948d59cff67fc228e84fca22
       Authorization:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:50:28 GMT
+      - Sun, 11 Oct 2026 21:17:58 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,20 +39,20 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c70cd766-e126-4705-817f-c513e677824b
+      - 8d844a38-e9e0-4b8b-afe4-41520c9e1ffd
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":879},"output":{"message":{"content":[{"toolUse":{"input":{"query":"test
-        data"},"name":"content_returning","toolUseId":"tooluse_z9YUIJHO9s5DS1H8INTbOy"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":939,"outputTokens":26,"serverToolUsage":{},"totalTokens":965}}'
-  recorded_at: Wed, 07 Oct 2026 13:50:28 GMT
+      string: '{"metrics":{"latencyMs":564},"output":{"message":{"content":[{"toolUse":{"input":{"query":"test
+        data"},"name":"content_returning","toolUseId":"tooluse_k8uvNDqwxgGrmGRRtfsLJA"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":939,"outputTokens":26,"serverToolUsage":{},"totalTokens":965}}'
+  recorded_at: Sun, 11 Oct 2026 21:17:58 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Process this query:
-        test data"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_z9YUIJHO9s5DS1H8INTbOy","name":"content_returning","input":{"query":"test
-        data"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_z9YUIJHO9s5DS1H8INTbOy","content":[{"text":"Processed:
+        test data"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_k8uvNDqwxgGrmGRRtfsLJA","name":"content_returning","input":{"query":"test
+        data"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_k8uvNDqwxgGrmGRRtfsLJA","content":[{"text":"Processed:
         test data"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"content_returning","description":"Returns
         a processed string result","inputSchema":{"json":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}}]}}'
@@ -62,9 +62,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T135028Z
+      - 20261011T211758Z
       X-Amz-Content-Sha256:
-      - 2309836c618a62fb1b55d8167a8a125bcea24f6419520875a65fcba2c642a6c4
+      - 704ba548804bc4847fe3e2305d32c3a9630f65c3f932d965d1585e4a00462c3f
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -78,18 +78,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:50:29 GMT
+      - Sun, 11 Oct 2026 21:17:59 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '280'
+      - '286'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 2a0155fc-3a81-4e4d-9729-68587b1cd0ec
+      - 8be5018c-b0a0-4b74-890a-102add6217ee
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":451},"output":{"message":{"content":[{"text":"The
-        query has been processed successfully. Result: **Processed: test data**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":996,"outputTokens":16,"serverToolUsage":{},"totalTokens":1012}}'
-  recorded_at: Wed, 07 Oct 2026 13:50:29 GMT
+      string: '{"metrics":{"latencyMs":483},"output":{"message":{"content":[{"text":"The
+        processed result for your query \"test data\" is:\n\n**Processed: test data**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":996,"outputTokens":21,"serverToolUsage":{},"totalTokens":1017}}'
+  recorded_at: Sun, 11 Oct 2026 21:17:59 GMT
 recorded_with: VCR 6.4.0

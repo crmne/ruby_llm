@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:00:53 GMT
+      - Sun, 11 Oct 2026 21:07:53 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 64b7ba3c8a93db98802c53c0505f41f2
+      - e7abf98ba3e10c5ecca214df6a251e2d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,16 +46,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 138c5da513bf886df833184db08dc3f0.cloudfront.net (CloudFront)
+      - 1.1 b3f288e164adbaabe632e02a62ed3088.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL52-P3
       X-Amz-Cf-Id:
-      - wC1CzwECrIlyVSM4TM98U1Q8v75m1Vk6S-AF8w9NWbN_PNsdqEbDwQ==
+      - 4T7i_DqlXh-VfBXBUT_WcpMVmVS4HDa9sgNzqteAhzq_Z3n6fWaVrw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e1253713-ab36-41ba-9752-8817778577a7","object":"response","created_at":1791378053,"status":"completed","background":false,"completed_at":1791378053,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"f4555bfc-8794-4083-a300-86980dfc9fb7","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer only number. 2+2=4. Need just number."}],"summary":[],"encrypted_content":"e1253713-ab36-41ba-9752-8817778577a7-0"},{"type":"message","id":"925afe33-9154-498a-bd39-af4b617b9be0","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":42,"input_tokens_details":{"cached_tokens":0},"output_tokens":19,"output_tokens_details":{"reasoning_tokens":17},"total_tokens":61},"user":null,"metadata":{}}'
-  recorded_at: Wed, 07 Oct 2026 13:00:54 GMT
+      string: '{"id":"12d05462-75c5-4a41-94dd-cea078ad49d4","object":"response","created_at":1791752873,"status":"completed","background":false,"completed_at":1791752873,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"f0e70b33-81b3-4043-ae93-4b4d96ade5a9","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer just number. 2+2=4. Must obey \"Just the number.\" Final 4."}],"summary":[],"encrypted_content":"12d05462-75c5-4a41-94dd-cea078ad49d4-0"},{"type":"message","id":"693b5c61-69b0-43bf-bab3-e6b309d3bc23","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":42,"input_tokens_details":{"cached_tokens":0},"output_tokens":26,"output_tokens_details":{"reasoning_tokens":24},"total_tokens":68},"user":null,"metadata":{}}'
+  recorded_at: Sun, 11 Oct 2026 21:07:54 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/responses
@@ -63,7 +63,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","input":[{"role":"user","content":"What
         is 2 + 2? Just the number."},{"type":"reasoning","content":[{"type":"reasoning_text","text":"We
-        need answer only number. 2+2=4. Need just number."}]},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Multiply
+        need answer just number. 2+2=4. Must obey \"Just the number.\" Final 4."}]},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Multiply
         that answer by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
@@ -88,7 +88,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:00:54 GMT
+      - Sun, 11 Oct 2026 21:07:54 GMT
       Server:
       - elb
       Vary:
@@ -96,7 +96,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 2ff547bbb1389586801be672a94271b6
+      - 9f3b92e83cc1cc23af8b7cf955464b02
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -104,15 +104,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 7f50c4297c734e04046c5ba262693b20.cloudfront.net (CloudFront)
+      - 1.1 3588568928e677ce9bb8aedfd6e0ea04.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P4
+      - TXL50-P2
       X-Amz-Cf-Id:
-      - 7EPqYcdFMCkhcLGwMikwFERkdXp8iUrCK1WGTMK6wuSaN9kthJzGHg==
+      - LzVDK8XfHjyBozMuw8epVFlsvmVYq0w6xC1qbDE3ZO0zkUvaCVDWCw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1fa2b1ad-6902-487b-a481-7771a37d9204","object":"response","created_at":1791378054,"status":"completed","background":false,"completed_at":1791378055,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"7c9feade-24b1-40ee-b978-282cba9221d9","status":"completed","content":[{"type":"reasoning_text","text":"We
-        need answer only number. User asks Multiply that answer by 3. Previous answer
-        4. 4*3=12. Just the number."}],"summary":[],"encrypted_content":"1fa2b1ad-6902-487b-a481-7771a37d9204-0"},{"type":"message","id":"d9c8cd8c-fa32-47e7-be02-0e95c173ae9d","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"12"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":58,"input_tokens_details":{"cached_tokens":0},"output_tokens":33,"output_tokens_details":{"reasoning_tokens":31},"total_tokens":91},"user":null,"metadata":{}}'
-  recorded_at: Wed, 07 Oct 2026 13:00:55 GMT
+      string: '{"id":"dbf575d8-850a-41a6-8695-5e1ccbaa547b","object":"response","created_at":1791752874,"status":"completed","background":false,"completed_at":1791752874,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"deepseek-flash","moderation":null,"output":[{"type":"reasoning","id":"1472c44d-d179-4222-9422-454743eeb55b","status":"completed","content":[{"type":"reasoning_text","text":"We
+        need answer user. Need follow context. User asks \"What is 2 + 2? Just the
+        number.\" Assistant answered 4. Then user: \"Multiply that answer by 3. Just
+        the number.\" Need just number. 4*3=12. Final only 12."}],"summary":[],"encrypted_content":"dbf575d8-850a-41a6-8695-5e1ccbaa547b-0"},{"type":"message","id":"180e928a-77c5-4484-90b4-b7342b812455","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"12"}],"phase":"final_answer","role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":null},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":58,"input_tokens_details":{"cached_tokens":0},"output_tokens":62,"output_tokens_details":{"reasoning_tokens":60},"total_tokens":120},"user":null,"metadata":{}}'
+  recorded_at: Sun, 11 Oct 2026 21:07:54 GMT
 recorded_with: VCR 6.4.0

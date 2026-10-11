@@ -23,22 +23,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      X-Envoy-Upstream-Service-Time:
-      - '1599'
-      Date:
-      - Thu, 08 Oct 2026 01:18:54 GMT
+      Req-Cost-Time:
+      - '1961'
+      Resp-Start-Time:
+      - '1791752876985'
+      Server:
+      - istio-envoy
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '1602'
-      Resp-Start-Time:
-      - '1791422336650'
-      Server:
-      - istio-envoy
       Req-Arrive-Time:
-      - '1791422335047'
+      - '1791752875024'
+      X-Envoy-Upstream-Service-Time:
+      - '1957'
+      Date:
+      - Sun, 11 Oct 2026 21:07:54 GMT
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -46,18 +46,20 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**. It is a major cultural, economic, and political
-        hub in Europe, known for landmarks such as the Eiffel Tower, the Louvre Museum,
-        and the Seine River.","reasoning_content":"Okay, the user is asking for the
-        capital of France. I need to make sure I give the correct answer. Let me recall...
-        France is a country in Europe, and its capital is Paris. Wait, but I should
-        double-check that. Sometimes people confuse capitals, like thinking it''s
-        Lyon or Marseille, but no, Paris is definitely the capital. It''s the political,
-        economic, and cultural center of France. I should also mention that Paris
-        is known for landmarks like the Eiffel Tower and the Louvre Museum. But the
-        user just asked for the capital, so maybe keep it concise. However, adding
-        a bit more context might be helpful. Let me confirm once again. Yes, Paris
-        is the capital. No other cities are considered the capital. So the answer
-        is Paris.\n"}}],"created":1791422336,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":209,"prompt_tokens":15,"total_tokens":224,"prompt_tokens_details":{"cached_tokens":4}},"id":"chatcmpl-AOTLOZqKtxGIGARa0E7oZmkN1P1ynhY8","timings":{"cache_n":4,"prompt_n":11,"prompt_ms":13.928,"prompt_per_token_ms":1.2661818181818183,"prompt_per_second":789.7759908098794,"predicted_n":209,"predicted_ms":1564.009,"predicted_per_token_ms":7.519274038461538,"predicted_per_second":132.99156206901623}}'
-  recorded_at: Thu, 08 Oct 2026 01:18:56 GMT
+        capital of France is **Paris**. It is the most populous city in France and
+        serves as the country''s political, economic, and cultural center.","reasoning_content":"Okay,
+        the user is asking for the capital of France. Let me think. I know that France
+        is a country in Europe, and its capital is a major city. The most common answer
+        I remember is Paris. But wait, maybe I should double-check to make sure I''m
+        not mixing up any other cities. Let me recall... Paris is the capital, right?
+        I think that''s correct. There''s also Lyon, which is a big city, but not
+        the capital. Marseille is another major city, but again, not the capital.
+        So, yes, Paris is the capital of France. I should confirm that there''s no
+        confusion with other countries, like maybe the capital of another country
+        in Europe. For example, the capital of Italy is Rome, and Germany''s is Berlin.
+        So, no, France''s capital is definitely Paris. I don''t think there''s any
+        other city that''s considered the capital. Let me just make sure there''s
+        no historical context where the capital might have changed. I don''t recall
+        any such changes. So the answer is Paris.\n"}}],"created":1791752876,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":251,"prompt_tokens":15,"total_tokens":266,"prompt_tokens_details":{"cached_tokens":4}},"id":"chatcmpl-UgCoqoms6OBIymCetUjdLztGaoMMGXsL","timings":{"cache_n":4,"prompt_n":11,"prompt_ms":15.806,"prompt_per_token_ms":1.436909090909091,"prompt_per_second":695.9382512969759,"predicted_n":251,"predicted_ms":1927.077,"predicted_per_token_ms":7.708308,"predicted_per_second":129.73015608613457}}'
+  recorded_at: Sun, 11 Oct 2026 21:07:56 GMT
 recorded_with: VCR 6.4.0

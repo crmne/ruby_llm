@@ -24,21 +24,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 12:59:19 GMT
+      - Sun, 11 Oct 2026 21:06:29 GMT
       Content-Length:
-      - '961'
+      - '990'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-750","object":"chat.completion","created":1791377959,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
-        8}","reasoning":"Okay, the user is asking for the square root of 64. Let me
-        think. Square root means a number that, when multiplied by itself, gives the
-        original number. So, what number times itself is 64? Well, 8 times 8 is 64.
-        Wait, but there''s also -8, because negative times negative is positive. However,
-        when people ask for the square root, they usually mean the principal (positive)
-        root. So the answer should be 8. Let me confirm. Yes, the square root symbol
-        typically denotes the principal root. So the result is 8. I need to present
-        this as a JSON object with the key ''result''. Alright, that''s straightforward.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":159,"total_tokens":190}}
+      string: '{"id":"chatcmpl-158","object":"chat.completion","created":1791752789,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
+        8\n}","reasoning":"Okay, the user is asking for the square root of 64. Let
+        me think. Well, square root means a number that when multiplied by itself
+        gives the original number. So, what number times itself is 64? Let''s see,
+        8 times 8 is 64. Wait, but there''s also -8, right? Because negative times
+        negative is positive. But usually, when people ask for the square root, they''re
+        referring to the principal (positive) root. So the answer should be 8. The
+        user wants the answer in a JSON object with the key ''result''. So I need
+        to make sure the JSON is correctly formatted. Let me double-check: 8 squared
+        is 64, yes. Alright, that''s straightforward.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":172,"total_tokens":203}}
 
         '
-  recorded_at: Wed, 07 Oct 2026 12:59:19 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:29 GMT
 recorded_with: VCR 6.4.0

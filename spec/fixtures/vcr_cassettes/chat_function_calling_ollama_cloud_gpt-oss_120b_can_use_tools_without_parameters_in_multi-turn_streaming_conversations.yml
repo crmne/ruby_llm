@@ -28,21 +28,21 @@ http_interactions:
       Content-Type:
       - text/event-stream
       X-Build-Commit:
-      - aca5aad1d053bda171888c526b817e0c61227261
+      - fb036d5c394cd0c23173b2be8d69965e24bc9914
       X-Build-Time:
-      - '2026-10-06T19:15:30-07:00'
+      - '2026-10-09T17:17:18-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Date:
-      - Wed, 07 Oct 2026 13:40:33 GMT
+      - Sun, 11 Oct 2026 21:11:37 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-2ecbf6b8b73fabe42684d16e698a7a88-7fa4fbc050bdcf60-00
       X-Cloud-Trace-Context:
-      - 2ecbf6b8b73fabe42684d16e698a7a88/9197753142404304736
+      - b222bc6432a6479715a5e6e675cc9f16/10455688446248520850
+      Traceparent:
+      - 00-b222bc6432a6479715a5e6e675cc9f16-911a113ec8cc8c92-00
       Via:
       - 1.1 google
       Alt-Svc:
@@ -52,27 +52,35 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"The"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"The"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" user wants to call best"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" user asks"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"_language_to_learn function,"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" to call best_language_to_le"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" then repeat the programming language it"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"arn and repeat"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" returns. We need to call"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" the programming language it returns."},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" the function."},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" We"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","tool_calls":[{"id":"call_m8onvj73","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" must"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}]}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" use"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-924","object":"chat.completion.chunk","created":1791380433,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":141,"completion_tokens":50,"total_tokens":191,"prompt_tokens_details":{"cached_tokens":80}}}
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" the function. We'll"},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" call it."},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","tool_calls":[{"id":"call_p1bkrnfb","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}]}
+
+        data: {"id":"chatcmpl-554","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":141,"completion_tokens":51,"total_tokens":192,"prompt_tokens_details":{"cached_tokens":80}}}
 
         data: [DONE]
 
-  recorded_at: Wed, 07 Oct 2026 13:40:34 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:37 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -80,11 +88,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_m8onvj73","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants to call best_language_to_learn function, then repeat the programming
-        language it returns. We need to call the function.","reasoning_content":"The
-        user wants to call best_language_to_learn function, then repeat the programming
-        language it returns. We need to call the function."},{"role":"tool","content":"Ruby","tool_call_id":"call_m8onvj73"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_p1bkrnfb","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user asks to call best_language_to_learn and repeat the programming language
+        it returns. We must use the function. We''ll call it.","reasoning_content":"The
+        user asks to call best_language_to_learn and repeat the programming language
+        it returns. We must use the function. We''ll call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_p1bkrnfb"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -105,21 +113,21 @@ http_interactions:
       Content-Type:
       - text/event-stream
       X-Build-Commit:
-      - aca5aad1d053bda171888c526b817e0c61227261
+      - fb036d5c394cd0c23173b2be8d69965e24bc9914
       X-Build-Time:
-      - '2026-10-06T19:15:30-07:00'
+      - '2026-10-09T17:17:18-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Date:
-      - Wed, 07 Oct 2026 13:40:34 GMT
+      - Sun, 11 Oct 2026 21:11:37 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-0bde57a3f291de296427141b9f0f72d5-0e8c2b32e99e0fff-00
       X-Cloud-Trace-Context:
-      - 0bde57a3f291de296427141b9f0f72d5/1048260310938292223
+      - 722d60f0c5a3af3d3c996c35b67119d0/9910583768123039783
+      Traceparent:
+      - 00-722d60f0c5a3af3d3c996c35b67119d0-8989776db7b9e027-00
       Via:
       - 1.1 google
       Alt-Svc:
@@ -129,17 +137,17 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-300","object":"chat.completion.chunk","created":1791380434,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"Ruby"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-244","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"Ruby"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-300","object":"chat.completion.chunk","created":1791380434,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}]}
+        data: {"id":"chatcmpl-244","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-300","object":"chat.completion.chunk","created":1791380434,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+        data: {"id":"chatcmpl-244","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
 
-        data: {"id":"chatcmpl-300","object":"chat.completion.chunk","created":1791380434,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":206,"completion_tokens":5,"total_tokens":211,"prompt_tokens_details":{"cached_tokens":160}}}
+        data: {"id":"chatcmpl-244","object":"chat.completion.chunk","created":1791753097,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":207,"completion_tokens":5,"total_tokens":212,"prompt_tokens_details":{"cached_tokens":160}}}
 
         data: [DONE]
 
-  recorded_at: Wed, 07 Oct 2026 13:40:34 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:37 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -147,11 +155,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_m8onvj73","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants to call best_language_to_learn function, then repeat the programming
-        language it returns. We need to call the function.","reasoning_content":"The
-        user wants to call best_language_to_learn function, then repeat the programming
-        language it returns. We need to call the function."},{"role":"tool","content":"Ruby","tool_call_id":"call_m8onvj73"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_p1bkrnfb","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user asks to call best_language_to_learn and repeat the programming language
+        it returns. We must use the function. We''ll call it.","reasoning_content":"The
+        user asks to call best_language_to_learn and repeat the programming language
+        it returns. We must use the function. We''ll call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_p1bkrnfb"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
         best_language_to_learn again and repeat the programming language it returns."}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
     headers:
@@ -173,21 +181,21 @@ http_interactions:
       Content-Type:
       - text/event-stream
       X-Build-Commit:
-      - aca5aad1d053bda171888c526b817e0c61227261
+      - fb036d5c394cd0c23173b2be8d69965e24bc9914
       X-Build-Time:
-      - '2026-10-06T19:15:30-07:00'
+      - '2026-10-09T17:17:18-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Date:
-      - Wed, 07 Oct 2026 13:40:35 GMT
+      - Sun, 11 Oct 2026 21:11:38 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-099eec2638666cb678f5e2aed56a338d-877fbb380437da54-00
+      - 00-18c6e5dc25d6491d96e34f5ea4cff842-2067b95203a5212e-00
       X-Cloud-Trace-Context:
-      - '099eec2638666cb678f5e2aed56a338d/9763728366425856596'
+      - 18c6e5dc25d6491d96e34f5ea4cff842/2335038693714501934
       Via:
       - 1.1 google
       Alt-Svc:
@@ -197,27 +205,21 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"The"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-718","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"We need to call"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" user wants to call best"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-718","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" the"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"_language_to_learn again."},"finish_reason":null}]}
+        data: {"id":"chatcmpl-718","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" function again."},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" Use"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-718","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","tool_calls":[{"id":"call_0g6iae1q","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":" the function"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-718","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}]}
 
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","reasoning":"."},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":"","tool_calls":[{"id":"call_rao2myoz","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}]}
-
-        data: {"id":"chatcmpl-230","object":"chat.completion.chunk","created":1791380435,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":199,"completion_tokens":39,"total_tokens":238,"prompt_tokens_details":{"cached_tokens":112}}}
+        data: {"id":"chatcmpl-718","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":199,"completion_tokens":31,"total_tokens":230,"prompt_tokens_details":{"cached_tokens":112}}}
 
         data: [DONE]
 
-  recorded_at: Wed, 07 Oct 2026 13:40:35 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:38 GMT
 - request:
     method: post
     uri: https://ollama.com/v1/chat/completions
@@ -225,14 +227,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-oss:120b","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"Call best_language_to_learn
-        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_m8onvj73","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants to call best_language_to_learn function, then repeat the programming
-        language it returns. We need to call the function.","reasoning_content":"The
-        user wants to call best_language_to_learn function, then repeat the programming
-        language it returns. We need to call the function."},{"role":"tool","content":"Ruby","tool_call_id":"call_m8onvj73"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
-        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_rao2myoz","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user wants to call best_language_to_learn again. Use the function.","reasoning_content":"The
-        user wants to call best_language_to_learn again. Use the function."},{"role":"tool","content":"Ruby","tool_call_id":"call_rao2myoz"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_p1bkrnfb","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user asks to call best_language_to_learn and repeat the programming language
+        it returns. We must use the function. We''ll call it.","reasoning_content":"The
+        user asks to call best_language_to_learn and repeat the programming language
+        it returns. We must use the function. We''ll call it."},{"role":"tool","content":"Ruby","tool_call_id":"call_p1bkrnfb"},{"role":"assistant","content":"Ruby"},{"role":"user","content":"Call
+        best_language_to_learn again and repeat the programming language it returns."},{"role":"assistant","content":"","tool_calls":[{"id":"call_0g6iae1q","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"We
+        need to call the function again.","reasoning_content":"We need to call the
+        function again."},{"role":"tool","content":"Ruby","tool_call_id":"call_0g6iae1q"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -253,21 +255,21 @@ http_interactions:
       Content-Type:
       - text/event-stream
       X-Build-Commit:
-      - aca5aad1d053bda171888c526b817e0c61227261
+      - fb036d5c394cd0c23173b2be8d69965e24bc9914
       X-Build-Time:
-      - '2026-10-06T19:15:30-07:00'
+      - '2026-10-09T17:17:18-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Date:
-      - Wed, 07 Oct 2026 13:40:36 GMT
+      - Sun, 11 Oct 2026 21:11:38 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - ae07ed705b99e9cfcf54d0f2edd55fc4/3043148157903781736
+      - 84eb05d665fa8d4e1f0863c4acf74107/14190026633933550204
       Traceparent:
-      - 00-ae07ed705b99e9cfcf54d0f2edd55fc4-2a3b6f2056bd3f68-00
+      - 00-84eb05d665fa8d4e1f0863c4acf74107-c4ed1a0aa4f0f27c-00
       Via:
       - 1.1 google
       Alt-Svc:
@@ -277,16 +279,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-823","object":"chat.completion.chunk","created":1791380436,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"Ruby"},"finish_reason":null}]}
+        data: {"id":"chatcmpl-81","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"Ruby"},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-823","object":"chat.completion.chunk","created":1791380436,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}]}
+        data: {"id":"chatcmpl-81","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-823","object":"chat.completion.chunk","created":1791380436,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+        data: {"id":"chatcmpl-81","object":"chat.completion.chunk","created":1791753098,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
 
-        data: {"id":"chatcmpl-823","object":"chat.completion.chunk","created":1791380436,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":253,"completion_tokens":5,"total_tokens":258,"prompt_tokens_details":{"cached_tokens":208}}}
+        data: {"id":"chatcmpl-81","object":"chat.completion.chunk","created":1791753099,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":245,"completion_tokens":5,"total_tokens":250,"prompt_tokens_details":{"cached_tokens":208}}}
 
         data: [DONE]
 
-  recorded_at: Wed, 07 Oct 2026 13:40:36 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:39 GMT
 recorded_with: VCR 6.4.0
 ...

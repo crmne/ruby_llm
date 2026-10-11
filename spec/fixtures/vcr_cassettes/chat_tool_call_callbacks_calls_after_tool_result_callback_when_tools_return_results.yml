@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:44:42 GMT
+      - Sun, 11 Oct 2026 21:15:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1342'
+      - '1068'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -61,11 +61,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '4998'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
       - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 24ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_03626211c8036da8016ac64cc9420887d2b3e3152527a44df4",
+          "id": "resp_0d5050f66c183b43016acbfc76210087d2833745290a052cb2",
           "object": "response",
-          "created_at": 1791380681,
+          "created_at": 1791753334,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791380682,
+          "completed_at": 1791753335,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -98,11 +98,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_03626211c8036da8016ac64cca559c87d2b0afc57100cf84f5",
+              "id": "fc_0d5050f66c183b43016acbfc76d15487d2a1864a858c5e1fa6",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_9tY6xig6ADkcT1oXyCyopgbZ",
+              "call_id": "call_xhcSpKvtec3toHOX36uGfFb1",
               "name": "weather"
             }
           ],
@@ -192,14 +192,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Wed, 07 Oct 2026 13:44:42 GMT
+  recorded_at: Sun, 11 Oct 2026 21:15:35 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6","input":[{"role":"user","content":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_9tY6xig6ADkcT1oXyCyopgbZ","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_9tY6xig6ADkcT1oXyCyopgbZ","output":"Current
+        in Berlin? (52.5200, 13.4050)"},{"type":"function_call","call_id":"call_xhcSpKvtec3toHOX36uGfFb1","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_xhcSpKvtec3toHOX36uGfFb1","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -221,7 +221,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:44:44 GMT
+      - Sun, 11 Oct 2026 21:15:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -245,7 +245,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1368'
+      - '837'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -255,11 +255,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '4999'
+      - '4998'
       X-Ratelimit-Remaining-Tokens:
       - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 12ms
+      - 24ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -272,16 +272,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_06dafbeda6483330016ac64ccadb0087d2b4220eee5d77625a",
+          "id": "resp_0c9c50f3b94c0e65016acbfc776a4087d2ad0fb98105d3b289",
           "object": "response",
-          "created_at": 1791380682,
+          "created_at": 1791753335,
           "status": "completed",
           "access_programs": null,
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1791380684,
+          "completed_at": 1791753336,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -292,7 +292,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_06dafbeda6483330016ac64ccbdb3087d2b4de5436facb8f92",
+              "id": "msg_0c9c50f3b94c0e65016acbfc78077487d2a1b51a0375bb4ef6",
               "type": "message",
               "status": "completed",
               "content": [
@@ -393,5 +393,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Wed, 07 Oct 2026 13:44:44 GMT
+  recorded_at: Sun, 11 Oct 2026 21:15:36 GMT
 recorded_with: VCR 6.4.0

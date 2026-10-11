@@ -30,51 +30,51 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:00:10 GMT
+      - Sun, 11 Oct 2026 21:07:13 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
+      - accept-encoding
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - d92091aff830ef9de92f9362382b4149
+      - 836cb0bd40e822eb01e66272fdb24983
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 5f778d35c6d984dad3799b4a47e97e44.cloudfront.net (CloudFront)
+      - 1.1 8ba5a7db0f86d152bf852f67ddf89e84.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - TXL50-P1
       X-Amz-Cf-Id:
-      - viRcyDQD8p0vBFeY30x_UZ0zQLR-n8jTI_sjYZ-kXOV6-tK0VMAGig==
+      - 1nIg_v-XE6agOSyt5MhYMKbrxrjJYuGQ0xRe1JkCS3P_pGniJg3tqg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"eb68fdc1-6c30-40be-96e2-1df9912e1486","object":"chat.completion","created":1791378010,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by **Yukihiro Matsumoto**, commonly known as **Matz**. He began
-        developing it in the mid-1990s, and Ruby was first released in **1995**.","reasoning_content":"We
-        need answer. User asks who is creator of programming language Ruby. Answer:
-        Yukihiro Matsumoto, aka Matz. Created in Japan, released 1995. Need concise.
-        Maybe mention influenced by Perl, Smalltalk, Eiffel, Ada, Lisp. Final."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":40,"completion_tokens":102,"total_tokens":142,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":59},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":40},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Wed, 07 Oct 2026 13:00:11 GMT
+      string: '{"id":"edeb1d1e-a96c-4a7f-ac6c-cc3897e4850e","object":"chat.completion","created":1791752833,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        creator of the Ruby programming language is **Yukihiro Matsumoto**, commonly
+        known as **Matz**. He began developing Ruby in the early 1990s, and it was
+        first released in 1995.","reasoning_content":"We need answer. User asks simple.
+        Need identify creator of Ruby: Yukihiro Matsumoto (Matz). Could mention first
+        released 1995. Need maybe concise. Final."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":40,"completion_tokens":85,"total_tokens":125,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":38},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":40},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Sun, 11 Oct 2026 21:07:14 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"Ruby
-        was created by **Yukihiro Matsumoto**, commonly known as **Matz**. He began
-        developing it in the mid-1990s, and Ruby was first released in **1995**.","reasoning_content":"We
-        need answer. User asks who is creator of programming language Ruby. Answer:
-        Yukihiro Matsumoto, aka Matz. Created in Japan, released 1995. Need concise.
-        Maybe mention influenced by Perl, Smalltalk, Eiffel, Ada, Lisp. Final.","reasoning":"We
-        need answer. User asks who is creator of programming language Ruby. Answer:
-        Yukihiro Matsumoto, aka Matz. Created in Japan, released 1995. Need concise.
-        Maybe mention influenced by Perl, Smalltalk, Eiffel, Ada, Lisp. Final."},{"role":"user","content":"What
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of the Ruby programming language is **Yukihiro Matsumoto**, commonly
+        known as **Matz**. He began developing Ruby in the early 1990s, and it was
+        first released in 1995.","reasoning_content":"We need answer. User asks simple.
+        Need identify creator of Ruby: Yukihiro Matsumoto (Matz). Could mention first
+        released 1995. Need maybe concise. Final.","reasoning":"We need answer. User
+        asks simple. Need identify creator of Ruby: Yukihiro Matsumoto (Matz). Could
+        mention first released 1995. Need maybe concise. Final."},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
@@ -99,7 +99,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:00:11 GMT
+      - Sun, 11 Oct 2026 21:07:14 GMT
       Server:
       - elb
       Vary:
@@ -107,7 +107,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - dbecf69e68705c23ee66d815de974417
+      - 374f8755c5b5360698f590c5d8142cf1
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -115,23 +115,25 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f3a325e6e24a6fb1a22eaa7647e9171a.cloudfront.net (CloudFront)
+      - 1.1 e1df9556bb1356130b1e2a47706ca86a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL50-P6
       X-Amz-Cf-Id:
-      - eOCm7qYiJhZ8I5mUbAHpvD72YKdblMDSOeCjDH3tWd_qrCm_ZIYU1A==
+      - EOVFfweNbZBf-fauPcq5OcjsweDsWGwYbNtrG_VrK2T1i6EGlSk8vA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2262290e-e4e0-4b91-9d76-6ce2f91361f7","object":"chat.completion","created":1791378011,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        Matsumoto began developing Ruby in **1993** and first released it publicly
-        in **1995**. So Ruby is commonly cited as being created in **1995**.","reasoning_content":"We
-        need answer. Need be careful: previous said began mid-1990s, first released
-        1995. User asks \"What year did he create Ruby?\" Need answer likely 1995.
-        But \"create\" maybe began development in 1993, first public release 1995.
-        Need clarify. Matsumoto started designing Ruby in 1993, first released in
-        1995. The question \"What year did he create Ruby?\" Could answer 1995 if
-        release. But if \"create\" maybe 1993. We should provide nuance: He began
-        work on Ruby in 1993 and released it publicly in 1995. So if asking creation
-        year, often cited 1995. Let''s craft concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":93,"completion_tokens":187,"total_tokens":280,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":148},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":93},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Wed, 07 Oct 2026 13:00:13 GMT
+      string: '{"id":"e73487cb-5af9-4fc4-8b98-6c88b232d366","object":"chat.completion","created":1791752834,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        Matsumoto began developing Ruby in **1993**, and he first released it publicly
+        in **1995**. So if you mean the first public release, the year is **1995**.","reasoning_content":"We
+        need answer. Need be careful. User asks \"What year did he create Ruby?\"
+        Previous said began early 1990s, first released 1995. Need answer likely 1995.
+        But \"create\" could be began work 1993, first public release 1995. Let''s
+        verify. Yukihiro Matsumoto started developing Ruby around 1993, first released
+        in 1995. The question \"What year did he create Ruby?\" Often answer: Ruby
+        was created in 1995 by Yukihiro Matsumoto. Some sources say designed and developed
+        in 1993, released 1995. Need maybe mention nuance: He began work in 1993;
+        first public release was 1995. Since previous assistant said began in early
+        1990s and first released 1995. So answer: 1995 (public release), with development
+        starting in 1993. Keep concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":97,"completion_tokens":231,"total_tokens":328,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":188},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":97},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Sun, 11 Oct 2026 21:07:15 GMT
 recorded_with: VCR 6.4.0

@@ -23,97 +23,109 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Resp-Start-Time:
-      - '1791422363910'
+      Req-Arrive-Time:
+      - '1791752967596'
+      X-Envoy-Upstream-Service-Time:
+      - '3710'
+      Date:
+      - Sun, 11 Oct 2026 21:09:26 GMT
       Server:
       - istio-envoy
-      Access-Control-Allow-Origin:
-      - ''
       Content-Type:
       - application/json; charset=utf-8
-      X-Envoy-Upstream-Service-Time:
-      - '5227'
-      Date:
-      - Thu, 08 Oct 2026 01:19:17 GMT
       Req-Cost-Time:
-      - '5230'
-      Req-Arrive-Time:
-      - '1791422358680'
+      - '3718'
+      Resp-Start-Time:
+      - '1791752971314'
+      Access-Control-Allow-Origin:
+      - ''
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHN1bSBvZiA1IGFuZCAzIGlzIGNhbGN1bGF0ZWQgYnkgY29tYmluaW5nIHRoZSB0d28gbnVtYmVycy4gXG5cbioqU3RlcC1ieS1TdGVwIEV4cGxhbmF0aW9uOioqXG4xLiBTdGFydCB3aXRoIHRoZSBudW1iZXIgNS5cbjIuIEFkZCAzIHRvIGl0OiA1ICsgMy5cbjMuIENvdW50aW5nIGZvcndhcmQgZnJvbSA1OiA1IChmaXJzdCBudW1iZXIpLCA2IChhZGQgMSksIDcgKGFkZCAxKSwgOCAoYWRkIDEpLlxuNC4gVGhlIHRvdGFsIGlzICoqOCoqLlxuXG4qKkFuc3dlcjoqKiA1ICsgMyA9ICoqOCoqLiIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgaXMgYXNraW5nIHdoYXQgNSArIDMgaXMuIExldCBtZSBtYWtlIHN1cmUgSSB1bmRlcnN0YW5kIHRoZSBxdWVzdGlvbiBjb3JyZWN0bHkuIFRoZXkncmUganVzdCBhZGRpbmcgdHdvIG51bWJlcnMsIHJpZ2h0PyBTbywgNSBwbHVzIDMuIEhtbSwgYmFzaWMgYXJpdGhtZXRpYy4gTGV0IG1lIHRoaW5rLlxuXG5GaXJzdCwgSSBrbm93IHRoYXQgYWRkaXRpb24gaXMgY29tYmluaW5nIHR3byBxdWFudGl0aWVzLiBTbywgaWYgSSBoYXZlIDUgYXBwbGVzIGFuZCBhZGQgMyBtb3JlIGFwcGxlcywgaG93IG1hbnkgYXBwbGVzIGRvIEkgaGF2ZSBpbiB0b3RhbD8gV2VsbCwgNSBwbHVzIDMgc2hvdWxkIGJlIDguIFdhaXQsIGxldCBtZSB2ZXJpZnkgdGhhdC4gNSBwbHVzIDIgaXMgNywgYW5kIHRoZW4gcGx1cyAxIG1vcmUgaXMgOC4gWWVhaCwgdGhhdCBzZWVtcyByaWdodC5cblxuQWx0ZXJuYXRpdmVseSwgSSBjYW4gdXNlIGZpbmdlcnMgdG8gY291bnQuIElmIEkgaG9sZCB1cCA1IGZpbmdlcnMgb24gb25lIGhhbmQgYW5kIDMgb24gdGhlIG90aGVyLCBob3cgbWFueSBpcyB0aGF0PyBMZXQgbWUgY291bnQ6IDEsIDIsIDMsIDQsIDUgb24gdGhlIGZpcnN0IGhhbmQgYW5kIDEsIDIsIDMgb24gdGhlIHNlY29uZC4gQ29tYmluaW5nIHRoZW0sIHRoYXQncyA1ICsgMyA9IDguIE9rYXksIHRoYXQgY2hlY2tzIG91dC5cblxuQW5vdGhlciB3YXkgdG8gdGhpbmsgYWJvdXQgaXQgaXMgdXNpbmcgYSBudW1iZXIgbGluZS4gU3RhcnRpbmcgYXQgNSBhbmQgbW92aW5nIDMgdW5pdHMgdG8gdGhlIHJpZ2h0LiBTbywgNSB0byA2IGlzIG9uZSwgNiB0byA3IGlzIHR3bywgYW5kIDcgdG8gOCBpcyB0aHJlZS4gU28sIGVuZGluZyB1cCBhdCA4LiBZZXAsIHRoYXQncyBjb25zaXN0ZW50LlxuXG5XYWl0LCBpcyB0aGVyZSBhbnkgY2hhbmNlIEkgY291bGQgaGF2ZSBtYWRlIGEgbWlzdGFrZSBoZXJlPyBNYXliZSBpZiBJIGNvbmZ1c2VkIHRoZSBudW1iZXJzPyBMZXQgbWUgY2hlY2sgYWdhaW4uIDUgKyAzLiA1IHBsdXMgMy4gTGV0IG1lIHdyaXRlIGl0IGRvd24gYXMgYW4gZXF1YXRpb246IDUgKyAzID0gOC4gVGhhdCdzIGNvcnJlY3QuIFxuXG5BbHRlcm5hdGl2ZWx5LCBpZiBJIHVzZSB0aGUgY29tbXV0YXRpdmUgcHJvcGVydHkgb2YgYWRkaXRpb24sIDMgKyA1IGlzIHRoZSBzYW1lIGFzIDUgKyAzLCBzbyBpdCdzIGFsc28gOC4gU28sIHJlZ2FyZGxlc3Mgb2YgdGhlIG9yZGVyLCB0aGUgcmVzdWx0IGlzIHRoZSBzYW1lLiBcblxuSSBndWVzcyB0aGVyZSdzIG5vIHRyaWNrIGhlcmUuIFRoZSB1c2VyIGlzIHByb2JhYmx5IGp1c3QgdGVzdGluZyBpZiBJIGNhbiBwZXJmb3JtIGJhc2ljIGFyaXRobWV0aWMuIEJ1dCB0byBiZSB0aG9yb3VnaCwgSSBzaG91bGQgbWFrZSBzdXJlIHRoZXJlJ3Mgbm8gaGlkZGVuIG1lYW5pbmcuIFRoZSBxdWVzdGlvbiBpcyBzdHJhaWdodGZvcndhcmQuIFxuXG5ObywgSSBkb24ndCB0aGluayB0aGVyZSdzIGFueSBhbHRlcm5hdGl2ZSBpbnRlcnByZXRhdGlvbi4gVGhlIHF1ZXN0aW9uIGlzIHNpbXBseSBhc2tpbmcgZm9yIHRoZSBzdW0gb2YgNSBhbmQgMy4gVGhlcmVmb3JlLCB0aGUgYW5zd2VyIHNob3VsZCBiZSA4LiBJIGNhbid0IHNlZSBhbnkgcmVhc29uIHdoeSB0aGlzIHdvdWxkIGJlIGRpZmZlcmVudC4gTWF5YmUgaWYgdGhlIG51bWJlcnMgd2VyZSBpbiBhIGRpZmZlcmVudCBiYXNlLCBidXQgdGhlIHF1ZXN0aW9uIGRvZXNuJ3QgbWVudGlvbiB0aGF0LiBBc3N1bWluZyBiYXNlIDEwLCB3aGljaCBpcyBzdGFuZGFyZCB1bmxlc3Mgc3BlY2lmaWVkIG90aGVyd2lzZS4gXG5cblNvLCB5ZWFoLCA1ICsgMyBlcXVhbHMgOC4gSSB0aGluayB0aGF0J3Mgc29saWQuIEFsbCB0aGUgbWV0aG9kcyBJIHVzZWTigJRjb3VudGluZywgbnVtYmVyIGxpbmUsIGZpbmdlcnMsIGFuZCB0aGUgY29tbXV0YXRpdmUgcHJvcGVydHnigJRjb25maXJtIHRoZSBzYW1lIHJlc3VsdC4gTm8gY29uZmxpY3RpbmcgaW5mb3JtYXRpb24uIEknbSBjb25maWRlbnQgdGhlIGFuc3dlciBpcyA4LlxuIn19XSwiY3JlYXRlZCI6MTc5MTQyMjM2MywibW9kZWwiOiJxd2VuMy1uYXRpdmUiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjY4MywicHJvbXB0X3Rva2VucyI6MTYsInRvdGFsX3Rva2VucyI6Njk5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTF9fSwiaWQiOiJjaGF0Y21wbC01RGlNb1dJS0FKTEQ0d2NYbVVwNXVYSGFydHlXZExFbSIsInRpbWluZ3MiOnsiY2FjaGVfbiI6MTEsInByb21wdF9uIjo1LCJwcm9tcHRfbXMiOjI0LjU1NSwicHJvbXB0X3Blcl90b2tlbl9tcyI6NC45MTEsInByb21wdF9wZXJfc2Vjb25kIjoyMDMuNjI0NTE2MzkxNzczNTcsInByZWRpY3RlZF9uIjo2ODMsInByZWRpY3RlZF9tcyI6NTE5MS4yNjUsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuNjExODI1NTEzMTk2NDgxLCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTMxLjM3NDUzMDEwMDA4MTU2fX0=
-  recorded_at: Thu, 08 Oct 2026 01:19:23 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"5
+        + 3 equals 8. \n\n**Explanation:**  \nWhen you add 5 and 3 together, you combine
+        the quantities:  \n5 (units) + 3 (units) = 8 (units).  \n\nThis is a basic
+        arithmetic operation, and the result is **8**.","reasoning_content":"Okay,
+        the user is asking \"What is 5 + 3?\" That seems straightforward, but I should
+        make sure I understand the question correctly. Let me break it down.\n\nFirst,
+        I need to perform the addition of 5 and 3. Basic arithmetic, right? So 5 plus
+        3. Let me visualize this. If I have five objects and add three more, how many
+        do I have in total? Let me count: 1, 2, 3, 4, 5, and then 6, 7, 8. Wait, that''s
+        8. So 5 + 3 equals 8. Is there any chance I could be mistaken here? Let me
+        double-check. Maybe using another method. \n\nAlternatively, I can think of
+        addition as combining two numbers. 5 is the first number, and 3 is the second.
+        Adding them together gives the sum. So 5 + 3 = 8. Another way to verify is
+        to use a number line. Starting at 5 and moving 3 steps to the right: 5 to
+        6 is one, 6 to 7 is two, 7 to 8 is three. Yep, that lands at 8. \n\nI guess
+        there''s no trick here. The user might just be testing if I can do basic math,
+        or maybe they''re looking for an explanation. But the question is direct.
+        Since the user hasn''t provided any context or additional details, the answer
+        should be the simple sum. \n\nWait, could there be a different interpretation?
+        For example, in some contexts, symbols might have different meanings, but
+        in standard arithmetic, the plus sign is addition. Unless they''re using a
+        different notation, but that''s not indicated here. \n\nSo, to recap: 5 +
+        3 is a basic addition problem. The result is 8. I should present that clearly.
+        Maybe the user is a student practicing math, or someone who needs confirmation.
+        Either way, the answer is straightforward. I''ll just state the result and
+        confirm it with a simple explanation to ensure clarity.\n"}}],"created":1791752971,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":494,"prompt_tokens":16,"total_tokens":510,"prompt_tokens_details":{"cached_tokens":11}},"id":"chatcmpl-3XrR6On6IMmF9udOZ6Cz2C5Hfht1QIKq","timings":{"cache_n":11,"prompt_n":5,"prompt_ms":20.026,"prompt_per_token_ms":4.0052,"prompt_per_second":249.6754219514631,"predicted_n":494,"predicted_ms":3677.556,"predicted_per_token_ms":7.459545638945233,"predicted_per_second":134.056422254345}}'
+  recorded_at: Sun, 11 Oct 2026 21:09:31 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by combining
-        the two numbers. \n\n**Step-by-Step Explanation:**\n1. Start with the number
-        5.\n2. Add 3 to it: 5 + 3.\n3. Counting forward from 5: 5 (first number),
-        6 (add 1), 7 (add 1), 8 (add 1).\n4. The total is **8**.\n\n**Answer:** 5
-        + 3 = **8**.","reasoning":"Okay, the user is asking what 5 + 3 is. Let me
-        make sure I understand the question correctly. They''re just adding two numbers,
-        right? So, 5 plus 3. Hmm, basic arithmetic. Let me think.\n\nFirst, I know
-        that addition is combining two quantities. So, if I have 5 apples and add
-        3 more apples, how many apples do I have in total? Well, 5 plus 3 should be
-        8. Wait, let me verify that. 5 plus 2 is 7, and then plus 1 more is 8. Yeah,
-        that seems right.\n\nAlternatively, I can use fingers to count. If I hold
-        up 5 fingers on one hand and 3 on the other, how many is that? Let me count:
-        1, 2, 3, 4, 5 on the first hand and 1, 2, 3 on the second. Combining them,
-        that''s 5 + 3 = 8. Okay, that checks out.\n\nAnother way to think about it
-        is using a number line. Starting at 5 and moving 3 units to the right. So,
-        5 to 6 is one, 6 to 7 is two, and 7 to 8 is three. So, ending up at 8. Yep,
-        that''s consistent.\n\nWait, is there any chance I could have made a mistake
-        here? Maybe if I confused the numbers? Let me check again. 5 + 3. 5 plus 3.
-        Let me write it down as an equation: 5 + 3 = 8. That''s correct. \n\nAlternatively,
-        if I use the commutative property of addition, 3 + 5 is the same as 5 + 3,
-        so it''s also 8. So, regardless of the order, the result is the same. \n\nI
-        guess there''s no trick here. The user is probably just testing if I can perform
-        basic arithmetic. But to be thorough, I should make sure there''s no hidden
-        meaning. The question is straightforward. \n\nNo, I don''t think there''s
-        any alternative interpretation. The question is simply asking for the sum
-        of 5 and 3. Therefore, the answer should be 8. I can''t see any reason why
-        this would be different. Maybe if the numbers were in a different base, but
-        the question doesn''t mention that. Assuming base 10, which is standard unless
-        specified otherwise. \n\nSo, yeah, 5 + 3 equals 8. I think that''s solid.
-        All the methods I used—counting, number line, fingers, and the commutative
-        property—confirm the same result. No conflicting information. I''m confident
-        the answer is 8.\n","reasoning_content":"Okay, the user is asking what 5 +
-        3 is. Let me make sure I understand the question correctly. They''re just
-        adding two numbers, right? So, 5 plus 3. Hmm, basic arithmetic. Let me think.\n\nFirst,
-        I know that addition is combining two quantities. So, if I have 5 apples and
-        add 3 more apples, how many apples do I have in total? Well, 5 plus 3 should
-        be 8. Wait, let me verify that. 5 plus 2 is 7, and then plus 1 more is 8.
-        Yeah, that seems right.\n\nAlternatively, I can use fingers to count. If I
-        hold up 5 fingers on one hand and 3 on the other, how many is that? Let me
-        count: 1, 2, 3, 4, 5 on the first hand and 1, 2, 3 on the second. Combining
-        them, that''s 5 + 3 = 8. Okay, that checks out.\n\nAnother way to think about
-        it is using a number line. Starting at 5 and moving 3 units to the right.
-        So, 5 to 6 is one, 6 to 7 is two, and 7 to 8 is three. So, ending up at 8.
-        Yep, that''s consistent.\n\nWait, is there any chance I could have made a
-        mistake here? Maybe if I confused the numbers? Let me check again. 5 + 3.
-        5 plus 3. Let me write it down as an equation: 5 + 3 = 8. That''s correct.
-        \n\nAlternatively, if I use the commutative property of addition, 3 + 5 is
-        the same as 5 + 3, so it''s also 8. So, regardless of the order, the result
-        is the same. \n\nI guess there''s no trick here. The user is probably just
-        testing if I can perform basic arithmetic. But to be thorough, I should make
-        sure there''s no hidden meaning. The question is straightforward. \n\nNo,
-        I don''t think there''s any alternative interpretation. The question is simply
-        asking for the sum of 5 and 3. Therefore, the answer should be 8. I can''t
-        see any reason why this would be different. Maybe if the numbers were in a
-        different base, but the question doesn''t mention that. Assuming base 10,
-        which is standard unless specified otherwise. \n\nSo, yeah, 5 + 3 equals 8.
-        I think that''s solid. All the methods I used—counting, number line, fingers,
-        and the commutative property—confirm the same result. No conflicting information.
-        I''m confident the answer is 8.\n"},{"role":"user","content":"Now multiply
-        that by 2"}],"stream":false}'
+        3?"},{"role":"assistant","content":"5 + 3 equals 8. \n\n**Explanation:**  \nWhen
+        you add 5 and 3 together, you combine the quantities:  \n5 (units) + 3 (units)
+        = 8 (units).  \n\nThis is a basic arithmetic operation, and the result is
+        **8**.","reasoning":"Okay, the user is asking \"What is 5 + 3?\" That seems
+        straightforward, but I should make sure I understand the question correctly.
+        Let me break it down.\n\nFirst, I need to perform the addition of 5 and 3.
+        Basic arithmetic, right? So 5 plus 3. Let me visualize this. If I have five
+        objects and add three more, how many do I have in total? Let me count: 1,
+        2, 3, 4, 5, and then 6, 7, 8. Wait, that''s 8. So 5 + 3 equals 8. Is there
+        any chance I could be mistaken here? Let me double-check. Maybe using another
+        method. \n\nAlternatively, I can think of addition as combining two numbers.
+        5 is the first number, and 3 is the second. Adding them together gives the
+        sum. So 5 + 3 = 8. Another way to verify is to use a number line. Starting
+        at 5 and moving 3 steps to the right: 5 to 6 is one, 6 to 7 is two, 7 to 8
+        is three. Yep, that lands at 8. \n\nI guess there''s no trick here. The user
+        might just be testing if I can do basic math, or maybe they''re looking for
+        an explanation. But the question is direct. Since the user hasn''t provided
+        any context or additional details, the answer should be the simple sum. \n\nWait,
+        could there be a different interpretation? For example, in some contexts,
+        symbols might have different meanings, but in standard arithmetic, the plus
+        sign is addition. Unless they''re using a different notation, but that''s
+        not indicated here. \n\nSo, to recap: 5 + 3 is a basic addition problem. The
+        result is 8. I should present that clearly. Maybe the user is a student practicing
+        math, or someone who needs confirmation. Either way, the answer is straightforward.
+        I''ll just state the result and confirm it with a simple explanation to ensure
+        clarity.\n","reasoning_content":"Okay, the user is asking \"What is 5 + 3?\"
+        That seems straightforward, but I should make sure I understand the question
+        correctly. Let me break it down.\n\nFirst, I need to perform the addition
+        of 5 and 3. Basic arithmetic, right? So 5 plus 3. Let me visualize this. If
+        I have five objects and add three more, how many do I have in total? Let me
+        count: 1, 2, 3, 4, 5, and then 6, 7, 8. Wait, that''s 8. So 5 + 3 equals 8.
+        Is there any chance I could be mistaken here? Let me double-check. Maybe using
+        another method. \n\nAlternatively, I can think of addition as combining two
+        numbers. 5 is the first number, and 3 is the second. Adding them together
+        gives the sum. So 5 + 3 = 8. Another way to verify is to use a number line.
+        Starting at 5 and moving 3 steps to the right: 5 to 6 is one, 6 to 7 is two,
+        7 to 8 is three. Yep, that lands at 8. \n\nI guess there''s no trick here.
+        The user might just be testing if I can do basic math, or maybe they''re looking
+        for an explanation. But the question is direct. Since the user hasn''t provided
+        any context or additional details, the answer should be the simple sum. \n\nWait,
+        could there be a different interpretation? For example, in some contexts,
+        symbols might have different meanings, but in standard arithmetic, the plus
+        sign is addition. Unless they''re using a different notation, but that''s
+        not indicated here. \n\nSo, to recap: 5 + 3 is a basic addition problem. The
+        result is 8. I should present that clearly. Maybe the user is a student practicing
+        math, or someone who needs confirmation. Either way, the answer is straightforward.
+        I''ll just state the result and confirm it with a simple explanation to ensure
+        clarity.\n"},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -130,46 +142,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - istio-envoy
       Access-Control-Allow-Origin:
       - ''
-      Resp-Start-Time:
-      - '1791422366934'
-      X-Envoy-Upstream-Service-Time:
-      - '3014'
-      Date:
-      - Thu, 08 Oct 2026 01:19:23 GMT
       Content-Type:
       - application/json; charset=utf-8
-      Req-Cost-Time:
-      - '3018'
       Req-Arrive-Time:
-      - '1791422363915'
+      - '1791752971318'
+      Resp-Start-Time:
+      - '1791752973630'
+      X-Envoy-Upstream-Service-Time:
+      - '2308'
+      Date:
+      - Sun, 11 Oct 2026 21:09:30 GMT
+      Server:
+      - istio-envoy
+      Req-Cost-Time:
+      - '2311'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        result of multiplying 8 by 2 is calculated as follows:  \n\n**Step-by-Step
-        Explanation:**  \n1. Start with the previous result: **8**.  \n2. Multiply
-        it by 2: $ 8 \\times 2 $.  \n3. $ 8 \\times 2 = 16 $.  \n\n**Answer:** $ 8
-        \\times 2 = \\boxed{16} $.","reasoning_content":"Okay, let''s see. The user
-        first asked what 5 + 3 is, and I told them it''s 8. Now they''re saying \"Now
-        multiply that by 2.\" So I need to take the previous result, which was 8,
-        and multiply it by 2.\n\nWait, let me make sure I understand correctly. The
-        user is continuing the same problem, right? So first they added 5 and 3 to
-        get 8, and now they want to multiply that result by 2. So the next step is
-        8 * 2.\n\nHmm, multiplying 8 by 2. Let me double-check that. 8 times 2 is
-        16. Let me confirm by adding 8 twice: 8 + 8 = 16. Yeah, that''s correct. \n\nI
-        should present the answer clearly, maybe showing the steps again. So first,
-        the addition part was 5 + 3 = 8. Then multiplying by 2: 8 * 2 = 16. That should
-        be the final answer. Let me make sure there''s no confusion here. The user
-        might be testing if I follow the previous result or if they want a new calculation.
-        But since they said \"multiply that by 2,\" \"that\" refers to the previous
-        result of 8. So yes, 8 * 2 = 16. Alright, that''s straightforward. I''ll just
-        state the answer clearly.\n"}}],"created":1791422366,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":390,"prompt_tokens":138,"total_tokens":528,"prompt_tokens_details":{"cached_tokens":16}},"id":"chatcmpl-e6aRuZFFQ3tvrfcMiE5qMMSbSfz1Qyiw","timings":{"cache_n":16,"prompt_n":122,"prompt_ms":32.645,"prompt_per_token_ms":0.2675819672131148,"prompt_per_second":3737.1726144892014,"predicted_n":390,"predicted_ms":2953.843,"predicted_per_token_ms":7.593426735218508,"predicted_per_second":131.6928489428856}}'
-  recorded_at: Thu, 08 Oct 2026 01:19:26 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"To
+        multiply the previous result (8) by 2:\n\n$$\n8 \\times 2 = 16\n$$\n\n**Answer:**
+        16.","reasoning_content":"Okay, the user previously asked \"What is 5 + 3?\"
+        and I answered 8. Now they''re saying \"Now multiply that by 2.\" Let me make
+        sure I understand correctly.\n\nFirst, I need to take the result from the
+        previous calculation, which was 8, and multiply it by 2. So 8 times 2. Let
+        me check that again. 8 multiplied by 2 is 16. \n\nWait, is there any chance
+        they might be referring to something else? Like maybe a different interpretation
+        of the question? Let me think. The user said \"multiply that by 2,\" where
+        \"that\" refers to the previous result, which was 8. So yes, 8 x 2 = 16. \n\nI
+        should confirm that there''s no trick or hidden step here. The user seems
+        to be testing basic arithmetic, so the straightforward answer should be correct.
+        No need for complicated steps. Just 8 times 2 equals 16. \n\nI should present
+        the answer clearly, showing the multiplication and the result. Maybe break
+        it down for clarity. Let me also check if the user might have a follow-up
+        question or if they just want the answer. Since they didn''t ask anything
+        else, I''ll provide the result and a simple explanation.\n"}}],"created":1791752973,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":303,"prompt_tokens":93,"total_tokens":396,"prompt_tokens_details":{"cached_tokens":16}},"id":"chatcmpl-1GnRXbWLALlEyzIYL7w6NEQJGcb3Z483","timings":{"cache_n":16,"prompt_n":77,"prompt_ms":24.329,"prompt_per_token_ms":0.31596103896103894,"prompt_per_second":3164.9471823749436,"predicted_n":303,"predicted_ms":2260.46,"predicted_per_token_ms":7.484966887417219,"predicted_per_second":133.60112543464604}}'
+  recorded_at: Sun, 11 Oct 2026 21:09:33 GMT
 recorded_with: VCR 6.4.0

@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:01:09 GMT
+      - Sun, 11 Oct 2026 21:07:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,51 +42,51 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9993000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:01:08Z'
+      - '2026-10-11T21:07:14Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:01:08Z'
+      - '2026-10-11T21:07:15Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:01:06Z'
+      - '2026-10-11T21:07:12Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11993000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:01:08Z'
+      - '2026-10-11T21:07:14Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-0be07678dbe27c0b8db115aee24e1c95-034017391c261831-01
+      - 00-e842d6bd10948521690a602b16d20526-36383b8c7eaf67df-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvJLK3c8kmP5rUahAEf","type":"message","role":"assistant","content":[{"type":"mcp_tool_use","id":"mcptoolu_01MiVRusjTiG83qKvPcMt41h","name":"microsoft_docs_search","input":{"query":"Azure
-        Blob Storage"},"server_name":"docs"},{"type":"mcp_tool_result","tool_use_id":"mcptoolu_01MiVRusjTiG83qKvPcMt41h","is_error":false,"content":[{"type":"text","text":"{\"results\":[{\"title\":\"What
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8btEKV3BgdnfnzGWmA","type":"message","role":"assistant","content":[{"type":"mcp_tool_use","id":"mcptoolu_01AHNeTBKiMTbHfuXmixVug6","name":"microsoft_docs_search","input":{"query":"Azure
+        Blob Storage"},"server_name":"docs"},{"type":"mcp_tool_result","tool_use_id":"mcptoolu_01AHNeTBKiMTbHfuXmixVug6","is_error":false,"content":[{"type":"text","text":"{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft\\u0027s object storage solution for the cloud. Blob
         Storage is optimized for storing massive amounts of unstructured data. Unstructured
@@ -359,21 +359,21 @@ http_interactions:
         Event Grid event for each inventory report. The article describes these items
         later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
         adding a policy with one or more rules to your storage account. For guidance,
-        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}],\"SessionId\":\"65eb3ca9-e041-4f60-af3b-2d87913a0ad5\"}"}]},{"type":"text","text":"##
+        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}"}]},{"type":"text","text":"##
         Summary\n\n**Azure Blob Storage** is Microsoft''s cloud object storage solution
-        optimized for storing massive amounts of unstructured data such as text and
-        binary files, and it provides <GOOGLE_CLOUD_LOCATION>ly accessible storage
-        with support for various access methods, data management features, and high
-        reliability capabilities."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":7990,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":120,"service_tier":"standard","inference_geo":"not_available","server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}},"diagnostics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:01:09 GMT
+        optimized for storing massive amounts of unstructured data such as text, binary
+        files, documents, and media, and is designed for use cases including serving
+        content via browsers, distributed file access, streaming, logging, backup,
+        disaster recovery, and data analysis."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":7892,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":132,"service_tier":"standard","inference_geo":"not_available","server_tool_use":{"web_search_requests":0,"web_fetch_requests":0}},"diagnostics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:07:15 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Search
-        Microsoft documentation for Azure Blob Storage, then summarize it in one sentence."}]},{"role":"assistant","content":[{"type":"mcp_tool_use","id":"mcptoolu_01MiVRusjTiG83qKvPcMt41h","name":"microsoft_docs_search","input":{"query":"Azure
-        Blob Storage"},"server_name":"docs"},{"type":"mcp_tool_result","tool_use_id":"mcptoolu_01MiVRusjTiG83qKvPcMt41h","is_error":false,"content":[{"type":"text","text":"{\"results\":[{\"title\":\"What
+        Microsoft documentation for Azure Blob Storage, then summarize it in one sentence."}]},{"role":"assistant","content":[{"type":"mcp_tool_use","id":"mcptoolu_01AHNeTBKiMTbHfuXmixVug6","name":"microsoft_docs_search","input":{"query":"Azure
+        Blob Storage"},"server_name":"docs"},{"type":"mcp_tool_result","tool_use_id":"mcptoolu_01AHNeTBKiMTbHfuXmixVug6","is_error":false,"content":[{"type":"text","text":"{\"results\":[{\"title\":\"What
         is Azure Blob storage?\",\"content\":\"# What is Azure Blob storage?\\nAzure
         Blob Storage is Microsoft\\u0027s object storage solution for the cloud. Blob
         Storage is optimized for storing massive amounts of unstructured data. Unstructured
@@ -646,12 +646,12 @@ http_interactions:
         Event Grid event for each inventory report. The article describes these items
         later.\\n## Enabling inventory reports\\nEnable blob inventory reports by
         adding a policy with one or more rules to your storage account. For guidance,
-        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}],\"SessionId\":\"65eb3ca9-e041-4f60-af3b-2d87913a0ad5\"}"}]},{"type":"text","text":"##
+        see [Enable Azure Storage blob inventory reports](https://learn.microsoft.com/azure/storage/blobs/blob-inventory-how-to).\",\"contentUrl\":\"https://learn.microsoft.com/azure/storage/blobs/blob-inventory\"}]}"}]},{"type":"text","text":"##
         Summary\n\n**Azure Blob Storage** is Microsoft''s cloud object storage solution
-        optimized for storing massive amounts of unstructured data such as text and
-        binary files, and it provides <GOOGLE_CLOUD_LOCATION>ly accessible storage
-        with support for various access methods, data management features, and high
-        reliability capabilities."}]},{"role":"user","content":[{"type":"text","text":"Which
+        optimized for storing massive amounts of unstructured data such as text, binary
+        files, documents, and media, and is designed for use cases including serving
+        content via browsers, distributed file access, streaming, logging, backup,
+        disaster recovery, and data analysis."}]},{"role":"user","content":[{"type":"text","text":"Which
         cloud service did you just look up?"}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"Call
         microsoft_docs_search once to answer the first question. For later questions
         use only those results."}],"mcp_servers":[{"type":"url","name":"docs","url":"https://learn.microsoft.com/api/mcp"}],"tools":[{"type":"mcp_toolset","mcp_server_name":"docs","default_config":{"enabled":false},"configs":{"microsoft_docs_search":{"enabled":true}}}]}'
@@ -676,7 +676,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:01:10 GMT
+      - Sun, 11 Oct 2026 21:07:16 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -688,51 +688,51 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9993000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:01:10Z'
+      - '2026-10-11T21:07:16Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:01:10Z'
+      - '2026-10-11T21:07:16Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:01:09Z'
+      - '2026-10-11T21:07:16Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11993000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:01:10Z'
+      - '2026-10-11T21:07:16Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-520b672cac9b156ef8df686278adbbfc-40befac8b9f55137-01
+      - 00-3b110124963433be4b72ae8b08b12f87-f010d1af52dbb0a7-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnvJZ7jStMXu5VHPQHBs","type":"message","role":"assistant","content":[{"type":"text","text":"I
-        just looked up **Azure Blob Storage**, which is Microsoft''s object storage
-        solution for the cloud."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":7260,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":24,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:01:10 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8cBUAgdfwGiJXX3Zi1","type":"message","role":"assistant","content":[{"type":"text","text":"I
+        looked up **Azure Blob Storage**, which is Microsoft''s object storage solution
+        for the cloud."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":7208,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":23,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:07:16 GMT
 recorded_with: VCR 6.4.0

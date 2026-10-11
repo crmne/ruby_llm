@@ -29,29 +29,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:05:32 GMT
+      - Sun, 11 Oct 2026 21:09:24 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1224'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":456,"completion_tokens":126,"total_tokens":582,"completion_tokens_details":{"reasoning_tokens":57},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-98337a6a4191855a","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"id":"chatcmpl-tool-936d3331e989ecfd","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user is asking for two things:\n1. The weather in Berlin (52.5200, 13.4050)\n2.
-        The best language to learn\n\nThese are independent queries, so I can call
-        both functions in parallel.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-b6bc8fad-c522-4198-8d18-561054cbb09a","object":"chat.completion","created":1791378327,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:05:32 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":456,"completion_tokens":128,"total_tokens":584,"completion_tokens_details":{"reasoning_tokens":59},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-ad7c105c7f24b898","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"id":"chatcmpl-tool-bbefc02096b8f0b8","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is asking two independent things:\n1. The weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. The best language to learn\n\nSince these are independent,
+        I can make both function calls in parallel.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-1d2a07e2-b12c-4bf7-8b43-e49067c18829","object":"chat.completion","created":1791752963,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:09:24 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/api/v1/chat/completions
@@ -59,14 +59,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-98337a6a4191855a","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"chatcmpl-tool-936d3331e989ecfd","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user is asking for two things:\n1. The weather in Berlin (52.5200, 13.4050)\n2.
-        The best language to learn\n\nThese are independent queries, so I can call
-        both functions in parallel.\n","reasoning_content":"The user is asking for
-        two things:\n1. The weather in Berlin (52.5200, 13.4050)\n2. The best language
-        to learn\n\nThese are independent queries, so I can call both functions in
-        parallel.\n"},{"role":"tool","content":"Current weather at 52.5200, 13.4050:
-        15°C, Wind: 10 km/h","tool_call_id":"chatcmpl-tool-98337a6a4191855a"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-936d3331e989ecfd"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-ad7c105c7f24b898","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"chatcmpl-tool-bbefc02096b8f0b8","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is asking two independent things:\n1. The weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. The best language to learn\n\nSince these are independent,
+        I can make both function calls in parallel.\n","reasoning_content":"The user
+        is asking two independent things:\n1. The weather in Berlin at coordinates
+        (52.5200, 13.4050)\n2. The best language to learn\n\nSince these are independent,
+        I can make both function calls in parallel.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"chatcmpl-tool-ad7c105c7f24b898"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-bbefc02096b8f0b8"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -88,24 +88,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:05:38 GMT
+      - Sun, 11 Oct 2026 21:09:26 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1277'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjM2LCJjb21wbGV0aW9uX3Rva2VucyI6MTQzLCJ0b3RhbF90b2tlbnMiOjc3OSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxNX0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjcmVhdGVkX2NhY2hlX3Rva2VucyI6MCwibXVsdGltb2RhbF90b2tlbnMiOm51bGx9fSwiY2hvaWNlcyI6W3sibWVzc2FnZSI6eyJjb250ZW50IjoiXG5cbkhlcmUncyB3aGF0IHlvdSBhc2tlZCBmb3I6XG5cbioq8J+MpO+4jyBXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTLCsE4sIDEzLjQxwrBFKToqKlxuLSAqKlRlbXBlcmF0dXJlOioqIDE1wrBDXG4tICoqV2luZDoqKiAxMCBrbS9oXG5cbkEgcGxlYXNhbnQsIG1pbGQgZGF5IVxuXG4qKvCfkrsgQmVzdCBMYW5ndWFnZSB0byBMZWFybjoqKlxuLSAqKlJ1YnkqKiDigJQgZ3JlYXQgY2hvaWNlISBJdCdzIGJlbG92ZWQgZm9yIGl0cyBlbGVnYW50LCByZWFkYWJsZSBzeW50YXggYW5kIGlzIHRoZSBmb3VuZGF0aW9uIG9mIFJhaWxzLCBtYWtpbmcgaXQgYSBwb3B1bGFyIHBpY2sgZm9yIHdlYiBkZXZlbG9wbWVudCBhbmQgZm9yIGJlZ2lubmVycyB3aG8gd2FudCBwcm9kdWN0aXZlLCBleHByZXNzaXZlIGNvZGUuXG5cbkxldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbW9yZSBkZXRhaWxzIG9uIGVpdGhlciEiLCJyb2xlIjoiYXNzaXN0YW50IiwicmVmdXNhbCI6bnVsbCwiYW5ub3RhdGlvbnMiOm51bGwsImF1ZGlvIjpudWxsLCJmdW5jdGlvbl9jYWxsIjpudWxsLCJyZWFzb25pbmciOiJCb3RoIHJlc3BvbnNlcyBoYXZlIGJlZW4gcmVjZWl2ZWQuIExldCBtZSBwdXQgdG9nZXRoZXIgYSBjbGVhciBhbnN3ZXIuXG4ifSwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsInN0b3BfcmVhc29uIjpudWxsLCJ0b2tlbl9pZHMiOm51bGwsInJvdXRlZF9leHBlcnRzIjpudWxsfV0sImlkIjoiY2hhdGNtcGwtZGNkMDVlMzItZDBhYi00ZTkyLTg2OTctMTlhYmM2YzU0ZTMwIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc5MTM3ODMzMiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJwcm9tcHRfbG9ncHJvYnMiOm51bGwsInByb21wdF90b2tlbl9pZHMiOm51bGwsInByb21wdF90ZXh0IjpudWxsLCJrdl90cmFuc2Zlcl9wYXJhbXMiOm51bGwsImVjX3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwibWV0cmljcyI6bnVsbH0=
-  recorded_at: Wed, 07 Oct 2026 13:05:38 GMT
+        eyJtb2RlbCI6IlF3ZW4vUXdlbjMuOC0yN0IiLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2MzgsImNvbXBsZXRpb25fdG9rZW5zIjoxMjYsInRvdGFsX3Rva2VucyI6NzY0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjM0fSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNyZWF0ZWRfY2FjaGVfdG9rZW5zIjowLCJtdWx0aW1vZGFsX3Rva2VucyI6bnVsbH19LCJjaG9pY2VzIjpbeyJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZSdzIHdoYXQgSSBmb3VuZDpcblxuKirwn4yk77iPIFdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKToqKlxuLSBUZW1wZXJhdHVyZTogKioxNcKwQyoqXG4tIFdpbmQ6ICoqMTAga20vaCoqXG5cbioq8J+TmiBCZXN0IGxhbmd1YWdlIHRvIGxlYXJuOioqXG4tICoqUnVieSoqIOKAlCBhIGNsZWFuLCBkZXZlbG9wZXItZnJpZW5kbHkgbGFuZ3VhZ2Uga25vd24gZm9yIGl0cyBlbGVnYW50IHN5bnRheCBhbmQgdGhlIFJhaWxzIGZyYW1ld29yay4gR3JlYXQgZm9yIHdlYiBkZXZlbG9wbWVudCEiLCJyb2xlIjoiYXNzaXN0YW50IiwicmVmdXNhbCI6bnVsbCwiYW5ub3RhdGlvbnMiOm51bGwsImF1ZGlvIjpudWxsLCJmdW5jdGlvbl9jYWxsIjpudWxsLCJyZWFzb25pbmciOiJCb3RoIGNhbGxzIHJldHVybmVkIHJlc3VsdHMuIExldCdzIHJlcG9ydDpcbi0gQmVybGluIHdlYXRoZXI6IDE1wrBDLCB3aW5kIDEwIGttL2hcbi0gQmVzdCBsYW5ndWFnZSB0byBsZWFybjogUnVieVxuIn0sImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJzdG9wX3JlYXNvbiI6bnVsbCwidG9rZW5faWRzIjpudWxsLCJyb3V0ZWRfZXhwZXJ0cyI6bnVsbH1dLCJpZCI6ImNoYXRjbXBsLTFkMTkyZWQ5LWM3N2MtNDcwZS1iNDgxLTEwZmEyYTlkYmUyNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTI5NjQsInN5c3RlbV9maW5nZXJwcmludCI6bnVsbCwicHJvbXB0X2xvZ3Byb2JzIjpudWxsLCJwcm9tcHRfdG9rZW5faWRzIjpudWxsLCJwcm9tcHRfdGV4dCI6bnVsbCwia3ZfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJlY190cmFuc2Zlcl9wYXJhbXMiOm51bGwsIm1ldHJpY3MiOm51bGx9
+  recorded_at: Sun, 11 Oct 2026 21:09:26 GMT
 recorded_with: VCR 6.4.0

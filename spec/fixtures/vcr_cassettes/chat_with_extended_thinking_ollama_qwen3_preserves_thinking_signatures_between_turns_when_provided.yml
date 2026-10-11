@@ -24,72 +24,117 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:03:13 GMT
-      Content-Length:
-      - '1638'
+      - Sun, 11 Oct 2026 21:10:38 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-649","object":"chat.completion","created":1791378193,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        sum of 5 and 3 is calculated by adding the two numbers together. Starting
-        at 5 and counting 3 more steps:  \n5 + 1 = 6,  \n6 + 1 = 7,  \n7 + 1 = 8.  \n\n**Answer:**
-        8.","reasoning":"Okay, let''s see. The user is asking what 5 plus 3 is. Hmm,
-        this seems pretty straightforward. I remember that addition is one of the
-        basic arithmetic operations. So, 5 plus 3. Let me break it down. Starting
-        with 5, then adding 3 more. So, 5 + 1 is 6, then 6 + 1 is 7, and then 7 +
-        1 is 8. Wait, that''s adding three 1s, which makes sense because 3 is three
-        ones. So, 5 + 3 should be 8. Let me check another way. If I have 5 apples
-        and I add 3 more apples, how many do I have in total? 5 + 3 is 8. Yeah, that
-        seems right. Maybe I can think of it as 5 + 2 + 1. So 5 + 2 is 7, then 7 +
-        1 is 8. Yep, that gives the same result. Alternatively, using number lines:
-        starting at 5, moving 3 units to the right. 5 to 6 is one, 6 to 7 is two,
-        7 to 8 is three. So, 8 again. All these methods point to the answer being
-        8. I don''t see any errors in my reasoning here. It''s a simple addition problem,
-        so the answer should definitely be 8. Let me just confirm with another approach,
-        maybe using fingers. If I hold up 5 fingers on one hand and 3 on the other,
-        that''s 8 fingers total. Yep, that works. Okay, I''m confident that 5 + 3
-        equals 8.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":18,"prompt_tokens_details":{"cached_tokens":3},"completion_tokens":423,"total_tokens":441}}
+      string: '{"id":"chatcmpl-155","object":"chat.completion","created":1791753038,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        sum of 5 and 3 is calculated by combining the quantities. Starting at 5 and
+        adding 3 more:  \n- 5 + 1 = 6  \n- 6 + 1 = 7  \n- 7 + 1 = 8  \n\nAlternatively,
+        using decomposition:  \n- 5 + 2 = 7  \n- 7 + 1 = 8  \n\nAll methods confirm
+        that **5 + 3 = 8**.  \n\n**Answer:** 8","reasoning":"Okay, so I need to figure
+        out what 5 plus 3 is. Let me start by recalling basic addition. I know that
+        adding numbers means combining their quantities. So, if I have 5 objects and
+        then add 3 more, how many do I have in total?\n\nLet me visualize it. Suppose
+        I have 5 apples. Then I add 3 more apples. Let''s count them one by one. Starting
+        with 5, then adding 1 makes 6, adding another makes 7, and the third one makes
+        8. Wait, that''s 5 + 1 + 1 + 1. So that''s 5 + 3. Hmm, but maybe there''s
+        a quicker way without counting each one.\n\nI remember that addition is commutative,
+        meaning the order doesn''t matter. So 5 + 3 is the same as 3 + 5. Maybe I
+        can think of 3 + 5. Starting with 3, adding 5. So 3 + 1 is 4, 3 + 2 is 5,
+        3 + 3 is 6, 3 + 4 is 7, 3 + 5 is 8. Wait, that''s the same result.\n\nAlternatively,
+        maybe using number lines. If I start at 5 and move 3 units to the right, I
+        land on 8. That seems to check out. Another way is using fingers. If I hold
+        up 5 fingers and then add 3 more, I have 8 fingers up. \n\nWait, but maybe
+        I should double-check to make sure I''m not making a mistake. Sometimes when
+        you count, you might skip a number. Let''s try counting again. Starting with
+        5, then adding 1: 5 + 1 = 6. Then adding another 1: 6 + 1 = 7. Then adding
+        the last 1: 7 + 1 = 8. So that''s three additions, which gives 8. \n\nAlternatively,
+        think of 5 + 2 + 1. That would be 7 + 1 = 8. So that''s another way to break
+        it down. \n\nI could also think in terms of known facts. For example, 5 +
+        5 is 10, so 5 + 3 is 5 + 5 - 2, which is 10 - 2 = 8. That works too. \n\nAnother
+        approach: using decomposition. Breaking 3 into 2 + 1. So 5 + 2 is 7, then
+        add 1 more to get 8. \n\nWait, maybe I should use a different method to verify.
+        Let''s use the concept of place value. 5 is 5 units, 3 is 3 units. Adding
+        them together gives 8 units. \n\nIs there any chance I could have messed up
+        the counting? Let me write it down numerically. 5 + 3. Adding the units place:
+        5 + 3. Since both are single digits, just sum them. 5 + 3 equals 8. \n\nI
+        think all these methods consistently give me 8. So I can be confident that
+        5 + 3 is 8. I don''t see any errors in my reasoning, and each approach confirms
+        the same result. Therefore, the answer should be 8.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":18,"prompt_tokens_details":{"cached_tokens":3},"completion_tokens":806,"total_tokens":824}}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:03:13 GMT
+  recorded_at: Sun, 11 Oct 2026 21:10:38 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by adding
-        the two numbers together. Starting at 5 and counting 3 more steps:  \n5 +
-        1 = 6,  \n6 + 1 = 7,  \n7 + 1 = 8.  \n\n**Answer:** 8.","reasoning":"Okay,
-        let''s see. The user is asking what 5 plus 3 is. Hmm, this seems pretty straightforward.
-        I remember that addition is one of the basic arithmetic operations. So, 5
-        plus 3. Let me break it down. Starting with 5, then adding 3 more. So, 5 +
-        1 is 6, then 6 + 1 is 7, and then 7 + 1 is 8. Wait, that''s adding three 1s,
-        which makes sense because 3 is three ones. So, 5 + 3 should be 8. Let me check
-        another way. If I have 5 apples and I add 3 more apples, how many do I have
-        in total? 5 + 3 is 8. Yeah, that seems right. Maybe I can think of it as 5
-        + 2 + 1. So 5 + 2 is 7, then 7 + 1 is 8. Yep, that gives the same result.
-        Alternatively, using number lines: starting at 5, moving 3 units to the right.
-        5 to 6 is one, 6 to 7 is two, 7 to 8 is three. So, 8 again. All these methods
-        point to the answer being 8. I don''t see any errors in my reasoning here.
-        It''s a simple addition problem, so the answer should definitely be 8. Let
-        me just confirm with another approach, maybe using fingers. If I hold up 5
-        fingers on one hand and 3 on the other, that''s 8 fingers total. Yep, that
-        works. Okay, I''m confident that 5 + 3 equals 8.\n","reasoning_content":"Okay,
-        let''s see. The user is asking what 5 plus 3 is. Hmm, this seems pretty straightforward.
-        I remember that addition is one of the basic arithmetic operations. So, 5
-        plus 3. Let me break it down. Starting with 5, then adding 3 more. So, 5 +
-        1 is 6, then 6 + 1 is 7, and then 7 + 1 is 8. Wait, that''s adding three 1s,
-        which makes sense because 3 is three ones. So, 5 + 3 should be 8. Let me check
-        another way. If I have 5 apples and I add 3 more apples, how many do I have
-        in total? 5 + 3 is 8. Yeah, that seems right. Maybe I can think of it as 5
-        + 2 + 1. So 5 + 2 is 7, then 7 + 1 is 8. Yep, that gives the same result.
-        Alternatively, using number lines: starting at 5, moving 3 units to the right.
-        5 to 6 is one, 6 to 7 is two, 7 to 8 is three. So, 8 again. All these methods
-        point to the answer being 8. I don''t see any errors in my reasoning here.
-        It''s a simple addition problem, so the answer should definitely be 8. Let
-        me just confirm with another approach, maybe using fingers. If I hold up 5
-        fingers on one hand and 3 on the other, that''s 8 fingers total. Yep, that
-        works. Okay, I''m confident that 5 + 3 equals 8.\n"},{"role":"user","content":"Now
+        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by combining
+        the quantities. Starting at 5 and adding 3 more:  \n- 5 + 1 = 6  \n- 6 + 1
+        = 7  \n- 7 + 1 = 8  \n\nAlternatively, using decomposition:  \n- 5 + 2 = 7  \n-
+        7 + 1 = 8  \n\nAll methods confirm that **5 + 3 = 8**.  \n\n**Answer:** 8","reasoning":"Okay,
+        so I need to figure out what 5 plus 3 is. Let me start by recalling basic
+        addition. I know that adding numbers means combining their quantities. So,
+        if I have 5 objects and then add 3 more, how many do I have in total?\n\nLet
+        me visualize it. Suppose I have 5 apples. Then I add 3 more apples. Let''s
+        count them one by one. Starting with 5, then adding 1 makes 6, adding another
+        makes 7, and the third one makes 8. Wait, that''s 5 + 1 + 1 + 1. So that''s
+        5 + 3. Hmm, but maybe there''s a quicker way without counting each one.\n\nI
+        remember that addition is commutative, meaning the order doesn''t matter.
+        So 5 + 3 is the same as 3 + 5. Maybe I can think of 3 + 5. Starting with 3,
+        adding 5. So 3 + 1 is 4, 3 + 2 is 5, 3 + 3 is 6, 3 + 4 is 7, 3 + 5 is 8. Wait,
+        that''s the same result.\n\nAlternatively, maybe using number lines. If I
+        start at 5 and move 3 units to the right, I land on 8. That seems to check
+        out. Another way is using fingers. If I hold up 5 fingers and then add 3 more,
+        I have 8 fingers up. \n\nWait, but maybe I should double-check to make sure
+        I''m not making a mistake. Sometimes when you count, you might skip a number.
+        Let''s try counting again. Starting with 5, then adding 1: 5 + 1 = 6. Then
+        adding another 1: 6 + 1 = 7. Then adding the last 1: 7 + 1 = 8. So that''s
+        three additions, which gives 8. \n\nAlternatively, think of 5 + 2 + 1. That
+        would be 7 + 1 = 8. So that''s another way to break it down. \n\nI could also
+        think in terms of known facts. For example, 5 + 5 is 10, so 5 + 3 is 5 + 5
+        - 2, which is 10 - 2 = 8. That works too. \n\nAnother approach: using decomposition.
+        Breaking 3 into 2 + 1. So 5 + 2 is 7, then add 1 more to get 8. \n\nWait,
+        maybe I should use a different method to verify. Let''s use the concept of
+        place value. 5 is 5 units, 3 is 3 units. Adding them together gives 8 units.
+        \n\nIs there any chance I could have messed up the counting? Let me write
+        it down numerically. 5 + 3. Adding the units place: 5 + 3. Since both are
+        single digits, just sum them. 5 + 3 equals 8. \n\nI think all these methods
+        consistently give me 8. So I can be confident that 5 + 3 is 8. I don''t see
+        any errors in my reasoning, and each approach confirms the same result. Therefore,
+        the answer should be 8.\n","reasoning_content":"Okay, so I need to figure
+        out what 5 plus 3 is. Let me start by recalling basic addition. I know that
+        adding numbers means combining their quantities. So, if I have 5 objects and
+        then add 3 more, how many do I have in total?\n\nLet me visualize it. Suppose
+        I have 5 apples. Then I add 3 more apples. Let''s count them one by one. Starting
+        with 5, then adding 1 makes 6, adding another makes 7, and the third one makes
+        8. Wait, that''s 5 + 1 + 1 + 1. So that''s 5 + 3. Hmm, but maybe there''s
+        a quicker way without counting each one.\n\nI remember that addition is commutative,
+        meaning the order doesn''t matter. So 5 + 3 is the same as 3 + 5. Maybe I
+        can think of 3 + 5. Starting with 3, adding 5. So 3 + 1 is 4, 3 + 2 is 5,
+        3 + 3 is 6, 3 + 4 is 7, 3 + 5 is 8. Wait, that''s the same result.\n\nAlternatively,
+        maybe using number lines. If I start at 5 and move 3 units to the right, I
+        land on 8. That seems to check out. Another way is using fingers. If I hold
+        up 5 fingers and then add 3 more, I have 8 fingers up. \n\nWait, but maybe
+        I should double-check to make sure I''m not making a mistake. Sometimes when
+        you count, you might skip a number. Let''s try counting again. Starting with
+        5, then adding 1: 5 + 1 = 6. Then adding another 1: 6 + 1 = 7. Then adding
+        the last 1: 7 + 1 = 8. So that''s three additions, which gives 8. \n\nAlternatively,
+        think of 5 + 2 + 1. That would be 7 + 1 = 8. So that''s another way to break
+        it down. \n\nI could also think in terms of known facts. For example, 5 +
+        5 is 10, so 5 + 3 is 5 + 5 - 2, which is 10 - 2 = 8. That works too. \n\nAnother
+        approach: using decomposition. Breaking 3 into 2 + 1. So 5 + 2 is 7, then
+        add 1 more to get 8. \n\nWait, maybe I should use a different method to verify.
+        Let''s use the concept of place value. 5 is 5 units, 3 is 3 units. Adding
+        them together gives 8 units. \n\nIs there any chance I could have messed up
+        the counting? Let me write it down numerically. 5 + 3. Adding the units place:
+        5 + 3. Since both are single digits, just sum them. 5 + 3 equals 8. \n\nI
+        think all these methods consistently give me 8. So I can be confident that
+        5 + 3 is 8. I don''t see any errors in my reasoning, and each approach confirms
+        the same result. Therefore, the answer should be 8.\n"},{"role":"user","content":"Now
         multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
@@ -108,12 +153,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:03:18 GMT
+      - Sun, 11 Oct 2026 21:10:45 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg0MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzNzgxOTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRvIG11bHRpcGx5IDggYnkgJCBcXGZyYWN7Mn17M30gJDpcblxuJCRcbjggXFx0aW1lcyBcXGZyYWN7Mn17M30gPSBcXGZyYWN7OCBcXHRpbWVzIDJ9ezN9ID0gXFxmcmFjezE2fXszfVxuJCRcblxuVGhpcyBzaW1wbGlmaWVzIHRvICoqJDUgXFxmcmFjezF9ezN9JCoqIG9yIGFwcHJveGltYXRlbHkgKio1LjMzKiogYXMgYSBkZWNpbWFsLiBcblxuKipBbnN3ZXI6KiogJCBcXGZyYWN7MTZ9ezN9ICQgb3IgJDUgXFxmcmFjezF9ezN9JC4iLCJyZWFzb25pbmciOiJPa2F5LCBzbyB0aGUgdXNlciBmaXJzdCBhc2tlZCB3aGF0IDUgKyAzIGlzLCBhbmQgSSB0b2xkIHRoZW0gaXQncyA4LiBOb3cgdGhleSdyZSBzYXlpbmcgdG8gbXVsdGlwbHkgdGhhdCBieSAyLzMuIExldCBtZSBtYWtlIHN1cmUgSSB1bmRlcnN0YW5kIHRoZSBxdWVzdGlvbiBjb3JyZWN0bHkuIFRoZXkgd2FudCBtZSB0byB0YWtlIHRoZSBwcmV2aW91cyByZXN1bHQsIHdoaWNoIHdhcyA4LCBhbmQgbXVsdGlwbHkgaXQgYnkgMi8zLiBcblxuV2FpdCwgdGhlIHVzZXIgd3JvdGUgXCJtdWx0aXBseSB0aGF0IGJ5IDIgL3RoaW5rXCIuIEhtbSwgdGhlIFwiL3RoaW5rXCIgbWlnaHQgYmUgYSB0eXBvIG9yIG1heWJlIHRoZXkgbWVhbnQgMi8zPyBCZWNhdXNlIGluIHRoZSBwcmV2aW91cyBhbnN3ZXIsIHRoZSByZXN1bHQgd2FzIDguIFNvIGlmIEkgbXVsdGlwbHkgOCBieSAyLzMsIHRoYXQgd291bGQgYmUgKDggKiAyKSAvIDMuIExldCBtZSBjYWxjdWxhdGUgdGhhdC4gXG5cbkZpcnN0LCA4IG11bHRpcGxpZWQgYnkgMiBpcyAxNi4gVGhlbiBkaXZpZGUgYnkgMywgd2hpY2ggZ2l2ZXMgMTYvMy4gQXMgYSBtaXhlZCBudW1iZXIsIHRoYXQncyA1IGFuZCAxLzMuIEJ1dCBtYXliZSB0aGV5IGp1c3Qgd2FudCB0aGUgaW1wcm9wZXIgZnJhY3Rpb24gb3IgYSBkZWNpbWFsPyBMZXQgbWUgY2hlY2sgaWYgdGhlcmUncyBhbnkgYW1iaWd1aXR5LiBUaGUgb3JpZ2luYWwgcXVlc3Rpb24gZGlkbid0IHNwZWNpZnkgdGhlIGZvcm0gb2YgdGhlIGFuc3dlciwgc28gcHJvYmFibHkgYmVzdCB0byBwcmVzZW50IGl0IGFzIGEgZnJhY3Rpb24uIFxuXG5BbHRlcm5hdGl2ZWx5LCBpZiB0aGUgdXNlciBtZWFudCBtdWx0aXBseWluZyBieSAyIGFuZCB0aGVuIGRpdmlkaW5nIGJ5IDMsIHRoYXQncyB0aGUgc2FtZSBhcyAyLzMuIFNvIHllYWgsIDggKiAyID0gMTYsIDE2IC8gMyDiiYggNS4zMzMuLi4gQnV0IHNpbmNlIHRoZXkgbWlnaHQgcHJlZmVyIGZyYWN0aW9ucywgMTYvMyBpcyBleGFjdC4gXG5cbldhaXQsIGJ1dCB0aGUgdXNlciBtaWdodCBoYXZlIG1hZGUgYSBtaXN0YWtlIGluIHRoZSBxdWVzdGlvbi4gTGV0IG1lIGNvbmZpcm0uIFRoZSBvcmlnaW5hbCBxdWVzdGlvbiB3YXMgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyIC90aGlua1wiLiBNYXliZSB0aGV5IGludGVuZGVkIHRvIHdyaXRlIDIvMyBidXQgdGhlIFwiL3RoaW5rXCIgaXMgYW4gZXJyb3IuIE9yIG1heWJlIHRoZXkgbWVhbnQgbXVsdGlwbHkgYnkgMiBhbmQgdGhlbiB0aGluayBhYm91dCBzb21ldGhpbmcgZWxzZS4gQnV0IGdpdmVuIHRoZSBjb250ZXh0LCBpdCdzIHNhZmUgdG8gYXNzdW1lIHRoZXkgbWVhbnQgbXVsdGlwbHkgYnkgMi8zLiBcblxuU28gdGhlIGNhbGN1bGF0aW9uIGlzIDggKiAoMi8zKSA9IDE2LzMuIExldCBtZSB3cml0ZSB0aGF0IGFzIHRoZSBhbnN3ZXIuIEFsdGVybmF0aXZlbHksIGlmIHRoZXkgd2FudGVkIGEgZGVjaW1hbCwgMTYgZGl2aWRlZCBieSAzIGlzIGFwcHJveGltYXRlbHkgNS4zMy4gQnV0IHNpbmNlIHRoZSBpbml0aWFsIGFuc3dlciB3YXMgYSB3aG9sZSBudW1iZXIsIG1heWJlIHRoZXkgZXhwZWN0IGEgZnJhY3Rpb24uIFxuXG5BbHRlcm5hdGl2ZWx5LCBtYXliZSB0aGUgdXNlciBpcyB0ZXN0aW5nIGlmIEkgY2FuIHJlY29nbml6ZSB0aGF0IDIvMyBpcyBhIGZyYWN0aW9uIGFuZCBoYW5kbGUgdGhlIG11bHRpcGxpY2F0aW9uIGNvcnJlY3RseS4gU28geWVzLCA4IHRpbWVzIDIgaXMgMTYsIGRpdmlkZWQgYnkgMyBpcyAxNi8zLiBUaGF0J3MgdGhlIGFjY3VyYXRlIHJlc3VsdC4gXG5cbkkgdGhpbmsgdGhhdCdzIHRoZSBjb3JyZWN0IGFwcHJvYWNoLiBMZXQgbWUgcHJlc2VudCB0aGUgYW5zd2VyIGFzIDE2LzMgb3IgNSAxLzMsIGJ1dCBzaW5jZSB0aGUgdXNlciBtaWdodCBwcmVmZXIgb25lIG92ZXIgdGhlIG90aGVyLCBidXQgZnJhY3Rpb25zIGFyZSBtb3JlIHByZWNpc2UuIFNvIEknbGwgZ28gd2l0aCAxNi8zLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjExfSwiY29tcGxldGlvbl90b2tlbnMiOjY3NCwidG90YWxfdG9rZW5zIjo3NzB9fQo=
-  recorded_at: Wed, 07 Oct 2026 13:03:18 GMT
+        eyJpZCI6ImNoYXRjbXBsLTQzNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTE3NTMwNDUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRvIHNvbHZlIHRoaXMsIHdlIHN0YXJ0IHdpdGggdGhlIHByZXZpb3VzIHJlc3VsdCBvZiAkNSArIDMgPSA4JC4gTm93LCB3ZSBtdWx0aXBseSB0aGF0IGJ5ICRcXGZyYWN7Mn17M30kOlxuXG4kJFxuOCBcXHRpbWVzIFxcZnJhY3syfXszfSA9IFxcZnJhY3s4IFxcdGltZXMgMn17M30gPSBcXGZyYWN7MTZ9ezN9XG4kJFxuXG5UaGlzIHNpbXBsaWZpZXMgdG8gdGhlIG1peGVkIG51bWJlciAkNSBcXGZyYWN7MX17M30kIG9yIHRoZSBkZWNpbWFsICQ1LjMzM1xcbGRvdHMkLiBcblxuKipBbnN3ZXI6KiogJFxcZnJhY3sxNn17M30kIChvciBhcHByb3hpbWF0ZWx5IDUuMzMpIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCwgd2hpY2ggd2FzIDgsIGJ5IDIvMy4gTGV0IG1lIG1ha2Ugc3VyZSBJIHVuZGVyc3RhbmQgdGhlIHF1ZXN0aW9uIGNvcnJlY3RseS4gU28gZmlyc3QsIHRoZXkgd2FudGVkIHRvIGtub3cgNSArIDMsIHdoaWNoIGlzIDguIE5vdyB0aGV5J3JlIGFza2luZyB0byBtdWx0aXBseSB0aGF0IGJ5IDIgZGl2aWRlZCBieSAzLiBcblxuV2FpdCwgaXMgaXQgMi8zIG9yIDIgZGl2aWRlZCBieSBzb21ldGhpbmcgZWxzZT8gVGhlIHVzZXIgd3JvdGUgXCJtdWx0aXBseSB0aGF0IGJ5IDIgL3RoaW5rXCIuIE1heWJlIHRoZXJlJ3MgYSBmb3JtYXR0aW5nIGlzc3VlIGhlcmUuIExldCBtZSBjaGVjayB0aGUgb3JpZ2luYWwgcXVlc3Rpb24gYWdhaW4uIFRoZSB1c2VyIHdyb3RlOiBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIgL3RoaW5rXCIuIEhtbSwgbWF5YmUgdGhleSBtZWFudCAyIGRpdmlkZWQgYnkgMz8gT3IgaXMgaXQgMiBtdWx0aXBsaWVkIGJ5IDM/IFdhaXQsIHRoZSBvcmlnaW5hbCBpbnN0cnVjdGlvbiB3YXMgdG8gbXVsdGlwbHkgYnkgMiBkaXZpZGVkIGJ5IHNvbWV0aGluZy4gV2FpdCwgdGhlIGluaXRpYWwgYW5zd2VyIHdhcyA4LCBhbmQgbm93IHRoZXkncmUgc2F5aW5nIG11bHRpcGx5IHRoYXQgYnkgMiBkaXZpZGVkIGJ5Li4uIFdhaXQsIG1heWJlIHRoZSB1c2VyIG1hZGUgYSB0eXBvLiBMZXQgbWUgdGhpbmsuXG5cbldhaXQsIGluIHRoZSBpbml0aWFsIHByb2JsZW0sIHRoZSB1c2VyIGFza2VkIFwiV2hhdCBpcyA1ICsgMz9cIiBhbmQgdGhlbiBzYWlkIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMiAvdGhpbmtcIi4gVGhlIFwiL3RoaW5rXCIgbWlnaHQgYmUgcGFydCBvZiB0aGUgaW5zdHJ1Y3Rpb24sIGJ1dCBtYXliZSBpdCdzIGEgbWlzdGFrZS4gTWF5YmUgdGhleSBtZWFudCB0byB3cml0ZSBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIvM1wiPyBCZWNhdXNlIHNvbWV0aW1lcyB3aGVuIHBlb3BsZSB3cml0ZSBmcmFjdGlvbnMsIHRoZXkgbWlnaHQgdXNlIGEgc2xhc2guIEFsdGVybmF0aXZlbHksIG1heWJlIHRoZXkgaW50ZW5kZWQgdG8gd3JpdGUgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyIGRpdmlkZWQgYnkgM1wiLCB3aGljaCB3b3VsZCBiZSA4IG11bHRpcGxpZWQgYnkgKDIvMykuIFxuXG5BbHRlcm5hdGl2ZWx5LCBjb3VsZCBpdCBiZSB0aGF0IHRoZSB1c2VyIG1lYW50IFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMiwgdGhlbiBkaXZpZGUgYnkgM1wiPyBCdXQgdGhhdCB3b3VsZCBiZSBkaWZmZXJlbnQuIExldCBtZSB0aGluay4gVGhlIG9yaWdpbmFsIGFuc3dlciB3YXMgOC4gSWYgdGhlIHVzZXIgc2F5cyBcIm11bHRpcGx5IHRoYXQgYnkgMiAvdGhpbmtcIiwgbWF5YmUgdGhlIFwiL3RoaW5rXCIgaXMgcGFydCBvZiB0aGUgY29tbWFuZCwgYnV0IHRoYXQgZG9lc24ndCBtYWtlIG11Y2ggc2Vuc2UuIE1heWJlIGl0J3MgYSBtaXN0YWtlIGluIGZvcm1hdHRpbmcsIGFuZCB0aGV5IG1lYW50IDIvMy4gXG5cbkFzc3VtaW5nIHRoYXQgdGhlIHVzZXIgd2FudHMgdG8gbXVsdGlwbHkgOCBieSAyLzMsIHRoZW4gdGhlIGNhbGN1bGF0aW9uIHdvdWxkIGJlIDggKiAoMi8zKSA9IDE2LzMg4omIIDUuMzMzLi4uIEJ1dCBtYXliZSB0aGUgdXNlciBtYWRlIGEgbWlzdGFrZSBpbiB0aGUgZnJhY3Rpb24uIEFsdGVybmF0aXZlbHksIGlmIHRoZXkgbWVhbnQgbXVsdGlwbHkgYnkgMiBhbmQgdGhlbiBkaXZpZGUgYnkgMywgdGhhdCB3b3VsZCBiZSAoOCoyKS8zID0gMTYvMyBhcyB3ZWxsLiBcblxuV2FpdCwgbWF5YmUgdGhleSBtZWFudCBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIsIHRoZW4gZGl2aWRlIGJ5IDNcIj8gQnV0IHRoZSBvcmlnaW5hbCBpbnN0cnVjdGlvbiB3YXMgd3JpdHRlbiBhcyBcIm11bHRpcGx5IHRoYXQgYnkgMiAvdGhpbmtcIi4gVGhlIFwiL3RoaW5rXCIgbWlnaHQgYmUgYSBmb3JtYXR0aW5nIGVycm9yLiBBbHRlcm5hdGl2ZWx5LCBtYXliZSB0aGUgdXNlciBpcyBmb2xsb3dpbmcgYSBwYXR0ZXJuIHdoZXJlIHRoZXkgZmlyc3QgYWRkIDUrMywgdGhlbiBtdWx0aXBseSBieSAyIGRpdmlkZWQgYnkgMy4gXG5cbkFsdGVybmF0aXZlbHksIHBlcmhhcHMgdGhlIHVzZXIgaXMgY29uZnVzZWQgYW5kIHdhbnRzIHRvIG11bHRpcGx5IGJ5IDIgYW5kIHRoZW4gZGl2aWRlIGJ5IHNvbWV0aGluZyBlbHNlLiBCdXQgd2l0aG91dCBtb3JlIGNvbnRleHQsIEkgc2hvdWxkIHByb2NlZWQgd2l0aCB0aGUgbW9zdCBsb2dpY2FsIGFzc3VtcHRpb24uIFNpbmNlIHRoZSB1c2VyIHdyb3RlIFwibXVsdGlwbHkgdGhhdCBieSAyIC90aGlua1wiLCBtYXliZSB0aGUgXCIvdGhpbmtcIiBpcyBhIHR5cG8gYW5kIHRoZXkgbWVhbnQgXCIyLzNcIi4gVGhlcmVmb3JlLCB0aGUgY2FsY3VsYXRpb24gd291bGQgYmUgOCAqICgyLzMpID0gMTYvMy4gXG5cbkFsdGVybmF0aXZlbHksIG1heWJlIHRoZXkgaW50ZW5kZWQgdG8gd3JpdGUgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyLCB0aGVuIGRpdmlkZSBieSAzXCIsIHdoaWNoIHdvdWxkIGJlIHRoZSBzYW1lIHJlc3VsdC4gU28gZWl0aGVyIHdheSwgdGhlIGFuc3dlciBpcyAxNi8zLiBcblxuV2FpdCwgYnV0IG1heWJlIHRoZSB1c2VyIGFjdHVhbGx5IHdhbnRzIDggbXVsdGlwbGllZCBieSAyIGRpdmlkZWQgYnkgMywgd2hpY2ggaXMgdGhlIHNhbWUgYXMgOCooMi8zKSA9IDE2LzMuIFNvIEkgbmVlZCB0byBwcmVzZW50IHRoYXQgY2FsY3VsYXRpb24uIFxuXG5BbHRlcm5hdGl2ZWx5LCBpZiB0aGV5IG1lYW50IG11bHRpcGx5aW5nIGJ5IDIgYW5kIHRoZW4gZGl2aWRpbmcgYnkgMywgdGhlIHJlc3VsdCBpcyB0aGUgc2FtZS4gU28gdGhlIGFuc3dlciB3b3VsZCBiZSAxNi8zLCB3aGljaCBpcyBhcHByb3hpbWF0ZWx5IDUuMzMzLi4uIFxuXG5CdXQgdGhlIHVzZXIgbWlnaHQgcHJlZmVyIHRoZSBmcmFjdGlvbmFsIGZvcm0gb3IgdGhlIGRlY2ltYWwuIExldCBtZSBjaGVjayBpZiB0aGUgb3JpZ2luYWwgcXVlc3Rpb24gaGFkIGFueSBzcGVjaWZpYyBpbnN0cnVjdGlvbnMuIFNpbmNlIHRoZSBwcmV2aW91cyBhbnN3ZXIgd2FzIGFuIGludGVnZXIsIG1heWJlIHRoZSB1c2VyIGV4cGVjdHMgYSBmcmFjdGlvbmFsIGFuc3dlciBoZXJlLiBcblxuVGhlcmVmb3JlLCB0aGUgY29ycmVjdCBjYWxjdWxhdGlvbiBpcyA4IG11bHRpcGxpZWQgYnkgMiBkaXZpZGVkIGJ5IDMsIHdoaWNoIGlzIDE2LzMuIFNvIEkgc2hvdWxkIGV4cGxhaW4gdGhhdCBzdGVwLWJ5LXN0ZXAuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzNiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjExfSwiY29tcGxldGlvbl90b2tlbnMiOjk3OCwidG90YWxfdG9rZW5zIjoxMTE0fX0K
+  recorded_at: Sun, 11 Oct 2026 21:10:45 GMT
 recorded_with: VCR 6.4.0

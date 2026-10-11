@@ -26,13 +26,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:56:10 GMT
+      - Sun, 11 Oct 2026 21:18:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -40,41 +43,38 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1791381371'
+      - '1791753502'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1791381368,"created_at":1791381368,"error":null,"frequency_penalty":0,"id":"resp_ecc9b93b-0bcf-4dd1-b1b7-aa3df39455c3","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"query\":\"test
-        data\"}","call_id":"call_qKQj26n7P0eYqerL7LRUzswJ","id":"fc_bb9da771-caf3-4f7d-9990-1a8edc1ba218","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+      string: '{"background":false,"completed_at":1791753499,"created_at":1791753499,"error":null,"frequency_penalty":0,"id":"resp_45accd01-1ff2-4028-8660-a1413dfdc4c6","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"query\":\"test
+        data\"}","call_id":"call_BE9JENjZRldVamdijDecIvqp","id":"fc_ecdcf9cb-dd49-41fa-bcb0-cdf3b0c50676","name":"content_returning","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
-        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00023,"total_cost":0.00025},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":117,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":191},"user":null}
+        to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00002,"output_cost":0.00039,"total_cost":0.00041},"input_tokens":74,"input_tokens_details":{"cached_tokens":0},"output_tokens":197,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":271},"user":null}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:56:10 GMT
+  recorded_at: Sun, 11 Oct 2026 21:18:21 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
     body:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"Process
-        this query: test data"},{"type":"function_call","call_id":"call_qKQj26n7P0eYqerL7LRUzswJ","name":"content_returning","arguments":"{\"query\":\"test
-        data\"}"},{"type":"function_call_output","call_id":"call_qKQj26n7P0eYqerL7LRUzswJ","output":"Processed:
+        this query: test data"},{"type":"function_call","call_id":"call_BE9JENjZRldVamdijDecIvqp","name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"},{"type":"function_call_output","call_id":"call_BE9JENjZRldVamdijDecIvqp","output":"Processed:
         test data"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
         to process"}},"required":["query"],"additionalProperties":false,"strict":true},"strict":false}]}'
@@ -95,13 +95,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:56:11 GMT
+      - Sun, 11 Oct 2026 21:18:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ratelimit-Limit:
@@ -109,31 +112,28 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1791381372'
+      - '1791753504'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1791381370,"created_at":1791381370,"error":null,"frequency_penalty":0,"id":"resp_c248add5-8f9c-4113-b7b2-084ae8009a02","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
-        test data","type":"output_text"}],"id":"msg_d59811cc-109f-4dfe-a55e-63376f7f0674","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
+      string: '{"background":false,"completed_at":1791753501,"created_at":1791753501,"error":null,"frequency_penalty":0,"id":"resp_8005f9ac-f99f-416d-aee8-dfc2bb1e92bb","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"content":[{"annotations":[],"text":"Processed:
+        test data","type":"output_text"}],"id":"msg_ad2393de-fef0-4263-ad0f-2b23fa71a96b","role":"assistant","status":"completed","type":"message"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"content_returning","description":"Returns
         a processed string result","parameters":{"additionalProperties":false,"properties":{"query":{"description":"Query
         to process","type":"string"}},"required":["query"],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00002,"total_cost":0.00005},"input_tokens":107,"input_tokens_details":{"cached_tokens":0},"output_tokens":8,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":115},"user":null}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:56:11 GMT
+  recorded_at: Sun, 11 Oct 2026 21:18:23 GMT
 recorded_with: VCR 6.4.0

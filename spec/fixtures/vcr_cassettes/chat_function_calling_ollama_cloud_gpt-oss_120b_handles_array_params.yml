@@ -29,34 +29,38 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - aca5aad1d053bda171888c526b817e0c61227261
+      - fb036d5c394cd0c23173b2be8d69965e24bc9914
       X-Build-Time:
-      - '2026-10-06T19:15:30-07:00'
+      - '2026-10-09T17:17:18-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '706'
+      - '1004'
       Date:
-      - Wed, 07 Oct 2026 13:40:43 GMT
+      - Sun, 11 Oct 2026 21:11:46 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-9fae797eef99c4897a7ebb93bcbdadcf-75288efedc1e55e2-00
+      - 00-3edd38c01892de424df481e73b9e3d74-d53b648cae429ea0-00
       X-Cloud-Trace-Context:
-      - 9fae797eef99c4897a7ebb93bcbdadcf/8442154726771807714
+      - 3edd38c01892de424df481e73b9e3d74/15364985109086379680
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-371","object":"chat.completion","created":1791380443,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants to call the array_params tool with tags [\"red\",\"blue\"] and
-        tell the combined tags. So we need to invoke the function. Use the function
-        call with name \"array_params\" and pass tags array.","tool_calls":[{"id":"call_e15tee09","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":81,"total_tokens":228,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-434","object":"chat.completion","created":1791753106,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user asks to \"Call the array params tool with tags [\"red\",\"blue\"] and
+        tell me the combined tags.\" We have a tool: functions.array_params with param
+        tags: any[] (list of tags to combine). We need to call the tool. Likely it
+        returns something. The tool description: \"Uses params DSL array support\".
+        Not much description of what it returns. Probably combine array maybe? We''ll
+        call it with tags [\"red\",\"blue\"] and capture result. Then respond with
+        combined tags.\n\nLet''s call the function.","tool_calls":[{"id":"call_hrh42voj","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":138,"total_tokens":285,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:40:43 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:46 GMT
 recorded_with: VCR 6.4.0

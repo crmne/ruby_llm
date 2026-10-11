@@ -25,22 +25,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Sun, 11 Oct 2026 21:09:15 GMT
       Server:
       - istio-envoy
+      Resp-Start-Time:
+      - '1791752957597'
       Access-Control-Allow-Origin:
       - ''
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '1096'
-      Resp-Start-Time:
-      - '1791422387117'
-      Date:
-      - Thu, 08 Oct 2026 01:19:45 GMT
+      - '1091'
       Req-Arrive-Time:
-      - '1791422386021'
+      - '1791752956505'
       X-Envoy-Upstream-Service-Time:
-      - '1093'
+      - '1086'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -52,8 +52,8 @@ http_interactions:
         There''s a function called dice_roll that rolls a six-sided die. The user
         said exactly three times, so I need to call that function three separate times.
         Each call doesn''t need any parameters, so I''ll just make three individual
-        tool calls. Let me make sure I don''t miss any and that each is properly formatted.\n","tool_calls":[{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"DjLmV1ZxbRWuQeMFgGUjKmAgqOK7V4yE"},{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"ZZWYmu253zuBG625DUHDMLofwPxTO9FH"},{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"1tcNb2iIhk0zdrfjHUdaR7vh9QnZXx9N"}]}}],"created":1791422387,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":138,"prompt_tokens":177,"total_tokens":315,"prompt_tokens_details":{"cached_tokens":3}},"id":"chatcmpl-hP0uDQaW3x3a6l9mmoQ8jsG23YleBpN5","timings":{"cache_n":3,"prompt_n":174,"prompt_ms":42.052,"prompt_per_token_ms":0.24167816091954022,"prompt_per_second":4137.734233805764,"predicted_n":138,"predicted_ms":1034.04,"predicted_per_token_ms":7.547737226277372,"predicted_per_second":132.4900390700553}}'
-  recorded_at: Thu, 08 Oct 2026 01:19:47 GMT
+        tool calls. Let me make sure I don''t miss any and that each is properly formatted.\n","tool_calls":[{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"cKm7ogf1d9bIXuciNMv0K2r8bvcHn6FW"},{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"YZaMQHIpRRTBC8siAhE2SzkevGykMJ31"},{"type":"function","function":{"name":"dice_roll","arguments":"{}"},"id":"yK2Mg6Fe3AXY6L43Ixea8edXm45k14IH"}]}}],"created":1791752957,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":138,"prompt_tokens":177,"total_tokens":315,"prompt_tokens_details":{"cached_tokens":176}},"id":"chatcmpl-fi7495nPx7TMpUPI47IAo2ZYdf3kWfw0","timings":{"cache_n":176,"prompt_n":1,"prompt_ms":8.523,"prompt_per_token_ms":8.523,"prompt_per_second":117.32957878681216,"predicted_n":138,"predicted_ms":1019.241,"predicted_per_token_ms":7.4397153284671536,"predicted_per_second":134.41374512995455}}'
+  recorded_at: Sun, 11 Oct 2026 21:09:17 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -61,7 +61,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"DjLmV1ZxbRWuQeMFgGUjKmAgqOK7V4yE","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"ZZWYmu253zuBG625DUHDMLofwPxTO9FH","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"1tcNb2iIhk0zdrfjHUdaR7vh9QnZXx9N","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"cKm7ogf1d9bIXuciNMv0K2r8bvcHn6FW","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"YZaMQHIpRRTBC8siAhE2SzkevGykMJ31","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"yK2Mg6Fe3AXY6L43Ixea8edXm45k14IH","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
         There''s a function called dice_roll that rolls a six-sided die. The user
         said exactly three times, so I need to call that function three separate times.
@@ -71,7 +71,7 @@ http_interactions:
         There''s a function called dice_roll that rolls a six-sided die. The user
         said exactly three times, so I need to call that function three separate times.
         Each call doesn''t need any parameters, so I''ll just make three individual
-        tool calls. Let me make sure I don''t miss any and that each is properly formatted.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"DjLmV1ZxbRWuQeMFgGUjKmAgqOK7V4yE"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"ZZWYmu253zuBG625DUHDMLofwPxTO9FH"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"1tcNb2iIhk0zdrfjHUdaR7vh9QnZXx9N"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        tool calls. Let me make sure I don''t miss any and that each is properly formatted.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"cKm7ogf1d9bIXuciNMv0K2r8bvcHn6FW"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"YZaMQHIpRRTBC8siAhE2SzkevGykMJ31"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"yK2Mg6Fe3AXY6L43Ixea8edXm45k14IH"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -89,22 +89,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Cost-Time:
-      - '1413'
-      Req-Arrive-Time:
-      - '1791422387122'
-      Server:
-      - istio-envoy
-      Content-Type:
-      - application/json; charset=utf-8
       Resp-Start-Time:
-      - '1791422388536'
+      - '1791752959155'
       X-Envoy-Upstream-Service-Time:
-      - '1410'
-      Date:
-      - Thu, 08 Oct 2026 01:19:47 GMT
+      - '1550'
       Access-Control-Allow-Origin:
       - ''
+      Content-Type:
+      - application/json; charset=utf-8
+      Req-Cost-Time:
+      - '1554'
+      Date:
+      - Sun, 11 Oct 2026 21:09:16 GMT
+      Server:
+      - istio-envoy
+      Req-Arrive-Time:
+      - '1791752957600'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -112,6 +112,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGRpY2Ugcm9sbHMgcmVzdWx0ZWQgaW46XG4xLiDwn46yIDFcbjIuIPCfjrIgMlxuMy4g8J+OsiAzXG5cbldvdWxkIHlvdSBsaWtlIHRvIGRvIGFueXRoaW5nIHdpdGggdGhlc2UgcmVzdWx0cz8iLCJyZWFzb25pbmdfY29udGVudCI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIHRvIHJvbGwgdGhlIGRpY2UgdGhyZWUgdGltZXMuIEkgY2FsbGVkIHRoZSBkaWNlX3JvbGwgZnVuY3Rpb24gdGhyZWUgdGltZXMsIGFuZCBlYWNoIHRpbWUgdGhlIHJlc3VsdCB3YXMgMSwgMiwgYW5kIDMgcmVzcGVjdGl2ZWx5LiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhlc2UgcmVzdWx0cyBpbiBhIGNsZWFyIHdheS4gTGV0IG1lIGxpc3QgZWFjaCByb2xsIHdpdGggaXRzIGNvcnJlc3BvbmRpbmcgbnVtYmVyLiBNYXliZSB1c2UgYSBzaW1wbGUgc2VudGVuY2UgZm9yIGVhY2ggcmVzdWx0IGFuZCB0aGVuIHN1bW1hcml6ZSB0aGUgdG90YWwuIFdhaXQsIHRoZSB1c2VyIGRpZG4ndCBhc2sgZm9yIGEgdG90YWwsIGp1c3QgdGhlIHJvbGxzLiBTbyBtYXliZSBqdXN0IHN0YXRlIGVhY2ggcmVzdWx0IGluIG9yZGVyLiBMZXQgbWUgY2hlY2sgdGhlIHJlc3BvbnNlcyBhZ2FpbiB0byBtYWtlIHN1cmUgSSBoYXZlIHRoZW0gcmlnaHQuIFllcCwgZmlyc3Qgcm9sbCB3YXMgMSwgc2Vjb25kIDIsIHRoaXJkIDMuIEFscmlnaHQsIHRpbWUgdG8gcHV0IHRoYXQgaW50byBhIGZyaWVuZGx5IHJlcGx5LlxuIn19XSwiY3JlYXRlZCI6MTc5MTQyMjM4OCwibW9kZWwiOiJxd2VuMy1uYXRpdmUiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE4NCwicHJvbXB0X3Rva2VucyI6MzUwLCJ0b3RhbF90b2tlbnMiOjUzNCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMxNH19LCJpZCI6ImNoYXRjbXBsLTZqbzNZYWhPQnFFa3FVYjN5d0RkOEpQcjFwZk91RVA5IiwidGltaW5ncyI6eyJjYWNoZV9uIjozMTQsInByb21wdF9uIjozNiwicHJvbXB0X21zIjoxNy44NzIsInByb21wdF9wZXJfdG9rZW5fbXMiOjAuNDk2NDQ0NDQ0NDQ0NDQ0NDcsInByb21wdF9wZXJfc2Vjb25kIjoyMDE0LjMyNDA4MjM2MzQ3MzUsInByZWRpY3RlZF9uIjoxODQsInByZWRpY3RlZF9tcyI6MTM4NS4yMDEsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjcuNTY5NDA0MzcxNTg0Njk5NSwicHJlZGljdGVkX3Blcl9zZWNvbmQiOjEzMi4xMTA3OTExNDE1MDIyfX0=
-  recorded_at: Thu, 08 Oct 2026 01:19:48 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgdGhlIHJlc3VsdHMgb2YgeW91ciB0aHJlZSBkaWNlIHJvbGxzOlxuXG4xLiAqKlJvbGwgMToqKiDwn46yIDEgIFxuMi4gKipSb2xsIDI6Kiog8J+OsiAyICBcbjMuICoqUm9sbCAzOioqIPCfjrIgMyAgXG5cbkxldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgdG8gcm9sbCBhZ2FpbiEg8J+YiiIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgbGV0J3Mgc2VlLiBUaGUgdXNlciBhc2tlZCB0byByb2xsIHRoZSBkaWNlIHRocmVlIHRpbWVzLCBhbmQgSSBjYWxsZWQgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiB0aHJlZSB0aW1lcy4gRWFjaCByZXNwb25zZSBjYW1lIGJhY2sgd2l0aCBhIHJvbGwgdmFsdWU6IDEsIDIsIGFuZCAzLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhlc2UgcmVzdWx0cyBpbiBhIGNsZWFyIHdheS5cblxuSG1tLCBtYXliZSBsaXN0IGVhY2ggcm9sbCB3aXRoIGEgbnVtYmVyLiBMaWtlIFJvbGwgMTogMSwgUm9sbCAyOiAyLCBSb2xsIDM6IDMuIFRoYXQgbWFrZXMgaXQgZWFzeSB0byBmb2xsb3cuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBvdGhlciBpbmZvIG5lZWRlZCwgYnV0IHRoZSB1c2VyIGp1c3Qgd2FudGVkIHRoZSByb2xscy4gQWxyaWdodCwgdGhhdCdzIHN0cmFpZ2h0Zm9yd2FyZC4gSSdsbCBmb3JtYXQgdGhlIGFuc3dlciB3aXRoIGVhY2ggcm9sbCBudW1iZXJlZCBhbmQgdGhlIHJlc3VsdCBuZXh0IHRvIGl0LlxuIn19XSwiY3JlYXRlZCI6MTc5MTc1Mjk1OSwibW9kZWwiOiJxd2VuMy1uYXRpdmUiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiMTA4MzAtNDY1ZTQ5YjljIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjIwNCwicHJvbXB0X3Rva2VucyI6MzUwLCJ0b3RhbF90b2tlbnMiOjU1NCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMxNH19LCJpZCI6ImNoYXRjbXBsLVJXSXdJaHRxcm9KUEdraktvN1hDbzVaN2NGelJ4cFNqIiwidGltaW5ncyI6eyJjYWNoZV9uIjozMTQsInByb21wdF9uIjozNiwicHJvbXB0X21zIjoxNy40NTMsInByb21wdF9wZXJfdG9rZW5fbXMiOjAuNDg0ODA1NTU1NTU1NTU1NTUsInByb21wdF9wZXJfc2Vjb25kIjoyMDYyLjY4MjYzMzM1ODE2MiwicHJlZGljdGVkX24iOjIwNCwicHJlZGljdGVkX21zIjoxNTI1LjM5NCwicHJlZGljdGVkX3Blcl90b2tlbl9tcyI6Ny41MTQyNTYxNTc2MzU0NjgsInByZWRpY3RlZF9wZXJfc2Vjb25kIjoxMzMuMDgwMzcxMzY2MzQ4NjN9fQ==
+  recorded_at: Sun, 11 Oct 2026 21:09:19 GMT
 recorded_with: VCR 6.4.0

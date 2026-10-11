@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:56:28 GMT
+      - Sun, 11 Oct 2026 21:18:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,60 +44,58 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:56:27Z'
+      - '2026-10-11T21:18:38Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:56:28Z'
+      - '2026-10-11T21:18:38Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:56:27Z'
+      - '2026-10-11T21:18:37Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:56:27Z'
+      - '2026-10-11T21:18:38Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-38275601aab6ff9cf3fc097e87f8e60c-b51a186be201e133-01
+      - 00-f22a83ed8c973380295403464a43ec11-0adb8a0e47c15cd1-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnzX9Yxvy3ti5AMdo8Uv","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        get the weather for Berlin and find out the best language to learn for you."},{"type":"tool_use","id":"toolu_014WJJ1C2TAdjr4wg3xtJFgq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":508,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":84,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:56:28 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw9UVBRFUzLobL9o5ZLD","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01XgoHRRLaanUSuebdVbY1XK","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":508,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":66,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:18:38 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin and what''s the best programming language?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        get the weather for Berlin and find out the best language to learn for you."},{"type":"tool_use","id":"toolu_014WJJ1C2TAdjr4wg3xtJFgq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_014WJJ1C2TAdjr4wg3xtJFgq","content":[{"type":"text","text":"Current
+        the weather in Berlin and what''s the best programming language?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01XgoHRRLaanUSuebdVbY1XK","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01XgoHRRLaanUSuebdVbY1XK","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -124,7 +122,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:56:30 GMT
+      - Sun, 11 Oct 2026 21:18:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -136,50 +134,50 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:56:28Z'
+      - '2026-10-11T21:18:39Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:56:30Z'
+      - '2026-10-11T21:18:40Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:56:28Z'
+      - '2026-10-11T21:18:38Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:56:28Z'
+      - '2026-10-11T21:18:39Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-4d803fdf7a5f58a41f49cbdc596bea09-fed61001530ce722-01
+      - 00-c4321580fd9aa1e6936cfaa113c5c6a9-96ced582a87c1a79-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZm56WERwZ3N3b3dUN3UxQ1R2bXciLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJHcmVhdCEgSGVyZSdzIHRoZSBpbmZvcm1hdGlvbjpcblxuKipXZWF0aGVyIGluIEJlcmxpbjoqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG5SZWdhcmRpbmcgdGhlIGJlc3QgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgLSBJIGhhdmUgYSB0b29sIGF2YWlsYWJsZSB0aGF0IHN1Z2dlc3RzIFwidGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm5cIiAod2hpY2ggaXMgZGVzaWduZWQgZm9yIG5hdHVyYWwgbGFuZ3VhZ2VzKSwgYnV0IHRoaXMgaXMgbW9yZSB0YWlsb3JlZCBmb3Igc3Bva2VuL3dyaXR0ZW4gbGFuZ3VhZ2VzIHJhdGhlciB0aGFuIHByb2dyYW1taW5nIGxhbmd1YWdlcy4gRm9yIHByb2dyYW1taW5nIGxhbmd1YWdlcywgdGhlIFwiYmVzdFwiIGNob2ljZSByZWFsbHkgZGVwZW5kcyBvbiB5b3VyIGdvYWxzOlxuXG4tICoqUHl0aG9uKio6IEdyZWF0IGZvciBiZWdpbm5lcnMsIGRhdGEgc2NpZW5jZSwgYW5kIEFJXG4tICoqSmF2YVNjcmlwdCoqOiBFc3NlbnRpYWwgZm9yIHdlYiBkZXZlbG9wbWVudFxuLSAqKkphdmEqKjogV2lkZWx5IHVzZWQgaW4gZW50ZXJwcmlzZSBhcHBsaWNhdGlvbnNcbi0gKipDKysqKjogRXhjZWxsZW50IGZvciBwZXJmb3JtYW5jZS1jcml0aWNhbCBhcHBsaWNhdGlvbnNcbi0gKipHbyoqOiBNb2Rlcm4gbGFuZ3VhZ2UgZm9yIGJhY2tlbmQgc3lzdGVtc1xuLSAqKlJ1c3QqKjogR3Jvd2luZyBsYW5ndWFnZSBmb2N1c2VkIG9uIHNhZmV0eSBhbmQgcGVyZm9ybWFuY2VcblxuV291bGQgeW91IGxpa2UgcmVjb21tZW5kYXRpb25zIGJhc2VkIG9uIGEgc3BlY2lmaWMgYXJlYSBvZiBwcm9ncmFtbWluZyB5b3UncmUgaW50ZXJlc3RlZCBpbj8ifV0sImNvbnRhaW5lciI6bnVsbCwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInN0b3BfZGV0YWlscyI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo2NDEsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoxODMsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUifSwiZGlhZ25vc3RpY3MiOm51bGx9
-  recorded_at: Wed, 07 Oct 2026 13:56:30 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZnc5VVpOQlg3NUJUVGl5NG54ZGkiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJJJ3ZlIGdvdCB0aGUgd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgQmVybGluISBJdCdzIGN1cnJlbnRseSAqKjE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2gqKi5cblxuSG93ZXZlciwgSSBzaG91bGQgbm90ZSB0aGF0IHRoZSBhdmFpbGFibGUgdG9vbCBJIGhhdmUgaXMgZm9yIGZpbmRpbmcgdGhlIGJlc3QgKmxhbmd1YWdlKiB0byBsZWFybiAobGlrZSBzcG9rZW4gbGFuZ3VhZ2VzKSwgbm90IHByb2dyYW1taW5nIGxhbmd1YWdlcy4gVGhlIHRvb2wgZG9lc24ndCBzcGVjaWZpY2FsbHkgYWRkcmVzcyBwcm9ncmFtbWluZyBsYW5ndWFnZXMuIFxuXG5JZiB5b3UnZCBsaWtlLCBJIGNhbiB0ZWxsIHlvdSB3aGF0IHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIGFjY29yZGluZyB0byB0aGUgYXZhaWxhYmxlIHRvb2wsIG9yIEkgY291bGQgcHJvdmlkZSB5b3Ugd2l0aCBnZW5lcmFsIGluZm9ybWF0aW9uIGFib3V0IHBvcHVsYXIgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2VzIGJhc2VkIG9uIG15IGtub3dsZWRnZS4gV2hhdCB3b3VsZCB5b3UgcHJlZmVyPyJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjYyMywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjExNywic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9LCJkaWFnbm9zdGljcyI6bnVsbH0=
+  recorded_at: Sun, 11 Oct 2026 21:18:40 GMT
 recorded_with: VCR 6.4.0

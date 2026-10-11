@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:56:19 GMT
+      - Sun, 11 Oct 2026 21:18:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,58 +42,58 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:56:19Z'
+      - '2026-10-11T21:18:29Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:56:19Z'
+      - '2026-10-11T21:18:30Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:56:18Z'
+      - '2026-10-11T21:18:29Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:56:19Z'
+      - '2026-10-11T21:18:29Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-832745f4c61161894e591de960e2ca20-2c6940db23a6fc44-01
+      - 00-6bd3f30a01656646133fc62f55962e42-ce60908c57056f1d-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnzWWsqWNjNe8nAJE3VY","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01GyFFDGMv3VunoVTa3aFgNe","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":735,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:56:19 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw9Tt2KBbmM2mdUicAT7","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01BKbJN3QAG2oLM3ad4VCGm5","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":735,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:18:30 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"When
-        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01GyFFDGMv3VunoVTa3aFgNe","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01GyFFDGMv3VunoVTa3aFgNe","content":[{"type":"text","text":"Current
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01BKbJN3QAG2oLM3ad4VCGm5","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01BKbJN3QAG2oLM3ad4VCGm5","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -118,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:56:22 GMT
+      - Sun, 11 Oct 2026 21:18:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,63 +130,62 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '9999000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:56:19Z'
+      - '2026-10-11T21:18:30Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:56:22Z'
+      - '2026-10-11T21:18:32Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:56:19Z'
+      - '2026-10-11T21:18:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '11999000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:56:19Z'
+      - '2026-10-11T21:18:30Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-7ce8f2e834e98b103d7b3cf09576e0fc-af18aa598c9ad8f7-01
+      - 00-5ea47c60a643f4ffb03c196c8c89fe9e-2b8057c42b1d1ee5-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CfnzWaGUeXf1VapxLuH7C","type":"message","role":"assistant","content":[{"type":"text","text":"I
-        apologize, but your question about the fall of Rome isn''t related to the
-        weather tool I have available. Let me answer your historical question directly:\n\nThe
-        **Fall of the Roman Empire** is typically dated to **476 CE** (or AD 476),
-        when the last Western Roman Emperor, Romulus Augustulus, was deposed by the
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw9TwnXohCkwekBa29vd","type":"message","role":"assistant","content":[{"type":"text","text":"The
+        fall of Rome is generally dated to **476 CE** (or 476 AD), when the last Roman
+        Emperor of the Western Roman Empire, Romulus Augustulus, was deposed by the
         Germanic chieftain Odoacer. This marked the formal end of the Western Roman
-        Empire.\n\nHowever, it''s important to note that:\n\n1. **The Eastern Roman
-        Empire (Byzantine Empire)** continued to exist for another thousand years
-        until 1453 CE.\n\n2. The fall was a gradual process rather than a sudden event,
-        with the Western Empire''s power declining over many decades due to factors
-        like political instability, economic troubles, military pressure from Germanic
-        tribes, and overextension.\n\n3. Some scholars point to earlier dates (like
-        410 CE when Visigoths sacked Rome) as marking the effective end of Roman power,
-        while others see the process as more complex and gradual.\n\nIs there anything
-        else about Roman history you''d like to know?"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":758,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":242,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:56:22 GMT
+        Empire.\n\nHowever, it''s important to note that Rome''s decline was gradual
+        rather than sudden:\n\n- **The Eastern Roman Empire** (Byzantine Empire) continued
+        for another thousand years until 1453 CE\n- The process of decline spanned
+        several centuries, involving political instability, economic troubles, military
+        pressure from Germanic tribes, and other factors\n- Some historians point
+        to earlier dates, like 410 CE (when Visigoths sacked Rome under Alaric) or
+        earlier crises\n- The fall wasn''t a single catastrophic event but rather
+        a prolonged transformation\n\nSo while 476 CE is the conventional date for
+        the \"fall\" of the Western Roman Empire, the reality was more complex and
+        occurred over a longer period."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":758,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":220,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:18:32 GMT
 recorded_with: VCR 6.4.0

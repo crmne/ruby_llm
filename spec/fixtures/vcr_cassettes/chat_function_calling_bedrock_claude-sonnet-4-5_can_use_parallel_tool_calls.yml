@@ -17,7 +17,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T130346Z
+      - 20261011T210735Z
       X-Amz-Content-Sha256:
       - ad7b8f69936d024afea8b77e86e1ce7d0877e695f4bfac28fa2a959d630f33bd
       Authorization:
@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:03:48 GMT
+      - Sun, 11 Oct 2026 21:07:37 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,19 +41,19 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 57e973f9-4d60-4035-8a39-8795bb4fd676
+      - a3c0c260-5e46-4509-b4dd-4a3c83a39734
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1860},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_EHKJrImPLVJBTy3ExdAijB","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_dL6AHDv7KJu97GHEfRLPcI","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
-  recorded_at: Wed, 07 Oct 2026 13:03:48 GMT
+      string: '{"metrics":{"latencyMs":1992},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_VmIF5HmcxFvn0WMwixJzpf","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_lFIAZbIHnCYyTG8DqKH5Mq","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
+  recorded_at: Sun, 11 Oct 2026 21:07:37 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_EHKJrImPLVJBTy3ExdAijB","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_dL6AHDv7KJu97GHEfRLPcI","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_EHKJrImPLVJBTy3ExdAijB","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_dL6AHDv7KJu97GHEfRLPcI","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_VmIF5HmcxFvn0WMwixJzpf","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_lFIAZbIHnCYyTG8DqKH5Mq","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_VmIF5HmcxFvn0WMwixJzpf","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_lFIAZbIHnCYyTG8DqKH5Mq","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}},{"toolSpec":{"name":"best_language_to_learn","description":"Gets
@@ -64,9 +64,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T130348Z
+      - 20261011T210737Z
       X-Amz-Content-Sha256:
-      - b1237e93064f49fa8a0e83228a6aa98a10d91328de651a383d321a6b538fff5a
+      - ae1c10562528dc575481b7dae1bfe465eb487298f3e8d28ac63c25fe39c9935c
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -80,18 +80,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:03:51 GMT
+      - Sun, 11 Oct 2026 21:07:40 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '436'
+      - '454'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 63a25d6f-85e6-4290-8e4d-8491d72cbec5
+      - 47049161-99b9-4b2c-9b3e-cf9d925ae4c6
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTc3NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJIZXJlJ3Mgd2hhdCBJIGZvdW5kOlxuXG4qKldlYXRoZXIgaW4gQmVybGluOioqXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cbioqQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKiBSdWJ5In1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjo4OTMsIm91dHB1dFRva2VucyI6NDEsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjo5MzR9fQ==
-  recorded_at: Wed, 07 Oct 2026 13:03:51 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTY5MH0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJIZXJlJ3MgdGhlIGluZm9ybWF0aW9uIHlvdSByZXF1ZXN0ZWQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW46Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IGxhbmd1YWdlIHRvIGxlYXJuOioqXG5SdWJ5In1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjo4OTMsIm91dHB1dFRva2VucyI6NDMsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjo5MzZ9fQ==
+  recorded_at: Sun, 11 Oct 2026 21:07:40 GMT
 recorded_with: VCR 6.4.0

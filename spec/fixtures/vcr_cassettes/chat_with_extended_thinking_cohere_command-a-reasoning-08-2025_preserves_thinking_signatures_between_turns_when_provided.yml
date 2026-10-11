@@ -42,11 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 85766edb9e607d24422a4642e1d975ed
+      - 720c22635268317f8a7309416671b091
       Date:
-      - Wed, 07 Oct 2026 13:01:43 GMT
+      - Sun, 11 Oct 2026 21:08:59 GMT
       X-Envoy-Upstream-Service-Time:
-      - '874'
+      - '486'
       Server:
       - envoy
       Via:
@@ -57,11 +57,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"977b2293-45d7-474d-a3a5-304323b494b1","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+      string: '{"id":"4b99726d-617b-4ad9-82a4-cc4abaa5353b","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
         user is asking for the sum of 5 and 3. Since this is a straightforward arithmetic
         problem, I don''t need to use any tools. I can calculate the result directly."},{"type":"text","text":"The
         sum of 5 and 3 is 8."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":50},"tokens":{"input_tokens":1394,"output_tokens":55,"reasoning_tokens":38},"cached_tokens":1344}}'
-  recorded_at: Wed, 07 Oct 2026 13:01:43 GMT
+  recorded_at: Sun, 11 Oct 2026 21:08:59 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
@@ -98,7 +98,7 @@ http_interactions:
       Num-Chars:
       - '6876'
       Num-Tokens:
-      - '192'
+      - '191'
       Pragma:
       - no-cache
       Vary:
@@ -106,30 +106,30 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 33018a7ea25f4267e8e99b0c737819f6
+      - 50d4d93975dcf76cba5dc6707beca4ac
       Date:
-      - Wed, 07 Oct 2026 13:01:45 GMT
+      - Sun, 11 Oct 2026 21:09:01 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1521'
+      - '1376'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d41c69e5-35bb-4d87-90c9-93c189290ce9","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
+      string: '{"id":"b3dd309b-536e-49a8-a567-62f766f7ef29","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
         the user first asked, \"What is 5 + 3?\" and I responded with the sum, which
         is 8. Now they''re asking to multiply that result by 2. So the next step is
-        to take 8 and multiply by 2. Let me verify the previous answer to make sure
-        it''s correct. 5 plus 3 is indeed 8. Then multiplying 8 by 2 gives 16. I should
-        check if there''s any possible misunderstanding here. The user says \"that,\"
-        referring to the previous result, so there''s no ambiguity. The calculation
-        is straightforward. No tools are needed here since it''s a simple arithmetic
-        operation. I can directly provide the answer."},{"type":"text","text":"The
-        result of multiplying 8 (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":166},"tokens":{"input_tokens":1431,"output_tokens":171,"reasoning_tokens":144},"cached_tokens":1344}}'
-  recorded_at: Wed, 07 Oct 2026 13:01:45 GMT
+        to take 8 and multiply it by 2. Let me check the calculation again to be sure.
+        5 plus 3 is definitely 8. Then 8 multiplied by 2 equals 16. I need to make
+        sure there''s no confusion here. Since the user referred to \"that,\" which
+        means the previous result, I should confirm the previous answer was correct
+        before proceeding. Everything seems in order. The multiplication is straightforward.
+        The final answer should be 16."},{"type":"text","text":"The result of multiplying
+        8 (from 5 + 3) by 2 is **16**."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":165},"tokens":{"input_tokens":1431,"output_tokens":170,"reasoning_tokens":143},"cached_tokens":1344}}'
+  recorded_at: Sun, 11 Oct 2026 21:09:01 GMT
 recorded_with: VCR 6.4.0

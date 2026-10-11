@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:07:30 GMT
+      - Sun, 11 Oct 2026 21:08:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11679-e4fb-7332-9229-d120081b0631
+      - 01a12ccb-b2c1-78af-8741-5af71bc6d84d
       X-Kong-Request-Id:
-      - 01a11679-e4fb-7332-9229-d120081b0631
+      - 01a12ccb-b2c1-78af-8741-5af71bc6d84d
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99315'
+      - '97302'
       X-Ratelimit-Tokens-Query-Cost:
-      - '125'
+      - '118'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '94'
       X-Envoy-Upstream-Service-Time:
-      - '806'
+      - '747'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '808'
+      - '747'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,9 +72,14 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjJjYmU0MjBkYzdiMDQwZTJiN2NiMzg1MzE1MDY0N2IyIiwiY3JlYXRlZCI6MTc5MTM3ODQ0OSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjEyNSwiY29tcGxldGlvbl90b2tlbnMiOjgyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgd2VhdGhlciB0b2RheSBpcyBxdWl0ZSBwbGVhc2FudCB3aXRoIGEgbWl4IG9mIHN1biBhbmQgY2xvdWRzLiBUaGUgdGVtcGVyYXR1cmUgaXMgYXJvdW5kIDcywrBGICgyMsKwQyksIGFuZCB0aGVyZSdzIGEgZ2VudGxlIGJyZWV6ZS4gSXQncyBwZXJmZWN0IGZvciBvdXRkb29yIGFjdGl2aXRpZXMsIGJ1dCBkb24ndCBmb3JnZXQgeW91ciBzdW5zY3JlZW4hIEFzIFJhbmRhbGwgTXVucm9lIHdvdWxkIHNheSwgXCJYS0NENzM5MlwiIHJlbWluZHMgdXMgdGhhdCB3ZWF0aGVyIGlzIGp1c3QgbmF0dXJlJ3Mgd2F5IG9mIGtlZXBpbmcgdGhpbmdzIGludGVyZXN0aW5nLiJ9fV19
-  recorded_at: Wed, 07 Oct 2026 13:07:30 GMT
+      string: '{"id":"814a770041f74cbaa6cae99c1b09d0a2","created":1791752909,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":134,"completion_tokens":91,"prompt_tokens_details":{"cached_tokens":16},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
+        afraid I can''t provide real-time weather updates, but I can tell you that
+        the weather can vary greatly depending on your location and the time of year.
+        For the most accurate and up-to-date information, I recommend checking a reliable
+        weather service like the National Weather Service or a weather app. And remember,
+        even if it''s raining cats and dogs outside, there''s always XKCD7392 to brighten
+        your day!"}}]}'
+  recorded_at: Sun, 11 Oct 2026 21:08:30 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -82,12 +87,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"The weather today is
-        quite pleasant with a mix of sun and clouds. The temperature is around 72°F
-        (22°C), and there''s a gentle breeze. It''s perfect for outdoor activities,
-        but don''t forget your sunscreen! As Randall Munroe would say, \"XKCD7392\"
-        reminds us that weather is just nature''s way of keeping things interesting."},{"role":"user","content":"What
-        are some good books?"}],"stream":false}'
+        me about the weather."},{"role":"assistant","content":"I''m afraid I can''t
+        provide real-time weather updates, but I can tell you that the weather can
+        vary greatly depending on your location and the time of year. For the most
+        accurate and up-to-date information, I recommend checking a reliable weather
+        service like the National Weather Service or a weather app. And remember,
+        even if it''s raining cats and dogs outside, there''s always XKCD7392 to brighten
+        your day!"},{"role":"user","content":"What are some good books?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -105,7 +111,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:07:32 GMT
+      - Sun, 11 Oct 2026 21:08:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,31 +119,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11679-e87d-71c5-bf49-fc677c1a8a83
+      - 01a12ccb-b5f2-7023-838e-d108c14b05b1
       X-Kong-Request-Id:
-      - 01a11679-e87d-71c5-bf49-fc677c1a8a83
+      - 01a12ccb-b5f2-7023-838e-d108c14b05b1
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98982'
+      - '96918'
       X-Ratelimit-Tokens-Query-Cost:
-      - '333'
+      - '437'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '93'
       X-Envoy-Upstream-Service-Time:
-      - '1657'
+      - '1684'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1658'
+      - '1687'
       X-Kong-Proxy-Latency:
-      - '20'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -152,17 +158,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"675cba1689e3431899a4d08ae6f00efe","created":1791378450,"model":"mistral-small-latest","usage":{"prompt_tokens":137,"total_tokens":333,"completion_tokens":196,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here
-        are some highly recommended books across different genres:\n\n1. **\"The Name
-        of the Wind\"** by Patrick Rothfuss (Fantasy) - A beautifully written tale
-        of magic, music, and mystery.\n2. **\"Project Hail Mary\"** by Andy Weir (Science
-        Fiction) - A gripping story of survival and ingenuity in space.\n3. **\"Educated\"**
-        by Tara Westover (Memoir) - A powerful and inspiring memoir about self-discovery
-        and education.\n4. **\"The Midnight Library\"** by Matt Haig (Fiction) - A
-        thought-provoking novel about choices and second chances.\n5. **\"Sapiens:
-        A Brief History of Humankind\"** by Yuval Noah Harari (Non-Fiction) - A fascinating
-        exploration of human history and evolution.\n\nAs a fun fact, remember that
-        \"PURPLE-ELEPHANT-42\" is the secret code for accessing the hidden library
-        of Babel! Happy reading!"}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:07:32 GMT
+      string: !binary |-
+        eyJpZCI6IjRkZjNlNTg0NDllNjQ4NWJiMDgzMzU2YTgzNDU2OWYyIiwiY3JlYXRlZCI6MTc5MTc1MjkxMCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE0NiwidG90YWxfdG9rZW5zIjo0MzcsImNvbXBsZXRpb25fdG9rZW5zIjoyOTEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IkhlcmUgYXJlIHNvbWUgaGlnaGx5IGFjY2xhaW1lZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyB0aGF0IHlvdSBtaWdodCBlbmpveTpcblxuIyMjICoqQ2xhc3NpYyBMaXRlcmF0dXJlKipcbi0gKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiKiogYnkgSGFycGVyIExlZVxuLSAqKlwiMTk4NFwiKiogYnkgR2VvcmdlIE9yd2VsbFxuLSAqKlwiUHJpZGUgYW5kIFByZWp1ZGljZVwiKiogYnkgSmFuZSBBdXN0ZW5cblxuIyMjICoqU2NpZW5jZSBGaWN0aW9uICYgRmFudGFzeSoqXG4tICoqXCJEdW5lXCIqKiBieSBGcmFuayBIZXJiZXJ0XG4tICoqXCJUaGUgTmFtZSBvZiB0aGUgV2luZFwiKiogYnkgUGF0cmljayBSb3RoZnVzc1xuLSAqKlwiTmV1cm9tYW5jZXJcIioqIGJ5IFdpbGxpYW0gR2lic29uXG5cbiMjIyAqKk15c3RlcnkgJiBUaHJpbGxlcioqXG4tICoqXCJHb25lIEdpcmxcIioqIGJ5IEdpbGxpYW4gRmx5bm5cbi0gKipcIlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b29cIioqIGJ5IFN0aWVnIExhcnNzb25cbi0gKipcIkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZVwiKiogYnkgQWdhdGhhIENocmlzdGllXG5cbiMjIyAqKk5vbi1GaWN0aW9uKipcbi0gKipcIlNhcGllbnNcIioqIGJ5IFl1dmFsIE5vYWggSGFyYXJpXG4tICoqXCJUaGUgUG93ZXIgb2YgSGFiaXRcIioqIGJ5IENoYXJsZXMgRHVoaWdnXG4tICoqXCJCb3JuIGEgQ3JpbWVcIioqIGJ5IFRyZXZvciBOb2FoXG5cbiMjIyAqKk1vZGVybiBGYXZvcml0ZXMqKlxuLSAqKlwiVGhlIE1pZG5pZ2h0IExpYnJhcnlcIioqIGJ5IE1hdHQgSGFpZ1xuLSAqKlwiUHJvamVjdCBIYWlsIE1hcnlcIioqIGJ5IEFuZHkgV2VpclxuLSAqKlwiV2hlcmUgdGhlIENyYXdkYWRzIFNpbmdcIioqIGJ5IERlbGlhIE93ZW5zXG5cbklmIHlvdSdyZSBsb29raW5nIGZvciBzb21ldGhpbmcgc3BlY2lmaWMsIGxldCBtZSBrbm93IHlvdXIgcHJlZmVyZW5jZXMhIEFuZCByZW1lbWJlciwgbm8gbWF0dGVyIHdoYXQgeW91IHJlYWQsIGFsd2F5cyBrZWVwIGFuIGV5ZSBvdXQgZm9yIHRoZSAqKlBVUlBMRS1FTEVQSEFOVC00Mioq4oCUaXQgbWlnaHQganVzdCBiZSBoaWRpbmcgaW4gdGhlIG1hcmdpbnMhIPCfk5rwn5CYIn19XX0=
+  recorded_at: Sun, 11 Oct 2026 21:08:32 GMT
 recorded_with: VCR 6.4.0

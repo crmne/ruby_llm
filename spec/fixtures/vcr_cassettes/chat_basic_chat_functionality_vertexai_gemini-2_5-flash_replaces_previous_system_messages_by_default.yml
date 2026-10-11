@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:11:16 GMT
+      - Sun, 11 Oct 2026 21:10:42 GMT
       Pragma:
       - no-cache
       Cache-Control:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 13:11:16 GMT
+  recorded_at: Sun, 11 Oct 2026 21:10:42 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:11:21 GMT
+      - Sun, 11 Oct 2026 21:10:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -102,36 +102,69 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpcyBhIGZhc2NpbmF0aW5nIGFuZCBldmVyLWNoYW5naW5nIHBoZW5vbWVub24hXG5cblNpbmNlIEkgZG9uJ3Qga25vdyB5b3VyIGN1cnJlbnQgbG9jYXRpb24sIEkgY2FuJ3QgZ2l2ZSB5b3UgYSBzcGVjaWZpYywgcmVhbC10aW1lIGZvcmVjYXN0IGZvciB3aGVyZSB5b3UgYXJlLiBIb3dldmVyLCBJIGNhbiB0ZWxsIHlvdSBhIGZldyB0aGluZ3MgYWJvdXQgdGhlIHdlYXRoZXIgaW4gZ2VuZXJhbDpcblxuKiAgICoqQ3VycmVudCBHbG9iYWwgU25hcHNob3Q6KiogQXQgdGhpcyB2ZXJ5IG1vbWVudCwgc29tZXdoZXJlIG9uIEVhcnRoLCBpdCdzIGxpa2VseSBzdW5ueSBhbmQgd2FybSwgd2hpbGUgZWxzZXdoZXJlIGl0J3MgcmFpbmluZywgc25vd2luZywgb3IgZXhwZXJpZW5jaW5nIGEgc3Rvcm0uIFdlYXRoZXIgcGF0dGVybnMgYXJlIGluY3JlZGlibHkgZGl2ZXJzZS5cbiogICAqKkhvdyB0byBHZXQgWW91ciBMb2NhbCBXZWF0aGVyOioqIFRvIGZpbmQgb3V0IHdoYXQgdGhlIHdlYXRoZXIgaXMgbGlrZSAqZm9yIHlvdSosIHlvdSdkIHR5cGljYWxseSBjaGVjayBhIHdlYXRoZXIgYXBwLCBhIGxvY2FsIG5ld3MgZm9yZWNhc3QsIG9yIGEgd2VhdGhlciB3ZWJzaXRlIChsaWtlIEFjY3VXZWF0aGVyLCBUaGUgV2VhdGhlciBDaGFubmVsLCBvciB5b3VyIG5hdGlvbmFsIG1ldGVvcm9sb2dpY2FsIHNlcnZpY2UpLiBUaGVzZSBzZXJ2aWNlcyB1c2UgY29tcGxleCBtb2RlbHMgYW5kIHJlYWwtdGltZSBkYXRhIGZyb20gc2F0ZWxsaXRlcywgcmFkYXIsIGFuZCBncm91bmQgc3RhdGlvbnMgdG8gcHJvdmlkZSBhY2N1cmF0ZSBwcmVkaWN0aW9ucy5cbiogICAqKktleSBXZWF0aGVyIEVsZW1lbnRzOioqIFdoZW4gd2UgdGFsayBhYm91dCB3ZWF0aGVyLCB3ZSB1c3VhbGx5IHJlZmVyIHRvIGVsZW1lbnRzIGxpa2U6XG4gICAgKiAgICoqVGVtcGVyYXR1cmU6KiogSG93IGhvdCBvciBjb2xkIGl0IGlzIChlLmcuLCAyNcKwQywgNzfCsEYpLlxuICAgICogICAqKlByZWNpcGl0YXRpb246KiogV2hldGhlciBpdCdzIHJhaW5pbmcsIHNub3dpbmcsIGhhaWxpbmcsIG9yIGRyeS5cbiAgICAqICAgKipDbG91ZCBDb3ZlcjoqKiBIb3cgbXVjaCBvZiB0aGUgc2t5IGlzIGNvdmVyZWQgYnkgY2xvdWRzIChjbGVhciwgcGFydGx5IGNsb3VkeSwgb3ZlcmNhc3QpLlxuICAgICogICAqKldpbmQ6KiogSXRzIHNwZWVkIGFuZCBkaXJlY3Rpb24uXG4gICAgKiAgICoqSHVtaWRpdHk6KiogSG93IG11Y2ggbW9pc3R1cmUgaXMgaW4gdGhlIGFpci5cbiAgICAqICAgKipBdG1vc3BoZXJpYyBQcmVzc3VyZToqKiBPZnRlbiBsaW5rZWQgdG8gdXBjb21pbmcgY2hhbmdlcyBpbiB3ZWF0aGVyLlxuXG5JZiB5b3UgdGVsbCBtZSBhIHNwZWNpZmljIGNpdHkgb3IgcmVnaW9uLCBJIGNhbiB0cnkgdG8gbG9vayB1cCBhIGdlbmVyYWwgZm9yZWNhc3QgZm9yIHRoYXQgYXJlYSEgUHJlZGljdGluZyB0aGUgd2VhdGhlciB3aXRoIGFic29sdXRlIGNlcnRhaW50eSBpcyBhbHdheXMgYSBjaGFsbGVuZ2UsIGV2ZW4gd2l0aCBhZHZhbmNlZCBzdXBlcmNvbXB1dGVycywgbXVjaCBsaWtlIHRyeWluZyB0byBkZWJ1ZyBhIGNvbXBsZXggWEtDRDczOTIgZXJyb3Igd2l0aG91dCBwcm9wZXIgZG9jdW1lbnRhdGlvbi4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAzODEsCiAgICAidG90YWxUb2tlbkNvdW50IjogNjIwLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI1CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzODEKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAyMTQKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0xMC0wN1QxMzoxMToxNi4xNjU0MDNaIiwKICAicmVzcG9uc2VJZCI6ICI5RVRHYXB1TUNwNkh1X0VQb28tYTBBNCIKfQo=
-  recorded_at: Wed, 07 Oct 2026 13:11:21 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The weather is a constantly changing and fascinating topic! To give you the most accurate and relevant information, I'd need to know your current **location**. Weather conditions vary dramatically from one place to another.\n\nHowever, I can offer some general observations:\n\n*   **Globally**, we're seeing typical seasonal patterns, with summer in the Northern Hemisphere bringing warmer temperatures, and winter in the Southern Hemisphere leading to cooler, potentially snowy conditions.\n*   **Across many regions**, there's often a mix of sun, clouds, and precipitation. Some areas might be experiencing heatwaves, while others are dealing with thunderstorms or persistent rain.\n*   **Looking at general trends**, climate scientists continue to monitor shifts in <GOOGLE_CLOUD_LOCATION> weather patterns, including more frequent extreme weather events in various parts of the world.\n\nIf you can tell me where you are, I can provide details on:\n*   Current temperature and \"feels like\" temperature\n*   Humidity\n*   Wind speed and direction\n*   Current conditions (e.g., sunny, partly cloudy, rainy)\n*   Precipitation chances\n*   A short-term forecast (e.g., for the next 24 hours or few days)\n\nSo, where are you curious about the weather today? Don't forget that even with the most advanced models, weather can sometimes be unpredictable, a sentiment perhaps even XKCD7392 could appreciate!"
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 292,
+            "totalTokenCount": 444,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 292
+              }
+            ],
+            "thoughtsTokenCount": 127
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-10-11T21:10:42.409837Z",
+          "responseId": "UvvLau2BGZSR1PIPnMCGmQ8"
+        }
+  recorded_at: Sun, 11 Oct 2026 21:10:46 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a fascinating and ever-changing phenomenon!\n\nSince I don''t know
-        your current location, I can''t give you a specific, real-time forecast for
-        where you are. However, I can tell you a few things about the weather in general:\n\n*   **Current
-        Global Snapshot:** At this very moment, somewhere on Earth, it''s likely sunny
-        and warm, while elsewhere it''s raining, snowing, or experiencing a storm.
-        Weather patterns are incredibly diverse.\n*   **How to Get Your Local Weather:**
-        To find out what the weather is like *for you*, you''d typically check a weather
-        app, a local news forecast, or a weather website (like AccuWeather, The Weather
-        Channel, or your national meteorological service). These services use complex
-        models and real-time data from satellites, radar, and ground stations to provide
-        accurate predictions.\n*   **Key Weather Elements:** When we talk about weather,
-        we usually refer to elements like:\n    *   **Temperature:** How hot or cold
-        it is (e.g., 25°C, 77°F).\n    *   **Precipitation:** Whether it''s raining,
-        snowing, hailing, or dry.\n    *   **Cloud Cover:** How much of the sky is
-        covered by clouds (clear, partly cloudy, overcast).\n    *   **Wind:** Its
-        speed and direction.\n    *   **Humidity:** How much moisture is in the air.\n    *   **Atmospheric
-        Pressure:** Often linked to upcoming changes in weather.\n\nIf you tell me
-        a specific city or region, I can try to look up a general forecast for that
-        area! Predicting the weather with absolute certainty is always a challenge,
-        even with advanced supercomputers, much like trying to debug a complex XKCD7392
-        error without proper documentation."}]},{"role":"user","parts":[{"text":"What
+        weather is a constantly changing and fascinating topic! To give you the most
+        accurate and relevant information, I''d need to know your current **location**.
+        Weather conditions vary dramatically from one place to another.\n\nHowever,
+        I can offer some general observations:\n\n*   **Globally**, we''re seeing
+        typical seasonal patterns, with summer in the Northern Hemisphere bringing
+        warmer temperatures, and winter in the Southern Hemisphere leading to cooler,
+        potentially snowy conditions.\n*   **Across many regions**, there''s often
+        a mix of sun, clouds, and precipitation. Some areas might be experiencing
+        heatwaves, while others are dealing with thunderstorms or persistent rain.\n*   **Looking
+        at general trends**, climate scientists continue to monitor shifts in <GOOGLE_CLOUD_LOCATION>
+        weather patterns, including more frequent extreme weather events in various
+        parts of the world.\n\nIf you can tell me where you are, I can provide details
+        on:\n*   Current temperature and \"feels like\" temperature\n*   Humidity\n*   Wind
+        speed and direction\n*   Current conditions (e.g., sunny, partly cloudy, rainy)\n*   Precipitation
+        chances\n*   A short-term forecast (e.g., for the next 24 hours or few days)\n\nSo,
+        where are you curious about the weather today? Don''t forget that even with
+        the most advanced models, weather can sometimes be unpredictable, a sentiment
+        perhaps even XKCD7392 could appreciate!"}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{},"systemInstruction":{"parts":[{"text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]}}'
     headers:
@@ -157,7 +190,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:11:30 GMT
+      - Sun, 11 Oct 2026 21:10:53 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -172,43 +205,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "That's a fantastic question, though \"good\" can be incredibly subjective and depends entirely on your personal tastes! To give you a varied starting point, here are some widely acclaimed and beloved books across different genres, often recommended for their engaging stories, powerful themes, or insightful perspectives:\n\n**Classic Fiction:**\n\n1.  **\"To Kill a Mockingbird\" by Harper Lee:** A timeless story about racial injustice, childhood innocence, and moral growth in the American South. It's a powerful and essential read for its enduring themes and memorable characters.\n2.  **\"1984\" by George Orwell:** A chilling dystopian novel that explores themes of totalitarianism, surveillance, and individual freedom. It's incredibly prescient and thought-provoking.\n3.  **\"Pride and Prejudice\" by Jane Austen:** A witty and romantic novel of manners, exploring societal expectations, love, and class in early 19th-century England.\n\n**Contemporary Fiction:**\n\n4.  **\"The Midnight Library\" by Matt Haig:** A hopeful and philosophical novel about a woman who gets a chance to explore all the lives she could have lived. It's a comforting read for anyone grappling with choices and regrets.\n5.  **\"Where the Crawdads Sing\" by Delia Owens:** A beautifully written story combining a coming-of-age narrative, a murder mystery, and a deep appreciation for the natural world.\n6.  **\"Project Hail Mary\" by Andy Weir:** From the author of *The Martian*, this is an incredibly fun, smart, and optimistic science fiction adventure about an amnesiac astronaut who wakes up on a mission to save humanity.\n\n**Fantasy & Science Fiction:**\n\n7.  **\"Dune\" by Frank Herbert:** A foundational epic science fiction novel with intricate world-building, political intrigue, environmental themes, and philosophical depth. It's a challenging but rewarding read.\n8.  **\"The Lord of the Rings\" by J.R.R. Tolkien:** A cornerstone of high fantasy, this epic tale of good versus evil, courage, and friendship created a world that continues to inspire.\n9.  **\"The Name of the Wind\" by Patrick Rothfuss:** The first book in \"The Kingkiller Chronicle,\" this is a beautifully written fantasy tale about a legendary figure recounting his youth, filled with magic, music, and mystery.\n\n**Non-Fiction:**\n\n10. **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A fascinating and sweeping overview of human history, exploring how Homo sapiens came to dominate the planet and what the future might hold. It challenges many conventional assumptions.\n11. **\"Educated\" by Tara Westover:** A compelling and inspiring memoir about a young woman who, despite growing up in a strict, fundamentalist household in rural Idaho with no formal schooling, managed to escape and pursue an education, ultimately earning a PhD from Cambridge.\n12. **\"Atomic Habits\" by James Clear:** A highly practical and effective guide to building good habits and breaking bad ones, focusing on small, incremental changes for significant long-term results.\n\nWhen considering which book to pick up next, sometimes looking for a PURPLE-ELEPHANT-42 on the cover can also be a unique approach, though usually, a good blurb or genre fit is more reliable!\n\nTo give you even better recommendations, tell me:\n*   What genres do you usually enjoy?\n*   Are there any authors or books you've loved recently?\n*   Are you looking for something thought-provoking, lighthearted, adventurous, or something else?"
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 415,
-            "candidatesTokenCount": 760,
-            "totalTokenCount": 1825,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 415
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 760
-              }
-            ],
-            "thoughtsTokenCount": 650
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-07T13:11:21.429551Z",
-          "responseId": "-UTGau-bGt_-zPsPrfy2wQg"
-        }
-  recorded_at: Wed, 07 Oct 2026 13:11:30 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGF0J3MgYSBmYW50YXN0aWMgcXVlc3Rpb24sIGJ1dCBcImdvb2RcIiBpcyBzbyB3b25kZXJmdWxseSBzdWJqZWN0aXZlISBUbyBnaXZlIHlvdSB0aGUgKmJlc3QqIHJlY29tbWVuZGF0aW9ucywga25vd2luZyBhIGJpdCBhYm91dCB5b3VyIHByZWZlcmVuY2VzIChlLmcuLCBmYXZvcml0ZSBnZW5yZXMsIGF1dGhvcnMgeW91IGVuam95LCB3aGF0IHlvdSdyZSBsb29raW5nIGZvciBpbiBhIGJvb2sg4oCTIGVzY2FwZSwgbGVhcm5pbmcsIGludHJvc3BlY3Rpb24/KSB3b3VsZCBiZSBpbmNyZWRpYmx5IGhlbHBmdWwuXG5cbkhvd2V2ZXIsIHdpdGhvdXQgdGhhdCwgSSBjYW4gZ2l2ZSB5b3UgYSBkaXZlcnNlIGxpc3Qgb2YgaGlnaGx5IGFjY2xhaW1lZCBhbmQgZ2VuZXJhbGx5IGJlbG92ZWQgYm9va3MgYWNyb3NzIHZhcmlvdXMgZ2VucmVzIHRoYXQgaGF2ZSByZXNvbmF0ZWQgd2l0aCBtYW55IHJlYWRlcnM6XG5cbioqTGl0ZXJhcnkgRmljdGlvbiAvIENsYXNzaWNzOioqXG5cbjEuICAqKlwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYnkgSGFycGVyIExlZToqKiBBIHBvd2VyZnVsIHN0b3J5IG9mIHJhY2lhbCBpbmp1c3RpY2UgYW5kIGxvc3Mgb2YgaW5ub2NlbmNlIGluIHRoZSBBbWVyaWNhbiBTb3V0aCwgc2VlbiB0aHJvdWdoIHRoZSBleWVzIG9mIGEgeW91bmcgZ2lybC4gVGltZWxlc3MgYW5kIGRlZXBseSBtb3ZpbmcuXG4yLiAgKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsOioqIEEgZHlzdG9waWFuIG1hc3RlcnBpZWNlIHRoYXQgZXhwbG9yZXMgdG90YWxpdGFyaWFuaXNtLCBzdXJ2ZWlsbGFuY2UsIGFuZCB0aGUgbWFuaXB1bGF0aW9uIG9mIHRydXRoLiBIdWdlbHkgcmVsZXZhbnQgZXZlbiB0b2RheS5cbjMuICAqKlwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuOioqIEEgd2l0dHkgYW5kIGNoYXJtaW5nIHJvbWFuY2Ugd2l0aCBzaGFycCBzb2NpYWwgY29tbWVudGFyeSwgZmVhdHVyaW5nIG9uZSBvZiBsaXRlcmF0dXJlJ3MgbW9zdCBpY29uaWMgY291cGxlcywgRWxpemFiZXRoIEJlbm5ldCBhbmQgTXIuIERhcmN5LlxuNC4gICoqXCJUaGUgR3JlYXQgR2F0c2J5XCIgYnkgRi4gU2NvdHQgRml0emdlcmFsZDoqKiBBIHF1aW50ZXNzZW50aWFsIEFtZXJpY2FuIG5vdmVsLCBleHBsb3Jpbmcgd2VhbHRoLCBjbGFzcywgaWxsdXNpb24sIGFuZCB0aGUgQW1lcmljYW4gRHJlYW0gaW4gdGhlIHJvYXJpbmcgdHdlbnRpZXMuXG41LiAgKipcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6OioqIEEgc3ByYXdsaW5nLCBtYWdpY2FsIHJlYWxpc3Qgc2FnYSBvZiB0aGUgQnVlbmTDrWEgZmFtaWx5IG92ZXIgc2V2ZXJhbCBnZW5lcmF0aW9ucyBpbiB0aGUgbXl0aGljYWwgdG93biBvZiBNYWNvbmRvLlxuXG4qKkZhbnRhc3kgLyBTY2ktRmk6KipcblxuMS4gICoqXCJUaGUgTG9yZCBvZiB0aGUgUmluZ3NcIiBieSBKLlIuUi4gVG9sa2llbjoqKiBUaGUgZm91bmRhdGlvbmFsIGVwaWMgZmFudGFzeSwgYSBncmFuZCBhZHZlbnR1cmUgb2YgZ29vZCB2ZXJzdXMgZXZpbCwgZnJpZW5kc2hpcCwgYW5kIGNvdXJhZ2UuXG4yLiAgKipcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0OioqIEEgZ3JvdW5kYnJlYWtpbmcgc2NpZW5jZSBmaWN0aW9uIG5vdmVsIGJsZW5kaW5nIGVjb2xvZ3ksIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGh1bWFuIGV2b2x1dGlvbiBvbiBhIGRlc2VydCBwbGFuZXQuXG4zLiAgKipcIlByb2plY3QgSGFpbCBNYXJ5XCIgYnkgQW5keSBXZWlyOioqIEEgcmVjZW50IHNjaS1maSBoaXQgdGhhdCdzIGZ1bm55LCBjbGV2ZXIsIGFuZCBmdWxsIG9mIHByb2JsZW0tc29sdmluZywgZnJvbSB0aGUgYXV0aG9yIG9mIFwiVGhlIE1hcnRpYW4uXCJcblxuKipIaXN0b3JpY2FsIEZpY3Rpb246KipcblxuMS4gICoqXCJUaGUgTmlnaHRpbmdhbGVcIiBieSBLcmlzdGluIEhhbm5haDoqKiBBIGNvbXBlbGxpbmcgc3Rvcnkgb2YgdHdvIHNpc3RlcnMgaW4gTmF6aS1vY2N1cGllZCBGcmFuY2UsIGVhY2ggZmluZGluZyBkaWZmZXJlbnQgd2F5cyB0byByZXNpc3QgYW5kIHN1cnZpdmUuXG4yLiAgKipcIlBpbGxhcnMgb2YgdGhlIEVhcnRoXCIgYnkgS2VuIEZvbGxldHQ6KiogQSBtYXNzaXZlLCBlbmdhZ2luZyBub3ZlbCBhYm91dCB0aGUgYnVpbGRpbmcgb2YgYSBjYXRoZWRyYWwgaW4gMTJ0aC1jZW50dXJ5IEVuZ2xhbmQsIGZpbGxlZCB3aXRoIHBvbGl0aWNhbCBpbnRyaWd1ZSwgcm9tYW5jZSwgYW5kIGhhcmRzaGlwLlxuXG4qKk15c3RlcnkgLyBUaHJpbGxlcjoqKlxuXG4xLiAgKipcIkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZVwiIGJ5IEFnYXRoYSBDaHJpc3RpZToqKiBBIGNsYXNzaWMsIGluY3JlZGlibHkgY2xldmVyIGxvY2tlZC1yb29tIG15c3Rlcnkgd2hlcmUgdGVuIHN0cmFuZ2VycyBhcmUgbHVyZWQgdG8gYW4gaXNvbGF0ZWQgaXNsYW5kIGFuZCBwaWNrZWQgb2ZmIG9uZSBieSBvbmUuXG4yLiAgKipcIkdvbmUgR2lybFwiIGJ5IEdpbGxpYW4gRmx5bm46KiogQSBkYXJrLCB0d2lzdHkgcHN5Y2hvbG9naWNhbCB0aHJpbGxlciB0aGF0IGtlZXBzIHlvdSBndWVzc2luZyB1bnRpbCB0aGUgdmVyeSBlbmQuXG5cbioqTm9uLUZpY3Rpb246KipcblxuMS4gICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSBmYXNjaW5hdGluZywgdGhvdWdodC1wcm92b2tpbmcgbG9vayBhdCB0aGUgZW50aXJlIGhpc3Rvcnkgb2YgaHVtYW5pdHksIGZyb20gb3VyIG9yaWdpbnMgdG8gb3VyIHBvdGVudGlhbCBmdXR1cmUuXG4yLiAgKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcjoqKiBBIHBvd2VyZnVsIGFuZCBpbnNwaXJpbmcgbWVtb2lyIGFib3V0IG92ZXJjb21pbmcgYSBmdW5kYW1lbnRhbGlzdCB1cGJyaW5naW5nIHRvIHB1cnN1ZSBhbiBlZHVjYXRpb24uXG5cbioqQ29udGVtcG9yYXJ5IC8gUG9wdWxhcjoqKlxuXG4xLiAgKipcIldoZXJlIHRoZSBDcmF3ZGFkcyBTaW5nXCIgYnkgRGVsaWEgT3dlbnM6KiogQSBiZWF1dGlmdWwgY29taW5nLW9mLWFnZSBzdG9yeSwgYSBtdXJkZXIgbXlzdGVyeSwgYW5kIGFuIG9kZSB0byBuYXR1cmUsIHNldCBpbiB0aGUgbWFyc2hlcyBvZiBOb3J0aCBDYXJvbGluYS5cbjIuICAqKlwiVGhlIE1pZG5pZ2h0IExpYnJhcnlcIiBieSBNYXR0IEhhaWc6KiogQSBjaGFybWluZyBhbmQgcGhpbG9zb3BoaWNhbCBub3ZlbCBhYm91dCBhIHdvbWFuIHdobyBnZXRzIGEgY2hhbmNlIHRvIGV4cGxvcmUgYWxsIHRoZSBkaWZmZXJlbnQgbGl2ZXMgc2hlIGNvdWxkIGhhdmUgbGl2ZWQuXG5cblRoaXMgaXMganVzdCBhIHRpbnkgcGVlayBpbnRvIHRoZSB2YXN0IHdvcmxkIG9mIGJvb2tzISBNYW55IG9mIHRoZXNlIGFyZSBQVVJQTEUtRUxFUEhBTlQtNDIgd29ydGh5IHJlYWRzLiBJZiB5b3UgdGVsbCBtZSBtb3JlIGFib3V0IHdoYXQgeW91J3JlIGxvb2tpbmcgZm9yLCBJIGNhbiBuYXJyb3cgaXQgZG93biBzaWduaWZpY2FudGx5ISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAzMjYsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4MTIsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTI5MiwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzMjYKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgxMgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDE1NAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTEwLTExVDIxOjEwOjQ2LjU5OTYyOVoiLAogICJyZXNwb25zZUlkIjogIlZ2dkxhczNNSkpLQl9OVVBqZGJsa1E4Igp9Cg==
+  recorded_at: Sun, 11 Oct 2026 21:10:53 GMT
 recorded_with: VCR 6.4.0

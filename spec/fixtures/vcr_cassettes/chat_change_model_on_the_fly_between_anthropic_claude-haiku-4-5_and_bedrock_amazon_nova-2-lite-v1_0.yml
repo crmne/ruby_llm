@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:11:34 GMT
+      - Sun, 11 Oct 2026 21:11:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,51 +38,51 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-10-07T13:11:34Z'
+      - '2026-10-11T21:11:12Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-10-07T13:11:34Z'
+      - '2026-10-11T21:11:12Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-10-07T13:11:34Z'
+      - '2026-10-11T21:11:12Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-10-07T13:11:34Z'
+      - '2026-10-11T21:11:12Z'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Request-Id:
       - "<REQUEST_ID>"
       Traceresponse:
-      - 00-8f0c429a0dcbbbcfdc25ca99250e2523-4736a7e9d2acdeba-01
+      - 00-7109ede903cd8a92740f7a125f98fded-f709f5c139a3e981-01
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Anthropic-Workspace-Id:
       - "<ANTHROPIC_WORKSPACE_ID>"
       Vary:
       - Accept-Encoding
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Server:
       - cloudflare
-      Cf-Cache-Status:
-      - DYNAMIC
       X-Robots-Tag:
       - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfnw6e2CET8tPea5gyhom","type":"message","role":"assistant","content":[{"type":"text","text":"FOUR"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:11:34 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cfw8ucq821yPsoYwv1Lja","type":"message","role":"assistant","content":[{"type":"text","text":"FOUR"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:11:12 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -97,7 +97,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T131134Z
+      - 20261011T211112Z
       X-Amz-Content-Sha256:
       - 83af1602e93b1079c9c9aaf880bc385b80430a3da0ea07e49ec58dbc4beac54d
       Authorization:
@@ -113,7 +113,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:11:36 GMT
+      - Sun, 11 Oct 2026 21:11:18 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -121,9 +121,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 8a613bfb-f788-4f6f-813e-84edb5f699c3
+      - 5ab87456-0af4-4309-8021-596875816455
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":579},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
-  recorded_at: Wed, 07 Oct 2026 13:11:36 GMT
+      string: '{"metrics":{"latencyMs":352},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
+  recorded_at: Sun, 11 Oct 2026 21:11:18 GMT
 recorded_with: VCR 6.4.0

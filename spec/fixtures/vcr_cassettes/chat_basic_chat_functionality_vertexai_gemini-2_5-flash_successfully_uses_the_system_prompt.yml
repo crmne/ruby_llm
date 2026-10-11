@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 07 Oct 2026 13:11:06 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Date:
+      - Sun, 11 Oct 2026 21:10:38 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -51,12 +51,12 @@ http_interactions:
       string: |-
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3598,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 13:11:06 GMT
+  recorded_at: Sun, 11 Oct 2026 21:10:38 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:11:15 GMT
+      - Sun, 11 Oct 2026 21:10:41 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -102,43 +102,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "I'd be happy to tell you about the weather!\n\nHowever, to give you accurate, up-to-the-minute details, I'll need to know your location. Could you tell me what city and state/country you're interested in, or perhaps a zip/postal code?\n\nOnce I have a location, I can tell you things like:\n*   **Current temperature** and what it feels like\n*   **Current conditions** (e.g., sunny, cloudy, rainy, snowy, foggy)\n*   **Humidity**\n*   **Wind speed** and direction\n*   **Chances of precipitation**\n*   **Hourly and daily forecasts** (highs, lows, expected conditions for the next several days)\n\nIn the meantime, you can easily check the weather on most smartphones, dedicated weather apps (like AccuWeather, The Weather Channel, Google Weather), or by simply typing \"weather [your location]\" into a search engine. These services provide real-time updates and detailed forecasts, leveraging vast networks of weather stations, satellites, and sophisticated computer models.\n\nThe constant effort to model and predict atmospheric conditions is an incredibly intricate science, aiming to provide you with the most reliable information possible, even for short-term forecasts. XKCD7392"
-                  }
-                ]
-              },
-              "finishReason": "STOP"
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 25,
-            "candidatesTokenCount": 268,
-            "totalTokenCount": 1426,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 25
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 268
-              }
-            ],
-            "thoughtsTokenCount": 1133
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-07T13:11:06.167179Z",
-          "responseId": "6kTGaouaCoeHstMP_PzwkAI"
-        }
-  recorded_at: Wed, 07 Oct 2026 13:11:15 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJJIGNhbiBjZXJ0YWlubHkgdGVsbCB5b3UgYWJvdXQgdGhlIHdlYXRoZXIsIGJ1dCBcInRoZSB3ZWF0aGVyXCIgaXMgYSB2ZXJ5IGJpZyB0b3BpYyEgVG8gZ2l2ZSB5b3UgYSB1c2VmdWwgYW5kIGFjY3VyYXRlIHJlcG9ydCwgSSBuZWVkIGEgbGl0dGxlIG1vcmUgaW5mb3JtYXRpb24uXG5cbkNvdWxkIHlvdSBwbGVhc2UgdGVsbCBtZTpcblxuMS4gICoqV2hhdCBsb2NhdGlvbiBhcmUgeW91IGludGVyZXN0ZWQgaW4/KiogKGUuZy4sIFwiTmV3IFlvcmsgQ2l0eSxcIiBcIkxvbmRvbiwgVUssXCIgXCJteSBjdXJyZW50IGxvY2F0aW9uLFwiIFwiUGFyaXMsXCIgXCJUb2t5byxcIiBvciBhIHNwZWNpZmljIHppcC9wb3N0YWwgY29kZSlcbjIuICAqKldoYXQgdGltZWZyYW1lIGFyZSB5b3UgbG9va2luZyBmb3I/KiogKGUuZy4sIFwicmlnaHQgbm93LFwiIFwidGhlIGZvcmVjYXN0IGZvciB0aGUgbmV4dCBmZXcgZGF5cyxcIiBcInRoaXMgd2Vla2VuZCxcIiBcIm5leHQgd2Vla1wiKVxuMy4gICoqQXJlIHlvdSBsb29raW5nIGZvciBhbnl0aGluZyBzcGVjaWZpYz8qKiAoZS5nLiwgXCJqdXN0IHRoZSB0ZW1wZXJhdHVyZSxcIiBcImlmIGl0J3MgZ29pbmcgdG8gcmFpbixcIiBcIndpbmQgY29uZGl0aW9ucyxcIiBcImV4dHJlbWUgd2VhdGhlciBhbGVydHNcIilcblxuT25jZSBJIGhhdmUgdGhvc2UgZGV0YWlscywgSSBjYW4gZ2l2ZSB5b3UgYSBtdWNoIG1vcmUgcHJlY2lzZSB3ZWF0aGVyIHVwZGF0ZSEgSXQncyBhbHdheXMgZmFzY2luYXRpbmcgaG93IG11Y2ggdGhlIHdlYXRoZXIgY2FuIHZhcnksIHNvbWV0aW1lcyBldmVuIGp1c3QgYSBmZXcgbWlsZXMgYXBhcnQuIEZvciBpbnN0YW5jZSwgcmlnaHQgbm93LCBzb21lb25lIG1pZ2h0IGJlIGVuam95aW5nIGEgc3VubnkgNzXCsEYgZGF5IHdoaWxlIGFub3RoZXIgaXMgYnJhY2luZyBmb3IgYSBibGl6emFyZC4gWEtDRDczOTIhIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjQxLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDQxOCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjQxCiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTUyCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMTAtMTFUMjE6MTA6MzguOTczMjQ4WiIsCiAgInJlc3BvbnNlSWQiOiAiVHZ2TGFzQ3pPOS1OdV9FUHpZRGlRUSIKfQo=
+  recorded_at: Sun, 11 Oct 2026 21:10:41 GMT
 recorded_with: VCR 6.4.0

@@ -29,35 +29,34 @@ http_interactions:
       Content-Type:
       - application/json
       X-Build-Commit:
-      - aca5aad1d053bda171888c526b817e0c61227261
+      - fb036d5c394cd0c23173b2be8d69965e24bc9914
       X-Build-Time:
-      - '2026-10-06T19:15:30-07:00'
+      - '2026-10-09T17:17:18-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '704'
+      - '612'
       Date:
-      - Wed, 07 Oct 2026 13:40:44 GMT
+      - Sun, 11 Oct 2026 21:11:46 GMT
       Server:
       - Google Frontend
       X-Cloud-Trace-Context:
-      - 955ddb82c9a7d19a9eb3105e9cc9a47c/17010284789199902747
+      - 6e2865e68eb5b57fdfd27d3e029bb1a3/14644584415654286197
       Traceparent:
-      - 00-955ddb82c9a7d19a9eb3105e9cc9a47c-ec10abe4347d981b-00
+      - 00-6e2865e68eb5b57fdfd27d3e029bb1a3-cb3c03ef8a4b9375-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-608","object":"chat.completion","created":1791380444,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to call the function any_of_params with task \"Review PR\" and status
-        \"pending\". The tool signature expects parameters: status: string | null,
-        task: string. Use function call.","tool_calls":[{"id":"call_d4fq0m88","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":77,"total_tokens":239,"prompt_tokens_details":{"cached_tokens":64}}}
+      string: '{"id":"chatcmpl-311","object":"chat.completion","created":1791753106,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to call the any_of_params tool with given parameters. Use the function
+        any_of_params.","tool_calls":[{"id":"call_14550vqa","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":57,"total_tokens":219,"prompt_tokens_details":{"cached_tokens":64}}}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:40:44 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:47 GMT
 recorded_with: VCR 6.4.0

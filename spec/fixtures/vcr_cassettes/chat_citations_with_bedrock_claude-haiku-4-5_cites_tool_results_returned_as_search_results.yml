@@ -15,7 +15,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T125929Z
+      - 20261011T210628Z
       X-Amz-Content-Sha256:
       - b26bb050654d27c05eded33cf8e1f4caeb39bc5c074305ed76f43d85920209f5
       Authorization:
@@ -31,30 +31,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 12:59:30 GMT
+      - Sun, 11 Oct 2026 21:06:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '543'
+      - '461'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 46892eef-f70b-427f-afab-5a23579ac795
+      - d1b48d0d-7989-4ec4-8891-16f26d87b7dc
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":689},"output":{"message":{"content":[{"text":"I''ll
-        search the knowledge base for information about who created Ruby."},{"toolUse":{"input":{"query":"who
-        created Ruby programming language"},"name":"knowledge_base","toolUseId":"tooluse_iM6LymaHg472fa7gnxNEXa","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":592,"outputTokens":71,"serverToolUsage":{},"totalTokens":663}}'
-  recorded_at: Wed, 07 Oct 2026 12:59:30 GMT
+      string: '{"metrics":{"latencyMs":693},"output":{"message":{"content":[{"toolUse":{"input":{"query":"Who
+        created Ruby programming language"},"name":"knowledge_base","toolUseId":"tooluse_VdWUpD3BWrpxI5TRSeRq5K","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":592,"outputTokens":58,"serverToolUsage":{},"totalTokens":650}}'
+  recorded_at: Sun, 11 Oct 2026 21:06:29 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"Who created Ruby? Search
-        the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"text":"I''ll
-        search the knowledge base for information about who created Ruby."},{"toolUse":{"toolUseId":"tooluse_iM6LymaHg472fa7gnxNEXa","name":"knowledge_base","input":{"query":"who
-        created Ruby programming language"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_iM6LymaHg472fa7gnxNEXa","content":[{"searchResult":{"source":"https://example.com/ruby-facts","title":"Ruby
+        the knowledge base first and cite your sources."}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_VdWUpD3BWrpxI5TRSeRq5K","name":"knowledge_base","input":{"query":"Who
+        created Ruby programming language"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_VdWUpD3BWrpxI5TRSeRq5K","content":[{"searchResult":{"source":"https://example.com/ruby-facts","title":"Ruby
         Facts","content":[{"text":"The Ruby programming language was created by Yukihiro
         Matsumoto in 1993."}],"citations":{"enabled":true}}}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"knowledge_base","description":"Searches
         the company knowledge base","inputSchema":{"json":{"type":"object","properties":{"query":{"type":"string","description":"What
@@ -65,9 +63,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T125930Z
+      - 20261011T210629Z
       X-Amz-Content-Sha256:
-      - b30f9851176aea8b9ae4091b924113d80b69c2699742cacd562cbac69c19cf64
+      - d4a615859330d17ddb29e6d0fb537a3b3a1c295efa81368c12c38d6f01ef5e9a
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -81,19 +79,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 12:59:31 GMT
+      - Sun, 11 Oct 2026 21:06:30 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '657'
+      - '682'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e778d275-df98-4a9e-bf45-8bdcde1186e6
+      - d7611df9-244c-42af-96c8-247fa1b53f43
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":691},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"searchResultLocation":{"end":1,"searchResultIndex":0,"start":0}},"source":"https://example.com/ruby-facts","sourceContent":[{"text":"The
+      string: '{"metrics":{"latencyMs":613},"output":{"message":{"content":[{"citationsContent":{"citations":[{"location":{"searchResultLocation":{"end":1,"searchResultIndex":0,"start":0}},"source":"https://example.com/ruby-facts","sourceContent":[{"text":"The
         Ruby programming language was created by Yukihiro Matsumoto in 1993."}],"title":"Ruby
-        Facts"}],"content":[{"text":"Ruby was created by Yukihiro Matsumoto in 1993."}]}}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":1266,"outputTokens":36,"serverToolUsage":{},"totalTokens":1302}}'
-  recorded_at: Wed, 07 Oct 2026 12:59:32 GMT
+        Facts"}],"content":[{"text":"The Ruby programming language was created by
+        Yukihiro Matsumoto in 1993."}]}}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":1253,"outputTokens":39,"serverToolUsage":{},"totalTokens":1292}}'
+  recorded_at: Sun, 11 Oct 2026 21:06:30 GMT
 recorded_with: VCR 6.4.0

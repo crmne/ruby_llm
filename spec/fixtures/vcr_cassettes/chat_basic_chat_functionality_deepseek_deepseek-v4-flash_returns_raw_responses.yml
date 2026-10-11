@@ -30,31 +30,32 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:00:09 GMT
+      - Sun, 11 Oct 2026 21:07:12 GMT
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - elb
       Vary:
+      - accept-encoding
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 332bbd085e76363bc1a2b384c89769b3
+      - 28a145e117301a025c63670978bbe773
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 83dede49b3c78b7f99a0399a34264ed6.cloudfront.net (CloudFront)
+      - 1.1 a78f8078f85de402de93ba5387c94df8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - ZtxvbRZLgyKtfBqlKCPoVGZM_OfjPl5XA8mD3yHv6Nm7kt6CZLmSeg==
+      - fwrBbO5syejNx5_jk2eL0wnp7FxPbQBezVv2LD79xKF-F06j5vb4Sw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"619063dc-7832-4f3c-92bc-f59aefcc392f","object":"chat.completion","created":1791378009,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"c334df1a-ab6e-4e4f-9fb4-a2c7eec1af6d","object":"chat.completion","created":1791752832,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
         capital of France is **Paris**.","reasoning_content":"We need answer simple.
-        Need comply. Capital of France is Paris. Final."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":37,"completion_tokens":25,"total_tokens":62,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":16},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":37},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Wed, 07 Oct 2026 13:00:10 GMT
+        Need comply. Capital France Paris. final concise."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":37,"completion_tokens":24,"total_tokens":61,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":15},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":37},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Sun, 11 Oct 2026 21:07:13 GMT
 recorded_with: VCR 6.4.0

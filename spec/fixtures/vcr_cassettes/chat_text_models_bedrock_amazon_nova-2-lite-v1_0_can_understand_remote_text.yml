@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Fri, 02 Oct 2026 22:02:41 GMT
       Access-Control-Allow-Origin:
@@ -35,35 +33,35 @@ http_interactions:
       Etag:
       - W/"6ac02a01-9c6"
       Expires:
-      - Wed, 07 Oct 2026 13:09:14 GMT
+      - Sun, 11 Oct 2026 21:16:10 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - C6E4:35106F:13BBC3:13F33F:6AC64221
+      - 9D9C:2F48DF:4FCDA41:508CDB6:6ACBFA41
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 07 Oct 2026 12:59:27 GMT
+      - Sun, 11 Oct 2026 21:06:21 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '13'
+      - '11'
       X-Served-By:
-      - cache-ber1080040-BER
+      - cache-ber1080041-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1791377967.411354,VS0,VE1
+      - S1791752782.519210,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 5cd9635afe7314ab67bbe12f310d1b9d0e2fdcb6
+      - de237624219276aacab94d075359c2ec557eb8b8
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 07 Oct 2026 12:59:27 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:21 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -145,7 +143,7 @@ http_interactions:
       Content-Type:
       - application/json
       X-Amz-Date:
-      - 20261007T125927Z
+      - 20261011T210621Z
       X-Amz-Content-Sha256:
       - d111e406a0cff0f16ea7f16ede30947c734ae87a90255b1eb9bbf2a8ea98e7cb
       Authorization:
@@ -161,66 +159,59 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 12:59:32 GMT
+      - Sun, 11 Oct 2026 21:06:24 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '3951'
+      - '3445'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ee340c82-ef24-4d7d-9df4-119f0fd14462
+      - b133c9bb-2040-4939-a3f7-bcbd6da73f70
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":3036},"output":{"message":{"content":[{"text":"###
+      string: '{"metrics":{"latencyMs":2840},"output":{"message":{"content":[{"text":"###
         Contents of `license.txt`\n\nThe file `license.txt` contains the licensing
         terms for the Ruby programming language. It outlines the conditions under
-        which the software can be redistributed, modified, and used. Below is a detailed
-        breakdown of the contents:\n\n---\n\n#### **Header**\n- **Copyright Notice**:  \n  Ruby
-        is copyrighted free software by Yukihiro Matsumoto (`matz@netlab.jp`).\n\n---\n\n####
-        **Licensing Options**\nThe software can be used and distributed under **either**
-        of the following:\n1. The **2-clause BSDL** (Berkeley Software Distribution
-        License), as detailed in a separate file named `BSDL`.\n2. The conditions
-        explicitly listed below.\n\n---\n\n### **Conditions for Redistribution and
-        Modification**\n\n#### **1. Redistribution of Verbatim Copies**\n- You may
-        make and give away **verbatim copies** of the source form of the software
-        **without restriction**, **provided that**:\n  - All original **copyright
-        notices** and **associated disclaimers** are duplicated in the copies.\n\n####
-        **2. Modifications to the Software**\n- You may modify your copy of the software
-        in any way, **provided that you do at least ONE** of the following:\n  - **a)**
-        Place your modifications in the **Public Domain** or otherwise make them **Freely
-        Available** (e.g., by posting them to Usenet or an equivalent medium, or by
-        allowing the author to include them in the software).\n  - **b)** Use the
-        modified software **only within your corporation or organization**.\n  - **c)**
-        Give **non-standard binaries non-standard names**, along with instructions
-        on where to obtain the original software distribution.\n  - **d)** Make **other
-        distribution arrangements** with the author.\n\n#### **3. Distribution of
-        Object Code or Binary Form**\n- You may distribute the software in **object
-        code or binary form**, provided that you do at least ONE of the following:\n  -
-        **a)** Distribute the binaries and library files **along with instructions**
-        (in the manual page or equivalent) on where to get the original distribution.\n  -
-        **b)** Accompany the distribution with the **machine-readable source** of
-        the software.\n  - **c)** Give **non-standard binaries non-standard names**,
-        with instructions on where to get the original software distribution.\n  -
-        **d)** Make **other distribution arrangements** with the author.\n\n#### **4.
-        Incorporating Ruby into Other Software**\n- You may modify and include parts
-        of the software into any other software (possibly commercial).\n  - **However**,
-        some files in the distribution **are not written by the author** and **are
-        not under these terms**.\n  - For a list of those files and their specific
-        copying conditions, see the file named **`LEGAL`**.\n\n#### **5. Scripts and
-        Library Files**\n- The **scripts and library files** supplied as input to
-        or produced as output from the software **do not automatically fall under
-        the copyright of the software**.\n  - These files **belong to whomever generated
-        them**.\n  - They **may be sold commercially** and **may be aggregated with
-        this software**.\n\n#### **6. Disclaimer of Warranty**\n- **THIS SOFTWARE
-        IS PROVIDED \"AS IS\" AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES**, INCLUDING,
-        WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-        FOR A PARTICULAR PURPOSE.\n\n---\n\n### **Summary**\nThis license allows for
-        free redistribution and modification of Ruby under certain conditions, ensuring
-        that original copyright notices are preserved and that modifications are either
-        shared freely or used internally. It also permits commercial use and integration,
-        with specific conditions for non-author-written files detailed in the `LEGAL`
-        file. The software is distributed **as is**, with **no warranties** expressed
-        or implied."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":570,"outputTokens":748,"serverToolUsage":{},"totalTokens":1318}}'
-  recorded_at: Wed, 07 Oct 2026 12:59:32 GMT
+        which Ruby, which is copyrighted free software by Yukihiro Matsumoto (`matz@netlab.jp`),
+        can be redistributed, modified, and used. Below is a detailed breakdown of
+        the contents:\n\n---\n\n#### **1. Redistribution Rights**\nYou are allowed
+        to make and give away verbatim copies of the source code **without restriction**,
+        **provided that** you:\n- Duplicate all of the original copyright notices
+        and associated disclaimers.\n\n---\n\n#### **2. Modification Rights**\nYou
+        may modify your copy of the software in any way, **provided that you do at
+        least ONE** of the following:\n\n- **(a)** Place your modifications in the
+        Public Domain or otherwise make them Freely Available (e.g., by posting them
+        to Usenet or an equivalent medium, or by allowing the author to include your
+        modifications in the software).\n- **(b)** Use the modified software only
+        within your corporation or organization.\n- **(c)** Give non-standard binaries
+        non-standard names, along with instructions on where to get the original software
+        distribution.\n- **(d)** Make other distribution arrangements with the author.\n\n---\n\n####
+        **3. Distribution Rights (Binary/Object Code)**\nYou may distribute the software
+        in object code or binary form, **provided that you do at least ONE** of the
+        following:\n\n- **(a)** Distribute the binaries and library files **together
+        with instructions** (e.g., in the manual page or equivalent) on where to get
+        the original distribution.\n- **(b)** Accompany the distribution with the
+        **machine-readable source** of the software.\n- **(c)** Give non-standard
+        binaries non-standard names, with instructions on where to get the original
+        software distribution.\n- **(d)** Make other distribution arrangements with
+        the author.\n\n---\n\n#### **4. Inclusion in Other Software**\nYou may modify
+        and include parts of the software into any other software (possibly commercial).
+        However, **some files in the distribution are not written by the author**,
+        and therefore **are not under these terms**. For a list of those files and
+        their copying conditions, refer to the file named `LEGAL`.\n\n---\n\n####
+        **5. Scripts and Library Files**\nThe scripts and library files that are supplied
+        as input to or produced as output from the software **do not automatically
+        fall under the copyright of the software**. These files belong to **whomever
+        generated them**, and they may be:\n- Sold commercially.\n- Aggregated with
+        this software.\n\n---\n\n#### **6. Disclaimer of Warranty**\nThe software
+        is provided **\"AS IS\"** and **without any express or implied warranties**,
+        including, but not limited to:\n- The implied warranties of **merchantability**
+        and **fitness for a particular purpose**.\n\n---\n\n### Summary\nThis license
+        allows for free redistribution and modification of Ruby under specific conditions.
+        It emphasizes preserving original copyright notices, provides flexibility
+        for modifications and distributions, and includes a disclaimer of warranty,
+        stating that the software is provided \"as is.\" For files not written by
+        the author, additional terms can be found in the `LEGAL` file."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":570,"outputTokens":628,"serverToolUsage":{},"totalTokens":1198}}'
+  recorded_at: Sun, 11 Oct 2026 21:06:24 GMT
 recorded_with: VCR 6.4.0

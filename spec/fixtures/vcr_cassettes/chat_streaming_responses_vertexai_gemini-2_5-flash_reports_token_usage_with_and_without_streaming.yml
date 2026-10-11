@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Date:
-      - Wed, 07 Oct 2026 13:10:28 GMT
+      - Sun, 11 Oct 2026 21:06:56 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 13:10:28 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:56 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -91,7 +91,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 07 Oct 2026 13:10:29 GMT
+      - Sun, 11 Oct 2026 21:06:57 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,16 +106,16 @@ http_interactions:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
         [{\"text\": \"1, 2, 3\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-10-07T13:10:28.722959Z\",\"responseId\":
-        \"xETGao-QLLrdmNAPqMK6uA4\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-10-11T21:06:57.018597Z\",\"responseId\":
+        \"cfrLaqWRAcbL1PIP1uC28AQ\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
         {\"role\": \"model\",\"parts\": [{\"text\": \"\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
         {\"promptTokenCount\": 12,\"candidatesTokenCount\": 7,\"totalTokenCount\":
         47,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 12}],\"candidatesTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"thoughtsTokenCount\": 28},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-10-07T13:10:28.722959Z\",\"responseId\":
-        \"xETGao-QLLrdmNAPqMK6uA4\"}\r\n\r\n"
-  recorded_at: Wed, 07 Oct 2026 13:10:29 GMT
+        \"gemini-2.5-flash\",\"createTime\": \"2026-10-11T21:06:57.018597Z\",\"responseId\":
+        \"cfrLaqWRAcbL1PIP1uC28AQ\"}\r\n\r\n"
+  recorded_at: Sun, 11 Oct 2026 21:06:57 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -146,7 +146,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:10:30 GMT
+      - Sun, 11 Oct 2026 21:06:59 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -179,7 +179,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 12,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 47,
+            "totalTokenCount": 53,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -193,11 +193,11 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 28
+            "thoughtsTokenCount": 34
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-07T13:10:29.784304Z",
-          "responseId": "xUTGarDvL9ihw-APrtvsoQ4"
+          "createTime": "2026-10-11T21:06:58.344938Z",
+          "responseId": "cvrLauqGFcbL1PIP1uC28AQ"
         }
-  recorded_at: Wed, 07 Oct 2026 13:10:30 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:59 GMT
 recorded_with: VCR 6.4.0

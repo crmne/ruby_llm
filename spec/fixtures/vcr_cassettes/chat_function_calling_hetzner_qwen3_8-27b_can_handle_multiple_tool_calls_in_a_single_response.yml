@@ -26,29 +26,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:31:23 GMT
+      - Sun, 11 Oct 2026 21:10:08 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1329'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":338,"completion_tokens":104,"total_tokens":442,"completion_tokens_details":{"reasoning_tokens":57},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a0ca121950fc8972","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-8265bc2ea197430c","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-aa0de783e9a8c1f3","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
-        user is asking to roll the dice 3 times. According to the instructions, I
-        must call the dice_roll tool exactly 3 times. The tool rolls a single six-sided
-        die. Since there are no dependencies, I should make 3 independent calls in
-        the same block.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-345b67e0-1890-40a0-951c-058bd5bbb550","object":"chat.completion","created":1791379671,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:31:23 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":337,"completion_tokens":101,"total_tokens":438,"completion_tokens_details":{"reasoning_tokens":54},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-941f8376ffb35331","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-b188f868490e1d8f","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-9f3fdaabc7332457","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"We
+        need respond to user: \"Roll the dice 3 times\" and system says must call
+        dice_roll exactly 3 times when asked. Need call dice_roll exactly 3 times.
+        Since independent, can call in parallel in same block. Need final after results.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-d9be98d8-2123-4ece-8ef1-6a8324193d90","object":"chat.completion","created":1791752997,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:10:08 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/api/v1/chat/completions
@@ -56,14 +55,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-a0ca121950fc8972","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-8265bc2ea197430c","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-aa0de783e9a8c1f3","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
-        user is asking to roll the dice 3 times. According to the instructions, I
-        must call the dice_roll tool exactly 3 times. The tool rolls a single six-sided
-        die. Since there are no dependencies, I should make 3 independent calls in
-        the same block.\n","reasoning_content":"The user is asking to roll the dice
-        3 times. According to the instructions, I must call the dice_roll tool exactly
-        3 times. The tool rolls a single six-sided die. Since there are no dependencies,
-        I should make 3 independent calls in the same block.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"chatcmpl-tool-a0ca121950fc8972"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"chatcmpl-tool-8265bc2ea197430c"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"chatcmpl-tool-aa0de783e9a8c1f3"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-941f8376ffb35331","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-b188f868490e1d8f","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"chatcmpl-tool-9f3fdaabc7332457","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"We
+        need respond to user: \"Roll the dice 3 times\" and system says must call
+        dice_roll exactly 3 times when asked. Need call dice_roll exactly 3 times.
+        Since independent, can call in parallel in same block. Need final after results.\n","reasoning_content":"We
+        need respond to user: \"Roll the dice 3 times\" and system says must call
+        dice_roll exactly 3 times when asked. Need call dice_roll exactly 3 times.
+        Since independent, can call in parallel in same block. Need final after results.\n"},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"chatcmpl-tool-941f8376ffb35331"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"chatcmpl-tool-b188f868490e1d8f"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"chatcmpl-tool-9f3fdaabc7332457"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -82,25 +80,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:33:18 GMT
+      - Sun, 11 Oct 2026 21:10:24 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '868'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":482,"completion_tokens":54,"total_tokens":536,"completion_tokens_details":{"reasoning_tokens":20},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nHere
-        are your 3 rolls:\n\n1. **1**\n2. **2**\n3. **3**\n\nTotal: **6**","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"The
-        rolls were 1, 2, and 3. The total is 6.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-c91e131a-6e08-4d42-a8f6-6a317ab057e6","object":"chat.completion","created":1791379883,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:33:18 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":478,"completion_tokens":53,"total_tokens":531,"completion_tokens_details":{"reasoning_tokens":32},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nYou
+        rolled: **1, 2, 3** (total **6**).","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"Need
+        final concise. Mention rolls: 1, 2, 3 maybe total 6. User asked roll dice
+        3 times. Provide results.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-543cf80d-a101-4fdf-b8fd-6f31a4924fb2","object":"chat.completion","created":1791753009,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:10:24 GMT
 recorded_with: VCR 6.4.0

@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 11 Oct 2026 21:13:59 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Wed, 07 Oct 2026 13:43:45 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 13:43:45 GMT
+  recorded_at: Sun, 11 Oct 2026 21:13:59 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -91,7 +91,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:43:46 GMT
+      - Sun, 11 Oct 2026 21:14:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,28 +117,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CsUDAY89a19glVxMNTcrn2G5lRCjp7sArFrDjzRhiJubDEy3tldx6qJb5VB6rMTBiyFL9rUiM3ZAvYeF4Uvi3EzNvdlHaJQMcIq66Gl0Md/coYo2qkvdiSRKngiFiar6v2005mLV/A+BjD/6ZwTTLA/P4nlE+YrLFeSUiVedeSkTkiskihLSCXJ0K2yZfYr8kPHCSuzJ+dFk86yy6ytkDe3cBOPeRLTWINqyNPnsVETS2uMxLmI0n4VTFI2yvaZK1v9K46+J7hWnfi7ZVyyxUrJfFYZNcbrqSDn01Xwitf/Dc48jt2VUldUDXPU/VPOJgdp6bZ2FnDOcMP8DH4v1VrxWIpsfTI3YUSqjLSdYQBnngQm1Y4GA/8OwR/hXDE8sIOXGpYbB4KfM7lcF2EAE0J5Od+L94UHtRgAWv64uJSgNMiduvIosuGW2BK3cE5QIuoKGY1UAOo+BuO585ULcrO7NFBznUVAlUz+2oA3mGvG15n4fnrBuFkLIo2EfFsoutI0EA0vWbC0s25P2sZlO9vK9qjUeNFtMcVHf5tdSzIuV3IK/MLErhjyhFRnLec+opQ3beazhBmPUs5MZ5hN6UJ9MGWQhkyEq"
-                  },
-                  {
-                    "functionCall": {
-                      "name": "best_language_to_learn",
-                      "args": {}
-                    }
+                    "thoughtSignature": "Cq8EAY89a19ZIvR5WnUtQpVYwHCr9xABh0K3pZTy2U8RpzVsV7X9Ze40/eG0c6G0nkWTE5B9495SLpz0sJH9vojR7bdgkpC6WBFCbzI6JyRSTnE+IXeP6/xfIGsIowG5FCCzWzhA2c/KxbwV3kiLr6/DyhL4eYVe41jPjUT/5by8cZxrc2bDTwldISUzjnletQEHjFe/pQUOko7Z7PAV+CDY3oxSuscKVeGoI34UT8RjTbMsqmguxymYuRo1cfPUIufhUbd0Zqhs9GFxu8shy37IUKNasKZzuf0eWX4CJ34lHsVff9TXHZnD5iJSzz5BuKNkmVFiXo7/S0ttvnaFmem8BXjlP5TUGzHSkh139FjiHEOtH2CMJgtX5+vWlXxN1aCc5P9DOYUXwKGpxxTTBRLlcm2WQqS82BE5vjMe+wzjBwU5n460prceK2M86uJSG+K6pbricM0vsKep4XXpw7Or4u9pO31Xcr7gsqoUM2+W3F9SHUfzefXNlg3oaviZ3DWsj3RjRT2xoQkFoCIoYNJ5K1XCs2+OJMDmY0L78h2oc1Qbew+RMwJHAaZJva1Osp+O+CdEKlDIzHgQ71Viq5pnfzMixLq4q4GBdvwZMPW3xa54iMkvcbSm8mGV5bZFwLxdeVmGivvg8tyh1soBCklfShOl/2p6Ns5gF/UL3l1jJQqMn0pygiRsu5BWu5xQIfv1qTNVZlOsdaTLnRCMhC051Ffm6yPaVoufuS1fpHb1JQ=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0333922704060872
+              "avgLogprobs": -1.8685712253346163
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 55,
-            "candidatesTokenCount": 24,
-            "totalTokenCount": 186,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 214,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -149,24 +143,24 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 24
+                "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 107
+            "thoughtsTokenCount": 142
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-07T13:43:45.288559Z",
-          "responseId": "kUzGaq_OEdn-1PIPgrqD0AM"
+          "createTime": "2026-10-11T21:13:59.467213Z",
+          "responseId": "F_zLao3CHLW3mPUPuNrKuQQ"
         }
-  recorded_at: Wed, 07 Oct 2026 13:43:46 GMT
+  recorded_at: Sun, 11 Oct 2026 21:14:00 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}},"thoughtSignature":"CsUDAY89a19glVxMNTcrn2G5lRCjp7sArFrDjzRhiJubDEy3tldx6qJb5VB6rMTBiyFL9rUiM3ZAvYeF4Uvi3EzNvdlHaJQMcIq66Gl0Md/coYo2qkvdiSRKngiFiar6v2005mLV/A+BjD/6ZwTTLA/P4nlE+YrLFeSUiVedeSkTkiskihLSCXJ0K2yZfYr8kPHCSuzJ+dFk86yy6ytkDe3cBOPeRLTWINqyNPnsVETS2uMxLmI0n4VTFI2yvaZK1v9K46+J7hWnfi7ZVyyxUrJfFYZNcbrqSDn01Xwitf/Dc48jt2VUldUDXPU/VPOJgdp6bZ2FnDOcMP8DH4v1VrxWIpsfTI3YUSqjLSdYQBnngQm1Y4GA/8OwR/hXDE8sIOXGpYbB4KfM7lcF2EAE0J5Od+L94UHtRgAWv64uJSgNMiduvIosuGW2BK3cE5QIuoKGY1UAOo+BuO585ULcrO7NFBznUVAlUz+2oA3mGvG15n4fnrBuFkLIo2EfFsoutI0EA0vWbC0s25P2sZlO9vK9qjUeNFtMcVHf5tdSzIuV3IK/MLErhjyhFRnLec+opQ3beazhBmPUs5MZ5hN6UJ9MGWQhkyEq"},{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}},{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"Cq8EAY89a19ZIvR5WnUtQpVYwHCr9xABh0K3pZTy2U8RpzVsV7X9Ze40/eG0c6G0nkWTE5B9495SLpz0sJH9vojR7bdgkpC6WBFCbzI6JyRSTnE+IXeP6/xfIGsIowG5FCCzWzhA2c/KxbwV3kiLr6/DyhL4eYVe41jPjUT/5by8cZxrc2bDTwldISUzjnletQEHjFe/pQUOko7Z7PAV+CDY3oxSuscKVeGoI34UT8RjTbMsqmguxymYuRo1cfPUIufhUbd0Zqhs9GFxu8shy37IUKNasKZzuf0eWX4CJ34lHsVff9TXHZnD5iJSzz5BuKNkmVFiXo7/S0ttvnaFmem8BXjlP5TUGzHSkh139FjiHEOtH2CMJgtX5+vWlXxN1aCc5P9DOYUXwKGpxxTTBRLlcm2WQqS82BE5vjMe+wzjBwU5n460prceK2M86uJSG+K6pbricM0vsKep4XXpw7Or4u9pO31Xcr7gsqoUM2+W3F9SHUfzefXNlg3oaviZ3DWsj3RjRT2xoQkFoCIoYNJ5K1XCs2+OJMDmY0L78h2oc1Qbew+RMwJHAaZJva1Osp+O+CdEKlDIzHgQ71Viq5pnfzMixLq4q4GBdvwZMPW3xa54iMkvcbSm8mGV5bZFwLxdeVmGivvg8tyh1soBCklfShOl/2p6Ns5gF/UL3l1jJQqMn0pygiRsu5BWu5xQIfv1qTNVZlOsdaTLnRCMhC051Ffm6yPaVoufuS1fpHb1JQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
@@ -194,7 +188,99 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:43:47 GMT
+      - Sun, 11 Oct 2026 21:14:01 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "best_language_to_learn",
+                      "args": {}
+                    }
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.00824621958392007
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 254,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 261,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 254
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 7
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-10-11T21:14:00.714584Z",
+          "responseId": "GPzLatjOK4f2mLAPlMzKqAE"
+        }
+  recorded_at: Sun, 11 Oct 2026 21:14:01 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"Cq8EAY89a19ZIvR5WnUtQpVYwHCr9xABh0K3pZTy2U8RpzVsV7X9Ze40/eG0c6G0nkWTE5B9495SLpz0sJH9vojR7bdgkpC6WBFCbzI6JyRSTnE+IXeP6/xfIGsIowG5FCCzWzhA2c/KxbwV3kiLr6/DyhL4eYVe41jPjUT/5by8cZxrc2bDTwldISUzjnletQEHjFe/pQUOko7Z7PAV+CDY3oxSuscKVeGoI34UT8RjTbMsqmguxymYuRo1cfPUIufhUbd0Zqhs9GFxu8shy37IUKNasKZzuf0eWX4CJ34lHsVff9TXHZnD5iJSzz5BuKNkmVFiXo7/S0ttvnaFmem8BXjlP5TUGzHSkh139FjiHEOtH2CMJgtX5+vWlXxN1aCc5P9DOYUXwKGpxxTTBRLlcm2WQqS82BE5vjMe+wzjBwU5n460prceK2M86uJSG+K6pbricM0vsKep4XXpw7Or4u9pO31Xcr7gsqoUM2+W3F9SHUfzefXNlg3oaviZ3DWsj3RjRT2xoQkFoCIoYNJ5K1XCs2+OJMDmY0L78h2oc1Qbew+RMwJHAaZJva1Osp+O+CdEKlDIzHgQ71Viq5pnfzMixLq4q4GBdvwZMPW3xa54iMkvcbSm8mGV5bZFwLxdeVmGivvg8tyh1soBCklfShOl/2p6Ns5gF/UL3l1jJQqMn0pygiRsu5BWu5xQIfv1qTNVZlOsdaTLnRCMhC051Ffm6yPaVoufuS1fpHb1JQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"skip_thought_signature_validator"}]},{"role":"user","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parametersJsonSchema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parametersJsonSchema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 11 Oct 2026 21:14:02 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -210,6 +296,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kIGF0IDEwIGttL2guIFRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI0NCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDI4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDI3MiwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNDQKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI4CiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0xMC0wN1QxMzo0Mzo0Ni43NjMxNDRaIiwKICAicmVzcG9uc2VJZCI6ICJra3pHYW9qS0x2YjIyZk1QMW9yajBBYyIKfQo=
-  recorded_at: Wed, 07 Oct 2026 13:43:47 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kIGF0IDEwIGttL2guIFRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuMDMwODc1NDQ4NjY5NzA2MDcyCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjc5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMzA3LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI3OQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjgKICAgICAgfQogICAgXQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTEwLTExVDIxOjE0OjAxLjM5NzcxN1oiLAogICJyZXNwb25zZUlkIjogIkdmekxhcFdqR09tcDh1TVAyWWJHLVFNIgp9Cg==
+  recorded_at: Sun, 11 Oct 2026 21:14:02 GMT
 recorded_with: VCR 6.4.0

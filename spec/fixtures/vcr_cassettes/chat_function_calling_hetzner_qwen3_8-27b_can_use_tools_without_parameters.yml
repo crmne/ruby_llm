@@ -25,40 +25,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:10:14 GMT
+      - Sun, 11 Oct 2026 21:09:39 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1052'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":323,"completion_tokens":56,"total_tokens":379,"completion_tokens_details":{"reasoning_tokens":37},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-a3129b14634fe793","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user is requesting to use the best_language_to_learn tool in order to know
-        which language they should learn. This tool doesn''t take any parameters.
-        Let''s try calling it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-5b5a80c5-3cab-4080-888d-761833f1ce34","object":"chat.completion","created":1791378609,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:10:14 GMT
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":322,"completion_tokens":39,"total_tokens":361,"completion_tokens_details":{"reasoning_tokens":20},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-83af081e7be06fba","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is asking to use the best_language_to_learn tool. Let me try calling
+        it.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-99dbe14a-8e59-4b0c-9f5b-31887ac0da09","object":"chat.completion","created":1791752978,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:09:39 GMT
 - request:
     method: post
     uri: https://inference.hetzner.com/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"Qwen3.8-27B","messages":[{"role":"user","content":"Use the
-        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-a3129b14634fe793","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
-        user is requesting to use the best_language_to_learn tool in order to know
-        which language they should learn. This tool doesn''t take any parameters.
-        Let''s try calling it.\n","reasoning_content":"The user is requesting to use
-        the best_language_to_learn tool in order to know which language they should
-        learn. This tool doesn''t take any parameters. Let''s try calling it.\n"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-a3129b14634fe793"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"chatcmpl-tool-83af081e7be06fba","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        user is asking to use the best_language_to_learn tool. Let me try calling
+        it.\n","reasoning_content":"The user is asking to use the best_language_to_learn
+        tool. Let me try calling it.\n"},{"role":"tool","content":"Ruby","tool_call_id":"chatcmpl-tool-83af081e7be06fba"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -77,24 +74,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:13:55 GMT
+      - Sun, 11 Oct 2026 21:09:42 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1186'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtb2RlbCI6IlF3ZW4zLjgtMjdCIiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzk1LCJjb21wbGV0aW9uX3Rva2VucyI6MTAyLCJ0b3RhbF90b2tlbnMiOjQ5NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozMn0sInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjcmVhdGVkX2NhY2hlX3Rva2VucyI6MCwibXVsdGltb2RhbF90b2tlbnMiOm51bGx9fSwiY2hvaWNlcyI6W3sibWVzc2FnZSI6eyJjb250ZW50IjoiXG5cbkFjY29yZGluZyB0byB0aGUgdG9vbCwgdGhlIGJlc3QgbGFuZ3VhZ2UgZm9yIHlvdSB0byBsZWFybiBpcyAqKlJ1YnkqKi4g8J+Hr/Cfh7XinKhcblxuUnVieSBpcyBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4IGFuZCBcImRldmVsb3BlciBoYXBwaW5lc3NcIiBwaGlsb3NvcGh5IOKAlCBpdCBwb3dlcnMgUmFpbHMsIG9uZSBvZiB0aGUgbW9zdCBwb3B1bGFyIHdlYiBmcmFtZXdvcmtzIGluIHRoZSB3b3JsZC4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBzb21lIHRpcHMgb24gd2hlcmUgdG8gc3RhcnQhIiwicm9sZSI6ImFzc2lzdGFudCIsInJlZnVzYWwiOm51bGwsImFubm90YXRpb25zIjpudWxsLCJhdWRpbyI6bnVsbCwiZnVuY3Rpb25fY2FsbCI6bnVsbCwicmVhc29uaW5nIjoiVGhlIHRvb2wgcmVzcG9uZGVkIFwiUnVieVwiLiBJbiBvdGhlciB3b3JkcywgYWNjb3JkaW5nIHRvIHRoZSB0b29sLCB0aGUgb3B0aW1hbCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LiBJIHNob3VsZCBjb252ZXkgdGhpcyB0byB0aGUgdXNlci5cbiJ9LCJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwic3RvcF9yZWFzb24iOm51bGwsInRva2VuX2lkcyI6bnVsbCwicm91dGVkX2V4cGVydHMiOm51bGx9XSwiaWQiOiJjaGF0Y21wbC05ZTUzZjRmMy0zMmRlLTQwNjgtYjBjYi05OGUzMzNlYzZhZGIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzkxMzc4NjE0LCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInByb21wdF9sb2dwcm9icyI6bnVsbCwicHJvbXB0X3Rva2VuX2lkcyI6bnVsbCwicHJvbXB0X3RleHQiOm51bGwsImt2X3RyYW5zZmVyX3BhcmFtcyI6bnVsbCwiZWNfdHJhbnNmZXJfcGFyYW1zIjpudWxsLCJtZXRyaWNzIjpudWxsfQ==
-  recorded_at: Wed, 07 Oct 2026 13:13:55 GMT
+      encoding: UTF-8
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":377,"completion_tokens":70,"total_tokens":447,"completion_tokens_details":{"reasoning_tokens":15},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"content":"\n\nAccording
+        to the tool, the best language to learn is **Ruby**. \n\nRuby is a dynamic,
+        object-oriented language known for its elegant syntax and focus on programmer
+        happiness. It''s the language behind the popular Ruby on Rails web framework.
+        Give it a try!","role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":"The
+        tool returned \"Ruby\". I should communicate this to the user.\n"},"index":0,"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-4d577e6f-d3d1-48cd-8a3a-ace312c9c12d","object":"chat.completion","created":1791752979,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:09:42 GMT
 recorded_with: VCR 6.4.0

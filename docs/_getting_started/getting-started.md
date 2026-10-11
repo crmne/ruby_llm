@@ -37,7 +37,7 @@ bundle add ruby_llm --git https://github.com/crmne/ruby_llm --branch main
 Add RubyLLM 2.1 with Bundler:
 
 ```sh
-bundle add ruby_llm --version 2.1.0
+bundle add ruby_llm --version 2.1.1
 ```
 {% endif %}
 

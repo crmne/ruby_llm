@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:00:05 GMT
+      - Sun, 11 Oct 2026 21:06:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11673-1905-75af-8c7d-85bac22dc957
+      - 01a12cca-36cc-75f8-9933-98ab1f153056
       X-Kong-Request-Id:
-      - 01a11673-1905-75af-8c7d-85bac22dc957
+      - 01a12cca-36cc-75f8-9933-98ab1f153056
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '80187'
+      - '80482'
       X-Ratelimit-Tokens-Query-Cost:
       - '22'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '98'
+      - '92'
       X-Envoy-Upstream-Service-Time:
-      - '1070'
+      - '384'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1071'
+      - '385'
       X-Kong-Proxy-Latency:
-      - '13'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,9 +71,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"11f2dd274e6d46ab8906a5f8f2473fec","created":1791378004,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
-        \"Bob\", \"age\": 32}"}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:00:05 GMT
+      string: '{"id":"20628de421874429895850e1b29087a9","created":1791752812,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+        \"Bob\", \"age\": 30}"}}]}'
+  recorded_at: Sun, 11 Oct 2026 21:06:52 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -81,7 +81,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
         a person named Bob"},{"role":"assistant","content":"{\"name\": \"Bob\", \"age\":
-        32}"},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
+        30}"},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -99,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:00:07 GMT
+      - Sun, 11 Oct 2026 21:06:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -107,31 +107,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11673-1f8c-7c7d-a5ad-0d060a1a0c07
+      - 01a12cca-38aa-77b2-b706-d2ed4e6438ed
       X-Kong-Request-Id:
-      - 01a11673-1f8c-7c7d-a5ad-0d060a1a0c07
+      - 01a12cca-38aa-77b2-b706-d2ed4e6438ed
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '80239'
+      - '80267'
       X-Ratelimit-Tokens-Query-Cost:
       - '215'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '97'
+      - '91'
       X-Envoy-Upstream-Service-Time:
-      - '1823'
+      - '1397'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1825'
+      - '1397'
       X-Kong-Proxy-Latency:
-      - '11'
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -146,18 +146,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c914a0e940e448d687719ed62320f54e","created":1791378005,"model":"mistral-small-latest","usage":{"prompt_tokens":42,"total_tokens":215,"completion_tokens":173,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
+      string: '{"id":"d37c3ba7dd20426fab9d5554cd052c8a","created":1791752812,"model":"mistral-small-latest","usage":{"prompt_tokens":42,"total_tokens":215,"completion_tokens":173,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
         is a dynamic, open-source programming language known for its simplicity and
         productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
-        emphasizes developer happiness and elegant syntax. It''s often associated
-        with the Ruby on Rails framework, which revolutionized web development with
-        its convention-over-configuration approach.\n\nKey features of Ruby include:\n-
-        Clean, readable syntax that resembles natural language\n- Everything is an
-        object (even primitive types)\n- Flexible and expressive metaprogramming capabilities\n-
-        A strong focus on developer productivity and enjoyment\n\nRuby is particularly
-        popular for web development (thanks to Rails), but it''s also used for scripting,
-        automation, and even data processing. The language has a vibrant community
-        and extensive library support through RubyGems.\n\nWould you like to know
-        more about a specific aspect of Ruby?"}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:00:07 GMT
+        emphasizes developer happiness and elegant syntax. It follows the principle
+        of \"least surprise,\" meaning it behaves in a way that feels natural to programmers.\n\nKey
+        features of Ruby include:\n- **Object-oriented**: Everything in Ruby is an
+        object, even primitive types.\n- **Flexible syntax**: Supports multiple ways
+        to express the same idea.\n- **Metaprogramming**: Allows code to modify itself
+        at runtime.\n- **Strong community**: Powers the popular web framework Ruby
+        on Rails.\n\nRuby is often used for web development, scripting, automation,
+        and prototyping. Its clean and readable code makes it a favorite among developers
+        who value both speed and maintainability."}}]}'
+  recorded_at: Sun, 11 Oct 2026 21:06:54 GMT
 recorded_with: VCR 6.4.0

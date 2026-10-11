@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:39:53 GMT
+      - Sun, 11 Oct 2026 21:10:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,31 +35,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11697-8db3-74e7-b945-5feb184126d2
+      - 01a12ccd-d6da-7f1b-9670-0ede67d0686b
       X-Kong-Request-Id:
-      - 01a11697-8db3-74e7-b945-5feb184126d2
+      - 01a12ccd-d6da-7f1b-9670-0ede67d0686b
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '97634'
+      - '93321'
       X-Ratelimit-Tokens-Query-Cost:
       - '133'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '81'
+      - '79'
       X-Envoy-Upstream-Service-Time:
-      - '253'
+      - '283'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '255'
+      - '284'
       X-Kong-Proxy-Latency:
-      - '23'
+      - '17'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,7 +74,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f8f4a40bc9ec447bb3a73f08b2f9b569","created":1791380393,"model":"mistral-small-latest","usage":{"prompt_tokens":118,"total_tokens":133,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"NHyEWPc9Y","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+      string: '{"id":"0bc5362bbb224b36917e63348f76e117","created":1791753049,"model":"mistral-small-latest","usage":{"prompt_tokens":118,"total_tokens":133,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"Cl6P2VCzf","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
         [\"red\", \"blue\"]}"},"index":0}],"content":""}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:39:53 GMT
+  recorded_at: Sun, 11 Oct 2026 21:10:50 GMT
 recorded_with: VCR 6.4.0

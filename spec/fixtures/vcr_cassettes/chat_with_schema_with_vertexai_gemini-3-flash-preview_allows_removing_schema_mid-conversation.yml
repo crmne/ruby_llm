@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 07 Oct 2026 13:00:55 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Date:
+      - Sun, 11 Oct 2026 21:07:26 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 13:00:55 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:26 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:00:57 GMT
+      - Sun, 11 Oct 2026 21:07:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,7 +111,7 @@ http_interactions:
                 "parts": [
                   {
                     "text": "{\"name\":\"Bob\",\"age\":30}",
-                    "thoughtSignature": "AY89a1+UVePUegvKKhrjdT18jWPKPFZeKdL1brPrWCHJWXKHP4TbA1VMB8aXMuXG9Yd7KUAqzUCEAWOcgVIO28T5uK4gGkWze1ZjUY1CE1yz6RJ88PQgFoyzOwmbqWIZnx4mhQu9TCeGIWhZ3+upGQBPmUn6iQt1NcvBIBc6Q50cq63vRhL1HtX3/qW76HPkxjkli5PXKmH1BTcA56Rd+oN0aCOPJh85JCK+IzpglnY+vAiJPVtO7kihJcrKE0SwMvm4wa/s72asRzDiRI6cIWJSEPdsG3/CZOMr2kIyXsn8FzzDRcEpMHlsLDvLXxciCVhthOD9Fvsh8NV2d71eK8Up6YAC82FD+JvCHUfN0ou3MuI9RbGiJj/92kJaYmdf1jasMayQ4x3yXq483a5N8nxM6+ERwdQmnUmVMxrlU+tsoWwuSrfJg3lfrRr3dD9kip/+Wm7VXxTsw8y4Ow0iNw2lZo95iIxhvn359aJdPzpTh9qoihkXwZnYVD0R2F8Tk9+BMpnl6qRoTYeYsfnUnrcCZyQ9eDM3p9xoQ2x6uaJHMDUHuh7GvXij9aC4y7zvjbPoTlOfag36PrtnBq6F7n1DKGINgaw/zKt260p2I5YowRf/lUC7yCu9mFw9X86R9qLtZeJ2o4h9O15KfrilOReGkrXo0fa1Wn/eL7au/DfBmQ4emT9XfsrXeOmG4qJwS2/Tdre4quW/oTjcRITY0wcemDcsr/+SEIcIbqBzzz604LgBJMi552O0zyVKLU2DDfaO4QTxFbx8xsk11H/lgpzFxMN5CsD06hKWbnx2TQAXpvmrKC5/4mQubMaMjmbnQ/H4YbNI7rlKCqic50N3e3S5hQquYk2O5P13LG2HZUyOD7GiXJBu46Y+OKmaeCmZHuJIdK8tjNNhRuAZsgUwNSLqoxbkFP9Q1MFApgUYWa9rxBNQzvdiwkoaWxXLwhbW1XWX/taKCLwPor1z5JKZl+yXMktdHq0gprK/ACzRM/9bdTgUVzY0vQE9IauFBzqMRk6yRkXA9xx0XnAkdYDRQ3QUKWNUOdRHyE33t8nyefVosb+kqocQeRaE8ZE6wK6uB/u4a+qMQl/enUn4QJ+ed/WXKwJKtxZ8LnB3i85x5qHpEHSJ12aOHr9tSTBFh3pAX5ttsB1KKdONKBVR9dCMwgCLeWSLT4zJOGCoih5gFdWBh8cp2EyilkRfSu0DEThyaADdlS++vzqi0DWHKL5PKRS0QnWDzauPok9M"
+                    "thoughtSignature": "AY89a19QekV086Qfv8SHfTkpilDpB1lQqX3G70QL4ZeXgO7SiYewC8ajucbcpxa+9EB3Nj+uDMSlpia8nb25wVTony0RT2tTBmXdjcBLqJQf20/CORXe8aSOjeDmWZpkT7Y5IB8tS4hTrXaXGSSZGnt6dUXm1mx6vT8cB5R5THkK5x9S7QNCGtCh3zJaKfDkU6m83l0g9Ji9IUY+YvnTpwzc07/la3jLa11wmyQYrIv/+BAxs6TUwEkxI0aeB6hrVMs1/49iQ7XRo0V1fcZCi13Ecm3ftXFTWTtiZAefKXbsOTog4UtkX5s6EhN006Ww8NPth+Wqj3eTxF6Vd2EQemO7Dl1Q00E8ewi1gk1VkM/EzeMLk/DZ/D+PcB0LFmyinUPEkE7qXn1QHZ+tjoUMXUfj6xRv7p507GTTNU2ZmQjF+x+1Wie1BHvoX3QmGSy11Egwc8cI/YTCMNCSnGflynfTEHTQ8QFoTj3ayj5LbdJ9ibL4hP5gGR/wY7SYJ+/+w3vYK6f+/mEv/fM42xOtWE2McjBzynMnzVAF+lax9UJFkVj4kV/RxN5z3qskEtr0DAeY4qYRrX02Sn82uruJRjS+1ci3s7eMbkIyp+V71qYY0acBf6wiVokobNqXFh2ACu7SbLOTS0MZehFt0V9hlBDxXrivDuNrJpYl1SgVmGUJtc4PjR8iJ3TCX2IICdMp0w3rnfDvWGtobwn8+kv7+Tiwh7ukhxrxKqTVCW9oKOQiFp8IbW+lCgdujBSxMHY8iKoeVRZA5PJaVG9+HXCY1ixNSjeKMTkUhhQ4no2A5xMrUzrEQ48S1QKv7+XwOV7sdoWUX90W1OiWxmYK7Dn+59LAMNmPKe7/DiHWZ8E2Vd5torNwIRvwxvqK9pQzVJeWer54eRrOCwU7gII8rw/bGneRS00/ck5awpbbJO9zAkBUKNSc+S2dfq4fOgVmKxsfL5cTmR/WcJSZamSBjvM3SWPsP2o3c/eaQa89dnm4jo2M4y5V8aEIt3hNIHCogX133+GdQPzrB3NmOecyxJkcqGfB0vU0XjX+29iC3OmphisO7I7LqzK2LYKb3nTyXkcBl0BeKyGlCvHS0lKQUrRA2gRl0oe7TKtBxMyZ8ofIFz03vPebFHi06TczKyMvt53jUbvZW8xG87QvNQCUd5gdxBM6iyhWXVAmNjP1PLSmizjteyGG0iIpOjkxxDsLa9KRb4K11dTYqwUL54w/BgctwWYiaN2D1sH2zXq7BY9wQIZpsAwzDzfaDM7CVK14G+2jVvuqY6E5hWFquWwdzIfCZkawHhpdqvSnQmA1MQi8Sr2agbWHvU5qIzHLv0GdR96ZG7skeSxb58km7ynSV8kcom6cPY9pPvgO/2zWKkv7je1WYtL+fehEBXOCFDaYHJUi2niv0ndVJ1vuqmNNUggihKrLVWA9UQqCgcDSUScp1+8T/a6jrecYFyM1LPrLa5ScXBjszqt62/BnZKMcm0FZepQCY6Qud9DGYmeWKMqQBGIUNhYFnO/c3ay/Y0UYJK1ANoOQKIUxj6XvcqxmhSOKSeO0JwDDenScc8aEfnc7NMB2pPmNqPmghwnqpc6agBhn0T7Ku4COPxmDTv+Vg6AV8+PNfRiNQQtXIkBZvgwpGJ+FlKPuTui9OOADSKtREnWzx9AOGXO0"
                   }
                 ]
               },
@@ -121,7 +121,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 70,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 338,
+            "totalTokenCount": 425,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,20 +135,20 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 258
+            "thoughtsTokenCount": 345
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-10-07T13:00:55.477293Z",
-          "responseId": "h0LGau2QHdn-1PIPgrqD0AM"
+          "createTime": "2026-10-11T21:07:26.901371Z",
+          "responseId": "jvrLavuBN5SR1PIPnMCGmQ8"
         }
-  recorded_at: Wed, 07 Oct 2026 13:00:57 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:29 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
-        Bob"}]},{"role":"model","parts":[{"text":"{\"name\":\"Bob\",\"age\":30}","thoughtSignature":"AY89a1+UVePUegvKKhrjdT18jWPKPFZeKdL1brPrWCHJWXKHP4TbA1VMB8aXMuXG9Yd7KUAqzUCEAWOcgVIO28T5uK4gGkWze1ZjUY1CE1yz6RJ88PQgFoyzOwmbqWIZnx4mhQu9TCeGIWhZ3+upGQBPmUn6iQt1NcvBIBc6Q50cq63vRhL1HtX3/qW76HPkxjkli5PXKmH1BTcA56Rd+oN0aCOPJh85JCK+IzpglnY+vAiJPVtO7kihJcrKE0SwMvm4wa/s72asRzDiRI6cIWJSEPdsG3/CZOMr2kIyXsn8FzzDRcEpMHlsLDvLXxciCVhthOD9Fvsh8NV2d71eK8Up6YAC82FD+JvCHUfN0ou3MuI9RbGiJj/92kJaYmdf1jasMayQ4x3yXq483a5N8nxM6+ERwdQmnUmVMxrlU+tsoWwuSrfJg3lfrRr3dD9kip/+Wm7VXxTsw8y4Ow0iNw2lZo95iIxhvn359aJdPzpTh9qoihkXwZnYVD0R2F8Tk9+BMpnl6qRoTYeYsfnUnrcCZyQ9eDM3p9xoQ2x6uaJHMDUHuh7GvXij9aC4y7zvjbPoTlOfag36PrtnBq6F7n1DKGINgaw/zKt260p2I5YowRf/lUC7yCu9mFw9X86R9qLtZeJ2o4h9O15KfrilOReGkrXo0fa1Wn/eL7au/DfBmQ4emT9XfsrXeOmG4qJwS2/Tdre4quW/oTjcRITY0wcemDcsr/+SEIcIbqBzzz604LgBJMi552O0zyVKLU2DDfaO4QTxFbx8xsk11H/lgpzFxMN5CsD06hKWbnx2TQAXpvmrKC5/4mQubMaMjmbnQ/H4YbNI7rlKCqic50N3e3S5hQquYk2O5P13LG2HZUyOD7GiXJBu46Y+OKmaeCmZHuJIdK8tjNNhRuAZsgUwNSLqoxbkFP9Q1MFApgUYWa9rxBNQzvdiwkoaWxXLwhbW1XWX/taKCLwPor1z5JKZl+yXMktdHq0gprK/ACzRM/9bdTgUVzY0vQE9IauFBzqMRk6yRkXA9xx0XnAkdYDRQ3QUKWNUOdRHyE33t8nyefVosb+kqocQeRaE8ZE6wK6uB/u4a+qMQl/enUn4QJ+ed/WXKwJKtxZ8LnB3i85x5qHpEHSJ12aOHr9tSTBFh3pAX5ttsB1KKdONKBVR9dCMwgCLeWSLT4zJOGCoih5gFdWBh8cp2EyilkRfSu0DEThyaADdlS++vzqi0DWHKL5PKRS0QnWDzauPok9M"}]},{"role":"user","parts":[{"text":"Now
+        Bob"}]},{"role":"model","parts":[{"text":"{\"name\":\"Bob\",\"age\":30}","thoughtSignature":"AY89a19QekV086Qfv8SHfTkpilDpB1lQqX3G70QL4ZeXgO7SiYewC8ajucbcpxa+9EB3Nj+uDMSlpia8nb25wVTony0RT2tTBmXdjcBLqJQf20/CORXe8aSOjeDmWZpkT7Y5IB8tS4hTrXaXGSSZGnt6dUXm1mx6vT8cB5R5THkK5x9S7QNCGtCh3zJaKfDkU6m83l0g9Ji9IUY+YvnTpwzc07/la3jLa11wmyQYrIv/+BAxs6TUwEkxI0aeB6hrVMs1/49iQ7XRo0V1fcZCi13Ecm3ftXFTWTtiZAefKXbsOTog4UtkX5s6EhN006Ww8NPth+Wqj3eTxF6Vd2EQemO7Dl1Q00E8ewi1gk1VkM/EzeMLk/DZ/D+PcB0LFmyinUPEkE7qXn1QHZ+tjoUMXUfj6xRv7p507GTTNU2ZmQjF+x+1Wie1BHvoX3QmGSy11Egwc8cI/YTCMNCSnGflynfTEHTQ8QFoTj3ayj5LbdJ9ibL4hP5gGR/wY7SYJ+/+w3vYK6f+/mEv/fM42xOtWE2McjBzynMnzVAF+lax9UJFkVj4kV/RxN5z3qskEtr0DAeY4qYRrX02Sn82uruJRjS+1ci3s7eMbkIyp+V71qYY0acBf6wiVokobNqXFh2ACu7SbLOTS0MZehFt0V9hlBDxXrivDuNrJpYl1SgVmGUJtc4PjR8iJ3TCX2IICdMp0w3rnfDvWGtobwn8+kv7+Tiwh7ukhxrxKqTVCW9oKOQiFp8IbW+lCgdujBSxMHY8iKoeVRZA5PJaVG9+HXCY1ixNSjeKMTkUhhQ4no2A5xMrUzrEQ48S1QKv7+XwOV7sdoWUX90W1OiWxmYK7Dn+59LAMNmPKe7/DiHWZ8E2Vd5torNwIRvwxvqK9pQzVJeWer54eRrOCwU7gII8rw/bGneRS00/ck5awpbbJO9zAkBUKNSc+S2dfq4fOgVmKxsfL5cTmR/WcJSZamSBjvM3SWPsP2o3c/eaQa89dnm4jo2M4y5V8aEIt3hNIHCogX133+GdQPzrB3NmOecyxJkcqGfB0vU0XjX+29iC3OmphisO7I7LqzK2LYKb3nTyXkcBl0BeKyGlCvHS0lKQUrRA2gRl0oe7TKtBxMyZ8ofIFz03vPebFHi06TczKyMvt53jUbvZW8xG87QvNQCUd5gdxBM6iyhWXVAmNjP1PLSmizjteyGG0iIpOjkxxDsLa9KRb4K11dTYqwUL54w/BgctwWYiaN2D1sH2zXq7BY9wQIZpsAwzDzfaDM7CVK14G+2jVvuqY6E5hWFquWwdzIfCZkawHhpdqvSnQmA1MQi8Sr2agbWHvU5qIzHLv0GdR96ZG7skeSxb58km7ynSV8kcom6cPY9pPvgO/2zWKkv7je1WYtL+fehEBXOCFDaYHJUi2niv0ndVJ1vuqmNNUggihKrLVWA9UQqCgcDSUScp1+8T/a6jrecYFyM1LPrLa5ScXBjszqt62/BnZKMcm0FZepQCY6Qud9DGYmeWKMqQBGIUNhYFnO/c3ay/Y0UYJK1ANoOQKIUxj6XvcqxmhSOKSeO0JwDDenScc8aEfnc7NMB2pPmNqPmghwnqpc6agBhn0T7Ku4COPxmDTv+Vg6AV8+PNfRiNQQtXIkBZvgwpGJ+FlKPuTui9OOADSKtREnWzx9AOGXO0"}]},{"role":"user","parts":[{"text":"Now
         just tell me about Ruby"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
@@ -173,7 +173,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:01:07 GMT
+      - Sun, 11 Oct 2026 21:07:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -196,8 +196,8 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**Ruby** most commonly refers to either a programming language or a precious gemstone. Here is a breakdown of both:\n\n### 1. Ruby (Programming Language)\nRuby is a high-level, interpreted, object-oriented programming language.\n*   **Origin:** Created in the mid-1990s by Yukihiro \"Matz\" Matsumoto in Japan.\n*   **Philosophy:** It was designed with a focus on programmer productivity and simplicity. Its motto is often \"a programmer's best friend,\" emphasizing a syntax that reads almost like English.\n*   **Ruby on Rails:** Ruby became world-famous due to \"Rails,\" a powerful web framework used to build sites like GitHub, Airbnb, and Shopify.\n*   **Characteristics:** It is dynamically typed, features automatic memory management (garbage collection), and is highly flexible, allowing developers to \"open\" and modify classes at runtime.\n\n### 2. Ruby (Gemstone)\nA ruby is a pink to blood-red colored gemstone, a variety of the mineral **corundum**.\n*   **Color:** The red color is caused by the presence of the element chromium. The most prized color is a deep red called \"pigeon's blood.\"\n*   **Durability:** Rubies are extremely hard, measuring 9.0 on the Mohs scale of mineral hardness (second only to diamonds).\n*   **Symbolism:** Historically, rubies have represented passion, protection, and wealth. It is the birthstone for the month of July.\n\n***\n\n**If you were looking for another person data object (like Bob):**\n```json\n{\"name\": \"Ruby\", \"age\": 28}\n```",
-                    "thoughtSignature": "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"
+                    "text": "Depending on what you are looking for, \"Ruby\" usually refers to one of two things:\n\n### 1. The Programming Language\nRuby is a dynamic, open-source programming language with a focus on simplicity and productivity. \n*   **Created by:** Yukihiro \"Matz\" Matsumoto in Japan in the mid-1990s.\n*   **Philosophy:** It was designed to make developers happy, featuring a syntax that is natural to read and easy to write.\n*   **Object-Oriented:** Everything in Ruby is an object, even basic data types like integers.\n*   **Ruby on Rails:** Ruby became world-famous due to this web framework, which is used to build sites like GitHub, Airbnb, and Shopify.\n\n### 2. The Gemstone\nA ruby is a pink to blood-red colored precious gemstone.\n*   **Composition:** It is a variety of the mineral corundum (aluminum oxide).\n*   **Color:** The red color is caused by the presence of the element chromium.\n*   **Symbolism:** It is the birthstone for July and is traditionally associated with passion, protection, and prosperity.\n\n**If you were asking for another person profile (like Bob), here she is:**\n*   **Name:** Ruby\n*   **Age:** 28\n*   **Occupation:** Software Developer",
+                    "thoughtSignature": "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"
                   }
                 ]
               },
@@ -206,8 +206,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 21,
-            "candidatesTokenCount": 352,
-            "totalTokenCount": 1103,
+            "candidatesTokenCount": 284,
+            "totalTokenCount": 1559,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -218,14 +218,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 352
+                "tokenCount": 284
               }
             ],
-            "thoughtsTokenCount": 730
+            "thoughtsTokenCount": 1254
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-10-07T13:00:57.827326Z",
-          "responseId": "iULGar6_Mqn1mLAP1ryG6Qw"
+          "createTime": "2026-10-11T21:07:29.409948Z",
+          "responseId": "kfrLatyCGcLWn9kPoYa1gQs"
         }
-  recorded_at: Wed, 07 Oct 2026 13:01:07 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:38 GMT
 recorded_with: VCR 6.4.0

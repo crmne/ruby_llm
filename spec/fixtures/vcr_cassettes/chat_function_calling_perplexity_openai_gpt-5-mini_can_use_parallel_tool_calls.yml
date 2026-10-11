@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:42:41 GMT
+      - Sun, 11 Oct 2026 21:13:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1791380562'
+      - '1791753184'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
@@ -63,14 +63,14 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"background":false,"completed_at":1791380558,"created_at":1791380558,"error":null,"frequency_penalty":0,"id":"resp_5e4811ad-81a5-467a-a22c-c6cd26d87865","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call_2EBPlC74M2p5lnJGwgqFttzQ","id":"fc_3177684e-3e4a-46cd-a3b7-b958da6396b8","name":"weather","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_nlKF5kREU4VED0rK3Pd1G9pL","id":"fc_41a2cf3f-8b91-4de3-9817-9a231c5b3ab4","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"weather","description":"Gets
+      string: '{"background":false,"completed_at":1791753181,"created_at":1791753181,"error":null,"frequency_penalty":0,"id":"resp_c621f252-aaa7-415c-96a1-4bcd0ca219e4","incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"metadata":{},"model":"openai/gpt-5-mini","object":"response","output":[{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call_aU8Vt3C9t2SR58tvoxQr1eJA","id":"fc_8015b5d2-c6fa-4d03-af4b-cbabee931c56","name":"weather","status":"completed","type":"function_call"},{"arguments":"{}","call_id":"call_qiymZJmQZ2nmVypxECNrkOiA","id":"fc_61c90a5b-83f1-421b-b3ad-7ae77828716c","name":"best_language_to_learn","status":"completed","type":"function_call"}],"parallel_tool_calls":true,"presence_penalty":0,"previous_response_id":null,"prompt_cache_key":null,"reasoning":null,"safety_identifier":null,"service_tier":"default","status":"completed","store":false,"temperature":1,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"additionalProperties":false,"properties":{"latitude":{"description":"Latitude
         (e.g., 52.5200)","type":"string"},"longitude":{"description":"Longitude (e.g.,
         13.4050)","type":"string"}},"required":["latitude","longitude"],"strict":true,"type":"object"},"strict":false},{"type":"function","name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00049,"total_cost":0.00052},"input_tokens":137,"input_tokens_details":{"cached_tokens":0},"output_tokens":246,"output_tokens_details":{"reasoning_tokens":128},"total_tokens":383},"user":null}
+        the best language to learn","parameters":{"additionalProperties":false,"properties":{},"required":[],"strict":true,"type":"object"},"strict":false}],"top_logprobs":0,"top_p":1,"truncation":"","usage":{"cost":{"currency":"USD","input_cost":0.00003,"output_cost":0.00035,"total_cost":0.00038},"input_tokens":137,"input_tokens_details":{"cached_tokens":0},"output_tokens":174,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":311},"user":null}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:42:41 GMT
+  recorded_at: Sun, 11 Oct 2026 21:13:03 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/v1/agent
@@ -78,8 +78,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"openai/gpt-5-mini","input":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"type":"function_call","call_id":"call_2EBPlC74M2p5lnJGwgqFttzQ","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call","call_id":"call_nlKF5kREU4VED0rK3Pd1G9pL","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_2EBPlC74M2p5lnJGwgqFttzQ","output":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"type":"function_call_output","call_id":"call_nlKF5kREU4VED0rK3Pd1G9pL","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        learn?"},{"type":"function_call","call_id":"call_aU8Vt3C9t2SR58tvoxQr1eJA","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call","call_id":"call_qiymZJmQZ2nmVypxECNrkOiA","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_aU8Vt3C9t2SR58tvoxQr1eJA","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"type":"function_call_output","call_id":"call_qiymZJmQZ2nmVypxECNrkOiA","output":"Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false},{"type":"function","name":"best_language_to_learn","description":"Gets
@@ -101,7 +101,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:42:47 GMT
+      - Sun, 11 Oct 2026 21:13:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -115,20 +115,20 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '0'
       X-Ratelimit-Reset:
-      - '1791380568'
+      - '1791753189'
       X-Ratelimit-Used:
       - '1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -136,6 +136,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkxMzgwNTYxLCJjcmVhdGVkX2F0IjoxNzkxMzgwNTYxLCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF9iM2VlNGY3Zi00ZTE0LTQ2OGYtOGQxNy1hNTMzNzI3MGQ5NWQiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtZXRhZGF0YSI6e30sIm1vZGVsIjoib3BlbmFpL2dwdC01LW1pbmkiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siY29udGVudCI6W3siYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiV2VhdGhlciAoQmVybGluIOKAlCA1Mi41MjAwLCAxMy40MDUwKTogMTXCsEMsIHdpbmQgfjEwIGttL2guXG5cbkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46IFJ1YnkuXG5cbk5vdGVzOlxuLSBcIkJlc3RcIiBpcyBzdWJqZWN0aXZlIOKAlCBJIHJhbiBhIHF1aWNrIGNoZWNrIHRoYXQgcmV0dXJuZWQgUnVieS4gSWYgeW91ciBnb2FsIGlzIHdlYiBkZXZlbG9wbWVudCwgUnVieSAod2l0aCBSYWlscykgaXMgYW4gZXhjZWxsZW50LCBiZWdpbm5lci1mcmllbmRseSBjaG9pY2UuIElmIHlvdSBoYXZlIG90aGVyIGdvYWxzLCBvdGhlciBsYW5ndWFnZXMgbWF5IGJlIGJldHRlcjpcbiAgLSBEYXRhIHNjaWVuY2UgLyBnZW5lcmFsIHNjcmlwdGluZzogUHl0aG9uXG4gIC0gV2ViIGZyb250LWVuZCAvIGZ1bGwtc3RhY2s6IEphdmFTY3JpcHQgLyBUeXBlU2NyaXB0XG4gIC0gU3lzdGVtcyBwcm9ncmFtbWluZzogUnVzdCBvciBDKytcbiAgLSBNb2JpbGU6IFN3aWZ0IChpT1MpIG9yIEtvdGxpbiAoQW5kcm9pZClcbi0gV2FudCBsZWFybmluZyByZXNvdXJjZXMgZm9yIFJ1YnkgKG9yIGEgcmVjb21tZW5kYXRpb24gdGFpbG9yZWQgdG8geW91ciBnb2Fscyk/IEFsc28sIHdvdWxkIHlvdSBsaWtlIGEgbW9yZSBkZXRhaWxlZCB3ZWF0aGVyIGZvcmVjYXN0IChodW1pZGl0eSwgcHJlY2lwaXRhdGlvbiwgaG91cmx5L25leHQgZmV3IGRheXMpPyIsInR5cGUiOiJvdXRwdXRfdGV4dCJ9XSwiaWQiOiJtc2dfMjMzOTJkMTItMTI0Yi00MDk0LThkMDYtMGNlNzJiODJiMjdjIiwicm9sZSI6ImFzc2lzdGFudCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInR5cGUiOiJtZXNzYWdlIn1dLCJwYXJhbGxlbF90b29sX2NhbGxzIjp0cnVlLCJwcmVzZW5jZV9wZW5hbHR5IjowLCJwcmV2aW91c19yZXNwb25zZV9pZCI6bnVsbCwicHJvbXB0X2NhY2hlX2tleSI6bnVsbCwicmVhc29uaW5nIjpudWxsLCJzYWZldHlfaWRlbnRpZmllciI6bnVsbCwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN0YXR1cyI6ImNvbXBsZXRlZCIsInN0b3JlIjpmYWxzZSwidGVtcGVyYXR1cmUiOjEsInRleHQiOnsiZm9ybWF0Ijp7InR5cGUiOiJ0ZXh0In19LCJ0b29sX2Nob2ljZSI6ImF1dG8iLCJ0b29scyI6W3sidHlwZSI6ImZ1bmN0aW9uIiwibmFtZSI6IndlYXRoZXIiLCJkZXNjcmlwdGlvbiI6IkdldHMgY3VycmVudCB3ZWF0aGVyIGZvciBhIGxvY2F0aW9uIiwicGFyYW1ldGVycyI6eyJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInByb3BlcnRpZXMiOnsibGF0aXR1ZGUiOnsiZGVzY3JpcHRpb24iOiJMYXRpdHVkZSAoZS5nLiwgNTIuNTIwMCkiLCJ0eXBlIjoic3RyaW5nIn0sImxvbmdpdHVkZSI6eyJkZXNjcmlwdGlvbiI6IkxvbmdpdHVkZSAoZS5nLiwgMTMuNDA1MCkiLCJ0eXBlIjoic3RyaW5nIn19LCJyZXF1aXJlZCI6WyJsYXRpdHVkZSIsImxvbmdpdHVkZSJdLCJzdHJpY3QiOnRydWUsInR5cGUiOiJvYmplY3QifSwic3RyaWN0IjpmYWxzZX0seyJ0eXBlIjoiZnVuY3Rpb24iLCJuYW1lIjoiYmVzdF9sYW5ndWFnZV90b19sZWFybiIsImRlc2NyaXB0aW9uIjoiR2V0cyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiIsInBhcmFtZXRlcnMiOnsiYWRkaXRpb25hbFByb3BlcnRpZXMiOmZhbHNlLCJwcm9wZXJ0aWVzIjp7fSwicmVxdWlyZWQiOltdLCJzdHJpY3QiOnRydWUsInR5cGUiOiJvYmplY3QifSwic3RyaWN0IjpmYWxzZX1dLCJ0b3BfbG9ncHJvYnMiOjAsInRvcF9wIjoxLCJ0cnVuY2F0aW9uIjoiIiwidXNhZ2UiOnsiY29zdCI6eyJjdXJyZW5jeSI6IlVTRCIsImlucHV0X2Nvc3QiOjAuMDAwMDYsIm91dHB1dF9jb3N0IjowLjAwMTE4LCJ0b3RhbF9jb3N0IjowLjAwMTI0fSwiaW5wdXRfdG9rZW5zIjoyMjUsImlucHV0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjo1ODgsIm91dHB1dF90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjozODR9LCJ0b3RhbF90b2tlbnMiOjgxM30sInVzZXIiOm51bGx9Cg==
-  recorded_at: Wed, 07 Oct 2026 13:42:47 GMT
+        eyJiYWNrZ3JvdW5kIjpmYWxzZSwiY29tcGxldGVkX2F0IjoxNzkxNzUzMTgzLCJjcmVhdGVkX2F0IjoxNzkxNzUzMTgzLCJlcnJvciI6bnVsbCwiZnJlcXVlbmN5X3BlbmFsdHkiOjAsImlkIjoicmVzcF84ZDFhNGYyMC0wYjBiLTQ1MDQtOWNkNy03ZGZlYmYwZWEyNjQiLCJpbmNvbXBsZXRlX2RldGFpbHMiOm51bGwsImluc3RydWN0aW9ucyI6bnVsbCwibWF4X291dHB1dF90b2tlbnMiOm51bGwsIm1heF90b29sX2NhbGxzIjpudWxsLCJtZXRhZGF0YSI6e30sIm1vZGVsIjoib3BlbmFpL2dwdC01LW1pbmkiLCJvYmplY3QiOiJyZXNwb25zZSIsIm91dHB1dCI6W3siY29udGVudCI6W3siYW5ub3RhdGlvbnMiOltdLCJ0ZXh0IjoiV2VhdGhlciAoQmVybGluIOKAlCA1Mi41MjAwLCAxMy40MDUwKTogMTXCsEMsIHdpbmQgMTAga20vaC5cblxuQmVzdCBsYW5ndWFnZSB0byBsZWFybjogUnVieS5cblxuV2h5IFJ1Ynk/IEl0IGhhcyBhIGNsZWFyLCBiZWdpbm5lci1mcmllbmRseSBzeW50YXggYW5kIGEgc3Ryb25nIHdlYi1kZXZlbG9wbWVudCBlY29zeXN0ZW0gKFJ1Ynkgb24gUmFpbHMpIHRoYXQgbWFrZXMgYnVpbGRpbmcgZnVsbCB3ZWIgYXBwcyBmYXN0IOKAlCBnb29kIGZvciBwcm90b3R5cGluZyBhbmQgbGVhcm5pbmcgcHJvZ3JhbW1pbmcgY29uY2VwdHMuIFRoYXQgc2FpZCwg4oCcYmVzdOKAnSBkZXBlbmRzIG9uIHlvdXIgZ29hbHM6XG4tIERhdGEgc2NpZW5jZSAvIEFJOiBQeXRob25cbi0gV2ViIGZyb250LWVuZDogSmF2YVNjcmlwdCAvIFR5cGVTY3JpcHRcbi0gTW9iaWxlIGFwcHM6IFN3aWZ0IChpT1MpIG9yIEtvdGxpbiAoQW5kcm9pZClcbi0gRW50ZXJwcmlzZSAvIGJhY2tlbmQ6IEphdmEgb3IgQyNcblxuVGVsbCBtZSB5b3VyIGdvYWxzIChjYXJlZXIsIHByb2plY3RzLCBvciBob2JiaWVzKSBhbmQgSeKAmWxsIHJlY29tbWVuZCB0aGUgYmVzdCBsYW5ndWFnZSBmb3IgeW91IGFuZCBhIGxlYXJuaW5nIHBhdGguIiwidHlwZSI6Im91dHB1dF90ZXh0In1dLCJpZCI6Im1zZ18zMzkzYzE3NC0zZWQ3LTQwN2EtOWJlYy1mNjEwZDQwNmI5OGMiLCJyb2xlIjoiYXNzaXN0YW50Iiwic3RhdHVzIjoiY29tcGxldGVkIiwidHlwZSI6Im1lc3NhZ2UifV0sInBhcmFsbGVsX3Rvb2xfY2FsbHMiOnRydWUsInByZXNlbmNlX3BlbmFsdHkiOjAsInByZXZpb3VzX3Jlc3BvbnNlX2lkIjpudWxsLCJwcm9tcHRfY2FjaGVfa2V5IjpudWxsLCJyZWFzb25pbmciOm51bGwsInNhZmV0eV9pZGVudGlmaWVyIjpudWxsLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3RhdHVzIjoiY29tcGxldGVkIiwic3RvcmUiOmZhbHNlLCJ0ZW1wZXJhdHVyZSI6MSwidGV4dCI6eyJmb3JtYXQiOnsidHlwZSI6InRleHQifX0sInRvb2xfY2hvaWNlIjoiYXV0byIsInRvb2xzIjpbeyJ0eXBlIjoiZnVuY3Rpb24iLCJuYW1lIjoid2VhdGhlciIsImRlc2NyaXB0aW9uIjoiR2V0cyBjdXJyZW50IHdlYXRoZXIgZm9yIGEgbG9jYXRpb24iLCJwYXJhbWV0ZXJzIjp7ImFkZGl0aW9uYWxQcm9wZXJ0aWVzIjpmYWxzZSwicHJvcGVydGllcyI6eyJsYXRpdHVkZSI6eyJkZXNjcmlwdGlvbiI6IkxhdGl0dWRlIChlLmcuLCA1Mi41MjAwKSIsInR5cGUiOiJzdHJpbmcifSwibG9uZ2l0dWRlIjp7ImRlc2NyaXB0aW9uIjoiTG9uZ2l0dWRlIChlLmcuLCAxMy40MDUwKSIsInR5cGUiOiJzdHJpbmcifX0sInJlcXVpcmVkIjpbImxhdGl0dWRlIiwibG9uZ2l0dWRlIl0sInN0cmljdCI6dHJ1ZSwidHlwZSI6Im9iamVjdCJ9LCJzdHJpY3QiOmZhbHNlfSx7InR5cGUiOiJmdW5jdGlvbiIsIm5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwiZGVzY3JpcHRpb24iOiJHZXRzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIiwicGFyYW1ldGVycyI6eyJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2UsInByb3BlcnRpZXMiOnt9LCJyZXF1aXJlZCI6W10sInN0cmljdCI6dHJ1ZSwidHlwZSI6Im9iamVjdCJ9LCJzdHJpY3QiOmZhbHNlfV0sInRvcF9sb2dwcm9icyI6MCwidG9wX3AiOjEsInRydW5jYXRpb24iOiIiLCJ1c2FnZSI6eyJjb3N0Ijp7ImN1cnJlbmN5IjoiVVNEIiwiaW5wdXRfY29zdCI6MC4wMDAwNiwib3V0cHV0X2Nvc3QiOjAuMDAxMywidG90YWxfY29zdCI6MC4wMDEzNn0sImlucHV0X3Rva2VucyI6MjI1LCJpbnB1dF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NjUyLCJvdXRwdXRfdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NDQ4fSwidG90YWxfdG9rZW5zIjo4Nzd9LCJ1c2VyIjpudWxsfQo=
+  recorded_at: Sun, 11 Oct 2026 21:13:08 GMT
 recorded_with: VCR 6.4.0

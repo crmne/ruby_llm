@@ -43,11 +43,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 3059f96783f9133d5271c8dde58a90d3
+      - 7aaccc9afa376e6ed0c7ab0c844276db
       Date:
-      - Wed, 07 Oct 2026 13:04:26 GMT
+      - Sun, 11 Oct 2026 21:08:13 GMT
       X-Envoy-Upstream-Service-Time:
-      - '796'
+      - '660'
       Server:
       - envoy
       Via:
@@ -58,17 +58,17 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"05d25c01-a300-45d7-b854-4f6f4543c82a","message":{"role":"assistant","tool_plan":"I
+      string: '{"id":"be91e2d2-aeb9-4205-a2c5-d77d4e5d65f2","message":{"role":"assistant","tool_plan":"I
         will use the best_language_to_learn tool to find out which language the user
-        should learn.","tool_calls":[{"id":"best_language_to_learn_kf72s45sfnqg","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":47,"output_tokens":30},"tokens":{"input_tokens":1445,"output_tokens":60},"cached_tokens":112}}'
-  recorded_at: Wed, 07 Oct 2026 13:04:26 GMT
+        should learn.","tool_calls":[{"id":"best_language_to_learn_1dbn6n93cvmh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":47,"output_tokens":30},"tokens":{"input_tokens":1445,"output_tokens":60},"cached_tokens":992}}'
+  recorded_at: Sun, 11 Oct 2026 21:08:13 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Use
-        the best_language_to_learn tool to tell me which language to learn."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_kf72s45sfnqg","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_kf72s45sfnqg","content":"Ruby"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best_language_to_learn tool to tell me which language to learn."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_1dbn6n93cvmh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_1dbn6n93cvmh","content":"Ruby"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
@@ -105,22 +105,22 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 3636ca2b438e2a9b28d1f266be26d711
+      - 907e5cf421f0a5ff5c92bb65c3431a36
       Date:
-      - Wed, 07 Oct 2026 13:04:27 GMT
+      - Sun, 11 Oct 2026 21:08:13 GMT
       X-Envoy-Upstream-Service-Time:
-      - '407'
+      - '251'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"81a1c273-5ecc-4adf-a30b-e1c913b30b83","message":{"role":"assistant","content":[{"type":"text","text":"Ruby
-        is the best language to learn."}],"citations":[{"start":0,"end":4,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_kf72s45sfnqg:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":50,"output_tokens":8},"tokens":{"input_tokens":1532,"output_tokens":22},"cached_tokens":992}}'
-  recorded_at: Wed, 07 Oct 2026 13:04:27 GMT
+      string: '{"id":"4810ac0a-0280-4d02-8516-9bc3fc2e6a85","message":{"role":"assistant","content":[{"type":"text","text":"The
+        best language to learn is Ruby."}],"citations":[{"start":30,"end":35,"text":"Ruby.","sources":[{"type":"tool","id":"best_language_to_learn_1dbn6n93cvmh:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":50,"output_tokens":8},"tokens":{"input_tokens":1532,"output_tokens":21},"cached_tokens":1408}}'
+  recorded_at: Sun, 11 Oct 2026 21:08:13 GMT
 recorded_with: VCR 6.4.0

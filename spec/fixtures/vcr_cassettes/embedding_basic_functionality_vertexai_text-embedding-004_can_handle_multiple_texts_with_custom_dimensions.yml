@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Sun, 11 Oct 2026 21:06:36 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 07 Oct 2026 12:59:45 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 12:59:45 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:36 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:46 GMT
+      - Sun, 11 Oct 2026 21:06:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,10 +106,6 @@ http_interactions:
           "predictions": [
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                },
                 "values": [
                   -0.0071573383174836636,
                   0.01143405307084322,
@@ -879,14 +875,18 @@ http_interactions:
                   0.02526424266397953,
                   0.0099949613213539124,
                   -0.016448808833956718
-                ]
+                ],
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 1
+                }
               }
             },
             {
               "embeddings": {
                 "statistics": {
-                  "truncated": false,
-                  "token_count": 1
+                  "token_count": 1,
+                  "truncated": false
                 },
                 "values": [
                   0.020355613902211189,
@@ -1662,10 +1662,6 @@ http_interactions:
             },
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 2
-                },
                 "values": [
                   -0.0097851529717445374,
                   0.0091454703360795975,
@@ -2435,7 +2431,11 @@ http_interactions:
                   0.0023286323994398117,
                   0.018018519505858421,
                   -0.026372617110610008
-                ]
+                ],
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 2
+                }
               }
             }
           ],
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Wed, 07 Oct 2026 12:59:46 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:37 GMT
 recorded_with: VCR 6.4.0

@@ -24,22 +24,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Req-Arrive-Time:
-      - '1791422394909'
-      Date:
-      - Thu, 08 Oct 2026 01:19:54 GMT
-      Access-Control-Allow-Origin:
-      - ''
-      Resp-Start-Time:
-      - '1791422398456'
-      X-Envoy-Upstream-Service-Time:
-      - '3543'
-      Server:
-      - istio-envoy
       Content-Type:
       - application/json; charset=utf-8
       Req-Cost-Time:
-      - '3546'
+      - '1275'
+      Resp-Start-Time:
+      - '1791753352614'
+      Date:
+      - Sun, 11 Oct 2026 21:15:50 GMT
+      Server:
+      - istio-envoy
+      Access-Control-Allow-Origin:
+      - ''
+      Req-Arrive-Time:
+      - '1791753351338'
+      X-Envoy-Upstream-Service-Time:
+      - '1272'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -49,95 +49,41 @@ http_interactions:
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the file. Let me start by checking the available tools.
-        The tools section says there''s a function called file_fetch that fetches
-        a sample text file named ruby.txt. The parameters for this function are empty,
-        so I don''t need to provide any arguments when calling it.\n\nFirst, I need
-        to make sure I call the file_fetch function correctly. Since there are no
-        parameters required, the tool call should just have the name \"file_fetch\"
-        and an empty arguments object. Once I call that function, it should retrieve
-        the contents of ruby.txt. \n\nAfter fetching the file, the next step is to
-        repeat the contents. But wait, how does the system handle the response after
-        the file is fetched? I assume that once the file is retrieved, the contents
-        will be available, and then I can read them and output them back to the user.
-        However, in the current setup, I need to first make the tool call to fetch
-        the file. The user''s instruction says to first call file_fetch and then repeat
-        the contents. \n\nSo, the first part is to generate the tool call. Then, once
-        the file is fetched, I can read its contents and present them. But since I''m
-        simulating the process, I need to make sure that after the tool call, the
-        response includes the file''s content. However, in the context of this problem,
-        I might just need to generate the tool call first. The user''s instruction
-        is to call file_fetch and then repeat the contents, so the assistant''s response
-        should first trigger the tool call, and then once the file is retrieved, the
-        contents are repeated.\n\nBut in the current step, I''m only supposed to generate
-        the tool call. So the correct action here is to call file_fetch with no arguments.
-        Then, once that''s done, the next step would be to read the file''s content
-        and output it. But for this query, the user is asking to first call the function,
-        so the answer should be the tool call. Therefore, I should output the tool_call
-        XML with the file_fetch function and empty arguments.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz"}]}}],"created":1791422398,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":460,"prompt_tokens":166,"total_tokens":626,"prompt_tokens_details":{"cached_tokens":51}},"id":"chatcmpl-dZohu5gcgPExMH0RQI0ufcHj0ZBav28f","timings":{"cache_n":51,"prompt_n":115,"prompt_ms":32.459,"prompt_per_token_ms":0.2822521739130435,"prompt_per_second":3542.9310822884254,"predicted_n":460,"predicted_ms":3495.414,"predicted_per_token_ms":7.615281045751635,"predicted_per_second":131.31491720294076}}'
-  recorded_at: Thu, 08 Oct 2026 01:19:58 GMT
+        The tools provided include a function called file_fetch which fetches the
+        ruby.txt file. The function doesn''t require any parameters, so I just need
+        to call it without any arguments. Once I get the file content, I should read
+        the text from the file and output it back to the user. Let me make sure I
+        structure the tool call correctly. Since there are no parameters, the arguments
+        object will be empty. I''ll format the tool call as specified and then proceed
+        to read the file''s content once the function is called.\n","tool_calls":[{"type":"function","function":{"name":"file_fetch","arguments":"{}"},"id":"kujAA3Y9gOtVwnPeNUokZ3Ou7666O4YC"}]}}],"created":1791753352,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":160,"prompt_tokens":166,"total_tokens":326,"prompt_tokens_details":{"cached_tokens":165}},"id":"chatcmpl-sGzawCA2Jx5lpwenJIQqAzVI1dgcUUdR","timings":{"cache_n":165,"prompt_n":1,"prompt_ms":9.598,"prompt_per_token_ms":9.598,"prompt_per_second":104.18837257762033,"predicted_n":160,"predicted_ms":1204.875,"predicted_per_token_ms":7.577830188679245,"predicted_per_second":131.96389666977902}}'
+  recorded_at: Sun, 11 Oct 2026 21:15:52 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call file_fetch
-        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
+        to get ruby.txt, then repeat the contents of the attached file."},{"role":"assistant","content":"","tool_calls":[{"id":"kujAA3Y9gOtVwnPeNUokZ3Ou7666O4YC","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the file. Let me start by checking the available tools.
-        The tools section says there''s a function called file_fetch that fetches
-        a sample text file named ruby.txt. The parameters for this function are empty,
-        so I don''t need to provide any arguments when calling it.\n\nFirst, I need
-        to make sure I call the file_fetch function correctly. Since there are no
-        parameters required, the tool call should just have the name \"file_fetch\"
-        and an empty arguments object. Once I call that function, it should retrieve
-        the contents of ruby.txt. \n\nAfter fetching the file, the next step is to
-        repeat the contents. But wait, how does the system handle the response after
-        the file is fetched? I assume that once the file is retrieved, the contents
-        will be available, and then I can read them and output them back to the user.
-        However, in the current setup, I need to first make the tool call to fetch
-        the file. The user''s instruction says to first call file_fetch and then repeat
-        the contents. \n\nSo, the first part is to generate the tool call. Then, once
-        the file is fetched, I can read its contents and present them. But since I''m
-        simulating the process, I need to make sure that after the tool call, the
-        response includes the file''s content. However, in the context of this problem,
-        I might just need to generate the tool call first. The user''s instruction
-        is to call file_fetch and then repeat the contents, so the assistant''s response
-        should first trigger the tool call, and then once the file is retrieved, the
-        contents are repeated.\n\nBut in the current step, I''m only supposed to generate
-        the tool call. So the correct action here is to call file_fetch with no arguments.
-        Then, once that''s done, the next step would be to read the file''s content
-        and output it. But for this query, the user is asking to first call the function,
-        so the answer should be the tool call. Therefore, I should output the tool_call
-        XML with the file_fetch function and empty arguments.\n","reasoning_content":"Okay,
+        The tools provided include a function called file_fetch which fetches the
+        ruby.txt file. The function doesn''t require any parameters, so I just need
+        to call it without any arguments. Once I get the file content, I should read
+        the text from the file and output it back to the user. Let me make sure I
+        structure the tool call correctly. Since there are no parameters, the arguments
+        object will be empty. I''ll format the tool call as specified and then proceed
+        to read the file''s content once the function is called.\n","reasoning_content":"Okay,
         the user wants me to call the file_fetch function to get ruby.txt and then
         repeat the contents of the file. Let me start by checking the available tools.
-        The tools section says there''s a function called file_fetch that fetches
-        a sample text file named ruby.txt. The parameters for this function are empty,
-        so I don''t need to provide any arguments when calling it.\n\nFirst, I need
-        to make sure I call the file_fetch function correctly. Since there are no
-        parameters required, the tool call should just have the name \"file_fetch\"
-        and an empty arguments object. Once I call that function, it should retrieve
-        the contents of ruby.txt. \n\nAfter fetching the file, the next step is to
-        repeat the contents. But wait, how does the system handle the response after
-        the file is fetched? I assume that once the file is retrieved, the contents
-        will be available, and then I can read them and output them back to the user.
-        However, in the current setup, I need to first make the tool call to fetch
-        the file. The user''s instruction says to first call file_fetch and then repeat
-        the contents. \n\nSo, the first part is to generate the tool call. Then, once
-        the file is fetched, I can read its contents and present them. But since I''m
-        simulating the process, I need to make sure that after the tool call, the
-        response includes the file''s content. However, in the context of this problem,
-        I might just need to generate the tool call first. The user''s instruction
-        is to call file_fetch and then repeat the contents, so the assistant''s response
-        should first trigger the tool call, and then once the file is retrieved, the
-        contents are repeated.\n\nBut in the current step, I''m only supposed to generate
-        the tool call. So the correct action here is to call file_fetch with no arguments.
-        Then, once that''s done, the next step would be to read the file''s content
-        and output it. But for this query, the user is asking to first call the function,
-        so the answer should be the tool call. Therefore, I should output the tool_call
-        XML with the file_fetch function and empty arguments.\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call 4BvHd4xBtKRTPFSiEtA1VS24edk3ZhVz:"},{"type":"text","text":"<file
+        The tools provided include a function called file_fetch which fetches the
+        ruby.txt file. The function doesn''t require any parameters, so I just need
+        to call it without any arguments. Once I get the file content, I should read
+        the text from the file and output it back to the user. Let me make sure I
+        structure the tool call correctly. Since there are no parameters, the arguments
+        object will be empty. I''ll format the tool call as specified and then proceed
+        to read the file''s content once the function is called.\n"},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"kujAA3Y9gOtVwnPeNUokZ3Ou7666O4YC"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call kujAA3Y9gOtVwnPeNUokZ3Ou7666O4YC:"},{"type":"text","text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"temperature":0,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
         a sample text file named ruby.txt","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -156,22 +102,22 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Envoy-Upstream-Service-Time:
+      - '1443'
+      Date:
+      - Sun, 11 Oct 2026 21:15:51 GMT
       Server:
       - istio-envoy
       Access-Control-Allow-Origin:
       - ''
+      Req-Arrive-Time:
+      - '1791753352618'
       Content-Type:
       - application/json; charset=utf-8
-      Req-Arrive-Time:
-      - '1791422398462'
-      Date:
-      - Thu, 08 Oct 2026 01:19:58 GMT
       Req-Cost-Time:
-      - '1330'
+      - '1450'
       Resp-Start-Time:
-      - '1791422399793'
-      X-Envoy-Upstream-Service-Time:
-      - '1327'
+      - '1791753354069'
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
@@ -185,9 +131,10 @@ http_interactions:
         any arguments. The response came back with the file attached, and the content
         is \"Ruby is the best.\" Now, the user wants me to repeat the contents of
         the file. Since the file is already fetched, I just need to output the text
-        from the file. I should check if there''s any specific way the user wants
-        the content repeated, but since they just said \"repeat the contents,\" probably
-        just echoing the text is enough. Let me make sure there''s no additional processing
-        needed. The text is straightforward, so I''ll present it as is.\n"}}],"created":1791422399,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":170,"prompt_tokens":254,"total_tokens":424,"prompt_tokens_details":{"cached_tokens":166}},"id":"chatcmpl-ImDeValgd0Tp3aNgd6UQCKric78NIfKw","timings":{"cache_n":166,"prompt_n":88,"prompt_ms":26.133,"prompt_per_token_ms":0.2969659090909091,"prompt_per_second":3367.389890177171,"predicted_n":170,"predicted_ms":1284.058,"predicted_per_token_ms":7.597976331360947,"predicted_per_second":131.61399251435682}}'
-  recorded_at: Thu, 08 Oct 2026 01:19:59 GMT
+        from the file. I should check if there''s any specific way to present it,
+        but since the user just said \"repeat,\" plain text should be fine. Let me
+        make sure I don''t miss any part of the content. The file''s MIME type is
+        text/plain, so it''s a straightforward text file. Alright, I''ll just echo
+        the content back as the answer.\n"}}],"created":1791753354,"model":"qwen3-native","system_fingerprint":"b10830-465e49b9c","object":"chat.completion","usage":{"completion_tokens":184,"prompt_tokens":253,"total_tokens":437,"prompt_tokens_details":{"cached_tokens":166}},"id":"chatcmpl-4SVixlF6aNq2XDBc7lbzkdi5BLeje5yE","timings":{"cache_n":166,"prompt_n":87,"prompt_ms":55.942,"prompt_per_token_ms":0.6430114942528735,"prompt_per_second":1555.1821529441208,"predicted_n":184,"predicted_ms":1380.046,"predicted_per_token_ms":7.541234972677596,"predicted_per_second":132.6042755096569}}'
+  recorded_at: Sun, 11 Oct 2026 21:15:54 GMT
 recorded_with: VCR 6.4.0

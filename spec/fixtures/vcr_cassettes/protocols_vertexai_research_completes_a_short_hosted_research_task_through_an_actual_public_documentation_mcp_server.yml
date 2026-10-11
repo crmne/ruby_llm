@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Wed, 07 Oct 2026 12:58:57 GMT
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 11 Oct 2026 21:06:10 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 12:58:57 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:10 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:58:59 GMT
+      - Sun, 11 Oct 2026 21:06:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -103,11 +103,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:58:59 GMT
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Sun, 11 Oct 2026 21:06:11 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -132,7 +132,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:58:59 GMT
+      - Sun, 11 Oct 2026 21:06:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -147,13 +147,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:58:59 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:12 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -178,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:03 GMT
+      - Sun, 11 Oct 2026 21:06:15 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -193,13 +193,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:03 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:15 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -224,7 +224,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:06 GMT
+      - Sun, 11 Oct 2026 21:06:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -239,13 +239,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:06 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:19 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -270,7 +270,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:10 GMT
+      - Sun, 11 Oct 2026 21:06:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -285,13 +285,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:10 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:22 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -316,7 +316,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:13 GMT
+      - Sun, 11 Oct 2026 21:06:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -331,13 +331,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:13 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:26 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -362,7 +362,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:17 GMT
+      - Sun, 11 Oct 2026 21:06:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -377,13 +377,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:17 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:29 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -408,7 +408,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:20 GMT
+      - Sun, 11 Oct 2026 21:06:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -423,13 +423,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:20 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:33 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -454,7 +454,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:24 GMT
+      - Sun, 11 Oct 2026 21:06:36 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -469,13 +469,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:24 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:36 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -500,7 +500,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:27 GMT
+      - Sun, 11 Oct 2026 21:06:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -515,13 +515,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:27 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:39 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -546,7 +546,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:31 GMT
+      - Sun, 11 Oct 2026 21:06:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -561,11 +561,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"in_progress","created":"","updated":"","service_tier":"standard","object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:31 GMT
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Sun, 11 Oct 2026 21:06:43 GMT
 - request:
     method: get
-    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
     body:
       encoding: US-ASCII
       string: ''
@@ -590,7 +592,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 12:59:36 GMT
+      - Sun, 11 Oct 2026 21:06:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -605,12 +607,148 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ChA1NjRmYzQzMDQ4MWNiOTRlEAgaATAqBG1haW4","status":"completed","usage":{"total_tokens":38950,"total_input_tokens":36917,"input_tokens_by_modality":[{"modality":"text","tokens":36917}],"total_output_tokens":325,"output_tokens_by_modality":[{"modality":"text","tokens":325}],"total_thought_tokens":1708},"service_tier":"standard","steps":[{"type":"user_input","content":[{"text":"Use
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Sun, 11 Oct 2026 21:06:46 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 11 Oct 2026 21:06:50 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","steps":[{"type":"user_input","content":[{"text":"Use
+        the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
+        do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Sun, 11 Oct 2026 21:06:50 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 11 Oct 2026 21:06:54 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"in_progress","created":"","updated":"","service_tier":"standard","object":"interaction","agent":"deep-research-preview-04-2026"}'
+  recorded_at: Sun, 11 Oct 2026 21:06:54 GMT
+- request:
+    method: get
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/interactions/ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 11 Oct 2026 21:06:59 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ChA1MjdjYTY1M2MyYTMyYmNmEAgaATAqBG1haW4","status":"completed","usage":{"total_tokens":39697,"total_input_tokens":37049,"input_tokens_by_modality":[{"modality":"text","tokens":37049}],"total_output_tokens":404,"output_tokens_by_modality":[{"modality":"text","tokens":404}],"total_thought_tokens":2244},"service_tier":"standard","steps":[{"type":"user_input","content":[{"text":"Use
         the Microsoft Learn MCP search tool for one lookup: what does Azure Functions
         do? Answer in one sentence with its source. Do not ask follow-up questions.","type":"text"}]},{"content":[{"text":"Azure
-        Functions is a serverless solution that enables developers to build applications
-        and implement system logic as event-driven, readily available blocks of code
-        while minimizing infrastructure management and lowering costs [cite: 1].","annotations":[{"start_index":226,"end_index":235,"title":"microsoft_docs_search
+        Functions is a serverless cloud computing solution that allows developers
+        to easily build and run small, event-driven pieces of code on demand without
+        needing to provision or manage the underlying infrastructure [cite: 1].","annotations":[{"start_index":218,"end_index":227,"title":"microsoft_docs_search
         result","type":"url_citation"}],"type":"text"}],"type":"model_output"}],"object":"interaction","agent":"deep-research-preview-04-2026"}'
-  recorded_at: Wed, 07 Oct 2026 12:59:36 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:59 GMT
 recorded_with: VCR 6.4.0

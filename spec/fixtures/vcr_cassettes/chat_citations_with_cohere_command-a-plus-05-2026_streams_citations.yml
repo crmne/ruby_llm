@@ -42,9 +42,9 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 9a0904bdd3bc7e0c0002cd428074e9c5
+      - c7e83a93f77163354f0392d6625cb8b4
       Date:
-      - Wed, 07 Oct 2026 12:59:54 GMT
+      - Sun, 11 Oct 2026 21:06:52 GMT
       X-Envoy-Upstream-Service-Time:
       - '7'
       Server:
@@ -59,28 +59,22 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"cb4e6919-b605-4f61-9fdb-7476c7540f9d","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"de3eb939-daeb-459e-9461-2ce0639af83b","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"I"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" see"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" from"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"The"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" document"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" clearly"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" states"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
@@ -119,27 +113,6 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" The"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" document"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" contains"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" information"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" explicitly"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
-
-        event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
 
         event: content-delta
@@ -147,6 +120,9 @@ http_interactions:
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" now"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" directly"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answer"}}}}
@@ -161,9 +137,6 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" question"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" directly"}}}}
-
-        event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
 
         event: content-delta
@@ -171,6 +144,15 @@ http_interactions:
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" information"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" from"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" document"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
@@ -209,7 +191,10 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" by"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Y"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" **"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"Y"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"uk"}}}}
@@ -221,10 +206,13 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Matsumoto"}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":47,"end":65,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":49,"end":67,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":0}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"**"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" in"}}}}
@@ -242,7 +230,7 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":69,"end":74,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":73,"end":78,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":1}
@@ -305,7 +293,7 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":".\""}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":2,"delta":{"message":{"citations":{"start":100,"end":174,"text":"\"The Ruby programming language was created by Yukihiro Matsumoto in 1993.\"","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":2,"delta":{"message":{"citations":{"start":104,"end":178,"text":"\"The Ruby programming language was created by Yukihiro Matsumoto in 1993.\"","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":2}
@@ -314,10 +302,10 @@ http_interactions:
         data: {"type":"content-end","index":1}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":75},"tokens":{"input_tokens":508,"output_tokens":108,"reasoning_tokens":38},"cached_tokens":144}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":72},"tokens":{"input_tokens":508,"output_tokens":104,"reasoning_tokens":32},"cached_tokens":144}}}
 
         data: [DONE]
 
-  recorded_at: Wed, 07 Oct 2026 12:59:55 GMT
+  recorded_at: Sun, 11 Oct 2026 21:06:53 GMT
 recorded_with: VCR 6.4.0
 ...

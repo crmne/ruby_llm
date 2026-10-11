@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Sun, 11 Oct 2026 21:12:08 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 07 Oct 2026 13:18:28 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 07 Oct 2026 13:18:28 GMT
+  recorded_at: Sun, 11 Oct 2026 21:12:08 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 07 Oct 2026 13:18:40 GMT
+      - Sun, 11 Oct 2026 21:12:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,7 +110,7 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This video shows a serene beach scene on a beautiful, sunny day.\n\nHere's what I see:\n*   **A woman** with long, dark hair is seated on the golden-brown sand, with her back to the camera, looking out towards the ocean. She appears to be wearing a light-colored (possibly pink or peach) sleeveless top. Her hair is gently blowing in the breeze.\n*   The **sandy beach** in the foreground is wide and stretches out to the water.\n*   The **ocean** extends into the distance, with calm, gentle waves lapping at the shore. The water near the beach is a clear, light turquoise, transitioning to deeper blues further out. There appear to be some lighter patches in the water, possibly indicating shallow areas or a reef.\n*   The **sky** is a bright, clear blue with scattered fluffy white clouds, suggesting good weather.\n*   The overall impression is one of peace, relaxation, and natural beauty."
+                    "text": "The video shows a serene outdoor scene at a beach on a bright, sunny day.\n\nHere's what I see:\n\n*   **Subject:** A woman with long, dark hair is seated on the sandy shore, facing away from the camera and looking out at the vast ocean. She appears to be wearing a light-colored (possibly peach or pink) top and white or light-colored bottoms. Her hair is gently blowing in the breeze throughout the clip.\n*   **Beach:** The foreground is made up of light-colored, soft sand with some scattered natural debris like small twigs and leaves.\n*   **Ocean:** The water is clear and calm, displaying beautiful shades of light blue and turquoise near the shore, gradually deepening to a darker blue further out. Small, gentle waves are lapping at the coastline. In the far distance, a very small figure can be seen in the water to the right, possibly swimming or wading.\n*   **Sky:** The horizon meets a bright, clear blue sky filled with scattered white, puffy clouds.\n*   **Atmosphere:** The overall impression is one of peace, relaxation, and natural beauty, suggesting a tranquil moment by the sea."
                   }
                 ]
               },
@@ -119,30 +119,30 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 3362,
-            "candidatesTokenCount": 205,
-            "totalTokenCount": 4573,
+            "candidatesTokenCount": 244,
+            "totalTokenCount": 4671,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 8
-              },
-              {
                 "modality": "VIDEO",
                 "tokenCount": 3354
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 205
+                "tokenCount": 244
               }
             ],
-            "thoughtsTokenCount": 1006
+            "thoughtsTokenCount": 1065
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-10-07T13:18:29.469576Z",
-          "responseId": "pUbGasjUHJfr2fMP5c7CwQI"
+          "createTime": "2026-10-11T21:12:09.160009Z",
+          "responseId": "qfvLaoniCa2jhcIPvoWh6Ao"
         }
-  recorded_at: Wed, 07 Oct 2026 13:18:40 GMT
+  recorded_at: Sun, 11 Oct 2026 21:12:18 GMT
 recorded_with: VCR 6.4.0

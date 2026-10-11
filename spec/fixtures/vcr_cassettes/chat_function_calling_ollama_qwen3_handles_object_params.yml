@@ -28,20 +28,20 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 07 Oct 2026 13:40:26 GMT
+      - Sun, 11 Oct 2026 21:11:29 GMT
       Content-Length:
-      - '1056'
+      - '1032'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-331","object":"chat.completion","created":1791380426,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-799","object":"chat.completion","created":1791753089,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the object params tool with a window starting on
-        2025-01-01 and ending on 2025-01-02. Let me check the function definition
-        again. The function requires a window object with start and end in ISO format.
-        The parameters are provided, so I need to structure the JSON correctly. The
-        start is \"2025-01-01\" and the end is \"2025-01-02\". I''ll format the arguments
-        as a JSON object inside the tool_call tags. Make sure the keys are \"start\"
-        and \"end\" and the values are strings. That should do it.\n","tool_calls":[{"id":"call_o25d9xcg","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":200,"total_tokens":405}}
+        2025-01-01 and ending on 2025-01-02. Let me check the function signature provided.
+        The tool requires a window object with start and end in ISO format. The parameters
+        are correctly formatted as dates. I need to structure the JSON arguments with
+        the window containing those dates. Make sure the keys are ''start'' and ''end''
+        under the ''window'' object. No other parameters are needed. Let me put that
+        into the tool_call format.\n","tool_calls":[{"id":"call_hvroq6a0","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":205,"prompt_tokens_details":{"cached_tokens":48},"completion_tokens":174,"total_tokens":379}}
 
         '
-  recorded_at: Wed, 07 Oct 2026 13:40:26 GMT
+  recorded_at: Sun, 11 Oct 2026 21:11:29 GMT
 recorded_with: VCR 6.4.0

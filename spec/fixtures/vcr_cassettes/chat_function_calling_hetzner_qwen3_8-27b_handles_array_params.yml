@@ -26,26 +26,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:55:36 GMT
+      - Sun, 11 Oct 2026 21:10:25 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '1034'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Vary:
       - Origin
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Went-Into-Resp-Headers:
       - 'true'
+      X-Llm-D-Flow-Queue-Duration-Ms:
+      - '0'
       Server:
       - HeRay
     body:
       encoding: UTF-8
-      string: '{"model":"Qwen3.8-27B","usage":{"prompt_tokens":349,"completion_tokens":64,"total_tokens":413,"completion_tokens_details":{"reasoning_tokens":31},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-beb53f71fc0d94c9","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+      string: '{"model":"Qwen/Qwen3.8-27B","usage":{"prompt_tokens":348,"completion_tokens":62,"total_tokens":410,"completion_tokens_details":{"reasoning_tokens":29},"prompt_tokens_details":{"cached_tokens":0,"created_cache_tokens":0,"multimodal_tokens":null}},"choices":[{"message":{"role":"assistant","refusal":null,"annotations":null,"audio":null,"function_call":null,"tool_calls":[{"id":"chatcmpl-tool-bbf4e44406a5910e","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
         [\"red\", \"blue\"]}"}}],"reasoning":"The user wants to call the array_params
-        tool with tags [\"red\", \"blue\"] and communicate the combined tags. Let
-        me make the tool call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-51a2da7a-274a-4659-9afe-36c13e4c4dd7","object":"chat.completion","created":1791381200,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
-  recorded_at: Wed, 07 Oct 2026 13:55:36 GMT
+        tool with tags [\"red\",\"blue\"] and report the combined tags. Let''s make
+        the call.\n"},"index":0,"logprobs":null,"finish_reason":"tool_calls","stop_reason":null,"token_ids":null,"routed_experts":null}],"id":"chatcmpl-4fe9a111-7b46-47c7-9837-430cd1559b4d","object":"chat.completion","created":1791753024,"system_fingerprint":null,"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}'
+  recorded_at: Sun, 11 Oct 2026 21:10:25 GMT
 recorded_with: VCR 6.4.0

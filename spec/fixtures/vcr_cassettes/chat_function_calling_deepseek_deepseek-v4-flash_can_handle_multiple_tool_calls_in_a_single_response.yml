@@ -32,7 +32,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:05:01 GMT
+      - Sun, 11 Oct 2026 21:08:41 GMT
       Server:
       - elb
       Vary:
@@ -40,7 +40,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 64e0696a22dffba40b168a517b3638cd
+      - c7336b87dc39583546bd391455a69dd4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -48,19 +48,18 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 bdd9bc79dc1b6d281d32deec57de395e.cloudfront.net (CloudFront)
+      - 1.1 22aa51e74fb02e10dd4d8353100e9be0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - TXL50-P1
       X-Amz-Cf-Id:
-      - 2MxcLRyJihu0Up4xJZSsdLYFcvGCsoa6XxLhnjlsPqHWGeHMg3tryg==
+      - pm2-O1seTCQXfW7Ks5bKkSaviMLqKao2KsSzENwz32nzT_D-apxQ2Q==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"6cf91223-adad-40f9-9915-d205bd1be3ac","object":"chat.completion","created":1791378301,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+      string: '{"id":"9c93264c-892e-49d3-9d30-254a6556befb","object":"chat.completion","created":1791752921,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
         roll the dice 3 times for you.","reasoning_content":"The user wants me to
-        roll the dice 3 times. I need to call the dice_roll tool exactly 3 times.
-        Since there are no dependencies between the calls, I can make all three calls
-        in the same block.","tool_calls":[{"index":0,"id":"call_00_wYhEpKyd40dqhnt8ixsh7685","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"call_01_jI58dou8kqra3HPck2UI7991","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"call_02_DF7BnYk31Kq0GWYyyXNL5314","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":321,"completion_tokens":108,"total_tokens":429,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":46},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":321},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
-  recorded_at: Wed, 07 Oct 2026 13:05:01 GMT
+        roll the dice 3 times. I must call the dice_roll tool exactly 3 times. Let
+        me make all three calls in parallel.","tool_calls":[{"index":0,"id":"call_00_ltRdGDHZEqHVmCkFhdZg2009","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"call_01_LhqRlBKTFRRhPvEz25me8479","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"call_02_Yg7PHBjPtmU74vx6Q85I4974","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":321,"completion_tokens":96,"total_tokens":417,"prompt_tokens_details":{"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":34},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":193},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Sun, 11 Oct 2026 21:08:42 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -69,13 +68,11 @@ http_interactions:
       string: '{"model":"deepseek-v4-flash","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
-        for you.","tool_calls":[{"id":"call_00_wYhEpKyd40dqhnt8ixsh7685","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_01_jI58dou8kqra3HPck2UI7991","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_02_DF7BnYk31Kq0GWYyyXNL5314","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
-        user wants me to roll the dice 3 times. I need to call the dice_roll tool
-        exactly 3 times. Since there are no dependencies between the calls, I can
-        make all three calls in the same block.","reasoning":"The user wants me to
-        roll the dice 3 times. I need to call the dice_roll tool exactly 3 times.
-        Since there are no dependencies between the calls, I can make all three calls
-        in the same block."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_00_wYhEpKyd40dqhnt8ixsh7685"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_01_jI58dou8kqra3HPck2UI7991"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_02_DF7BnYk31Kq0GWYyyXNL5314"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        for you.","tool_calls":[{"id":"call_00_ltRdGDHZEqHVmCkFhdZg2009","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_01_LhqRlBKTFRRhPvEz25me8479","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_02_Yg7PHBjPtmU74vx6Q85I4974","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to roll the dice 3 times. I must call the dice_roll tool exactly
+        3 times. Let me make all three calls in parallel.","reasoning":"The user wants
+        me to roll the dice 3 times. I must call the dice_roll tool exactly 3 times.
+        Let me make all three calls in parallel."},{"role":"tool","content":"{\"roll\":1}","tool_call_id":"call_00_ltRdGDHZEqHVmCkFhdZg2009"},{"role":"tool","content":"{\"roll\":2}","tool_call_id":"call_01_LhqRlBKTFRRhPvEz25me8479"},{"role":"tool","content":"{\"roll\":3}","tool_call_id":"call_02_Yg7PHBjPtmU74vx6Q85I4974"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -100,7 +97,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 07 Oct 2026 13:05:02 GMT
+      - Sun, 11 Oct 2026 21:08:42 GMT
       Server:
       - elb
       Vary:
@@ -108,7 +105,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 2e272edda151695781619241b9b71672
+      - 948d5e8cb3e97865665fa8e395f2bf69
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -116,14 +113,15 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 547a0375ec02f9b604ed007303b6266a.cloudfront.net (CloudFront)
+      - 1.1 2491b6822c8b67ab71408f2502e68b7e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - lu-RL9yfE5kgAhEAzDZKfBeVCI0r2hG1jgrQitRJNO-3euUUUiW8Qg==
+      - 0nNEGATZYCCEoZObFuTzNp23IDgCO3MiA2FPLzZV85hUqUtVkDcHKQ==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjU1NjI2NWFiLTlkMDQtNDVlZS04MTAzLWNkMGEzZTFhZjZmYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTEzNzgzMDIsIm1vZGVsIjoiZGVlcHNlZWstZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUgYXJlIHlvdXIgMyBkaWNlIHJvbGxzOlxuXG4xLiDwn46yICoqMSoqXG4yLiDwn46yICoqMioqXG4zLiDwn46yICoqMyoqXG5cblRvdGFsOiAqKjYqKlxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdGhyZWUgcm9sbHMgcmV0dXJuZWQgMSwgMiwgYW5kIDMuIExldCBtZSByZXBvcnQgdGhpcyB0byB0aGUgdXNlci4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NjksImNvbXBsZXRpb25fdG9rZW5zIjo3MSwidG90YWxfdG9rZW5zIjo1NDAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTZ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjIyfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjI1NiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyMTN9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJhZWI1NjQwMWNhNzRlMTI3ODIxYzRmOTEyNmRjYjY2OSJ9
-  recorded_at: Wed, 07 Oct 2026 13:05:03 GMT
+      string: '{"id":"b95d150d-795f-480a-9901-f2ec5d910e6c","object":"chat.completion","created":1791752922,"model":"deepseek-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Here
+        are your 3 dice rolls:\n\n- Roll 1: **1**\n- Roll 2: **2**\n- Roll 3: **3**\n\nTotal:
+        **6**","reasoning_content":"The three rolls are 1, 2, 3."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":457,"completion_tokens":51,"total_tokens":508,"prompt_tokens_details":{"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":13},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":201},"system_fingerprint":"aeb56401ca74e127821c4f9126dcb669"}'
+  recorded_at: Sun, 11 Oct 2026 21:08:42 GMT
 recorded_with: VCR 6.4.0

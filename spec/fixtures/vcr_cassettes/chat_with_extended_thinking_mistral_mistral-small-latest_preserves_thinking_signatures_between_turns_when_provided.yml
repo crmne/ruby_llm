@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:02:41 GMT
+      - Sun, 11 Oct 2026 21:10:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11675-7d5e-76f1-b659-83167fd2a589
+      - 01a12ccd-1c1f-7c3e-8b50-8bc4defd412e
       X-Kong-Request-Id:
-      - 01a11675-7d5e-76f1-b659-83167fd2a589
+      - 01a12ccd-1c1f-7c3e-8b50-8bc4defd412e
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '94945'
+      - '94686'
       X-Ratelimit-Tokens-Query-Cost:
-      - '72'
+      - '66'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '95'
+      - '99'
       X-Envoy-Upstream-Service-Time:
-      - '711'
+      - '388'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '712'
+      - '388'
       X-Kong-Proxy-Latency:
-      - '17'
+      - '15'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,11 +71,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4b9dbf9957af4403a331bbcb051edd60","created":1791378161,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":72,"completion_tokens":49,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the result of a simple arithmetic operation: 5 + 3. This
-        is a straightforward addition problem. The sum of 5 and 3 is 8."}],"closed":true},{"type":"text","text":"5
-        + 3 equals **8**."}]}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:02:41 GMT
+      string: '{"id":"68334ee0c9824ee787c8d52722903770","created":1791753002,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":66,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the sum of 5 and 3. This is a straightforward arithmetic
+        problem. I know that 5 plus 3 equals 8."}],"closed":true},{"type":"text","text":"5
+        + 3 = 8"}]}}]}'
+  recorded_at: Sun, 11 Oct 2026 21:10:02 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -83,9 +83,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
         is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the result of a simple arithmetic operation: 5 + 3. This
-        is a straightforward addition problem. The sum of 5 and 3 is 8."}]},{"type":"text","text":"5
-        + 3 equals **8**."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
+        user is asking for the sum of 5 and 3. This is a straightforward arithmetic
+        problem. I know that 5 plus 3 equals 8."}]},{"type":"text","text":"5 + 3 =
+        8"}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:02:42 GMT
+      - Sun, 11 Oct 2026 21:10:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,31 +111,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11675-8086-78b1-91b1-6ea6547efb39
+      - 01a12ccd-1dff-745f-818d-30880aaac644
       X-Kong-Request-Id:
-      - 01a11675-8086-78b1-91b1-6ea6547efb39
+      - 01a12ccd-1dff-745f-818d-30880aaac644
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '94821'
+      - '94579'
       X-Ratelimit-Tokens-Query-Cost:
-      - '124'
+      - '117'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '94'
+      - '98'
       X-Envoy-Upstream-Service-Time:
-      - '1154'
+      - '442'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1155'
+      - '444'
       X-Kong-Proxy-Latency:
-      - '13'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -151,6 +151,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImIyZTZhY2UxZGE1OTRlOWJiYjYxNDYzZGQxMzk5ZDFiIiwiY3JlYXRlZCI6MTc5MTM3ODE2MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjgwLCJ0b3RhbF90b2tlbnMiOjEyNCwiY29tcGxldGlvbl90b2tlbnMiOjQ0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgdXNlciB3YW50cyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0ICh3aGljaCB3YXMgOCkgYnkgMi4gU28sIDggbXVsdGlwbGllZCBieSAyIGlzIDE2LiJ9XSwiY2xvc2VkIjp0cnVlfSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6Ijggw5cgMiBlcXVhbHMgKioxNioqLiJ9XX19XX0=
-  recorded_at: Wed, 07 Oct 2026 13:02:42 GMT
+        eyJpZCI6IjY5YTU4NWFkZjc5ZDRkZDZhMDNiNzEwNGYzM2FlYTlmIiwiY3JlYXRlZCI6MTc5MTc1MzAwMiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc0LCJ0b3RhbF90b2tlbnMiOjExNywiY29tcGxldGlvbl90b2tlbnMiOjQzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgdXNlciB3YW50cyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0ICh3aGljaCB3YXMgOCkgYnkgMi4gU28sIDggbXVsdGlwbGllZCBieSAyIGVxdWFscyAxNi4ifV0sImNsb3NlZCI6dHJ1ZX0seyJ0eXBlIjoidGV4dCIsInRleHQiOiI4IMOXIDIgPSAxNiJ9XX19XX0=
+  recorded_at: Sun, 11 Oct 2026 21:10:02 GMT
 recorded_with: VCR 6.4.0

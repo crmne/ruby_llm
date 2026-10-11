@@ -25,19 +25,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 12:57:52 GMT
+      - Sun, 11 Oct 2026 21:07:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Server:
-      - cloudflare
+      X-Typesafe-Request-Id:
+      - req_01a12cca56247a598eea734bc06ebe62
       Set-Cookie:
       - "<COOKIE>"
-      X-Typesafe-Request-Id:
-      - req_01a116711704755d9ac8afbc2dd3d00e
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       Cf-Ray:
@@ -46,6 +46,6 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"jev-1.13.0","answers":{"department":{"type":"choice","choice":"billing","confidence":1.0,"probabilities":{"technical":0.0,"billing":1.0}},"urgent":{"type":"noul","noul":0.46}},"usage":{"input_tokens":320,"output_tokens":48}}'
-  recorded_at: Wed, 07 Oct 2026 12:57:52 GMT
+      string: '{"model":"jev-1.13.0","answers":{"department":{"type":"choice","choice":"billing","confidence":1.0,"probabilities":{"billing":1.0,"technical":0.0}},"urgent":{"type":"noul","noul":0.48}},"usage":{"input_tokens":320,"output_tokens":48}}'
+  recorded_at: Sun, 11 Oct 2026 21:07:00 GMT
 recorded_with: VCR 6.4.0

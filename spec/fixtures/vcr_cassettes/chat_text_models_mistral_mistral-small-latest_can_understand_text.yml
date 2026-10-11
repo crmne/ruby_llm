@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:05:23 GMT
+      - Sun, 11 Oct 2026 21:07:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,29 +33,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11677-f366-72a3-aa72-70cb0a46aaf2
+      - 01a12cca-aef1-754a-9265-184aa3aef805
       X-Kong-Request-Id:
-      - 01a11677-f366-72a3-aa72-70cb0a46aaf2
+      - 01a12cca-aef1-754a-9265-184aa3aef805
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98996'
+      - '85068'
       X-Ratelimit-Tokens-Query-Cost:
       - '60'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '99'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '1555'
+      - '252'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1556'
+      - '253'
       X-Kong-Proxy-Latency:
       - '15'
       Cf-Cache-Status:
@@ -72,9 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f005f3c7c7cb489e9fab0d22b1338ad3","created":1791378322,"model":"mistral-small-latest","usage":{"prompt_tokens":41,"total_tokens":60,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"ec54da0eec914f72bf076f052cdf3f99","created":1791752843,"model":"mistral-small-latest","usage":{"prompt_tokens":41,"total_tokens":60,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.txt` contains the plain text:\n\n```\nRuby is the best.\n```"}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:05:23 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:23 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -103,7 +103,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Oct 2026 13:05:24 GMT
+      - Sun, 11 Oct 2026 21:07:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -111,31 +111,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - 01a11677-f9e1-7862-b72f-fcd474986ce1
+      - 01a12cca-b03e-725b-b0a2-1596e6b9db18
       X-Kong-Request-Id:
-      - 01a11677-f9e1-7862-b72f-fcd474986ce1
+      - 01a12cca-b03e-725b-b0a2-1596e6b9db18
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '98933'
+      - '85056'
       X-Ratelimit-Tokens-Query-Cost:
-      - '106'
+      - '122'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '98'
+      - '96'
       X-Envoy-Upstream-Service-Time:
-      - '371'
+      - '298'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '373'
+      - '299'
       X-Kong-Proxy-Latency:
-      - '71'
+      - '12'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -150,8 +150,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3a243cbed70d47c58c52c7a9594e6128","created":1791378324,"model":"mistral-small-latest","usage":{"prompt_tokens":93,"total_tokens":122,"completion_tokens":29,"prompt_tokens_details":{"cached_tokens":16},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"540688ff779b4a599dae217c53531297","created":1791752843,"model":"mistral-small-latest","usage":{"prompt_tokens":93,"total_tokens":122,"completion_tokens":29,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
         is the best</truism>\n```"}}]}'
-  recorded_at: Wed, 07 Oct 2026 13:05:24 GMT
+  recorded_at: Sun, 11 Oct 2026 21:07:23 GMT
 recorded_with: VCR 6.4.0
