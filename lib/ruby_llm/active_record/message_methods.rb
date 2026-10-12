@@ -73,6 +73,12 @@ module RubyLLM
         optional_column(:cache_until_here) || false
       end
 
+      # Serialization reads each column through its method, and
+      # #cache_until_here marks a boundary instead of reading one.
+      def read_attribute_for_serialization(name) # :nodoc:
+        name.to_s == 'cache_until_here' ? cache_until_here? : super
+      end
+
       # Returns the cache lifetime given to the message's boundary, or +nil+
       # when the chat's caching policy applies.
       def cache_ttl
