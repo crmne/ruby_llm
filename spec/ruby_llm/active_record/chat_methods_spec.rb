@@ -409,6 +409,104 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect { chat.cache_until_here }.to raise_error(ArgumentError, 'No messages to cache')
     end
+
+    it 'sends the boundary with the next request on the same instance' do
+      model = model_for(:anthropic)
+      url = 'https://api.anthropic.com/v1/messages'
+      stub_request(:post, url).to_return_json(
+        body: { model: model, content: [{ type: 'text', text: 'Done' }], stop_reason: 'end_turn',
+                usage: { input_tokens: 10, output_tokens: 1 } }
+      )
+      chat = Chat.create!(model: model, provider: :anthropic).with_caching
+
+      chat.with_instructions('Reusable policy').cache_until_here(ttl: '1h')
+      chat.ask('Use the policy')
+
+      expect(a_request(:post, url).with do |request|
+        JSON.parse(request.body).dig('system', -1, 'cache_control') == { 'type' => 'ephemeral', 'ttl' => '1h' }
+      end).to have_been_made
+    end
+
+    it 'applies a changed lifetime to the same instance' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Reusable policy', cache_until_here: { ttl: '1h' })
+
+      chat.cache_until_here(ttl: '5m')
+
+      expect(chat.to_llm.messages.sole.cache_ttl).to eq('5m')
+    end
+
+    it 'applies a boundary marked on the message add_message returned' do
+      chat = Chat.create!(model: model_id)
+      chat.to_llm
+      message = chat.add_message(role: :user, content: 'Reusable prompt')
+
+      expect(message.cache_until_here(ttl: '1h')).to be(message)
+      expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
+    end
+
+    it 'marks a returned message before the chat builds its history' do
+      chat = Chat.create!(model: model_id)
+
+      chat.add_message(role: :user, content: 'Reusable prompt').cache_until_here(ttl: '1h')
+
+      expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
+    end
+
+    it 'marks a message whose chat is not loaded without fetching the chat' do
+      chat = Chat.create!(model: model_id)
+      message = Message.find(chat.add_message(role: :user, content: 'Reusable prompt').id)
+
+      queries = QueryHelpers.matching(/FROM ["`]chats["`]/) { message.cache_until_here(ttl: '1h') }
+
+      expect(message.cache_ttl).to eq('1h')
+      expect(queries).to be_empty
+    end
+
+    it 'keeps the runtime configuration and unsaved attributes of the chat' do
+      chat = Chat.create!(model: model_id).with_temperature(0.2)
+      runtime = chat.to_llm
+      chat.add_message(role: :user, content: 'Reusable prompt')
+      chat[:cancelled] = true
+
+      chat.cache_until_here
+
+      expect(chat.to_llm).to be(runtime)
+      expect(chat.temperature).to eq(0.2)
+      expect(chat.changes).to eq('cancelled' => [false, true])
+    end
+
+    context 'when the associations have no inverse' do
+      before do
+        stub_const('ThreadChat', Class.new(ApplicationRecord) do
+          self.table_name = 'chats'
+          acts_as_chat message_class: 'ThreadMessage', messages_foreign_key: :chat_id
+        end)
+        stub_const('ThreadMessage', Class.new(ApplicationRecord) do
+          self.table_name = 'messages'
+          acts_as_message chat_class: 'ThreadChat', chat_foreign_key: :chat_id
+        end)
+      end
+
+      it 'applies a boundary marked on the chat' do
+        chat = ThreadChat.create!(model: model_id)
+        chat.to_llm
+        chat.add_message(role: :user, content: 'Reusable prompt')
+
+        chat.cache_until_here(ttl: '1h')
+
+        expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
+      end
+
+      it 'applies a boundary marked on the message add_message returned' do
+        chat = ThreadChat.create!(model: model_id)
+        chat.to_llm
+
+        chat.add_message(role: :user, content: 'Reusable prompt').cache_until_here(ttl: '1h')
+
+        expect(chat.to_llm.messages.last.cache_ttl).to eq('1h')
+      end
+    end
   end
 
   describe 'accounting' do
