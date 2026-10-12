@@ -58,21 +58,27 @@ module RubyLLM
 
       # Rebuilds a cost from a stored breakdown Hash, as produced by #to_h
       # and persisted alongside a usage entry. Keys may be Strings or
-      # Symbols. The component readers return the recorded amounts and
+      # Symbols, and amounts may be numeric Strings, as JSON encodes
+      # decimals. The component readers return the recorded amounts and
       # #total equals the recorded +:total+.
       #
       #   RubyLLM::Cost.from_h({ input: 0.0001, total: 0.0003 }).total
       #
       def from_h(hash, tokens: nil)
-        amounts = COMPONENTS.to_h { |component| [component, hash[component] || hash[component.to_s]] }
+        amounts = COMPONENTS.to_h { |component| [component, recorded_amount(hash, component)] }
         total_recorded = hash.key?(:total) || hash.key?('total')
-        total = hash[:total] || hash['total'] if total_recorded
+        total = recorded_amount(hash, :total) if total_recorded
         missing = missing_recorded_components(amounts, tokens, total_recorded)
 
         new(amounts:, missing:, reported: recorded_tokens?(amounts, tokens, total_recorded), total:)
       end
 
       private
+
+      def recorded_amount(hash, key)
+        amount = hash[key] || hash[key.to_s]
+        amount.is_a?(String) ? Float(amount) : amount
+      end
 
       def aggregate_total(costs)
         totals = costs.map(&:total)

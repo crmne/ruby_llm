@@ -140,5 +140,47 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
 
       expect(record.chat_association).to eq(chat)
     end
+
+    describe 'exporting the recorded cost' do
+      include_context 'with configured RubyLLM'
+
+      let(:model) { model_for(:openrouter) }
+      let(:chat) { Chat.create!(model: model, provider: :openrouter) }
+
+      def reply(usage)
+        body = { model: model, usage: usage,
+                 choices: [{ message: { role: 'assistant', content: 'Answer' }, finish_reason: 'stop' }] }
+        stub_request(:post, 'https://openrouter.ai/api/v1/chat/completions').to_return_json(body: body)
+        chat.ask('Hello')
+        chat.messages.where(role: 'assistant').last
+      end
+
+      def restore(record)
+        RubyLLM::Message.new(JSON.parse(JSON.generate(record.to_llm.to_h)).transform_keys(&:to_sym))
+      end
+
+      it 'keeps the cost the provider reported through a JSON round trip' do
+        record = reply(prompt_tokens: 1000, completion_tokens: 2000, cost: 0.123)
+
+        expect(restore(record).cost.total).to eq(0.123)
+        expect(restore(record).cost.input).to eq(record.cost.input)
+        expect(RubyLLM::Message.new(record.to_llm.to_h).cost.total).to eq(0.123)
+      end
+
+      it 'keeps the total unknown when an attempt has no recorded cost' do
+        record = reply(prompt_tokens: 1000, completion_tokens: 2000, cost: 0.123)
+        chat.ruby_llm_usages.create!(message: record, operation: 'chat', provider: 'openrouter', model: model,
+                                     status: 'failed')
+
+        expect(restore(record).cost.total).to be_nil
+        expect(restore(record).cost.output).to eq(record.cost.output)
+      end
+
+      it 'adds no cost to a message without recorded usage' do
+        record = chat.add_message(role: :user, content: 'Hello')
+
+        expect(record.to_llm.to_h).not_to have_key(:cost)
+      end
+    end
   end
 end
