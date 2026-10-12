@@ -236,17 +236,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       expect(assistant.tool_results).to eq([result])
     end
 
-    it 'removes internal tool and usage rows when their chat is destroyed' do
+    it 'removes internal tool rows and keeps usage rows when their chat is destroyed' do
       chat = Chat.create!(model: model)
       message = chat.messages.create!(role: :assistant, content: '')
       message.ruby_llm_tool_calls.create!(tool_call_id: 'call_destroy', name: 'noop', arguments: {})
-      chat.ruby_llm_usages.create!(
+      usage = chat.ruby_llm_usages.create!(
         message:, operation: 'chat', provider: 'openai', model:, status: 'succeeded'
       )
 
-      expect { chat.destroy! }
-        .to change(RubyLLM::ActiveRecord::ToolCall, :count).by(-1)
-        .and change(RubyLLM::ActiveRecord::Usage, :count).by(-1)
+      expect { chat.destroy! }.to change(RubyLLM::ActiveRecord::ToolCall, :count).by(-1)
+      expect(usage.reload).to have_attributes(chat_id: nil, chat_type: nil, message_id: nil)
     end
   end
 
