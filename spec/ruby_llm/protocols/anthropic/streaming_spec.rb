@@ -37,6 +37,29 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(chunk.tokens.thinking).to eq(7)
   end
 
+  it 'reports the cumulative input tokens from message_delta usage' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [
+      { 'type' => 'message_start',
+        'message' => { 'model' => 'claude-haiku-4-5', 'usage' => { 'input_tokens' => 2225, 'output_tokens' => 1 } } },
+      { 'type' => 'message_delta', 'delta' => { 'stop_reason' => 'end_turn' },
+        'usage' => { 'input_tokens' => 11_715, 'output_tokens' => 310 } }
+    ].each { |event| accumulator.add(protocol.send(:build_chunk, event)) }
+
+    expect(accumulator.to_message(nil).tokens).to have_attributes(input: 11_715, output: 310)
+  end
+
+  it 'keeps the message_start input tokens when message_delta omits them' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [
+      { 'type' => 'message_start',
+        'message' => { 'model' => 'claude-haiku-4-5', 'usage' => { 'input_tokens' => 25, 'output_tokens' => 1 } } },
+      { 'type' => 'message_delta', 'delta' => { 'stop_reason' => 'end_turn' }, 'usage' => { 'output_tokens' => 12 } }
+    ].each { |event| accumulator.add(protocol.send(:build_chunk, event)) }
+
+    expect(accumulator.to_message(nil).tokens).to have_attributes(input: 25, output: 12)
+  end
+
   it 'reads the cache write lifetimes from message_start usage' do
     chunk = protocol.send(
       :build_chunk,

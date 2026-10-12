@@ -75,7 +75,7 @@ module RubyLLM
         end
 
         def extract_input_tokens(data)
-          message_usage(data)['input_tokens']
+          message_usage(data)['input_tokens'] || delta_usage(data)['input_tokens']
         end
 
         def extract_output_tokens(data)
