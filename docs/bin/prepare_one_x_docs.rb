@@ -91,3 +91,9 @@ safe_upload = <<~MARKDOWN
   ```ruby
 MARKDOWN
 File.write(rails_path, rails.sub(unsafe_upload, safe_upload))
+
+custom_scss_path = File.join(docs_dir, '_sass', 'custom', 'custom.scss')
+custom_scss = File.read(custom_scss_path)
+File.write(custom_scss_path, custom_scss.sub(%r{^(\s*\.provider-logo img\[src\*="/openrouter\.svg"\]),$}) do
+  "#{Regexp.last_match(1)} {\n    filter: invert(1);\n  }"
+end)

@@ -213,6 +213,32 @@ RSpec.describe 'Versioned documentation site', type: :task do
   end
 
   describe 'frozen 1.x assets' do
+    before do
+      write_page('_sass/custom/custom.scss', <<~SCSS)
+        @media (prefers-color-scheme: dark) {
+          .provider-logo img[src*="-text.svg"],
+          .provider-logo img[src*="/openrouter.svg"],
+
+          .site-logo {
+            background-image: url('/assets/images/logotype_dark.svg');
+          }
+        }
+      SCSS
+    end
+
+    it 'inverts dark provider logos instead of painting the site logo on them' do
+      write_page('_config.yml', '{}')
+      write_page('_includes/head.html', '')
+      write_page('_includes/head_custom.html', '')
+      write_page('_layouts/default.html', '')
+      write_page('_advanced/rails.md', File.read(File.join(root, 'spec/fixtures/docs/one_x_rails.md')))
+
+      run_script('prepare_one_x_docs.rb', site)
+
+      expect(File.read(File.join(site, '_sass/custom/custom.scss')))
+        .to match(/openrouter\.svg"\] \{\n\s+filter: invert\(1\);\n\s+\}\n\n\s+\.site-logo \{/)
+    end
+
     it 'keeps assets and copied Markdown inside the selected documentation version' do
       write_page('_config.yml', '{}')
       write_page('_includes/head.html', '')
