@@ -52,6 +52,12 @@ share_home_tour() {
     "$source/index.md"
 }
 
+share_home_design() {
+  local source="$1"
+  cp "$docs/_includes/home.html" "$source/_includes/"
+  cp "$docs/assets/css/rubyllm-overrides.css" "$source/assets/css/"
+}
+
 use_generated_about_card() {
   sed -i.bak '/^image: /d' "$1/about.md" && rm "$1/about.md.bak"
 }
@@ -72,6 +78,7 @@ echo "==> Building stable docs ($stable_ref) -> /"
 archive_release "$stable_ref" "$workspace/stable" tasks/
 prepare_version "$workspace/stable/docs" stable
 share_home_tour "$workspace/stable/docs"
+share_home_design "$workspace/stable/docs"
 use_generated_about_card "$workspace/stable/docs"
 render_models_page "$workspace/stable" "$workspace/stable/docs"
 build_version "$workspace/stable/docs" "$workspace/stable-out" "$BASE" "$workspace/stable"
