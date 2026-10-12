@@ -76,6 +76,17 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
     expect(record.updated_at).to be > created_at
   end
 
+  it 'leaves the update time of a row the registry carries unchanged' do
+    described_class.write(RubyLLM::Models.new([model_info]))
+    updated_at = 1.day.ago.change(usec: 0)
+    record = record_class.find_by!(model_id: model_info.id, provider: model_info.provider)
+    record.update_columns(updated_at: updated_at)
+
+    described_class.write(RubyLLM::Models.new([model_info]))
+
+    expect(record.reload.updated_at).to eq(updated_at)
+  end
+
   it 'keeps the last entry when a registry lists a model twice' do
     renamed = RubyLLM::Model.new(id: model_info.id, name: 'Renamed Model', provider: model_info.provider)
 
