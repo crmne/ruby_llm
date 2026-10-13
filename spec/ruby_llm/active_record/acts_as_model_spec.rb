@@ -96,6 +96,14 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
       .to eq(['Renamed Model'])
   end
 
+  it 'writes nothing when a registry entry is invalid' do
+    unnamed = RubyLLM::Model.new(id: 'unnamed-model', name: '', provider: model_info.provider)
+
+    expect { described_class.write(RubyLLM::Models.new([model_info, unnamed])) }
+      .to raise_error(ActiveRecord::RecordInvalid)
+    expect(record_class.where(provider: model_info.provider, model_id: [model_info.id, unnamed.id])).to be_empty
+  end
+
   it 'reads public RubyLLM::Model values' do
     record_class.save_to_database(RubyLLM::Models.new([model_info]))
 
