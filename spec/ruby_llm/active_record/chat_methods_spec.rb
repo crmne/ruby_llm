@@ -347,6 +347,26 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  describe 'message serialization' do
+    it 'reads the cache boundary column without marking a boundary' do
+      chat = Chat.create!(model: model_id)
+      chat.add_message(role: :user, content: 'First')
+      chat.add_message(role: :assistant, content: 'Second')
+
+      json = chat.messages.order(:id).as_json
+
+      expect(json.pluck('cache_until_here')).to eq([false, false])
+      expect(chat.messages.where(cache_until_here: true)).to be_empty
+    end
+
+    it 'serializes a marked boundary as it is stored' do
+      chat = Chat.create!(model: model_id)
+      message = chat.add_message(role: :user, content: 'Handbook').cache_until_here
+
+      expect(JSON.parse(message.to_json)['cache_until_here']).to be(true)
+    end
+  end
+
   describe '#add_message' do
     it 'copies an existing message record into the conversation' do
       source = Chat.create!(model: model_id)
