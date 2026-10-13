@@ -45,6 +45,7 @@ class <%= create_migration_class_name('ruby_llm_records') %> < ActiveRecord::Mig
       t.text :thought_signature
       t.string :approval
       t.boolean :remote, default: false, null: false
+      t.datetime :claimed_until
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
       t.jsonb :mcp_state

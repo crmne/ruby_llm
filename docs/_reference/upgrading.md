@@ -2,13 +2,13 @@
 layout: default
 title: Upgrading
 nav_order: 4
-description: Move a RubyLLM 2.0 application to 2.1, one release at a time.
+description: Move a RubyLLM 2.1 application to 2.2, one release at a time.
 redirect_from:
   - /upgrading-to-1-7
   - /upgrading-to-1-7/
 ---
 
-# Upgrade to 2.1
+# Upgrade to 2.2
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
@@ -16,21 +16,11 @@ redirect_from:
 After reading this guide, you will know:
 
 * How RubyLLM upgrades move from one release to the next.
-* What to finish on 2.0 before you update the gem.
-* How to upgrade a 2.0 application and its Rails schema to 2.1.
-* How to move Perplexity chat from Sonar to presets.
-* Which provider limits now raise the provider's error.
-* Where to read the request a chat sends.
-* How provider tool use is counted.
-* Which blocked transcriptions now raise an error.
+* How to upgrade a 2.1 application and its Rails schema to 2.2.
+* How persisted chats now run in one process at a time.
+* What changes for a crashed job, a denial, and a deploy that mixes versions.
 
-This guide covers **2.0 to 2.1**. Coming from 1.x? Follow the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md) with RubyLLM 2.0 first.
-
-## Evaluations from Earlier Development Builds
-
-If you tried evaluations on `main` before the default correctness check was added, set `evaluator false` on assertions-only classes to keep them free of grading requests. Defining `assertions` alone no longer disables model grading.
-
-Classes without declared criteria or configured Judge questions now compare their result with `expected_output`. Every selected case must supply that field. Explicit criteria keep their existing behavior; `evaluation :correctness` without instructions selects the built-in comparison. See [Evaluators]({% link _advanced/evaluation-evaluators.md %}) for defaults and overrides.
+This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
 ## One Release at a Time
 
@@ -38,27 +28,16 @@ Each release ships the upgrade steps for the changes since the previous release.
 
 To move across several releases, upgrade to each one in turn. Deploy it, run its upgrade, and resolve its deprecation warnings before you continue. Each release's upgrade guide stays in the repository at that release's tag.
 
-## Finish the 2.0 Upgrade
+## Finish the 2.1 Upgrade
 
-2.1 does not include the 1.16 upgrade generator, its migration helpers, or the `ruby_llm:upgrade:rollback`, `resume`, and `finalize` tasks. Finish that upgrade while your application still runs 2.0:
-
-* Run the 2.0 cleanup phase in every environment. In copy mode, finalize the upgrade first, then remove the generated `ruby_llm_upgrade.rb` concern and initializer.
-* Delete the 2.0 upgrade migrations from `db/migrate` once every environment has run them. They load helpers that ship only with 2.0, and your schema file already records their result.
+2.2 does not include the 2.1 upgrade generator. Run it while your application still runs 2.1, in every environment, and keep the migration it generated in `db/migrate`.
 
 ## Update the Gem
 
-RubyLLM 2.1 requires Ruby 3.2 or later. Ruby 3.1 reached its end of life in March 2025, and Rails 8 already requires 3.2.
-
-Require 2.1 in your `Gemfile`, so the update stops at this release:
+Require 2.2 in your `Gemfile`, so the update stops at this release:
 
 ```ruby
-gem "ruby_llm", "~> 2.1.0"
-```
-
-RubyLLM 2.1 allows JSON 3. On Rails versions before 8.1.4, keep JSON 2 explicitly in your `Gemfile` before updating:
-
-```ruby
-gem "json", "< 3"
+gem "ruby_llm", "~> 2.2.0"
 ```
 
 Then update it in your development branch:
@@ -67,120 +46,55 @@ Then update it in your development branch:
 bundle update ruby_llm
 ```
 
-2.1 does not require changes to your code, except to move Perplexity chat off Sonar, to rescue provider errors where RubyLLM used to check a provider's limits, to stop reading request bodies from raw responses, to read tool use counts by their new names, and to rescue blocked Gemini transcriptions.
-
-## Move Perplexity Chat to Presets
-
-Perplexity retires Sonar on September 27, 2026, so Perplexity chat now runs on its Agent API. Chats that name a Sonar model keep working: each runs the preset Perplexity recommends and logs a deprecation warning. Replace the model names to silence it:
-
-| Sonar model | Preset |
-| --- | --- |
-| `sonar` | `fast` |
-| `sonar-pro` | `low` |
-| `sonar-reasoning-pro` | `medium` |
-| `sonar-deep-research` | `high` |
-
-```ruby
-RubyLLM.chat(model: "fast", provider: :perplexity)
-```
-
-Expect a few differences:
-
-* Perplexity picks the model behind each preset, so answers can read differently.
-* PDF and other document attachments raise `RubyLLM::UnsupportedAttachmentError`. Images and text files still work.
-* `response.cost` is the total Perplexity bills, search fees included.
-
-Sonar's search parameters moved onto the `web_search` tool. The Agent API rejects them at the top level of a request, so a chat that still sends them raises `RubyLLM::BadRequestError` (`unknown field "search_recency_filter"`). Pass them as tool options instead:
-
-```ruby
-# Before
-chat.with_provider_options(search_recency_filter: "week",
-                           search_domain_filter: ["rubyonrails.org"])
-
-# After
-chat.with_provider_tools(web_search: {
-  filters: { search_recency_filter: "week", search_domain_filter: ["rubyonrails.org"] }
-})
-```
-
-The options you sent in `web_search_options`, such as `search_context_size` and `user_location`, become `web_search` options too.
-
-Read sources from `response.citations`. The Agent API response has no top-level `citations` field, so code that read them from `response.raw` finds none.
-
-To keep Sonar writing the answers, name it as a model. A model searches only with the `web_search` tool:
-
-```ruby
-RubyLLM.chat(model: "perplexity/sonar", provider: :perplexity).with_provider_tools(:web_search)
-```
-
-## Rescue Provider Errors for Provider Limits
-
-RubyLLM no longer copies provider limits into checks of its own. A request it used to refuse now reaches the provider, and the provider's error names the limit. These calls raised `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` before the request in 2.0. Now the provider decides, and a request it rejects raises `RubyLLM::BadRequestError` or another `RubyLLM::Error`:
-
-* `RubyLLM.rerank` on Bedrock or Vertex AI with no documents, more than 1,000 documents, an empty query, or a `top_n:` outside the provider's range.
-* `RubyLLM.embed` with more than one image on Cohere Embed v3.
-* Cohere embedding batches with `dimensions:`.
-* `RubyLLM.upload` on OpenAI or Azure without `purpose:`.
-* `RubyLLM.upload` on DeepSeek with a file that is not an image, a file over 64 MiB, or a `purpose:` other than `"user_data"`.
-* `RubyLLM.research` on Vertex AI with an agent other than the Deep Research preview, or with audio or video attachments.
-* `RubyLLM.animate` with Luma Ray 2 on Bedrock and an empty prompt, a prompt over 5,000 characters, or keyframes other than PNG or JPEG.
-* Other media formats on Bedrock: Stability source images beyond JPEG, PNG, and WebP, guardrail images beyond PNG and JPEG, and Voxtral audio beyond MP3 and WAV.
-* ElevenLabs image masks on models other than GPT Image, and reference audio or video on video models other than Seedance.
-* `RubyLLM.animate` without a prompt on ElevenLabs or GPUStack.
-* `RubyLLM.transcribe` on Gemini with `prompt:` combined with speaker names or word timestamps.
-* Streaming transcription on ElevenLabs or xAI with a WAV sample rate outside the rates RubyLLM listed, or on xAI with more than eight channels.
-* Perplexity Router chats with request options such as `seed`, tools without descriptions, audio other than MP3 or WAV, or a schema with `strict: false`, and Sonar chats with documents other than PDF, DOC, DOCX, TXT, or RTF.
-* Gemini Interactions chats with a thinking effort other than minimal, low, medium, or high.
-* Bedrock Converse chats with a thinking effort and a `max_output_tokens:` too small for the model's smallest thinking budget.
-
-If you rescue `ArgumentError` or `RubyLLM::UnsupportedAttachmentError` around these calls, rescue `RubyLLM::Error` instead. Bedrock and Vertex AI embedding batches also send empty strings to the provider now, instead of refusing the batch.
-
-RubyLLM no longer drops an explicit option the provider might reject, either. `RubyLLM.paint` on xAI now sends `size:`, so xAI's error replaces an image at its default size. Leave `size:` unset for xAI.
-
-## Read Requests Before They Are Sent
-
-A raw response no longer keeps the request it answered: `response.raw.env.request_body` is `nil`, so a conversation does not hold a serialized copy of its history for every reply. Read the request from the chat instead:
-
-```ruby
-chat.render
-chat.before_request { |payload| Rails.logger.debug(payload) }
-```
-
-## Read Tool Use by Its New Names
-
-`tokens.server_tool_use` now uses the same names on every provider and leaves out tools that did not run, so a response that used no provider tools returns `nil` even when the provider reported zero counts. Web searches are `web_search_requests` everywhere, and OpenAI, Azure, Gemini, Vertex AI, and Perplexity now report theirs. See [Pricing Tool Use]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use).
-
-Three providers reported other counters in 2.0:
-
-| Provider | 2.0 | 2.1 |
-| --- | --- | --- |
-| xAI | `num_server_side_tools_used` and `num_sources_used` | One count per tool, such as `web_search_requests` and `x_search_requests` |
-| OpenRouter Responses | `tool_calls_requested` and `tool_calls_executed` as well | Only per-tool counts such as `web_search_requests`, since those totals span every tool |
-| Mistral Conversations | Connector names, such as `web_search` and `code_interpreter` | `web_search_requests` and `code_execution_requests` |
-
-## Rescue Blocked Transcriptions
-
-`RubyLLM.transcribe` with a Gemini model on Gemini or Vertex AI returned an empty transcript in 2.0 when Google's safety filters blocked the audio. It now raises `RubyLLM::ContentFilterError`, whose message names the block reason. If you check for an empty transcript to detect a block, rescue the error instead. See [Blocked Transcriptions]({% link _core_features/audio-transcription.md %}#blocked-transcriptions).
+Plain Ruby applications need no changes. Rails applications upgrade their schema and read the changes to persisted chats below.
 
 ## Upgrade the Rails Schema
 
-Rails applications generate and run the 2.1 upgrade:
+Rails applications generate and run the 2.2 upgrade:
 
 ```bash
 bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-If your message model is not `Message`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade message:ChatMessage`.
+If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds the `ruby_llm_mcp_credentials` table, where the [MCP client]({% link _core_features/mcp.md %}#authorization) keeps OAuth credentials encrypted, two columns to `ruby_llm_tool_calls`, `mcp_state`, where a paused MCP tool call keeps its input requests or its task, and `mcp_result`, where an [MCP App]({% link _core_features/mcp.md %}#mcp-apps) tool call keeps the result its UI renders, the `ruby_llm_provider_files` table, where RubyLLM records the [provider uploads of stored attachments]({% link _advanced/rails-persistence.md %}#attachments-and-structured-output), and a `server_tool_use` column to `ruby_llm_usages`, where each attempt keeps how many times it ran each [provider tool]({% link _core_features/cost-and-usage-tracking.md %}#pricing-tool-use). It adds a `cache_ttl` column to your messages table, where a [cache boundary with its own lifetime]({% link _core_features/prompt-caching.md %}#explicit-cache-boundaries) keeps it. It also prepares `ruby_llm_usages` for attempts outside a chat: the chat reference becomes optional, a polymorphic `owner` reference records who caused an attempt, and the operation check constraint accepts every 2.1 operation. Existing rows keep their data. If your application ran a 2.1 upgrade from main before these changes, regenerate it with `bin/rails generate ruby_llm:upgrade --force` and migrate again. An application that ran a 2.1 upgrade from main before the release has its `pending_input` column renamed to `mcp_state`. Credentials use Active Record encryption, so run `bin/rails db:encryption:init` first if your app has no encryption keys.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data.
+
+Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
+
+## One Process Runs a Chat
+
+In 2.1, two processes that completed the same persisted chat at the same time could both run an approved tool call and both ask the model for a reply, for example when a double-submitted approval enqueued two jobs. In 2.2, `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat before they call the model or run a tool, and each tool call is claimed before it runs. A process that finds the chat claimed returns without doing anything:
+
+* `complete` returns the latest message, and `step`, `generate`, and `compact` return `nil`.
+* `waiting?` is `true`, so loops that stop on `complete? || waiting?` stop.
+* `chat.running?` and a tool call record's `running?` are `true`.
+
+The process that holds the claim continues with approvals and questions recorded while it ran. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+
+## Crashed Runs Resume After Their Claim Expires
+
+In 2.1, `complete` ran the unfinished tool calls of a crashed job right away. In 2.2, a crashed job keeps its claims for `config.max_run_time`, ten minutes by default, and `complete` in another process returns until they expire. A job retried within that time finds the chat `running?` and does nothing. Check `running?` after `complete` and enqueue the job again later, as [Resuming a Crashed Run]({% link _advanced/durable-agents.md %}#resuming-a-crashed-run) shows.
+
+Give tools that legitimately run longer than ten minutes their own limit with [`max_run_time`]({% link _core_features/tools.md %}#long-running-tools), and raise `config.max_run_time` above your slowest model request without streaming. A run that outlasts its claim counts as crashed and may run again.
+
+## Rescue Denials of Running Calls
+
+`deny` on a persisted tool call that has started running now raises `RubyLLM::ToolCallRunningError`; in 2.1 it recorded a denial the running tool never saw. `approve` on a running call and either decision on an answered call change nothing, where 2.1 overwrote the recorded decision. Rescue the error where you record denials:
+
+```ruby
+rescue_from RubyLLM::ToolCallRunningError do
+  redirect_back fallback_location: root_path, alert: "That action is already running."
+end
+```
+
+## Deploy Without Mixing Versions
+
+Workers on 2.1 do not claim chats, so they can still overlap with workers on 2.2 while a deploy rolls out. Run the schema upgrade first, then let the new version replace every worker before you rely on claims. Chats that run once all workers are on 2.2 are covered.
 
 Run your tests and deploy.
 
-## The Community MCP Gem
-
-2.1 includes an MCP client, `RubyLLM::MCP`. The community ruby_llm-mcp gem defines the same constant, so remove it before updating and move your servers to [MCP classes]({% link _core_features/mcp.md %}).
-
 ## Older Upgrade Guides
 
-Use the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md), or the [1.16 upgrade guide](https://rubyllm.com/v1/upgrading/) for older releases. See [GitHub releases](https://github.com/crmne/ruby_llm/releases) for the full changelog.
+Use the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md), the [2.0 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.0.0/docs/_reference/upgrading.md), or the [1.16 upgrade guide](https://rubyllm.com/v1/upgrading/) for older releases. See [GitHub releases](https://github.com/crmne/ruby_llm/releases) for the full changelog.

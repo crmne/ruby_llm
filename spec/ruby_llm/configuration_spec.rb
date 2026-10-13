@@ -15,6 +15,7 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.retry_max_interval).to eq(30)
       expect(config.retry_interval_randomness).to eq(0.5)
       expect(config.tool_concurrency).to be(false)
+      expect(config.max_run_time).to eq(600)
       expect(config.deprecation_behavior).to eq(:warn)
       expect(config.faraday_adapter).to eq(:net_http)
       expect(config.default_judgment_model).to eq('jev-latest')

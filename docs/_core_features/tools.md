@@ -138,6 +138,23 @@ One `ask` call handles the conversation loop:
 
 For full control over this loop (running each turn as its own job, setting an iteration budget, or stopping and resuming elsewhere), see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
+## Long-Running Tools
+
+A persisted chat claims each tool call while it runs, so no other process runs it at the same time. The claim lasts `config.max_run_time`, ten minutes by default. If the process running a tool dies, another process runs the call again once the claim expires. Give a tool that legitimately runs longer its own limit:
+
+```ruby
+class GenerateReport < RubyLLM::Tool
+  description "Builds the quarterly report"
+  max_run_time 2.hours
+
+  def execute(quarter:)
+    Reports.build!(quarter)
+  end
+end
+```
+
+A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; long MCP operations that run as [tasks]({% link _core_features/mcp.md %}#tasks) pause the chat and release their claim instead. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+
 ## Error Handling in Tools
 
 Tools should handle errors based on whether they're recoverable:

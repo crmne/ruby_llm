@@ -257,6 +257,15 @@ module RubyLLM
     option :tool_concurrency, false
 
     ##
+    # :attr_accessor: max_run_time
+    #
+    # Seconds a persisted chat's run, or a tool call it runs, may take
+    # before another process treats it as crashed and resumes it. A run
+    # renews its claim as it streams and between steps; a tool call keeps
+    # its claim for this long, or for its Tool.max_run_time. Default: 600.
+    option :max_run_time, 600
+
+    ##
     # :attr_accessor: auto_upload_large_files
     #
     # Whether oversized local attachments are uploaded to provider file

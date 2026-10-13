@@ -39,6 +39,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(Chat.find(chat.id).with_mcp(reports).pending_tasks.first).to have_attributes(id: 'task-1', status: :working)
   end
 
+  it 'releases the claims of a call that waits on a task' do
+    chat = paused_chat
+
+    expect(tool_call_record.claimed_until).to be_nil
+    expect(tool_call_record).not_to be_running
+    expect(chat).not_to be_running
+  end
+
   it 'checks on the task from another process and resumes once it finishes' do
     chat = paused_chat
 

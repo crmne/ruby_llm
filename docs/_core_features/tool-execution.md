@@ -173,7 +173,25 @@ class CompleteJob < ApplicationJob
 end
 ```
 
-Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and a retry will run it again.
+A double-submitted approval enqueues two jobs, and that is safe: only one process runs a chat at a time, so the second job finds the chat running or the call answered and returns without running it. Approving a call again changes nothing. Denying a call that has started raises `RubyLLM::ToolCallRunningError`, because the tool is already doing its work:
+
+```ruby
+class ApprovalsController < ApplicationController
+  rescue_from RubyLLM::ToolCallRunningError do
+    redirect_back fallback_location: root_path, alert: "That action is already running."
+  end
+end
+```
+
+A tool call record's `running?` is `true` while a process runs it, so a message's approval cards can show progress:
+
+```erb
+<% message.ruby_llm_tool_calls.each do |tool_call| %>
+  <%= tool_call.name %>: <%= tool_call.running? ? "Running…" : tool_call.approval %>
+<% end %>
+```
+
+Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Durable Agents]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
 [Durable Agents]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation.
 

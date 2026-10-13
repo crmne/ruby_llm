@@ -14,6 +14,20 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
+  describe '.max_run_time' do
+    it 'sets the run time that subclasses inherit' do
+      parent = Class.new(described_class) { max_run_time 7200 }
+      child = Class.new(parent)
+
+      expect(parent.new.max_run_time).to eq(7200)
+      expect(child.max_run_time).to eq(7200)
+    end
+
+    it 'leaves the configured run time in place by default' do
+      expect(Class.new(described_class).new.max_run_time).to be_nil
+    end
+  end
+
   describe '.parameter' do
     it 'accepts a description for the parameter' do
       stub_const('ParamDescriptionTool', Class.new(described_class) do

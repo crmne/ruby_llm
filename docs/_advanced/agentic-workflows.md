@@ -46,7 +46,7 @@ chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
 
 `ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
 
-With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Work interrupted before its result is saved may run again. See [Durable Agents]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
+With Rails persistence, each method reads the saved transcript and skips tool calls with saved results. Only one process runs a chat at a time: while another process is running it, each method returns without doing anything and `waiting?` is `true`. Work interrupted before its result is saved may run again once its claim expires. See [Durable Agents]({% link _advanced/durable-agents.md %}) for job retries and idempotent tools.
 
 Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _core_features/mcp.md %}#input-requests) asking for input and running tasks.
 

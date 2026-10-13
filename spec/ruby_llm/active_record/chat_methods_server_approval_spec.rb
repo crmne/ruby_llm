@@ -50,6 +50,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  it 'sends one approval response when two workers resume the chat' do
+    chat = parked_chat
+    first_worker = agent.find(chat.id)
+    second_worker = agent.find(chat.id)
+    chat.approve(chat.pending_approvals.first)
+
+    first_worker.run_tools
+    second_worker.run_tools
+
+    expect(chat.messages_association.where(role: 'tool').count).to eq(1)
+  end
+
   it 'reads a decision written by another worker while the query cache is enabled' do
     chat = parked_chat
     pending = chat.pending_approvals.first

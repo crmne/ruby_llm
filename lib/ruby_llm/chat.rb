@@ -148,6 +148,10 @@ module RubyLLM
       @tool_call_inputs = {}
       @input_checker = nil
       @input_recorder = nil
+      @tool_call_claimer = nil
+      @tool_call_releaser = nil
+      @running_checker = nil
+      @contested_tool_calls = []
     end
 
     # Adds +message+ as a user message and runs the conversation loop,
@@ -298,10 +302,10 @@ module RubyLLM
 
     # Returns whether the conversation can't continue until something
     # outside it happens: every remaining pending tool call waits on an
-    # approval decision, an answer to an MCP input request, or an MCP task.
-    # #complete stops here, and #awaiting_approval?, #awaiting_input?, and
-    # #awaiting_tasks? tell what it waits on. Stop a loop you drive with
-    # #step here too:
+    # approval decision, an answer to an MCP input request, an MCP task, or
+    # a run in another process. #complete stops here, and
+    # #awaiting_approval?, #awaiting_input?, and #awaiting_tasks? tell what
+    # it waits on. Stop a loop you drive with #step here too:
     #
     #   chat.step until chat.complete? || chat.waiting?
     #
@@ -310,7 +314,9 @@ module RubyLLM
       return false unless response
 
       pending = pending_tool_calls(response).values
-      pending.any? && pending.all? { |tool_call| approval_pending?(tool_call) || paused?(tool_call) }
+      pending.any? && pending.all? do |tool_call|
+        approval_pending?(tool_call) || paused?(tool_call) || running_elsewhere?(tool_call)
+      end
     end
 
     # Returns whether the conversation can make no progress without an
@@ -1023,7 +1029,8 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder, :approval_checker, :input_checker, :input_recorder # :nodoc:
+    attr_writer :cancellation_checker, :usage_recorder, :approval_checker, :input_checker, :input_recorder,
+                :tool_call_claimer, :tool_call_releaser, :running_checker # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -1525,23 +1532,56 @@ module RubyLLM
       raise_if_cancelled!
 
       server_calls, local_calls = pending_tool_calls(response).partition { |_, call| call.remote? }.map(&:to_h)
-      respond_to_tool_approvals(server_calls)
+      decisions = server_calls.transform_values { |tool_call| tool_call_approval(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
-      deny_tool_calls(denied)
-      if concurrency
-        handle_concurrent_tool_calls(executable)
-      else
-        handle_sequential_tool_calls(executable)
-      end
-
+      claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
+      answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
       @tool_prefs[:choice] = nil if forced_tool_choice?
     end
 
-    def respond_to_tool_approvals(tool_calls)
-      tool_calls.each_value do |tool_call|
-        decision = tool_call_approval(nil, tool_call)
-        next if decision.nil?
+    def answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
+      respond_to_tool_approvals(server_calls.slice(*claimed), decisions)
+      deny_tool_calls(denied.slice(*claimed))
+      if concurrency
+        handle_concurrent_tool_calls(executable.slice(*claimed))
+      else
+        handle_sequential_tool_calls(executable.slice(*claimed))
+      end
+    ensure
+      release_tool_calls(claimed)
+    end
 
+    def claim_tool_calls(executable, answered)
+      requested = executable.keys + answered.keys
+      @contested_tool_calls = []
+      return requested unless @tool_call_claimer && requested.any?
+
+      leases = executable.values.to_h { |tool_call| [tool_call, max_run_time_for(tool_call)] }
+      answered.each_value { |tool_call| leases[tool_call] = @config.max_run_time }
+      claimed = @tool_call_claimer.call(leases, executing: executable.keys)
+      @contested_tool_calls = requested - claimed
+      claimed
+    end
+
+    def release_tool_calls(ids)
+      return unless @tool_call_releaser
+
+      answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
+      unanswered = ids - answered
+      @tool_call_releaser.call(unanswered) if unanswered.any?
+    end
+
+    def max_run_time_for(tool_call)
+      tools[tool_call.name.to_sym]&.max_run_time || @config.max_run_time
+    end
+
+    def running_elsewhere?(tool_call)
+      @contested_tool_calls.include?(tool_call.id) && @running_checker&.call(tool_call)
+    end
+
+    def respond_to_tool_approvals(tool_calls, decisions)
+      tool_calls.each do |id, tool_call|
+        decision = decisions.fetch(id)
         raise_if_cancelled!
         run_callbacks(:before_message)
         response = @provider.tool_approval_response(tool_call, approved: decision, model: @model, protocol: @protocol)

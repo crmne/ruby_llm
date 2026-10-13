@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_008_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_013_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -42,6 +42,8 @@ ActiveRecord::Schema[7.1].define(version: 20_261_008_120_000) do
   create_table 'chats', force: :cascade do |t|
     t.integer 'ruby_llm_model_id', null: false
     t.boolean 'cancelled', default: false, null: false
+    t.string 'claim_token'
+    t.datetime 'claimed_until'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['ruby_llm_model_id'], name: 'index_chats_on_ruby_llm_model_id'
@@ -126,6 +128,7 @@ ActiveRecord::Schema[7.1].define(version: 20_261_008_120_000) do
     t.json 'arguments', default: {}
     t.json 'mcp_state'
     t.json 'mcp_result'
+    t.datetime 'claimed_until'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[message_type message_id], name: 'index_ruby_llm_tool_calls_on_message'

@@ -2,6 +2,7 @@
 
 require 'active_support/concern'
 require 'ruby_llm/active_record/attachment_helpers'
+require 'ruby_llm/active_record/run_claims'
 
 module RubyLLM
   module ActiveRecord
@@ -21,6 +22,7 @@ module RubyLLM
       extend ActiveSupport::Concern
       include Enumerable
       include AttachmentHelpers
+      include RunClaims
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:
@@ -67,7 +69,8 @@ module RubyLLM
 
       # Records approval for +tool_call+ (a ToolCall, a tool call record, or
       # an id) on the persisted tool call, so the next #complete executes it
-      # from any process. Returns +self+.
+      # from any process. Approving a call that is running or answered
+      # changes nothing. Returns +self+.
       #
       #   chat.approve(params[:tool_call_id])
       #   CompleteJob.perform_later(chat.id)
@@ -78,10 +81,37 @@ module RubyLLM
 
       # Records denial for +tool_call+ (a ToolCall, a tool call record, or
       # an id) on the persisted tool call. The next #complete appends a
-      # structured denial result instead of executing the tool. Returns
-      # +self+.
+      # structured denial result instead of executing the tool. Denying an
+      # answered call changes nothing. Returns +self+.
+      #
+      # Raises RubyLLM::ToolCallRunningError when the call is already
+      # running.
       def deny(tool_call)
         record_tool_call_decision(tool_call, 'denied')
+      end
+
+      # Returns whether a process is running this chat's conversation loop:
+      # calling the model or running tools from #complete, #step, #generate,
+      # #run_tools, or #compact. Reads the database, so it sees runs in
+      # other processes. While another process runs the chat, those methods
+      # return without doing anything and #waiting? is +true+.
+      #
+      #   CompleteJob.set(wait: 1.minute).perform_later(chat.id) if chat.running?
+      #
+      def running?
+        return false unless run_claims?
+
+        claimed_until = self.class.uncached { chat_row.pick(:claimed_until) }
+        claimed_until&.future? || false
+      end
+
+      # Returns whether the conversation can't continue until something
+      # outside it happens, as RubyLLM::Chat#waiting? describes, or until
+      # the process that is #running? it finishes. Approvals, answers, and
+      # tasks persist on their tool calls, so any process sees what the
+      # chat waits on.
+      def waiting?
+        to_llm.waiting? || running_elsewhere?
       end
 
       # Returns whether the conversation is waiting on tool calls that
@@ -487,13 +517,6 @@ module RubyLLM
       # Delegates to Chat#mcp. See that method for arguments and return values.
 
       ##
-      # :method: waiting?
-      # :call-seq: waiting?
-      #
-      # Delegates to Chat#waiting?. Approvals, answers, and tasks persist on
-      # their tool calls, so any process sees what the chat waits on.
-
-      ##
       # :method: awaiting_input?
       # :call-seq: awaiting_input?
       #
@@ -532,7 +555,7 @@ module RubyLLM
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations compaction concurrency end_user fallbacks headers max_output_tokens provider_options
-        schema provider_tools temperature thinking tool_options tools deferred_tools mcp waiting? awaiting_input?
+        schema provider_tools temperature thinking tool_options tools deferred_tools mcp awaiting_input?
         pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 
@@ -595,6 +618,7 @@ module RubyLLM
         llm_message = RubyLLM::Message.new(llm_message) unless llm_message.is_a?(RubyLLM::Message)
 
         message_record = messages_association.create!(message_attributes(llm_message))
+        @last_message_id = message_record.id
 
         if llm_message.tool_call_id && (tool_call = find_tool_call(llm_message.tool_call_id))
           tool_call.update!(result: message_record)
@@ -680,41 +704,37 @@ module RubyLLM
 
       # Makes a single generation attempt, persists the response, and returns it as a
       # RubyLLM::Message. Tool calls in the response are not executed. See
-      # RubyLLM::Chat#generate.
+      # RubyLLM::Chat#generate. Returns +nil+ without calling the model
+      # while another process is #running? the chat.
       def generate(...)
-        to_llm.generate(...)
-      rescue *COMPLETION_ERRORS => e
-        cleanup_after_failure(e)
-        raise
+        exclusively(-> {}) { completing { to_llm.generate(...) } }
       end
 
       # Compacts the model context and persists its assistant Message without
-      # deleting earlier messages. See RubyLLM::Chat#compact.
+      # deleting earlier messages. See RubyLLM::Chat#compact. Returns +nil+
+      # without calling the model while another process is #running? the
+      # chat.
       def compact
-        to_llm.compact
-      rescue *COMPLETION_ERRORS => e
-        cleanup_after_failure(e)
-        raise
+        exclusively(-> {}) { completing { to_llm.compact } }
       end
 
       # Executes the pending tool calls and persists their results without
-      # calling the model. See RubyLLM::Chat#run_tools. Returns +self+.
+      # calling the model. See RubyLLM::Chat#run_tools. Does nothing while
+      # another process is #running? the chat. Returns +self+.
       def run_tools
-        to_llm.run_tools
+        exclusively(-> {}) { to_llm.run_tools }
         self
       end
 
       # Advances the conversation by one move: runs the pending tool calls if
       # there are any, otherwise generates a response. Returns +nil+ once the
-      # chat is complete or #waiting?. See RubyLLM::Chat#step.
+      # chat is complete or #waiting?, including while another process is
+      # #running? it. See RubyLLM::Chat#step.
       #
       #   chat.step until chat.complete? || chat.waiting?
       #
       def step(...)
-        to_llm.step(...)
-      rescue *COMPLETION_ERRORS => e
-        cleanup_after_failure(e)
-        raise
+        exclusively(-> {}) { completing { to_llm.step(...) } }
       end
 
       # Returns whether the conversation has no pending work, neither a
@@ -728,14 +748,32 @@ module RubyLLM
       # message, and returns the latest RubyLLM::Message. Pauses when a tool
       # requires approval. When the API call fails, destroys the empty assistant
       # message and any orphaned tool results, then re-raises the error.
+      #
+      # Only one process runs a chat at a time. While another process is
+      # #running? it, returns the latest message without calling the model
+      # or running tools, and #waiting? is +true+. Work recorded while this
+      # process ran, such as an approval, continues before it returns.
       def complete(...)
-        to_llm.complete(...)
+        loop do
+          busy = false
+          response = exclusively(-> { busy = true }) { completing { to_llm.complete(...) } }
+          return latest_message if busy
+          return response unless work_arrived_during_run?
+        end
+      end
+
+      private
+
+      def completing
+        yield
       rescue *COMPLETION_ERRORS => e
         cleanup_after_failure(e)
         raise
       end
 
-      private
+      def latest_message
+        to_llm.messages.reverse.find { |message| message.role != :system } || to_llm.messages.last
+      end
 
       def bind_message_chat(message)
         message.association(message.chat_association_name).target = self
@@ -880,20 +918,30 @@ module RubyLLM
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
-        chat.cancellation_checker = proc { consume_persisted_cancellation_request }
+        chat.cancellation_checker = proc do
+          renew_run_claim
+          consume_persisted_cancellation_request
+        end
         chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
         chat.input_checker = proc { |tool_call| persisted_tool_call_input(tool_call) }
         chat.input_recorder = proc { |tool_call, input| persist_tool_call_input(tool_call, input) }
+        install_tool_call_claims(chat)
         install_persistence_callbacks(chat)
+      end
+
+      def install_tool_call_claims(chat)
+        chat.tool_call_claimer = proc { |leases, executing:| claim_persisted_tool_calls(leases, executing:) }
+        chat.tool_call_releaser = proc { |tool_call_ids| release_persisted_tool_calls(tool_call_ids) }
+        chat.running_checker = proc { |tool_call| tool_call_running_elsewhere?(tool_call) }
       end
 
       def record_tool_call_decision(tool_call, decision)
         id = tool_call.respond_to?(:tool_call_id) ? tool_call.tool_call_id : tool_call
         id = id.id if id.respond_to?(:id) && !id.is_a?(String)
-        record = find_tool_call(id)
+        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(id) }
         raise ArgumentError, "Unknown tool call: #{id.inspect}" unless record
 
-        record.update!(approval: decision)
+        decide_persisted_tool_call(record, decision)
         self
       end
 
@@ -918,7 +966,9 @@ module RubyLLM
       end
 
       def sync_messages(chat = @chat)
+        snapshot_run_claim
         message_records = eager_load_messages
+        @last_message_id = message_records.last&.id
         chat.messages = message_records
         linked_entry_pairs = message_records.zip(chat.messages).flat_map do |record, message|
           record.ruby_llm_usage_records.zip(message.ruby_llm_usage_entries)
@@ -1017,6 +1067,8 @@ module RubyLLM
 
         attrs = { role: :assistant, content: '' }
         @message = messages_association.create!(attrs)
+        @last_message_id = @message.id
+        @message
       end
 
       def blank_placeholder?
@@ -1029,18 +1081,21 @@ module RubyLLM
       def persist_message_completion(message)
         return unless message
 
+        verify_run_claim
         tool_call = find_tool_call(message.tool_call_id) if message.tool_call_id
         attrs = message_attributes(message)
 
-        transaction do
+        answered = transaction do
           @message.assign_attributes(attrs)
           @message.save!
-          tool_call&.update!(tool_result_attributes(tool_call, message))
+          raise ::ActiveRecord::Rollback if tool_call && !tool_result_recorded?(tool_call, message)
 
           persist_content(@message, message.attachments) if message.attachments.any?
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
           link_usage_entries(message)
+          true
         end
+        discard_superseded_message unless answered
       end
 
       def message_attributes(message)
@@ -1055,12 +1110,6 @@ module RubyLLM
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)
         attrs
-      end
-
-      def tool_result_attributes(tool_call, message)
-        attributes = { result: @message }
-        attributes[:mcp_result] = message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
-        attributes
       end
 
       def assign_supported_attribute(attributes, name, value)

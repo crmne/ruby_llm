@@ -51,6 +51,7 @@ module RubyLLM
       @requires_approval
       @approval_resolver
       @deferred
+      @max_run_time
     ].freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
 
@@ -183,6 +184,24 @@ module RubyLLM
       end
 
       # :call-seq:
+      #   max_run_time(seconds) -> seconds
+      #   max_run_time -> seconds or nil
+      #
+      # Sets how long a run of this tool may take before a persisted chat
+      # treats it as crashed, overriding Configuration#max_run_time. Another
+      # process that resumes the chat after that time runs the call again.
+      # Without an argument, returns the declared value, or +nil+.
+      #
+      #   class GenerateReport < RubyLLM::Tool
+      #     max_run_time 2.hours
+      #   end
+      #
+      def max_run_time(seconds = nil)
+        @max_run_time = seconds if seconds
+        @max_run_time
+      end
+
+      # :call-seq:
       #   provider_options(options) -> self
       #   provider_options -> hash
       #
@@ -272,6 +291,12 @@ module RubyLLM
 
     def approval_resolver # :nodoc:
       self.class.approval_resolver
+    end
+
+    # Returns the run time declared on the class with ::max_run_time, or
+    # +nil+ to use Configuration#max_run_time.
+    def max_run_time
+      self.class.max_run_time
     end
 
     def declared_parameters # :nodoc:

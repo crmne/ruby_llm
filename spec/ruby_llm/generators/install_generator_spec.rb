@@ -58,13 +58,15 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
-    it 'adds cancellation state to chat storage' do
+    it 'adds cancellation and run claim state to chat storage' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_chats.rb').first
         expect(migration).to be_present
 
         content = File.read(migration)
         expect(content).to include('t.boolean :cancelled')
+        expect(content).to include('t.string :claim_token')
+        expect(content).to include('t.datetime :claimed_until')
         expect(content).to include('t.references :ruby_llm_model')
         expect(content).to include('foreign_key: { to_table: :ruby_llm_models }')
       end

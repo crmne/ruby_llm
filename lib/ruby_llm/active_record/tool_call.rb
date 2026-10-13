@@ -25,6 +25,12 @@ module RubyLLM
         )
       end
 
+      # Returns whether a process is running this tool call: it has no
+      # result yet and its claim has not expired.
+      def running?
+        (result_id.nil? && has_attribute?(:claimed_until) && claimed_until&.future?) || false
+      end
+
       def tool_error_message
         payload_error_message(arguments)
       end

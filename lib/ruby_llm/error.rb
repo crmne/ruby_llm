@@ -95,6 +95,10 @@ module RubyLLM
   # #approve or #deny decisions for calls that require approval.
   class PendingToolCallsError < StandardError; end
 
+  # Raised when a persisted tool call is denied after it started running.
+  # The call keeps running and the model receives its result.
+  class ToolCallRunningError < StandardError; end
+
   # Raised when a requested model id is not in the model registry.
   class ModelNotFoundError < StandardError; end
 

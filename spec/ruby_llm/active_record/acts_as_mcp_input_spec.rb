@@ -35,6 +35,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(chat.pending_inputs.first.message).to eq('Which environment?')
   end
 
+  it 'releases the claims of a call that pauses for input' do
+    chat = paused_chat
+
+    expect(tool_call_record.claimed_until).to be_nil
+    expect(tool_call_record).not_to be_running
+    expect(chat).not_to be_running
+  end
+
   it 'resumes from another process after the user answers' do
     chat = paused_chat
     answering = Chat.find(chat.id).with_mcp(files)
