@@ -361,6 +361,13 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.total).to eq(0.005)
     end
 
+    it 'reads numeric strings, as JSON encodes decimal amounts' do
+      cost = described_class.from_h({ 'input' => '0.001', 'output' => '0.004', 'total' => '0.123' })
+
+      expect(cost.input).to eq(0.001)
+      expect(cost.total).to eq(0.123)
+    end
+
     it 'preserves a recorded total when component costs were not stored' do
       cost = described_class.from_h({ total: 0.005 })
 

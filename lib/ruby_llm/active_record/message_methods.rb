@@ -17,7 +17,8 @@ module RubyLLM
         send(chat_association_name)
       end
 
-      # Converts this record to a RubyLLM::Message.
+      # Converts this record to a RubyLLM::Message. The message carries the
+      # recorded cost, so RubyLLM::Message#to_h exports it.
       def to_llm
         entries = ruby_llm_usage_entries
         RubyLLM::Message.new(
@@ -30,6 +31,7 @@ module RubyLLM
           raw_content: optional_column(:raw_content),
           raw_reasoning: optional_column(:raw_reasoning),
           usage_entries: entries,
+          cost: (cost if entries.any?),
           tool_calls: tool_calls,
           tool_call_id: parent_tool_call&.id,
           mcp_result: mcp_result,
@@ -110,7 +112,7 @@ module RubyLLM
 
       # Returns the cost across every attempt that produced the message, as a RubyLLM::Cost.
       def cost
-        records = ruby_llm_usages.to_a
+        records = ruby_llm_usage_records
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
