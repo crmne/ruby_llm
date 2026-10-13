@@ -8,7 +8,7 @@ module RubyLLM
     # tool runs, and they expire after Configuration#max_run_time so another
     # process resumes the work of one that crashed.
     module RunClaims # :nodoc:
-      class ClaimLost < StandardError; end
+      class ClaimLost < StandardError; end # :nodoc:
       private_constant :ClaimLost
 
       private
