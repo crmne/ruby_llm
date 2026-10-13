@@ -195,6 +195,13 @@ RSpec.describe RubyLLM::ActiveRecord::ProviderFile do
     expect(described_class.count).to eq(0)
   end
 
+  it 'purges a blob that was never saved and has no key' do
+    blob = ActiveStorage::Blob.new(filename: 'notes.txt', byte_size: 5, checksum: 'checksum')
+    blob[:key] = nil
+
+    expect { blob.purge }.not_to raise_error
+  end
+
   it 'purges blobs before the table exists' do
     stub_uploads('file_1')
     chat = Chat.create!(model:)

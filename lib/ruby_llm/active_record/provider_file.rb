@@ -19,8 +19,11 @@ module RubyLLM
       end
 
       # Deletes the uploads recorded for +blob+ as Active Storage destroys it.
+      # Reads the stored key: Blob#key generates one when it is missing, and
+      # a destroyed blob is frozen.
       def self.forget_blob(blob)
-        where(blob_key: blob.key).delete_all if table_exists?
+        key = blob[:key]
+        where(blob_key: key).delete_all if key && table_exists?
       end
 
       # The uploads of one blob. The block finds the blob the first time a
