@@ -105,7 +105,7 @@ module RubyLLM
                    as: :chat,
                    class_name: 'RubyLLM::ActiveRecord::Usage',
                    inverse_of: :chat,
-                   dependent: :destroy
+                   dependent: :nullify
         end
 
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false)
