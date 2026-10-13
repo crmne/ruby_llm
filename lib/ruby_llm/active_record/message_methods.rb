@@ -62,11 +62,13 @@ module RubyLLM
 
       # Marks the message as a prompt cache boundary and returns it. Pass
       # +ttl:+ to give the boundary its own cache lifetime, as
-      # RubyLLM::Message#cache_until_here describes.
+      # RubyLLM::Message#cache_until_here describes. The chat that returned
+      # the message sends the boundary with its next request.
       def cache_until_here(ttl: nil)
         attributes = { cache_until_here: true }
         attributes[:cache_ttl] = ttl if ttl || has_attribute?(:cache_ttl)
         update!(attributes)
+        association(chat_association_name).target&.refresh_messages
         self
       end
 

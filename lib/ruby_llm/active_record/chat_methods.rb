@@ -111,6 +111,11 @@ module RubyLLM
         send(messages_association_name)
       end
 
+      def refresh_messages # :nodoc:
+        messages_association.reset
+        sync_messages if @chat
+      end
+
       # Sets the chat's model from an id, a RubyLLM::Model value, or the
       # associated internal model record.
       #
@@ -600,7 +605,7 @@ module RubyLLM
 
         @chat&.add_message(llm_message)
 
-        message_record
+        bind_message_chat(message_record)
       end
 
       # Marks the latest persisted message as a prompt cache boundary, or the
@@ -614,7 +619,7 @@ module RubyLLM
       def cache_until_here(ttl: nil)
         message_record = messages_association.order(:id).last
         if message_record
-          message_record.cache_until_here(ttl:)
+          bind_message_chat(message_record).cache_until_here(ttl:)
         elsif @chat&.messages&.any?
           @chat.cache_until_here(ttl:)
         else
@@ -731,6 +736,11 @@ module RubyLLM
       end
 
       private
+
+      def bind_message_chat(message)
+        message.association(message.chat_association_name).target = self
+        message
+      end
 
       def persist_usage_entry(entry)
         usage_records_by_entry[entry] = Usage.transaction(requires_new: true) do
