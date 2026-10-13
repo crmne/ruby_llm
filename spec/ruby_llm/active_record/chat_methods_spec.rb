@@ -103,6 +103,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(RubyLLM::ActiveRecord::Model).to have_received(:save_to_database).with(RubyLLM.models)
     end
 
+    [nil, ''].each do |name|
+      it "still adds the first chat when a registry entry has a #{name.inspect} name" do
+        unnamed = RubyLLM::Model.new(id: 'unnamed-model', provider: 'openai', name: name)
+        allow(RubyLLM::ActiveRecord::Model).to receive(:none?).and_return(true)
+        allow(RubyLLM.models).to receive(:all).and_return(RubyLLM.models.all_including_unlisted + [unnamed])
+
+        chat = Chat.create!(model: model_id)
+
+        expect(chat.model.model_id).to eq(model_id)
+        expect(RubyLLM::ActiveRecord::Model.where(model_id: 'unnamed-model')).to be_empty
+      end
+    end
+
     it 'accepts a RubyLLM::Model value' do
       chat = Chat.new
       chat.model = RubyLLM.models.find(model_id)

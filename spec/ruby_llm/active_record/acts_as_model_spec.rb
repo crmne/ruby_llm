@@ -48,6 +48,54 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
     expect(record_class.find_by!(model_id: model_info.id, provider: model_info.provider).name).to eq('Test Model')
   end
 
+  it 'writes a registry in the same number of queries whatever its size' do
+    listed = RubyLLM.models.all
+    bulk = ->(size) { (1..size).map { |index| RubyLLM::Model.new(id: "bulk-#{index}", name: 'Bulk', provider: 'openai') } }
+    queries_for = lambda do |models|
+      count = 0
+      counter = ->(*, payload) { count += 1 unless %w[SCHEMA TRANSACTION].include?(payload[:name]) }
+      ActiveSupport::Notifications.subscribed(counter, 'sql.active_record') do
+        described_class.write(RubyLLM::Models.new(models))
+      end
+      count
+    end
+    described_class.write(RubyLLM::Models.new(listed))
+    small = queries_for.call(listed + bulk.call(3))
+
+    expect(queries_for.call(listed + bulk.call(30))).to eq(small)
+  end
+
+  it 'keeps the creation time of a row a later write updates' do
+    created_at = 1.day.ago.change(usec: 0)
+    record = record_class.create!(model_id: model_info.id, provider: model_info.provider, name: 'Old',
+                                  created_at: created_at, updated_at: created_at)
+
+    described_class.write(RubyLLM::Models.new([model_info]))
+
+    expect(record.reload.created_at).to eq(created_at)
+    expect(record.updated_at).to be > created_at
+  end
+
+  it 'leaves the update time of a row the registry carries unchanged' do
+    described_class.write(RubyLLM::Models.new([model_info]))
+    updated_at = 1.day.ago.change(usec: 0)
+    record = record_class.find_by!(model_id: model_info.id, provider: model_info.provider)
+    record.update_columns(updated_at: updated_at)
+
+    described_class.write(RubyLLM::Models.new([model_info]))
+
+    expect(record.reload.updated_at).to eq(updated_at)
+  end
+
+  it 'keeps the last entry when a registry lists a model twice' do
+    renamed = RubyLLM::Model.new(id: model_info.id, name: 'Renamed Model', provider: model_info.provider)
+
+    described_class.write(RubyLLM::Models.new([model_info, renamed]))
+
+    expect(record_class.where(model_id: model_info.id, provider: model_info.provider).pluck(:name))
+      .to eq(['Renamed Model'])
+  end
+
   it 'reads public RubyLLM::Model values' do
     record_class.save_to_database(RubyLLM::Models.new([model_info]))
 
