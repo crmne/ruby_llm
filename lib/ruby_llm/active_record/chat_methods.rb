@@ -160,7 +160,7 @@ module RubyLLM
           tool_call_id: ids,
           message_type: self.class.message_class.constantize.polymorphic_name,
           message_id: messages_association.select(:id)
-        )
+        ).order(:created_at, :id)
       end
 
       def messages_association # :nodoc:
