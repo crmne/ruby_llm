@@ -55,7 +55,7 @@ module RubyLLM
 
         @run_claim_token = nil
         chat_row.where(claim_token: token).update_all(claimed_until: nil)
-        @synced_run_claim_token = completed ? token : nil # mutineer:disable-line boolean_literal -- no claim token is true either
+        @synced_run_claim_token = completed ? token : nil
       end
 
       def renew_run_claim(force: false)
@@ -205,7 +205,7 @@ module RubyLLM
       end
 
       def run_claims?
-        persisted? && has_attribute?(:claim_token) && has_attribute?(:claimed_until) # mutineer:disable-line boolean_connector -- only an unsaved chat tells them apart, and it has no row to claim
+        persisted? && has_attribute?(:claim_token) && has_attribute?(:claimed_until)
       end
 
       def tool_call_claims?

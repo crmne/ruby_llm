@@ -3,3 +3,24 @@
 framework: rspec
 timeout: 60
 capture_timeout: 1200
+# Equivalent mutants. An id changes when its method changes, so recheck
+# the entry when you edit one of these methods.
+ignore:
+  # RunClaims#release_run_claim: no claim token is true either.
+  - 47b0cc41573b
+  # RunClaims#run_claims?: only an unsaved chat tells them apart, and it
+  # has no row to claim.
+  - 4d8df17b0a5a
+  - f54357e76833
+  # Chat#initialize: an unset instance variable reads nil too.
+  - cdd92a72524b
+  - a628cf763df0
+  - af2acddb01de
+  # Chat#claim_tool_calls: with nothing to claim, every pending call
+  # already waits.
+  - 7793f07399ce
+  # Tokens.aggregate: one entry returns equal counts without a copy.
+  - 377e5eca7c58
+  # Anthropic render_count_tokens_payload: the count is sliced to
+  # COUNT_TOKENS_KEYS, which drops the temperature.
+  - 5006a30d0b0b

@@ -95,7 +95,7 @@ module RubyLLM
     # no attempt reported it.
     def self.aggregate(tokens)
       tokens = Array(tokens).compact
-      return tokens.first if tokens.one? # mutineer:disable-line statement_removal -- same counts, no copy
+      return tokens.first if tokens.one?
 
       values = %i[input output cache_read cache_write thinking reported_cost].to_h do |component|
         reported = tokens.filter_map { |usage| usage.public_send(component) }

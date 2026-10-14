@@ -58,7 +58,7 @@ module RubyLLM
             messages,
             tools: tools,
             tool_prefs: tool_prefs,
-            temperature: nil, # mutineer:disable-line boolean_literal -- the count is sliced to COUNT_TOKENS_KEYS
+            temperature: nil,
             model: model,
             schema: schema,
             thinking: thinking,

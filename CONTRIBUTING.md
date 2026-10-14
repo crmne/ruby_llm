@@ -115,11 +115,15 @@ Mutants replay cassettes and never record them. `bin/mutineer` sets `CI=1`, whic
 
 The pre-push hook mutates the lines your push changes, compared with the upstream branch or `origin/main`. With a full-run report in `tmp/mutineer/report.json`, it fails only on survivors that report does not already list; without one, it fails on any survivor. It takes its specs from the coverage the full run recorded, so keep a recent full run around. Skip it for one push with `SKIP=MutationTesting git push`.
 
-Kill a survivor with a spec that checks the behavior the line exists for, never by loosening an assertion. When a mutant is equivalent, behaving exactly like the original, remove the redundant code if you can. Otherwise suppress it on its line with the operator and the reason:
+Kill a survivor with a spec that checks the behavior the line exists for, never by loosening an assertion. When a mutant is equivalent, behaving exactly like the original, remove the redundant code if you can. Otherwise add its id from the report to the `ignore:` list in `.mutineer.yml`, with a comment naming the method and why the mutant is equivalent:
 
-```ruby
-@running_checker = nil # mutineer:disable-line statement_removal -- an unset variable reads nil too
+```yaml
+ignore:
+  # Chat#initialize: an unset instance variable reads nil too.
+  - cdd92a72524b
 ```
+
+Keep suppressions out of `lib/`. An id changes when its method changes, so check the list when you edit one of those methods.
 
 ### OpenTelemetry conformance
 

@@ -148,9 +148,9 @@ module RubyLLM
       @tool_call_inputs = {}
       @input_checker = nil
       @input_recorder = nil
-      @tool_call_claimer = nil # mutineer:disable-line statement_removal -- an unset variable reads nil too
-      @tool_call_releaser = nil # mutineer:disable-line statement_removal -- an unset variable reads nil too
-      @running_checker = nil # mutineer:disable-line statement_removal -- an unset variable reads nil too
+      @tool_call_claimer = nil
+      @tool_call_releaser = nil
+      @running_checker = nil
       @contested_tool_calls = []
     end
 
@@ -1553,7 +1553,7 @@ module RubyLLM
 
     def claim_tool_calls(executable, answered)
       requested = executable.keys + answered.keys
-      @contested_tool_calls = [] # mutineer:disable-line statement_removal -- with nothing to claim, every pending call already waits
+      @contested_tool_calls = []
       return requested unless @tool_call_claimer && requested.any?
 
       leases = executable.values.to_h { |tool_call| [tool_call, max_run_time_for(tool_call)] }
