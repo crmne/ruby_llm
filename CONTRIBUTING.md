@@ -176,6 +176,12 @@ workflow, which validates the tag and gem version, tests the released commit,
 and publishes the gem to RubyGems and GitHub Packages. A tag push alone does
 not publish the gem.
 
+A minor release has a What's New page in `docs/_getting_started`. Only the
+newest one stays there: when a new one is added, move the previous page to
+`docs/_reference` with `parent: Release History`, keeping its file name so its
+URL stays the same, and update the release's row in
+`docs/_reference/release-history.md`.
+
 Commit the hand-written notes in `release-notes.md`. Start the first line
 with `RubyLLM` followed by the exact gem version and a summary. Include
 credits, known limitations, release media, and the comparison link.
