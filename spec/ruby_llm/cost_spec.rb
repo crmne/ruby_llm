@@ -258,6 +258,16 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.cache_write).to be_within(0.0000000001).of(0.000125)
     end
 
+    it 'prices one-hour writes from the input price when the registry has no cache-write price' do
+      input_only = RubyLLM::Model.new(id: 'claude-input-only', name: 'Claude', provider: 'anthropic',
+                                      pricing: { text_tokens: { standard: { input_per_million: 3.0 } } })
+      tokens = RubyLLM::Tokens.new(cache_write: 100, cache_write_by_ttl: { '1h' => 100 })
+      cost = described_class.new(tokens:, model: input_only)
+
+      expect(cost.cache_write).to be_within(0.0000000001).of(0.0006)
+      expect(cost.total).to be_within(0.0000000001).of(0.0006)
+    end
+
     it 'leaves the cache-write cost unknown when the input price is missing' do
       unpriced = RubyLLM::Model.new(id: 'claude-unpriced', name: 'Claude', provider: 'anthropic',
                                     pricing: { text_tokens: { standard: { cache_write_input_per_million: 3.75 } } })
@@ -339,9 +349,17 @@ RSpec.describe RubyLLM::Cost do
     it 'ignores entries without token usage' do
       priced = described_class.new(tokens: RubyLLM::Tokens.new(input: 10), model:)
       empty = described_class.new(model: model)
-      aggregate = described_class.aggregate([empty, priced])
+      aggregate = described_class.aggregate([nil, empty, priced])
 
       expect(aggregate.total).to eq(0.00001)
+      expect(described_class.aggregate([empty]).tokens?).to be(false)
+    end
+
+    it 'leaves a component unknown when one call could not price it' do
+      priced = described_class.new(tokens: RubyLLM::Tokens.new(input: 10), model:)
+      unpriced = described_class.new(tokens: RubyLLM::Tokens.new(input: 10), model: nil)
+
+      expect(described_class.aggregate([priced, unpriced]).input).to be_nil
     end
   end
 
@@ -383,10 +401,23 @@ RSpec.describe RubyLLM::Cost do
     it 'keeps missing historical pricing missing when token usage is known' do
       tokens = RubyLLM::Tokens.new(input: 10)
       cost = described_class.from_h({}, tokens: tokens)
+      priced = described_class.new(tokens: RubyLLM::Tokens.new(input: 10), model:)
 
       expect(cost.input).to be_nil
       expect(cost.total).to be_nil
       expect(cost).to be_missing(:input)
+      expect(described_class.aggregate([cost, priced]).input).to be_nil
+    end
+
+    it 'totals a stored breakdown that recorded every component with tokens' do
+      cost = described_class.from_h({ input: 0.001 }, tokens: RubyLLM::Tokens.new(input: 10, output: 0))
+
+      expect(cost.total).to eq(0.001)
+    end
+
+    it 'reports no total for a stored breakdown whose token counts are unknown' do
+      expect(described_class.from_h({ input: 0.001 }, tokens: RubyLLM::Tokens.new).total).to be_nil
+      expect(described_class.from_h({}, tokens: RubyLLM::Tokens.new(input: 0)).total).to be_nil
     end
 
     it 'aggregates a restored reported cost the way it aggregated the live one' do
@@ -530,6 +561,112 @@ RSpec.describe RubyLLM::Cost do
 
       expect(cost.missing?(:output)).to be(true)
       expect(cost.total).to be_nil
+    end
+  end
+
+  describe 'pricing tiers' do
+    let(:tiered_model) do
+      RubyLLM::Model.new(
+        id: 'tiered-model', name: 'Tiered Model', provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: { input_per_million: 4.0, output_per_million: 8.0, cache_write_input_per_million: 5.0 },
+            batch: { input_per_million: 2.0, output_per_million: 4.0 },
+            long_context: { input_per_million: 6.0, output_per_million: 12.0, cache_write_input_per_million: 7.0 },
+            long_context_threshold: 1_000
+          }
+        }
+      )
+    end
+
+    it 'prices a batch request at the batch rates' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 500, output: 500), model: tiered_model,
+                                 tier: 'batch')
+
+      expect(cost.input).to be_within(0.0000000001).of(0.001)
+      expect(cost.output).to be_within(0.0000000001).of(0.002)
+    end
+
+    it 'counts cache writes toward the long-context prompt threshold' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 600, output: 100, cache_write: 600),
+                                 model: tiered_model)
+
+      expect(cost.input).to be_within(0.0000000001).of(0.0036)
+      expect(cost.cache_write).to be_within(0.0000000001).of(0.0042)
+      expect(cost.output).to be_within(0.0000000001).of(0.0012)
+    end
+  end
+
+  describe 'thinking pricing' do
+    it 'prices thinking tokens when the model lists a reasoning price but no output price' do
+      reasoning_only = RubyLLM::Model.new(
+        id: 'reasoning-only', name: 'Reasoning Only', provider: 'perplexity',
+        pricing: { text_tokens: { standard: { reasoning_output_per_million: 3.0 } } }
+      )
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(thinking: 1_000), model: reasoning_only)
+
+      expect(cost.thinking).to be_within(0.0000000001).of(0.003)
+      expect(cost.total).to be_within(0.0000000001).of(0.003)
+    end
+  end
+
+  describe 'zero token counts' do
+    it 'costs nothing for zero tokens even when the model has no price' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 0, output: 0), model: nil)
+
+      expect(cost.input).to eq(0.0)
+      expect(cost.total).to eq(0.0)
+    end
+  end
+
+  describe 'image input details' do
+    def image_model(images:, text: nil)
+      pricing = { images: { standard: images } }
+      pricing[:text_tokens] = { standard: text } if text
+      RubyLLM::Model.new(id: 'image-model', name: 'Image Model', provider: 'openai', pricing:)
+    end
+
+    def image_cost(model, details, category: :images)
+      described_class.new(tokens: RubyLLM::Tokens.new(input: 250, output: 50), model:, category:,
+                          input_details: details)
+    end
+
+    it 'prices image input at the image rate when the model has no text input rate' do
+      model = image_model(images: { input_per_million: 10.0, output_per_million: 40.0 })
+      cost = image_cost(model, { 'text_tokens' => 0, 'image_tokens' => 250 })
+
+      expect(cost.input).to be_within(0.0000000001).of(0.0025)
+      expect(cost.total).to be_within(0.0000000001).of(0.0045)
+    end
+
+    it 'leaves image input unknown when an input part has no price' do
+      model = image_model(images: { output_per_million: 40.0 })
+      cost = image_cost(model, { 'text_tokens' => 100, 'image_tokens' => 150 })
+
+      expect(cost.input).to be_nil
+      expect(cost.output).to be_within(0.0000000001).of(0.002)
+      expect(cost.total).to be_nil
+    end
+
+    it 'prices image input at the text rate without input details' do
+      model = image_model(images: { output_per_million: 40.0 }, text: { input_per_million: 4.0 })
+      cost = image_cost(model, nil)
+
+      expect(cost.input).to be_within(0.0000000001).of(0.001)
+    end
+
+    it 'prices output for the singular image category at the image rate' do
+      model = image_model(images: { output_per_million: 40.0 }, text: { output_per_million: 8.0 })
+      cost = image_cost(model, nil, category: :image)
+
+      expect(cost.output).to be_within(0.0000000001).of(0.002)
+    end
+
+    it 'ignores input details for text tokens' do
+      model = image_model(images: { input_per_million: 10.0 }, text: { input_per_million: 4.0 })
+      cost = image_cost(model, { 'text_tokens' => 100, 'image_tokens' => 150 }, category: :text_tokens)
+
+      expect(cost.input).to be_within(0.0000000001).of(0.001)
     end
   end
 end

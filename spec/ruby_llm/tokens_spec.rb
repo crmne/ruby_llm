@@ -23,6 +23,21 @@ RSpec.describe RubyLLM::Tokens do
   end
 
   describe '.aggregate' do
+    it 'sums each count across attempts and skips missing attempts' do
+      tokens = described_class.aggregate([nil, described_class.new(input: 10, output: 2), nil,
+                                          described_class.new(input: 5, reported_cost: 0.01)])
+
+      expect(tokens.input).to eq(15)
+      expect(tokens.output).to eq(2)
+      expect(tokens.thinking).to be_nil
+      expect(tokens.reported_cost).to eq(0.01)
+      expect(tokens.cache_write_by_ttl).to be_nil
+    end
+
+    it 'returns empty counts for no attempts' do
+      expect(described_class.aggregate(nil).to_h).to eq({})
+    end
+
     it 'sums server tool counts across attempts' do
       tokens = described_class.aggregate(
         [

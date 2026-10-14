@@ -207,7 +207,6 @@ module RubyLLM
     def missing_component?(component)
       return image_input_missing? if component == :input && detailed_image_input?
       return cache_write_missing? if component == :cache_write && repriced_cache_writes?
-      return false if component == :thinking && !thinking_priced_separately?
 
       tokens_for(component).to_i.positive? && price_for(component).nil?
     end
@@ -218,8 +217,6 @@ module RubyLLM
 
       token_count = tokens_for(component)
       return nil if token_count.nil?
-
-      token_count = token_count.to_i
       return 0.0 if token_count.zero?
 
       price = price_for(component)
@@ -262,7 +259,6 @@ module RubyLLM
     end
 
     def output_price
-      return image_pricing.output || text_output_price if image_cost?
       return text_output_price if @category == :text_tokens
 
       category_pricing.output || text_output_price
@@ -299,7 +295,6 @@ module RubyLLM
     end
 
     def category_pricing
-      return text_pricing if @category == :text_tokens
       return image_pricing if image_cost?
 
       pricing = @model&.pricing
@@ -370,7 +365,6 @@ module RubyLLM
     end
 
     def image_input_parts
-      text_input_price = applicable_text_tier&.input_per_million || text_pricing.input
       [
         [:text, input_detail('text_tokens'), text_input_price],
         [:image, input_detail('image_tokens'), image_pricing.input || text_input_price]
@@ -382,12 +376,10 @@ module RubyLLM
     end
 
     def thinking_priced_separately?
-      tier = applicable_text_tier
-      reasoning_price = tier&.reasoning_output_per_million || text_pricing.reasoning_output
+      reasoning_price = price_for(:thinking)
       return false unless reasoning_price
 
-      output_price = tier&.output_per_million || text_pricing.output
-      output_price.nil? || reasoning_price != output_price
+      text_output_price.nil? || reasoning_price != text_output_price
     end
 
     def normalize_model(model)

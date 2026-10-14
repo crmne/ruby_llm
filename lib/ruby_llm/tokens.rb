@@ -95,8 +95,7 @@ module RubyLLM
     # no attempt reported it.
     def self.aggregate(tokens)
       tokens = Array(tokens).compact
-      return new if tokens.empty?
-      return tokens.first if tokens.one?
+      return tokens.first if tokens.one? # mutineer:disable-line statement_removal -- same counts, no copy
 
       values = %i[input output cache_read cache_write thinking reported_cost].to_h do |component|
         reported = tokens.filter_map { |usage| usage.public_send(component) }
@@ -115,10 +114,7 @@ module RubyLLM
     end
 
     def self.aggregate_counts(tokens, reader) # :nodoc:
-      reported = tokens.filter_map(&reader)
-      return nil if reported.empty?
-
-      reported.each_with_object({}) do |counters, total|
+      tokens.filter_map(&reader).each_with_object({}) do |counters, total|
         counters.each { |key, count| total[key] = total.fetch(key, 0) + count.to_i }
       end
     end
