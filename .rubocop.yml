@@ -15,6 +15,9 @@ AllCops:
     - lib/generators/**/templates/**/*
   SuggestExtensions: false
 
+Layout/LineLength:
+  AllowedPatterns:
+    - '# mutineer:disable-line' # the marker and its reason must share the line
 Metrics/ClassLength:
   Max: 600
 Metrics/AbcSize:

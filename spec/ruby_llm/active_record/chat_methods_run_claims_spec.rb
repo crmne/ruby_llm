@@ -55,6 +55,46 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call_id)
   end
 
+  def question_chat
+    Chat.create!(model: model_for(:openai)).tap { |chat| chat.add_message(role: :user, content: 'Hello') }
+  end
+
+  def chunk
+    RubyLLM::Chunk.new(role: :assistant, content: 'Do')
+  end
+
+  def claimed_until(chat)
+    Chat.find(chat.id).claimed_until
+  end
+
+  def take_over(chat)
+    Chat.where(id: chat.id).update_all(claim_token: 'elsewhere', claimed_until: 10.minutes.from_now)
+  end
+
+  def tool_call_message(id, name: 'charge_card')
+    tool_calls = { id => RubyLLM::ToolCall.new(id:, name:, arguments: {}) }
+    RubyLLM::Message.new(role: :assistant, content: '', tool_calls:)
+  end
+
+  def counting_reloads(job)
+    allow(job).to receive(:resync_messages).and_call_original
+    job
+  end
+
+  def without_claim_columns
+    connection = ActiveRecord::Base.connection
+    ActiveRecord::Base.transaction do
+      connection.remove_column(:chats, :claim_token)
+      connection.remove_column(:chats, :claimed_until)
+      connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
+      [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+      yield
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+  end
+
   it 'runs an approved tool once when two jobs complete the same chat' do
     chat = approved_chat
     first_job = job_for(chat)
@@ -110,6 +150,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(overlap[:response].role).to eq(:user)
     expect(requests).to eq([first_job])
     expect(roles(chat)).to eq(%w[user assistant])
+  end
+
+  it 'returns the latest message other than its instructions from a job that finds the chat busy' do
+    chat = question_chat
+    chat.with_instructions('Be brief')
+    second_job = job_for(chat)
+    responses = []
+    first_job = job_for(chat) { responses << second_job.complete }
+
+    first_job.complete
+
+    expect(responses.map(&:content)).to eq(['Hello'])
   end
 
   it 'answers a question asked while another process streamed the previous answer' do
@@ -333,25 +385,246 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(plain_chats.map { |chat| chat.messages.map(&:role) }).to all(eq(%i[user assistant tool assistant]))
   end
 
+  it 'runs a call the same record makes from inside its own run' do
+    chat = approved_chat
+    job = job_for(chat)
+    nested = []
+    during_run << -> { nested << job.generate }
+
+    job.complete
+
+    expect(nested.map(&:content)).to eq(['Done'])
+    expect(requests).to eq([job, job])
+  end
+
+  it 'reloads the transcript after another process ran the chat' do
+    chat = question_chat
+    stale_job = job_for(chat)
+    job_for(chat).complete
+
+    expect(stale_job.step).to be_nil
+    expect(requests.size).to eq(1)
+    expect(roles(chat)).to eq(%w[user assistant])
+  end
+
+  it 'keeps the loaded transcript while no other process runs the chat' do
+    chat = question_chat
+    job_for(chat).complete
+    job = counting_reloads(job_for(chat))
+
+    job.ask('And then?')
+    job.ask('And after that?')
+
+    expect(job).not_to have_received(:resync_messages)
+    expect(job).not_to be_waiting
+    expect(roles(chat)).to eq(%w[user assistant user assistant user assistant])
+  end
+
+  it 'keeps the loaded transcript when every tool call it claims is free' do
+    job = counting_reloads(job_for(approved_chat))
+
+    job.complete
+
+    expect(job).not_to have_received(:resync_messages)
+    expect(executions.size).to eq(1)
+  end
+
+  it 'keeps the loaded transcript when a run finds the chat waiting' do
+    chat = question_chat
+    chat.add_message(tool_call_message(call_id))
+    job = counting_reloads(job_for(chat))
+
+    job.complete
+    job.add_message(tool_call_message("#{call_id}_2"))
+    job.complete
+
+    expect(job).to be_waiting
+    expect(job).not_to have_received(:resync_messages)
+    expect(requests).to be_empty
+  end
+
+  it 'reloads the transcript after a failed run' do
+    chat = question_chat
+    job = job_for(chat)
+    sent = []
+    attempts = 0
+    allow(job.to_llm.provider).to receive(:complete) do |messages, **|
+      sent << messages.map(&:content)
+      raise RubyLLM::ServerError, 'overloaded' if (attempts += 1) == 1
+
+      RubyLLM::Message.new(role: :assistant, content: 'Done')
+    end
+
+    expect { job.complete }.to raise_error(RubyLLM::ServerError)
+    Chat.find(chat.id).add_message(role: :user, content: 'Are you there?')
+    job.complete
+
+    expect(sent.last).to eq(['Hello', 'Are you there?'])
+  end
+
+  it 'removes its empty answer when another process takes the chat over mid-stream' do
+    freeze_time
+    chat = question_chat
+    job = job_for(chat) do |stream|
+      stream.call(chunk)
+      take_over(chat)
+      travel 3.minutes
+      stream.call(chunk)
+    end
+
+    response = job.complete { |_chunk| nil }
+
+    expect(response.content).to eq('Hello')
+    expect(roles(chat)).to eq(%w[user])
+  ensure
+    travel_back
+  end
+
+  it 'discards an answer that arrives after another process took the chat over' do
+    chat = question_chat
+    job = job_for(chat) { take_over(chat) }
+
+    response = job.complete
+
+    expect(response.content).to eq('Hello')
+    expect(roles(chat)).to eq(%w[user])
+  end
+
+  it 'discards a partly saved answer that arrives after another process took the chat over' do
+    chat = question_chat
+    job = job_for(chat) do |stream|
+      stream.call(chunk)
+      take_over(chat)
+    end
+
+    job.complete { |chunk| job.messages.last.update!(content: chunk.content) }
+
+    expect(roles(chat)).to eq(%w[user])
+  end
+
+  it 'discards a tool result another process recorded first' do
+    chat = approved_chat
+    during_run << lambda {
+      Chat.find(chat.id).add_message(role: :tool, content: 'charged elsewhere', tool_call_id: call_id)
+    }
+
+    job_for(chat).complete
+
+    expect(chat.messages_association.where(role: 'tool').pluck(:content)).to eq(['charged elsewhere'])
+    expect(roles(chat)).to eq(%w[user assistant tool])
+  end
+
+  it 'renews its claim at most every quarter of the run time' do
+    freeze_time
+    chat = question_chat
+    started = Time.current
+    claims = []
+    job = job_for(chat) do |stream|
+      travel 1.minute
+      stream.call(chunk)
+      claims << claimed_until(chat)
+      travel 90.seconds
+      stream.call(chunk)
+      claims << claimed_until(chat)
+    end
+
+    job.complete { |_chunk| nil }
+
+    expect(claims).to eq([started + 10.minutes, started + 150.seconds + 10.minutes])
+  ensure
+    travel_back
+  end
+
+  it 'keeps the claim a long tool call extended when it renews afterwards' do
+    freeze_time
+    started = Time.current
+    claims = []
+    job = job_for(approved_chat, tool_class { max_run_time 2.hours }) do |stream|
+      travel 3.minutes
+      stream.call(chunk)
+      claims << claimed_until(Chat.last)
+    end
+
+    job.complete { |_chunk| nil }
+
+    expect(claims).to eq([started + 2.hours])
+  ensure
+    travel_back
+  end
+
+  it 'stops extending its claim for a call it already answered' do
+    freeze_time
+    started = Time.current
+    chat = approved_chat
+    claims = []
+    refund = Class.new(RubyLLM::Tool) do
+      requires_approval
+      define_method(:name) { 'refund' }
+      define_method(:execute) { claims << Chat.find(chat.id).claimed_until and 'refunded' }
+    end
+    job = job_for(chat, tool_class { max_run_time 2.hours }).with_tools(refund)
+    job.complete
+    travel 1.hour
+    job.add_message(tool_call_message('refund_call', name: 'refund'))
+    job.approve('refund_call')
+
+    job.complete
+
+    expect(claims).to eq([started + 1.hour + 10.minutes])
+  ensure
+    travel_back
+  end
+
+  it 'waits on a call another process is running while the chat itself is free' do
+    chat = approved_chat
+    tool_call_record.update!(claimed_until: 10.minutes.from_now)
+    job = job_for(chat)
+
+    job.run_tools
+
+    expect(executions).to be_empty
+    expect(job).to be_waiting
+    expect(job).not_to be_running
+  end
+
   it 'runs without claims on a schema that has no claim columns' do
     chat = approved_chat
-    connection = ActiveRecord::Base.connection
 
-    ActiveRecord::Base.transaction do
-      connection.remove_column(:chats, :claim_token)
-      connection.remove_column(:chats, :claimed_until)
-      connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
-      [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
-
+    without_claim_columns do
       job = job_for(chat)
       job.complete
 
       expect(executions.size).to eq(1)
       expect(roles(chat)).to eq(%w[user assistant tool assistant])
       expect(job).not_to be_running
-      raise ActiveRecord::Rollback
+      expect(job).not_to be_waiting
     end
-  ensure
-    [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+  end
+
+  it 'leaves work another process added to a chat without claim columns to that process' do
+    chat = question_chat
+
+    without_claim_columns do
+      job = job_for(chat) do |stream|
+        stream.call(chunk)
+        Chat.find(chat.id).add_message(role: :user, content: 'And then?')
+      end
+      job.complete { |_chunk| nil }
+
+      expect(requests).to eq([job])
+      expect(roles(chat)).to eq(%w[user assistant user])
+    end
+  end
+
+  it 'releases an unanswered call on a schema that has no claim columns' do
+    chat = approved_chat
+
+    without_claim_columns do
+      job = job_for(chat)
+      during_run << -> { job.cancel }
+
+      expect { job.run_tools }.to raise_error(RubyLLM::CancelledError)
+      expect(tool_call_record.result).to be_nil
+    end
   end
 end

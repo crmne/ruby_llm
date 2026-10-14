@@ -118,7 +118,7 @@ The pre-push hook mutates the lines your push changes, compared with the upstrea
 Kill a survivor with a spec that checks the behavior the line exists for, never by loosening an assertion. When a mutant is equivalent, behaving exactly like the original, remove the redundant code if you can. Otherwise suppress it on its line with the operator and the reason:
 
 ```ruby
-return if blocks.empty? # mutineer:disable-line statement_removal -- the loop below does nothing for no blocks
+@running_checker = nil # mutineer:disable-line statement_removal -- an unset variable reads nil too
 ```
 
 ### OpenTelemetry conformance
