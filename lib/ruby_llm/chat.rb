@@ -88,6 +88,10 @@ module RubyLLM
     # Whether #with_citations asked the provider for citations.
     attr_reader :citations
 
+    # The code execution options set with #with_code_execution, +false+
+    # when explicitly disabled, or +nil+ when not configured.
+    attr_reader :code_execution
+
     # The Context this chat sends requests through, or +nil+ for the global
     # configuration.
     attr_reader :context
@@ -136,6 +140,8 @@ module RubyLLM
       @citations = false
       @caching = nil
       @compaction = nil
+      @code_execution = nil
+      @code_execution_tool = nil
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
@@ -492,7 +498,7 @@ module RubyLLM
     # Raises ArgumentError when two tools share a name.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
-      mcp.flat_map(&:tools).each_with_object(offered) do |tool, tools|
+      [@code_execution_tool, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 
         name = tool.name.to_sym
@@ -776,6 +782,57 @@ module RubyLLM
       end
 
       @compaction = options == false ? false : normalize_compaction(options)
+      self
+    end
+
+    # Lets the model run code in the sandbox set with
+    # Configuration#sandbox. The model gets one tool, +run_code+, that
+    # runs Ruby or a shell script in a fresh working directory, with
+    # read-only copies of the conversation's files, and returns the output
+    # and every file the code writes as attachments on the tool result.
+    # The options are:
+    #
+    # +languages+:: the languages the model may use, from +:ruby+,
+    #               +:python+, and +:shell+. Default: Ruby and shell, plus
+    #               Python when +python:+ declares packages.
+    # +timeout+:: seconds a run may take. Default: 120.
+    # +network+:: +false+ (the default), +true+, or
+    #             <tt>{ allow: ["pypi.org"] }</tt>.
+    # +gems+:: gems installed once and available to every Ruby run.
+    # +python+:: Python packages installed once and available to every
+    #            Python run.
+    # +gem_home+:: a GEM_HOME with gems already installed, used instead
+    #              of +gems+.
+    # +virtualenv+:: a Python virtualenv with packages already installed,
+    #                used instead of +python+.
+    # +readable+:: more paths runs may read, such as fonts or an
+    #              application installed outside the system directories.
+    #
+    # Accepts keywords or an options Hash. Pass +false+ to disable it.
+    # Passing +nil+ raises ArgumentError. Returns +self+.
+    #
+    #   chat.with_code_execution
+    #   chat.with_code_execution(languages: [:ruby, :python], timeout: 120)
+    #   chat.with_code_execution(gems: %w[prawn], python: %w[pandas matplotlib])
+    #   chat.with_code_execution(virtualenv: "/opt/sandbox/venv", readable: ["/opt/fonts"])
+    #   chat.with_code_execution(false)
+    #
+    # Raises ConfigurationError when no sandbox is configured. Code never
+    # runs outside a sandbox. To run code on the provider's servers
+    # instead, use <tt>with_provider_tools(:code_execution)</tt>.
+    def with_code_execution(enabled = true, **options)
+      options = CodeExecution.options(enabled, options)
+      @code_execution_tool = if options
+                               CodeExecution.new(
+                                 sandbox: Sandbox.resolve(@config.sandbox),
+                                 attachments: -> { messages.flat_map(&:attachments) },
+                                 chat: self,
+                                 config: @config,
+                                 package_cache_dir: @config.package_cache_dir,
+                                 **options
+                               )
+                             end
+      @code_execution = options
       self
     end
 
@@ -1371,7 +1428,7 @@ module RubyLLM
     # the original attachments while each provider's upload is memoized on
     # them. An attachment's store keeps its uploads for later processes.
     def preprocessed_messages(list = messages)
-      list = request_history(list)
+      list = CodeExecution.for_model(request_history(list))
       return list unless @provider
 
       @provider.preprocess_messages(list, model: @model, protocol: @protocol,
@@ -1380,6 +1437,7 @@ module RubyLLM
 
     def unsupported_attachment_handler
       callbacks = @callbacks[:unsupported_attachment]
+      callbacks += [CodeExecution.method(:describe)] if @code_execution
       return if callbacks.empty?
 
       lambda do |attachment|

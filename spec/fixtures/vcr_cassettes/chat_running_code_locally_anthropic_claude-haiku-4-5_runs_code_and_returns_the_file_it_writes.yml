@@ -1,0 +1,199 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        run_code once to compute the sum of the squares of 1 to 100, and write squares.csv
+        with the columns n and square for n from 1 to 10. Then tell me the sum."}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"run_code","description":"Runs
+        Ruby code in a sandbox and returns its exit code, output, and the files it
+        writes. Each call starts in a new empty working directory, and nothing carries
+        over between calls. Files attached to the conversation, and files earlier
+        calls returned, are in ./attachments (read-only). Write files to the working
+        directory to return them to the user. The code has no network access. A call
+        stops after 120 seconds.","input_schema":{"type":"object","properties":{"language":{"type":"string","enum":["ruby"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 14:31:43 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T14:31:42Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T14:31:43Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T14:31:42Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T14:31:42Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-2131604ecfa73c885f3a0e3d59944868-d1e17c6819b3055f-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2HsSRKcx5uVfAkS2kyj","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01TmgDASQQ2ZsvQYwjJXygcS","name":"run_code","input":{"language":"ruby","code":"\n#
+        Compute the sum of squares from 1 to 100\nsum_of_squares = (1..100).sum {
+        |n| n * n }\n\n# Write squares.csv with n and square for n from 1 to 10\nFile.open(''squares.csv'',
+        ''w'') do |file|\n  file.puts \"n,square\"\n  (1..10).each do |n|\n    file.puts
+        \"#{n},#{n * n}\"\n  end\nend\n\nputs \"Sum of squares from 1 to 100: #{sum_of_squares}\"\n"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":739,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":205,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 14:31:43 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        run_code once to compute the sum of the squares of 1 to 100, and write squares.csv
+        with the columns n and square for n from 1 to 10. Then tell me the sum."}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01TmgDASQQ2ZsvQYwjJXygcS","name":"run_code","input":{"code":"\n#
+        Compute the sum of squares from 1 to 100\nsum_of_squares = (1..100).sum {
+        |n| n * n }\n\n# Write squares.csv with n and square for n from 1 to 10\nFile.open(''squares.csv'',
+        ''w'') do |file|\n  file.puts \"n,square\"\n  (1..10).each do |n|\n    file.puts
+        \"#{n},#{n * n}\"\n  end\nend\n\nputs \"Sum of squares from 1 to 100: #{sum_of_squares}\"\n","language":"ruby"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01TmgDASQQ2ZsvQYwjJXygcS","content":[{"type":"text","text":"{\"exit_code\":0,\"stdout\":\"Sum
+        of squares from 1 to 100: 338350\\n\",\"stderr\":\"\",\"files\":[\"squares.csv\"]}"},{"type":"text","text":"<file
+        name=''squares.csv'' mime_type=''text/csv''>n,square\n1,1\n2,4\n3,9\n4,16\n5,25\n6,36\n7,49\n8,64\n9,81\n10,100\n</file>"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"run_code","description":"Runs
+        Ruby code in a sandbox and returns its exit code, output, and the files it
+        writes. Each call starts in a new empty working directory, and nothing carries
+        over between calls. Files attached to the conversation, and files earlier
+        calls returned, are in ./attachments (read-only). Write files to the working
+        directory to return them to the user. The code has no network access. A call
+        stops after 120 seconds.","input_schema":{"type":"object","properties":{"language":{"type":"string","enum":["ruby"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 14:31:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T14:31:44Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T14:31:44Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T14:31:44Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T14:31:44Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-b7993325f66a4e21bceb5f3fb09173c8-054daab21b706272-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2HsaoM4J7q2o1zhD2VC","type":"message","role":"assistant","content":[{"type":"text","text":"The
+        sum of the squares of 1 to 100 is **338,350**.\n\nI''ve also created the `squares.csv`
+        file with the n and square columns for n from 1 to 10, as shown above."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1054,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":54,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 14:31:44 GMT
+recorded_with: VCR 6.4.0

@@ -186,6 +186,23 @@ module RubyLLM
     # registering RubyLLM. Default: +nil+.
     option :mcp_client_id, nil
 
+    ##
+    # :attr_accessor: sandbox
+    #
+    # Where code from a model runs, such as the code Chat#with_code_execution
+    # executes: +:mxc+ for the built-in sandbox on the mxc gem, or any
+    # object Sandbox describes. Default: +nil+ (nothing runs locally).
+    option :sandbox, nil
+
+    ##
+    # :attr_accessor: package_cache_dir
+    #
+    # Directory holding the gems and Python packages declared with
+    # Chat#with_code_execution, installed once and reused by every run.
+    # Defaults to a +packages+ directory in the operating system's user
+    # cache directory.
+    option :package_cache_dir, -> { (directory = Support::Utils.cache_directory) && File.join(directory, 'packages') }
+
     # Keeps custom 1.x initializers bootable long enough to run the 2.0
     # upgrade generator. The registry is always RubyLLM-owned in 2.0.
     def model_registry_class=(_value) # :nodoc:

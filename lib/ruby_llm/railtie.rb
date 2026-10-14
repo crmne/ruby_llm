@@ -39,6 +39,10 @@ if defined?(Rails::Railtie)
         end
       end
 
+      config.after_initialize do
+        RubyLLM::Sandbox.verify(RubyLLM.sandbox)
+      end
+
       rake_tasks do
         load 'tasks/ruby_llm.rake'
       end

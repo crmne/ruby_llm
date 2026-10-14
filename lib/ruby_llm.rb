@@ -30,6 +30,7 @@ loader.inflector.inflect(
   'mcp' => 'MCP',
   'oauth' => 'OAuth',
   'mistral' => 'Mistral',
+  'mxc' => 'MXC',
   'ocr' => 'OCR',
   'openai' => 'OpenAI',
   'open_telemetry' => 'OpenTelemetry',
@@ -89,6 +90,8 @@ loader.setup
 # MCP is a Model Context Protocol client: describe a server to connect to
 # in an MCP class, and Chat#with_mcp gives the model its tools. RubyLLM.mcp
 # connects to one inline.
+# Chat#with_code_execution lets the model run Ruby, Python, and shell code
+# in the Sandbox set with Configuration#sandbox, read through RubyLLM.sandbox.
 #
 # Agent defines a reusable configuration with model, instructions, tools,
 # schema, and runtime inputs. Chat#ask_later, Chat#generate, Chat#run_tools,
@@ -558,6 +561,18 @@ module RubyLLM
     # Returns the global Configuration instance.
     def config
       @config ||= Configuration.new
+    end
+
+    # Returns the sandbox set with Configuration#sandbox, or +nil+ when
+    # none is configured. Check whether it can run on this machine with
+    # +supported?+:
+    #
+    #   RubyLLM.sandbox.supported? # => true
+    #
+    # Raises ConfigurationError when the configured value is not a sandbox,
+    # or names the mxc sandbox without the mxc gem installed.
+    def sandbox
+      Sandbox.resolve(config.sandbox)
     end
 
     def logger # :nodoc:

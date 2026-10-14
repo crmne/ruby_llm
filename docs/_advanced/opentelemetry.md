@@ -94,7 +94,7 @@ A few details:
 
 ## Spans
 
-Span names follow the pattern `<operation> <target>`. The target is the model for model calls, the tool name for tools, and the workflow or step name for workflows.
+Span names follow the pattern `<operation> <target>`. The target is the model for model calls, the tool name for tools, the language for code execution runs, and the workflow or step name for workflows.
 
 | RubyLLM operation | Operation name | Span kind |
 | --- | --- | --- |
@@ -107,6 +107,7 @@ Span names follow the pattern `<operation> <target>`. The target is the model fo
 | Moderation | `moderation` | Client |
 | Judgments | `judgment` | Client |
 | Tool execution | `execute_tool` | Internal |
+| Code execution runs | `ruby_llm.code_execution` | Internal |
 | Workflows | `invoke_workflow` | Internal |
 | Workflow steps | `ruby_llm.workflow_step` | Internal |
 
@@ -132,6 +133,7 @@ Spans follow the [OpenTelemetry GenAI semantic conventions](https://github.com/o
 | `gen_ai.tool.name`, `gen_ai.tool.call.id` | The tool and its call ID |
 | `gen_ai.workflow.name`, `ruby_llm.workflow.id` | The workflow name and ID |
 | `ruby_llm.workflow.step.name`, `ruby_llm.workflow.step.id` | The step name and ID |
+| `ruby_llm.code_execution.language`, `ruby_llm.code_execution.exit_code`, `ruby_llm.code_execution.timed_out`, `ruby_llm.code_execution.duration` | A code execution run's language, exit code, timeout, and duration in seconds |
 
 Token counts the provider did not report are left out, and reported zeroes stay zero. When an operation raises, the span's status is set to error and `error.type` holds the exception class.
 

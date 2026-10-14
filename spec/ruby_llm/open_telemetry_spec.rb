@@ -394,4 +394,23 @@ RSpec.describe RubyLLM::OpenTelemetry do
       expect(OpenTelemetry::Context.current).to equal(previous)
     end
   end
+
+  it 'traces a code execution run inside its tool call' do
+    sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: 2) }
+    chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model:).with_code_execution
+    call = RubyLLM::ToolCall.new(id: 'call_code', name: 'run_code',
+                                 arguments: { 'language' => 'shell', 'code' => 'exit 2' })
+    RubyLLM.instrument('tool_call.ruby_llm', tool_name: call.name, tool_call_id: call.id) do
+      chat.tools[:run_code].call(language: 'shell', code: 'exit 2')
+    end
+
+    tool = spans.find { |span| span.name == 'execute_tool run_code' }
+    run = spans.find { |span| span.name == 'ruby_llm.code_execution shell' }
+    expect(run.parent_span_id).to eq(tool.span_id)
+    expect(run.kind).to eq(:internal)
+    expect(run.attributes).to include('ruby_llm.code_execution.language' => 'shell',
+                                      'ruby_llm.code_execution.exit_code' => 2,
+                                      'ruby_llm.code_execution.timed_out' => false)
+    expect(run.attributes['ruby_llm.code_execution.duration']).to be_a(Float)
+  end
 end

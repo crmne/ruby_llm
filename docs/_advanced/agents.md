@@ -89,6 +89,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `caching` (see [Prompt Caching]({% link _core_features/prompt-caching.md %}))
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
 * `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
+* `code_execution` (see [Code Execution]({% link _core_features/code-execution.md %}))
 * `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `headers` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `schema` (see [Chat Basics]({% link _core_features/chat.md %}))

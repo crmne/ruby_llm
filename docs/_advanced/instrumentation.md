@@ -190,6 +190,7 @@ RubyLLM emits these events:
 *   `batch.ruby_llm` - one batch submission operation
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result
+*   `code_execution.ruby_llm` - one [code execution]({% link _core_features/code-execution.md %}) run: language, duration, exit code, timeout, blocked hosts, and returned files
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
 *   `image.ruby_llm` - image generation model, prompt, size, and result
 *   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video

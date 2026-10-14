@@ -73,7 +73,7 @@ module RubyLLM
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
       with_temperature with_max_output_tokens with_thinking with_citations
-      with_end_user with_compaction with_caching with_context with_provider_options
+      with_end_user with_compaction with_caching with_code_execution with_context with_provider_options
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
       before_fallback after_fallback
@@ -84,7 +84,8 @@ module RubyLLM
     # Chat values and operations whose return values pass through unchanged.
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers schema
-      concurrency caching citations compaction context end_user fallbacks thinking temperature max_output_tokens
+      concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
+      max_output_tokens
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
     ].freeze
@@ -92,6 +93,7 @@ module RubyLLM
     COPIED_INHERITED_CONFIG = (%i[
       @thinking
       @citations
+      @code_execution
       @end_user
       @schema
       @context
@@ -284,6 +286,19 @@ module RubyLLM
         end
 
         @compaction = options
+      end
+
+      # Lets chats this agent builds run code in the configured sandbox,
+      # applied via Chat#with_code_execution. Accepts the same options as
+      # keywords or a Hash. Pass +false+ to disable it. Passing +nil+
+      # raises ArgumentError.
+      #
+      #   code_execution
+      #   code_execution false
+      #   code_execution languages: [:ruby, :python], gems: %w[prawn]
+      #
+      def code_execution(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
+        @code_execution = CodeExecution.options(enabled, options)
       end
 
       # Sets the safety identifier for chats this agent builds, applied via
@@ -640,6 +655,7 @@ module RubyLLM
         apply_end_user(chat, runtime)
         apply_caching(chat, runtime)
         apply_compaction(chat)
+        apply_code_execution(chat)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
         apply_schema(chat, runtime)
@@ -780,6 +796,12 @@ module RubyLLM
         return if @compaction.nil?
 
         @compaction == false ? chat.with_compaction(false) : chat.with_compaction(**@compaction)
+      end
+
+      def apply_code_execution(chat)
+        return if @code_execution.nil?
+
+        @code_execution == false ? chat.with_code_execution(false) : chat.with_code_execution(**@code_execution)
       end
 
       def apply_provider_options(chat, runtime)
@@ -1032,6 +1054,12 @@ module RubyLLM
     # Delegates to Chat#with_caching. See that method for arguments and return values.
 
     ##
+    # :method: with_code_execution
+    # :call-seq: with_code_execution(enabled = true, **options)
+    #
+    # Delegates to Chat#with_code_execution. See that method for arguments and return values.
+
+    ##
     # :method: with_context
     # :call-seq: with_context(context)
     #
@@ -1234,6 +1262,12 @@ module RubyLLM
     # :call-seq: citations
     #
     # Delegates to Chat#citations. See that method for arguments and return values.
+
+    ##
+    # :method: code_execution
+    # :call-seq: code_execution
+    #
+    # Delegates to Chat#code_execution. See that method for arguments and return values.
 
     ##
     # :method: compaction

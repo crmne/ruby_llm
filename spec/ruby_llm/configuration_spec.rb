@@ -19,6 +19,19 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.deprecation_behavior).to eq(:warn)
       expect(config.faraday_adapter).to eq(:net_http)
       expect(config.default_judgment_model).to eq('jev-latest')
+      expect(config.sandbox).to be_nil
+    end
+
+    it 'keeps code execution packages in the user cache directory' do
+      allow(RubyLLM::Support::Utils).to receive(:cache_directory).and_return('/cache/ruby_llm')
+
+      expect(config.package_cache_dir).to eq('/cache/ruby_llm/packages')
+    end
+
+    it 'has no package cache without a cache directory' do
+      allow(RubyLLM::Support::Utils).to receive(:cache_directory).and_return(nil)
+
+      expect(config.package_cache_dir).to be_nil
     end
 
     it 'exposes a discoverable options API' do

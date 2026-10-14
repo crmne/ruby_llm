@@ -228,6 +228,10 @@ RubyLLM.configure do |config|
   config.tool_concurrency = false # true/:threads or :fibers
   config.max_run_time = Integer # Seconds before a persisted chat's run counts as crashed; defaults to 600
 
+  # Code Execution
+  config.sandbox = :mxc # Or an object answering supported? and run; defaults to nil
+  config.package_cache_dir = String # Declared gems and Python packages; defaults to the OS user cache directory
+
   # Logging
   config.logger = Logger
   config.instrumenter = Object # Responds to instrument(name, payload) { ... }

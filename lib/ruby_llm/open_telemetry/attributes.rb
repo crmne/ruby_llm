@@ -14,6 +14,7 @@ module RubyLLM
         'moderation.ruby_llm' => 'moderation',
         'judgment.ruby_llm' => 'judgment',
         'tool_call.ruby_llm' => 'execute_tool',
+        'code_execution.ruby_llm' => 'ruby_llm.code_execution',
         'workflow.ruby_llm' => 'invoke_workflow',
         'workflow_step.ruby_llm' => 'ruby_llm.workflow_step'
       }.freeze
@@ -25,7 +26,7 @@ module RubyLLM
         'mistral' => 'mistral_ai',
         'xai' => 'x_ai'
       }.freeze
-      INTERNAL_OPERATIONS = %w[execute_tool invoke_workflow ruby_llm.workflow_step].freeze
+      INTERNAL_OPERATIONS = %w[execute_tool invoke_workflow ruby_llm.workflow_step ruby_llm.code_execution].freeze
 
       module_function
 
@@ -34,6 +35,7 @@ module RubyLLM
                  when 'execute_tool' then payload[:tool_name]
                  when 'invoke_workflow' then payload[:workflow_name]
                  when 'ruby_llm.workflow_step' then payload[:workflow_step_name]
+                 when 'ruby_llm.code_execution' then payload[:language]
                  else payload[:model]
                  end
         [operation, target].compact.join(' ')
@@ -46,6 +48,7 @@ module RubyLLM
       def request(operation, payload, event:)
         return workflow(operation, payload) if %w[invoke_workflow ruby_llm.workflow_step].include?(operation)
         return tool(payload) if operation == 'execute_tool'
+        return code_execution_request(payload) if operation == 'ruby_llm.code_execution'
 
         {
           'gen_ai.operation.name' => operation,
@@ -69,10 +72,10 @@ module RubyLLM
 
       def response(payload)
         response = payload[:response]
-        attributes = {
+        attributes = code_execution(payload).merge(
           'gen_ai.response.model' => payload[:response_model],
           'gen_ai.response.finish_reasons' => ([response.finish_reason.to_s] if response&.finish_reason)
-        }.compact
+        ).compact
         attributes.merge!(tokens(payload[:response_tokens] || payload[:tokens])) if payload[:tokens]
         attributes
       end
@@ -86,6 +89,20 @@ module RubyLLM
           'gen_ai.usage.cache_write.input_tokens' => tokens.cache_write,
           'gen_ai.usage.reasoning.output_tokens' => tokens.thinking
         }.compact
+      end
+
+      def code_execution_request(payload)
+        { 'ruby_llm.code_execution.language' => payload[:language].to_s }
+      end
+
+      def code_execution(payload)
+        return {} unless payload.key?(:timed_out)
+
+        {
+          'ruby_llm.code_execution.exit_code' => payload[:exit_code],
+          'ruby_llm.code_execution.timed_out' => payload[:timed_out],
+          'ruby_llm.code_execution.duration' => payload[:duration]
+        }
       end
 
       def tool(payload)

@@ -1,0 +1,303 @@
+# frozen_string_literal: true
+
+require 'json'
+require 'stringio'
+
+module RubyLLM
+  # CodeExecution is the +run_code+ tool Chat#with_code_execution gives the
+  # model. Each call runs Ruby, Python, or a shell script in the configured
+  # Sandbox, in a fresh working directory with read-only copies of the
+  # conversation's files, and returns the exit code, the output, and every
+  # file the code wrote as an attachment on the tool result.
+  #
+  #   chat = RubyLLM.chat.with_code_execution
+  #   chat.tools[:run_code] # => #<RubyLLM::CodeExecution ...>
+  class CodeExecution < Tool
+    # The languages code execution can run.
+    LANGUAGES = %i[ruby python shell].freeze
+
+    # The options Chat#with_code_execution accepts.
+    OPTIONS = %i[languages timeout network gems python gem_home virtualenv readable].freeze
+
+    # Seconds a run may take unless +timeout:+ says otherwise.
+    DEFAULT_TIMEOUT = 120
+
+    # Characters of standard output and of standard error kept per run.
+    MAX_OUTPUT = 20_000
+
+    # Files a run returns at most.
+    MAX_FILES = 10
+
+    # Bytes a returned file may have at most.
+    MAX_FILE_SIZE = 10 * 1024 * 1024
+
+    # Bytes of a text file the model reads back. Larger files, and files
+    # that are not images, PDFs, or text, reach the model as a description.
+    MAX_MODEL_TEXT = 64 * 1024
+
+    CHECKS = {}.compare_by_identity
+    CHECKS_LOCK = Mutex.new
+    private_constant :CHECKS, :CHECKS_LOCK
+
+    class << self
+      def tool_name # :nodoc:
+        'run_code'
+      end
+
+      # Returns the options +enabled+ and +options+ describe, +false+ when
+      # disabled. Raises ArgumentError for anything else.
+      def options(enabled, options) # :nodoc:
+        return options(true, enabled.transform_keys(&:to_sym).merge(options)) if enabled.is_a?(Hash)
+        unless [true, false].include?(enabled)
+          raise ArgumentError, 'code execution accepts false or code execution options'
+        end
+        raise ArgumentError, 'disabled code execution does not accept options' if !enabled && options.any?
+        return false unless enabled
+
+        validate_options(options)
+        options.merge(languages: languages_for(options)).freeze
+      end
+
+      # Returns +messages+ as the model reads them: files a run returned
+      # stay attached when they are images, PDFs, or short text, and
+      # become a description otherwise.
+      def for_model(messages) # :nodoc:
+        ids = messages.flat_map { |message| run_code_call_ids(message) }
+        return messages if ids.empty?
+
+        messages.map do |message|
+          returned_files?(message, ids) ? message.with_attachments(model_view(message.attachments)) : message
+        end
+      end
+
+      # Returns a text Attachment telling the model where its code finds
+      # +attachment+.
+      def describe(attachment) # :nodoc:
+        name = Workspace.filename(attachment.filename)
+        text = "#{name} (#{attachment.mime_type}, #{attachment.byte_size} bytes) is not shown here. " \
+               "Code you run with #{tool_name} can read it at #{Workspace::ATTACHMENTS}/#{name}."
+        Attachment.new(StringIO.new(text), filename: "#{name}.txt")
+      end
+
+      def available?(sandbox, language, env) # :nodoc:
+        CHECKS_LOCK.synchronize do
+          checks = CHECKS[sandbox] ||= {}
+          return checks[language.name] if checks.key?(language.name)
+
+          result = sandbox.run(*language.check_command, env:, timeout: 30)
+          checks[language.name] = result.exit_code&.zero? && !result.timed_out? ? true : false
+        end
+      end
+
+      private
+
+      def validate_options(options)
+        unknown = options.keys - OPTIONS
+        raise ArgumentError, "code execution accepts #{OPTIONS.join(', ')}, got #{unknown.join(', ')}" if unknown.any?
+        raise ArgumentError, 'code execution options cannot be nil' if options.value?(nil)
+        raise ArgumentError, 'pass gems: or gem_home:, not both' if options.key?(:gems) && options.key?(:gem_home)
+        return unless options.key?(:python) && options.key?(:virtualenv)
+
+        raise ArgumentError, 'pass python: or virtualenv:, not both'
+      end
+
+      def languages_for(options)
+        default = options[:python] || options[:virtualenv] ? %i[ruby python shell] : %i[ruby shell]
+        languages = Array(options.fetch(:languages, default)).map { |language| language.to_s.to_sym }.uniq
+        unsupported = languages - LANGUAGES
+        if unsupported.any?
+          raise ArgumentError, "code execution runs #{LANGUAGES.join(', ')}, got #{unsupported.join(', ')}"
+        end
+        raise ArgumentError, 'code execution needs at least one language' if languages.empty?
+
+        languages.freeze
+      end
+
+      def returned_files?(message, ids)
+        message.tool_result? && ids.include?(message.tool_call_id) && message.attachments.any?
+      end
+
+      def model_view(files)
+        files.map { |file| readable_by_model?(file) ? file : describe(file) }
+      end
+
+      def run_code_call_ids(message)
+        (message.tool_calls || {}).values.select { |call| call.name == tool_name }.map(&:id)
+      end
+
+      def readable_by_model?(attachment)
+        attachment.image? || attachment.pdf? || (attachment.text? && attachment.byte_size <= MAX_MODEL_TEXT)
+      end
+    end
+
+    # The Sandbox the code runs in.
+    attr_reader :sandbox
+
+    # The seconds a run may take.
+    attr_reader :timeout
+
+    # The network access runs get: +false+, +true+, or
+    # <tt>{ allow: [...] }</tt>.
+    attr_reader :network
+
+    # The extra paths runs may read.
+    attr_reader :readable
+
+    # Creates the tool for +sandbox+ with the options Chat#with_code_execution
+    # takes. +attachments+ returns the conversation's files when called,
+    # and +mounts+ a Hash of paths inside the working directory to
+    # directories mounted there read-only. +chat+ and +config+ describe
+    # where the instrumentation events go.
+    # Raises ConfigurationError without a sandbox.
+    def initialize(sandbox:, attachments: -> { [] }, mounts: -> { {} }, chat: nil, config: nil,
+                   package_cache_dir: nil, languages: %i[ruby shell], timeout: DEFAULT_TIMEOUT, network: false,
+                   readable: [], **packages)
+      super()
+      raise ConfigurationError, 'Code execution needs a sandbox. Set config.sandbox = :mxc.' unless sandbox
+
+      @sandbox = sandbox
+      @attachments = attachments
+      @mounts = mounts
+      @chat = chat
+      @config = config
+      @requested_languages = languages
+      @timeout = timeout
+      @network = network
+      @readable = Array(readable).map { |path| File.expand_path(path) }
+      @packages = Packages.new(sandbox:, cache_dir: package_cache_dir, **packages)
+    end
+
+    # Returns the languages the model may use: those requested that the
+    # sandbox can run. Raises ConfigurationError when it can run none.
+    def languages
+      @languages ||= begin
+        env = @packages.base_env(Dir.tmpdir)
+        available = @requested_languages.select { |name| self.class.available?(sandbox, Language[name], env) }
+        raise ConfigurationError, "The sandbox cannot run #{@requested_languages.join(', ')}" if available.empty?
+
+        available
+      end
+    end
+
+    # Returns the description the model sees, naming only the languages
+    # the sandbox can run.
+    def description
+      [
+        "Runs #{language_list} code in a sandbox and returns its exit code, output, and the files it writes.",
+        'Each call starts in a new empty working directory, and nothing carries over between calls.',
+        "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \
+        '(read-only). Write files to the working directory to return them to the user.',
+        packages_note,
+        network_note,
+        "A call stops after #{timeout} seconds."
+      ].compact.join(' ')
+    end
+
+    # Returns the JSON Schema of the +language+ and +code+ arguments.
+    def parameters_schema
+      {
+        'type' => 'object',
+        'properties' => {
+          'language' => { 'type' => 'string', 'enum' => languages.map(&:to_s),
+                          'description' => 'The language the code is written in' },
+          'code' => { 'type' => 'string', 'description' => 'The complete program to run' }
+        },
+        'required' => %w[language code],
+        'additionalProperties' => false,
+        'strict' => true
+      }
+    end
+
+    # Runs +code+ written in +language+ and returns its report, followed by
+    # the files it wrote as Attachments.
+    def execute(language:, code:)
+      language = language.to_s.downcase.to_sym
+      unless languages.include?(language)
+        return { error: "Unsupported language #{language}. Use one of: #{languages.join(', ')}" }
+      end
+
+      Workspace.open { |workspace| run(Language[language], code, workspace) }
+    end
+
+    private
+
+    def run(language, code, workspace)
+      workspace.copy_in(@attachments.call)
+      mounted = workspace.mount(@mounts.call)
+      script = workspace.write_source(language, code)
+      instrument(language) do |event|
+        result = run_in_sandbox(language.command(script), workspace, readable: mounted)
+        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE)
+        record(event, result, files)
+        files.empty? ? report(result, files, skipped) : [report(result, files, skipped), *files]
+      end
+    end
+
+    def run_in_sandbox(command, workspace, readable:)
+      sandbox.run(*command,
+                  readable: [*@packages.readable, *self.readable, *readable, workspace.source, workspace.inputs],
+                  writable: [workspace.directory, workspace.home, workspace.tmp], network:, timeout:,
+                  directory: workspace.directory, env: @packages.env(workspace.home, workspace.tmp))
+    end
+
+    def instrument(language)
+      payload = { chat: @chat, tool_name: name, language: language.name, timeout:, network: }
+      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      RubyLLM.instrument('code_execution.ruby_llm', payload, config: @config) do |event|
+        yield event
+      ensure
+        event[:duration] = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
+      end
+    end
+
+    def record(event, result, files)
+      event[:exit_code] = result.exit_code
+      event[:timed_out] = result.timed_out?
+      event[:blocked_hosts] = Array(result.blocked) if result.respond_to?(:blocked)
+      event[:files] = files.map(&:filename)
+    end
+
+    def report(result, files, skipped)
+      blocked = Array(result.blocked) if result.respond_to?(:blocked)
+      {
+        exit_code: result.exit_code,
+        stdout: truncate(result.stdout),
+        stderr: truncate(result.stderr),
+        error: ("The code ran past the #{timeout}-second limit and was stopped" if result.timed_out?),
+        blocked_hosts: (blocked if blocked&.any?),
+        files: (files.map(&:filename) if files.any?),
+        skipped_files: (skipped if skipped.any?)
+      }.compact.to_json
+    end
+
+    def truncate(text)
+      text = text.to_s.dup.force_encoding(Encoding::UTF_8).scrub
+      return text if text.length <= MAX_OUTPUT
+
+      half = MAX_OUTPUT / 2
+      "#{text[0, half]}\n[#{text.length - MAX_OUTPUT} characters omitted]\n#{text[-half..]}"
+    end
+
+    def language_list
+      labels = languages.map { |name| Language[name].label }
+      labels.size > 1 ? "#{labels[0..-2].join(', ')} or #{labels.last}" : labels.first
+    end
+
+    def packages_note
+      notes = []
+      gems = @packages.gem_names
+      python = @packages.python_names
+      notes << "Ruby #{RUBY_VERSION} has these gems: #{gems.join(', ')}." if gems.any?
+      notes << "Python has these packages: #{python.join(', ')}." if python.any?
+      notes.join(' ') unless notes.empty?
+    end
+
+    def network_note
+      case network
+      when true then 'The code can reach the network.'
+      when Hash then "The code can only reach these hosts: #{Array(network[:allow]).join(', ')}."
+      else 'The code has no network access.'
+      end
+    end
+  end
+end
