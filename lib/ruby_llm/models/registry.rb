@@ -140,25 +140,8 @@ module RubyLLM
       end
 
       def cache_path
-        home = Dir.home
-        host_os = RbConfig::CONFIG['host_os']
-
-        directory = if host_os.match?(/darwin/i)
-                      File.join(home, 'Library', 'Caches', 'RubyLLM')
-                    elsif host_os.match?(/mswin|mingw|cygwin/i)
-                      local_app_data = ENV.fetch('LOCALAPPDATA', nil)
-                      local_app_data = File.join(home, 'AppData', 'Local') if local_app_data.to_s.empty?
-                      File.join(local_app_data, 'RubyLLM', 'Cache')
-                    else
-                      xdg_cache = ENV.fetch('XDG_CACHE_HOME', nil)
-                      xdg_cache = File.join(home, '.cache') if xdg_cache.to_s.empty?
-                      File.join(xdg_cache, 'ruby_llm')
-                    end
-
-        File.join(directory, 'models.json')
-      rescue ArgumentError
-        # Dir.home raises when the home directory cannot be determined.
-        nil
+        directory = Support::Utils.cache_directory
+        File.join(directory, 'models.json') if directory
       end
     end
   end
