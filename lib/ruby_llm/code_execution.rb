@@ -240,22 +240,22 @@ module RubyLLM
 
     # Runs +code+ written in +language+ and returns its report, followed by
     # the files it wrote as Attachments.
-    def execute(language:, code:)
+    def execute(language:, code:, tool_call: nil)
       language = language.to_s.downcase.to_sym
       unless languages.include?(language)
         return { error: "Unsupported language #{language}. Use one of: #{languages.join(', ')}" }
       end
 
-      Workspace.open { |workspace| run(Language[language], code, workspace) }
+      Workspace.open { |workspace| run(Language[language], code, workspace, tool_call) }
     end
 
     private
 
-    def run(language, code, workspace)
+    def run(language, code, workspace, tool_call)
       workspace.copy_in(@attachments.call)
       mounted = workspace.mount(@mounts.call)
       script = workspace.write_source(language, code)
-      instrument(language) do |event|
+      instrument(language, tool_call) do |event|
         result = run_in_sandbox(language.command(script), workspace, readable: mounted)
         files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE)
         record(event, result, files)
@@ -300,8 +300,9 @@ module RubyLLM
       { network: Array(granted[:network]), readable:, writable:, environment: granted[:environment] }
     end
 
-    def instrument(language)
-      payload = { chat: @chat, tool_name: name, language: language.name, timeout:, network: }
+    def instrument(language, tool_call)
+      payload = { chat: @chat, tool_call_id: tool_call&.id, tool_name: name, language: language.name, timeout:,
+                  network: }
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
       config = @config.is_a?(Proc) ? @config.call : @config
       RubyLLM.instrument('code_execution.ruby_llm', payload, config:) do |event|

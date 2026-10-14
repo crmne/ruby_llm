@@ -225,6 +225,25 @@ RSpec.describe RubyLLM::Chat do
       expect(payload[:duration]).to be_a(Float)
     end
 
+    it 'names the tool call a run answers in code_execution.ruby_llm' do
+      payloads = []
+      instrumenter = Object.new
+      instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
+        result = block.call(payload)
+        payloads << payload.dup if name == 'code_execution.ruby_llm'
+        result
+      end
+      chat = RubyLLM.context do |config|
+        config.sandbox = FakeSandbox.new { FakeSandbox.result }
+        config.instrumenter = instrumenter
+      end.chat(model: model_for(:openai), provider: :openai)
+      tool_call = RubyLLM::ToolCall.new(id: 'call_42', name: 'run_code', arguments: {})
+
+      chat.with_code_execution.tools[:run_code].call(language: 'shell', code: 'true', tool_call:)
+
+      expect(payloads.sole).to include(tool_call_id: 'call_42')
+    end
+
     it 'links mounted directories at fixed paths in the working directory' do
       Dir.mktmpdir do |skill|
         seen = nil

@@ -89,6 +89,16 @@ rescue_from RubyLLM::ToolCallRunningError do
 end
 ```
 
+## Rename Chat Columns Named After New Methods
+
+`acts_as_chat` records gain `code_execution`, `skills`, `with_code_execution`, `with_skills`, and `with_permissions` in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+
+```ruby
+rename_column :chats, :code_execution, :runs_code
+```
+
+The `permissions` column is RubyLLM's own, added by the 2.2 upgrade. If your chats already have a `permissions` column for something else, rename it before you run the upgrade.
+
 ## Deploy Without Mixing Versions
 
 Workers on 2.1 do not claim chats, so they can still overlap with workers on 2.2 while a deploy rolls out. Run the schema upgrade first, then let the new version replace every worker before you rely on claims. Chats that run once all workers are on 2.2 are covered.
