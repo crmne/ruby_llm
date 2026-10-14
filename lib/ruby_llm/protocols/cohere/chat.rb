@@ -133,17 +133,17 @@ module RubyLLM
           raise ServerError.new(message || 'The generation failed due to an internal error', response:)
         end
 
-        # Cohere reports what the model processed under tokens and what it
-        # charges for under billed_units; the two differ because Cohere does
-        # not bill its own preamble.
+        # Cohere reports what it charges for under billed_units and what the
+        # model processed under tokens. The processed counts and cached_tokens
+        # include Cohere's own preamble, which it does not bill, so a reply's
+        # usage is its billed units.
         def usage_tokens(usage)
           tokens = usage['tokens'] || {}
           billed = usage['billed_units'] || {}
 
           {
-            input_tokens: tokens['input_tokens'] || billed['input_tokens'],
-            output_tokens: tokens['output_tokens'] || billed['output_tokens'],
-            cache_read_tokens: usage['cached_tokens']
+            input_tokens: billed['input_tokens'] || tokens['input_tokens'],
+            output_tokens: billed['output_tokens'] || tokens['output_tokens']
           }
         end
 

@@ -143,10 +143,10 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       expect(message).to be_stopped
     end
 
-    it 'reports the tokens the model processed, not the billed units' do
+    it 'reports the units Cohere bills, not the tokens the model processed' do
       message = protocol.send(:parse_completion_body, body, raw: nil)
 
-      expect(message.tokens.input).to eq(71)
+      expect(message.tokens.input).to eq(5)
       expect(message.tokens.output).to eq(418)
     end
 
@@ -154,10 +154,23 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       expect(protocol.send(:parse_completion_body, body, raw: nil).model).to eq('command-a-plus-05-2026')
     end
 
-    it 'reads the prompt cache hits Cohere reports' do
-      body['usage']['cached_tokens'] = 12
+    context 'when the reply hit the prompt cache' do
+      before do
+        body['usage'] = { 'billed_units' => { 'input_tokens' => 8, 'output_tokens' => 8 },
+                          'tokens' => { 'input_tokens' => 503, 'output_tokens' => 11 }, 'cached_tokens' => 448 }
+      end
 
-      expect(protocol.send(:parse_completion_body, body, raw: nil).tokens.cache_read).to eq(12)
+      it 'reports the billed units without the cache hits Cohere does not bill' do
+        message = protocol.send(:parse_completion_body, body, raw: nil)
+
+        expect(message.tokens).to have_attributes(input: 8, output: 8, cache_read: nil)
+      end
+
+      it 'has a cost, which is what Cohere bills for it' do
+        message = protocol.send(:parse_completion_body, body, raw: nil)
+
+        expect(message.cost.total).to be_within(0.0000001).of(0.0001)
+      end
     end
 
     it 'raises a generation that ended in an error' do
