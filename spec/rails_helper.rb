@@ -26,10 +26,9 @@ module DummyDatabase
   end
 
   # A process forked after this file loaded, such as a mutineer worker,
-  # inherits a database file that earlier forks have written to. Test-queue
-  # workers are forks too, but share one database, so they keep the build.
+  # inherits a database file that earlier forks have written to.
   def self.stale?
-    @built_by != Process.pid && !defined?(TestQueue)
+    @built_by != Process.pid
   end
 end
 

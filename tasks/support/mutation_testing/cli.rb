@@ -93,16 +93,18 @@ module MutationTesting
 
     def run_passes(sources, label:, extra:)
       lock = CassetteLock.new(@root).acquire(label)
+      database = "#{label}-#{Process.pid}"
       by_pass = sources.group_by { |source| MutationTesting.pass_for(source) }.sort_by { |pass, _| pass.name }
       results = by_pass.map do |pass, files|
         say "#{pass.name} pass: #{files.size} source(s)"
         cache_dir = File.join(MutationTesting.state_dir(@root), 'cache', "#{label}-#{pass.name}")
         command = MutationTesting.command(pass, files, yield(pass, files), cache_dir:, extra:)
-        system(MutationTesting.environment(pass, label), *command, chdir: @root)
+        system(MutationTesting.environment(pass, database), *command, chdir: @root)
       end
       results.all?
     ensure
       lock&.release
+      FileUtils.rm_f(Dir.glob(File.join(@root, "spec/dummy/storage/test-mutineer-#{database}.sqlite3*")))
     end
 
     def expand(paths)
