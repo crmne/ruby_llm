@@ -96,6 +96,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         tool_calls: ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'dangerous', arguments: {})] }
       )
     )
+    RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: ids.first).update_columns(created_at: 1.minute.from_now)
 
     pending = reading_rows_in_reverse { chat.pending_approvals.map(&:tool_call_id) }
 

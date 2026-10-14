@@ -157,10 +157,9 @@ module RubyLLM
       def pending_approvals
         ids = to_llm.pending_approvals.map(&:id)
         RubyLLM::ActiveRecord::ToolCall.where(
-          tool_call_id: ids,
           message_type: self.class.message_class.constantize.polymorphic_name,
           message_id: messages_association.select(:id)
-        ).order(:created_at, :id)
+        ).in_order_of(:tool_call_id, ids)
       end
 
       def messages_association # :nodoc:
