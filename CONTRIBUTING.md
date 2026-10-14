@@ -80,7 +80,46 @@ rake vcr:record[all]               # Everything
 
 Specs tagged `:live` talk to provider APIs through VCR cassettes; everything else is a plain unit test.
 
+When a `:live` example fails, the spec suite deletes its cassette. This is on purpose. The missing file shows you which recording to look at, and the next run with API keys records it again against the real API instead of replaying a response that may be hiding the bug. Check `git status` after a failing run and re-record or restore the cassettes it removed.
+
 Always check cassettes for leaked API keys before committing.
+
+### Mutation testing
+
+[Mutineer](https://github.com/davidteren/mutineer) changes the library one line at a time and runs the specs against each change. A change no spec notices is a surviving mutant: a line your specs execute but do not check. It needs MRI 3.4 or later and runs on your machine, not in CI.
+
+Mutate a file or directory with the specs that reach it:
+
+```bash
+bin/mutineer run lib/ruby_llm/cost.rb
+bin/mutineer run lib/ruby_llm/protocols/anthropic --spec spec/ruby_llm/protocols/anthropic/chat_spec.rb
+bin/mutineer run lib/ruby_llm/tokens.rb -- --only 'RubyLLM::Tokens.aggregate' --format json
+```
+
+Plain-Ruby code runs against the plain specs, booted from `spec/spec_helper.rb`. Rails integration code (`lib/ruby_llm/active_record` and the railtie) runs against the Rails specs, booted from `spec/rails_helper.rb`, one mutant at a time with mutineer's `redefine` strategy. `bin/mutineer` picks the pass for each file. Options after `--` go to mutineer.
+
+A run over the whole library takes several hours, so it runs in shards, in the background, at idle priority:
+
+```bash
+bin/mutineer start    # run every shard whose report is missing or out of date
+bin/mutineer status   # running or paused, shards done, score so far
+bin/mutineer pause    # freeze it while you need the CPU
+bin/mutineer resume
+bin/mutineer stop     # the next start picks up where this one stopped
+bin/mutineer report   # survivors by file, tmp/mutineer/report.json and report.html
+```
+
+Each shard keeps its report in `tmp/mutineer/shards`, keyed by a digest of its sources and the spec tree, so `start` skips shards nothing has changed for, including after a reboot. Stopping loses only the shard in progress. A shard that was paused and came back with timed-out mutants runs again, because mutineer times mutants by the wall clock. The background run uses a systemd user unit, so it needs Linux; `bin/mutineer full` runs the same shards in the foreground anywhere.
+
+Mutants replay cassettes and never record them. `bin/mutineer` sets `CI=1`, which puts VCR in `record: :none`, and makes the cassette directories read-only while it runs. A mutant's failing example says nothing about its cassette, so it must not delete it, and a deleted cassette would send every later mutant to the real API. The permissions come back when the run ends, is stopped, or on the next `bin/mutineer` command after a crash. `bin/mutineer unlock` restores them by hand.
+
+The pre-push hook mutates the lines your push changes, compared with the upstream branch or `origin/main`. With a full-run report in `tmp/mutineer/report.json`, it fails only on survivors that report does not already list; without one, it fails on any survivor. It takes its specs from the coverage the full run recorded, so keep a recent full run around. Skip it for one push with `SKIP=MutationTesting git push`.
+
+Kill a survivor with a spec that checks the behavior the line exists for, never by loosening an assertion. When a mutant is equivalent, behaving exactly like the original, remove the redundant code if you can. Otherwise suppress it on its line with the operator and the reason:
+
+```ruby
+return if blocks.empty? # mutineer:disable-line statement_removal -- the loop below does nothing for no blocks
+```
 
 ### OpenTelemetry conformance
 

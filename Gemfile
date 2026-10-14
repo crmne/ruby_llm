@@ -22,6 +22,8 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'json', '< 3'
   gem 'json_schemer'
   gem 'minitest', '>= 5', '< 7'
+  # Mutation testing runs on MRI 3.4 and later; see CONTRIBUTING.md.
+  gem 'mutineer', '~> 1.6', require: false if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '3.4'
   gem 'nokogiri'
   gem 'opentelemetry-sdk', '~> 1.0'
   gem 'overcommit', '>= 0.66'

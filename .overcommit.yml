@@ -49,3 +49,9 @@ PostCheckout:
 
   IndexTags:
     enabled: true # Generate a tags file with `ctags` each time HEAD changes
+
+PrePush:
+  MutationTesting:
+    enabled: true
+    description: 'Mutation-test the lines about to be pushed'
+    command: ['bin/mutineer', 'check']

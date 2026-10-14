@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Mutation testing for RubyLLM; see the Mutation testing section of
+# CONTRIBUTING.md. Run bin/mutineer help for the commands.
+
+root = File.expand_path('..', __dir__)
+ENV['BUNDLE_GEMFILE'] ||= File.join(root, 'Gemfile')
+require 'bundler/setup'
+require_relative '../tasks/support/mutation_testing'
+
+exit MutationTesting::CLI.new(root).call(ARGV) == false ? 1 : 0
