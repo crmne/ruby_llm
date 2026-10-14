@@ -1,7 +1,7 @@
 ---
 layout: default
 title: What's New in 2.0
-nav_order: 5
+nav_order: 6
 description: Explore the expanded provider coverage, new AI operations, conversation controls, and Rails integration in RubyLLM 2.0.
 provider_coverage: true
 ---

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: What's New in 2.1
-nav_order: 4
+nav_order: 5
 description: Connect to MCP servers, ask typed judgments, evaluate your agents, and trace them with OpenTelemetry in RubyLLM 2.1.
 ---
 
