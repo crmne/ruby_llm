@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_013_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_014_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -44,6 +44,8 @@ ActiveRecord::Schema[7.1].define(version: 20_261_013_120_000) do
     t.boolean 'cancelled', default: false, null: false
     t.string 'claim_token'
     t.datetime 'claimed_until'
+    t.string 'permissions'
+    t.json 'permission_grants'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['ruby_llm_model_id'], name: 'index_chats_on_ruby_llm_model_id'

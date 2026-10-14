@@ -141,8 +141,15 @@ module RubyLLM
     attr_reader :timeout
 
     # The network access runs get: +false+, +true+, or
-    # <tt>{ allow: [...] }</tt>.
-    attr_reader :network
+    # <tt>{ allow: [...] }</tt>, with the hosts the chat's permissions
+    # granted added to the list.
+    def network
+      granted = grants[:network]
+      return @network if @network == true || granted.empty?
+
+      configured = @network.is_a?(Hash) ? Array(@network[:allow]) : []
+      { allow: (configured + granted).uniq }
+    end
 
     # The extra paths runs may read.
     attr_reader :readable
@@ -152,11 +159,13 @@ module RubyLLM
     # needs them. +attachments+ returns the conversation's files when called,
     # and +mounts+ a Hash of paths inside the working directory to
     # directories mounted there read-only. +chat+ and +config+ describe
-    # where the instrumentation events go.
+    # where the instrumentation events go. +grants+ returns the hosts and
+    # paths the chat's permissions granted, and +requests+ whether the model
+    # can ask for more with +request_permission+.
     # Raises ConfigurationError without a sandbox.
     def initialize(sandbox:, attachments: -> { [] }, mounts: -> { {} }, chat: nil, config: nil,
                    package_cache_dir: nil, languages: %i[ruby shell], timeout: DEFAULT_TIMEOUT, network: false,
-                   readable: [], **packages)
+                   readable: [], grants: -> { {} }, requests: -> { false }, **packages)
       super()
       @sandbox = sandbox
       self.sandbox
@@ -168,7 +177,15 @@ module RubyLLM
       @timeout = timeout
       @network = network
       @readable = Array(readable).map { |path| File.expand_path(path) }
+      @grants = grants
+      @requests = requests
       @packages = Packages.new(sandbox: -> { self.sandbox }, cache_dir: package_cache_dir, **packages)
+    end
+
+    # Returns whether runs change nothing outside the sandbox: +true+ until
+    # the chat's permissions grant a writable path.
+    def read_only?
+      grants[:writable].empty?
     end
 
     # Returns the Sandbox the code runs in. Raises ConfigurationError when
@@ -201,6 +218,7 @@ module RubyLLM
         '(read-only). Write files to the working directory to return them to the user.',
         packages_note,
         network_note,
+        requests_note,
         "A call stops after #{timeout} seconds."
       ].compact.join(' ')
     end
@@ -246,12 +264,40 @@ module RubyLLM
     end
 
     def run_in_sandbox(command, workspace, readable:)
+      granted = grants
+      network = self.network
+      environment = environment_for(granted)
       sandbox.run(*command,
-                  readable: [*@packages.readable, *@packages.resolver_config(network), *self.readable, *readable,
-                             workspace.source, workspace.inputs],
+                  readable: [*@packages.readable, *@packages.resolver_config(network), *self.readable,
+                             *granted[:readable], *environment&.readable, *readable, workspace.source,
+                             workspace.inputs],
                   denied: @packages.denied,
-                  writable: [workspace.directory, workspace.home, workspace.tmp], network:, timeout:,
-                  directory: workspace.directory, env: @packages.env(workspace.home, workspace.tmp))
+                  writable: [workspace.directory, workspace.home, workspace.tmp, *granted[:writable],
+                             *environment&.writable],
+                  network:, timeout:, directory: workspace.directory,
+                  env: run_env(workspace, environment))
+    end
+
+    def run_env(workspace, environment)
+      env = @packages.env(workspace.home, workspace.tmp)
+      environment ? environment.env(env) : env
+    end
+
+    def environment_for(granted)
+      return unless granted[:environment]
+
+      Environment.new(@packages, granted[:environment]).tap do |environment|
+        environment.prepare(python: languages.include?(:python))
+      end
+    end
+
+    def grants
+      granted = @grants.call
+      writable = Array(granted[:writable])
+      readable = Array(granted[:readable]).reject do |path|
+        writable.any? { |parent| Chat::Permissions.covers_path?(parent, path) }
+      end
+      { network: Array(granted[:network]), readable:, writable:, environment: granted[:environment] }
     end
 
     def instrument(language)
@@ -280,9 +326,14 @@ module RubyLLM
         stderr: truncate(result.stderr),
         error: ("The code ran past the #{timeout}-second limit and was stopped" if result.timed_out?),
         blocked_hosts: (blocked if blocked&.any?),
+        hint: blocked_hint(blocked),
         files: (files.map(&:filename) if files.any?),
         skipped_files: (skipped if skipped.any?)
       }.compact.to_json
+    end
+
+    def blocked_hint(blocked)
+      'Ask for access to the blocked hosts with request_permission.' if blocked&.any? && @requests.call
     end
 
     def truncate(text)
@@ -308,11 +359,17 @@ module RubyLLM
     end
 
     def network_note
-      case network
+      case @network
       when true then 'The code can reach the network.'
-      when Hash then "The code can only reach these hosts: #{Array(network[:allow]).join(', ')}."
+      when Hash then "The code can only reach these hosts: #{Array(@network[:allow]).join(', ')}."
       else 'The code has no network access.'
       end
+    end
+
+    def requests_note
+      return unless @requests.call
+
+      'To reach a host or a path the code cannot reach, ask for it with request_permission first.'
     end
   end
 end

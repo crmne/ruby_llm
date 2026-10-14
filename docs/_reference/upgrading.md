@@ -59,9 +59,9 @@ bin/rails db:migrate
 
 If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a `permissions` column and a `permission_grants` JSON column to your chats table, which keep a chat's [permission mode]({% link _core_features/permissions.md %}) and what it granted. The migration changes no existing data.
 
-Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
+Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1. Permission modes work without the new columns, but only in the process that set them.
 
 ## One Process Runs a Chat
 

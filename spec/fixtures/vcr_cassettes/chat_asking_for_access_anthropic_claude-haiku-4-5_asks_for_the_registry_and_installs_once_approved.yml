@@ -1,0 +1,329 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Install
+        the requests Python package with pip, then tell me which version you installed."}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"run_code","description":"Runs
+        Python or shell code in a sandbox and returns its exit code, output, and the
+        files it writes. Each call starts in a new empty working directory, and nothing
+        carries over between calls. Files attached to the conversation, and files
+        earlier calls returned, are in ./attachments (read-only). Write files to the
+        working directory to return them to the user. The code has no network access.
+        To reach a host or a path the code cannot reach, ask for it with request_permission
+        first. A call stops after 120 seconds.","input_schema":{"type":"object","properties":{"language":{"type":"string","enum":["python","shell"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true}},{"name":"request_permission","description":"Asks
+        the user to let later run_code calls reach a network host, or read or write
+        a path on this machine, that they cannot reach yet. Name each host exactly,
+        without a scheme or path, such as pypi.org, and add a port only when it is
+        not 80 or 443. Wildcards are refused. Name paths as absolute paths. Explain
+        in reason what the access is for: the user reads it before deciding. Installing
+        packages needs their registry: rubygems.org for gem install, pypi.org and
+        files.pythonhosted.org for pip install. Packages you install stay available
+        for the rest of the conversation.","input_schema":{"type":"object","properties":{"permission":{"type":"string","enum":["network","readable","writable"],"description":"network
+        to reach hosts, readable or writable for paths"},"targets":{"type":"array","items":{"type":"string"},"description":"The
+        exact hosts or absolute paths"},"reason":{"type":"string","description":"Why
+        the code needs this access"}},"required":["permission","targets","reason"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 15:13:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T15:13:49Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T15:13:50Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T15:13:49Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T15:13:49Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-f4a06b351b4de242b55a6e5c8725d2c6-c38c179bf37471cc-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2M5kMkpafSuq2mLTYhJ","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        install the requests package and check its version for you."},{"type":"tool_use","id":"toolu_01ALjdhzJNLAH1hVLpoBUPSC","name":"request_permission","input":{"permission":"network","targets":["pypi.org","files.pythonhosted.org"],"reason":"To
+        install the requests Python package from PyPI using pip"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1020,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":126,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 15:13:50 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Install
+        the requests Python package with pip, then tell me which version you installed."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        install the requests package and check its version for you."},{"type":"tool_use","id":"toolu_01ALjdhzJNLAH1hVLpoBUPSC","name":"request_permission","input":{"reason":"To
+        install the requests Python package from PyPI using pip","targets":["pypi.org","files.pythonhosted.org"],"permission":"network"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01ALjdhzJNLAH1hVLpoBUPSC","content":[{"type":"text","text":"Granted
+        network access to pypi.org, files.pythonhosted.org for the rest of the conversation.
+        Run your code again."}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"run_code","description":"Runs
+        Python or shell code in a sandbox and returns its exit code, output, and the
+        files it writes. Each call starts in a new empty working directory, and nothing
+        carries over between calls. Files attached to the conversation, and files
+        earlier calls returned, are in ./attachments (read-only). Write files to the
+        working directory to return them to the user. The code has no network access.
+        To reach a host or a path the code cannot reach, ask for it with request_permission
+        first. A call stops after 120 seconds.","input_schema":{"type":"object","properties":{"language":{"type":"string","enum":["python","shell"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true}},{"name":"request_permission","description":"Asks
+        the user to let later run_code calls reach a network host, or read or write
+        a path on this machine, that they cannot reach yet. Name each host exactly,
+        without a scheme or path, such as pypi.org, and add a port only when it is
+        not 80 or 443. Wildcards are refused. Name paths as absolute paths. Explain
+        in reason what the access is for: the user reads it before deciding. Installing
+        packages needs their registry: rubygems.org for gem install, pypi.org and
+        files.pythonhosted.org for pip install. Packages you install stay available
+        for the rest of the conversation.","input_schema":{"type":"object","properties":{"permission":{"type":"string","enum":["network","readable","writable"],"description":"network
+        to reach hosts, readable or writable for paths"},"targets":{"type":"array","items":{"type":"string"},"description":"The
+        exact hosts or absolute paths"},"reason":{"type":"string","description":"Why
+        the code needs this access"}},"required":["permission","targets","reason"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 15:13:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T15:13:51Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T15:13:51Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T15:13:50Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T15:13:51Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-733f96b22b89030318bf04f37015f0fe-3ec9f90d10d8d48b-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2M5rFTaTpugAiihTn2i","type":"message","role":"assistant","content":[{"type":"text","text":"Now
+        I''ll install the requests package and check its version:"},{"type":"tool_use","id":"toolu_016BX6AWtaKcf4mFCJ7894d5","name":"run_code","input":{"language":"shell","code":"pip
+        install requests"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1187,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":85,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 15:13:51 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Install
+        the requests Python package with pip, then tell me which version you installed."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        install the requests package and check its version for you."},{"type":"tool_use","id":"toolu_01ALjdhzJNLAH1hVLpoBUPSC","name":"request_permission","input":{"reason":"To
+        install the requests Python package from PyPI using pip","targets":["pypi.org","files.pythonhosted.org"],"permission":"network"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01ALjdhzJNLAH1hVLpoBUPSC","content":[{"type":"text","text":"Granted
+        network access to pypi.org, files.pythonhosted.org for the rest of the conversation.
+        Run your code again."}]}]},{"role":"assistant","content":[{"type":"text","text":"Now
+        I''ll install the requests package and check its version:"},{"type":"tool_use","id":"toolu_016BX6AWtaKcf4mFCJ7894d5","name":"run_code","input":{"code":"pip
+        install requests","language":"shell"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_016BX6AWtaKcf4mFCJ7894d5","content":[{"type":"text","text":"{\"exit_code\":0,\"stdout\":\"Successfully
+        installed requests-2.32.3\\n2.32.3\\n\",\"stderr\":\"\"}"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"run_code","description":"Runs
+        Python or shell code in a sandbox and returns its exit code, output, and the
+        files it writes. Each call starts in a new empty working directory, and nothing
+        carries over between calls. Files attached to the conversation, and files
+        earlier calls returned, are in ./attachments (read-only). Write files to the
+        working directory to return them to the user. The code has no network access.
+        To reach a host or a path the code cannot reach, ask for it with request_permission
+        first. A call stops after 120 seconds.","input_schema":{"type":"object","properties":{"language":{"type":"string","enum":["python","shell"],"description":"The
+        language the code is written in"},"code":{"type":"string","description":"The
+        complete program to run"}},"required":["language","code"],"additionalProperties":false,"strict":true}},{"name":"request_permission","description":"Asks
+        the user to let later run_code calls reach a network host, or read or write
+        a path on this machine, that they cannot reach yet. Name each host exactly,
+        without a scheme or path, such as pypi.org, and add a port only when it is
+        not 80 or 443. Wildcards are refused. Name paths as absolute paths. Explain
+        in reason what the access is for: the user reads it before deciding. Installing
+        packages needs their registry: rubygems.org for gem install, pypi.org and
+        files.pythonhosted.org for pip install. Packages you install stay available
+        for the rest of the conversation.","input_schema":{"type":"object","properties":{"permission":{"type":"string","enum":["network","readable","writable"],"description":"network
+        to reach hosts, readable or writable for paths"},"targets":{"type":"array","items":{"type":"string"},"description":"The
+        exact hosts or absolute paths"},"reason":{"type":"string","description":"Why
+        the code needs this access"}},"required":["permission","targets","reason"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 15:13:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T15:13:52Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T15:13:52Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T15:13:52Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T15:13:52Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-041073dc09d556415bfaed22de2ad075-6a3ea2a8ac14bdcd-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2M5vvzdTYUdBYJwE2YN","type":"message","role":"assistant","content":[{"type":"text","text":"Perfect!
+        I''ve successfully installed the **requests** package. The version installed
+        is **2.32.3**."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1315,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":26,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 15:13:52 GMT
+recorded_with: VCR 6.4.0

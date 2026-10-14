@@ -2,7 +2,7 @@
 layout: default
 title: What's New in 2.2
 nav_order: 4
-description: Let models run Ruby, Python, and shell code in a sandbox on your own servers, and run each persisted chat in one process at a time, in RubyLLM 2.2.
+description: Let models run Ruby, Python, and shell code in a sandbox on your own servers, decide which tool calls run with permission modes, and run each persisted chat in one process at a time, in RubyLLM 2.2.
 ---
 
 # {{ page.title }}
@@ -16,10 +16,11 @@ After reading this guide, you will know:
 * What that code can see, and how the files it makes come back.
 * How to give it gems, Python packages, and programs such as LibreOffice.
 * How to measure each run.
+* How permission modes decide which tool calls run, wait, or are denied.
 * How persisted chats now run in one process at a time.
 * How to upgrade.
 
-RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
+RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets you decide how much it may do without asking, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
 
 ## Code Execution
 
@@ -79,6 +80,23 @@ A sandbox is any object that answers `supported?` and `run`. Wrap a hosted sandb
 
 See [Code Execution]({% link _core_features/code-execution.md %}) for every option.
 
+## Permissions
+
+Approvals used to be a property of each tool. Permission modes set them for the whole chat, so one line decides how much the model may do on its own:
+
+```ruby
+chat.with_permissions(:read_only)  # read-only tools run, everything else is denied
+chat.with_permissions(:ask)        # read-only tools run, everything else waits for approval
+chat.with_permissions(:auto, allow: [SearchDocs, { network: ["pypi.org", "files.pythonhosted.org"] }])
+chat.with_permissions(:dangerous)  # everything runs, still in the sandbox
+```
+
+Mark the tools that change nothing with `read_only`, and MCP tools follow their server's `readOnlyHint`. Calls that wait look exactly like `requires_approval` calls, so the approval interface you already have keeps working. `approve(tool_call, remember: true)` stops asking about that tool for the rest of the chat.
+
+With code execution, the model can ask for more with a `request_permission` tool: a network host such as `pypi.org`, or a path on your server, with its reason. Once you grant a package registry, it can `gem install` and `pip install` into an environment kept for the chat. Persisted chats store their mode and grants, so an approval in one process takes effect in the job that resumes the chat. Agents declare a starting mode with `permissions :ask`.
+
+See [Permissions]({% link _core_features/permissions.md %}).
+
 ## One Process at a Time
 
 A persisted chat now runs in one process at a time. `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat before they call the model or run a tool, and each tool call is claimed before it runs. A double-submitted approval that enqueues two jobs no longer runs a tool twice or asks the model for two replies:
@@ -100,7 +118,7 @@ If a process dies, its claims expire and another process picks the chat up. See 
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and the `permissions` and `permission_grants` columns chats use to keep their permission mode. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.2
 

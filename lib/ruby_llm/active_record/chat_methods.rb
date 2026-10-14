@@ -3,6 +3,7 @@
 require 'active_support/concern'
 require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/run_claims'
+require 'ruby_llm/active_record/chat_permissions'
 
 module RubyLLM
   module ActiveRecord
@@ -23,6 +24,7 @@ module RubyLLM
       include Enumerable
       include AttachmentHelpers
       include RunClaims
+      include ChatPermissions
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:
@@ -70,13 +72,36 @@ module RubyLLM
       # Records approval for +tool_call+ (a ToolCall, a tool call record, or
       # an id) on the persisted tool call, so the next #complete executes it
       # from any process. Approving a call that is running or answered
-      # changes nothing. Returns +self+.
+      # changes nothing. With <tt>remember: true</tt>, later calls to the
+      # same tool run without asking for the rest of the chat, as
+      # RubyLLM::Chat#approve describes; the grant persists on the chat.
+      # Returns +self+.
       #
       #   chat.approve(params[:tool_call_id])
+      #   chat.approve(params[:tool_call_id], remember: true)
       #   CompleteJob.perform_later(chat.id)
       #
-      def approve(tool_call)
-        record_tool_call_decision(tool_call, 'approved')
+      def approve(tool_call, remember: false)
+        record = record_tool_call_decision(tool_call, 'approved')
+        to_llm.approve(record.to_llm, remember: true) if remember
+        self
+      end
+
+      # Sets the permissions mode as RubyLLM::Chat#with_permissions
+      # describes and persists it on the chat, so every process decides
+      # tool calls under the same mode from its next tool call on. +allow:+
+      # is not persisted: load the chat through its agent, or set it again,
+      # in each process. Returns +self+.
+      #
+      #   chat.with_permissions(:ask)
+      #   chat.with_permissions(:auto, allow: [SearchDocs, { network: ["pypi.org"] }])
+      #
+      def with_permissions(mode, allow: [])
+        mode = RubyLLM::Chat::Permissions.mode(mode)
+        RubyLLM::Chat::Permissions.allow(allow, mode)
+        persist_permissions_mode(mode)
+        to_llm.with_permissions(mode, allow:)
+        self
       end
 
       # Records denial for +tool_call+ (a ToolCall, a tool call record, or
@@ -88,6 +113,7 @@ module RubyLLM
       # running.
       def deny(tool_call)
         record_tool_call_decision(tool_call, 'denied')
+        self
       end
 
       # Returns whether a process is running this chat's conversation loop:
@@ -439,6 +465,13 @@ module RubyLLM
       # Delegates to Chat#code_execution. See that method for arguments and return values.
 
       ##
+      # :method: permissions
+      # :call-seq: permissions
+      #
+      # Delegates to Chat#permissions. Reads the mode persisted on the chat,
+      # so it sees a mode set in another process.
+
+      ##
       # :method: compaction
       # :call-seq: compaction
       #
@@ -567,7 +600,7 @@ module RubyLLM
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations code_execution compaction concurrency end_user fallbacks headers max_output_tokens
-        provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
+        provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp permissions
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 
@@ -930,6 +963,7 @@ module RubyLLM
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
+        install_permissions(chat)
         chat.cancellation_checker = proc do
           renew_run_claim
           consume_persisted_cancellation_request
@@ -947,16 +981,6 @@ module RubyLLM
         chat.running_checker = proc { |tool_call| tool_call_running_elsewhere?(tool_call) }
       end
 
-      def record_tool_call_decision(tool_call, decision)
-        id = tool_call.respond_to?(:tool_call_id) ? tool_call.tool_call_id : tool_call
-        id = id.id if id.respond_to?(:id) && !id.is_a?(String)
-        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(id) }
-        raise ArgumentError, "Unknown tool call: #{id.inspect}" unless record
-
-        decide_persisted_tool_call(record, decision)
-        self
-      end
-
       def persisted_tool_call_input(tool_call)
         record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
         record.mcp_state if record&.has_attribute?(:mcp_state)
@@ -965,16 +989,6 @@ module RubyLLM
       def persist_tool_call_input(tool_call, input)
         record = find_tool_call(tool_call.id)
         record.update!(mcp_state: input) if record&.has_attribute?(:mcp_state)
-      end
-
-      def persisted_tool_call_approval(tool_call)
-        record = RubyLLM::ActiveRecord::ToolCall.uncached { find_tool_call(tool_call.id) }
-        return unless record&.has_attribute?(:approval)
-
-        case record.approval
-        when 'approved' then true
-        when 'denied' then false
-        end
       end
 
       def sync_messages(chat = @chat)

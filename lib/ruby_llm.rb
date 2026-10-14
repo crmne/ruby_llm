@@ -82,7 +82,10 @@ loader.setup
 #
 # Subclass Tool and implement +execute+ to give the model an application
 # action. Tool.requires_approval pauses execution for a human decision;
-# Chat#approve and Chat#deny record it. Tool#progress reports what a
+# Chat#approve and Chat#deny record it. Chat#with_permissions sets a mode
+# for the whole chat: read-only, ask, auto with an allow list, or
+# dangerous. Tool.read_only marks a tool that changes nothing, which runs
+# without asking. Tool#progress reports what a
 # running tool is doing to Chat#after_tool_progress as a Progress.
 # Chat#with_provider_tools enables provider-executed tools such as web
 # search, code execution, and remote MCP.
@@ -92,6 +95,8 @@ loader.setup
 # connects to one inline.
 # Chat#with_code_execution lets the model run Ruby, Python, and shell code
 # in the Sandbox set with Configuration#sandbox, read through RubyLLM.sandbox.
+# With a permissions mode, the model asks for network hosts and paths with
+# its +request_permission+ tool, and can install gems and Python packages.
 #
 # Agent defines a reusable configuration with model, instructions, tools,
 # schema, and runtime inputs. Chat#ask_later, Chat#generate, Chat#run_tools,

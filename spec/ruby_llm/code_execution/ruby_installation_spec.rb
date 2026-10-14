@@ -63,6 +63,19 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     )
   end
 
+  it "builds a gem directory with only Ruby's bundled gems, once" do
+    FileUtils.mkdir_p(File.join(extensions, 'csv-3.3.5'))
+    cache = File.join(root, 'cache-dir')
+
+    view = installation.ruby_gems(cache)
+
+    expect(Dir.children(File.join(view, 'specifications'))).to eq(['csv-3.3.5.gemspec'])
+    expect(File.readlink(File.join(view, 'gems', 'csv-3.3.5'))).to eq(File.join(gem_dir, 'gems', 'csv-3.3.5'))
+    expect(File.symlink?(File.join(view, extensions.delete_prefix(gem_dir), 'csv-3.3.5'))).to be(true)
+    expect(Dir.exist?(File.join(view, 'gems', 'rspec-core-3.13.0'))).to be(false)
+    expect(installation.ruby_gems(cache)).to eq(view)
+  end
+
   it 'reads the bundled gems Ruby lists' do
     allow(installation).to receive(:bundled_gems).and_call_original
     allow(RbConfig::CONFIG).to receive(:[]).and_call_original

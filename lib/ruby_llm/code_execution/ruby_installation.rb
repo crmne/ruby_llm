@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'digest'
+require 'fileutils'
 require 'rbconfig'
 
 module RubyLLM
@@ -36,6 +38,24 @@ module RubyLLM
         ].select { |path| File.exist?(path) }.uniq.freeze
       end
 
+      # Returns a directory, built once under +cache_dir+, that holds only
+      # Ruby's bundled gems: their gemspecs, and links to their files. A
+      # GEM_PATH with it instead of the gem directory finds no hidden
+      # application gem, so <tt>gem install</tt> installs every dependency
+      # and +require+ loads what it installed. Default gems load from any
+      # GEM_PATH.
+      def ruby_gems(cache_dir)
+        directory = File.join(cache_dir, "ruby-#{ruby_gems_key}")
+        return directory if File.exist?("#{directory}.ready")
+
+        FileUtils.mkdir_p(cache_dir)
+        File.open("#{directory}.lock", File::RDWR | File::CREAT, 0o644) do |lock|
+          lock.flock(File::LOCK_EX)
+          link_ruby_gems(directory) unless File.exist?("#{directory}.ready")
+        end
+        directory
+      end
+
       def ruby_gem?(name)
         default_gems.include?(name) || bundled_gems.include?(name)
       end
@@ -43,15 +63,45 @@ module RubyLLM
       private
 
       def application_gems
-        Dir.glob(File.join(@gem_dir, 'specifications', '*.gemspec')).filter_map do |path|
-          stub = Gem::StubSpecification.gemspec_stub(path, @gem_dir, File.join(@gem_dir, 'gems'))
-          stub unless ruby_gem?(stub.name)
+        installed_stubs.reject { |stub| ruby_gem?(stub.name) }
+      end
+
+      def installed_stubs
+        Dir.glob(File.join(@gem_dir, 'specifications', '*.gemspec')).map do |path|
+          Gem::StubSpecification.gemspec_stub(path, @gem_dir, File.join(@gem_dir, 'gems'))
         end
       end
 
+      def bundled_gem_stubs
+        installed_stubs.select { |stub| bundled_gems.include?(stub.name) && !default_gems.include?(stub.name) }
+      end
+
+      def ruby_gems_key
+        Digest::SHA256.hexdigest([RbConfig.ruby, RUBY_VERSION, *bundled_gem_stubs.map(&:full_name)].join("\n"))[0, 24]
+      end
+
+      def link_ruby_gems(directory)
+        FileUtils.rm_rf(directory)
+        bundled_gem_stubs.each do |stub|
+          [File.join(@gem_dir, 'gems', stub.full_name), extensions_dir(stub)].each do |path|
+            next unless File.exist?(path)
+
+            link = File.join(directory, path.delete_prefix(File.join(@gem_dir, '')))
+            FileUtils.mkdir_p(File.dirname(link))
+            File.symlink(path, link)
+          end
+          FileUtils.mkdir_p(File.join(directory, 'specifications'))
+          FileUtils.cp(stub.loaded_from, File.join(directory, 'specifications'))
+        end
+        File.write("#{directory}.ready", '')
+      end
+
+      def extensions_dir(stub)
+        File.join(@gem_dir, 'extensions', Gem::Platform.local.to_s, Gem.extension_api_version, stub.full_name)
+      end
+
       def gem_paths(stub)
-        extensions = File.join(@gem_dir, 'extensions', Gem::Platform.local.to_s, Gem.extension_api_version,
-                               stub.full_name)
+        extensions = extensions_dir(stub)
         built = Dir.exist?(extensions) ? Dir.children(extensions) - [BUILD_MARKER] : []
         [File.join(@gem_dir, 'gems', stub.full_name), *built.map { |name| File.join(extensions, name) },
          File.join(@gem_dir, 'plugins', "#{stub.name}_plugin.rb")]

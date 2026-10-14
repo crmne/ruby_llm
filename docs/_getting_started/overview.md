@@ -37,7 +37,7 @@ The conversation API provides:
 
 * **Messages and attachments** for text, images, audio, and documents the model supports.
 * **Streaming** to display a response as it arrives.
-* **Tools** that let the model call your Ruby code, with optional human approval before execution.
+* **Tools** that let the model call your Ruby code, with optional human approval before execution and permission modes that decide which calls run, wait, or are denied.
 * **MCP servers** whose tools a chat or agent can use, described in a Ruby class. See [MCP]({% link _core_features/mcp.md %}).
 * **Code execution** that lets the model run Ruby, Python, and shell code in a sandbox on your own servers and hand back the files it makes. See [Code Execution]({% link _core_features/code-execution.md %}).
 * **Structured output** for results you read as a Hash through `response.parsed`.

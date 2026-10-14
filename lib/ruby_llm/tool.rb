@@ -50,6 +50,7 @@ module RubyLLM
       @parameters_schema_definition
       @requires_approval
       @approval_resolver
+      @read_only
       @deferred
       @max_run_time
     ].freeze
@@ -183,6 +184,27 @@ module RubyLLM
         @requires_approval || false
       end
 
+      # Declares that this tool changes nothing: it only reads or computes.
+      # Chat#with_permissions runs read-only tools without asking in every
+      # mode, including +:read_only+. A tool that does not declare it counts
+      # as one that can change things.
+      #
+      #   class SearchDocs < RubyLLM::Tool
+      #     read_only
+      #
+      #     def execute(query:)
+      #       Docs.search(query)
+      #     end
+      #   end
+      #
+      def read_only
+        @read_only = true
+      end
+
+      def read_only? # :nodoc:
+        @read_only || false
+      end
+
       # :call-seq:
       #   max_run_time(seconds) -> seconds
       #   max_run_time -> seconds or nil
@@ -291,6 +313,11 @@ module RubyLLM
 
     def approval_resolver # :nodoc:
       self.class.approval_resolver
+    end
+
+    # Returns whether this tool was declared with ::read_only.
+    def read_only?
+      self.class.read_only?
     end
 
     # Returns the run time declared on the class with ::max_run_time, or

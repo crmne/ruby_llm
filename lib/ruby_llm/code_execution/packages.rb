@@ -83,6 +83,10 @@ module RubyLLM
         @lock.synchronize { @installed_virtualenv ||= install(:python, python) }
       end
 
+      def cache_dir
+        @cache_dir || raise(ConfigurationError, 'Set config.package_cache_dir to install code execution packages')
+      end
+
       def base_env(home, tmp = home)
         {
           'PATH' => [RbConfig::CONFIG['bindir'], *SYSTEM_PATH].join(File::PATH_SEPARATOR),
@@ -170,10 +174,6 @@ module RubyLLM
         Dir.mktmpdir('ruby_llm-install-') do |home|
           run('python3', '-c', 'import sys; print(sys.version)', home:).stdout.to_s.strip
         end
-      end
-
-      def cache_dir
-        @cache_dir || raise(ConfigurationError, 'Set config.package_cache_dir to install code execution packages')
       end
     end
   end

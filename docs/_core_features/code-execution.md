@@ -18,6 +18,7 @@ After reading this guide, you will know:
 * What the code can see, and what it cannot.
 * How files go into a run and come back from it.
 * How to give the code gems, Python packages, and other programs.
+* How the model asks for network hosts and paths, and installs packages itself.
 * How to measure each run.
 * How to plug in a sandbox of your own.
 
@@ -99,6 +100,8 @@ chat.with_code_execution(network: { allow: ["api.github.com"] })
 
 When the code tries to reach a host outside the list, the request is refused and the model sees which hosts were blocked. Host lists need extra packages on Linux and are not available on Windows; see [mxc's network policies](https://crmne.github.io/mxc/policies/#network).
 
+To let the model ask for hosts as it needs them instead of listing them up front, give the chat a [permission mode](#asking-for-access).
+
 ## What the Code Can See
 
 Each call starts in a new, empty working directory, which RubyLLM removes when the call ends. Nothing carries over from one call to the next, except files, which work like this:
@@ -124,7 +127,7 @@ Programs installed under `/usr`, such as LibreOffice, Poppler's `pdftoppm`, and 
 chat.with_code_execution(readable: ["/opt/libreoffice", "/usr/share/fonts/custom"])
 ```
 
-The paths are read-only. Only your application grants them; the model cannot widen what its code can see.
+The paths are read-only. Only your application and the user grant access: the model can [ask for more](#asking-for-access), but cannot widen what its code can see on its own.
 
 ### Limits
 
@@ -172,6 +175,41 @@ chat.with_code_execution(gem_home: "/opt/sandbox/gems", virtualenv: "/opt/sandbo
 ```
 
 `gem_home:` takes a directory you installed gems into with `gem install --install-dir`, and `virtualenv:` a Python virtualenv. RubyLLM mounts them read-only on every run and installs nothing. Each replaces its declared counterpart, so pass `gems:` or `gem_home:`, and `python:` or `virtualenv:`, not both. A virtualenv adds Python to the default languages.
+
+## Asking for Access
+
+With a [permission mode]({% link _core_features/permissions.md %}), the model gets a second tool, `request_permission`. When a run is blocked, its result lists the blocked hosts and tells the model it can ask. The model names a network host, or a path to read or write, and says why:
+
+```ruby
+chat = RubyLLM.chat.with_code_execution.with_permissions(:ask)
+chat.ask "Download the latest release notes from api.github.com and summarize them"
+
+request = chat.pending_approvals.first
+request.arguments # => {"permission"=>"network", "targets"=>["api.github.com"], "reason"=>"..."}
+
+chat.approve(request)
+chat.complete
+```
+
+Approving the request lets every later run in the chat reach exactly that host. `:auto` grants what its `allow:` list covers without asking, `:dangerous` grants everything, and `:read_only` denies every request. Without a permission mode, the model has no `request_permission` tool and its code gets only what you configured. [Permissions]({% link _core_features/permissions.md %}#asking-for-network-and-paths) covers paths and how grants work.
+
+A granted writable path makes `run_code` a tool that changes things, so `:ask` asks before each run once you grant one.
+
+### Packages the Model Installs
+
+Once the model has a package registry, `rubygems.org` for gems or `pypi.org` and `files.pythonhosted.org` for Python packages, it can run `gem install` and `pip install`. The packages go into an environment kept for the chat, so its later runs find them, in this process and in any other:
+
+```ruby
+chat = RubyLLM.chat.with_code_execution(languages: [:python, :shell])
+chat.with_permissions(:auto, allow: [{ network: ["pypi.org", "files.pythonhosted.org"] }])
+chat.ask "Use requests to check which of these URLs respond", with: "urls.txt"
+```
+
+Each chat gets a GEM_HOME and, when Python is one of its languages, a virtualenv, under `chats/` in `config.package_cache_dir`. They see the gems and packages you declared, but not your application's gems. RubyLLM never removes them, so prune old ones with a scheduled job.
+
+On Windows, mxc has no host lists, so a run with a granted host raises instead of opening the whole network.
+
+Declared packages are installed once for every chat, and the model's code stays offline. Prefer them for what every conversation needs, and let the model install the rest.
 
 ## Code Execution in Rails
 
