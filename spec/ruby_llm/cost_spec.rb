@@ -389,6 +389,19 @@ RSpec.describe RubyLLM::Cost do
       expect(cost).to be_missing(:input)
     end
 
+    it 'aggregates a restored reported cost the way it aggregated the live one' do
+      tokens = RubyLLM::Tokens.new(input: 10, output: 5, reported_cost: 0.0042)
+      live = described_class.new(tokens:, model: nil)
+      restored = described_class.from_h(live.to_h, tokens:)
+      priced = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model:)
+
+      aggregate = described_class.aggregate([restored, priced])
+
+      expect(aggregate.input).to be_nil
+      expect(aggregate.total).to be_within(0.0000000001).of(0.0052)
+      expect(aggregate.to_h).to eq(described_class.aggregate([live, priced]).to_h)
+    end
+
     it 'round-trips a live cost through to_h' do
       live = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000, output: 2_000), model:)
       restored = described_class.from_h(live.to_h)

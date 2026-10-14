@@ -68,7 +68,7 @@ module RubyLLM
         amounts = COMPONENTS.to_h { |component| [component, recorded_amount(hash, component)] }
         total_recorded = hash.key?(:total) || hash.key?('total')
         total = recorded_amount(hash, :total) if total_recorded
-        missing = missing_recorded_components(amounts, tokens, total_recorded)
+        missing = missing_recorded_components(amounts, tokens)
 
         new(amounts:, missing:, reported: recorded_tokens?(amounts, tokens, total_recorded), total:)
       end
@@ -85,8 +85,7 @@ module RubyLLM
         totals.sum if totals.any? && totals.none?(&:nil?)
       end
 
-      def missing_recorded_components(amounts, tokens, total_recorded)
-        return [] if total_recorded
+      def missing_recorded_components(amounts, tokens)
         return COMPONENTS.reject { |component| amounts[component] } unless tokens
 
         COMPONENTS.select do |component|
