@@ -149,6 +149,12 @@ RSpec.describe MutationTesting do
   end
 
   describe MutationTesting::Report do
+    before do
+      require 'mutineer'
+    rescue LoadError
+      skip 'mutineer runs on Ruby 3.4 and later'
+    end
+
     it 'combines shard reports into one report mutineer accepts as a baseline' do
       first = report(killed: 3, survivors: [survivor('lib/ruby_llm/b.rb', 4, 'bbbbbbbbbbbb')])
       second = report(killed: 1, survivors: [survivor('lib/ruby_llm/a.rb', 9, 'aaaaaaaaaaaa')])
@@ -160,7 +166,6 @@ RSpec.describe MutationTesting do
       expect(combined['survivors'].pluck('id')).to eq(%w[aaaaaaaaaaaa bbbbbbbbbbbb])
       path = File.join(root, 'report.json')
       File.write(path, JSON.generate(combined))
-      require 'mutineer'
       expect(Mutineer::Baseline.load(path).score).to eq(66.7)
     end
 
