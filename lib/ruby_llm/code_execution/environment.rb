@@ -10,15 +10,14 @@ module RubyLLM
     # and a virtualenv for <tt>pip install</tt>, kept under
     # Configuration#package_cache_dir by the chat's grants, so every later
     # run in the chat, in any process, finds what earlier runs installed.
-    # Its GEM_PATH leaves out Ruby's gem directory, where the application's
-    # hidden gems would pass for installed ones, for a copy that holds only
-    # Ruby's bundled gems.
+    # Its GEM_PATH, like that of declared gems, leaves out Ruby's gem
+    # directory, where the application's hidden gems would pass for
+    # installed ones.
     class Environment # :nodoc:
       attr_reader :directory
 
-      def initialize(packages, id, installation: RubyInstallation.current)
+      def initialize(packages, id)
         @packages = packages
-        @installation = installation
         @directory = File.join(packages.cache_dir, 'chats', id)
       end
 
@@ -40,7 +39,7 @@ module RubyLLM
 
       def prepare(python:)
         FileUtils.mkdir_p(gem_home)
-        @ruby_gems = @installation.ruby_gems(@packages.cache_dir)
+        @ruby_gems = @packages.ruby_gems
         create_virtualenv if python && !File.exist?(ready_marker)
       end
 

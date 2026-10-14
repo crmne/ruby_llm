@@ -18,6 +18,14 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
     described_class.new(sandbox:, cache_dir:, **)
   end
 
+  def ruby_gems(directory = cache_dir)
+    RubyLLM::CodeExecution::RubyInstallation.current.ruby_gems(directory)
+  end
+
+  def gem_path(*directories)
+    directories.join(File::PATH_SEPARATOR)
+  end
+
   describe 'declared gems' do
     it 'installs them in the sandbox with only RubyGems reachable' do
       directory = packages(gems: %w[rubyzip prawn]).gem_home
@@ -28,8 +36,8 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
                                    '--bindir', File.join(directory, 'bin'), 'rubyzip', 'prawn'])
       expect(run[:network]).to eq(allow: %w[rubygems.org *.rubygems.org])
       expect(run[:writable]).to include(directory)
-      expect(run[:env]).to include('GEM_HOME' => directory, 'GEM_PATH' => directory)
-      expect(run[:readable]).to include(RbConfig::CONFIG['prefix'])
+      expect(run[:env]).to include('GEM_HOME' => directory, 'GEM_PATH' => gem_path(directory, ruby_gems))
+      expect(run[:readable]).to include(RbConfig::CONFIG['prefix'], ruby_gems)
       expect(File.exist?("#{directory}.ready")).to be(true)
     end
 
@@ -54,8 +62,10 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
       directory = gems.gem_home
       env = gems.env('/home')
 
-      expect(gems.readable).to include(directory)
-      expect(env['GEM_PATH']).to eq([directory, Gem.default_dir].join(File::PATH_SEPARATOR))
+      expect(gems.readable).to include(directory, ruby_gems)
+      expect(env['GEM_PATH']).to eq(gem_path(directory, ruby_gems))
+      expect(env['GEM_HOME']).to eq(directory)
+      expect(env['GEM_PATH'].split(File::PATH_SEPARATOR)).not_to include(Gem.default_dir)
       expect(env['PATH']).to start_with(File.join(directory, 'bin'))
       expect(env).not_to have_key('VIRTUAL_ENV')
     end
@@ -95,7 +105,7 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
 
       expect { described_class.new(sandbox:, cache_dir:, gems: %w[nope]).gem_home }
         .to raise_error(RubyLLM::Error, /Could not install gems nope: ERROR: could not find gem nope \(blocked: evil/)
-      expect(Dir.glob(File.join(cache_dir, '*.ready'))).to be_empty
+      expect(Dir.glob(File.join(cache_dir, 'ruby-*.ready'))).to be_empty
     end
 
     it 'reports an install that ran out of time' do
@@ -120,10 +130,22 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
         gems = packages(gem_home: home)
 
         expect(gems.gem_home).to eq(home)
-        expect(gems.readable).to include(home)
-        expect(gems.env('/home')['GEM_PATH']).to eq([home, Gem.default_dir].join(File::PATH_SEPARATOR))
+        expect(gems.readable).to include(home, ruby_gems)
+        expect(gems.env('/home')).to include('GEM_HOME' => home, 'GEM_PATH' => gem_path(home, ruby_gems))
         expect(gems.gem_names).to eq(%w[pdf-core prawn])
         expect(sandbox.runs).to be_empty
+      end
+    end
+
+    it 'leaves the application gems off the gem path without a cache directory' do
+      Dir.mktmpdir do |home|
+        gems = described_class.new(sandbox:, cache_dir: nil, gem_home: home)
+        path = gems.env('/home')['GEM_PATH'].split(File::PATH_SEPARATOR)
+
+        expect(path.first).to eq(home)
+        expect(path).not_to include(Gem.default_dir)
+        expect(gems.readable).to include(path.last)
+        expect(File.directory?(File.join(path.last, 'specifications'))).to be(true)
       end
     end
 

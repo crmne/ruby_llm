@@ -50,7 +50,8 @@ module RubyLLM
       end
 
       def readable
-        [*@installation.readable, gem_home, virtualenv].compact
+        home = gem_home
+        [*@installation.readable, home, (ruby_gems if home), virtualenv].compact
       end
 
       def denied
@@ -66,7 +67,8 @@ module RubyLLM
       def env(home, tmp = home)
         base_env(home, tmp).merge(
           'PATH' => path,
-          'GEM_PATH' => gem_home && [gem_home, Gem.default_dir].join(File::PATH_SEPARATOR),
+          'GEM_HOME' => gem_home,
+          'GEM_PATH' => gem_home && [gem_home, ruby_gems].join(File::PATH_SEPARATOR),
           'VIRTUAL_ENV' => virtualenv
         ).compact
       end
@@ -97,9 +99,13 @@ module RubyLLM
         }
       end
 
-      def run(*command, home:, writable: [], network: false, env: {})
+      def ruby_gems
+        @installation.ruby_gems(@cache_dir)
+      end
+
+      def run(*command, home:, readable: [], writable: [], network: false, env: {})
         sandbox = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
-        sandbox.run(*command, readable: [*@installation.readable, *resolver_config(network)], denied:,
+        sandbox.run(*command, readable: [*@installation.readable, *resolver_config(network), *readable], denied:,
                               writable: [*writable, home], network:,
                               env: base_env(home).merge(env), timeout: INSTALL_TIMEOUT)
       end
@@ -135,8 +141,8 @@ module RubyLLM
       def install_gems(directory, gems, home)
         result = run('ruby', '-S', 'gem', 'install', '--no-document', '--install-dir', directory,
                      '--bindir', File.join(directory, 'bin'), *gems,
-                     home:, writable: [directory], network: { allow: REGISTRIES[:ruby] },
-                     env: { 'GEM_HOME' => directory, 'GEM_PATH' => directory })
+                     home:, readable: [ruby_gems], writable: [directory], network: { allow: REGISTRIES[:ruby] },
+                     env: { 'GEM_HOME' => directory, 'GEM_PATH' => [directory, ruby_gems].join(File::PATH_SEPARATOR) })
         verify(result, "gems #{gems.join(', ')}")
       end
 

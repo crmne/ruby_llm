@@ -3,6 +3,7 @@
 require 'digest'
 require 'fileutils'
 require 'rbconfig'
+require 'tmpdir'
 
 module RubyLLM
   class CodeExecution
@@ -38,14 +39,16 @@ module RubyLLM
         ].select { |path| File.exist?(path) }.uniq.freeze
       end
 
-      # Returns a directory, built once under +cache_dir+, that holds only
-      # Ruby's bundled gems: their gemspecs, and links to their files. A
-      # GEM_PATH with it instead of the gem directory finds no hidden
-      # application gem, so <tt>gem install</tt> installs every dependency
-      # and +require+ loads what it installed. Default gems load from any
-      # GEM_PATH.
+      # Returns a directory, built once under +cache_dir+, or under a
+      # private temporary directory without one, that holds only Ruby's
+      # bundled gems: their gemspecs, and links to their files. A GEM_PATH
+      # with it instead of the gem directory finds no hidden application
+      # gem, so <tt>gem install</tt> installs every dependency and RubyGems
+      # never activates a gem whose files the sandbox hides. Default gems
+      # load from any GEM_PATH.
       def ruby_gems(cache_dir)
-        directory = File.join(cache_dir, "ruby-#{ruby_gems_key}")
+        cache_dir ||= (@private_dir ||= Dir.mktmpdir('ruby_llm-ruby-gems-'))
+        directory = File.join(cache_dir, "bundled-gems-#{ruby_gems_key}")
         return directory if File.exist?("#{directory}.ready")
 
         FileUtils.mkdir_p(cache_dir)
