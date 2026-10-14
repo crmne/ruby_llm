@@ -49,15 +49,16 @@ module RubyLLM
           content = nil if content && content.empty?
           content = '(no output)' if content.nil? && msg.attachments.empty?
 
+          texts, files = split_text_attachments(msg.attachments)
           function_response = {
             name: function_name,
             response: {
               name: function_name,
-              content: Media.format_content(content)
+              content: Media.format_content(content) + texts.map { |text| Media.format_content_attachment(text) }
             }
           }
 
-          media_parts, sibling_parts = partition_tool_result_attachments(msg.attachments)
+          media_parts, sibling_parts = partition_tool_result_attachments(files)
           function_response[:parts] = media_parts if media_parts.any?
 
           [{ functionResponse: function_response }, *sibling_parts]
@@ -99,6 +100,12 @@ module RubyLLM
           return parts if first_call.nil? || first_call.key?(:thoughtSignature)
 
           parts.map { |part| part.equal?(first_call) ? part.merge(thoughtSignature: PLACEHOLDER_SIGNATURE) : part }
+        end
+
+        # Vertex refuses text parts beside a functionResponse, so text files
+        # travel inside its response.
+        def split_text_attachments(attachments)
+          attachments.partition { |attachment| attachment.type == :text && !attachment.provider_file? }
         end
 
         # functionResponse.parts only accepts inline bytes, and pre-Gemini 3 models reject it
