@@ -221,11 +221,15 @@ module RubyLLM
           { 'web_search_requests' => searches }
         end
 
+        # Gemini reports what a server-side tool loaded for the model, such as
+        # the frames of an agentic video, apart from the prompt, and bills it
+        # as input.
         def input_tokens(data)
-          prompt_tokens = data.dig('usageMetadata', 'promptTokenCount')
+          usage = data['usageMetadata'] || {}
+          prompt_tokens = usage['promptTokenCount']
           return unless prompt_tokens
 
-          [prompt_tokens.to_i - data.dig('usageMetadata', 'cachedContentTokenCount').to_i, 0].max
+          [prompt_tokens.to_i + usage['toolUsePromptTokenCount'].to_i - usage['cachedContentTokenCount'].to_i, 0].max
         end
 
         def parse_content(data)

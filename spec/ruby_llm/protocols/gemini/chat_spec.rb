@@ -579,5 +579,32 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(message.tokens.output).to eq(8)
       expect(message.tokens.cache_read).to eq(21)
     end
+
+    it 'bills the tool-use prompt as input' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Done' }] } }],
+                                   'usageMetadata' => {
+                                     'promptTokenCount' => 88, 'candidatesTokenCount' => 131,
+                                     'toolUsePromptTokenCount' => 155, 'thoughtsTokenCount' => 226,
+                                     'cachedContentTokenCount' => 40, 'totalTokenCount' => 600
+                                   }
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens).to have_attributes(input: 203, cache_read: 40, output: 357, thinking: 226)
+    end
+
+    it 'reports no uncached input when the cache covers the prompt and the tool-use prompt' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Done' }] } }],
+                                   'usageMetadata' => { 'promptTokenCount' => 30, 'toolUsePromptTokenCount' => 12,
+                                                        'cachedContentTokenCount' => 42 }
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens).to have_attributes(input: 0, cache_read: 42)
+    end
   end
 end
