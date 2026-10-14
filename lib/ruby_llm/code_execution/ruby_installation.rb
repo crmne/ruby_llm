@@ -85,6 +85,7 @@ module RubyLLM
 
       def link_ruby_gems(directory)
         FileUtils.rm_rf(directory)
+        FileUtils.mkdir_p(File.join(directory, 'specifications'))
         bundled_gem_stubs.each do |stub|
           [File.join(@gem_dir, 'gems', stub.full_name), extensions_dir(stub)].each do |path|
             next unless File.exist?(path)
@@ -93,7 +94,6 @@ module RubyLLM
             FileUtils.mkdir_p(File.dirname(link))
             File.symlink(path, link)
           end
-          FileUtils.mkdir_p(File.join(directory, 'specifications'))
           FileUtils.cp(stub.loaded_from, File.join(directory, 'specifications'))
         end
         File.write("#{directory}.ready", '')
