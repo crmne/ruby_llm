@@ -40,7 +40,7 @@ if defined?(Rails::Railtie)
       end
 
       config.after_initialize do
-        RubyLLM::Sandbox.verify(RubyLLM.sandbox)
+        RubyLLM::Sandbox.verify(RubyLLM.sandbox) unless ENV['SECRET_KEY_BASE_DUMMY']
       end
 
       rake_tasks do

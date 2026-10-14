@@ -44,7 +44,7 @@ Without `config.sandbox`, nothing runs locally. Check that the sandbox works on 
 RubyLLM.sandbox.supported? # => true
 ```
 
-In Rails, RubyLLM checks this when the application boots and raises `RubyLLM::ConfigurationError` with the reason and how to fix it, so a server that cannot run code fails at deploy time instead of in the middle of a conversation. See [Checking the Host](https://crmne.github.io/mxc/checking-the-host/) for what each platform needs.
+In Rails, RubyLLM checks this when the application boots and raises `RubyLLM::ConfigurationError` with the reason and how to fix it, so a server that cannot run code fails at deploy time instead of in the middle of a conversation. Build-time boots that set `SECRET_KEY_BASE_DUMMY`, such as `assets:precompile` in a Docker build, skip the check. See [Checking the Host](https://crmne.github.io/mxc/checking-the-host/) for what each platform needs.
 
 ## Running Code
 

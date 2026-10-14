@@ -72,7 +72,7 @@ RSpec.describe RubyLLM::Sandbox do
   end
 
   describe 'booting a Rails app' do
-    def boot(supported:)
+    def boot(supported:, env: {})
       script = <<~RUBY
         ENV['RAILS_ENV'] = 'test'
         require 'bundler/setup'
@@ -90,12 +90,16 @@ RSpec.describe RubyLLM::Sandbox do
           print e.message
         end
       RUBY
-      stdout, = Open3.capture3(RbConfig.ruby, '-I', File.expand_path('../../lib', __dir__), '-e', script)
+      stdout, = Open3.capture3(env, RbConfig.ruby, '-I', File.expand_path('../../lib', __dir__), '-e', script)
       stdout
     end
 
     it 'fails when the configured sandbox cannot run' do
       expect(boot(supported: false)).to eq('The configured sandbox cannot run on this machine. Install bubblewrap.')
+    end
+
+    it 'skips the check in build-time boots such as assets:precompile' do
+      expect(boot(supported: false, env: { 'SECRET_KEY_BASE_DUMMY' => '1' })).to eq('booted')
     end
 
     it 'boots when it can' do
