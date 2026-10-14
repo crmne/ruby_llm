@@ -6,13 +6,15 @@ require 'pathname'
 module RubyLLM
   # Resolves prompt templates from the application and registered engine directories.
   class Prompt
-    # The ordered directories searched for prompt files. The application's
-    # prompt directory is always first, so an application can override any
-    # prompt an engine ships by placing a file at the same relative path.
-    # Engines append their own directory in an initializer:
+    # The ordered directories searched for prompt files, and for skills
+    # through Skill.roots. The application's directory is always first, so
+    # an application can override any prompt or skill an engine ships by
+    # placing its own at the same relative path. Engines append their own
+    # directories in an initializer:
     #
     #   initializer "my_engine.prompts" do
     #     RubyLLM::Prompt.roots << MyEngine::Engine.root.join("app/prompts")
+    #     RubyLLM::Skill.roots << MyEngine::Engine.root.join("app/skills")
     #   end
     #
     class Roots
