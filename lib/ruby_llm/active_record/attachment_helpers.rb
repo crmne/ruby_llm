@@ -61,7 +61,7 @@ module RubyLLM
             io: StringIO.new(attachment.content),
             filename: attachment.filename,
             content_type: attachment.mime_type,
-            metadata: { resolution: attachment.resolution&.to_s }.compact
+            metadata: { resolution: attachment.resolution&.to_s, processing: attachment.processing&.to_s }.compact
           }
         end
       rescue StandardError => e
@@ -233,7 +233,8 @@ module RubyLLM
         stored = if pending_upload_attachable?(attachable)
                    pending_upload_attachment(attachable)
                  else
-                   RubyLLM::Attachment.new(attachment, resolution: attachment.metadata['resolution']&.to_sym)
+                   RubyLLM::Attachment.new(attachment, resolution: attachment.metadata['resolution']&.to_sym,
+                                                       processing: attachment.metadata['processing']&.to_sym)
                  end
         stored.provider_file_store = ProviderFile.store { attachment.blob&.key }
         stored
@@ -264,7 +265,8 @@ module RubyLLM
         if attachable.is_a?(Hash)
           RubyLLM::Attachment.new(attachment_hash_io(attachable),
                                   filename: attachment_hash_filename(attachable),
-                                  resolution: attachable.dig(:metadata, :resolution)&.to_sym)
+                                  resolution: attachable.dig(:metadata, :resolution)&.to_sym,
+                                  processing: attachable.dig(:metadata, :processing)&.to_sym)
         else
           RubyLLM::Attachment.new(attachable)
         end

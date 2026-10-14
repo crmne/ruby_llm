@@ -354,8 +354,12 @@ module RubyLLM
           thoughts.empty? ? nil : thoughts
         end
 
+        # Agentic video navigation steps carry signatures of their own, which
+        # Gemini refuses on the answer they precede.
         def extract_thought_signature(parts)
           parts.each do |part|
+            next if part.key?('toolCall') || part.key?('toolResponse')
+
             signature = part['thoughtSignature'] ||
                         part['thought_signature'] ||
                         part.dig('functionCall', 'thoughtSignature') ||

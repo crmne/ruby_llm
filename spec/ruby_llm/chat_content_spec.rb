@@ -127,6 +127,56 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
     end
   end
 
+  describe 'agentic video' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    let(:model) { model_for(:gemini, :agentic_video) }
+    let(:video) { RubyLLM::Attachment.new(File.expand_path('../fixtures/ruby_clip.mp4', __dir__), processing: :agentic) }
+    let(:follow_up) { 'Which colors stand out in that video? Answer in one sentence.' }
+
+    before { skip_without_cassette_or_key('GEMINI_API_KEY') }
+
+    it "gemini/#{model_for(:gemini, :agentic_video)} navigates a video and answers a follow-up" do
+      chat = RubyLLM.chat(model:, provider: :gemini)
+
+      response = chat.ask('What do you see in this video?', with: video)
+
+      expect(response.content).to match(/beach|ocean|sand|wave/i)
+      expect(response.tokens.input).to be_positive
+      expect(chat.ask(follow_up).content).to be_present
+    end
+
+    it "gemini/#{model_for(:gemini, :agentic_video)} streams a video answer and answers a follow-up" do
+      chat = RubyLLM.chat(model:, provider: :gemini)
+      chunks = []
+
+      response = chat.ask('What do you see in this video?', with: video) { |chunk| chunks << chunk }
+
+      expect(chunks.filter_map(&:content).join).to eq(response.content)
+      expect(response.content).to match(/beach|ocean|sand|wave/i)
+      expect(chat.ask(follow_up).content).to be_present
+    end
+
+    it "gemini/#{model_for(:gemini, :agentic_video)} lists the navigation through Interactions and replays it" do
+      chat = RubyLLM.chat(model:, provider: :gemini, protocol: :interactions)
+
+      response = chat.ask('What do you see in this video?', with: video)
+
+      expect(response.content).to match(/beach|ocean|sand|wave/i)
+      expect(response.server_tool_calls.map(&:type)).to include('processing_call', 'processing_result')
+      expect(chat.ask(follow_up).tokens).to have_attributes(input: be_positive)
+    end
+
+    it "gemini/#{model_for(:gemini, :agentic_video)} streams the navigation through Interactions" do
+      chat = RubyLLM.chat(model:, provider: :gemini, protocol: :interactions)
+      chunks = []
+
+      response = chat.ask('What do you see in this video?', with: video) { |chunk| chunks << chunk }
+
+      expect(chunks.filter_map(&:content).join).to eq(response.content)
+      expect(response.server_tool_calls.map(&:type)).to include('processing_call', 'processing_result')
+      expect(chat.ask(follow_up).content).to be_present
+    end
+  end
+
   describe 'audio models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     each_model(AUDIO_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand audio" do

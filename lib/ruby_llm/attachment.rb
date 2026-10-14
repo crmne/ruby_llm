@@ -37,6 +37,13 @@ module RubyLLM
     # Media resolutions accepted by +resolution:+.
     RESOLUTIONS = %i[low medium high ultra_high original].freeze
 
+    # How the model reads a video: +:static+, +:agentic+, or +nil+ for the
+    # provider default.
+    attr_reader :processing
+
+    # Video processing modes accepted by +processing:+.
+    PROCESSING_MODES = %i[static agentic].freeze
+
     # File extensions recognized as document attachments when the MIME type
     # alone is inconclusive.
     DOCUMENT_EXTENSIONS = %w[
@@ -72,7 +79,8 @@ module RubyLLM
 
     def self.from_h(data, config: nil) # :nodoc:
       data = data.transform_keys(&:to_sym)
-      new(data.fetch(:source), filename: data[:filename], resolution: data[:resolution]&.to_sym, config:)
+      new(data.fetch(:source), filename: data[:filename], resolution: data[:resolution]&.to_sym,
+                               processing: data[:processing]&.to_sym, config:)
     end
 
     # Creates an attachment from +source+: a file path, URL, IO-like object,
@@ -89,6 +97,13 @@ module RubyLLM
     #
     #   RubyLLM::Attachment.new("page-3.png", resolution: :ultra_high)
     #
+    # +processing:+ chooses how the model reads a video. +:static+ samples
+    # frames across the whole video up front. +:agentic+ lets the model
+    # navigate a long video and load only the parts it needs. Providers
+    # without the setting ignore it.
+    #
+    #   RubyLLM::Attachment.new("lecture.mp4", processing: :agentic)
+    #
     # +config:+ is the Configuration a URL source is downloaded with, and
     # defaults to the global one.
     #
@@ -96,13 +111,13 @@ module RubyLLM
     # They can be read or fetched during construction to detect the MIME type.
     # Validate upload parameters before passing them here: an unchecked String
     # can access local files or internal network endpoints.
-    def initialize(source, filename: nil, resolution: nil, config: nil)
-      unless resolution.nil? || RESOLUTIONS.include?(resolution)
-        raise ArgumentError, "resolution must be one of #{RESOLUTIONS.join(', ')}, got #{resolution.inspect}"
-      end
+    def initialize(source, filename: nil, resolution: nil, processing: nil, config: nil)
+      check_option(:resolution, resolution, RESOLUTIONS)
+      check_option(:processing, processing, PROCESSING_MODES)
 
       @config = config
       @resolution = resolution
+      @processing = processing
       @source = source
       @source = source_type_cast
       @filename = filename || source_filename
@@ -251,7 +266,7 @@ module RubyLLM
     end
 
     def to_h # :nodoc:
-      { type: type, source: @source, filename: filename, resolution: resolution }.compact
+      { type: type, source: @source, filename: filename, resolution: resolution, processing: processing }.compact
     end
 
     def byte_size # :nodoc:
@@ -259,6 +274,12 @@ module RubyLLM
     end
 
     private
+
+    def check_option(name, value, allowed)
+      return if value.nil? || allowed.include?(value)
+
+      raise ArgumentError, "#{name} must be one of #{allowed.join(', ')}, got #{value.inspect}"
+    end
 
     def data_uri
       "data:#{mime_type};base64,#{encoded}"
@@ -406,7 +427,7 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      { filename: filename, mime_type: mime_type, resolution: resolution, source: @source }
+      { filename: filename, mime_type: mime_type, resolution: resolution, processing: processing, source: @source }
     end
   end
 end

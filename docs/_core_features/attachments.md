@@ -17,6 +17,7 @@ After reading this guide, you will know:
 * How to send local files and remote URLs through the `with:` parameter.
 * How RubyLLM detects file types automatically.
 * How to trade tokens for detail with `resolution:`.
+* How to let a model navigate a long video with `processing:`.
 * When to use in-prompt attachments versus provider-managed file IDs.
 
 ## Attaching Files
@@ -174,6 +175,32 @@ The values are `:low`, `:medium`, `:high`, `:ultra_high`, and `:original`. Each 
 Gemini applies the setting to images, videos, and PDFs, sending `:high` for videos and PDFs when you ask for `:ultra_high`. OpenAI, Azure, OpenRouter, and xAI apply it to images, sending `:low` as low detail and `:medium`, `:high`, and `:ultra_high` as high detail. Other providers ignore it, since it is a quality hint rather than a requirement.
 
 For `:original`, OpenAI and Azure send `detail: "original"`. RubyLLM passes the request through without checking the model; a model that does not support original detail returns an API error. Gemini treats `:original` like `:ultra_high`, using its highest setting for the attachment type. OpenRouter and xAI use high detail, and other providers ignore it.
+
+### Choosing How a Model Watches a Video
+
+A model usually samples a video at one frame per second and reads every frame before it answers. For an hour-long lecture, that fills most of the context window, even when the question is about one moment. Set `processing: :agentic` to let the model navigate the video instead:
+
+```ruby
+lecture = RubyLLM::Attachment.new("lecture.mp4", processing: :agentic)
+chat = RubyLLM.chat(model: "{{ site.models.gemini_agentic_video }}")
+chat.ask "When does the speaker introduce recursion?", with: lecture
+```
+
+The model reads the transcript first, then loads only the frames and audio it needs. `:static` samples the whole video up front. Leave it unset to use the provider's default, which is static. Each video keeps its own setting, so one message can mix an agentic lecture with a static clip. Persisted chats keep the setting, so later turns and background jobs send the same mode.
+
+Agentic processing suits long videos and questions about specific moments. Short clips answer faster with static processing. Navigating a long video takes time, so stream the response to keep the connection active while the model works.
+
+The frames and audio the model loads count as input tokens, so `response.tokens` and `response.cost` include them.
+
+Gemini applies the setting to videos alongside `resolution:`. Other providers ignore it. Through the [Interactions protocol]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol), `response.server_tool_calls` lists each step the model took, and RubyLLM sends the steps back on the next turn, so a follow-up question reuses what the model already loaded:
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.gemini_agentic_video }}", protocol: :interactions)
+chat.ask "When does the speaker introduce recursion?", with: lecture
+chat.ask "What example does the speaker use?"
+```
+
+Gemini's default protocol does not accept the steps back, so the model navigates the video again when a follow-up needs it.
 
 ### Automatic File Type Detection
 

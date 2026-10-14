@@ -607,4 +607,42 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(message.tokens).to have_attributes(input: 0, cache_read: 42)
     end
   end
+
+  describe 'agentic video' do
+    let(:parts) do
+      [
+        { 'thought' => true, 'text' => 'Reading the transcript first.' },
+        { 'thoughtSignature' => 'sig_A', 'toolCall' => { 'id' => 'call_1' } },
+        { 'thoughtSignature' => 'sig_B', 'toolResponse' => { 'id' => 'call_1' } },
+        { 'text' => 'Waves roll onto a beach.', 'thoughtSignature' => 'sig_E' }
+      ]
+    end
+    let(:message) do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{ 'content' => { 'role' => 'model', 'parts' => parts },
+                                                      'finishReason' => 'STOP' }],
+                                   'usageMetadata' => { 'promptTokenCount' => 300, 'candidatesTokenCount' => 9,
+                                                        'toolUsePromptTokenCount' => 1200 }
+                                 })
+      RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+    end
+
+    it 'answers with the text and bills what the navigation loaded as input' do
+      expect(message.content).to eq('Waves roll onto a beach.')
+      expect(message.tokens.input).to eq(1500)
+    end
+
+    it 'replays the answer under its own signature, without the navigation steps Gemini refuses back' do
+      entry = RubyLLM::Accounting::Usage::Entry.new(operation: :chat, provider: 'gemini', model: 'gemini-3.8-flash',
+                                                    status: :succeeded)
+      chat = RubyLLM.chat(model: 'gemini-3.8-flash', provider: :gemini)
+      chat.add_message(role: :user, content: 'What happens in this video?')
+      chat.add_message(RubyLLM::Message.new(**message.to_h, usage_entries: [entry]))
+
+      contents = chat.ask_later('And then?').render[:contents]
+
+      expect(contents.second[:parts]).to eq([{ thought: true, text: 'Reading the transcript first.' },
+                                             { text: 'Waves roll onto a beach.', thoughtSignature: 'sig_E' }])
+    end
+  end
 end

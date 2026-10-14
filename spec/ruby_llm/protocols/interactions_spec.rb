@@ -181,6 +181,42 @@ RSpec.describe RubyLLM::Protocols::Interactions do
     expect(parts.last).to include(mime_type: 'application/pdf', data: a_string_starting_with('JVBER'))
   end
 
+  describe 'agentic video' do
+    it 'renders each video with its own processing mode and leaves other attachments alone' do
+      file = RubyLLM::UploadedFile.new(id: 'files/abc', provider: 'gemini', filename: 'lecture.mp4',
+                                       mime_type: 'video/mp4',
+                                       uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc')
+      lecture = RubyLLM::Attachment.new(file, processing: :agentic)
+      clip = RubyLLM::Attachment.new('spec/fixtures/ruby.mp4', processing: :static)
+      image = RubyLLM::Attachment.new('spec/fixtures/ruby.png', processing: :agentic)
+
+      chat.ask_later('Compare', with: [lecture, clip, image, 'spec/fixtures/ruby.mp4'])
+      parts = chat.render[:input].first[:content].drop(1)
+
+      expect(parts.first).to eq(type: 'video', mime_type: 'video/mp4', processing: 'agentic',
+                                uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc')
+      expect(parts.second).to include(type: 'video', processing: 'static')
+      expect(parts.drop(2)).to all(satisfy { |part| !part.key?(:processing) })
+    end
+
+    it 'lists the navigation steps and replays them signed in the next request' do
+      video_steps = [
+        { 'type' => 'processing_call', 'id' => 'call_01', 'signature' => 'sig_call_01' },
+        { 'type' => 'processing_result', 'call_id' => 'call_01', 'signature' => 'sig_result_01' },
+        { 'type' => 'thought', 'signature' => 'sig_thought' },
+        { 'type' => 'model_output', 'content' => [{ 'type' => 'text', 'text' => 'Waves roll onto a beach.' }] }
+      ]
+      message = protocol.send(:parse_completion_body, body.merge('steps' => video_steps), raw: nil)
+
+      expect(message.content).to eq('Waves roll onto a beach.')
+      expect(message.server_tool_calls.map { |call| [call.type, call.id] })
+        .to eq([%w[processing_call call_01], %w[processing_result call_01]])
+      chat.messages = [{ role: :user, content: 'What happens in this video?' },
+                       JSON.parse(JSON.generate(message.to_h)).transform_keys(&:to_sym)]
+      expect(chat.ask_later('And then?').render[:input]).to include(*video_steps.first(3))
+    end
+  end
+
   it 'accumulates streamed MCP steps and never yields remote result text as assistant text' do
     events = [{ 'event_type' => 'interaction.created', 'interaction' => body.except('steps', 'usage') }]
     steps.each_with_index do |step, index|
