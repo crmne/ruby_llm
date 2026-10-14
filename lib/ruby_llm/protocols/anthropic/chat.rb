@@ -58,7 +58,7 @@ module RubyLLM
             messages,
             tools: tools,
             tool_prefs: tool_prefs,
-            temperature: nil,
+            temperature: nil, # mutineer:disable-line boolean_literal -- the count is sliced to COUNT_TOKENS_KEYS
             model: model,
             schema: schema,
             thinking: thinking,
@@ -83,8 +83,6 @@ module RubyLLM
         end
 
         def build_system_content(system_messages, caching: nil)
-          return [] if system_messages.empty?
-
           # Anthropic's `system` parameter accepts an array of text content blocks
           # (each optionally with cache_control); each :system message becomes its
           # own block in the resulting array.
@@ -430,11 +428,9 @@ module RubyLLM
         end
 
         def inject_cache_control(blocks, caching: nil, ttl: nil)
-          return blocks if blocks.empty?
-
           last = blocks.last
-          return blocks if last.is_a?(Hash) && (last[:cache_control] || last['cache_control'])
           return blocks unless last.is_a?(Hash)
+          return blocks if last[:cache_control] || last['cache_control']
 
           blocks[-1] = last.merge(cache_control: prompt_cache_control(caching, ttl:))
           blocks
@@ -450,8 +446,6 @@ module RubyLLM
         end
 
         def prompt_cache_options(caching)
-          return {} unless caching
-
           options = caching.to_h.transform_keys(&:to_sym)
           unsupported = options.keys - PROMPT_CACHE_OPTIONS
           return options if unsupported.empty?
@@ -527,8 +521,6 @@ module RubyLLM
 
           budget = EFFORT_BUDGETS.fetch(effort, EFFORT_BUDGETS['high'])
           minimum = [model.reasoning_option(:budget_tokens)[:min].to_i, 1].max
-          return [budget, minimum].max unless max_tokens
-
           budget.clamp(minimum, [max_tokens - 1, minimum].max)
         end
 

@@ -19,6 +19,20 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
       expect(document_block[:source][:data]).to be_present
     end
 
+    it 'makes PDFs and text files citable documents only when citations are on' do
+      text_path = File.join('spec', 'fixtures', 'ruby.txt')
+
+      plain = described_class.format_content(nil, RubyLLM::Attachment.wrap([pdf_path, text_path]))
+      cited = described_class.format_content(nil, RubyLLM::Attachment.wrap([pdf_path, text_path]), citations: true)
+
+      expect(plain.map { |block| block[:type] }).to eq(%w[document text])
+      expect(plain.first).not_to have_key(:citations)
+      expect(cited.map { |block| block.slice(:type, :title, :citations) }).to eq(
+        [{ type: 'document', title: 'sample.pdf', citations: { enabled: true } },
+         { type: 'document', title: 'ruby.txt', citations: { enabled: true } }]
+      )
+    end
+
     it 'skips empty content rather than rendering an empty text block' do
       attachments = RubyLLM::Attachment.wrap(pdf_path)
 

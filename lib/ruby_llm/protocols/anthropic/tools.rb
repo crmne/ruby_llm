@@ -69,8 +69,6 @@ module RubyLLM
           }
           declaration[:defer_loading] = true if deferred?(tool)
 
-          return declaration if tool.provider_options.empty?
-
           RubyLLM::Support::Utils.deep_merge(declaration, tool.provider_options)
         end
 
@@ -131,8 +129,6 @@ module RubyLLM
         end
 
         def parse_tool_calls(content_blocks)
-          return nil if content_blocks.nil?
-
           content_blocks = [content_blocks] unless content_blocks.is_a?(Array)
 
           tool_calls = {}

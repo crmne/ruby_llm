@@ -245,6 +245,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
 
       expect(tool_calls.keys).to eq([2])
       expect(tool_calls[2].id).to be_nil
+      expect(tool_calls[2].name).to be_nil
       expect(tool_calls[2].arguments).to eq('{"query":"market news"}')
     end
   end
@@ -279,6 +280,72 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     it 'returns nil for empty or nil input' do
       expect(described_class.parse_tool_calls(nil)).to be_nil
       expect(described_class.parse_tool_calls([])).to be_nil
+    end
+  end
+
+  describe '.build_tool_choice' do
+    it 'passes auto and none through' do
+      expect(described_class.build_tool_choice(choice: :auto)).to eq(type: :auto)
+      expect(described_class.build_tool_choice(choice: :none, calls: :one)).to eq(type: :none)
+    end
+
+    it 'asks for any tool when one is required' do
+      expect(described_class.build_tool_choice(choice: :required, calls: :many))
+        .to eq(type: :any, disable_parallel_tool_use: false)
+    end
+
+    it 'names a specific tool' do
+      expect(described_class.build_tool_choice(choice: :weather, calls: :one))
+        .to eq(type: :tool, name: :weather, disable_parallel_tool_use: true)
+    end
+
+    it 'defaults to auto when only the number of calls is set' do
+      expect(described_class.build_tool_choice(choice: nil, calls: :one))
+        .to eq(type: :auto, disable_parallel_tool_use: true)
+    end
+  end
+
+  describe '.format_tool_result_content' do
+    it 'renders search results as citable search_result blocks' do
+      results = RubyLLM::SearchResults.new({ title: 'Guide', url: 'https://example.com/guide', text: 'Ruby is fun.' },
+                                           { title: 'Notes', text: 'Matz, 1993.' })
+      message = RubyLLM::Message.new(role: :tool, content: results.to_json, tool_call_id: 'tool_1')
+
+      expect(described_class.format_tool_result_content(message)).to eq(
+        [
+          { type: 'search_result', source: 'https://example.com/guide', title: 'Guide',
+            content: [{ type: 'text', text: 'Ruby is fun.' }], citations: { enabled: true } },
+          { type: 'search_result', source: 'Notes', title: 'Notes',
+            content: [{ type: 'text', text: 'Matz, 1993.' }], citations: { enabled: true } }
+        ]
+      )
+    end
+  end
+
+  describe '.apply_tool_search' do
+    it 'keeps messages with plain text content when it strips tool search blocks' do
+      payload = { messages: [{ role: 'user', content: 'Hello' }] }
+
+      expect(described_class.apply_tool_search(payload)[:messages]).to eq([{ role: 'user', content: 'Hello' }])
+    end
+  end
+
+  describe '.function_for' do
+    it 'declares the schema a tool provides' do
+      schema = { 'type' => 'object', 'properties' => { 'city' => { 'type' => 'string' } } }
+      tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Weather', parameters_schema: schema,
+                                            declared_parameters: {}, provider_options: {})
+
+      expect(described_class.function_for(tool)[:input_schema]).to eq(schema)
+    end
+
+    it 'declares a strict empty object schema for a tool without parameters' do
+      tool = instance_double(RubyLLM::Tool, name: 'ping', description: 'Ping', parameters_schema: nil,
+                                            declared_parameters: {}, provider_options: {})
+
+      expect(described_class.function_for(tool)[:input_schema]).to eq(
+        'type' => 'object', 'properties' => {}, 'required' => [], 'additionalProperties' => false, 'strict' => true
+      )
     end
   end
 end

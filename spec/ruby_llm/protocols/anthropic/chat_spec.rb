@@ -20,6 +20,10 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(message.finish_reason).to eq(:max_tokens)
     end
+
+    it 'leaves the finish_reason empty when the response has no stop_reason' do
+      expect(described_class.normalize_finish_reason(nil)).to be_nil
+    end
   end
 
   describe '.parse_citation' do
@@ -27,6 +31,12 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       citation = described_class.parse_citation({ 'url' => 'HTTPS://example.com/source' })
 
       expect(citation.url).to eq('HTTPS://example.com/source')
+    end
+
+    it 'turns the exclusive end page into the last cited page' do
+      citation = described_class.parse_citation({ 'start_page_number' => 2, 'end_page_number' => 4 })
+
+      expect([citation.start_page, citation.end_page]).to eq([2, 3])
     end
   end
 
@@ -134,6 +144,16 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(described_class.apply_files_beta({}, payload)).to eq({})
     end
+
+    it 'adds the Files API beta when the instructions reference an uploaded file' do
+      file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'policy.pdf', mime_type: 'application/pdf')
+      instructions = RubyLLM::Message.new(role: :system, content: 'Follow this policy', attachments: [file])
+      payload = { messages: [{ role: 'user', content: [{ type: 'text', text: 'Hello' }] }],
+                  system: described_class.build_system_content([instructions]) }
+
+      expect(described_class.apply_files_beta({ 'anthropic-beta' => 'other-beta' }, payload))
+        .to eq('anthropic-beta' => 'other-beta,files-api-2025-04-14')
+    end
   end
 
   describe '.format_message' do
@@ -177,6 +197,38 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(formatted[:content].last).to include(cache_control: { type: 'ephemeral' })
     end
+
+    it 'adds cache_control to replayed provider blocks marked as a cache boundary' do
+      raw_content = [{ 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search' },
+                     { 'type' => 'text', 'text' => 'Found it' }]
+      message = RubyLLM::Message.new(role: :assistant, content: 'Found it', raw_content:).cache_until_here
+
+      formatted = described_class.format_message(message)
+
+      expect(formatted[:content].first).not_to have_key(:cache_control)
+      expect(formatted[:content].last).to eq('type' => 'text', 'text' => 'Found it',
+                                             cache_control: { type: 'ephemeral' })
+      expect(raw_content.last).not_to have_key(:cache_control)
+    end
+
+    it 'leaves cache boundaries unmarked when caching is turned off' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
+
+      formatted = described_class.format_message(message, caching: false)
+
+      expect(formatted[:content].last).not_to have_key(:cache_control)
+    end
+
+    it 'adds cache_control to the last tool call of a turn marked as a cache boundary' do
+      tool_calls = { 'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'lookup', arguments: {}) }
+      message = claude_answer(RubyLLM::Thinking.new(text: 'Look it up', signature: 'sig'), tool_calls:)
+
+      formatted = anthropic_protocol.send(:format_message, message.cache_until_here)
+
+      expect(formatted[:content].map { |block| block[:type] }).to eq(%w[thinking text tool_use])
+      expect(formatted[:content].first).not_to have_key(:cache_control)
+      expect(formatted[:content].last).to include(id: 'tool_1', cache_control: { type: 'ephemeral' })
+    end
   end
 
   describe '.render_payload' do
@@ -219,6 +271,31 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
           }
         ]
       )
+    end
+
+    describe 'tool_choice' do
+      let(:tool) do
+        instance_double(RubyLLM::Tool, name: 'weather', description: 'Weather', parameters_schema: nil,
+                                       declared_parameters: {}, provider_options: {})
+      end
+
+      def render(tool_prefs)
+        described_class.render_payload([RubyLLM::Message.new(role: :user, content: 'Weather?')],
+                                       tools: { weather: tool }, temperature: nil, model: model, tool_prefs:)
+      end
+
+      it 'is sent when only the choice is set' do
+        expect(render(choice: :required, calls: nil)[:tool_choice]).to eq(type: :any)
+      end
+
+      it 'is sent when only the number of calls is set' do
+        expect(render(choice: nil, calls: :one)[:tool_choice]).to eq(type: :auto, disable_parallel_tool_use: true)
+      end
+
+      it 'is left to the API default when neither is set' do
+        expect(render(choice: nil, calls: nil)).not_to have_key(:tool_choice)
+        expect(render(nil)).not_to have_key(:tool_choice)
+      end
     end
 
     it 'adds top-level automatic cache_control when caching is enabled without explicit boundaries' do
@@ -468,6 +545,27 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(low[:output_config]).to eq(effort: 'low')
     end
 
+    it 'raises the effort budget to the minimum the model takes' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-4-5',
+        thinking: RubyLLM::Thinking::Config.new(effort: :low),
+        reasoning_options: [{ type: 'budget_tokens', min: 2048 }]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 2048)
+    end
+
+    it 'sizes an effort the budget table does not list as high' do
+      model = RubyLLM::Model.new(id: 'claude-opus-4-5', provider: 'anthropic',
+                                 metadata: { reasoning_options: [budget_option] })
+
+      payload = described_class.render_payload([user_message], tools: {}, temperature: nil, model:,
+                                                               max_output_tokens: 100_000,
+                                                               thinking: RubyLLM::Thinking::Config.new(effort: :max))
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 63_999)
+    end
+
     it 'keeps the effort budget under the max_output_tokens of the request' do
       model = RubyLLM::Model.new(
         id: 'claude-opus-4-5',
@@ -633,6 +731,38 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   end
 
   describe '#parse_completion_response' do
+    def parse(body)
+      response = instance_double(Faraday::Response, body: { 'model' => 'claude-sonnet-4-5', 'usage' => {} }.merge(body))
+      RubyLLM::Protocols::Anthropic.allocate.send(:parse_completion_response, response)
+    end
+
+    it 'reads the answer from text blocks only' do
+      message = parse('content' => [{ 'type' => 'thinking', 'thinking' => 'Hmm', 'text' => 'Hmm' },
+                                    { 'type' => 'text', 'text' => 'Hello' }])
+
+      expect(message.content).to eq('Hello')
+      expect(message.thinking.text).to eq('Hmm')
+    end
+
+    it 'identifies a server tool result by the call it answers' do
+      message = parse('content' => [
+                        { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search', 'input' => {} },
+                        { 'type' => 'web_search_tool_result', 'tool_use_id' => 'srv_1', 'content' => [] }
+                      ])
+
+      expect(message.server_tool_calls.map(&:id)).to eq(%w[srv_1 srv_1])
+    end
+
+    it 'reads thinking tokens from each place a response reports them' do
+      [
+        { 'output_tokens_details' => { 'reasoning_tokens' => 7 } },
+        { 'thinking_tokens' => 7 },
+        { 'reasoning_tokens' => 7 }
+      ].each do |usage|
+        expect(parse('content' => [], 'usage' => usage).tokens.thinking).to eq(7)
+      end
+    end
+
     it 'captures cache usage metrics on the message' do
       response_body = {
         'model' => 'claude-sonnet-4-5-20250929',
@@ -766,17 +896,37 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
+  describe '.portable_raw_content' do
+    def portable(raw_content)
+      described_class.portable_raw_content(RubyLLM::Message.new(role: :assistant, content: 'hi', raw_content:))
+    end
+
+    let(:search) { { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'tool_search_tool_bm25' } }
+    let(:text) { { 'type' => 'text', 'text' => 'hi' } }
+
+    it 'keeps a tool search turn without its thinking for another model' do
+      expect(portable([{ 'type' => 'thinking', 'thinking' => 'Hmm' }, search, text])).to eq([search, text])
+    end
+
+    it 'keeps nothing from a turn without a tool search' do
+      expect(portable([text])).to be_nil
+      expect(portable(nil)).to be_nil
+    end
+
+    it 'keeps nothing from a tool search turn that used another server tool' do
+      expect(portable([search, { 'type' => 'web_search_tool_result', 'tool_use_id' => 'srv_2' }])).to be_nil
+    end
+  end
+
   describe '.inject_cache_control' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 
-    it 'leaves empty blocks alone' do
-      expect(protocol.send(:inject_cache_control, [])).to eq([])
-    end
-
     it 'leaves a block that already carries cache_control alone' do
-      blocks = [{ type: 'text', text: 'hi', cache_control: { type: 'ephemeral' } }]
+      blocks = [{ type: 'text', text: 'hi', cache_control: { type: 'ephemeral', ttl: '1h' } }]
+      replayed = [{ 'type' => 'text', 'text' => 'hi', 'cache_control' => { 'type' => 'ephemeral' } }]
 
-      expect(protocol.send(:inject_cache_control, blocks)).to eq(blocks)
+      expect(protocol.send(:inject_cache_control, blocks.dup)).to eq(blocks)
+      expect(protocol.send(:inject_cache_control, replayed.dup)).to eq(replayed)
     end
 
     it 'leaves a trailing block it cannot annotate alone' do
@@ -822,6 +972,13 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'is nil when thinking is off or explicitly none' do
       expect(build(nil)).to be_nil
       expect(build(RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
+    end
+
+    it 'asks for no thinking mode without an effort, budget, or display' do
+      adaptive = RubyLLM::Model.new(id: 'claude-opus-4-7', provider: 'anthropic',
+                                    metadata: { reasoning_options: [{ type: 'effort', values: %w[low high] }] })
+
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.default, adaptive, 4096)).to eq({})
     end
 
     it 'sends effort alone when the registry lists no thinking controls' do

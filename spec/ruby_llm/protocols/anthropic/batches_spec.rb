@@ -31,6 +31,33 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
     end
   end
 
+  describe '#create_batch' do
+    it 'submits each request under its custom_id with its payload as params' do
+      connection = instance_double(RubyLLM::Transport::Connection)
+      protocol.instance_variable_set(:@connection, connection)
+      allow(connection).to receive(:post).and_return(
+        instance_double(Faraday::Response, body: { 'id' => 'msgbatch_1', 'processing_status' => 'in_progress' })
+      )
+
+      protocol.create_batch([{ custom_id: '0', payload: { model: 'claude-haiku-4-5' } }])
+
+      expect(connection).to have_received(:post).with(
+        'v1/messages/batches', { requests: [{ custom_id: '0', params: { model: 'claude-haiku-4-5' } }] },
+        idempotent: false
+      )
+    end
+  end
+
+  describe '#parse_batch_status' do
+    it 'succeeds only an ended batch that completed' do
+      statuses = [['ended', true], ['ended', false], ['canceling', true]].map do |raw_status, completed|
+        protocol.send(:parse_batch_status, raw_status, completed:)
+      end
+
+      expect(statuses).to eq(%i[succeeded pending pending])
+    end
+  end
+
   describe '#parse_batch_result' do
     it 'parses succeeded results into messages keyed by submission index' do
       line = {

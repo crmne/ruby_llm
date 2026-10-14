@@ -92,6 +92,122 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     expect(protocol.instance_variable_get(:@stream_blocks)[0]['text']).to be(text).and eq('Hello, world')
   end
 
+  it 'streams thinking text and its signature as thinking, not content' do
+    thinking = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
+                                             'delta' => { 'type' => 'thinking_delta', 'thinking' => 'Hmm' } })
+    signature = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
+                                              'delta' => { 'type' => 'signature_delta', 'signature' => 'sig' } })
+    text = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
+                                         'delta' => { 'type' => 'text_delta', 'text' => 'Hi' } })
+
+    expect([thinking.content, thinking.thinking.text, thinking.thinking.signature]).to eq([nil, 'Hmm', nil])
+    expect([signature.content, signature.thinking.text, signature.thinking.signature]).to eq([nil, nil, 'sig'])
+    expect(text.thinking).to be_nil
+    expect(text.citations).to be_empty
+  end
+
+  it 'starts each streamed message of a pause_turn continuation with no blocks' do
+    events = lambda do |index, block, partial_json|
+      delta = { 'type' => 'input_json_delta', 'partial_json' => partial_json }
+      [{ 'type' => 'message_start', 'message' => { 'model' => 'claude-sonnet-4-5', 'usage' => {} } },
+       { 'type' => 'content_block_start', 'index' => index, 'content_block' => block },
+       { 'type' => 'content_block_delta', 'index' => index, 'delta' => delta },
+       { 'type' => 'content_block_stop', 'index' => index },
+       { 'type' => 'message_stop' }].map { |event| protocol.send(:build_chunk, event) }.last
+    end
+    search = { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search', 'input' => {} }
+    tool = { 'type' => 'tool_use', 'id' => 'tool_1', 'name' => 'lookup', 'input' => {} }
+
+    first = events.call(0, search, '{"query":"ruby"}')
+    second = events.call(1, tool, '')
+
+    expect(first.raw_content).to eq([search.merge('input' => { 'query' => 'ruby' })])
+    expect(second.raw_content).to be_nil
+    expect(second.server_tool_calls).to be_empty
+    expect(protocol.instance_variable_get(:@stream_block_json).keys).to eq([1])
+  end
+
+  describe 'content block reconstruction' do
+    def start(index, block)
+      protocol.send(:build_chunk, { 'type' => 'content_block_start', 'index' => index, 'content_block' => block })
+    end
+
+    def input_json(index, partial_json)
+      protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => index,
+                                    'delta' => { 'type' => 'input_json_delta', 'partial_json' => partial_json } })
+    end
+
+    def stop(index)
+      protocol.send(:build_chunk, { 'type' => 'content_block_stop', 'index' => index })
+    end
+
+    def block(index) = protocol.instance_variable_get(:@stream_blocks)[index]
+
+    it 'assembles tool input from a stream that sent no message_start' do
+      start(0, { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search' })
+      input_json(0, '{"query":')
+      input_json(0, '"ruby"}')
+      stop(0)
+
+      expect(block(0)['input']).to eq('query' => 'ruby')
+    end
+
+    it 'keeps an empty input object for a tool that streamed no input' do
+      start(0, { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search' })
+      stop(0)
+
+      expect(block(0)['input']).to eq({})
+    end
+
+    it 'falls back to the starting input when the streamed input is not JSON' do
+      start(0, { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search', 'input' => { 'q' => 1 } })
+      start(1, { 'type' => 'server_tool_use', 'id' => 'srv_2', 'name' => 'web_search' })
+      input_json(0, '{"query":')
+      input_json(1, '{"query":')
+      stop(0)
+      stop(1)
+
+      expect([block(0)['input'], block(1)['input']]).to eq([{ 'q' => 1 }, {}])
+    end
+
+    it 'ignores a delta for a block that never started' do
+      expect { input_json(3, '{}') }.not_to raise_error
+      expect(protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 3,
+                                           'delta' => { 'type' => 'text_delta', 'text' => 'Hi' } }).content).to eq('Hi')
+    end
+
+    it 'reports the reconstructed blocks only when the message stops' do
+      start(0, { 'type' => 'server_tool_use', 'id' => 'srv_1', 'name' => 'web_search', 'input' => {} })
+
+      delta = stop(0)
+
+      expect(delta.raw_content).to be_nil
+      expect(delta.server_tool_calls).to be_empty
+      expect(protocol.send(:build_chunk, { 'type' => 'message_stop' }).server_tool_calls.map(&:id)).to eq(['srv_1'])
+    end
+  end
+
+  it 'streams a citation with the text it cites' do
+    citation = protocol.send(:build_chunk, {
+                               'type' => 'content_block_delta', 'index' => 0,
+                               'delta' => { 'type' => 'citations_delta',
+                                            'citation' => { 'type' => 'char_location', 'cited_text' => 'Ruby',
+                                                            'document_title' => 'Guide' } }
+                             })
+    empty = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
+                                          'delta' => { 'type' => 'citations_delta' } })
+
+    expect(citation.citations.map(&:cited_text)).to eq(['Ruby'])
+    expect(empty.citations).to be_empty
+  end
+
+  it 'reads no tool call from a text delta' do
+    chunk = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
+                                          'delta' => { 'type' => 'text_delta', 'text' => 'Hi' } })
+
+    expect(chunk.tool_calls).to be_nil
+  end
+
   it 'sends Accept-Encoding: identity on streaming requests' do
     captured = nil
 
@@ -132,6 +248,10 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
       end
 
       expect(parsed).to eq(statuses.transform_values { |status| [status, 'Failed'] })
+    end
+
+    it 'ignores an event that is not an error' do
+      expect(protocol.send(:parse_streaming_error, { type: 'ping' }.to_json)).to be_nil
     end
 
     it 'falls back to a 500 for an error type it does not know' do

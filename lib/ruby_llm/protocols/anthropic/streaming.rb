@@ -144,9 +144,7 @@ module RubyLLM
         end
 
         def extract_citations_delta(data, delta_type)
-          return nil unless delta_type == 'citations_delta'
-
-          citation = data.dig('delta', 'citation')
+          citation = data.dig('delta', 'citation') if delta_type == 'citations_delta'
           citation ? [Chat.parse_citation(citation)] : nil
         end
 
