@@ -14,6 +14,7 @@ module RubyLLM
     # A prebuilt GEM_HOME or virtualenv is mounted as it is.
     class Packages # :nodoc:
       SYSTEM_PATH = %w[/usr/local/bin /usr/bin /bin].freeze
+      RESOLVER_CONFIG = '/etc/resolv.conf'
       INSTALL_TIMEOUT = 600
       REGISTRIES = {
         ruby: %w[rubygems.org *.rubygems.org],
@@ -22,8 +23,10 @@ module RubyLLM
 
       attr_reader :gems, :python
 
-      def initialize(sandbox:, cache_dir:, gems: [], python: [], gem_home: nil, virtualenv: nil)
+      def initialize(sandbox:, cache_dir:, gems: [], python: [], gem_home: nil, virtualenv: nil,
+                     installation: RubyInstallation.current)
         @sandbox = sandbox
+        @installation = installation
         @cache_dir = cache_dir
         @gems = Array(gems).map(&:to_s)
         @python = Array(python).map(&:to_s)
@@ -47,7 +50,17 @@ module RubyLLM
       end
 
       def readable
-        [*ruby_directories, gem_home, virtualenv].compact
+        [*@installation.readable, gem_home, virtualenv].compact
+      end
+
+      def denied
+        @installation.denied - [@gem_home]
+      end
+
+      def resolver_config(network)
+        return [] unless network && File.exist?(RESOLVER_CONFIG)
+
+        [RESOLVER_CONFIG, File.realpath(RESOLVER_CONFIG)].uniq
       end
 
       def env(home, tmp = home)
@@ -81,17 +94,13 @@ module RubyLLM
       end
 
       def run(*command, home:, writable: [], network: false, env: {})
-        @sandbox.run(*command, readable: ruby_directories, writable: [*writable, home], network:,
-                               env: base_env(home).merge(env), timeout: INSTALL_TIMEOUT)
+        sandbox = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
+        sandbox.run(*command, readable: [*@installation.readable, *resolver_config(network)], denied:,
+                              writable: [*writable, home], network:,
+                              env: base_env(home).merge(env), timeout: INSTALL_TIMEOUT)
       end
 
       private
-
-      def ruby_directories
-        prefix = RbConfig::CONFIG['prefix']
-        gem_dir = Gem.default_dir
-        gem_dir.start_with?(File.join(prefix, '')) ? [prefix] : [prefix, gem_dir]
-      end
 
       def path
         [virtualenv && File.join(virtualenv, 'bin'), gem_home && File.join(gem_home, 'bin'),

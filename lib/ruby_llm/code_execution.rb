@@ -79,17 +79,24 @@ module RubyLLM
         Attachment.new(StringIO.new(text), filename: "#{name}.txt")
       end
 
-      def available?(sandbox, language, env) # :nodoc:
+      def available?(sandbox, language, **) # :nodoc:
         CHECKS_LOCK.synchronize do
           checks = CHECKS[sandbox] ||= {}
           return checks[language.name] if checks.key?(language.name)
 
-          result = sandbox.run(*language.check_command, env:, timeout: 30)
-          checks[language.name] = result.exit_code&.zero? && !result.timed_out? ? true : false
+          checks[language.name] = runs?(sandbox, language, **)
         end
       end
 
       private
+
+      def runs?(sandbox, language, **)
+        result = sandbox.run(*language.check_command, timeout: 30, **)
+        result.exit_code&.zero? && !result.timed_out? ? true : false
+      rescue StandardError => e
+        RubyLLM.logger.debug { "Code execution cannot run #{language.label}: #{e.class}: #{e.message}" }
+        false
+      end
 
       def validate_options(options)
         unknown = options.keys - OPTIONS
@@ -130,9 +137,6 @@ module RubyLLM
       end
     end
 
-    # The Sandbox the code runs in.
-    attr_reader :sandbox
-
     # The seconds a run may take.
     attr_reader :timeout
 
@@ -144,7 +148,8 @@ module RubyLLM
     attr_reader :readable
 
     # Creates the tool for +sandbox+ with the options Chat#with_code_execution
-    # takes. +attachments+ returns the conversation's files when called,
+    # takes. +sandbox+ and +config+ may be Procs, called whenever the tool
+    # needs them. +attachments+ returns the conversation's files when called,
     # and +mounts+ a Hash of paths inside the working directory to
     # directories mounted there read-only. +chat+ and +config+ describe
     # where the instrumentation events go.
@@ -153,9 +158,8 @@ module RubyLLM
                    package_cache_dir: nil, languages: %i[ruby shell], timeout: DEFAULT_TIMEOUT, network: false,
                    readable: [], **packages)
       super()
-      raise ConfigurationError, 'Code execution needs a sandbox. Set config.sandbox = :mxc.' unless sandbox
-
       @sandbox = sandbox
+      self.sandbox
       @attachments = attachments
       @mounts = mounts
       @chat = chat
@@ -164,15 +168,23 @@ module RubyLLM
       @timeout = timeout
       @network = network
       @readable = Array(readable).map { |path| File.expand_path(path) }
-      @packages = Packages.new(sandbox:, cache_dir: package_cache_dir, **packages)
+      @packages = Packages.new(sandbox: -> { self.sandbox }, cache_dir: package_cache_dir, **packages)
+    end
+
+    # Returns the Sandbox the code runs in. Raises ConfigurationError when
+    # there is none.
+    def sandbox
+      current = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
+      current || raise(ConfigurationError, 'Code execution needs a sandbox. Set config.sandbox = :mxc.')
     end
 
     # Returns the languages the model may use: those requested that the
     # sandbox can run. Raises ConfigurationError when it can run none.
     def languages
-      @languages ||= begin
-        env = @packages.base_env(Dir.tmpdir)
-        available = @requested_languages.select { |name| self.class.available?(sandbox, Language[name], env) }
+      (@languages ||= {}.compare_by_identity)[sandbox] ||= begin
+        options = { env: @packages.base_env(Dir.tmpdir), readable: RubyInstallation.current.readable,
+                    denied: @packages.denied }
+        available = @requested_languages.select { |name| self.class.available?(sandbox, Language[name], **options) }
         raise ConfigurationError, "The sandbox cannot run #{@requested_languages.join(', ')}" if available.empty?
 
         available
@@ -235,7 +247,9 @@ module RubyLLM
 
     def run_in_sandbox(command, workspace, readable:)
       sandbox.run(*command,
-                  readable: [*@packages.readable, *self.readable, *readable, workspace.source, workspace.inputs],
+                  readable: [*@packages.readable, *@packages.resolver_config(network), *self.readable, *readable,
+                             workspace.source, workspace.inputs],
+                  denied: @packages.denied,
                   writable: [workspace.directory, workspace.home, workspace.tmp], network:, timeout:,
                   directory: workspace.directory, env: @packages.env(workspace.home, workspace.tmp))
     end
@@ -243,7 +257,8 @@ module RubyLLM
     def instrument(language)
       payload = { chat: @chat, tool_name: name, language: language.name, timeout:, network: }
       started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-      RubyLLM.instrument('code_execution.ruby_llm', payload, config: @config) do |event|
+      config = @config.is_a?(Proc) ? @config.call : @config
+      RubyLLM.instrument('code_execution.ruby_llm', payload, config:) do |event|
         yield event
       ensure
         event[:duration] = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started

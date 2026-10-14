@@ -17,7 +17,7 @@ module RubyLLM
   #       true
   #     end
   #
-  #     def run(*command, readable: [], writable: [], network: false, timeout:, directory: nil, env: {})
+  #     def run(*command, timeout:, readable: [], writable: [], denied: [], network: false, directory: nil, env: {})
   #       # Runs +command+ and returns an object answering stdout, stderr,
   #       # exit_code, and timed_out?
   #     end
@@ -25,7 +25,8 @@ module RubyLLM
   #
   # +run+ takes the command like Kernel#system: one String for the shell,
   # or a program and its arguments. +readable+ and +writable+ are paths on
-  # this machine the command may read, or read and change. +network+ is
+  # this machine the command may read, or read and change, and +denied+
+  # paths it must not see, even inside readable ones. +network+ is
   # +false+, +true+, or <tt>{ allow: ["pypi.org"] }</tt>. +directory+ is
   # where the command starts and +env+ the only environment variables it
   # gets. The result may also answer +blocked+, the hosts the network

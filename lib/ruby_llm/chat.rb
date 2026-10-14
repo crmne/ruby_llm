@@ -824,10 +824,10 @@ module RubyLLM
       options = CodeExecution.options(enabled, options)
       @code_execution_tool = if options
                                CodeExecution.new(
-                                 sandbox: Sandbox.resolve(@config.sandbox),
+                                 sandbox: -> { Sandbox.resolve(@config.sandbox) },
                                  attachments: -> { messages.flat_map(&:attachments) },
                                  chat: self,
-                                 config: @config,
+                                 config: -> { @config },
                                  package_cache_dir: @config.package_cache_dir,
                                  **options
                                )

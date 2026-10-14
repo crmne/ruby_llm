@@ -22,8 +22,8 @@ module RubyLLM
 
       # Runs +command+ in a new mxc sandbox and returns its MXC::Result. See
       # Sandbox for the arguments.
-      def run(*command, timeout:, readable: [], writable: [], network: false, directory: nil, env: {})
-        ::MXC::Sandbox.new(readable:, writable:, network:, timeout:, directory:, env:).run(*command)
+      def run(*command, timeout:, readable: [], writable: [], denied: [], network: false, directory: nil, env: {})
+        ::MXC::Sandbox.new(readable:, writable:, denied:, network:, timeout:, directory:, env:).run(*command)
       end
     end
   end

@@ -27,8 +27,8 @@ class FakeSandbox
     @supported
   end
 
-  def run(*command, timeout:, readable: [], writable: [], network: false, directory: nil, env: {})
-    run = { command:, readable:, writable:, network:, timeout:, directory:, env: }
+  def run(*command, timeout:, readable: [], writable: [], denied: [], network: false, directory: nil, env: {})
+    run = { command:, readable:, writable:, denied:, network:, timeout:, directory:, env: }
     @lock.synchronize { @runs << run }
     return self.class.result(stderr: "#{command.first}: not found", exit_code: 127) if @missing.include?(command.first)
 

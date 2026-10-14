@@ -25,7 +25,7 @@ After reading this guide, you will know:
 
 A model that can run code can calculate exactly, transform data, and produce files such as charts, spreadsheets, and PDFs. That code was written by a model, so it never runs in your application's process. It runs in a sandbox that cannot read your project, your home directory, or your secrets.
 
-RubyLLM's built-in sandbox uses the [mxc gem](https://crmne.github.io/mxc/): Bubblewrap on Linux, Seatbelt on macOS, and process containers on Windows. Add the gem and choose it in your configuration:
+RubyLLM's built-in sandbox uses the [mxc gem](https://crmne.github.io/mxc/): Bubblewrap on Linux and Seatbelt on macOS. Code execution is verified on Linux and macOS. Add the gem and choose it in your configuration:
 
 ```ruby
 # Gemfile
@@ -75,7 +75,7 @@ The model writes Ruby or shell scripts by default. Choose from `:ruby`, `:python
 chat.with_code_execution(languages: [:python])
 ```
 
-Ruby is the one your application runs, without your application's gems or Bundler environment. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it.
+Ruby is the one your application runs, without your application's gems or Bundler environment: Ruby's default and bundled gems load, and every other gem installed with it is hidden. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it.
 
 ### Timeouts
 
@@ -233,7 +233,7 @@ class RemoteSandbox
     true
   end
 
-  def run(*command, timeout:, readable: [], writable: [], network: false, directory: nil, env: {})
+  def run(*command, timeout:, readable: [], writable: [], denied: [], network: false, directory: nil, env: {})
     # Run the command and return an object answering
     # stdout, stderr, exit_code, and timed_out?
   end
@@ -250,6 +250,7 @@ end
 | --- | --- |
 | `readable` | Paths on this machine the command may read |
 | `writable` | Paths on this machine the command may read and change |
+| `denied` | Paths the command must not see, even inside readable ones |
 | `network` | `false`, `true`, or `{ allow: ["pypi.org"] }` |
 | `timeout` | Seconds before the command is stopped |
 | `directory` | The working directory |

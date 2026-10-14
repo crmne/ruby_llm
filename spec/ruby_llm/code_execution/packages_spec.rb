@@ -33,6 +33,22 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
       expect(File.exist?("#{directory}.ready")).to be(true)
     end
 
+    it 'lets the installer read the resolver configuration' do
+      allow(File).to receive(:exist?).and_call_original
+      allow(File).to receive(:exist?).with('/etc/resolv.conf').and_return(true)
+      allow(File).to receive(:realpath).and_call_original
+      allow(File).to receive(:realpath).with('/etc/resolv.conf').and_return('/private/var/run/resolv.conf')
+      packages(gems: %w[prawn]).gem_home
+
+      expect(sandbox.runs.last[:readable]).to include('/etc/resolv.conf', '/private/var/run/resolv.conf')
+    end
+
+    it "hides the application's gems from the installer" do
+      packages(gems: %w[prawn]).gem_home
+
+      expect(sandbox.runs.last[:denied]).to eq(RubyLLM::CodeExecution::RubyInstallation.current.denied)
+    end
+
     it 'mounts the gems read-only and puts them on the gem path' do
       gems = packages(gems: %w[prawn])
       directory = gems.gem_home

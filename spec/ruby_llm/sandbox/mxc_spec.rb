@@ -65,15 +65,38 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     expect(output['stdout']).to eq("\"[1,2]\"\n")
   end
 
+  it "hides the application's gems" do
+    rspec = Gem.loaded_specs.fetch('rspec-core').full_gem_path
+    code = <<~RUBY
+      begin
+        require 'rspec/core'
+        puts 'loaded'
+      rescue LoadError
+        puts 'missing'
+      end
+      begin
+        puts Dir.children(#{rspec.inspect}).size
+      rescue SystemCallError
+        puts 0
+      end
+    RUBY
+
+    expect(report(run_code(code))['stdout']).to eq("missing\n0\n")
+    expect(Dir.children(rspec)).not_to be_empty
+  end
+
   it 'cannot read the project or the home directory' do
     project = File.expand_path('../../../Gemfile', __dir__)
     home = Dir.home
     mounted = RbConfig::CONFIG['prefix'].delete_prefix(File.join(home, '')).split('/').first
-    code = "puts File.exist?(#{project.inspect}); puts Dir.exist?(#{home.inspect}) ? Dir.children(#{home.inspect}) : []"
+    code = <<~RUBY
+      puts((File.read(#{project.inspect}) rescue 'unreadable'))
+      puts((Dir.children(#{home.inspect}) rescue []))
+    RUBY
     output = report(run_code(code))
 
     expect(File.exist?(project)).to be(true)
-    expect(output['stdout'].lines.first).to eq("false\n")
+    expect(output['stdout'].lines.first).to eq("unreadable\n")
     expect(output['stdout'].lines.drop(1).map(&:chomp) - [mounted]).to be_empty
   end
 
@@ -99,7 +122,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     output = report(run_code("puts File.read('attachments/data.csv'); File.write('attachments/data.csv', 'x')"))
 
     expect(output['stdout']).to eq("1,2\n")
-    expect(output['stderr']).to include('Read-only file system')
+    expect(output['stderr']).to match(/Read-only file system|Operation not permitted/)
   end
 
   it 'runs shell scripts' do
@@ -150,7 +173,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   it 'installs declared gems once, with only RubyGems reachable' do
     skip 'host allow-lists are not available on this machine' unless self.class.network_policy_supported?
 
-    output = report(run_code("require 'rainbow'; puts Rainbow::VERSION", gems: %w[rainbow]))
+    output = report(run_code("require 'rainbow'; puts Gem.loaded_specs.fetch('rainbow').version", gems: %w[rainbow]))
 
     expect(output['exit_code']).to eq(0)
     expect(Dir.glob(File.join(cache_dir, 'ruby-*.ready')).size).to eq(1)

@@ -87,6 +87,22 @@ RSpec.describe RubyLLM::Chat do
       expect { plain.with_code_execution }.to raise_error(RubyLLM::ConfigurationError, /config.sandbox/)
     end
 
+    it "runs in the sandbox of the chat's current context" do
+      other = FakeSandbox.new
+      chat.with_code_execution.with_context(RubyLLM.context { |config| config.sandbox = other })
+
+      run_code('puts 1')
+
+      expect(other.code_runs.size).to eq(1)
+      expect(sandbox.code_runs).to be_empty
+    end
+
+    it 'raises ConfigurationError when the current context has no sandbox' do
+      chat.with_code_execution.with_context(RubyLLM.context { |config| config.sandbox = nil })
+
+      expect { run_code('puts 1') }.to raise_error(RubyLLM::ConfigurationError, /config.sandbox/)
+    end
+
     it 'refuses a tool of the same name' do
       own = Class.new(RubyLLM::Tool) do
         def self.tool_name = 'run_code'
@@ -139,6 +155,7 @@ RSpec.describe RubyLLM::Chat do
       expect(run[:command]).to eq(['ruby', File.join(File.dirname(run[:directory]), 'source', 'main.rb')])
       expect(run[:readable]).to include(RbConfig::CONFIG['prefix'])
       expect(run[:readable]).not_to include(Dir.pwd)
+      expect(run[:denied]).to eq(RubyLLM::CodeExecution::RubyInstallation.current.denied)
       scratch = File.dirname(run[:directory])
       expect(run[:writable]).to eq([run[:directory], File.join(scratch, 'home'), File.join(scratch, 'tmp')])
       expect(run[:network]).to be(false)
