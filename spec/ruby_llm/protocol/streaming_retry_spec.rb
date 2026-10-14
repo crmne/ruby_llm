@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Protocol::Streaming do
         expect(message.content).to eq('Hello')
         expect(message.tokens.output).to eq(7)
         expect(message.ruby_llm_usage_entries.map(&:status)).to eq(%i[failed succeeded])
-        expect(message.raw.env.request.context).not_to have_key(RubyLLM::Transport::ErrorMiddleware::STREAM_RESET_KEY)
+        expect(message.raw.env.request.context).to be_nil
       end
 
       it 'discards a partially parsed SSE event before retrying' do

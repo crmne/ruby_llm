@@ -89,6 +89,10 @@ rescue_from RubyLLM::ToolCallRunningError do
 end
 ```
 
+## Responses Keep No Request Headers
+
+In 2.1, `message.raw` and `error.response` still carried the request headers, including the API key, and `error.response` also carried the request body, the whole serialized conversation. In 2.2 they keep neither, so logging or reporting them no longer leaks keys or prompts. To see what a chat sends, use `render` or a `before_request` hook, described in [Advanced Request Control]({% link _core_features/chat-request-control.md %}#request-hooks).
+
 ## Rename Chat Columns Named After New Methods
 
 `acts_as_chat` records gain `code_execution`, `skills`, `with_code_execution`, `with_skills`, and `with_permissions` in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:

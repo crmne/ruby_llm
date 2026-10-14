@@ -84,13 +84,12 @@ module RubyLLM
 
       def post(url, payload, usage: nil, idempotent: true, stream: false, &)
         instrument_request(:post, url) do
-          response = connection(stream:).post url, payload do |req|
+          connection(stream:).post url, payload do |req|
             prepare(req)
             set_usage_tracker(req, usage) if usage
             mark_non_idempotent(req) unless idempotent
             yield req if block_given?
           end
-          release_request(response)
         end
       end
 
@@ -105,11 +104,10 @@ module RubyLLM
 
       def patch(url, payload, &)
         instrument_request(:patch, url) do
-          response = connection.patch url, payload do |req|
+          connection.patch url, payload do |req|
             prepare(req)
             yield req if block_given?
           end
-          release_request(response)
         end
       end
 
@@ -132,19 +130,28 @@ module RubyLLM
         }
 
         RubyLLM.instrument('request.ruby_llm', payload, config: @config) do |event|
-          response = yield
+          response = release_request(yield)
           event[:status] = response.status if response.respond_to?(:status)
           response
+        rescue RubyLLM::Error => e
+          release_request(e.response)
+          raise
         end
       end
 
-      # The response outlives the call as Message#raw and other results. A chat
-      # request body is the whole serialized conversation, and a streaming
+      # The response outlives the call as Message#raw, Error#response, and
+      # other results, which applications log and report. The request holds
+      # the API key in its headers, the whole serialized conversation in its
+      # body, and the provider and signer in its context, and a streaming
       # callback closes over the payload it was built from.
       def release_request(response)
-        response.env.request_body = nil
-        response.env.request.on_data = nil
-        response.env.request.context&.delete(ErrorMiddleware::STREAM_RESET_KEY)
+        env = response.respond_to?(:env) ? response.env : response
+        return response unless env.is_a?(Faraday::Env)
+
+        env.request_body = nil
+        env.request_headers = Faraday::Utils::Headers.new
+        env.request.on_data = nil
+        env.request.context = nil
         response
       end
 
