@@ -1,7 +1,8 @@
 ---
 layout: default
 title: What's New in 2.1
-nav_order: 5
+parent: Release History
+nav_order: 1
 description: Connect to MCP servers, ask typed judgments, evaluate your agents, and trace them with OpenTelemetry in RubyLLM 2.1.
 ---
 
@@ -31,7 +32,7 @@ After reading this guide, you will know:
 * Which provider errors you can now rescue by their class.
 * How upgrades work from 2.1 on.
 
-RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, evaluations, OpenTelemetry tracing, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _getting_started/whats-new-in-2-0.md %}).
+RubyLLM 2.1 does less work on every call, and brings an MCP client, typed judgments, evaluations, OpenTelemetry tracing, and more control over where agents and records get their configuration. For everything that arrived in 2.0, see [What's New in 2.0]({% link _reference/whats-new-in-2-0.md %}).
 
 ## Faster by Default
 

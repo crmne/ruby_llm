@@ -1,7 +1,8 @@
 ---
 layout: default
 title: What's New in 2.0
-nav_order: 6
+parent: Release History
+nav_order: 2
 description: Explore the expanded provider coverage, new AI operations, conversation controls, and Rails integration in RubyLLM 2.0.
 provider_coverage: true
 ---
@@ -31,7 +32,7 @@ Red cells show built-in support added in 2.0. Gray cells were already supported 
 
 {% include provider_coverage_matrix.html compact=true %}
 
-The [Provider API Coverage]({% link _reference/provider-coverage.md %}) page records support at the audit date, with source references and remaining gaps. The comparison above uses the provider features documented at that date for both versions, so it includes features providers introduced after 1.16. It predates TypeSafe support, which arrived with [typed judgments in 2.1]({% link _getting_started/whats-new-in-2-1.md %}#typed-judgments).
+The [Provider API Coverage]({% link _reference/provider-coverage.md %}) page records support at the audit date, with source references and remaining gaps. The comparison above uses the provider features documented at that date for both versions, so it includes features providers introduced after 1.16. It predates TypeSafe support, which arrived with [typed judgments in 2.1]({% link _reference/whats-new-in-2-1.md %}#typed-judgments).
 
 ## Providers and Protocols
 

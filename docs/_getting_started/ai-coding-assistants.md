@@ -1,7 +1,7 @@
 ---
 layout: default
 title: AI Coding Assistants
-nav_order: 7
+nav_order: 5
 description: Install the RubyLLM skill to help your coding assistant use the API and documentation that match your application.
 ---
 
