@@ -150,7 +150,8 @@ module RubyLLM
       # Returns the persisted tool call records that require approval and
       # have no recorded decision, ready to render as approval cards. Pass
       # a record (or its tool_call_id) to #approve or #deny.
-      # A record's +remote?+ identifies a provider-executed call.
+      # A record's +remote?+ identifies a provider-executed call. Records
+      # come in the order the model made the calls.
       #
       #   chat.pending_approvals.each { |record| render record }
       #
