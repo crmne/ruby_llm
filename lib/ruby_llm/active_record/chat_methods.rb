@@ -3,7 +3,7 @@
 require 'active_support/concern'
 require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/run_claims'
-require 'ruby_llm/active_record/chat_permissions'
+require 'ruby_llm/active_record/chat_approvals'
 
 module RubyLLM
   module ActiveRecord
@@ -24,7 +24,7 @@ module RubyLLM
       include Enumerable
       include AttachmentHelpers
       include RunClaims
-      include ChatPermissions
+      include ChatApprovals
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:
@@ -74,33 +74,16 @@ module RubyLLM
       # from any process. Approving a call that is running or answered
       # changes nothing. With <tt>remember: true</tt>, later calls to the
       # same tool run without asking for the rest of the chat, as
-      # RubyLLM::Chat#approve describes; the grant persists on the chat.
-      # Returns +self+.
+      # RubyLLM::Chat#approve describes, in every process. Returns +self+.
       #
       #   chat.approve(params[:tool_call_id])
       #   chat.approve(params[:tool_call_id], remember: true)
       #   CompleteJob.perform_later(chat.id)
       #
       def approve(tool_call, remember: false)
-        record = record_tool_call_decision(tool_call, 'approved')
-        to_llm.approve(record.to_llm, remember: true) if remember
-        self
-      end
-
-      # Sets the permissions mode as RubyLLM::Chat#with_permissions
-      # describes and persists it on the chat, so every process decides
-      # tool calls under the same mode from its next tool call on. +allow:+
-      # is not persisted: load the chat through its agent, or set it again,
-      # in each process. Returns +self+.
-      #
-      #   chat.with_permissions(:ask)
-      #   chat.with_permissions(:auto, allow: [SearchDocs, { network: ["pypi.org"] }])
-      #
-      def with_permissions(mode, allow: [])
-        mode = RubyLLM::Chat::Permissions.mode(mode)
-        RubyLLM::Chat::Permissions.allow(allow, mode)
-        persist_permissions_mode(mode)
-        to_llm.with_permissions(mode, allow:)
+        record = tool_call_record(tool_call)
+        to_llm.approve(record.to_llm, remember:)
+        record_tool_call_decision(record, remember ? 'remembered' : 'approved')
         self
       end
 
@@ -477,13 +460,6 @@ module RubyLLM
       # Delegates to Chat#skills. See that method for arguments and return values.
 
       ##
-      # :method: permissions
-      # :call-seq: permissions
-      #
-      # Delegates to Chat#permissions. Reads the mode persisted on the chat,
-      # so it sees a mode set in another process.
-
-      ##
       # :method: compaction
       # :call-seq: compaction
       #
@@ -612,7 +588,7 @@ module RubyLLM
 
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations code_execution compaction concurrency end_user fallbacks headers max_output_tokens
-        provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp permissions
+        provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
         skills
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
@@ -976,12 +952,12 @@ module RubyLLM
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
-        install_permissions(chat)
         chat.cancellation_checker = proc do
           renew_run_claim
           consume_persisted_cancellation_request
         end
         chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
+        chat.remembered_checker = proc { |name| persisted_remembered_tool?(name) }
         chat.input_checker = proc { |tool_call| persisted_tool_call_input(tool_call) }
         chat.input_recorder = proc { |tool_call, input| persist_tool_call_input(tool_call, input) }
         install_tool_call_claims(chat)

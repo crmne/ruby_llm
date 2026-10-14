@@ -59,9 +59,9 @@ bin/rails db:migrate
 
 If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a `permissions` column and a `permission_grants` JSON column to your chats table, which keep a chat's [permission mode]({% link _core_features/permissions.md %}) and what it granted. The migration changes no existing data.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data.
 
-Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1. Permission modes work without the new columns, but only in the process that set them.
+Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
 
 ## One Process Runs a Chat
 
@@ -95,13 +95,11 @@ In 2.1, `message.raw` and `error.response` still carried the request headers, in
 
 ## Rename Chat Columns Named After New Methods
 
-`acts_as_chat` records gain `code_execution`, `skills`, `with_code_execution`, `with_skills`, and `with_permissions` in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
+`acts_as_chat` records gain `code_execution`, `skills`, `with_code_execution`, and `with_skills` in 2.2. A column of your own with one of those names is hidden behind RubyLLM's method, so reading it returns RubyLLM's setting, usually `nil`, instead of your value. Rename such a column before you upgrade, for example a `code_execution` toggle to `runs_code`:
 
 ```ruby
 rename_column :chats, :code_execution, :runs_code
 ```
-
-The `permissions` column is RubyLLM's own, added by the 2.2 upgrade. If your chats already have a `permissions` column for something else, rename it before you run the upgrade.
 
 ## Deploy Without Mixing Versions
 

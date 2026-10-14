@@ -9,27 +9,39 @@ RSpec.describe RubyLLM::Sandbox do
       expect(described_class.resolve(nil)).to be_nil
     end
 
-    it 'builds the mxc sandbox for :mxc' do
-      expect(described_class.resolve(:mxc)).to be_a(RubyLLM::Sandbox::MXC)
-      expect(described_class.resolve('mxc')).to be(described_class.resolve(:mxc))
+    it 'runs an MXC::Sandbox class or instance with a fresh copy of its policy for each run' do
+      require 'mxc'
+      stub_const('ReadOnlySandbox', Class.new(MXC::Sandbox) { timeout 30 })
+
+      from_class = described_class.resolve(ReadOnlySandbox)
+      from_instance = described_class.resolve(ReadOnlySandbox.new.with_network(allow: ['pypi.org']))
+
+      expect(from_class).to be_a(RubyLLM::Sandbox::MXC)
+      expect([from_class.timeout, from_class.network]).to eq([30, false])
+      expect(from_instance.network).to eq(allow: ['pypi.org'])
+      expect(from_instance.isolated.network).to be(false)
     end
 
-    it 'returns any object answering supported? and run' do
+    it 'returns any object answering supported? and run, and instantiates such a class' do
       sandbox = FakeSandbox.new
 
       expect(described_class.resolve(sandbox)).to be(sandbox)
+      expect(described_class.resolve(FakeSandbox)).to be_a(FakeSandbox)
     end
 
     it 'raises ConfigurationError for anything else' do
-      expect { described_class.resolve(:docker) }
-        .to raise_error(RubyLLM::ConfigurationError, /must be :mxc or an object answering supported\? and run/)
+      expect { described_class.resolve(:mxc) }
+        .to raise_error(RubyLLM::ConfigurationError, /an MXC::Sandbox class or an object answering supported\? and run/)
     end
+  end
 
-    it 'names the gem when mxc is missing' do
-      described_class.instance_variable_set(:@mxc, nil)
-      allow(described_class).to receive(:require).with('mxc').and_raise(LoadError)
+  describe '.name_for' do
+    it 'names a sandbox after its class, without the Sandbox suffix' do
+      stub_const('Admin::FullDiskSandbox', Class.new(FakeSandbox))
 
-      expect { described_class.resolve(:mxc) }.to raise_error(RubyLLM::ConfigurationError, /Add `gem "mxc"`/)
+      expect(described_class.name_for(Admin::FullDiskSandbox)).to eq('full_disk')
+      expect(described_class.name_for(Admin::FullDiskSandbox.new)).to eq('full_disk')
+      expect { described_class.name_for(Class.new(FakeSandbox)) }.to raise_error(ArgumentError, /Name the sandbox/)
     end
   end
 

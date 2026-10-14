@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Chat do
   let(:cache_dir) { Dir.mktmpdir('ruby_llm-packages-spec') }
   let(:chat) do
     RubyLLM.context do |config|
-      config.sandbox = :mxc
+      config.sandbox = MXC::Sandbox
       config.package_cache_dir = cache_dir
     end.chat(model: model_for(:openai), provider: :openai)
   end

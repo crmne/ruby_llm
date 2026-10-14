@@ -85,7 +85,7 @@ module RubyLLM
 
       # Returns whether the tool pauses for approval, as declared with
       # MCP.requires_approval.
-      def requires_approval?
+      def requires_approval?(_tool_call = nil)
         @mcp.requires_approval?(self)
       end
 

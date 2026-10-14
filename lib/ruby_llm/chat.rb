@@ -25,7 +25,6 @@ module RubyLLM
     include Enumerable
     include Support::Inspectable
     include ToolSearch
-    include Permissions
 
     # The provider-neutral options #with_compaction accepts.
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
@@ -100,17 +99,6 @@ module RubyLLM
     # configuration.
     attr_reader :context
 
-    # Returns the permissions mode set with #with_permissions: +:read_only+,
-    # +:ask+, +:auto+, +:dangerous+, or +nil+ when tools run unless they
-    # require approval.
-    #
-    #   chat.with_permissions(:ask)
-    #   chat.permissions # => :ask
-    #
-    def permissions
-      permissions_mode
-    end
-
     attr_reader :tool_prefs, :fallback_errors, :usage_entries # :nodoc:
 
     # Returns the +choice+, +calls+, and +concurrency+ set with
@@ -157,12 +145,8 @@ module RubyLLM
       @compaction = nil
       @code_execution = nil
       @code_execution_tool = nil
-      @permission_request_tool = nil
       @skills = []
       @skill_loader = Skill::Loader.new(skills: -> { @skills }, code_execution: -> { !@code_execution_tool.nil? })
-      @permissions = nil
-      @permission_allow = Permissions.allow([], nil)
-      @permission_grants = Permissions.grants({})
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
@@ -171,15 +155,16 @@ module RubyLLM
       @cancelled = false
       @cancellation_checker = nil
       @tool_call_decisions = {}
+      @remembered_tools = []
+      @used_escalations = []
       @approval_checker = nil
+      @remembered_checker = nil
       @tool_call_inputs = {}
       @input_checker = nil
       @input_recorder = nil
       @tool_call_claimer = nil
       @tool_call_releaser = nil
       @running_checker = nil
-      @permissions_checker = nil
-      @permission_recorder = nil
       @contested_tool_calls = []
     end
 
@@ -317,15 +302,17 @@ module RubyLLM
     #   chat.complete
     #
     # With <tt>remember: true</tt>, later calls to the same tool run without
-    # asking for the rest of the chat. Approving a +request_permission+ call
-    # grants exactly the hosts or paths it names, never more, with or
-    # without +remember+.
+    # asking for the rest of the chat.
     #
     #   chat.approve(tool_call, remember: true)
     #
+    # A +run_code+ call that asks for another sandbox is approved one call
+    # at a time: passing <tt>remember: true</tt> for it raises
+    # ArgumentError, and the approval never applies to another call.
     def approve(tool_call, remember: false)
+      name = remembered_tool_name(tool_call) if remember
       record_tool_call_decision(tool_call, true)
-      remember_tool_call(tool_call) if remember
+      @remembered_tools |= [name] if name
       self
     end
 
@@ -530,7 +517,7 @@ module RubyLLM
     # Raises ArgumentError when two tools share a name.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
-      built_in = [@code_execution_tool, (@permission_request_tool if @permissions), (@skill_loader if skills.any?)]
+      built_in = [@code_execution_tool, (@skill_loader if skills.any?)]
       [*built_in, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 
@@ -818,19 +805,21 @@ module RubyLLM
       self
     end
 
-    # Lets the model run code in the sandbox set with
-    # Configuration#sandbox. The model gets one tool, +run_code+, that
-    # runs Ruby or a shell script in a fresh working directory, with
-    # read-only copies of the conversation's files, and returns the output
-    # and every file the code writes as attachments on the tool result.
-    # The options are:
+    # Lets the model run code in a Sandbox. The model gets one tool,
+    # +run_code+, that runs Ruby, Python, or a shell script in a fresh run
+    # directory, with read-only copies of the conversation's files, and
+    # returns the output and every file the code writes there as
+    # attachments on the tool result. The options are:
     #
+    # +sandbox+:: the sandbox every call runs in. Default:
+    #             Configuration#sandbox.
+    # +escalate_to+:: sandboxes the model may ask for, one call at a time,
+    #                 as an Array named after their classes
+    #                 (WorkspaceSandbox is +workspace+) or a Hash of names
+    #                 to sandboxes. Each call that asks waits for #approve.
     # +languages+:: the languages the model may use, from +:ruby+,
     #               +:python+, and +:shell+. Default: Ruby and shell, plus
     #               Python when +python:+ declares packages.
-    # +timeout+:: seconds a run may take. Default: 120.
-    # +network+:: +false+ (the default), +true+, or
-    #             <tt>{ allow: ["pypi.org"] }</tt>.
     # +gems+:: gems installed once and available to every Ruby run.
     # +python+:: Python packages installed once and available to every
     #            Python run.
@@ -838,19 +827,16 @@ module RubyLLM
     #              of +gems+.
     # +virtualenv+:: a Python virtualenv with packages already installed,
     #                used instead of +python+.
-    # +readable+:: more paths runs may read, such as fonts or an
-    #              application installed outside the system directories.
-    # +mounts+:: directories mounted read-only in each run's working
-    #            directory, keyed by their path there, or a Proc called
-    #            before each run that returns them.
+    # +mounts+:: directories mounted read-only in each run directory, keyed
+    #            by their path there, or a Proc called before each run
+    #            that returns them.
     #
     # Accepts keywords or an options Hash. Pass +false+ to disable it.
     # Passing +nil+ raises ArgumentError. Returns +self+.
     #
     #   chat.with_code_execution
-    #   chat.with_code_execution(languages: [:ruby, :python], timeout: 120)
     #   chat.with_code_execution(gems: %w[prawn], python: %w[pandas matplotlib])
-    #   chat.with_code_execution(virtualenv: "/opt/sandbox/venv", readable: ["/opt/fonts"])
+    #   chat.with_code_execution(sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox])
     #   chat.with_code_execution(mounts: { "templates" => "app/templates/reports" })
     #   chat.with_code_execution(false)
     #
@@ -861,18 +847,16 @@ module RubyLLM
       options = CodeExecution.options(enabled, options)
       @code_execution_tool = if options
                                CodeExecution.new(
-                                 sandbox: -> { Sandbox.resolve(@config.sandbox) },
+                                 sandbox: options.fetch(:sandbox) { -> { @config.sandbox } },
                                  attachments: -> { messages.flat_map(&:attachments) },
                                  skills: -> { skills.to_h { |skill| [Skill::Loader.mount_path(skill), skill.path] } },
                                  chat: self,
                                  config: -> { @config },
                                  package_cache_dir: @config.package_cache_dir,
-                                 grants: -> { sandbox_grants },
-                                 requests: -> { !@permissions.nil? },
-                                 **options
+                                 approval: ->(tool_call) { escalation_approved?(tool_call) },
+                                 **options.except(:sandbox)
                                )
                              end
-      @permission_request_tool = (CodeExecution::PermissionRequest.new(method(:grant_sandbox_access)) if options)
       @code_execution = options
       self
     end
@@ -901,46 +885,6 @@ module RubyLLM
     def with_skills(*skills)
       selection = Skill.selection(skills)
       @skills = selection == false ? [] : Skill.merge(@skills, Skill.resolve(selection)).freeze
-      self
-    end
-
-    # Sets how the chat decides whether a tool call runs:
-    #
-    # +:read_only+:: tools declared with Tool.read_only run; every other
-    #                tool call and every request for sandbox access is
-    #                denied.
-    # +:ask+:: read-only tools run; every other call, and every request for
-    #          sandbox access, waits for #approve or #deny.
-    # +:auto+:: read-only tools and those named in +allow:+ run, requests
-    #           for the hosts and paths +allow:+ grants are granted, and the
-    #           rest waits for a decision.
-    # +:dangerous+:: every call runs and every request is granted without
-    #                asking. Code still runs in the sandbox.
-    #
-    # Pass +nil+ to remove the mode: tools run unless they were declared
-    # with Tool.requires_approval. A tool declared with
-    # Tool.requires_approval waits for a decision in every mode except
-    # +:dangerous+. The mode applies from the next tool call, including to
-    # calls already waiting for a decision. Returns +self+.
-    #
-    # +allow:+ takes Tool classes, tool names, MCP servers (all their
-    # tools), and the sandbox access #with_code_execution's
-    # +request_permission+ tool may be granted without asking:
-    # <tt>{ network: ["pypi.org"] }</tt>, <tt>{ readable: ["/srv/data"] }</tt>,
-    # and <tt>{ writable: ["/srv/exports"] }</tt>. A host may start with
-    # <tt>*.</tt> to cover its subdomains, and a path covers what is inside
-    # it. Grants are always for exactly what the model asked for.
-    #
-    #   chat.with_permissions(:ask)
-    #   chat.with_permissions(:auto, allow: [SearchDocs, GitHub, { network: ["pypi.org"] }])
-    #   chat.with_permissions(nil)
-    #
-    # Raises ArgumentError for an unknown mode, or +allow:+ with any mode
-    # but +:auto+.
-    def with_permissions(mode, allow: [])
-      mode = Permissions.mode(mode)
-      @permission_allow = Permissions.allow(allow, mode)
-      @permissions = mode
       self
     end
 
@@ -1195,8 +1139,7 @@ module RubyLLM
 
     # Hooks installed by the Rails integration.
     attr_writer :cancellation_checker, :usage_recorder, :approval_checker, :input_checker, :input_recorder,
-                :tool_call_claimer, :tool_call_releaser, :running_checker, :permissions_checker,
-                :permission_recorder # :nodoc:
+                :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -1706,7 +1649,7 @@ module RubyLLM
       raise_if_cancelled!
 
       server_calls, local_calls = pending_tool_calls(response).partition { |_, call| call.remote? }.map(&:to_h)
-      decisions = server_calls.transform_values { |tool_call| remote_permission_decision(tool_call) }.compact
+      decisions = server_calls.transform_values { |tool_call| approval_decision(nil, tool_call) }.compact
       executable, denied = partition_pending_tool_calls(local_calls)
       claimed = claim_tool_calls(executable, server_calls.slice(*decisions.keys).merge(denied))
       answer_claimed_tool_calls(claimed, server_calls, decisions, executable, denied)
@@ -1776,9 +1719,7 @@ module RubyLLM
 
     def execution_decision(tool_call)
       tool = tools[tool_call.name.to_sym]
-      mode = permissions_mode
-      return permission_decision(tool, tool_call, mode) if mode
-      return approval_decision(tool, tool_call) if tool&.requires_approval?
+      return approval_decision(tool, tool_call) if tool&.requires_approval?(tool_call)
 
       @tool_call_decisions[tool_call.id] != false
     end
@@ -1787,15 +1728,7 @@ module RubyLLM
       tool_calls.each_value do |tool_call|
         raise_if_cancelled!
         run_callbacks(:before_message)
-        add_tool_result_message(tool_call, { error: denial_message(tool_call) })
-      end
-    end
-
-    def denial_message(tool_call)
-      if @permissions == :read_only && recorded_decision(tool_call) != false
-        "The #{tool_call.name} tool call was not run: this chat's permissions are read-only."
-      else
-        "The user denied the #{tool_call.name} tool call."
+        add_tool_result_message(tool_call, { error: "The user denied the #{tool_call.name} tool call." })
       end
     end
 
@@ -1806,14 +1739,50 @@ module RubyLLM
     end
 
     def approval_pending?(tool_call)
-      return remote_permission_decision(tool_call).nil? if tool_call.remote?
+      return approval_decision(nil, tool_call).nil? if tool_call.remote?
 
       tool = tools[tool_call.name.to_sym]
-      mode = permissions_mode
-      return permission_decision(tool, tool_call, mode).nil? if mode
-      return false unless tool&.requires_approval?
+      return false unless tool&.requires_approval?(tool_call)
 
       approval_decision(tool, tool_call).nil?
+    end
+
+    def approval_decision(tool, tool_call)
+      decision = tool_call_approval(tool, tool_call)
+      return decision unless decision.nil?
+      return if tool.is_a?(CodeExecution)
+
+      true if remembered_tool?(tool_call.name)
+    end
+
+    def remembered_tool?(name)
+      @remembered_tools.include?(name) || @remembered_checker&.call(name) || false
+    end
+
+    def remembered_tool_name(tool_call)
+      id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
+      call = tool_call.respond_to?(:name) ? tool_call : find_tool_call(id)
+      raise ArgumentError, "Unknown tool call: #{id.inspect}" unless call
+      if call.name == CodeExecution.tool_name
+        raise ArgumentError, "#{call.name} calls are approved one at a time and cannot be remembered"
+      end
+
+      call.name
+    end
+
+    def find_tool_call(id)
+      messages.reverse_each do |message|
+        call = message.tool_calls&.[](id)
+        return call if call
+      end
+      nil
+    end
+
+    def escalation_approved?(tool_call)
+      return false if tool_call.nil? || @used_escalations.include?(tool_call.id)
+
+      @used_escalations << tool_call.id
+      tool_call_approval(nil, tool_call) == true
     end
 
     def tool_call_approval(tool, tool_call)

@@ -2,53 +2,87 @@
 
 module RubyLLM
   # A sandbox runs commands RubyLLM did not write, such as the code a model
-  # sends to Chat#with_code_execution, where they cannot read your project,
-  # your home directory, or your secrets. Set one in the configuration:
+  # sends to Chat#with_code_execution, and holds the whole policy for them:
+  # what they may read and write, which hosts they reach, where they start,
+  # and how long they run. Define one as an MXC::Sandbox class from the mxc
+  # gem:
   #
-  #   RubyLLM.configure do |config|
-  #     config.sandbox = :mxc
+  #   class ReadOnlySandbox < MXC::Sandbox
+  #     timeout 120
   #   end
   #
-  # +:mxc+ uses the built-in sandbox on the mxc gem. Any other object that
-  # answers two methods works too:
+  #   class WorkspaceSandbox < MXC::Sandbox
+  #     directory Rails.root.join("storage/workspace")
+  #     writable Rails.root.join("storage/workspace")
+  #     timeout 300
+  #   end
+  #
+  #   RubyLLM.configure do |config|
+  #     config.sandbox = ReadOnlySandbox
+  #   end
+  #
+  # A sandbox may be an MXC::Sandbox class or instance, or any other class
+  # or object whose instances answer two methods:
   #
   #   class RemoteSandbox
   #     def supported?
   #       true
   #     end
   #
-  #     def run(*command, timeout:, readable: [], writable: [], denied: [], network: false, directory: nil, env: {})
+  #     def run(*command, timeout:, readable: [], writable: [], denied: [], directory: nil, env: {}, network: nil)
   #       # Runs +command+ and returns an object answering stdout, stderr,
   #       # exit_code, and timed_out?
   #     end
   #   end
   #
   # +run+ takes the command like Kernel#system: one String for the shell,
-  # or a program and its arguments. +readable+ and +writable+ are paths on
-  # this machine the command may read, or read and change, and +denied+
-  # paths it must not see, even inside readable ones. +network+ is
-  # +false+, +true+, or <tt>{ allow: ["pypi.org"] }</tt>. +directory+ is
-  # where the command starts and +env+ the only environment variables it
-  # gets. The result may also answer +blocked+, the hosts the network
-  # policy refused. A sandbox may answer +reason+, which RubyLLM adds to the
-  # error it raises when #supported? is false.
+  # or a program and its arguments. The keywords are what RubyLLM adds to
+  # the sandbox's own policy for one run: +readable+ and +writable+ paths
+  # holding the run's files, +denied+ paths it must not see, even inside
+  # readable ones, the +directory+ to start in when the sandbox has none of
+  # its own, and +env+, the environment the run's languages and packages
+  # need. +timeout+ is the sandbox's own, or 120 seconds when it answers
+  # +timeout+ with +nil+ or not at all. +network+ is +nil+ for the
+  # sandbox's own access; RubyLLM passes <tt>{ allow: [...] }</tt> only to
+  # install declared packages from their registries. The result may also
+  # answer +blocked+, the hosts the network policy refused. A sandbox may
+  # answer +reason+, which RubyLLM adds to the error it raises when
+  # #supported? is false, and +readable+, +writable+, +network+,
+  # +directory+, and +timeout+, which describe it to the model and to the
+  # person approving an escalation.
   module Sandbox
-    class << self
-      # Returns the sandbox +value+ names: +nil+ for none, the built-in
-      # sandbox for +:mxc+, or +value+ itself when it answers +run+.
-      #
-      # Raises ConfigurationError for any other value, and for +:mxc+ when
-      # the mxc gem is not installed.
-      def resolve(value) # :nodoc:
-        case value
-        when nil then nil
-        when :mxc, 'mxc' then mxc
-        else
-          return value if value.respond_to?(:run) && value.respond_to?(:supported?)
+    # Seconds a run may take when the sandbox sets no timeout.
+    DEFAULT_TIMEOUT = 120
 
-          raise ConfigurationError,
-                "config.sandbox must be :mxc or an object answering supported? and run, got #{value.inspect}"
+    class << self
+      # Returns a runner for the sandbox +value+ describes, or +nil+ for
+      # none.
+      #
+      # Raises ConfigurationError for a value that is not a sandbox.
+      def resolve(value) # :nodoc:
+        return if value.nil?
+        return MXC.new(value) if mxc?(value)
+
+        instance = value.is_a?(Class) ? value.new : value
+        return instance if instance.respond_to?(:run) && instance.respond_to?(:supported?)
+
+        raise ConfigurationError,
+              "A sandbox is an MXC::Sandbox class or an object answering supported? and run, got #{value.inspect}"
+      end
+
+      # Returns the name the model uses for +value+: its class name without
+      # a +Sandbox+ suffix, in snake case, so WorkspaceSandbox is
+      # +workspace+.
+      #
+      # Raises ArgumentError when the class has no name.
+      def name_for(value) # :nodoc:
+        klass = value.is_a?(Class) ? value : value.class
+        base = klass.name.to_s.split('::').last.to_s.delete_suffix('Sandbox')
+        if base.empty?
+          raise ArgumentError, "Name the sandbox #{value.inspect} with a Hash: escalate_to: { name => sandbox }"
         end
+
+        base.gsub(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
       end
 
       # Raises ConfigurationError unless +sandbox+ can run on this machine.
@@ -61,13 +95,8 @@ module RubyLLM
 
       private
 
-      def mxc
-        @mxc ||= begin
-          require 'mxc'
-          MXC.new
-        rescue LoadError
-          raise ConfigurationError, 'config.sandbox = :mxc needs the mxc gem. Add `gem "mxc"` to your Gemfile.'
-        end
+      def mxc?(value)
+        defined?(::MXC::Sandbox) && (value.is_a?(::MXC::Sandbox) || (value.is_a?(Class) && value <= ::MXC::Sandbox))
       end
     end
   end

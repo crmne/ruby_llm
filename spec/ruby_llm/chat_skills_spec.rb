@@ -66,12 +66,11 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.with_skills(:missing) }.to raise_error(RubyLLM::SkillNotFoundError)
     end
 
-    it 'gives the model the read-only load_skill tool only while it has skills' do
+    it 'gives the model the load_skill tool only while it has skills' do
       expect(chat.tools).not_to have_key(:load_skill)
 
       tool = chat.with_skills(:ticket_codes).tools[:load_skill]
 
-      expect(tool).to be_read_only
       expect(tool.parameters_schema['required']).to eq(['skill'])
       expect(chat.with_skills(false).tools).not_to have_key(:load_skill)
     end
@@ -166,19 +165,6 @@ RSpec.describe RubyLLM::Chat do
         .to end_with('Use it from run_code at skills/assets-demo/assets/big.txt.')
     ensure
       FileUtils.rm_rf(folder)
-    end
-
-    it 'runs in read-only permission mode' do
-      chat.with_skills(:ticket_codes).with_permissions(:read_only)
-      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'load_skill', arguments: { 'skill' => 'ticket-codes' })
-      allow(chat.provider).to receive(:complete).and_return(
-        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
-        RubyLLM::Message.new(role: :assistant, content: 'TKT-42-ZX')
-      )
-
-      chat.ask('Ticket code for 6?')
-
-      expect(chat.messages.find(&:tool_result?).content).to include('# Ticket codes')
     end
   end
 

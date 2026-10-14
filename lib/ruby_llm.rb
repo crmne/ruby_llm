@@ -82,10 +82,7 @@ loader.setup
 #
 # Subclass Tool and implement +execute+ to give the model an application
 # action. Tool.requires_approval pauses execution for a human decision;
-# Chat#approve and Chat#deny record it. Chat#with_permissions sets a mode
-# for the whole chat: read-only, ask, auto with an allow list, or
-# dangerous. Tool.read_only marks a tool that changes nothing, which runs
-# without asking. Tool#progress reports what a
+# Chat#approve and Chat#deny record it. Tool#progress reports what a
 # running tool is doing to Chat#after_tool_progress as a Progress.
 # Chat#with_provider_tools enables provider-executed tools such as web
 # search, code execution, and remote MCP.
@@ -94,9 +91,9 @@ loader.setup
 # in an MCP class, and Chat#with_mcp gives the model its tools. RubyLLM.mcp
 # connects to one inline.
 # Chat#with_code_execution lets the model run Ruby, Python, and shell code
-# in the Sandbox set with Configuration#sandbox, read through RubyLLM.sandbox.
-# With a permissions mode, the model asks for network hosts and paths with
-# its +request_permission+ tool, and can install gems and Python packages.
+# in a Sandbox, by default the one set with Configuration#sandbox and read
+# through RubyLLM.sandbox. The model can ask to run one call in a wider
+# sandbox the application lists, and each such call waits for approval.
 # Chat#with_skills gives the model Skill folders in the open Agent Skills
 # format: each request lists them, the model loads the instructions and
 # files it needs with its +load_skill+ tool, and code execution runs their
@@ -578,8 +575,7 @@ module RubyLLM
     #
     #   RubyLLM.sandbox.supported? # => true
     #
-    # Raises ConfigurationError when the configured value is not a sandbox,
-    # or names the mxc sandbox without the mxc gem installed.
+    # Raises ConfigurationError when the configured value is not a sandbox.
     def sandbox
       Sandbox.resolve(config.sandbox)
     end

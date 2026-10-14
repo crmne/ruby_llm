@@ -73,7 +73,7 @@ module RubyLLM
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
       with_temperature with_max_output_tokens with_thinking with_citations
-      with_end_user with_compaction with_caching with_code_execution with_skills with_permissions with_context
+      with_end_user with_compaction with_caching with_code_execution with_skills with_context
       with_provider_options
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
@@ -86,7 +86,7 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers schema
       concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
-      max_output_tokens permissions skills
+      max_output_tokens skills
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
     ].freeze
@@ -96,7 +96,6 @@ module RubyLLM
       @citations
       @code_execution
       @skills
-      @permissions
       @end_user
       @schema
       @context
@@ -299,6 +298,7 @@ module RubyLLM
       #   code_execution
       #   code_execution false
       #   code_execution languages: [:ruby, :python], gems: %w[prawn]
+      #   code_execution sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox]
       #   code_execution mounts: -> { { "templates" => chat.templates_dir } }
       #
       # A +mounts+ lambda runs before each run, with +chat+ and the
@@ -323,24 +323,6 @@ module RubyLLM
         return @skills if skills.empty?
 
         @skills = Skill.selection(skills)
-      end
-
-      # Sets the starting permissions mode for chats this agent builds,
-      # applied via Chat#with_permissions with the same arguments. A chat
-      # that already has a mode keeps it, so ::find restores the mode a
-      # persisted chat was switched to, and +allow:+ applies whenever the
-      # chat's mode is +:auto+. Called with no arguments, returns the
-      # declared mode.
-      #
-      #   permissions :ask
-      #   permissions :auto, allow: [SearchDocs, { network: ["pypi.org"] }]
-      #
-      def permissions(mode = (reading = true), allow: [])
-        return @permissions&.fetch(:mode) if reading
-
-        mode = Chat::Permissions.mode(mode)
-        Chat::Permissions.allow(allow, mode)
-        @permissions = { mode:, allow: Array(allow).freeze }.freeze
       end
 
       # Sets the safety identifier for chats this agent builds, applied via
@@ -699,7 +681,6 @@ module RubyLLM
         apply_compaction(chat)
         apply_code_execution(chat, runtime)
         apply_skills(chat)
-        apply_permissions(chat)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
         apply_schema(chat, runtime)
@@ -856,13 +837,6 @@ module RubyLLM
         return if @skills.nil?
 
         chat.with_skills(*Array(@skills))
-      end
-
-      def apply_permissions(chat)
-        return unless @permissions
-
-        mode = chat.permissions || @permissions[:mode]
-        chat.with_permissions(mode, allow: mode == :auto ? @permissions[:allow] : [])
       end
 
       def apply_provider_options(chat, runtime)
@@ -1127,12 +1101,6 @@ module RubyLLM
     # Delegates to Chat#with_skills. See that method for arguments and return values.
 
     ##
-    # :method: with_permissions
-    # :call-seq: with_permissions(mode, allow: [])
-    #
-    # Delegates to Chat#with_permissions. See that method for arguments and return values.
-
-    ##
     # :method: with_context
     # :call-seq: with_context(context)
     #
@@ -1347,12 +1315,6 @@ module RubyLLM
     # :call-seq: skills
     #
     # Delegates to Chat#skills. See that method for arguments and return values.
-
-    ##
-    # :method: permissions
-    # :call-seq: permissions
-    #
-    # Delegates to Chat#permissions. See that method for arguments and return values.
 
     ##
     # :method: compaction

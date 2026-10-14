@@ -17,23 +17,19 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     namespace.const_get(File.basename(path, '.rb').sub(/\A\d+_/, '').camelize, false)
   end
 
-  it 'adds the run claims and permissions 2.2 needs to a 2.1 schema' do
+  it 'adds the run claims 2.2 needs to a 2.1 schema' do
     upgrade = migration_class
 
     ActiveRecord::Base.transaction do
       connection.remove_column(:chats, :claim_token)
       connection.remove_column(:chats, :claimed_until)
       connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
-      connection.remove_column(:chats, :permissions)
-      connection.remove_column(:chats, :permission_grants)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
       expect(connection.column_exists?(:chats, :claim_token, :string)).to be(true)
       expect(connection.column_exists?(:chats, :claimed_until, :datetime)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until, :datetime)).to be(true)
-      expect(connection.column_exists?(:chats, :permissions, :string)).to be(true)
-      expect(connection.column_exists?(:chats, :permission_grants, :json)).to be(true)
       raise ActiveRecord::Rollback
     end
   ensure
@@ -47,8 +43,6 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
     expect(migration).to include('add_column :conversations, :claim_token, :string')
     expect(migration).to include('add_column :conversations, :claimed_until, :datetime')
-    expect(migration).to include('add_column :conversations, :permissions, :string')
-    expect(migration).to include('add_column :conversations, :permission_grants, :json')
   end
 
   it 'leaves an up-to-date schema alone' do

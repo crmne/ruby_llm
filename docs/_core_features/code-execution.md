@@ -13,20 +13,18 @@ description: Let the model run Ruby, Python, and shell code in a sandbox on your
 
 After reading this guide, you will know:
 
-* How to configure a sandbox.
 * How to let a chat or an agent run code.
 * What the code can see, and what it cannot.
 * How files go into a run and come back from it.
-* How to give the code gems, Python packages, and other programs.
-* How the model asks for network hosts and paths, and installs packages itself.
+* How to give the code gems, Python packages, and folders of your own.
+* How the model asks to run a call in a wider sandbox.
 * How to measure each run.
-* How to plug in a sandbox of your own.
 
 ## Setting Up a Sandbox
 
-A model that can run code can calculate exactly, transform data, and produce files such as charts, spreadsheets, and PDFs. That code was written by a model, so it never runs in your application's process. It runs in a sandbox that cannot read your project, your home directory, or your secrets.
+A model that can run code can calculate exactly, transform data, and produce files such as charts, spreadsheets, and PDFs. That code was written by a model, so it never runs in your application's process. It runs in a [sandbox]({% link _core_features/sandboxes.md %}) that cannot read your project, your home directory, or your secrets.
 
-RubyLLM's built-in sandbox uses the [mxc gem](https://crmne.github.io/mxc/): Bubblewrap on Linux and Seatbelt on macOS. Code execution is verified on Linux and macOS. Add the gem and choose it in your configuration:
+Add the [mxc gem](https://crmne.github.io/mxc/), define a sandbox, and make it the default:
 
 ```ruby
 # Gemfile
@@ -34,18 +32,16 @@ gem "mxc"
 ```
 
 ```ruby
+class ReadOnlySandbox < MXC::Sandbox
+  timeout 120
+end
+
 RubyLLM.configure do |config|
-  config.sandbox = :mxc
+  config.sandbox = ReadOnlySandbox
 end
 ```
 
-Without `config.sandbox`, nothing runs locally. Check that the sandbox works on this machine:
-
-```ruby
-RubyLLM.sandbox.supported? # => true
-```
-
-In Rails, RubyLLM checks this when the application boots and raises `RubyLLM::ConfigurationError` with the reason and how to fix it, so a server that cannot run code fails at deploy time instead of in the middle of a conversation. Build-time boots that set `SECRET_KEY_BASE_DUMMY`, such as `assets:precompile` in a Docker build, skip the check. See [Checking the Host](https://crmne.github.io/mxc/checking-the-host/) for what each platform needs.
+The sandbox decides what the code may read, write, and reach, and how long it runs. [Sandboxes]({% link _core_features/sandboxes.md %}) covers defining them, checking that they run on your servers, and letting the model ask for a wider one.
 
 ## Running Code
 
@@ -61,7 +57,7 @@ The model gets one tool, `run_code`, that takes a language and a program. RubyLL
 `with_code_execution` follows the same shape as `with_thinking` and `with_caching`: call it bare to turn it on, pass options to tune it, and pass `false` to turn it off:
 
 ```ruby
-chat.with_code_execution(languages: [:ruby, :python, :shell], timeout: 120)
+chat.with_code_execution(languages: [:ruby, :python, :shell])
 chat.with_code_execution(false)
 chat.code_execution # => false
 ```
@@ -78,36 +74,18 @@ chat.with_code_execution(languages: [:python])
 
 Ruby is the one your application runs, without your application's gems or Bundler environment: Ruby's default and bundled gems load, and every other gem installed with it is hidden. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it.
 
-### Timeouts
+### Timeouts and Network
 
-Each run stops after 120 seconds, long enough for work such as rendering a document with LibreOffice. Set your own limit with `timeout:`:
+Each run stops when its sandbox's timeout passes, after 120 seconds when the sandbox sets none. The sandbox stops the code and everything it started, and the model is told the run ran out of time. The code reaches the network only when its sandbox allows it. When it tries a host outside the sandbox's list, the request is refused and the model sees which hosts were blocked.
 
-```ruby
-chat.with_code_execution(timeout: 300)
-```
-
-When a run takes longer, the sandbox stops it and everything it started, and the model is told the run ran out of time.
-
-The timeout is the only limit RubyLLM sets. Memory and CPU limits belong to the container or cgroup your application runs in, and runs inherit them.
-
-### Network
-
-The code has no network unless you grant it. Pass `true` for any destination, or list the hosts it may reach:
-
-```ruby
-chat.with_code_execution(network: { allow: ["api.github.com"] })
-```
-
-When the code tries to reach a host outside the list, the request is refused and the model sees which hosts were blocked. Host lists need extra packages on Linux and are not available on Windows; see [mxc's network policies](https://crmne.github.io/mxc/policies/#network).
-
-To let the model ask for hosts as it needs them instead of listing them up front, give the chat a [permission mode](#asking-for-access).
+Both belong to the sandbox, so a chat that needs longer runs or a package registry uses a sandbox that allows them, as its default or [one call at a time](#asking-for-a-wider-sandbox).
 
 ## What the Code Can See
 
-Each call starts in a new, empty working directory, which RubyLLM removes when the call ends. Nothing carries over from one call to the next, except files, which work like this:
+Each call gets a new, empty run directory, which RubyLLM removes when the call ends. The code starts there unless its sandbox sets a [directory of its own]({% link _core_features/sandboxes.md %}#building-a-coding-agent), and `RUN_DIR` holds its path either way. Nothing carries over from one call to the next, except files, which work like this:
 
-* **Files in the conversation come in.** Every file attached to the conversation, and every file an earlier call returned, is copied into `attachments/` in the working directory, read-only. A later file with the same name replaces an earlier one.
-* **Files the code writes go out.** Every file the code writes in the working directory comes back as an attachment on the tool result message.
+* **Files in the conversation come in.** Every file attached to the conversation, and every file an earlier call returned, is copied into `attachments/` in the run directory, read-only. A later file with the same name replaces an earlier one.
+* **Files the code writes go out.** Every file the code writes in the run directory comes back as an attachment on the tool result message.
 
 ```ruby
 chat = RubyLLM.chat.with_code_execution(python: %w[pandas matplotlib])
@@ -117,18 +95,18 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-The code sees the system's programs and libraries read-only, its working directory, and nothing else: no project, no home directory, and no environment variables beyond `PATH`, `LANG`, and those the declared packages need. `HOME`, `XDG_CACHE_HOME`, and `TMPDIR` point to writable directories that live as long as the call, so programs such as LibreOffice and fontconfig can keep their profiles and caches.
+With a sandbox that grants nothing more, the code sees the system's programs and libraries read-only, its run directory, and nothing else: no project, no home directory, and no environment variables beyond `PATH`, `LANG`, `RUN_DIR`, and those the declared packages need. `HOME`, `XDG_CACHE_HOME`, and `TMPDIR` point to writable directories that live as long as the call, so programs such as LibreOffice and fontconfig can keep their profiles and caches.
 
 ### Your Own Folders
 
-To give the code files of your own, such as report templates or brand assets, mount their directories with `mounts:`. Each key is where the directory appears in the working directory:
+To give the code files of your own, such as report templates or brand assets, mount their directories with `mounts:`. Each key is where the directory appears in the run directory:
 
 ```ruby
 chat.with_code_execution(mounts: { "templates" => Rails.root.join("app/templates/office") })
 chat.ask "Write the quarterly report using templates/report.docx"
 ```
 
-The code reads `templates/report.docx` but cannot change it, and the model's tool description lists the mounted folders. The keys are relative paths inside the working directory. `attachments/` and `skills/` are taken, and paths that leave the working directory raise ArgumentError.
+The code reads `templates/report.docx` but cannot change it, and the model's tool description lists the mounted folders. The keys are relative paths inside the run directory. `attachments/` and `skills/` are taken, and paths that leave the run directory raise ArgumentError.
 
 When the folders depend on who is asking, pass a lambda. RubyLLM calls it before each run, and an empty Hash mounts nothing:
 
@@ -138,13 +116,14 @@ chat.with_code_execution(mounts: -> { { "templates" => current_account.templates
 
 ### Other Programs
 
-Programs installed under `/usr`, such as LibreOffice, Poppler's `pdftoppm`, and fontconfig, work without any setup. Grant read access to anything installed elsewhere with `readable:`:
+Programs installed under `/usr`, such as LibreOffice, Poppler's `pdftoppm`, and fontconfig, work without any setup. Grant read access to anything installed elsewhere in the sandbox:
 
 ```ruby
-chat.with_code_execution(readable: ["/opt/libreoffice", "/usr/share/fonts/custom"])
+class ReadOnlySandbox < MXC::Sandbox
+  readable "/opt/libreoffice", "/usr/share/fonts/custom"
+  timeout 120
+end
 ```
-
-The paths are read-only. Only your application and the user grant access: the model can [ask for more](#asking-for-access), but cannot widen what its code can see on its own.
 
 ### Limits
 
@@ -171,7 +150,7 @@ chat.with_code_execution(gems: %w[prawn rubyzip], python: %w[pandas matplotlib])
 
 Declaring Python packages adds Python to the default languages. Pin versions the way each installer reads them: `"prawn:2.5.0"` for a gem, `"pandas==2.2.3"` for a package.
 
-RubyLLM installs each set once, the first time a run needs it, and every later run mounts it read-only. The install runs in the sandbox too, with only RubyGems (`rubygems.org`) or PyPI (`pypi.org` and `files.pythonhosted.org`) reachable, so code that runs during installation is contained. The code the model writes stays offline. Gems with native extensions need a compiler on the system.
+RubyLLM installs each set once, the first time a run needs it, and every later run mounts it read-only. The install runs in a sandbox too, one with none of your sandbox's access and only RubyGems (`rubygems.org`) or PyPI (`pypi.org` and `files.pythonhosted.org`) reachable, so code that runs during installation is contained. The code the model writes reaches only what its sandbox allows. Gems with native extensions need a compiler on the system.
 
 Installed sets live in `config.package_cache_dir`, which defaults to a `packages` directory in your user cache directory. Each set is keyed by its packages and by the Ruby or Python that runs it, so upgrading Ruby installs it again. Processes that need the same set at the same time wait for one install instead of racing:
 
@@ -193,40 +172,20 @@ chat.with_code_execution(gem_home: "/opt/sandbox/gems", virtualenv: "/opt/sandbo
 
 `gem_home:` takes a directory you installed gems into with `gem install --install-dir`, and `virtualenv:` a Python virtualenv. RubyLLM mounts them read-only on every run and installs nothing. Each replaces its declared counterpart, so pass `gems:` or `gem_home:`, and `python:` or `virtualenv:`, not both. A virtualenv adds Python to the default languages.
 
-## Asking for Access
+## Asking for a Wider Sandbox
 
-With a [permission mode]({% link _core_features/permissions.md %}), the model gets a second tool, `request_permission`. When a run is blocked, its result lists the blocked hosts and tells the model it can ask. The model names a network host, or a path to read or write, and says why:
+List the sandboxes the model may ask for, and it can run one call at a time in one of them, with a reason, once someone approves it:
 
 ```ruby
-chat = RubyLLM.chat.with_code_execution.with_permissions(:ask)
-chat.ask "Download the latest release notes from api.github.com and summarize them"
+chat = RubyLLM.chat.with_code_execution(sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox])
+chat.ask "Add a changelog entry for the new export feature"
 
-request = chat.pending_approvals.first
-request.arguments # => {"permission"=>"network", "targets"=>["api.github.com"], "reason"=>"..."}
-
-chat.approve(request)
+chat.pending_approvals.first.arguments["sandbox"] # => "workspace"
+chat.approve(chat.pending_approvals.first)
 chat.complete
 ```
 
-Approving the request lets every later run in the chat reach exactly that host. `:auto` grants what its `allow:` list covers without asking, `:dangerous` grants everything, and `:read_only` denies every request. Without a permission mode, the model has no `request_permission` tool and its code gets only what you configured. [Permissions]({% link _core_features/permissions.md %}#asking-for-network-and-paths) covers paths and how grants work.
-
-A granted writable path makes `run_code` a tool that changes things, so `:ask` asks before each run once you grant one.
-
-### Packages the Model Installs
-
-Once the model has a package registry, `rubygems.org` for gems or `pypi.org` and `files.pythonhosted.org` for Python packages, it can run `gem install` and `pip install`. The packages go into an environment kept for the chat, so its later runs find them, in this process and in any other:
-
-```ruby
-chat = RubyLLM.chat.with_code_execution(languages: [:python, :shell])
-chat.with_permissions(:auto, allow: [{ network: ["pypi.org", "files.pythonhosted.org"] }])
-chat.ask "Use requests to check which of these URLs respond", with: "urls.txt"
-```
-
-Each chat gets a GEM_HOME and, when Python is one of its languages, a virtualenv, under `chats/` in `config.package_cache_dir`. They see the gems and packages you declared, but not your application's gems. RubyLLM never removes them, so prune old ones with a scheduled job.
-
-On Windows, mxc has no host lists, so a run with a granted host raises instead of opening the whole network.
-
-Declared packages are installed once for every chat, and the model's code stays offline. Prefer them for what every conversation needs, and let the model install the rest.
+The next call runs in the default sandbox again, and an escalated call is never remembered. [Sandboxes]({% link _core_features/sandboxes.md %}#asking-for-a-wider-sandbox) covers approving these calls, why they are safe, and how to build a coding agent from them.
 
 ## Code Execution in Rails
 
@@ -247,6 +206,10 @@ Agents declare code execution with the `code_execution` macro, which takes the s
 class AnalystAgent < RubyLLM::Agent
   instructions "Answer with numbers you computed, not estimates."
   code_execution python: %w[pandas]
+end
+
+class CodingAgent < RubyLLM::Agent
+  code_execution sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox]
 end
 ```
 
@@ -274,7 +237,7 @@ ActiveSupport::Notifications.subscribe("code_execution.ruby_llm") do |event|
 end
 ```
 
-The payload carries the `chat`, the `tool_call_id` of the call it answers, the `language`, the `timeout` and `network` the run had, and, once it finishes, its `duration` in seconds, `exit_code`, `timed_out`, `blocked_hosts`, and the `files` it returned. With [OpenTelemetry]({% link _advanced/opentelemetry.md %}) enabled, each run becomes a `ruby_llm.code_execution` span under its tool span.
+The payload carries the `chat`, the `tool_call_id` of the call it answers, the `language`, the `sandbox` it asked for (`nil` for the default), the `timeout` and `network` the run had, and, once it finishes, its `duration` in seconds, `exit_code`, `timed_out`, `blocked_hosts`, and the `files` it returned. With [OpenTelemetry]({% link _advanced/opentelemetry.md %}) enabled, each run becomes a `ruby_llm.code_execution` span under its tool span.
 
 ## Running Code on the Provider's Servers
 
@@ -286,43 +249,9 @@ chat.with_provider_tools(:code_execution)
 
 Hosted code execution needs no sandbox on your servers, but your files go to the provider and its containers decide what the code can reach.
 
-## Writing Your Own Sandbox
-
-Any object with two methods can be the sandbox, such as one that runs code on a hosted service:
-
-```ruby
-class RemoteSandbox
-  def supported?
-    true
-  end
-
-  def run(*command, timeout:, readable: [], writable: [], denied: [], network: false, directory: nil, env: {})
-    # Run the command and return an object answering
-    # stdout, stderr, exit_code, and timed_out?
-  end
-end
-
-RubyLLM.configure do |config|
-  config.sandbox = RemoteSandbox.new
-end
-```
-
-`run` takes the command like `Kernel#system`: one String runs through the shell, and several Strings are a program and its arguments. The keywords say what the command needs:
-
-| Keyword | Meaning |
-| --- | --- |
-| `readable` | Paths on this machine the command may read |
-| `writable` | Paths on this machine the command may read and change |
-| `denied` | Paths the command must not see, even inside readable ones |
-| `network` | `false`, `true`, or `{ allow: ["pypi.org"] }` |
-| `timeout` | Seconds before the command is stopped |
-| `directory` | The working directory |
-| `env` | The only environment variables the command gets |
-
-A sandbox on another machine copies the readable and writable paths in before the command runs and copies the writable ones back after it, so the files the code writes come back. Its result can also answer `blocked`, the hosts the network policy refused, which RubyLLM passes on to the model. To explain why `supported?` is false at boot, define `reason`, returning a String.
-
 ## Next Steps
 
+* [Sandboxes]({% link _core_features/sandboxes.md %}) - Define what the code can do, and let the model ask for more.
 * [Tools]({% link _core_features/tools.md %}) - Write your own tools in Ruby.
 * [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Approve calls, run them concurrently, and watch them with callbacks.
 * [Provider Tools]({% link _core_features/provider-tools.md %}) - Run code, search the web, and more on the provider's servers.

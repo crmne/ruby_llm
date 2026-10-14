@@ -10,8 +10,6 @@ module RubyLLM
       MAX_FILE_SIZE = 256 * 1024
       MOUNT = 'skills'
 
-      read_only
-
       def self.tool_name
         'load_skill'
       end

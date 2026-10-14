@@ -2,7 +2,7 @@
 layout: default
 title: What's New in 2.2
 nav_order: 4
-description: Let models run Ruby, Python, and shell code in a sandbox on your own servers, decide which tool calls run with permission modes, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
+description: Let models run Ruby, Python, and shell code in sandboxes on your own servers, let them ask for a wider sandbox one call at a time, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
 ---
 
 # {{ page.title }}
@@ -16,20 +16,24 @@ After reading this guide, you will know:
 * What that code can see, and how the files it makes come back.
 * How to give it gems, Python packages, and programs such as LibreOffice.
 * How to measure each run.
-* How permission modes decide which tool calls run, wait, or are denied.
+* How sandboxes decide what code can do, and how the model asks for more.
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
 * How to upgrade.
 
-RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets you decide how much it may do without asking, teaches it your workflows with skills, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
+RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets it ask for more access one call at a time, teaches it your workflows with skills, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
 
 ## Code Execution
 
 A model that can run code calculates exactly, reshapes data, and makes files: charts, spreadsheets, PDFs, and presentations. Turn it on for a chat:
 
 ```ruby
+class ReadOnlySandbox < MXC::Sandbox
+  timeout 120
+end
+
 RubyLLM.configure do |config|
-  config.sandbox = :mxc
+  config.sandbox = ReadOnlySandbox
 end
 
 chat = RubyLLM.chat.with_code_execution(python: %w[pandas matplotlib])
@@ -39,21 +43,21 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-The model gets one tool, `run_code`, that runs Ruby, Python, or a shell script. The code was written by a model, so it never runs in your application's process. It runs in a sandbox built on the [mxc gem](https://crmne.github.io/mxc/), which uses the operating system's own isolation: Bubblewrap on Linux and Seatbelt on macOS. Without a configured sandbox, `with_code_execution` raises instead of running anything.
+The model gets one tool, `run_code`, that runs Ruby, Python, or a shell script. The code was written by a model, so it never runs in your application's process. It runs in a sandbox, a class built on the [mxc gem](https://crmne.github.io/mxc/), which uses the operating system's own isolation: Bubblewrap on Linux and Seatbelt on macOS. The sandbox holds the whole policy: what the code reads, writes, and reaches, and how long it runs. Without a configured sandbox, `with_code_execution` raises instead of running anything.
 
 `with_code_execution` takes the same shape as `with_thinking` and `with_caching`, and agents declare it with a macro:
 
 ```ruby
 class Analyst < RubyLLM::Agent
-  code_execution languages: [:ruby, :python], timeout: 120
+  code_execution languages: [:ruby, :python]
 end
 ```
 
 ### What the Code Can See
 
-Each call starts in a new, empty working directory. Files from the conversation are copied into it read-only, and every file the code writes comes back as an attachment on the tool result. In Rails, those attachments are stored with Active Storage like any other message file, so your interface can offer them for download.
+Each call starts in a new, empty run directory. Files from the conversation are copied into it read-only, and every file the code writes comes back as an attachment on the tool result. In Rails, those attachments are stored with Active Storage like any other message file, so your interface can offer them for download.
 
-The code sees the system's programs and libraries read-only, and nothing else: not your project, not your home directory, not your application's gems, and no network unless you grant it. In Rails, the application checks the sandbox when it boots, so a server that cannot run code fails at deploy time instead of in the middle of a conversation.
+The code sees the system's programs and libraries read-only, and nothing else: not your project, not your home directory, not your application's gems, and no network unless its sandbox allows it. In Rails, the application checks the sandbox when it boots, so a server that cannot run code fails at deploy time instead of in the middle of a conversation.
 
 ### Gems, Packages, and Programs
 
@@ -69,7 +73,7 @@ To install nothing at runtime, bake the environments into your image and point a
 chat.with_code_execution(virtualenv: "/opt/sandbox/venv", gem_home: "/opt/sandbox/gems")
 ```
 
-Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work without setup. Grant read access to programs or fonts installed elsewhere with `readable:`, and give the code your own folders, such as templates, with `mounts:`.
+Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work without setup. Grant read access to programs or fonts installed elsewhere in the sandbox class, and give the code your own folders, such as templates, with `mounts:`.
 
 ### Measuring Runs
 
@@ -77,26 +81,28 @@ Each run emits a `code_execution.ruby_llm` event with its language, duration, ex
 
 ### Your Own Sandbox
 
-A sandbox is any object that answers `supported?` and `run`. Wrap a hosted sandbox service in that shape and set it as `config.sandbox`. To run code on the provider's servers instead, keep using `with_provider_tools(:code_execution)`.
+Besides an `MXC::Sandbox` class, a sandbox can be any class or object that answers `supported?` and `run`. Wrap a hosted sandbox service in that shape and set it as `config.sandbox`. To run code on the provider's servers instead, keep using `with_provider_tools(:code_execution)`.
 
 See [Code Execution]({% link _core_features/code-execution.md %}) for every option.
 
-## Permissions
+## Asking for a Wider Sandbox
 
-Approvals used to be a property of each tool. Permission modes set them for the whole chat, so one line decides how much the model may do on its own:
+The default sandbox should be the smallest one that does the job. When the code needs more, such as changing files in a project or reaching the network, the model can ask for one call at a time:
 
 ```ruby
-chat.with_permissions(:read_only)  # read-only tools run, everything else is denied
-chat.with_permissions(:ask)        # read-only tools run, everything else waits for approval
-chat.with_permissions(:auto, allow: [SearchDocs, { network: ["pypi.org", "files.pythonhosted.org"] }])
-chat.with_permissions(:dangerous)  # everything runs, still in the sandbox
+chat.with_code_execution(sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox])
+chat.ask "Add a changelog entry for the new export feature"
+
+chat.pending_approvals.first.arguments # => {"code"=>"...", "sandbox"=>"workspace", "reason"=>"Edit CHANGELOG.md"}
+chat.approve(chat.pending_approvals.first)
+chat.complete
 ```
 
-Mark the tools that change nothing with `read_only`, and MCP tools follow their server's `readOnlyHint`. Calls that wait look exactly like `requires_approval` calls, so the approval interface you already have keeps working. `approve(tool_call, remember: true)` stops asking about that tool for the rest of the chat.
+The model picks from the sandboxes you listed and says why. That one call waits for approval, like a `requires_approval` call, so the approval interface you already have keeps working. The next call runs in the default again. An escalated call is never remembered, there is no stored grant to widen, and RubyLLM checks the approval for that exact call right before it runs. A coding agent's ask, workspace, and skip-permissions modes become three choices of default and escalations.
 
-With code execution, the model can ask for more with a `request_permission` tool: a network host such as `pypi.org`, or a path on your server, with its reason. Once you grant a package registry, it can `gem install` and `pip install` into an environment kept for the chat. Persisted chats store their mode and grants, so an approval in one process takes effect in the job that resumes the chat. Agents declare a starting mode with `permissions :ask`.
+`approve(tool_call, remember: true)` stops asking about an ordinary tool for the rest of the chat, in every process.
 
-See [Permissions]({% link _core_features/permissions.md %}).
+See [Sandboxes]({% link _core_features/sandboxes.md %}).
 
 ## Skills
 
@@ -141,7 +147,7 @@ If a process dies, its claims expire and another process picks the chat up. See 
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and the `permissions` and `permission_grants` columns chats use to keep their permission mode. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.2
 

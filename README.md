@@ -223,7 +223,7 @@ Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with us
 * **Moderation:** Content flags, categories, and scores with `RubyLLM.moderate`
 * **Judgments:** Probabilities, choices, and scores with `RubyLLM::Judge` and `RubyLLM.judge`
 * **Tools:** Let AI call your Ruby methods
-* **Tool approval:** Park a run until a human approves with `requires_approval`, or set a permission mode for the whole chat with [`with_permissions`](https://rubyllm.com/next/permissions/)
+* **Tool approval:** Park a run until a human approves with `requires_approval`
 * **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
 * **Provider tools:** Web search, code execution, and MCP connectors with `with_provider_tools`
 * **Code execution (main):** Let the model run Ruby, Python, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)

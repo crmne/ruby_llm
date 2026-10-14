@@ -16,11 +16,11 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     mxc_supported? && MXC.supports?(:network_policy)
   end
 
-  let(:sandbox) { RubyLLM::Sandbox.resolve(:mxc) }
+  let(:sandbox) { RubyLLM::Sandbox.resolve(MXC::Sandbox) }
   let(:cache_dir) { Dir.mktmpdir('ruby_llm-packages-spec') }
   let(:chat) do
     RubyLLM.context do |config|
-      config.sandbox = :mxc
+      config.sandbox = MXC::Sandbox
       config.package_cache_dir = cache_dir
     end.chat(model: model_for(:openai), provider: :openai)
   end
@@ -137,9 +137,9 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   end
 
   it 'stops code that runs past its timeout' do
-    output = report(run_code('sleep 5', language: 'shell', timeout: 1))
+    output = report(run_code('sleep 5', language: 'shell', sandbox: MXC::Sandbox.new(timeout: 1)))
 
-    expect(output['error']).to eq('The code ran past the 1-second limit and was stopped')
+    expect(output['error']).to eq('The code ran past its time limit and was stopped')
   end
 
   it 'runs LibreOffice, Poppler, and fontconfig with a writable home and cache' do
@@ -158,14 +158,15 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     expect(files.map(&:filename)).to eq(%w[page-1.png report.pdf])
   end
 
-  it 'reads extra paths and mounted directories it is given' do
+  it "reads the sandbox's readable paths and the mounted directories" do
     Dir.mktmpdir do |skill|
       File.write(File.join(skill, 'hello.rb'), 'puts "from the skill"')
       tool = RubyLLM::CodeExecution.new(sandbox:, skills: -> { { 'skills/hello' => skill } })
 
       expect(report(tool.call(language: 'ruby', code: "load 'skills/hello/hello.rb'"))['stdout'])
         .to eq("from the skill\n")
-      expect(report(run_code("puts File.read(#{File.join(skill, 'hello.rb').inspect})", readable: [skill]))['stdout'])
+      readable = MXC::Sandbox.new(readable: [skill])
+      expect(report(run_code("puts File.read(#{File.join(skill, 'hello.rb').inspect})", sandbox: readable))['stdout'])
         .to eq("puts \"from the skill\"\n")
     end
   end
@@ -177,5 +178,28 @@ RSpec.describe RubyLLM::Sandbox::MXC do
 
     expect(output['exit_code']).to eq(0)
     expect(Dir.glob(File.join(cache_dir, 'ruby-*.ready')).size).to eq(1)
+  end
+
+  it 'runs an approved escalation in the sandbox it names, starting in its directory' do
+    Dir.mktmpdir do |project|
+      project = File.realpath(project)
+      stub_const('WorkspaceSandbox', Class.new(MXC::Sandbox))
+      WorkspaceSandbox.directory project
+      WorkspaceSandbox.writable project
+      tool = chat.with_code_execution(escalate_to: [WorkspaceSandbox]).tools[:run_code]
+      code = "File.write('notes.txt', 'kept'); File.write(File.join(ENV['RUN_DIR'], 'out.txt'), Dir.pwd)"
+      call = RubyLLM::ToolCall.new(id: 'call_1', name: 'run_code',
+                                   arguments: { 'language' => 'ruby', 'code' => code, 'sandbox' => 'workspace' })
+      chat.add_message(role: :assistant, content: '', tool_calls: { call.id => call })
+
+      default = report(run_code("File.write(#{File.join(project, 'x').inspect}, 'x') rescue puts 'refused'"))
+      chat.approve('call_1')
+      text, *files = tool.call(language: 'ruby', code:, sandbox: 'workspace', tool_call: call)
+
+      expect(default['stdout']).to eq("refused\n")
+      expect(JSON.parse(text)['exit_code']).to eq(0)
+      expect(File.read(File.join(project, 'notes.txt'))).to eq('kept')
+      expect(files.map { |file| [file.filename, file.content] }).to eq([['out.txt', project]])
+    end
   end
 end

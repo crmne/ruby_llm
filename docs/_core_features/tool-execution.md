@@ -124,7 +124,14 @@ chat.complete # appends the denial result and asks the model to respond
 
 Calls that need no approval still run while protected calls wait.
 
-To decide approvals for a whole chat rather than tool by tool, set a [permission mode]({% link _core_features/permissions.md %}): `:read_only`, `:ask`, `:auto`, or `:dangerous`. Calls waiting under a mode look exactly like the calls described here.
+When the user approves a call and says "don't ask again", pass `remember: true`:
+
+```ruby
+chat.approve(tool_call, remember: true)
+chat.complete
+```
+
+Later calls to the same tool run without asking for the rest of the chat. A [code execution]({% link _core_features/code-execution.md %}) call that asks for a wider sandbox is the exception: each one waits for its own approval, and `remember: true` raises `ArgumentError` for it. See [Sandboxes]({% link _core_features/sandboxes.md %}#asking-for-a-wider-sandbox).
 
 If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), stop when the chat is waiting: `chat.step until chat.complete? || chat.waiting?`. `waiting?` is true while every pending call waits on something outside the chat, such as an approval, and `awaiting_approval?` tells you an approval is what it waits on.
 
@@ -195,7 +202,7 @@ A tool call record's `running?` is `true` while a process runs it, so a message'
 
 Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and the call runs again once its claim expires. See [Durable Agents]({% link _advanced/durable-agents.md %}#at-least-once-not-exactly-once).
 
-[Durable Agents]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation. [Permissions]({% link _core_features/permissions.md %}#remembering-an-approval) covers `approve(tool_call, remember: true)`.
+[Durable Agents]({% link _advanced/durable-agents.md %}) covers jobs, restarts, and cancellation. A call approved with `remember: true` is recorded as `remembered` on its tool call record, so later calls to that tool run without asking in every process.
 
 ## Concurrent Tool Execution
 

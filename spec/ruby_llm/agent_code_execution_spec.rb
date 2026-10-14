@@ -28,13 +28,14 @@ RSpec.describe RubyLLM::Agent do
   end
 
   it 'passes options as keywords or a Hash' do
-    keywords = agent_with { code_execution languages: [:python], timeout: 5 }.chat
+    keywords = agent_with { code_execution languages: [:python], escalate_to: { files: FakeSandbox.new } }.chat
     hash = agent_with { code_execution({ 'gems' => %w[prawn] }) }.chat
 
-    expect(keywords.code_execution).to eq(languages: [:python], timeout: 5)
+    expect(keywords.code_execution).to include(languages: [:python])
+    expect(keywords.tools[:run_code].escalations).to eq(['files'])
     expect(hash.code_execution).to eq(gems: %w[prawn], languages: %i[ruby shell])
-    expect(agent_with { code_execution virtualenv: '/opt/venv', readable: ['/opt/fonts'] }.chat.code_execution)
-      .to eq(virtualenv: '/opt/venv', readable: ['/opt/fonts'], languages: %i[ruby python shell])
+    expect(agent_with { code_execution virtualenv: '/opt/venv' }.chat.code_execution)
+      .to eq(virtualenv: '/opt/venv', languages: %i[ruby python shell])
   end
 
   it 'resolves a mounts lambda before each run with the chat in scope' do
@@ -76,7 +77,7 @@ RSpec.describe RubyLLM::Agent do
   it 'delegates with_code_execution and code_execution to the chat' do
     agent = agent_with { temperature 0.1 }.new
 
-    expect(agent.with_code_execution(timeout: 9)).to be(agent.chat)
-    expect(agent.code_execution).to eq(timeout: 9, languages: %i[ruby shell])
+    expect(agent.with_code_execution(gems: %w[prawn])).to be(agent.chat)
+    expect(agent.code_execution).to eq(gems: %w[prawn], languages: %i[ruby shell])
   end
 end

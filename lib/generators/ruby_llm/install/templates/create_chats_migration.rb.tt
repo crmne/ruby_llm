@@ -5,12 +5,6 @@ class <%= create_migration_class_name(chat_table_name) %> < ActiveRecord::Migrat
       t.boolean :cancelled, null: false, default: false
       t.string :claim_token
       t.datetime :claimed_until
-      t.string :permissions
-<% if postgresql? %>
-      t.jsonb :permission_grants
-<% else %>
-      t.json :permission_grants
-<% end %>
       t.timestamps
     end
   end

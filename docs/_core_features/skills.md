@@ -106,8 +106,6 @@ What the model loads stays in the conversation as tool results, so it does not n
 
 `load_skill` reads only inside the skill's folder. It refuses absolute paths, paths with `..`, and symbolic links that point outside the folder, and returns text files only, up to 256 KB each. Larger files and other formats, such as images and templates, are for the skill's scripts to use.
 
-`load_skill` is [read-only]({% link _core_features/permissions.md %}#read-only-tools), so it runs in every permission mode, including `:read_only`.
-
 ## Running Scripts
 
 Many skills ship scripts that do the real work, such as building a document or converting a file. Scripts run through [code execution]({% link _core_features/code-execution.md %}), in the same sandbox as the code the model writes:
@@ -200,5 +198,5 @@ RubyLLM checks every skill when you give it to a chat, so a broken skill fails w
 ## Next Steps
 
 * [Code Execution]({% link _core_features/code-execution.md %}) - Configure the sandbox that runs skill scripts.
-* [Permissions]({% link _core_features/permissions.md %}) - Decide which tool calls run without asking.
+* [Sandboxes]({% link _core_features/sandboxes.md %}) - Decide what skill scripts can read, write, and reach.
 * [Agents]({% link _advanced/agents.md %}) - Package skills with instructions and tools.

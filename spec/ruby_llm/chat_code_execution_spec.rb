@@ -49,8 +49,8 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'accepts options as keywords or a Hash' do
-      chat.with_code_execution(languages: [:python], timeout: 5)
-      expect(chat.code_execution).to eq(languages: [:python], timeout: 5)
+      chat.with_code_execution(languages: [:python], gems: %w[prawn])
+      expect(chat.code_execution).to eq(languages: [:python], gems: %w[prawn])
 
       chat.with_code_execution({ 'languages' => ['ruby'] })
       expect(chat.code_execution).to eq(languages: [:ruby])
@@ -73,10 +73,11 @@ RSpec.describe RubyLLM::Chat do
     it 'rejects nil, unknown options, unknown languages, and options with false' do
       expect { chat.with_code_execution(nil) }.to raise_error(ArgumentError, /accepts false or code execution/)
       expect { chat.with_code_execution(memory: 1) }.to raise_error(ArgumentError, /got memory/)
+      expect { chat.with_code_execution(timeout: 5) }.to raise_error(ArgumentError, /got timeout/)
       expect { chat.with_code_execution(languages: [:cobol]) }.to raise_error(ArgumentError, /got cobol/)
       expect { chat.with_code_execution(languages: []) }.to raise_error(ArgumentError, /at least one language/)
-      expect { chat.with_code_execution(timeout: nil) }.to raise_error(ArgumentError, /cannot be nil/)
-      expect { chat.with_code_execution(false, timeout: 5) }.to raise_error(ArgumentError, /does not accept/)
+      expect { chat.with_code_execution(gems: nil) }.to raise_error(ArgumentError, /cannot be nil/)
+      expect { chat.with_code_execution(false, gems: %w[a]) }.to raise_error(ArgumentError, /does not accept/)
       expect { chat.with_code_execution(gems: %w[a], gem_home: '/g') }.to raise_error(ArgumentError, /not both/)
       expect { chat.with_code_execution(python: %w[a], virtualenv: '/v') }.to raise_error(ArgumentError, /not both/)
     end
@@ -134,21 +135,23 @@ RSpec.describe RubyLLM::Chat do
       expect { tool.languages }.to raise_error(RubyLLM::ConfigurationError, /cannot run python/)
     end
 
-    it 'describes the timeout, network, and declared packages' do
-      tool = chat.with_code_execution(timeout: 30, network: { allow: ['pypi.org'] }, gems: %w[prawn],
-                                      python: %w[pandas]).tools[:run_code]
+    it "describes the sandbox's timeout and network, and the declared packages" do
+      online = FakeSandbox.new(timeout: 30, network: { allow: ['pypi.org'] })
+      tool = chat.with_code_execution(sandbox: online, gems: %w[prawn], python: %w[pandas]).tools[:run_code]
 
-      expect(tool.description).to include('stops after 30 seconds')
-      expect(tool.description).to include('only reach these hosts: pypi.org')
+      expect(tool.description).to include('Stops after 30 seconds.')
+      expect(tool.description).to include('Can reach only pypi.org.')
       expect(tool.description).to include("Ruby #{RUBY_VERSION} has these gems: prawn.")
       expect(tool.description).to include('Python has these packages: pandas.')
-      expect(chat.with_code_execution(network: true).tools[:run_code].description).to include('can reach the network')
-      expect(chat.with_code_execution.tools[:run_code].description).to include('no network access')
+      expect(chat.with_code_execution(sandbox: FakeSandbox.new(network: true)).tools[:run_code].description)
+        .to include('Can reach the network.')
+      expect(chat.with_code_execution.tools[:run_code].description).to include('No network access.')
     end
 
-    it 'runs the code in a fresh working directory with only the Ruby installation readable' do
-      chat.with_code_execution(timeout: 12)
-      result = run_code('puts 1 + 1')
+    it 'runs the code in a fresh run directory with only the Ruby installation readable' do
+      sandbox = FakeSandbox.new(timeout: 12)
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      result = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'puts 1 + 1')
       run = sandbox.code_runs.last
 
       expect(report(result)).to eq('exit_code' => 0, 'stdout' => '', 'stderr' => '')
@@ -158,11 +161,12 @@ RSpec.describe RubyLLM::Chat do
       expect(run[:denied]).to eq(RubyLLM::CodeExecution::RubyInstallation.current.denied)
       scratch = File.dirname(run[:directory])
       expect(run[:writable]).to eq([run[:directory], File.join(scratch, 'home'), File.join(scratch, 'tmp')])
-      expect(run[:network]).to be(false)
+      expect(run[:network]).to be_nil
       expect(run[:timeout]).to eq(12)
       expect(run[:env]).to include('HOME' => File.join(scratch, 'home'), 'TMPDIR' => File.join(scratch, 'tmp'),
                                    'XDG_CACHE_HOME' => File.join(scratch, 'home', '.cache'))
-      expect(run[:env].keys).to contain_exactly('PATH', 'HOME', 'XDG_CACHE_HOME', 'TMPDIR', 'LANG')
+      expect(run[:env].keys).to contain_exactly('PATH', 'HOME', 'XDG_CACHE_HOME', 'TMPDIR', 'LANG', 'RUN_DIR')
+      expect(run[:env]['RUN_DIR']).to eq(run[:directory])
       expect(run[:env]['PATH']).to start_with(RbConfig::CONFIG['bindir'])
       expect(File.exist?(run[:directory])).to be(false)
     end
@@ -184,19 +188,11 @@ RSpec.describe RubyLLM::Chat do
       expect(sources).to eq(['print(1)', 'echo 1'])
     end
 
-    it 'stops runs after two minutes by default' do
+    it 'stops runs after two minutes when the sandbox sets no timeout' do
       chat.with_code_execution
       run_code('puts 1')
 
       expect(sandbox.code_runs.last[:timeout]).to eq(120)
-    end
-
-    it 'mounts the extra paths it is given read-only' do
-      chat.with_code_execution(readable: ['/opt/libreoffice', Pathname('fonts')])
-      run_code('puts 1')
-
-      expect(sandbox.code_runs.last[:readable]).to include('/opt/libreoffice', File.expand_path('fonts'))
-      expect(sandbox.code_runs.last[:writable]).not_to include('/opt/libreoffice')
     end
 
     it 'emits code_execution.ruby_llm for each run' do
@@ -215,11 +211,12 @@ RSpec.describe RubyLLM::Chat do
         config.sandbox = sandbox
         config.instrumenter = instrumenter
       end.chat(model: model_for(:openai), provider: :openai)
-      chat.with_code_execution(timeout: 7).tools[:run_code].call(language: 'shell', code: 'exit 3')
+      chat.with_code_execution.tools[:run_code].call(language: 'shell', code: 'exit 3')
 
       name, payload = events.find { |event| event.first == 'code_execution.ruby_llm' }
       expect(name).to eq('code_execution.ruby_llm')
-      expect(payload).to include(chat:, tool_name: 'run_code', language: :shell, timeout: 7, network: false,
+      expect(payload).to include(chat:, tool_name: 'run_code', language: :shell, sandbox: nil, timeout: 120,
+                                 network: false,
                                  exit_code: 3, timed_out: false, blocked_hosts: ['evil.example:443'],
                                  files: ['out.txt'])
       expect(payload[:duration]).to be_a(Float)
@@ -328,13 +325,6 @@ RSpec.describe RubyLLM::Chat do
       expect { tool.call(language: 'ruby', code: 'x') }.to raise_error(ArgumentError, /not a path inside/)
     end
 
-    it 'passes the network policy to the sandbox' do
-      chat.with_code_execution(network: { allow: ['example.com'] })
-      run_code('puts 1')
-
-      expect(sandbox.code_runs.last[:network]).to eq(allow: ['example.com'])
-    end
-
     it 'refuses a language it was not given' do
       chat.with_code_execution(languages: [:ruby])
 
@@ -404,10 +394,10 @@ RSpec.describe RubyLLM::Chat do
     it 'reports a timeout' do
       sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: nil, timed_out: true, stdout: 'partial') }
       chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
-      result = chat.with_code_execution(timeout: 3).tools[:run_code].call(language: 'ruby', code: 'sleep')
+      result = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'sleep')
 
       expect(report(result)).to eq('stdout' => 'partial', 'stderr' => '',
-                                   'error' => 'The code ran past the 3-second limit and was stopped')
+                                   'error' => 'The code ran past its time limit and was stopped')
     end
 
     it 'reports blocked hosts' do
@@ -494,7 +484,7 @@ RSpec.describe RubyLLM::Chat do
       it "#{provider}/#{model} runs code and returns the file it writes" do
         skip 'mxc cannot start a sandbox on this machine' unless mxc_supported
 
-        chat = RubyLLM.context { |config| config.sandbox = :mxc }
+        chat = RubyLLM.context { |config| config.sandbox = MXC::Sandbox }
                       .chat(model:, provider:).with_code_execution(languages: [:ruby])
         response = chat.ask 'Use run_code once to compute the sum of the squares of 1 to 100, and write ' \
                             'squares.csv with the columns n and square for n from 1 to 10. Then tell me the sum.'
