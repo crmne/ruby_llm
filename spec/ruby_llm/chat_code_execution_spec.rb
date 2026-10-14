@@ -63,6 +63,14 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_code_execution(virtualenv: '/opt/venv').code_execution[:languages]).to eq(%i[ruby python shell])
     end
 
+    it 'adds JavaScript when npm packages are declared' do
+      chat.with_code_execution(npm: %w[pptxgenjs])
+
+      expect(chat.code_execution[:languages]).to eq(%i[ruby javascript shell])
+      expect(chat.with_code_execution(node_modules: '/opt/app/node_modules', python: %w[pandas])
+                 .code_execution[:languages]).to eq(%i[ruby python javascript shell])
+    end
+
     it 'disables code execution with false' do
       chat.with_code_execution.with_code_execution(false)
 
@@ -80,6 +88,7 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.with_code_execution(false, gems: %w[a]) }.to raise_error(ArgumentError, /does not accept/)
       expect { chat.with_code_execution(gems: %w[a], gem_home: '/g') }.to raise_error(ArgumentError, /not both/)
       expect { chat.with_code_execution(python: %w[a], virtualenv: '/v') }.to raise_error(ArgumentError, /not both/)
+      expect { chat.with_code_execution(npm: %w[a], node_modules: '/n') }.to raise_error(ArgumentError, /not both/)
     end
 
     it 'raises ConfigurationError without a sandbox' do
@@ -323,6 +332,27 @@ RSpec.describe RubyLLM::Chat do
       tool = RubyLLM::CodeExecution.new(sandbox:, mounts: -> { { '../escape' => Dir.pwd } })
 
       expect { tool.call(language: 'ruby', code: 'x') }.to raise_error(ArgumentError, /not a path inside/)
+    end
+
+    it 'runs JavaScript with node and finds the npm packages next to the script' do
+      Dir.mktmpdir do |project|
+        node_modules = File.join(project, 'node_modules')
+        FileUtils.mkdir_p(node_modules)
+        seen = nil
+        sandbox = FakeSandbox.new do |run|
+          script = run[:command].last
+          seen = [run[:command].first, File.basename(script),
+                  File.readlink(File.join(File.dirname(script), 'node_modules')), run[:readable].include?(node_modules)]
+          FakeSandbox.result
+        end
+        chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+        tool = chat.with_code_execution(node_modules:).tools[:run_code]
+
+        tool.call(language: 'javascript', code: 'console.log(1)')
+
+        expect(seen).to eq(['node', 'main.js', node_modules, true])
+        expect(tool.parameters_schema.dig('properties', 'language', 'enum')).to eq(%w[ruby javascript shell])
+      end
     end
 
     it 'refuses a language it was not given' do

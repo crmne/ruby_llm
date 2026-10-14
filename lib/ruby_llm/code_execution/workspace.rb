@@ -57,6 +57,10 @@ module RubyLLM
         File.join(source, language.filename).tap { |path| File.write(path, code) }
       end
 
+      def link_packages(node_modules)
+        File.symlink(node_modules, File.join(source, 'node_modules'))
+      end
+
       def copy_in(attachments)
         attachments.reject(&:provider_file?).each do |attachment|
           File.binwrite(File.join(inputs, self.class.filename(attachment.filename)), attachment.content)

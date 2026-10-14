@@ -2,7 +2,7 @@
 layout: default
 title: What's New in 2.2
 nav_order: 4
-description: Let models run Ruby, Python, and shell code in sandboxes on your own servers, let them ask for a wider sandbox one call at a time, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
+description: Let models run Ruby, Python, JavaScript, and shell code in sandboxes on your own servers, let them ask for a wider sandbox one call at a time, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
 ---
 
 # {{ page.title }}
@@ -28,12 +28,14 @@ RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, le
 A model that can run code calculates exactly, reshapes data, and makes files: charts, spreadsheets, PDFs, and presentations. Turn it on for a chat:
 
 ```ruby
-class ReadOnlySandbox < MXC::Sandbox
+# app/sandboxes/application_sandbox.rb
+class ApplicationSandbox < MXC::Sandbox
   timeout 120
 end
 
+# config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
-  config.sandbox = ReadOnlySandbox
+  config.sandbox = "ApplicationSandbox"
 end
 
 chat = RubyLLM.chat.with_code_execution(python: %w[pandas matplotlib])
@@ -43,7 +45,7 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-The model gets one tool, `run_code`, that runs Ruby, Python, or a shell script. The code was written by a model, so it never runs in your application's process. It runs in a sandbox, a class built on the [mxc gem](https://crmne.github.io/mxc/), which uses the operating system's own isolation: Bubblewrap on Linux and Seatbelt on macOS. The sandbox holds the whole policy: what the code reads, writes, and reaches, and how long it runs. Without a configured sandbox, `with_code_execution` raises instead of running anything.
+The model gets one tool, `run_code`, that runs Ruby, Python, JavaScript, or a shell script. The code was written by a model, so it never runs in your application's process. It runs in a sandbox, a class built on the [mxc gem](https://crmne.github.io/mxc/), which uses the operating system's own isolation: Bubblewrap on Linux and Seatbelt on macOS. The sandbox holds the whole policy: what the code reads, writes, and reaches, and how long it runs. Without a configured sandbox, `with_code_execution` raises instead of running anything.
 
 `with_code_execution` takes the same shape as `with_thinking` and `with_caching`, and agents declare it with a macro:
 
@@ -61,16 +63,19 @@ The code sees the system's programs and libraries read-only, and nothing else: n
 
 ### Gems, Packages, and Programs
 
-Declare the gems and Python packages the code may use. RubyLLM installs them once, inside the sandbox with network access limited to RubyGems or PyPI, and every run reads them from a cache:
+Declare the gems, Python packages, and npm packages the code may use. RubyLLM installs them once, inside a sandbox with network access limited to RubyGems, PyPI, or npm, and every run reads them from a cache:
 
 ```ruby
-chat.with_code_execution(gems: %w[prawn caxlsx], python: %w[python-pptx openpyxl])
+chat.with_code_execution(gems: %w[prawn caxlsx], python: %w[python-pptx openpyxl], npm: %w[pptxgenjs docx])
 ```
+
+JavaScript runs on the Node.js your application's `PATH` finds, including one from mise or nvm.
 
 To install nothing at runtime, bake the environments into your image and point at them:
 
 ```ruby
-chat.with_code_execution(virtualenv: "/opt/sandbox/venv", gem_home: "/opt/sandbox/gems")
+chat.with_code_execution(virtualenv: "/opt/sandbox/venv", gem_home: "/opt/sandbox/gems",
+                         node_modules: "/opt/sandbox/node/node_modules")
 ```
 
 Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work without setup. Grant read access to programs or fonts installed elsewhere in the sandbox class, and give the code your own folders, such as templates, with `mounts:`.
@@ -147,7 +152,7 @@ If a process dies, its claims expire and another process picks the chat up. See 
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and the `app/skills` and `app/sandboxes` directories. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.2
 

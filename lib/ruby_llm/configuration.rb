@@ -191,8 +191,8 @@ module RubyLLM
     #
     # Where code from a model runs by default, such as the code
     # Chat#with_code_execution executes: an MXC::Sandbox class from the mxc
-    # gem, or any sandbox Sandbox describes. Default: +nil+ (nothing runs
-    # locally).
+    # gem, its name as a String, or any sandbox Sandbox describes. Default:
+    # +nil+ (nothing runs locally).
     option :sandbox, nil
 
     ##

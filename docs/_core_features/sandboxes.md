@@ -14,6 +14,7 @@ description: Decide what code from a model can read, write, and reach, and let t
 After reading this guide, you will know:
 
 * What a sandbox is and how to define one.
+* Where sandbox classes live in a Rails application.
 * How a chat picks its default sandbox.
 * How the model asks to run one call in a wider sandbox, and how you approve it.
 * Why escalation is safe by construction.
@@ -32,9 +33,10 @@ A sandbox is a class. RubyLLM's sandboxes come from the [mxc gem](https://crmne.
 gem "mxc"
 ```
 
-Subclass `MXC::Sandbox` and declare its policy with class macros:
+Subclass `MXC::Sandbox` and declare its policy with class macros. In Rails, each sandbox is a class in `app/sandboxes`:
 
 ```ruby
+# app/sandboxes/read_only_sandbox.rb
 class ReadOnlySandbox < MXC::Sandbox
   timeout 120
 end
@@ -53,17 +55,21 @@ end
 
 `MXC::Sandbox` on its own reads the system's programs and libraries, writes nothing, and has no network. Each macro widens it: `readable` and `writable` add paths, `network` opens the network or lists hosts, `directory` sets where the code starts, and `timeout` sets how long it may run. A sandbox without a timeout stops runs after 120 seconds. See [mxc's policies](https://crmne.github.io/mxc/policies/) for every setting.
 
-The class holds the whole policy. RubyLLM adds only what a run needs to work: a fresh run directory with the conversation's files and your [mounted folders]({% link _core_features/code-execution.md %}#your-own-folders), the Ruby installation, and the [gems and Python packages]({% link _core_features/code-execution.md %}#gems-and-python-packages) you declared. It never widens the sandbox in any other way.
+The class holds the whole policy. RubyLLM adds only what a run needs to work: a fresh run directory with the conversation's files and your [mounted folders]({% link _core_features/code-execution.md %}#your-own-folders), the Ruby and Node.js installations, and the [packages]({% link _core_features/code-execution.md %}#packages) you declared. It never widens the sandbox in any other way.
 
 ## The Default Sandbox
 
-Set the sandbox every chat uses in your configuration:
+Name the sandbox every chat uses in your configuration:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.sandbox = ReadOnlySandbox
+  config.sandbox = "ReadOnlySandbox"
 end
 ```
+
+The name is a String because the initializer runs while Rails boots, before it can load your application's classes. RubyLLM looks the class up whenever a chat needs it, so the sandboxes in `app/sandboxes` autoload and reload like the rest of your code. Outside Rails, pass the class itself. Everywhere else, such as in agents and chats, use the class: `escalate_to: [WorkspaceSandbox]`.
+
+`bin/rails generate ruby_llm:install` creates `app/sandboxes`, and the 2.2 upgrade generator adds it to existing applications. RubyLLM does not depend on mxc: add it to your Gemfile when you run code, and Bundler loads it like any other gem.
 
 Without `config.sandbox`, nothing runs locally, and turning on code execution raises `RubyLLM::ConfigurationError`. Check that the sandbox works on this machine:
 
@@ -205,7 +211,7 @@ class RemoteSandbox
 end
 
 RubyLLM.configure do |config|
-  config.sandbox = RemoteSandbox
+  config.sandbox = "RemoteSandbox"
 end
 ```
 
@@ -225,6 +231,6 @@ A sandbox on another machine copies the readable and writable paths in before th
 
 ## Next Steps
 
-* [Code Execution]({% link _core_features/code-execution.md %}) - Let the model run Ruby, Python, and shell code.
+* [Code Execution]({% link _core_features/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code.
 * [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Approve calls, remember approvals, and run calls concurrently.
 * [Agents]({% link _advanced/agents.md %}) - Package code execution with instructions and tools.

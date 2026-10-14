@@ -136,6 +136,15 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     expect(report(tool.call(language: 'python', code: 'print(6 * 7)'))['stdout']).to eq("42\n")
   end
 
+  it 'runs JavaScript when node is on the PATH, wherever it is installed' do
+    tool = chat.with_code_execution(languages: %i[javascript]).tools[:run_code]
+    skip 'node is not available' unless system('node', '-e', '0', out: File::NULL, err: File::NULL)
+
+    output = report(tool.call(language: 'javascript', code: 'require("fs").writeFileSync("n.txt", String(6 * 7))'))
+
+    expect(output).to include('exit_code' => 0, 'files' => ['n.txt'])
+  end
+
   it 'stops code that runs past its timeout' do
     output = report(run_code('sleep 5', language: 'shell', sandbox: MXC::Sandbox.new(timeout: 1)))
 

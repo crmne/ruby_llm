@@ -203,6 +203,6 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging)
 *   [Tool Parameters]({% link _core_features/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
 *   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, approval, concurrency, and callbacks.
 *   [Tool Search]({% link _core_features/tool-search.md %}) - Keep large tool sets out of the model's context until it searches for them.
-*   [Code Execution]({% link _core_features/code-execution.md %}) - Let the model run Ruby, Python, and shell code in a sandbox.
+*   [Code Execution]({% link _core_features/code-execution.md %}) - Let the model run Ruby, Python, JavaScript, and shell code in a sandbox.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) - The conversational core that tools plug into.
 *   [Error Handling]({% link _advanced/error-handling.md %}) - Recover from failures across the whole stack.

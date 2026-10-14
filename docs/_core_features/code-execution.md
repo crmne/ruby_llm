@@ -3,7 +3,7 @@ layout: default
 title: Code Execution
 parent: "Tools"
 nav_order: 6
-description: Let the model run Ruby, Python, and shell code in a sandbox on your own servers and hand back the files it makes.
+description: Let the model run Ruby, Python, JavaScript, and shell code in a sandbox on your own servers and hand back the files it makes.
 ---
 
 # {{ page.title }}
@@ -16,7 +16,7 @@ After reading this guide, you will know:
 * How to let a chat or an agent run code.
 * What the code can see, and what it cannot.
 * How files go into a run and come back from it.
-* How to give the code gems, Python packages, and folders of your own.
+* How to give the code gems, Python and npm packages, and folders of your own.
 * How the model asks to run a call in a wider sandbox.
 * How to measure each run.
 
@@ -32,12 +32,16 @@ gem "mxc"
 ```
 
 ```ruby
-class ReadOnlySandbox < MXC::Sandbox
+# app/sandboxes/application_sandbox.rb
+class ApplicationSandbox < MXC::Sandbox
   timeout 120
 end
+```
 
+```ruby
+# config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
-  config.sandbox = ReadOnlySandbox
+  config.sandbox = "ApplicationSandbox"
 end
 ```
 
@@ -66,13 +70,13 @@ Calling `with_code_execution` without a configured sandbox raises `RubyLLM::Conf
 
 ### Languages
 
-The model writes Ruby or shell scripts by default. Choose from `:ruby`, `:python`, and `:shell`:
+The model writes Ruby or shell scripts by default. Choose from `:ruby`, `:python`, `:javascript`, and `:shell`:
 
 ```ruby
-chat.with_code_execution(languages: [:python])
+chat.with_code_execution(languages: [:python, :javascript])
 ```
 
-Ruby is the one your application runs, without your application's gems or Bundler environment: Ruby's default and bundled gems load, and every other gem installed with it is hidden. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it.
+Ruby is the one your application runs, without your application's gems or Bundler environment: Ruby's default and bundled gems load, and every other gem installed with it is hidden. JavaScript runs on the Node.js your application's `PATH` finds, wherever it is installed, including a version manager such as mise or nvm, and RubyLLM lets the sandbox read that installation. Python is whatever `python3` the sandbox finds on the system. The tool's description lists only the languages the sandbox can actually run, so the model never tries Python on a server without it.
 
 ### Timeouts and Network
 
@@ -140,19 +144,19 @@ Files past the count or size limit stay out of the result, and the model is told
 
 The user gets every file. The model reads back images, PDFs, and text files up to 64 KB, so it can check the chart it drew. For larger text files and other formats, such as a spreadsheet or a ZIP archive, the model gets a short description that tells it where its code finds the file. The same applies to files a user attaches that the provider cannot read: with code execution on, the model is told to open them with code instead of the request failing.
 
-## Gems and Python Packages
+## Packages
 
-Declare the gems and Python packages the code can use:
+Declare the gems, Python packages, and npm packages the code can use:
 
 ```ruby
-chat.with_code_execution(gems: %w[prawn rubyzip], python: %w[pandas matplotlib])
+chat.with_code_execution(gems: %w[prawn rubyzip], python: %w[pandas matplotlib], npm: %w[pptxgenjs docx])
 ```
 
-Declaring Python packages adds Python to the default languages. Pin versions the way each installer reads them: `"prawn:2.5.0"` for a gem, `"pandas==2.2.3"` for a package.
+Declaring Python packages adds Python to the default languages, and declaring npm packages adds JavaScript. Pin versions the way each installer reads them: `"prawn:2.5.0"` for a gem, `"pandas==2.2.3"` for a Python package, and `"docx@9.5.1"` for an npm package. JavaScript finds npm packages with both `require` and `import`.
 
-RubyLLM installs each set once, the first time a run needs it, and every later run mounts it read-only. The install runs in a sandbox too, one with none of your sandbox's access and only RubyGems (`rubygems.org`) or PyPI (`pypi.org` and `files.pythonhosted.org`) reachable, so code that runs during installation is contained. The code the model writes reaches only what its sandbox allows. Gems with native extensions need a compiler on the system.
+RubyLLM installs each set once, the first time a run needs it, and every later run mounts it read-only. The install runs in a sandbox too, one with none of your sandbox's access and only RubyGems (`rubygems.org`), PyPI (`pypi.org` and `files.pythonhosted.org`), or npm (`registry.npmjs.org`) reachable, so code that runs during installation is contained. npm packages install without running their install scripts, so packages that build native code at install time do not work. The code the model writes reaches only what its sandbox allows. Gems with native extensions need a compiler on the system.
 
-Installed sets live in `config.package_cache_dir`, which defaults to a `packages` directory in your user cache directory. Each set is keyed by its packages and by the Ruby or Python that runs it, so upgrading Ruby installs it again. Processes that need the same set at the same time wait for one install instead of racing:
+Installed sets live in `config.package_cache_dir`, which defaults to a `packages` directory in your user cache directory. Each set is keyed by its packages and by the Ruby, Python, or Node.js that runs it, so upgrading Ruby installs it again. Processes that need the same set at the same time wait for one install instead of racing:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -167,10 +171,11 @@ An install that fails raises `RubyLLM::Error` with the installer's output.
 To install packages when you build your image instead of at runtime, point code execution at the environment you built:
 
 ```ruby
-chat.with_code_execution(gem_home: "/opt/sandbox/gems", virtualenv: "/opt/sandbox/venv")
+chat.with_code_execution(gem_home: "/opt/sandbox/gems", virtualenv: "/opt/sandbox/venv",
+                         node_modules: "/opt/sandbox/node/node_modules")
 ```
 
-`gem_home:` takes a directory you installed gems into with `gem install --install-dir`, and `virtualenv:` a Python virtualenv. RubyLLM mounts them read-only on every run and installs nothing. Each replaces its declared counterpart, so pass `gems:` or `gem_home:`, and `python:` or `virtualenv:`, not both. A virtualenv adds Python to the default languages.
+`gem_home:` takes a directory you installed gems into with `gem install --install-dir`, `virtualenv:` a Python virtualenv, and `node_modules:` the `node_modules` directory `npm install` created. RubyLLM mounts them read-only on every run and installs nothing. The tool's description lists the npm packages the `package.json` next to `node_modules` declares. Each replaces its declared counterpart, so pass `gems:` or `gem_home:`, `python:` or `virtualenv:`, and `npm:` or `node_modules:`, not both. A virtualenv adds Python to the default languages, and a `node_modules` adds JavaScript.
 
 ## Asking for a Wider Sandbox
 

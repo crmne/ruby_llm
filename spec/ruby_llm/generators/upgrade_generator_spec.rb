@@ -48,4 +48,16 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
   it 'leaves an up-to-date schema alone' do
     expect { ActiveRecord::Migration.suppress_messages { migration_class.migrate(:up) } }.not_to raise_error
   end
+
+  it 'creates the app directories the application is missing, keeping existing ones' do
+    FileUtils.mkdir_p(File.join(destination, 'app/skills/invoices'))
+    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+
+    generator.create_app_directories
+
+    %w[agents tools schemas prompts skills sandboxes mcp evals].each do |name|
+      expect(File.directory?(File.join(destination, 'app', name))).to be(true)
+    end
+    expect(File.directory?(File.join(destination, 'app/skills/invoices'))).to be(true)
+  end
 end

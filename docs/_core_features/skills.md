@@ -122,7 +122,7 @@ chat.messages.find { |message| message.attachments.any? }.attachments.first.file
 
 Every skill the chat has is mounted read-only in each run, at `skills/<name>/` in the working directory, so `python skills/invoices/scripts/build_invoice.py` works as written. The run sees the rest of its working directory as usual: the conversation's files in `attachments/`, temporary files in `$TMPDIR`, and every file the script writes to the working directory comes back as an attachment. A script cannot change its skill's folder.
 
-Install what the scripts import the way you would for any code the model runs: with `gems:` and `python:`, or a prebuilt `gem_home:` and `virtualenv:`. See [Gems and Python Packages]({% link _core_features/code-execution.md %}#gems-and-python-packages).
+Install what the scripts import the way you would for any code the model runs: with `gems:`, `python:`, and `npm:`, or a prebuilt `gem_home:`, `virtualenv:`, and `node_modules:`. See [Packages]({% link _core_features/code-execution.md %}#packages).
 
 Without code execution, the model still reads the instructions and the files they mention, and is told that the scripts cannot run, so it can say so instead of pretending.
 

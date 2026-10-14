@@ -20,6 +20,8 @@ module RubyLLM
       ruby: Language.new(name: :ruby, label: 'Ruby', filename: 'main.rb', program: 'ruby', check: ['-e', 'exit']),
       python: Language.new(name: :python, label: 'Python', filename: 'main.py', program: 'python3',
                            check: ['-c', 'pass']),
+      javascript: Language.new(name: :javascript, label: 'JavaScript', filename: 'main.js', program: 'node',
+                               check: ['-e', '0']),
       shell: Language.new(name: :shell, label: 'shell', filename: 'main.sh', program: 'sh', check: ['-c', 'exit 0'])
     }.freeze
   end

@@ -42,7 +42,7 @@ class FakeSandbox
   end
 
   def check?(command)
-    command.size == 3 && ['exit', 'pass', 'exit 0'].include?(command.last)
+    command.size == 3 && ['exit', 'pass', 'exit 0', '0'].include?(command.last)
   end
 
   def code_runs

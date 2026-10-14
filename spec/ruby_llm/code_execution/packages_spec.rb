@@ -212,4 +212,62 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
     expect(none.env('/home').keys).to contain_exactly('PATH', 'HOME', 'XDG_CACHE_HOME', 'TMPDIR', 'LANG')
     expect(sandbox.runs).to be_empty
   end
+
+  describe 'npm packages' do
+    let(:node) do
+      instance_double(RubyLLM::CodeExecution::NodeInstallation, prefix: '/opt/node', bin_dir: '/opt/node/bin',
+                                                                version: 'v26.0.0', readable: ['/opt/node'])
+    end
+
+    it 'installs them in the sandbox with only the npm registry reachable and no install scripts' do
+      node_modules = packages(npm: %w[pptxgenjs docx], node:).node_modules
+      directory = File.dirname(node_modules)
+      run = sandbox.runs.last
+
+      expect(File.basename(node_modules)).to eq('node_modules')
+      expect(File.dirname(directory)).to eq(cache_dir)
+      expect(run[:command]).to eq(['npm', 'install', '--prefix', directory, '--ignore-scripts', '--no-audit',
+                                   '--no-fund', '--no-update-notifier', 'pptxgenjs', 'docx'])
+      expect(run[:network]).to eq(allow: %w[registry.npmjs.org])
+      expect(run[:writable]).to include(directory)
+      expect(run[:readable]).to include('/opt/node')
+      expect(run[:env]['PATH'].split(File::PATH_SEPARATOR)).to include('/opt/node/bin')
+    end
+
+    it 'mounts Node and the packages read-only, with node on the PATH' do
+      npm = packages(npm: %w[docx], node:)
+
+      expect(npm.readable).to include('/opt/node', npm.node_modules)
+      expect(npm.env('/home')['PATH'].split(File::PATH_SEPARATOR)).to include('/opt/node/bin')
+      expect(npm.npm_names).to eq(%w[docx])
+    end
+
+    it 'installs again for another Node version' do
+      first = packages(npm: %w[docx], node:).node_modules
+      newer = instance_double(RubyLLM::CodeExecution::NodeInstallation, prefix: '/opt/node', bin_dir: '/opt/node/bin',
+                                                                        version: 'v27.0.0', readable: ['/opt/node'])
+
+      expect(packages(npm: %w[docx], node: newer).node_modules).not_to eq(first)
+    end
+
+    it 'mounts a prebuilt node_modules and lists what its package.json declares' do
+      Dir.mktmpdir do |project|
+        File.write(File.join(project, 'package.json'),
+                   JSON.generate(dependencies: { 'pptxgenjs' => '^4', 'docx' => '^9' }))
+        FileUtils.mkdir_p(File.join(project, 'node_modules', 'jszip'))
+        npm = packages(node_modules: File.join(project, 'node_modules'), node:)
+
+        expect(npm.node_modules).to eq(File.join(project, 'node_modules'))
+        expect(npm.npm_names).to eq(%w[docx pptxgenjs])
+        expect(sandbox.runs).to be_empty
+      end
+    end
+
+    it 'raises without node on the PATH' do
+      missing = instance_double(RubyLLM::CodeExecution::NodeInstallation, prefix: nil, bin_dir: nil, version: nil,
+                                                                          readable: [])
+
+      expect { packages(npm: %w[docx], node: missing).node_modules }.to raise_error(RubyLLM::Error, /node is not/)
+    end
+  end
 end

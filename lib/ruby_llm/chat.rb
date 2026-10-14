@@ -806,7 +806,7 @@ module RubyLLM
     end
 
     # Lets the model run code in a Sandbox. The model gets one tool,
-    # +run_code+, that runs Ruby, Python, or a shell script in a fresh run
+    # +run_code+, that runs Ruby, Python, JavaScript, or a shell script in a fresh run
     # directory, with read-only copies of the conversation's files, and
     # returns the output and every file the code writes there as
     # attachments on the tool result. The options are:
@@ -818,15 +818,20 @@ module RubyLLM
     #                 (WorkspaceSandbox is +workspace+) or a Hash of names
     #                 to sandboxes. Each call that asks waits for #approve.
     # +languages+:: the languages the model may use, from +:ruby+,
-    #               +:python+, and +:shell+. Default: Ruby and shell, plus
-    #               Python when +python:+ declares packages.
+    #               +:python+, +:javascript+, and +:shell+. Default: Ruby
+    #               and shell, plus Python and JavaScript when their
+    #               packages are declared.
     # +gems+:: gems installed once and available to every Ruby run.
     # +python+:: Python packages installed once and available to every
     #            Python run.
+    # +npm+:: npm packages installed once, without their install scripts,
+    #         and available to every JavaScript run.
     # +gem_home+:: a GEM_HOME with gems already installed, used instead
     #              of +gems+.
     # +virtualenv+:: a Python virtualenv with packages already installed,
     #                used instead of +python+.
+    # +node_modules+:: a +node_modules+ directory with packages already
+    #                  installed, used instead of +npm+.
     # +mounts+:: directories mounted read-only in each run directory, keyed
     #            by their path there, or a Proc called before each run
     #            that returns them.

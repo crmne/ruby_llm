@@ -5,7 +5,7 @@ require 'stringio'
 
 module RubyLLM
   # CodeExecution is the +run_code+ tool Chat#with_code_execution gives the
-  # model. Each call runs Ruby, Python, or a shell script in a Sandbox, in a
+  # model. Each call runs Ruby, Python, JavaScript, or a shell script in a Sandbox, in a
   # fresh run directory with read-only copies of the conversation's files,
   # and returns the exit code, the output, and every file the code wrote
   # there as an attachment on the tool result.
@@ -18,10 +18,10 @@ module RubyLLM
   #   chat.tools[:run_code].escalations # => ["workspace"]
   class CodeExecution < Tool
     # The languages code execution can run.
-    LANGUAGES = %i[ruby python shell].freeze
+    LANGUAGES = %i[ruby python javascript shell].freeze
 
     # The options Chat#with_code_execution accepts.
-    OPTIONS = %i[sandbox escalate_to languages gems python gem_home virtualenv mounts].freeze
+    OPTIONS = %i[sandbox escalate_to languages gems python npm gem_home virtualenv node_modules mounts].freeze
 
     # Characters of standard output and of standard error kept per run.
     MAX_OUTPUT = 20_000
@@ -145,10 +145,11 @@ module RubyLLM
       end
 
       def validate_packages(options)
-        raise ArgumentError, 'pass gems: or gem_home:, not both' if options.key?(:gems) && options.key?(:gem_home)
-        return unless options.key?(:python) && options.key?(:virtualenv)
+        { gems: :gem_home, python: :virtualenv, npm: :node_modules }.each do |declared, prebuilt|
+          next unless options.key?(declared) && options.key?(prebuilt)
 
-        raise ArgumentError, 'pass python: or virtualenv:, not both'
+          raise ArgumentError, "pass #{declared}: or #{prebuilt}:, not both"
+        end
       end
 
       def validate_mounts(mounts)
@@ -159,7 +160,8 @@ module RubyLLM
       end
 
       def languages_for(options)
-        default = options[:python] || options[:virtualenv] ? %i[ruby python shell] : %i[ruby shell]
+        default = [:ruby, (:python if options[:python] || options[:virtualenv]),
+                   (:javascript if options[:npm] || options[:node_modules]), :shell].compact
         languages = Array(options.fetch(:languages, default)).map { |language| language.to_s.to_sym }.uniq
         unsupported = languages - LANGUAGES
         if unsupported.any?
@@ -213,7 +215,8 @@ module RubyLLM
       @chat = chat
       @config = config
       @requested_languages = languages
-      @packages = Packages.new(sandbox: -> { isolated(self.sandbox) }, cache_dir: package_cache_dir, **packages)
+      node = NodeInstallation.current if languages.include?(:javascript)
+      @packages = Packages.new(sandbox: -> { isolated(self.sandbox) }, cache_dir: package_cache_dir, node:, **packages)
     end
 
     # Returns the default Sandbox calls run in. Raises ConfigurationError
@@ -355,7 +358,8 @@ module RubyLLM
     end
 
     def sandbox_key
-      @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
+      value = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
+      value.is_a?(String) ? Sandbox.constant(value) : value
     end
 
     def isolated(runner)
@@ -375,6 +379,7 @@ module RubyLLM
       workspace.copy_in(@attachments.call)
       mounted = workspace.mount(mounts.merge(@skills.call))
       script = workspace.write_source(language, code)
+      workspace.link_packages(@packages.node_modules) if language.name == :javascript && @packages.node_modules
       instrument(language, runner, name, tool_call) do |event|
         result = run_in_sandbox(runner, language.command(script), workspace, readable: mounted)
         files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE)
@@ -455,8 +460,10 @@ module RubyLLM
       notes = []
       gems = @packages.gem_names
       python = @packages.python_names
+      npm = @packages.npm_names
       notes << "Ruby #{RUBY_VERSION} has these gems: #{gems.join(', ')}." if gems.any?
       notes << "Python has these packages: #{python.join(', ')}." if python.any?
+      notes << "JavaScript has these npm packages: #{npm.join(', ')}." if npm.any?
       notes.join(' ') unless notes.empty?
     end
 

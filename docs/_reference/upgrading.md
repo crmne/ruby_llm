@@ -59,7 +59,7 @@ bin/rails db:migrate
 
 If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`.
 
 Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
 

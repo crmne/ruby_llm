@@ -90,7 +90,7 @@ loader.setup
 # MCP is a Model Context Protocol client: describe a server to connect to
 # in an MCP class, and Chat#with_mcp gives the model its tools. RubyLLM.mcp
 # connects to one inline.
-# Chat#with_code_execution lets the model run Ruby, Python, and shell code
+# Chat#with_code_execution lets the model run Ruby, Python, JavaScript, and shell code
 # in a Sandbox, by default the one set with Configuration#sandbox and read
 # through RubyLLM.sandbox. The model can ask to run one call in a wider
 # sandbox the application lists, and each such call waits for approval.

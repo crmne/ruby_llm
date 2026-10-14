@@ -36,7 +36,7 @@ The generator:
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs ActiveStorage for file attachments
 - Creates an initializer for provider configuration
-- Creates conventional AI app directories
+- Creates the conventional AI app directories: `app/agents`, `app/tools`, `app/schemas`, `app/prompts`, `app/skills`, `app/sandboxes`, `app/mcp`, and `app/evals`
 
 After running the generator:
 

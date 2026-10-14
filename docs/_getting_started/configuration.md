@@ -229,7 +229,7 @@ RubyLLM.configure do |config|
   config.max_run_time = Integer # Seconds before a persisted chat's run counts as crashed; defaults to 600
 
   # Code Execution
-  config.sandbox = ReadOnlySandbox # An MXC::Sandbox class or your own sandbox; defaults to nil
+  config.sandbox = "ApplicationSandbox" # The name of an MXC::Sandbox class or your own sandbox; defaults to nil
   config.package_cache_dir = String # Declared gems and Python packages; defaults to the OS user cache directory
 
   # Logging

@@ -18,8 +18,12 @@ module RubyLLM
   #   end
   #
   #   RubyLLM.configure do |config|
-  #     config.sandbox = ReadOnlySandbox
+  #     config.sandbox = "ReadOnlySandbox"
   #   end
+  #
+  # A String names the class and is looked up whenever a chat needs it,
+  # so in Rails the classes live in +app/sandboxes+, autoload, and reload
+  # like the rest of the application.
   #
   # A sandbox may be an MXC::Sandbox class or instance, or any other class
   # or object whose instances answer two methods:
@@ -56,11 +60,13 @@ module RubyLLM
 
     class << self
       # Returns a runner for the sandbox +value+ describes, or +nil+ for
-      # none.
+      # none. A String names the sandbox class, looked up on each call.
       #
       # Raises ConfigurationError for a value that is not a sandbox.
       def resolve(value) # :nodoc:
         return if value.nil?
+
+        value = constant(value) if value.is_a?(String)
         return MXC.new(value) if mxc?(value)
 
         instance = value.is_a?(Class) ? value.new : value
@@ -76,8 +82,7 @@ module RubyLLM
       #
       # Raises ArgumentError when the class has no name.
       def name_for(value) # :nodoc:
-        klass = value.is_a?(Class) ? value : value.class
-        base = klass.name.to_s.split('::').last.to_s.delete_suffix('Sandbox')
+        base = class_name(value).to_s.split('::').last.to_s.delete_suffix('Sandbox')
         if base.empty?
           raise ArgumentError, "Name the sandbox #{value.inspect} with a Hash: escalate_to: { name => sandbox }"
         end
@@ -93,7 +98,21 @@ module RubyLLM
         raise ConfigurationError, ['The configured sandbox cannot run on this machine.', reason].compact.join(' ')
       end
 
+      # Returns the class a String names. Raises ConfigurationError when
+      # nothing by that name is defined.
+      def constant(name) # :nodoc:
+        Object.const_get(name)
+      rescue NameError
+        raise ConfigurationError, "The sandbox #{name} is not defined"
+      end
+
       private
+
+      def class_name(value)
+        return value if value.is_a?(String)
+
+        (value.is_a?(Class) ? value : value.class).name
+      end
 
       def mxc?(value)
         defined?(::MXC::Sandbox) && (value.is_a?(::MXC::Sandbox) || (value.is_a?(Class) && value <= ::MXC::Sandbox))
