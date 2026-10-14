@@ -44,6 +44,8 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     FileUtils.mkdir_p(File.join(extensions, 'rspec-core-3.13.0'))
     File.write(File.join(extensions, 'rspec-core-3.13.0', 'gem.build_complete'), '')
     File.write(File.join(extensions, 'rspec-core-3.13.0', 'native.so'), '')
+    File.write(File.join(gem_dir, 'plugins', 'rspec-core_plugin.rb'), '')
+    File.write(File.join(gem_dir, 'plugins', 'csv_plugin.rb'), '')
     allow(installation).to receive(:bundled_gems).and_return(%w[csv])
   end
 
@@ -55,8 +57,8 @@ RSpec.describe RubyLLM::CodeExecution::RubyInstallation do
     expect(installation.denied).to contain_exactly(
       File.join(gem_dir, 'gems', 'rspec-core-3.13.0'),
       File.join(extensions, 'rspec-core-3.13.0', 'native.so'),
+      File.join(gem_dir, 'plugins', 'rspec-core_plugin.rb'),
       File.join(gem_dir, 'cache'),
-      File.join(gem_dir, 'plugins'),
       bundle
     )
   end

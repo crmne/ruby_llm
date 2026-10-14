@@ -7,9 +7,11 @@ module RubyLLM
     # The application's Ruby, as code execution mounts it: the installation
     # read-only, with every gem in its gem directory hidden except Ruby's
     # default and bundled gems, and every other gem directory the
-    # application uses hidden entirely.
+    # application uses hidden entirely. RubyGems lists the plugins
+    # directory on every +gem+ command, so only the application's plugins
+    # are hidden, not the directory: macOS refuses to list a hidden one.
     class RubyInstallation # :nodoc:
-      HIDDEN_DIRECTORIES = %w[cache doc plugins].freeze
+      HIDDEN_DIRECTORIES = %w[cache doc].freeze
       BUILD_MARKER = 'gem.build_complete'
 
       def self.current
@@ -51,7 +53,8 @@ module RubyLLM
         extensions = File.join(@gem_dir, 'extensions', Gem::Platform.local.to_s, Gem.extension_api_version,
                                stub.full_name)
         built = Dir.exist?(extensions) ? Dir.children(extensions) - [BUILD_MARKER] : []
-        [File.join(@gem_dir, 'gems', stub.full_name), *built.map { |name| File.join(extensions, name) }]
+        [File.join(@gem_dir, 'gems', stub.full_name), *built.map { |name| File.join(extensions, name) },
+         File.join(@gem_dir, 'plugins', "#{stub.name}_plugin.rb")]
       end
 
       def default_gems
