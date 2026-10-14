@@ -87,6 +87,14 @@ end
 
 Read-only tools run in every mode. A tool that does not say so counts as one that can change things.
 
+`read_only` and `requires_approval` answer different questions. `requires_approval` says a tool always needs a human, whatever the mode. `read_only` says a tool never changes anything, so a mode never needs to ask about it. Most tools declare neither:
+
+| Tool | No mode | `:read_only` | `:ask` | `:auto` | `:dangerous` |
+| --- | --- | --- | --- | --- | --- |
+| `read_only` | Runs | Runs | Runs | Runs | Runs |
+| Neither | Runs | Denied | Waits | Runs if in `allow:` | Runs |
+| `requires_approval` | Waits | Denied | Waits | Waits | Runs |
+
 [MCP]({% link _core_features/mcp.md %}) tools are read-only when their server marks them with the `readOnlyHint` annotation. That is the server's claim, so trust it as far as you trust the server.
 
 `run_code`, the [code execution]({% link _core_features/code-execution.md %}) tool, counts as read-only: it changes nothing outside its sandbox. Once you grant it a writable path, it counts as a tool that changes things.
