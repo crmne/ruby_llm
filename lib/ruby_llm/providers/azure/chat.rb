@@ -20,6 +20,20 @@ module RubyLLM
         def format_role(role)
           role.to_s
         end
+
+        private
+
+        # Grok on Azure reports cached tokens beside prompt_tokens, not inside
+        # them, so prompt_tokens is the uncached input.
+        def input_tokens(usage)
+          grok? ? usage['prompt_tokens'] : super
+        end
+
+        def grok?
+          return false unless @model
+
+          @model.family == 'grok' || @model.id.start_with?('grok')
+        end
       end
     end
   end

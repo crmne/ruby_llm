@@ -156,17 +156,13 @@ module RubyLLM
           Error.new(message, response: raw)
         end
 
-        # Cached tokens are normally part of prompt_tokens. A count above it
-        # was reported outside the prompt, so the prompt tokens stand as
-        # they are.
         def input_tokens(usage)
           return usage['prompt_cache_miss_tokens'] if usage['prompt_cache_miss_tokens']
 
           prompt_tokens = usage['prompt_tokens']
           return unless prompt_tokens
 
-          standard_tokens = prompt_tokens.to_i - cache_read_tokens(usage).to_i - cache_write_tokens(usage).to_i
-          standard_tokens.negative? ? prompt_tokens.to_i : standard_tokens
+          [prompt_tokens.to_i - cache_read_tokens(usage).to_i - cache_write_tokens(usage).to_i, 0].max
         end
 
         def output_tokens(usage)

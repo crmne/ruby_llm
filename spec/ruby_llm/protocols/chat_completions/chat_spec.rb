@@ -534,19 +534,6 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       expect(message.tokens.output).to eq(4)
     end
-
-    it 'keeps the prompt tokens when the provider counts cache hits outside them' do
-      body = {
-        'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => '4' } }],
-        'usage' => { 'prompt_tokens' => 7, 'completion_tokens' => 1, 'total_tokens' => 8,
-                     'prompt_tokens_details' => { 'cached_tokens' => 162, 'text_tokens' => 7 } }
-      }
-      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
-
-      message = described_class.parse_completion_body(body, raw: nil)
-
-      expect(message.tokens).to have_attributes(input: 7, cache_read: 162)
-    end
   end
 
   describe 'thinking round-trips' do
