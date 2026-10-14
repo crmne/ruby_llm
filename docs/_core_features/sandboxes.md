@@ -128,18 +128,37 @@ Escalation is built so that a mistake or a hostile model cannot widen what code 
 
 ## Building a Coding Agent
 
-A coding agent usually offers modes, such as ask before editing, edit freely, or skip permissions entirely. With sandboxes, each mode is only a choice of default and escalations. Switch modes by calling `with_code_execution` again:
+A coding agent works on a project, so even its smallest sandbox reads it. Start from a sandbox that reads the project and starts there, and widen it by subclassing:
 
 ```ruby
-class FullDiskSandbox < MXC::Sandbox
-  directory Rails.root.join("storage/workspace")
-  writable Rails.root.join("storage/workspace"), Dir.tmpdir
+PROJECT = Rails.root.join("storage/workspace")
+
+class ProjectSandbox < MXC::Sandbox
+  directory PROJECT
+  readable PROJECT
+  timeout 300
+end
+
+class WorkspaceSandbox < ProjectSandbox
+  writable PROJECT
+end
+
+class OnlineSandbox < ProjectSandbox
+  network allow: ["rubygems.org", "pypi.org", "files.pythonhosted.org"]
+end
+
+class FullDiskSandbox < WorkspaceSandbox
+  writable Dir.tmpdir
   network true
   timeout 600
 end
+```
 
+A coding agent usually offers modes, such as ask before editing, edit freely, or skip permissions entirely. With sandboxes, each mode is only a choice of default and escalations. Switch modes by calling `with_code_execution` again:
+
+```ruby
 MODES = {
-  ask: { sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox] },
+  ask: { sandbox: ProjectSandbox, escalate_to: [WorkspaceSandbox, OnlineSandbox] },
   workspace: { sandbox: WorkspaceSandbox, escalate_to: [OnlineSandbox] },
   dangerously_skip_permissions: { sandbox: FullDiskSandbox }
 }.freeze
@@ -147,9 +166,9 @@ MODES = {
 chat.with_code_execution(**MODES.fetch(:ask))
 ```
 
-In `:ask`, the code reads and computes freely, and every edit or download waits for the user. In `:workspace`, it edits the project without asking, and only reaching the network asks. Skipping permissions means a wider default with nothing to ask for, and the code still runs in a sandbox: it never reaches what `FullDiskSandbox` leaves out.
+In `:ask`, the code reads the project and computes freely, and every edit or download waits for the user. In `:workspace`, it edits the project without asking, and only reaching the network asks. Skipping permissions means a wider default with nothing to ask for, and the code still runs in a sandbox: it never reaches what `FullDiskSandbox` leaves out.
 
-A sandbox with a `directory` starts the code there, so a workspace sandbox sees the project as its working directory. The run directory still exists: the conversation's files and the files to return are under `$RUN_DIR`, and the tool's description tells the model so.
+A sandbox with a `directory` starts the code there, so each of these sees the project as its working directory. The run directory still exists: the conversation's files and the files to return are under `$RUN_DIR`, and the tool's description tells the model so.
 
 ## A Server Application
 
@@ -167,7 +186,7 @@ class ReportAgent < RubyLLM::Agent
 end
 ```
 
-Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone. Memory and CPU limits belong to the container your application runs in, and runs inherit them.
+Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone. Memory and CPU limits belong on the sandbox too, but mxc cannot set them per run yet. Until it can, set them on the container your application runs in, and runs inherit them.
 
 ## Writing Your Own Sandbox
 
