@@ -2,7 +2,7 @@
 layout: default
 title: What's New in 2.2
 nav_order: 4
-description: Let models run Ruby, Python, and shell code in a sandbox on your own servers, decide which tool calls run with permission modes, and run each persisted chat in one process at a time, in RubyLLM 2.2.
+description: Let models run Ruby, Python, and shell code in a sandbox on your own servers, decide which tool calls run with permission modes, teach them your workflows with skills, and run each persisted chat in one process at a time, in RubyLLM 2.2.
 ---
 
 # {{ page.title }}
@@ -17,10 +17,11 @@ After reading this guide, you will know:
 * How to give it gems, Python packages, and programs such as LibreOffice.
 * How to measure each run.
 * How permission modes decide which tool calls run, wait, or are denied.
+* How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
 * How to upgrade.
 
-RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets you decide how much it may do without asking, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
+RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets you decide how much it may do without asking, teaches it your workflows with skills, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
 
 ## Code Execution
 
@@ -96,6 +97,28 @@ Mark the tools that change nothing with `read_only`, and MCP tools follow their 
 With code execution, the model can ask for more with a `request_permission` tool: a network host such as `pypi.org`, or a path on your server, with its reason. Once you grant a package registry, it can `gem install` and `pip install` into an environment kept for the chat. Persisted chats store their mode and grants, so an approval in one process takes effect in the job that resumes the chat. Agents declare a starting mode with `permissions :ask`.
 
 See [Permissions]({% link _core_features/permissions.md %}).
+
+## Skills
+
+Some tasks need a procedure, not a sentence: how your company formats an invoice, or the script that turns a spreadsheet into slides. Putting every procedure in every chat's instructions fills the model's context with work it rarely does. Skills keep them in folders, in the open [Agent Skills format](https://agentskills.io/specification), and the model loads one only when a task needs it:
+
+```
+app/skills/invoices/
+├── SKILL.md
+├── references/TAX_RULES.md
+└── scripts/build_invoice.py
+```
+
+```ruby
+chat = RubyLLM.chat.with_skills(:invoices).with_code_execution(python: %w[reportlab])
+chat.ask "Bill order 1042 to ACME", with: "order-1042.json"
+```
+
+Every request lists each skill's name and description. The model loads a skill's instructions with its `load_skill` tool, and the files they mention with the same tool, one at a time. With code execution, each skill folder is mounted read-only in every run at `skills/<name>/`, so the skill's scripts run in the sandbox and the files they write come back as attachments.
+
+`with_skills` with no arguments gives every skill in `app/skills`, engines add their own folders, and agents name theirs with `skills :invoices, :refunds`. A `SKILL.md` that breaks the specification raises when you configure the chat, not in the middle of a conversation. RubyLLM ships no skills and never downloads them.
+
+See [Skills]({% link _core_features/skills.md %}).
 
 ## One Process at a Time
 

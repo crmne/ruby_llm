@@ -93,6 +93,9 @@ module RubyLLM
     # when explicitly disabled, or +nil+ when not configured.
     attr_reader :code_execution
 
+    # The Skill objects given with #with_skills, empty without skills.
+    attr_reader :skills
+
     # The Context this chat sends requests through, or +nil+ for the global
     # configuration.
     attr_reader :context
@@ -155,6 +158,8 @@ module RubyLLM
       @code_execution = nil
       @code_execution_tool = nil
       @permission_request_tool = nil
+      @skills = []
+      @skill_loader = Skill::Loader.new(skills: -> { @skills }, code_execution: -> { !@code_execution_tool.nil? })
       @permissions = nil
       @permission_allow = Permissions.allow([], nil)
       @permission_grants = Permissions.grants({})
@@ -525,7 +530,7 @@ module RubyLLM
     # Raises ArgumentError when two tools share a name.
     def tools
       offered = @tools.reject { |_, tool| hidden_from_model?(tool) }
-      built_in = [@code_execution_tool, (@permission_request_tool if @permissions)]
+      built_in = [@code_execution_tool, (@permission_request_tool if @permissions), (@skill_loader if skills.any?)]
       [*built_in, *mcp.flat_map(&:tools)].compact.each_with_object(offered) do |tool, tools|
         next if hidden_from_model?(tool)
 
@@ -854,6 +859,7 @@ module RubyLLM
                                CodeExecution.new(
                                  sandbox: -> { Sandbox.resolve(@config.sandbox) },
                                  attachments: -> { messages.flat_map(&:attachments) },
+                                 mounts: -> { skills.to_h { |skill| [Skill::Loader.mount_path(skill), skill.path] } },
                                  chat: self,
                                  config: -> { @config },
                                  package_cache_dir: @config.package_cache_dir,
@@ -864,6 +870,33 @@ module RubyLLM
                              end
       @permission_request_tool = (CodeExecution::PermissionRequest.new(method(:grant_sandbox_access)) if options)
       @code_execution = options
+      self
+    end
+
+    # Gives the model skills: folders of instructions, scripts, and files
+    # in the open Agent Skills format. Called bare or with +true+, adds
+    # every skill directly under Skill.roots, +app/skills+ by default.
+    # Symbols name folders under the roots, and Strings and Pathnames are
+    # paths to skill folders. Pass +false+ to remove every skill. Passing
+    # +nil+ raises ArgumentError. Returns +self+.
+    #
+    #   chat.with_skills
+    #   chat.with_skills(:invoices, :reports)
+    #   chat.with_skills(:invoices, "vendor/skills/pdf")
+    #   chat.with_skills(false)
+    #
+    # Every request lists each skill's name and description, and the model
+    # loads a skill's instructions and files with its +load_skill+ tool.
+    # With #with_code_execution, each skill folder is mounted read-only in
+    # every run at <tt>skills/<name>/</tt>, so the model can run the
+    # skill's scripts.
+    #
+    # Raises SkillNotFoundError for a missing skill, InvalidSkillError for
+    # a +SKILL.md+ that breaks the specification, and ArgumentError when
+    # two skills share a name.
+    def with_skills(*skills)
+      selection = Skill.selection(skills)
+      @skills = selection == false ? [] : Skill.merge(@skills, Skill.resolve(selection)).freeze
       self
     end
 
@@ -1500,11 +1533,18 @@ module RubyLLM
     # the original attachments while each provider's upload is memoized on
     # them. An attachment's store keeps its uploads for later processes.
     def preprocessed_messages(list = messages)
-      list = CodeExecution.for_model(request_history(list))
+      list = CodeExecution.for_model(with_skill_listing(request_history(list)))
       return list unless @provider
 
       @provider.preprocess_messages(list, model: @model, protocol: @protocol,
                                           unsupported_attachment: unsupported_attachment_handler)
+    end
+
+    def with_skill_listing(list)
+      return list if skills.empty?
+
+      index = list.index { |message| message.role != :system } || list.size
+      list.dup.insert(index, Message.new(role: :system, content: @skill_loader.listing))
     end
 
     def unsupported_attachment_handler

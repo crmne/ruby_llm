@@ -1,0 +1,648 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        ticket code for ticket 6?"}],"instructions":"You have skills: folders of instructions,
+        scripts, and files for specific tasks. When a task matches a skill, call load_skill
+        with its name and follow the instructions it returns. Load the files the instructions
+        mention with load_skill as well, one at a time.\n\nThis conversation cannot
+        run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n-
+        csv-report: Summarizes a CSV file into a Markdown report. Use when someone
+        asks for a report on a CSV file.\n- ticket-codes: Builds the official code
+        for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","parameters":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 16:12:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2618'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_065ec5569a771b52016acfa9fac56887d2ba186d4b57fb6aba",
+          "object": "response",
+          "created_at": 1791994362,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1791994365,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You have skills: folders of instructions, scripts, and files for specific tasks. When a task matches a skill, call load_skill with its name and follow the instructions it returns. Load the files the instructions mention with load_skill as well, one at a time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV file into a Markdown report. Use when someone asks for a report on a CSV file.\n- ticket-codes: Builds the official code for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_065ec5569a771b52016acfa9fb6b6c87d2bcd0a50f5a183b24",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqz6n9k3-AvVJaPRrLydlZsRDzLCKobkDOej7ZTEp-5MBdFCqDuCQfN3HvoRY-GF3BaYwxWlhkaA5izA1q-Iq9xoQj20U7iYvT_1sZe1hOfeVYY-BjOKK9DPmbIUjbMc1hFwQEHSZhyTWzzlEGRI70Ty1u53VWd3wjUpRWzaTqghCd44nkSnzx_GGPYy6IO7JfUopuHnSiH-qtySyAf0yhKo8stL0m2XSj8Ap0K3lGiTc5KvnK7XOkueuQekWDaL9IuOvaA_zUlXKuuIYGP2JBBeAFKVSbBuO9ejPL7dGmZFm1ztJEkAvUjnpmTnqKeog1Tlw_LmbEUfRDE03QHC8o1lLE4d0bUru1OpZZr48LHZ1xkV3yH7ZVwsNSaoRXm4peX4UtHCHjVz5dRx9_5EbVSk6zPZOegteafoVKRNWNUoJn76Cl-ZRwWJk_qppJ9BgJEe2ZuYex-1ZWLHlhu9fgp5sXfBjBGJtLf-bkLCtS4cFdBLsoV72mSVhEQwrRfTOUWkON54ALt3HJOfMFo_D819-damkBMzIQHyRCPDvnh2Etsut4s6Q5wfCv4OzAknQYZez5tnb1zy0JtjmFSdKuXD8Dub-YD29ZzIemQnBBlZYCbClFTip2UsypXtxej6fa46OLwJbqvW-TJHmheLBXcZ7aRynGCP2wiewzHC2zG5uaW7pGTZYrMbhwW8Z0BCb47XcSJCufV7vvuTJZcq47m3n_F-cHqTQJD7gZZCoU_YS1QCKxvkiBGMgh-rV_LxcCkYUTQqR3rzixIBbclmFdnqv0PDtPjrKp6o-Q0H9QVvVb226A7M785i4bA37nR5jGGHX20chlExrAcumeI6KEjoThxiJzDatxnysmQ9Pe4Rl79yEwo6GTXTSUFr2q-EiDajJEyhyTRSb8gPIKyEAdWf2S0pwLRH-moirfToOHRjk8jKZdul1Un7pAjOlCjocpw2NTVla4h6PsJte1DH-H4u0JovnEnMmfdryCKvZc9r88rxJMas7qxTBCQ-ulpH2xi5ZGUSmNjfLBeyoChv9DNIhs3mHT0hEFi0XYXozY9gyyOo4WOsFvuMWR0MSeRA9r3vHVhE4R1DfoJsEJbYWdgz55M8s7kM4Wa6iXA4DM_DhHUHAOSx56l1S9aCLBD8QUOK9ksfiHa8DUxtI3-YhC9XMVzvfknem2UBMjjiXViMCmyvlmNLxis9VEz31JCYWkr24d-QhR2WUDNvJs-LFFG4tPVDjqRFhO-o8eyPlzznXJle1L7WvrjglyxZI7j8v-PynaqUnhecMKYGrdUU5RILRJN_yR2SDPAlvfzCv5llG-jRo6U-eO54bpHj9mWsBEulQZoqEItCCzbjr_1_o4au_FT_bT1FSo7P6roM6xcCLmgtOFPuqH9YJBroJCU2c1I3quoGt6yv0mPMP6xekJqCedVJuXH7Rk9JBB499lMG267BQJoTipaWRxAHYCV1MPszUUUgfLTpLNcgVaKVrCJBW0N--kSzbrtqxSkMcDf2ZSp8WVFQsGRwfNtNcLvmSWWY0-7BeYLS5elTRpJYFykvVXV0DBRQVZABMCKLb0pUFFMVIHW_hCllchPIJPNTQ5XkNfiNhRh0OQMbw2MjPS_kEGbhcaaXVOolvLG28iAxBmNhD0Pk6HDvo_CqB_Yi3E2g88bsL9d77lj-96zWcy_82iyYx8nsb2edQ1b-T06KRfnkjpplKdYfvZFDoH_lTg38M7Wdut1nNczCJFd3IpLVqFb73EE8i7d9X_pXWuX9YAbmZ208SjLFckhMJBBlbRmkk30G5fUEIj1762t-5aOh1dIRo-q3HiyC1I2PfjjE4TvFlUoRMdtkRKfq-PwHkyu4mHu-PfoXqsFEKTOmxYgABfwq1mtg_-0asuHuYjMu4cQwJytqJ-mwHhZzwWvMceVsm4oFta5vJjNN3Rw4aWjaxw9wCdTRhm3os5XLb2tbslnJI91Jwt7yr1s9PQlXAUbluZYHQ7sh_WrYeWCXH0lx_irN0jTiYUDPvY0vA0J5_vIQclKsUNdW_nkDElDKujFG5vLGaXgkuZDQVruWq4dMfJZRphGzuVTXotNvwMyPUdhm6v8BfG2JRqadp8UpWMVvFY2QyG57uNQPKl2vJlkbtFaLzqF8cae-Y5Dh0wX0RykBsLsy5bCVaKxgJ2dj5hshjT1ew9LDiWZse8xrz0U3PUBfEbSOs2VA94rumCV0eWGJGyEkzCWDJV35pocS4U3r8a9VDOeSihUurweT0u18qAB5jIJZ5nVvnf-XtJ7d-POEzGfJCQuszTYw7QB5heu1cvc-_xNRQ_RNk5_J3-uLsJHOADo1q1W2D6vR0j303QlmAw3jZDHQiM-gBJ7K6cHhZgNr9eMvqRf5MB-MVMaKjqW6ADjfpUkJuzDEq-34L4FeKPXqXOk04yfPrY6a6OuDCZhIcF35ghk6lMAVkjerh1iC_m2YV6bupJQsPEhvTe5Op9mBKkE9ooTqAUbQlj3zkECpsxtFPpPVcjsB16ADzi1UTEYN8gnDQ7Emj7M5XRjUTrZsDMNunid-4ThQYO6JOXp9uz63CPXgtA_1cXleCYLL1Gc-QY2iijVTKmotHcpI7uheQxhcc82MfAYWIsDDM2phjYaUcOLYCWt5_ZATnSFXt-RQUZdSUxunF9J1M-lCqfticPDNrIhyrFZs38TfXSvsPrLkh_7v473nGpRxZqxmBsDwLAiINodHnMcqTkdgel-ZfyC7-q-zlfw-n7L2jrauutSBlgOi_J73UaKW3avPhlsKI0usWRoUiKn2KtAzzAWSP35cZgEXAmgXK2KCEHXmLGS0zVAn5LF6a6x-qU_qBUEPsWf35Aa_SjDgTeXVa2XoEx049XvpSmo3U31d40AL4Rego45idSjNfc4llRFARwX0v6jywBjC0mhn8NhWnrEpOqIFc3efgcTO0qgmHpWVjxwjsMkYlh3p1aWHtzX-45G6eVvo5bO4ARihau0qaw2nJOswtllmxgaKqFyaPbZgECE0UNBDsXDmvmMyV4Y_wVUnB3gAmoTxMcDavuk2-Ly_RrZUWzKE3-elgMPoi3nhgplX0mzqqU23r-r8_vceiloMZVoXVn37TmuIged_cnqJCC6RWlBJPRA0j6aO4mHTw3e2zQjd2FdEvxQSekdsF_hMAYT_puUqpO1XYz0__OAJfTDeaFglhVZ3nBBbIQoiw1XuUkJ9mPAUQD7MQ8d8RRDVnSOCVg3rUvU1slsb45sCdsk2H-Lh_QPlCaSDqVTufFkNG7OTe0bGzfVEWdJ62MJ8BWjHVxJrnx9newiinWeE3TboYatB_NnlduDQE0M_POWsYGLden58p57l43zQ9YI5zmctR_-F6hJ5qRFnYrA1Q0lgU28zS7rMWMv8bWbmCatF19k5B3OZIzaim07So6N0J7cKYkBOUUdEdguyKLa1HWg-WUpTN6Q3ls39kLPSFEp88QYhmjl8QYRaU5cjp2kFR6Z0rgJs4E5KEeEfR5nuHRM9THLt5kj-aHZRg9FvH5sLbSewRLAIwjbZwhrHiNgWQJvtFARz4JWgGXJs4KmKPX2dYLOwpiuFnOeBAd08_eH0Ct8-oYL1e-LUYY1to8AbtBnvriDprNkQ6u9Bqsiw0okLJshjYrAmIoAojbK0OPNsfBYhNgo36dtdigRrCvmtuDGyX68KKC2qKOVssDJeBYbvqhldrBggXOXvPCg1kGZTUbn8ocYo2jJf19pe43SQPCafk52582ZX1lqhKcYe3MfqBMRnzGsuW7FLgp_34c9UaIzlL7Ql6zvGXkR4_MctsFsYYiKKj0UCNb1VzcvaNufz5wh8dymQgz63iqNO_CV3foMHnnduwiu12HHWW6p2dAVWwdl0vXvBghg-oJHc0pjjCxjXOhGdTQmzV9EkE95DJHnxXSZNCzuNU4V4Eo_CZU6R-1o2Yvp4lZd0GX1HlKfFsgwZ7Y8le2z5gk",
+              "summary": []
+            },
+            {
+              "id": "fc_065ec5569a771b52016acfa9fd370487d2a4eaecfba65dc848",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"skill\":\"ticket-codes\"}",
+              "call_id": "call_UCF1gY3gDe6OzGm0wUu8Uvaj",
+              "name": "load_skill"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Loads a skill's instructions, or a file inside a skill's folder that its instructions mention. Call it with only skill to get the instructions before following a skill, and with file, a path relative to the skill folder, to read one of its files.",
+              "name": "load_skill",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "description": "The name of the skill"
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "A file path relative to the skill folder. Leave it out for the instructions"
+                  }
+                },
+                "required": [
+                  "skill"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 258,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 214,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 472
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Wed, 14 Oct 2026 16:12:45 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        ticket code for ticket 6?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqz6n9k3-AvVJaPRrLydlZsRDzLCKobkDOej7ZTEp-5MBdFCqDuCQfN3HvoRY-GF3BaYwxWlhkaA5izA1q-Iq9xoQj20U7iYvT_1sZe1hOfeVYY-BjOKK9DPmbIUjbMc1hFwQEHSZhyTWzzlEGRI70Ty1u53VWd3wjUpRWzaTqghCd44nkSnzx_GGPYy6IO7JfUopuHnSiH-qtySyAf0yhKo8stL0m2XSj8Ap0K3lGiTc5KvnK7XOkueuQekWDaL9IuOvaA_zUlXKuuIYGP2JBBeAFKVSbBuO9ejPL7dGmZFm1ztJEkAvUjnpmTnqKeog1Tlw_LmbEUfRDE03QHC8o1lLE4d0bUru1OpZZr48LHZ1xkV3yH7ZVwsNSaoRXm4peX4UtHCHjVz5dRx9_5EbVSk6zPZOegteafoVKRNWNUoJn76Cl-ZRwWJk_qppJ9BgJEe2ZuYex-1ZWLHlhu9fgp5sXfBjBGJtLf-bkLCtS4cFdBLsoV72mSVhEQwrRfTOUWkON54ALt3HJOfMFo_D819-damkBMzIQHyRCPDvnh2Etsut4s6Q5wfCv4OzAknQYZez5tnb1zy0JtjmFSdKuXD8Dub-YD29ZzIemQnBBlZYCbClFTip2UsypXtxej6fa46OLwJbqvW-TJHmheLBXcZ7aRynGCP2wiewzHC2zG5uaW7pGTZYrMbhwW8Z0BCb47XcSJCufV7vvuTJZcq47m3n_F-cHqTQJD7gZZCoU_YS1QCKxvkiBGMgh-rV_LxcCkYUTQqR3rzixIBbclmFdnqv0PDtPjrKp6o-Q0H9QVvVb226A7M785i4bA37nR5jGGHX20chlExrAcumeI6KEjoThxiJzDatxnysmQ9Pe4Rl79yEwo6GTXTSUFr2q-EiDajJEyhyTRSb8gPIKyEAdWf2S0pwLRH-moirfToOHRjk8jKZdul1Un7pAjOlCjocpw2NTVla4h6PsJte1DH-H4u0JovnEnMmfdryCKvZc9r88rxJMas7qxTBCQ-ulpH2xi5ZGUSmNjfLBeyoChv9DNIhs3mHT0hEFi0XYXozY9gyyOo4WOsFvuMWR0MSeRA9r3vHVhE4R1DfoJsEJbYWdgz55M8s7kM4Wa6iXA4DM_DhHUHAOSx56l1S9aCLBD8QUOK9ksfiHa8DUxtI3-YhC9XMVzvfknem2UBMjjiXViMCmyvlmNLxis9VEz31JCYWkr24d-QhR2WUDNvJs-LFFG4tPVDjqRFhO-o8eyPlzznXJle1L7WvrjglyxZI7j8v-PynaqUnhecMKYGrdUU5RILRJN_yR2SDPAlvfzCv5llG-jRo6U-eO54bpHj9mWsBEulQZoqEItCCzbjr_1_o4au_FT_bT1FSo7P6roM6xcCLmgtOFPuqH9YJBroJCU2c1I3quoGt6yv0mPMP6xekJqCedVJuXH7Rk9JBB499lMG267BQJoTipaWRxAHYCV1MPszUUUgfLTpLNcgVaKVrCJBW0N--kSzbrtqxSkMcDf2ZSp8WVFQsGRwfNtNcLvmSWWY0-7BeYLS5elTRpJYFykvVXV0DBRQVZABMCKLb0pUFFMVIHW_hCllchPIJPNTQ5XkNfiNhRh0OQMbw2MjPS_kEGbhcaaXVOolvLG28iAxBmNhD0Pk6HDvo_CqB_Yi3E2g88bsL9d77lj-96zWcy_82iyYx8nsb2edQ1b-T06KRfnkjpplKdYfvZFDoH_lTg38M7Wdut1nNczCJFd3IpLVqFb73EE8i7d9X_pXWuX9YAbmZ208SjLFckhMJBBlbRmkk30G5fUEIj1762t-5aOh1dIRo-q3HiyC1I2PfjjE4TvFlUoRMdtkRKfq-PwHkyu4mHu-PfoXqsFEKTOmxYgABfwq1mtg_-0asuHuYjMu4cQwJytqJ-mwHhZzwWvMceVsm4oFta5vJjNN3Rw4aWjaxw9wCdTRhm3os5XLb2tbslnJI91Jwt7yr1s9PQlXAUbluZYHQ7sh_WrYeWCXH0lx_irN0jTiYUDPvY0vA0J5_vIQclKsUNdW_nkDElDKujFG5vLGaXgkuZDQVruWq4dMfJZRphGzuVTXotNvwMyPUdhm6v8BfG2JRqadp8UpWMVvFY2QyG57uNQPKl2vJlkbtFaLzqF8cae-Y5Dh0wX0RykBsLsy5bCVaKxgJ2dj5hshjT1ew9LDiWZse8xrz0U3PUBfEbSOs2VA94rumCV0eWGJGyEkzCWDJV35pocS4U3r8a9VDOeSihUurweT0u18qAB5jIJZ5nVvnf-XtJ7d-POEzGfJCQuszTYw7QB5heu1cvc-_xNRQ_RNk5_J3-uLsJHOADo1q1W2D6vR0j303QlmAw3jZDHQiM-gBJ7K6cHhZgNr9eMvqRf5MB-MVMaKjqW6ADjfpUkJuzDEq-34L4FeKPXqXOk04yfPrY6a6OuDCZhIcF35ghk6lMAVkjerh1iC_m2YV6bupJQsPEhvTe5Op9mBKkE9ooTqAUbQlj3zkECpsxtFPpPVcjsB16ADzi1UTEYN8gnDQ7Emj7M5XRjUTrZsDMNunid-4ThQYO6JOXp9uz63CPXgtA_1cXleCYLL1Gc-QY2iijVTKmotHcpI7uheQxhcc82MfAYWIsDDM2phjYaUcOLYCWt5_ZATnSFXt-RQUZdSUxunF9J1M-lCqfticPDNrIhyrFZs38TfXSvsPrLkh_7v473nGpRxZqxmBsDwLAiINodHnMcqTkdgel-ZfyC7-q-zlfw-n7L2jrauutSBlgOi_J73UaKW3avPhlsKI0usWRoUiKn2KtAzzAWSP35cZgEXAmgXK2KCEHXmLGS0zVAn5LF6a6x-qU_qBUEPsWf35Aa_SjDgTeXVa2XoEx049XvpSmo3U31d40AL4Rego45idSjNfc4llRFARwX0v6jywBjC0mhn8NhWnrEpOqIFc3efgcTO0qgmHpWVjxwjsMkYlh3p1aWHtzX-45G6eVvo5bO4ARihau0qaw2nJOswtllmxgaKqFyaPbZgECE0UNBDsXDmvmMyV4Y_wVUnB3gAmoTxMcDavuk2-Ly_RrZUWzKE3-elgMPoi3nhgplX0mzqqU23r-r8_vceiloMZVoXVn37TmuIged_cnqJCC6RWlBJPRA0j6aO4mHTw3e2zQjd2FdEvxQSekdsF_hMAYT_puUqpO1XYz0__OAJfTDeaFglhVZ3nBBbIQoiw1XuUkJ9mPAUQD7MQ8d8RRDVnSOCVg3rUvU1slsb45sCdsk2H-Lh_QPlCaSDqVTufFkNG7OTe0bGzfVEWdJ62MJ8BWjHVxJrnx9newiinWeE3TboYatB_NnlduDQE0M_POWsYGLden58p57l43zQ9YI5zmctR_-F6hJ5qRFnYrA1Q0lgU28zS7rMWMv8bWbmCatF19k5B3OZIzaim07So6N0J7cKYkBOUUdEdguyKLa1HWg-WUpTN6Q3ls39kLPSFEp88QYhmjl8QYRaU5cjp2kFR6Z0rgJs4E5KEeEfR5nuHRM9THLt5kj-aHZRg9FvH5sLbSewRLAIwjbZwhrHiNgWQJvtFARz4JWgGXJs4KmKPX2dYLOwpiuFnOeBAd08_eH0Ct8-oYL1e-LUYY1to8AbtBnvriDprNkQ6u9Bqsiw0okLJshjYrAmIoAojbK0OPNsfBYhNgo36dtdigRrCvmtuDGyX68KKC2qKOVssDJeBYbvqhldrBggXOXvPCg1kGZTUbn8ocYo2jJf19pe43SQPCafk52582ZX1lqhKcYe3MfqBMRnzGsuW7FLgp_34c9UaIzlL7Ql6zvGXkR4_MctsFsYYiKKj0UCNb1VzcvaNufz5wh8dymQgz63iqNO_CV3foMHnnduwiu12HHWW6p2dAVWwdl0vXvBghg-oJHc0pjjCxjXOhGdTQmzV9EkE95DJHnxXSZNCzuNU4V4Eo_CZU6R-1o2Yvp4lZd0GX1HlKfFsgwZ7Y8le2z5gk"},{"type":"function_call","call_id":"call_UCF1gY3gDe6OzGm0wUu8Uvaj","name":"load_skill","arguments":"{\"skill\":\"ticket-codes\"}"},{"type":"function_call_output","call_id":"call_UCF1gY3gDe6OzGm0wUu8Uvaj","output":"#
+        Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
+        folder. This conversation cannot run code, so the skill''s scripts cannot
+        run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
+        Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
+        Build the code for the ticket number you were given.\n3. Answer with the code
+        and nothing else."}],"instructions":"You have skills: folders of instructions,
+        scripts, and files for specific tasks. When a task matches a skill, call load_skill
+        with its name and follow the instructions it returns. Load the files the instructions
+        mention with load_skill as well, one at a time.\n\nThis conversation cannot
+        run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n-
+        csv-report: Summarizes a CSV file into a Markdown report. Use when someone
+        asks for a report on a CSV file.\n- ticket-codes: Builds the official code
+        for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","parameters":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 16:12:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2425'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0edfe27c23901fd9016acfa9fdb48c87d2b749c3afac10cd79",
+          "object": "response",
+          "created_at": 1791994365,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1791994368,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You have skills: folders of instructions, scripts, and files for specific tasks. When a task matches a skill, call load_skill with its name and follow the instructions it returns. Load the files the instructions mention with load_skill as well, one at a time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV file into a Markdown report. Use when someone asks for a report on a CSV file.\n- ticket-codes: Builds the official code for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0edfe27c23901fd9016acfa9fe55ac87d2a134212e475b499d",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqz6oAW0BVHU8de6ad4d_jGu8KSrIEL1AFU3jMMr-jeDxCgv7VFohE5nj3O5GCMF_Ed8fabCl9U0BY2kH2ioHWsgKNAwFnRAJRtxu34iz8rHD3cJkbCB_oVevuqC5Ni8uIO76dyYx_FVOuKx40oSUa_UGpYWcmflxzSK3FuidUkqEv0XZBwKxUX9R-gBtazFgz2PEG-V_4xG0JhCrabKo0HJDh0f5EmyUZDgaiGQGblxJPlwOGqL95qsTp4dqxFANiSYQzCdtbtFoJ4L2_mHZkjq7wVOkCdMJgco9wB_-teLClcF2To4z2Lx3Lsk4YiOmRBHxiQUsTqr6rKodPLbPkqQyvBuuB6lN5XaTcaV5vqeVMrxg0KogKLbfnxyFo2xRi5U6Ju6G684tiQtsR81Egmg1knvV9oz5ux4Qn12ghSPA3cdhHtlRfzQcLJNatntFE91zo53ZYmZf2vFh2o4BdiNmERAHhw8qMDzzL26eoWoBwD8mOyYUlMnEMuIID7RA2jgjfx4dKaMR1afLajr23L3amdeL07gPnoCnx-PS7WMOdNkFxA5NbWRKvv1fWTtFcPPXvzdAGmzOp3aJNDV9jIAJH0ruI7wx-2SiuJKyo3e6_fDgRKVqWcsQ-Az8vDdOT3JIBUASVwSorDOsNZWO_VmbmYp9USIt-X40CIH75F5QEULDNlqDoV2OvAGgUZ74H01ZaQ_jKfA5QXph136v08oJeRdt6B-cLmWcWG7X2ayngnirSgu7f3Va-yWlorYcPduRqi9ytsc4tdPBeOuByb4MGXnoJy1Q0Yk3I81nJzHFjnTK5veFP5B1v-4-2g0Pst-qP2wvgJV-Qal0tXGMtD8r24BBhKEwmTJdXlnyK03Mkc__xX1UBwHtnv8-tH-xlLeoOxmvQu01dlAV89W0BiNWIof-tAKqIHUvduSPLfclXPYCFRAEy_dzZrMufg4uG4mNQyh-JyQv6u_-jMTGmy3SASwxwwXjw5f9X3KUOcSknSkaXK6ucvQt4qaRedCrIRGtp84FHzqLEDfqODGxcDCT6C-Xu1c3kTDTRO0fmhdV4K8VYen_CyUqAXWvRsBb0kQH7JQEldjUqilqQKB7Ewr-fs2tb00CGodR7_Fd_fjEWyKz-mFW9Y46ByZ5ScSKtVk1_lAEFLX39ofR-XNbisluLp3dASDqxYQY0wfuVvt--DDcwcYF3nnLNKZkmRVdVtzGrO41OPJQu5iPtt8vG9Vhl7C9CkrHZNjWExT-45iLsKl3rKvJy9ERb6rn1jbUsj-Q3BFMioHbpN0wlknApiQeYOV5IhM07eMPLvBv90sAQLJakSTlLa9w-T4TkxMdvpSSSlolx2VU9J1BrP9NdNpeQ3QgWUb46Y2s8iiAzvrPd1O1j1WBt8gO4ccVnKvmptVcb7PItOFSvk1N4b3T_XqZQNgrTpP7rrdOCeZvBYDgLyK2-sW_WvpdV8ZbCyWUfZfmiUIlsD1Bx26z3tVdl2ttNhpRrLCfOiUAUT14hm5hAj3qCslYNkvth9Da13ZXB5xGy4V5JUykQiDB0FpDYQndjN4N_NCizstqOlOChBAnTrmZ2RRZyAaai1lw0LTxORpHQbPq4_DmitLUgDmzYBrsz4aVWPz6mdDhuUHwWUfknU0-gW1SFnAy2TrIXMywT8sYPctxUdbE87vXLoaHgBzrG1MOG-M28-c31k4j8_p9Qg_MIXpTrj6NTIDcgHQNvUUMm3SS0vSQgslbdpBebUKsEQBZD0Vr3ShsmcVRAmqa1lPCK0lhjdq76cOLcQAGX9uRPQ_61-u_WNqIQTsH7KIAhgM7WdQ3O1iSZug1T89yu7mB3UsxuMHE-GWkk1ZpfpSnB9wxX9QaoO5H3w6Z4Bocr7zqf6t5IwJ2QqthhYJeqEFOxc7UfHxRA8iW9P_3LBDiquyqe1V-GM-POvuzu2TuxcER5WHI-ImtlIF7OSGAxXAek2f6eNObwb6tAxfzccwueJePw3VRU11IntZD7LMwjd5NDaDfnQUn7XAZN4ny25kuJ2KUHRiy6hvNjJY9BL00LMYAHrKo8N50mFEPB9GAp1ehIALqyDXvsa6p8pIfYlAtTBxggwjJfZMKLFvoCRN1q1QGIeBlqohHpRTqhGPCWMjgCeFfQNwn852pvURcGyHQiwufay0DCbWFY0y594uVrxt1HpUJvG6aGlnK48l5zYAB2cbIFxbtmdsgidjobUpwbgvkIfvXpssocCM4KkFweTVLf6ipZe6XV2YDF2Xl2szmLLjiEuJpfeBWUS2dPVXirJnhuyZLUJtYjf36F3VlRfrPSOhMdZ32vmIMUCyEoUerhcHSjwSWPzfyjr8N8WdIRMF6wY61ZkJ6C10f08v54UiaYf9QX_u909ik3rWJym2RmrDbcT9L0X6lroohT-2BcEgUHGoP4_KG2WX8wqR3dI-NRRZfbXIae7S9QJjMwebFQCy8b0ySh8TAgdP8TgUHf-uAzeRgzHkCs3Pauurp24d5760l1SnwInUfo4VVW1BKRbMRMdC0--SXioX0o0YAxkY_7Yd-iFBZ_faqsg0J2alhMgy5EKbPRHsfcP9mkl2GYfxaXY8wwFbZ-4N79Rj4mTWCCuqaqvVJfTOlDmO3qm0LySPAlPJe_0MpEX_RPWSpMi4GNl7eQ5_iBc4-YJTPGECXe8rnfpgBPsqNZEncLyy64fQcgBCyDSQ9-Vynp4UmuGcrsgqhPF4hKF6GvOeBOv32RvnT9VbCSlLJiDif1b11C0zJNo1z6SfFmJRCSvThGnQAcCJ1VzZNX750stsOnUUyxuEn2-4jox6rXBKNvWvamc506A1Hx2-UHoZgogrev0j1DBQYtIpkI5jLoXFBoHaUhYVIcqErPdElTpB1fWR8pIW81BQwiHadqZaS_cv3Te4gkx7gcWCv6IqO6Gf-XqJFPldMWrXrNpc6DuTJoPslyMqPb62CSnkIJrkv-FsogFDw9GOD64wNXxPfuoPILTQyPndDAhN52JrDW4vjjw3lU2nobbgvD5DWOYzdTCg==",
+              "summary": []
+            },
+            {
+              "id": "fc_0edfe27c23901fd9016acfa9ff771c87d28f838e05db2cd2b6",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"skill\":\"ticket-codes\",\"file\":\"references/FORMAT.md\"}",
+              "call_id": "call_YkdJSu75hiDUv9AzoBIoOYOt",
+              "name": "load_skill"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Loads a skill's instructions, or a file inside a skill's folder that its instructions mention. Call it with only skill to get the instructions before following a skill, and with file, a path relative to the skill folder, to read one of its files.",
+              "name": "load_skill",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "description": "The name of the skill"
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "A file path relative to the skill folder. Leave it out for the instructions"
+                  }
+                },
+                "required": [
+                  "skill"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 571,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 155,
+            "output_tokens_details": {
+              "reasoning_tokens": 64
+            },
+            "total_tokens": 726
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Wed, 14 Oct 2026 16:12:48 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        ticket code for ticket 6?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqz6n9k3-AvVJaPRrLydlZsRDzLCKobkDOej7ZTEp-5MBdFCqDuCQfN3HvoRY-GF3BaYwxWlhkaA5izA1q-Iq9xoQj20U7iYvT_1sZe1hOfeVYY-BjOKK9DPmbIUjbMc1hFwQEHSZhyTWzzlEGRI70Ty1u53VWd3wjUpRWzaTqghCd44nkSnzx_GGPYy6IO7JfUopuHnSiH-qtySyAf0yhKo8stL0m2XSj8Ap0K3lGiTc5KvnK7XOkueuQekWDaL9IuOvaA_zUlXKuuIYGP2JBBeAFKVSbBuO9ejPL7dGmZFm1ztJEkAvUjnpmTnqKeog1Tlw_LmbEUfRDE03QHC8o1lLE4d0bUru1OpZZr48LHZ1xkV3yH7ZVwsNSaoRXm4peX4UtHCHjVz5dRx9_5EbVSk6zPZOegteafoVKRNWNUoJn76Cl-ZRwWJk_qppJ9BgJEe2ZuYex-1ZWLHlhu9fgp5sXfBjBGJtLf-bkLCtS4cFdBLsoV72mSVhEQwrRfTOUWkON54ALt3HJOfMFo_D819-damkBMzIQHyRCPDvnh2Etsut4s6Q5wfCv4OzAknQYZez5tnb1zy0JtjmFSdKuXD8Dub-YD29ZzIemQnBBlZYCbClFTip2UsypXtxej6fa46OLwJbqvW-TJHmheLBXcZ7aRynGCP2wiewzHC2zG5uaW7pGTZYrMbhwW8Z0BCb47XcSJCufV7vvuTJZcq47m3n_F-cHqTQJD7gZZCoU_YS1QCKxvkiBGMgh-rV_LxcCkYUTQqR3rzixIBbclmFdnqv0PDtPjrKp6o-Q0H9QVvVb226A7M785i4bA37nR5jGGHX20chlExrAcumeI6KEjoThxiJzDatxnysmQ9Pe4Rl79yEwo6GTXTSUFr2q-EiDajJEyhyTRSb8gPIKyEAdWf2S0pwLRH-moirfToOHRjk8jKZdul1Un7pAjOlCjocpw2NTVla4h6PsJte1DH-H4u0JovnEnMmfdryCKvZc9r88rxJMas7qxTBCQ-ulpH2xi5ZGUSmNjfLBeyoChv9DNIhs3mHT0hEFi0XYXozY9gyyOo4WOsFvuMWR0MSeRA9r3vHVhE4R1DfoJsEJbYWdgz55M8s7kM4Wa6iXA4DM_DhHUHAOSx56l1S9aCLBD8QUOK9ksfiHa8DUxtI3-YhC9XMVzvfknem2UBMjjiXViMCmyvlmNLxis9VEz31JCYWkr24d-QhR2WUDNvJs-LFFG4tPVDjqRFhO-o8eyPlzznXJle1L7WvrjglyxZI7j8v-PynaqUnhecMKYGrdUU5RILRJN_yR2SDPAlvfzCv5llG-jRo6U-eO54bpHj9mWsBEulQZoqEItCCzbjr_1_o4au_FT_bT1FSo7P6roM6xcCLmgtOFPuqH9YJBroJCU2c1I3quoGt6yv0mPMP6xekJqCedVJuXH7Rk9JBB499lMG267BQJoTipaWRxAHYCV1MPszUUUgfLTpLNcgVaKVrCJBW0N--kSzbrtqxSkMcDf2ZSp8WVFQsGRwfNtNcLvmSWWY0-7BeYLS5elTRpJYFykvVXV0DBRQVZABMCKLb0pUFFMVIHW_hCllchPIJPNTQ5XkNfiNhRh0OQMbw2MjPS_kEGbhcaaXVOolvLG28iAxBmNhD0Pk6HDvo_CqB_Yi3E2g88bsL9d77lj-96zWcy_82iyYx8nsb2edQ1b-T06KRfnkjpplKdYfvZFDoH_lTg38M7Wdut1nNczCJFd3IpLVqFb73EE8i7d9X_pXWuX9YAbmZ208SjLFckhMJBBlbRmkk30G5fUEIj1762t-5aOh1dIRo-q3HiyC1I2PfjjE4TvFlUoRMdtkRKfq-PwHkyu4mHu-PfoXqsFEKTOmxYgABfwq1mtg_-0asuHuYjMu4cQwJytqJ-mwHhZzwWvMceVsm4oFta5vJjNN3Rw4aWjaxw9wCdTRhm3os5XLb2tbslnJI91Jwt7yr1s9PQlXAUbluZYHQ7sh_WrYeWCXH0lx_irN0jTiYUDPvY0vA0J5_vIQclKsUNdW_nkDElDKujFG5vLGaXgkuZDQVruWq4dMfJZRphGzuVTXotNvwMyPUdhm6v8BfG2JRqadp8UpWMVvFY2QyG57uNQPKl2vJlkbtFaLzqF8cae-Y5Dh0wX0RykBsLsy5bCVaKxgJ2dj5hshjT1ew9LDiWZse8xrz0U3PUBfEbSOs2VA94rumCV0eWGJGyEkzCWDJV35pocS4U3r8a9VDOeSihUurweT0u18qAB5jIJZ5nVvnf-XtJ7d-POEzGfJCQuszTYw7QB5heu1cvc-_xNRQ_RNk5_J3-uLsJHOADo1q1W2D6vR0j303QlmAw3jZDHQiM-gBJ7K6cHhZgNr9eMvqRf5MB-MVMaKjqW6ADjfpUkJuzDEq-34L4FeKPXqXOk04yfPrY6a6OuDCZhIcF35ghk6lMAVkjerh1iC_m2YV6bupJQsPEhvTe5Op9mBKkE9ooTqAUbQlj3zkECpsxtFPpPVcjsB16ADzi1UTEYN8gnDQ7Emj7M5XRjUTrZsDMNunid-4ThQYO6JOXp9uz63CPXgtA_1cXleCYLL1Gc-QY2iijVTKmotHcpI7uheQxhcc82MfAYWIsDDM2phjYaUcOLYCWt5_ZATnSFXt-RQUZdSUxunF9J1M-lCqfticPDNrIhyrFZs38TfXSvsPrLkh_7v473nGpRxZqxmBsDwLAiINodHnMcqTkdgel-ZfyC7-q-zlfw-n7L2jrauutSBlgOi_J73UaKW3avPhlsKI0usWRoUiKn2KtAzzAWSP35cZgEXAmgXK2KCEHXmLGS0zVAn5LF6a6x-qU_qBUEPsWf35Aa_SjDgTeXVa2XoEx049XvpSmo3U31d40AL4Rego45idSjNfc4llRFARwX0v6jywBjC0mhn8NhWnrEpOqIFc3efgcTO0qgmHpWVjxwjsMkYlh3p1aWHtzX-45G6eVvo5bO4ARihau0qaw2nJOswtllmxgaKqFyaPbZgECE0UNBDsXDmvmMyV4Y_wVUnB3gAmoTxMcDavuk2-Ly_RrZUWzKE3-elgMPoi3nhgplX0mzqqU23r-r8_vceiloMZVoXVn37TmuIged_cnqJCC6RWlBJPRA0j6aO4mHTw3e2zQjd2FdEvxQSekdsF_hMAYT_puUqpO1XYz0__OAJfTDeaFglhVZ3nBBbIQoiw1XuUkJ9mPAUQD7MQ8d8RRDVnSOCVg3rUvU1slsb45sCdsk2H-Lh_QPlCaSDqVTufFkNG7OTe0bGzfVEWdJ62MJ8BWjHVxJrnx9newiinWeE3TboYatB_NnlduDQE0M_POWsYGLden58p57l43zQ9YI5zmctR_-F6hJ5qRFnYrA1Q0lgU28zS7rMWMv8bWbmCatF19k5B3OZIzaim07So6N0J7cKYkBOUUdEdguyKLa1HWg-WUpTN6Q3ls39kLPSFEp88QYhmjl8QYRaU5cjp2kFR6Z0rgJs4E5KEeEfR5nuHRM9THLt5kj-aHZRg9FvH5sLbSewRLAIwjbZwhrHiNgWQJvtFARz4JWgGXJs4KmKPX2dYLOwpiuFnOeBAd08_eH0Ct8-oYL1e-LUYY1to8AbtBnvriDprNkQ6u9Bqsiw0okLJshjYrAmIoAojbK0OPNsfBYhNgo36dtdigRrCvmtuDGyX68KKC2qKOVssDJeBYbvqhldrBggXOXvPCg1kGZTUbn8ocYo2jJf19pe43SQPCafk52582ZX1lqhKcYe3MfqBMRnzGsuW7FLgp_34c9UaIzlL7Ql6zvGXkR4_MctsFsYYiKKj0UCNb1VzcvaNufz5wh8dymQgz63iqNO_CV3foMHnnduwiu12HHWW6p2dAVWwdl0vXvBghg-oJHc0pjjCxjXOhGdTQmzV9EkE95DJHnxXSZNCzuNU4V4Eo_CZU6R-1o2Yvp4lZd0GX1HlKfFsgwZ7Y8le2z5gk"},{"type":"function_call","call_id":"call_UCF1gY3gDe6OzGm0wUu8Uvaj","name":"load_skill","arguments":"{\"skill\":\"ticket-codes\"}"},{"type":"function_call_output","call_id":"call_UCF1gY3gDe6OzGm0wUu8Uvaj","output":"#
+        Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
+        folder. This conversation cannot run code, so the skill''s scripts cannot
+        run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
+        Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
+        Build the code for the ticket number you were given.\n3. Answer with the code
+        and nothing else."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqz6oAW0BVHU8de6ad4d_jGu8KSrIEL1AFU3jMMr-jeDxCgv7VFohE5nj3O5GCMF_Ed8fabCl9U0BY2kH2ioHWsgKNAwFnRAJRtxu34iz8rHD3cJkbCB_oVevuqC5Ni8uIO76dyYx_FVOuKx40oSUa_UGpYWcmflxzSK3FuidUkqEv0XZBwKxUX9R-gBtazFgz2PEG-V_4xG0JhCrabKo0HJDh0f5EmyUZDgaiGQGblxJPlwOGqL95qsTp4dqxFANiSYQzCdtbtFoJ4L2_mHZkjq7wVOkCdMJgco9wB_-teLClcF2To4z2Lx3Lsk4YiOmRBHxiQUsTqr6rKodPLbPkqQyvBuuB6lN5XaTcaV5vqeVMrxg0KogKLbfnxyFo2xRi5U6Ju6G684tiQtsR81Egmg1knvV9oz5ux4Qn12ghSPA3cdhHtlRfzQcLJNatntFE91zo53ZYmZf2vFh2o4BdiNmERAHhw8qMDzzL26eoWoBwD8mOyYUlMnEMuIID7RA2jgjfx4dKaMR1afLajr23L3amdeL07gPnoCnx-PS7WMOdNkFxA5NbWRKvv1fWTtFcPPXvzdAGmzOp3aJNDV9jIAJH0ruI7wx-2SiuJKyo3e6_fDgRKVqWcsQ-Az8vDdOT3JIBUASVwSorDOsNZWO_VmbmYp9USIt-X40CIH75F5QEULDNlqDoV2OvAGgUZ74H01ZaQ_jKfA5QXph136v08oJeRdt6B-cLmWcWG7X2ayngnirSgu7f3Va-yWlorYcPduRqi9ytsc4tdPBeOuByb4MGXnoJy1Q0Yk3I81nJzHFjnTK5veFP5B1v-4-2g0Pst-qP2wvgJV-Qal0tXGMtD8r24BBhKEwmTJdXlnyK03Mkc__xX1UBwHtnv8-tH-xlLeoOxmvQu01dlAV89W0BiNWIof-tAKqIHUvduSPLfclXPYCFRAEy_dzZrMufg4uG4mNQyh-JyQv6u_-jMTGmy3SASwxwwXjw5f9X3KUOcSknSkaXK6ucvQt4qaRedCrIRGtp84FHzqLEDfqODGxcDCT6C-Xu1c3kTDTRO0fmhdV4K8VYen_CyUqAXWvRsBb0kQH7JQEldjUqilqQKB7Ewr-fs2tb00CGodR7_Fd_fjEWyKz-mFW9Y46ByZ5ScSKtVk1_lAEFLX39ofR-XNbisluLp3dASDqxYQY0wfuVvt--DDcwcYF3nnLNKZkmRVdVtzGrO41OPJQu5iPtt8vG9Vhl7C9CkrHZNjWExT-45iLsKl3rKvJy9ERb6rn1jbUsj-Q3BFMioHbpN0wlknApiQeYOV5IhM07eMPLvBv90sAQLJakSTlLa9w-T4TkxMdvpSSSlolx2VU9J1BrP9NdNpeQ3QgWUb46Y2s8iiAzvrPd1O1j1WBt8gO4ccVnKvmptVcb7PItOFSvk1N4b3T_XqZQNgrTpP7rrdOCeZvBYDgLyK2-sW_WvpdV8ZbCyWUfZfmiUIlsD1Bx26z3tVdl2ttNhpRrLCfOiUAUT14hm5hAj3qCslYNkvth9Da13ZXB5xGy4V5JUykQiDB0FpDYQndjN4N_NCizstqOlOChBAnTrmZ2RRZyAaai1lw0LTxORpHQbPq4_DmitLUgDmzYBrsz4aVWPz6mdDhuUHwWUfknU0-gW1SFnAy2TrIXMywT8sYPctxUdbE87vXLoaHgBzrG1MOG-M28-c31k4j8_p9Qg_MIXpTrj6NTIDcgHQNvUUMm3SS0vSQgslbdpBebUKsEQBZD0Vr3ShsmcVRAmqa1lPCK0lhjdq76cOLcQAGX9uRPQ_61-u_WNqIQTsH7KIAhgM7WdQ3O1iSZug1T89yu7mB3UsxuMHE-GWkk1ZpfpSnB9wxX9QaoO5H3w6Z4Bocr7zqf6t5IwJ2QqthhYJeqEFOxc7UfHxRA8iW9P_3LBDiquyqe1V-GM-POvuzu2TuxcER5WHI-ImtlIF7OSGAxXAek2f6eNObwb6tAxfzccwueJePw3VRU11IntZD7LMwjd5NDaDfnQUn7XAZN4ny25kuJ2KUHRiy6hvNjJY9BL00LMYAHrKo8N50mFEPB9GAp1ehIALqyDXvsa6p8pIfYlAtTBxggwjJfZMKLFvoCRN1q1QGIeBlqohHpRTqhGPCWMjgCeFfQNwn852pvURcGyHQiwufay0DCbWFY0y594uVrxt1HpUJvG6aGlnK48l5zYAB2cbIFxbtmdsgidjobUpwbgvkIfvXpssocCM4KkFweTVLf6ipZe6XV2YDF2Xl2szmLLjiEuJpfeBWUS2dPVXirJnhuyZLUJtYjf36F3VlRfrPSOhMdZ32vmIMUCyEoUerhcHSjwSWPzfyjr8N8WdIRMF6wY61ZkJ6C10f08v54UiaYf9QX_u909ik3rWJym2RmrDbcT9L0X6lroohT-2BcEgUHGoP4_KG2WX8wqR3dI-NRRZfbXIae7S9QJjMwebFQCy8b0ySh8TAgdP8TgUHf-uAzeRgzHkCs3Pauurp24d5760l1SnwInUfo4VVW1BKRbMRMdC0--SXioX0o0YAxkY_7Yd-iFBZ_faqsg0J2alhMgy5EKbPRHsfcP9mkl2GYfxaXY8wwFbZ-4N79Rj4mTWCCuqaqvVJfTOlDmO3qm0LySPAlPJe_0MpEX_RPWSpMi4GNl7eQ5_iBc4-YJTPGECXe8rnfpgBPsqNZEncLyy64fQcgBCyDSQ9-Vynp4UmuGcrsgqhPF4hKF6GvOeBOv32RvnT9VbCSlLJiDif1b11C0zJNo1z6SfFmJRCSvThGnQAcCJ1VzZNX750stsOnUUyxuEn2-4jox6rXBKNvWvamc506A1Hx2-UHoZgogrev0j1DBQYtIpkI5jLoXFBoHaUhYVIcqErPdElTpB1fWR8pIW81BQwiHadqZaS_cv3Te4gkx7gcWCv6IqO6Gf-XqJFPldMWrXrNpc6DuTJoPslyMqPb62CSnkIJrkv-FsogFDw9GOD64wNXxPfuoPILTQyPndDAhN52JrDW4vjjw3lU2nobbgvD5DWOYzdTCg=="},{"type":"function_call","call_id":"call_YkdJSu75hiDUv9AzoBIoOYOt","name":"load_skill","arguments":"{\"file\":\"references/FORMAT.md\",\"skill\":\"ticket-codes\"}"},{"type":"function_call_output","call_id":"call_YkdJSu75hiDUv9AzoBIoOYOt","output":"#
+        Ticket code format\n\nA ticket code is `TKT-`, then the ticket number multiplied
+        by 7, then `-ZX`.\n\nFor ticket 3, the code is TKT-21-ZX.\n"}],"instructions":"You
+        have skills: folders of instructions, scripts, and files for specific tasks.
+        When a task matches a skill, call load_skill with its name and follow the
+        instructions it returns. Load the files the instructions mention with load_skill
+        as well, one at a time.\n\nThis conversation cannot run code, so skill scripts
+        cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report:
+        Summarizes a CSV file into a Markdown report. Use when someone asks for a
+        report on a CSV file.\n- ticket-codes: Builds the official code for a support
+        ticket number. Use whenever someone asks for a ticket code.\n</skills>","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","parameters":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 16:12:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1551'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999435'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 16ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_01c46b6836e1286a016acfaa00e2d887d287c817a5c229d026",
+          "object": "response",
+          "created_at": 1791994368,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1791994370,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You have skills: folders of instructions, scripts, and files for specific tasks. When a task matches a skill, call load_skill with its name and follow the instructions it returns. Load the files the instructions mention with load_skill as well, one at a time.\n\nThis conversation cannot run code, so skill scripts cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report: Summarizes a CSV file into a Markdown report. Use when someone asks for a report on a CSV file.\n- ticket-codes: Builds the official code for a support ticket number. Use whenever someone asks for a ticket code.\n</skills>",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_01c46b6836e1286a016acfaa0149cc87d2b98efc8defd69e69",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqz6oCtk5d-xrJSXxRqqasxZLq_edyA7ArD-srAhqf3o0LYWe_jlECHm1m9Xf0dEaO4nzU6pyYbD-8NjV6EbKpHS8fP4CPBL9r0x0bAy6KJfeD05xpYZG-546DXmP0qZw_6ClEjz1yF35xYwPh0l_A4lRYBcejkJ2L6MbK1tepsi7OOrK8dijSzKsbgeSP4-gVK6JypUPZhCUCF620oXikAbhUcCkpzH-bdr1YyUmPoi2za6u1uxnINeLsDgZCFm8ZkutHlM9X0LUmHEfiZAmO64dwki5ERet5rIN55U87EWFiEEVWNs8D1Lb6oGvnX4jYGdGCOYsKzQ_Xc-qRR2EuKhG6Z_Vy1j7QA5g14l4rqhSivkEZ_aJHaG9kQ4hFBePzXzntCYnVRDXKfuNQdwh26EPtweIJIQ4RVVh7IFajvYoY40K0oirE7k1baoPjZt1p_ZVSjDeRl7DA6qPCNVuXHmWtFHczp2JxQB_wNhDiyHfecuAUGyw2FO3QD2-vsvTS_QEQIGB-WW8g0P_By7oja43L3bJAaFIvHGIAJTtTjQcrM1hL9_Y0YS72DrBJaoNu0Xt2al3Mn3pTF7YnklgTPL__BthreyNCL8YA4yB0ipvwTaXBCedISr4B_Ta1hqC2-FnW2CkVA3b0T-VaWjzNwcWGxmbNcaT3i6PYaEmgnyFGO9awm19sxuz_eph0G2-vhlWk8mp4WKG9sAbhj6Cjexyu3GOPp4fii9L502XBnvnkmUjZnXeMvjVKgEQYMq9O6AYbrizJeHxm4eu49zVn7SDBgAdq0hxbXCWEFhXDbqLKV7D9XyzsRsPWntmDvAoPizvFxB_8nrbalLb1xnDuUQYT9E_aqvLiHu6P3SOi2XOIPhR5VPNZkYb8v_BuCNW5x9VgO-bP5Q-hzGDTcK6YgwEtvKrrZJlrAPYfohkO5SRoCUmY9AW7R4WztUnzMR9wb87r5C9ZxEATsmBKasmfzs4S2IIBn2mL8yrXr7ECQPryyElQ7S8zJ1AOZjawEr9jh7M4vuR3p-TYhIcyq2VJXTBQ_hOO-E0Mnsq-DZPrgep6xhHck-DiaXJMrtuu_8Mnfb2KmeWQYryxMbaFVyvxmAd_qjc8QQ0Ueo_iM62RKvKdMR-r3RgviqIV-SSkpLeOt-DgfbQP4IS-LDv2AA3w1ORjXdLDMA3H94uzV1Gx9ar9QnpxrCIavetDcXh6mHzorOnA_X3dkoC8RwSZU3NPlOeVADev6w25MjSYmz58QsKnaY24mcberbSwaWQ9Qkf18Y4VTHLxq7pLNf_caLEGGTrGLsGfSCfg7MimUp0iv19jeErCZLDKLMm_i5i3pxMgM35tccOx4pSxCwbhWYOIVVxF62kXmPwTV-RkhpvQ50AXkRum4ZLMTiKDZfI4KYtoIPEA4gMTPk431Erva2pJ_QHUKsT72c_qCEW4tSQIiHLLRewJNimxvVZOTsw8TgAumT8zgxX_WHUVjkMt-hjuseIwR831QbKBok8Rd0dwbLfKqHaMLOfMgZQJ370zflMQv8OobwS86qbAUDYU0DXu-LnAIS4yP7qvIA-I3sLS_NQVqOODrksveYoPfbG7c34GpB1x50HGx6bZer_a7mlWhTyvWiI9anCyGHhvDhPAbQ99cT_dFdPWFR1pesh5-0lp318QdMIzZ1n8qW5UfBWrRtiI82U3MyF87XB82rPj3L699c0Gaipch-ImZ7YOGe5ptTGxq8-lYrJQwC0c_rhq_26Hno-573yBCT8gVrUjpBY3W1nHiD-qAAd_NrDAVIZ9fJtg3Z3w77c05TQ86gR1l6mkjoTlmLxwPWju7E1HM-DvAmGatN04j7ideVAuapXsHHSvTBWTIXR4owc55bO-JJ8rBrhkUrcX6zJuzo7D3hLIddB9xi5iTXP_XfvGyUQqcv2uOGwdVHMH76g2iVXbHAHmyS4HHGpHH0EOpwj457h83Jbf3j1Mcb42Hz6kcqWn4bEXpf_zPidvJqSjWVe6Ub_oTgVO6kqOc5c8mLJgtLaGeQHpii5e9Ve2agkATVYIGhuXF4uo1eGkNnEk3_0fYszsIjUB_8yEyRsBJj9YetAdnJQrT-JtuG97BDaITLBfcVIJzVZNaP7IAKLRib-mTTl36bKERv1jrXw4PWtdM6tfDngWA-fpKnYiOytz1d62jpC5FXQtexcKPoalvmOg0RkxxQgnrxt2x0VII7Bk9Zcr_xj-hLfiyfkrpYU88lr39mWgdFWrRxIRQeGxfQn7eZMU__Qzx8BO7vWri2_JQHv6T49EEvyJbx8V2QVuMG1gIFAgVBAyyQc5ewFxEzb3oUwY4bZmhQRYfI_DqD-tcrOpeYejwu7lWG0p5sSmN745o-As__iXTI2XPP3eQXJHDN3az1fDpFQs6qVKCZSVtPAa3zV_TnTroDoDlL2Y8YxnsRUSwisMMln2ncU3duv3wNz1RTZLVdTjQQkcrJc0q06M7OjpK2lnKt3W-nJqbBj-f4eUNi4fuP56MYoUpqvirYe4tAVz5RCHIq48lQ-ZpLwZ5HDqAfoEbeGcH_l5hJxGU9E2eTELBr6-qfvbTNjn_xE0FFUTQxh9DkDJyXINrl_wD1aMMZI1XLe6WK8jufUBEB7ev5w_rCAc0a77DAAX5aJPox4oodosUPcOtx5xB7AsVmsshOvCbQ4Gx1MJPj5j5U5CPySJF_3-1t_T9XQ0qPKQEQ==",
+              "summary": []
+            },
+            {
+              "id": "msg_01c46b6836e1286a016acfaa0248d887d28685ead1c3906800",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "TKT-42-ZX"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Loads a skill's instructions, or a file inside a skill's folder that its instructions mention. Call it with only skill to get the instructions before following a skill, and with file, a path relative to the skill folder, to read one of its files.",
+              "name": "load_skill",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "description": "The name of the skill"
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "A file path relative to the skill folder. Leave it out for the instructions"
+                  }
+                },
+                "required": [
+                  "skill"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 777,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 129,
+            "output_tokens_details": {
+              "reasoning_tokens": 64
+            },
+            "total_tokens": 906
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Wed, 14 Oct 2026 16:12:50 GMT
+recorded_with: VCR 6.4.0

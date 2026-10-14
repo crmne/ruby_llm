@@ -1,0 +1,311 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the ticket code for ticket 6?"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","input_schema":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false}}],"system":[{"type":"text","text":"You
+        have skills: folders of instructions, scripts, and files for specific tasks.
+        When a task matches a skill, call load_skill with its name and follow the
+        instructions it returns. Load the files the instructions mention with load_skill
+        as well, one at a time.\n\nThis conversation cannot run code, so skill scripts
+        cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report:
+        Summarizes a CSV file into a Markdown report. Use when someone asks for a
+        report on a CSV file.\n- ticket-codes: Builds the official code for a support
+        ticket number. Use whenever someone asks for a ticket code.\n</skills>"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 16:12:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T16:12:51Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T16:12:51Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T16:12:50Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T16:12:51Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-b41e338f7dd5b8c3879c6bfda09ab75a-6130b9314221eecb-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2RaoQ5kzHwJM6oFjXVW","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Jg2syDBv9E36PRbVDaXQNR","name":"load_skill","input":{"skill":"ticket-codes"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":800,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 16:12:51 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the ticket code for ticket 6?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01Jg2syDBv9E36PRbVDaXQNR","name":"load_skill","input":{"skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Jg2syDBv9E36PRbVDaXQNR","content":[{"type":"text","text":"#
+        Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
+        folder. This conversation cannot run code, so the skill''s scripts cannot
+        run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
+        Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
+        Build the code for the ticket number you were given.\n3. Answer with the code
+        and nothing else."}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","input_schema":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false}}],"system":[{"type":"text","text":"You
+        have skills: folders of instructions, scripts, and files for specific tasks.
+        When a task matches a skill, call load_skill with its name and follow the
+        instructions it returns. Load the files the instructions mention with load_skill
+        as well, one at a time.\n\nThis conversation cannot run code, so skill scripts
+        cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report:
+        Summarizes a CSV file into a Markdown report. Use when someone asks for a
+        report on a CSV file.\n- ticket-codes: Builds the official code for a support
+        ticket number. Use whenever someone asks for a ticket code.\n</skills>"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 16:12:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T16:12:52Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T16:12:52Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T16:12:51Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T16:12:52Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-abfb7509fd6bcedec9a810db51303ff8-c9fe7d3da45fe7ca-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg2Rasg4dXkj6bHkM48WK","type":"message","role":"assistant","content":[{"type":"text","text":"Now
+        let me read the format file:"},{"type":"tool_use","id":"toolu_01YYtrTzBTSxeVjxfApCAFa9","name":"load_skill","input":{"skill":"ticket-codes","file":"references/FORMAT.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":964,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":85,"service_tier":"standard","inference_geo":"not_available"},"diagnostics":null}'
+  recorded_at: Wed, 14 Oct 2026 16:12:52 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the ticket code for ticket 6?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01Jg2syDBv9E36PRbVDaXQNR","name":"load_skill","input":{"skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Jg2syDBv9E36PRbVDaXQNR","content":[{"type":"text","text":"#
+        Skill: ticket-codes\n\nPaths in these instructions are relative to the skill
+        folder. This conversation cannot run code, so the skill''s scripts cannot
+        run: follow the rest of the instructions, and say so when a step needs a script.\n\n#
+        Ticket codes\n\n1. Read references/FORMAT.md for the format of a ticket code.\n2.
+        Build the code for the ticket number you were given.\n3. Answer with the code
+        and nothing else."}]}]},{"role":"assistant","content":[{"type":"text","text":"Now
+        let me read the format file:"},{"type":"tool_use","id":"toolu_01YYtrTzBTSxeVjxfApCAFa9","name":"load_skill","input":{"file":"references/FORMAT.md","skill":"ticket-codes"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01YYtrTzBTSxeVjxfApCAFa9","content":[{"type":"text","text":"#
+        Ticket code format\n\nA ticket code is `TKT-`, then the ticket number multiplied
+        by 7, then `-ZX`.\n\nFor ticket 3, the code is TKT-21-ZX.\n"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"load_skill","description":"Loads
+        a skill''s instructions, or a file inside a skill''s folder that its instructions
+        mention. Call it with only skill to get the instructions before following
+        a skill, and with file, a path relative to the skill folder, to read one of
+        its files.","input_schema":{"type":"object","properties":{"skill":{"type":"string","description":"The
+        name of the skill"},"file":{"type":"string","description":"A file path relative
+        to the skill folder. Leave it out for the instructions"}},"required":["skill"],"additionalProperties":false}}],"system":[{"type":"text","text":"You
+        have skills: folders of instructions, scripts, and files for specific tasks.
+        When a task matches a skill, call load_skill with its name and follow the
+        instructions it returns. Load the files the instructions mention with load_skill
+        as well, one at a time.\n\nThis conversation cannot run code, so skill scripts
+        cannot run. Follow the rest of their instructions.\n\n<skills>\n- csv-report:
+        Summarizes a CSV file into a Markdown report. Use when someone asks for a
+        report on a CSV file.\n- ticket-codes: Builds the official code for a support
+        ticket number. Use whenever someone asks for a ticket code.\n</skills>"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Oct 2026 16:12:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-14T16:12:53Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-14T16:12:54Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-14T16:12:53Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-14T16:12:53Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-7da2a37fddc69a75bffdc449aa00fff3-9f78641ac47f152d-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZzJSYXlEQlRVcVJLTFREV0Z5R0wiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgZm9ybWF0LCBhIHRpY2tldCBjb2RlIGlzIGNvbnN0cnVjdGVkIGFzOiBgVEtULWAgKyAodGlja2V0IG51bWJlciDDlyA3KSArIGAtWlhgXG5cbkZvciB0aWNrZXQgNjpcbi0gNiDDlyA3ID0gNDJcblxuKipUS1QtNDItWlgqKiJ9XSwiY29udGFpbmVyIjpudWxsLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjExMTAsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjo2Mywic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9LCJkaWFnbm9zdGljcyI6bnVsbH0=
+  recorded_at: Wed, 14 Oct 2026 16:12:54 GMT
+recorded_with: VCR 6.4.0

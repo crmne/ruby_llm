@@ -97,6 +97,10 @@ loader.setup
 # in the Sandbox set with Configuration#sandbox, read through RubyLLM.sandbox.
 # With a permissions mode, the model asks for network hosts and paths with
 # its +request_permission+ tool, and can install gems and Python packages.
+# Chat#with_skills gives the model Skill folders in the open Agent Skills
+# format: each request lists them, the model loads the instructions and
+# files it needs with its +load_skill+ tool, and code execution runs their
+# scripts. Skill.roots holds the directories they come from.
 #
 # Agent defines a reusable configuration with model, instructions, tools,
 # schema, and runtime inputs. Chat#ask_later, Chat#generate, Chat#run_tools,

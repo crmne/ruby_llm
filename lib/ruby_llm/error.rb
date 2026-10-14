@@ -81,6 +81,13 @@ module RubyLLM
   # Raised when RubyLLM.render_prompt cannot find the named prompt file.
   class PromptNotFoundError < StandardError; end
 
+  # Raised when a skill named by Chat#with_skills or Skill.find is missing.
+  class SkillNotFoundError < StandardError; end
+
+  # Raised when a skill's +SKILL.md+ breaks the Agent Skills specification:
+  # missing or malformed front matter, or a name or description it rejects.
+  class InvalidSkillError < StandardError; end
+
   # Raised when a message role outside +:system+, +:user+, +:assistant+, or
   # +:tool+ is used.
   class InvalidRoleError < StandardError; end
