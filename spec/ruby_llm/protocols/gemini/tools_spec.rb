@@ -143,11 +143,17 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
         end
       end
 
-      it 'keeps text files as sibling text parts on Gemini 3 models' do
-        result = format_for('gemini-3-flash-preview', File.expand_path('../../../fixtures/ruby.txt', __dir__))
+      it 'folds text files into the function response, since Vertex refuses sibling text parts' do
+        text = File.expand_path('../../../fixtures/ruby.txt', __dir__)
 
-        expect(result.first[:functionResponse]).not_to have_key(:parts)
-        expect(result.last).to have_key(:text)
+        %w[gemini-3-flash-preview gemini-2.5-flash].each do |id|
+          result = format_for(id, text)
+
+          expect(result.length).to eq(1)
+          expect(result.first[:functionResponse]).not_to have_key(:parts)
+          expect(result.first[:functionResponse][:response][:content])
+            .to eq([{ text: 'Found it' }, { text: RubyLLM::Attachment.new(text).for_llm }])
+        end
       end
 
       it 'keeps provider-managed files as sibling parts on Gemini 3 models' do
