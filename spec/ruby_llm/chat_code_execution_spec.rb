@@ -430,6 +430,32 @@ RSpec.describe RubyLLM::Chat do
                                    'error' => 'The code ran past its time limit and was stopped')
     end
 
+    it 'reports a limit the code used up, and the CPU time it used' do
+      events = []
+      instrumenter = Object.new
+      instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
+        result = block.call(payload)
+        events << payload.dup if name == 'code_execution.ruby_llm'
+        result
+      end
+      sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: nil, cpu_time: 2.01, limit_exceeded: :cpu_time) }
+      chat = RubyLLM.context do |config|
+        config.sandbox = sandbox
+        config.instrumenter = instrumenter
+      end.chat(model: model_for(:openai), provider: :openai)
+      result = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'loop {}')
+
+      expect(report(result)['error']).to eq('The code used up its CPU time and was stopped')
+      expect(events.sole).to include(cpu_time: 2.01, limit_exceeded: :cpu_time)
+    end
+
+    it "describes the sandbox's resource limits" do
+      limited = FakeSandbox.new(limits: { cpu_time: 120, memory: 2 * (1024**3) })
+      tool = chat.with_code_execution(sandbox: limited).tools[:run_code]
+
+      expect(tool.description).to include('Each process may use 120 seconds of CPU time and 2048 MB of memory.')
+    end
+
     it 'reports blocked hosts' do
       sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: 1, blocked: ['evil.example:443']) }
       chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)

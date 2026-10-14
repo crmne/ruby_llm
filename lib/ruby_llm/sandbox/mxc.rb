@@ -29,6 +29,7 @@ module RubyLLM
       def network = sandbox.network
       def directory = sandbox.directory
       def timeout = sandbox.timeout
+      def limits = sandbox.respond_to?(:limits) ? sandbox.limits : {}
 
       # Returns a runner for a sandbox with none of this one's access, on
       # the same backend, for RubyLLM's own package installs.

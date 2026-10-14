@@ -41,10 +41,15 @@ module RubyLLM
     RUN_DIR = 'RUN_DIR'
 
     ESCALATION_NAME = /\A[a-z][a-z0-9_]*\z/
+    LIMIT_ERRORS = {
+      cpu_time: 'The code used up its CPU time and was stopped',
+      memory: 'The code used more memory than it may and was stopped',
+      processes: 'The code started more processes than it may and was stopped'
+    }.freeze
 
     CHECKS = {}.compare_by_identity
     CHECKS_LOCK = Mutex.new
-    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME
+    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :LIMIT_ERRORS
 
     class << self
       def tool_name # :nodoc:
@@ -422,6 +427,8 @@ module RubyLLM
       event[:exit_code] = result.exit_code
       event[:timed_out] = result.timed_out?
       event[:blocked_hosts] = Array(result.blocked) if result.respond_to?(:blocked)
+      event[:cpu_time] = result.cpu_time if result.respond_to?(:cpu_time)
+      event[:limit_exceeded] = result.limit_exceeded if result.respond_to?(:limit_exceeded)
       event[:files] = files.map(&:filename)
     end
 
@@ -431,11 +438,18 @@ module RubyLLM
         exit_code: result.exit_code,
         stdout: truncate(result.stdout),
         stderr: truncate(result.stderr),
-        error: ('The code ran past its time limit and was stopped' if result.timed_out?),
+        error: run_error(result),
         blocked_hosts: (blocked if blocked&.any?),
         files: (files.map(&:filename) if files.any?),
         skipped_files: (skipped if skipped.any?)
       }.compact.to_json
+    end
+
+    def run_error(result)
+      return 'The code ran past its time limit and was stopped' if result.timed_out?
+
+      limit = result.limit_exceeded if result.respond_to?(:limit_exceeded)
+      LIMIT_ERRORS[limit] if limit
     end
 
     def truncate(text)
@@ -491,7 +505,7 @@ module RubyLLM
       runner = sandbox.respond_to?(:run) ? sandbox : Sandbox.resolve(sandbox)
       [(directory_sentence(runner) if directory), paths_sentence('Can read', setting(runner, :readable)),
        paths_sentence('Can change', setting(runner, :writable)), network_sentence(setting(runner, :network)),
-       "Stops after #{timeout_for(runner)} seconds."].compact.join(' ')
+       limits_sentence(setting(runner, :limits)), "Stops after #{timeout_for(runner)} seconds."].compact.join(' ')
     end
 
     def directory_sentence(runner)
@@ -502,6 +516,15 @@ module RubyLLM
     def paths_sentence(label, paths)
       paths = Array(paths).map { |path| File.expand_path(path) }
       "#{label} #{paths.join(', ')}." if paths.any?
+    end
+
+    def limits_sentence(limits)
+      limits = limits.to_h
+      seconds = limits[:cpu_time].to_f.ceil if limits[:cpu_time]
+      parts = [("#{seconds} #{seconds == 1 ? 'second' : 'seconds'} of CPU time" if seconds),
+               ("#{(limits[:memory].to_i / (1024.0**2)).ceil} MB of memory" if limits[:memory]),
+               ("#{limits[:processes]} processes at once" if limits[:processes])].compact
+      "Each process may use #{parts.join(' and ')}." if parts.any?
     end
 
     def network_sentence(network)

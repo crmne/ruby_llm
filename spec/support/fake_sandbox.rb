@@ -3,20 +3,22 @@
 # A sandbox that records each run and answers with a block, so specs can
 # check what code execution asks a sandbox to do without starting one.
 class FakeSandbox
-  Result = Struct.new(:stdout, :stderr, :exit_code, :timed_out, :blocked, keyword_init: true) do
+  Result = Struct.new(:stdout, :stderr, :exit_code, :timed_out, :blocked, :cpu_time, :limit_exceeded,
+                      keyword_init: true) do
     def timed_out?
       timed_out
     end
   end
 
-  attr_reader :runs, :timeout, :network, :directory, :readable, :writable
+  attr_reader :runs, :timeout, :network, :directory, :readable, :writable, :limits
 
-  def self.result(stdout: '', stderr: '', exit_code: 0, timed_out: false, blocked: [])
-    Result.new(stdout:, stderr:, exit_code:, timed_out:, blocked:)
+  def self.result(stdout: '', stderr: '', exit_code: 0, timed_out: false, blocked: [], cpu_time: nil,
+                  limit_exceeded: nil)
+    Result.new(stdout:, stderr:, exit_code:, timed_out:, blocked:, cpu_time:, limit_exceeded:)
   end
 
   def initialize(supported: true, missing: [], timeout: nil, network: false, directory: nil, readable: [],
-                 writable: [], &handler)
+                 writable: [], limits: {}, &handler)
     @supported = supported
     @missing = missing
     @timeout = timeout
@@ -24,6 +26,7 @@ class FakeSandbox
     @directory = directory
     @readable = readable
     @writable = writable
+    @limits = limits
     @handler = handler
     @runs = []
     @lock = Mutex.new

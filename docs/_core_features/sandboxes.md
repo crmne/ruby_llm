@@ -53,7 +53,7 @@ class OnlineSandbox < MXC::Sandbox
 end
 ```
 
-`MXC::Sandbox` on its own reads the system's programs and libraries, writes nothing, and has no network. Each macro widens it: `readable` and `writable` add paths, `network` opens the network or lists hosts, `directory` sets where the code starts, and `timeout` sets how long it may run. A sandbox without a timeout stops runs after 120 seconds. See [mxc's policies](https://crmne.github.io/mxc/policies/) for every setting.
+`MXC::Sandbox` on its own reads the system's programs and libraries, writes nothing, and has no network. Each macro widens it: `readable` and `writable` add paths, `network` opens the network or lists hosts, `directory` sets where the code starts, and `timeout` sets how long it may run. `limits` and `priority` bound what it may use. A sandbox without a timeout stops runs after 120 seconds. See [mxc's policies](https://crmne.github.io/mxc/policies/) for every setting.
 
 The class holds the whole policy. RubyLLM adds only what a run needs to work: a fresh run directory with the conversation's files and your [mounted folders]({% link _core_features/code-execution.md %}#your-own-folders), the Ruby and Node.js installations, and the [packages]({% link _core_features/code-execution.md %}#packages) you declared. It never widens the sandbox in any other way.
 
@@ -178,11 +178,13 @@ A sandbox with a `directory` starts the code there, so each of these sees the pr
 
 ## A Server Application
 
-An application that runs code for its users, such as one that turns uploads into reports, needs one sandbox and no escalation. Give it a timeout and mount the folders the code reads:
+An application that runs code for its users, such as one that turns uploads into reports, needs one sandbox and no escalation. Give it a timeout and resource limits, and mount the folders the code reads:
 
 ```ruby
 class ReportSandbox < MXC::Sandbox
   timeout 120
+  limits cpu_time: 60, memory: 2.gigabytes
+  priority :low
 end
 
 class ReportAgent < RubyLLM::Agent
@@ -192,7 +194,9 @@ class ReportAgent < RubyLLM::Agent
 end
 ```
 
-Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone. Memory and CPU limits belong on the sandbox too, but mxc cannot set them per run yet. Until it can, set them on the container your application runs in, and runs inherit them.
+Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone.
+
+`limits` caps the CPU time and memory each process the code starts may use, and `priority :low` keeps your application responsive while code runs. When the code uses up a limit, the sandbox stops it and the model is told which limit it hit. The limits apply to each process, so to bound a run that starts many workers, also limit the container your application runs in. See [mxc's limits on each platform](https://crmne.github.io/mxc/policies/#limits-on-each-platform) for what each platform enforces.
 
 ## Writing Your Own Sandbox
 
@@ -227,7 +231,7 @@ RubyLLM creates an instance of a class for each use. `run` takes the command lik
 | `timeout` | The sandbox's own timeout, or 120 seconds |
 | `network` | `nil` for the sandbox's own access; `{ allow: [...] }` only to install declared packages |
 
-A sandbox on another machine copies the readable and writable paths in before the command runs and copies the writable ones back after it, so the files the code writes come back. Its result can also answer `blocked`, the hosts the network policy refused, which RubyLLM passes on to the model. To explain why `supported?` is false at boot, define `reason`, returning a String. Answer `readable`, `writable`, `network`, `directory`, and `timeout` to describe the sandbox to the model and to the person approving an escalation.
+A sandbox on another machine copies the readable and writable paths in before the command runs and copies the writable ones back after it, so the files the code writes come back. Its result can also answer `blocked`, the hosts the network policy refused, which RubyLLM passes on to the model. To explain why `supported?` is false at boot, define `reason`, returning a String. Answer `readable`, `writable`, `network`, `directory`, `timeout`, and `limits` to describe the sandbox to the model and to the person approving an escalation.
 
 ## Next Steps
 

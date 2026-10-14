@@ -242,7 +242,7 @@ ActiveSupport::Notifications.subscribe("code_execution.ruby_llm") do |event|
 end
 ```
 
-The payload carries the `chat`, the `tool_call_id` of the call it answers, the `language`, the `sandbox` it asked for (`nil` for the default), the `timeout` and `network` the run had, and, once it finishes, its `duration` in seconds, `exit_code`, `timed_out`, `blocked_hosts`, and the `files` it returned. With [OpenTelemetry]({% link _advanced/opentelemetry.md %}) enabled, each run becomes a `ruby_llm.code_execution` span under its tool span.
+The payload carries the `chat`, the `tool_call_id` of the call it answers, the `language`, the `sandbox` it asked for (`nil` for the default), the `timeout` and `network` the run had, and, once it finishes, its `duration` in seconds, `exit_code`, `timed_out`, `blocked_hosts`, the `cpu_time` it used and the `limit_exceeded` it hit when its sandbox sets resource limits, and the `files` it returned. With [OpenTelemetry]({% link _advanced/opentelemetry.md %}) enabled, each run becomes a `ruby_llm.code_execution` span under its tool span.
 
 ## Running Code on the Provider's Servers
 
