@@ -37,6 +37,22 @@ RSpec.describe RubyLLM::Agent do
       .to eq(virtualenv: '/opt/venv', readable: ['/opt/fonts'], languages: %i[ruby python shell])
   end
 
+  it 'resolves a mounts lambda before each run with the chat in scope' do
+    Dir.mktmpdir do |templates|
+      links = []
+      RubyLLM.config.sandbox = FakeSandbox.new do |run|
+        links << File.readlink(File.join(run[:directory], 'templates'))
+        FakeSandbox.result
+      end
+      chat = agent_with { code_execution mounts: -> { { 'templates' => chat.instance_variable_get(:@dir) } } }.chat
+      chat.instance_variable_set(:@dir, templates)
+
+      chat.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(links).to eq([File.realpath(templates)])
+    end
+  end
+
   it 'disables code execution with false, also for subclasses' do
     parent = agent_with { code_execution }
     child = Class.new(parent) { code_execution false }

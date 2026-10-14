@@ -299,7 +299,10 @@ module RubyLLM
       #   code_execution
       #   code_execution false
       #   code_execution languages: [:ruby, :python], gems: %w[prawn]
+      #   code_execution mounts: -> { { "templates" => chat.templates_dir } }
       #
+      # A +mounts+ lambda runs before each run, with +chat+ and the
+      # agent's inputs in scope, like the agent's other lambdas.
       def code_execution(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
         @code_execution = CodeExecution.options(enabled, options)
       end
@@ -694,7 +697,7 @@ module RubyLLM
         apply_end_user(chat, runtime)
         apply_caching(chat, runtime)
         apply_compaction(chat)
-        apply_code_execution(chat)
+        apply_code_execution(chat, runtime)
         apply_skills(chat)
         apply_permissions(chat)
         apply_provider_options(chat, runtime)
@@ -839,10 +842,14 @@ module RubyLLM
         @compaction == false ? chat.with_compaction(false) : chat.with_compaction(**@compaction)
       end
 
-      def apply_code_execution(chat)
+      def apply_code_execution(chat, runtime)
         return if @code_execution.nil?
+        return chat.with_code_execution(false) if @code_execution == false
 
-        @code_execution == false ? chat.with_code_execution(false) : chat.with_code_execution(**@code_execution)
+        options = @code_execution
+        mounts = options[:mounts]
+        options = options.merge(mounts: -> { evaluate(mounts, runtime) }) if mounts.is_a?(Proc)
+        chat.with_code_execution(**options)
       end
 
       def apply_skills(chat)

@@ -17,7 +17,7 @@ module RubyLLM
     LANGUAGES = %i[ruby python shell].freeze
 
     # The options Chat#with_code_execution accepts.
-    OPTIONS = %i[languages timeout network gems python gem_home virtualenv readable].freeze
+    OPTIONS = %i[languages timeout network gems python gem_home virtualenv readable mounts].freeze
 
     # Seconds a run may take unless +timeout:+ says otherwise.
     DEFAULT_TIMEOUT = 120
@@ -88,6 +88,16 @@ module RubyLLM
         end
       end
 
+      # Returns +name+ as a path inside the working directory. Raises
+      # ArgumentError for a path outside it, or inside a folder code
+      # execution fills itself.
+      def mount_name(name) # :nodoc:
+        path = Workspace.mount_path(name)
+        raise ArgumentError, "#{name.inspect} is reserved for skills" if path.split('/').first == Skill::Loader::MOUNT
+
+        path
+      end
+
       private
 
       def runs?(sandbox, language, **)
@@ -103,9 +113,18 @@ module RubyLLM
         raise ArgumentError, "code execution accepts #{OPTIONS.join(', ')}, got #{unknown.join(', ')}" if unknown.any?
         raise ArgumentError, 'code execution options cannot be nil' if options.value?(nil)
         raise ArgumentError, 'pass gems: or gem_home:, not both' if options.key?(:gems) && options.key?(:gem_home)
-        return unless options.key?(:python) && options.key?(:virtualenv)
+        if options.key?(:python) && options.key?(:virtualenv)
+          raise ArgumentError, 'pass python: or virtualenv:, not both'
+        end
 
-        raise ArgumentError, 'pass python: or virtualenv:, not both'
+        validate_mounts(options[:mounts]) if options.key?(:mounts)
+      end
+
+      def validate_mounts(mounts)
+        return if mounts.is_a?(Proc)
+        raise ArgumentError, 'mounts: takes a Hash or a Proc that returns one' unless mounts.is_a?(Hash)
+
+        mounts.each_key { |name| mount_name(name) }
       end
 
       def languages_for(options)
@@ -154,22 +173,41 @@ module RubyLLM
     # The extra paths runs may read.
     attr_reader :readable
 
+    # Returns the directories mounted read-only in each run's working
+    # directory, keyed by their path there. Raises ArgumentError for a
+    # path outside the working directory or a directory that does not
+    # exist.
+    def mounts
+      mounts = @mounts.is_a?(Proc) ? @mounts.call : @mounts
+      raise ArgumentError, 'mounts: takes a Hash or a Proc that returns one' unless mounts.is_a?(Hash)
+
+      mounts.to_h do |name, directory|
+        directory = File.expand_path(directory)
+        raise ArgumentError, "#{directory} is not a directory" unless File.directory?(directory)
+
+        [self.class.mount_name(name), File.realpath(directory)]
+      end
+    end
+
     # Creates the tool for +sandbox+ with the options Chat#with_code_execution
     # takes. +sandbox+ and +config+ may be Procs, called whenever the tool
     # needs them. +attachments+ returns the conversation's files when called,
-    # and +mounts+ a Hash of paths inside the working directory to
-    # directories mounted there read-only. +chat+ and +config+ describe
+    # and +skills+ a Hash of paths under +skills/+ to the skill folders
+    # mounted there. +mounts+ is a Hash of paths inside the working
+    # directory to directories mounted there read-only, or a Proc called
+    # before each run that returns one. +chat+ and +config+ describe
     # where the instrumentation events go. +grants+ returns the hosts and
     # paths the chat's permissions granted, and +requests+ whether the model
     # can ask for more with +request_permission+.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, attachments: -> { [] }, mounts: -> { {} }, chat: nil, config: nil,
+    def initialize(sandbox:, attachments: -> { [] }, skills: -> { {} }, mounts: {}, chat: nil, config: nil,
                    package_cache_dir: nil, languages: %i[ruby shell], timeout: DEFAULT_TIMEOUT, network: false,
                    readable: [], grants: -> { {} }, requests: -> { false }, **packages)
       super()
       @sandbox = sandbox
       self.sandbox
       @attachments = attachments
+      @skills = skills
       @mounts = mounts
       @chat = chat
       @config = config
@@ -216,6 +254,7 @@ module RubyLLM
         'Each call starts in a new empty working directory, and nothing carries over between calls.',
         "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \
         '(read-only). Write files to the working directory to return them to the user.',
+        mounts_note,
         packages_note,
         network_note,
         requests_note,
@@ -253,7 +292,7 @@ module RubyLLM
 
     def run(language, code, workspace, tool_call)
       workspace.copy_in(@attachments.call)
-      mounted = workspace.mount(@mounts.call)
+      mounted = workspace.mount(mounts.merge(@skills.call))
       script = workspace.write_source(language, code)
       instrument(language, tool_call) do |event|
         result = run_in_sandbox(language.command(script), workspace, readable: mounted)
@@ -348,6 +387,11 @@ module RubyLLM
     def language_list
       labels = languages.map { |name| Language[name].label }
       labels.size > 1 ? "#{labels[0..-2].join(', ')} or #{labels.last}" : labels.first
+    end
+
+    def mounts_note
+      names = mounts.keys
+      "These folders are available read-only: #{names.map { |name| "./#{name}" }.join(', ')}." if names.any?
     end
 
     def packages_note

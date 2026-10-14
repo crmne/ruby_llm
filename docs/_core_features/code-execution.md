@@ -119,6 +119,23 @@ result.attachments.first.filename # => "revenue.png"
 
 The code sees the system's programs and libraries read-only, its working directory, and nothing else: no project, no home directory, and no environment variables beyond `PATH`, `LANG`, and those the declared packages need. `HOME`, `XDG_CACHE_HOME`, and `TMPDIR` point to writable directories that live as long as the call, so programs such as LibreOffice and fontconfig can keep their profiles and caches.
 
+### Your Own Folders
+
+To give the code files of your own, such as report templates or brand assets, mount their directories with `mounts:`. Each key is where the directory appears in the working directory:
+
+```ruby
+chat.with_code_execution(mounts: { "templates" => Rails.root.join("app/templates/office") })
+chat.ask "Write the quarterly report using templates/report.docx"
+```
+
+The code reads `templates/report.docx` but cannot change it, and the model's tool description lists the mounted folders. The keys are relative paths inside the working directory. `attachments/` and `skills/` are taken, and paths that leave the working directory raise ArgumentError.
+
+When the folders depend on who is asking, pass a lambda. RubyLLM calls it before each run, and an empty Hash mounts nothing:
+
+```ruby
+chat.with_code_execution(mounts: -> { { "templates" => current_account.templates_path } })
+```
+
 ### Other Programs
 
 Programs installed under `/usr`, such as LibreOffice, Poppler's `pdftoppm`, and fontconfig, work without any setup. Grant read access to anything installed elsewhere with `readable:`:
@@ -230,6 +247,14 @@ Agents declare code execution with the `code_execution` macro, which takes the s
 class AnalystAgent < RubyLLM::Agent
   instructions "Answer with numbers you computed, not estimates."
   code_execution python: %w[pandas]
+end
+```
+
+A `mounts:` lambda in an agent runs before each run with `chat` in scope, like the agent's other lambdas:
+
+```ruby
+class ReportAgent < RubyLLM::Agent
+  code_execution mounts: -> { { "templates" => chat.account.templates_path } }
 end
 ```
 

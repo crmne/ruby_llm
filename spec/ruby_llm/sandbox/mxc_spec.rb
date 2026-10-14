@@ -161,7 +161,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   it 'reads extra paths and mounted directories it is given' do
     Dir.mktmpdir do |skill|
       File.write(File.join(skill, 'hello.rb'), 'puts "from the skill"')
-      tool = RubyLLM::CodeExecution.new(sandbox:, mounts: -> { { 'skills/hello' => skill } })
+      tool = RubyLLM::CodeExecution.new(sandbox:, skills: -> { { 'skills/hello' => skill } })
 
       expect(report(tool.call(language: 'ruby', code: "load 'skills/hello/hello.rb'"))['stdout'])
         .to eq("from the skill\n")

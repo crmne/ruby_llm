@@ -252,13 +252,74 @@ RSpec.describe RubyLLM::Chat do
           seen = [File.symlink?(link), File.readlink(link), run[:readable].include?(skill)]
           FakeSandbox.result
         end
-        tool = RubyLLM::CodeExecution.new(sandbox:, mounts: -> { { 'skills/reports' => skill } })
+        tool = RubyLLM::CodeExecution.new(sandbox:, skills: -> { { 'skills/reports' => skill } })
 
         _, *files = Array(tool.call(language: 'ruby', code: 'x'))
 
         expect(seen).to eq([true, skill, true])
         expect(files).to be_empty
       end
+    end
+
+    it 'mounts directories read-only at the paths it is given' do
+      Dir.mktmpdir do |templates|
+        seen = nil
+        sandbox = FakeSandbox.new do |run|
+          link = File.join(run[:directory], 'templates', 'office')
+          seen = [File.readlink(link), run[:readable].include?(File.realpath(templates)),
+                  run[:writable].include?(File.realpath(templates))]
+          FakeSandbox.result
+        end
+        chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+        chat.with_code_execution(mounts: { 'templates/office' => Pathname(templates) })
+
+        _, *files = Array(chat.tools[:run_code].call(language: 'ruby', code: 'x'))
+
+        expect(seen).to eq([File.realpath(templates), true, false])
+        expect(files).to be_empty
+        expect(chat.tools[:run_code].description)
+          .to include('These folders are available read-only: ./templates/office.')
+      end
+    end
+
+    it 'resolves a mounts Proc before each run' do
+      Dir.mktmpdir do |first|
+        Dir.mktmpdir do |second|
+          current = first
+          links = []
+          sandbox = FakeSandbox.new do |run|
+            links << File.readlink(File.join(run[:directory], 'templates'))
+            FakeSandbox.result
+          end
+          chat = RubyLLM.context { |config| config.sandbox = sandbox }
+                        .chat(model: model_for(:openai), provider: :openai)
+          chat.with_code_execution(mounts: -> { { 'templates' => current } })
+
+          chat.tools[:run_code].call(language: 'ruby', code: 'x')
+          current = second
+          chat.tools[:run_code].call(language: 'ruby', code: 'x')
+
+          expect(links).to eq([File.realpath(first), File.realpath(second)])
+        end
+      end
+    end
+
+    it 'leaves mounts out of the description when there are none' do
+      chat.with_code_execution(mounts: -> { {} })
+
+      expect(chat.tools[:run_code].description).not_to include('read-only:')
+    end
+
+    it 'refuses mounts that are not directories or that take a reserved path' do
+      expect { chat.with_code_execution(mounts: ['templates']) }.to raise_error(ArgumentError, /Hash or a Proc/)
+      expect { chat.with_code_execution(mounts: { '/abs' => Dir.pwd }) }.to raise_error(ArgumentError, /not a path/)
+      expect { chat.with_code_execution(mounts: { 'a/../b' => Dir.pwd }) }.to raise_error(ArgumentError, /not a path/)
+      expect { chat.with_code_execution(mounts: { 'attachments' => Dir.pwd }) }
+        .to raise_error(ArgumentError, /not a path/)
+      expect { chat.with_code_execution(mounts: { 'skills/x' => Dir.pwd }) }.to raise_error(ArgumentError, /reserved/)
+
+      chat.with_code_execution(mounts: -> { { 'templates' => File.join(Dir.pwd, 'missing') } })
+      expect { run_code('puts 1') }.to raise_error(ArgumentError, /is not a directory/)
     end
 
     it 'refuses mounts outside the working directory' do

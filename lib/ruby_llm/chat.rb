@@ -840,6 +840,9 @@ module RubyLLM
     #                used instead of +python+.
     # +readable+:: more paths runs may read, such as fonts or an
     #              application installed outside the system directories.
+    # +mounts+:: directories mounted read-only in each run's working
+    #            directory, keyed by their path there, or a Proc called
+    #            before each run that returns them.
     #
     # Accepts keywords or an options Hash. Pass +false+ to disable it.
     # Passing +nil+ raises ArgumentError. Returns +self+.
@@ -848,6 +851,7 @@ module RubyLLM
     #   chat.with_code_execution(languages: [:ruby, :python], timeout: 120)
     #   chat.with_code_execution(gems: %w[prawn], python: %w[pandas matplotlib])
     #   chat.with_code_execution(virtualenv: "/opt/sandbox/venv", readable: ["/opt/fonts"])
+    #   chat.with_code_execution(mounts: { "templates" => "app/templates/reports" })
     #   chat.with_code_execution(false)
     #
     # Raises ConfigurationError when no sandbox is configured. Code never
@@ -859,7 +863,7 @@ module RubyLLM
                                CodeExecution.new(
                                  sandbox: -> { Sandbox.resolve(@config.sandbox) },
                                  attachments: -> { messages.flat_map(&:attachments) },
-                                 mounts: -> { skills.to_h { |skill| [Skill::Loader.mount_path(skill), skill.path] } },
+                                 skills: -> { skills.to_h { |skill| [Skill::Loader.mount_path(skill), skill.path] } },
                                  chat: self,
                                  config: -> { @config },
                                  package_cache_dir: @config.package_cache_dir,

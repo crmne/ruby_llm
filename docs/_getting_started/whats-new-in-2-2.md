@@ -69,7 +69,7 @@ To install nothing at runtime, bake the environments into your image and point a
 chat.with_code_execution(virtualenv: "/opt/sandbox/venv", gem_home: "/opt/sandbox/gems")
 ```
 
-Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work without setup. Grant read access to programs or fonts installed elsewhere with `readable:`.
+Programs under `/usr`, such as LibreOffice and Poppler's `pdftoppm`, work without setup. Grant read access to programs or fonts installed elsewhere with `readable:`, and give the code your own folders, such as templates, with `mounts:`.
 
 ### Measuring Runs
 
