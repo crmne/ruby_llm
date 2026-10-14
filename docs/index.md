@@ -341,6 +341,15 @@ response.citations
 {: .home-code-card data-title="Search the web with citations" data-href="{% link _core_features/provider-tools.md %}" data-doc-title="Provider Tools" }
 
 ```ruby
+chat = RubyLLM.chat
+  .with_code_execution(python: %w[matplotlib])
+chat.ask "Chart revenue by month", with: "revenue.csv"
+
+chat.messages.find(&:tool_result?).attachments
+```
+{: .home-code-card data-title="Run code in a sandbox" data-href="{% link _core_features/code-execution.md %}" data-doc-title="Code Execution" }
+
+```ruby
 documents = ["Ruby is expressive", "Python uses indentation"]
 embeddings = RubyLLM.embed(documents)
 ranked = RubyLLM.rerank("Ruby language", documents, model: "{{ site.models.rerank_cohere }}")

@@ -226,6 +226,7 @@ Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with us
 * **Tool approval:** Park a run until a human approves with `requires_approval`
 * **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
 * **Provider tools:** Web search, code execution, and MCP connectors with `with_provider_tools`
+* **Code execution (main):** Let the model run Ruby, Python, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
 * **Agents:** Reusable assistants with `RubyLLM::Agent`
 * **Evaluations (main):** Reusable datasets, model criteria, and Ruby assertions with [`RubyLLM::Evaluation`](https://rubyllm.com/next/evaluations/)
 * **Prompt templates:** ERB prompts in `app/prompts`, rendered with `RubyLLM.render_prompt`
