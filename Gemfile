@@ -14,6 +14,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'dotenv'
   # Reference parser for the server-sent events differential spec
   gem 'event_stream_parser'
+  gem 'faraday-net_http_persistent'
   gem 'ferrum'
   gem 'flay'
   gem 'image_processing', '~> 1.2'

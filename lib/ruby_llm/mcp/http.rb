@@ -285,11 +285,15 @@ module RubyLLM
       # The body is either a single JSON value or a server-sent event
       # stream; the first character tells them apart. An event stream stops
       # being read once it carries the answer to request +id+, since servers
-      # may keep it open, and one that breaks midway counts as ended. Only
-      # answers are kept, so a stream that stays open does not grow.
-      # Faraday 2 passes the response headers with each chunk; Faraday 1
-      # has them only once the response ends.
+      # may keep it open, and one that breaks midway counts as ended. The
+      # stop raises so adapters that pool sockets can discard the connection
+      # instead of returning it with unread bytes. Only answers are kept, so
+      # a stream that stays open does not grow. Faraday 2 passes the response
+      # headers with each chunk; Faraday 1 has them only once the response ends.
       class Stream # :nodoc:
+        class Abandoned < StandardError # :nodoc:
+        end
+
         attr_reader :id, :headers
 
         def initialize(id, &on_message)
@@ -307,8 +311,10 @@ module RubyLLM
         end
 
         def read(&)
-          response = catch(self, &)
+          response = yield
           @headers = response.headers if @headers.empty? && response.respond_to?(:headers)
+          self
+        rescue Abandoned
           self
         rescue Faraday::ConnectionFailed
           raise unless events?
@@ -331,7 +337,7 @@ module RubyLLM
           return unless @events
 
           @parser.feed(chunk) { |_type, data| receive_event(data) }
-          throw self if answer
+          raise Abandoned if answer
         end
 
         def replies
