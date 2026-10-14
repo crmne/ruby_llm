@@ -150,17 +150,17 @@ module RubyLLM
       # Returns the persisted tool call records that require approval and
       # have no recorded decision, ready to render as approval cards. Pass
       # a record (or its tool_call_id) to #approve or #deny.
-      # A record's +remote?+ identifies a provider-executed call.
+      # A record's +remote?+ identifies a provider-executed call. Records
+      # come in the order the model made the calls.
       #
       #   chat.pending_approvals.each { |record| render record }
       #
       def pending_approvals
         ids = to_llm.pending_approvals.map(&:id)
         RubyLLM::ActiveRecord::ToolCall.where(
-          tool_call_id: ids,
           message_type: self.class.message_class.constantize.polymorphic_name,
           message_id: messages_association.select(:id)
-        )
+        ).in_order_of(:tool_call_id, ids)
       end
 
       def messages_association # :nodoc:

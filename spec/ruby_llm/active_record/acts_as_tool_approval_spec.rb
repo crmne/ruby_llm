@@ -85,6 +85,30 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(calls).to eq(ids)
   end
 
+  it 'returns pending approvals in the order the model made them' do
+    ids = ["#{call_id}_1", "#{call_id}_2"]
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    chat.with_tools(approval_tool)
+    chat.add_message(
+      RubyLLM::Message.new(
+        role: :assistant,
+        content: '',
+        tool_calls: ids.to_h { |id| [id, RubyLLM::ToolCall.new(id:, name: 'dangerous', arguments: {})] }
+      )
+    )
+
+    reloaded = reading_rows_in_reverse do
+      Chat.find(chat.id).with_tools(approval_tool).pending_approvals.map(&:tool_call_id)
+    end
+    expect(reloaded).to eq(ids)
+
+    RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: ids.first).update_columns(created_at: 1.minute.from_now)
+
+    pending = reading_rows_in_reverse { chat.pending_approvals.map(&:tool_call_id) }
+
+    expect(pending).to eq(ids)
+  end
+
   # SQLite returns the rows of a query without ORDER BY in reverse under
   # this pragma, as PostgreSQL returns a row after an update moves it.
   def reading_rows_in_reverse
