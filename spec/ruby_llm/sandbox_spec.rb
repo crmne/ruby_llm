@@ -36,6 +36,11 @@ RSpec.describe RubyLLM::Sandbox do
   end
 
   describe '.name_for' do
+    it 'separates acronyms and digits from the following word' do
+      expect(described_class.name_for('Admin::HTTP2ReadOnlySandbox')).to eq('http2_read_only')
+      expect(described_class.name_for('HTTPSandbox')).to eq('http')
+    end
+
     it 'names a sandbox after its class, without the Sandbox suffix' do
       stub_const('Admin::FullDiskSandbox', Class.new(FakeSandbox))
 

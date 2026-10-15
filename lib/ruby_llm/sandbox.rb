@@ -87,7 +87,7 @@ module RubyLLM
           raise ArgumentError, "Name the sandbox #{value.inspect} with a Hash: escalate_to: { name => sandbox }"
         end
 
-        base.gsub(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+        base.gsub(/([A-Z\d])([A-Z][a-z])/, '\1_\2').gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
       end
 
       # Raises ConfigurationError unless +sandbox+ can run on this machine.

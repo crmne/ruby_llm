@@ -139,6 +139,18 @@ RSpec.describe RubyLLM::Evaluation do
     end
   end
 
+  it 'discovers namespaced datasets with acronyms in their class names' do
+    Dir.mktmpdir do |directory|
+      allow(RubyLLM::Prompt).to receive(:root).and_return(Pathname.new(directory).join('app/prompts'))
+      root = File.join(directory, 'app/evals/checks')
+      FileUtils.mkdir_p(root)
+      stub_const('Checks::HTTPResponseEvaluation', evaluation)
+      File.write(File.join(root, 'http_response_evaluation.yml'), YAML.dump('cases' => cases.map(&:to_h).as_json))
+
+      expect(evaluation.run).to be_passed
+    end
+  end
+
   it 'loads YAML, JSON, and JSONL with the same data and explicit paths' do
     Dir.mktmpdir do |directory|
       files = { 'yml' => YAML.dump('cases' => cases.map(&:to_h).as_json),

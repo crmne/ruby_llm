@@ -66,7 +66,7 @@ module RubyLLM
       end
 
       def explain_own_broadcasting(source)
-        return unless source.match?(/broadcast_\w+_to|broadcasts_to|broadcasts_refreshes|broadcast_append_chunk/)
+        return unless source.match?(/\b(?:broadcast_\w+_to|broadcasts_to|broadcasts_refreshes|broadcast_append_chunk)/)
         return if source.include?('broadcasts: false')
 
         say "\n  #{message_model_name} broadcasts with Turbo itself, and the chat UI turns on RubyLLM's broadcasting.",

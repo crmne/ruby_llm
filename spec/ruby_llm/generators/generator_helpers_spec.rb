@@ -6,6 +6,37 @@ require 'thor'
 require 'generators/ruby_llm/generator_helpers'
 
 RSpec.describe RubyLLM::Generators::GeneratorHelpers, :generator do
+  describe '#explain_own_broadcasting' do
+    let(:helpers) { Object.new.extend(described_class) }
+
+    before do
+      allow(helpers).to receive(:message_model_name).and_return('Message')
+      allow(helpers).to receive(:say)
+    end
+
+    %w[
+      broadcast_append_to broadcast_replace_later_to broadcasts_to broadcasts_refreshes_to broadcast_append_chunk
+    ].each do |method|
+      it "warns about #{method} alongside RubyLLM broadcasting" do
+        helpers.explain_own_broadcasting("after_commit -> { #{method} :messages }")
+
+        expect(helpers).to have_received(:say).with(/Message broadcasts with Turbo itself/, :yellow)
+      end
+    end
+
+    it 'does not mistake a suffix of another identifier for a Turbo broadcast' do
+      helpers.explain_own_broadcasting("not_#{'broadcast_' * 5_000}unrelated_to = true")
+
+      expect(helpers).not_to have_received(:say)
+    end
+
+    it 'does not warn when RubyLLM broadcasting is disabled' do
+      helpers.explain_own_broadcasting("acts_as_message broadcasts: false\nbroadcasts_to :messages")
+
+      expect(helpers).not_to have_received(:say)
+    end
+  end
+
   describe 'database detection' do
     let(:helpers) { Object.new.extend(described_class) }
 

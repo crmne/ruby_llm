@@ -119,6 +119,28 @@ RSpec.describe RubyLLM::Prompt do
       expect(described_class.render('instructions', 'x-y' => 1, Name: 2)).to eq('12')
     end
 
+    it 'renders Unicode and underscore-prefixed locals' do
+      create_prompt('instructions', '<%= café %> <%= _name2 %>')
+
+      expect(described_class.render('instructions', café: 'Coffee', _name2: 'Ada')).to eq('Coffee Ada')
+    end
+
+    %w[_ é].each do |character|
+      it "keeps long invalid names containing #{character} in local_assigns only" do
+        name = "#{character * 50_000}!"
+        create_prompt('instructions', '<%= local_assigns.fetch(key) %>')
+
+        expect(described_class.render('instructions', key: name, name => 'Ada')).to eq('Ada')
+      end
+    end
+
+    it 'renders partials with dots in their names and directories' do
+      create_prompt('shared.v1/_tone.formal', 'Dear <%= name %>')
+      create_prompt('instructions', '<%= render "shared.v1/tone.formal", name: name %>')
+
+      expect(described_class.render('instructions', name: 'Ada')).to eq('Dear Ada')
+    end
+
     it 'treats nil locals in the hash form as no locals' do
       create_prompt('_tone', 'Stay calm.')
       create_prompt('instructions', '<%= render partial: "tone", locals: nil %>')

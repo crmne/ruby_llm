@@ -7,7 +7,7 @@
 # RubyLLM lexical scope: +Chat+ in a template is the application's model,
 # not RubyLLM::Chat.
 class RubyLLM::Prompt::Context # rubocop:disable Style/ClassAndModuleChildren
-  LOCAL_VARIABLE_NAME = /\A(?![A-Z0-9])(?:[[:alnum:]_]|[^\0-\177])+\z/
+  LOCAL_VARIABLE_NAME = /\A(?![A-Z0-9])[[:alnum:]_[:^ascii:]]+\z/
   private_constant :LOCAL_VARIABLE_NAME
 
   # Returns the locals passed to the current prompt or partial. Use it to
@@ -46,7 +46,7 @@ class RubyLLM::Prompt::Context # rubocop:disable Style/ClassAndModuleChildren
 
   def partial(name)
     name = name.to_s
-    partial = name.sub(%r{([^/]+)\z}, '_\\1')
+    partial = name.sub(%r{(\A|/)([^/]+)\z}, '\\1_\\2')
     directory = File.dirname(@prompt.name)
     return RubyLLM::Prompt.new(partial) if name.include?('/') || directory == '.'
 

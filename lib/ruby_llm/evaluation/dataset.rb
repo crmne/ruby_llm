@@ -42,7 +42,7 @@ module RubyLLM
       def discover(name)
         raise ArgumentError, 'An anonymous evaluation needs an explicit dataset' unless name
 
-        filename = name.gsub('::', '/').gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        filename = name.gsub('::', '/').gsub(/([A-Z])([A-Z][a-z])/, '\1_\2')
                        .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
         root = Prompt.root.parent.join('evals')
         paths = %w[yml yaml json jsonl].map { |extension| root.join("#{filename}.#{extension}") }.select(&:file?)
