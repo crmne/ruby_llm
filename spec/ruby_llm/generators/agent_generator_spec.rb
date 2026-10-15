@@ -33,16 +33,27 @@ RSpec.describe RubyLLM::Generators::AgentGenerator, :generator, type: :generator
     GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_agent_generator'))
   end
 
-  it 'creates an agent class and instructions prompt in the convention path' do
+  it 'creates an agent that inherits from ApplicationAgent, with an instructions prompt' do
     within_test_app(app_path) do
       output, status = run_rails_generate('ruby_llm:agent', 'Support')
       expect(status.success?).to be(true), output
 
-      expect(File.exist?('app/agents/support_agent.rb')).to be true
       expect(File.exist?('app/prompts/support_agent/instructions.txt.erb')).to be true
+      expect(File.read('app/agents/support_agent.rb')).to eq("class SupportAgent < ApplicationAgent\nend\n")
+      success, runner_output = run_rails_runner('exit(SupportAgent.create!.is_a?(Chat) ? 0 : 1)')
+      expect(success).to be(true), runner_output
+    end
+  end
 
-      agent_class = File.read('app/agents/support_agent.rb')
-      expect(agent_class).to include('class SupportAgent < RubyLLM::Agent')
+  it 'gives the agent its own chat model when there is no ApplicationAgent' do
+    within_test_app(app_path) do
+      FileUtils.mv('app/agents/application_agent.rb', 'tmp/application_agent.rb')
+      output, status = run_rails_generate('ruby_llm:agent', 'Billing')
+      FileUtils.mv('tmp/application_agent.rb', 'app/agents/application_agent.rb')
+      expect(status.success?).to be(true), output
+
+      agent_class = File.read('app/agents/billing_agent.rb')
+      expect(agent_class).to include('class BillingAgent < RubyLLM::Agent')
       expect(agent_class).to include("Change `Chat` to your app's chat model for Rails persistence.")
       expect(agent_class).to include('chat_model Chat')
       expect(agent_class).not_to include("\n  instructions")

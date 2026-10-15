@@ -1,6 +1,6 @@
 class <%= chat_job_class_name %> < ApplicationJob
   def perform(<%= chat_variable_name %>_id, content = nil)
-    <%= chat_variable_name %> = <%= chat_model_name %>.find(<%= chat_variable_name %>_id)
+    <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
     <%= chat_variable_name %>.ask_later(content) if content
 
     <%= chat_variable_name %>.complete do |chunk|

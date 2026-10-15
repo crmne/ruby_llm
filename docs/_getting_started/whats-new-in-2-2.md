@@ -145,6 +145,8 @@ bin/rails generate ruby_llm:judge Urgency
 
 They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`. `ruby_llm:install` creates every folder, including the new `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`. See [Generators]({% link _advanced/rails-generators.md %}#generators).
 
+Agents get a parent, the way models have `ApplicationRecord`. `ruby_llm:install` creates `ApplicationAgent` with your chat model, and `ruby_llm:agent` generates subclasses of it. The chat UI talks to its own `ChatAgent`, so tools you add there show up in the UI, with approval cards for the ones that require approval and attachments for the files they return. See [Approvals and Attachments]({% link _advanced/rails-generators.md %}#approvals-and-attachments).
+
 ## One Process at a Time
 
 A persisted chat now runs in one process at a time. `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat before they call the model or run a tool, and each tool call is claimed before it runs. A double-submitted approval that enqueues two jobs no longer runs a tool twice or asks the model for two replies:

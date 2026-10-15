@@ -37,6 +37,7 @@ The generator:
 - Installs ActiveStorage for file attachments
 - Creates an initializer for provider configuration
 - Creates the conventional AI app directories: `app/agents`, `app/tools`, `app/schemas`, `app/prompts`, `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`
+- Creates `app/agents/application_agent.rb`, the parent of your agents, pointed at your chat model
 
 After running the generator:
 
@@ -76,6 +77,7 @@ bin/rails generate ruby_llm:chat_ui
 
 The generator creates:
 
+- **Agent**: `ChatAgent`, which the controllers and job create and load chats through
 - **Controllers**: Create chats, enqueue message processing, and record approval decisions
 - **Views**: Render messages, their attachments, and approval cards, and update them with Turbo Streams
 - **Jobs**: Request AI responses in the background and continue the conversation after a decision
@@ -95,18 +97,17 @@ When a tool [requires approval]({% link _core_features/tool-execution.md %}#requ
 
 Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. Decided calls show as ordinary tool calls with their results. When the job finishes or pauses for the next approval, it broadcasts the cards and the message form to the page.
 
-The generated controllers and job load chats with `Chat.find`, which has the transcript but no tools. Load the chat through your agent instead, so the page and the job know which calls need approval:
+The chat UI talks to `ChatAgent` in `app/agents/chat_agent.rb`. The controllers and the job create chats with `ChatAgent.create!` and load them with `ChatAgent.find`, so whatever you add to it reaches the UI. Give it tools, instructions, or code execution, and tools that require approval get their cards:
 
 ```ruby
-# app/controllers/chats_controller.rb
-@chat = SupportAgent.find(params[:id])
-
-# app/controllers/messages_controller.rb and app/controllers/approvals_controller.rb
-@chat = SupportAgent.find(params[:chat_id])
-
-# app/jobs/chat_response_job.rb
-chat = SupportAgent.find(chat_id)
+class ChatAgent < ApplicationAgent
+  instructions "You help the finance team with invoices."
+  tools SendInvoiceTool
+  code_execution sandbox: ReadOnlySandbox, escalate_to: [WorkspaceSandbox]
+end
 ```
+
+The agent is named after your chat model: `chat:Conversation` gives `ConversationAgent`, and `chat:Llm::Chat` gives `Llm::ChatAgent` in `app/agents/llm/chat_agent.rb`.
 
 Messages show their Active Storage attachments: images inline, and other files as download links with their size. That includes the files a code run returns, such as charts.
 
@@ -166,7 +167,7 @@ bin/rails generate ruby_llm:judge Urgency
 
 What each generator creates:
 
-- `ruby_llm:agent`: `app/agents/support_agent.rb` and `app/prompts/support_agent/instructions.txt.erb`
+- `ruby_llm:agent`: `app/agents/support_agent.rb`, a subclass of `ApplicationAgent`, and `app/prompts/support_agent/instructions.txt.erb`. In an app without `ApplicationAgent`, the agent inherits from `RubyLLM::Agent` and names its chat model itself.
 - `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
 - `ruby_llm:mcp`: `app/mcp/linear.rb`, connecting to the URL you give. For a server that runs on your machine, pass `--command` instead: `bin/rails generate ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."`

@@ -49,6 +49,7 @@ module RubyLLM
 
       def create_app_directories
         create_convention_directories
+        create_application_agent
       end
 
       def install_active_storage

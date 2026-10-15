@@ -31,6 +31,10 @@ module RubyLLM
       def agent_file_name
         agent_class_name.demodulize.underscore
       end
+
+      def application_agent?
+        File.exist?(File.join(destination_root, 'app/agents/application_agent.rb'))
+      end
     end
   end
 end

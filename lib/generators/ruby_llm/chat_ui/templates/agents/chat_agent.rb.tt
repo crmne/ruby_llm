@@ -1,0 +1,11 @@
+<% if application_agent? -%>
+class <%= chat_agent_class_name %> < ApplicationAgent
+<% unless application_agent_chat_model? -%>
+  chat_model <%= chat_model_name %>
+<% end -%>
+end
+<% else -%>
+class <%= chat_agent_class_name %> < RubyLLM::Agent
+  chat_model <%= chat_model_name %>
+end
+<% end -%>

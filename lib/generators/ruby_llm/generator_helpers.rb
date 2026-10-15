@@ -6,6 +6,7 @@ module RubyLLM
     module GeneratorHelpers
       APPLICATION_MODEL_TYPES = %w[chat message].freeze
       CONVENTION_DIRECTORIES = %w[agents tools schemas prompts skills sandboxes mcp evals judges].freeze
+      APPLICATION_AGENT_PATH = 'app/agents/application_agent.rb'
       DEFAULT_MODEL_NAMES = {
         chat: 'Chat',
         message: 'Message'
@@ -17,6 +18,20 @@ module RubyLLM
           keep = File.join('app', name, '.gitkeep')
           create_file keep unless File.exist?(File.join(destination_root, keep))
         end
+      end
+
+      def create_application_agent
+        return if application_agent?
+
+        create_file APPLICATION_AGENT_PATH, <<~RUBY
+          class ApplicationAgent < RubyLLM::Agent
+            chat_model #{chat_model_name}
+          end
+        RUBY
+      end
+
+      def application_agent?
+        File.exist?(File.join(destination_root, APPLICATION_AGENT_PATH))
       end
 
       def parse_model_mappings(allowed_types: APPLICATION_MODEL_TYPES, defaults: DEFAULT_MODEL_NAMES)

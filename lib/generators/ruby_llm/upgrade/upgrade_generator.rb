@@ -29,6 +29,7 @@ module RubyLLM
 
       def create_app_directories
         create_convention_directories
+        create_application_agent
       end
     end
   end

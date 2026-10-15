@@ -101,6 +101,10 @@ module RubyLLM
         template 'controllers/approvals_controller.rb', "app/controllers/#{approval_view_path}_controller.rb"
       end
 
+      def create_agent
+        template 'agents/chat_agent.rb', "app/agents/#{chat_agent_class_name.underscore}.rb"
+      end
+
       def create_jobs
         template 'jobs/chat_response_job.rb', "app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
       end
@@ -222,6 +226,12 @@ module RubyLLM
 
       def approval_view_path = approval_model_name.underscore.pluralize
       def approval_controller_class_name = controller_class_name_for(approval_model_name)
+      def chat_agent_class_name = "#{chat_model_name}Agent"
+
+      def application_agent_chat_model?
+        File.read(File.join(destination_root, APPLICATION_AGENT_PATH))
+            .match?(/^\s*chat_model #{Regexp.escape(chat_model_name)}\s*$/)
+      end
 
       def message_helper_module_name
         if message_model_name.include?('::')

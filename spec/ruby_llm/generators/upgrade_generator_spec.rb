@@ -60,4 +60,22 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     end
     expect(File.directory?(File.join(destination, 'app/skills/invoices'))).to be(true)
   end
+
+  it 'adds an ApplicationAgent for the mapped chat model' do
+    described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+                   .create_app_directories
+
+    expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
+      .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Conversation\nend\n")
+  end
+
+  it 'leaves an existing ApplicationAgent alone' do
+    path = File.join(destination, 'app/agents/application_agent.rb')
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, "class ApplicationAgent < RubyLLM::Agent\n  chat_model Chat\n  model 'gpt-5.6-luna'\nend\n")
+
+    described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_app_directories
+
+    expect(File.read(path)).to include("model 'gpt-5.6-luna'")
+  end
 end

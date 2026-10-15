@@ -26,6 +26,6 @@ class <%= message_controller_class_name %> < ApplicationController
   private
 
   def set_<%= chat_variable_name %>
-    @<%= chat_variable_name %> = <%= chat_model_name %>.find(params[:<%= chat_model_name.include?('::') ? chat_model_name.demodulize.underscore : chat_variable_name %>_id])
+    @<%= chat_variable_name %> = <%= chat_agent_class_name %>.find(params[:<%= chat_model_name.include?('::') ? chat_model_name.demodulize.underscore : chat_variable_name %>_id])
   end
 end

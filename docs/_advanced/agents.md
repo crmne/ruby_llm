@@ -446,11 +446,18 @@ Handlers apply to agent instances. `WorkAssistant.chat` returns a plain `RubyLLM
 
 ## Rails-Backed Agents
 
-Set `chat_model` to use your ActiveRecord chat model:
+Set `chat_model` to use your ActiveRecord chat model. `bin/rails generate ruby_llm:install` puts it in `ApplicationAgent`, the place for settings every agent in your app shares:
 
 ```ruby
-class WorkAssistant < RubyLLM::Agent
+class ApplicationAgent < RubyLLM::Agent
   chat_model Chat
+end
+```
+
+Agents inherit from it, the way models inherit from `ApplicationRecord`, and `bin/rails generate ruby_llm:agent Support` writes `class SupportAgent < ApplicationAgent` for you:
+
+```ruby
+class WorkAssistant < ApplicationAgent
   model "{{ site.models.default_chat }}"
   instructions "You are a helpful assistant."
   tools SearchDocs, LookupAccount

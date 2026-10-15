@@ -189,7 +189,21 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
                                      chdir: Dir.pwd)
   end
 
-  def approval_flow_script(chat_class:, controller:, assigns:, chats_path:, job:, message_key:)
+  def give_chat_agent_an_approval_tool(agent_path)
+    File.write('app/tools/send_mail_tool.rb', <<~RUBY)
+      class SendMailTool < RubyLLM::Tool
+        description "Sends an email"
+        parameter :to, description: "The recipient"
+        requires_approval
+
+        def execute(to:) = "Sent to \#{to}"
+      end
+    RUBY
+    agent = File.read(agent_path)
+    File.write(agent_path, agent.sub(/^end\n\z/, "  tools SendMailTool\nend\n")) unless agent.include?('SendMailTool')
+  end
+
+  def approval_flow_script(agent:, controller:, assigns:, chats_path:, job:, message_key:, **)
     <<~RUBY
       ActiveJob::Base.queue_adapter = :test
       ActionController::Base.allow_forgery_protection = false
@@ -198,12 +212,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       csv = Rails.root.join("tmp/report.csv")
       File.write(csv, "day,signups\nMon,12\n")
 
-      chat = #{chat_class}.create!
+      chat = #{agent}.create!
       chat.add_message(role: :user, content: "Chart this", attachments: [ csv.to_s, png.to_s ])
       chat.add_message(RubyLLM::Message.new(role: :assistant, content: "", tool_calls: {
         "call_search" => RubyLLM::ToolCall.new(id: "call_search", name: "search_docs", arguments: { "query" => "refunds" }, remote: true),
-        "call_mail" => RubyLLM::ToolCall.new(id: "call_mail", name: "send_mail", arguments: { "to" => "ops" }, remote: true)
+        "call_mail" => RubyLLM::ToolCall.new(id: "call_mail", name: "send_mail", arguments: { "to" => "ops" })
       }))
+      chat = #{agent}.find(chat.id)
 
       html = #{controller}.render(:show, assigns: #{assigns})
       [ "\#{chat.class.name.underscore.tr('/', '_')}_\#{chat.id}_approvals", "Approve search_docs?", "refunds",
@@ -278,20 +293,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       chats_controller_path: 'app/controllers/chats_controller.rb',
       chats_controller_expectations: [
         'class ChatsController',
-        'Chat.find',
+        '@chat = ChatAgent.find(params[:id])',
         '@chat = Chat.new',
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
         'if prompt.present?',
         'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
-        '@chat = Chat.create!(model: model.presence, provider: provider.presence)',
+        '@chat = ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
         '@chat.errors.add(:prompt, "can\'t be blank")',
         'render :new, status:'
       ],
       messages_controller_path: 'app/controllers/messages_controller.rb',
       messages_controller_expectations: [
         'class MessagesController',
-        '@chat = Chat.find(params[:chat_id])',
+        '@chat = ChatAgent.find(params[:chat_id])',
         'content = params.dig(:message, :content)',
         'if @chat.pending_approvals.any?',
         'if content.present?',
@@ -304,14 +319,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       approvals_controller_path: 'app/controllers/approvals_controller.rb',
       approvals_controller_expectations: [
         'class ApprovalsController',
-        '@chat = Chat.find(params[:chat_id])',
+        '@chat = ChatAgent.find(params[:chat_id])',
         '@chat.approve(params[:tool_call_id])',
         '@chat.deny(params[:tool_call_id])',
         'ChatResponseJob.perform_later(@chat.id)',
         'rescue_from RubyLLM::ToolCallRunningError'
       ],
       approval_flow: {
-        chat_class: 'Chat', controller: 'ChatsController',
+        agent: 'ChatAgent', agent_path: 'app/agents/chat_agent.rb', controller: 'ChatsController',
         assigns: '{ chat: chat, message: Message.new }', chats_path: '/chats',
         job: 'ChatResponseJob', message_key: 'message'
       },
@@ -324,7 +339,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       job_options: {
         path: 'app/jobs/chat_response_job.rb',
         class_name: 'class ChatResponseJob',
-        lookup_line: 'chat = Chat.find(chat_id)',
+        lookup_line: 'chat = ChatAgent.find(chat_id)',
         ask_line: 'chat.ask_later(content) if content',
         last_message_line: 'message = chat.messages.last',
         broadcast_lines: ['partial: "chats/approvals"', 'partial: "messages/form"']
@@ -376,20 +391,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       chats_controller_path: 'app/controllers/llm/chats_controller.rb',
       chats_controller_expectations: [
         'class Llm::ChatsController',
-        'Llm::Chat.find',
+        '@llm_chat = Llm::ChatAgent.find(params[:id])',
         '@llm_chat = Llm::Chat.new',
         '@chat_models = available_chat_models',
         'prompt = params.dig(:llm_chat, :prompt)',
         'if prompt.present?',
         'provider, model = params.dig(:llm_chat, :model).to_s.split(":", 2)',
-        '@llm_chat = Llm::Chat.create!(model: model.presence, provider: provider.presence)',
+        '@llm_chat = Llm::ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
         '@llm_chat.errors.add(:prompt, "can\'t be blank")',
         'render :new, status:'
       ],
       messages_controller_path: 'app/controllers/llm/messages_controller.rb',
       messages_controller_expectations: [
         'class Llm::MessagesController',
-        '@llm_chat = Llm::Chat.find(params[:chat_id])',
+        '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
         'content = params.dig(:llm_message, :content)',
         'if @llm_chat.pending_approvals.any?',
         'if content.present?',
@@ -402,14 +417,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       approvals_controller_path: 'app/controllers/llm/approvals_controller.rb',
       approvals_controller_expectations: [
         'class Llm::ApprovalsController',
-        '@llm_chat = Llm::Chat.find(params[:chat_id])',
+        '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
         '@llm_chat.approve(params[:tool_call_id])',
         '@llm_chat.deny(params[:tool_call_id])',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
         'rescue_from RubyLLM::ToolCallRunningError'
       ],
       approval_flow: {
-        chat_class: 'Llm::Chat', controller: 'Llm::ChatsController',
+        agent: 'Llm::ChatAgent', agent_path: 'app/agents/llm/chat_agent.rb', controller: 'Llm::ChatsController',
         assigns: '{ llm_chat: chat, llm_message: Llm::Message.new }', chats_path: '/llm/chats',
         job: 'LlmChatResponseJob', message_key: 'llm_message'
       },
@@ -422,7 +437,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       job_options: {
         path: 'app/jobs/llm_chat_response_job.rb',
         class_name: 'class LlmChatResponseJob',
-        lookup_line: 'llm_chat = Llm::Chat.find(llm_chat_id)',
+        lookup_line: 'llm_chat = Llm::ChatAgent.find(llm_chat_id)',
         ask_line: 'llm_chat.ask_later(content) if content',
         last_message_line: 'llm_message = llm_chat.llm_messages.last',
         broadcast_lines: ['partial: "llm/chats/approvals"', 'partial: "llm/messages/form"']
@@ -486,6 +501,20 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       if description == 'with default model names'
+        it 'gives the chat agent its chat model without an ApplicationAgent' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              FileUtils.rm('app/agents/application_agent.rb')
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--force', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/agents/chat_agent.rb'))
+                .to eq("class ChatAgent < RubyLLM::Agent\n  chat_model Chat\nend\n")
+            end
+          end
+        end
+
         it 'uses scaffold-style inline styles by default' do
           within_test_app(app_path) do
             index_view = File.read('app/views/chats/index.html.erb')
@@ -516,7 +545,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
               controller = File.read('app/controllers/llm/chats_controller.rb')
               expect(controller).to include('class Llm::ChatsController')
-              expect(controller).to include('Llm::Chat.find')
+              expect(controller).to include('Llm::ChatAgent.find')
               expect_chat_script_to_succeed('Rails.application.eager_load!')
             end
           end
@@ -549,6 +578,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
             expect(messages_controller).to include(line)
           end
           expect(messages_controller).not_to include('def content')
+
+          chat_agent = File.read(config[:approval_flow][:agent_path])
+          expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
+          expect(chat_agent).not_to include('chat_model')
 
           approvals_controller = File.read(config[:approvals_controller_path])
           config[:approvals_controller_expectations].each do |line|
@@ -587,6 +620,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
       it 'renders approvals and attachments and records decisions' do
         within_test_app(app_path) do
+          give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
           output, status = run_rails_runner_outside_executor(approval_flow_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end

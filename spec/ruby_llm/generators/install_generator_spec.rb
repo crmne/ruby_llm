@@ -183,6 +183,18 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'creates an ApplicationAgent that creates and finds chats' do
+      within_test_app(app_path) do
+        expect(File.read('app/agents/application_agent.rb'))
+          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Chat\nend\n")
+        success, output = run_rails_runner(<<~RUBY)
+          chat = ApplicationAgent.create!
+          exit(chat.is_a?(Chat) && ApplicationAgent.find(chat.id) == chat ? 0 : 1)
+        RUBY
+        expect(success).to be(true), output
+      end
+    end
+
     it 'chat functionality works correctly' do
       within_test_app(app_path) do
         test_script = <<~RUBY
@@ -192,6 +204,19 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         RUBY
         success, output = run_rails_runner(test_script)
         expect(success).to be(true), output
+      end
+    end
+  end
+
+  describe 'with a mapped chat model' do
+    it 'points ApplicationAgent at that model' do
+      Dir.mktmpdir do |destination|
+        described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+                       .create_app_directories
+
+        expect(File.read(File.join(destination, 'app/agents/application_agent.rb')))
+          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Conversation\nend\n")
+        expect(File.exist?(File.join(destination, 'app/agents/.gitkeep'))).to be(true)
       end
     end
   end
@@ -260,6 +285,18 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(message_model).to include('chat: :llm_chat')
         expect(message_model).to include("chat_class: 'Llm::Chat'")
         expect(message_model).not_to include('tool_call_class')
+      end
+    end
+
+    it 'creates an ApplicationAgent for the namespaced chat model' do
+      within_test_app(app_path) do
+        expect(File.read('app/agents/application_agent.rb'))
+          .to eq("class ApplicationAgent < RubyLLM::Agent\n  chat_model Llm::Chat\nend\n")
+        success, output = run_rails_runner(<<~RUBY)
+          chat = ApplicationAgent.create!
+          exit(chat.is_a?(Llm::Chat) && ApplicationAgent.find(chat.id) == chat ? 0 : 1)
+        RUBY
+        expect(success).to be(true), output
       end
     end
 
