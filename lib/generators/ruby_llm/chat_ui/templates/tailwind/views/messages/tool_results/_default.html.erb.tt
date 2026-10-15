@@ -14,6 +14,8 @@
 
     <pre class="whitespace-pre-wrap text-gray-700 text-sm overflow-x-auto"><%%= tool.content.presence || "(no output)" %></pre>
 
+    <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: tool %>
+
     <div>
       <span class="text-sm text-gray-600"><%%= tool.created_at&.strftime("%I:%M %p") %></span>
     </div>

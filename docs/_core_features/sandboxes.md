@@ -117,7 +117,7 @@ chat.approve(call)
 chat.complete
 ```
 
-Show the person the code, the reason, and the summary before they decide. `approve` runs that one call in the named sandbox, and `deny` refuses it: the model learns the user said no, and continues. These calls are ordinary [tool approvals]({% link _core_features/tool-execution.md %}#requiring-approval), so the approval interface you already have works for them.
+Show the person the code, the reason, and the summary before they decide. `approve` runs that one call in the named sandbox, and `deny` refuses it: the model learns the user said no, and continues. These calls are ordinary [tool approvals]({% link _core_features/tool-execution.md %}#requiring-approval), so the approval interface you already have works for them. The cards from the [chat UI generator]({% link _advanced/rails-generators.md %}#approvals-and-attachments) show all three.
 
 Escalation is per call. The next call runs in the default sandbox again unless it asks again, and every call that asks waits for its own decision. An escalated call is never remembered: `approve(call, remember: true)` raises `ArgumentError` for it, so no approval can turn into standing access.
 

@@ -55,6 +55,11 @@ module RubyLLM
         template ui_template('views/chats/_chat.html.erb'),
                  "app/views/#{chat_view_path}/_#{chat_model_name.demodulize.underscore}.html.erb"
         template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
+        template 'views/chats/_approvals.html.erb', "app/views/#{chat_view_path}/_approvals.html.erb"
+
+        # Approval views
+        template ui_template('views/approvals/_approval.html.erb'), "app/views/#{approval_view_path}/_approval.html.erb"
+        template 'views/approvals/create.turbo_stream.erb', "app/views/#{approval_view_path}/create.turbo_stream.erb"
 
         # Message views
         template ui_template('views/messages/_assistant.html.erb'), "app/views/#{message_view_path}/_assistant.html.erb"
@@ -73,6 +78,8 @@ module RubyLLM
         template ui_template('views/messages/create.turbo_stream.erb'),
                  "app/views/#{message_view_path}/create.turbo_stream.erb"
         template ui_template('views/messages/_content.html.erb'), "app/views/#{message_view_path}/_content.html.erb"
+        template ui_template('views/messages/_attachments.html.erb'),
+                 "app/views/#{message_view_path}/_attachments.html.erb"
         template ui_template('views/messages/_form.html.erb'), "app/views/#{message_view_path}/_form.html.erb"
 
         # Model views
@@ -91,6 +98,7 @@ module RubyLLM
         template 'controllers/chats_controller.rb', "app/controllers/#{chat_controller_path}_controller.rb"
         template 'controllers/messages_controller.rb', "app/controllers/#{message_controller_path}_controller.rb"
         template 'controllers/models_controller.rb', "app/controllers/#{model_controller_path}_controller.rb"
+        template 'controllers/approvals_controller.rb', "app/controllers/#{approval_view_path}_controller.rb"
       end
 
       def create_jobs
@@ -136,6 +144,7 @@ module RubyLLM
               end
               resources :#{chat_resource} do
                 resources :#{message_resource}, only: [ :create ]
+                resources :approvals, only: [ :create ]
               end
             end
           ROUTES
@@ -152,6 +161,7 @@ module RubyLLM
           chat_routes = <<~ROUTES.strip
             resources :#{chat_table_name} do
               resources :#{message_table_name}, only: [ :create ]
+              resources :approvals, only: [ :create ]
             end
           ROUTES
           route chat_routes
@@ -203,6 +213,15 @@ module RubyLLM
       end
 
       private
+
+      def approval_model_name
+        return 'Approval' unless chat_model_name.include?('::')
+
+        "#{chat_model_name.deconstantize}::Approval"
+      end
+
+      def approval_view_path = approval_model_name.underscore.pluralize
+      def approval_controller_class_name = controller_class_name_for(approval_model_name)
 
       def message_helper_module_name
         if message_model_name.include?('::')

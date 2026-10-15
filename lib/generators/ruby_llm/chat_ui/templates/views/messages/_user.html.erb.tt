@@ -3,6 +3,7 @@
      style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #007bff;">
   <div style="font-weight: bold; margin-bottom: 5px;">User</div>
   <div id="<%= message_variable_name %>_<%%= user.id %>_content" style="white-space: pre-wrap;"><%%= user.content %></div>
+  <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: user %>
   <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
     <%%= user.created_at&.strftime("%I:%M %p") %>
   </div>

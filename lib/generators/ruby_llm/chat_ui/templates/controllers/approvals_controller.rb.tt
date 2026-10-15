@@ -1,0 +1,27 @@
+class <%= approval_controller_class_name %> < ApplicationController
+  before_action :set_<%= chat_variable_name %>
+
+  rescue_from RubyLLM::ToolCallRunningError do
+    redirect_to @<%= chat_variable_name %>, notice: "That tool call is already running."
+  end
+
+  def create
+    if ActiveModel::Type::Boolean.new.cast(params[:approved])
+      @<%= chat_variable_name %>.approve(params[:tool_call_id])
+    else
+      @<%= chat_variable_name %>.deny(params[:tool_call_id])
+    end
+    <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @<%= chat_variable_name %> }
+    end
+  end
+
+  private
+
+  def set_<%= chat_variable_name %>
+    @<%= chat_variable_name %> = <%= chat_model_name %>.find(params[:<%= chat_model_name.include?('::') ? chat_model_name.demodulize.underscore : chat_variable_name %>_id])
+  end
+end

@@ -1,0 +1,22 @@
+<%% arguments = approval.arguments.to_h %>
+<%% sandbox = arguments["sandbox"].presence if approval.name == "run_code" %>
+<div id="approval_<%%= approval.id %>" class="approval"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #d97706; background: #fffbeb;">
+  <div style="font-weight: bold; margin-bottom: 5px;">Approve <%%= approval.name %>?</div>
+  <%% if sandbox %>
+    <p style="margin: 0 0 5px;"><%%= arguments["reason"] %></p>
+    <pre style="white-space: pre-wrap; margin: 0 0 5px;"><%%= arguments["code"] %></pre>
+    <p style="margin: 0 0 10px;">Runs in the <strong><%%= sandbox %></strong> sandbox. <%%= <%= chat_model_name.demodulize.underscore %>.tools[:run_code]&.summary(sandbox) %></p>
+  <%% else %>
+    <dl style="margin: 0 0 10px;">
+      <%% arguments.each do |name, value| %>
+        <dt style="font-weight: bold; margin-top: 5px;"><%%= name.to_s.humanize %></dt>
+        <dd style="margin: 0;"><pre style="white-space: pre-wrap; margin: 0;"><%%= value.is_a?(String) ? value : value.to_json %></pre></dd>
+      <%% end %>
+    </dl>
+  <%% end %>
+  <%%= button_to "Approve", <%= chat_variable_name %>_approvals_path(<%= chat_model_name.demodulize.underscore %>),
+    params: { tool_call_id: approval.tool_call_id, approved: true }, form: { style: "display: inline-block;" } %>
+  <%%= button_to "Deny", <%= chat_variable_name %>_approvals_path(<%= chat_model_name.demodulize.underscore %>),
+    params: { tool_call_id: approval.tool_call_id, approved: false }, form: { style: "display: inline-block;" } %>
+</div>

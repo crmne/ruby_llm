@@ -16,7 +16,7 @@ After reading this guide, you will know:
 *   What the `ruby_llm:install` and `ruby_llm:chat_ui` generators create for you.
 *   How RubyLLM's conventional app directory structure is organized.
 *   How to generate agents, tools, schemas, MCP servers, skills, sandboxes, evaluations, and judges.
-*   How the generated chat UI renders messages, tool calls, and tool results.
+*   How the generated chat UI renders messages, tool calls, tool results, approvals, and attachments.
 *   How to customize model names and set up ActiveStorage.
 
 RubyLLM's generators write models, migrations, controllers, jobs, and views into your application. Start with persistence, then add the chat UI or generate individual agents, tools, and schemas as you need them.
@@ -76,10 +76,10 @@ bin/rails generate ruby_llm:chat_ui
 
 The generator creates:
 
-- **Controllers**: Create chats and enqueue message processing
-- **Views**: Render messages and update them with Turbo Streams
-- **Jobs**: Request AI responses in the background
-- **Routes**: RESTful routes for chats and messages
+- **Controllers**: Create chats, enqueue message processing, and record approval decisions
+- **Views**: Render messages, their attachments, and approval cards, and update them with Turbo Streams
+- **Jobs**: Request AI responses in the background and continue the conversation after a decision
+- **Routes**: RESTful routes for chats, messages, and approvals
 
 Start your server and visit `http://localhost:3000/chats`.
 
@@ -88,6 +88,27 @@ The UI generator also supports custom model names:
 ```bash
 bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 ```
+
+### Approvals and Attachments
+
+When a tool [requires approval]({% link _core_features/tool-execution.md %}#requiring-approval), the chat page shows a card for each call in `chat.pending_approvals`, with its arguments and Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _core_features/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. Remote tool calls, such as those from MCP servers, get the same cards.
+
+Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. When the job pauses for the next approval, it broadcasts the new cards to the page.
+
+The generated controllers and job load chats with `Chat.find`, which has the transcript but no tools. Load the chat through your agent instead, so the page and the job know which calls need approval:
+
+```ruby
+# app/controllers/chats_controller.rb
+@chat = SupportAgent.find(params[:id])
+
+# app/controllers/approvals_controller.rb
+@chat = SupportAgent.find(params[:chat_id])
+
+# app/jobs/chat_response_job.rb
+chat = SupportAgent.find(chat_id)
+```
+
+Messages show their Active Storage attachments: images inline, and other files as download links with their size. That includes the files a code run returns, such as charts.
 
 ## Upgrading an Existing Integration
 
@@ -176,6 +197,8 @@ This comes from Rails partial rendering: `render @chat.messages` calls `to_parti
 
 For compatibility with model broadcasts (`broadcasts_to`), generated message partials also accept a `message` local as a fallback.
 
+Shared partials take explicit locals: `messages/_attachments.html.erb` gets `message`, `chats/_approvals.html.erb` gets `chat`, and `approvals/_approval.html.erb` gets `approval` and `chat`.
+
 ### Tool Call and Tool Result Partials
 
 Tool-specific partials are generated under `app/views/messages/tool_calls` and `app/views/messages/tool_results`:
@@ -202,6 +225,7 @@ Using fixed locals keeps the templates dumb and predictable.
 Turbo Stream templates used by the generated chat UI:
 
 - `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create`.
+- `approvals/create.turbo_stream.erb` replaces the approval cards for `ApprovalsController#create`.
 
 ## Setting Up ActiveStorage
 

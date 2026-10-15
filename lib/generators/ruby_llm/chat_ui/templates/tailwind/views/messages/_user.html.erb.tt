@@ -8,6 +8,8 @@
 
   <div id="<%= message_variable_name %>_<%%= user.id %>_content" class="whitespace-pre-wrap"><%%= user.content %></div>
 
+  <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: user %>
+
   <div>
     <span class="text-sm text-gray-600"><%%= user.created_at&.strftime("%I:%M %p") %></span>
   </div>

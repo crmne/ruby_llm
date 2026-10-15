@@ -1,0 +1,5 @@
+<div id="<%= chat_variable_name %>_<%%= <%= chat_model_name.demodulize.underscore %>.id %>_approvals">
+  <%% <%= chat_model_name.demodulize.underscore %>.pending_approvals.each do |approval| %>
+    <%%= render "<%= approval_view_path %>/approval", approval: approval, <%= chat_model_name.demodulize.underscore %>: <%= chat_model_name.demodulize.underscore %> %>
+  <%% end %>
+</div>

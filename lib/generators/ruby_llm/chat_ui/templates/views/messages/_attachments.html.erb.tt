@@ -1,0 +1,14 @@
+<%% if message.respond_to?(:attachments) && message.attachments.attached? %>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+    <%% message.attachments.each do |attachment| %>
+      <%% if ActiveStorage.web_image_content_types.include?(attachment.content_type) %>
+        <%%= link_to image_tag(attachment, alt: attachment.filename.to_s, style: "display: block; max-width: 100%; max-height: 320px;"), rails_blob_path(attachment) %>
+      <%% else %>
+        <div>
+          <%%= link_to attachment.filename.to_s, rails_blob_path(attachment, disposition: "attachment") %>
+          (<%%= number_to_human_size(attachment.byte_size) %>)
+        </div>
+      <%% end %>
+    <%% end %>
+  </div>
+<%% end %>
