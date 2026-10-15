@@ -41,6 +41,7 @@ RSpec.describe RubyLLM::Configuration do
         :default_model,
         :default_speech_model,
         :default_judgment_model,
+        :prompt_trim_mode,
         :model_registry_file,
         :openai_api_key,
         :openrouter_api_base

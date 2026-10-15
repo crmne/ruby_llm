@@ -213,6 +213,29 @@ RSpec.describe RubyLLM::Prompt do
     end
   end
 
+  describe 'prompt_trim_mode' do
+    after { RubyLLM.config.prompt_trim_mode = nil }
+
+    it 'keeps the line break after a tag by default' do
+      create_prompt('plan', "<% if name %>\nHi <%= name %>.\n<% end %>\nBye.")
+      expect(described_class.render('plan', name: 'Ada')).to eq("\nHi Ada.\n\nBye.")
+    end
+
+    it 'removes the line break after a tag ending in -%> when set to -' do
+      RubyLLM.config.prompt_trim_mode = '-'
+      create_prompt('plan', "<% if name -%>\nHi <%= name %>.\n<% end -%>\nBye.")
+      expect(described_class.render('plan', name: 'Ada')).to eq("Hi Ada.\nBye.")
+      expect(described_class.render('plan', name: nil)).to eq('Bye.')
+    end
+
+    it 'applies to the partials a prompt renders' do
+      RubyLLM.config.prompt_trim_mode = '-'
+      create_prompt('_tone', "<% if formal -%>\nFormal.\n<% end -%>\n")
+      create_prompt('letter', "<%= render 'tone', formal: true %>Dear <%= name %>.")
+      expect(described_class.render('letter', name: 'Ada')).to eq("Formal.\nDear Ada.")
+    end
+  end
+
   describe 'RubyLLM.render_prompt' do
     it 'renders a prompt with locals through the top-level entrypoint' do
       create_prompt('friend', 'Hello, <%= name %>!')

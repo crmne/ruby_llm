@@ -293,6 +293,14 @@ module RubyLLM
     option :max_run_time, 600
 
     ##
+    # :attr_accessor: prompt_trim_mode
+    #
+    # The ERB trim mode used to render prompt templates, partials included.
+    # Use <tt>'-'</tt> to let a tag ending in <tt>-%></tt> remove the line
+    # break after it. Default: +nil+, ERB's own default.
+    option :prompt_trim_mode, nil
+
+    ##
     # :attr_accessor: auto_upload_large_files
     #
     # Whether oversized local attachments are uploaded to provider file
