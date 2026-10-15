@@ -159,7 +159,32 @@ end
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 ```
 
-Streamed chunks still append into the latest message. A chunk that arrives before the refresh brings that message onto the page is dropped, and the refresh at the end of the response shows the full text. Morphing needs `<%= yield :head %>` in your layout, which Rails 7.2 and later include. Without it, refreshes replace the page.
+Stream the text the same way: send the whole reply so far, not each chunk. An update that arrives late or out of order then shows the reply up to that point, and one that arrives before the message is on the page costs nothing. The generated job sends at most ten updates a second:
+
+```ruby
+# app/models/message.rb
+def broadcast_streamed_content(content)
+  broadcast_update_to "chat_#{chat_id}", target: "message_#{id}_content", content: ERB::Util.html_escape(content)
+end
+
+# app/jobs/chat_response_job.rb
+streamed = Hash.new { |texts, id| texts[id] = +"" }
+broadcast_at = 0.0
+chat.complete do |chunk|
+  next if chunk.content.to_s.empty?
+
+  message = chat.messages.last
+  streamed[message.id] << chunk.content
+  now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  next if now - broadcast_at < 0.1
+
+  broadcast_at = now
+  message.broadcast_streamed_content(streamed[message.id])
+end
+chat.broadcast_refresh_to "chat_#{chat.id}"
+```
+
+The refresh at the end shows the final text. Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
 
 #### Solution 2: Client-Side Reordering
 

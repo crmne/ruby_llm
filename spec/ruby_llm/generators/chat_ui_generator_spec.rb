@@ -158,7 +158,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
     expect(message_content).to include(%(after_commit -> { broadcast_refresh_to "#{stream}" }))
     expect(message_content).not_to include('broadcasts_to')
-    expect(message_content).to include('def broadcast_append_chunk(content)')
+    expect(message_content).to include('def broadcast_streamed_content(content)')
     expect(message_content).to include(broadcast_target_line)
     expect(message_content).to include(content_target_line)
     expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
@@ -314,7 +314,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         path: 'app/models/message.rb',
         acts_as_message_lines: ['acts_as_message'],
         stream: "chat_\#{chat_id}",
-        broadcast_target_line: "broadcast_append_to \"chat_\#{chat_id}\"",
+        broadcast_target_line: "broadcast_update_to \"chat_\#{chat_id}\"",
         content_target_line: "target: \"message_\#{id}_content\""
       },
       controllers_example: 'controllers reference correct model classes',
@@ -370,7 +370,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'chat = ChatAgent.find(chat_id)',
         ask_line: 'chat.ask_later(content) if content',
         last_message_line: 'message = chat.messages.last',
-        broadcast_lines: ['chat.broadcast_refresh_to "chat_']
+        broadcast_lines: ['chat.broadcast_refresh_to "chat_', 'streamed[message.id] << chunk.content',
+                          'message.broadcast_streamed_content(streamed[message.id])']
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -412,7 +413,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           "acts_as_message chat: :llm_chat, chat_class: 'Llm::Chat'"
         ],
         stream: "llm_chat_\#{llm_chat_id}",
-        broadcast_target_line: "broadcast_append_to \"llm_chat_\#{llm_chat_id}\"",
+        broadcast_target_line: "broadcast_update_to \"llm_chat_\#{llm_chat_id}\"",
         content_target_line: "target: \"llm_message_\#{id}_content\""
       },
       controllers_example: 'controllers reference correct namespaced model classes',
@@ -468,7 +469,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'llm_chat = Llm::ChatAgent.find(llm_chat_id)',
         ask_line: 'llm_chat.ask_later(content) if content',
         last_message_line: 'llm_message = llm_chat.llm_messages.last',
-        broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_']
+        broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_', 'streamed[llm_message.id] << chunk.content',
+                          'llm_message.broadcast_streamed_content(streamed[llm_message.id])']
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -529,6 +531,23 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       if description == 'with default model names'
+        it 'adds yield :head to a layout without it, once' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              layout = 'app/views/layouts/application.html.erb'
+              File.write(layout, File.read(layout).gsub(/^.*yield :head.*\n/, ''))
+
+              2.times do
+                output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(status.success?).to be(true), output
+              end
+              expect(File.read(layout).scan('<%= yield :head %>').size).to eq(1)
+              expect(File.read(layout)).to match(%r{<%= yield :head %>\n\s*</head>})
+            end
+          end
+        end
+
         it 'gives the chat agent its chat model without an ApplicationAgent' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)

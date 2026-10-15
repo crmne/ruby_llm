@@ -185,8 +185,8 @@ module RubyLLM
 
   after_commit -> { broadcast_refresh_to "#{chat_var}_\#{#{chat_association}_id}" }
 
-  def broadcast_append_chunk(content)
-    broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",
+  def broadcast_streamed_content(content)
+    broadcast_update_to "#{chat_var}_\#{#{chat_association}_id}",
       target: "#{msg_var}_\#{id}_content",
       content: ERB::Util.html_escape(content.to_s)
   end
@@ -198,6 +198,15 @@ module RubyLLM
       rescue Errno::ENOENT
         say "#{message_model_name} model not found. Add broadcasting code to your model.", :yellow
         say broadcasting_callbacks, :yellow
+      end
+
+      def add_head_to_layout
+        path = 'app/views/layouts/application.html.erb'
+        layout = File.join(destination_root, path)
+        return unless File.exist?(layout)
+        return if File.read(layout).include?('yield :head')
+
+        inject_into_file path, "    <%= yield :head %>\n", before: %r{^\s*</head>}
       end
 
       def display_post_install_message

@@ -1,13 +1,22 @@
 class <%= chat_job_class_name %> < ApplicationJob
+  STREAM_INTERVAL = 0.1
+
   def perform(<%= chat_variable_name %>_id, content = nil)
     <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
     <%= chat_variable_name %>.ask_later(content) if content
 
+    streamed = Hash.new { |texts, id| texts[id] = +"" }
+    broadcast_at = 0.0
     <%= chat_variable_name %>.complete do |chunk|
-      if chunk.content && !chunk.content.empty?
-        <%= message_variable_name %> = <%= chat_variable_name %>.<%= message_table_name %>.last
-        <%= message_variable_name %>.broadcast_append_chunk(chunk.content)
-      end
+      next if chunk.content.to_s.empty?
+
+      <%= message_variable_name %> = <%= chat_variable_name %>.<%= message_table_name %>.last
+      streamed[<%= message_variable_name %>.id] << chunk.content
+      now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      next if now - broadcast_at < STREAM_INTERVAL
+
+      broadcast_at = now
+      <%= message_variable_name %>.broadcast_streamed_content(streamed[<%= message_variable_name %>.id])
     end
 
     <%= chat_variable_name %>.broadcast_refresh_to "<%= chat_variable_name %>_#{<%= chat_variable_name %>.id}"
