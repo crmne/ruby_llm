@@ -625,6 +625,70 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
+        it 'keeps exactly one broadcasting block when run again, with or without --force' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              generated = File.read('app/models/message.rb')
+              [%w[--skip], %w[--force]].each do |flags|
+                output, status = run_rails_generate('ruby_llm:chat_ui', *flags, chdir: destination)
+                expect(status.success?).to be(true), output
+              end
+
+              expect(File.read('app/models/message.rb')).to eq(generated)
+              expect(generated.scan('def broadcast_append_chunk').size).to eq(1)
+            end
+          end
+        end
+
+        it 'replaces the broadcasting block an earlier release wrote' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              generated = File.read('app/models/message.rb')
+              File.write('app/models/message.rb', <<~'RUBY')
+                class Message < ApplicationRecord
+                  acts_as_message
+                  has_many_attached :attachments
+
+                  broadcasts_to ->(message) { "chat_#{message.chat_id}" }, inserts_by: :append
+
+                  def broadcast_append_chunk(content)
+                    broadcast_append_to "chat_#{chat_id}",
+                      target: "message_#{id}_content",
+                      content: ERB::Util.html_escape(content.to_s)
+                  end
+                end
+              RUBY
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/models/message.rb')).to eq(generated)
+            end
+          end
+        end
+
+        it 'leaves broadcasting code it did not write alone and explains what to change' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              custom = <<~RUBY
+                class Message < ApplicationRecord
+                  acts_as_message
+                  broadcasts_to ->(message) { [message.chat, :messages] }
+                end
+              RUBY
+              File.write('app/models/message.rb', custom)
+
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(File.read('app/models/message.rb')).to eq(custom)
+              expect(output).to include('Message already has broadcasting code that RubyLLM did not write')
+              expect(output).to include('def broadcast_append_chunk(content, sequence)')
+            end
+          end
+        end
+
         it 'explains that replies stay plain text in an app without JavaScript' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
