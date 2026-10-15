@@ -17,6 +17,18 @@ module RubyLLM
         send(chat_association_name)
       end
 
+      # Returns an assistant RubyLLM::Chunk with +content+ at position
+      # +index+ that streams into this message, as the chunks a persisted
+      # chat yields do, so it answers +message+ and +broadcast+. Use it to
+      # stand in for a streamed reply in tests:
+      #
+      #   chunk = message.chunk("Hello", index: 0)
+      #   chunk.broadcast
+      #
+      def chunk(content, index:)
+        ChunkMethods.attach(RubyLLM::Chunk.new(role: :assistant, content:, index:), self)
+      end
+
       # Converts this record to a RubyLLM::Message. The message carries the
       # recorded cost, so RubyLLM::Message#to_h exports it.
       def to_llm

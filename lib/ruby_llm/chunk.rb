@@ -11,7 +11,16 @@ module RubyLLM
   #     print chunk.content
   #   end
   #
+  # Pass +index:+ to build one with its position, such as in a test:
+  #
+  #   RubyLLM::Chunk.new(role: :assistant, content: "Hel", index: 0)
+  #
   class Chunk < Message
+    def initialize(options = {}) # :nodoc:
+      super
+      @index = options[:index]
+    end
+
     # Returns the position of this chunk within the response it belongs
     # to, starting at 0. Each response in a Chat#complete loop, such as
     # the one after a tool call, starts again at 0. Counts every chunk,

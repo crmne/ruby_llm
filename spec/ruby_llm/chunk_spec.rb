@@ -42,6 +42,10 @@ RSpec.describe RubyLLM::Chunk do
     expect(streamed).to eq([['', 0], ['', 1], ['Ruby ', 0], ['blocks', 1], ['', 2]])
   end
 
+  it 'takes its index in the constructor' do
+    expect(chunk('Hel', index: 3).index).to eq(3)
+  end
+
   it 'has no index outside a stream' do
     expect(chunk('text').index).to be_nil
   end

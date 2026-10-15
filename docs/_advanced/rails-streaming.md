@@ -98,6 +98,26 @@ class Message < ApplicationRecord
 end
 ```
 
+## Testing a Streaming Job
+
+A message record builds the chunk a streamed reply would yield, with its record and its position, so a test can stand in for the model:
+
+```ruby
+message = chat.messages.create!(role: :assistant, content: "")
+chunk = message.chunk("Hello", index: 0)
+
+chunk.message   # => message
+chunk.broadcast # appends "Hello" to the message on the chat's page
+```
+
+Stub the completion to stream it to your job:
+
+```ruby
+agent.stub(:complete, ->(&block) { block.call(message.chunk("Hel", index: 0)) }) do
+  ChatResponseJob.perform_now(chat.id)
+end
+```
+
 ## Cancelling a Background Stream
 
 `acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.

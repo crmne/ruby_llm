@@ -17,11 +17,14 @@ module RubyLLM
       def self.streaming(block, &message) # :nodoc:
         return unless block
 
-        lambda do |chunk|
-          chunk.extend(ChunkMethods)
-          chunk.message = message.call
-          block.call(chunk)
-        end
+        ->(chunk) { block.call(attach(chunk, message.call)) }
+      end
+
+      # Gives +chunk+ the record +message+ it streams into. Returns +chunk+.
+      def self.attach(chunk, message) # :nodoc:
+        chunk.extend(ChunkMethods)
+        chunk.message = message
+        chunk
       end
 
       # Returns the persisted message record this chunk streams into.

@@ -66,6 +66,20 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
       expect(broadcasts.last).to eq([:broadcast_refresh_to, [chat], {}])
     end
 
+    it 'broadcasts a chunk a record builds for a test' do
+      chat = BroadcastChat.create!(model: model_for(:openai))
+      message = chat.messages.create!(role: :assistant, content: '')
+      broadcasts.clear
+
+      chunk = message.chunk('Hel', index: 0)
+      chunk.broadcast
+
+      expect([chunk.role, chunk.content, chunk.index, chunk.message]).to eq([:assistant, 'Hel', 0, message])
+      expect(broadcasts).to eq([[:broadcast_append_to, [chat],
+                                 { target: "broadcast_message_#{message.id}_stream",
+                                   content: '<span data-seq="0">Hel</span>' }]])
+    end
+
     it 'removes a destroyed message' do
       chat = BroadcastChat.create!(model: model_for(:openai))
       message = chat.messages.create!(role: :user, content: 'Hi')
@@ -114,6 +128,14 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
 
       expect(broadcasts).to be_empty
     end
+  end
+
+  it 'raises the same clear error for a chunk a record builds when broadcasting is off' do
+    define_models(broadcasts: false)
+    message = BroadcastChat.create!(model: model_for(:openai)).messages.create!(role: :assistant, content: '')
+
+    expect { message.chunk('Hel', index: 0).broadcast }
+      .to raise_error(RubyLLM::ConfigurationError, /config.broadcast_messages = true/)
   end
 
   it 'raises the same clear error when turbo-rails or Action Cable is missing' do
