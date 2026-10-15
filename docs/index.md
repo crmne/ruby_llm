@@ -121,7 +121,7 @@ ruby_llm provider-gem Acme \
 ```ruby
 chat = RubyLLM.chat
 chat.ask "What's the best way to learn Ruby?"
-# Build small things you care about and read good Ruby code...
+# Build small things you care about...
 
 chat.ask "What should I build first?"
 # A command-line tool for something you do every day...
@@ -161,7 +161,7 @@ end
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
-chat.ask "Summarize this", with: "https://example.com/q3.pdf"
+chat.ask "Summarize", with: "https://example.com/q3.pdf"
 chat.ask "Recap this call", with: ["call.wav", "notes.pdf"]
 ```
 {: .home-code-card }
@@ -182,8 +182,9 @@ class Weather < RubyLLM::Tool
   description "Get current weather"
 
   def execute(latitude:, longitude:)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
-    JSON.parse(Faraday.get(url).body)
+    url = "https://api.open-meteo.com/v1/forecast"
+    query = { latitude:, longitude:, current_weather: true }
+    JSON.parse(Faraday.get(url, query).body)
   end
 end
 
@@ -235,7 +236,9 @@ class ProductSchema < Schematist::Schema
   end
 end
 
-response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "product.txt"
+response = chat.with_schema(ProductSchema)
+               .ask "Analyze this", with: "product.txt"
+response.parsed["features"]
 ```
 {: .home-code-card }
 
@@ -245,16 +248,20 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
     <div class="home-step">
       <div class="home-step-text">
         <h3 class="home-step-title">Define an agent</h3>
-        <p class="home-step-desc">Give an agent its model and instructions in a Ruby class. Create an instance whenever you need it.</p>
+        <p class="home-step-desc">Give an agent its model, instructions, and tools in a Ruby class. In Rails, it saves its conversation, and <code>find</code> picks it up again in any request or job.</p>
         <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
       </div>
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
 class SupportAgent < RubyLLM::Agent
+  chat_model Chat
   model "{{ site.models.default_chat }}"
-  instructions "Accept returns of unopened items within 30 days."
+  instructions "Refund unopened items within 30 days."
+  tools LookupOrder, IssueRefund
 end
+
+SupportAgent.find(chat_id).ask "Where's my refund?"
 ```
 {: .home-code-card }
 
@@ -282,7 +289,7 @@ end
 cases:
   - name: within_return_window
     inputs: Can I return an unopened item after 14 days?
-    expected_output: Yes, unopened items can be returned within 30 days.
+    expected_output: Yes, within 30 days if it is unopened.
 ```
 {: .home-code-card data-title="app/evals/support_evaluation.yml" }
 
@@ -295,10 +302,109 @@ cases:
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking, OpenTelemetry tracing, and Rails integration to bring them into your app.
+      Agents that run code, follow your workflows, and wait for a human when it matters. Everything else a production AI feature needs is built in.
     </p>
   </div>
 
+  <h3 class="home-group-title">Let agents do real work, safely</h3>
+  <div class="home-steps home-steps--features">
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Run code on your own servers</h3>
+        <p class="home-step-desc">The model writes Ruby, Python, JavaScript, or shell to calculate and make files. Each run happens in a sandbox on your servers that cannot read your application or its secrets. The files it makes come back as attachments.</p>
+        <a class="home-step-link" href="{% link _core_features/code-execution.md %}">Code execution guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+chat = RubyLLM.chat
+  .with_code_execution(python: %w[matplotlib])
+chat.ask "Chart revenue by month", with: "revenue.csv"
+
+chat.messages.find(&:tool_result?).attachments
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Ask before reaching further</h3>
+        <p class="home-step-desc">Describe wider sandboxes as Ruby classes and list the ones the model may ask for. A call that needs one waits for a person to approve it, runs once, and never turns into standing access.</p>
+        <a class="home-step-link" href="{% link _core_features/sandboxes.md %}#asking-for-a-wider-sandbox">Sandboxes guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class WorkspaceSandbox < MXC::Sandbox
+  writable Rails.root.join("storage/workspace")
+end
+
+chat = RubyLLM.chat
+  .with_code_execution(escalate_to: [WorkspaceSandbox])
+chat.ask "Add a changelog entry for the export"
+
+chat.approve(chat.pending_approvals.first)
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Teach it your workflows</h3>
+        <p class="home-step-desc">Write skills in the open Agent Skills format: instructions, scripts, and reference files in a folder. The model loads a skill only when a task needs it and runs its scripts in the sandbox.</p>
+        <a class="home-step-link" href="{% link _core_features/skills.md %}">Skills guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```text
+app/skills/invoices/
+├── SKILL.md
+├── references/TAX_RULES.md
+└── scripts/build_invoice.py
+```
+{: .home-code-card }
+
+```ruby
+chat = RubyLLM.chat
+  .with_skills(:invoices)
+  .with_code_execution(python: %w[reportlab])
+chat.ask "Bill order 1042 to ACME", with: "order.json"
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Resume across jobs and deploys</h3>
+        <p class="home-step-desc">A saved conversation is the agent's whole state. Any job can pick it up and continue, after a crash, a deploy, or a wait for approval.</p>
+        <a class="home-step-link" href="{% link _advanced/durable-agents.md %}">Durable agents guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class AgentJob < ApplicationJob
+  def perform(chat_id)
+    SupportAgent.find(chat_id).complete
+  end
+end
+
+chat = SupportAgent.find(chat_id)
+chat.approve(chat.pending_approvals.first)
+AgentJob.perform_later(chat.id)
+```
+{: .home-code-card }
+
+</div>
+    </div>
+  </div>
+
+  <h3 class="home-group-title">Run them in production</h3>
   <div class="home-code-grid home-code-grid--columns" markdown="1">
 
 ```ruby
@@ -312,67 +418,20 @@ end
 {: .home-code-card data-title="Require human approval" data-href="{% link _core_features/tool-execution.md %}#requiring-approval" data-doc-title="Requiring Approval" }
 
 ```ruby
-chats = documents.map do |doc|
-  RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
-    .with_instructions("Summarize in one paragraph.")
-    .ask_later(doc.text)
-end
-
-batch = RubyLLM.batch(chats)
+RubyLLM.chat(model: "{{ site.models.openai_current }}")
+  .with_fallbacks("{{ site.models.anthropic_current }}")
+  .ask("Explain Ruby blocks")
 ```
-{: .home-code-card data-title="Cut costs with batches" data-href="{% link _advanced/batches.md %}" data-doc-title="Batches" }
+{: .home-code-card data-title="Fall back to another model" data-href="{% link _advanced/error-handling.md %}#model-fallbacks" data-doc-title="Model Fallbacks" }
 
 ```ruby
 chat = RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
   .with_caching
 chat.with_instructions(File.read("review.md"))
   .cache_until_here
-chat.ask "Review this diff", with: "large_diff.patch"
+chat.ask "Review this diff", with: "changes.patch"
 ```
 {: .home-code-card data-title="Cache repeated prompts" data-href="{% link _core_features/prompt-caching.md %}" data-doc-title="Prompt Caching" }
-
-```ruby
-response = RubyLLM.chat
-  .with_provider_tools(:web_search)
-  .ask "What's the latest stable Ruby? Cite sources."
-
-response.citations
-```
-{: .home-code-card data-title="Search the web with citations" data-href="{% link _core_features/provider-tools.md %}" data-doc-title="Provider Tools" }
-
-```ruby
-chat = RubyLLM.chat
-  .with_code_execution(python: %w[matplotlib])
-chat.ask "Chart revenue by month", with: "revenue.csv"
-
-chat.messages.find(&:tool_result?).attachments
-```
-{: .home-code-card data-title="Run code in a sandbox" data-href="{% link _core_features/code-execution.md %}" data-doc-title="Code Execution" }
-
-```ruby
-chat = RubyLLM.chat
-  .with_skills(:invoices)
-  .with_code_execution
-chat.ask "Bill order 1042 to ACME"
-```
-{: .home-code-card data-title="Teach it your workflows with skills" data-href="{% link _core_features/skills.md %}" data-doc-title="Skills" }
-
-```ruby
-documents = ["Ruby is expressive", "Python uses indentation"]
-embeddings = RubyLLM.embed(documents)
-ranked = RubyLLM.rerank("Ruby language", documents, model: "{{ site.models.rerank_cohere }}")
-```
-{: .home-code-card data-title="Embed and rank your documents" data-href="{% link _advanced/rag.md %}" data-doc-title="RAG" }
-
-```ruby
-class Urgency < RubyLLM::Judge
-  model "jev-latest"
-  probability :urgent, "Does this need action today?"
-end
-
-Urgency.judge("My account is locked!").urgent.probability
-```
-{: #judgment-models .home-code-card data-title="Ask for probabilities, choices, and scores" data-href="{% link _core_features/judgments.md %}" data-doc-title="Judgments" }
 
 ```ruby
 response = chat.ask "Explain embeddings"
@@ -381,11 +440,54 @@ response.cost.total
 ```
 {: .home-code-card data-title="Track usage and costs" data-href="{% link _core_features/cost-and-usage-tracking.md %}" data-doc-title="Cost and Usage Tracking" }
 
+  </div>
+
+  <h3 class="home-group-title">Work with your data</h3>
+  <div class="home-code-grid home-code-grid--columns" markdown="1">
+
 ```ruby
-transcript = RubyLLM.transcribe "meeting.wav"
-RubyLLM.speak(transcript.text).save "transcript.mp3"
+documents = ["Ruby is expressive", "Go is fast"]
+embeddings = RubyLLM.embed(documents)
+ranked = RubyLLM.rerank("Ruby language", documents,
+                        model: "{{ site.models.rerank_cohere }}")
 ```
-{: .home-code-card data-title="Transcribe audio and generate speech" data-href="{% link _core_features/text-to-speech.md %}" data-doc-title="Text to speech" }
+{: .home-code-card data-title="Embed and rank your documents" data-href="{% link _advanced/rag.md %}" data-doc-title="RAG" }
+
+```ruby
+response = RubyLLM.chat
+  .with_provider_tools(:web_search)
+  .ask "What's the latest Ruby release?"
+
+response.citations
+```
+{: .home-code-card data-title="Search the web with citations" data-href="{% link _core_features/provider-tools.md %}" data-doc-title="Provider Tools" }
+
+```ruby
+class Urgency < RubyLLM::Judge
+  model "jev-latest"
+  probability :urgent, "Needs action today?"
+end
+
+judgment = Urgency.judge("My account is locked!")
+judgment.urgent.probability
+```
+{: #judgment-models .home-code-card data-title="Ask for probabilities, choices, and scores" data-href="{% link _core_features/judgments.md %}" data-doc-title="Judgments" }
+
+```ruby
+chats = documents.map do |doc|
+  RubyLLM.chat(model: "{{ site.models.anthropic_current }}")
+    .with_instructions("Summarize in one line.")
+    .ask_later(doc.text)
+end
+
+batch = RubyLLM.batch(chats)
+```
+{: .home-code-card data-title="Cut costs with batches" data-href="{% link _advanced/batches.md %}" data-doc-title="Batches" }
+
+  </div>
+
+  <h3 class="home-group-title">Read, hear, and make media</h3>
+  <div class="home-code-grid home-code-grid--columns" markdown="1">
 
 ```ruby
 document = RubyLLM.ocr "scanned-contract.pdf"
@@ -394,30 +496,28 @@ puts document.markdown
 {: .home-code-card data-title="Turn documents into Markdown" data-href="{% link _core_features/ocr.md %}" data-doc-title="Document OCR" }
 
 ```ruby
-RubyLLM.paint "a sunset over mountains in watercolor style"
-RubyLLM.animate "a paper boat sailing down a rainy gutter"
+transcript = RubyLLM.transcribe "meeting.wav"
+RubyLLM.speak(transcript.text).save "transcript.mp3"
+```
+{: .home-code-card data-title="Transcribe audio and generate speech" data-href="{% link _core_features/text-to-speech.md %}" data-doc-title="Text to speech" }
+
+```ruby
+RubyLLM.paint "a watercolor sunset over mountains"
+RubyLLM.animate "a paper boat in a rainy gutter"
 ```
 {: .home-code-card data-title="Generate images and video" data-href="{% link _core_features/video-generation.md %}" data-doc-title="Video generation" }
 
 ```ruby
-RubyLLM.moderate("Some user-generated content").flagged?
+RubyLLM.moderate(comment.body).flagged?
 ```
 {: .home-code-card data-title="Moderate user content" data-href="{% link _core_features/moderation.md %}" data-doc-title="Moderation" }
-
-```ruby
-RubyLLM.chat(model: "{{ site.models.openai_current }}")
-  .with_fallbacks("{{ site.models.anthropic_current }}")
-  .ask("Explain Ruby blocks")
-```
-{: .home-code-card data-title="Fall back to another model" data-href="{% link _advanced/error-handling.md %}#model-fallbacks" data-doc-title="Model Fallbacks" }
 
   </div>
 
   <div class="home-code-cta">
     <p>Coordinate agents with
       <a href="{% link _advanced/agentic-workflows.md %}">workflows</a>,
-      give them <a href="{% link _advanced/memory.md %}">memory</a>,
-      and <a href="{% link _advanced/durable-agents.md %}">resume their work across jobs and deploys</a>.
+      and give them <a href="{% link _advanced/memory.md %}">memory</a>.
       Use <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">separate configurations for each tenant</a>
       and <a href="{% link _advanced/error-handling.md %}#automatic-retries">retries</a> when requests fail.
       Follow requests with <a href="{% link _advanced/instrumentation.md %}">instrumentation</a>,
@@ -480,12 +580,13 @@ bin/rails generate ruby_llm:schema Product
   </div>
 
   <div class="home-code-cta">
-    <p>Keep your agents, tools, and schemas in
+    <p>Keep your agents, tools, schemas, skills, and sandboxes in
       <a href="{% link _advanced/rails-generators.md %}#conventional-directory-structure">app/</a>.
       Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage</a>
       and write your prompts in <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
       Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies
-      and <a href="{% link _advanced/durable-agents.md %}">Active Job</a> to run agents in the background.
+      and <a href="{% link _advanced/durable-agents.md %}">Active Job</a> to run agents in the background,
+      one process per chat, with <a href="{% link _core_features/tool-execution.md %}#approval-in-rails">approvals</a> that survive restarts.
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--rails" href="{% link _advanced/rails.md %}">Read the Rails guide</a>

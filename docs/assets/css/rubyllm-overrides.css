@@ -1319,6 +1319,44 @@ body:has(.VPHome .home-section.home-band:last-child) .VPFooter {
   width: min(var(--home-inner), 100%);
 }
 
+.home-group-title,
+.vp-doc h3.home-group-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: min(var(--home-inner), 100%);
+  margin: 88px auto 32px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.home-group-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--home-line);
+}
+
+.home-section-inner + .home-group-title,
+.vp-doc .home-section-inner + h3.home-group-title {
+  margin-top: 56px !important;
+}
+
+.home-steps--features {
+  gap: 64px;
+  margin-top: 0;
+}
+
+.home-steps--features .home-step-text::before {
+  display: none;
+}
+
 .home-ready-code {
   width: min(560px, 100%);
   margin: 38px auto 0;
@@ -1907,6 +1945,10 @@ body:has(.VPHome .home-section.home-band:last-child) .VPFooter {
   color: var(--home-heading);
 }
 
+.dark .vp-doc h3.home-group-title {
+  color: var(--vp-c-brand-1);
+}
+
 .dark .home-love-card header span {
   background: #232323;
 }
@@ -2311,5 +2353,14 @@ body:has(.VPHome .home-section.home-band:last-child) .VPFooter {
   .home-step-title,
   .vp-doc h3.home-step-title {
     font-size: 25px;
+  }
+
+  .home-group-title,
+  .vp-doc h3.home-group-title {
+    margin-top: 64px !important;
+  }
+
+  .home-steps--features {
+    gap: 48px;
   }
 }
