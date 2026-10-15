@@ -7,12 +7,6 @@ permalink: /
 redirect_from:
   - /guides/
 hero:
-  logo:
-    light: /assets/images/logotype.svg
-    dark: /assets/images/logotype_dark.svg
-    alt: RubyLLM
-    width: 320
-    height: 110
   text: 'The Ruby <span class="home-hero-highlight">AI framework</span>'
   tagline: 'Build AI features <em class="home-hero-tagline-highlight">the Ruby way</em>: models, tools, agents, sandboxed code, evaluations, and Rails conventions, designed together, with one consistent API.'
   actions:
@@ -329,9 +323,6 @@ RubyLLM.moderate(comment.body).flagged?
       Follow requests with <a href="{% link _advanced/instrumentation.md %}">instrumentation</a>,
       or explore community gems for <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring dashboards</a>.
     </p>
-    <div class="home-code-cta-actions">
-      <a class="home-button home-button--solid home-button--guides" href="{% link _getting_started/getting-started.md %}">Build your first feature</a>
-    </div>
   </div>
 </section>
 
@@ -413,6 +404,9 @@ app/
 <section id="code-examples" class="home-section home-code-section">
   <div class="home-section-inner">
     <h2 class="home-heading">Start with one line.<br>Add files, tools, and agents</h2>
+    <p class="home-lead">
+      Every feature above grows from the same chat. Follow it from your first question to an agent you can evaluate.
+    </p>
   </div>
 
   <div class="home-steps">
@@ -600,6 +594,12 @@ cases:
 {: .home-code-card data-title="app/evals/support_evaluation.yml" }
 
 </div>
+    </div>
+  </div>
+
+  <div class="home-code-cta">
+    <div class="home-code-cta-actions">
+      <a class="home-button home-button--solid home-button--guides" href="{% link _getting_started/getting-started.md %}">Build your first feature</a>
     </div>
   </div>
 </section>
