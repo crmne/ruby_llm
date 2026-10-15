@@ -20,6 +20,15 @@ module RubyLLM
         template 'sandbox.rb.tt', File.join('app/sandboxes', class_path, "#{sandbox_file_name}.rb")
       end
 
+      def add_mxc_gem
+        gemfile = File.join(destination_root, 'Gemfile')
+        return unless File.exist?(gemfile)
+        return if File.read(gemfile).match?(/^\s*gem\s+["']mxc["']/)
+
+        gem 'mxc'
+        say 'Run bundle install: sandboxes subclass MXC::Sandbox from the mxc gem.', :yellow
+      end
+
       private
 
       def sandbox_class_name

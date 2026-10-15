@@ -15,7 +15,8 @@ module GeneratorTestHelpers
 
     root_env = GitEnvironment.cleared.merge(
       'RUBYLLM_PATH' => ruby_llm_path,
-      'BUNDLE_GEMFILE' => root_bundle_gemfile
+      'BUNDLE_GEMFILE' => root_bundle_gemfile,
+      'RAILS_ENV' => 'development'
     )
     root_env['BUNDLE_PATH'] = ENV['BUNDLE_PATH'] if ENV.key?('BUNDLE_PATH')
     root_env['BUNDLE_DISABLE_SHARED_GEMS'] = ENV['BUNDLE_DISABLE_SHARED_GEMS'] if ENV.key?('BUNDLE_DISABLE_SHARED_GEMS')
@@ -58,15 +59,20 @@ module GeneratorTestHelpers
     previous_bundle_gemfile = ENV.fetch('BUNDLE_GEMFILE', nil)
     previous_bundle_ignore_config = ENV.fetch('BUNDLE_IGNORE_CONFIG', nil)
     previous_openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+    previous_rails_env = ENV.fetch('RAILS_ENV', nil)
 
     ENV['BUNDLE_GEMFILE'] = bundle_gemfile
     ENV['BUNDLE_IGNORE_CONFIG'] = '1'
     ENV['OPENAI_API_KEY'] = api_key
+    # rails_helper sets RAILS_ENV=test for the dummy app, and CI eager loads
+    # in test. Generated apps run in development, as a developer runs them.
+    ENV['RAILS_ENV'] = 'development'
     Dir.chdir(app_path, &)
   ensure
     ENV['BUNDLE_GEMFILE'] = previous_bundle_gemfile
     ENV['BUNDLE_IGNORE_CONFIG'] = previous_bundle_ignore_config
     ENV['OPENAI_API_KEY'] = previous_openai_api_key
+    ENV['RAILS_ENV'] = previous_rails_env
   end
 
   def run_rails_runner(script)

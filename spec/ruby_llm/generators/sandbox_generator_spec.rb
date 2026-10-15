@@ -39,6 +39,7 @@ RSpec.describe RubyLLM::Generators::SandboxGenerator, :generator, type: :generat
 
       expect(File.read('app/sandboxes/workspace_sandbox.rb'))
         .to eq("class WorkspaceSandbox < MXC::Sandbox\n  timeout 120\nend\n")
+      expect(File.read('Gemfile')).to match(/^gem "mxc"$/)
       success, runner = run_rails_runner('require "mxc"; puts RubyLLM::Sandbox.resolve("WorkspaceSandbox").timeout')
       expect(success).to be(true), runner
       expect(runner).to include("120\n")

@@ -71,7 +71,7 @@ end
 
 The name is a String because the initializer runs while Rails boots, before it can load your application's classes. RubyLLM looks the class up whenever a chat needs it, so the sandboxes in `app/sandboxes` autoload and reload like the rest of your code. Outside Rails, pass the class itself. Everywhere else, such as in agents and chats, use the class: `escalate_to: [WorkspaceSandbox]`.
 
-`bin/rails generate ruby_llm:install` creates `app/sandboxes`, and the 2.2 upgrade generator adds it to existing applications. RubyLLM does not depend on mxc: add it to your Gemfile when you run code, and Bundler loads it like any other gem.
+`bin/rails generate ruby_llm:install` creates `app/sandboxes`, and the 2.2 upgrade generator adds it to existing applications. RubyLLM does not depend on mxc: add it to your Gemfile when you run code, and Bundler loads it like any other gem. `bin/rails generate ruby_llm:sandbox` adds it for you.
 
 Without `config.sandbox`, nothing runs locally, and turning on code execution raises `RubyLLM::ConfigurationError`. Check that the sandbox works on this machine:
 
