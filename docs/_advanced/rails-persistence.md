@@ -33,7 +33,6 @@ end
 # app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
-  has_many_attached :attachments
 
   validates :role, presence: true
 end
@@ -233,7 +232,7 @@ No application `Batch` model is required. See [Batch Processing]({% link _advanc
 
 ## Attachments and Structured Output
 
-With Active Storage on your message model, files passed to `ask` are persisted with the user message. In a controller action, check that an upload parameter is a file before passing it to `ask`:
+`acts_as_message` declares `has_many_attached :attachments`, so Rails applications need Active Storage. Files passed to `ask` are persisted with the user message. In a controller action, check that an upload parameter is a file before passing it to `ask`:
 
 ```ruby
 uploaded_file = params[:uploaded_file]

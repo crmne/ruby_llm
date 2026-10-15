@@ -63,6 +63,25 @@ It adds `claim_token` and `claimed_until` columns to your chats table and a `cla
 
 Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
 
+## Messages Broadcast With Turbo
+
+> If your application broadcasts its messages with Turbo itself, for example with `broadcasts_to` or its own chunk broadcasting in a job, set `acts_as_message broadcasts: false` before you deploy 2.2, or every message is sent twice.
+{: .warning }
+
+```ruby
+class Message < ApplicationRecord
+  acts_as_message broadcasts: false
+end
+```
+
+When turbo-rails and Action Cable are loaded, `acts_as_message` now broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
+
+Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that broadcasts needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`, or `broadcasts: false`.
+
+## Messages Declare Their Attachments
+
+`acts_as_message` now declares `has_many_attached :attachments`, so Active Storage is required. Remove `has_many_attached :attachments` from your message model. An application without Active Storage runs `bin/rails active_storage:install` and `bin/rails db:migrate`.
+
 ## One Process Runs a Chat
 
 In 2.1, two processes that completed the same persisted chat at the same time could both run an approved tool call and both ask the model for a reply, for example when a double-submitted approval enqueued two jobs. In 2.2, `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat before they call the model or run a tool, and each tool call is claimed before it runs. A process that finds the chat claimed returns without doing anything:

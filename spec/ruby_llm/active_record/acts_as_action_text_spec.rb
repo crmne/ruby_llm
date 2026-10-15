@@ -64,7 +64,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     acts_as_message chat: :action_text_chat,
                     chat_class: 'ActionTextChat'
     has_rich_text :content
-    has_many_attached :attachments
   end
 
   class ActionTextAttachable < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration

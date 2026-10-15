@@ -787,16 +787,30 @@ module RubyLLM
       # #running? it, returns the latest message without calling the model
       # or running tools, and #waiting? is +true+. Work recorded while this
       # process ran, such as an approval, continues before it returns.
-      def complete(...)
+      #
+      # Each chunk passed to the block also answers +message+, the record
+      # it streams into, and +broadcast+ (see ChunkMethods). When the
+      # messages broadcast with Turbo, the chat's page refreshes once the
+      # run ends.
+      #
+      #   chat.complete(&:broadcast)
+      def complete(&block)
+        on_chunk = ChunkMethods.streaming(block) { @message }
         loop do
           busy = false
-          response = exclusively(-> { busy = true }) { completing { to_llm.complete(...) } }
+          response = exclusively(-> { busy = true }) { completing { to_llm.complete(&on_chunk) } }
           return latest_message if busy
           return response unless work_arrived_during_run?
         end
+      ensure
+        broadcast_refresh_to(self) if broadcasts_messages?
       end
 
       private
+
+      def broadcasts_messages?
+        self.class.message_class.constantize.include?(MessageBroadcasting)
+      end
 
       def completing
         yield

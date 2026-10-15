@@ -25,6 +25,8 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/provider_file'
           require 'ruby_llm/active_record/chat_methods'
           require 'ruby_llm/active_record/message_methods'
+          require 'ruby_llm/active_record/message_broadcasting'
+          require 'ruby_llm/active_record/chunk_methods'
 
           require 'ruby_llm/active_record/acts_as'
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
