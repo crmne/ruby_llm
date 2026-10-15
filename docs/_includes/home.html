@@ -2,27 +2,6 @@
 {% assign home_features = page.features %}
 {% assign home_body = include.content | strip %}
 {% assign theme = site.jekyll_vitepress %}
-{% assign github_star_config = theme.github_star %}
-{% assign github_star_enabled = false %}
-{% assign github_star_repository = nil %}
-{% assign github_star_text = 'Star' %}
-{% assign github_star_show_count = true %}
-{% if github_star_config and github_star_config != false %}
-  {% assign github_star_repository = github_star_config.repository | default: github_star_config.repo %}
-  {% if github_star_config.text %}
-    {% assign github_star_text = github_star_config.text %}
-  {% endif %}
-  {% if github_star_config.show_count == false %}
-    {% assign github_star_show_count = false %}
-  {% endif %}
-  {% if github_star_config.enabled != false and github_star_repository %}
-    {% assign github_star_enabled = true %}
-  {% endif %}
-{% endif %}
-{% assign github_star_url = nil %}
-{% if github_star_enabled %}
-  {% assign github_star_url = 'https://github.com/' | append: github_star_repository %}
-{% endif %}
 {% assign gem_downloads_config = theme.gem_downloads %}
 {% assign gem_downloads_enabled = false %}
 {% assign gem_downloads_gem = nil %}
@@ -130,7 +109,7 @@
           {% if home_hero.actions %}
             {% assign home_hero_actions_count = home_hero.actions.size %}
           {% endif %}
-          {% if home_hero_actions_count > 0 or github_star_enabled %}
+          {% if home_hero_actions_count > 0 %}
             <div class="actions home-hero-actions">
               {% if home_hero_actions_count > 0 %}
                 {% for action in home_hero.actions %}
@@ -163,15 +142,6 @@
                   </a>
                 </div>
                 {% endfor %}
-              {% endif %}
-              {% if github_star_enabled %}
-                <div class="action home-hero-metric-action">
-                  <a class="VPButton medium alt VPMetricButton home-hero-metric-button home-hero-star-link" href="{{ github_star_url }}" aria-label="Star {{ github_star_repository }} on GitHub" target="_blank" rel="noreferrer noopener" data-github-star-repo="{{ github_star_repository | escape }}" data-github-star-show-count="{{ github_star_show_count }}">
-                    <span class="VPMetricButtonIcon vpi-social-github" aria-hidden="true"></span>
-                    <span>{{ github_star_text }}</span>
-                    <span class="home-hero-star-count VPMetricButtonCount" data-vp-github-star-count aria-hidden="true"{% unless github_star_show_count %} hidden{% endunless %}>{% if github_star_show_count %}...{% endif %}</span>
-                  </a>
-                </div>
               {% endif %}
             </div>
           {% endif %}

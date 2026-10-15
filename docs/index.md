@@ -102,7 +102,7 @@ ruby_llm provider-gem Acme \
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between: agents that run code safely, workflows, evaluations, observability, and the data they need, designed to work together.
+      Build agents, run code safely, evaluate results, and track usage with shared Ruby and Rails conventions.
     </p>
   </div>
 
