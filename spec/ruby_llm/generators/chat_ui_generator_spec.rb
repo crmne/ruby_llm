@@ -362,6 +362,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
         'if prompt.present?',
+        'ChatResponseJob.set(wait: 1.second).perform_later(@chat.id, prompt)',
         'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
         '@chat = ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
         '@chat.errors.add(:prompt, "can\'t be blank")',

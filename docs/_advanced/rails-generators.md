@@ -90,7 +90,7 @@ The generator creates:
 
 Start your server and visit `http://localhost:3000/chats`.
 
-The generated job streams each reply with the chunks' own `broadcast`:
+The generated job streams each reply with the chunks' own `broadcast`. `ChatsController#create` enqueues a new chat's first reply a second later, so the new page has subscribed to the chat's stream before the reply starts:
 
 ```ruby
 class ChatResponseJob < ApplicationJob

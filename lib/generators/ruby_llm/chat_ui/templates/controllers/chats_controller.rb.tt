@@ -16,7 +16,7 @@ class <%= chat_controller_class_name %> < ApplicationController
     if prompt.present?
       provider, model = params.dig(:<%= chat_variable_name %>, :model).to_s.split(":", 2)
       @<%= chat_variable_name %> = <%= chat_agent_class_name %>.create!(**{ model: model.presence, provider: provider.presence }.compact)
-      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
+      <%= chat_job_class_name %>.set(wait: 1.second).perform_later(@<%= chat_variable_name %>.id, prompt)
 
       redirect_to @<%= chat_variable_name %>, notice: "<%= chat_model_name.humanize %> was successfully created."
     else
