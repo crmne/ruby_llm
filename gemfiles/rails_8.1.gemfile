@@ -11,6 +11,7 @@ group :development do
   gem "colorize"
   gem "dotenv"
   gem "event_stream_parser"
+  gem "faraday-net_http_persistent"
   gem "ferrum"
   gem "flay"
   gem "image_processing", "~> 1.2"
@@ -18,7 +19,9 @@ group :development do
   gem "json", ">= 3", "< 4"
   gem "json_schemer"
   gem "minitest", ">= 5", "< 7"
+  gem "mxc", platform: :mri
   gem "mutineer", "~> 1.6", require: false
+  gem "net-http-persistent"
   gem "nokogiri"
   gem "opentelemetry-sdk", "~> 1.0"
   gem "overcommit", ">= 0.66"

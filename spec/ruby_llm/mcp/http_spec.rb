@@ -525,6 +525,27 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
       end
     end
+
+    it 'reuses a pooled adapter after abandoning an open event stream' do
+      require 'faraday/net_http_persistent'
+
+      keep_open = lambda do |socket, request|
+        open_stream(socket, answer(request))
+        sleep 2
+        socket.write("0\r\n\r\n")
+        socket.close
+      rescue StandardError
+        nil
+      end
+
+      RubyLLM.configure { |config| config.faraday_adapter = :net_http_persistent }
+      serve([method(:discovered), keep_open, keep_open]) do |client|
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+      end
+    ensure
+      RubyLLM.configure { |config| config.faraday_adapter = :net_http }
+    end
   end
 
   describe 'listening over a real connection' do
