@@ -318,6 +318,28 @@ RSpec.describe RubyLLM::MCP::OAuth do
   end
 
   describe 'a pre-registered client' do
+    it 'authenticates code exchanges and refreshes only in the Basic header' do
+      oauth = described_class.new(server_url, owner: 'ada', client_id: 'client', client_secret: 'secret')
+      grants = []
+      stub_request(:post, 'https://auth.example.com/token')
+        .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('client:secret')}" })
+        .to_return do |request|
+          form = URI.decode_www_form(request.body).to_h
+          grants << form.fetch('grant_type')
+          if form.key?('client_id') || form.key?('client_secret')
+            { status: 400, body: { error: 'invalid_client', error_description: 'Duplicate credentials' }.to_json }
+          else
+            { body: { access_token: 'access-1', refresh_token: 'refresh-1' }.to_json }
+          end
+        end
+
+      oauth.authorize(callback(oauth.authorization_url(redirect_uri:)))
+      oauth.refresh
+
+      expect(oauth).to be_authorized
+      expect(grants).to eq(%w[authorization_code refresh_token])
+    end
+
     def pre_registered(client_id)
       url = server_url
       Class.new(RubyLLM::MCP) do
@@ -747,7 +769,7 @@ RSpec.describe RubyLLM::MCP::OAuth do
         'client_secret' => 'sso-secret'
       )
       expect(token_form).to eq('grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer', 'assertion' => 'id-jag',
-                               'client_id' => 'wiki-app', 'resource' => server_url, 'scope' => 'issues:read')
+                               'resource' => server_url, 'scope' => 'issues:read')
       expect(a_request(:post, 'https://auth.example.com/token')
         .with(headers: { 'Authorization' => "Basic #{Base64.strict_encode64('wiki-app:wiki-secret')}" }))
         .to have_been_made

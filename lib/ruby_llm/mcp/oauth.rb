@@ -394,6 +394,7 @@ module RubyLLM
         elsif client['client_secret']
           methods = server['token_endpoint_auth_methods_supported'] || ['client_secret_basic']
           if methods.include?('client_secret_basic')
+            form.delete(:client_id)
             headers['Authorization'] = "Basic #{basic_credentials(client['client_id'], client['client_secret'])}"
           else
             form[:client_secret] = client['client_secret']
