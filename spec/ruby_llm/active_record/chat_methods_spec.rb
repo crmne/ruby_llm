@@ -855,6 +855,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(Message.find_by(id: placeholder.id)).to be_present
     end
 
+    it 'keeps a tool result with empty content' do
+      chat = Chat.create!(model: model_id)
+      chat.send(:persist_new_message)
+      tool_result = chat.instance_variable_get(:@message)
+      tool_result.update!(role: :tool, content: '')
+
+      chat.send(:persist_new_message)
+
+      expect(Message.find_by(id: tool_result.id)).to be_present
+    end
+
     it 'does nothing when the round produced no message' do
       chat = Chat.create!(model: model_id)
 
