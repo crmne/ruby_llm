@@ -238,7 +238,7 @@ RSpec.describe RubyLLM::Batch, :live do
 
       calls = chat.messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values }
       expect(calls.map(&:id).uniq.size).to eq(2)
-      expect(calls.map(&:provider_id)).to eq(%w[toolu_1 toolu_1])
+      expect(calls.map(&:provider_call_id)).to eq(%w[toolu_1 toolu_1])
     end
 
     it 'does not re-deliver a tool-call answer saved before RubyLLM assigned its own IDs' do

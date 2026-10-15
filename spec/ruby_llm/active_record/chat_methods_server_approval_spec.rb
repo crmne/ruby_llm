@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   include_context 'with configured RubyLLM'
 
-  let(:call_id) { "approval_#{SecureRandom.hex(6)}" }
+  let(:provider_call_id) { "approval_#{SecureRandom.hex(6)}" }
   let(:raw_approval) do
-    { 'type' => 'mcp_approval_request', 'id' => call_id, 'name' => 'search',
+    { 'type' => 'mcp_approval_request', 'id' => provider_call_id, 'name' => 'search',
       'arguments' => '{"query":"Ruby"}', 'server_label' => 'docs' }
   end
   let(:agent) do
@@ -41,10 +41,12 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       resumed.run_tools.run_tools
       result = resumed.messages_association.find_by!(role: 'tool')
       expect(result.to_llm.raw_content).to eq([
-                                                { 'type' => 'mcp_approval_response', 'approval_request_id' => call_id,
+                                                { 'type' => 'mcp_approval_response',
+                                                  'approval_request_id' => provider_call_id,
                                                   'approve' => approved }
                                               ])
-      expect(result.to_llm.tool_call_id).to eq(call_id)
+      expect(result.to_llm.tool_call_id).to eq(call.tool_call_id)
+      expect(result.to_llm.provider_call_id).to eq(provider_call_id)
       expect(resumed.messages_association.where(role: 'tool').count).to eq(1)
       expect(agent.find(chat.id).render[:input]).to include(raw_approval, *result.to_llm.raw_content)
     end

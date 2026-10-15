@@ -33,7 +33,7 @@ module RubyLLM
           when 'response.output_item.added'
             build_item_added_chunk(data)
           when 'response.function_call_arguments.delta'
-            chunk tool_calls: { data['output_index'] => ToolCall.new(id: nil, name: nil, arguments: data['delta']) }
+            chunk tool_calls: { data['output_index'] => ToolCall.new(name: nil, arguments: data['delta']) }
           when 'response.output_item.done'
             build_item_done_chunk(data)
           when 'response.completed', 'response.incomplete'
@@ -75,7 +75,7 @@ module RubyLLM
           return chunk unless item['type'] == 'function_call'
 
           chunk tool_calls: {
-            data['output_index'] => ToolCall.new(id: item['call_id'], name: item['name'], arguments: +'')
+            data['output_index'] => ToolCall.new(provider_call_id: item['call_id'], name: item['name'], arguments: +'')
           }
         end
 

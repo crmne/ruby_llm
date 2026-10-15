@@ -16,7 +16,7 @@ module RubyLLM
         return message unless message.tool_call?
 
         calls = message.tool_calls.transform_values do |call|
-          call.id ? call.with_id(id_for(call.id)) : call
+          call.provider_call_id ? call.with_id(id_for(call.provider_call_id)) : call
         end
         calls = ToolCall.index(calls.values) unless message.is_a?(Chunk)
         message.with_tool_calls(calls)

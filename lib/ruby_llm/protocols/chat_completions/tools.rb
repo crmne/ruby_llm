@@ -49,7 +49,7 @@ module RubyLLM
 
           tool_calls.map do |_, tc|
             call = {
-              id: tc.provider_id,
+              id: tc.provider_call_id,
               type: 'function',
               function: {
                 name: tc.name,
@@ -89,7 +89,7 @@ module RubyLLM
               parse_tool_call(tc, parse_arguments:, response:, finish_reason:)
             ]
           end
-          stream_keys ? calls.to_h : ToolCall.index(calls.map(&:last))
+          stream_keys ? calls.to_h : ToolCall.index(calls.map(&:last), by: :provider_call_id)
         end
 
         def parse_tool_call(call, parse_arguments:, response:, finish_reason:)
@@ -98,7 +98,7 @@ module RubyLLM
                       else
                         call.dig('function', 'arguments')
                       end
-          ToolCall.new(id: call['id'], name: call.dig('function', 'name'), arguments:,
+          ToolCall.new(provider_call_id: call['id'], name: call.dig('function', 'name'), arguments:,
                        thought_signature: extract_tool_call_thought_signature(call))
         end
 

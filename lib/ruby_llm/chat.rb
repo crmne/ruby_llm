@@ -1160,7 +1160,7 @@ module RubyLLM
 
     def prepare_message(message_or_attributes) # :nodoc:
       message = coerce_message(message_or_attributes)
-      if message.tool_call? && message.tool_calls.keys.any? { |id| find_tool_call(id) }
+      if message.tool_call? && message.tool_calls.values.any? { |call| call.id.nil? || find_tool_call(call.id) }
         message = ToolCallIds.new.assign(message)
       end
       message
@@ -1540,7 +1540,7 @@ module RubyLLM
     def unfinished_result(tool_call)
       (remote_refusal(tool_call) if tool_call.remote?) ||
         Message.new(role: :tool, content: UNFINISHED_TOOL_RESULT, tool_call_id: tool_call.id,
-                    provider_tool_call_id: tool_call.provider_id)
+                    provider_call_id: tool_call.provider_call_id)
     end
 
     # A provider-executed call is closed with the refusal its provider
@@ -1853,7 +1853,7 @@ module RubyLLM
       content, attachments = Tool.split_result(result)
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
       message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
-                            provider_tool_call_id: tool_call.provider_id, mcp_result:)
+                            provider_call_id: tool_call.provider_call_id, mcp_result:)
       run_callbacks(:after_message, message)
       message
     end

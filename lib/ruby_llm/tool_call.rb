@@ -14,11 +14,12 @@ module RubyLLM
   class ToolCall
     include Support::Inspectable
 
-    def self.index(calls) # :nodoc:
+    def self.index(calls, by: :id) # :nodoc:
       calls.each_with_object({}) do |call, indexed|
-        raise Error, "Duplicate tool call ID in one response: #{call.id.inspect}" if indexed.key?(call.id)
+        id = call.public_send(by)
+        raise Error, "Duplicate tool call ID in one response: #{id.inspect}" if indexed.key?(id)
 
-        indexed[call.id] = call
+        indexed[id] = call
       end
     end
 
@@ -44,20 +45,21 @@ module RubyLLM
     # RubyLLM replays it to the provider on later requests.
     attr_accessor :thought_signature
 
-    def initialize(id:, name:, arguments: {}, thought_signature: nil, remote: false, provider_id: nil) # :nodoc:
+    def initialize(name:, id: nil, provider_call_id: nil, arguments: {}, thought_signature: nil,
+                   remote: false) # :nodoc:
       @id = id
-      @provider_id = provider_id
+      @provider_call_id = provider_call_id
       @name = name
       @arguments = canonical_arguments(arguments)
       @thought_signature = thought_signature
       @remote = remote
     end
 
-    def provider_id = @provider_id || id # :nodoc:
+    def provider_call_id = @provider_call_id || id # :nodoc:
 
     def with_id(id) # :nodoc:
       dup.tap do |call|
-        call.instance_variable_set(:@provider_id, provider_id)
+        call.instance_variable_set(:@provider_call_id, provider_call_id)
         call.instance_variable_set(:@id, id)
       end
     end
@@ -70,7 +72,7 @@ module RubyLLM
     def to_h
       {
         id: @id,
-        provider_id: @provider_id,
+        provider_call_id: @provider_call_id,
         name: @name,
         arguments: @arguments,
         remote: remote? || nil,

@@ -506,7 +506,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
       tool_calls = streaming.send(:build_chunk, event).tool_calls
 
-      expect(tool_calls[0]).to have_attributes(id: 'call_1', name: 'lookup', arguments: {})
+      expect(tool_calls[0]).to have_attributes(id: nil, provider_call_id: 'call_1', name: 'lookup', arguments: {})
     end
 
     it 'reads argument fragments out of a delta' do

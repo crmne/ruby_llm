@@ -68,6 +68,23 @@ RSpec.describe RubyLLM::Message do
   end
 
   describe '.new from #to_h attributes' do
+    it 'restores earlier provider ID keys while serializing the current names' do
+      message = described_class.new(
+        role: :assistant, content: '',
+        tool_calls: { 'invocation_1' => { 'id' => 'invocation_1', 'provider_id' => 'call_1', 'name' => 'lookup' } }
+      )
+      result = described_class.new(role: :tool, content: 'Done', tool_call_id: 'invocation_1',
+                                   provider_tool_call_id: 'call_1')
+
+      expect(message.tool_calls.fetch('invocation_1')).to have_attributes(id: 'invocation_1',
+                                                                          provider_call_id: 'call_1')
+      expect(result).to have_attributes(tool_call_id: 'invocation_1', provider_call_id: 'call_1')
+      expect(message.to_h[:tool_calls]['invocation_1']).to include(provider_call_id: 'call_1')
+      expect(message.to_h[:tool_calls]['invocation_1']).not_to have_key(:provider_id)
+      expect(result.to_h).to include(provider_call_id: 'call_1')
+      expect(result.to_h).not_to have_key(:provider_tool_call_id)
+    end
+
     it 'preserves a remote approval through JSON serialization' do
       call = RubyLLM::ToolCall.new(id: 'approval_1', name: 'search', arguments: { 'query' => 'Ruby' },
                                    remote: true)

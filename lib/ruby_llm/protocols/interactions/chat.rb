@@ -71,7 +71,7 @@ module RubyLLM
         end
 
         def render_interaction_result(message, calls)
-          { type: 'function_result', call_id: message.provider_tool_call_id, name: calls[message.tool_call_id]&.name,
+          { type: 'function_result', call_id: message.provider_call_id, name: calls[message.tool_call_id]&.name,
             result: render_interaction_content(message.content, message.attachments) }.compact
         end
 
@@ -92,7 +92,7 @@ module RubyLLM
           steps << { type: message.role == :assistant ? 'model_output' : 'user_input', content: } if content.any?
           message.tool_calls.to_h.values.each_with_index do |call, position|
             signature = call.thought_signature || (Gemini::Tools::PLACEHOLDER_SIGNATURE if current && position.zero?)
-            steps << { type: 'function_call', id: call.provider_id, name: call.name, arguments: call.arguments,
+            steps << { type: 'function_call', id: call.provider_call_id, name: call.name, arguments: call.arguments,
                        signature: }.compact
           end
           steps

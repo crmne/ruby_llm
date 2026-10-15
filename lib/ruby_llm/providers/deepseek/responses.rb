@@ -47,7 +47,7 @@ module RubyLLM
         def format_tool_items(message)
           [{
             type: 'function_call_output',
-            call_id: message.provider_tool_call_id,
+            call_id: message.provider_call_id,
             output: format_content(message.content, message.attachments)
           }]
         end

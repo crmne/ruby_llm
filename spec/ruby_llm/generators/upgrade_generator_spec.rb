@@ -24,14 +24,14 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       connection.remove_column(:chats, :claim_token)
       connection.remove_column(:chats, :claimed_until)
       connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
-      connection.remove_column(:ruby_llm_tool_calls, :provider_id)
+      connection.remove_column(:ruby_llm_tool_calls, :provider_call_id)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
       expect(connection.column_exists?(:chats, :claim_token, :string)).to be(true)
       expect(connection.column_exists?(:chats, :claimed_until, :datetime)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until, :datetime)).to be(true)
-      expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_id, :string)).to be(true)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id, :string)).to be(true)
       raise ActiveRecord::Rollback
     end
   ensure
@@ -49,6 +49,26 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
   it 'leaves an up-to-date schema alone' do
     expect { ActiveRecord::Migration.suppress_messages { migration_class.migrate(:up) } }.not_to raise_error
+  end
+
+  it 'renames the earlier provider ID column without changing saved call IDs' do
+    invocation_id = SecureRandom.uuid
+    chat = Chat.create!(model: model_for(:openai))
+    message = chat.messages.create!(role: :assistant, content: '')
+    call = message.ruby_llm_tool_calls.create!(tool_call_id: invocation_id,
+                                               provider_call_id: 'call_1', name: 'lookup')
+
+    ActiveRecord::Base.transaction do
+      connection.rename_column(:ruby_llm_tool_calls, :provider_call_id, :provider_id)
+      ActiveRecord::Migration.suppress_messages { migration_class.migrate(:up) }
+
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_id)).to be(false)
+      expect(call.reload.provider_call_id).to eq('call_1')
+      expect(call.to_llm.id).to eq(invocation_id)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::ToolCall.reset_column_information
   end
 
   it 'creates the app directories the application is missing, keeping existing ones' do

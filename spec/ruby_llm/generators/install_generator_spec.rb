@@ -89,7 +89,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
         content = File.read(migration)
         expect(content).to include('t.text :thought_signature')
-        expect(content).to include('t.string :provider_id')
+        expect(content).to include('t.string :provider_call_id')
         expect(content).to include('t.boolean :remote, default: false, null: false')
         expect(content).to include('t.json :reported_cost')
       end

@@ -81,7 +81,7 @@ module RubyLLM
 
           {
             data['index'] => ToolCall.new(
-              id: tool_call['id'],
+              provider_call_id: tool_call['id'],
               name: tool_call.dig('function', 'name'),
               arguments: tool_call.dig('function', 'arguments').to_s
             )
@@ -92,7 +92,7 @@ module RubyLLM
           arguments = data.dig('delta', 'message', 'tool_calls', 'function', 'arguments')
           return nil unless arguments
 
-          { data['index'] => ToolCall.new(id: nil, name: nil, arguments: arguments) }
+          { data['index'] => ToolCall.new(name: nil, arguments: arguments) }
         end
 
         def stream_usage(usage)

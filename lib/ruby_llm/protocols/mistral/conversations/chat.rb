@@ -56,7 +56,7 @@ module RubyLLM
               if message.raw_content
                 Array(message.raw_content)
               elsif message.tool_result?
-                [{ type: 'function.result', tool_call_id: message.provider_tool_call_id, result: message.content.to_s }]
+                [{ type: 'function.result', tool_call_id: message.provider_call_id, result: message.content.to_s }]
               else
                 format_conversation_message(message)
               end
@@ -100,7 +100,7 @@ module RubyLLM
               }
             end
             message.tool_calls&.each_value do |call|
-              entries << { type: 'function.call', tool_call_id: call.provider_id, name: call.name,
+              entries << { type: 'function.call', tool_call_id: call.provider_call_id, name: call.name,
                            arguments: JSON.generate(call.arguments) }
             end
             entries

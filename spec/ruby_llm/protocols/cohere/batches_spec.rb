@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
 
     expect(message).to have_attributes(content: 'Checking.', model:, finish_reason: :tool_calls)
     expect(message.tool_calls.size).to eq(1)
-    expect(message.tool_calls.values.first).to have_attributes(name: 'weather', provider_id: 'call_weather',
+    expect(message.tool_calls.values.first).to have_attributes(name: 'weather', provider_call_id: 'call_weather',
                                                                arguments: { 'city' => 'Berlin' })
     expect(message.tokens).to have_attributes(input: 12, output: 7)
     expect(batch.results.last).to be_nil

@@ -325,14 +325,14 @@ module RubyLLM
             role: format_role(msg.role),
             content: format_message_content(msg, caching: caching),
             tool_calls: format_tool_calls(msg.tool_calls),
-            tool_call_id: msg.provider_tool_call_id
+            tool_call_id: msg.provider_call_id
           }.compact.merge(format_thinking(msg))
         end
 
         # Chat Completions tool messages are text-only on the wire, so tool
         # attachments ride a user message spliced in after the results.
         def tool_attachment_message(msg)
-          parts = [Media.format_text("Attachments from tool call #{msg.provider_tool_call_id}:")]
+          parts = [Media.format_text("Attachments from tool call #{msg.provider_call_id}:")]
           parts.concat(format_content(nil, msg.attachments))
           { role: 'user', content: parts }
         end

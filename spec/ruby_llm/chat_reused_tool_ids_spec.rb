@@ -19,8 +19,8 @@ RSpec.describe RubyLLM::Chat do
   let(:chat) { RubyLLM.chat(model: model_for(:openai), provider: :openai).with_tools(lookup) }
 
   def response(city)
-    call = RubyLLM::ToolCall.new(id: 'call_1', name: 'lookup', arguments: { city: })
-    RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call })
+    call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'lookup', arguments: { city: })
+    RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.provider_call_id => call })
   end
 
   def answer_with(*responses)

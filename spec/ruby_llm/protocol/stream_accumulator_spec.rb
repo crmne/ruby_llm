@@ -4,22 +4,31 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocol::StreamAccumulator do
   describe '#add' do
+    it 'keeps provider call IDs separate from invocation IDs while assembling a response' do
+      accumulator = described_class.new
+      call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'search', arguments: '{}')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => call }))
+
+      expect(accumulator.to_message(nil).tool_calls.fetch('call_1'))
+        .to have_attributes(id: nil, provider_call_id: 'call_1', arguments: {})
+    end
+
     it 'gives an empty provider ID the same fallback in the chunk and completed message' do
       accumulator = described_class.new
-      call = RubyLLM::ToolCall.new(id: '', name: 'search', arguments: '{}')
+      call = RubyLLM::ToolCall.new(provider_call_id: '', name: 'search', arguments: '{}')
       chunk = RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => call })
 
       accumulator.add(chunk)
       message = accumulator.to_message(nil)
 
-      expect(chunk.tool_calls[0].id).not_to be_empty
-      expect(message.tool_calls.keys).to eq([chunk.tool_calls[0].id])
+      expect(chunk.tool_calls[0].provider_call_id).not_to be_empty
+      expect(message.tool_calls.keys).to eq([chunk.tool_calls[0].provider_call_id])
     end
 
     it 'rejects distinct streamed calls that share an ID' do
       accumulator = described_class.new
-      first = RubyLLM::ToolCall.new(id: 'call_1', name: 'search', arguments: '{"city":"Paris"}')
-      second = RubyLLM::ToolCall.new(id: 'call_1', name: 'search', arguments: '{"city":"London"}')
+      first = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'search', arguments: '{"city":"Paris"}')
+      second = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'search', arguments: '{"city":"London"}')
       accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => first }))
 
       expect do
@@ -49,7 +58,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
 
     it 'handles tool call deltas that omit arguments' do
       accumulator = described_class.new
-      tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: nil)
+      tool_call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: nil)
       chunk = RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call })
 
       expect { accumulator.add(chunk) }.not_to raise_error
@@ -62,12 +71,12 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator = described_class.new
 
       chunks = [
-        { 1 => RubyLLM::ToolCall.new(id: 'call_1', name: 'market_data', arguments: {}) },
-        { 2 => RubyLLM::ToolCall.new(id: 'call_2', name: 'search', arguments: {}) },
-        { 1 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '{"symbol":"MNQM26",') },
-        { 2 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '{"query":"market news",') },
-        { 1 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '"interval":"minute"}') },
-        { 2 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '"date":"2026-03-31"}') }
+        { 1 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'market_data', arguments: {}) },
+        { 2 => RubyLLM::ToolCall.new(provider_call_id: 'call_2', name: 'search', arguments: {}) },
+        { 1 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '{"symbol":"MNQM26",') },
+        { 2 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '{"query":"market news",') },
+        { 1 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '"interval":"minute"}') },
+        { 2 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '"date":"2026-03-31"}') }
       ]
 
       chunks.each do |tool_calls|
@@ -94,7 +103,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
         RubyLLM::Chunk.new(
           role: :assistant,
           content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: '{"city":"Berlin"') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: '{"city":"Berlin"') }
         )
       )
       accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: 'length'))
@@ -225,11 +234,11 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: '', name: 'weather', arguments: '') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: '', name: 'weather', arguments: '') }
         )
       )
 
-      expect(accumulator.tool_calls.values.first.id).to match(/\A[0-9a-f-]{36}\z/)
+      expect(accumulator.tool_calls.values.first.provider_call_id).to match(/\A[0-9a-f-]{36}\z/)
     end
 
     it 'keeps parallel id-less tool calls separate and keys them by their generated ids' do
@@ -238,14 +247,14 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
           tool_calls: {
-            0 => RubyLLM::ToolCall.new(id: '', name: 'weather', arguments: '{}'),
-            1 => RubyLLM::ToolCall.new(id: '', name: 'news', arguments: '{}')
+            0 => RubyLLM::ToolCall.new(provider_call_id: '', name: 'weather', arguments: '{}'),
+            1 => RubyLLM::ToolCall.new(provider_call_id: '', name: 'news', arguments: '{}')
           }
         )
       )
 
       expect(accumulator.tool_calls.values.map(&:name)).to eq(%w[weather news])
-      expect(accumulator.tool_calls.keys).to eq(accumulator.tool_calls.values.map(&:id))
+      expect(accumulator.tool_calls.keys).to eq(accumulator.tool_calls.values.map(&:provider_call_id))
     end
 
     it 'keeps text arriving in the same chunk as a tool call' do
@@ -253,7 +262,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: 'Checking the weather.',
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: '{}') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: '{}') }
         )
       )
 
@@ -268,7 +277,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 3 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '{}') }
+          tool_calls: { 3 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '{}') }
         )
       )
 
@@ -280,19 +289,19 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: +'{"a":') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: +'{"a":') }
         )
       )
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: nil) }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: nil) }
         )
       )
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '1}') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '1}') }
         )
       )
 
@@ -304,13 +313,13 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: +'{}') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: +'{}') }
         )
       )
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '', thought_signature: 'sig') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: nil, name: nil, arguments: '', thought_signature: 'sig') }
         )
       )
 
@@ -322,7 +331,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Rome' }) }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: { 'city' => 'Rome' }) }
         )
       )
 
@@ -339,7 +348,7 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       accumulator.add(
         RubyLLM::Chunk.new(
           role: :assistant, content: nil,
-          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: '{}') }
+          tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: '{}') }
         )
       )
 

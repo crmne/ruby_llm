@@ -22,9 +22,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     Chat.find(chat.id).with_tools(lookup).tap { |record| record.protocol = :responses }
   end
 
-  def response(city)
-    call = RubyLLM::ToolCall.new(id: 'call_1', name: 'lookup', arguments: { city: })
-    RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call })
+  def response(city, id: nil)
+    call = RubyLLM::ToolCall.new(id:, provider_call_id: 'call_1', name: 'lookup', arguments: { city: })
+    RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { id || call.provider_call_id => call })
   end
 
   it 'keeps calls, approvals and results separate across processes' do
@@ -41,8 +41,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     expect(executions).to eq(['Paris'])
     expect(second.tool_call_id).not_to eq(first.tool_call_id)
-    expect(second.provider_id).to eq(first.provider_id)
-    expect(second.provider_id).to eq('call_1')
+    expect(second.provider_call_id).to eq(first.provider_call_id)
+    expect(second.provider_call_id).to eq('call_1')
 
     process(chat).approve(first.tool_call_id)
     expect(process(chat).pending_approvals.pluck(:id)).to eq([second.id])
@@ -65,15 +65,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat = process(Chat.create!(model: model_for(:openai)))
       allow(chat.to_llm.provider).to receive(:complete).and_return(response('Paris'))
       chat.ask('Check Paris')
-      expect(chat.pending_approvals.first.provider_id).to eq('call_1')
+      expect(chat.pending_approvals.first.provider_call_id).to eq('call_1')
     end
   end
 
   it 'distinguishes repeated IDs in messages appended by the application' do
+    id = SecureRandom.uuid
     chat = process(Chat.create!(model: model_for(:openai)))
-    first = chat.add_message(response('Paris')).tool_calls.values.first
+    first = chat.add_message(response('Paris', id:)).tool_calls.values.first
     chat.approve(first).run_tools
-    second = chat.add_message(response('London')).tool_calls.values.first
+    second = chat.add_message(response('London', id:)).tool_calls.values.first
 
     expect(second.id).not_to eq(first.id)
     expect(process(chat).pending_approvals.map(&:tool_call_id)).to eq([second.id])

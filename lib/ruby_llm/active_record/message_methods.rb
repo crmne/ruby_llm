@@ -46,7 +46,7 @@ module RubyLLM
           cost: (cost if entries.any?),
           tool_calls: tool_calls,
           tool_call_id: parent_tool_call&.id,
-          provider_tool_call_id: parent_tool_call&.provider_id,
+          provider_call_id: parent_tool_call&.provider_call_id,
           mcp_result: mcp_result,
           finish_reason: optional_column(:finish_reason),
           model: entries.reverse.find(&:succeeded?)&.model,

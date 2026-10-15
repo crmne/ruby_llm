@@ -20,8 +20,8 @@ module RubyLLM
         @raw_content = nil
         @raw_reasoning = nil
         @finish_reason = nil
-        @latest_tool_call_id = nil
-        @tool_call_ids_by_index = {}
+        @latest_provider_call_id = nil
+        @provider_call_ids_by_index = {}
       end
 
       def add(chunk)
@@ -108,6 +108,7 @@ module RubyLLM
 
           ToolCall.new(
             id: tc.id,
+            provider_call_id: tc.provider_call_id,
             name: tc.name,
             arguments: arguments,
             thought_signature: tc.thought_signature,
@@ -125,11 +126,11 @@ module RubyLLM
       def accumulate_tool_calls(new_tool_calls)
         RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
         new_tool_calls.each do |stream_key, tool_call|
-          if tool_call.id == ''
-            tool_call = ToolCall.new(**tool_call.to_h, id: SecureRandom.uuid)
+          if tool_call.provider_call_id == ''
+            tool_call = ToolCall.new(**tool_call.to_h, provider_call_id: SecureRandom.uuid)
             new_tool_calls[stream_key] = tool_call
           end
-          if tool_call.id
+          if tool_call.provider_call_id
             start_tool_call(stream_key, tool_call)
           else
             append_tool_call_fragment(stream_key, tool_call)
@@ -138,20 +139,21 @@ module RubyLLM
       end
 
       def start_tool_call(stream_key, tool_call)
-        tool_call_id = tool_call.id
-        if @tool_calls.key?(tool_call_id) && @tool_call_ids_by_index[stream_key] != tool_call_id
-          raise Error, "Duplicate tool call ID in one response: #{tool_call_id.inspect}"
+        provider_call_id = tool_call.provider_call_id
+        if @tool_calls.key?(provider_call_id) && @provider_call_ids_by_index[stream_key] != provider_call_id
+          raise Error, "Duplicate tool call ID in one response: #{provider_call_id.inspect}"
         end
 
-        @tool_calls[tool_call_id] = ToolCall.new(
-          id: tool_call_id,
+        @tool_calls[provider_call_id] = ToolCall.new(
+          id: tool_call.id,
+          provider_call_id:,
           name: tool_call.name,
           arguments: initial_tool_call_arguments(tool_call),
           thought_signature: tool_call.thought_signature,
           remote: tool_call.remote?
         )
-        @tool_call_ids_by_index[stream_key] = tool_call_id unless stream_key.nil?
-        @latest_tool_call_id = tool_call_id
+        @provider_call_ids_by_index[stream_key] = provider_call_id unless stream_key.nil?
+        @latest_provider_call_id = provider_call_id
       end
 
       def initial_tool_call_arguments(tool_call)
@@ -174,9 +176,9 @@ module RubyLLM
       end
 
       def find_tool_call(stream_key)
-        return @tool_calls[@latest_tool_call_id] if stream_key.nil?
+        return @tool_calls[@latest_provider_call_id] if stream_key.nil?
 
-        @tool_calls[@tool_call_ids_by_index[stream_key]] || @tool_calls[stream_key]
+        @tool_calls[@provider_call_ids_by_index[stream_key]] || @tool_calls[stream_key]
       end
 
       def count_tokens(chunk)

@@ -20,7 +20,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Approvals do
     message = parse(body)
 
     expect(message.tool_calls.fetch('approval_1'))
-      .to have_attributes(id: 'approval_1', name: 'search', arguments: { 'query' => 'Ruby' }, remote?: true)
+      .to have_attributes(id: nil, provider_call_id: 'approval_1', name: 'search',
+                          arguments: { 'query' => 'Ruby' }, remote?: true)
     expect(message.raw_content).to eq([approval])
     expect(message.server_tool_calls.first.raw).to eq(approval)
   end
@@ -56,10 +57,10 @@ RSpec.describe RubyLLM::Protocols::Responses::Approvals do
 
   [true, false].each do |approved|
     it "replays the #{approved ? 'approval' : 'denial'} without a local function output" do
-      request = parse(body).tool_calls.fetch('approval_1')
+      request = parse(body).tool_calls.fetch('approval_1').with_id('invocation_1')
       response = protocol.tool_approval_response(request, approved:)
 
-      expect(response).to have_attributes(role: :tool, tool_call_id: 'approval_1')
+      expect(response).to have_attributes(role: :tool, tool_call_id: 'invocation_1', provider_call_id: 'approval_1')
       expected = { type: 'mcp_approval_response', approval_request_id: 'approval_1', approve: approved }
       expect(protocol.send(:format_tool_items, response)).to eq([expected])
     end

@@ -32,7 +32,7 @@ module RubyLLM
         def format_tool_result_block(msg)
           {
             type: 'tool_result',
-            tool_use_id: msg.provider_tool_call_id,
+            tool_use_id: msg.provider_call_id,
             content: format_tool_result_content(msg)
           }
         end
@@ -114,7 +114,7 @@ module RubyLLM
         end
 
         def extract_tool_call_delta(data)
-          { data['index'] => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+          { data['index'] => ToolCall.new(name: nil, arguments: data.dig('delta', 'partial_json')) }
         end
 
         def extract_tool_call_start(data)
@@ -135,13 +135,13 @@ module RubyLLM
             next unless block && block['type'] == 'tool_use'
 
             ToolCall.new(
-              id: block['id'],
+              provider_call_id: block['id'],
               name: block['name'],
               arguments: block['input']
             )
           end
 
-          ToolCall.index(calls) unless calls.empty?
+          ToolCall.index(calls, by: :provider_call_id) unless calls.empty?
         end
 
         def default_input_schema

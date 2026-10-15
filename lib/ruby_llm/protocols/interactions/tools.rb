@@ -27,11 +27,11 @@ module RubyLLM
           calls = steps.filter_map do |step|
             next unless step['type'] == 'function_call' && !answered.include?(step['id'])
 
-            ToolCall.new(id: step.fetch('id'), name: step.fetch('name'),
+            ToolCall.new(provider_call_id: step.fetch('id'), name: step.fetch('name'),
                          arguments: parse_interaction_arguments(step['arguments']),
                          thought_signature: step['signature'])
           end
-          ToolCall.index(calls)
+          ToolCall.index(calls, by: :provider_call_id)
         end
 
         def interaction_answered_calls(steps)

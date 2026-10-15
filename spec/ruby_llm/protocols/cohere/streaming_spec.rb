@@ -58,7 +58,8 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
       )
 
       expect(chunk.tool_calls[0]).to have_attributes(
-        id: 'query_daily_sales_report_j3f0adww9pmr',
+        id: nil,
+        provider_call_id: 'query_daily_sales_report_j3f0adww9pmr',
         name: 'query_daily_sales_report',
         arguments: ''
       )
@@ -141,7 +142,8 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
       )
 
       expect(response.tool_calls.values.first).to have_attributes(
-        id: 'query_daily_sales_report_j3f0adww9pmr',
+        id: nil,
+        provider_call_id: 'query_daily_sales_report_j3f0adww9pmr',
         name: 'query_daily_sales_report',
         arguments: { 'day' => '2023-09-29' }
       )

@@ -191,7 +191,7 @@ module RubyLLM
             msg.tool_calls.each_value do |tool_call|
               blocks << {
                 toolUse: {
-                  toolUseId: tool_call.provider_id,
+                  toolUseId: tool_call.provider_call_id,
                   name: tool_call.name,
                   input: tool_call.arguments
                 }
@@ -229,7 +229,7 @@ module RubyLLM
         def format_tool_result_block(msg)
           {
             toolResult: {
-              toolUseId: msg.provider_tool_call_id,
+              toolUseId: msg.provider_call_id,
               content: format_tool_result_content(msg)
             }
           }
@@ -532,13 +532,13 @@ module RubyLLM
             next if server_tool_use?(tool_use)
 
             ToolCall.new(
-              id: tool_use['toolUseId'],
+              provider_call_id: tool_use['toolUseId'],
               name: tool_use['name'],
               arguments: tool_use['input'] || {}
             )
           end
 
-          ToolCall.index(calls) unless calls.empty?
+          ToolCall.index(calls, by: :provider_call_id) unless calls.empty?
         end
 
         # Provider-executed tool steps come back with a distinguishing type,

@@ -359,7 +359,7 @@ module RubyLLM
           tool_use_id = tool_use['toolUseId']
           {
             event_block_index(event) => ToolCall.new(
-              id: tool_use_id,
+              provider_call_id: tool_use_id,
               name: tool_use['name'],
               arguments: tool_use['input'] || {}
             )
@@ -372,7 +372,7 @@ module RubyLLM
           input = normalized_delta(event).dig('toolUse', 'input')
           return nil unless input
 
-          { event_block_index(event) => ToolCall.new(id: nil, name: nil, arguments: input) }
+          { event_block_index(event) => ToolCall.new(name: nil, arguments: input) }
         end
 
         # Server-executed tool steps stream as typed toolUse and toolResult

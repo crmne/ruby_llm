@@ -154,7 +154,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
   describe '.format_tool_result' do
     let(:msg) do
       instance_double(RubyLLM::Message,
-                      provider_tool_call_id: 'tool_123',
+                      provider_call_id: 'tool_123',
                       content: 'Tool result',
                       attachments: [])
     end
@@ -181,7 +181,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
 
     it 'uses a placeholder when the tool returns no content' do
       msg = instance_double(RubyLLM::Message,
-                            provider_tool_call_id: 'tool_123',
+                            provider_call_id: 'tool_123',
                             content: '',
                             attachments: [])
 
@@ -228,7 +228,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       tool_calls = extractor.send(:extract_tool_calls, data)
 
       expect(tool_calls.keys).to eq([2])
-      expect(tool_calls[2].id).to eq('tool_2')
+      expect(tool_calls[2]).to have_attributes(id: nil, provider_call_id: 'tool_2')
       expect(tool_calls[2].name).to eq('search')
     end
 

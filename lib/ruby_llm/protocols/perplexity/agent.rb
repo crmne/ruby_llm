@@ -92,7 +92,7 @@ module RubyLLM
           return super unless item['type'] == 'function_call'
 
           chunk tool_calls: {
-            data['output_index'] => ToolCall.new(id: item['call_id'], name: item['name'],
+            data['output_index'] => ToolCall.new(provider_call_id: item['call_id'], name: item['name'],
                                                  arguments: +item['arguments'].to_s)
           }
         end

@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
       expect(result['call_123'].name).to eq('weather')
       expect(result['call_123'].arguments).to eq({ 'location' => 'Berlin' })
       expect(result['call_123'].thought_signature).to be_nil
+      expect(result['call_123']).to have_attributes(id: nil, provider_call_id: 'call_123')
     end
 
     it 'extracts thought signatures from extra_content.google.thought_signature' do
