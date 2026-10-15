@@ -93,6 +93,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     # RubyLLM owns the models table, so the association is always :model no
     # matter what the app calls its chat class or the models UI resource.
     chat_show = File.read(File.join(base_path, 'chats/show.html.erb'))
+    expect(chat_show).to include('turbo_refreshes_with method: :morph, scroll: :preserve')
+    expect(tool_calls_partial).to include('message.content.present?')
     expect(chat_show).to include('.model&.label || default_model_display_name')
     chat_partial = File.read(File.join(base_path, 'chats/_chat.html.erb'))
     expect(chat_partial).to include('.model&.label || default_model_display_name')
@@ -144,7 +146,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
   def expect_broadcasting_model(
     path:,
     acts_as_message_lines:,
-    broadcasts_to_line:,
+    stream:,
     broadcast_target_line:,
     content_target_line:
   )
@@ -154,8 +156,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       expect(message_content).to include(line)
     end
 
-    expect(message_content).to include(broadcasts_to_line)
-    expect(message_content).to include('inserts_by: :append')
+    expect(message_content).to include(%(after_commit -> { broadcast_refresh_to "#{stream}" }))
+    expect(message_content).not_to include('broadcasts_to')
     expect(message_content).to include('def broadcast_append_chunk(content)')
     expect(message_content).to include(broadcast_target_line)
     expect(message_content).to include(content_target_line)
@@ -203,6 +205,31 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     File.write(agent_path, agent.sub(/^end\n\z/, "  tools SendMailTool\nend\n")) unless agent.include?('SendMailTool')
   end
 
+  def broadcast_order_script(agent:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      actions = []
+      ActiveSupport::Notifications.subscribe("broadcast.action_cable") do |*, payload|
+        actions << payload[:message].to_s[/action="(\\w+)"/, 1]
+      end
+
+      chat = #{agent}.create!
+      created = [
+        chat.add_message(role: :user, content: "Invoice Acme"),
+        chat.add_message(RubyLLM::Message.new(role: :assistant, content: "Sending it.", tool_calls: {
+          "call_order" => RubyLLM::ToolCall.new(id: "call_order", name: "send_mail", arguments: { "to" => "acme" })
+        })),
+        chat.add_message(RubyLLM::Message.new(role: :tool, tool_call_id: "call_order", content: "Sent")),
+        chat.add_message(role: :assistant, content: "Done.")
+      ].map(&:id)
+
+      later = ActiveJob::Base.queue_adapter.enqueued_jobs.map { |job| job["job_class"] }.grep(/Turbo/)
+      abort "broadcasts left to jobs: \#{later}" if later.any?
+      refreshes = actions.size >= created.size && actions.uniq == [ "refresh" ]
+      abort "broadcast \#{actions} for \#{created.size} messages" unless refreshes
+    RUBY
+  end
+
   def approval_flow_script(agent:, controller:, assigns:, chats_path:, job:, message_key:, **)
     <<~RUBY
       ActiveJob::Base.queue_adapter = :test
@@ -214,7 +241,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
       chat = #{agent}.create!
       chat.add_message(role: :user, content: "Chart this", attachments: [ csv.to_s, png.to_s ])
-      chat.add_message(RubyLLM::Message.new(role: :assistant, content: "", tool_calls: {
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: "Checking the docs first.", tool_calls: {
         "call_search" => RubyLLM::ToolCall.new(id: "call_search", name: "search_docs", arguments: { "query" => "refunds" }, remote: true),
         "call_mail" => RubyLLM::ToolCall.new(id: "call_mail", name: "send_mail", arguments: { "to" => "ops" })
       }))
@@ -224,7 +251,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       [ "\#{chat.class.name.underscore.tr('/', '_')}_\#{chat.id}_approvals", "Approve search_docs?", "refunds",
         "Approve send_mail?", "<img", "chart.png", "report.csv", "disposition=attachment",
         '[id="#{message_key}_tool_call_call_search"] { display: none; }',
-        '<p id="new_#{message_key}"', "Approve or deny the requests above to continue." ].each do |text|
+        '<p id="new_#{message_key}"', "Approve or deny the requests above to continue.",
+        "Checking the docs first." ].each do |text|
         abort "show page lacks \#{text}" unless html.include?(text)
       end
       abort "show page offers the message form" if html.include?('name="#{message_key}[content]"')
@@ -285,7 +313,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       broadcasting_options: {
         path: 'app/models/message.rb',
         acts_as_message_lines: ['acts_as_message'],
-        broadcasts_to_line: "broadcasts_to ->(message) { \"chat_\#{message.chat_id}\" }",
+        stream: "chat_\#{chat_id}",
         broadcast_target_line: "broadcast_append_to \"chat_\#{chat_id}\"",
         content_target_line: "target: \"message_\#{id}_content\""
       },
@@ -342,7 +370,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'chat = ChatAgent.find(chat_id)',
         ask_line: 'chat.ask_later(content) if content',
         last_message_line: 'message = chat.messages.last',
-        broadcast_lines: ['partial: "chats/approvals"', 'partial: "messages/form"']
+        broadcast_lines: ['chat.broadcast_refresh_to "chat_']
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -383,7 +411,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         acts_as_message_lines: [
           "acts_as_message chat: :llm_chat, chat_class: 'Llm::Chat'"
         ],
-        broadcasts_to_line: "broadcasts_to ->(llm_message) { \"llm_chat_\#{llm_message.llm_chat_id}\" }",
+        stream: "llm_chat_\#{llm_chat_id}",
         broadcast_target_line: "broadcast_append_to \"llm_chat_\#{llm_chat_id}\"",
         content_target_line: "target: \"llm_message_\#{id}_content\""
       },
@@ -440,7 +468,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'llm_chat = Llm::ChatAgent.find(llm_chat_id)',
         ask_line: 'llm_chat.ask_later(content) if content',
         last_message_line: 'llm_message = llm_chat.llm_messages.last',
-        broadcast_lines: ['partial: "llm/chats/approvals"', 'partial: "llm/messages/form"']
+        broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_']
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -615,6 +643,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           within_test_app(app_path) do
             instance_exec(&config[:extra_view_assertions])
           end
+        end
+      end
+
+      it 'broadcasts message changes as page refreshes, so arrival order cannot matter' do
+        within_test_app(app_path) do
+          give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
+          success, output = run_rails_runner(broadcast_order_script(**config[:approval_flow]))
+          expect(success).to be(true), output
         end
       end
 

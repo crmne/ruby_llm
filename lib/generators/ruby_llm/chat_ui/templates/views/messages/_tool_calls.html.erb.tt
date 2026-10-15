@@ -1,5 +1,11 @@
 <%% message = local_assigns[:<%= message_model_name.demodulize.underscore %>] || tool_calls %>
 <div id="<%= message_variable_name %>_<%%= message.id %>">
+  <%% if message.content.present? %>
+    <div class="<%= message_variable_name %>" style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #28a745;">
+      <div style="font-weight: bold; margin-bottom: 5px;">Assistant</div>
+      <div id="<%= message_variable_name %>_<%%= message.id %>_content" style="white-space: pre-wrap;"><%%= message.content %></div>
+    </div>
+  <%% end %>
   <%% message.<%= tool_call_variable_name.pluralize %>.each_value do |tool_call| %>
     <%%= render tool_call_partial(tool_call), message: message, tool_call: tool_call %>
   <%% end %>

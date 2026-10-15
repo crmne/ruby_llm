@@ -183,7 +183,7 @@ module RubyLLM
 
         broadcasting_callbacks = <<-RUBY
 
-  broadcasts_to ->(#{msg_var}) { "#{chat_var}_\#{#{msg_var}.#{chat_association}_id}" }, inserts_by: :append
+  after_commit -> { broadcast_refresh_to "#{chat_var}_\#{#{chat_association}_id}" }
 
   def broadcast_append_chunk(content)
     broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",

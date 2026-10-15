@@ -141,7 +141,27 @@ end
 
 Action Cable processes messages concurrently, which can cause out-of-order delivery:
 
-#### Solution 1: Client-Side Reordering (Recommended)
+#### Solution 1: Page Refreshes
+
+Broadcast a refresh instead of inserting each message. The page fetches the chat again and morphs into it, so the order the broadcasts arrive in cannot matter. This is what the [generated chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) does:
+
+```ruby
+# app/models/message.rb
+class Message < ApplicationRecord
+  acts_as_message
+  after_commit -> { broadcast_refresh_to "chat_#{chat_id}" }
+end
+```
+
+```erb
+<%# app/views/chats/show.html.erb %>
+<% turbo_refreshes_with method: :morph, scroll: :preserve %>
+<%= turbo_stream_from "chat_#{@chat.id}" %>
+```
+
+Streamed chunks still append into the latest message. A chunk that arrives before the refresh brings that message onto the page is dropped, and the refresh at the end of the response shows the full text. Morphing needs `<%= yield :head %>` in your layout, which Rails 7.2 and later include. Without it, refreshes replace the page.
+
+#### Solution 2: Client-Side Reordering
 
 Use Stimulus to maintain chronological order:
 
@@ -222,7 +242,7 @@ Update your views to use the controller:
 <% end %>
 ```
 
-#### Solution 2: Server-Side Ordering
+#### Solution 3: Server-Side Ordering
 
 [AnyCable](https://anycable.io) provides order guarantees at the server level through "sticky concurrency" - ensuring messages from the same stream are processed by the same worker. This eliminates the need for client-side reordering code.
 

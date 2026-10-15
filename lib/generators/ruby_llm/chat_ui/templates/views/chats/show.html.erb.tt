@@ -2,6 +2,7 @@
   <p style="color: green"><%%= notice %></p>
 <%% end %>
 
+<%% turbo_refreshes_with method: :morph, scroll: :preserve %>
 <%%= turbo_stream_from "<%= chat_variable_name %>_#{@<%= chat_variable_name %>.id}" %>
 
 <%% content_for :title, "<%= chat_model_name %>" %>

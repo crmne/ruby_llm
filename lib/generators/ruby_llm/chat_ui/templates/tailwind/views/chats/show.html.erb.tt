@@ -1,5 +1,6 @@
 <%% content_for :title, "Showing <%= chat_table_name.singularize.humanize.downcase %>" %>
 
+<%% turbo_refreshes_with method: :morph, scroll: :preserve %>
 <%%= turbo_stream_from "<%= chat_variable_name %>_#{@<%= chat_variable_name %>.id}" %>
 
 <%# Keep layout conventions aligned with tailwindcss-rails scaffold (top-left, md:w-2/3). -%>

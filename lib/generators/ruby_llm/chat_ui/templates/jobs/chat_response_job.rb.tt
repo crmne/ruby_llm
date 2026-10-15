@@ -10,13 +10,6 @@ class <%= chat_job_class_name %> < ApplicationJob
       end
     end
 
-    <%= chat_variable_name %>.broadcast_replace_to "<%= chat_variable_name %>_#{<%= chat_variable_name %>.id}",
-      target: "<%= chat_variable_name %>_#{<%= chat_variable_name %>.id}_approvals",
-      partial: "<%= chat_model_name.underscore.pluralize %>/approvals",
-      locals: { <%= chat_model_name.demodulize.underscore %>: <%= chat_variable_name %> }
-    <%= chat_variable_name %>.broadcast_replace_to "<%= chat_variable_name %>_#{<%= chat_variable_name %>.id}",
-      target: "new_<%= message_variable_name %>",
-      partial: "<%= message_model_name.underscore.pluralize %>/form",
-      locals: { <%= chat_variable_name %>: <%= chat_variable_name %>, <%= message_variable_name %>: <%= message_model_name %>.new }
+    <%= chat_variable_name %>.broadcast_refresh_to "<%= chat_variable_name %>_#{<%= chat_variable_name %>.id}"
   end
 end
