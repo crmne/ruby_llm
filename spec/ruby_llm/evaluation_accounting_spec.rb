@@ -61,6 +61,7 @@ RSpec.describe RubyLLM::Evaluation do
     expect(trial.evaluator_tokens.input).to eq(90)
     expect(trial.cost.total).to be_within(1e-12).of(trial.task_cost.total + trial.evaluator_cost.total)
     expect(report.cost.total).to be_within(1e-12).of(trial.cost.total * 2)
+    expect(report.to_s.lines.last).to end_with(format(', cost $%.4f', report.cost.total))
     expect(report.to_h).to include(tokens: report.tokens.to_h, cost: report.cost.to_h)
     expect(trial.to_h).to include(task_tokens: trial.task_tokens.to_h, evaluator_tokens: trial.evaluator_tokens.to_h)
   end

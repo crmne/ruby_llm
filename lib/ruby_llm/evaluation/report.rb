@@ -72,10 +72,14 @@ module RubyLLM
         path
       end
 
-      # Returns a readable per-case report followed by counts.
+      # Returns a readable per-case report followed by counts, and the total
+      # cost when every amount is known.
       def to_s
         rows = trials.map { |trial| trial_description(trial) }
-        [name, *rows, counts.map { |status, count| "#{count} #{status}" }.join(', ')].join("\n")
+        total = cost.total
+        summary = counts.map { |status, count| "#{count} #{status}" }.join(', ')
+        summary += format(', cost $%.4f', total) if total
+        [name, *rows, summary].join("\n")
       end
 
       def inspect_attributes # :nodoc:

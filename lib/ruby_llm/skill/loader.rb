@@ -65,9 +65,9 @@ module RubyLLM
       def instructions(skill)
         folder = if @code_execution.call
                    mount = self.class.mount_path(skill)
-                   "Its folder is at #{mount}/ in run_code's working directory, read-only, so a file these " \
-                     "instructions call scripts/example.py is #{mount}/scripts/example.py there. Run its scripts " \
-                     'with run_code from the working directory, and write output files to the working directory.'
+                   "Its folder is at #{mount}/ in run_code's working directory, read-only. Paths in these " \
+                     "instructions are relative to it, so prefix them with #{mount}/. Run its scripts with " \
+                     'run_code from the working directory, and write output files to the working directory.'
                  else
                    'Paths in these instructions are relative to the skill folder. This conversation cannot run ' \
                      "code, so the skill's scripts cannot run: follow the rest of the instructions, and say so " \
