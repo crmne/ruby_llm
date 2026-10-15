@@ -61,7 +61,7 @@ output_dir.glob('**/*.html').sort.each do |path|
         {
           '@type' => 'WebSite', '@id' => website_id, 'url' => "#{site_root}/",
           'name' => 'RubyLLM',
-          'description' => 'The Ruby-native AI framework for building with every major provider.',
+          'description' => 'The Ruby AI framework for building with every major provider.',
           'inLanguage' => 'en-US'
         },
         {
