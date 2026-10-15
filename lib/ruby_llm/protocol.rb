@@ -709,7 +709,8 @@ module RubyLLM
       return attachment if attachment.provider_file?
       return attachment unless upload_large_attachment?(attachment)
 
-      Attachment.new(provider_upload(attachment), resolution: attachment.resolution, config: @config)
+      Attachment.new(provider_upload(attachment), resolution: attachment.resolution,
+                                                  processing: attachment.processing, config: @config)
     end
 
     def supported_message_attachment?(_message, attachment)

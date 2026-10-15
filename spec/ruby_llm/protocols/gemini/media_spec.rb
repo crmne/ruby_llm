@@ -121,6 +121,48 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
 
       expect(parts.second).not_to have_key(:media_resolution)
     end
+
+    it 'sets media_processing on each video in its own mode' do
+      uri = 'https://generativelanguage.googleapis.com/v1beta/files/abc'
+      file = RubyLLM::UploadedFile.new(id: 'files/abc', filename: 'lecture.mp4', mime_type: 'video/mp4', uri:)
+      lecture = RubyLLM::Attachment.new(file, processing: :agentic)
+      clip = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4', processing: :static)
+
+      parts = described_class.format_content('Compare them', [lecture, clip])
+
+      expect(parts.drop(1)).to eq(
+        [
+          { file_data: { mime_type: 'video/mp4', file_uri: uri }, media_processing: 'AGENTIC' },
+          { inline_data: { mime_type: 'video/mp4', data: Base64.strict_encode64('mp4 bytes') },
+            media_processing: 'STATIC' }
+        ]
+      )
+    end
+
+    it 'sets media_processing beside media_resolution' do
+      video = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4', resolution: :low,
+                                                                 processing: :agentic)
+
+      parts = described_class.format_content('Watch this', [video])
+
+      expect(parts.second).to include(media_resolution: { level: 'MEDIA_RESOLUTION_LOW' }, media_processing: 'AGENTIC')
+    end
+
+    it 'omits media_processing on attachments that are not videos' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), processing: :agentic)
+
+      parts = described_class.format_content('Read this', [image])
+
+      expect(parts.second).not_to have_key(:media_processing)
+    end
+
+    it 'omits media_processing when no processing mode is set' do
+      video = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4')
+
+      parts = described_class.format_content('Watch this', [video])
+
+      expect(parts.second).to eq(inline_data: { mime_type: 'video/mp4', data: Base64.strict_encode64('mp4 bytes') })
+    end
   end
 
   describe '#build_response_content' do

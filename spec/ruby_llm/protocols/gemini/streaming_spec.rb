@@ -89,6 +89,30 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     expect(chunk.raw_content.size).to eq(3)
   end
 
+  it 'signs a streamed agentic video answer with its own signature, not a navigation step' do
+    navigation = [
+      { 'thoughtSignature' => 'sig_A', 'toolCall' => { 'id' => 'call_1' } },
+      { 'thoughtSignature' => 'sig_B', 'toolResponse' => { 'id' => 'call_1' } }
+    ]
+    navigation_chunks = navigation.map do |part|
+      test_obj.send(:build_chunk, { 'candidates' => [{ 'content' => { 'parts' => [part] } }] })
+    end
+    chunk = test_obj.send(:build_chunk, {
+                            'candidates' => [{
+                              'content' => { 'parts' => [{ 'text' => 'Waves roll onto a beach.',
+                                                           'thoughtSignature' => 'sig_E' }] },
+                              'finishReason' => 'STOP'
+                            }],
+                            'usageMetadata' => { 'promptTokenCount' => 300, 'candidatesTokenCount' => 9,
+                                                 'toolUsePromptTokenCount' => 1200 }
+                          })
+
+    expect(navigation_chunks.map(&:thinking)).to all(be_nil)
+    expect(chunk.thinking.signature).to eq('sig_E')
+    expect(chunk.raw_content).to be_nil
+    expect(chunk.tokens.input).to eq(1500)
+  end
+
   it 'preserves raw finishReason on chunks' do
     data = {
       'candidates' => [

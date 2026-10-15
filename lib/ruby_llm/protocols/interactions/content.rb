@@ -29,6 +29,7 @@ module RubyLLM
           type = interaction_attachment_type(attachment)
 
           part = { type: type, mime_type: attachment.mime_type }
+          part[:processing] = attachment.processing.to_s if attachment.processing && attachment.video?
           if attachment.provider_file?
             part.merge(uri: attachment.provider_file_uri)
           elsif attachment.url?

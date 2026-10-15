@@ -280,6 +280,27 @@ RSpec.describe RubyLLM::Attachment do
       .to raise_error(ArgumentError, /resolution must be one of/)
   end
 
+  it 'accepts a video processing mode' do
+    attachment = described_class.new(StringIO.new('mp4'), filename: 'lecture.mp4', processing: :agentic)
+
+    expect(attachment.processing).to eq(:agentic)
+  end
+
+  it 'leaves the processing mode to the provider by default' do
+    expect(described_class.new(StringIO.new('mp4'), filename: 'lecture.mp4').processing).to be_nil
+  end
+
+  it 'shows the video processing mode in inspect' do
+    attachment = described_class.new(StringIO.new('mp4'), filename: 'lecture.mp4', processing: :static)
+
+    expect(attachment.inspect).to include('processing: :static')
+  end
+
+  it 'rejects unknown video processing modes' do
+    expect { described_class.new(StringIO.new('mp4'), filename: 'lecture.mp4', processing: 'agentic') }
+      .to raise_error(ArgumentError, 'processing must be one of static, agentic, got "agentic"')
+  end
+
   describe 'serialized attributes' do
     let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
     let(:original) { described_class.new(image_path, filename: 'custom.png', resolution: :high) }
@@ -309,6 +330,20 @@ RSpec.describe RubyLLM::Attachment do
 
       expect(rebuilt).to have_attributes(source: Pathname.new(image_path), filename: 'custom.png',
                                          mime_type: 'image/png', resolution: :high)
+    end
+
+    it 'serializes and rebuilds the video processing mode' do
+      video = described_class.new(StringIO.new('mp4'), filename: 'lecture.mp4', processing: :agentic)
+      attributes = JSON.parse(JSON.generate(video.to_h.except(:source)))
+      expect(attributes).to include('processing' => 'agentic')
+
+      rebuilt = described_class.wrap([attributes.merge('source' => StringIO.new('mp4'))]).first
+
+      expect(rebuilt).to have_attributes(filename: 'lecture.mp4', mime_type: 'video/mp4', processing: :agentic)
+    end
+
+    it 'omits an unset processing mode' do
+      expect(original.to_h).not_to have_key(:processing)
     end
 
     it 'rebuilds a URL attachment from JSON attributes' do

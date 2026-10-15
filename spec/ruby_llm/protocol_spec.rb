@@ -115,6 +115,15 @@ RSpec.describe RubyLLM::Protocol do
 
       expect(protocol.send(:preprocess_attachment, attachment).resolution).to eq(:high)
     end
+
+    it 'keeps the processing mode when it uploads a large video' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('mp4'), filename: 'a.mp4', processing: :agentic)
+      upload = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'a.mp4', mime_type: 'video/mp4')
+      allow(protocol).to receive_messages(upload_large_attachment?: true, provider_upload: upload)
+
+      expect(protocol.send(:preprocess_attachment, attachment)).to have_attributes(provider_file_id: 'file_123',
+                                                                                   processing: :agentic)
+    end
   end
 
   describe '#validate_paint_inputs!' do

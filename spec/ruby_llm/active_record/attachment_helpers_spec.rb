@@ -102,6 +102,40 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
 
       expect(message.to_llm.attachments.first.resolution).to eq(:low)
     end
+
+    it 'keeps the video processing mode across a reload' do
+      chat = Chat.create!(model: model_for(:gemini))
+      message = chat.messages.create!(role: 'user', content: 'see attached')
+      video = RubyLLM::Attachment.new(StringIO.new('mp4'), filename: 'lecture.mp4', resolution: :low,
+                                                           processing: :agentic)
+
+      helpers.persist_content(message, [video])
+
+      expect(Message.find(message.id).to_llm.attachments.first)
+        .to have_attributes(resolution: :low, processing: :agentic)
+    end
+
+    it 'keeps the video processing mode before the record is saved' do
+      chat = Chat.create!(model: model_for(:gemini))
+      message = chat.messages.build(role: 'user', content: 'see attached')
+      video = RubyLLM::Attachment.new(StringIO.new('mp4'), filename: 'lecture.mp4', processing: :static)
+
+      helpers.persist_content(message, [video])
+
+      expect(message.to_llm.attachments.first.processing).to eq(:static)
+    end
+
+    it 'reads the video processing mode an existing blob holds across a reload' do
+      chat = Chat.create!(model: model_for(:gemini))
+      message = chat.messages.create!(role: 'user', content: 'see attached')
+      video = ActiveStorage::Blob.create_and_upload!(io: StringIO.new('mp4'), filename: 'lecture.mp4',
+                                                     content_type: 'video/mp4',
+                                                     metadata: { 'processing' => 'agentic' })
+
+      helpers.persist_content(message, [RubyLLM::Attachment.new(video, processing: :agentic)])
+
+      expect(Message.find(message.id).to_llm.attachments.first.processing).to eq(:agentic)
+    end
   end
 
   describe '#prepare_for_active_storage' do
