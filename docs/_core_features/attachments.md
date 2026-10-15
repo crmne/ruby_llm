@@ -186,7 +186,20 @@ chat = RubyLLM.chat(model: "{{ site.models.gemini_agentic_video }}")
 chat.ask "When does the speaker introduce recursion?", with: lecture
 ```
 
-The model reads the transcript first, then loads only the frames and audio it needs. `:static` samples the whole video up front. Leave it unset to use the provider's default, which is static. Each video keeps its own setting, so one message can mix an agentic lecture with a static clip. Persisted chats keep the setting, so later turns and background jobs send the same mode.
+The model reads the transcript first, then loads only the frames and audio it needs. `:static` samples the whole video up front. Leave it unset to use the provider's default, which is static. Each video keeps its own setting, so one message can mix an agentic lecture with a static clip.
+
+Persisted chats keep the setting in the metadata of the file RubyLLM stores for the message, so later turns and background jobs send the same mode. A file already in Active Storage is attached as it is, so a reloaded chat reads the mode from that blob's own metadata. Set it on the blob as well as on the attachment:
+
+```ruby
+blob = lesson.video.blob
+blob.update!(metadata: blob.metadata.merge("processing" => "agentic"))
+
+chat = Chat.create!(model: "{{ site.models.gemini_agentic_video }}")
+chat.ask "When does the speaker introduce recursion?",
+         with: RubyLLM::Attachment.new(blob, processing: :agentic)
+```
+
+Blob metadata is shared, so every chat that attaches the blob replays it with that mode.
 
 Agentic processing suits long videos and questions about specific moments. Short clips answer faster with static processing. Navigating a long video takes time, so stream the response to keep the connection active while the model works.
 
