@@ -26,6 +26,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'mxc', platform: :mri
   # Mutation testing runs on MRI 3.4 and later; see CONTRIBUTING.md.
   gem 'mutineer', '~> 1.6', require: false if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '3.4'
+  gem 'net-http-persistent'
   gem 'nokogiri'
   gem 'opentelemetry-sdk', '~> 1.0'
   gem 'overcommit', '>= 0.66'
