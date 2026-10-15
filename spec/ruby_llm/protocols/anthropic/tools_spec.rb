@@ -23,10 +23,11 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
                       thinking: nil,
                       raw_reasoning: nil,
                       tool_calls: {
-                        'tool_123' => instance_double(RubyLLM::ToolCall,
-                                                      id: 'tool_123',
-                                                      name: 'test_tool',
-                                                      arguments: { 'arg1' => 'value1' })
+                        'tool_123' => RubyLLM::ToolCall.new(
+                          id: 'tool_123',
+                          name: 'test_tool',
+                          arguments: { 'arg1' => 'value1' }
+                        )
                       })
     end
 
@@ -153,7 +154,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
   describe '.format_tool_result' do
     let(:msg) do
       instance_double(RubyLLM::Message,
-                      tool_call_id: 'tool_123',
+                      provider_tool_call_id: 'tool_123',
                       content: 'Tool result',
                       attachments: [])
     end
@@ -180,7 +181,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
 
     it 'uses a placeholder when the tool returns no content' do
       msg = instance_double(RubyLLM::Message,
-                            tool_call_id: 'tool_123',
+                            provider_tool_call_id: 'tool_123',
                             content: '',
                             attachments: [])
 

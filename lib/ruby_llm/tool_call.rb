@@ -14,8 +14,17 @@ module RubyLLM
   class ToolCall
     include Support::Inspectable
 
-    # The unique identifier for this call. The tool result message
-    # answering this call carries the same id.
+    def self.index(calls) # :nodoc:
+      calls.each_with_object({}) do |call, indexed|
+        raise Error, "Duplicate tool call ID in one response: #{call.id.inspect}" if indexed.key?(call.id)
+
+        indexed[call.id] = call
+      end
+    end
+
+    # The RubyLLM identifier for this invocation. The tool result message
+    # answering this call carries the same id, including after a reload.
+    # This is independent of the ID in the provider's response.
     attr_reader :id
 
     # The name of the tool the model wants to invoke.
@@ -35,12 +44,22 @@ module RubyLLM
     # RubyLLM replays it to the provider on later requests.
     attr_accessor :thought_signature
 
-    def initialize(id:, name:, arguments: {}, thought_signature: nil, remote: false) # :nodoc:
+    def initialize(id:, name:, arguments: {}, thought_signature: nil, remote: false, provider_id: nil) # :nodoc:
       @id = id
+      @provider_id = provider_id
       @name = name
       @arguments = canonical_arguments(arguments)
       @thought_signature = thought_signature
       @remote = remote
+    end
+
+    def provider_id = @provider_id || id # :nodoc:
+
+    def with_id(id) # :nodoc:
+      dup.tap do |call|
+        call.instance_variable_set(:@provider_id, provider_id)
+        call.instance_variable_set(:@id, id)
+      end
     end
 
     def inspect_attributes # :nodoc:
@@ -51,6 +70,7 @@ module RubyLLM
     def to_h
       {
         id: @id,
+        provider_id: @provider_id,
         name: @name,
         arguments: @arguments,
         remote: remote? || nil,

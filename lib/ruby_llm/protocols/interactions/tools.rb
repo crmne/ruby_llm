@@ -24,11 +24,14 @@ module RubyLLM
 
         def parse_interaction_calls(steps)
           answered = interaction_answered_calls(steps)
-          steps.select { |step| step['type'] == 'function_call' && !answered.include?(step['id']) }.to_h do |step|
-            [step.fetch('id'), ToolCall.new(id: step.fetch('id'), name: step.fetch('name'),
-                                            arguments: parse_interaction_arguments(step['arguments']),
-                                            thought_signature: step['signature'])]
+          calls = steps.filter_map do |step|
+            next unless step['type'] == 'function_call' && !answered.include?(step['id'])
+
+            ToolCall.new(id: step.fetch('id'), name: step.fetch('name'),
+                         arguments: parse_interaction_arguments(step['arguments']),
+                         thought_signature: step['signature'])
           end
+          ToolCall.index(calls)
         end
 
         def interaction_answered_calls(steps)

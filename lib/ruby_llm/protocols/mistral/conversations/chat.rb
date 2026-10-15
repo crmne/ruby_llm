@@ -56,7 +56,7 @@ module RubyLLM
               if message.raw_content
                 Array(message.raw_content)
               elsif message.tool_result?
-                [{ type: 'function.result', tool_call_id: message.tool_call_id, result: message.content.to_s }]
+                [{ type: 'function.result', tool_call_id: message.provider_tool_call_id, result: message.content.to_s }]
               else
                 format_conversation_message(message)
               end
@@ -100,7 +100,7 @@ module RubyLLM
               }
             end
             message.tool_calls&.each_value do |call|
-              entries << { type: 'function.call', tool_call_id: call.id, name: call.name,
+              entries << { type: 'function.call', tool_call_id: call.provider_id, name: call.name,
                            arguments: JSON.generate(call.arguments) }
             end
             entries
@@ -127,13 +127,10 @@ module RubyLLM
                               response: raw)
             end
 
-            output.select { |entry| pending_conversation_call?(entry) }.to_h do |entry|
-              call = parse_tool_calls([
-                                        { 'id' => entry['tool_call_id'], 'type' => 'function',
-                                          'function' => entry.slice('name', 'arguments') }
-                                      ], response: raw, finish_reason: :tool_calls).values.first
-              [call.id, call]
+            calls = output.select { |entry| pending_conversation_call?(entry) }.map do |entry|
+              { 'id' => entry['tool_call_id'], 'type' => 'function', 'function' => entry.slice('name', 'arguments') }
             end
+            parse_tool_calls(calls, response: raw, finish_reason: :tool_calls) || {}
           end
 
           def pending_conversation_call?(entry)

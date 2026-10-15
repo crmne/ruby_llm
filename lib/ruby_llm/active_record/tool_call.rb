@@ -18,6 +18,7 @@ module RubyLLM
       def to_llm
         RubyLLM::ToolCall.new(
           id: tool_call_id,
+          provider_id: self[:provider_id],
           name: name,
           arguments: arguments || {},
           thought_signature: thought_signature,

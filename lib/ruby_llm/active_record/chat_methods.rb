@@ -647,9 +647,7 @@ module RubyLLM
       #   chat.add_message(role: :user, content: long_context)
       #
       def add_message(message_or_attributes)
-        llm_message = message_or_attributes
-        llm_message = llm_message.to_llm if llm_message.respond_to?(:to_llm)
-        llm_message = RubyLLM::Message.new(llm_message) unless llm_message.is_a?(RubyLLM::Message)
+        llm_message = to_llm.prepare_message(message_or_attributes)
 
         message_record = messages_association.create!(message_attributes(llm_message))
         @last_message_id = message_record.id
@@ -661,7 +659,7 @@ module RubyLLM
         persist_content(message_record, llm_message.attachments) if llm_message.attachments.any?
         persist_tool_calls(llm_message.tool_calls, message_record:) if llm_message.tool_calls.present?
 
-        @chat&.add_message(llm_message)
+        @chat.add_message(llm_message)
 
         bind_message_chat(message_record)
       end

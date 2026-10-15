@@ -49,7 +49,7 @@ module RubyLLM
 
           tool_calls.map do |_, tc|
             call = {
-              id: tc.id,
+              id: tc.provider_id,
               type: 'function',
               function: {
                 name: tc.name,
@@ -83,21 +83,23 @@ module RubyLLM
         def parse_tool_calls(tool_calls, parse_arguments: true, response: nil, finish_reason: nil, stream_keys: false)
           return nil unless tool_calls&.any?
 
-          tool_calls.to_h do |tc|
+          calls = tool_calls.map do |tc|
             [
-              stream_keys ? tc['index'] || tc['id'] : tc['id'],
-              ToolCall.new(
-                id: tc['id'],
-                name: tc.dig('function', 'name'),
-                arguments: if parse_arguments
-                             parse_tool_call_arguments(tc, response: response, finish_reason: finish_reason)
-                           else
-                             tc.dig('function', 'arguments')
-                           end,
-                thought_signature: extract_tool_call_thought_signature(tc)
-              )
+              tc['index'] || tc['id'],
+              parse_tool_call(tc, parse_arguments:, response:, finish_reason:)
             ]
           end
+          stream_keys ? calls.to_h : ToolCall.index(calls.map(&:last))
+        end
+
+        def parse_tool_call(call, parse_arguments:, response:, finish_reason:)
+          arguments = if parse_arguments
+                        parse_tool_call_arguments(call, response:, finish_reason:)
+                      else
+                        call.dig('function', 'arguments')
+                      end
+          ToolCall.new(id: call['id'], name: call.dig('function', 'name'), arguments:,
+                       thought_signature: extract_tool_call_thought_signature(call))
         end
 
         def build_tool_choice(tool_choice)

@@ -14,6 +14,37 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     end
   end
 
+  it 'rejects different content blocks that reuse a tool call ID' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+
+    expect do
+      2.times do |index|
+        event = { 'contentBlockIndex' => index,
+                  'start' => { 'toolUse' => { 'toolUseId' => 'call_1', 'name' => 'weather' } } }
+        accumulator.add(streaming.send(:build_chunk, event))
+      end
+    end.to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
+  end
+
+  it 'matches interleaved tool arguments to their content blocks' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    2.times do |index|
+      event = { 'contentBlockStart' => { 'contentBlockIndex' => index,
+                                         'start' => { 'toolUse' => { 'toolUseId' => "call_#{index}",
+                                                                     'name' => 'weather' } } } }
+      accumulator.add(streaming.send(:build_chunk, event))
+    end
+    %w[Paris London].each_with_index do |city, index|
+      event = { 'contentBlockDelta' => { 'contentBlockIndex' => index,
+                                         'delta' => { 'toolUse' => { 'input' => JSON.generate(city:) } } } }
+      accumulator.add(streaming.send(:build_chunk, event))
+    end
+
+    calls = accumulator.to_message(nil).tool_calls
+    expect(calls.fetch('call_0').arguments).to eq('city' => 'Paris')
+    expect(calls.fetch('call_1').arguments).to eq('city' => 'London')
+  end
+
   it 'extracts thinking text from Bedrock Converse Stream reasoningContent deltas' do
     event = {
       'contentBlockDelta' => {
@@ -468,14 +499,14 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     it 'reads a tool call out of a content block start' do
       event = {
         'contentBlockStart' => {
+          'contentBlockIndex' => 0,
           'start' => { 'toolUse' => { 'toolUseId' => 'call_1', 'name' => 'lookup' } }
         }
       }
 
       tool_calls = streaming.send(:build_chunk, event).tool_calls
 
-      expect(tool_calls['call_1'].name).to eq('lookup')
-      expect(tool_calls['call_1'].arguments).to eq({})
+      expect(tool_calls[0]).to have_attributes(id: 'call_1', name: 'lookup', arguments: {})
     end
 
     it 'reads argument fragments out of a delta' do

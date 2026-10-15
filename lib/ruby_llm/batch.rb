@@ -292,6 +292,7 @@ module RubyLLM
       slots = Array.new(result_slot_count(results))
 
       results.each do |index, result, failure_status|
+        result = Chat::ToolCallIds.new(namespace: [@provider.slug, id, index]).assign(result) if result.is_a?(Message)
         slots[index] = result
         deliver(index, result, failure_status)
       end
@@ -397,11 +398,16 @@ module RubyLLM
     # answer is not: running its tools adds messages after it, so we match on its
     # tool-call ids instead.
     def already_in_chat?(chat, message)
-      if message.tool_call?
-        chat.messages.any? { |m| m.tool_call? && m.tool_calls.keys.intersect?(message.tool_calls.keys) }
-      else
-        !AWAITING_ROLES.include?(chat.messages.last&.role)
-      end
+      return !AWAITING_ROLES.include?(chat.messages.last&.role) unless message.tool_call?
+
+      tool_calls_delivered?(chat, message)
+    end
+
+    def tool_calls_delivered?(chat, message)
+      calls = chat.messages.flat_map { |existing| existing.tool_calls.to_h.values }
+      legacy_ids = calls.select { |call| call.provider_id == call.id }.map(&:id)
+      calls.map(&:id).intersect?(message.tool_calls.keys) ||
+        legacy_ids.intersect?(message.tool_calls.values.map(&:provider_id))
     end
 
     module Helpers # :nodoc:

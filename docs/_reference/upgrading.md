@@ -59,11 +59,21 @@ bin/rails db:migrate
 
 If your chat model is not `Chat`, name it the way you did for the install generator, for example `bin/rails generate ruby_llm:upgrade chat:Conversation`.
 
-It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
+It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. It also adds a nullable `provider_id` column to tool calls so RubyLLM can distinguish invocations when a provider reuses an ID. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
 
 The generator also removes the broadcasting code and the `has_many_attached :attachments` line that `ruby_llm:chat_ui` wrote into your message model, because `acts_as_message` now provides both, and turns on `config.broadcast_messages` when it removes that broadcasting code. It installs Active Storage if your application lacks it. Broadcasting code you wrote yourself stays untouched. Rerunning `ruby_llm:chat_ui` cleans the model the same way.
 
-Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
+Run the migration before deploying 2.2.
+
+## Tool Call IDs Belong to RubyLLM
+
+New tool calls receive a RubyLLM ID rather than exposing the provider's ID. Continue using `tool_call.id` for callbacks, approvals and results. Do not compare it with an ID in a raw provider response. Existing persisted calls keep their IDs, and newly persisted calls keep theirs across reloads and job retries.
+
+Restart every worker on 2.2 before resuming these conversations. A 2.1 worker does not read the saved provider ID.
+
+Each new invocation has its own ID, even when a provider repeats an earlier ID or requests the same arguments again. A one-time approval applies only to that invocation. `remember: true` continues to approve later calls to the same tool.
+
+For chats with tool calls saved before 2.2, batch redelivery checks still rely on those older provider IDs. Start a new chat for new batches if your provider reuses them.
 
 ## Messages Can Broadcast With Turbo
 

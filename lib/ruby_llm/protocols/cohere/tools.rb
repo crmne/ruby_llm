@@ -58,7 +58,7 @@ module RubyLLM
         def format_tool_calls(tool_calls)
           tool_calls.map do |_, tool_call|
             {
-              id: tool_call.id,
+              id: tool_call.provider_id,
               type: 'function',
               function: {
                 name: tool_call.name,
@@ -71,7 +71,7 @@ module RubyLLM
         def format_tool_result(msg)
           {
             role: 'tool',
-            tool_call_id: msg.tool_call_id,
+            tool_call_id: msg.provider_tool_call_id,
             content: format_tool_result_content(msg)
           }
         end
@@ -111,16 +111,13 @@ module RubyLLM
         def parse_tool_calls(tool_calls, response: nil, finish_reason: nil)
           return nil unless tool_calls&.any?
 
-          tool_calls.to_h do |tool_call|
-            [
-              tool_call['id'],
-              ToolCall.new(
-                id: tool_call['id'],
-                name: tool_call.dig('function', 'name'),
-                arguments: parse_arguments(tool_call.dig('function', 'arguments'), response, finish_reason)
-              )
-            ]
-          end
+          ToolCall.index(tool_calls.map do |tool_call|
+            ToolCall.new(
+              id: tool_call['id'],
+              name: tool_call.dig('function', 'name'),
+              arguments: parse_arguments(tool_call.dig('function', 'arguments'), response, finish_reason)
+            )
+          end)
         end
 
         def parse_arguments(arguments, response, finish_reason)

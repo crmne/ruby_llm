@@ -75,4 +75,11 @@ RSpec.describe RubyLLM::Protocols::Responses::Approvals do
     expect(message.tool_calls.keys).to eq(['approval_1'])
     expect(message.tool_calls.fetch('approval_1')).to have_attributes(remote?: true, arguments: { 'query' => 'Ruby' })
   end
+
+  it 'rejects a local call and a remote approval sharing one ID' do
+    call = { 'type' => 'function_call', 'call_id' => approval['id'], 'name' => 'search', 'arguments' => '{}' }
+
+    expect { parse('status' => 'completed', 'output' => [approval, call]) }
+      .to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
+  end
 end

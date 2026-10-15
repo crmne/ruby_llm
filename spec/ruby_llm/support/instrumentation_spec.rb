@@ -177,7 +177,7 @@ RSpec.describe RubyLLM::Support::Instrumentation do
       provider: 'openai',
       model: model_for(:openai, :temperature),
       tool_name: 'instrumentation_probe',
-      tool_call_id: 'call_1',
+      tool_call_id: chat.messages.find(&:tool_call?).tool_calls.keys.first,
       tool_arguments: { value: 'ok' },
       result: 'tool ok',
       result_content: 'tool ok',

@@ -590,7 +590,7 @@ RSpec.describe RubyLLM::Chat, :live do
       tool_messages = chat.messages.select { |message| message.role == :tool }
       expect(ConcurrentProbeTool.max_running).to eq(2)
       expect(chat.concurrency).to eq(:threads)
-      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_2 call_1])
+      expect(tool_messages.map(&:tool_call_id)).to eq(chat.messages.find(&:tool_call?).tool_calls.keys.reverse)
       expect(tool_messages.map(&:content)).to eq(['finished fast', 'finished slow'])
     end
 
@@ -603,7 +603,7 @@ RSpec.describe RubyLLM::Chat, :live do
       tool_messages = chat.messages.select { |message| message.role == :tool }
       expect(ConcurrentProbeTool.max_running).to eq(2)
       expect(chat.concurrency).to eq(:fibers)
-      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_2 call_1])
+      expect(tool_messages.map(&:tool_call_id)).to eq(chat.messages.find(&:tool_call?).tool_calls.keys.reverse)
       expect(tool_messages.map(&:content)).to eq(['finished fast', 'finished slow'])
     end
 
@@ -630,10 +630,11 @@ RSpec.describe RubyLLM::Chat, :live do
 
       chat.ask('Run the tools')
 
+      first, second = chat.messages.find(&:tool_call?).tool_calls.keys
       expect(events).to eq([
-                             [:tool_message, 'call_2'],
-                             [:tool_message, 'call_1'],
-                             [:follow_up, %w[call_2 call_1]]
+                             [:tool_message, second],
+                             [:tool_message, first],
+                             [:follow_up, [second, first]]
                            ])
     end
   end

@@ -384,7 +384,7 @@ module RubyLLM
           msg.tool_calls.each_value do |tool_call|
             content_blocks << {
               type: 'tool_use',
-              id: tool_call.id,
+              id: tool_call.provider_id,
               name: tool_call.name,
               input: tool_call.arguments
             }

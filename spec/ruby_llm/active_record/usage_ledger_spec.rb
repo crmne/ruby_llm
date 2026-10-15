@@ -297,7 +297,7 @@ RSpec.describe RubyLLM::ActiveRecord::Usage do
 
       expect(chat.with_tools(ClockTool).ask('What time is it?').content).to eq('Hi')
       expect(chat.reload.messages.map(&:role)).to eq(%w[user assistant tool assistant])
-      expect(chat.messages.second.tool_calls.keys).to eq(['toolu_1'])
+      expect(chat.messages.second.tool_calls.keys).to eq([chat.messages.third.parent_tool_call.id])
       expect(chat.ruby_llm_usages.map(&:message_id)).to eq([nil, nil])
     end
 

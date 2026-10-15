@@ -57,14 +57,14 @@ RSpec.describe RubyLLM::Chat do
     expect(chat).to be_awaiting_approval
     expect(chat).not_to be_complete
     expect(executions).to be_empty
-    expect(response.tool_calls.keys).to eq(['call_1'])
+    expect(response.tool_calls.keys).to eq(chat.pending_approvals.map(&:id))
   end
 
   it 'resumes and executes after approve' do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     chat.ask('Do the thing')
 
-    chat.approve('call_1')
+    chat.approve(chat.pending_approvals.first.id)
     response = chat.complete
 
     expect(executions).to eq([:dangerous])
@@ -87,13 +87,14 @@ RSpec.describe RubyLLM::Chat do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     chat.ask('Do the thing')
 
-    chat.deny('call_1')
+    id = chat.pending_approvals.first.id
+    chat.deny(id)
     response = chat.complete
 
     expect(executions).to be_empty
     denial = chat.messages.find(&:tool_result?)
     expect(denial.content).to include('denied the dangerous tool call')
-    expect(denial.tool_call_id).to eq('call_1')
+    expect(denial.tool_call_id).to eq(id)
     expect(response.content).to eq('All done')
   end
 
@@ -142,7 +143,7 @@ RSpec.describe RubyLLM::Chat do
 
     chat.ask('Do the thing')
 
-    expect(resolver_calls.uniq).to eq(['call_1'])
+    expect(resolver_calls.uniq).to eq(chat.messages.last.tool_calls.keys)
     expect(chat).to be_awaiting_approval
     expect(executions).to be_empty
   end
@@ -167,7 +168,7 @@ RSpec.describe RubyLLM::Chat do
     chat = stubbed_chat(tool_call_message('call_1' => 'dangerous'), final_message, tools: [dangerous_tool])
     chat.ask('Do the thing')
 
-    expect(chat.pending_approvals.map(&:id)).to eq(['call_1'])
+    expect(chat.pending_approvals.map(&:id)).to eq(chat.messages.last.tool_calls.keys)
     expect(chat.pending_approvals.first.name).to eq('dangerous')
 
     chat.approve(chat.pending_approvals.first)
@@ -182,7 +183,7 @@ RSpec.describe RubyLLM::Chat do
 
     expect(chat.inspect).to include('awaiting_approval: ["dangerous"]')
 
-    chat.approve('call_1')
+    chat.approve(chat.pending_approvals.first.id)
     chat.complete
 
     expect(chat.inspect).not_to include('awaiting_approval')
@@ -200,7 +201,7 @@ RSpec.describe RubyLLM::Chat do
     expect(executions).to eq([:harmless])
     expect(chat).to be_awaiting_approval
 
-    chat.approve('call_b')
+    chat.approve(chat.pending_approvals.first.id)
     response = chat.complete
 
     expect(executions).to eq(%i[harmless dangerous])

@@ -215,8 +215,44 @@ RSpec.describe RubyLLM::Batch, :live do
 
       collect.call # first delivery appends the tool-call answer
       # the app runs the tool, appending a result and moving the chat on
-      chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: 'toolu_1'))
+      call_id = chat.messages.last.tool_calls.keys.first
+      chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: call_id))
       collect.call # a redelivered poll re-collects the same batch
+
+      expect(chat.messages.count(&:tool_call?)).to eq(1)
+    end
+
+    it 'distinguishes new batches when a provider reuses a tool call ID' do
+      chat = RubyLLM.chat(model: model).ask_later('Look it up.')
+      answer = RubyLLM::Message.new(
+        role: :assistant, content: nil, input_tokens: 1, output_tokens: 1,
+        tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'lookup') }
+      )
+      allow(chat.provider).to receive(:batch_results).and_return([[0, answer]])
+
+      %w[first second].each do |id|
+        described_class.new(provider: chat.provider, chats: [chat], id:, raw_status: 'ended', completed: true).messages
+        call_id = chat.messages.last.tool_calls.keys.first
+        chat.add_message(role: :tool, content: 'done', tool_call_id: call_id)
+      end
+
+      calls = chat.messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values }
+      expect(calls.map(&:id).uniq.size).to eq(2)
+      expect(calls.map(&:provider_id)).to eq(%w[toolu_1 toolu_1])
+    end
+
+    it 'does not re-deliver a tool-call answer saved before RubyLLM assigned its own IDs' do
+      chat = RubyLLM.chat(model: model).ask_later('Look it up.')
+      answer = RubyLLM::Message.new(
+        role: :assistant, content: nil, input_tokens: 1, output_tokens: 1,
+        tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'lookup') }
+      )
+      chat.add_message(answer)
+      chat.add_message(role: :tool, content: 'done', tool_call_id: 'toolu_1')
+      allow(chat.provider).to receive(:batch_results).and_return([[0, answer]])
+
+      described_class.new(provider: chat.provider, chats: [chat], id: 'old_batch',
+                          raw_status: 'ended', completed: true).messages
 
       expect(chat.messages.count(&:tool_call?)).to eq(1)
     end

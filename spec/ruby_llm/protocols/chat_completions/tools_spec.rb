@@ -4,6 +4,15 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
   describe '.parse_tool_calls' do
+    it 'rejects two calls with the same ID in one response' do
+      calls = %w[Paris London].map do |city|
+        { 'id' => 'call_1', 'function' => { 'name' => 'weather', 'arguments' => JSON.generate(city:) } }
+      end
+
+      expect { described_class.parse_tool_calls(calls) }
+        .to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
+    end
+
     it 'parses tool calls without thought signatures' do
       tool_calls = [
         {

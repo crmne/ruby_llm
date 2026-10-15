@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Chat do
     chat = stubbed_chat(calls('call_1'), calls('call_2'))
     chat.ask('Go')
 
-    chat.approve('call_1', remember: true).complete
+    chat.approve(chat.pending_approvals.first.id, remember: true).complete
 
     expect(executions).to eq(%i[refund refund])
     expect { chat.approve('missing', remember: true) }.to raise_error(ArgumentError, /Unknown tool call/)
@@ -53,10 +53,12 @@ RSpec.describe RubyLLM::Chat do
     chat = stubbed_chat(calls('call_1'), calls('call_2'))
     chat.ask('Go')
 
-    chat.approve('call_1').complete
+    first_id = chat.pending_approvals.first.id
+    chat.approve(first_id).complete
 
     expect(executions).to eq([:refund])
-    expect(chat.pending_approvals.map(&:id)).to eq(['call_2'])
+    expect(chat.pending_approvals.size).to eq(1)
+    expect(chat.pending_approvals.first.id).not_to eq(first_id)
   end
 
   it 'remembers remote tools by name' do

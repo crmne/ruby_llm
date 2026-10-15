@@ -125,6 +125,10 @@ module RubyLLM
       def accumulate_tool_calls(new_tool_calls)
         RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
         new_tool_calls.each do |stream_key, tool_call|
+          if tool_call.id == ''
+            tool_call = ToolCall.new(**tool_call.to_h, id: SecureRandom.uuid)
+            new_tool_calls[stream_key] = tool_call
+          end
           if tool_call.id
             start_tool_call(stream_key, tool_call)
           else
@@ -134,7 +138,10 @@ module RubyLLM
       end
 
       def start_tool_call(stream_key, tool_call)
-        tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
+        tool_call_id = tool_call.id
+        if @tool_calls.key?(tool_call_id) && @tool_call_ids_by_index[stream_key] != tool_call_id
+          raise Error, "Duplicate tool call ID in one response: #{tool_call_id.inspect}"
+        end
 
         @tool_calls[tool_call_id] = ToolCall.new(
           id: tool_call_id,

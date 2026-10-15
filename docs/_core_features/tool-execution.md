@@ -285,6 +285,8 @@ end
 
 `tool_call:` is reserved for RubyLLM and is not shown to the model. It also works during concurrent execution.
 
+`tool_call.id` identifies one invocation. Use it to match callbacks, approvals and results. It stays the same when you reload a persisted chat or resume a pending call. If a provider reuses an ID in a later response, RubyLLM gives the new invocation its own ID and approval decision automatically.
+
 ## Model Compatibility
 
 RubyLLM will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.

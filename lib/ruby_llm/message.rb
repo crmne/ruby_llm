@@ -95,6 +95,7 @@ module RubyLLM
       @model = options[:model]
       @supplied_cost = coerce_value(options[:cost], Cost)
       @tool_call_id = options[:tool_call_id]
+      @provider_tool_call_id = options[:provider_tool_call_id]
       @tokens = options[:tokens] || Tokens.new(
         input: options[:input_tokens],
         output: options[:output_tokens],
@@ -137,6 +138,10 @@ module RubyLLM
       dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }
     end
 
+    def with_tool_calls(tool_calls) # :nodoc:
+      dup.tap { |message| message.instance_variable_set(:@tool_calls, tool_calls) }
+    end
+
     def without_native_content(raw_content: nil) # :nodoc:
       dup.tap do |message|
         message.instance_variable_set(:@thinking, nil)
@@ -156,6 +161,17 @@ module RubyLLM
     # +false+ otherwise.
     def tool_result?
       !tool_call_id.nil? && !tool_call_id.empty?
+    end
+
+    def provider_tool_call_id # :nodoc:
+      return @provider_tool_call_id if @provider_tool_call_id
+      return tool_call_id unless tool_result? && conversation
+
+      conversation.messages.reverse_each do |message|
+        call = message.tool_calls&.[](tool_call_id)
+        return call.provider_id if call
+      end
+      tool_call_id
     end
 
     # Returns the tool result messages answering this message's tool calls,
@@ -265,6 +281,7 @@ module RubyLLM
         reported_cost: tokens.reported_cost,
         tool_calls: tool_calls&.transform_values(&:to_h),
         tool_call_id: tool_call_id,
+        provider_tool_call_id: @provider_tool_call_id,
         thinking: thinking&.text,
         thinking_signature: thinking&.signature,
         citations: list_to_h(citations),
@@ -309,6 +326,7 @@ module RubyLLM
 
         attributes = call.transform_keys(&:to_sym)
         [id, ToolCall.new(id: attributes[:id] || id, name: attributes[:name],
+                          provider_id: attributes[:provider_id],
                           arguments: attributes[:arguments] || {},
                           thought_signature: attributes[:thought_signature], remote: attributes.fetch(:remote, false))]
       end

@@ -4,6 +4,29 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocol::StreamAccumulator do
   describe '#add' do
+    it 'gives an empty provider ID the same fallback in the chunk and completed message' do
+      accumulator = described_class.new
+      call = RubyLLM::ToolCall.new(id: '', name: 'search', arguments: '{}')
+      chunk = RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => call })
+
+      accumulator.add(chunk)
+      message = accumulator.to_message(nil)
+
+      expect(chunk.tool_calls[0].id).not_to be_empty
+      expect(message.tool_calls.keys).to eq([chunk.tool_calls[0].id])
+    end
+
+    it 'rejects distinct streamed calls that share an ID' do
+      accumulator = described_class.new
+      first = RubyLLM::ToolCall.new(id: 'call_1', name: 'search', arguments: '{"city":"Paris"}')
+      second = RubyLLM::ToolCall.new(id: 'call_1', name: 'search', arguments: '{"city":"London"}')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 0 => first }))
+
+      expect do
+        accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', tool_calls: { 1 => second }))
+      end.to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
+    end
+
     it 'ignores an empty model id from an initial chunk' do
       accumulator = described_class.new
 

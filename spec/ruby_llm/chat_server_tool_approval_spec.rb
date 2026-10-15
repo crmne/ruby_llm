@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::Chat do
     stage(remote_call)
 
     expect(chat).to be_awaiting_approval
-    expect(chat.pending_approvals).to eq([remote_call])
+    expect(chat.pending_approvals).to eq(chat.messages.last.tool_calls.values)
     expect(executions).to be_empty
     expect(provider).to have_received(:complete).once
   end
@@ -44,7 +44,8 @@ RSpec.describe RubyLLM::Chat do
     it "records a server #{approved ? 'approval' : 'denial'} exactly once without executing a same-name local tool" do
       chat.with_tools(local_tool)
       stage(remote_call)
-      approved ? chat.approve(remote_call) : chat.deny(remote_call)
+      call = chat.pending_approvals.first
+      approved ? chat.approve(call) : chat.deny(call)
 
       chat.run_tools.run_tools
       decisions = chat.messages.select(&:tool_result?)
@@ -60,7 +61,8 @@ RSpec.describe RubyLLM::Chat do
     it "raises a RubyLLM error for a server #{approved ? 'approval' : 'denial'} after a move to another provider" do
       stage(remote_call)
       chat.with_model(model_for(:anthropic), provider: :anthropic)
-      approved ? chat.approve(remote_call) : chat.deny(remote_call)
+      call = chat.pending_approvals.first
+      approved ? chat.approve(call) : chat.deny(call)
 
       expect { chat.run_tools }.to raise_error(RubyLLM::Error, /Anthropic doesn't support remote tool approvals/)
     end
@@ -70,13 +72,14 @@ RSpec.describe RubyLLM::Chat do
     chat.with_tools(local_tool)
     local_call = RubyLLM::ToolCall.new(id: 'local_1', name: 'search')
     stage(remote_call, local_call)
+    response = chat.messages.find(&:tool_call?)
 
     expect(executions).to eq([:local])
     expect(chat).to be_awaiting_approval
-    chat.approve(remote_call)
+    chat.approve(chat.pending_approvals.first)
     chat.complete
 
     expect(executions).to eq([:local])
-    expect(chat.messages.select(&:tool_result?).map(&:tool_call_id)).to eq(%w[local_1 approval_1])
+    expect(chat.messages.select(&:tool_result?).map(&:tool_call_id)).to eq(response.tool_calls.keys.reverse)
   end
 end

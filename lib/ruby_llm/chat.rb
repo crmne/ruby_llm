@@ -1153,8 +1153,16 @@ module RubyLLM
     #   chat.add_message(role: :user, content: "What's the capital of France?")
     #
     def add_message(message_or_attributes)
-      message = coerce_message(message_or_attributes)
+      message = prepare_message(message_or_attributes)
       messages << message
+      message
+    end
+
+    def prepare_message(message_or_attributes) # :nodoc:
+      message = coerce_message(message_or_attributes)
+      if message.tool_call? && message.tool_calls.keys.any? { |id| find_tool_call(id) }
+        message = ToolCallIds.new.assign(message)
+      end
       message
     end
 
@@ -1183,7 +1191,7 @@ module RubyLLM
         response.ruby_llm_usage_entries.each { |entry| record_usage_entry(entry) }
       end
       run_callbacks(:before_message)
-      add_message response
+      response = add_message(response)
       run_callbacks(:after_message, response)
       response
     end
@@ -1531,7 +1539,8 @@ module RubyLLM
 
     def unfinished_result(tool_call)
       (remote_refusal(tool_call) if tool_call.remote?) ||
-        Message.new(role: :tool, content: UNFINISHED_TOOL_RESULT, tool_call_id: tool_call.id)
+        Message.new(role: :tool, content: UNFINISHED_TOOL_RESULT, tool_call_id: tool_call.id,
+                    provider_tool_call_id: tool_call.provider_id)
     end
 
     # A provider-executed call is closed with the refusal its provider
@@ -1546,14 +1555,15 @@ module RubyLLM
       raise_if_cancelled!
 
       request_messages = preprocessed_messages
+      tool_call_ids = ToolCallIds.new
       streamed = false
       tracker = proc do |chunk|
         streamed = true
         stream_tracker&.call(chunk)
       end
-      on_chunk = wrap_streaming_block(stream_tracker: tracker, &)
+      on_chunk = wrap_streaming_block(tool_call_ids:, stream_tracker: tracker, &)
 
-      replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
+      response = replacing_missing_uploads(request_messages, -> { streamed }) do |sent_messages|
         @provider.complete(
           sent_messages,
           tools: request_tools,
@@ -1576,6 +1586,7 @@ module RubyLLM
           &on_chunk
         )
       end
+      tool_call_ids.assign(response)
     end
 
     def provider_compaction
@@ -1637,7 +1648,7 @@ module RubyLLM
       @callbacks[name].each { |callback| callback.call(*args) }
     end
 
-    def wrap_streaming_block(stream_tracker: nil, &block)
+    def wrap_streaming_block(tool_call_ids:, stream_tracker: nil, &block)
       return nil unless block
 
       run_callbacks(:before_message)
@@ -1645,6 +1656,7 @@ module RubyLLM
 
       proc do |chunk|
         raise_if_cancelled!
+        chunk = tool_call_ids.assign(chunk)
         chunk.index = index += 1
         stream_tracker&.call(chunk)
         block.call(chunk)
@@ -1840,7 +1852,8 @@ module RubyLLM
     def add_tool_result_message(tool_call, result)
       content, attachments = Tool.split_result(result)
       mcp_result = result if result.is_a?(MCP::Result) && result.ui_uri
-      message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id, mcp_result:)
+      message = add_message(role: :tool, content:, attachments:, tool_call_id: tool_call.id,
+                            provider_tool_call_id: tool_call.provider_id, mcp_result:)
       run_callbacks(:after_message, message)
       message
     end

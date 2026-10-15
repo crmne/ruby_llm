@@ -91,7 +91,8 @@ RSpec.describe RubyLLM::Chat do
           .after_tool_result { |result| calls << [:result, result] }
       chat.ask('Use the tool')
 
-      expect(calls).to eq([['call_a', 'Starting a', nil], ['call_a', 'Finishing a', 1.0], [:result, 'a done']])
+      id = chat.messages.find(&:tool_call?).tool_calls.keys.first
+      expect(calls).to eq([[id, 'Starting a', nil], [id, 'Finishing a', 1.0], [:result, 'a done']])
     end
 
     %i[threads fibers].each do |mode|
@@ -104,7 +105,8 @@ RSpec.describe RubyLLM::Chat do
         chat.ask('Use the tools')
 
         reports = Array.new(calls.size) { calls.pop }.group_by(&:first).transform_values { |pairs| pairs.map(&:last) }
-        expect(reports).to eq('call_a' => ['Starting a', 'Finishing a'], 'call_b' => ['Starting b', 'Finishing b'])
+        first, second = chat.messages.find(&:tool_call?).tool_calls.keys
+        expect(reports).to eq(first => ['Starting a', 'Finishing a'], second => ['Starting b', 'Finishing b'])
       end
     end
 
@@ -125,7 +127,8 @@ RSpec.describe RubyLLM::Chat do
       chat.after_tool_progress { |call, progress| calls << [call.id, progress.message] }
       chat.ask('Use the tool')
 
-      expect(calls).to eq([['call_1', 'Reading in the background']])
+      id = chat.messages.find(&:tool_call?).tool_calls.keys.first
+      expect(calls).to eq([[id, 'Reading in the background']])
     end
 
     it 'runs tools that report progress without a callback' do

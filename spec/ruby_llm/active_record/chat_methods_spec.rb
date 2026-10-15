@@ -678,7 +678,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         .to eq(chat)
       chat.ask('Use the tool')
 
-      expect(reports).to eq([[call.id, 'Working', 0.5]])
+      expect(reports).to eq([[chat.messages.second.tool_calls.keys.first, 'Working', 0.5]])
     end
 
     it 'defers tools registered with defer: true' do
@@ -707,7 +707,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     it 'classifies every method defined on Chat' do
       integration_methods = %i[
         approval_checker= cancellation_checker= fallback_errors input_checker= input_recorder=
-        raise_if_pending_tool_calls! remembered_checker= running_checker= tool_call_claimer=
+        prepare_message raise_if_pending_tool_calls! remembered_checker= running_checker= tool_call_claimer=
         tool_call_releaser= tool_prefs
         usage_entries usage_entries= usage_recorder=
       ]
@@ -837,8 +837,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
         messages = Chat.find(chat.id).to_llm.messages
         expect(messages.map(&:role)).to eq(%i[user assistant tool assistant])
-        expect(messages[2]).to have_attributes(content: content, tool_call_id: call.id)
-        expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result.content).to eq(content)
+        id = messages[1].tool_calls.keys.first
+        expect(messages[2]).to have_attributes(content: content, tool_call_id: id)
+        expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: id).result.content).to eq(content)
       end
     end
 

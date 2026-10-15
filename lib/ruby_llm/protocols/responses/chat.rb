@@ -365,12 +365,12 @@ module RubyLLM
 
           items = [{
             type: 'function_call_output',
-            call_id: msg.tool_call_id,
+            call_id: msg.provider_tool_call_id,
             output: format_content(msg.content)
           }]
 
           if msg.attachments.any?
-            parts = [{ type: 'input_text', text: "Attachments from tool call #{msg.tool_call_id}:" }]
+            parts = [{ type: 'input_text', text: "Attachments from tool call #{msg.provider_tool_call_id}:" }]
             parts.concat(format_content(nil, msg.attachments))
             items << { role: 'user', content: parts }
           end
@@ -402,7 +402,7 @@ module RubyLLM
           tool_calls.map do |_, tc|
             {
               type: 'function_call',
-              call_id: tc.id,
+              call_id: tc.provider_id,
               name: tc.name,
               arguments: JSON.generate(tc.arguments)
             }
@@ -445,18 +445,15 @@ module RubyLLM
           calls = output.select { |item| item['type'] == 'function_call' }
           return nil if calls.empty?
 
-          calls.to_h do |call|
+          ToolCall.index(calls.map do |call|
             arguments = call['arguments']
 
-            [
-              call['call_id'],
-              ToolCall.new(
-                id: call['call_id'],
-                name: call['name'],
-                arguments: parse_function_call_arguments(arguments, response: response, finish_reason: finish_reason)
-              )
-            ]
-          end
+            ToolCall.new(
+              id: call['call_id'],
+              name: call['name'],
+              arguments: parse_function_call_arguments(arguments, response: response, finish_reason: finish_reason)
+            )
+          end)
         end
 
         def parse_function_call_arguments(arguments, response: nil, finish_reason: nil)

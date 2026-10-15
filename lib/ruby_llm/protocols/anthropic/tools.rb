@@ -32,7 +32,7 @@ module RubyLLM
         def format_tool_result_block(msg)
           {
             type: 'tool_result',
-            tool_use_id: msg.tool_call_id,
+            tool_use_id: msg.provider_tool_call_id,
             content: format_tool_result_content(msg)
           }
         end
@@ -131,18 +131,17 @@ module RubyLLM
         def parse_tool_calls(content_blocks)
           content_blocks = [content_blocks] unless content_blocks.is_a?(Array)
 
-          tool_calls = {}
-          content_blocks.each do |block|
+          calls = content_blocks.filter_map do |block|
             next unless block && block['type'] == 'tool_use'
 
-            tool_calls[block['id']] = ToolCall.new(
+            ToolCall.new(
               id: block['id'],
               name: block['name'],
               arguments: block['input']
             )
           end
 
-          tool_calls.empty? ? nil : tool_calls
+          ToolCall.index(calls) unless calls.empty?
         end
 
         def default_input_schema
