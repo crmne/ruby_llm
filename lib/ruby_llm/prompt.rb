@@ -52,7 +52,7 @@ module RubyLLM
     def render(**locals) # :nodoc:
       raise PromptNotFoundError, "Prompt file not found: #{path}" unless File.exist?(path)
 
-      ERB.new(File.read(path), trim_mode: RubyLLM.config.prompt_trim_mode).result(Context.new(self, locals).scope)
+      ERB.new(File.read(path), trim_mode: '-').result(Context.new(self, locals).scope)
     end
 
     def self.render(name, **locals) # :nodoc:

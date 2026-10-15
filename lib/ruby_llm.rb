@@ -522,6 +522,7 @@ module RubyLLM
     # Renders the ERB prompt template +name+ and returns the result as a
     # String. The name resolves to a <tt>.txt.erb</tt> file under
     # app/prompts. Keyword arguments become locals in the template.
+    # Templates and partials support <tt>-%></tt> newline trimming.
     #
     #   instructions = RubyLLM.render_prompt(
     #     "support/instructions",

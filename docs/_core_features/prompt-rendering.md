@@ -89,15 +89,9 @@ RubyLLM.render_prompt(
 
 If the template references a local you did not pass, ERB raises an error while rendering.
 
-## Trim Mode
+## Whitespace
 
-By default every ERB tag leaves its own line break in the rendered prompt. If your templates already use the `-` trim mode, as Rails views usually do, set it once and a tag ending in `-%>` removes the line break after it:
-
-```ruby
-RubyLLM.configure do |config|
-  config.prompt_trim_mode = "-"
-end
-```
+Use `-%>` to remove the line break after a tag, as in Rails templates:
 
 ```erb
 <% if plan_name -%>
@@ -106,7 +100,7 @@ Your plan is <%= plan_name %>.
 Answer with concise, practical steps.
 ```
 
-The setting applies to every prompt and to the partials it renders. It is `nil` by default, which keeps ERB's own behavior.
+This works automatically in prompts and partials. Tags ending in `%>` keep the line break.
 
 ## Nested Paths and Extensions
 
