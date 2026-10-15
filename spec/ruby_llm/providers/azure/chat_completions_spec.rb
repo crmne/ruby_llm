@@ -3,14 +3,14 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
-  def protocol_for(api_base, api_key: 'azure-key', auth_token: nil)
+  def protocol_for(api_base, api_key: 'azure-key', auth_token: nil, model: nil)
     config = RubyLLM::Configuration.new.tap do |c|
       c.azure_api_base = api_base
       c.azure_api_key = api_key
       c.azure_ai_auth_token = auth_token
     end
 
-    described_class.new(RubyLLM::Providers::Azure.new(config))
+    described_class.new(RubyLLM::Providers::Azure.new(config), model)
   end
 
   describe '#azure_endpoint' do
@@ -141,6 +141,72 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
       expect { RubyLLM::Providers::Azure.new(config) }.to raise_error(
         RubyLLM::ConfigurationError, /Missing configuration for Azure: azure_api_key or azure_ai_auth_token/
       )
+    end
+  end
+
+  describe 'usage' do
+    let(:grok_usage) do
+      { 'prompt_tokens' => 212, 'completion_tokens' => 18, 'total_tokens' => 230,
+        'prompt_tokens_details' => { 'text_tokens' => 212, 'cached_tokens' => 159 } }
+    end
+
+    let(:openai_usage) do
+      { 'prompt_tokens' => 2_048, 'completion_tokens' => 18, 'total_tokens' => 2_066,
+        'prompt_tokens_details' => { 'cached_tokens' => 1_024 } }
+    end
+
+    def completion_tokens(model, usage)
+      body = { 'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => 'Done' } }], 'usage' => usage }
+
+      protocol_for('https://res.services.ai.azure.com', model: model)
+        .send(:parse_completion_body, body, raw: nil).tokens
+    end
+
+    it 'reports every prompt token of a Grok reply as input beside its cache reads' do
+      grok = RubyLLM.models.find('grok-4-1-fast-non-reasoning', provider: :azure)
+
+      expect(completion_tokens(grok, grok_usage)).to have_attributes(input: 212, output: 18, cache_read: 159)
+    end
+
+    it 'reports every prompt token of a streamed Grok reply as input' do
+      grok = RubyLLM.models.find('grok-4-1-fast-non-reasoning', provider: :azure)
+      chunk = protocol_for('https://res.services.ai.azure.com', model: grok)
+              .send(:build_chunk, { 'choices' => [{ 'delta' => {} }], 'usage' => grok_usage })
+
+      expect(chunk.tokens).to have_attributes(input: 212, cache_read: 159)
+    end
+
+    it 'keeps the prompt tokens when the cache reads exceed them' do
+      grok = RubyLLM.models.find('grok-4-1-fast-non-reasoning', provider: :azure)
+      usage = { 'prompt_tokens' => 7, 'completion_tokens' => 1, 'total_tokens' => 8,
+                'prompt_tokens_details' => { 'text_tokens' => 7, 'cached_tokens' => 162 } }
+
+      expect(completion_tokens(grok, usage)).to have_attributes(input: 7, cache_read: 162)
+    end
+
+    it 'reads a deployment of a Grok model the same way' do
+      config = RubyLLM::Configuration.new.tap do |c|
+        c.azure_deployments = { 'prod-chat' => 'grok-4-1-fast-non-reasoning' }
+      end
+      deployment = RubyLLM.models.find('prod-chat', provider: :azure, config: config)
+
+      expect(completion_tokens(deployment, grok_usage)).to have_attributes(input: 212, cache_read: 159)
+    end
+
+    it 'reads a Grok model the registry lists without a family the same way' do
+      grok = RubyLLM::Model.new(id: 'grok-4.3', provider: 'azure')
+
+      expect(completion_tokens(grok, grok_usage)).to have_attributes(input: 212, cache_read: 159)
+    end
+
+    it 'subtracts cache reads from the prompt tokens of other models' do
+      gpt = RubyLLM.models.find('gpt-5-nano', provider: :azure)
+
+      expect(completion_tokens(gpt, openai_usage)).to have_attributes(input: 1_024, cache_read: 1_024)
+    end
+
+    it 'subtracts cache reads when no model is known, as in batch results' do
+      expect(completion_tokens(nil, openai_usage)).to have_attributes(input: 1_024, cache_read: 1_024)
     end
   end
 end
