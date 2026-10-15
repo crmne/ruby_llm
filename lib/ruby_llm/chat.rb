@@ -1641,9 +1641,11 @@ module RubyLLM
       return nil unless block
 
       run_callbacks(:before_message)
+      index = -1
 
       proc do |chunk|
         raise_if_cancelled!
+        chunk.index = index += 1
         stream_tracker&.call(chunk)
         block.call(chunk)
         raise_if_cancelled!

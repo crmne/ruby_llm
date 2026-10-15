@@ -51,6 +51,7 @@ Key attributes of a `Chunk`:
 *   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). Cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
 *   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). Includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
+*   `chunk.index`: The chunk's position within its response, starting at 0. Each response in a loop with tool calls starts again at 0, so you can put chunks back in order after they travel over a channel that may reorder them.
 *   `chunk.finish_reason`: Provider-reported reason the model stopped, usually only present on the final chunk. Chunks also support finish-reason predicates such as `chunk.max_tokens?`, `chunk.content_filtered?`, `chunk.tool_call_stop?`, and `chunk.stopped?`.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.

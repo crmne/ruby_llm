@@ -12,5 +12,13 @@ module RubyLLM
   #   end
   #
   class Chunk < Message
+    # Returns the position of this chunk within the response it belongs
+    # to, starting at 0. Each response in a Chat#complete loop, such as
+    # the one after a tool call, starts again at 0. Counts every chunk,
+    # including those without content.
+    #
+    #   chat.ask("Count to three") { |chunk| puts "#{chunk.index}: #{chunk.content}" }
+    #
+    attr_accessor :index
   end
 end
