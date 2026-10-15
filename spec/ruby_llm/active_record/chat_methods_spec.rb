@@ -821,6 +821,27 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
   end
 
   describe 'persistence callbacks' do
+    ['', " \n"].each do |content|
+      it "keeps a completed tool result with #{content.inspect} content after reloading" do
+        stub_const('EmptyResultTool', Class.new(RubyLLM::Tool) do
+          define_method(:execute) { content }
+        end)
+        call = tool_call(name: 'empty_result')
+        chat = Chat.create!(model: model_id).with_tools(EmptyResultTool)
+        allow(chat.to_llm.provider).to receive(:complete).and_return(
+          RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }),
+          RubyLLM::Message.new(role: :assistant, content: 'Nothing found')
+        )
+
+        chat.ask('Look for open orders')
+
+        messages = Chat.find(chat.id).to_llm.messages
+        expect(messages.map(&:role)).to eq(%i[user assistant tool assistant])
+        expect(messages[2]).to have_attributes(content: content, tool_call_id: call.id)
+        expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).result.content).to eq(content)
+      end
+    end
+
     it 'replaces a blank placeholder assistant message on the next round' do
       chat = Chat.create!(model: model_id)
       chat.send(:persist_new_message)

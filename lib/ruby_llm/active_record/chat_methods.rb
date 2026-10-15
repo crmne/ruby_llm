@@ -1103,6 +1103,7 @@ module RubyLLM
 
       def blank_placeholder?
         return false unless @message&.persisted? && @message.content.blank?
+        return false unless @message.role.to_s == 'assistant'
         return false if @message.respond_to?(:attachments) && @message.attachments.attached?
 
         !@message.ruby_llm_tool_calls.exists?
