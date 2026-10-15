@@ -101,17 +101,23 @@ RubyLLM's Rails generators establish a default app structure:
 
 ```text
 app/
-|-- agents/
-|-- prompts/
-|-- schemas/
-`-- tools/
+|-- agents/      agent classes
+|-- tools/       tool classes
+|-- schemas/     structured output schemas
+|-- prompts/     ERB instructions, one folder per agent
+|-- skills/      Agent Skills folders, one per skill
+|-- sandboxes/   sandbox classes for code execution
+|-- mcp/         MCP server classes
+`-- evals/       evaluations and their datasets
 ```
 
-The install generator creates these directories with `.gitkeep` files so teams start from one shared convention.
+The install generator creates these directories with `.gitkeep` files so teams start from one shared convention, and the upgrade generator adds any an existing application lacks.
 
 These are conventions, not hard requirements:
 
-- Agents, tools, and schemas can live anywhere in your app autoload paths.
+- Agents, tools, schemas, sandboxes, and MCP servers can live anywhere in your app autoload paths.
+- `with_skills` and the `skills` macro find skills in `app/skills` unless you add other roots.
+- Evaluations find their dataset next to the class in `app/evals`.
 - Prompt lookup convention: named agents automatically resolve `instructions.txt.erb` from the agent class name when the file exists.
 
 For prompt lookup, RubyLLM uses class name conventions:

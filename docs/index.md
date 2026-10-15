@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'Build and evaluate AI features in Ruby and Rails with chats, tools, agents, images, audio, and video across 19 providers.'
+description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 19 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -13,8 +13,8 @@ hero:
     alt: RubyLLM
     width: 320
     height: 110
-  text: 'Build AI features <span class="home-hero-highlight">the Ruby way</span>'
-  tagline: 'RubyLLM is the <em class="home-hero-tagline-highlight">Ruby-native AI framework</em>. Work with models, tools, and agents through one consistent API, in plain Ruby or Rails.'
+  text: 'The Ruby <span class="home-hero-highlight">AI framework</span>'
+  tagline: 'Build AI features <em class="home-hero-tagline-highlight">the Ruby way</em>: models, tools, agents, sandboxed code, evaluations, and Rails conventions, designed together, with one consistent API.'
   actions:
     - theme: brand
       class: home-button--guides
@@ -302,7 +302,7 @@ cases:
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
-      Agents that run code, follow your workflows, and wait for a human when it matters. Everything else a production AI feature needs is built in.
+      More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between: agents that run code safely, workflows, evaluations, observability, and the data they need, designed to work together.
     </p>
   </div>
 
@@ -565,23 +565,33 @@ RubyLLM.moderate(comment.body).flagged?
   <div class="home-code-grid home-code-grid--columns home-rails-code-grid" markdown="1">
 
 ```ruby
+class Chat < ApplicationRecord
+  acts_as_chat
+end
+
 chat = Chat.create! model: "{{ site.models.anthropic_opus }}"
 chat.ask "What's in this file?", with: "report.pdf"
+chat.messages.last.content
 ```
 {: .home-code-card data-title="Save chats with Active Record" data-href="{% link _advanced/rails-persistence.md %}#two-application-models" data-doc-title="Rails persistence" }
 
-```sh
-bin/rails generate ruby_llm:agent Support
-bin/rails generate ruby_llm:tool Weather
-bin/rails generate ruby_llm:schema Product
+```text
+app/
+├── agents/     support_agent.rb
+├── tools/      issue_refund.rb
+├── schemas/    product_schema.rb
+├── prompts/    support_agent/
+├── skills/     invoices/SKILL.md
+├── sandboxes/  workspace_sandbox.rb
+├── mcp/        linear.rb
+└── evals/      support_evaluation.rb
 ```
-{: .home-code-card data-title="Generate agents, tools, and schemas" data-href="{% link _advanced/rails-generators.md %}#rails-generators-for-agents-tools-and-schemas" data-doc-title="Rails Generators for Agents, Tools, and Schemas" }
+{: .home-code-card data-title="A place for everything in app/" data-href="{% link _advanced/rails-generators.md %}#conventional-directory-structure" data-doc-title="Conventional directory structure" }
 
   </div>
 
   <div class="home-code-cta">
-    <p>Keep your agents, tools, schemas, skills, and sandboxes in
-      <a href="{% link _advanced/rails-generators.md %}#conventional-directory-structure">app/</a>.
+    <p><a href="{% link _advanced/rails-generators.md %}#rails-generators-for-agents-tools-and-schemas">Generators</a> create each piece where Rails expects it.
       Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage</a>
       and write your prompts in <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
       Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies
