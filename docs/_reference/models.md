@@ -29,7 +29,7 @@ In plain Ruby, RubyLLM uses the valid registry in your operating system's user c
 
 Each registry entry describes the model:
 
-*   **`id`**: The unique identifier used by the provider (e.g., `gpt-5.6`).
+*   **`id`**: The unique identifier used by the provider (e.g., `gpt-6.1-sol`).
 *   **`provider`**: The source provider (`openai`, `anthropic`, etc.).
 *   **`type`**: The model's primary function as a Symbol (`:chat`, `:embedding`, and so on).
 *   **`name`**: A human-friendly name.

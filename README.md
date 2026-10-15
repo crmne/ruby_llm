@@ -143,7 +143,7 @@ class Chat < ApplicationRecord
   acts_as_chat
 end
 
-chat = Chat.create! model: "gpt-5.6-luna"
+chat = Chat.create! model: "gpt-6-luna"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
 
@@ -254,7 +254,7 @@ chat.with_tools(Weather).ask "What's the weather in Berlin?"
 ```ruby
 # Define an agent with instructions + tools
 class WeatherAssistant < RubyLLM::Agent
-  model "gpt-5.6-luna"
+  model "gpt-6-luna"
   instructions "Be concise and always use tools for weather."
   tools Weather
 end

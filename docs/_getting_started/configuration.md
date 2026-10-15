@@ -68,7 +68,7 @@ end
 ```
 
 Defaults if not configured:
-- Chat: `gpt-5.6`
+- Chat: `gpt-6.1-sol`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
 - Videos: `grok-imagine-video-1.5`

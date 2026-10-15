@@ -603,7 +603,7 @@ module RubyLLM
     # the model, first-party providers before aggregators. Raises
     # RubyLLM::ModelNotFoundError if no model matches.
     #
-    #   RubyLLM.models.find 'gpt-5.6'
+    #   RubyLLM.models.find 'gpt-6.1-sol'
     #   RubyLLM.models.find 'claude-sonnet-5', provider: :bedrock
     #
     def find(model_id, provider: nil, config: nil)

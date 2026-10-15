@@ -151,8 +151,8 @@ RubyLLM normally selects the protocol for your model and operation. Choose one e
 Override it per chat with the `protocol:` model option, or app-wide with configuration:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-5.6', protocol: :chat_completions)
-chat = RubyLLM.chat(model: 'gpt-5.6').with_model('gpt-5.6', protocol: :chat_completions)
+chat = RubyLLM.chat(model: 'gpt-6.1-sol', protocol: :chat_completions)
+chat = RubyLLM.chat(model: 'gpt-6.1-sol').with_model('gpt-6.1-sol', protocol: :chat_completions)
 
 RubyLLM.configure do |config|
   config.openai_protocol = :chat_completions

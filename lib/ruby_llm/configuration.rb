@@ -65,8 +65,8 @@ module RubyLLM
     # :attr_accessor: default_model
     #
     # The model id used by RubyLLM.chat when no model is given.
-    # Default: <tt>'gpt-5.6'</tt>.
-    option :default_model, 'gpt-5.6'
+    # Default: <tt>'gpt-6.1-sol'</tt>.
+    option :default_model, 'gpt-6.1-sol'
 
     ##
     # :attr_accessor: default_embedding_model

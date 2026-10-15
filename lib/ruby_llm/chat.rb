@@ -636,7 +636,7 @@ module RubyLLM
     # +assume_model_exists:+ is false.
     #
     #   chat.with_model('claude-sonnet-5')
-    #   chat.with_model('gpt-5.6', protocol: :chat_completions)
+    #   chat.with_model('gpt-6.1-sol', protocol: :chat_completions)
     #
     def with_model(model_id, provider: nil, protocol: nil, assume_model_exists: false)
       model_id ||= @config.default_model

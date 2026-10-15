@@ -5,7 +5,7 @@ module RubyLLM
     # A Model::Modalities lists the kinds of content a model accepts and
     # produces, as arrays of Strings. Instances come from Model#modalities.
     #
-    #   model = RubyLLM.models.find('gpt-5.6')
+    #   model = RubyLLM.models.find('gpt-6.1-sol')
     #   model.modalities.input   # => ["text", "image", "pdf"]
     #   model.modalities.output  # => ["text"]
     #

@@ -72,7 +72,7 @@ module RubyLLM
     # even when every count is +nil+.
     #
     #   tokens = RubyLLM::Tokens.new(input: 100, output: 20)
-    #   RubyLLM.models.find("gpt-5.6").cost_for(tokens).total
+    #   RubyLLM.models.find("gpt-6.1-sol").cost_for(tokens).total
     #
     # +cache_write_by_ttl:+ splits the cache writes by lifetime, keyed as
     # #cache_write_by_ttl describes;

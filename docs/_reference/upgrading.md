@@ -84,6 +84,16 @@ Broadcasting renders each message with its partial, chosen by `to_partial_path`,
 
 `acts_as_message` now declares `has_many_attached :attachments`, so Active Storage is required. Remove `has_many_attached :attachments` from your message model. An application without Active Storage runs `bin/rails active_storage:install` and `bin/rails db:migrate`.
 
+## The Default Model Is GPT-6.1 Sol
+
+`RubyLLM.chat` without a model, and a persisted chat created without one, now use `gpt-6.1-sol` instead of `gpt-5.6`. To keep the previous model, set it in your configuration:
+
+```ruby
+RubyLLM.configure do |config|
+  config.default_model = "gpt-5.6"
+end
+```
+
 ## One Process Runs a Chat
 
 In 2.1, two processes that completed the same persisted chat at the same time could both run an approved tool call and both ask the model for a reply, for example when a double-submitted approval enqueued two jobs. In 2.2, `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat before they call the model or run a tool, and each tool call is claimed before it runs. A process that finds the chat claimed returns without doing anything:

@@ -15,7 +15,7 @@ module RubyLLM
     #     acts_as_chat
     #   end
     #
-    #   chat = Chat.create!(model: 'gpt-5.6-luna')
+    #   chat = Chat.create!(model: 'gpt-6-luna')
     #   chat.ask "What is the capital of France?"
     #   chat.messages.count # => 2
     #
@@ -158,7 +158,7 @@ module RubyLLM
       # Sets the chat's model from an id, a RubyLLM::Model value, or the
       # associated internal model record.
       #
-      #   chat.model = 'gpt-5.6-luna'
+      #   chat.model = 'gpt-6-luna'
       #
       def model=(value)
         if value.is_a?(RubyLLM::ActiveRecord::Model)
@@ -178,7 +178,7 @@ module RubyLLM
 
       # Returns the model id of the associated model record, or +nil+.
       #
-      #   chat.model_id # => "gpt-5.6-luna"
+      #   chat.model_id # => "gpt-6-luna"
       #
       def model_id
         model&.model_id || @pending_model_id
