@@ -1,3 +1,6 @@
 <%%= turbo_stream.replace "<%= chat_variable_name %>_#{@<%= chat_variable_name %>.id}_approvals",
   partial: "<%= chat_model_name.underscore.pluralize %>/approvals",
   locals: { <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> } %>
+<%% unless @<%= chat_variable_name %>.pending_approvals.any? %>
+  <%%= turbo_stream.update "new_<%= message_variable_name %>", "Continuing the conversation." %>
+<%% end %>

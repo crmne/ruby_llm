@@ -3,7 +3,9 @@ class <%= message_controller_class_name %> < ApplicationController
 
   def create
     content = params.dig(:<%= message_variable_name %>, :content)
-    if content.present?
+    if @<%= chat_variable_name %>.pending_approvals.any?
+      redirect_to @<%= chat_variable_name %>, notice: "Approve or deny the requests above to continue.", status: :see_other
+    elsif content.present?
       <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, content)
 
       respond_to do |format|

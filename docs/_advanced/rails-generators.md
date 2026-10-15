@@ -91,9 +91,9 @@ bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 
 ### Approvals and Attachments
 
-When a tool [requires approval]({% link _core_features/tool-execution.md %}#requiring-approval), the chat page shows a card for each call in `chat.pending_approvals`, with its arguments and Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _core_features/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. Remote tool calls, such as those from MCP servers, get the same cards.
+When a tool [requires approval]({% link _core_features/tool-execution.md %}#requiring-approval), the chat page shows a card for each call in `chat.pending_approvals`, with its arguments and Approve and Deny buttons. A `run_code` call that asks for a [wider sandbox]({% link _core_features/sandboxes.md %}) shows its reason, its code, and what that sandbox allows. Remote tool calls, such as those from MCP servers, get the same cards. While a call waits, the transcript hides its tool call entry so the call shows only as a card, and the message form gives way to a line asking for a decision. `MessagesController` redirects a message sent in the meantime back to the chat.
 
-Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. When the job pauses for the next approval, it broadcasts the new cards to the page.
+Each button posts to `ApprovalsController#create`, which records the decision with `chat.approve` or `chat.deny`, replaces the cards with a Turbo Stream, and enqueues `ChatResponseJob` to continue the conversation. Decided calls show as ordinary tool calls with their results. When the job finishes or pauses for the next approval, it broadcasts the cards and the message form to the page.
 
 The generated controllers and job load chats with `Chat.find`, which has the transcript but no tools. Load the chat through your agent instead, so the page and the job know which calls need approval:
 
@@ -101,7 +101,7 @@ The generated controllers and job load chats with `Chat.find`, which has the tra
 # app/controllers/chats_controller.rb
 @chat = SupportAgent.find(params[:id])
 
-# app/controllers/approvals_controller.rb
+# app/controllers/messages_controller.rb and app/controllers/approvals_controller.rb
 @chat = SupportAgent.find(params[:chat_id])
 
 # app/jobs/chat_response_job.rb

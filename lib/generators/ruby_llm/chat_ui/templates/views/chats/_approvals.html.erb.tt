@@ -1,5 +1,13 @@
+<%% approvals = <%= chat_model_name.demodulize.underscore %>.pending_approvals %>
 <div id="<%= chat_variable_name %>_<%%= <%= chat_model_name.demodulize.underscore %>.id %>_approvals">
-  <%% <%= chat_model_name.demodulize.underscore %>.pending_approvals.each do |approval| %>
+  <%% if approvals.any? %>
+    <style>
+      <%% approvals.each do |approval| %>
+        [id="<%= message_variable_name %>_tool_call_<%%= approval.tool_call_id %>"] { display: none; }
+      <%% end %>
+    </style>
+  <%% end %>
+  <%% approvals.each do |approval| %>
     <%%= render "<%= approval_view_path %>/approval", approval: approval, <%= chat_model_name.demodulize.underscore %>: <%= chat_model_name.demodulize.underscore %> %>
   <%% end %>
 </div>
