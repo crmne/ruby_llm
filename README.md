@@ -38,6 +38,12 @@ Build with the models you want. Move between hosted and local providers without 
 
 More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between: agents that run code safely, workflows, evaluations, observability, and the data they need, designed to work together.
 
+* **Code execution (main):** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
+* **Skills (main):** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/next/skills/)
+* **MCP:** Connect agents to your systems with server classes in `app/mcp`, per-user inputs, tool filtering, and OAuth with [`RubyLLM::MCP`](https://rubyllm.com/mcp/)
+* **Agents:** Reusable assistants with `RubyLLM::Agent`
+* **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
+* **Evaluations (main):** Reusable datasets, model criteria, and Ruby assertions with [`RubyLLM::Evaluation`](https://rubyllm.com/next/evaluations/)
 * **Chat:** Conversational AI with `RubyLLM.chat`
 * **Vision:** Analyze images and videos
 * **Audio:** Transcribe speech with `RubyLLM.transcribe` and generate it with `RubyLLM.speak`
@@ -51,12 +57,7 @@ More than a client for model APIs. RubyLLM gives your application the convention
 * **Judgments:** Probabilities, choices, and scores with `RubyLLM::Judge` and `RubyLLM.judge`
 * **Tools:** Let AI call your Ruby methods
 * **Tool approval:** Park a run until a human approves with `requires_approval`
-* **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
 * **Provider tools:** Web search, code execution, and MCP connectors with `with_provider_tools`
-* **Code execution (main):** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
-* **Skills (main):** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/next/skills/)
-* **Agents:** Reusable assistants with `RubyLLM::Agent`
-* **Evaluations (main):** Reusable datasets, model criteria, and Ruby assertions with [`RubyLLM::Evaluation`](https://rubyllm.com/next/evaluations/)
 * **Prompt templates:** ERB prompts in `app/prompts`, rendered with `RubyLLM.render_prompt`
 * **Workflows:** Correlate multi-agent runs in your telemetry with `RubyLLM.workflow`
 * **Structured output:** Define a Ruby schema and read the result with `response.parsed`
@@ -74,6 +75,52 @@ More than a client for model APIs. RubyLLM gives your application the convention
 * **Compaction:** Let providers condense long conversations with `with_compaction`
 * **Token counting:** Count a request before you send it with `count_tokens`
 * **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, and any OpenAI-compatible API
+
+## Evaluate your agents
+
+Keep questions and expected answers in a dataset. RubyLLM checks correctness by default. Run the same evaluation from Ruby, RSpec, Minitest, or Rake.
+
+Evaluations are available on `main`. Follow the [development installation guide](https://rubyllm.com/next/getting-started/) to try them.
+
+`app/agents/support_agent.rb`
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  instructions "Accept returns of unopened items within 30 days."
+end
+```
+
+`app/evals/support_evaluation.rb`
+
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  def perform(input)
+    SupportAgent.new.ask(input)
+  end
+end
+```
+
+`app/evals/support_evaluation.yml`
+
+```yaml
+cases:
+  - name: within_return_window
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, unopened items can be returned within 30 days.
+  - name: past_return_window
+    inputs: Can I return an unopened item after 45 days?
+    expected_output: No, the 30-day return window has passed.
+```
+
+Run the evaluation:
+
+```ruby
+report = SupportEvaluation.run
+report.passed?
+report.cost.total
+```
+
+The model evaluator checks meaning, so answers can use different wording. Declare your own criteria, add Ruby assertions, or choose a configured evaluator agent or judgment model. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
 
 ## Feels at home in Rails
 
@@ -228,52 +275,6 @@ end
 response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "product.txt"
 response.parsed
 ```
-
-## Evaluate your agents
-
-Keep questions and expected answers in a dataset. RubyLLM checks correctness by default. Run the same evaluation from Ruby, RSpec, Minitest, or Rake.
-
-Evaluations are available on `main`. Follow the [development installation guide](https://rubyllm.com/next/getting-started/) to try them.
-
-`app/agents/support_agent.rb`
-
-```ruby
-class SupportAgent < RubyLLM::Agent
-  instructions "Accept returns of unopened items within 30 days."
-end
-```
-
-`app/evals/support_evaluation.rb`
-
-```ruby
-class SupportEvaluation < RubyLLM::Evaluation
-  def perform(input)
-    SupportAgent.new.ask(input)
-  end
-end
-```
-
-`app/evals/support_evaluation.yml`
-
-```yaml
-cases:
-  - name: within_return_window
-    inputs: Can I return an unopened item after 14 days?
-    expected_output: Yes, unopened items can be returned within 30 days.
-  - name: past_return_window
-    inputs: Can I return an unopened item after 45 days?
-    expected_output: No, the 30-day return window has passed.
-```
-
-Run the evaluation:
-
-```ruby
-report = SupportEvaluation.run
-report.passed?
-report.cost.total
-```
-
-The model evaluator checks meaning, so answers can use different wording. Declare your own criteria, add Ruby assertions, or choose a configured evaluator agent or judgment model. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
 
 ## Installation
 

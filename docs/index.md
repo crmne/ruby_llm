@@ -154,7 +154,7 @@ chat.approve(chat.pending_approvals.first)
 
     <div class="home-step">
       <div class="home-step-text">
-        <h3 class="home-step-title">Teach it your workflows</h3>
+        <h3 class="home-step-title">Teach them your workflows</h3>
         <p class="home-step-desc">Write skills in the open Agent Skills format: instructions, scripts, and reference files in a folder. The model loads a skill only when a task needs it and runs its scripts in the sandbox.</p>
         <a class="home-step-link" href="{% link _core_features/skills.md %}">Skills guide</a>
       </div>
@@ -181,6 +181,30 @@ chat.ask "Bill order 1042 to ACME", with: "order.json"
 
     <div class="home-step">
       <div class="home-step-text">
+        <h3 class="home-step-title">Connect them to your systems</h3>
+        <p class="home-step-desc">Describe each MCP server as a Ruby class in <code>app/mcp</code>. Inputs pass in the current user, <code>only</code> picks the tools the model sees, and OAuth credentials are stored encrypted in your database.</p>
+        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP client guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class Linear < RubyLLM::MCP
+  url "https://mcp.linear.app/mcp"
+  inputs :user
+  oauth owner: :user
+  only :list_issues, :get_issue
+end
+
+chat.with_mcp(Linear.new(user: current_user))
+    .ask "What's blocking the release?"
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
         <h3 class="home-step-title">Resume across jobs and deploys</h3>
         <p class="home-step-desc">A saved conversation is the agent's whole state. Any job can pick it up and continue, after a crash, a deploy, or a wait for approval.</p>
         <a class="home-step-link" href="{% link _advanced/durable-agents.md %}">Durable agents guide</a>
@@ -197,6 +221,39 @@ end
 chat = SupportAgent.find(chat_id)
 chat.approve(chat.pending_approvals.first)
 AgentJob.perform_later(chat.id)
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div id="evaluations" class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Know they work</h3>
+        <p class="home-step-desc">Keep questions and expected answers in a dataset next to an evaluation class in <code>app/evals</code>. RubyLLM checks each answer for correctness. Run the same evaluation from RSpec, Minitest, or Rake, and fail CI when a case fails.</p>
+        <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  def perform(input)
+    SupportAgent.new.ask(input)
+  end
+end
+```
+{: .home-code-card data-title="app/evals/support_evaluation.rb" }
+
+```yaml
+cases:
+  - name: within_return_window
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, within 30 days if it is unopened.
+```
+{: .home-code-card data-title="app/evals/support_evaluation.yml" }
+
+```sh
+bin/rails "ruby_llm:eval[SupportEvaluation]"
 ```
 {: .home-code-card }
 
@@ -234,11 +291,34 @@ chat.ask "Review this diff", with: "changes.patch"
 {: .home-code-card data-title="Cache repeated prompts" data-href="{% link _core_features/prompt-caching.md %}" data-doc-title="Prompt Caching" }
 
 ```ruby
-response = chat.ask "Explain embeddings"
-response.tokens.output
-response.cost.total
+RubyLLM.with_usage_owner(current_account) do
+  SupportAgent.new.ask "Where is order 42?"
+end
+
+current_account.ruby_llm_usages.sum(:total_cost)
 ```
-{: .home-code-card data-title="Track usage and costs" data-href="{% link _core_features/cost-and-usage-tracking.md %}" data-doc-title="Cost and Usage Tracking" }
+{: .home-code-card data-title="Usage and costs by customer" data-href="{% link _core_features/cost-and-usage-tracking.md %}#one-shot-operations" data-doc-title="Cost and Usage Tracking" }
+
+```ruby
+OpenTelemetry::SDK.configure
+RubyLLM::OpenTelemetry.enable
+
+SupportAgent.new.ask "Where is order 42?"
+# chat → execute_tool lookup_order → chat
+```
+{: .home-code-card data-title="Trace every run" data-href="{% link _advanced/opentelemetry.md %}" data-doc-title="OpenTelemetry" }
+
+```ruby
+RubyLLM.workflow("Write article") do |workflow|
+  notes = workflow.step("Research") do
+    ResearchAgent.new.ask(topic).content
+  end
+  workflow.step("Draft") do
+    WriterAgent.new.ask(notes).content
+  end
+end
+```
+{: .home-code-card data-title="Coordinate agents in workflows" data-href="{% link _advanced/agentic-workflows.md %}" data-doc-title="Agentic Workflows" }
 
   </div>
 
@@ -315,12 +395,9 @@ RubyLLM.moderate(comment.body).flagged?
   </div>
 
   <div class="home-code-cta">
-    <p>Coordinate agents with
-      <a href="{% link _advanced/agentic-workflows.md %}">workflows</a>,
-      and give them <a href="{% link _advanced/memory.md %}">memory</a>.
+    <p>Give agents <a href="{% link _advanced/memory.md %}">memory</a>.
       Use <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">separate configurations for each tenant</a>
-      and <a href="{% link _advanced/error-handling.md %}#automatic-retries">retries</a> when requests fail.
-      Follow requests with <a href="{% link _advanced/instrumentation.md %}">instrumentation</a>,
+      and <a href="{% link _advanced/error-handling.md %}#automatic-retries">retries</a> when requests fail,
       or explore community gems for <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring dashboards</a>.
     </p>
   </div>
@@ -405,7 +482,7 @@ app/
   <div class="home-section-inner">
     <h2 class="home-heading">Start with one line.<br>Add files, tools, and agents</h2>
     <p class="home-lead">
-      Every feature above grows from the same chat. Follow it from your first question to an agent you can evaluate.
+      Everything above is built on one chat API. Follow it from your first question to your first agent.
     </p>
   </div>
 
@@ -497,30 +574,6 @@ chat.with_tools(Weather).ask "What's the weather in Berlin?"
 
     <div class="home-step">
       <div class="home-step-text">
-        <h3 class="home-step-title">Connect to MCP servers</h3>
-        <p class="home-step-desc">Describe a Model Context Protocol server in a Ruby class. Its tools become the model's tools, and you choose which ones it sees.</p>
-        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP client guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class Linear < RubyLLM::MCP
-  url "https://mcp.linear.app/mcp"
-  inputs :user
-  bearer_token { user.linear_token }
-  only :list_issues, :get_issue
-end
-
-chat.with_mcp(Linear.new(user: current_user))
-    .ask "What's blocking the release?"
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
         <h3 class="home-step-title">Get structured output</h3>
         <p class="home-step-desc">Define the fields you want in a Ruby schema. Read the result as a Hash with <code>response.parsed</code>.</p>
         <a class="home-step-link" href="{% link _core_features/structured-output.md %}">Structured output guide</a>
@@ -564,34 +617,6 @@ end
 SupportAgent.find(chat_id).ask "Where's my refund?"
 ```
 {: .home-code-card }
-
-</div>
-    </div>
-
-    <div id="evaluations" class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Evaluate your agents</h3>
-        <p class="home-step-desc">Run your agent against a dataset of questions and expected answers. RubyLLM checks correctness by default. Use the same evaluation from Ruby, RSpec, Minitest, or Rake.</p>
-        <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class SupportEvaluation < RubyLLM::Evaluation
-  def perform(input)
-    SupportAgent.new.ask(input)
-  end
-end
-```
-{: .home-code-card data-title="app/evals/support_evaluation.rb" }
-
-```yaml
-cases:
-  - name: within_return_window
-    inputs: Can I return an unopened item after 14 days?
-    expected_output: Yes, within 30 days if it is unopened.
-```
-{: .home-code-card data-title="app/evals/support_evaluation.yml" }
 
 </div>
     </div>
