@@ -1,12 +1,16 @@
 <%% assistant ||= local_assigns[:<%= message_model_name.demodulize.underscore %>] %>
-<div id="<%= message_variable_name %>_<%%= assistant.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-green-50">
+<%% streaming = assistant.content.blank? && assistant.<%= chat_table_name.singularize %>.running? %>
+<div id="<%= message_variable_name %>_<%%= assistant.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-green-50"<%%= " data-turbo-permanent" if streaming %>>
   <div>
     <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700">
       Assistant
     </span>
   </div>
 
-  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="whitespace-pre-wrap"><%% if assistant.content.blank? && assistant.<%= chat_table_name.singularize %>.running? %><span class="text-gray-500">Thinking…</span><%% else %><%%= assistant.content %><%% end %></div>
+  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="peer whitespace-pre-wrap"><%%= assistant.content %></div>
+  <%% if streaming %>
+    <div class="hidden peer-empty:block text-gray-500">Thinking…</div>
+  <%% end %>
 
   <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: assistant %>
 

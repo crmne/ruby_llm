@@ -143,13 +143,22 @@ Action Cable processes messages concurrently, which can cause out-of-order deliv
 
 #### Solution 1: Page Refreshes
 
-Broadcast a refresh instead of inserting each message. The page fetches the chat again and morphs into it, so the order the broadcasts arrive in cannot matter. This is what the [generated chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) does:
+Broadcast a refresh for every change to the conversation's structure, such as a new message, and stream the text as deltas. The page fetches the chat again and morphs into it, so the order refreshes arrive in cannot matter. This is what the [generated chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) does:
 
 ```ruby
 # app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
+
+  after_create_commit -> { broadcast_append_to "chat_#{chat_id}" if role.to_s == "assistant" && content.blank? }
+  after_update_commit -> { broadcast_replace_to "chat_#{chat_id}" }
   after_commit -> { broadcast_refresh_to "chat_#{chat_id}" }
+
+  def broadcast_append_chunk(content)
+    broadcast_append_to "chat_#{chat_id}",
+      target: "message_#{id}_content",
+      content: ERB::Util.html_escape(content.to_s)
+  end
 end
 ```
 
@@ -159,32 +168,7 @@ end
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 ```
 
-Stream the text the same way: send the whole reply so far, not each chunk. An update that arrives late or out of order then shows the reply up to that point, and one that arrives before the message is on the page costs nothing. The generated job sends at most ten updates a second:
-
-```ruby
-# app/models/message.rb
-def broadcast_streamed_content(content)
-  broadcast_update_to "chat_#{chat_id}", target: "message_#{id}_content", content: ERB::Util.html_escape(content)
-end
-
-# app/jobs/chat_response_job.rb
-streamed = Hash.new { |texts, id| texts[id] = +"" }
-broadcast_at = 0.0
-chat.complete do |chunk|
-  next if chunk.content.to_s.empty?
-
-  message = chat.messages.last
-  streamed[message.id] << chunk.content
-  now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-  next if now - broadcast_at < 0.1
-
-  broadcast_at = now
-  message.broadcast_streamed_content(streamed[message.id])
-end
-chat.broadcast_refresh_to "chat_#{chat.id}"
-```
-
-The refresh at the end shows the final text. Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
+Each chunk is sent once and appended as plain text, so a reply costs as many bytes as it has. The empty assistant message is appended as soon as it is created, so it is on the page before its first chunk. While it streams, the partial marks it `data-turbo-permanent`, so a refresh neither removes it nor clears the text streamed so far. When the reply is saved, the message replaces itself once with the finished text, which repairs any chunk that arrived early or out of order. Streamed text never waits for a refresh. Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
 
 #### Solution 2: Client-Side Reordering
 

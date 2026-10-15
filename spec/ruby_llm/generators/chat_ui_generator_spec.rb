@@ -123,7 +123,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(message_form).to include('Approve or deny the requests above to continue.')
     expect(message_form.index('pending_approvals.any?')).to be < message_form.index('chat.running?')
     expect(message_form).to include('Replying…')
-    expect(File.read(File.join(base_path, 'messages/_assistant.html.erb'))).to include('.running? %>')
+    expect(assistant_partial).to include('.running? %>')
+    expect(assistant_partial).to include('" data-turbo-permanent" if streaming')
     attachments = File.read(File.join(base_path, 'messages/_attachments.html.erb'))
     expect(attachments).to include('message.attachments.attached?')
     expect(attachments).to include('number_to_human_size(attachment.byte_size)')
@@ -160,8 +161,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     end
 
     expect(message_content).to include(%(after_commit -> { broadcast_refresh_to "#{stream}" }))
+    expect(message_content).to include(%(after_update_commit -> { broadcast_replace_to "#{stream}" }))
+    expect(message_content).to include(
+      %(after_create_commit -> { broadcast_append_to "#{stream}" if role.to_s == "assistant" && content.blank? })
+    )
     expect(message_content).not_to include('broadcasts_to')
-    expect(message_content).to include('def broadcast_streamed_content(content)')
+    expect(message_content).to include('def broadcast_append_chunk(content)')
     expect(message_content).to include(broadcast_target_line)
     expect(message_content).to include(content_target_line)
     expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
@@ -230,6 +235,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "broadcasts left to jobs: \#{later}" if later.any?
       refreshes = actions.size >= created.size && actions.uniq == [ "refresh" ]
       abort "broadcast \#{actions} for \#{created.size} messages" unless refreshes
+
+      actions.clear
+      placeholder = chat.add_message(role: :assistant, content: "")
+      placeholder.broadcast_append_chunk("Hel")
+      abort "streaming broadcast \#{actions}" unless actions.sort == %w[append append refresh]
     RUBY
   end
 
@@ -346,7 +356,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         path: 'app/models/message.rb',
         acts_as_message_lines: ['acts_as_message'],
         stream: "chat_\#{chat_id}",
-        broadcast_target_line: "broadcast_update_to \"chat_\#{chat_id}\"",
+        broadcast_target_line: "broadcast_append_to \"chat_\#{chat_id}\"",
         content_target_line: "target: \"message_\#{id}_content\""
       },
       controllers_example: 'controllers reference correct model classes',
@@ -403,8 +413,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'chat = ChatAgent.find(chat_id)',
         ask_line: 'chat.ask_later(content) if content',
         last_message_line: 'message = chat.messages.last',
-        broadcast_lines: ['chat.broadcast_refresh_to "chat_', 'streamed[message.id] << chunk.content',
-                          'message.broadcast_streamed_content(streamed[message.id])']
+        broadcast_lines: ['chat.broadcast_refresh_to "chat_', 'message.broadcast_append_chunk(chunk.content)']
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -446,7 +455,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           "acts_as_message chat: :llm_chat, chat_class: 'Llm::Chat'"
         ],
         stream: "llm_chat_\#{llm_chat_id}",
-        broadcast_target_line: "broadcast_update_to \"llm_chat_\#{llm_chat_id}\"",
+        broadcast_target_line: "broadcast_append_to \"llm_chat_\#{llm_chat_id}\"",
         content_target_line: "target: \"llm_message_\#{id}_content\""
       },
       controllers_example: 'controllers reference correct namespaced model classes',
@@ -503,8 +512,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'llm_chat = Llm::ChatAgent.find(llm_chat_id)',
         ask_line: 'llm_chat.ask_later(content) if content',
         last_message_line: 'llm_message = llm_chat.llm_messages.last',
-        broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_', 'streamed[llm_message.id] << chunk.content',
-                          'llm_message.broadcast_streamed_content(streamed[llm_message.id])']
+        broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_',
+                          'llm_message.broadcast_append_chunk(chunk.content)']
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -699,7 +708,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         end
       end
 
-      it 'broadcasts message changes as page refreshes, so arrival order cannot matter' do
+      it 'refreshes for message changes and appends streamed chunks' do
         within_test_app(app_path) do
           give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
           success, output = run_rails_runner(broadcast_order_script(**config[:approval_flow]))

@@ -183,10 +183,12 @@ module RubyLLM
 
         broadcasting_callbacks = <<-RUBY
 
+  after_create_commit -> { broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}" if role.to_s == "assistant" && content.blank? }
+  after_update_commit -> { broadcast_replace_to "#{chat_var}_\#{#{chat_association}_id}" }
   after_commit -> { broadcast_refresh_to "#{chat_var}_\#{#{chat_association}_id}" }
 
-  def broadcast_streamed_content(content)
-    broadcast_update_to "#{chat_var}_\#{#{chat_association}_id}",
+  def broadcast_append_chunk(content)
+    broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",
       target: "#{msg_var}_\#{id}_content",
       content: ERB::Util.html_escape(content.to_s)
   end
