@@ -5,7 +5,7 @@ module RubyLLM
     # Shared helpers for RubyLLM generators
     module GeneratorHelpers
       APPLICATION_MODEL_TYPES = %w[chat message].freeze
-      CONVENTION_DIRECTORIES = %w[agents tools schemas prompts skills sandboxes mcp evals].freeze
+      CONVENTION_DIRECTORIES = %w[agents tools schemas prompts skills sandboxes mcp evals judges].freeze
       DEFAULT_MODEL_NAMES = {
         chat: 'Chat',
         message: 'Message'

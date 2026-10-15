@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/model.rb')).to be false
         expect(File.exist?('app/models/tool_call.rb')).to be false
         expect(File.exist?('app/models/batch.rb')).to be false
-        %w[agents tools schemas prompts skills sandboxes mcp evals].each do |name|
+        %w[agents tools schemas prompts skills sandboxes mcp evals judges].each do |name|
           expect(File.exist?("app/#{name}/.gitkeep")).to be(true), "app/#{name}/.gitkeep is missing"
         end
         expect(File.read('config/initializers/ruby_llm.rb')).not_to include('sandbox')

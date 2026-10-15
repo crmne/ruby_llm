@@ -48,6 +48,8 @@ cases:
     expected_output: No, sale items are final.
 ```
 
+`bin/rails generate ruby_llm:evaluation Support` creates both files, with one case to fill in.
+
 Run it:
 
 ```sh

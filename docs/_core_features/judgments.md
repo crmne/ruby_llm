@@ -32,6 +32,8 @@ judgment = Urgency.judge("Please refund the duplicate charge today.")
 judgment.urgent.probability # => 0.96
 ```
 
+In Rails, `bin/rails generate ruby_llm:judge Urgency` creates `UrgencyJudge` in `app/judges/urgency_judge.rb`.
+
 Configure your [TypeSafe API key]({% link _getting_started/configuration-providers.md %}#typesafe) or a [Jev-compatible local endpoint]({% link _getting_started/configuration-providers.md %}#jev-compatible-apis) before making a request. With an [OpenAI API key]({% link _getting_started/configuration-providers.md %}#api-keys), choose `{{ site.models.openai_judgment }}`. OpenAI judgments use the Decisions API and answer the same questions. To judge on your own machine, run a decision model such as Clef with [Ollama](#local-decision-models). Judges use `config.default_judgment_model`, not the default chat model.
 
 Each call judges the input you supply. It does not retain conversation history. Put a conversation in the input when you want the questions to consider it.

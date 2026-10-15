@@ -458,14 +458,15 @@ app/
 ├── skills/     invoices/SKILL.md
 ├── sandboxes/  workspace_sandbox.rb
 ├── mcp/        linear.rb
-└── evals/      support_evaluation.rb
+├── evals/      support_evaluation.rb
+└── judges/     urgency_judge.rb
 ```
 {: .home-code-card data-title="A place for everything in app/" data-href="{% link _advanced/rails-generators.md %}#conventional-directory-structure" data-doc-title="Conventional directory structure" }
 
   </div>
 
   <div class="home-code-cta">
-    <p><a href="{% link _advanced/rails-generators.md %}#rails-generators-for-agents-tools-and-schemas">Generators</a> create each piece where Rails expects it.
+    <p><a href="{% link _advanced/rails-generators.md %}#generators">Generators</a> create each piece where Rails expects it.
       Store files with <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage</a>
       and write your prompts in <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB templates</a>.
       Use <a href="{% link _advanced/rails-streaming.md %}#full-streaming-implementation">Turbo Streams</a> to show replies

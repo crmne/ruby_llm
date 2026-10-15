@@ -1,0 +1,7 @@
+class <%= class_name %> < RubyLLM::MCP
+<% if url.present? -%>
+  url <%= url.inspect %>
+<% else -%>
+  command <%= command_arguments %>
+<% end -%>
+end

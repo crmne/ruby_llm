@@ -53,6 +53,8 @@ class OnlineSandbox < MXC::Sandbox
 end
 ```
 
+`bin/rails generate ruby_llm:sandbox Workspace` creates `app/sandboxes/workspace_sandbox.rb` with a two-minute timeout.
+
 `MXC::Sandbox` on its own reads the system's programs and libraries, writes nothing, and has no network. Each macro widens it: `readable` and `writable` add paths, `network` opens the network or lists hosts, `directory` sets where the code starts, and `timeout` sets how long it may run. `limits` and `priority` bound what it may use. A sandbox without a timeout stops runs after 120 seconds. See [mxc's policies](https://crmne.github.io/mxc/policies/) for every setting.
 
 The class holds the whole policy. RubyLLM adds only what a run needs to work: a fresh run directory with the conversation's files and your [mounted folders]({% link _core_features/code-execution.md %}#your-own-folders), the Ruby and Node.js installations, and the [packages]({% link _core_features/code-execution.md %}#packages) you declared. It never widens the sandbox in any other way.

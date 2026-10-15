@@ -1,0 +1,9 @@
+class <%= evaluation_class_name %> < RubyLLM::Evaluation
+  def perform(input)
+<% if agent_class_name -%>
+    <%= agent_class_name %>.new.ask(input)
+<% else -%>
+    RubyLLM.chat.ask(input)
+<% end -%>
+  end
+end

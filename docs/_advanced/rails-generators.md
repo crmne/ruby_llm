@@ -15,7 +15,7 @@ After reading this guide, you will know:
 
 *   What the `ruby_llm:install` and `ruby_llm:chat_ui` generators create for you.
 *   How RubyLLM's conventional app directory structure is organized.
-*   How to generate starter agents, tools, and schemas.
+*   How to generate agents, tools, schemas, MCP servers, skills, sandboxes, evaluations, and judges.
 *   How the generated chat UI renders messages, tool calls, and tool results.
 *   How to customize model names and set up ActiveStorage.
 
@@ -36,7 +36,7 @@ The generator:
 - Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs ActiveStorage for file attachments
 - Creates an initializer for provider configuration
-- Creates the conventional AI app directories: `app/agents`, `app/tools`, `app/schemas`, `app/prompts`, `app/skills`, `app/sandboxes`, `app/mcp`, and `app/evals`
+- Creates the conventional AI app directories: `app/agents`, `app/tools`, `app/schemas`, `app/prompts`, `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`
 
 After running the generator:
 
@@ -108,14 +108,15 @@ app/
 |-- skills/      Agent Skills folders, one per skill
 |-- sandboxes/   sandbox classes for code execution
 |-- mcp/         MCP server classes
-`-- evals/       evaluations and their datasets
+|-- evals/       evaluations and their datasets
+`-- judges/      judge classes
 ```
 
 The install generator creates these directories with `.gitkeep` files so teams start from one shared convention, and the upgrade generator adds any an existing application lacks.
 
 These are conventions, not hard requirements:
 
-- Agents, tools, schemas, sandboxes, and MCP servers can live anywhere in your app autoload paths.
+- Agents, tools, schemas, sandboxes, MCP servers, and judges can live anywhere in your app autoload paths.
 - `with_skills` and the `skills` macro find skills in `app/skills` unless you add other roots.
 - Evaluations find their dataset next to the class in `app/evals`.
 - Prompt lookup convention: named agents automatically resolve `instructions.txt.erb` from the agent class name when the file exists.
@@ -127,14 +128,19 @@ For prompt lookup, RubyLLM uses class name conventions:
 
 See the [Agents guide]({% link _advanced/agents.md %}#default-instructions-prompt) for how agent instruction rendering works, or [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) for direct `RubyLLM.render_prompt` usage.
 
-## Rails Generators for Agents, Tools, and Schemas
+## Generators
 
-Alongside `ruby_llm:install` and `ruby_llm:chat_ui`, Rails apps can generate starter classes for common AI building blocks:
+Alongside `ruby_llm:install` and `ruby_llm:chat_ui`, every building block has a generator that puts it where RubyLLM looks for it:
 
 ```bash
 bin/rails generate ruby_llm:agent Support
 bin/rails generate ruby_llm:tool Weather
 bin/rails generate ruby_llm:schema Product
+bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp
+bin/rails generate ruby_llm:skill invoices "Bills an order to a customer as a PDF."
+bin/rails generate ruby_llm:sandbox Workspace
+bin/rails generate ruby_llm:evaluation Support
+bin/rails generate ruby_llm:judge Urgency
 ```
 
 What each generator creates:
@@ -142,6 +148,11 @@ What each generator creates:
 - `ruby_llm:agent`: `app/agents/support_agent.rb` and `app/prompts/support_agent/instructions.txt.erb`
 - `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
+- `ruby_llm:mcp`: `app/mcp/linear.rb`, connecting to the URL you give. For a server that runs on your machine, pass `--command` instead: `bin/rails generate ruby_llm:mcp Files --command "npx -y @modelcontextprotocol/server-filesystem ."`
+- `ruby_llm:skill`: `app/skills/invoices/SKILL.md` with the name and description. Names use lowercase letters, digits, and hyphens, as the Agent Skills format requires.
+- `ruby_llm:sandbox`: `app/sandboxes/workspace_sandbox.rb`, an `MXC::Sandbox` with a two-minute timeout
+- `ruby_llm:evaluation`: `app/evals/support_evaluation.rb` and its dataset, `support_evaluation.yml`, with one case to fill in. It runs `SupportAgent` when you have one.
+- `ruby_llm:judge`: `app/judges/urgency_judge.rb`
 
 `ruby_llm:chat_ui` and `ruby_llm:tool` accept `--ui scaffold` or `--ui tailwind`. The default, `--ui auto`, picks Tailwind when your app has it. An existing app follows [Upgrading]({% link _reference/upgrading.md %}) instead of running `ruby_llm:install`.
 

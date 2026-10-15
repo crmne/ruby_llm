@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
 
     generator.create_app_directories
 
-    %w[agents tools schemas prompts skills sandboxes mcp evals].each do |name|
+    %w[agents tools schemas prompts skills sandboxes mcp evals judges].each do |name|
       expect(File.directory?(File.join(destination, 'app', name))).to be(true)
     end
     expect(File.directory?(File.join(destination, 'app/skills/invoices'))).to be(true)

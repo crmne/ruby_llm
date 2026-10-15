@@ -162,6 +162,8 @@ RubyLLM ships no skills and never downloads them. A skill's instructions steer t
 
 ## Writing a Skill
 
+In Rails, `bin/rails generate ruby_llm:skill invoices "Bills an order to a customer as a PDF."` creates `app/skills/invoices/SKILL.md` with a valid name and description. Add the instructions below the front matter.
+
 The [specification](https://agentskills.io/specification) defines the front matter:
 
 | Field | Required | Rules |

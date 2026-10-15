@@ -49,6 +49,8 @@ end
 
 The process starts on the first request and stops when you call `close`.
 
+In Rails, `bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp` creates `app/mcp/linear.rb`, and `--command` instead of a URL creates a server started over stdio.
+
 ### Custom Transports
 
 Some servers are reached neither over HTTP nor over stdio, such as a server on a user's computer that dials out to your app through a tunnel. Give those a `transport`, an object that carries the JSON-RPC messages:

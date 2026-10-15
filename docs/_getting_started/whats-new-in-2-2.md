@@ -131,6 +131,20 @@ Every request lists each skill's name and description. The model loads a skill's
 
 See [Skills]({% link _core_features/skills.md %}).
 
+## A Generator for Every Building Block
+
+Every building block now has a generator that puts it in its `app/` folder, ready to use:
+
+```sh
+bin/rails generate ruby_llm:mcp Linear https://mcp.linear.app/mcp
+bin/rails generate ruby_llm:skill invoices "Bills an order to a customer as a PDF."
+bin/rails generate ruby_llm:sandbox Workspace
+bin/rails generate ruby_llm:evaluation Support
+bin/rails generate ruby_llm:judge Urgency
+```
+
+They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`. `ruby_llm:install` creates every folder, including the new `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`. See [Generators]({% link _advanced/rails-generators.md %}#generators).
+
 ## One Process at a Time
 
 A persisted chat now runs in one process at a time. `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat before they call the model or run a tool, and each tool call is claimed before it runs. A double-submitted approval that enqueues two jobs no longer runs a tool twice or asks the model for two replies:
@@ -152,7 +166,7 @@ If a process dies, its claims expire and another process picks the chat up. See 
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and the `app/skills` and `app/sandboxes` directories. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 ## Try 2.2
 
