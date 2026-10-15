@@ -11,6 +11,9 @@ module RubyLLM
 
       source_root File.expand_path('templates', __dir__)
 
+      MARKED_VERSION = '18.0.14'
+      DOMPURIFY_VERSION = '3.4.16'
+
       namespace 'ruby_llm:chat_ui'
 
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName ...'
@@ -113,6 +116,29 @@ module RubyLLM
         template 'helpers/messages_helper.rb', "app/helpers/#{message_model_name.underscore.pluralize}_helper.rb"
       end
 
+      def create_javascript
+        copy_file 'javascript/controllers/chat_message_controller.js',
+                  'app/javascript/controllers/chat_message_controller.js'
+      end
+
+      def add_javascript_dependencies
+        return unless behavior == :invoke
+
+        if app_file?('config/importmap.rb')
+          pin_javascript_dependencies
+        elsif app_file?('package.json')
+          say "\n  Add the chat UI's JavaScript dependencies, then register its Stimulus controller:", :yellow
+          say "    yarn add #{javascript_packages}   (or: npm install #{javascript_packages})"
+          say '    bin/rails stimulus:manifest:update'
+        else
+          say "\n  Your app has no JavaScript setup, so replies show as plain text until it has one.", :yellow
+        end
+        return if app_file?('app/javascript/controllers/index.js')
+
+        say '  The chat UI renders replies with a Stimulus controller. Install Stimulus to use it:', :yellow
+        say '    bin/rails stimulus:install'
+      end
+
       def add_available_chat_models_to_application_controller
         path = 'app/controllers/application_controller.rb'
         return unless File.exist?(path)
@@ -185,12 +211,13 @@ module RubyLLM
 
   after_create_commit -> { broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}" if role.to_s == "assistant" && content.blank? }
   after_update_commit -> { broadcast_replace_to "#{chat_var}_\#{#{chat_association}_id}" }
+  after_destroy_commit -> { broadcast_remove_to "#{chat_var}_\#{#{chat_association}_id}" }
   after_commit -> { broadcast_refresh_to "#{chat_var}_\#{#{chat_association}_id}" }
 
-  def broadcast_append_chunk(content)
+  def broadcast_append_chunk(content, sequence)
     broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",
       target: "#{msg_var}_\#{id}_stream",
-      content: ERB::Util.html_escape(content.to_s)
+      content: %(<span data-seq="\#{sequence}">\#{ERB::Util.html_escape(content)}</span>)
   end
         RUBY
 
@@ -228,6 +255,17 @@ module RubyLLM
       end
 
       private
+
+      def javascript_packages = "marked@#{MARKED_VERSION} dompurify@#{DOMPURIFY_VERSION}"
+      def app_file?(path) = File.exist?(File.join(destination_root, path))
+
+      def pin_javascript_dependencies
+        importmap = File.read(File.join(destination_root, 'config/importmap.rb'))
+        return if importmap.match?(/^pin "marked"/) && importmap.match?(/^pin "dompurify"/)
+        return if run("bin/importmap pin #{javascript_packages}")
+
+        say "\n  Pin the chat UI's JavaScript dependencies: bin/importmap pin #{javascript_packages}", :yellow
+      end
 
       def approval_model_name
         return 'Approval' unless chat_model_name.include?('::')

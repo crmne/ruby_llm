@@ -124,7 +124,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(message_form.index('pending_approvals.any?')).to be < message_form.index('chat.running?')
     expect(message_form).to include('Replying…')
     expect(assistant_partial).to include('.running? %>')
-    expect(assistant_partial).to include('" data-turbo-permanent" if streaming')
+    expect(assistant_partial).to include('" data-streaming" if streaming')
+    expect(assistant_partial).to include('data-controller="chat-message"')
+    expect(assistant_partial).to include('data-chat-message-target="source"')
+    expect(assistant_partial).to include('data-chat-message-target="output"')
+    expect(assistant_partial).not_to include('data-turbo-permanent')
+    controller = File.read('app/javascript/controllers/chat_message_controller.js')
+    expect(controller).to include('DOMPurify.sanitize(marked.parse(this.text))')
+    expect(controller).to include('turbo:before-morph-element')
     expect(assistant_partial).to include('<%= streaming ? "stream" : "content" %>')
     attachments = File.read(File.join(base_path, 'messages/_attachments.html.erb'))
     expect(attachments).to include('message.attachments.attached?')
@@ -167,10 +174,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       %(after_create_commit -> { broadcast_append_to "#{stream}" if role.to_s == "assistant" && content.blank? })
     )
     expect(message_content).not_to include('broadcasts_to')
-    expect(message_content).to include('def broadcast_append_chunk(content)')
+    expect(message_content).to include('def broadcast_append_chunk(content, sequence)')
+    expect(message_content).to include('content: %(<span data-seq="')
+    expect(message_content).to include(%(after_destroy_commit -> { broadcast_remove_to "#{stream}" }))
     expect(message_content).to include(broadcast_target_line)
     expect(message_content).to include(content_target_line)
-    expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
+    expect(message_content).to include('ERB::Util.html_escape(content)}</span>)')
   end
 
   def expect_file_content(path, includes:, excludes: [])
@@ -239,7 +248,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
       actions.clear
       placeholder = chat.add_message(role: :assistant, content: "")
-      placeholder.broadcast_append_chunk("Hel")
+      placeholder.broadcast_append_chunk("Hel", 1)
       abort "streaming broadcast \#{actions}" unless actions.sort == %w[append append refresh]
     RUBY
   end
@@ -414,7 +423,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         lookup_line: 'chat = ChatAgent.find(chat_id)',
         ask_line: 'chat.ask_later(content) if content',
         last_message_line: 'message = chat.messages.last',
-        broadcast_lines: ['chat.broadcast_refresh_to "chat_', 'message.broadcast_append_chunk(chunk.content)']
+        broadcast_lines: ['chat.broadcast_refresh_to "chat_',
+                          'message.broadcast_append_chunk(chunk.content, sequence[message.id] += 1)']
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -514,7 +524,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         ask_line: 'llm_chat.ask_later(content) if content',
         last_message_line: 'llm_message = llm_chat.llm_messages.last',
         broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_',
-                          'llm_message.broadcast_append_chunk(chunk.content)']
+                          'llm_message.broadcast_append_chunk(chunk.content, sequence[llm_message.id] += 1)']
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -588,6 +598,53 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               end
               expect(File.read(layout).scan('<%= yield :head %>').size).to eq(1)
               expect(File.read(layout)).to match(%r{<%= yield :head %>\n\s*</head>})
+            end
+          end
+        end
+
+        it 'pins its JavaScript dependencies with importmap, once' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('config/importmap.rb', %(pin "application"\n))
+              File.write('bin/importmap', <<~SH)
+                #!/bin/sh
+                echo "$@" >> tmp/importmap_calls
+                echo 'pin "marked" # @18.0.14' >> config/importmap.rb
+                echo 'pin "dompurify" # @3.4.16' >> config/importmap.rb
+              SH
+              FileUtils.chmod('+x', 'bin/importmap')
+
+              2.times do
+                output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(status.success?).to be(true), output
+              end
+              expect(File.read('tmp/importmap_calls')).to eq("pin marked@18.0.14 dompurify@3.4.16\n")
+            end
+          end
+        end
+
+        it 'explains that replies stay plain text in an app without JavaScript' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(output).to include('Your app has no JavaScript setup, so replies show as plain text')
+            end
+          end
+        end
+
+        it 'prints the packages to install for a jsbundling app' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              File.write('package.json', '{}')
+              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+              expect(status.success?).to be(true), output
+              expect(output).to include('yarn add marked@18.0.14 dompurify@3.4.16')
+              expect(output).to include('bin/rails stimulus:manifest:update')
+              expect(output).to include('bin/rails stimulus:install')
             end
           end
         end

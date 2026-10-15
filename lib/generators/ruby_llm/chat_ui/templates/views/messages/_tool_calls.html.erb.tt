@@ -1,9 +1,11 @@
 <%% message = local_assigns[:<%= message_model_name.demodulize.underscore %>] || tool_calls %>
 <div id="<%= message_variable_name %>_<%%= message.id %>">
   <%% if message.content.present? %>
-    <div class="<%= message_variable_name %>" style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #28a745;">
+    <div class="<%= message_variable_name %>" data-controller="chat-message" data-action="turbo:morph-element->chat-message#restore"
+         style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #28a745;">
       <div style="font-weight: bold; margin-bottom: 5px;">Assistant</div>
-      <div id="<%= message_variable_name %>_<%%= message.id %>_content" style="white-space: pre-wrap;"><%%= message.content %></div>
+      <div id="<%= message_variable_name %>_<%%= message.id %>_content" data-chat-message-target="source" style="white-space: pre-wrap;"><%%= message.content %></div>
+      <div data-chat-message-target="output"></div>
     </div>
   <%% end %>
   <%% message.<%= tool_call_variable_name.pluralize %>.each_value do |tool_call| %>

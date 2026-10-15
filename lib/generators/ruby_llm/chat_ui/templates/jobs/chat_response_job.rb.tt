@@ -3,10 +3,11 @@ class <%= chat_job_class_name %> < ApplicationJob
     <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
     <%= chat_variable_name %>.ask_later(content) if content
 
+    sequence = Hash.new(0)
     <%= chat_variable_name %>.complete do |chunk|
       if chunk.content && !chunk.content.empty?
         <%= message_variable_name %> = <%= chat_variable_name %>.<%= message_table_name %>.last
-        <%= message_variable_name %>.broadcast_append_chunk(chunk.content)
+        <%= message_variable_name %>.broadcast_append_chunk(chunk.content, sequence[<%= message_variable_name %>.id] += 1)
       end
     end
 

@@ -141,9 +141,9 @@ end
 
 Action Cable processes messages concurrently, which can cause out-of-order delivery:
 
-#### Solution 1: Page Refreshes
+#### Solution 1: Numbered Chunks and Page Refreshes
 
-Broadcast a refresh for every change to the conversation's structure, such as a new message, and stream the text as deltas. The page fetches the chat again and morphs into it, so the order refreshes arrive in cannot matter. This is what the [generated chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) does:
+This is what the [generated chat UI]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) does. Number each chunk and let a small Stimulus controller put them back in order, and broadcast a page refresh for every other change, such as a new message or an approval card. A refresh fetches the chat again and morphs the page into it, so the order refreshes arrive in cannot matter:
 
 ```ruby
 # app/models/message.rb
@@ -152,21 +152,34 @@ class Message < ApplicationRecord
 
   after_create_commit -> { broadcast_append_to "chat_#{chat_id}" if role.to_s == "assistant" && content.blank? }
   after_update_commit -> { broadcast_replace_to "chat_#{chat_id}" }
+  after_destroy_commit -> { broadcast_remove_to "chat_#{chat_id}" }
   after_commit -> { broadcast_refresh_to "chat_#{chat_id}" }
 
-  def broadcast_append_chunk(content)
+  def broadcast_append_chunk(content, sequence)
     broadcast_append_to "chat_#{chat_id}",
       target: "message_#{id}_stream",
-      content: ERB::Util.html_escape(content.to_s)
+      content: %(<span data-seq="#{sequence}">#{ERB::Util.html_escape(content)}</span>)
   end
 end
+
+# app/jobs/chat_response_job.rb
+sequence = Hash.new(0)
+chat.complete do |chunk|
+  if chunk.content && !chunk.content.empty?
+    message = chat.messages.last
+    message.broadcast_append_chunk(chunk.content, sequence[message.id] += 1)
+  end
+end
+chat.broadcast_refresh_to "chat_#{chat.id}"
 ```
 
 ```erb
 <%# app/views/messages/_assistant.html.erb %>
 <% streaming = assistant.content.blank? && assistant.chat.running? %>
-<div id="message_<%= assistant.id %>"<%= " data-turbo-permanent" if streaming %>>
-  <div id="message_<%= assistant.id %>_<%= streaming ? "stream" : "content" %>"><%= assistant.content %></div>
+<div id="message_<%= assistant.id %>"<%= " data-streaming" if streaming %>
+     data-controller="chat-message" data-action="turbo:morph-element->chat-message#restore">
+  <div id="message_<%= assistant.id %>_<%= streaming ? "stream" : "content" %>" data-chat-message-target="source"><%= assistant.content %></div>
+  <div data-chat-message-target="output"></div>
 </div>
 ```
 
@@ -176,7 +189,11 @@ end
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 ```
 
-Each chunk is sent once and appended as plain text, so a reply costs as many bytes as it has. The empty assistant message is appended as soon as it is created, so it is on the page before its first chunk. While it streams, the partial marks it `data-turbo-permanent`, so a refresh neither removes it nor clears the text streamed so far. When the reply is saved, the message replaces itself once with the finished text, which repairs any chunk that arrived early or out of order. The finished message has no `_stream` element, so a chunk that arrives after the replace finds no target and Turbo drops it. Streamed text never waits for a refresh. Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
+Each chunk is sent once, so a reply costs as many bytes as it has. The empty assistant message is appended as soon as it is created, so it is on the page before its first chunk. The `chat-message` controller in `app/javascript/controllers/chat_message_controller.js` keeps the chunks in a hidden source element, sorts them by `data-seq`, drops repeats, and shows the text up to the first missing chunk. It renders that text as Markdown with [marked](https://marked.js.org) and sanitizes the result with [DOMPurify](https://github.com/cure53/DOMPurify), at most once per animation frame.
+
+When the reply is saved, the message replaces itself once with the full text. The finished message has no `_stream` element, so a chunk that arrives after the replace finds no target and Turbo drops it. The controller also keeps a refresh from emptying a reply that is still streaming, and keeps a late placeholder from replacing a finished message. Without JavaScript, the page shows the source as plain text.
+
+Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
 
 #### Solution 2: Client-Side Reordering
 
