@@ -8,12 +8,13 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Carmine Paolino']
   spec.email         = ['carmine@paolino.me']
 
-  spec.summary       = 'Build AI features the Ruby way: a delightful Ruby AI framework for every major AI provider.'
-  spec.description   = 'Build AI features the Ruby way. A delightful Ruby AI framework that feels at home in ' \
-                       'Rails: switch models without rewriting your code, then scale from a single call to ' \
-                       'production agents, RAG, and workflows. Features chat (text, images, audio, PDFs), ' \
-                       'image generation, embeddings, tools (function calling), structured output, Rails ' \
-                       'integration, and streaming. Works with OpenAI, Azure, Anthropic, Google Gemini, ' \
+  spec.summary       = 'The Ruby AI framework: build AI features the Ruby way with every major AI provider.'
+  spec.description   = 'The Ruby AI framework. Build AI features the Ruby way, with conventions that feel at ' \
+                       'home in Rails: switch models without rewriting your code, then grow from a single call ' \
+                       'to production agents that run code in a sandbox, follow skills, and resume across ' \
+                       'jobs. Features chat (text, images, audio, PDFs), tools, MCP, structured output, ' \
+                       'evaluations, embeddings, image, audio, and video generation, Rails integration, and ' \
+                       'streaming. Works with OpenAI, Azure, Anthropic, Google Gemini, ' \
                        'Vertex AI, AWS Bedrock, xAI, Cohere, DeepSeek, Mistral, Perplexity, OpenRouter, ' \
                        'ElevenLabs, Deepgram, Ollama and GPUStack (local models), and any OpenAI-compatible ' \
                        'API. Plain Ruby with a small set of runtime dependencies.'

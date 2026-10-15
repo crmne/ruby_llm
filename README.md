@@ -5,9 +5,9 @@
   <img src="/docs/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
 </picture>
 
-<strong>Build AI features the Ruby way</strong>
+<strong>The Ruby AI framework</strong>
 
-<p>RubyLLM is the Ruby-native AI framework. Work with models, tools, and agents through one consistent API, in plain Ruby or Rails.</p>
+<p>Build AI features the Ruby way: models, tools, agents, sandboxed code, evaluations, and Rails conventions, designed together, with one consistent API.</p>
 
 [Website](https://rubyllm.com/) · [Getting Started](https://rubyllm.com/getting-started/) · [What's New in 2.1](https://rubyllm.com/whats-new-in-2-1/)
 
@@ -209,7 +209,7 @@ The model evaluator checks meaning, so answers can use different wording. Declar
 
 ## A complete AI framework for Ruby
 
-Agents, evaluations, workflows, RAG, images, audio, and video. Built in, with usage tracking and Rails integration to bring them into your app.
+More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between: agents that run code safely, workflows, evaluations, observability, and the data they need, designed to work together.
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
 * **Vision:** Analyze images and videos
