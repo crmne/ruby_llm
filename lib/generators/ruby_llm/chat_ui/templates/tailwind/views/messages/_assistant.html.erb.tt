@@ -6,7 +6,7 @@
     </span>
   </div>
 
-  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="whitespace-pre-wrap"><%%= assistant.content %></div>
+  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="whitespace-pre-wrap"><%% if assistant.content.blank? && assistant.<%= chat_table_name.singularize %>.running? %><span class="text-gray-500">Thinking…</span><%% else %><%%= assistant.content %><%% end %></div>
 
   <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: assistant %>
 

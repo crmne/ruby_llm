@@ -121,6 +121,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     message_form = File.read(File.join(base_path, 'messages/_form.html.erb'))
     expect(message_form).to include('chat.pending_approvals.any?')
     expect(message_form).to include('Approve or deny the requests above to continue.')
+    expect(message_form.index('pending_approvals.any?')).to be < message_form.index('chat.running?')
+    expect(message_form).to include('Replying…')
+    expect(File.read(File.join(base_path, 'messages/_assistant.html.erb'))).to include('.running? %>')
     attachments = File.read(File.join(base_path, 'messages/_attachments.html.erb'))
     expect(attachments).to include('message.attachments.attached?')
     expect(attachments).to include('number_to_human_size(attachment.byte_size)')
@@ -227,6 +230,35 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       abort "broadcasts left to jobs: \#{later}" if later.any?
       refreshes = actions.size >= created.size && actions.uniq == [ "refresh" ]
       abort "broadcast \#{actions} for \#{created.size} messages" unless refreshes
+    RUBY
+  end
+
+  def running_reply_script(agent:, controller:, assigns:, chats_path:, job:, message_key:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      chat = #{agent}.create!
+      chat.add_message(role: :user, content: "Tell me about blocks")
+      chat.add_message(role: :assistant, content: "")
+      chat.update_columns(claim_token: "reply", claimed_until: 5.minutes.from_now)
+
+      html = #{controller}.render(:show, assigns: #{assigns})
+      [ "Thinking…", '<p id="new_#{message_key}"', "Replying…" ].each do |text|
+        abort "running page lacks \#{text}" unless html.include?(text)
+      end
+      abort "running page offers the form" if html.include?('name="#{message_key}[content]"')
+
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
+      abort "message answered \#{session.response.status}" unless session.response.status == 303
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" }
+      abort "enqueued \#{jobs}" if jobs.any?
+
+      chat.update_columns(claim_token: nil, claimed_until: nil)
+      html = #{controller}.render(:show, assigns: #{assigns})
+      abort "finished page still thinks" if html.include?("Thinking…")
+      abort "finished page lacks the form" unless html.include?('name="#{message_key}[content]"')
     RUBY
   end
 
@@ -337,6 +369,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat = ChatAgent.find(params[:chat_id])',
         'content = params.dig(:message, :content)',
         'if @chat.pending_approvals.any?',
+        'elsif @chat.running?',
         'if content.present?',
         'ChatResponseJob.perform_later',
         'format.turbo_stream',
@@ -436,6 +469,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
         'content = params.dig(:llm_message, :content)',
         'if @llm_chat.pending_approvals.any?',
+        'elsif @llm_chat.running?',
         'if content.present?',
         'LlmChatResponseJob.perform_later',
         'format.turbo_stream',
@@ -670,6 +704,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
           success, output = run_rails_runner(broadcast_order_script(**config[:approval_flow]))
           expect(success).to be(true), output
+        end
+      end
+
+      it 'shows Thinking and Replying while a reply runs, and refuses messages' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(running_reply_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
         end
       end
 

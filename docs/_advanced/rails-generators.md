@@ -85,6 +85,8 @@ The generator creates:
 
 Start your server and visit `http://localhost:3000/chats`.
 
+Replies stream into the page as they arrive. While the job runs the chat, an empty reply shows "Thinking…" and the message form gives way to "Replying…". The page refreshes when the job finishes, which brings the form back. `MessagesController` refuses a message sent in the meantime. It reads `chat.running?`, so a job that dies frees the chat once its claim expires.
+
 The UI generator also supports custom model names:
 
 ```bash

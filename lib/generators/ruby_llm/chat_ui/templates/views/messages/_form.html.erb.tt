@@ -1,5 +1,7 @@
 <%% if <%= chat_variable_name %>.pending_approvals.any? %>
   <p id="new_<%= message_variable_name %>" style="margin: 0;">Approve or deny the requests above to continue.</p>
+<%% elsif <%= chat_variable_name %>.running? %>
+  <p id="new_<%= message_variable_name %>" style="margin: 0; color: #666;">Replying…</p>
 <%% else %>
   <%%= form_with(model: <%= message_variable_name %>, url: <%= chat_model_name.include?('::') ? "#{chat_model_name.split('::').first.underscore}_#{chat_model_name.demodulize.underscore}_#{message_model_name.demodulize.underscore.pluralize}_path(#{chat_variable_name})" : "[#{chat_variable_name}, #{message_variable_name}]" %>, id: "new_<%= message_variable_name %>") do |form| %>
     <%% if <%= message_variable_name %>.errors.any? %>
