@@ -156,10 +156,18 @@ class Message < ApplicationRecord
 
   def broadcast_append_chunk(content)
     broadcast_append_to "chat_#{chat_id}",
-      target: "message_#{id}_content",
+      target: "message_#{id}_stream",
       content: ERB::Util.html_escape(content.to_s)
   end
 end
+```
+
+```erb
+<%# app/views/messages/_assistant.html.erb %>
+<% streaming = assistant.content.blank? && assistant.chat.running? %>
+<div id="message_<%= assistant.id %>"<%= " data-turbo-permanent" if streaming %>>
+  <div id="message_<%= assistant.id %>_<%= streaming ? "stream" : "content" %>"><%= assistant.content %></div>
+</div>
 ```
 
 ```erb
@@ -168,7 +176,7 @@ end
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 ```
 
-Each chunk is sent once and appended as plain text, so a reply costs as many bytes as it has. The empty assistant message is appended as soon as it is created, so it is on the page before its first chunk. While it streams, the partial marks it `data-turbo-permanent`, so a refresh neither removes it nor clears the text streamed so far. When the reply is saved, the message replaces itself once with the finished text, which repairs any chunk that arrived early or out of order. Streamed text never waits for a refresh. Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
+Each chunk is sent once and appended as plain text, so a reply costs as many bytes as it has. The empty assistant message is appended as soon as it is created, so it is on the page before its first chunk. While it streams, the partial marks it `data-turbo-permanent`, so a refresh neither removes it nor clears the text streamed so far. When the reply is saved, the message replaces itself once with the finished text, which repairs any chunk that arrived early or out of order. The finished message has no `_stream` element, so a chunk that arrives after the replace finds no target and Turbo drops it. Streamed text never waits for a refresh. Morphing needs `<%= yield :head %>` in your layout. The chat UI generator adds it when your layout lacks it.
 
 #### Solution 2: Client-Side Reordering
 

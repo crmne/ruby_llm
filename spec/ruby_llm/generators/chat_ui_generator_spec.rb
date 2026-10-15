@@ -125,6 +125,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(message_form).to include('Replying…')
     expect(assistant_partial).to include('.running? %>')
     expect(assistant_partial).to include('" data-turbo-permanent" if streaming')
+    expect(assistant_partial).to include('<%= streaming ? "stream" : "content" %>')
     attachments = File.read(File.join(base_path, 'messages/_attachments.html.erb'))
     expect(attachments).to include('message.attachments.attached?')
     expect(attachments).to include('number_to_human_size(attachment.byte_size)')
@@ -357,7 +358,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         acts_as_message_lines: ['acts_as_message'],
         stream: "chat_\#{chat_id}",
         broadcast_target_line: "broadcast_append_to \"chat_\#{chat_id}\"",
-        content_target_line: "target: \"message_\#{id}_content\""
+        content_target_line: "target: \"message_\#{id}_stream\""
       },
       controllers_example: 'controllers reference correct model classes',
       chats_controller_path: 'app/controllers/chats_controller.rb',
@@ -456,7 +457,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         ],
         stream: "llm_chat_\#{llm_chat_id}",
         broadcast_target_line: "broadcast_append_to \"llm_chat_\#{llm_chat_id}\"",
-        content_target_line: "target: \"llm_message_\#{id}_content\""
+        content_target_line: "target: \"llm_message_\#{id}_stream\""
       },
       controllers_example: 'controllers reference correct namespaced model classes',
       chats_controller_path: 'app/controllers/llm/chats_controller.rb',

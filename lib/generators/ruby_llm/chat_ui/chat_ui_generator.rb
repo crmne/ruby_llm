@@ -189,7 +189,7 @@ module RubyLLM
 
   def broadcast_append_chunk(content)
     broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",
-      target: "#{msg_var}_\#{id}_content",
+      target: "#{msg_var}_\#{id}_stream",
       content: ERB::Util.html_escape(content.to_s)
   end
         RUBY

@@ -3,10 +3,10 @@
 <div id="<%= message_variable_name %>_<%%= assistant.id %>" class="<%= message_variable_name %>"<%%= " data-turbo-permanent" if streaming %>
      style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #28a745;">
   <div style="font-weight: bold; margin-bottom: 5px;">Assistant</div>
-  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" style="white-space: pre-wrap;"><%%= assistant.content %></div>
+  <div id="<%= message_variable_name %>_<%%= assistant.id %>_<%%= streaming ? "stream" : "content" %>" style="white-space: pre-wrap;"><%%= assistant.content %></div>
   <%% if streaming %>
     <div class="thinking" style="color: #666;">Thinking…</div>
-    <style>#<%= message_variable_name %>_<%%= assistant.id %>_content:not(:empty) ~ .thinking { display: none; }</style>
+    <style>#<%= message_variable_name %>_<%%= assistant.id %>_stream:not(:empty) ~ .thinking { display: none; }</style>
   <%% end %>
   <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: assistant %>
   <div style="font-size: 0.85em; color: #666; margin-top: 5px;">

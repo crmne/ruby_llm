@@ -7,7 +7,7 @@
     </span>
   </div>
 
-  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="peer whitespace-pre-wrap"><%%= assistant.content %></div>
+  <div id="<%= message_variable_name %>_<%%= assistant.id %>_<%%= streaming ? "stream" : "content" %>" class="peer whitespace-pre-wrap"><%%= assistant.content %></div>
   <%% if streaming %>
     <div class="hidden peer-empty:block text-gray-500">Thinking…</div>
   <%% end %>
