@@ -39,7 +39,7 @@ hero:
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">19 providers. One Ruby API.</h2>
+    <h2 class="home-heading">19 providers. One API.</h2>
     <p class="home-lead">
       Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
     </p>
@@ -104,201 +104,7 @@ ruby_llm provider-gem Acme \
   </div>
 </section>
 
-<section id="code-examples" class="home-section home-code-section">
-  <div class="home-section-inner">
-    <h2 class="home-heading">Start with one line.<br>Add files, tools, and agents</h2>
-  </div>
-
-  <div class="home-steps">
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Just ask</h3>
-        <p class="home-step-desc">Ask a question, then ask again. The chat keeps the conversation history, so every follow-up has context.</p>
-        <a class="home-step-link" href="{% link _core_features/chat.md %}">Chat guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-chat = RubyLLM.chat
-chat.ask "What's the best way to learn Ruby?"
-# Build small things you care about...
-
-chat.ask "What should I build first?"
-# A command-line tool for something you do every day...
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Stream responses</h3>
-        <p class="home-step-desc">Pass a block to display the response as it arrives, in your terminal or a Rails view.</p>
-        <a class="home-step-link" href="{% link _core_features/streaming.md %}">Streaming guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-chat = RubyLLM.chat
-chat.ask "Tell me a story about Ruby" do |chunk|
-  print chunk.content
-end
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Send files</h3>
-        <p class="home-step-desc">Ask about an image, a recording, or a PDF. Pass local paths, URLs, or several files at once with <code>with:</code> and RubyLLM prepares them for the model.</p>
-        <a class="home-step-link" href="{% link _core_features/attachments.md %}">Attachments guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
-chat.ask "What's in this image?", with: "ruby_conf.jpg"
-chat.ask "Summarize", with: "https://example.com/q3.pdf"
-chat.ask "Recap this call", with: ["call.wav", "notes.pdf"]
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Give the model tools</h3>
-        <p class="home-step-desc">Describe a tool in a Ruby class and implement <code>execute</code>. RubyLLM runs the tool calls and sends the results back to the model.</p>
-        <a class="home-step-link" href="{% link _core_features/tools.md %}">Tools guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class Weather < RubyLLM::Tool
-  description "Get current weather"
-
-  def execute(latitude:, longitude:)
-    url = "https://api.open-meteo.com/v1/forecast"
-    query = { latitude:, longitude:, current_weather: true }
-    JSON.parse(Faraday.get(url, query).body)
-  end
-end
-
-chat.with_tools(Weather).ask "What's the weather in Berlin?"
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Connect to MCP servers</h3>
-        <p class="home-step-desc">Describe a Model Context Protocol server in a Ruby class. Its tools become the model's tools, and you choose which ones it sees.</p>
-        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP client guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class Linear < RubyLLM::MCP
-  url "https://mcp.linear.app/mcp"
-  inputs :user
-  bearer_token { user.linear_token }
-  only :list_issues, :get_issue
-end
-
-chat.with_mcp(Linear.new(user: current_user))
-    .ask "What's blocking the release?"
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Get structured output</h3>
-        <p class="home-step-desc">Define the fields you want in a Ruby schema. Read the result as a Hash with <code>response.parsed</code>.</p>
-        <a class="home-step-link" href="{% link _core_features/structured-output.md %}">Structured output guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class ProductSchema < Schematist::Schema
-  string :name
-  number :price
-  array :features do
-    string
-  end
-end
-
-response = chat.with_schema(ProductSchema)
-               .ask "Analyze this", with: "product.txt"
-response.parsed["features"]
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Define an agent</h3>
-        <p class="home-step-desc">Give an agent its model, instructions, and tools in a Ruby class. In Rails, it saves its conversation, and <code>find</code> picks it up again in any request or job.</p>
-        <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class SupportAgent < RubyLLM::Agent
-  chat_model Chat
-  model "{{ site.models.default_chat }}"
-  instructions "Refund unopened items within 30 days."
-  tools LookupOrder, IssueRefund
-end
-
-SupportAgent.find(chat_id).ask "Where's my refund?"
-```
-{: .home-code-card }
-
-</div>
-    </div>
-
-    <div id="evaluations" class="home-step">
-      <div class="home-step-text">
-        <h3 class="home-step-title">Evaluate your agents</h3>
-        <p class="home-step-desc">Run your agent against a dataset of questions and expected answers. RubyLLM checks correctness by default. Use the same evaluation from Ruby, RSpec, Minitest, or Rake.</p>
-        <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
-      </div>
-      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
-
-```ruby
-class SupportEvaluation < RubyLLM::Evaluation
-  def perform(input)
-    SupportAgent.new.ask(input)
-  end
-end
-```
-{: .home-code-card data-title="app/evals/support_evaluation.rb" }
-
-```yaml
-cases:
-  - name: within_return_window
-    inputs: Can I return an unopened item after 14 days?
-    expected_output: Yes, within 30 days if it is unopened.
-```
-{: .home-code-card data-title="app/evals/support_evaluation.yml" }
-
-</div>
-    </div>
-  </div>
-</section>
-
-<section id="complete" class="home-section home-band home-complete-section">
+<section id="complete" class="home-section home-complete-section">
   <div class="home-section-inner">
     <h2 class="home-heading">A complete AI framework for Ruby</h2>
     <p class="home-lead">
@@ -529,7 +335,7 @@ RubyLLM.moderate(comment.body).flagged?
   </div>
 </section>
 
-<section id="rails-integration" class="home-section home-rails-section">
+<section id="rails-integration" class="home-section home-band home-rails-section">
   <div class="home-section-inner">
     <h2 class="home-heading">Feels at home in Rails</h2>
     <p class="home-lead">
@@ -600,6 +406,200 @@ app/
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--rails" href="{% link _advanced/rails.md %}">Read the Rails guide</a>
+    </div>
+  </div>
+</section>
+
+<section id="code-examples" class="home-section home-code-section">
+  <div class="home-section-inner">
+    <h2 class="home-heading">Start with one line.<br>Add files, tools, and agents</h2>
+  </div>
+
+  <div class="home-steps">
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Just ask</h3>
+        <p class="home-step-desc">Ask a question, then ask again. The chat keeps the conversation history, so every follow-up has context.</p>
+        <a class="home-step-link" href="{% link _core_features/chat.md %}">Chat guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+chat = RubyLLM.chat
+chat.ask "What's the best way to learn Ruby?"
+# Build small things you care about...
+
+chat.ask "What should I build first?"
+# A command-line tool for something you do every day...
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Stream responses</h3>
+        <p class="home-step-desc">Pass a block to display the response as it arrives, in your terminal or a Rails view.</p>
+        <a class="home-step-link" href="{% link _core_features/streaming.md %}">Streaming guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+chat = RubyLLM.chat
+chat.ask "Tell me a story about Ruby" do |chunk|
+  print chunk.content
+end
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Send files</h3>
+        <p class="home-step-desc">Ask about an image, a recording, or a PDF. Pass local paths, URLs, or several files at once with <code>with:</code> and RubyLLM prepares them for the model.</p>
+        <a class="home-step-link" href="{% link _core_features/attachments.md %}">Attachments guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+chat = RubyLLM.chat(model: "{{ site.models.gemini_current }}")
+chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "Summarize", with: "https://example.com/q3.pdf"
+chat.ask "Recap this call", with: ["call.wav", "notes.pdf"]
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Give the model tools</h3>
+        <p class="home-step-desc">Describe a tool in a Ruby class and implement <code>execute</code>. RubyLLM runs the tool calls and sends the results back to the model.</p>
+        <a class="home-step-link" href="{% link _core_features/tools.md %}">Tools guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class Weather < RubyLLM::Tool
+  description "Get current weather"
+
+  def execute(latitude:, longitude:)
+    url = "https://api.open-meteo.com/v1/forecast"
+    query = { latitude:, longitude:, current_weather: true }
+    JSON.parse(Faraday.get(url, query).body)
+  end
+end
+
+chat.with_tools(Weather).ask "What's the weather in Berlin?"
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Connect to MCP servers</h3>
+        <p class="home-step-desc">Describe a Model Context Protocol server in a Ruby class. Its tools become the model's tools, and you choose which ones it sees.</p>
+        <a class="home-step-link" href="{% link _core_features/mcp.md %}">MCP client guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class Linear < RubyLLM::MCP
+  url "https://mcp.linear.app/mcp"
+  inputs :user
+  bearer_token { user.linear_token }
+  only :list_issues, :get_issue
+end
+
+chat.with_mcp(Linear.new(user: current_user))
+    .ask "What's blocking the release?"
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Get structured output</h3>
+        <p class="home-step-desc">Define the fields you want in a Ruby schema. Read the result as a Hash with <code>response.parsed</code>.</p>
+        <a class="home-step-link" href="{% link _core_features/structured-output.md %}">Structured output guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class ProductSchema < Schematist::Schema
+  string :name
+  number :price
+  array :features do
+    string
+  end
+end
+
+response = chat.with_schema(ProductSchema)
+               .ask "Analyze this", with: "product.txt"
+response.parsed["features"]
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Define an agent</h3>
+        <p class="home-step-desc">Give an agent its model, instructions, and tools in a Ruby class. In Rails, it saves its conversation, and <code>find</code> picks it up again in any request or job.</p>
+        <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  chat_model Chat
+  model "{{ site.models.default_chat }}"
+  instructions "Refund unopened items within 30 days."
+  tools LookupOrder, IssueRefund
+end
+
+SupportAgent.find(chat_id).ask "Where's my refund?"
+```
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div id="evaluations" class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Evaluate your agents</h3>
+        <p class="home-step-desc">Run your agent against a dataset of questions and expected answers. RubyLLM checks correctness by default. Use the same evaluation from Ruby, RSpec, Minitest, or Rake.</p>
+        <a class="home-step-link" href="{% link _advanced/evaluations.md %}">Evaluations guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class SupportEvaluation < RubyLLM::Evaluation
+  def perform(input)
+    SupportAgent.new.ask(input)
+  end
+end
+```
+{: .home-code-card data-title="app/evals/support_evaluation.rb" }
+
+```yaml
+cases:
+  - name: within_return_window
+    inputs: Can I return an unopened item after 14 days?
+    expected_output: Yes, within 30 days if it is unopened.
+```
+{: .home-code-card data-title="app/evals/support_evaluation.yml" }
+
+</div>
     </div>
   </div>
 </section>

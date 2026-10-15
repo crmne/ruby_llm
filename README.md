@@ -28,11 +28,79 @@ https://github.com/user-attachments/assets/519fcb20-ab8c-4af3-9185-0953b3ba7b81
 
 ---
 
-## 19 providers. One Ruby API.
+## 19 providers. One API.
 
 Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
 
 [Browse models and pricing](https://rubyllm.com/available-models/) · [Connect a provider](https://rubyllm.com/configuration-providers/)
+
+## A complete AI framework for Ruby
+
+More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between: agents that run code safely, workflows, evaluations, observability, and the data they need, designed to work together.
+
+* **Chat:** Conversational AI with `RubyLLM.chat`
+* **Vision:** Analyze images and videos
+* **Audio:** Transcribe speech with `RubyLLM.transcribe` and generate it with `RubyLLM.speak`
+* **Documents:** Ask questions about PDFs, text files, and other supported formats
+* **OCR:** Turn documents into markdown with `RubyLLM.ocr`
+* **Image generation:** Create images with `RubyLLM.paint`
+* **Video generation:** Create videos with `RubyLLM.animate`
+* **Embeddings:** Generate embeddings with `RubyLLM.embed`
+* **Reranking:** Order retrieval candidates by relevance with `RubyLLM.rerank`
+* **Moderation:** Content flags, categories, and scores with `RubyLLM.moderate`
+* **Judgments:** Probabilities, choices, and scores with `RubyLLM::Judge` and `RubyLLM.judge`
+* **Tools:** Let AI call your Ruby methods
+* **Tool approval:** Park a run until a human approves with `requires_approval`
+* **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
+* **Provider tools:** Web search, code execution, and MCP connectors with `with_provider_tools`
+* **Code execution (main):** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
+* **Skills (main):** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/next/skills/)
+* **Agents:** Reusable assistants with `RubyLLM::Agent`
+* **Evaluations (main):** Reusable datasets, model criteria, and Ruby assertions with [`RubyLLM::Evaluation`](https://rubyllm.com/next/evaluations/)
+* **Prompt templates:** ERB prompts in `app/prompts`, rendered with `RubyLLM.render_prompt`
+* **Workflows:** Correlate multi-agent runs in your telemetry with `RubyLLM.workflow`
+* **Structured output:** Define a Ruby schema and read the result with `response.parsed`
+* **Streaming:** Real-time responses with blocks
+* **Rails:** Active Record persistence, Active Storage attachments, Hotwire streaming, and generators
+* **Files:** Upload once and reuse across chats with `RubyLLM.upload`
+* **Prompt caching:** Turn on the provider's cache with `with_caching` and `cache_until_here`
+* **Fallbacks and cancellation:** Retry on backup models with `with_fallbacks`, stop a run with `cancel`
+* **Cost tracking:** A per-attempt usage ledger behind `chat.tokens` and `chat.cost`
+* **Async:** Fiber-based concurrency
+* **Model registry:** Browse capabilities, limits, and pricing across providers
+* **Extended thinking:** Control, view, and persist model deliberation
+* **Citations:** Normalized source citations from documents, search, and grounding
+* **Batches:** Provider-side batch processing with provider-specific discounts via `RubyLLM.batch`
+* **Compaction:** Let providers condense long conversations with `with_compaction`
+* **Token counting:** Count a request before you send it with `count_tokens`
+* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, and any OpenAI-compatible API
+
+## Feels at home in Rails
+
+Save conversations with Active Record and stream replies with Hotwire. The generators give you a working chat UI. Watch the two-minute demo.
+
+https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345
+
+```bash
+# Install Rails Integration
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
+bin/rails ruby_llm:load_models
+
+# Add Chat UI (optional)
+bin/rails generate ruby_llm:chat_ui
+```
+
+```ruby
+class Chat < ApplicationRecord
+  acts_as_chat
+end
+
+chat = Chat.create! model: "gpt-5.6-luna"
+chat.ask "What's in this file?", with: "report.pdf"
+```
+
+Start your Rails server and visit `http://localhost:3000/chats` to try the chat interface. See the [Rails guide](https://rubyllm.com/rails/) for persistence, streaming, and background jobs.
 
 ## Start with one line. Add files, tools, and agents
 
@@ -207,47 +275,6 @@ report.cost.total
 
 The model evaluator checks meaning, so answers can use different wording. Declare your own criteria, add Ruby assertions, or choose a configured evaluator agent or judgment model. [Read the evaluation guides](https://rubyllm.com/next/evaluations/).
 
-## A complete AI framework for Ruby
-
-More than a client for model APIs. RubyLLM gives your application the conventions, the runtime, and every piece in between: agents that run code safely, workflows, evaluations, observability, and the data they need, designed to work together.
-
-* **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and videos
-* **Audio:** Transcribe speech with `RubyLLM.transcribe` and generate it with `RubyLLM.speak`
-* **Documents:** Ask questions about PDFs, text files, and other supported formats
-* **OCR:** Turn documents into markdown with `RubyLLM.ocr`
-* **Image generation:** Create images with `RubyLLM.paint`
-* **Video generation:** Create videos with `RubyLLM.animate`
-* **Embeddings:** Generate embeddings with `RubyLLM.embed`
-* **Reranking:** Order retrieval candidates by relevance with `RubyLLM.rerank`
-* **Moderation:** Content flags, categories, and scores with `RubyLLM.moderate`
-* **Judgments:** Probabilities, choices, and scores with `RubyLLM::Judge` and `RubyLLM.judge`
-* **Tools:** Let AI call your Ruby methods
-* **Tool approval:** Park a run until a human approves with `requires_approval`
-* **The agentic loop:** Drive it yourself with `ask_later`, `step`, and `complete?`
-* **Provider tools:** Web search, code execution, and MCP connectors with `with_provider_tools`
-* **Code execution (main):** Let the model run Ruby, Python, JavaScript, and shell in a sandbox on your servers with [`with_code_execution`](https://rubyllm.com/next/code-execution/)
-* **Skills (main):** Teach the model your workflows with folders of instructions and scripts in the Agent Skills format with [`with_skills`](https://rubyllm.com/next/skills/)
-* **Agents:** Reusable assistants with `RubyLLM::Agent`
-* **Evaluations (main):** Reusable datasets, model criteria, and Ruby assertions with [`RubyLLM::Evaluation`](https://rubyllm.com/next/evaluations/)
-* **Prompt templates:** ERB prompts in `app/prompts`, rendered with `RubyLLM.render_prompt`
-* **Workflows:** Correlate multi-agent runs in your telemetry with `RubyLLM.workflow`
-* **Structured output:** Define a Ruby schema and read the result with `response.parsed`
-* **Streaming:** Real-time responses with blocks
-* **Rails:** Active Record persistence, Active Storage attachments, Hotwire streaming, and generators
-* **Files:** Upload once and reuse across chats with `RubyLLM.upload`
-* **Prompt caching:** Turn on the provider's cache with `with_caching` and `cache_until_here`
-* **Fallbacks and cancellation:** Retry on backup models with `with_fallbacks`, stop a run with `cancel`
-* **Cost tracking:** A per-attempt usage ledger behind `chat.tokens` and `chat.cost`
-* **Async:** Fiber-based concurrency
-* **Model registry:** Browse capabilities, limits, and pricing across providers
-* **Extended thinking:** Control, view, and persist model deliberation
-* **Citations:** Normalized source citations from documents, search, and grounding
-* **Batches:** Provider-side batch processing with provider-specific discounts via `RubyLLM.batch`
-* **Compaction:** Let providers condense long conversations with `with_compaction`
-* **Token counting:** Count a request before you send it with `count_tokens`
-* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, and any OpenAI-compatible API
-
 ## Installation
 
 Install RubyLLM 2.1:
@@ -267,33 +294,6 @@ end
 ```
 
 Configure the other providers used by the examples as needed: Gemini for files, xAI for video, Mistral for OCR, and Cohere for reranking. [Getting Started](https://rubyllm.com/getting-started/) shows each setup beside its example. Upgrading an existing app? Follow the [upgrade guide](https://rubyllm.com/upgrading/).
-
-## Feels at home in Rails
-
-Save conversations with Active Record and stream replies with Hotwire. The generators give you a working chat UI. Watch the two-minute demo.
-
-https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345
-
-```bash
-# Install Rails Integration
-bin/rails generate ruby_llm:install
-bin/rails db:migrate
-bin/rails ruby_llm:load_models
-
-# Add Chat UI (optional)
-bin/rails generate ruby_llm:chat_ui
-```
-
-```ruby
-class Chat < ApplicationRecord
-  acts_as_chat
-end
-
-chat = Chat.create! model: "gpt-5.6-luna"
-chat.ask "What's in this file?", with: "report.pdf"
-```
-
-Start your Rails server and visit `http://localhost:3000/chats` to try the chat interface. See the [Rails guide](https://rubyllm.com/rails/) for persistence, streaming, and background jobs.
 
 ## AI coding assistants
 
