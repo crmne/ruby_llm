@@ -7,7 +7,7 @@
 <%% else %>
   <div id="<%= message_variable_name %>_<%%= tool.id %>" class="<%= message_variable_name %>"
        style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #6b7280; background: #f9fafb;">
-    <div style="font-weight: bold; margin-bottom: 5px;">Tool</div>
+    <div style="font-weight: bold; margin-bottom: 5px;"><%%= tool_result_label(tool) %> result</div>
     <pre style="white-space: pre-wrap; margin: 0;"><%%= tool.content.presence || "(no output)" %></pre>
     <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: tool %>
     <div style="font-size: 0.85em; color: #666; margin-top: 5px;">

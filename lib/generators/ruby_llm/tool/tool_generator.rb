@@ -49,10 +49,6 @@ module RubyLLM
         tool_class_name.demodulize.underscore
       end
 
-      def tool_display_name
-        tool_class_name.demodulize.delete_suffix('Tool')
-      end
-
       # Mirrors RubyLLM::Tool.tool_name, the key the runtime partial lookup uses.
       def tool_partial_name
         tool_file_name.delete_suffix('_tool')
