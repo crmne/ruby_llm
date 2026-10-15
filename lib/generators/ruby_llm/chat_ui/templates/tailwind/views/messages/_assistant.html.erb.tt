@@ -1,6 +1,6 @@
 <%% assistant ||= local_assigns[:<%= message_model_name.demodulize.underscore %>] %>
 <%% streaming = assistant.content.blank? && assistant.<%= chat_table_name.singularize %>.running? %>
-<div id="<%= message_variable_name %>_<%%= assistant.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-green-50"<%%= " data-streaming" if streaming %>
+<div id="<%%= dom_id(assistant) %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-green-50"<%%= " data-streaming" if streaming %>
      data-controller="chat-message" data-action="turbo:morph-element->chat-message#restore">
   <div>
     <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700">
@@ -8,7 +8,7 @@
     </span>
   </div>
 
-  <div id="<%= message_variable_name %>_<%%= assistant.id %>_<%%= streaming ? "stream" : "content" %>" data-chat-message-target="source" class="peer whitespace-pre-wrap"><%%= assistant.content %></div>
+  <div id="<%%= dom_id(assistant) %>_<%%= streaming ? "stream" : "content" %>" data-chat-message-target="source" class="peer whitespace-pre-wrap"><%%= assistant.content %></div>
   <%% if streaming %>
     <div class="hidden peer-empty:block text-gray-500">Thinking…</div>
   <%% end %>

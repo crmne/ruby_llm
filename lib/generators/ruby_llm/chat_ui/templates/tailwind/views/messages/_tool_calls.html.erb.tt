@@ -1,5 +1,5 @@
 <%% message = local_assigns[:<%= message_model_name.demodulize.underscore %>] || tool_calls %>
-<div id="<%= message_variable_name %>_<%%= message.id %>">
+<div id="<%%= dom_id(message) %>">
   <%% if message.content.present? %>
     <div class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-green-50" data-controller="chat-message" data-action="turbo:morph-element->chat-message#restore">
       <div>
@@ -8,7 +8,7 @@
         </span>
       </div>
 
-      <div id="<%= message_variable_name %>_<%%= message.id %>_content" data-chat-message-target="source" class="whitespace-pre-wrap"><%%= message.content %></div>
+      <div data-chat-message-target="source" class="whitespace-pre-wrap"><%%= message.content %></div>
       <div data-chat-message-target="output" class="space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6 [&_code]:font-mono [&_code]:text-sm [&_pre]:overflow-x-auto [&_pre]:rounded-md [&_pre]:bg-white [&_pre]:p-2 [&_a]:text-blue-600 [&_a]:underline"></div>
     </div>
   <%% end %>

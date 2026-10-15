@@ -122,7 +122,8 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
   end
 
   it 'orders streamed chunks and shows only the run without gaps' do
-    open_message('<span data-seq="2">b</span><span data-seq="1">a</span><span data-seq="4">d</span>', streaming: true)
+    open_message('<span data-seq="2" data-after="1">b</span><span data-seq="1">a</span>' \
+                 '<span data-seq="4" data-after="3">d</span>', streaming: true)
     wait_for { output_html.include?('ab') }
     expect(output_html).to include('ab')
     expect(output_html).not_to include('d')
@@ -130,6 +131,7 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     browser.execute(<<~JS)
       const chunk = document.createElement("span")
       chunk.dataset.seq = "3"
+      chunk.dataset.after = "2"
       chunk.textContent = "c"
       document.getElementById("message_1_stream").append(chunk)
     JS
@@ -137,8 +139,15 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     expect(output_html).to include('abcd')
   end
 
+  it 'joins chunks across indexes that carried no content' do
+    open_message('<span data-seq="5" data-after="2">c</span><span data-seq="2">ab</span>', streaming: true)
+    wait_for { output_html.include?('abc') }
+    expect(output_html).to include('abc')
+  end
+
   it 'drops a repeated chunk' do
-    open_message('<span data-seq="1">a</span><span data-seq="1">a</span><span data-seq="2">b</span>', streaming: true)
+    open_message('<span data-seq="1">a</span><span data-seq="1">a</span><span data-seq="2" data-after="1">b</span>',
+                 streaming: true)
     wait_for { output_html.include?('ab') }
     expect(output_html).to include('ab')
     expect(output_html).not_to include('aa')

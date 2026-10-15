@@ -31,6 +31,17 @@ module RubyLLM
         create_convention_directories
         create_application_agent
       end
+
+      def remove_generated_message_code_from_message_model
+        remove_generated_message_code
+      end
+
+      def install_active_storage
+        return if table_exists?('active_storage_blobs')
+
+        say '  acts_as_message stores attachments with Active Storage, which this app has not installed.', :yellow
+        rails_command 'active_storage:install'
+      end
     end
   end
 end

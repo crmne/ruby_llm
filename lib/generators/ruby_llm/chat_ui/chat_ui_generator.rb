@@ -198,23 +198,8 @@ module RubyLLM
         end
       end
 
-      def add_broadcasting_to_message_model
-        path = "app/models/#{message_model_name.underscore}.rb"
-        model = File.join(destination_root, path)
-        return explain_broadcasting("#{message_model_name} model not found.") unless File.exist?(model)
-        return inject_into_file(path, broadcasting_block, before: /^end\s*\z/) if behavior == :revoke
-
-        source = File.read(model)
-        return say_status(:identical, path) if source.include?(broadcasting_block)
-
-        if (previous = previous_broadcasting_blocks.find { |block| source.include?(block) })
-          gsub_file(path, previous) { broadcasting_block }
-        elsif source.match?(/broadcast_append_chunk|broadcasts_to|broadcasts_refreshes/)
-          explain_broadcasting("#{message_model_name} already has broadcasting code that RubyLLM did not write, " \
-                               'so it was left alone. Replace that code with:')
-        else
-          inject_into_file path, broadcasting_block, before: /^end\s*\z/
-        end
+      def remove_generated_broadcasting_from_message_model
+        remove_generated_message_code
       end
 
       def add_head_to_layout
@@ -253,45 +238,6 @@ module RubyLLM
         return if run("bin/importmap pin #{javascript_packages}")
 
         say "\n  Pin the chat UI's JavaScript dependencies: bin/importmap pin #{javascript_packages}", :yellow
-      end
-
-      def broadcasting_block
-        <<-RUBY
-
-  after_create_commit -> { broadcast_append_to #{chat_stream} if role.to_s == "assistant" && content.blank? }
-  after_update_commit -> { broadcast_replace_to #{chat_stream} }
-  after_destroy_commit -> { broadcast_remove_to #{chat_stream} }
-  after_commit -> { broadcast_refresh_to #{chat_stream} }
-
-  def broadcast_append_chunk(content, sequence)
-    broadcast_append_to #{chat_stream},
-      target: "#{message_variable_name}_\#{id}_stream",
-      content: %(<span data-seq="\#{sequence}">\#{ERB::Util.html_escape(content)}</span>)
-  end
-        RUBY
-      end
-
-      # The blocks earlier releases wrote, from 1.14 through 2.1, which a
-      # rerun replaces in place.
-      def previous_broadcasting_blocks
-        [<<-RUBY]
-
-  broadcasts_to ->(#{message_variable_name}) { "#{chat_variable_name}_\#{#{message_variable_name}.#{chat_association}_id}" }, inserts_by: :append
-
-  def broadcast_append_chunk(content)
-    broadcast_append_to #{chat_stream},
-      target: "#{message_variable_name}_\#{id}_content",
-      content: ERB::Util.html_escape(content.to_s)
-  end
-        RUBY
-      end
-
-      def chat_stream = %("#{chat_variable_name}_\#{#{chat_association}_id}")
-      def chat_association = chat_table_name.singularize
-
-      def explain_broadcasting(reason)
-        say reason, :yellow
-        say broadcasting_block, :yellow
       end
 
       def approval_model_name

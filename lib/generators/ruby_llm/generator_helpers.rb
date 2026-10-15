@@ -34,6 +34,64 @@ module RubyLLM
         File.exist?(File.join(destination_root, APPLICATION_AGENT_PATH))
       end
 
+      # Removes the broadcasting code and attachment declaration earlier
+      # versions wrote into the message model, which acts_as_message now
+      # provides, and explains what to do with broadcasting code RubyLLM
+      # did not write.
+      def remove_generated_message_code
+        return unless behavior == :invoke
+
+        path = "app/models/#{message_model_name.underscore}.rb"
+        model = File.join(destination_root, path)
+        return unless File.exist?(model)
+
+        source = File.read(model)
+        (generated_broadcasting_blocks + ["  has_many_attached :attachments\n"]).each do |code|
+          gsub_file(path, code, '') if source.include?(code)
+        end
+        explain_own_broadcasting(File.read(model))
+      end
+
+      def explain_own_broadcasting(source)
+        return unless source.match?(/broadcast_\w+_to|broadcasts_to|broadcasts_refreshes|broadcast_append_chunk/)
+        return if source.include?('broadcasts: false')
+
+        say "\n  #{message_model_name} broadcasts with Turbo itself, and acts_as_message now does too.", :yellow
+        say '  Remove that code to use RubyLLM\'s broadcasting, or keep it and write acts_as_message broadcasts: false.'
+      end
+
+      # The broadcasting blocks earlier versions of ruby_llm:chat_ui wrote:
+      # releases 1.14 through 2.1, and the numbered-chunk block before
+      # acts_as_message broadcast.
+      def generated_broadcasting_blocks
+        message = message_variable_name
+        chat = chat_variable_name
+        association = chat_table_name.singularize
+        stream = %("#{chat}_\#{#{association}_id}")
+        [<<-RELEASED, <<-NUMBERED]
+
+  broadcasts_to ->(#{message}) { "#{chat}_\#{#{message}.#{association}_id}" }, inserts_by: :append
+
+  def broadcast_append_chunk(content)
+    broadcast_append_to #{stream},
+      target: "#{message}_\#{id}_content",
+      content: ERB::Util.html_escape(content.to_s)
+  end
+        RELEASED
+
+  after_create_commit -> { broadcast_append_to #{stream} if role.to_s == "assistant" && content.blank? }
+  after_update_commit -> { broadcast_replace_to #{stream} }
+  after_destroy_commit -> { broadcast_remove_to #{stream} }
+  after_commit -> { broadcast_refresh_to #{stream} }
+
+  def broadcast_append_chunk(content, sequence)
+    broadcast_append_to #{stream},
+      target: "#{message}_\#{id}_stream",
+      content: %(<span data-seq="\#{sequence}">\#{ERB::Util.html_escape(content)}</span>)
+  end
+        NUMBERED
+      end
+
       def parse_model_mappings(allowed_types: APPLICATION_MODEL_TYPES, defaults: DEFAULT_MODEL_NAMES)
         @model_names = defaults.dup
         @explicit_model_mappings = []

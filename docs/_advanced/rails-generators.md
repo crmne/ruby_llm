@@ -34,7 +34,7 @@ The generator:
 - Creates application migrations and models for Chat and Message
 - Creates one migration for RubyLLM's internal model, tool-call, usage, and batch tables
 - Adds the `acts_as_chat` and `acts_as_message` declarations
-- Installs ActiveStorage for file attachments
+- Installs Active Storage, which `acts_as_message` uses for attachments
 - Creates an initializer for provider configuration
 - Creates the conventional AI app directories: `app/agents`, `app/tools`, `app/schemas`, `app/prompts`, `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`
 - Creates `app/agents/application_agent.rb`, the parent of your agents, pointed at your chat model
@@ -58,14 +58,19 @@ bin/rails generate ruby_llm:install
 
 bin/rails generate ruby_llm:install chat:Conversation message:ChatMessage
 bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage
-
-# Skip ActiveStorage if you don't need file attachments
-bin/rails generate ruby_llm:install --skip-active-storage
 ```
 
 The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
 
-For most apps, keep the default behavior (install ActiveStorage) so file attachments work out of the box. Use `--skip-active-storage` only when you're sure you won't send files to models.
+The generated models are one line each:
+
+```ruby
+class Message < ApplicationRecord
+  acts_as_message
+end
+```
+
+`acts_as_message` declares the message's attachments and, when turbo-rails and Action Cable are loaded, broadcasts the chat's messages with Turbo. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
 ## Adding a Chat UI
 
@@ -84,6 +89,17 @@ The generator creates:
 - **Routes**: RESTful routes for chats, messages, and approvals
 
 Start your server and visit `http://localhost:3000/chats`.
+
+The generated job streams each reply with the chunks' own `broadcast`:
+
+```ruby
+class ChatResponseJob < ApplicationJob
+  def perform(chat_id, content = nil)
+    chat = ChatAgent.find(chat_id)
+    content ? chat.ask(content, &:broadcast) : chat.complete(&:broadcast)
+  end
+end
+```
 
 Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller, `app/javascript/controllers/chat_message_controller.js`, puts the chunks in order and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. The generator pins its two dependencies, `marked` and `dompurify`, with `bin/importmap pin` at exact versions. In an app that bundles its JavaScript, it prints the `yarn add` command and `bin/rails stimulus:manifest:update` instead. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues). While the job runs the chat, an empty reply shows "Thinking…" and the message form gives way to "Replying…". The page refreshes when the job finishes, which brings the form back. `MessagesController` refuses a message sent in the meantime. It reads `chat.running?`, so a job that dies frees the chat once its claim expires.
 
@@ -230,26 +246,16 @@ Turbo Stream templates used by the generated chat UI:
 - `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create`.
 - `approvals/create.turbo_stream.erb` replaces the approval cards for `ApprovalsController#create`.
 
-## Setting Up ActiveStorage
+## Setting Up Active Storage
 
-The generator automatically configures ActiveStorage for file attachments. If you skipped it during generation, add it manually:
+`acts_as_message` stores attachments with Active Storage, and the install generator installs it. An application that does not have it yet runs:
 
 ```bash
 bin/rails active_storage:install
 bin/rails db:migrate
 ```
 
-Then add to your Message model:
-
-```ruby
-# app/models/message.rb
-class Message < ApplicationRecord
-  acts_as_message
-  has_many_attached :attachments  # Required for file attachments
-end
-```
-
-This `:attachments` association is only required on RubyLLM message records. The ActiveStorage attachments you pass to `with:` from your own models can use any name.
+The ActiveStorage attachments you pass to `with:` from your own models can use any name.
 
 ## Next Steps
 

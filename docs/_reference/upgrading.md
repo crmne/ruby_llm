@@ -61,6 +61,8 @@ If your chat model is not `Chat`, name it the way you did for the install genera
 
 It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
 
+The generator also removes the broadcasting code and the `has_many_attached :attachments` line that `ruby_llm:chat_ui` wrote into your message model, because `acts_as_message` now provides both, and installs Active Storage if your application lacks it. Broadcasting code you wrote yourself stays, and the generator tells you to remove it or set `broadcasts: false`. Rerunning `ruby_llm:chat_ui` cleans the model the same way.
+
 Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
 
 ## Messages Broadcast With Turbo

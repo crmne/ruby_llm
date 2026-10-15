@@ -17,9 +17,6 @@ module RubyLLM
 
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName ...'
 
-      class_option :skip_active_storage, type: :boolean, default: false,
-                                         desc: 'Skip ActiveStorage installation and attachment setup'
-
       desc 'Creates models and migrations for RubyLLM Rails integration\n' \
            'Usage: bin/rails g ruby_llm:install [chat:ChatName] [message:MessageName] ...'
 
@@ -53,32 +50,22 @@ module RubyLLM
       end
 
       def install_active_storage
-        return if options[:skip_active_storage]
-
-        say '  Installing ActiveStorage for file attachments...', :cyan
+        say '  Installing Active Storage for message attachments...', :cyan
         rails_command 'active_storage:install'
       end
 
       def show_install_info
         say "\n  ✅ RubyLLM installed!", :green
 
-        say '  ✅ ActiveStorage configured for file attachments support', :green unless options[:skip_active_storage]
+        say '  ✅ Active Storage installed for message attachments', :green
 
         say "\n  Next steps:", :yellow
         say '     1. Run: bin/rails db:migrate'
         say '     2. Run: bin/rails ruby_llm:load_models'
         say '     3. Set your API keys in config/initializers/ruby_llm.rb'
 
-        say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-5.6-luna').ask('Hello!')"
+        say "     4. Start chatting: #{chat_model_name}.create!.ask('Hello!')"
         say "     5. Optional UI: #{chat_ui_generator_command}"
-
-        if options[:skip_active_storage]
-          say "\n  📎 Note: ActiveStorage was skipped", :yellow
-          say '     File attachments won\'t work without ActiveStorage.'
-          say '     To enable later:'
-          say '       1. Run: bin/rails active_storage:install && bin/rails db:migrate'
-          say "       2. Add to your #{message_model_name} model: has_many_attached :attachments"
-        end
 
         say "\n  📚 Documentation: https://rubyllm.com", :cyan
 

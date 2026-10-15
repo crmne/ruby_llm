@@ -83,12 +83,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     tool_calls_partial = File.read(File.join(base_path, 'messages/_tool_calls.html.erb'))
     expect(tool_calls_partial).to include('message: message, tool_call: tool_call')
     expect(tool_calls_partial).to include('local_assigns[:message]')
-    expect(tool_calls_partial).to include('message_<%= message.id %>">')
+    expect(tool_calls_partial).to include('id="<%= dom_id(message) %>">')
     tool_calls_default = File.read(File.join(base_path, 'messages/tool_calls/_default.html.erb'))
     expect(tool_calls_default).to include('message_tool_call_<%= tool_call.id %>')
     tool_results_default = File.read(File.join(base_path, 'messages/tool_results/_default.html.erb'))
     expect(tool_results_default).to include('tool.tool_error_message')
-    expect(tool_results_default).to include('message_<%= tool.id %>')
+    expect(tool_results_default).to include('id="<%= dom_id(tool) %>"')
     expect(tool_results_default).not_to include('message_tool_result_<%= tool.id %>')
     # RubyLLM owns the models table, so the association is always :model no
     # matter what the app calls its chat class or the models UI resource.
@@ -156,32 +156,17 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(routes_content).to include('namespace :llm') if namespaced
   end
 
-  def expect_broadcasting_model(
-    path:,
-    acts_as_message_lines:,
-    stream:,
-    broadcast_target_line:,
-    content_target_line:
-  )
+  def expect_broadcasting_model(path:, acts_as_message_lines:)
     message_content = File.read(path)
 
     acts_as_message_lines.each do |line|
       expect(message_content).to include(line)
     end
-
-    expect(message_content).to include(%(after_commit -> { broadcast_refresh_to "#{stream}" }))
-    expect(message_content).to include(%(after_update_commit -> { broadcast_replace_to "#{stream}" }))
-    expect(message_content).to include(
-      %(after_create_commit -> { broadcast_append_to "#{stream}" if role.to_s == "assistant" && content.blank? })
-    )
-    expect(message_content).not_to include('broadcasts_to')
-    expect(message_content).to include('def broadcast_append_chunk(content, sequence)')
-    expect(message_content).to include('content: %(<span data-seq="')
-    expect(message_content).to include(%(after_destroy_commit -> { broadcast_remove_to "#{stream}" }))
-    expect(message_content).to include(broadcast_target_line)
-    expect(message_content).to include(content_target_line)
-    expect(message_content).to include('ERB::Util.html_escape(content)}</span>)')
+    expect(message_content).not_to include('broadcast')
+    expect(message_content).not_to include('has_many_attached')
   end
+
+  def plain_message_model = "class Message < ApplicationRecord\n  acts_as_message\nend\n"
 
   def expect_file_content(path, includes:, excludes: [])
     content = File.read(path)
@@ -189,13 +174,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     excludes.each { |line| expect(content).not_to include(line) }
   end
 
-  def expect_job_file(path:, class_name:, lookup_line:, ask_line:, last_message_line:, broadcast_lines:)
+  def expect_job_file(path:, class_name:, lookup_line:, ask_line:)
     job_content = File.read(path)
     expect(job_content).to include(class_name)
     expect(job_content).to include(lookup_line)
     expect(job_content).to include(ask_line)
-    expect(job_content).to include(last_message_line)
-    broadcast_lines.each { |line| expect(job_content).to include(line) }
+    expect(job_content).not_to include('broadcast_refresh_to')
   end
 
   # The script sends requests through the app, and each request resets
@@ -244,12 +228,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
       later = ActiveJob::Base.queue_adapter.enqueued_jobs.map { |job| job["job_class"] }.grep(/Turbo/)
       abort "broadcasts left to jobs: \#{later}" if later.any?
-      refreshes = actions.size >= created.size && actions.uniq == [ "refresh" ]
+      refreshes = actions.count("refresh") >= created.size && (actions - %w[refresh replace]).empty?
       abort "broadcast \#{actions} for \#{created.size} messages" unless refreshes
 
       actions.clear
       placeholder = chat.add_message(role: :assistant, content: "")
-      placeholder.broadcast_append_chunk("Hel", 1)
+      chunk = RubyLLM::Chunk.new(role: :assistant, content: "Hel")
+      chunk.index = 0
+      placeholder.broadcast_chunk(chunk)
       abort "streaming broadcast \#{actions}" unless actions.sort == %w[append append refresh]
     RUBY
   end
@@ -362,13 +348,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       job_file_path: 'app/jobs/chat_response_job.rb',
       routes_example: 'adds routes for default controllers',
       namespaced_routes: false,
-      broadcasting_example: 'adds broadcasting to message model',
+      broadcasting_example: 'leaves broadcasting to acts_as_message',
       broadcasting_options: {
         path: 'app/models/message.rb',
-        acts_as_message_lines: ['acts_as_message'],
-        stream: "chat_\#{chat_id}",
-        broadcast_target_line: "broadcast_append_to \"chat_\#{chat_id}\"",
-        content_target_line: "target: \"message_\#{id}_stream\""
+        acts_as_message_lines: ['acts_as_message']
       },
       controllers_example: 'controllers reference correct model classes',
       chats_controller_path: 'app/controllers/chats_controller.rb',
@@ -422,10 +405,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         path: 'app/jobs/chat_response_job.rb',
         class_name: 'class ChatResponseJob',
         lookup_line: 'chat = ChatAgent.find(chat_id)',
-        ask_line: 'chat.ask_later(content) if content',
-        last_message_line: 'message = chat.messages.last',
-        broadcast_lines: ['chat.broadcast_refresh_to "chat_',
-                          'message.broadcast_append_chunk(chunk.content, sequence[message.id] += 1)']
+        ask_line: 'content ? chat.ask(content, &:broadcast) : chat.complete(&:broadcast)'
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -460,15 +440,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       job_file_path: 'app/jobs/llm_chat_response_job.rb',
       routes_example: 'adds routes for namespaced controllers',
       namespaced_routes: true,
-      broadcasting_example: 'adds broadcasting to namespaced message model',
+      broadcasting_example: 'leaves broadcasting to acts_as_message in the namespaced model',
       broadcasting_options: {
         path: 'app/models/llm/message.rb',
         acts_as_message_lines: [
           "acts_as_message chat: :llm_chat, chat_class: 'Llm::Chat'"
-        ],
-        stream: "llm_chat_\#{llm_chat_id}",
-        broadcast_target_line: "broadcast_append_to \"llm_chat_\#{llm_chat_id}\"",
-        content_target_line: "target: \"llm_message_\#{id}_stream\""
+        ]
       },
       controllers_example: 'controllers reference correct namespaced model classes',
       chats_controller_path: 'app/controllers/llm/chats_controller.rb',
@@ -522,10 +499,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         path: 'app/jobs/llm_chat_response_job.rb',
         class_name: 'class LlmChatResponseJob',
         lookup_line: 'llm_chat = Llm::ChatAgent.find(llm_chat_id)',
-        ask_line: 'llm_chat.ask_later(content) if content',
-        last_message_line: 'llm_message = llm_chat.llm_messages.last',
-        broadcast_lines: ['llm_chat.broadcast_refresh_to "llm_chat_',
-                          'llm_message.broadcast_append_chunk(chunk.content, sequence[llm_message.id] += 1)']
+        ask_line: 'content ? llm_chat.ask(content, &:broadcast) : llm_chat.complete(&:broadcast)'
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -625,45 +599,64 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           end
         end
 
-        it 'keeps exactly one broadcasting block when run again, with or without --force' do
+        it 'leaves the message model to acts_as_message when run again, with or without --force' do
           Dir.mktmpdir do |destination|
             FileUtils.cp_r("#{app_path}/.", destination)
             within_test_app(destination) do
-              generated = File.read('app/models/message.rb')
               [%w[--skip], %w[--force]].each do |flags|
                 output, status = run_rails_generate('ruby_llm:chat_ui', *flags, chdir: destination)
                 expect(status.success?).to be(true), output
               end
 
-              expect(File.read('app/models/message.rb')).to eq(generated)
-              expect(generated.scan('def broadcast_append_chunk').size).to eq(1)
+              expect(File.read('app/models/message.rb')).to eq(plain_message_model)
             end
           end
         end
 
-        it 'replaces the broadcasting block an earlier release wrote' do
-          Dir.mktmpdir do |destination|
-            FileUtils.cp_r("#{app_path}/.", destination)
-            within_test_app(destination) do
-              generated = File.read('app/models/message.rb')
-              File.write('app/models/message.rb', <<~'RUBY')
-                class Message < ApplicationRecord
-                  acts_as_message
-                  has_many_attached :attachments
+        {
+          '2.1' => <<~'RUBY',
+            class Message < ApplicationRecord
+              acts_as_message
+              has_many_attached :attachments
 
-                  broadcasts_to ->(message) { "chat_#{message.chat_id}" }, inserts_by: :append
+              broadcasts_to ->(message) { "chat_#{message.chat_id}" }, inserts_by: :append
 
-                  def broadcast_append_chunk(content)
-                    broadcast_append_to "chat_#{chat_id}",
-                      target: "message_#{id}_content",
-                      content: ERB::Util.html_escape(content.to_s)
-                  end
-                end
-              RUBY
+              def broadcast_append_chunk(content)
+                broadcast_append_to "chat_#{chat_id}",
+                  target: "message_#{id}_content",
+                  content: ERB::Util.html_escape(content.to_s)
+              end
+            end
+          RUBY
+          'the numbered-chunk chat UI' => <<~'RUBY'
+            class Message < ApplicationRecord
+              acts_as_message
+              has_many_attached :attachments
 
-              output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
-              expect(status.success?).to be(true), output
-              expect(File.read('app/models/message.rb')).to eq(generated)
+              after_create_commit -> { broadcast_append_to "chat_#{chat_id}" if role.to_s == "assistant" && content.blank? }
+              after_update_commit -> { broadcast_replace_to "chat_#{chat_id}" }
+              after_destroy_commit -> { broadcast_remove_to "chat_#{chat_id}" }
+              after_commit -> { broadcast_refresh_to "chat_#{chat_id}" }
+
+              def broadcast_append_chunk(content, sequence)
+                broadcast_append_to "chat_#{chat_id}",
+                  target: "message_#{id}_stream",
+                  content: %(<span data-seq="#{sequence}">#{ERB::Util.html_escape(content)}</span>)
+              end
+            end
+          RUBY
+        }.each do |version, model|
+          it "removes the broadcasting #{version} wrote into the message model" do
+            Dir.mktmpdir do |destination|
+              FileUtils.cp_r("#{app_path}/.", destination)
+              within_test_app(destination) do
+                File.write('app/models/message.rb', model)
+
+                output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
+                expect(status.success?).to be(true), output
+                expect(File.read('app/models/message.rb')).to eq(plain_message_model)
+                expect(output).not_to include('broadcasts with Turbo itself')
+              end
             end
           end
         end
@@ -683,8 +676,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
               expect(status.success?).to be(true), output
               expect(File.read('app/models/message.rb')).to eq(custom)
-              expect(output).to include('Message already has broadcasting code that RubyLLM did not write')
-              expect(output).to include('def broadcast_append_chunk(content, sequence)')
+              expect(output).to include('Message broadcasts with Turbo itself, and acts_as_message now does too.')
+              expect(output).to include('acts_as_message broadcasts: false')
             end
           end
         end

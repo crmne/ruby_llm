@@ -335,7 +335,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     it 'honors model mappings that follow boolean options' do
       within_test_app(app_path) do
         output, status = run_rails_generate(
-          'ruby_llm:install', '--skip-active-storage', '--force',
+          'ruby_llm:install', '--quiet', '--force',
           'chat:Billing::Chat', 'message:Billing::Message'
         )
         expect(status.success?).to be(true), output
