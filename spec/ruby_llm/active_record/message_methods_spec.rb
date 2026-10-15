@@ -40,6 +40,8 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
   end
 
   describe 'Rails-backed message records' do
+    include_context 'with configured RubyLLM'
+
     let(:chat) { Chat.create!(model: model_for(:openai, :temperature)) }
 
     def tool_call
@@ -142,8 +144,6 @@ RSpec.describe RubyLLM::ActiveRecord::MessageMethods do
     end
 
     describe 'exporting the recorded cost' do
-      include_context 'with configured RubyLLM'
-
       let(:model) { model_for(:openrouter) }
       let(:chat) { Chat.create!(model: model, provider: :openrouter) }
 
