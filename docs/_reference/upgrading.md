@@ -61,28 +61,27 @@ If your chat model is not `Chat`, name it the way you did for the install genera
 
 It adds `claim_token` and `claimed_until` columns to your chats table and a `claimed_until` column to `ruby_llm_tool_calls`. They record which process runs a chat and its tool calls. The migration changes no existing data. The generator also creates any of RubyLLM's conventional directories your application lacks, such as `app/skills` and `app/sandboxes`, and an `app/agents/application_agent.rb` that points at your chat model, unless you already have one. New agents from `ruby_llm:agent` inherit from it.
 
-The generator also removes the broadcasting code and the `has_many_attached :attachments` line that `ruby_llm:chat_ui` wrote into your message model, because `acts_as_message` now provides both, and installs Active Storage if your application lacks it. Broadcasting code you wrote yourself stays, and the generator tells you to remove it or set `broadcasts: false`. Rerunning `ruby_llm:chat_ui` cleans the model the same way.
+The generator also removes the broadcasting code and the `has_many_attached :attachments` line that `ruby_llm:chat_ui` wrote into your message model, because `acts_as_message` now provides both, and turns on `config.broadcast_messages` when it removes that broadcasting code. It installs Active Storage if your application lacks it. Broadcasting code you wrote yourself stays untouched. Rerunning `ruby_llm:chat_ui` cleans the model the same way.
 
 Until it runs, RubyLLM claims nothing, and overlapping runs behave as they did in 2.1.
 
-## Messages Broadcast With Turbo
+## Messages Can Broadcast With Turbo
 
-> If your application broadcasts its messages with Turbo itself, for example with `broadcasts_to` or its own chunk broadcasting in a job, set `acts_as_message broadcasts: false` before you deploy 2.2, or every message is sent twice.
-{: .warning }
+An application that broadcasts its messages itself needs no change: RubyLLM's broadcasting is off unless you turn it on.
 
 ```ruby
-class Message < ApplicationRecord
-  acts_as_message broadcasts: false
+RubyLLM.configure do |config|
+  config.broadcast_messages = true
 end
 ```
 
-When turbo-rails and Action Cable are loaded, `acts_as_message` now broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
+With it on, and turbo-rails and Action Cable loaded, `acts_as_message` broadcasts a chat's messages to the chat record's stream, `turbo_stream_from @chat`. It appends an empty assistant reply when it is created, replaces a message when it is saved, removes it when it is destroyed, and refreshes the chat's page after every change and at the end of each run. Streamed chunks know their record, so a job streams with `chat.complete(&:broadcast)`. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
-Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that broadcasts needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`, or `broadcasts: false`.
+Broadcasting renders each message with its partial, chosen by `to_partial_path`, so an application that turns it on needs `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`. A model's `broadcasts:` option overrides the configuration.
 
 ## Messages Declare Their Attachments
 
-`acts_as_message` now declares `has_many_attached :attachments`, so Active Storage is required. Remove `has_many_attached :attachments` from your message model. An application without Active Storage runs `bin/rails active_storage:install` and `bin/rails db:migrate`.
+`acts_as_message` now declares `has_many_attached :attachments`, so you can remove that line from your message model. Without Active Storage, the model boots without attachments and RubyLLM logs how to add them; storing an attachment then raises `RubyLLM::ConfigurationError`. To add Active Storage, run `bin/rails active_storage:install` and `bin/rails db:migrate`.
 
 ## The Default Model Is GPT-6.1 Sol
 

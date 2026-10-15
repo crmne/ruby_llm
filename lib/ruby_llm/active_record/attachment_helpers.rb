@@ -8,7 +8,11 @@ module RubyLLM
       private
 
       def persist_content(message_record, attachments)
-        return unless message_record.respond_to?(:attachments)
+        unless message_record.respond_to?(:attachments)
+          raise RubyLLM::ConfigurationError,
+                "#{message_record.class.name} cannot store attachments without Active Storage. " \
+                'Load it with require "active_storage/engine", then run bin/rails active_storage:install.'
+        end
 
         attachables = prepare_for_active_storage(attachments)
         return if attachables.empty?

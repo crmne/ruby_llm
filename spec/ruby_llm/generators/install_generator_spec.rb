@@ -208,6 +208,14 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
+  it 'leaves message broadcasting off in the initializer' do
+    Dir.mktmpdir do |destination|
+      described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new).create_initializer
+
+      expect(File.read(File.join(destination, 'config/initializers/ruby_llm.rb'))).not_to include('broadcast_messages')
+    end
+  end
+
   describe 'with a mapped chat model' do
     it 'points ApplicationAgent at that model' do
       Dir.mktmpdir do |destination|

@@ -809,7 +809,8 @@ module RubyLLM
       private
 
       def broadcasts_messages?
-        self.class.message_class.constantize.include?(MessageBroadcasting)
+        message_class = self.class.message_class.constantize
+        message_class.include?(MessageBroadcasting) && message_class.broadcasting?
       end
 
       def completing

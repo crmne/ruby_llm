@@ -70,7 +70,7 @@ class Message < ApplicationRecord
 end
 ```
 
-`acts_as_message` declares the message's attachments and, when turbo-rails and Action Cable are loaded, broadcasts the chat's messages with Turbo. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
+`acts_as_message` declares the message's attachments and, when `config.broadcast_messages` is on, broadcasts the chat's messages with Turbo. `ruby_llm:chat_ui` turns that setting on in your RubyLLM initializer. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
 ## Adding a Chat UI
 
@@ -248,7 +248,7 @@ Turbo Stream templates used by the generated chat UI:
 
 ## Setting Up Active Storage
 
-`acts_as_message` stores attachments with Active Storage, and the install generator installs it. An application that does not have it yet runs:
+`acts_as_message` stores attachments with Active Storage, and the install generator installs it. Without it, the message model boots without attachments and RubyLLM logs how to add them. An application that does not have it yet runs:
 
 ```bash
 bin/rails active_storage:install

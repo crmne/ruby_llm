@@ -74,7 +74,8 @@ module RubyLLM
       # associations behind +tool_calls+, +tokens+, and +cost+, and
       # <tt>has_many_attached :attachments</tt>, so Active Storage is
       # required. When turbo-rails and Action Cable are loaded, it also
-      # broadcasts the chat's messages with Turbo (see MessageBroadcasting).
+      # broadcasts the chat's messages with Turbo when
+      # Configuration#broadcast_messages is on (see MessageBroadcasting).
       #
       # Options:
       #
@@ -82,9 +83,9 @@ module RubyLLM
       # [+chat_class:+] Class of the chat. Inferred from the association name.
       # [+chat_foreign_key:+] Foreign key on this table. Inferred by Rails.
       # [+touch_chat:+] Touch the chat when a message is saved. Defaults to +false+.
-      # [+broadcasts:+] Broadcast messages with Turbo. Defaults to on when
-      #                 turbo-rails and Action Cable are loaded. Pass +false+
-      #                 when the application broadcasts its messages itself.
+      # [+broadcasts:+] Broadcast messages with Turbo. Defaults to +nil+,
+      #                 which follows Configuration#broadcast_messages.
+      #                 Overrides it with +true+ or +false+.
 
       class_methods do # rubocop:disable Metrics/BlockLength
         def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil)
@@ -150,19 +151,19 @@ module RubyLLM
         private
 
         def ruby_llm_attachments
-          unless respond_to?(:has_many_attached)
-            raise RubyLLM::ConfigurationError,
-                  'acts_as_message stores attachments with Active Storage. Load it with ' \
-                  'require "active_storage/engine" in config/application.rb, then run ' \
-                  'bin/rails active_storage:install and bin/rails db:migrate.'
+          if respond_to?(:has_many_attached)
+            has_many_attached :attachments unless reflect_on_attachment(:attachments)
+          else
+            RubyLLM.logger.warn "#{name} has no attachments because Active Storage is not loaded. " \
+                                'Load it with require "active_storage/engine" in config/application.rb, ' \
+                                'then run bin/rails active_storage:install and bin/rails db:migrate.'
           end
-
-          has_many_attached :attachments unless reflect_on_attachment(:attachments)
         end
 
         def ruby_llm_broadcasting(broadcasts)
-          broadcasts = MessageBroadcasting.available? if broadcasts.nil?
-          include RubyLLM::ActiveRecord::MessageBroadcasting if broadcasts
+          class_attribute :ruby_llm_broadcasts, instance_writer: false
+          self.ruby_llm_broadcasts = broadcasts
+          include RubyLLM::ActiveRecord::MessageBroadcasting if broadcasts || MessageBroadcasting.available?
         end
       end
     end

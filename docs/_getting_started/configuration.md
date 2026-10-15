@@ -227,6 +227,7 @@ RubyLLM.configure do |config|
   config.auto_upload_large_files = Boolean
   config.tool_concurrency = false # true/:threads or :fibers
   config.max_run_time = Integer # Seconds before a persisted chat's run counts as crashed; defaults to 600
+  config.broadcast_messages = false # acts_as_message broadcasts chats with Turbo; the chat UI generator turns it on
 
   # Code Execution
   config.sandbox = "ApplicationSandbox" # The name of an MXC::Sandbox class or your own sandbox; defaults to nil

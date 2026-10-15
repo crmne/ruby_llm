@@ -46,9 +46,14 @@ The `add_message` method provides instant feedback while processing continues in
 
 ## Full Streaming Implementation
 
-`acts_as_message` broadcasts with Turbo when turbo-rails and Action Cable are loaded, so a streaming chat needs a job and a view:
+Turn on RubyLLM's broadcasting in your RubyLLM initializer. With turbo-rails and Action Cable loaded, `acts_as_message` then broadcasts a chat's messages with Turbo, so a streaming chat needs a job and a view:
 
 ```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM.configure do |config|
+  config.broadcast_messages = true
+end
+
 # app/models/chat.rb
 class Chat < ApplicationRecord
   acts_as_chat
@@ -67,7 +72,7 @@ class ChatStreamJob < ApplicationJob
 end
 ```
 
-Each chunk a persisted chat streams knows its record: `chunk.message` is the assistant message it belongs to, and `chunk.broadcast` appends it to that message on the page. When the run ends, the chat's page refreshes.
+Each chunk a persisted chat streams knows its record: `chunk.message` is the assistant message it belongs to, and `chunk.broadcast` appends it to that message on the page. When the run ends, the chat's page refreshes. With broadcasting off, `chunk.broadcast` raises `RubyLLM::ConfigurationError` and says how to turn it on.
 
 ```erb
 <%# app/views/chats/show.html.erb %>
@@ -85,7 +90,7 @@ Each chunk a persisted chat streams knows its record: `chunk.message` is the ass
 
 The message broadcasts to the chat record's stream, so the view subscribes with `turbo_stream_from @chat`. Rails renders each message with its partial, chosen by `to_partial_path`: `messages/_user`, `messages/_assistant`, `messages/_tool`, and `messages/_tool_calls`. The [chat UI generator]({% link _advanced/rails-generators.md %}#adding-a-chat-ui) writes all of them.
 
-If your application broadcasts its messages itself, turn RubyLLM's broadcasting off so nothing is sent twice:
+A model's `broadcasts:` option overrides the configuration either way. An application that broadcasts some models itself turns RubyLLM's broadcasting off for them:
 
 ```ruby
 class Message < ApplicationRecord

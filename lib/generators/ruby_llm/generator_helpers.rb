@@ -50,13 +50,27 @@ module RubyLLM
           gsub_file(path, code, '') if source.include?(code)
         end
         explain_own_broadcasting(File.read(model))
+        generated_broadcasting_blocks.any? { |block| source.include?(block) }
+      end
+
+      # Turns on Configuration#broadcast_messages in the RubyLLM initializer.
+      def enable_message_broadcasting
+        path = 'config/initializers/ruby_llm.rb'
+        initializer = File.join(destination_root, path)
+        unless File.exist?(initializer)
+          return say("\n  Add config.broadcast_messages = true to your RubyLLM configuration.", :yellow)
+        end
+        return if File.read(initializer).match?(/^\s*config\.broadcast_messages\s*=/)
+
+        inject_into_file path, "  config.broadcast_messages = true\n", before: /^end\s*\z/
       end
 
       def explain_own_broadcasting(source)
         return unless source.match?(/broadcast_\w+_to|broadcasts_to|broadcasts_refreshes|broadcast_append_chunk/)
         return if source.include?('broadcasts: false')
 
-        say "\n  #{message_model_name} broadcasts with Turbo itself, and acts_as_message now does too.", :yellow
+        say "\n  #{message_model_name} broadcasts with Turbo itself, and the chat UI turns on RubyLLM's broadcasting.",
+            :yellow
         say '  Remove that code to use RubyLLM\'s broadcasting, or keep it and write acts_as_message broadcasts: false.'
       end
 

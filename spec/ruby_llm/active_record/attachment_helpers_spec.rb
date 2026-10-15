@@ -78,8 +78,9 @@ RSpec.describe RubyLLM::ActiveRecord::AttachmentHelpers do
   end
 
   describe '#persist_content' do
-    it 'does nothing for a record without an attachments association' do
-      expect { helpers.persist_content(Object.new, [blob]) }.not_to raise_error
+    it 'says how to add Active Storage for a record without an attachments association' do
+      expect { helpers.persist_content(Object.new, [blob]) }
+        .to raise_error(RubyLLM::ConfigurationError, /without Active Storage.*active_storage:install/)
     end
 
     it 'keeps the media resolution across a reload' do

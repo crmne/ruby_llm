@@ -160,6 +160,15 @@ module RubyLLM
     option :batch_store, nil # :nodoc:
 
     ##
+    # :attr_accessor: broadcast_messages
+    #
+    # Whether +acts_as_message+ records broadcast a chat's messages and
+    # streamed chunks with Turbo. Needs turbo-rails and Action Cable. An
+    # +acts_as_message+ model's +broadcasts:+ option overrides it. The
+    # chat UI generator turns it on. Default: +false+.
+    option :broadcast_messages, false
+
+    ##
     # :attr_accessor: mcp_credential_store
     #
     # Store for the OAuth credentials of MCP servers. Rails apps keep them

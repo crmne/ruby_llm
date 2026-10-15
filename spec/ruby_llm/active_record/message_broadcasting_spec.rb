@@ -77,21 +77,68 @@ RSpec.describe RubyLLM::ActiveRecord::MessageBroadcasting do
     end
   end
 
-  context 'when turned off' do
-    before do
-      define_models(broadcasts: false)
+  context 'with turbo-rails and Action Cable loaded' do
+    before { allow(described_class).to receive(:available?).and_return(true) }
+
+    it 'broadcasts nothing by default, and chunk.broadcast says how to turn it on' do
+      define_models(broadcasts: nil)
       record_broadcasts
+      chat = BroadcastChat.create!(model: model_for(:openai))
+      stream_reply(chat, 'Hello')
+
+      expect { chat.ask('Say hello', &:broadcast) }
+        .to raise_error(RubyLLM::ConfigurationError, /config.broadcast_messages = true/)
+      expect(broadcasts).to be_empty
     end
 
-    it 'broadcasts nothing and leaves broadcast_chunk undefined' do
+    it 'broadcasts when the configuration turns it on' do
+      allow(RubyLLM.config).to receive(:broadcast_messages).and_return(true)
+      define_models(broadcasts: nil)
+      record_broadcasts
+      chat = BroadcastChat.create!(model: model_for(:openai))
+      stream_reply(chat, 'Hello')
+
+      chat.ask('Say hello', &:broadcast)
+
+      expect(broadcasts.map(&:first)).to include(:broadcast_append_to, :broadcast_replace_to, :broadcast_refresh_to)
+    end
+
+    it 'lets the model turn it off over the configuration' do
+      allow(RubyLLM.config).to receive(:broadcast_messages).and_return(true)
+      define_models(broadcasts: false)
+      record_broadcasts
       chat = BroadcastChat.create!(model: model_for(:openai))
       stream_reply(chat, 'Hello')
 
       chat.ask('Say hello') { |chunk| expect(chunk.message).to eq(chat.messages.last) }
 
       expect(broadcasts).to be_empty
-      expect(BroadcastMessage.new).not_to respond_to(:broadcast_chunk)
     end
+  end
+
+  it 'raises the same clear error when turbo-rails or Action Cable is missing' do
+    define_models(broadcasts: nil)
+    chat = BroadcastChat.create!(model: model_for(:openai))
+    stream_reply(chat, 'Hello')
+
+    expect { chat.ask('Say hello', &:broadcast) }
+      .to raise_error(RubyLLM::ConfigurationError, /config.broadcast_messages = true/)
+  end
+
+  it 'logs a warning instead of declaring attachments when Active Storage is not loaded' do
+    model = Class.new(ApplicationRecord) do
+      self.table_name = 'messages'
+
+      def self.name = 'PlainMessage'
+    end
+    allow(model).to receive(:respond_to?).and_call_original
+    allow(model).to receive(:respond_to?).with(:has_many_attached).and_return(false)
+    allow(RubyLLM.logger).to receive(:warn)
+
+    model.acts_as_message chat_class: 'Chat', chat_foreign_key: :chat_id
+
+    expect(RubyLLM.logger).to have_received(:warn).with(/PlainMessage has no attachments.*active_storage:install/)
+    expect(model.reflect_on_attachment(:attachments)).to be_nil
   end
 
   it 'declares the attachments itself' do

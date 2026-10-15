@@ -8,6 +8,10 @@ module RubyLLM
     #   chat.ask("Tell me a story", &:broadcast)
     #
     module ChunkMethods
+      BROADCASTING_OFF = 'Messages do not broadcast. Set config.broadcast_messages = true in the ' \
+                         'RubyLLM initializer, or pass broadcasts: true to acts_as_message, with ' \
+                         'turbo-rails and Action Cable loaded.' # :nodoc:
+
       # Returns a block that gives each chunk the record +message+ returns
       # before passing it to +block+, or +nil+ without a block.
       def self.streaming(block, &message) # :nodoc:
@@ -24,8 +28,11 @@ module RubyLLM
       attr_accessor :message
 
       # Appends this chunk to its message on the chat's page. See
-      # MessageBroadcasting#broadcast_chunk.
+      # MessageBroadcasting#broadcast_chunk. Raises
+      # RubyLLM::ConfigurationError when the message does not broadcast.
       def broadcast
+        raise RubyLLM::ConfigurationError, BROADCASTING_OFF unless message.respond_to?(:broadcast_chunk)
+
         message.broadcast_chunk(self)
       end
     end

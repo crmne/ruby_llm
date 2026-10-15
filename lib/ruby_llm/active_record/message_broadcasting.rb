@@ -4,7 +4,9 @@ require 'active_support/concern'
 
 module RubyLLM
   module ActiveRecord
-    # Shows a chat's messages live with Turbo. An empty assistant reply is
+    # Shows a chat's messages live with Turbo when
+    # Configuration#broadcast_messages, or the model's +broadcasts:+
+    # option, is on. An empty assistant reply is
     # appended when it is created, so its chunks have a place to land, and
     # each chunk is appended as a numbered span that the chat UI's Stimulus
     # controller puts back in order. A saved message replaces itself, a
@@ -24,20 +26,36 @@ module RubyLLM
 
       included do
         after_create_commit -> { broadcast_append_to chat_association }, if: :streaming_placeholder?
-        after_update_commit -> { broadcast_replace_to chat_association }
-        after_destroy_commit -> { broadcast_remove_to chat_association }
-        after_commit -> { broadcast_refresh_to chat_association }
+        after_update_commit -> { broadcast_replace_to chat_association }, if: :broadcasting?
+        after_destroy_commit -> { broadcast_remove_to chat_association }, if: :broadcasting?
+        after_commit -> { broadcast_refresh_to chat_association }, if: :broadcasting?
+      end
+
+      class_methods do
+        # Returns whether this model's messages broadcast: its
+        # +broadcasts:+ option when given, Configuration#broadcast_messages
+        # otherwise.
+        def broadcasting?
+          ruby_llm_broadcasts.nil? ? RubyLLM.config.broadcast_messages == true : ruby_llm_broadcasts
+        end
+      end
+
+      # Returns whether this message broadcasts. See ::broadcasting?.
+      def broadcasting?
+        self.class.broadcasting?
       end
 
       # Appends the content of +chunk+, a RubyLLM::Chunk streamed into this
       # message, to the message's <tt><dom_id>_stream</tt> element as
       # <tt><span data-seq="index"></tt>, escaped. Each span names the
       # index of the span before it in <tt>data-after</tt>, so the page can
-      # order them. Returns +nil+ for a chunk without content.
+      # order them. Returns +nil+ for a chunk without content. Raises
+      # RubyLLM::ConfigurationError when the message does not broadcast.
       #
       #   chat.ask("Tell me a story") { |chunk| chunk.message.broadcast_chunk(chunk) }
       #
       def broadcast_chunk(chunk)
+        raise RubyLLM::ConfigurationError, ChunkMethods::BROADCASTING_OFF unless broadcasting?
         return if chunk.content.to_s.empty?
 
         after = @last_broadcast_chunk_index
@@ -50,7 +68,7 @@ module RubyLLM
       private
 
       def streaming_placeholder?
-        role.to_s == 'assistant' && content.blank?
+        broadcasting? && role.to_s == 'assistant' && content.blank?
       end
 
       def chunk_span(chunk, after)

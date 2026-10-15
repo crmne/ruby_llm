@@ -145,7 +145,7 @@ bin/rails generate ruby_llm:judge Urgency
 
 They join `ruby_llm:agent`, `ruby_llm:tool`, and `ruby_llm:schema`. `ruby_llm:install` creates every folder, including the new `app/skills`, `app/sandboxes`, `app/mcp`, `app/evals`, and `app/judges`. See [Generators]({% link _advanced/rails-generators.md %}#generators).
 
-`acts_as_message` now streams a chat to its page by itself: with turbo-rails loaded, it broadcasts new messages, chunks, and the finished reply, and a job only needs `chat.complete(&:broadcast)`. Each chunk carries its position as `chunk.index`, so the generated chat UI puts chunks back in order even when Action Cable delivers them out of order. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
+`acts_as_message` can now stream a chat to its page by itself: with `config.broadcast_messages = true`, it broadcasts new messages, chunks, and the finished reply with Turbo, and a job only needs `chat.complete(&:broadcast)`. The chat UI generator turns it on. Each chunk carries its position as `chunk.index`, so the generated chat UI puts chunks back in order even when Action Cable delivers them out of order. See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}).
 
 Agents get a parent, the way models have `ApplicationRecord`. `ruby_llm:install` creates `ApplicationAgent` with your chat model, and `ruby_llm:agent` generates subclasses of it. The chat UI talks to its own `ChatAgent`, so tools you add there show up in the UI, with approval cards for the ones that require approval and attachments for the files they return. See [Approvals and Attachments]({% link _advanced/rails-generators.md %}#approvals-and-attachments).
 

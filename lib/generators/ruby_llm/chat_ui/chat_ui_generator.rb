@@ -198,8 +198,9 @@ module RubyLLM
         end
       end
 
-      def remove_generated_broadcasting_from_message_model
+      def broadcast_messages
         remove_generated_message_code
+        enable_message_broadcasting if behavior == :invoke
       end
 
       def add_head_to_layout

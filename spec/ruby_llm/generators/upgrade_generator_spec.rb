@@ -87,10 +87,29 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       end
     RUBY
 
+    initializer = File.join(destination, 'config/initializers/ruby_llm.rb')
+    FileUtils.mkdir_p(File.dirname(initializer))
+    File.write(initializer, "RubyLLM.configure do |config|\n  config.openai_api_key = ENV['OPENAI_API_KEY']\nend\n")
+
     described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
                    .remove_generated_message_code_from_message_model
 
     expect(File.read(path)).to eq("class Message < ApplicationRecord\n  acts_as_message\nend\n")
+    expect(File.read(initializer)).to end_with("  config.broadcast_messages = true\nend\n")
+  end
+
+  it 'leaves broadcasting off for a message model without the generated block' do
+    path = File.join(destination, 'app/models/message.rb')
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, "class Message < ApplicationRecord\n  acts_as_message\nend\n")
+    initializer = File.join(destination, 'config/initializers/ruby_llm.rb')
+    FileUtils.mkdir_p(File.dirname(initializer))
+    File.write(initializer, "RubyLLM.configure do |config|\nend\n")
+
+    described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+                   .remove_generated_message_code_from_message_model
+
+    expect(File.read(initializer)).not_to include('broadcast_messages')
   end
 
   it 'installs Active Storage when its tables are missing' do

@@ -33,7 +33,7 @@ module RubyLLM
       end
 
       def remove_generated_message_code_from_message_model
-        remove_generated_message_code
+        enable_message_broadcasting if remove_generated_message_code
       end
 
       def install_active_storage

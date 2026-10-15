@@ -609,6 +609,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               end
 
               expect(File.read('app/models/message.rb')).to eq(plain_message_model)
+              initializer = File.read('config/initializers/ruby_llm.rb')
+              expect(initializer.scan('config.broadcast_messages = true').size).to eq(1)
             end
           end
         end
@@ -676,7 +678,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
               output, status = run_rails_generate('ruby_llm:chat_ui', '--skip', chdir: destination)
               expect(status.success?).to be(true), output
               expect(File.read('app/models/message.rb')).to eq(custom)
-              expect(output).to include('Message broadcasts with Turbo itself, and acts_as_message now does too.')
+              expect(output).to include('Message broadcasts with Turbo itself')
+              expect(output).to include("the chat UI turns on RubyLLM's broadcasting")
               expect(output).to include('acts_as_message broadcasts: false')
             end
           end
