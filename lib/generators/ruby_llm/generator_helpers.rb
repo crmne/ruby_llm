@@ -207,7 +207,7 @@ module RubyLLM
 
         namespaces.each do |namespace|
           module_path = "app/models/#{namespace.underscore}.rb"
-          next if File.exist?(Rails.root.join(module_path))
+          next if File.exist?(File.join(destination_root, module_path))
 
           create_file module_path do
             <<~RUBY

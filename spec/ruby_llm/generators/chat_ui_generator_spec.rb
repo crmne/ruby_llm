@@ -335,6 +335,33 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(success).to be(true), output
   end
 
+  describe 'with a destination other than the working directory' do
+    let(:destination) { Dir.mktmpdir('ruby_llm_chat_ui') }
+    let(:generator) { described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new) }
+
+    before do
+      allow(generator.shell).to receive(:say_status)
+      { 'app/models/message.rb' => plain_message_model,
+        'app/controllers/application_controller.rb' => "class ApplicationController\nend\n" }.each do |path, content|
+        FileUtils.mkdir_p(File.dirname(File.join(destination, path)))
+        File.write(File.join(destination, path), content)
+      end
+    end
+
+    after { FileUtils.remove_entry(destination) }
+
+    it 'finds the message model there' do
+      expect { generator.check_model_exists }.not_to raise_error
+    end
+
+    it 'adds available_chat_models to the application controller there' do
+      generator.add_available_chat_models_to_application_controller
+
+      expect(File.read(File.join(destination, 'app/controllers/application_controller.rb')))
+        .to include('def available_chat_models')
+    end
+  end
+
   {
     'with default model names' => {
       app_name: 'test_app_default',
