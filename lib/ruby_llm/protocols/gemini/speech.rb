@@ -43,11 +43,15 @@ module RubyLLM
           audio = response.body.dig('candidates', 0, 'content', 'parts', 0, 'inlineData', 'data')
           raise Error, 'Unexpected response format from Gemini speech generation API' unless audio
 
+          usage = response.body['usageMetadata'] || {}
+
           RubyLLM::Speech.new(
             data: Base64.decode64(audio),
             model: model,
             voice: voice || 'Kore',
-            format: 'pcm'
+            format: 'pcm',
+            input_tokens: usage['promptTokenCount'],
+            output_tokens: usage['candidatesTokenCount']
           )
         end
       end
