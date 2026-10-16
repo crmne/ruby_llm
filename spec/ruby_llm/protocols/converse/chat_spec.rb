@@ -630,8 +630,27 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       rendered = described_class.format_messages(messages)
 
-      expect(rendered.map { |message| message[:role] }).to eq(%w[assistant user user])
-      expect(rendered[1][:content].length).to eq(2)
+      expect(rendered.map { |message| message[:role] }).to eq(%w[assistant user])
+      expect(rendered[1][:content].map { |block| block.keys.first }).to eq(%i[toolResult toolResult text])
+    end
+
+    it 'puts a user message after the tool results of the same turn' do
+      call = RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: {})
+      attachment = RubyLLM::Attachment.new(StringIO.new('%PDF-1.4'), filename: 'report.pdf')
+      user = RubyLLM::Message.new(role: :user, content: 'Still there?', attachments: [attachment]).cache_until_here
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Look it up'),
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_a' => call }),
+        RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'call_a'),
+        user,
+        RubyLLM::Message.new(role: :assistant, content: 'Yes')
+      ]
+
+      rendered = described_class.format_messages(messages)
+
+      expect(rendered.map { |message| message[:role] }).to eq(%w[user assistant user assistant])
+      expect(rendered[2][:content].map { |block| block.keys.first }).to eq(%i[toolResult text document cachePoint])
+      expect(rendered[2][:content][1]).to eq(text: 'Still there?')
     end
 
     it 'drops a message that renders to nothing' do
