@@ -419,12 +419,12 @@ module RubyLLM
       #   fallbacks "gpt-4.1-mini", "claude-haiku-4-5"
       #   fallbacks "gpt-4.1-mini", on: [RubyLLM::RateLimitError]
       #
-      def fallbacks(*models, **options)
-        return @fallbacks || [] if models.empty? && options.empty?
+      def fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+        return @fallbacks || [] if models.empty? && on.equal?(Fallback::DEFAULT_ERRORS)
         raise ArgumentError, 'To set fallback options, provide at least one fallback model' if models.empty?
 
         @fallbacks = models.flatten.compact
-        @fallback_options = options
+        @fallback_options = { on: }
       end
 
       def fallback_options
