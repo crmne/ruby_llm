@@ -5,13 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
   include_context 'with configured RubyLLM'
 
-  let(:test_obj) do
-    Object.new.tap do |obj|
-      obj.extend(RubyLLM::Protocols::Gemini::Tools)
-      obj.extend(RubyLLM::Protocols::Gemini::Chat)
-      obj.extend(described_class)
-    end
-  end
+  let(:test_obj) { RubyLLM::Protocols::Gemini.allocate }
 
   it 'captures cached token usage on chunks when present' do
     data = {
@@ -35,6 +29,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     expect(chunk.tokens.input).to eq(4)
     expect(chunk.tokens.output).to eq(4)
     expect(chunk.tokens.cache_read).to eq(6)
+  end
+
+  it 'carries a generated image on the chunk that delivers it' do
+    image = Base64.strict_encode64('image')
+    data = {
+      'candidates' => [{
+        'content' => { 'parts' => [{ 'inlineData' => { 'mimeType' => 'image/png', 'data' => image } }] },
+        'finishReason' => 'STOP'
+      }]
+    }
+
+    chunk = test_obj.send(:build_chunk, data)
+
+    expect(chunk.attachments.map(&:filename)).to eq(['gemini_attachment_1.png'])
+    expect(chunk.attachments.first.content).to eq('image')
   end
 
   it 'counts the web searches the final chunk grounds on' do
