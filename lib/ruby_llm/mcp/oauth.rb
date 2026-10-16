@@ -45,7 +45,7 @@ module RubyLLM
         issuer token_endpoint token_endpoint_auth_methods_supported token_endpoint_auth_signing_alg_values_supported
         authorization_response_iss_parameter_supported
       ].freeze
-      CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri dpop_key].freeze
+      CLIENT_FIELDS = %w[client_id client_secret issuer server redirect_uri dpop_key resource].freeze
       TOKEN = /[!\#$%&'*+.^_`|~0-9A-Za-z-]+/
       PARAMETER = /#{TOKEN}\s*=/
       QUOTED = /"((?:[^"\\]|\\.)*)"/
@@ -179,7 +179,7 @@ module RubyLLM
         verifier = SecureRandom.urlsafe_base64(64)
         state = SecureRandom.urlsafe_base64(32)
         pending = client.merge('state' => state, 'verifier' => verifier, 'redirect_uri' => redirect_uri,
-                               'issuer' => server['issuer'], 'scope' => scopes_for(server),
+                               'issuer' => server['issuer'], 'scope' => scopes_for(server), 'resource' => resource,
                                'dpop_key' => binding_key, 'expires_at' => Time.now.to_i + PENDING_FOR)
         write(credential.to_h.merge('pending' => pending.merge('server' => server.slice(*SERVER_FIELDS))))
 
@@ -366,7 +366,7 @@ module RubyLLM
       # attempt signs a new proof and a new client assertion.
       def send_token_request(server, client, key, params, retried: false)
         url = server['token_endpoint']
-        form = params.merge(client_id: client['client_id'], resource:)
+        form = params.merge(client_id: client['client_id'], resource: resource(client))
         headers = { 'Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' }
         authenticate(client, server, form, headers, key)
         headers['DPoP'] = proofs.sign(client['dpop_key'], url) if client['dpop_key']
@@ -579,8 +579,8 @@ module RubyLLM
         @challenge.to_h.each_value.filter_map { |parameters| parameters[name] }.first
       end
 
-      def resource
-        @resource || @server_url.chomp('/')
+      def resource(client = nil)
+        client&.fetch('resource', nil) || @resource || @server_url.chomp('/')
       end
 
       def first_json(urls)

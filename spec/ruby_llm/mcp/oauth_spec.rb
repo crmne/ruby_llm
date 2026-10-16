@@ -144,6 +144,45 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(exchange).to have_been_made
   end
 
+  describe 'the resource the server publishes' do
+    def resource = 'https://mcp.example.com'
+    def store = RubyLLM.config.mcp_credential_store
+    def key = "ada@#{server_url}"
+
+    def token_resources
+      resources = []
+      expect(a_request(:post, 'https://auth.example.com/token').with do |request|
+        resources << URI.decode_www_form(request.body).to_h['resource']
+      end).to have_been_made.at_least_once
+      resources
+    end
+
+    before do
+      stub_request(:get, 'https://mcp.example.com/.well-known/oauth-protected-resource/mcp')
+        .to_return(body: { resource:, authorization_servers: ['https://auth.example.com'] }.to_json)
+    end
+
+    it 'is the resource of the authorization, the code exchange, and every refresh' do
+      url = linear.authorization_url(redirect_uri:)
+      linear_class.new(user: 'ada').authorize(callback(url))
+      store.write(key, store.read(key).merge('access_token' => 'stale'))
+
+      linear_class.new(user: 'ada').tools
+
+      expect(URI.decode_www_form(URI(url).query).to_h['resource']).to eq(resource)
+      expect(token_resources).to eq([resource, resource])
+    end
+
+    it 'falls back to the server URL for credentials stored without it' do
+      linear.authorize(callback(linear.authorization_url(redirect_uri:)))
+      store.write(key, store.read(key).except('resource').merge('access_token' => 'stale'))
+
+      linear_class.new(user: 'ada').tools
+
+      expect(token_resources).to eq([resource, server_url])
+    end
+  end
+
   it 'declares no authorization extension for apps that users authorize' do
     linear.authorize(callback(linear.authorization_url(redirect_uri:)))
 
