@@ -114,7 +114,8 @@ module RubyLLM
       end
 
       def authorized?
-        credential&.key?('access_token')
+        @credential = store.read(key) unless @credential&.key?('access_token')
+        @credential.to_h.key?('access_token')
       end
 
       def access_token

@@ -100,6 +100,19 @@ RSpec.describe RubyLLM::MCP::OAuth do
     input.split('.').map { |part| JSON.parse(Base64.urlsafe_decode64(part)) }
   end
 
+  it 'is not authorized before the owner authorizes it' do
+    expect(linear.authorized?).to be(false)
+  end
+
+  it 'uses the token another instance stored after it started the authorization' do
+    url = linear.authorization_url(redirect_uri:)
+
+    linear_class.new(user: 'ada').authorize(callback(url))
+
+    expect(linear).to be_authorized
+    expect(linear.tools).to eq([])
+  end
+
   it 'starts an authorization with PKCE, the resource, and the challenged scope' do
     url = linear.authorization_url(redirect_uri:)
     params = URI.decode_www_form(URI(url).query).to_h
