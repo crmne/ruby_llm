@@ -803,6 +803,25 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).approval).to eq('denied')
     end
 
+    it 'denies a call it approved earlier' do
+      runs = []
+      charge = Class.new(RubyLLM::Tool) do
+        requires_approval
+        define_method(:name) { 'charge_card' }
+        define_method(:execute) { runs << :charged }
+      end
+      call = tool_call(name: 'charge_card')
+      chat = Chat.create!(model: model_id).with_tools(charge)
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
+
+      chat.approve(call.id)
+      chat.deny(call.id)
+      chat.run_tools
+
+      expect(runs).to be_empty
+      expect(chat.messages.reload.last.content).to include('The user denied the charge_card tool call.')
+    end
+
     it 'accepts a RubyLLM::ToolCall value' do
       call = tool_call
       chat = Chat.create!(model: model_id)
