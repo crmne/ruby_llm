@@ -56,6 +56,26 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     expect(chats.second.messages.reload.last.content).to eq('Jupiter')
   end
 
+  it 'submits a chat loaded through its agent and routes the answer home' do
+    agent = Class.new(RubyLLM::Agent) do
+      chat_model 'Chat'
+      model 'claude-haiku-4-5'
+      instructions 'Answer with one word.'
+    end
+    record = agent.create!
+    record.ask_later('Name the largest planet.')
+    stub_anthropic_batch(
+      create: { id: 'msgbatch_agent', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_agent', raw_status: 'ended', completed: true },
+      results: [[0, answer('Jupiter')]]
+    )
+
+    batch = RubyLLM.batch(agent.find(record.id))
+    described_class.find(batch.id).messages
+
+    expect(record.messages.reload.where(role: 'assistant').sole.content).to eq('Jupiter')
+  end
+
   it 'persists a reported batch invoice through refresh and fresh Batch.find calls' do
     chat = Chat.create!(model: model).ask_later('What is 2 + 2?')
     stub_anthropic_batch(

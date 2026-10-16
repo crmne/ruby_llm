@@ -24,6 +24,14 @@ RSpec.describe RubyLLM::Batch, :live do
         .to raise_error(ArgumentError, /awaiting the model/)
     end
 
+    it 'accepts a chat whose instructions follow the staged question' do
+      chat = RubyLLM.chat(model: model).ask_later('Hi').with_instructions('Answer with one word.')
+      allow(chat.provider).to receive(:create_batch)
+        .and_return(id: 'msgbatch_test', raw_status: 'in_progress', completed: false)
+
+      expect(RubyLLM.batch(chat).chats).to eq([chat])
+    end
+
     it 'rejects mixed providers' do
       chats = [
         RubyLLM.chat(model: model).ask_later('Hi'),
@@ -128,6 +136,20 @@ RSpec.describe RubyLLM::Batch, :live do
 
       batch.messages
       expect(provider).to have_received(:batch_results).once
+    end
+
+    it 'delivers an answer to a chat whose instructions were set while the batch was in flight' do
+      chat = RubyLLM.chat(model: model).ask_later('Hi')
+      message = RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1, output_tokens: 1)
+      allow(chat.provider).to receive(:batch_results).and_return([[0, message]])
+      batch = described_class.new(provider: chat.provider, chats: [chat], id: 'msgbatch_test',
+                                  raw_status: 'ended', completed: true)
+
+      chat.with_instructions('Answer with one word.')
+      batch.messages
+
+      expect(chat.messages.last).to be(message)
+      expect(chat).to be_complete
     end
 
     it 'records successful responses at batch prices' do
