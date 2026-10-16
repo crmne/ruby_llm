@@ -214,6 +214,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  describe '#context=' do
+    it 'rebinds a chat that is already built' do
+      chat = Chat.create!(model: model_id)
+      chat.to_llm
+
+      chat.context = RubyLLM.context { |config| config.request_timeout = 42 }
+
+      expect(chat.to_llm.provider.config.request_timeout).to eq(42)
+    end
+  end
+
   describe '#with_instructions' do
     it 'replaces the persisted system message by default' do
       chat = Chat.create!(model: model_id)
