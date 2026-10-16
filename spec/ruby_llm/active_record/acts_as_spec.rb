@@ -287,6 +287,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
         acts_as_message chat: :conversation, chat_class: 'Support::Conversation',
                         chat_foreign_key: :conversation_id
       end
+
+      class Ticket < ActiveRecord::Base
+        self.table_name = 'support_conversations'
+        acts_as_chat messages: :entries, message_class: 'Support::Entry',
+                     messages_foreign_key: :conversation_id
+      end
+
+      class Entry < ActiveRecord::Base
+        self.table_name = 'support_messages'
+        acts_as_message chat: :conversation, chat_class: 'Support::Ticket',
+                        chat_foreign_key: :conversation_id
+      end
     end
 
     it 'uses polymorphic internal rows without extra application models' do
@@ -319,6 +331,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       expect(message.tokens.input).to eq(3)
       expect(message.cost.total).to be_a(Numeric)
       expect(message.attributes).not_to include('input_tokens', 'model_id', 'provider')
+    end
+
+    it 'reads a messages association named like an Enumerable method' do
+      chat = Support::Ticket.create!(model: model)
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: 'Hi', model:, input_tokens: 3, output_tokens: 1)
+      )
+
+      chat.ask('Hello')
+
+      expect(chat.messages_association.pluck(:content)).to eq(%w[Hello Hi])
+      expect(chat.to_llm.messages.map(&:content)).to eq(%w[Hello Hi])
     end
   end
 end
