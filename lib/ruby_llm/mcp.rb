@@ -495,7 +495,8 @@ module RubyLLM
       def default_name_for(url:, command:)
         return File.basename(Array(command).first.to_s) unless url
 
-        labels = URI(url).host.split('.')[0...-1] - %w[mcp api www]
+        labels = URI(url).host.split('.')
+        labels = labels[0...-1] - %w[mcp api www] unless labels.one? || labels.all?(/\A\d+\z/)
         labels.join('_')
       end
     end
