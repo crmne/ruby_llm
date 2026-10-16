@@ -317,6 +317,19 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
+  def model_page_script(chats_path:, **)
+    <<~RUBY
+      model = RubyLLM.models.find(RubyLLM.config.default_model)
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      [ {}, { provider: model.provider } ].each do |params|
+        session.get "#{chats_path.sub('chats', 'models')}/\#{model.id}", params: params
+        abort "model page answered \#{session.response.status} for \#{params}" unless session.response.status == 200
+        abort "model page lacks \#{model.name} for \#{params}" unless session.response.body.include?(model.name)
+      end
+    RUBY
+  end
+
   def expect_chat_script_to_succeed(script)
     success, output = run_rails_runner(script)
     expect(success).to be(true), output
@@ -847,6 +860,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         within_test_app(app_path) do
           give_chat_agent_an_approval_tool(config[:approval_flow][:agent_path])
           output, status = run_rails_runner_outside_executor(approval_flow_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'shows a model with or without its provider' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(model_page_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end
       end

@@ -4,7 +4,7 @@ class <%= model_controller_class_name %> < ApplicationController
   end
 
   def show
-    @<%= model_variable_name %> = RubyLLM.models.find(params[:id], params[:provider])
+    @<%= model_variable_name %> = RubyLLM.models.find(params[:id], provider: params[:provider])
   end
 
   def refresh
