@@ -923,6 +923,39 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.messages.reload).to be_empty
     end
 
+    it 'keeps a trailing tool call paused on an MCP task' do
+      call = tool_call
+      chat = Chat.create!(model: model_id)
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call.id => call }))
+      state = { 'task' => { 'taskId' => 'task-1', 'status' => 'working' } }
+      RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).update!(mcp_state: state)
+
+      chat.send(:cleanup_orphaned_tool_results)
+
+      expect(chat.messages.reload.count).to eq(1)
+      expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: call.id).mcp_state).to eq(state)
+    end
+
+    it 'keeps a round with a tool call paused on an MCP task' do
+      answered = tool_call(name: 'answered')
+      paused = tool_call(name: 'paused')
+      chat = Chat.create!(model: model_id)
+      chat.add_message(
+        RubyLLM::Message.new(
+          role: :assistant, content: '',
+          tool_calls: { answered.id => answered, paused.id => paused }
+        )
+      )
+      chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: answered.id))
+      state = { 'task' => { 'taskId' => 'task-1', 'status' => 'working' } }
+      RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: paused.id).update!(mcp_state: state)
+
+      chat.send(:cleanup_orphaned_tool_results)
+
+      expect(chat.messages.reload.count).to eq(2)
+      expect(RubyLLM::ActiveRecord::ToolCall.find_by(tool_call_id: paused.id).mcp_state).to eq(state)
+    end
+
     it 'keeps a completed round' do
       call = tool_call
       chat = Chat.create!(model: model_id)

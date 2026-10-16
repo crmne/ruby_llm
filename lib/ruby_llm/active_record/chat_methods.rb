@@ -809,6 +809,8 @@ module RubyLLM
       # requires approval. When the API call fails, destroys the empty assistant
       # message and any orphaned tool results, then re-raises the error. When
       # the block raises, destroys the empty assistant message and re-raises.
+      # Tool calls paused on an MCP task or input request stay, so the next
+      # #complete picks them up.
       #
       # Only one process runs a chat at a time. While another process is
       # #running? it, returns the latest message without calling the model
@@ -958,13 +960,13 @@ module RubyLLM
         return unless last&.tool_call? || last&.tool_result?
 
         if last.tool_call?
-          last.destroy
+          last.destroy unless last.ruby_llm_tool_calls.any?(&:paused?)
         elsif last.tool_result?
           parent = last.ruby_llm_parent_tool_call
           tool_call_message = parent.message
           calls = tool_call_message.ruby_llm_tool_calls
 
-          if calls.any? { |call| call.result.nil? }
+          if calls.any? { |call| call.result.nil? } && calls.none?(&:paused?)
             calls.filter_map(&:result).each(&:destroy)
             tool_call_message.destroy
           end
