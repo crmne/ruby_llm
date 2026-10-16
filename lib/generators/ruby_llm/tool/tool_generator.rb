@@ -51,7 +51,7 @@ module RubyLLM
 
       # Mirrors RubyLLM::Tool.tool_name, the key the runtime partial lookup uses.
       def tool_partial_name
-        tool_file_name.delete_suffix('_tool')
+        tool_class_name.underscore.delete_suffix('_tool').gsub('/', '__')
       end
     end
   end

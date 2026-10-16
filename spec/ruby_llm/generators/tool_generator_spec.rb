@@ -77,6 +77,17 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
     end
   end
 
+  it 'names the partials of a namespaced tool after its runtime name' do
+    within_test_app(app_path) do
+      output, status = run_rails_generate('ruby_llm:tool', 'Admin::Search')
+      expect(status.success?).to be(true), output
+
+      expect(File.read('app/tools/admin/search_tool.rb')).to include('class Admin::SearchTool < RubyLLM::Tool')
+      expect(File.exist?('app/views/messages/tool_calls/_admin__search.html.erb')).to be true
+      expect(File.exist?('app/views/messages/tool_results/_admin__search.html.erb')).to be true
+    end
+  end
+
   it 'uses the tool call id in Tailwind partials' do
     within_test_app(app_path) do
       output, status = run_rails_generate('ruby_llm:tool', 'Forecast', '--ui', 'tailwind')
