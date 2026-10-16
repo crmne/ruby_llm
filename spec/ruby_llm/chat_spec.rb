@@ -168,4 +168,147 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(call.tool_results).to eq([result])
     end
   end
+
+  describe '#dup' do
+    let(:weather) do
+      Class.new(RubyLLM::Tool) do
+        def self.name = 'Weather'
+        description 'Looks up weather'
+        requires_approval
+
+        def execute(**) = 'sunny'
+      end
+    end
+    let(:search) do
+      Class.new(RubyLLM::Tool) do
+        def self.name = 'Search'
+        description 'Searches the web'
+
+        def execute(**) = 'found'
+      end
+    end
+    let(:chat) do
+      RubyLLM.chat(model: RubyLLM.config.default_model).with_instructions('Be terse.').with_tools(weather)
+    end
+
+    def reply(content)
+      RubyLLM::Message.new(role: :assistant, content:, input_tokens: 1, output_tokens: 1)
+    end
+
+    def weather_call
+      RubyLLM::Message.new(
+        role: :assistant,
+        content: '',
+        tool_calls: { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {}) }
+      )
+    end
+
+    it 'gives the copy its own conversation' do
+      chat.add_message(role: :user, content: 'Shared question')
+      branch = chat.dup
+      allow(branch.provider).to receive(:complete).and_return(reply('Branch answer'))
+
+      branch.ask('Branch question')
+
+      expect(chat.messages.map(&:content)).to eq(['Be terse.', 'Shared question'])
+      expect(branch.messages.map(&:content))
+        .to eq(['Be terse.', 'Shared question', 'Branch question', 'Branch answer'])
+      expect(chat.usage_entries).to be_empty
+      expect(branch.usage_entries.length).to eq(1)
+    end
+
+    it 'links the copied messages to the copy' do
+      call = chat.add_message(weather_call)
+      branch = chat.dup
+
+      result = branch.add_message(role: :tool, content: 'sunny', tool_call_id: 'call_1')
+
+      expect(branch.messages.last(2).first.tool_results).to eq([result])
+      expect(call.tool_results).to be_empty
+    end
+
+    it 'gives the copy its own tools and options' do
+      chat.with_headers('X-Trace' => 'original').with_provider_options(metadata: { run: 'original' })
+      branch = chat.dup
+
+      branch.with_tools(search).with_tool_options(calls: :one).with_temperature(0.9).with_provider_tools(:web_search)
+      branch.headers['X-Trace'] = 'branch'
+      branch.provider_options[:metadata][:run] = 'branch'
+
+      expect(chat.tools.keys).to eq([:weather])
+      expect(branch.tools.keys).to eq(%i[weather search])
+      expect(chat.tool_options).to eq(choice: nil, calls: nil, concurrency: nil)
+      expect(chat.temperature).to be_nil
+      expect(chat.provider_tools).to be_empty
+      expect(chat.headers).to eq('X-Trace' => 'original')
+      expect(chat.provider_options).to eq(metadata: { run: 'original' })
+    end
+
+    it 'keeps the callbacks registered so far and registers new ones on the copy alone' do
+      seen = []
+      chat.after_message { |message| seen << [:shared, message.content] }
+      branch = chat.dup
+      branch.after_message { |message| seen << [:branch, message.content] }
+      allow(chat.provider).to receive(:complete).and_return(reply('Original answer'), reply('Branch answer'))
+
+      chat.ask('Original question')
+      expect(seen).to eq([[:shared, 'Original answer']])
+
+      branch.ask('Branch question')
+      expect(seen.last(2)).to eq([[:shared, 'Branch answer'], [:branch, 'Branch answer']])
+    end
+
+    it 'leaves a cancellation and later approvals with the chat they were given to' do
+      chat.add_message(weather_call)
+      chat.cancel
+      branch = chat.dup
+
+      branch.approve('call_1')
+
+      expect(branch).not_to be_cancelled
+      expect(branch.pending_approvals).to be_empty
+      expect(chat.pending_approvals.map(&:id)).to eq(['call_1'])
+    end
+
+    it 'connects further MCP servers to the copy alone and shares the connected ones' do
+      docs = RubyLLM.mcp(url: 'https://mcp.example.com/docs', name: 'docs')
+      chat.with_mcp(docs)
+      branch = chat.dup
+
+      branch.with_mcp(RubyLLM.mcp(url: 'https://mcp.example.com/issues', name: 'issues'))
+
+      expect(chat.mcp.map(&:name)).to eq(['docs'])
+      expect(branch.mcp.map(&:name)).to eq(%w[docs issues])
+      expect(branch.mcp.docs).to be(docs)
+    end
+
+    it 'binds skills and code execution to the copy' do
+      seen = []
+      sandbox = FakeSandbox.new do |run|
+        seen << Dir.children(File.join(run[:directory], 'attachments'))
+        FakeSandbox.result
+      end
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }
+                    .chat(model: RubyLLM.config.default_model).with_code_execution
+      branch = chat.dup
+      branch.with_skills(File.expand_path('../fixtures/skills/ticket-codes', __dir__))
+      branch.add_message(role: :user, content: 'Data',
+                         attachments: [RubyLLM::Attachment.new(StringIO.new('1,2'), filename: 'data.csv')])
+
+      branch.tools[:run_code].call(language: 'ruby', code: 'x')
+      chat.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(seen).to eq([['data.csv'], []])
+      expect(branch.tools[:load_skill].call(skill: 'ticket-codes')).to be_a(String)
+      expect(chat.tools).not_to have_key(:load_skill)
+    end
+
+    it 'copies with clone as well' do
+      branch = chat.clone
+
+      branch.add_message(role: :user, content: 'Branch question')
+
+      expect(chat.messages.map(&:content)).to eq(['Be terse.'])
+    end
+  end
 end

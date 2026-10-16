@@ -30,8 +30,12 @@ module RubyLLM
     COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
     THINKING_OPTIONS = %i[effort budget display].freeze
     PAUSED = Object.new.freeze
+    COPIED_STATE = %i[
+      @usage_entries @tools @tool_deferrals @mcp @mcp_deferrals @tool_prefs @headers @attachment_replacements
+      @tool_call_decisions @remembered_tools @used_escalations @tool_call_inputs @contested_tool_calls
+    ].freeze
     UNFINISHED_TOOL_RESULT = { error: 'The tool call did not finish.' }.to_json.freeze
-    private_constant :THINKING_OPTIONS, :PAUSED, :UNFINISHED_TOOL_RESULT
+    private_constant :THINKING_OPTIONS, :PAUSED, :COPIED_STATE, :UNFINISHED_TOOL_RESULT
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -146,7 +150,7 @@ module RubyLLM
       @code_execution = nil
       @code_execution_tool = nil
       @skills = []
-      @skill_loader = Skill::Loader.new(skills: -> { @skills }, code_execution: -> { !@code_execution_tool.nil? })
+      @skill_loader = build_skill_loader
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
@@ -166,6 +170,35 @@ module RubyLLM
       @tool_call_releaser = nil
       @running_checker = nil
       @contested_tool_calls = []
+    end
+
+    ##
+    # :method: dup
+    # :call-seq: dup()
+    #
+    # Returns an independent copy of the chat, for branching a conversation.
+    # The copy starts with the same messages, tools, options, and callbacks,
+    # and changes to either chat leave the other alone. #clone does the
+    # same.
+    #
+    #   branch = chat.dup
+    #   branch.ask "What if we used Postgres instead?"
+    #   chat.messages.length # unchanged
+    #
+    # Tool instances, connected MCP servers, and the provider connection
+    # are shared. A cancellation or a run in progress stays with the
+    # original.
+
+    def initialize_copy(source) # :nodoc:
+      super
+      @messages = @messages.map { |message| coerce_message(message.dup) }
+      COPIED_STATE.each { |name| instance_variable_set(name, instance_variable_get(name).dup) }
+      @provider_tools = Support::Utils.deep_dup(@provider_tools)
+      @provider_options = Support::Utils.deep_dup(@provider_options)
+      @callbacks = @callbacks.dup.transform_values!(&:dup)
+      @skill_loader = build_skill_loader
+      with_code_execution(**@code_execution) if @code_execution
+      @cancelled = false
     end
 
     # Adds +message+ as a user message and runs the conversation loop,
@@ -1257,6 +1290,10 @@ module RubyLLM
     end
 
     private
+
+    def build_skill_loader
+      Skill::Loader.new(skills: -> { @skills }, code_execution: -> { !@code_execution_tool.nil? })
+    end
 
     def resolved_thinking
       @thinking&.resolve(@model)

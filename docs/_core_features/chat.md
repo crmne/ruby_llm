@@ -62,6 +62,20 @@ end
 
 `chat.messages` holds the conversation. RubyLLM includes that history in each request, so you do not need to assemble it yourself.
 
+### Branching a Conversation
+
+Copy a chat with `dup` to explore another direction without touching the original:
+
+```ruby
+branch = chat.dup
+branch.ask "How would the same example look in Hanami?"
+
+chat.messages.count   # => 4
+branch.messages.count # => 6
+```
+
+The copy starts with the same messages, tools, and options. From then on, each chat keeps its own.
+
 ## Guiding AI Behavior with System Prompts
 
 System prompts, also called instructions, allow you to set the overall behavior, personality, and constraints for the AI assistant. These instructions persist throughout the conversation and help ensure consistent responses.
