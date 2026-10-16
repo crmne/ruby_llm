@@ -42,7 +42,7 @@ module RubyLLM
           vectors = response.body['embeddings']&.map { |e| e['values'] }
           vectors = vectors.first if vectors&.length == 1 && !text.is_a?(Array)
 
-          Embedding.new(vectors:, model:)
+          Embedding.new(vectors:, model:, input_tokens: response.body.dig('usageMetadata', 'promptTokenCount'))
         end
 
         private
