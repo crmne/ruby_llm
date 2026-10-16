@@ -1000,6 +1000,7 @@ module RubyLLM
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
+        chat.interruptions = [ClaimLost]
         chat.cancellation_checker = proc do
           renew_run_claim
           consume_persisted_cancellation_request

@@ -270,6 +270,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     travel_back
   end
 
+  it 'does not fall back when another process takes over the run' do
+    chat = question_chat
+    fallback = stub_request(:post, 'https://api.anthropic.com/v1/messages').to_return(status: 500)
+    job = job_for(chat) { take_over(chat) }.with_fallbacks(model_for(:anthropic), on: StandardError)
+
+    job.complete
+
+    expect(requests).to eq([job])
+    expect(fallback).not_to have_been_requested
+    expect(job.to_llm.model.id).to eq(model_for(:openai))
+  end
+
   it 'skips a call another process answered since the transcript loaded' do
     chat = approved_chat
     stale_job = job_for(chat)
