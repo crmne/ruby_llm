@@ -4,6 +4,7 @@ require 'active_support/concern'
 require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
+require 'ruby_llm/active_record/chat_cancellation'
 
 module RubyLLM
   module ActiveRecord
@@ -25,6 +26,7 @@ module RubyLLM
       include AttachmentHelpers
       include RunClaims
       include ChatApprovals
+      include ChatCancellation
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:
@@ -1159,40 +1161,6 @@ module RubyLLM
           message_type: self.class.message_class.constantize.polymorphic_name,
           message_id: messages_association.select(:id)
         )
-      end
-
-      def consume_persisted_cancellation_request
-        if self[:cancelled]
-          clear_cancellation_request
-          return :cancelled
-        end
-        return unless persisted?
-        return unless cancellation_poll_due?
-        return unless persisted_cancellation_request?
-
-        clear_cancellation_request
-        :cancelled
-      end
-
-      # Jobs and requests run with the query cache on, which would replay the
-      # first poll's answer for the rest of the run.
-      def persisted_cancellation_request?
-        self.class.uncached do
-          self.class.unscoped.where(self.class.primary_key => id).pick(:cancelled)
-        end
-      end
-
-      def clear_cancellation_request
-        self[:cancelled] = false
-        self.class.unscoped.where(self.class.primary_key => id).update_all(cancelled: false) if persisted?
-      end
-
-      def cancellation_poll_due?
-        now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-        return false if @last_cancellation_poll_at && now - @last_cancellation_poll_at < CANCELLATION_POLL_INTERVAL
-
-        @last_cancellation_poll_at = now
-        true
       end
     end
   end
