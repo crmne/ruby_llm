@@ -69,7 +69,7 @@ module RubyLLM
 
     def self.coerce(source, config:) # :nodoc:
       return if source.nil? || (source.is_a?(String) && source.strip.empty?)
-      return source if source.is_a?(Attachment)
+      return source.with_default_config(config) if source.is_a?(Attachment)
       return source.to_attachment if source.respond_to?(:to_attachment)
       return from_h(source, config:) if source.is_a?(Hash)
 
@@ -104,8 +104,9 @@ module RubyLLM
     #
     #   RubyLLM::Attachment.new("lecture.mp4", processing: :agentic)
     #
-    # +config:+ is the Configuration a URL source is downloaded with, and
-    # defaults to the global one.
+    # +config:+ is the Configuration a URL source is downloaded with. It
+    # defaults to that of the chat or operation the attachment is given to,
+    # then to the global one.
     #
     # Paths and URLs must be trusted and authorized by the application.
     # They can be read or fetched during construction to detect the MIME type.
@@ -127,6 +128,11 @@ module RubyLLM
 
     def config # :nodoc:
       @config || RubyLLM.config
+    end
+
+    def with_default_config(config) # :nodoc:
+      @config ||= config
+      self
     end
 
     def url? # :nodoc:
