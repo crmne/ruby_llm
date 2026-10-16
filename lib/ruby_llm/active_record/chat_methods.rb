@@ -765,9 +765,10 @@ module RubyLLM
       # Makes a single generation attempt, persists the response, and returns it as a
       # RubyLLM::Message. Tool calls in the response are not executed. See
       # RubyLLM::Chat#generate. Returns +nil+ without calling the model
-      # while another process is #running? the chat.
-      def generate(...)
-        exclusively(-> {}) { completing { to_llm.generate(...) } }
+      # while another process is #running? the chat. A block receives the
+      # chunks as it does in #complete.
+      def generate(&block)
+        exclusively(-> {}) { completing(block) { |on_chunk| to_llm.generate(&on_chunk) } }
       end
 
       # Compacts the model context and persists its assistant Message without
@@ -789,12 +790,13 @@ module RubyLLM
       # Advances the conversation by one move: runs the pending tool calls if
       # there are any, otherwise generates a response. Returns +nil+ once the
       # chat is complete or #waiting?, including while another process is
-      # #running? it. See RubyLLM::Chat#step.
+      # #running? it. See RubyLLM::Chat#step. A block receives the chunks as
+      # it does in #complete.
       #
       #   chat.step until chat.complete? || chat.waiting?
       #
-      def step(...)
-        exclusively(-> {}) { completing { to_llm.step(...) } }
+      def step(&block)
+        exclusively(-> {}) { completing(block) { |on_chunk| to_llm.step(&on_chunk) } }
       end
 
       # Returns whether the conversation has no pending work, neither a
@@ -824,10 +826,11 @@ module RubyLLM
       #
       #   chat.complete(&:broadcast)
       def complete(&block)
-        on_chunk = ChunkMethods.streaming(block, on_error: method(:cleanup_after_block_failure)) { @message }
         loop do
           busy = false
-          response = exclusively(-> { busy = true }) { completing { to_llm.complete(&on_chunk) } }
+          response = exclusively(-> { busy = true }) do
+            completing(block) { |on_chunk| to_llm.complete(&on_chunk) }
+          end
           return latest_message if busy
           return response unless work_arrived_during_run?
         end
@@ -842,8 +845,8 @@ module RubyLLM
         message_class.include?(MessageBroadcasting) && message_class.broadcasting?
       end
 
-      def completing
-        yield
+      def completing(block = nil)
+        yield ChunkMethods.streaming(block, on_error: method(:cleanup_after_block_failure)) { @message }
       rescue *COMPLETION_ERRORS => e
         cleanup_after_failure(e)
         raise
