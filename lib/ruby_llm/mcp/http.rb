@@ -143,7 +143,7 @@ module RubyLLM
 
       def resume(stream, version:, timeout:, &on_notification)
         wait(stream.retry_after || RECONNECT_DELAY)
-        resumed = Stream.new(stream.id, &receiver(version, on_notification))
+        resumed = Stream.new(stream.id, stream, &receiver(version, on_notification))
         get(resumed, version:, timeout:, last_event_id: stream.last_event_id)
       rescue Faraday::Error
         resumed
@@ -288,7 +288,9 @@ module RubyLLM
       # may keep it open, and one that breaks midway counts as ended. The
       # stop raises so adapters that pool sockets can discard the connection
       # instead of returning it with unread bytes. Only answers are kept, so
-      # a stream that stays open does not grow. Faraday 2 passes the response
+      # a stream that stays open does not grow. A stream that resumes another
+      # starts from its last event ID and reconnection time, as an event
+      # source keeps both across reconnections. Faraday 2 passes the response
       # headers with each chunk; Faraday 1 has them only once the response ends.
       class Stream # :nodoc:
         class Abandoned < StandardError # :nodoc:
@@ -296,8 +298,10 @@ module RubyLLM
 
         attr_reader :id, :headers
 
-        def initialize(id, &on_message)
+        def initialize(id, resumed = nil, &on_message)
           @id = id
+          @last_event_id = resumed&.last_event_id
+          @retry_after = resumed&.retry_after
           @on_message = on_message
           @parser = Transport::EventStreamParser.new
           @body = +''
@@ -354,11 +358,11 @@ module RubyLLM
         end
 
         def last_event_id
-          @parser.last_event_id unless @parser.last_event_id.empty?
+          @parser.last_event_id.empty? ? @last_event_id : @parser.last_event_id
         end
 
         def retry_after
-          @parser.reconnection_time / 1000.0 if @parser.reconnection_time
+          @parser.reconnection_time ? @parser.reconnection_time / 1000.0 : @retry_after
         end
 
         private
