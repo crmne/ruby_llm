@@ -389,6 +389,27 @@ RSpec.describe RubyLLM::Chat do
       expect(files.map(&:filename)).to eq(['kept.txt'])
     end
 
+    it 'skips what it cannot read and still removes the run directory' do
+      skip 'root reads and removes files whatever their permissions' if Process.uid.zero?
+
+      directory = nil
+      sandbox = FakeSandbox.new do |run|
+        directory = run[:directory]
+        %w[locked sealed].each { |name| FileUtils.mkdir_p(File.join(directory, name)) }
+        %w[locked/kept.txt sealed/lost.txt secret.txt].each { |name| File.write(File.join(directory, name), 'x') }
+        { 'secret.txt' => 0o000, 'locked' => 0o555, 'sealed' => 0o000 }.each do |name, mode|
+          File.chmod(mode, File.join(directory, name))
+        end
+        FakeSandbox.result
+      end
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      text, *files = chat.with_code_execution.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(files.map(&:filename)).to eq(['locked/kept.txt'])
+      expect(JSON.parse(text)['skipped_files']).to eq(['sealed (unreadable)', 'secret.txt (unreadable)'])
+      expect(File.exist?(File.dirname(directory))).to be(false)
+    end
+
     it 'caps the number and size of returned files' do
       stub_const('RubyLLM::CodeExecution::MAX_FILES', 2)
       stub_const('RubyLLM::CodeExecution::MAX_FILE_SIZE', 10)
