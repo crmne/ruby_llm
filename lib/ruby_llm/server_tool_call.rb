@@ -46,7 +46,7 @@ module RubyLLM
     attr_reader :search_suggestions
 
     def self.from_h(data) # :nodoc:
-      data = Support::Utils.deep_symbolize_keys(data)
+      data = data.transform_keys(&:to_sym)
       new(type: data[:type], name: data[:name], id: data[:id], input: data[:input],
           result: data[:result], raw: data[:raw])
     end
