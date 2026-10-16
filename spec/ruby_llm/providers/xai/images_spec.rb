@@ -27,6 +27,15 @@ RSpec.describe RubyLLM::Providers::XAI::Images do
       expect(payload[:images].first[:url]).to start_with('data:image/png;base64,')
     end
 
+    it 'renders a reference image given as an attachment' do
+      image = File.binread(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      attachment = RubyLLM::Attachment.new(StringIO.new(image), filename: 'logo.png')
+      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
+                                                                          size: nil, with: attachment)
+
+      expect(payload[:images].first[:url]).to start_with('data:image/png;base64,')
+    end
+
     it 'passes remote reference images through as URLs' do
       payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
                                                                           size: nil,

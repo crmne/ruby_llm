@@ -43,6 +43,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
     end
   end
 
+  describe '#transcribe' do
+    let(:context) { RubyLLM.context { |config| config.gemini_api_key = 'test' } }
+
+    it 'sends audio given as an attachment' do
+      sent = nil
+      stub_request(:post, /generativelanguage\.googleapis\.com/)
+        .with { |request| sent = JSON.parse(request.body) }
+        .to_return_json(body: { candidates: [{ content: { parts: [{ text: 'Hi' }] } }] })
+
+      context.transcribe(audio, model: model_for(:gemini, :transcription), provider: :gemini)
+
+      expect(sent.dig('contents', 0, 'parts', 1, 'inline_data', 'data')).to eq(audio.encoded)
+    end
+  end
+
   describe '#parse_transcription_response' do
     let(:usage) do
       { 'promptTokenCount' => 133, 'totalTokenCount' => 133,

@@ -49,6 +49,16 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
       expect(payload[:known_speaker_references].length).to eq(1)
     end
 
+    it 'encodes a speaker reference given as an attachment' do
+      reference = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__))
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-4o-transcribe-diarize', language: nil,
+                     speaker_names: ['Alice'], speaker_references: [reference]
+      )
+
+      expect(payload[:known_speaker_references].first).to start_with('data:audio/wav;base64,')
+    end
+
     it 'merges provider options over rendered defaults' do
       payload = described_class.render_transcription_payload(
         'file-part', model: 'gpt-4o-transcribe-diarize', language: nil,

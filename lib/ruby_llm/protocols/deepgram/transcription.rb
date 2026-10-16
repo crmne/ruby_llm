@@ -41,7 +41,7 @@ module RubyLLM
           end
 
           track_usage(:transcription) do
-            attachment = Attachment.new(audio_file, config: @config)
+            attachment = audio_file.is_a?(Attachment) ? audio_file : Attachment.new(audio_file, config: @config)
             url = transcription_url(model:, language:, speaker_names:, provider_options:)
             payload = render_transcription_payload(attachment)
             response = post_transcription(url, payload, attachment)

@@ -66,6 +66,17 @@ RSpec.describe RubyLLM::Providers::Deepgram do
       expect(stub).to have_been_requested
     end
 
+    it 'posts the bytes of audio given as an attachment' do
+      stub_request(:post, %r{https://api\.deepgram\.com/v1/listen})
+        .to_return(status: 200, body: listen_response.to_json, headers: { 'Content-Type' => 'application/json' })
+      attachment = RubyLLM::Attachment.new(StringIO.new(File.binread(audio_path)), filename: 'meeting.wav')
+
+      RubyLLM.transcribe(attachment, model: 'nova-3', provider: :deepgram)
+
+      expect(a_request(:post, %r{https://api\.deepgram\.com/v1/listen}).with(body: File.binread(audio_path)))
+        .to have_been_made
+    end
+
     it 'hands a remote url to Deepgram as JSON rather than downloading it' do
       stub = stub_request(:post, %r{https://api\.deepgram\.com/v1/listen})
              .with(headers: { 'Content-Type' => 'application/json' },

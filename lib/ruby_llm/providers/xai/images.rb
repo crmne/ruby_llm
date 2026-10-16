@@ -43,7 +43,7 @@ module RubyLLM
         end
 
         def image_reference_url(source)
-          attachment = Attachment.new(source, config: @config)
+          attachment = source.is_a?(Attachment) ? source : Attachment.new(source, config: @config)
           return attachment.provider_file_id if attachment.provider_file?
           return attachment.source.to_s if attachment.url?
 
