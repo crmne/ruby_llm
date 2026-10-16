@@ -97,6 +97,50 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     expect(chat.messages.reload.where(role: 'assistant').count).to eq(1)
   end
 
+  it 'does not answer a later turn with an answer it already delivered' do
+    chat = Chat.create!(model: model).ask_later('What is 2 + 2?')
+    stub_anthropic_batch(
+      create: { id: 'msgbatch_4', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_4', raw_status: 'ended', completed: true },
+      results: [[0, answer('4')]]
+    )
+    batch = RubyLLM.batch([chat])
+    described_class.find(batch.id).refresh.messages
+    Chat.find(chat.id).ask_later('And 3 + 3?')
+
+    retried = described_class.find(batch.id)
+
+    expect(retried.messages.map(&:content)).to eq(['4'])
+    expect(retried.cost.total).to be_positive
+    expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant user])
+    expect(RubyLLM::ActiveRecord::Usage.where(chat: chat).count).to eq(1)
+  end
+
+  it 'delivers the rest of a batch to chats that have not been answered yet' do
+    chats = [
+      Chat.create!(model: model).ask_later('First question.'),
+      Chat.create!(model: model).ask_later('Second question.')
+    ]
+    stub_anthropic_batch(
+      create: { id: 'msgbatch_5', raw_status: 'in_progress', completed: false },
+      find: { id: 'msgbatch_5', raw_status: 'in_progress', completed: false },
+      results: [[0, answer('first')]]
+    )
+    batch = RubyLLM.batch(chats)
+    described_class.find(batch.id).messages
+    Chat.find(chats.first.id).ask_later('A follow-up.')
+    stub_anthropic_batch(
+      create: nil,
+      find: { id: 'msgbatch_5', raw_status: 'ended', completed: true },
+      results: [[0, answer('first')], [1, answer('second')]]
+    )
+
+    described_class.find(batch.id).refresh.messages
+
+    expect(chats.first.messages.reload.pluck(:role)).to eq(%w[user assistant user])
+    expect(chats.second.messages.reload.pluck(:content)).to eq(['Second question.', 'second'])
+  end
+
   it 'keeps answers aligned when a chat was deleted before collection' do
     chats = [
       Chat.create!(model: model).ask_later('First question.'),
