@@ -1,5 +1,5 @@
 class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= migration_version %>
-  def change
+  def up
     unless column_exists?(:ruby_llm_tool_calls, :provider_call_id)
       if column_exists?(:ruby_llm_tool_calls, :provider_id)
         rename_column :ruby_llm_tool_calls, :provider_id, :provider_call_id
@@ -19,5 +19,12 @@ class <%= 'upgrade_ruby_llm_to_2_2'.camelize %> < ActiveRecord::Migration<%= mig
     unless column_exists?(:ruby_llm_tool_calls, :claimed_until)
       add_column :ruby_llm_tool_calls, :claimed_until, :datetime
     end
+  end
+
+  def down
+    remove_column :ruby_llm_tool_calls, :claimed_until
+    remove_column :<%= chat_table_name %>, :claimed_until
+    remove_column :<%= chat_table_name %>, :claim_token
+    remove_column :ruby_llm_tool_calls, :provider_call_id
   end
 end
