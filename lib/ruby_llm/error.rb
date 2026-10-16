@@ -43,7 +43,7 @@ module RubyLLM
     # response; its body supplies the message when +message+ is +nil+.
     def initialize(message = nil, response: nil)
       @response = response
-      super(message || response&.body || self.class.default_message)
+      super(message || response_body_message || self.class.default_message)
     end
 
     # Returns a RequestShape describing the conversation request the error
@@ -62,6 +62,13 @@ module RubyLLM
       return @request_shape if defined?(@request_shape)
 
       @request_shape = request_protocol.request_shape(request_payload)
+    end
+
+    private
+
+    def response_body_message
+      body = response&.body
+      body unless body.respond_to?(:empty?) && body.empty?
     end
   end
 
