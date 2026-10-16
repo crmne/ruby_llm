@@ -135,6 +135,52 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.model).to be_a(RubyLLM::ActiveRecord::Model)
     end
 
+    it 'uses a model assigned to a saved record before saving it again' do
+      chat = Chat.create!(model: model_id)
+      other = model_for(:openai, :alternate_chat)
+
+      Chat.find(chat.id).tap { |record| record.model = other }.then do |record|
+        expect(record.model_id).to eq(other)
+        expect(record.to_llm.model.id).to eq(other)
+      end
+      Chat.find(chat.id).tap { |record| record.model_id = other }.then do |record|
+        expect(record.model_id).to eq(other)
+        expect(record.to_llm.model.id).to eq(other)
+      end
+    end
+
+    it 'leaves the provider of a newly assigned model to the registry' do
+      chat = Chat.create!(model: model_id)
+
+      chat.model = model_for(:anthropic)
+
+      expect(chat.provider).to be_nil
+      expect(chat.to_llm.model.provider).to eq('anthropic')
+      expect(chat.tap(&:save!).reload.provider).to eq('anthropic')
+    end
+
+    it 'switches the underlying chat when a model is assigned after it was built' do
+      chat = Chat.create!(model: model_id)
+      llm_chat = chat.to_llm.with_temperature(0.2)
+
+      chat.model = model_for(:openai, :alternate_chat)
+
+      expect(chat.to_llm).to be(llm_chat)
+      expect(llm_chat.model.id).to eq(model_for(:openai, :alternate_chat))
+      expect(llm_chat.temperature).to eq(0.2)
+    end
+
+    it 'uses a provider assigned to a saved record' do
+      chat = Chat.create!(model: model_id)
+
+      chat.provider = 'azure'
+
+      expect(chat.provider).to eq('azure')
+      expect(chat.to_llm.model.provider).to eq('azure')
+      expect(chat.tap(&:save!).reload.provider).to eq('azure')
+      expect(chat.model_id).to eq(model_id)
+    end
+
     it 'switches models with #with_model' do
       chat = Chat.create!(model: model_id)
 
