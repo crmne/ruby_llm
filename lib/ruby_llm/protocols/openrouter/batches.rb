@@ -116,7 +116,7 @@ module RubyLLM
           custom_id, shape = row.fetch('custom_id').split(':', 2)
           index = batch_result_index(custom_id)
           response = row['response']
-          unless response && response['status_code'].to_i.between?(200, 299) && !row['error']
+          unless batch_response_succeeded?(response) && !row['error']
             return [index, nil, batch_failure(custom_id, batch_error_message(row))]
           end
 

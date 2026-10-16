@@ -422,6 +422,10 @@ module RubyLLM
         status.to_s.match?(/cancel/i) ? :cancelled : :failed
       end
 
+      def batch_response_succeeded?(response)
+        response.is_a?(Hash) && response['status_code'].to_i.between?(200, 299)
+      end
+
       def batch_error_message(line)
         response = line['response']
         body = response['body'] if response.is_a?(Hash)
@@ -431,7 +435,8 @@ module RubyLLM
         batch_error_value(line['error']) ||
           line['error_message'] ||
           batch_error_value(body_error) ||
-          batch_error_value(response_error)
+          batch_error_value(response_error) ||
+          batch_error_value(body)
       end
 
       def batch_error_value(error)
