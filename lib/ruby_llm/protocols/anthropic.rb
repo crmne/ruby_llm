@@ -93,7 +93,7 @@ module RubyLLM
         Message.new(
           role: :assistant,
           content: segments.filter_map(&:content).join,
-          citations: segments.flat_map(&:citations),
+          citations: merge_citations(segments),
           server_tool_calls: segments.flat_map(&:server_tool_calls),
           raw_content: merge_raw_content(segments),
           thinking: final.thinking,
@@ -103,6 +103,22 @@ module RubyLLM
           model: final.model,
           raw: final.raw
         )
+      end
+
+      def merge_citations(segments)
+        offset = 0
+        segments.flat_map do |segment|
+          citations = segment.citations.map { |citation| offset_citation(citation, offset) }
+          offset += segment.content.to_s.length
+          citations
+        end
+      end
+
+      def offset_citation(citation, offset)
+        return citation unless citation.start_index && citation.end_index
+
+        Citation.new(citation.to_h.merge(start_index: citation.start_index + offset,
+                                         end_index: citation.end_index + offset))
       end
 
       def merge_raw_content(segments)

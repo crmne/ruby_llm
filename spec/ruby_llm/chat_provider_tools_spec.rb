@@ -223,6 +223,26 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(merged.tokens.input).to eq(30)
       expect(merged.tokens.output).to eq(12)
     end
+
+    it 'keeps citation offsets aligned with the merged content' do
+      protocol = RubyLLM::Protocols::Anthropic.new(RubyLLM::Providers::Anthropic.new(RubyLLM.config))
+      paused = RubyLLM::Message.new(
+        role: :assistant, content: 'Ruby was created by Matz. ', finish_reason: 'pause_turn',
+        citations: [RubyLLM::Citation.new(text: 'Ruby was created by Matz. ', start_index: 0, end_index: 26)]
+      )
+      final = RubyLLM::Message.new(
+        role: :assistant, content: 'It first shipped in 1995.', finish_reason: 'end_turn',
+        citations: [RubyLLM::Citation.new(text: 'It first shipped in 1995.', start_index: 0, end_index: 25),
+                    RubyLLM::Citation.new(title: 'ruby.pdf')]
+      )
+
+      merged = protocol.send(:merge_turn_segments, [paused, final])
+
+      expect(merged.citations.map { |citation| [citation.start_index, citation.end_index] })
+        .to eq([[0, 26], [26, 51], [nil, nil]])
+      expect(merged.citations.first(2).map { |citation| merged.content[citation.start_index...citation.end_index] })
+        .to eq(merged.citations.first(2).map(&:text))
+    end
   end
 
   describe 'web search' do
