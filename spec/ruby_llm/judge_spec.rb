@@ -79,6 +79,25 @@ RSpec.describe RubyLLM::Judge do
     expect(requests.first['state']).to eq('message' => 'Please help today.')
   end
 
+  it 'declares fields named like Kernel methods without calling them' do
+    Dir.mktmpdir do |dir|
+      command = "touch #{File.join(dir, 'ran')}"
+      kind = 'email'
+      channel = 'phone'
+      judge_class.judge do
+        system command
+        format kind
+        display 'banner'
+        customer { method channel }
+      end
+
+      expect(Dir.children(dir)).to be_empty
+      expect(requests.first['state']).to eq(
+        'system' => command, 'format' => kind, 'display' => 'banner', 'customer' => { 'method' => channel }
+      )
+    end
+  end
+
   it 'keeps successive judgments independent' do
     judge = judge_class.new
     judge.judge('First')
@@ -299,6 +318,33 @@ RSpec.describe RubyLLM::Judge do
 
     expect { judge_class.judge('Help', model:, provider: :openai) }.to raise_error(RubyLLM::Error, /does not exist/)
     expect(stub).to have_been_requested.once
+  end
+
+  context 'with options named like Kernel methods' do
+    let(:response_body) do
+      {
+        model: model_id,
+        answers: { urgent: { type: 'noul', noul: 0.9 },
+                   category: { type: 'choice', choice: 'format', confidence: 0.8,
+                               probabilities: { system: 0.1, format: 0.9 } } },
+        usage: { input_tokens: 100, output_tokens: 10 }
+      }
+    end
+
+    it 'declares them without calling the methods' do
+      Dir.mktmpdir do |dir|
+        command = "touch #{File.join(dir, 'ran')}"
+        label = 'Formatting problems'
+        judge_class.choice :category, 'What is this about?' do
+          system command
+          format label
+        end
+
+        expect(judge_class.judge('Help').category.choice).to eq(:format)
+        expect(Dir.children(dir)).to be_empty
+        expect(requests.first.dig('questions', 'category', 'criteria')).to eq('system' => command, 'format' => label)
+      end
+    end
   end
 
   context 'with all question types' do

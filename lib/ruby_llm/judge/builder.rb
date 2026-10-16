@@ -2,7 +2,7 @@
 
 module RubyLLM
   class Judge
-    class Builder # :nodoc:
+    class Builder < BasicObject # :nodoc:
       def self.resolve(value, scope:)
         return value unless value.is_a?(::Proc)
 
@@ -42,6 +42,11 @@ module RubyLLM
       end
 
       private
+
+      def proc(&block)
+        block
+      end
+      alias lambda proc
 
       def runtime_input?(name, values, block)
         values.empty? && !block && @scope.respond_to?(name)

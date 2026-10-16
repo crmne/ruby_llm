@@ -76,7 +76,7 @@ Either description is optional. A value near `0.5` means yes and no have similar
 
 `choice` selects one option and returns a probability for every option. Include an alternative such as `other` when none of the specific options may fit. Use a separate probability question for each condition when several can apply at once.
 
-A Hash supports names containing spaces, punctuation, or names that conflict with Ruby methods:
+A Hash supports names containing spaces, punctuation, or Ruby keywords such as `class`:
 
 ```ruby
 choice :department, "Which team?", {
