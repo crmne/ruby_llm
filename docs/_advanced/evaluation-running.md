@@ -26,7 +26,9 @@ Some checks do not need a model. Define `assertions` to check them in Ruby:
 ```ruby
 class SupportEvaluation < RubyLLM::Evaluation
   def perform(input)
-    SupportAgent.new.ask(input)
+    agent = SupportAgent.new
+    agent.ask(input)
+    agent
   end
 
   def assertions
@@ -35,6 +37,8 @@ class SupportEvaluation < RubyLLM::Evaluation
   end
 end
 ```
+
+`perform` returns the agent, not the answer, so `tool_calls` covers the whole conversation. A returned Message carries only its own tool calls, and a final answer has none.
 
 You can use `assert`, `refute`, `assert_equal`, `assert_includes`, `assert_match`, and every other method from `Minitest::Assertions`. They come from the `minitest` gem, which Rails applications already include. In plain Ruby, add `gem "minitest"` to your Gemfile. The first failing assertion fails the case and stops that case's assertions. Model grading and later cases still run.
 
