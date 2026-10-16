@@ -293,6 +293,24 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  describe '#protocol=' do
+    it 'switches the protocol of a chat that is already built' do
+      url = 'https://api.openai.com/v1/chat/completions'
+      stub_request(:post, url).to_return_json(
+        body: { model: model_id, choices: [{ message: { role: 'assistant', content: 'Done' }, finish_reason: 'stop' }],
+                usage: { prompt_tokens: 3, completion_tokens: 1 } }
+      )
+      chat = Chat.create!(model: model_id, provider: :openai)
+      llm_chat = chat.to_llm.with_temperature(0.2)
+
+      chat.protocol = :chat_completions
+      chat.ask('Hello')
+
+      expect(chat.to_llm).to be(llm_chat)
+      expect(a_request(:post, url)).to have_been_made
+    end
+  end
+
   describe '#dup' do
     it 'gives the copy its own conversation' do
       chat = Chat.create!(model: model_id)
