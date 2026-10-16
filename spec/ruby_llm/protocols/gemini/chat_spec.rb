@@ -485,6 +485,27 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(message.tokens.server_tool_use).to be_nil
     end
 
+    it 'leaves output tokens unknown when the response reports no usage' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Hi' }] } }]
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens.output).to be_nil
+    end
+
+    it 'adds thinking tokens to the reported output tokens' do
+      response = instance_double(Faraday::Response, body: {
+                                   'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Hi' }] } }],
+                                   'usageMetadata' => { 'candidatesTokenCount' => 0, 'thoughtsTokenCount' => 4 }
+                                 })
+
+      message = RubyLLM::Protocols::Gemini.allocate.send(:parse_completion_response, response)
+
+      expect(message.tokens.output).to eq(4)
+    end
+
     it 'normalizes finishReason' do
       response = instance_double(
         Faraday::Response,
