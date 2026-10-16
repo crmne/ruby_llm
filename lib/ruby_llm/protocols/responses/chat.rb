@@ -431,14 +431,20 @@ module RubyLLM
         end
 
         FINISH_REASONS = {
-          'completed' => :stop, 'max_output_tokens' => :max_tokens, 'content_filter' => :content_filter
+          'completed' => :stop, 'function_call' => :tool_calls,
+          'max_output_tokens' => :max_tokens, 'content_filter' => :content_filter
         }.freeze
 
         def finish_reasons = FINISH_REASONS
 
         def parse_finish_reason(data)
-          reason = data.dig('incomplete_details', 'reason') || (data['status'] if data['status'] == 'completed')
-          normalize_finish_reason(reason)
+          normalize_finish_reason(data.dig('incomplete_details', 'reason') || parse_completed_reason(data))
+        end
+
+        def parse_completed_reason(data)
+          return unless data['status'] == 'completed'
+
+          Array(data['output']).any? { |item| item['type'] == 'function_call' } ? 'function_call' : 'completed'
         end
 
         def parse_function_calls(output, response: nil, finish_reason: nil)

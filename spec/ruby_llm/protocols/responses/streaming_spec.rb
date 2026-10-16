@@ -204,7 +204,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunks.map { |chunk| chunk.tokens.output }).to eq([7])
   end
 
-  it 'reports the completed status as finish_reason for function-call responses' do
+  it 'reports a tool-call stop on the completed chunk of a function-call response' do
     chunk = build_chunk({
                           'type' => 'response.completed',
                           'response' => {
@@ -217,7 +217,26 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                           }
                         })
 
+    expect(chunk.finish_reason).to eq(:tool_calls)
+    expect(chunk).to be_tool_call_stop
+    expect(chunk).not_to be_stopped
+  end
+
+  it 'reports a normal stop when the provider ran every tool itself' do
+    chunk = build_chunk({
+                          'type' => 'response.completed',
+                          'response' => {
+                            'model' => 'gpt-5-nano',
+                            'status' => 'completed',
+                            'output' => [
+                              { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed' },
+                              { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Done' }] }
+                            ]
+                          }
+                        })
+
     expect(chunk.finish_reason).to eq(:stop)
+    expect(chunk).to be_stopped
   end
 
   describe '#parse_streaming_error' do
