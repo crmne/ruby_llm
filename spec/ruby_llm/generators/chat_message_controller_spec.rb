@@ -29,7 +29,7 @@ RSpec.describe 'The chat UI message controller', :generator do # rubocop:disable
     }
   end
 
-  let(:browser) { Ferrum::Browser.new(headless: true, timeout: 10) }
+  let(:browser) { Ferrum::Browser.new(headless: true, timeout: 10, process_timeout: 30) }
 
   # Ferrum talks to Chrome over local HTTP, which no cassette should record.
   around do |example|
