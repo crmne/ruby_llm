@@ -60,7 +60,10 @@ module RubyLLM
       # and persisted alongside a usage entry. Keys may be Strings or
       # Symbols, and amounts may be numeric Strings, as JSON encodes
       # decimals. The component readers return the recorded amounts and
-      # #total equals the recorded +:total+.
+      # #total equals the recorded +:total+. A breakdown with a total omits
+      # the components that had no usage, so ::aggregate still sums them
+      # across costs. Pass +tokens+ to mark used components without a
+      # recorded amount as missing pricing.
       #
       #   RubyLLM::Cost.from_h({ input: 0.0001, total: 0.0003 }).total
       #
@@ -68,7 +71,7 @@ module RubyLLM
         amounts = COMPONENTS.to_h { |component| [component, recorded_amount(hash, component)] }
         total_recorded = hash.key?(:total) || hash.key?('total')
         total = recorded_amount(hash, :total) if total_recorded
-        missing = missing_recorded_components(amounts, tokens)
+        missing = missing_recorded_components(amounts, tokens, total)
 
         new(amounts:, missing:, reported: recorded_tokens?(amounts, tokens, total_recorded), total:)
       end
@@ -85,11 +88,13 @@ module RubyLLM
         totals.sum if totals.any? && totals.none?(&:nil?)
       end
 
-      def missing_recorded_components(amounts, tokens)
-        return COMPONENTS.reject { |component| amounts[component] } unless tokens
-
-        COMPONENTS.select do |component|
-          tokens.public_send(component).to_i.positive? && amounts[component].nil?
+      def missing_recorded_components(amounts, tokens, total)
+        if tokens
+          COMPONENTS.select { |component| tokens.public_send(component).to_i.positive? && amounts[component].nil? }
+        elsif total && amounts.values.any?
+          []
+        else
+          COMPONENTS.reject { |component| amounts[component] }
         end
       end
 
