@@ -745,9 +745,9 @@ module RubyLLM
       error = part['error']
       return error if error.is_a?(String)
 
-      nested_message = error['message'] if error.is_a?(Hash)
-      [nested_message, part['message'], part['detail']].find { |message| message.is_a?(String) } ||
-        validation_detail_message(part['detail'])
+      detail = part['detail']
+      messages = [error, part, detail].filter_map { |source| source['message'] if source.is_a?(Hash) }
+      [*messages, detail].find { |message| message.is_a?(String) } || validation_detail_message(detail)
     end
 
     def validation_detail_message(detail)

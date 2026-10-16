@@ -720,6 +720,12 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.parse_error(response_for({ 'detail' => 'detail field' }))).to eq('detail field')
     end
 
+    it 'reads the message of a detail object' do
+      body = { 'detail' => { 'code' => 'subscription_required', 'message' => 'Not available on this tier.' } }
+
+      expect(provider.parse_error(response_for(body))).to eq('Not available on this tier.')
+    end
+
     it 'reads a FastAPI detail array of validation errors' do
       body = { 'detail' => [{ 'loc' => %w[body messages], 'msg' => 'field required' }] }
 
