@@ -120,6 +120,67 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     expect(File.read(initializer)).to end_with("  config.broadcast_messages = true\nend\n")
   end
 
+  it 'keeps the broadcasting a 2.1 chat UI job still calls' do
+    model = <<~'RUBY'
+      class Message < ApplicationRecord
+        acts_as_message
+        has_many_attached :attachments
+
+        broadcasts_to ->(message) { "chat_#{message.chat_id}" }, inserts_by: :append
+
+        def broadcast_append_chunk(content)
+          broadcast_append_to "chat_#{chat_id}",
+            target: "message_#{id}_content",
+            content: ERB::Util.html_escape(content.to_s)
+        end
+      end
+    RUBY
+    files = {
+      'app/models/message.rb' => model,
+      'app/jobs/chat_response_job.rb' => "message.broadcast_append_chunk(chunk.content)\n",
+      'config/initializers/ruby_llm.rb' => "RubyLLM.configure do |config|\nend\n"
+    }
+    files.each do |path, body|
+      FileUtils.mkdir_p(File.dirname(File.join(destination, path)))
+      File.write(File.join(destination, path), body)
+    end
+    shell = Thor::Shell::Basic.new
+    allow(shell).to receive(:say)
+
+    described_class.new([], {}, destination_root: destination, shell: shell)
+                   .remove_generated_message_code_from_message_model
+
+    expect(File.read(File.join(destination, 'app/models/message.rb'))).to eq(model)
+    expect(File.read(File.join(destination, 'config/initializers/ruby_llm.rb'))).not_to include('broadcast_messages')
+    expect(shell).to have_received(:say).with(/ruby_llm:chat_ui/, anything)
+  end
+
+  it 'keeps the broadcasting a 2.1 chat UI page still subscribes to' do
+    path = File.join(destination, 'app/models/message.rb')
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, <<~'RUBY')
+      class Message < ApplicationRecord
+        acts_as_message
+
+        broadcasts_to ->(message) { "chat_#{message.chat_id}" }, inserts_by: :append
+
+        def broadcast_append_chunk(content)
+          broadcast_append_to "chat_#{chat_id}",
+            target: "message_#{id}_content",
+            content: ERB::Util.html_escape(content.to_s)
+        end
+      end
+    RUBY
+    view = File.join(destination, 'app/views/chats/show.html.erb')
+    FileUtils.mkdir_p(File.dirname(view))
+    File.write(view, %(<%= turbo_stream_from "chat_\#{@chat.id}" %>\n))
+
+    described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+                   .remove_generated_message_code_from_message_model
+
+    expect(File.read(path)).to include('def broadcast_append_chunk(content)')
+  end
+
   it 'leaves broadcasting off for a message model without the generated block' do
     path = File.join(destination, 'app/models/message.rb')
     FileUtils.mkdir_p(File.dirname(path))

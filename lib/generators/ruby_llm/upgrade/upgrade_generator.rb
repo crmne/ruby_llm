@@ -33,6 +33,8 @@ module RubyLLM
       end
 
       def remove_generated_message_code_from_message_model
+        return keep_generated_broadcasting if chat_ui_uses_generated_broadcasting?
+
         enable_message_broadcasting if remove_generated_message_code
       end
 
@@ -41,6 +43,26 @@ module RubyLLM
 
         say '  acts_as_message stores attachments with Active Storage, which this app has not installed.', :yellow
         rails_command 'active_storage:install'
+      end
+
+      private
+
+      def chat_ui_uses_generated_broadcasting?
+        model = File.join(destination_root, "app/models/#{message_model_name.underscore}.rb")
+        return false unless File.exist?(model)
+        return false unless generated_broadcasting_blocks.any? { |block| File.read(model).include?(block) }
+
+        stream = %("#{chat_variable_name}_\#{)
+        Dir.glob(File.join(destination_root, 'app/**/*.{rb,erb}')).without(model).any? do |path|
+          source = File.read(path)
+          source.include?('broadcast_append_chunk') || source.include?(stream)
+        end
+      end
+
+      def keep_generated_broadcasting
+        say "\n  #{message_model_name} keeps the broadcasting ruby_llm:chat_ui wrote, which your chat UI still uses.",
+            :yellow
+        say "  Run bin/rails generate ruby_llm:chat_ui to move the job, views and model to RubyLLM's broadcasting."
       end
     end
   end
