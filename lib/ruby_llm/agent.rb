@@ -754,7 +754,13 @@ module RubyLLM
       end
 
       def apply_instructions(chat, runtime, inputs:, persist:, persistent_only: false)
-        instructions_config.each do |declaration|
+        instructions = resolved_instructions(chat, runtime, inputs:, persist:, persistent_only:)
+        instructions.reject! { |_, options| options[:persist] } if instructions_persisted?(chat, instructions)
+        instructions.each { |value, options| chat.with_instructions(value, **options) }
+      end
+
+      def resolved_instructions(chat, runtime, inputs:, persist:, persistent_only:)
+        instructions_config.filter_map do |declaration|
           next if persistent_only && !declaration[:persist]
 
           value = resolved_instruction_value(declaration, chat, runtime, inputs:)
@@ -765,8 +771,20 @@ module RubyLLM
             cache_until_here: declaration[:cache_until_here]
           }
           options[:persist] = persist && declaration[:persist] if rails_chat_record?(chat)
-          chat.with_instructions(value, **options)
+          [value, options]
         end
+      end
+
+      # Applying an agent to a record on every request would otherwise
+      # rewrite the same system rows each time, behind the conversation.
+      def instructions_persisted?(chat, instructions)
+        persistent = instructions.select { |_, options| options[:persist] }
+        replacement = persistent.rindex { |_, options| !options[:append] }
+        return false unless replacement
+
+        chat.system_instructions_persisted?(
+          persistent.drop(replacement).map { |value, options| [value, options[:cache_until_here]] }
+        )
       end
 
       # An empty prompt file, such as the one the agent generator writes,
