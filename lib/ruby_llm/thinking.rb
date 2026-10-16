@@ -134,14 +134,14 @@ module RubyLLM
         enabled == false || effort == :none
       end
 
-      def resolve(model)
+      def resolve(model, strict: true)
         return self if @intent.nil?
 
         options = Controls.new(model).public_send(@intent)
         return nil if options == :already_on
-        raise ArgumentError, resolution_error(model) unless options
+        raise ArgumentError, resolution_error(model) if strict && !options
 
-        self.class.new(**options)
+        self.class.new(**(options || { enabled: @intent == :enable }))
       end
 
       private

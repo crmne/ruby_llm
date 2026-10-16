@@ -719,9 +719,12 @@ module RubyLLM
     end
 
     # Returns the thinking options resolved for the current model, or +nil+
-    # when thinking was not configured or needs no provider control.
+    # when thinking was not configured or needs no provider control. When
+    # the model registry has no thinking controls for the model, returns
+    # the request itself, <tt>{ enabled: true }</tt> or
+    # <tt>{ enabled: false }</tt>; the request then raises ArgumentError.
     def thinking
-      config = resolved_thinking
+      config = @thinking&.resolve(@model, strict: false)
       return unless config
 
       {

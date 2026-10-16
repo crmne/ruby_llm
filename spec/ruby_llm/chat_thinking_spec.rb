@@ -83,6 +83,14 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.render }.to raise_error(ArgumentError, /does not know how to disable thinking/)
     end
 
+    it 'reads the request back when the registry has no controls for the model' do
+      chat = RubyLLM.chat(model: 'private-reasoner', provider: :openai, assume_model_exists: true)
+
+      expect(chat.with_thinking.thinking).to eq(enabled: true)
+      expect(chat.with_thinking(false).thinking).to eq(enabled: false)
+      expect { chat.render }.to raise_error(ArgumentError, /does not know how to disable thinking/)
+    end
+
     it 'rejects nil instead of treating it as false' do
       expect { RubyLLM.chat.with_thinking(nil) }
         .to raise_error(ArgumentError, /accepts false or thinking options/)
