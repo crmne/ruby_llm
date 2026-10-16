@@ -638,7 +638,7 @@ module RubyLLM
 
     # Returns a new Models registry containing only models in +family+.
     #
-    #   RubyLLM.models.by_family('claude3_sonnet')
+    #   RubyLLM.models.by_family('claude-sonnet')
     #
     def by_family(family)
       select_models { |m| m.family == family.to_s }
