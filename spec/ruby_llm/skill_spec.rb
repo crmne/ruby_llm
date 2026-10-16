@@ -19,6 +19,12 @@ RSpec.describe RubyLLM::Skill do
   end
 
   describe '.new' do
+    it 'reads a skill under a path the locale left without an encoding' do
+      folder = write_skill('pdf-forms', "name: pdf-forms\ndescription: Fills PDF forms.\n", root: tmpdir.join('café'))
+
+      expect(described_class.new(folder.to_s.b).name).to eq('pdf-forms')
+    end
+
     it 'reads the front matter and the instructions' do
       skill = described_class.new(File.join(fixtures, 'ticket-codes'))
 
