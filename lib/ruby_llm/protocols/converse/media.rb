@@ -180,11 +180,13 @@ module RubyLLM
         end
 
         def unique_document_name(base_name, used_names)
-          count = used_names[base_name].to_i
-          used_names[base_name] = count + 1
-          return base_name if count.zero?
-
-          "#{base_name}_#{count + 1}"
+          name = base_name
+          while used_names.key?(name)
+            used_names[base_name] += 1
+            name = "#{base_name}_#{used_names[base_name]}"
+          end
+          used_names[name] = 1
+          name
         end
       end
     end

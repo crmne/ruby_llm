@@ -98,6 +98,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       end
     end
 
+    it 'gives every document a distinct name when a generated name is already taken' do
+      attachments = %w[report.pdf report.pdf report_2.pdf report.pdf].map do |filename|
+        RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename:)
+      end
+
+      rendered = described_class.format_content(nil, attachments)
+
+      expect(rendered.map { |block| block.dig(:document, :name) }).to eq(%w[report report_2 report_2_2 report_3])
+    end
+
     it 'enables citations on document blocks when citations are requested' do
       attachment = RubyLLM::Attachment.new(StringIO.new('%PDF-1.4'), filename: 'report.pdf')
 
