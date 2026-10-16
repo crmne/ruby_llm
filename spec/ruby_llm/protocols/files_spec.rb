@@ -314,6 +314,23 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect(client.put_options.fetch(:body)).to be_a(StringIO)
     end
 
+    it 'keeps spaces, non-ASCII, and URI delimiters in the object key' do
+      client = Class.new do
+        attr_reader :keys
+
+        def get_object(bucket:, key:)
+          (@keys ||= []) << [bucket, key]
+          Struct.new(:body).new(StringIO.new('contents'))
+        end
+      end.new
+      allow(protocol).to receive(:s3_client).and_return(client)
+      names = ['Q3 report.jsonl', 'résumé.jsonl', 'a#1.jsonl', 'what?.jsonl', 'my_file[1].jsonl']
+
+      names.each { |name| protocol.download("s3://bucket/out/#{name}") }
+
+      expect(client.keys).to eq(names.map { |name| ['bucket', "out/#{name}"] })
+    end
+
     it 'lazy-loads the optional gem' do
       allow(protocol).to receive(:require).with('aws-sdk-s3').and_raise(LoadError)
 
