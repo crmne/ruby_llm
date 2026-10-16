@@ -204,6 +204,12 @@ RSpec.describe RubyLLM::Attachment do
       expect(attachment.content).to be_valid_encoding
     end
 
+    it 'scrubs invalid byte sequences an IO returns tagged as UTF-8' do
+      attachment = described_class.new(StringIO.new("caf\xE9 au lait"), filename: 'notes.txt')
+
+      expect(attachment.content).to eq("caf\uFFFD au lait")
+    end
+
     it 'leaves binary content in its original encoding' do
       attachment = described_class.new(StringIO.new("\x89PNG".b), filename: 'image.png')
 

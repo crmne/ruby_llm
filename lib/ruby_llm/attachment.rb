@@ -330,12 +330,14 @@ module RubyLLM
       end
     end
 
-    # Text content is loaded as binary; retag it so payloads serialize as UTF-8.
+    # Text content loaded as binary is retagged so payloads serialize as
+    # UTF-8. An IO can return text already tagged, with bytes its encoding
+    # does not allow.
     def normalize_text_encoding
-      return unless text? && @content.is_a?(String) && @content.encoding == Encoding::ASCII_8BIT
+      return unless text? && @content.is_a?(String)
 
-      text = @content.dup.force_encoding(Encoding::UTF_8)
-      @content = text.valid_encoding? ? text : text.scrub
+      @content = @content.dup.force_encoding(Encoding::UTF_8) if @content.encoding == Encoding::ASCII_8BIT
+      @content = @content.scrub unless @content.valid_encoding?
     end
 
     def determine_mime_type
