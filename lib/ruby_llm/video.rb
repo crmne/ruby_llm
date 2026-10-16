@@ -72,6 +72,7 @@ module RubyLLM
                      metadata: nil,
                      owner: nil)
       config = context&.config || RubyLLM.config
+      model ||= config.default_video_model
       payload = { model:, prompt:, provider_options:, metadata: }
 
       RubyLLM.instrument('video.ruby_llm', payload, config: config) do |event|

@@ -48,6 +48,22 @@ RSpec.describe RubyLLM::Video, :live do
     end
   end
 
+  describe 'instrumentation' do
+    it 'names the default model when the submission fails' do
+      models = []
+      instrumenter = Object.new
+      instrumenter.define_singleton_method(:instrument) do |name, payload, &block|
+        models << payload[:model] if name == 'video.ruby_llm'
+        block.call
+      end
+      context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+      allow(RubyLLM::VideoJob).to receive(:animate_later).and_raise(RubyLLM::Error, 'submission failed')
+
+      expect { RubyLLM.animate('a calm ocean wave', context:) }.to raise_error(RubyLLM::Error, 'submission failed')
+      expect(models).to eq([context.config.default_video_model])
+    end
+  end
+
   describe RubyLLM::VideoJob do
     let(:instrumenter) { CaptureInstrumenter.new }
     let(:config) { RubyLLM.context { |config| config.instrumenter = instrumenter }.config }
