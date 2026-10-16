@@ -62,7 +62,7 @@ module RubyLLM
 
       # Returns the measurement, policy, and outcome as a Hash.
       def to_h
-        { name:, status:, value: value.respond_to?(:to_h) ? value.to_h : value,
+        { name:, status:, value: value.nil? || !value.respond_to?(:to_h) ? value : value.to_h,
           reason:, minimum: @minimum, model:, evidence:,
           error: error && { class: error.class.name, message: error.message } }
       end
