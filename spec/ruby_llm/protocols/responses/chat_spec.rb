@@ -510,6 +510,31 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message).to be_stopped
     end
 
+    context 'with several reasoning items' do
+      let(:output) do
+        [
+          { 'type' => 'reasoning', 'id' => 'rs_1', 'encrypted_content' => 'first',
+            'summary' => [{ 'type' => 'summary_text', 'text' => 'Plan' }] },
+          { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Checking.' }] },
+          { 'type' => 'reasoning', 'id' => 'rs_2', 'encrypted_content' => 'second', 'summary' => [] },
+          { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather', 'arguments' => '{}' }
+        ]
+      end
+
+      it 'keeps the raw output so each one replays with its own encrypted content' do
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.raw_content).to eq(output)
+        expect(protocol.send(:format_input, [message])).to eq(output)
+      end
+
+      it 'keeps no raw output for a single reasoning item' do
+        message = protocol.send(:parse_completion_response, response_with(output.first(2)))
+
+        expect(message.raw_content).to be_nil
+      end
+    end
+
     it 'preserves incomplete_details reason as finish_reason when present' do
       response = instance_double(
         Faraday::Response,
