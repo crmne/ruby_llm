@@ -233,18 +233,58 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
     end
   end
 
-  it 'streams a citation with the text it cites' do
-    citation = protocol.send(:build_chunk, {
-                               'type' => 'content_block_delta', 'index' => 0,
-                               'delta' => { 'type' => 'citations_delta',
-                                            'citation' => { 'type' => 'char_location', 'cited_text' => 'Ruby',
-                                                            'document_title' => 'Guide' } }
-                             })
-    empty = protocol.send(:build_chunk, { 'type' => 'content_block_delta', 'index' => 0,
-                                          'delta' => { 'type' => 'citations_delta' } })
+  describe 'citations' do
+    let(:citation) do
+      { 'type' => 'char_location', 'cited_text' => 'Matz created Ruby in 1995', 'document_index' => 0,
+        'document_title' => 'facts.txt', 'start_char_index' => 0, 'end_char_index' => 25 }
+    end
+    let(:blocks) do
+      [{ 'type' => 'text', 'text' => 'Matz made Ruby.', 'citations' => [citation] },
+       { 'type' => 'text', 'text' => ' ' },
+       { 'type' => 'text', 'text' => 'It dates from 1995.', 'citations' => [citation] }]
+    end
+    let(:events) do
+      blocks.each_with_index.flat_map do |block, index|
+        [{ 'type' => 'content_block_start', 'index' => index, 'content_block' => { 'type' => 'text', 'text' => '' } },
+         *Array(block['citations']).map do |cited|
+           { 'type' => 'content_block_delta', 'index' => index,
+             'delta' => { 'type' => 'citations_delta', 'citation' => cited } }
+         end,
+         { 'type' => 'content_block_delta', 'index' => index,
+           'delta' => { 'type' => 'text_delta', 'text' => block['text'] } },
+         { 'type' => 'content_block_stop', 'index' => index }]
+      end
+    end
 
-    expect(citation.citations.map(&:cited_text)).to eq(['Ruby'])
-    expect(empty.citations).to be_empty
+    it 'streams a citation once the text it supports is complete' do
+      chunks = events.first(4).map { |event| protocol.send(:build_chunk, event) }
+
+      expect(chunks.first(3).flat_map(&:citations)).to be_empty
+      expect(chunks.last.citations.map(&:to_h)).to eq(
+        [{ title: 'facts.txt', text: 'Matz made Ruby.', cited_text: 'Matz created Ruby in 1995',
+           start_index: 0, end_index: 15, source_index: 0 }]
+      )
+    end
+
+    it 'gives streamed citations the spans of the complete response' do
+      complete = protocol.send(:parse_completion_body, { 'content' => blocks, 'usage' => {} }, raw: nil)
+      accumulator = RubyLLM::Protocol::StreamAccumulator.new
+      events.each { |event| accumulator.add(protocol.send(:build_chunk, event)) }
+      streamed = accumulator.to_message(nil)
+
+      expect(streamed.citations.map(&:text)).to eq(['Matz made Ruby.', 'It dates from 1995.'])
+      expect(streamed.citations.map(&:to_h)).to eq(complete.citations.map(&:to_h))
+    end
+
+    it 'ignores a citation delta without a citation' do
+      chunks = [
+        { 'type' => 'content_block_start', 'index' => 0, 'content_block' => { 'type' => 'text', 'text' => '' } },
+        { 'type' => 'content_block_delta', 'index' => 0, 'delta' => { 'type' => 'citations_delta' } },
+        { 'type' => 'content_block_stop', 'index' => 0 }
+      ].map { |event| protocol.send(:build_chunk, event) }
+
+      expect(chunks.flat_map(&:citations)).to be_empty
+    end
   end
 
   it 'reads no tool call from a text delta' do

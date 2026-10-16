@@ -20,7 +20,7 @@ module RubyLLM
             model: data['modelVersion'],
             content: extract_text_content(parts),
             attachments: build_response_content(parts.reject { |part| part['thought'] }).last,
-            citations: extract_citations(data, nil),
+            citations: extract_stream_citations(data),
             thinking: Thinking.build(
               text: extract_thought_parts(parts),
               signature: extract_thought_signature(parts)
@@ -67,6 +67,12 @@ module RubyLLM
             server_tool_calls: calls,
             raw_content: @saw_server_part ? without_search_suggestions(@stream_parts) : nil
           }
+        end
+
+        def extract_stream_citations(data)
+          return [] unless data.dig('candidates', 0, 'groundingMetadata')
+
+          extract_citations(data, extract_text_content(@stream_parts))
         end
 
         def extract_text_content(parts)

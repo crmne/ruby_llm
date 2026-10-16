@@ -89,19 +89,64 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     expect(chunk.thinking.signature).to eq('thinking-signature')
   end
 
-  it 'parses citation deltas into citations' do
-    event = {
-      'contentBlockIndex' => 3,
-      'delta' => {
-        'citation' => {
-          'location' => { 'web' => { 'url' => 'https://ruby-lang.org', 'domain' => 'ruby-lang.org' } }
-        }
-      }
-    }
+  describe 'citations' do
+    let(:citation) do
+      { 'title' => 'facts.txt', 'sourceContent' => [{ 'text' => 'Matz created Ruby in 1995' }],
+        'location' => { 'documentChar' => { 'documentIndex' => 0, 'start' => 0, 'end' => 25 } } }
+    end
+    let(:events) do
+      [{ 'contentBlockIndex' => 0, 'delta' => { 'citation' => citation } },
+       { 'contentBlockIndex' => 0, 'delta' => { 'text' => 'Matz made ' } },
+       { 'contentBlockIndex' => 0, 'delta' => { 'text' => 'Ruby.' } },
+       { 'contentBlockIndex' => 0 },
+       { 'contentBlockIndex' => 1, 'delta' => { 'text' => ' ' } },
+       { 'contentBlockIndex' => 1 },
+       { 'contentBlockIndex' => 2, 'delta' => { 'citation' => citation } },
+       { 'contentBlockIndex' => 2, 'delta' => { 'text' => 'It dates from 1995.' } },
+       { 'contentBlockIndex' => 2 },
+       { 'stopReason' => 'end_turn' }]
+    end
 
-    chunk = streaming.send(:build_chunk, event)
+    it 'streams a citation once the text it supports is complete' do
+      chunks = events.first(4).map { |event| streaming.send(:build_chunk, event) }
 
-    expect(chunk.citations.first.url).to eq('https://ruby-lang.org')
+      expect(chunks.first(3).flat_map(&:citations)).to be_empty
+      expect(chunks.last.citations.map(&:to_h)).to eq(
+        [{ title: 'facts.txt', cited_text: 'Matz created Ruby in 1995', start_index: 0, end_index: 15,
+           source_index: 0 }]
+      )
+    end
+
+    it 'gives streamed citations the spans of the complete response' do
+      complete = streaming.send(:parse_completion_body, {
+                                  'stopReason' => 'end_turn', 'usage' => {},
+                                  'output' => { 'message' => { 'content' => [
+                                    { 'citationsContent' => { 'content' => [{ 'text' => 'Matz made Ruby.' }],
+                                                              'citations' => [citation] } },
+                                    { 'text' => ' ' },
+                                    { 'citationsContent' => { 'content' => [{ 'text' => 'It dates from 1995.' }],
+                                                              'citations' => [citation] } }
+                                  ] } }
+                                }, raw: nil)
+      accumulator = RubyLLM::Protocol::StreamAccumulator.new
+      events.each { |event| accumulator.add(streaming.send(:build_chunk, event)) }
+      streamed = accumulator.to_message(nil)
+
+      expect(streamed.citations.map(&:text)).to eq(['Matz made Ruby.', 'It dates from 1995.'])
+      expect(streamed.citations.map(&:to_h)).to eq(complete.citations.map(&:to_h))
+    end
+
+    it 'streams the citations of a block left open when the message stops' do
+      event = { 'contentBlockIndex' => 3, 'delta' => { 'citation' => {
+        'location' => { 'web' => { 'url' => 'https://ruby-lang.org', 'domain' => 'ruby-lang.org' } }
+      } } }
+
+      pending = streaming.send(:build_chunk, event)
+      stopped = streaming.send(:build_chunk, { 'stopReason' => 'end_turn' })
+
+      expect(pending.citations).to be_empty
+      expect(stopped.citations.map(&:to_h)).to eq([{ url: 'https://ruby-lang.org' }])
+    end
   end
 
   it 'reports server tool starts without treating them as function calls' do

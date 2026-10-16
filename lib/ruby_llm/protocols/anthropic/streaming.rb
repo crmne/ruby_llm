@@ -40,7 +40,7 @@ module RubyLLM
             role: :assistant,
             model: extract_model_id(data),
             content: extract_content_delta(data, delta_type),
-            citations: extract_citations_delta(data, delta_type),
+            citations: extract_block_citations(data),
             thinking: Thinking.build(
               text: extract_thinking_delta(data, delta_type),
               signature: extract_signature_delta(data, delta_type)
@@ -147,9 +147,26 @@ module RubyLLM
           nil
         end
 
-        def extract_citations_delta(data, delta_type)
-          citation = data.dig('delta', 'citation') if delta_type == 'citations_delta'
-          citation ? [Chat.parse_citation(citation)] : nil
+        # A citation delta arrives before the text it supports, so a block's
+        # citations wait for the block to stop and take its span of the response.
+        def extract_block_citations(data)
+          return nil unless data['type'] == 'content_block_stop'
+
+          block = @stream_blocks&.dig(data['index'])
+          citations = Array(block && block['citations']).compact
+          return nil if citations.empty?
+
+          text = block['text'].to_s
+          start_index = stream_text_length_before(data['index'])
+          citations.map do |citation|
+            Chat.parse_citation(citation, text:, start_index:, end_index: start_index + text.length)
+          end
+        end
+
+        def stream_text_length_before(index)
+          @stream_blocks.sum do |block_index, block|
+            block_index < index && block['type'] == 'text' ? block['text'].to_s.length : 0
+          end
         end
 
         def extract_thinking_delta(data, delta_type)
