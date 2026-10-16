@@ -13,7 +13,7 @@ module RubyLLM
 
         def build_chunk(data)
           type = data['type']
-          raise_failed_generation(data.dig('delta', 'error')) if data.dig('delta', 'finish_reason') == 'ERROR'
+          raise_failed_stream(data) if data.dig('delta', 'finish_reason') == 'ERROR'
           track_content_lengths(data, type)
 
           Chunk.new(
@@ -26,6 +26,10 @@ module RubyLLM
             finish_reason: normalize_finish_reason(data.dig('delta', 'finish_reason')),
             **stream_usage(data.dig('delta', 'usage'))
           )
+        end
+
+        def raise_failed_stream(data)
+          raise_failed_generation(data.dig('delta', 'error'), response: build_stream_error_response(data, nil, 500))
         end
 
         # Citation spans are offsets into their own content block, so the

@@ -125,6 +125,18 @@ RSpec.describe RubyLLM::Protocols::Cohere::Streaming do
       expect { stream(events) }.to raise_error(RubyLLM::ServerError, 'Internal error during generation')
     end
 
+    it 'describes the request behind a generation that ended in an error' do
+      events = sse(
+        '{"delta":{"message":{"role":"assistant"}},"id":"29f14a5a","type":"message-start"}',
+        '{"delta":{"error":"Internal error during generation","finish_reason":"ERROR"},"type":"message-end"}'
+      )
+
+      expect { stream(events) }.to raise_error(RubyLLM::ServerError) { |error|
+        expect(error.response.status).to eq(500)
+        expect(error.request_shape.turns.size).to eq(1)
+      }
+    end
+
     it 'accumulates streamed tool calls' do
       response, = stream(
         sse(
