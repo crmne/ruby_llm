@@ -37,6 +37,14 @@ RSpec.describe RubyLLM::Protocols::Mistral::MultiCompletion do
     expect(protocol.send(:format_messages, [message])).to eq(messages.map { |entry| entry.except('index') })
   end
 
+  it 'renders a Conversations turn as a chat message instead of replaying its entries' do
+    entries = [{ 'object' => 'entry', 'type' => 'message.output', 'id' => 'msg_test', 'role' => 'assistant',
+                 'content' => 'Paris.' }]
+    message = RubyLLM::Message.new(role: :assistant, content: 'Paris.', raw_content: entries)
+
+    expect(protocol.send(:format_messages, [message])).to eq([{ role: 'assistant', content: 'Paris.' }])
+  end
+
   it 'keeps an unanswered local function call separate from completed hosted calls' do
     local_call = { 'id' => 'localcall', 'type' => 'function',
                    'function' => { 'name' => 'calculate', 'arguments' => '{}' } }
