@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Protocols::Perplexity::Files do
     allow(provider.connection).to receive(:get).with('v1/agent/resp_123/files')
                                                .and_return(instance_double(Faraday::Response,
                                                                            body: { 'data' => [data] }))
-    allow(provider.connection).to receive(:get).with('v1/agent/resp_123/files/file_123/content')
+    allow(provider.connection).to receive(:get).with('v1/agent/resp_123/files/file_123/content', raw: true)
                                                .and_return(instance_double(Faraday::Response, body: "value\n91\n"))
     expect(protocol.find('resp_123/files/file_123').filename).to eq('numbers.csv')
     expect(protocol.download('resp_123/files/file_123')).to eq("value\n91\n")

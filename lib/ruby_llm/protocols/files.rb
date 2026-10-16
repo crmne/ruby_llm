@@ -24,7 +24,7 @@ module RubyLLM
       end
 
       def download(file_id)
-        response = @connection.get(download_file_url(file_id)) do |request|
+        response = @connection.get(download_file_url(file_id), raw: true) do |request|
           request.headers['Accept'] = 'application/octet-stream'
           file_headers(request)
         end

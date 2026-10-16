@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations::Images do
     data = { 'outputs' => [{ 'type' => 'message.output', 'content' => [
       { 'type' => 'tool_file', 'tool' => 'image_generation', 'file_id' => 'generated', 'file_type' => 'png' }
     ] }], 'usage' => { 'prompt_tokens' => 10, 'completion_tokens' => 3, 'connector_tokens' => 5 } }
-    allow(provider.connection).to receive(:get).with('files/generated/content').and_return(
+    allow(provider.connection).to receive(:get).with('files/generated/content', raw: true).and_return(
       instance_double(Faraday::Response, body: bytes)
     )
     image = protocol.parse_image_response(instance_double(Faraday::Response, body: data), model: model.id)

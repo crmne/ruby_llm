@@ -93,10 +93,11 @@ module RubyLLM
         end
       end
 
-      def get(url, &)
+      def get(url, raw: false, &)
         instrument_request(:get, url) do
           connection.get url do |req|
             prepare(req)
+            keep_raw_body(req) if raw
             yield req if block_given?
           end
         end
@@ -273,6 +274,11 @@ module RubyLLM
       def mark_non_idempotent(request)
         context = request.options.context ||= {}
         context[IDEMPOTENT_KEY] = false
+      end
+
+      def keep_raw_body(request)
+        context = request.options.context ||= {}
+        context[JsonResponse::RAW_KEY] = true
       end
 
       def inspect_attributes # :nodoc:
