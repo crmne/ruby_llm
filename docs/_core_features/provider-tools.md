@@ -91,6 +91,15 @@ chat.with_provider_tools(web_search: { allowed_domains: ["ruby-lang.org"], max_u
 
 Options such as domain filters, connector IDs, and search-store IDs depend on the service. Use its documented settings for the selected tool.
 
+Enabling a tool again replaces its options, so a chat sends each tool once however often you call `with_provider_tools`:
+
+```ruby
+chat.with_provider_tools(:web_search)
+chat.with_provider_tools(web_search: { max_uses: 3 }) # one web search tool, limited to three uses
+```
+
+Raw Hashes and [MCP servers](#mcp-servers) add up instead, one entry for each distinct definition.
+
 A raw Hash lets you use a tool without a RubyLLM alias or select a particular tool version:
 
 ```ruby

@@ -26,6 +26,43 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(chat.provider_tools).to be_empty
     end
 
+    it 'keeps one entry per alias, with the later options' do
+      chat = RubyLLM.chat.with_provider_tools(:web_search, :code_execution)
+                    .with_provider_tools(:web_search)
+                    .with_provider_tools(web_search: { max_uses: 2 })
+
+      expect(chat.provider_tools).to eq(
+        [
+          { name: :web_search, options: { max_uses: 2 } },
+          { name: :code_execution, options: {} }
+        ]
+      )
+    end
+
+    it 'keeps one entry per identical raw hash' do
+      raw_tool = { type: 'custom_tool' }
+      chat = RubyLLM.chat.with_provider_tools(raw_tool).with_provider_tools(raw_tool.dup, { type: 'other_tool' })
+
+      expect(chat.provider_tools).to eq([{ raw: raw_tool }, { raw: { type: 'other_tool' } }])
+    end
+
+    it 'keeps an MCP entry per server' do
+      docs = { name: 'docs', url: 'https://mcp.example.com/docs' }
+      issues = { name: 'issues', url: 'https://mcp.example.com/issues' }
+      chat = RubyLLM.chat.with_provider_tools(mcp: docs).with_provider_tools(mcp: issues)
+                    .with_provider_tools(mcp: docs)
+
+      expect(chat.provider_tools).to eq([{ name: :mcp, options: docs }, { name: :mcp, options: issues }])
+    end
+
+    it 'sends a tool enabled on every turn once' do
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+
+      3.times { chat.with_provider_tools(:web_search) }
+
+      expect(chat.render[:tools].length).to eq(1)
+    end
+
     it 'rejects entries that are neither symbols nor hashes' do
       expect { RubyLLM.chat.with_provider_tools(42) }.to raise_error(ArgumentError, /Symbols or Hashes/)
     end

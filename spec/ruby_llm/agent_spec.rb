@@ -68,6 +68,17 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(chat.concurrency).to eq(:fibers)
   end
 
+  it 'enables a provider tool once when agents that declare it share a chat' do
+    researcher = Class.new(RubyLLM::Agent) { provider_tools :web_search }
+    editor = Class.new(RubyLLM::Agent) { provider_tools web_search: { max_uses: 2 } }
+    chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic)
+
+    2.times { researcher.new(chat:) }
+    editor.new(chat:)
+
+    expect(chat.provider_tools).to eq([{ name: :web_search, options: { max_uses: 2 } }])
+  end
+
   it 'forwards the protocol model option to new chats' do
     agent_class = Class.new(RubyLLM::Agent) do
       model model_for(:openai), protocol: :chat_completions
