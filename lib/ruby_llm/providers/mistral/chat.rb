@@ -6,8 +6,11 @@ module RubyLLM
       # Chat methods for Mistral API
       module Chat
         PROMPT_CACHE_OPTIONS = %i[key].freeze
+        FINISH_REASONS = Protocols::ChatCompletions::Chat::FINISH_REASONS.merge('model_length' => :max_tokens).freeze
 
         module_function
+
+        def finish_reasons = FINISH_REASONS
 
         def format_role(role)
           role.to_s
