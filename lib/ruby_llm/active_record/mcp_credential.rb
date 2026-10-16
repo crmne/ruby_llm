@@ -19,9 +19,13 @@ module RubyLLM
           find_by(key:)&.data
         end
 
+        # Another process can write the key first; this write then replaces
+        # its row.
         def write(key, data, owner: nil)
           record = find_or_initialize_by(key:)
           record.update!(data:, owner: owner.is_a?(::ActiveRecord::Base) ? owner : nil)
+        rescue ::ActiveRecord::RecordNotUnique
+          retry
         end
 
         def delete(key)
