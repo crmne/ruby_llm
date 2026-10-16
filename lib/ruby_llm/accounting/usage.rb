@@ -161,6 +161,11 @@ module RubyLLM
           judgment: :text_tokens
         }.freeze
 
+        CONNECT_FAILURES = [
+          Errno::ECONNREFUSED, Errno::EHOSTUNREACH, Errno::ENETUNREACH, SocketError, Net::OpenTimeout
+        ].freeze
+        TLS_HANDSHAKE_FAILURE = /\ASSL_connect|does not match the server certificate/
+
         attr_reader :entries
 
         def initialize(operation:, provider:, model:, config:, on_finish: nil, model_id: nil)
@@ -183,6 +188,7 @@ module RubyLLM
         end
 
         def observe(chunk)
+          @answered = @pending.last
           observe_tokens(chunk.tokens) if chunk.respond_to?(:tokens)
         end
 
@@ -250,13 +256,21 @@ module RubyLLM
         # failures keep their usage unknown.
         def failure_tokens(entry, error)
           return entry.tokens unless @model_info
-          return entry.tokens if entry.usage_available? || (!never_sent?(error) && !refused?(error))
+          return entry.tokens if entry.usage_available? || (!never_sent?(entry, error) && !refused?(error))
 
           Tokens.new(input: 0, output: 0)
         end
 
-        def never_sent?(error)
-          error.is_a?(Faraday::ConnectionFailed) || error.is_a?(Faraday::SSLError)
+        # Faraday also raises its connection errors for a connection that
+        # drops after the request was sent, so only the wrapped cause tells
+        # whether the connection was ever established.
+        def never_sent?(entry, error)
+          return false if entry.equal?(@answered)
+          return false unless error.is_a?(Faraday::ConnectionFailed) || error.is_a?(Faraday::SSLError)
+
+          cause = error.wrapped_exception || error.cause
+          CONNECT_FAILURES.any? { |failure| cause.is_a?(failure) } ||
+            (cause.is_a?(OpenSSL::SSL::SSLError) && cause.message.match?(TLS_HANDSHAKE_FAILURE))
         end
 
         def refused?(error)
