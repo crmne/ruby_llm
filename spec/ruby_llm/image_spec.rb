@@ -238,6 +238,16 @@ RSpec.describe RubyLLM::Image, :live do
     end
   end
 
+  describe '#to_blob', live: false do
+    it 'follows redirects to the image' do
+      stub_request(:get, 'https://example.com/owl.png')
+        .to_return(status: 302, body: 'Moved', headers: { 'Location' => 'https://cdn.example.com/owl.png' })
+      stub_request(:get, 'https://cdn.example.com/owl.png').to_return(body: 'png bytes')
+
+      expect(described_class.new(url: 'https://example.com/owl.png').to_blob).to eq('png bytes')
+    end
+  end
+
   describe 'blocked generations', live: false do
     it 'records the tokens Gemini billed when it returns no image' do
       model = model_for(:gemini, :image)

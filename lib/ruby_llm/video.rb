@@ -111,7 +111,7 @@ module RubyLLM
     #   video_bytes = video.to_blob
     #
     def to_blob
-      data || Transport::Connection.basic(config).get(url).body
+      data || Transport::Connection.download(url, config)
     end
 
     # Writes the binary video to +path+, expanding it first. Returns

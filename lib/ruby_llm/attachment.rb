@@ -352,8 +352,7 @@ module RubyLLM
     end
 
     def fetch_content
-      response = Transport::Connection.basic(config).get @source.to_s
-      @content = response.body
+      @content = Transport::Connection.download(@source, config)
     end
 
     def load_content_from_path

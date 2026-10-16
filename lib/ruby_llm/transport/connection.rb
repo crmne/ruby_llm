@@ -25,6 +25,8 @@ module RubyLLM
       )
 
       CACHE = Support::ProcessCache.new
+      REDIRECTS = [301, 302, 303, 307, 308].freeze
+      REDIRECT_LIMIT = 5
 
       attr_reader :provider, :config
 
@@ -41,6 +43,23 @@ module RubyLLM
           f.response :raise_error
           yield f if block_given?
         end
+      end
+
+      # Fetches the body at +url+ with no credentials, so a redirect to
+      # another host carries none.
+      def self.download(url, config = RubyLLM.config)
+        connection = basic(config)
+        uri = URI(url.to_s)
+        response = connection.get(uri)
+        REDIRECT_LIMIT.times do
+          break unless REDIRECTS.include?(response.status) && response.headers['location']
+
+          uri = URI.join(uri, response.headers['location'])
+          response = connection.get(uri)
+        end
+        return response.body if response.success?
+
+        raise Error.new("Download from #{uri.host} failed with status #{response.status}", response:)
       end
 
       def self.cache
