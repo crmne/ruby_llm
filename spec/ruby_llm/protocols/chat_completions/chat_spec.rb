@@ -74,6 +74,24 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(message.tokens.input).to eq(28)
     end
 
+    it 'surfaces a refusal as content' do
+      response_body = {
+        'model' => model_for(:openai, :temperature),
+        'choices' => [
+          {
+            'message' => { 'role' => 'assistant', 'content' => nil, 'refusal' => 'I cannot help with that.' },
+            'finish_reason' => 'stop'
+          }
+        ]
+      }
+
+      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+
+      message = described_class.parse_completion_body(response_body, raw: response_body)
+
+      expect(message.content).to eq('I cannot help with that.')
+    end
+
     it 'normalizes finish reasons' do
       response_body = {
         'model' => model_for(:openai, :temperature),

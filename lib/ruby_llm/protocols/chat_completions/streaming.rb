@@ -26,7 +26,7 @@ module RubyLLM
         def build_chunk(data)
           usage = data['usage'] || {}
           delta = data.dig('choices', 0, 'delta') || {}
-          content_source = delta['content'] || data.dig('choices', 0, 'message', 'content')
+          content_source = delta['content'] || delta['refusal'] || data.dig('choices', 0, 'message', 'content')
           content, thinking_from_blocks = extract_content_and_thinking(content_source)
 
           Chunk.new(

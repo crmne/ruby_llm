@@ -113,7 +113,8 @@ module RubyLLM
 
           usage = data['usage'] || {}
           thinking_tokens = thinking_tokens(usage)
-          content, thinking_from_blocks = extract_content_and_thinking(message_data['content'])
+          content, thinking_from_blocks =
+            extract_content_and_thinking(message_data['content'] || message_data['refusal'])
           thinking_text = thinking_from_blocks || extract_thinking_text(message_data)
           thinking_signature = extract_thinking_signature(message_data)
 

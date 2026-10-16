@@ -47,6 +47,18 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
     expect(chunk.tokens.to_h).to be_empty
   end
 
+  it 'streams refusal deltas as content' do
+    chunk = protocol.send(
+      :build_chunk,
+      {
+        'model' => model_for(:openai, :temperature),
+        'choices' => [{ 'delta' => { 'content' => nil, 'refusal' => 'I cannot help' } }]
+      }
+    )
+
+    expect(chunk.content).to eq('I cannot help')
+  end
+
   it 'preserves raw finish reasons on chunks' do
     chunk = protocol.send(
       :build_chunk,

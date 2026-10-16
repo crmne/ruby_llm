@@ -16,7 +16,7 @@ module RubyLLM
           Chunk.new(
             role: :assistant,
             model: data['model'],
-            content: delta['content'],
+            content: delta['content'] || delta['refusal'],
             citations: extract_chunk_citations(delta, data),
             thinking: Thinking.build(
               text: extract_thinking_text(delta),
