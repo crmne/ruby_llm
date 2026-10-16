@@ -764,6 +764,19 @@ RSpec.describe RubyLLM::Models do
       expect(registry.all.find { |m| m.id == 'llama' }.context_window).to eq(131_072)
     end
 
+    it 'records the providers whose model list could not be fetched' do
+      failing = fake_provider(slug: 'acme', display_name: 'Acme', error: ArgumentError.new('boom'))
+      instrumenter = CaptureInstrumenter.new
+      allow(RubyLLM.config).to receive(:instrumenter).and_return(instrumenter)
+      allow(RubyLLM::Provider).to receive(:configured_providers).and_return([failing, local_provider(8192)])
+      stub_published(published, 'etag-1', false)
+
+      described_class.new([]).refresh
+
+      expect(described_class.last_provider_failures.sole).to include(name: 'Acme', slug: 'acme')
+      expect(instrumenter.events.assoc('models.refresh.ruby_llm').last).to include(failed_providers: ['acme'])
+    end
+
     it 'fetches the whole catalog again when the snapshot behind the ETag is gone' do
       allow(RubyLLM::Provider).to receive(:configured_providers).and_return([local_provider(8192)])
       results = [

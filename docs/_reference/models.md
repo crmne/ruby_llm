@@ -76,6 +76,15 @@ chat_models = RubyLLM.models.refresh.chat_models
 
 The published registry is generated from provider APIs and [models.dev](https://models.dev). A failed refresh raises `RubyLLM::ModelRegistryError` and leaves the previously loaded registry available.
 
+A provider that cannot list its models does not fail the refresh. Its previous models stay in the registry, and `RubyLLM::Models.last_provider_failures` tells you which providers they were:
+
+```ruby
+RubyLLM.models.refresh
+RubyLLM::Models.last_provider_failures.each do |failure|
+  puts "#{failure[:name]}: #{failure[:error].message}"
+end
+```
+
 ### Local Provider Models
 
 By default, `refresh` includes models from local providers like Ollama and GPUStack if they're configured. To exclude local providers and only fetch from remote APIs:
