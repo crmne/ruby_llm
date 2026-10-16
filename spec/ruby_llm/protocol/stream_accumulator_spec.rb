@@ -105,6 +105,18 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       )
     end
 
+    it 'reads null streamed arguments as none and refuses other values that are not objects' do
+      message = lambda do |arguments|
+        accumulator = described_class.new
+        call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'now', arguments:)
+        accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 0 => call }))
+        accumulator.to_message(instance_double(Faraday::Response))
+      end
+
+      expect(message.call('null').tool_calls['call_1'].arguments).to eq({})
+      expect { message.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+    end
+
     it 'wraps malformed streamed tool call arguments in a RubyLLM error' do
       accumulator = described_class.new
       response = instance_double(Faraday::Response)

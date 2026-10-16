@@ -167,8 +167,8 @@ module RubyLLM
     end
   end
 
-  # Raised when a provider returns tool-call arguments that are not valid
-  # JSON, often because the response was truncated mid-tool-call.
+  # Raised when a provider returns tool-call arguments that are not a JSON
+  # object, often because the response was truncated mid-tool-call.
   class ToolCallParseError < Error
     # Returns the normalized reason generation stopped, or +nil+.
     attr_reader :finish_reason

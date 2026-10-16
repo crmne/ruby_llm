@@ -386,6 +386,18 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tool_calls['call_1'].arguments).to eq({ 'city' => 'Berlin' })
     end
 
+    it 'reads null function-call arguments as none and refuses other values that are not objects' do
+      parse = lambda do |arguments|
+        body = { 'model' => 'gpt-5-nano', 'status' => 'completed',
+                 'output' => [{ 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'now',
+                                'arguments' => arguments }] }
+        protocol.send(:parse_completion_response, instance_double(Faraday::Response, body:))
+      end
+
+      expect(parse.call('null').tool_calls['call_1'].arguments).to eq({})
+      expect { parse.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+    end
+
     it 'wraps malformed function-call arguments in a RubyLLM error' do
       response = instance_double(
         Faraday::Response,

@@ -475,8 +475,8 @@ module RubyLLM
         def parse_function_call_arguments(arguments, response: nil, finish_reason: nil)
           return {} if arguments.nil? || arguments.empty?
 
-          JSON.parse(arguments)
-        rescue JSON::ParserError => e
+          Hash(JSON.parse(arguments))
+        rescue JSON::ParserError, TypeError => e
           raise ToolCallParseError.new(response: response, finish_reason: finish_reason), cause: e
         end
 
