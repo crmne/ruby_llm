@@ -91,9 +91,10 @@ module RubyLLM
       end
 
       # Returns the skill in the folder called +name+ under the first skill
-      # root that has one, or else in the first Marketplace that has one. Underscores in a Symbol stand for hyphens, so
+      # root that has one, or else in the first Marketplace that has one.
+      # Underscores in a Symbol stand for hyphens, so
       # <tt>:pdf_processing</tt> finds +pdf-processing+. Raises
-      # SkillNotFoundError when no root has it.
+      # SkillNotFoundError when none has it.
       #
       #   RubyLLM::Skill.find(:invoices)
       #
@@ -119,8 +120,8 @@ module RubyLLM
       end
 
       # Returns the skills +selection+ names: Symbols are folders under the
-      # skill roots, Strings and Pathnames are skill folders, and +true+ is
-      # every skill under the roots.
+      # skill roots or a Marketplace, Strings and Pathnames are skill
+      # folders, and +true+ is every skill ::all returns.
       def resolve(selection) # :nodoc:
         case selection
         when true then all

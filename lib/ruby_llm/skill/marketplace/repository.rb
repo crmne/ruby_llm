@@ -14,23 +14,29 @@ module RubyLLM
       # place, or a GitHub repository, downloaded as one archive and
       # extracted into a temporary directory.
       class Repository # :nodoc:
-        NAME = %r{\A[\w.-]+/[\w.-]+\z}
-        REF = %r{\A[\w./-]+\z}
+        NAME = %r{\A[\w-][\w.-]*/[\w-][\w.-]*\z}
+        REF = %r{\A[\w-][\w.-]*(?:/[\w-][\w.-]*)*\z}
         MAX_BYTES = 128 * 1024 * 1024
         COMMIT = /\A\d+ comment=(\h{40})\n/
+        LONG_NAME = /^\d+ path=(.+)$/
 
-        def initialize(source)
-          @source = source.to_s
-          return if directory?
+        def self.github?(source)
+          name, ref = source.to_s.split('@', 2)
+          name.to_s.match?(NAME) && (ref.nil? || ref.match?(REF))
+        end
 
-          @name, @ref = @source.split('@', 2)
-          return if @name.to_s.match?(NAME) && (@ref.nil? || @ref.match?(REF))
+        attr_reader :source
+
+        def initialize(source, local: false)
+          @directory = local && File.directory?(source.to_s)
+          @source = @directory ? Pathname.new(source.to_s).cleanpath.to_s : source.to_s
+          return if @directory || self.class.github?(@source)
 
           raise ArgumentError, "#{@source.inspect} is neither a directory nor a GitHub repository like owner/repo"
         end
 
         def checkout
-          return yield(Pathname.new(File.realpath(@source)), nil) if directory?
+          return yield(Pathname.new(File.realpath(@source)), nil) if @directory
 
           Dir.mktmpdir('ruby_llm-marketplace') do |directory|
             tar = unzip(download)
@@ -41,12 +47,9 @@ module RubyLLM
 
         private
 
-        def directory?
-          File.directory?(@source)
-        end
-
         def download
-          Transport::Connection.basic.get("https://codeload.github.com/#{@name}/tar.gz/#{@ref || 'HEAD'}").body
+          name, ref = @source.split('@', 2)
+          Transport::Connection.basic.get("https://codeload.github.com/#{name}/tar.gz/#{ref || 'HEAD'}").body
         rescue Faraday::ResourceNotFound
           raise MarketplaceNotFoundError, "No GitHub repository #{@source}"
         end
@@ -61,14 +64,15 @@ module RubyLLM
         end
 
         def extract(tar, directory)
+          long_name = nil
           Gem::Package::TarReader.new(StringIO.new(tar)) do |reader|
             reader.each do |entry|
-              next unless entry.file?
+              next long_name = entry.read.to_s[LONG_NAME, 1] if entry.header.typeflag == 'x'
 
-              parts = entry.full_name.split('/').drop(1)
-              next if parts.empty?
-
-              write(File.join(directory, *safe(parts, entry.full_name)), entry)
+              name = long_name || entry.full_name
+              long_name = nil
+              parts = name.split('/').drop(1)
+              write(File.join(directory, *safe(parts, name)), entry) if entry.file? && parts.any?
             end
           end
         rescue Gem::Package::TarInvalidError

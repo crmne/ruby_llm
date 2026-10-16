@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Skill::Marketplace do
       end
 
       it 'replaces the skills when added again' do
-        described_class.add(source)
+        described_class.add("#{source}/")
         source.join('plugins/billing/skills/refunds').rmtree
         write_skill(source.join('plugins/billing/skills/credits'))
 
@@ -126,20 +126,30 @@ RSpec.describe RubyLLM::Skill::Marketplace do
       expect(described_class.add(cursor).skills.map(&:name)).to eq(%w[lint])
     end
 
-    it 'adds the skill paths a plugin entry lists and prefixes bare sources with the plugin root' do
-      write_skill(source.join('skills/pdf'))
-      write_skill(source.join('extra/docx'))
+    it 'adds the skill paths a plugin entry lists instead of its skills folder' do
+      %w[pdf docx brand].each { |name| write_skill(source.join('skills', name)) }
       write_skill(source.join('more/xlsx'))
-      write_skill(source.join('plugins/tools/skills/grep'))
-      write_marketplace(source, [{ name: 'documents', source: './', strict: false, skills: ['./extra/docx', './more'] },
-                                 { name: 'tools', source: 'tools' }],
-                        metadata: { pluginRoot: './plugins' })
+      source.join('more/linked').mkpath
+      File.symlink(source.join('skills/pdf/SKILL.md'), source.join('more/linked/SKILL.md'))
+      write_marketplace(source, [{ name: 'documents', source: './', strict: false,
+                                   skills: ['./skills/pdf', './skills/docx', './more', './missing'] },
+                                 { name: 'design', source: './', strict: false, skills: ['./skills/brand'] }])
 
       marketplace = described_class.add(source)
 
       expect(marketplace.skills.map { |skill| skill.path.relative_path_from(root).to_s })
-        .to eq(%w[acme-skills/documents/docx acme-skills/documents/pdf acme-skills/documents/xlsx
-                  acme-skills/tools/grep])
+        .to eq(%w[acme-skills/design/brand acme-skills/documents/docx acme-skills/documents/pdf
+                  acme-skills/documents/xlsx])
+      expect(described_class.add(source, only: 'design').skills.map(&:name)).to eq(%w[brand])
+    end
+
+    it 'prefixes bare plugin sources with the plugin root' do
+      write_skill(source.join('plugins/tools/skills/grep'))
+      write_skill(source.join('local/skills/sed'))
+      write_marketplace(source, [{ name: 'tools', source: 'tools' }, { name: 'local', source: './local' }],
+                        metadata: { pluginRoot: './plugins' })
+
+      expect(described_class.add(source).skills.map(&:name)).to eq(%w[sed grep])
     end
 
     it 'leaves out plugins without skills and plugins it cannot fetch, and raises when they are named' do
@@ -149,12 +159,16 @@ RSpec.describe RubyLLM::Skill::Marketplace do
                                  { name: 'hooks', source: './hooks' },
                                  { name: 'packaged', source: { source: 'npm', package: 'acme' } },
                                  { name: 'elsewhere', source: { source: 'url', url: 'https://git.example.com/a/b' } },
+                                 { name: 'local', source: { source: 'github', repo: '../billing' } },
+                                 { name: 'dotted', source: { source: 'url', url: 'https://github.com/../billing' } },
+                                 { name: 'odd-ref', source: { source: 'github', repo: 'acme/tools', ref: '../x' } },
+                                 { name: 'typed-ref', source: { source: 'github', repo: 'acme/tools', ref: 1 } },
                                  { name: 'missing' }])
 
       expect(described_class.add(source).plugins).to eq(%w[billing])
       expect { described_class.add(source, only: 'hooks') }
         .to raise_error(RubyLLM::InvalidMarketplaceError, 'The hooks plugin has no skills')
-      %w[packaged elsewhere missing].each do |name|
+      %w[packaged elsewhere local dotted odd-ref typed-ref missing].each do |name|
         expect { described_class.add(source, only: name) }
           .to raise_error(ArgumentError, "RubyLLM cannot fetch the source of the #{name} plugin")
       end
@@ -193,7 +207,8 @@ RSpec.describe RubyLLM::Skill::Marketplace do
         '{"name":"../acme","plugins":[]}' => %r{names the marketplace "\.\./acme"},
         '{"name":"acme","plugins":[{"name":"a/b","source":"./"}]}' => %r{names a plugin "a/b"},
         '{"name":"acme","plugins":[{"name":"a","source":"./"},{"name":"a","source":"./"}]}' => /lists a more than once/,
-        '{"name":"acme","plugins":[]}' => /has no skills to add/
+        '{"name":"acme","plugins":[{"name":"marketplace.json","source":"./"}]}' => /names a plugin "marketplace.json"/,
+        "\uFEFF{\"name\":\"acme\",\"plugins\":[]}" => /has no skills to add/
       }.each do |content, message|
         write_file(source.join('.claude-plugin/marketplace.json'), content)
 
@@ -203,7 +218,8 @@ RSpec.describe RubyLLM::Skill::Marketplace do
     end
 
     it 'raises ArgumentError for a source that is neither a directory nor a repository' do
-      ['', 'acme', 'https://github.com/acme/skills', 'acme/skills@', 'acme/skills@a b'].each do |invalid|
+      ['', 'acme', 'https://github.com/acme/skills', 'acme/skills@', 'acme/skills@a b', 'acme/..', '../acme',
+       'acme/skills@../../x'].each do |invalid|
         expect { described_class.add(invalid) }
           .to raise_error(ArgumentError, %r{is neither a directory nor a GitHub repository like owner/repo})
       end
@@ -245,6 +261,15 @@ RSpec.describe RubyLLM::Skill::Marketplace do
         marketplace = described_class.add('acme/skills@v1.2.0')
 
         expect(marketplace).to have_attributes(source: 'acme/skills@v1.2.0', commit: 'a' * 40)
+      end
+
+      it 'extracts files whose long names the archive keeps in an extended header' do
+        long = "plugins/billing/skills/invoices/references/#{'tax-rules-' * 9}.md"
+        stub_repository('acme/skills', files.merge(long => 'Rates'))
+
+        described_class.add('acme/skills')
+
+        expect(root.join('acme-skills/billing/invoices/references', "#{'tax-rules-' * 9}.md").read).to eq('Rates')
       end
 
       it 'records no commit when the archive names none' do

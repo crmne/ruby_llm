@@ -27,8 +27,8 @@ module MarketplaceHelpers
     io = StringIO.new
     Zlib::GzipWriter.wrap(io) do |gzip|
       Gem::Package::TarWriter.new(gzip) do |tar|
-        tar.add_file_simple('pax_global_header', 0o644, 52) { |file| file.write("52 comment=#{commit}\n") } if commit
-        files.each { |path, content| add_entry(tar, "#{root}/#{path}", content) }
+        add_pax_header(gzip, 'pax_global_header', 'g', "52 comment=#{commit}\n") if commit
+        files.each { |path, content| add_entry(tar, gzip, "#{root}/#{path}", content) }
       end
     end
     io.string
@@ -41,11 +41,23 @@ module MarketplaceHelpers
 
   private
 
-  def add_entry(tar, path, content)
+  def add_entry(tar, io, path, content)
+    if path.length > 100
+      record = " path=#{path}\n"
+      add_pax_header(io, 'long.paxheader', 'x', "#{record.bytesize + 2}#{record}")
+      path = 'long.data'
+    end
     case content
     when Symbol then tar.add_symlink(path, content.to_s, 0o777)
     when Array then tar.add_file_simple(path, content.first, content.last.bytesize) { |file| file.write(content.last) }
     else tar.add_file_simple(path, 0o644, content.bytesize) { |file| file.write(content) }
     end
+  end
+
+  def add_pax_header(io, name, typeflag, content)
+    header = Gem::Package::TarHeader.new(name:, typeflag:, size: content.bytesize, mode: 0o644, prefix: '',
+                                         mtime: Time.at(0))
+    io.write(header.to_s)
+    io.write(content.ljust((content.bytesize / 512.0).ceil * 512, "\0"))
   end
 end

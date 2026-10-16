@@ -27,8 +27,7 @@ module RubyLLM
     class Marketplace
       include Support::Inspectable
 
-      RECORD = 'marketplace.json'
-      private_constant :RECORD
+      RECORD = 'marketplace.json' # :nodoc:
 
       # The marketplace's name, from its marketplace file.
       attr_reader :name
@@ -79,19 +78,22 @@ module RubyLLM
         #
         # Every plugin is added, apart from plugins without skills and
         # plugins whose source is not the marketplace or a GitHub
-        # repository. +only+ names the plugins to add instead, and raises
-        # ArgumentError for one the marketplace lacks or RubyLLM cannot
-        # fetch.
+        # repository. +only+ names the plugins to add instead.
         #
-        # Raises MarketplaceNotFoundError when GitHub has no such
-        # repository, InvalidMarketplaceError when the marketplace file is
-        # missing or malformed or holds no skills, and InvalidSkillError
-        # when a skill breaks the Agent Skills specification. A failed add
-        # leaves the skills of an earlier one in place.
+        # Raises ArgumentError when +source+ is neither a directory nor a
+        # repository, when +only+ names a plugin the marketplace lacks or
+        # RubyLLM cannot fetch, and when another source was added under
+        # the same name. Raises MarketplaceNotFoundError when GitHub has
+        # no such repository, InvalidMarketplaceError when the marketplace
+        # file or the archive is unusable or holds no skills, and
+        # InvalidSkillError when a skill breaks the Agent Skills
+        # specification. A failed add leaves the skills of an earlier one
+        # in place.
         def add(source, only: nil)
-          Repository.new(source).checkout do |directory, commit|
-            catalog = Catalog.new(directory, source)
-            install(catalog, catalog.select(only), directory, source: source.to_s, commit:, strict: !only.nil?)
+          repository = Repository.new(source, local: true)
+          repository.checkout do |directory, commit|
+            catalog = Catalog.new(directory, repository.source)
+            install(catalog, catalog.select(only), directory, source: repository.source, commit:, strict: !only.nil?)
           end
         end
 
@@ -153,7 +155,8 @@ module RubyLLM
       # Fetches the marketplace again and replaces the skills of the plugins
       # it has. Returns +self+. A marketplace pinned to a tag or a commit
       # fetches the same files. To add plugins the marketplace gained, call
-      # ::add again.
+      # ::add again. Raises as ::add does, including ArgumentError when the
+      # marketplace no longer lists one of the plugins.
       def update
         fresh = self.class.add(source, only: plugins)
         @commit = fresh.commit

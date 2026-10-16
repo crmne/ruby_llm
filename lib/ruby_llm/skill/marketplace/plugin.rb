@@ -31,14 +31,18 @@ module RubyLLM
         end
 
         def skill_folders(plugin)
-          ['skills', *@entry.skills].flat_map do |path|
+          paths = @entry.skills.empty? ? ['skills'] : @entry.skills
+          paths.flat_map do |path|
             folder = inside(plugin, path)
             next [] unless folder.directory?
 
-            next [folder] if folder.join(FILE).file?
-
-            folder.children.select { |child| !child.symlink? && child.join(FILE).file? }
+            skill?(folder) ? [folder] : folder.children.select { |child| skill?(child) }
           end.uniq(&:basename).sort
+        end
+
+        def skill?(folder)
+          file = folder.join(FILE)
+          !folder.symlink? && file.file? && !file.symlink?
         end
 
         def inside(directory, path)
@@ -55,7 +59,8 @@ module RubyLLM
 
             copy = target.join(file.relative_path_from(folder))
             copy.dirname.mkpath
-            FileUtils.cp(file, copy, preserve: true)
+            FileUtils.cp(file, copy)
+            copy.chmod(0o755) if file.executable?
           end
           target
         end

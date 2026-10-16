@@ -46,7 +46,7 @@ module RubyLLM
         private
 
         def parse(file)
-          data = JSON.parse(file.read(encoding: 'UTF-8'))
+          data = JSON.parse(file.read(encoding: 'UTF-8').delete_prefix("\u{FEFF}").scrub)
           invalid("#{@label} must hold a JSON object with a plugins array") unless
             data.is_a?(Hash) && data['plugins'].is_a?(Array) && data['plugins'].all?(Hash)
           data.merge('metadata' => data['metadata'].is_a?(Hash) ? data['metadata'] : {})
@@ -66,7 +66,7 @@ module RubyLLM
 
         def name_of(entry, subject)
           name = entry['name'].to_s
-          return name if name.match?(NAME)
+          return name if name.match?(NAME) && name != RECORD
 
           invalid("#{@label} names #{subject} #{name.inspect}; names are letters and digits joined by - . or _")
         end
@@ -95,10 +95,9 @@ module RubyLLM
         end
 
         def github(name, source, path: '')
-          repository = [name, source['sha'] || source['ref']].compact.join('@')
-          return unsupported unless name.to_s.match?(Repository::NAME)
-
-          { repository:, path: }
+          ref = source['sha'] || source['ref']
+          repository = [name, ref].compact.join('@')
+          (ref.nil? || ref.is_a?(String)) && Repository.github?(repository) ? { repository:, path: } : unsupported
         end
 
         def unsupported

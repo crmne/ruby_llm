@@ -212,7 +212,7 @@ For a private repository, or one on another host, clone it and add the directory
 
 ### What Gets Copied
 
-RubyLLM copies skills and nothing else. A plugin's skills are the folders under its `skills` folder, and the folders its marketplace entry lists under `skills`. Hooks, commands, agents, and MCP servers stay behind, and so do symbolic links. A skill that reads files outside its own folder, through `${CLAUDE_PLUGIN_ROOT}` or `../`, will not find them.
+RubyLLM copies skills and nothing else. A plugin's skills are the folders its marketplace entry lists under `skills`, or the folders under its `skills` folder when the entry lists none. Hooks, commands, agents, and MCP servers stay behind, and so do symbolic links. A skill that reads files outside its own folder, through `${CLAUDE_PLUGIN_ROOT}` or `../`, will not find them.
 
 Without `only:`, a plugin with no skills, or with a source that is neither the marketplace itself nor a GitHub repository, is left out. Named in `only:`, it raises.
 
