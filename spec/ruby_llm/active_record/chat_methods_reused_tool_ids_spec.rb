@@ -27,6 +27,36 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { id || call.provider_call_id => call })
   end
 
+  def results_of(chat)
+    RubyLLM::ActiveRecord::ToolCall.where(message: chat.messages).order(:id).map { |call| call.result&.content }
+  end
+
+  it 'gives a call appended to another chat its own ID' do
+    first, second = Array.new(2) { process(Chat.create!(model: model_for(:openai))) }
+    first.add_message(response('Paris', id: 'call_1'))
+    call = second.add_message(response('London', id: 'call_1')).tool_calls.values.first
+    second.add_message(role: :tool, content: 'Weather in London', tool_call_id: 'call_1')
+
+    expect(call.id).not_to eq('call_1')
+    expect(call.provider_call_id).to eq('call_1')
+    expect(results_of(first)).to eq([nil])
+    expect(results_of(second)).to eq(['Weather in London'])
+    expect(process(second).to_llm.messages.last.tool_call_id).to eq(call.id)
+  end
+
+  it 'appends message records with tool calls from another chat' do
+    first, second = Array.new(2) { process(Chat.create!(model: model_for(:openai))) }
+    first.add_message(response('Paris'))
+    first.add_message(role: :tool, content: 'Weather in Paris', tool_call_id: 'call_1')
+    first.messages.order(:id).each { |record| second.add_message(record) }
+
+    copied = process(second).to_llm.messages
+    expect(copied.first.tool_calls.keys).not_to eq(process(first).to_llm.messages.first.tool_calls.keys)
+    expect(copied.last.tool_call_id).to eq(copied.first.tool_calls.keys.first)
+    expect(results_of(first)).to eq(['Weather in Paris'])
+    expect(results_of(second)).to eq(['Weather in Paris'])
+  end
+
   it 'keeps calls, approvals and results separate across processes' do
     chat = process(Chat.create!(model: model_for(:openai)))
     allow(chat.to_llm.provider).to receive(:complete).and_return(response('Paris'))

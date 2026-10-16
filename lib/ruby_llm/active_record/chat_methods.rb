@@ -671,7 +671,9 @@ module RubyLLM
       #   chat.add_message(role: :user, content: long_context)
       #
       def add_message(message_or_attributes)
-        llm_message = to_llm.prepare_message(message_or_attributes)
+        llm_message = to_llm.prepare_message(message_or_attributes) do |id|
+          RubyLLM::ActiveRecord::ToolCall.exists?(tool_call_id: id)
+        end
 
         message_record = messages_association.create!(message_attributes(llm_message))
         @last_message_id = message_record.id

@@ -1213,11 +1213,11 @@ module RubyLLM
       message
     end
 
-    def prepare_message(message_or_attributes) # :nodoc:
+    def prepare_message(message_or_attributes, &taken) # :nodoc:
       message = coerce_message(message_or_attributes)
       return ToolCallIds.answer(message, messages) if message.tool_result?
       return message unless message.tool_call?
-      return message if message.tool_calls.values.none? { |call| call.id.nil? || find_tool_call(call.id) }
+      return message if message.tool_calls.each_value.none? { |call| reused_tool_call_id?(call.id, &taken) }
 
       ToolCallIds.new.assign(message)
     end
@@ -1854,6 +1854,10 @@ module RubyLLM
         return call if call
       end
       nil
+    end
+
+    def reused_tool_call_id?(id)
+      id.nil? || find_tool_call(id) || (block_given? && yield(id))
     end
 
     def escalation_approved?(tool_call)
