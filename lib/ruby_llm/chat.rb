@@ -267,6 +267,8 @@ module RubyLLM
 
     # Runs the conversation loop until #complete? or #waiting? is +true+.
     # Returns the last conversation Message, or +nil+ for an empty chat.
+    # While the chat is #waiting?, returns the assistant Message that holds
+    # the pending tool calls, even after other tools in the round have run.
     # Used after #ask_later; #ask calls #complete for you.
     #
     # When a pending tool call requires approval and no decision has been
@@ -278,7 +280,7 @@ module RubyLLM
     def complete(&)
       run_tools if awaiting_tasks?
       step(&) until complete? || waiting?
-      last_non_system_message || messages.last
+      pending_tool_response || last_non_system_message || messages.last
     end
 
     # Returns whether the chat has no pending response or tool execution:

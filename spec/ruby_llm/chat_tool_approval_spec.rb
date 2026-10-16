@@ -207,4 +207,20 @@ RSpec.describe RubyLLM::Chat do
     expect(executions).to eq(%i[harmless dangerous])
     expect(response.content).to eq('All done')
   end
+
+  it 'returns the assistant message holding the pending call after another tool ran' do
+    chat = stubbed_chat(
+      tool_call_message('call_a' => 'harmless', 'call_b' => 'dangerous'),
+      final_message,
+      tools: [harmless_tool, dangerous_tool]
+    )
+
+    response = chat.ask('Do both things')
+
+    expect(chat.messages.last.role).to eq(:tool)
+    expect(response.role).to eq(:assistant)
+    expect(response.tool_calls.values.map(&:name)).to eq(%w[harmless dangerous])
+    expect(response.tool_calls.values).to include(chat.pending_approvals.first)
+    expect(chat.complete).to equal(response)
+  end
 end
