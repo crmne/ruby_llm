@@ -41,7 +41,9 @@ module RubyLLM
     # The provider-reported processing status of the file.
     attr_reader :status
 
-    # The MIME type of the stored file.
+    # The MIME type of the stored file. OpenAI, Azure, DeepSeek, and xAI do
+    # not report one: ::upload returns the content type it sent, and ::find
+    # returns +nil+.
     attr_reader :mime_type
 
     # The purpose the file was uploaded for, such as <tt>"batch"</tt>, when

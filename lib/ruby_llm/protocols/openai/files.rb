@@ -17,7 +17,11 @@ module RubyLLM
           { anchor: 'created_at', seconds: expires_in } if expires_in
         end
 
-        def parse_file_response(data)
+        def parse_upload_response(data, attachment)
+          parse_file_response(data, mime_type: file_content_type(attachment))
+        end
+
+        def parse_file_response(data, mime_type: nil)
           uploaded_file(
             data,
             id: data['id'],
@@ -26,7 +30,8 @@ module RubyLLM
             created_at: timestamp(data['created_at']),
             expires_at: timestamp(data['expires_at']),
             status: data['status'],
-            purpose: data['purpose']
+            purpose: data['purpose'],
+            mime_type:
           )
         end
       end

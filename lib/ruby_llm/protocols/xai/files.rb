@@ -13,7 +13,11 @@ module RubyLLM
           multipart_payload(attachment, expires_after: expires_in, purpose:)
         end
 
-        def parse_file_response(data)
+        def parse_upload_response(data, attachment)
+          parse_file_response(data, mime_type: file_content_type(attachment))
+        end
+
+        def parse_file_response(data, mime_type: nil)
           uploaded_file(
             data,
             id: data['id'],
@@ -21,7 +25,8 @@ module RubyLLM
             byte_size: data['bytes'],
             created_at: timestamp(data['created_at']),
             expires_at: timestamp(data['expires_at']),
-            purpose: data['purpose']
+            purpose: data['purpose'],
+            mime_type:
           )
         end
       end
