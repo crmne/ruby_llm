@@ -51,6 +51,22 @@ RSpec.describe RubyLLM::Chat do
     expect(executions).to eq(%w[Paris London])
   end
 
+  it 'pairs an appended result with the latest call that reused its provider ID' do
+    chat.with_model(model_for(:openai), provider: :openai, protocol: :responses)
+    %w[Paris London].each do |city|
+      chat.add_message(response(city))
+      chat.add_message(role: :tool, content: "Weather in #{city}", tool_call_id: 'call_1')
+    end
+    chat.add_message(role: :assistant, content: 'Done')
+
+    first, second = chat.messages.select(&:tool_call?)
+    expect(first.tool_results.map(&:content)).to eq(['Weather in Paris'])
+    expect(second.tool_results.map(&:content)).to eq(['Weather in London'])
+    results = chat.render[:input].select { |item| item[:type] == 'function_call_output' }
+    expect(results.map { |item| item[:call_id] }).to eq(%w[call_1 call_1])
+    expect(results.map { |item| item[:output] }).to eq(['Weather in Paris', 'Weather in London'])
+  end
+
   it 'does not carry a one-time approval to a new invocation with identical arguments' do
     lookup.requires_approval
     answer_with(response('Paris'), response('Paris'))

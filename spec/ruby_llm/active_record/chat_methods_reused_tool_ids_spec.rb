@@ -79,4 +79,28 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     expect(second.id).not_to eq(first.id)
     expect(process(chat).pending_approvals.map(&:tool_call_id)).to eq([second.id])
   end
+
+  it 'pairs an appended result with the latest call that reused its provider ID' do
+    chat = process(Chat.create!(model: model_for(:openai)))
+    %w[Paris London].each do |city|
+      chat.add_message(response(city))
+      chat.add_message(role: :tool, content: "Weather in #{city}", tool_call_id: 'call_1')
+    end
+    chat.add_message(role: :assistant, content: 'Done')
+
+    calls = RubyLLM::ActiveRecord::ToolCall.where(message: chat.messages).order(:id)
+    expect(calls.map { |call| call.result.content }).to eq(['Weather in Paris', 'Weather in London'])
+    results = process(chat).to_llm.render[:input].select { |item| item[:type] == 'function_call_output' }
+    expect(results.map { |item| item[:call_id] }).to eq(%w[call_1 call_1])
+    expect(results.map { |item| item[:output] }).to eq(['Weather in Paris', 'Weather in London'])
+  end
+
+  it 'keeps the first result of a call that is answered again' do
+    chat = process(Chat.create!(model: model_for(:openai)))
+    call = chat.add_message(response('Paris')).tool_calls.values.first
+    chat.add_message(role: :tool, content: 'Weather in Paris', tool_call_id: call.id)
+    chat.add_message(role: :tool, content: 'Again', tool_call_id: call.id)
+
+    expect(RubyLLM::ActiveRecord::ToolCall.find_by!(tool_call_id: call.id).result.content).to eq('Weather in Paris')
+  end
 end

@@ -676,7 +676,8 @@ module RubyLLM
         message_record = messages_association.create!(message_attributes(llm_message))
         @last_message_id = message_record.id
 
-        if llm_message.tool_call_id && (tool_call = find_tool_call(llm_message.tool_call_id))
+        tool_call = find_tool_call(llm_message.tool_call_id) if llm_message.tool_call_id
+        if tool_call && tool_call.result_id.nil?
           tool_call.mcp_result = llm_message.mcp_result&.dump if tool_call.has_attribute?(:mcp_result)
           tool_call.update!(result: message_record)
         end
