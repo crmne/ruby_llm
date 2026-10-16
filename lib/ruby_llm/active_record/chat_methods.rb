@@ -141,7 +141,7 @@ module RubyLLM
       def pending_approvals
         ids = to_llm.pending_approvals.map(&:id)
         RubyLLM::ActiveRecord::ToolCall.where(
-          message_type: self.class.message_class.constantize.polymorphic_name,
+          message_type: messages_association.klass.polymorphic_name,
           message_id: messages_association.select(:id)
         ).in_order_of(:tool_call_id, ids)
       end
@@ -807,7 +807,7 @@ module RubyLLM
       private
 
       def broadcasts_messages?
-        message_class = self.class.message_class.constantize
+        message_class = messages_association.klass
         message_class.include?(MessageBroadcasting) && message_class.broadcasting?
       end
 
@@ -1156,7 +1156,7 @@ module RubyLLM
       def find_tool_call(tool_call_id)
         RubyLLM::ActiveRecord::ToolCall.find_by(
           tool_call_id: tool_call_id,
-          message_type: self.class.message_class.constantize.polymorphic_name,
+          message_type: messages_association.klass.polymorphic_name,
           message_id: messages_association.select(:id)
         )
       end

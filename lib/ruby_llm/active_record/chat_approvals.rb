@@ -40,7 +40,7 @@ module RubyLLM
         RubyLLM::ActiveRecord::ToolCall.uncached do
           RubyLLM::ActiveRecord::ToolCall.where(
             name:, approval: 'remembered',
-            message_type: self.class.message_class.constantize.polymorphic_name,
+            message_type: messages_association.klass.polymorphic_name,
             message_id: messages_association.select(:id)
           ).exists?
         end
