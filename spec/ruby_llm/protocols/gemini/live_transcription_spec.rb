@@ -49,6 +49,17 @@ RSpec.describe RubyLLM::Protocols::Gemini::LiveTranscription do
     expect(chunks).not_to include(have_attributes(done?: true))
   end
 
+  it 'returns the transcript and usage when frames follow generation completion' do
+    trailing = { 'serverContent' => { 'turnComplete' => true },
+                 'usageMetadata' => { 'promptTokenCount' => 93, 'candidatesTokenCount' => 10 } }
+    stub_socket(events + [trailing])
+
+    result = RubyLLM.transcribe(path, model:, provider: :gemini)
+
+    expect(result.text).to eq('Hello.')
+    expect(result.tokens).to have_attributes(input: 93, output: 10)
+  end
+
   it 'supports returning a completed Live transcript without a consumer block' do
     stub_socket(events)
 

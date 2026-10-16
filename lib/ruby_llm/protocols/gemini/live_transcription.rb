@@ -92,7 +92,7 @@ module RubyLLM
               socket.close if event.dig('serverContent', 'generationComplete')
             end
           end
-          unless events.last&.dig('serverContent', 'generationComplete')
+          unless events.any? { |event| event.dig('serverContent', 'generationComplete') }
             raise Error, 'Google Live transcription ended before generation completed'
           end
 
