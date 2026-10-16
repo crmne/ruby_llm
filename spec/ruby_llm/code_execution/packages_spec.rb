@@ -137,6 +137,18 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
       end
     end
 
+    it 'names platform gems without their version and platform' do
+      Dir.mktmpdir do |home|
+        FileUtils.mkdir_p(File.join(home, 'specifications'))
+        %w[
+          rack-3.1.8 net-http2-0.18.5 ffi-1.17.0-x86_64-linux-gnu google-protobuf-4.29.3-x86_64-linux
+          nokogiri-1.18.10-x86_64-linux-gnu nokogiri-1.18.10-java
+        ].each { |name| File.write(File.join(home, 'specifications', "#{name}.gemspec"), '') }
+
+        expect(packages(gem_home: home).gem_names).to eq(%w[ffi google-protobuf net-http2 nokogiri rack])
+      end
+    end
+
     it 'leaves the application gems off the gem path without a cache directory' do
       Dir.mktmpdir do |home|
         gems = described_class.new(sandbox:, cache_dir: nil, gem_home: home)

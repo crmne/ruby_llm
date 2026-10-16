@@ -44,7 +44,7 @@ module RubyLLM
         return gems if gems.any? || @gem_home.nil?
 
         Dir.glob(File.join(@gem_home, 'specifications', '*.gemspec'))
-           .map { |path| File.basename(path, '.gemspec').sub(/-[^-]+\z/, '') }.uniq.sort
+           .map { |path| File.basename(path, '.gemspec').sub(/-\d[\w.]*(?:-[a-z][^.]*)?\z/, '') }.uniq.sort
       end
 
       def python_names
