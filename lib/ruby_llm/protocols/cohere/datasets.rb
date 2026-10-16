@@ -88,7 +88,7 @@ module RubyLLM
         end
 
         def download_part(url)
-          Transport::Connection.basic(@config).get(url).body
+          Transport::Connection.download(url, @config)
         end
 
         def load_avro

@@ -58,6 +58,23 @@ RSpec.describe RubyLLM::Protocols::Cohere::Datasets do
       .to eq([{ 'text' => 'first' }, { 'text' => 'second' }])
   end
 
+  it 'follows redirects from original and generated part URLs' do
+    content = "{\"text\":\"Ruby\"}\n"
+    part = { url: 'https://storage.example.test/input.avro', original_url: 'https://storage.example.test/input.jsonl' }
+    stub_request(:get, 'https://api.cohere.com/v1/datasets/dataset_ruby')
+      .to_return_json(body: { dataset: dataset(dataset_parts: [part]) })
+    part.each_value do |url|
+      stub_request(:get, url).to_return(status: 302, body: 'Moved', headers: { 'Location' => "#{url}?signed=1" })
+    end
+    stub_request(:get, "#{part[:original_url]}?signed=1").to_return(body: content)
+    stub_request(:get, "#{part[:url]}?signed=1").to_return(body: avro_content('Ruby'))
+
+    file = RubyLLM::UploadedFile.find('dataset_ruby', provider: :cohere, context:)
+
+    expect(context.download(file.id, provider: :cohere)).to eq(content)
+    expect(protocol.records(file)).to eq([{ 'text' => 'Ruby' }])
+  end
+
   it 'reports failed validation and bounds polling for pending datasets' do
     stub_request(:get, 'https://api.cohere.com/v1/datasets/bad')
       .to_return_json(body: { dataset: dataset(validation_status: 'failed', validation_error: 'Missing text') })
