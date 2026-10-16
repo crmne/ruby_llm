@@ -16,6 +16,20 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
       expect(payload).to eq(input_type: 'search_document', texts: %w[one two])
     end
 
+    it 'sends every text of an array so vectors stay aligned with the inputs' do
+      payload = protocol.send(:render_embedding_payload, ['first', '', 'third'], model: 'us.cohere.embed-v4:0',
+                                                                                 dimensions: nil, provider_options: {})
+
+      expect(payload[:texts]).to eq(['first', '', 'third'])
+    end
+
+    it 'omits texts for a blank input' do
+      payload = protocol.send(:render_embedding_payload, '', model: 'us.cohere.embed-v4:0',
+                                                             dimensions: nil, provider_options: {})
+
+      expect(payload).to eq(input_type: 'search_document')
+    end
+
     it 'sends custom dimensions as output_dimension on Embed v4' do
       payload = protocol.send(:render_embedding_payload, 'one', model: 'us.cohere.embed-v4:0',
                                                                 dimensions: 512, provider_options: {})
