@@ -97,7 +97,9 @@ loader.setup
 # Chat#with_skills gives the model Skill folders in the open Agent Skills
 # format: each request lists them, the model loads the instructions and
 # files it needs with its +load_skill+ tool, and code execution runs their
-# scripts. Skill.roots holds the directories they come from.
+# scripts. Skill.roots holds the directories they come from, and
+# Skill::Marketplace copies the skills of a plugin marketplace into
+# +vendor/skills+.
 #
 # Agent defines a reusable configuration with model, instructions, tools,
 # schema, and runtime inputs. Chat#ask_later, Chat#generate, Chat#run_tools,

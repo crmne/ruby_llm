@@ -17,6 +17,7 @@ After reading this guide, you will know:
 * How to give skills to a chat or an agent.
 * How a skill's scripts run with code execution.
 * How engines ship skills of their own.
+* How to add the skills of a plugin marketplace.
 * What makes a `SKILL.md` invalid, and when RubyLLM tells you.
 
 ## What Is a Skill?
@@ -158,7 +159,87 @@ end
 
 The application's folder comes first, so a skill in `app/skills` replaces an engine's skill with the same name.
 
-RubyLLM ships no skills and never downloads them. A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project.
+## Skills From Marketplaces
+
+Skills written for coding assistants are published in plugin marketplaces: a repository that lists plugins, each holding skill folders. Copying those folders by hand, one skill at a time, leaves you with no record of where a skill came from or how to refresh it. Add the whole marketplace instead:
+
+```bash
+bin/rails "ruby_llm:marketplaces:add[anthropics/skills]"
+```
+
+Or from Ruby:
+
+```ruby
+marketplace = RubyLLM::Skill::Marketplace.add("anthropics/skills")
+marketplace.name               # => "anthropic-agent-skills"
+marketplace.plugins            # => ["claude-api", "document-skills", "example-skills", ...]
+marketplace.skills.map(&:name) # => ["claude-api", "docx", "pdf", "pptx", "xlsx", ...]
+```
+
+RubyLLM reads the marketplace file that Claude Code, Codex, or Cursor would read, and copies each plugin's skill folders into `vendor/skills`, under the marketplace's and the plugin's names:
+
+```
+vendor/skills/
+└── anthropic-agent-skills/
+    ├── marketplace.json
+    └── document-skills/
+        ├── docx/
+        │   └── SKILL.md
+        └── pdf/
+            └── SKILL.md
+```
+
+RubyLLM looks for skills in these folders after `app/skills` and the folders engines add, so the calls you know find them:
+
+```ruby
+chat.with_skills(:pdf, :docx)
+```
+
+A skill in `app/skills` replaces a marketplace skill with the same name. Called bare, `with_skills` includes every marketplace skill, so name the ones a chat needs once you have added a large marketplace.
+
+The source is a GitHub repository, or the path of a directory that holds a marketplace. Add `@` and a branch, a tag, or a commit to pin a repository, and pass `only:` to add some of its plugins:
+
+```ruby
+RubyLLM::Skill::Marketplace.add("acme/skills@v1.2.0", only: "billing")
+RubyLLM::Skill::Marketplace.add("../our-skills")
+```
+
+```bash
+bin/rails "ruby_llm:marketplaces:add[acme/skills@v1.2.0,billing]"
+```
+
+For a private repository, or one on another host, clone it and add the directory.
+
+### What Gets Copied
+
+RubyLLM copies skills and nothing else. A plugin's skills are the folders under its `skills` folder, and the folders its marketplace entry lists under `skills`. Hooks, commands, agents, and MCP servers stay behind, and so do symbolic links. A skill that reads files outside its own folder, through `${CLAUDE_PLUGIN_ROOT}` or `../`, will not find them.
+
+Without `only:`, a plugin with no skills, or with a source that is neither the marketplace itself nor a GitHub repository, is left out. Named in `only:`, it raises.
+
+Every copied skill is checked the way `with_skills` checks it. An [invalid skill](#invalid-skills) raises `RubyLLM::InvalidSkillError` and nothing changes on disk: the skills of an earlier add stay in place.
+
+### Updating and Removing
+
+`marketplace.json` records the source and the commit the skills were copied at:
+
+```ruby
+marketplace = RubyLLM::Skill::Marketplace.find("anthropic-agent-skills")
+marketplace.source # => "anthropics/skills"
+marketplace.commit # => "3bf9a60e6aef..."
+
+marketplace.update # fetches the source again, for the plugins it has
+marketplace.remove # deletes vendor/skills/anthropic-agent-skills
+```
+
+```bash
+bin/rails ruby_llm:marketplaces
+bin/rails ruby_llm:marketplaces:update
+bin/rails "ruby_llm:marketplaces:remove[anthropic-agent-skills]"
+```
+
+`update` keeps the plugins you chose. To pick up plugins a marketplace gained, or to pin another tag, add it again.
+
+RubyLLM ships no skills, and downloads them only when you add or update a marketplace, never when a chat runs. A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project. Marketplace skills are files in your repository: read the diff, then commit it.
 
 ## Writing a Skill
 

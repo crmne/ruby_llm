@@ -23,3 +23,5 @@ namespace :ruby_llm do
     puts "✅ Loaded #{model_class.count} models into database"
   end
 end
+
+load 'tasks/ruby_llm/marketplaces.rake'

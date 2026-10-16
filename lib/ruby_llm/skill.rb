@@ -81,16 +81,17 @@ module RubyLLM
         end
       end
 
-      # Returns every skill directly under the skill roots. A skill in an
-      # earlier root hides one with the same folder name in a later root.
-      # Raises InvalidSkillError when a skill's +SKILL.md+ is invalid.
+      # Returns every skill directly under the skill roots, followed by the
+      # skills of each Marketplace. A skill in an earlier folder hides one
+      # with the same folder name in a later one. Raises InvalidSkillError
+      # when a skill's +SKILL.md+ is invalid.
       def all
-        folders = roots.flat_map { |root| skill_folders(Pathname.new(root)) }
+        folders = directories.flat_map { |root| skill_folders(Pathname.new(root)) }
         folders.uniq(&:basename).map { |folder| new(folder) }
       end
 
       # Returns the skill in the folder called +name+ under the first skill
-      # root that has one. Underscores in a Symbol stand for hyphens, so
+      # root that has one, or else in the first Marketplace that has one. Underscores in a Symbol stand for hyphens, so
       # <tt>:pdf_processing</tt> finds +pdf-processing+. Raises
       # SkillNotFoundError when no root has it.
       #
@@ -98,9 +99,9 @@ module RubyLLM
       #
       def find(name)
         folder = name.is_a?(Symbol) ? name.to_s.tr('_', '-') : name.to_s
-        found = (roots.map { |root| Pathname.new(root).join(folder) } if folder.match?(NAME_FORMAT))
+        found = (directories.map { |root| Pathname.new(root).join(folder) } if folder.match?(NAME_FORMAT))
                 &.find { |path| path.join(FILE).file? }
-        raise SkillNotFoundError, "No skill named #{folder} in #{roots.to_a.join(', ')}" unless found
+        raise SkillNotFoundError, "No skill named #{folder} in #{directories.join(', ')}" unless found
 
         new(found)
       end
@@ -140,6 +141,10 @@ module RubyLLM
       end
 
       private
+
+      def directories
+        [*roots, *Marketplace.roots]
+      end
 
       def skill(entry)
         case entry
