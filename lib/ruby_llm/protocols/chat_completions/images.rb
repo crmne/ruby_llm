@@ -39,7 +39,7 @@ module RubyLLM
           entries.map.with_index do |image_data, index|
             Image.new(
               url: image_data['url'],
-              mime_type: 'image/png', # DALL-E typically returns PNGs
+              mime_type: "image/#{data['output_format'] || 'png'}",
               revised_prompt: image_data['revised_prompt'],
               model: model,
               data: image_data['b64_json'],
