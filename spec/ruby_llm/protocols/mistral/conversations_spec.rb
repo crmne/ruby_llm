@@ -71,6 +71,24 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations do
     expect(JSON.generate(payload)).not_to include('conv_test', 'Remember violet')
   end
 
+  it 'keeps parallel function results consecutive and sends tool attachments in a user entry after them' do
+    attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'chart.png')
+    chat.messages = [
+      RubyLLM::Message.new(role: :user, content: 'Chart it'),
+      RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: {
+                             'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'chart', arguments: {}),
+                             'call_2' => RubyLLM::ToolCall.new(id: 'call_2', name: 'chart', arguments: {})
+                           }),
+      RubyLLM::Message.new(role: :tool, content: 'first', attachments: [attachment], tool_call_id: 'call_1'),
+      RubyLLM::Message.new(role: :tool, content: 'second', tool_call_id: 'call_2')
+    ]
+    inputs = chat.render[:inputs]
+    expect(inputs.last(3).map { |entry| entry[:type] }).to eq(%w[function.result function.result message.input])
+    expect(inputs.last).to include(role: 'user')
+    expect(inputs.last[:content].map { |part| part[:type] }).to eq(%w[text image_url])
+    expect(inputs.last[:content].first[:text]).to eq('Attachments from tool call call_1:')
+  end
+
   it 'keeps local function calls separate from completed hosted executions' do
     local = pending['outputs'].first.except('confirmation_status')
     output = %w[allowed denied].map do |status|
