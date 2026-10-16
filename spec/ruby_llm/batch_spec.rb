@@ -185,6 +185,21 @@ RSpec.describe RubyLLM::Batch, :live do
       expect(chat.usage_entries).to eq(message.ruby_llm_usage_entries)
     end
 
+    it 'returns results with unknown cost when a result names a model missing from the registry' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      fine_tune = "ft:#{model_for(:openai)}:acme::abc123"
+      message = RubyLLM::Message.new(role: :assistant, content: 'Paris', model: fine_tune,
+                                     input_tokens: 10, output_tokens: 2)
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+      batch = described_class.new(provider:, id: 'batch_test', raw_status: 'completed', completed: true)
+
+      expect(batch.messages).to eq([message])
+      expect(message.ruby_llm_usage_entries.sole.model).to eq(fine_tune)
+      expect(batch.tokens.to_h).to eq(input_tokens: 10, output_tokens: 2)
+      expect(batch.cost.total).to be_nil
+    end
+
     it 'applies the provider batch discount when the model has no batch tier' do
       chat = RubyLLM.chat(model: model).ask_later('Hi')
       provider = chat.provider

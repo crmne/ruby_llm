@@ -251,7 +251,7 @@ module RubyLLM
 
     def batch_cost(tokens, model:, category: :text_tokens) # :nodoc:
       standard = Cost.new(tokens:, model:, category:)
-      return standard if tokens.reported_cost
+      return standard if tokens.reported_cost || model.nil?
 
       pricing = model.pricing.public_send(category)
       batch_tier = pricing.batch unless long_context_pricing?(pricing, tokens)

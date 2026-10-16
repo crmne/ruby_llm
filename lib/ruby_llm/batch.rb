@@ -378,7 +378,7 @@ module RubyLLM
     def attach_batch_usage(result, operation:, model:, category:, instrument:)
       return unless result.ruby_llm_usage_entries.empty?
 
-      model ||= RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
+      model ||= result_model(result)
       entry = Accounting::Usage::Entry.new(
         operation:,
         provider: @provider.slug,
@@ -397,6 +397,12 @@ module RubyLLM
       else
         Accounting::Usage.report(entry, config: @provider.config)
       end
+    end
+
+    def result_model(result)
+      RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
+    rescue ModelNotFoundError
+      nil
     end
 
     # A plain answer is the chat's last non-system message once it arrives. A tool-call
