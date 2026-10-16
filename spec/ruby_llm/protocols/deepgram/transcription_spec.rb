@@ -43,6 +43,16 @@ RSpec.describe RubyLLM::Protocols::Deepgram::Transcription do
       expect(protocol.transcription_params(model: 'nova-3')).not_to have_key(:diarize_model)
     end
 
+    it 'sends the prompt as a key term' do
+      params = protocol.transcription_params(model: 'nova-3', prompt: 'RubyLLM')
+
+      expect(params[:keyterm]).to eq(['RubyLLM'])
+    end
+
+    it 'leaves key terms out without a prompt' do
+      expect(protocol.transcription_params(model: 'nova-3')).not_to have_key(:keyterm)
+    end
+
     it 'takes provider options as query parameters' do
       params = protocol.transcription_params(
         model: 'nova-3',
