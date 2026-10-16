@@ -104,7 +104,7 @@ module RubyLLM
           return unless candidate
 
           parts = candidate.dig('content', 'parts') || []
-          texts = parts.filter_map { |part| part['text'] }
+          texts = parts.reject { |part| part['thought'] }.filter_map { |part| part['text'] }
           texts.join if texts.any?
         end
 
