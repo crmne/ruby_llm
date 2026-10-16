@@ -55,8 +55,10 @@ module RubyLLM
       def read(path)
         case File.extname(path)
         when '.yml', '.yaml' then YAML.safe_load_file(path, aliases: false)
-        when '.json' then JSON.parse(File.read(path))
-        when '.jsonl' then File.foreach(path).reject { |line| line.strip.empty? }.map { |line| JSON.parse(line) }
+        when '.json' then JSON.parse(File.read(path, encoding: Encoding::UTF_8))
+        when '.jsonl'
+          File.foreach(path, encoding: Encoding::UTF_8).reject { |line| line.strip.empty? }
+              .map { |line| JSON.parse(line) }
         else raise ArgumentError, "Unsupported dataset format: #{path}"
         end
       end
