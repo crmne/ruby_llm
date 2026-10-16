@@ -38,6 +38,15 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
     expect(text_chunk.content).to eq(' and more')
   end
 
+  it 'leaves tokens unknown on chunks that report no usage' do
+    chunk = protocol.send(
+      :build_chunk,
+      { 'model' => 'mistral-small-latest', 'choices' => [{ 'delta' => { 'content' => 'Four' } }] }
+    )
+
+    expect(chunk.tokens.to_h).to be_empty
+  end
+
   it 'preserves raw finish reasons on chunks' do
     chunk = protocol.send(
       :build_chunk,

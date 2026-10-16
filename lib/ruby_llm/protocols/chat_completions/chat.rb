@@ -189,6 +189,8 @@ module RubyLLM
         end
 
         def cache_write_tokens(usage)
+          return if usage.empty?
+
           usage.dig('prompt_tokens_details', 'cache_write_tokens') ||
             usage.dig('input_tokens_details', 'cache_write_tokens') ||
             0
