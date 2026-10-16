@@ -1,6 +1,5 @@
 class <%= chat_job_class_name %> < ApplicationJob
-  def perform(<%= chat_variable_name %>_id, content = nil)
-    <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
-    content ? <%= chat_variable_name %>.ask(content, &:broadcast) : <%= chat_variable_name %>.complete(&:broadcast)
+  def perform(<%= chat_variable_name %>_id)
+    <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id).complete(&:broadcast)
   end
 end
