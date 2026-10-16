@@ -97,8 +97,6 @@ module RubyLLM
           end
         end
 
-        # Retries only rewind upload parts at the top level of the payload,
-        # so a lone image rides there instead of inside an array.
         def single_upload_part(parts)
           parts.one? ? parts.first : parts
         end

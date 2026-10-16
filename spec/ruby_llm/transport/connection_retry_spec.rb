@@ -129,6 +129,24 @@ RSpec.describe RubyLLM::Transport::Connection do
       expect(stub).to have_been_requested.twice
     end
 
+    it 'sends every upload part again when a multipart request is retried' do
+      bodies = []
+      stub_request(:post, 'https://api.openai.com/v1/images/edits').to_return do |request|
+        bodies << request.body
+        if bodies.one?
+          { status: 500, body: '{"error":{"message":"Internal server error"}}' }
+        else
+          { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
+        end
+      end
+      parts = %w[first second].map { |bytes| Faraday::UploadIO.new(StringIO.new(bytes), 'image/png', "#{bytes}.png") }
+
+      provider.connection.post('images/edits', { image: parts })
+
+      expect(bodies.size).to eq(2)
+      expect(bodies.last).to eq(bodies.first).and include('first', 'second')
+    end
+
     it 'retries a chat completion whose TLS connection fails' do
       stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
              .to_raise(OpenSSL::SSL::SSLError.new('SSL_connect returned=1 errno=0 state=error: unexpected eof'))

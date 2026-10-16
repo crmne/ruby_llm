@@ -16,10 +16,12 @@ module RubyLLM
 
       # Sits directly above the adapter, inside the retry middleware, so this
       # runs once per attempt: streaming state stored on the env by a previous
-      # attempt must not leak into the next one.
+      # attempt must not leak into the next one, and a body the previous
+      # attempt read to its end is sent again from its start.
       def call(env)
         env[:streaming_error_response] = nil
         env[:streaming_state] = nil
+        env[:body].rewind if env[:body].respond_to?(:rewind)
         context = env[:request]&.context
         context&.[](STREAM_RESET_KEY)&.call
         provider = context&.[](PROVIDER_KEY) || @provider
