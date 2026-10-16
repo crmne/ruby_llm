@@ -119,6 +119,12 @@ RSpec.describe RubyLLM::Prompt do
       expect(described_class.render('instructions', 'x-y' => 1, Name: 2)).to eq('12')
     end
 
+    it 'keeps a local that starts with a non-ASCII capital in local_assigns only' do
+      create_prompt('instructions', '<%= local_assigns[:Élan] %><%= local_assigns[:ǅana] %>')
+
+      expect(described_class.render('instructions', Élan: 1, ǅana: 2)).to eq('12')
+    end
+
     it 'renders Unicode and underscore-prefixed locals' do
       create_prompt('instructions', '<%= café %> <%= _name2 %>')
 
