@@ -31,6 +31,19 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
     end
   end
 
+  describe '.models_dev_alias' do
+    let(:source) { RubyLLM::Model.new(id: 'amazon.nova-lite-v1:0', provider: 'bedrock', context_window: 300_000) }
+
+    %w[us.amazon.nova-lite-v1:0 apac.amazon.nova-lite-v1:0].each do |profile_id|
+      it "finds the models.dev entry behind #{profile_id}" do
+        model = RubyLLM::Providers::Bedrock.models_dev_alias(profile_id, { "bedrock:#{source.id}" => source })
+
+        expect(model.id).to eq(profile_id)
+        expect(model.context_window).to eq(300_000)
+      end
+    end
+  end
+
   describe '#parse_list_models_response' do
     let(:model_data) do
       {
