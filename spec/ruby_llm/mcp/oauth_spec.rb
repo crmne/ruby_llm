@@ -113,6 +113,17 @@ RSpec.describe RubyLLM::MCP::OAuth do
     expect(registration).to have_been_made
   end
 
+  it 'keeps the query of the authorization endpoint' do
+    stub_request(:get, 'https://auth.example.com/.well-known/oauth-authorization-server')
+      .to_return(body: authorization_server.merge(
+        authorization_endpoint: 'https://auth.example.com/authorize?p=b2c_1_signin'
+      ).to_json)
+
+    params = URI.decode_www_form(URI(linear.authorization_url(redirect_uri:)).query).to_h
+
+    expect(params).to include('p' => 'b2c_1_signin', 'response_type' => 'code', 'client_id' => 'registered')
+  end
+
   it 'registers for the scopes it requests, and again when it needs more' do
     linear.authorization_url(redirect_uri:)
     url = linear_class.new(user: 'ada').authorization_url(redirect_uri:)

@@ -186,7 +186,9 @@ module RubyLLM
         query = { response_type: 'code', client_id: client['client_id'], redirect_uri:, state:,
                   code_challenge: Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false),
                   code_challenge_method: 'S256', resource:, scope: pending['scope'] }.compact
-        "#{endpoint(server['authorization_endpoint'])}?#{URI.encode_www_form(query)}"
+        uri = URI(endpoint(server['authorization_endpoint']))
+        uri.query = URI.encode_www_form(URI.decode_www_form(uri.query.to_s) + query.to_a)
+        uri.to_s
       end
 
       def authorize(params)
