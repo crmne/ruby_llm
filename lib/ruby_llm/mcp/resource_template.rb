@@ -56,9 +56,10 @@ module RubyLLM
       def self.expand_variable(spec, operator, separator, reserved, variables) # :nodoc:
         explode = spec.end_with?('*')
         name, length = spec.delete_suffix('*').split(':')
-        return unless variables.key?(name)
+        values = Array(variables[name])
+        return if values.empty?
 
-        parts = Array(variables[name]).map { |part| encode(length ? part.to_s[0, length.to_i] : part.to_s, reserved) }
+        parts = values.map { |part| encode(length ? part.to_s[0, length.to_i] : part.to_s, reserved) }
         named = NAMED_OPERATORS.include?(operator)
         return parts.map { |part| named ? "#{name}=#{part}" : part }.join(separator) if explode
 
