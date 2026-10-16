@@ -536,6 +536,44 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     end
   end
 
+  describe 'retried attempts in stream_response' do
+    before { stub_const('Faraday::VERSION', '2.0.0') }
+
+    def event_frame(type, payload)
+      headers = { ':message-type' => 'event', ':event-type' => type }
+      message = Aws::EventStream::Message.new(
+        headers: headers.transform_values { |value| Aws::EventStream::HeaderValue.new(value:, type: 'string') },
+        payload: StringIO.new(payload.to_json)
+      )
+      Aws::EventStream::Encoder.new.encode_message(message)
+    end
+
+    def connection_replaying(*attempts)
+      options = Faraday::RequestOptions.new
+      request = Struct.new(:headers, :options).new({}, options)
+      connection = instance_double(RubyLLM::Transport::Connection)
+      allow(connection).to receive(:post) do |_url, _body, **, &block|
+        block.call(request)
+        attempts.each do |bytes|
+          options.context[RubyLLM::Transport::ErrorMiddleware::STREAM_RESET_KEY]&.call
+          options.on_data.call(bytes, bytes.bytesize, nil)
+        end
+        nil
+      end
+      connection
+    end
+
+    it 'decodes a retry without the bytes of a frame the dropped attempt left unfinished' do
+      body = event_frame('contentBlockDelta', { 'contentBlockIndex' => 0, 'delta' => { 'text' => 'Hello' } }) +
+             event_frame('messageStop', { 'stopReason' => 'end_turn' })
+      streaming.instance_variable_set(:@connection, connection_replaying(body.byteslice(0, 7), body))
+
+      message = streaming.send(:stream_response, {}) { |_chunk| nil }
+
+      expect(message.content).to eq('Hello')
+    end
+  end
+
   describe 'on_data routing in stream_response' do
     # Captures the on_data proc that stream_response installs on the Faraday
     # request, by faking @connection/@provider/req just enough to run the block.
