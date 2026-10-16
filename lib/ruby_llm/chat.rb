@@ -1978,10 +1978,10 @@ module RubyLLM
         @tool_prefs[:choice] = nil
       else
         normalized_choice = normalize_tool_choice(choice)
-        valid_tool_choices = %i[auto none required] + tools.keys
-        unless valid_tool_choices.include?(normalized_choice)
+        modes = %i[auto none required]
+        unless modes.include?(normalized_choice) || tools.key?(normalized_choice)
           raise InvalidToolChoiceError,
-                "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
+                "Invalid tool choice: #{choice}. Valid choices are: #{(modes + tools.keys).join(', ')}"
         end
 
         @tool_prefs[:choice] = normalized_choice

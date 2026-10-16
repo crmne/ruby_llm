@@ -48,6 +48,20 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.tools.keys).to include(:echo, :add)
   end
 
+  it 'waits to contact servers when the tool choice names no tool' do
+    allow(files).to receive(:tools).and_call_original
+
+    chat.with_mcp(files).with_tool_options(choice: :required)
+
+    expect(files).not_to have_received(:tools)
+  end
+
+  it 'accepts a server tool as the tool choice' do
+    chat.with_mcp(files).with_tool_options(choice: :add)
+
+    expect(chat.tool_options[:choice]).to eq(:add)
+  end
+
   it 'lets the model call server tools' do
     allow(chat.provider).to receive(:complete).and_return(tool_call('add', { 'a' => 2, 'b' => 3 }), answer)
 
