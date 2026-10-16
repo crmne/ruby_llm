@@ -66,7 +66,7 @@ module RubyLLM
             completed = completed_batch_state?(state)
             {
               id: data['batch_id'] || data['id'],
-              raw_status: data['state'] ? xai_batch_status(state, completed:) : data['status'],
+              raw_status: data['state'] ? xai_batch_status(data, completed:) : data['status'],
               completed:,
               request_count: state['num_requests'],
               request_counts: state
@@ -76,13 +76,19 @@ module RubyLLM
           def parse_batch_status(raw_status, completed:)
             return :pending unless completed
 
-            raw_status == 'failed' ? :failed : :succeeded
+            case raw_status
+            when 'failed' then :failed
+            when 'cancelled' then :cancelled
+            else :succeeded
+            end
           end
 
-          def xai_batch_status(state, completed:)
+          def xai_batch_status(data, completed:)
+            state = data['state']
             return 'failed' unless state['error'].to_s.empty?
+            return 'processing' unless completed
 
-            completed ? 'completed' : 'processing'
+            data['cancel_time'] || state['num_cancelled'].to_i.positive? ? 'cancelled' : 'completed'
           end
 
           def completed_batch_state?(state)
