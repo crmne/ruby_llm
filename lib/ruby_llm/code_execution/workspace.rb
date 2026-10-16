@@ -23,7 +23,10 @@ module RubyLLM
       end
 
       def self.filename(name)
-        base = File.basename(name.to_s.tr('\\', '/'))
+        path = name.to_s.tr('\\', '/')
+        return path unless path.empty? || path.split('/', -1).intersect?(['', '.', '..'])
+
+        base = File.basename(path)
         ['', '.', '..'].include?(base) ? 'file' : base
       end
 
@@ -63,7 +66,9 @@ module RubyLLM
 
       def copy_in(attachments)
         attachments.reject(&:provider_file?).each do |attachment|
-          File.binwrite(File.join(inputs, self.class.filename(attachment.filename)), attachment.content)
+          path = File.join(inputs, self.class.filename(attachment.filename))
+          FileUtils.mkdir_p(File.dirname(path))
+          File.binwrite(path, attachment.content)
         end
       end
 

@@ -88,7 +88,7 @@ Both belong to the sandbox, so a chat that needs longer runs or a package regist
 
 Each call gets a new, empty run directory, which RubyLLM removes when the call ends. The code starts there unless its sandbox sets a [directory of its own]({% link _core_features/sandboxes.md %}#building-a-coding-agent), and `RUN_DIR` holds its path either way. Nothing carries over from one call to the next, except files, which work like this:
 
-* **Files in the conversation come in.** Every file attached to the conversation, and every file an earlier call returned, is copied into `attachments/` in the run directory, read-only. A later file with the same name replaces an earlier one.
+* **Files in the conversation come in.** Every file attached to the conversation, and every file an earlier call returned, is copied into `attachments/` in the run directory, read-only. A file an earlier call returned keeps its path, so `out/chart.png` is at `attachments/out/chart.png`. A later file with the same path replaces an earlier one.
 * **Files the code writes go out.** Every file the code writes in the run directory comes back as an attachment on the tool result message.
 
 ```ruby

@@ -421,6 +421,27 @@ RSpec.describe RubyLLM::Chat do
       expect(seen['data.csv']).to eq('1,2')
     end
 
+    it 'copies returned files in at the paths they were written to' do
+      seen = nil
+      sandbox = FakeSandbox.new do |run|
+        inputs = File.join(run[:directory], 'attachments')
+        seen = Dir.glob('**/*', base: inputs).select { |name| File.file?(File.join(inputs, name)) }
+                  .sort.to_h { |name| [name, File.read(File.join(inputs, name))] }
+        FakeSandbox.result
+      end
+      chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
+      chat.with_code_execution
+      returned = { 'out/a.txt' => 'first', 'other/a.txt' => 'second', 'report.zip' => 'PK' }.map do |name, content|
+        RubyLLM::Attachment.new(StringIO.new(content), filename: name)
+      end
+      chat.add_message(role: :tool, content: '{}', attachments: returned, tool_call_id: 'call_1')
+
+      chat.tools[:run_code].call(language: 'ruby', code: 'x')
+
+      expect(seen).to eq('other/a.txt' => 'second', 'out/a.txt' => 'first', 'report.zip' => 'PK')
+      expect(RubyLLM::CodeExecution.describe(returned.first).content).to include('read it at attachments/out/a.txt.')
+    end
+
     it 'reports a timeout' do
       sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: nil, timed_out: true, stdout: 'partial') }
       chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
