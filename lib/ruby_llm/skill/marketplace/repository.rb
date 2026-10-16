@@ -75,7 +75,7 @@ module RubyLLM
               write(File.join(directory, *safe(parts, name)), entry) if entry.file? && parts.any?
             end
           end
-        rescue Gem::Package::TarInvalidError
+        rescue Gem::Package::TarInvalidError, ArgumentError
           raise InvalidMarketplaceError, "#{@source} did not return a tar archive"
         end
 
