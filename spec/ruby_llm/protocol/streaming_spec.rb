@@ -37,6 +37,15 @@ RSpec.describe RubyLLM::Protocol::Streaming do
     expect(yielded_chunks).to eq(['chunk:ok'])
   end
 
+  it 'delivers an SSE payload whose error is null' do
+    yielded_chunks = []
+    handler = test_obj.send(:handle_stream) { |chunk| yielded_chunks << chunk }
+
+    handler.call("data: {\"x\":\"ok\",\"error\":null}\n\n", 0, env)
+
+    expect(yielded_chunks).to eq(['chunk:ok'])
+  end
+
   it 'prefers the failed HTTP response status over a generic parsed stream status' do
     failed_env = Faraday::Env.from(status: 429)
 

@@ -150,7 +150,7 @@ module RubyLLM
 
       def handle_data(data, env)
         parsed = JSON.parse(data)
-        return parsed unless parsed.is_a?(Hash) && parsed.key?('error')
+        return parsed unless parsed.is_a?(Hash) && parsed['error']
 
         raise_stream_error(data, parsed, env)
       rescue JSON::ParserError => e
