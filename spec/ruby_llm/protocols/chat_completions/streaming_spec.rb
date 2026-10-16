@@ -86,6 +86,23 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
       expect(message).to eq('Provider returned error')
     end
 
+    it 'reports a 401 for authentication errors' do
+      status, = protocol.send(
+        :parse_streaming_error,
+        { error: { type: 'authentication_error', message: 'Authentication Fails' } }.to_json
+      )
+
+      expect(status).to eq(401)
+    end
+
+    it 'reports the server-side status for overloaded and unavailable services' do
+      statuses = %w[overloaded_error service_unavailable].map do |type|
+        protocol.send(:parse_streaming_error, { error: { type:, message: 'Try again later' } }.to_json).first
+      end
+
+      expect(statuses).to eq([529, 503])
+    end
+
     it 'falls back to a 400 for other typed error objects' do
       status, message = protocol.send(
         :parse_streaming_error,
