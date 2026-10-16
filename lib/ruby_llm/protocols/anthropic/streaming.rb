@@ -129,12 +129,16 @@ module RubyLLM
         def stream_end_fields(data)
           return {} unless data['type'] == 'message_stop'
 
-          blocks = (@stream_blocks || {}).sort.map { |_index, block| block }
+          blocks = stream_block_list
           {
             server_tool_calls: extract_server_tool_calls(blocks),
             raw_content: @saw_server_block ? blocks : nil,
             raw_reasoning: parse_thinking_blocks(blocks)
           }
+        end
+
+        def stream_block_list
+          (@stream_blocks || {}).sort.map { |_index, block| block }
         end
 
         def extract_content_delta(data, delta_type)
@@ -150,12 +154,14 @@ module RubyLLM
 
         def extract_thinking_delta(data, delta_type)
           return data.dig('delta', 'thinking') if delta_type == 'thinking_delta'
+          return '' if delta_type == 'signature_delta'
 
           nil
         end
 
         def extract_signature_delta(data, delta_type)
           return data.dig('delta', 'signature') if delta_type == 'signature_delta'
+          return extract_thinking_signature(stream_block_list) if data['type'] == 'message_stop'
 
           nil
         end
