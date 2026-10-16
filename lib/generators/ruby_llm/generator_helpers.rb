@@ -200,7 +200,7 @@ module RubyLLM
 
         [chat_model_name, message_model_name].each do |model_name|
           if model_name.include?('::')
-            namespace = model_name.split('::').first
+            namespace = model_name.deconstantize
             namespaces << namespace unless namespaces.include?(namespace)
           end
         end
@@ -213,7 +213,7 @@ module RubyLLM
             <<~RUBY
               module #{namespace}
                 def self.table_name_prefix
-                  "#{namespace.underscore}_"
+                  "#{namespace.underscore.tr('/', '_')}_"
                 end
               end
             RUBY
