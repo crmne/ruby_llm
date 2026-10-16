@@ -91,6 +91,28 @@ RSpec.describe RubyLLM::Transport::Connection do
     end
   end
 
+  describe 'configuration changed after the connection was built' do
+    it 'sends the current credentials to the current API base' do
+      transport = RubyLLM::Providers::OpenAI.new(config).connection
+      config.openai_api_base = 'https://moved.example.test/v1'
+      config.openai_api_key = 'moved-key'
+      stub_request(:post, /chat/)
+
+      transport.post('chat/completions', {})
+
+      expect(a_request(:post, 'https://moved.example.test/v1/chat/completions')
+        .with(headers: { 'Authorization' => 'Bearer moved-key' })).to have_been_made
+    end
+
+    it 'keeps an API base it was given' do
+      transport = described_class.new(RubyLLM::Providers::OpenAI.new(config), config,
+                                      api_base: 'https://regional.example.test/v1')
+      config.openai_api_base = 'https://moved.example.test/v1'
+
+      expect(transport.connection.url_prefix.to_s).to eq('https://regional.example.test/v1')
+    end
+  end
+
   describe 'settings' do
     def changed_value(option, value)
       return :test if option == :faraday_adapter

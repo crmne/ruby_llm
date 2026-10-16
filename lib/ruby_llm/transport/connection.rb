@@ -68,17 +68,18 @@ module RubyLLM
         @config = config
         @headers = headers
         @signer = signer
-        @settings = settings_for(api_base || provider.api_base)
-        @stream_settings = @settings.dup.tap { |settings| settings.stream = true }.freeze
+        @api_base = api_base
         connection
       end
 
       # The Faraday connection shared by every request with these settings in
       # this process. Looked up per request, so an object that outlives a fork
-      # never reaches the parent's sockets. Streaming requests get their own:
-      # some adapters, such as httpx, only stream if their first request did.
+      # never reaches the parent's sockets, and a request goes to the endpoint
+      # configured for the credentials it carries. Streaming requests get
+      # their own: some adapters, such as httpx, only stream if their first
+      # request did.
       def connection(stream: false)
-        settings = stream ? @stream_settings : @settings
+        settings = settings_for(stream)
         CACHE.fetch(settings) { self.class.build(settings) }
       end
 
@@ -155,11 +156,11 @@ module RubyLLM
         response
       end
 
-      def settings_for(api_base)
+      def settings_for(stream)
         Settings.new(
           provider: @provider.class,
-          stream: false,
-          api_base: api_base,
+          stream: stream,
+          api_base: @api_base || @provider.api_base,
           adapter: @config.faraday_adapter,
           timeout: @config.request_timeout,
           proxy: @config.http_proxy,
