@@ -766,6 +766,35 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(strict_for(schema)).to be(false)
     end
 
+    it 'sends strict when a required field is named properties' do
+      schema = {
+        name: 'event',
+        schema: {
+          type: 'object',
+          properties: {
+            event: { type: 'string' },
+            properties: { type: 'object', properties: { plan: { type: 'string' } }, required: ['plan'] }
+          },
+          required: %w[event properties]
+        }
+      }
+
+      expect(strict_for(schema)).to be(true)
+    end
+
+    it 'sends non-strict when a definition, array item, or union member has optional properties' do
+      optional = { type: 'object', properties: { unit: { type: 'string' } } }
+      schemas = [
+        { '$defs': { address: optional } },
+        { properties: { addresses: { type: 'array', items: optional } }, required: ['addresses'] },
+        { properties: { address: { anyOf: [optional, { type: 'null' }] } }, required: ['address'] }
+      ]
+
+      schemas.each do |schema|
+        expect(strict_for({ name: 'person', schema: { type: 'object', **schema } })).to be(false)
+      end
+    end
+
     it 'keeps an explicit strict choice' do
       schema = { name: 'person', schema: { type: 'object', properties: { city: { type: 'string' } } }, strict: true }
 

@@ -35,14 +35,15 @@ module RubyLLM
         end
 
         def strict_schema?(node)
-          case node
-          when Hash
-            return false if optional_properties?(node)
+          return true unless node.is_a?(Hash)
+          return false if optional_properties?(node)
 
-            node.values.all? { |value| strict_schema?(value) }
-          when Array then node.all? { |value| strict_schema?(value) }
-          else true
-          end
+          subschemas(node).all? { |schema| strict_schema?(schema) }
+        end
+
+        def subschemas(node)
+          keyed = node.values_at(:properties, :$defs, :definitions).grep(Hash).flat_map(&:values)
+          keyed + node.values_at(:items, :prefixItems, :anyOf, :oneOf, :allOf, :additionalProperties).flatten(1)
         end
 
         def optional_properties?(node)
