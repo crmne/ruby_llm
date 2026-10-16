@@ -203,6 +203,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
                              ]
                            })
     end
+
+    it 'uses a placeholder when the tool returns only whitespace' do
+      msg = instance_double(RubyLLM::Message, provider_call_id: 'tool_123', content: " \n", attachments: [])
+
+      result = tools.format_tool_result(msg)
+
+      expect(result.dig(:content, 0, :content)).to eq([{ type: 'text', text: '(no output)' }])
+    end
   end
 
   describe '#extract_tool_calls' do
