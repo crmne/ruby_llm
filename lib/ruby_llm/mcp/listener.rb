@@ -58,7 +58,7 @@ module RubyLLM
         @changes = changes
         @pid = Process.pid
         @state = nil
-        @thread = Thread.new { Support::ProgressReporter.listen(nil) { run } }
+        @thread = Thread.new { Support::ProgressReporter.listen(nil) { Accounting::Usage.with_owner(nil) { run } } }
         @thread.name = 'ruby_llm-mcp-listener'
         @thread.report_on_exception = false
         acknowledgment
