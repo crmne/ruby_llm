@@ -385,6 +385,18 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.thinking.signature).to eq('ENCRYPTED')
     end
 
+    it 'separates reasoning summary parts the way the stream does' do
+      response = response_with([
+                                 { 'type' => 'reasoning',
+                                   'summary' => [{ 'type' => 'summary_text', 'text' => '**First summary**' },
+                                                 { 'type' => 'summary_text', 'text' => '**Second summary**' }] }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.thinking.text).to eq("**First summary**\n\n**Second summary**")
+    end
+
     it 'maps usage with cached and reasoning tokens' do
       response = response_with([], usage: {
                                  'input_tokens' => 10,

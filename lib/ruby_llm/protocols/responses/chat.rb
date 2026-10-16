@@ -469,7 +469,7 @@ module RubyLLM
             Array(item['summary']).filter_map { |part| part['text'] }
           end
 
-          texts.empty? ? nil : texts.join("\n")
+          texts.empty? ? nil : texts.join("\n\n")
         end
 
         def parse_reasoning_signature(output)
