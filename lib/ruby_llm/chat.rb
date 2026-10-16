@@ -648,8 +648,9 @@ module RubyLLM
 
     # Sets fallback models to try, in order, when generation fails. +on:+
     # selects the error classes that trigger a fallback; the default covers
-    # transient provider and network errors. Pass +nil+ to remove all
-    # fallbacks and restore the default error classes. Returns +self+.
+    # transient provider and network errors. Cancelling the chat never
+    # triggers a fallback. Pass +nil+ to remove all fallbacks and restore
+    # the default error classes. Returns +self+.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
@@ -1485,6 +1486,8 @@ module RubyLLM
     end
 
     def fallback_error?(error)
+      return false if error.is_a?(CancelledError)
+
       fallback_errors.any? { |error_class| error.is_a?(error_class) }
     end
 
