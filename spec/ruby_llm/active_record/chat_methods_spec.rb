@@ -202,6 +202,24 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
     end
   end
 
+  describe '#dup' do
+    it 'gives the copy its own conversation' do
+      chat = Chat.create!(model: model_id)
+      allow(chat.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'First'))
+      chat.ask('One')
+
+      copy = chat.dup
+      copy.save!
+      allow(copy.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Second'))
+      copy.ask('Two')
+
+      expect(chat.reload.messages.pluck(:content)).to eq(%w[One First])
+      expect(copy.reload.messages.pluck(:content)).to eq(%w[Two Second])
+    end
+  end
+
   describe '#with_context' do
     it 'rebinds the record and any built chat' do
       chat = Chat.create!(model: model_id)
