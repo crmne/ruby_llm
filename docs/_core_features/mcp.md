@@ -306,6 +306,8 @@ chat.mcp[:files]  # => #<Files ...>
 chat.with_mcp(nil)
 ```
 
+Disconnecting closes the servers the chat built from a class, which stops a stdio server's process and ends an HTTP session. So does connecting another server under the same name. An instance you pass in stays open for the other chats that use it, until you call `close` on it.
+
 Two tools with the same name raise an `ArgumentError` when the chat collects its tools. Pass `defer: true` to `with_mcp` to defer every tool of the servers you connect; see [Tool Search]({% link _core_features/tool-search.md %}).
 
 ### Agents

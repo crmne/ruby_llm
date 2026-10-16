@@ -39,6 +39,45 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.mcp.files).to be_a(Files)
   end
 
+  describe 'disconnecting' do
+    it 'closes the servers it built from a class' do
+      built = chat.with_mcp(Files).mcp.files
+      allow(built).to receive(:close).and_call_original
+
+      chat.with_mcp(nil)
+
+      expect(built).to have_received(:close)
+      expect(chat.mcp).to be_empty
+    end
+
+    it 'closes a server it built when another takes its name' do
+      built = chat.with_mcp(Files).mcp.files
+      allow(built).to receive(:close).and_call_original
+
+      chat.with_mcp(Files)
+
+      expect(built).to have_received(:close)
+      expect(chat.mcp.files).not_to be(built)
+    end
+
+    it 'leaves the instances it was given to their owner' do
+      allow(files).to receive(:close).and_call_original
+
+      chat.with_mcp(files).with_mcp(Files).with_mcp(nil)
+
+      expect(files).not_to have_received(:close)
+    end
+
+    it 'leaves the servers a copy shares with the chat that built them' do
+      built = chat.with_mcp(Files).mcp.files
+      allow(built).to receive(:close).and_call_original
+
+      chat.dup.with_mcp(nil)
+
+      expect(built).not_to have_received(:close)
+    end
+  end
+
   it 'waits to contact servers until the chat needs their tools' do
     allow(files).to receive(:tools).and_call_original
 

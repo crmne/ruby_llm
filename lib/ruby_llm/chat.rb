@@ -543,6 +543,10 @@ module RubyLLM
     # model their tools. The servers are contacted when the chat first
     # needs their tools. Pass +nil+ to disconnect them all. Returns +self+.
     #
+    # The chat closes the servers it built from a class when it disconnects
+    # them, or when another server takes their name. Instances you pass in
+    # stay open: close them with MCP#close.
+    #
     #   chat.with_mcp(Linear.new(user: current_user), Files)
     #   chat.mcp.linear
     #
@@ -555,12 +559,12 @@ module RubyLLM
     #
     def with_mcp(*servers, defer: nil)
       if servers == [nil]
+        @mcp.disconnect(self)
         @mcp = MCP::Collection.new
         @mcp_deferrals.clear
       else
         servers.flatten.compact.each do |server|
-          server = server.new if server.is_a?(Class)
-          @mcp << server
+          server = @mcp.connect(server, self)
           @mcp_deferrals[server.name.to_sym] = defer
         end
       end
