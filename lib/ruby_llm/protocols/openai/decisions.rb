@@ -27,8 +27,9 @@ module RubyLLM
 
         def parse_judgment_response(response, questions:)
           body = response.body
-          answers = questions.values.zip(body.fetch('answers')).to_h do |question, answer|
-            [question.name, parse_answer(answer, question)]
+          named = body.fetch('answers').to_h { |answer| [answer.fetch('name'), answer] }
+          answers = questions.values.to_h do |question|
+            [question.name, parse_answer(named.fetch(question.name.to_s), question)]
           end
           RubyLLM::Judgment.new(answers:, model: body.fetch('model'), raw: response, model_info: @model,
                                 tokens: parse_tokens(body['usage']))
