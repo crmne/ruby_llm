@@ -106,7 +106,8 @@ module RubyLLM
       end
 
       def choices(property)
-        options = property['enum'] || Array(property['oneOf'] || property.dig('items', 'anyOf')).map { |o| o['const'] }
+        options = property['enum'] || property.dig('items', 'enum') ||
+                  Array(property['oneOf'] || property.dig('items', 'anyOf')).map { |o| o['const'] }
         options unless options.empty?
       end
 
