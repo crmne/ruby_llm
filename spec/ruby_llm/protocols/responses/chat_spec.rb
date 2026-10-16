@@ -89,6 +89,49 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(payload[:input][1]).to eq({ role: 'assistant', content: [{ type: 'output_text', text: 'Hello!' }] })
     end
 
+    it 'sends assistant attachments in a user item after the assistant text' do
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate)
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Draw a boat'),
+        RubyLLM::Message.new(role: :assistant, content: 'Here it is', attachments: [image])
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:input][1]).to eq({ role: 'assistant', content: [{ type: 'output_text', text: 'Here it is' }] })
+      expect(payload[:input][2][:role]).to eq('user')
+      expect(payload[:input][2][:content].map { |part| part[:type] }).to eq(%w[input_text input_image])
+      expect(payload[:input][2][:content].first[:text]).to eq('Attachments from the assistant:')
+    end
+
+    it 'keeps an assistant turn that only carries attachments' do
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate)
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Draw a boat'),
+        RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image])
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:input].length).to eq(2)
+      expect(payload[:input][1][:content].map { |part| part[:type] }).to eq(%w[input_text input_image])
+    end
+
+    it 'sends assistant attachments after the function calls of the same turn' do
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate)
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      message = RubyLLM::Message.new(
+        role: :assistant, content: '', attachments: [image],
+        tool_calls: { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {}) }
+      )
+
+      payload = render_payload([message])
+
+      expect(payload[:input].map { |item| item[:type] || item[:role] }).to eq(%w[function_call user])
+    end
+
     it 'uses flat non-strict function definitions' do
       tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' }, provider_options: {})
