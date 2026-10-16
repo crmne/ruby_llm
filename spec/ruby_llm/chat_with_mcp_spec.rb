@@ -150,6 +150,39 @@ RSpec.describe RubyLLM::Chat do
     expect { chat.ask('Wait for it') }.to raise_error(RubyLLM::CancelledError)
   end
 
+  it 'stops every server tool running concurrently when the chat is cancelled' do
+    command = files_class.command
+    servers = %w[alpha beta].map do |name|
+      Class.new(RubyLLM::MCP) do
+        command(*command)
+        prefix name
+        timeout 5
+        self.default_name = name
+      end.new
+    end
+    calls = %w[alpha_wait beta_wait].to_h do |name|
+      [name, RubyLLM::ToolCall.new(id: name, name:, arguments: {})]
+    end
+    allow(chat.provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls), answer)
+    running = Queue.new
+    chat.with_mcp(*servers).with_tool_options(concurrency: :threads).before_tool_call { running << true }
+    cancelled_at = nil
+    canceller = Thread.new do
+      2.times { running.pop }
+      chat.cancel
+      cancelled_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    end
+
+    expect { chat.ask('Wait on both') }.to raise_error(RubyLLM::CancelledError)
+
+    expect(Process.clock_gettime(Process::CLOCK_MONOTONIC) - cancelled_at).to be < 2
+    expect(chat).not_to be_cancelled
+  ensure
+    canceller&.join
+    servers&.each(&:close)
+  end
+
   describe 'input requests' do
     before { allow(chat.provider).to receive(:complete).and_return(tool_call('deploy', {}), answer) }
 

@@ -215,8 +215,14 @@ RSpec.describe RubyLLM::Chat do
     it 'raises on the next completion attempt' do
       chat.cancel
 
-      expect { chat.send(:raise_if_cancelled!) }.to raise_error(RubyLLM::CancelledError)
+      expect { chat.generate }.to raise_error(RubyLLM::CancelledError)
       expect(chat).not_to be_cancelled
+    end
+
+    it 'holds the cancellation for every checkpoint until the operation ends' do
+      chat.cancel
+
+      2.times { expect { chat.send(:raise_if_cancelled!) }.to raise_error(RubyLLM::CancelledError) }
     end
 
     it 'consults an external cancellation checker' do

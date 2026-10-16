@@ -471,7 +471,7 @@ end
 
 The levels are the protocol's, from `:debug` through `:info`, `:notice`, `:warning`, `:error`, `:critical`, and `:alert` to `:emergency`. Without a level, servers send no log messages.
 
-Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
+Cancelling a chat also stops the server call it is waiting on, with no threads involved. `chat.cancel`, or the persisted cancellation flag on a Rails chat record, takes effect at the next event the server streams. When tool calls run concurrently, every server call in flight stops. Over HTTP, RubyLLM closes the response stream, which is how the 2026-07-28 revision cancels a request; stdio servers and older HTTP servers receive a cancellation notice. A server that answers with a single response and no events cannot be interrupted, so it stops at the request timeout.
 
 ## Listening for Changes
 
