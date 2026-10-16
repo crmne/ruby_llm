@@ -34,7 +34,8 @@ module RubyLLM
           vectors = vectors['float'] || vectors.values.first if vectors.is_a?(Hash)
           vectors = vectors.first unless text.is_a?(Array)
 
-          Embedding.new(vectors:, model:)
+          Embedding.new(vectors:, model:,
+                        input_tokens: response.headers['x-amzn-bedrock-input-token-count']&.to_i)
         end
       end
     end

@@ -156,7 +156,7 @@ RSpec.describe RubyLLM::Protocols::InvokeModel do
     end
 
     it 'parses Cohere float embedding responses' do
-      response = instance_double(Faraday::Response, body: { 'embeddings' => [[0.1, 0.2], [0.3, 0.4]] })
+      response = instance_double(Faraday::Response, body: { 'embeddings' => [[0.1, 0.2], [0.3, 0.4]] }, headers: {})
 
       embedding = protocol.send(:parse_embedding_response, response, model: 'cohere.embed-english-v3', text: %w[a b])
 
@@ -167,7 +167,8 @@ RSpec.describe RubyLLM::Protocols::InvokeModel do
     it 'parses Cohere typed embedding responses' do
       response = instance_double(
         Faraday::Response,
-        body: { 'embeddings' => { 'float' => [[0.1, 0.2]], 'int8' => [[1, 2]] } }
+        body: { 'embeddings' => { 'float' => [[0.1, 0.2]], 'int8' => [[1, 2]] } },
+        headers: {}
       )
 
       embedding = protocol.send(:parse_embedding_response, response, model: 'us.cohere.embed-v4:0', text: 'Ruby')

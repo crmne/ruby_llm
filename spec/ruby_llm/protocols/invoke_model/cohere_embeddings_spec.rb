@@ -28,7 +28,8 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
     it 'reads Embed v4 embeddings keyed by type' do
       response = instance_double(
         Faraday::Response,
-        body: { 'embeddings' => { 'float' => [[0.1, 0.2]] }, 'response_type' => 'embeddings_by_type' }
+        body: { 'embeddings' => { 'float' => [[0.1, 0.2]] }, 'response_type' => 'embeddings_by_type' },
+        headers: {}
       )
 
       embedding = protocol.send(:parse_embedding_response, response, model: 'us.cohere.embed-v4:0', text: 'one')
@@ -37,11 +38,31 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
     end
 
     it 'reads Embed v3 embeddings from the flat array' do
-      response = instance_double(Faraday::Response, body: { 'embeddings' => [[0.1, 0.2]] })
+      response = instance_double(Faraday::Response, body: { 'embeddings' => [[0.1, 0.2]] }, headers: {})
 
       embedding = protocol.send(:parse_embedding_response, response, model: 'cohere.embed-english-v3', text: 'one')
 
       expect(embedding.vectors).to eq([0.1, 0.2])
+    end
+
+    it 'reads the input tokens Bedrock reports in the response headers' do
+      response = instance_double(
+        Faraday::Response,
+        body: { 'embeddings' => { 'float' => [[0.1, 0.2]] } },
+        headers: Faraday::Utils::Headers.new('X-Amzn-Bedrock-Input-Token-Count' => '3')
+      )
+
+      embedding = protocol.send(:parse_embedding_response, response, model: 'us.cohere.embed-v4:0', text: 'one')
+
+      expect(embedding.tokens.input).to eq(3)
+    end
+
+    it 'leaves the input tokens unknown without the header' do
+      response = instance_double(Faraday::Response, body: { 'embeddings' => [[0.1, 0.2]] }, headers: {})
+
+      embedding = protocol.send(:parse_embedding_response, response, model: 'cohere.embed-english-v3', text: 'one')
+
+      expect(embedding.tokens.input).to be_nil
     end
   end
 end
