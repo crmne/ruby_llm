@@ -205,6 +205,26 @@ RSpec.describe RubyLLM::Chat do
     expect(fallback_provider).not_to have_received(:complete)
   end
 
+  it 'does not fall back when the streaming block raises' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model', on: StandardError)
+    allow(primary_provider).to receive(:complete) do |_messages, **_options, &block|
+      block.call(RubyLLM::Chunk.new(role: :assistant, content: 'partial', model: 'primary-model'))
+    end
+    allow(fallback_provider).to receive(:complete)
+    chunks = []
+
+    chat.ask_later('Hello')
+
+    expect do
+      chat.generate do |chunk|
+        chunks << chunk.content
+        raise Faraday::TimeoutError, 'the page went away'
+      end
+    end.to raise_error(Faraday::TimeoutError, 'the page went away')
+    expect(chunks).to eq(['partial'])
+    expect(fallback_provider).not_to have_received(:complete)
+  end
+
   it 'does not fall back on an interruption the Rails integration declares' do
     claim_lost = Class.new(StandardError)
     chat = described_class.new(model: 'primary-model')

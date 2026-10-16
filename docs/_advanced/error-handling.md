@@ -211,7 +211,7 @@ chat.with_fallbacks(
 )
 ```
 
-Cancelling a chat never triggers a fallback, whatever `on:` lists. `chat.cancel` raises `RubyLLM::CancelledError` and no fallback model runs. The same holds for a persisted chat that another process takes over mid-run: this process steps aside and no fallback model runs.
+Cancelling a chat never triggers a fallback, whatever `on:` lists. `chat.cancel` raises `RubyLLM::CancelledError` and no fallback model runs. The same holds for a persisted chat that another process takes over mid-run: this process steps aside and no fallback model runs. An error your streaming block raises is yours to handle too: it propagates as it is, and the block does not run again on a fallback model.
 
 Fallbacks can be model IDs or `RubyLLM::Model` objects:
 
