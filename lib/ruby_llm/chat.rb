@@ -18,7 +18,8 @@ module RubyLLM
   # #ask runs the conversation loop, executing tools until the model answers
   # or a call needs approval. #ask_later, #generate, #run_tools, and #step
   # expose individual operations. Resume an approval pause with #approve
-  # or #deny followed by #complete.
+  # or #deny followed by #complete. #queue adds a message from anywhere,
+  # even while the loop runs, and the loop takes it between two moves.
   #
   # A Chat is Enumerable over its messages.
   class Chat # rubocop:disable Metrics/ClassLength
@@ -171,6 +172,7 @@ module RubyLLM
       @tool_call_releaser = nil
       @running_checker = nil
       @contested_tool_calls = []
+      @message_queue = build_message_queue
     end
 
     ##
@@ -188,7 +190,8 @@ module RubyLLM
     #
     # Tool instances, connected MCP servers, and the provider connection
     # are shared. A cancellation or a run in progress stays with the
-    # original.
+    # original. The copy starts with the same queued messages in a queue
+    # of its own.
 
     def initialize_copy(source) # :nodoc:
       super
@@ -199,6 +202,7 @@ module RubyLLM
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
       with_code_execution(**@code_execution) if @code_execution
+      @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)
       @cancelled = false
     end
 
@@ -206,7 +210,8 @@ module RubyLLM
     # executing tools until the model answers or a call needs approval.
     # Returns the latest assistant Message; check #waiting? before
     # treating it as a final answer. Attach files with +with:+. An
-    # MCP::Prompt adds its messages instead.
+    # MCP::Prompt adds its messages instead. Messages still in the queue
+    # (see #queue) join the conversation first, in order.
     # A given block receives streamed Chunk objects as they arrive.
     #
     # String attachments read local paths or fetch URLs. Only pass trusted,
@@ -234,11 +239,15 @@ module RubyLLM
     #   chats = tickets.map { |t| RubyLLM.chat.ask_later(t.body) }
     #   RubyLLM.batch(chats)
     #
+    # Every message still in the queue (see #queue) joins the conversation
+    # first, in order, whether it steers or not.
+    #
     # Raises PendingToolCallsError while the last response has unanswered
     # tool calls: finish the round first, recording #approve or #deny
     # decisions for calls that require approval.
     def ask_later(message = nil, with: nil)
       raise_if_pending_tool_calls!
+      take_queued_messages
       if message.is_a?(MCP::Prompt)
         message.messages.each { |prompt_message| add_message(prompt_message) }
       else
@@ -289,19 +298,12 @@ module RubyLLM
     # if any are unanswered, otherwise generates the next response.
     # Returns the Message that move produced, and +nil+ once there is
     # nothing left to do or the chat is #waiting?.
+    #
+    # Unless tool calls are pending, every message in the queue (see
+    # #queue) joins the conversation before the model is asked, whether it
+    # steers or not.
     def step(&)
-      return if complete?
-
-      raise_if_cancelled!
-      return generate(&) unless pending_tool_response
-
-      before = messages.length
-      run_tools
-      messages.last if messages.length > before
-    rescue CancelledError
-      @cancelled = false
-      cancel_tasks
-      raise
+      advance(steering_only: false, &)
     end
 
     # Runs the conversation loop until #complete? or #waiting? is +true+.
@@ -316,22 +318,91 @@ module RubyLLM
     # #complete again to continue. A tool call that waits on an MCP::Task
     # pauses the loop too, and each #complete checks on the task once,
     # without waiting, and continues once it is done.
+    #
+    # The first time the loop could ask the model, every message in the
+    # queue joins the conversation, in order. After that, only messages
+    # that steer join, after each round of tool results and after the
+    # answer, so the turn goes on until the model has answered them.
+    # Messages queued with <tt>steer: false</tt> wait for the next
+    # #complete. See #queue.
     def complete(&)
       run_tools if awaiting_tasks?
-      step(&) until complete? || waiting?
+      continue_turn(steering_only: false, &)
+    end
+
+    # Runs the loop like #complete. With <tt>steering_only: true</tt> the
+    # loop goes on with the turn that is running, so messages queued with
+    # <tt>steer: false</tt> stay queued.
+    def continue_turn(steering_only: true, &) # :nodoc:
+      until settled?(steering_only) || waiting?
+        boundary = !pending_tool_response
+        advance(steering_only:, &)
+        steering_only ||= boundary
+      end
       pending_tool_response || last_non_system_message || messages.last
     end
 
     # Returns whether the chat has no pending response or tool execution:
-    # nothing is staged, or the model answered without requesting tools.
+    # nothing is staged, or the model answered without requesting tools,
+    # and no queued message steers the turn. Messages queued with
+    # <tt>steer: false</tt> don't count, so the chat is complete while
+    # they wait for the next #complete.
     def complete?
-      return false if pending_tool_response
+      settled?(true)
+    end
 
-      last = last_non_system_message
-      case last&.role
-      when nil then true
-      when :user, :tool then false
-      else !last.tool_call?
+    # Adds +message+ to the queue: a user message that waits outside the
+    # conversation until the loop takes it. Call it at any time, from any
+    # thread, even while #complete runs in another one. Attach files with
+    # +with:+, as with #ask. Returns the QueuedMessage.
+    #
+    #   chat.queue "Use the EU file instead"
+    #   chat.queue "Then email it to me", steer: false
+    #   chat.queue "Check this one too", with: "q3.pdf", owner: current_user
+    #
+    # A message that steers, the default, joins the turn that is running:
+    # after the next round of tool results, or once the model finishes its
+    # answer, which then goes on to answer it too. Pass <tt>steer: false</tt>
+    # to wait for the turn to end instead: #complete returns, the chat is
+    # #complete?, and the next #ask, #ask_later, #complete, or #step takes
+    # the message. Steering messages can join before waiting ones queued
+    # earlier. Messages that join together become separate user messages,
+    # oldest first.
+    #
+    # Nothing is taken while the chat is #waiting?, and #cancel leaves the
+    # queue as it is. Queueing never runs the loop: when nothing is
+    # running, call #complete. +owner+ is stored with the message and
+    # handed back on it without RubyLLM interpreting it.
+    def queue(message = nil, with: nil, steer: true, owner: nil)
+      queued = @message_queue.push(content: message, attachments: with, steer:, owner:)
+      run_callbacks(:after_queue, queued)
+      queued
+    end
+
+    # Returns the messages waiting in the queue, as QueuedMessage objects,
+    # oldest first.
+    def queued_messages
+      @message_queue.to_a
+    end
+
+    # Takes +queued+, a QueuedMessage or its id, out of the queue before the
+    # loop takes it. Returns +true+, or +false+ when it is no longer queued:
+    # the loop took it into the conversation, or it was unqueued already.
+    #
+    #   chat.unqueue(queued) # => true
+    #
+    def unqueue(queued)
+      removed = @message_queue.delete(queued)
+      run_callbacks(:after_unqueue, removed) if removed
+      !removed.nil?
+    end
+
+    # Adds every queued message to the conversation, or with
+    # <tt>steering_only: true</tt> only those that steer, and runs
+    # #after_dequeue for each.
+    def take_queued_messages(steering_only: false) # :nodoc:
+      @message_queue.take(steering_only:).each do |message, queued|
+        run_callbacks(:after_dequeue, message, queued)
       end
     end
 
@@ -1034,6 +1105,33 @@ module RubyLLM
       add_callback(:after_message, &)
     end
 
+    # Registers a callback that receives each QueuedMessage once #queue has
+    # added it. It runs in the thread that called #queue. Returns +self+.
+    #
+    #   chat.after_queue { |queued| puts "Queued: #{queued.content}" }
+    #
+    def after_queue(&)
+      add_callback(:after_queue, &)
+    end
+
+    # Registers a callback that receives each queued message as it joins
+    # the conversation: the user Message it became, then the QueuedMessage.
+    # It runs in the loop's thread, before the model is asked to answer it.
+    # Returns +self+.
+    #
+    #   chat.after_dequeue { |message, queued| puts "Joined: #{message.content}" }
+    #
+    def after_dequeue(&)
+      add_callback(:after_dequeue, &)
+    end
+
+    # Registers a callback that receives each QueuedMessage #unqueue takes
+    # out of the queue. It runs in the thread that called #unqueue. Returns
+    # +self+.
+    def after_unqueue(&)
+      add_callback(:after_unqueue, &)
+    end
+
     # Registers a callback that receives each local ToolCall before the tool
     # executes. Returns +self+.
     #
@@ -1203,7 +1301,7 @@ module RubyLLM
     # Hooks installed by the Rails integration.
     attr_writer :cancellation_checker, :usage_recorder, :approval_checker, :input_checker, :input_recorder,
                 :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
-                :interruptions # :nodoc:
+                :interruptions, :message_queue # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -1386,6 +1484,44 @@ module RubyLLM
     def raise_if_cancelled!
       @cancelled = true if @cancellation_checker&.call
       raise CancelledError if @cancelled
+    end
+
+    def build_message_queue(queued = [])
+      MessageQueue.new(queued) do |message|
+        add_message(role: :user, content: message.content, attachments: message.attachments)
+      end
+    end
+
+    def advance(steering_only:, &)
+      return if settled?(steering_only)
+
+      raise_if_cancelled!
+      take_queued_messages(steering_only:) unless pending_tool_response
+      return if answered?
+      return generate(&) unless pending_tool_response
+
+      before = messages.length
+      run_tools
+      messages.last if messages.length > before
+    rescue CancelledError
+      @cancelled = false
+      cancel_tasks
+      raise
+    end
+
+    def settled?(steering_only)
+      answered? && @message_queue.none?(steering_only:)
+    end
+
+    def answered?
+      return false if pending_tool_response
+
+      last = last_non_system_message
+      case last&.role
+      when nil then true
+      when :user, :tool then false
+      else !last.tool_call?
+      end
     end
 
     def generate_once(stream_tracker: nil, usage_start: nil, &block)

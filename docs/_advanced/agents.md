@@ -389,11 +389,12 @@ Delegated methods include:
 * `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
 * `cancel`, `cancelled?`, `waiting?`, `approve`, `deny`, `awaiting_approval?`, `pending_approvals`
+* `queue`, `queued_messages`, `unqueue`
 * `add_message`, `each`
 * `cache_until_here`, `with_tools`, `with_provider_tools`, `with_tool_options`
 * `with_model`, `with_instructions`, `with_temperature`, `with_max_output_tokens`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
-* `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`
+* `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `after_tool_progress`, `before_fallback`, `after_fallback`, `after_queue`, `after_dequeue`, `after_unqueue`
 
 You can always access the wrapped chat object directly via `agent.chat`.
 

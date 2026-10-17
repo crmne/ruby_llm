@@ -77,7 +77,7 @@ module RubyLLM
       with_provider_options
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-      before_fallback after_fallback
+      before_fallback after_fallback after_queue after_dequeue after_unqueue
       convert_unsupported_attachments
       cancel approve deny answer decline cache_until_here
     ].freeze
@@ -89,6 +89,7 @@ module RubyLLM
       max_output_tokens skills
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
+      queue queued_messages unqueue
     ].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
@@ -1206,6 +1207,24 @@ module RubyLLM
     # Delegates to Chat#after_fallback. See that method for arguments and return values.
 
     ##
+    # :method: after_queue
+    # :call-seq: after_queue(&block)
+    #
+    # Delegates to Chat#after_queue. See that method for arguments and return values.
+
+    ##
+    # :method: after_dequeue
+    # :call-seq: after_dequeue(&block)
+    #
+    # Delegates to Chat#after_dequeue. See that method for arguments and return values.
+
+    ##
+    # :method: after_unqueue
+    # :call-seq: after_unqueue(&block)
+    #
+    # Delegates to Chat#after_unqueue. See that method for arguments and return values.
+
+    ##
     # :method: cancel
     # :call-seq: cancel()
     #
@@ -1444,6 +1463,24 @@ module RubyLLM
     # :call-seq: add_message(message_or_attributes)
     #
     # Delegates to Chat#add_message. See that method for arguments and return values.
+
+    ##
+    # :method: queue
+    # :call-seq: queue(message = nil, with: nil, steer: true, owner: nil)
+    #
+    # Delegates to Chat#queue. See that method for arguments and return values.
+
+    ##
+    # :method: queued_messages
+    # :call-seq: queued_messages()
+    #
+    # Delegates to Chat#queued_messages. See that method for arguments and return values.
+
+    ##
+    # :method: unqueue
+    # :call-seq: unqueue(queued)
+    #
+    # Delegates to Chat#unqueue. See that method for arguments and return values.
 
     ##
     # :method: tokens

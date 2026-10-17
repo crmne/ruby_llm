@@ -49,8 +49,10 @@ module RubyLLM
       #
       # Adds the RubyLLM::Chat API (see ChatMethods), a +has_many+
       # association to the messages, a +belongs_to :model+ association to
-      # the registry row, and a +has_many :ruby_llm_usages+ association over
-      # the attempts the chat paid for.
+      # the registry row, a +has_many :ruby_llm_usages+ association over
+      # the attempts the chat paid for, and a
+      # +has_many :ruby_llm_queued_messages+ association over the messages
+      # waiting in its queue (see ChatMethods#queue).
       #
       # Options:
       #
@@ -112,6 +114,15 @@ module RubyLLM
                    class_name: 'RubyLLM::ActiveRecord::Usage',
                    inverse_of: :chat,
                    dependent: :nullify
+
+          has_many :ruby_llm_queued_messages,
+                   -> { order(:created_at, :id) },
+                   as: :chat,
+                   class_name: 'RubyLLM::ActiveRecord::QueuedMessage',
+                   inverse_of: :chat,
+                   dependent: :destroy
+
+          RubyLLM::ActiveRecord::QueuedMessage.declare_attachments
         end
 
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil)

@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * How to add RubyLLM to your `Chat` and `Message` models.
 * Which records belong to your application and which RubyLLM manages internally.
 * How persisted usage, tool calls, models, and batches behave.
+* How to queue messages from a request while a job runs the chat.
 * How to use custom or namespaced chat and message classes.
 
 ## Two Application Models
@@ -40,7 +41,7 @@ end
 
 That is the complete application-facing persistence setup. There is no `Model`, `ToolCall`, `UsageEntry`, or `Batch` model to add to `app/models`.
 
-RubyLLM owns six supporting tables under the `ruby_llm_` prefix:
+RubyLLM owns seven supporting tables under the `ruby_llm_` prefix:
 
 * `ruby_llm_models` for the model registry.
 * `ruby_llm_tool_calls` for provider tool requests and their result links.
@@ -48,8 +49,9 @@ RubyLLM owns six supporting tables under the `ruby_llm_` prefix:
 * `ruby_llm_batches` for provider-side batch state.
 * `ruby_llm_mcp_credentials` for encrypted MCP OAuth credentials.
 * `ruby_llm_provider_files` for the provider uploads of stored attachments.
+* `ruby_llm_queued_messages` for user messages waiting to join a chat.
 
-They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below.
+They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below. The one exception is `RubyLLM::ActiveRecord::QueuedMessage`, whose records `queued_messages` hands you to render.
 
 Their shared abstract base, `RubyLLM::ActiveRecord::Record`, inherits the default database connection. If your chats and messages use a secondary database, [configure the shared connection]({% link _advanced/rails-advanced-config.md %}#using-a-secondary-database) so all related tables stay together.
 
@@ -203,6 +205,45 @@ message.tool_results
 ```
 
 The tool result itself is an application-owned message with the `tool` role. The internal tool-call row only preserves the provider request and links it to that result message.
+
+## Queued Messages
+
+A message sent while a job runs the chat can't join the transcript yet: the reply is mid-stream, or a tool round still owes its results. `queue` stores it in `ruby_llm_queued_messages` instead, and the process that runs the chat takes it at its next step. The [Queueing Messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) guide explains when messages join; on a persisted chat the rules are the same, across processes.
+
+```ruby
+class MessagesController < ApplicationController
+  def create
+    @chat = Chat.find(params[:chat_id])
+    @chat.queue(params[:content], owner: Current.user)
+    ChatResponseJob.perform_later(@chat.id) unless @chat.running?
+
+    redirect_to @chat
+  end
+end
+```
+
+`queue` returns a `RubyLLM::ActiveRecord::QueuedMessage` record with `content`, `attachments`, `owner`, `queued_at`, and `steer?`. `owner` is a polymorphic association to any record. RubyLLM stores it and hands it back, without interpreting it. Attachments are stored with Active Storage and move to the message the queued message becomes, without uploading them again.
+
+Queue first and check `running?` after. A run that ends after your check still takes a steering message: before it gives up the chat, the run looks for messages that arrived and starts another loop for them. A job that finishes its turn with messages queued with `steer: false` should enqueue itself again, since they wait for the next `complete`:
+
+```ruby
+class ChatResponseJob < ApplicationJob
+  def perform(chat_id)
+    chat = Chat.find(chat_id)
+    chat.complete(&:broadcast)
+    self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
+  end
+end
+```
+
+`queued_messages` returns the waiting records, oldest first, ready to render. `unqueue` takes one back by record or id, and deletes its attachments:
+
+```ruby
+chat.queued_messages.each { |queued| render queued }
+chat.unqueue(params[:id]) # => true, or false once the chat took it
+```
+
+Taking and unqueuing each delete the row, and only the process whose delete succeeds goes on, so a message joins once or is withdrawn, never both. Destroying a chat destroys its queued messages.
 
 ## Batches
 
