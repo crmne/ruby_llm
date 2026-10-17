@@ -231,6 +231,16 @@ RSpec.describe RubyLLM::Chat do
       expect(requests.last.last).to eq([:user, 'Wait'])
     end
 
+    it 'keeps a message that fails to join queued, with the ones after it' do
+      chat.queue('First')
+      chat.queue('Broken', with: 'missing.pdf')
+      chat.queue('Last')
+
+      expect { chat.complete }.to raise_error(Errno::ENOENT)
+      expect(transcript).to eq([[:user, 'First']])
+      expect(chat.queued_messages.map(&:content)).to eq(%w[Broken Last])
+    end
+
     it 'keeps them queued when the chat is cancelled, and takes them after' do
       during_request << lambda {
         chat.queue('Steer')

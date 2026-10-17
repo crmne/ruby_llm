@@ -4,7 +4,8 @@ module RubyLLM
   class Chat
     # Holds a chat's queued messages in memory. Any thread may queue or
     # unqueue while the conversation loop takes them, and each message is
-    # taken or unqueued once.
+    # taken or unqueued once. A message that fails to join stays queued,
+    # with the ones taken after it.
     class MessageQueue # :nodoc:
       def initialize(messages = [], &add)
         @add = add
@@ -39,7 +40,12 @@ module RubyLLM
           ready, @messages = @messages.partition { |message| message.steer? || !steering_only }
           ready
         end
-        taken.map { |queued| [@add.call(queued), queued] }
+        taken.each_with_index.map do |queued, index|
+          [@add.call(queued), queued]
+        rescue StandardError
+          @lock.synchronize { @messages.unshift(*taken.drop(index)) }
+          raise
+        end
       end
     end
   end
