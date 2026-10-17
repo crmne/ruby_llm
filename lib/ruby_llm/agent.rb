@@ -681,6 +681,7 @@ module RubyLLM
         apply_compaction(chat)
         apply_code_execution(chat, runtime)
         apply_skills(chat)
+        apply_tool_options(chat, runtime)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
         apply_schema(chat, runtime)
@@ -781,11 +782,13 @@ module RubyLLM
         servers = Array(evaluate(mcp, runtime)).compact
         chat.with_mcp(*servers, defer: @mcp_defer) if servers.any?
 
-        options = evaluate(tool_options, runtime)
-        chat.with_tool_options(**options) if options && !options.empty?
-
         provider_tools_to_apply = Array(evaluate(provider_tools, runtime)).compact
         chat.with_provider_tools(*provider_tools_to_apply) if provider_tools_to_apply.any?
+      end
+
+      def apply_tool_options(chat, runtime)
+        options = evaluate(tool_options, runtime)
+        chat.with_tool_options(**options) if options && !options.empty?
       end
 
       def apply_passthrough_options(chat)

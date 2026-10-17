@@ -25,6 +25,15 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.chat.tools).to have_key(:load_skill)
   end
 
+  it 'accepts the skill loader as the tool choice' do
+    chat = agent_with do
+      skills :ticket_codes
+      tool_options choice: :load_skill
+    end.chat
+
+    expect(chat.tool_options[:choice]).to eq(:load_skill)
+  end
+
   it 'gives every skill with true' do
     agent = agent_with { skills true }
 

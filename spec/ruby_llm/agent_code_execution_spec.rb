@@ -27,6 +27,15 @@ RSpec.describe RubyLLM::Agent do
     expect(chat.tools).to have_key(:run_code)
   end
 
+  it 'accepts the code execution tool as the tool choice' do
+    chat = agent_with do
+      code_execution
+      tool_options choice: :run_code
+    end.chat
+
+    expect(chat.tool_options[:choice]).to eq(:run_code)
+  end
+
   it 'passes options as keywords or a Hash' do
     keywords = agent_with { code_execution languages: [:python], escalate_to: { files: FakeSandbox.new } }.chat
     hash = agent_with { code_execution({ 'gems' => %w[prawn] }) }.chat
