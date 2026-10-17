@@ -70,7 +70,7 @@ module RubyLLM
     end
 
     # Transcribes +audio_file+ and returns a Transcription. The file may be
-    # a path, URL, or IO object. Uses
+    # a path, URL, IO object, or Attachment. Uses
     # <tt>config.default_transcription_model</tt> unless +model:+ is given.
     # Pass +provider:+ and <tt>assume_model_exists: true</tt> to use a model
     # that is not in the registry.
@@ -92,8 +92,9 @@ module RubyLLM
     # <tt>"text"</tt>, <tt>"verbose_json"</tt>, or <tt>"diarized_json"</tt>,
     # while Gemini takes a MIME type such as <tt>"text/plain"</tt>.
     # +speaker_names:+ and +speaker_references:+ label the speakers on
-    # models that support diarization; references may be paths, URLs, or IO
-    # objects. Option support depends on the selected model and provider.
+    # models that support diarization; references may be paths, URLs, IO
+    # objects, or Attachments. Option support depends on the selected model
+    # and provider.
     # +timestamps:+ requests +:word+ timestamps. Some providers also accept
     # +:segment+ or +:character+; unsupported granularities raise ArgumentError.
     # +provider_options:+ takes options in the provider's request vocabulary

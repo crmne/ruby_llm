@@ -4,6 +4,8 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
   describe '#render_image_payload' do
+    let(:image_path) { File.expand_path('../../../fixtures/ruby.png', __dir__) }
+
     it 'asks for one image by default' do
       payload = described_class.render_image_payload('a cat', model: 'gpt-image-1', size: '1024x1024')
 
@@ -33,6 +35,22 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
 
         expect(payload[:size]).to eq('1536x1024')
       end
+    end
+
+    it 'references an image given as an attachment' do
+      attachment = RubyLLM::Attachment.new(StringIO.new(File.binread(image_path)), filename: 'logo.png')
+      payload = described_class.render_image_payload('make it green', model: 'gpt-image-1', size: nil,
+                                                                      with: attachment)
+
+      expect(payload[:images].first[:image_url]).to start_with('data:image/png;base64,')
+    end
+
+    it 'uploads an image given as an attachment' do
+      attachment = RubyLLM::Attachment.new(StringIO.new(File.binread(image_path)), filename: 'logo.png')
+      payload = described_class.render_image_payload('make it green', model: 'dall-e-2', size: nil,
+                                                                      with: attachment)
+
+      expect(payload[:image].read).to eq(File.binread(image_path))
     end
 
     it 'sends no size when the caller chose none' do
