@@ -25,7 +25,7 @@ module RubyLLM
         end
 
         def models_dev_alias(model_id, models_dev_by_key, _provider_model = nil)
-          normalized_id = model_id.sub(/^[a-z]{2}\./, '')
+          normalized_id = model_id.sub(/\A(?:#{Protocols::Converse::REGION_PREFIXES.join('|')})\./, '')
           context_override = nil
           normalized_id = normalized_id.gsub(/:(\d+)k\b/) do
             context_override = Regexp.last_match(1).to_i * 1000
