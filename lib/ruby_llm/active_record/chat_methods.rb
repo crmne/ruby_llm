@@ -44,7 +44,14 @@ module RubyLLM
       # Overrides the wire protocol the provider would pick for the model, such
       # as +:responses+ or +:chat_completions+ for OpenAI, or +nil+ for the
       # provider default. Not persisted; set it again after reloading the record.
-      attr_accessor :protocol
+      attr_reader :protocol
+
+      # Sets the protocol override, switching the underlying chat to it when
+      # that is already built.
+      def protocol=(value)
+        @protocol = value
+        @chat_model_stale = true if @chat
+      end
 
       # An optional RubyLLM::Context supplying per-chat configuration. Not
       # persisted; set it again after reloading the record. Assigning one
