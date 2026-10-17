@@ -44,4 +44,13 @@ RSpec.describe RubyLLM::Evaluation::Result do
     expect(result.to_h[:error]).to eq(class: 'RubyLLM::Error', message: 'Evaluator unavailable')
     expect(result).not_to be_passed
   end
+
+  it 'serializes a missing value as nil' do
+    unassessed = described_class.new(name: :correct, value: nil, reason: 'No evidence')
+    errored = described_class.new(name: :correct, error: RubyLLM::Error.new('Evaluator unavailable'))
+
+    expect(unassessed.to_h[:value]).to be_nil
+    expect(errored.to_h[:value]).to be_nil
+    expect(JSON.parse(JSON.generate(unassessed.to_h))['value']).to be_nil
+  end
 end
