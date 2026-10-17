@@ -19,7 +19,19 @@ module RubyLLM
       attr_reader :directory, :home, :tmp, :inputs, :source
 
       def self.open
-        Dir.mktmpdir('ruby_llm-code-') { |root| yield new(root) }
+        Dir.mktmpdir('ruby_llm-code-') do |root|
+          yield new(root)
+        ensure
+          unlock(root)
+        end
+      end
+
+      def self.unlock(root)
+        Find.find(root) do |path|
+          File.chmod(0o700, path) if File.lstat(path).directory?
+        rescue SystemCallError
+          next
+        end
       end
 
       def self.filename(name)
@@ -76,6 +88,8 @@ module RubyLLM
           next skipped << "#{name} (more than #{max_files} files)" if files.size >= max_files
 
           files << Attachment.new(StringIO.new(read(path)), filename: name)
+        rescue SystemCallError
+          skipped << "#{name} (unreadable)"
         end
         [files, skipped]
       end
@@ -87,10 +101,19 @@ module RubyLLM
         Find.find(directory) do |path|
           name = File.basename(path)
           Find.prune if path == inputs || IGNORED.include?(name) || (path != directory && name.start_with?('.'))
-          stat = File.lstat(path)
-          paths << [path, stat.size] if stat.file?
+          size = output_size(path)
+          paths << [path, size] if size
         end
         paths.sort
+      end
+
+      def output_size(path)
+        stat = File.lstat(path)
+        return stat.size if stat.file?
+
+        0 if stat.directory? && !(stat.readable? && stat.executable?)
+      rescue SystemCallError
+        0
       end
 
       def read(path)
