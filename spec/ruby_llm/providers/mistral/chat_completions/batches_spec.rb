@@ -146,8 +146,9 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
                'data' => [{ 'index' => 0, 'embedding' => [0.1, 0.2] }],
                'usage' => { 'prompt_tokens' => 3 } }
 
-      scalar_index, scalar = protocol.send(:parse_batch_result, 'custom_id' => '0', 'response' => { 'body' => body })
-      array_line = { 'custom_id' => '1:array', 'response' => { 'body' => body } }
+      response = { 'status_code' => 200, 'body' => body }
+      scalar_index, scalar = protocol.send(:parse_batch_result, 'custom_id' => '0', 'response' => response)
+      array_line = { 'custom_id' => '1:array', 'response' => response }
       array_index, array = protocol.send(:parse_batch_result, array_line)
 
       expect([scalar_index, array_index]).to eq([0, 1])
@@ -166,7 +167,8 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       rows = [{ 'index' => 2, 'embedding' => [0.3] }, { 'index' => 0, 'embedding' => [0.1] },
               { 'index' => 1, 'embedding' => [0.2] }]
       line = { 'custom_id' => '0:array',
-               'response' => { 'body' => { 'model' => model_for(:mistral, :embedding), 'data' => rows } } }
+               'response' => { 'status_code' => 200,
+                               'body' => { 'model' => model_for(:mistral, :embedding), 'data' => rows } } }
 
       index, embedding = protocol.send(:parse_batch_result, line)
 
@@ -178,7 +180,8 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       it "fails only the embedding result with invalid positions #{positions.inspect}" do
         rows = positions.each_with_index.map { |position, order| { 'index' => position, 'embedding' => [order.to_f] } }
         line = { 'custom_id' => '0:array',
-                 'response' => { 'body' => { 'model' => model_for(:mistral, :embedding), 'data' => rows } } }
+                 'response' => { 'status_code' => 200,
+                                 'body' => { 'model' => model_for(:mistral, :embedding), 'data' => rows } } }
 
         expect(protocol.send(:parse_batch_result, line)).to eq([0, nil, :failed])
       end
@@ -186,7 +189,8 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
 
     it 'fails only the embedding result with a missing position' do
       line = { 'custom_id' => '0:array',
-               'response' => { 'body' => { 'model' => model_for(:mistral, :embedding),
+               'response' => { 'status_code' => 200,
+                               'body' => { 'model' => model_for(:mistral, :embedding),
                                            'data' => [{ 'embedding' => [0.1] }, { 'embedding' => [0.2] }] } } }
 
       expect(protocol.send(:parse_batch_result, line)).to eq([0, nil, :failed])
@@ -196,6 +200,7 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       line = {
         'custom_id' => '1',
         'response' => {
+          'status_code' => 200,
           'body' => {
             'model' => 'mistral-small-latest',
             'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => 'Bonjour' } }],
@@ -209,6 +214,16 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       expect(index).to eq(1)
       expect(message.content).to eq('Bonjour')
       expect(message.model).to eq('mistral-small-latest')
+    end
+
+    it 'fails only the request whose response is an error' do
+      allow(RubyLLM.logger).to receive(:warn)
+      error = { 'object' => 'error', 'message' => 'Invalid model input', 'type' => 'invalid_request_error' }
+      line = { 'id' => 'batch-1-1', 'custom_id' => '1', 'response' => { 'status_code' => 400, 'body' => error },
+               'error' => nil }
+
+      expect(protocol.send(:parse_batch_result, line)).to eq([1, nil, :failed])
+      expect(RubyLLM.logger).to have_received(:warn).with('Batch request 1 failed: Invalid model input')
     end
   end
 

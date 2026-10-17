@@ -99,7 +99,7 @@ module RubyLLM
             custom_id, shape = line['custom_id'].split(':', 2)
             index = batch_result_index(custom_id)
             response = line['response']
-            body = response && response['body']
+            body = response['body'] if batch_response_succeeded?(response)
 
             if body && body['data'].is_a?(Array) && !valid_embedding_positions?(body['data'])
               return [index, nil, batch_failure(line['custom_id'], 'Invalid or duplicate embedding record positions')]

@@ -114,7 +114,7 @@ module RubyLLM
           index = batch_result_index(line['custom_id'])
           response = line['response']
 
-          if response && response['status_code'].to_i.between?(200, 299)
+          if batch_response_succeeded?(response)
             [index, parse_batch_completion_response(response['body'])]
           else
             [index, nil, batch_failure(line['custom_id'], batch_error_message(line))]
