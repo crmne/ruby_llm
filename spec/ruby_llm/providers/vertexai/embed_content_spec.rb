@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::EmbedContent do
     legacy = RubyLLM.models.find(model_for(:vertexai, :embedding), provider: :vertexai)
     legacy_protocol = provider.protocol_for(legacy, operation: :embed).new(provider, legacy)
     expect(legacy_protocol.send(:embedding_url, model: legacy.id)).to end_with("/#{legacy.id}:predict")
-    expect(legacy_protocol.send(:supports_embedding_media?)).to be(false)
+    expect(legacy_protocol.send(:embedding_media?)).to be(false)
     expect(provider.render_embedding('Ruby', model: legacy)).to eq(instances: [{ content: 'Ruby' }])
     expect(provider.render_embedding('Ruby', model:)).to eq(content: { parts: [{ text: 'Ruby' }] })
   end

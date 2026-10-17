@@ -108,7 +108,7 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
-  describe '#format_messages' do
+  describe '#render_messages' do
     it 'keeps parallel tool results consecutive and moves attachment carriers after the run' do
       attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'chart.png')
       payload = render_payload(
@@ -149,12 +149,12 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
-  describe '#format_message_content' do
+  describe '#render_message_content' do
     it 'formats arbitrary document attachments with Mistral document_url parts' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
       message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
-      formatted = provider.send(:format_message_content, message)
+      formatted = provider.send(:render_message_content, message)
 
       expect(formatted.second).to eq(
         type: 'document_url',
@@ -163,12 +163,12 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
-  describe '#format_tool_calls' do
+  describe '#render_tool_calls' do
     it 'leaves out the thought signature Gemini puts on a call' do
       call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Paris' },
                                    thought_signature: 'gemini-signature')
 
-      expect(provider.send(:format_tool_calls, { 'call_1' => call })).to eq(
+      expect(provider.send(:render_tool_calls, { 'call_1' => call })).to eq(
         [{ id: 'call_1', type: 'function', function: { name: 'weather', arguments: '{"city":"Paris"}' } }]
       )
     end

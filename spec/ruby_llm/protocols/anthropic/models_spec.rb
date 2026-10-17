@@ -108,14 +108,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Models do
     end
   end
 
-  describe '#extract_cache_write_tokens' do
+  describe '#parse_cache_write_tokens' do
     it 'sums the lifetimes of a message_delta that reports only a breakdown' do
       parser = Object.new.extend(described_class)
       data = { 'type' => 'message_delta',
                'usage' => { 'cache_creation' => { 'ephemeral_5m_input_tokens' => 3,
                                                   'ephemeral_1h_input_tokens' => 4 } } }
 
-      expect(parser.send(:extract_cache_write_tokens, data)).to eq(7)
+      expect(parser.send(:parse_cache_write_tokens, data)).to eq(7)
     end
   end
 end

@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Providers::Hetzner do
         .to_return(body: png, headers: { 'Content-Type' => 'image/png' })
       image = RubyLLM::Attachment.new('https://example.com/ruby.png')
 
-      content = protocol.format_content('What is this?', [image])
+      content = protocol.render_content('What is this?', [image])
 
       data_url = "data:image/png;base64,#{Base64.strict_encode64(png)}"
       expect(content.last).to eq(type: 'image_url', image_url: { url: data_url })
@@ -110,8 +110,8 @@ RSpec.describe RubyLLM::Providers::Hetzner do
       pdf = RubyLLM::Attachment.new(File.expand_path('../../fixtures/sample.pdf', __dir__))
       audio = RubyLLM::Attachment.new(File.expand_path('../../fixtures/ruby.wav', __dir__))
 
-      expect { protocol.format_content('Read this', [pdf]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
-      expect { protocol.format_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+      expect { protocol.render_content('Read this', [pdf]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+      expect { protocol.render_content('Hear this', [audio]) }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
   end
 

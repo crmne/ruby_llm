@@ -141,9 +141,9 @@ For the Chat Completions family, the seams you override most often are:
 | `render_payload` | Build the request body from messages, tools, temperature, etc. |
 | `parse_completion_body` | Turn a parsed response body into a `RubyLLM::Message` |
 | `build_chunk` | Turn one SSE event into a `RubyLLM::Chunk` |
-| `format_role` / `format_content` | Shape a message's role and content |
+| `render_role` / `render_content` | Shape a message's role and content |
 
-The smallest dialect changes shape only messages. DeepSeek, for example, overrides `format_role` and `format_content` to disable attachments its API rejects:
+The smallest dialect changes shape only messages. DeepSeek, for example, overrides `render_role` and `render_content` to disable attachments its API rejects:
 
 ```ruby
 # lib/ruby_llm/providers/deepseek/chat.rb (excerpt)
@@ -153,12 +153,12 @@ module RubyLLM
       module Chat
         module_function
 
-        def format_role(role)
+        def render_role(role)
           role.to_s
         end
 
-        def format_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.format_content(
+        def render_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.render_content(
             content,
             attachments,
             document_attachments: :none,

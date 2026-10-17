@@ -3,14 +3,14 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Converse::Reasoning do
-  describe '.format_reasoning_fields' do
+  describe '.render_reasoning_fields' do
     let(:model_without_budget) do
       instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', metadata: {}, reasoning_options: [],
                                       capabilities: ['reasoning'])
     end
 
     def reasoning_fields(thinking, model: model_without_budget)
-      described_class.format_reasoning_fields(thinking, model)
+      described_class.render_reasoning_fields(thinking, model)
     end
 
     it 'is nil when thinking is off' do

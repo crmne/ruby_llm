@@ -30,7 +30,7 @@ module RubyLLM
           Attachment.wrap(with, config: @config).map do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
 
-            Protocols::ChatCompletions::Media.format_image(attachment)
+            Protocols::ChatCompletions::Media.render_image(attachment)
           end
         end
 

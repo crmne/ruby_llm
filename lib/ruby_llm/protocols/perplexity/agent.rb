@@ -31,7 +31,7 @@ module RubyLLM
           payload.merge(preset: preset)
         end
 
-        def format_document(document)
+        def render_document(document)
           raise UnsupportedAttachmentError, document.mime_type
         end
 
@@ -100,14 +100,14 @@ module RubyLLM
         # Perplexity rejects its own search_results and fetch_url_results
         # items as input, so a replayed turn keeps only messages, reasoning,
         # and function calls.
-        def format_assistant_items(msg)
+        def render_assistant_items(msg)
           super.select do |item|
             type = item[:type] || item['type']
             type.nil? || Responses::Chat::CLIENT_OUTPUT_ITEM_TYPES.include?(type)
           end
         end
 
-        def supports_provider_file_references?
+        def provider_file_references?
           false
         end
       end

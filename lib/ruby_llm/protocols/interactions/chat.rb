@@ -22,7 +22,7 @@ module RubyLLM
           choice = tool_prefs&.dig(:choice)
           config[:tool_choice] = render_interaction_choice(choice) if choice
           payload = {
-            model: model.id, input: format_interaction_input(messages), stream: stream, store: false,
+            model: model.id, input: render_interaction_input(messages), stream: stream, store: false,
             system_instruction: messages.select { |message| message.role == :system }.map(&:content).join("\n\n"),
             generation_config: config, tools: render_interaction_tools(tools)
           }
@@ -50,7 +50,7 @@ module RubyLLM
 
         # Gemini checks signatures only in the current turn, which starts at
         # the last user message.
-        def format_interaction_input(messages)
+        def render_interaction_input(messages)
           calls = messages.flat_map { |message| message.tool_calls.to_h.values }.to_h { |call| [call.id, call] }
           turn_start = messages.rindex { |message| message.role == :user }
           messages.each_with_index.flat_map do |message, index|

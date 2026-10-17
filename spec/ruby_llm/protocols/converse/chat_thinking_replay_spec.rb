@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
   end
 
   def rendered_content(message)
-    JSON.parse(JSON.generate(protocol.send(:format_message_content, message)))
+    JSON.parse(JSON.generate(protocol.send(:render_message_content, message)))
   end
 
   it 'replays every signed and redacted block in order' do

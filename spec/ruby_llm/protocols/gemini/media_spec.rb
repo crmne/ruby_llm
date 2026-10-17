@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Gemini::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     it 'raises a clear error for unsupported rich documents' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'passes PDFs through as native inline data' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
-      parts = described_class.format_content('Summarize this file', [attachment])
+      parts = described_class.render_content('Summarize this file', [attachment])
 
       expect(parts.first).to eq(text: 'Summarize this file')
       expect(parts.second).to eq(
@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'keeps text files as text parts' do
       attachment = RubyLLM::Attachment.new(StringIO.new('hello'), filename: 'note.txt')
 
-      parts = described_class.format_content('Read this file', [attachment])
+      parts = described_class.render_content('Read this file', [attachment])
 
       expect(parts.second).to eq(
         text: "<file name='note.txt' mime_type='text/plain'>hello</file>"
@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
         mime_type: 'video/mp4',
         uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
       )
-      parts = described_class.format_content('Watch this', RubyLLM::Attachment.wrap(file))
+      parts = described_class.render_content('Watch this', RubyLLM::Attachment.wrap(file))
 
       expect(parts.second).to eq(
         file_data: {
@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
         mime_type: 'text/plain',
         uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
       )
-      parts = described_class.format_content('Summarize this', RubyLLM::Attachment.wrap(file))
+      parts = described_class.render_content('Summarize this', RubyLLM::Attachment.wrap(file))
 
       expect(parts.second).to eq(
         file_data: {
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'sends high resolution when ultra high is requested for a PDF' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf', resolution: :ultra_high)
 
-      parts = described_class.format_content('Read this page', [attachment])
+      parts = described_class.render_content('Read this page', [attachment])
 
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_HIGH')
     end
@@ -85,7 +85,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       file = RubyLLM::UploadedFile.new(id: 'files/abc', filename: 'video.mp4', mime_type: 'video/mp4')
       attachment = RubyLLM::Attachment.new(file, resolution: :low)
 
-      parts = described_class.format_content('Watch this', [attachment])
+      parts = described_class.render_content('Watch this', [attachment])
 
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_LOW')
     end
@@ -93,7 +93,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'sends ultra high resolution on images' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
 
-      parts = described_class.format_content('Read this', [image])
+      parts = described_class.render_content('Read this', [image])
 
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_ULTRA_HIGH')
     end
@@ -102,7 +102,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       file = RubyLLM::UploadedFile.new(id: 'files/abc', filename: 'video.mp4', mime_type: 'video/mp4')
       attachment = RubyLLM::Attachment.new(file, resolution: :ultra_high)
 
-      parts = described_class.format_content('Watch this', [attachment])
+      parts = described_class.render_content('Watch this', [attachment])
 
       expect(parts.second[:media_resolution]).to eq(level: 'MEDIA_RESOLUTION_HIGH')
     end
@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       it "maps original resolution to #{level} for #{filename}" do
         attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename:, resolution: :original)
 
-        parts = described_class.format_content('Read this', [attachment])
+        parts = described_class.render_content('Read this', [attachment])
 
         expect(parts.second[:media_resolution]).to eq(level: "MEDIA_RESOLUTION_#{level}")
       end
@@ -120,7 +120,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'omits media_resolution on audio' do
       attachment = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__), resolution: :low)
 
-      parts = described_class.format_content('Listen', [attachment])
+      parts = described_class.render_content('Listen', [attachment])
 
       expect(parts.second).not_to have_key(:media_resolution)
     end
@@ -128,13 +128,13 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'omits media_resolution from standalone parts such as tool results' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf', resolution: :high)
 
-      expect(described_class.format_content_attachment(attachment)).not_to have_key(:media_resolution)
+      expect(described_class.render_content_attachment(attachment)).not_to have_key(:media_resolution)
     end
 
     it 'omits media_resolution when no resolution is set' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf')
 
-      parts = described_class.format_content('Read this page', [attachment])
+      parts = described_class.render_content('Read this page', [attachment])
 
       expect(parts.second).not_to have_key(:media_resolution)
     end
@@ -145,7 +145,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       lecture = RubyLLM::Attachment.new(file, processing: :agentic)
       clip = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4', processing: :static)
 
-      parts = described_class.format_content('Compare them', [lecture, clip])
+      parts = described_class.render_content('Compare them', [lecture, clip])
 
       expect(parts.drop(1)).to eq(
         [
@@ -160,7 +160,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       video = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4', resolution: :low,
                                                                  processing: :agentic)
 
-      parts = described_class.format_content('Watch this', [video])
+      parts = described_class.render_content('Watch this', [video])
 
       expect(parts.second).to include(media_resolution: { level: 'MEDIA_RESOLUTION_LOW' }, media_processing: 'AGENTIC')
     end
@@ -168,7 +168,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'omits media_processing on attachments that are not videos' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), processing: :agentic)
 
-      parts = described_class.format_content('Read this', [image])
+      parts = described_class.render_content('Read this', [image])
 
       expect(parts.second).not_to have_key(:media_processing)
     end
@@ -176,7 +176,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     it 'omits media_processing when no processing mode is set' do
       video = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4')
 
-      parts = described_class.format_content('Watch this', [video])
+      parts = described_class.render_content('Watch this', [video])
 
       expect(parts.second).to eq(inline_data: { mime_type: 'video/mp4', data: Base64.strict_encode64('mp4 bytes') })
     end
@@ -266,24 +266,24 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     end
   end
 
-  describe '.format_content without text' do
+  describe '.render_content without text' do
     it 'sends attachments without any text' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
-      parts = described_class.format_content(nil, [attachment])
+      parts = described_class.render_content(nil, [attachment])
 
       expect(parts.length).to eq(1)
       expect(parts.first).to have_key(:inline_data)
     end
   end
 
-  describe '.format_file_data' do
+  describe '.render_file_data' do
     it 'falls back to the provider file id when there is no URI' do
       file = RubyLLM::UploadedFile.new(
         id: 'file_1', provider: 'gemini', filename: 'clip.mp4', mime_type: 'video/mp4'
       )
 
-      expect(described_class.format_file_data(RubyLLM::Attachment.new(file))).to eq(
+      expect(described_class.render_file_data(RubyLLM::Attachment.new(file))).to eq(
         file_data: { mime_type: 'video/mp4', file_uri: 'file_1' }
       )
     end

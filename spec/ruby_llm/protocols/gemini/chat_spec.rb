@@ -143,7 +143,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
-  describe '#format_messages' do
+  describe '#render_messages' do
     it 'groups consecutive tool responses into a single user message with multiple function responses' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'Question?'),
@@ -159,7 +159,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         RubyLLM::Message.new(role: :tool, content: 'Ruby', tool_call_id: 'call_2')
       ]
 
-      result = test_obj.send(:format_messages, messages)
+      result = test_obj.send(:render_messages, messages)
 
       expect(result.length).to eq(3)
       tool_response = result.last
@@ -184,7 +184,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         RubyLLM::Message.new(role: :tool, content: 'Berlin is rainy', tool_call_id: 'call_1')
       ]
 
-      parts = test_obj.send(:format_messages, messages).last[:parts]
+      parts = test_obj.send(:render_messages, messages).last[:parts]
 
       expect(parts.map { |part| part[:functionResponse][:response][:content] }).to eq(
         [[{ text: 'Berlin is rainy' }], [{ text: 'Paris is sunny' }]]
@@ -208,7 +208,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         RubyLLM::Message.new(role: :tool, content: 'D', tool_call_id: 'd')
       ]
 
-      steps = test_obj.send(:format_messages, messages).select { |content| content[:role] == 'model' }
+      steps = test_obj.send(:render_messages, messages).select { |content| content[:role] == 'model' }
 
       expect(steps.map { |step| step[:parts].map { |part| part[:thoughtSignature] } }).to eq(
         [[nil], [nil], ['skip_thought_signature_validator', nil], ['sig']]
@@ -218,7 +218,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     it 'does not send finish_reason back to the provider' do
       messages = [RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'max_tokens')]
 
-      result = test_obj.send(:format_messages, messages)
+      result = test_obj.send(:render_messages, messages)
 
       expect(result.first).not_to have_key(:finishReason)
       expect(result.first[:parts]).to eq([{ text: 'Done' }])
@@ -256,20 +256,20 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
-  describe '#format_role' do
+  describe '#render_role' do
     it 'maps assistant to model and the rest to user' do
-      expect(test_obj.send(:format_role, :assistant)).to eq('model')
-      expect(test_obj.send(:format_role, :system)).to eq('user')
-      expect(test_obj.send(:format_role, :tool)).to eq('user')
-      expect(test_obj.send(:format_role, :user)).to eq('user')
+      expect(test_obj.send(:render_role, :assistant)).to eq('model')
+      expect(test_obj.send(:render_role, :system)).to eq('user')
+      expect(test_obj.send(:render_role, :tool)).to eq('user')
+      expect(test_obj.send(:render_role, :user)).to eq('user')
     end
   end
 
-  describe '#format_system_instruction' do
+  describe '#render_system_instruction' do
     it 'skips empty system messages' do
       messages = [RubyLLM::Message.new(role: :system, content: '')]
 
-      expect(test_obj.send(:format_system_instruction, messages)).to be_nil
+      expect(test_obj.send(:render_system_instruction, messages)).to be_nil
     end
   end
 
@@ -284,7 +284,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
 
     def replay(message)
-      protocol.send(:format_parts, message)
+      protocol.send(:render_parts, message)
     end
 
     it 'sends a signature without thinking text back on the answer part' do
@@ -317,9 +317,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
-  describe '#extract_citations' do
+  describe '#parse_citations' do
     it 'returns nothing without grounding metadata' do
-      expect(test_obj.send(:extract_citations, {}, 'text')).to eq([])
+      expect(test_obj.send(:parse_citations, {}, 'text')).to eq([])
     end
 
     it 'cites every grounding chunk when there are no supports' do
@@ -338,7 +338,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         ]
       }
 
-      citations = test_obj.send(:extract_citations, data, 'text')
+      citations = test_obj.send(:parse_citations, data, 'text')
 
       expect(citations.map(&:url)).to eq(['https://a.example', 'https://b.example'])
       expect(citations.map(&:source_index)).to eq([0, 1])
@@ -358,7 +358,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         ]
       }
 
-      citations = test_obj.send(:extract_citations, data, 'Café is French')
+      citations = test_obj.send(:parse_citations, data, 'Café is French')
 
       expect(citations.length).to eq(1)
       expect(citations.first.start_index).to eq(0)
@@ -377,7 +377,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         ]
       }
 
-      citation = test_obj.send(:extract_citations, data, 'text').first
+      citation = test_obj.send(:parse_citations, data, 'text').first
 
       expect(citation.start_index).to be_nil
       expect(citation.end_index).to be_nil
@@ -394,15 +394,15 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
-  describe '#extract_thought_signature' do
+  describe '#parse_thought_signature' do
     it 'reads the signature off a function call part' do
       parts = [{ 'functionCall' => { 'thought_signature' => 'sig' } }]
 
-      expect(test_obj.send(:extract_thought_signature, parts)).to eq('sig')
+      expect(test_obj.send(:parse_thought_signature, parts)).to eq('sig')
     end
 
     it 'returns nil when no part carries one' do
-      expect(test_obj.send(:extract_thought_signature, [{ 'text' => 'hi' }])).to be_nil
+      expect(test_obj.send(:parse_thought_signature, [{ 'text' => 'hi' }])).to be_nil
     end
   end
 

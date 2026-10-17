@@ -7,7 +7,7 @@ module RubyLLM
       module Chat
         module_function
 
-        def format_role(role)
+        def render_role(role)
           role.to_s
         end
 
@@ -46,7 +46,7 @@ module RubyLLM
           payload[:response_format] = { type: 'json_object' }
         end
 
-        def format_thinking(msg)
+        def render_thinking(msg)
           return {} unless msg.role == :assistant
 
           thinking = msg.thinking
@@ -63,8 +63,8 @@ module RubyLLM
           )
         end
 
-        def format_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.format_content(
+        def render_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.render_content(
             content,
             attachments,
             document_attachments: :none,

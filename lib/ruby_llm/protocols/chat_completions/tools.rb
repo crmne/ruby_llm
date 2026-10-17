@@ -44,7 +44,7 @@ module RubyLLM
           RubyLLM::Support::Utils.deep_merge(definition, tool.provider_options)
         end
 
-        def format_tool_calls(tool_calls)
+        def render_tool_calls(tool_calls)
           return nil unless tool_calls&.any?
 
           tool_calls.map do |_, tc|
@@ -99,7 +99,7 @@ module RubyLLM
                         call.dig('function', 'arguments')
                       end
           ToolCall.new(provider_call_id: call['id'], name: call.dig('function', 'name'), arguments:,
-                       thought_signature: extract_tool_call_thought_signature(call))
+                       thought_signature: parse_tool_call_thought_signature(call))
         end
 
         def build_tool_choice(tool_choice)
@@ -116,7 +116,7 @@ module RubyLLM
           end
         end
 
-        def extract_tool_call_thought_signature(tool_call)
+        def parse_tool_call_thought_signature(tool_call)
           tool_call.dig('extra_content', 'google', 'thought_signature')
         end
       end

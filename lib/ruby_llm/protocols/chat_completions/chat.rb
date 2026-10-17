@@ -60,7 +60,7 @@ module RubyLLM
           tool_prefs ||= {}
           payload = {
             model: model.id,
-            messages: format_messages(messages, caching: caching),
+            messages: render_messages(messages, caching: caching),
             stream: stream
           }
 
@@ -114,9 +114,9 @@ module RubyLLM
           usage = data['usage'] || {}
           thinking_tokens = thinking_tokens(usage)
           content, thinking_from_blocks =
-            extract_content_and_thinking(message_data['content'] || message_data['refusal'])
-          thinking_text = thinking_from_blocks || extract_thinking_text(message_data)
-          thinking_signature = extract_thinking_signature(message_data)
+            parse_content_and_thinking(message_data['content'] || message_data['refusal'])
+          thinking_text = thinking_from_blocks || parse_thinking_text(message_data)
+          thinking_signature = parse_thinking_signature(message_data)
 
           finish_reason = normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
 
@@ -125,7 +125,7 @@ module RubyLLM
             content: content,
             citations: extract_citations(message_data, data, content),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
-            raw_reasoning: extract_raw_reasoning(message_data),
+            raw_reasoning: parse_raw_reasoning(message_data),
             tool_calls: parse_tool_calls(message_data['tool_calls'], response: raw, finish_reason: finish_reason),
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
@@ -309,35 +309,35 @@ module RubyLLM
           keys.map { |key| ":#{key}" }.join(', ')
         end
 
-        def format_messages(messages, caching: nil)
+        def render_messages(messages, caching: nil)
           messages_for_provider(messages)
             .chunk_while { |previous, current| previous.tool_result? && current.tool_result? }
-            .flat_map { |group| format_message_group(group, caching: caching) }
+            .flat_map { |group| render_message_group(group, caching: caching) }
         end
 
         # An assistant turn's tool results must stay consecutive, so the
         # attachment carriers of a parallel round follow the whole run.
-        def format_message_group(group, caching: nil)
-          formatted = group.map { |msg| format_message(msg, caching: caching) }
+        def render_message_group(group, caching: nil)
+          formatted = group.map { |msg| render_message(msg, caching: caching) }
           carriers = group.select { |msg| msg.tool_result? && msg.attachments.any? }
 
           formatted + carriers.map { |msg| tool_attachment_message(msg) }
         end
 
-        def format_message(msg, caching: nil)
+        def render_message(msg, caching: nil)
           {
-            role: format_role(msg.role),
-            content: format_message_content(msg, caching: caching),
-            tool_calls: format_tool_calls(msg.tool_calls),
+            role: render_role(msg.role),
+            content: render_message_content(msg, caching: caching),
+            tool_calls: render_tool_calls(msg.tool_calls),
             tool_call_id: msg.provider_call_id
-          }.compact.merge(format_thinking(msg))
+          }.compact.merge(render_thinking(msg))
         end
 
         # Chat Completions tool messages are text-only on the wire, so tool
         # attachments ride a user message spliced in after the results.
         def tool_attachment_message(msg)
-          parts = [Media.format_text("Attachments from tool call #{msg.provider_call_id}:")]
-          parts.concat(format_content(nil, msg.attachments))
+          parts = [Media.render_text("Attachments from tool call #{msg.provider_call_id}:")]
+          parts.concat(render_content(nil, msg.attachments))
           { role: 'user', content: parts }
         end
 
@@ -346,8 +346,8 @@ module RubyLLM
           system_messages + other_messages
         end
 
-        def format_message_content(msg, caching: nil, **)
-          content = format_content(msg.content, msg.tool_result? ? [] : msg.attachments)
+        def render_message_content(msg, caching: nil, **)
+          content = render_content(msg.content, msg.tool_result? ? [] : msg.attachments)
           return '' if content.nil? && thinking_only_assistant_message?(msg)
           return inject_cache_breakpoint(content) if caching != false && msg.cache_until_here? && openai_prompt_caching?
 
@@ -365,7 +365,7 @@ module RubyLLM
         def cache_breakpoint_parts(content)
           case content
           when Array then content.dup
-          when String then [Media.format_text(content)] unless content.empty?
+          when String then [Media.render_text(content)] unless content.empty?
           end
         end
 
@@ -373,11 +373,11 @@ module RubyLLM
           msg.role == :assistant && msg.thinking && !msg.tool_call?
         end
 
-        def format_content(content, attachments = [])
-          Media.format_content(content, attachments)
+        def render_content(content, attachments = [])
+          Media.render_content(content, attachments)
         end
 
-        def format_role(role)
+        def render_role(role)
           case role
           when :system
             @config.openai_use_system_role ? 'system' : 'developer'
@@ -402,7 +402,7 @@ module RubyLLM
           payload.merge(safety_identifier: identifier)
         end
 
-        def supports_provider_file_references?
+        def provider_file_references?
           @provider.slug == 'openai'
         end
 
@@ -418,7 +418,7 @@ module RubyLLM
           { purpose: 'user_data' }
         end
 
-        def format_thinking(msg)
+        def render_thinking(msg)
           return {} unless msg.role == :assistant
 
           thinking = msg.thinking
@@ -433,44 +433,44 @@ module RubyLLM
           payload
         end
 
-        def extract_thinking_text(message_data)
+        def parse_thinking_text(message_data)
           candidate = message_data['reasoning_content'] || message_data['reasoning'] || message_data['thinking']
           candidate.is_a?(String) ? candidate : nil
         end
 
-        def extract_thinking_signature(message_data)
+        def parse_thinking_signature(message_data)
           candidate = message_data['reasoning_signature'] || message_data['signature']
           candidate.is_a?(String) ? candidate : nil
         end
 
-        def extract_raw_reasoning(_message_data)
+        def parse_raw_reasoning(_message_data)
           nil
         end
 
-        def extract_content_and_thinking(content)
+        def parse_content_and_thinking(content)
           return [content, nil] unless content.is_a?(Array)
 
-          text = extract_text_from_blocks(content)
-          thinking = extract_thinking_from_blocks(content)
+          text = parse_text_from_blocks(content)
+          thinking = parse_thinking_from_blocks(content)
 
           [text.empty? ? nil : text, thinking.empty? ? nil : thinking]
         end
 
-        def extract_text_from_blocks(blocks)
+        def parse_text_from_blocks(blocks)
           blocks.filter_map do |block|
             block['text'] if block['type'] == 'text' && block['text'].is_a?(String)
           end.join
         end
 
-        def extract_thinking_from_blocks(blocks)
+        def parse_thinking_from_blocks(blocks)
           blocks.filter_map do |block|
             next unless block['type'] == 'thinking'
 
-            extract_thinking_text_from_block(block)
+            parse_thinking_text_from_block(block)
           end.join
         end
 
-        def extract_thinking_text_from_block(block)
+        def parse_thinking_text_from_block(block)
           thinking_block = block['thinking']
           return thinking_block if thinking_block.is_a?(String)
 

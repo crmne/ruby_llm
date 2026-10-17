@@ -17,7 +17,7 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
-        def format_message_group(group, **options)
+        def render_message_group(group, **options)
           content = group.first.raw_content
           return super unless group.one? && content.is_a?(Array) &&
                               content.all? { |entry| entry.is_a?(Hash) && entry['role'] && !entry['type'] }
@@ -116,7 +116,7 @@ module RubyLLM
           append_multi_content(entry, delta['content'])
           append_multi_calls(entry, delta['tool_calls'])
           @multi_finish_reason = choice['finish_reason'] if choice['finish_reason']
-          content, thinking = extract_content_and_thinking(delta['content']) if entry['role'] == 'assistant'
+          content, thinking = parse_content_and_thinking(delta['content']) if entry['role'] == 'assistant'
           Chunk.new(role: :assistant, content: content, thinking: Thinking.build(text: thinking), model: data['model'])
         end
 

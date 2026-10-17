@@ -237,14 +237,14 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     end
   end
 
-  describe '.format_messages' do
+  describe '.render_messages' do
     it 'sends OpenAI tool-returned images at original detail' do
       provider = RubyLLM::Providers::OpenAI.allocate
       protocol = RubyLLM::Protocols::ChatCompletions.new(provider)
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
       message = RubyLLM::Message.new(role: :tool, content: 'Page image', tool_call_id: 'call_1', attachments: [image])
 
-      formatted = protocol.send(:format_messages, [message])
+      formatted = protocol.send(:render_messages, [message])
 
       expect(formatted.dig(1, :content, 1, :image_url, :detail)).to eq('original')
     end
@@ -257,7 +257,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       protocol = RubyLLM::Protocols::ChatCompletions.allocate
       protocol.instance_variable_set(:@config, RubyLLM.config)
 
-      formatted = protocol.send(:format_messages, messages)
+      formatted = protocol.send(:render_messages, messages)
 
       expect(formatted.map { |message| message[:role] }).to eq(%w[developer user])
     end
@@ -267,7 +267,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       messages = [RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])]
 
-      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, messages)
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:render_messages, messages)
 
       expect(formatted.dig(0, :content, 1, :type)).to eq('file')
       expect(formatted.dig(0, :content, 1, :file, :filename)).to eq('proposal.pdf')
@@ -276,14 +276,14 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     it 'does not send finish_reason back to the provider' do
       message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
 
-      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, [message])
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:render_messages, [message])
 
       expect(formatted.first).not_to have_key(:finish_reason)
     end
 
     it 'keeps non-PDF documents disabled for OpenAI chat completions' do
       expect do
-        RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, [docx_message])
+        RubyLLM::Protocols::ChatCompletions.allocate.send(:render_messages, [docx_message])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -294,7 +294,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       provider = RubyLLM::Providers::DeepSeek::ChatCompletions.allocate
 
       expect do
-        provider.send(:format_messages, [docx_message])
+        provider.send(:render_messages, [docx_message])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -306,7 +306,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'image.png')
       message = RubyLLM::Message.new(role: :user, content: 'Describe this', attachments: [attachment])
 
-      formatted = provider.send(:format_messages, [message])
+      formatted = provider.send(:render_messages, [message])
 
       expect(formatted.first).to eq(
         role: 'user',
@@ -321,7 +321,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       stub_request(:get, url).to_return(body: 'png bytes', headers: { 'Content-Type' => 'image/png' })
       message = RubyLLM::Message.new(role: :user, content: 'Describe this', attachments: [url])
 
-      formatted = provider.send(:format_messages, [message])
+      formatted = provider.send(:render_messages, [message])
 
       expect(formatted.dig(0, :content, 1)).to eq(type: 'image_url', image_url: { url: url })
     end
@@ -329,7 +329,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     it 'uses Perplexity file_url parts for supported file attachments' do
       provider = RubyLLM::Providers::Perplexity::ChatCompletions.allocate
 
-      formatted = provider.send(:format_messages, [docx_message])
+      formatted = provider.send(:render_messages, [docx_message])
 
       expect(formatted.dig(0, :content, 1)).to eq(
         type: 'file_url',
@@ -344,7 +344,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
         attachment = RubyLLM::Attachment.new(StringIO.new('notes'), filename: "notes.#{extension}")
         message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
-        formatted = provider.send(:format_messages, [message])
+        formatted = provider.send(:render_messages, [message])
 
         expect(formatted.dig(0, :content, 1)).to eq(
           type: 'text',
@@ -357,7 +357,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       provider = RubyLLM::Providers::XAI::ChatCompletions.allocate
 
       expect do
-        provider.send(:format_messages, [docx_message])
+        provider.send(:render_messages, [docx_message])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -370,7 +370,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
       expect do
-        provider.send(:format_messages, [message])
+        provider.send(:render_messages, [message])
       end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: application/pdf})
     end
 
@@ -385,7 +385,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
     before do
-      allow(described_class).to receive(:format_messages).and_return([{ role: 'user', content: 'Hello' }])
+      allow(described_class).to receive(:render_messages).and_return([{ role: 'user', content: 'Hello' }])
     end
 
     it 'renders prompt cache params for any Chat Completions-compatible provider' do
@@ -569,21 +569,21 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
   describe 'thinking round-trips' do
     it 'reads reasoning out of the alternate field names' do
-      expect(described_class.extract_thinking_text({ 'reasoning' => 'why' })).to eq('why')
-      expect(described_class.extract_thinking_text({ 'thinking' => 'why' })).to eq('why')
-      expect(described_class.extract_thinking_text({ 'reasoning_content' => 42 })).to be_nil
-      expect(described_class.extract_thinking_signature({ 'signature' => 'sig' })).to eq('sig')
-      expect(described_class.extract_thinking_signature({ 'reasoning_signature' => 42 })).to be_nil
+      expect(described_class.parse_thinking_text({ 'reasoning' => 'why' })).to eq('why')
+      expect(described_class.parse_thinking_text({ 'thinking' => 'why' })).to eq('why')
+      expect(described_class.parse_thinking_text({ 'reasoning_content' => 42 })).to be_nil
+      expect(described_class.parse_thinking_signature({ 'signature' => 'sig' })).to eq('sig')
+      expect(described_class.parse_thinking_signature({ 'reasoning_signature' => 42 })).to be_nil
     end
 
     it 'hands string content back untouched, markup and all' do
-      expect(described_class.extract_content_and_thinking('plain')).to eq(['plain', nil])
-      expect(described_class.extract_content_and_thinking('<think>why</think>answer'))
+      expect(described_class.parse_content_and_thinking('plain')).to eq(['plain', nil])
+      expect(described_class.parse_content_and_thinking('<think>why</think>answer'))
         .to eq(['<think>why</think>answer', nil])
     end
 
     it 'leaves a content shape it does not understand alone' do
-      expect(described_class.extract_content_and_thinking(nil)).to eq([nil, nil])
+      expect(described_class.parse_content_and_thinking(nil)).to eq([nil, nil])
     end
 
     it 'reads thinking out of structured content blocks' do
@@ -594,7 +594,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
         { 'type' => 'text', 'text' => 'answer' }
       ]
 
-      expect(described_class.extract_content_and_thinking(content)).to eq(['answer', 'first second third'])
+      expect(described_class.parse_content_and_thinking(content)).to eq(['answer', 'first second third'])
     end
 
     it 'sends assistant thinking back under every field name providers accept' do
@@ -602,14 +602,14 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
         role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
       )
 
-      expect(described_class.format_thinking(message)).to eq(
+      expect(described_class.render_thinking(message)).to eq(
         reasoning: 'why', reasoning_content: 'why', reasoning_signature: 'sig'
       )
     end
 
     it 'sends nothing for a user message or one without thinking' do
-      expect(described_class.format_thinking(RubyLLM::Message.new(role: :user, content: 'hi'))).to eq({})
-      expect(described_class.format_thinking(RubyLLM::Message.new(role: :assistant, content: 'hi'))).to eq({})
+      expect(described_class.render_thinking(RubyLLM::Message.new(role: :user, content: 'hi'))).to eq({})
+      expect(described_class.render_thinking(RubyLLM::Message.new(role: :assistant, content: 'hi'))).to eq({})
     end
 
     it 'sends only the signature when that is all the model returned' do
@@ -617,7 +617,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
         role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(signature: 'sig')
       )
 
-      expect(described_class.format_thinking(message)).to eq(reasoning_signature: 'sig')
+      expect(described_class.render_thinking(message)).to eq(reasoning_signature: 'sig')
     end
   end
 
@@ -673,7 +673,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   describe '.warn_unsupported_citations' do
     it 'warns when citations are asked of a model without them' do
       allow(RubyLLM.logger).to receive(:warn)
-      allow(described_class).to receive(:format_messages).and_return([])
+      allow(described_class).to receive(:render_messages).and_return([])
       model = instance_double(RubyLLM::Model, id: model_for(:openai, :temperature), supports?: false)
 
       described_class.render_payload(

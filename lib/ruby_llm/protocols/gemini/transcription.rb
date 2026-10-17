@@ -30,7 +30,7 @@ module RubyLLM
         def render_transcription_payload(attachment, language:, format: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
           prompt = build_prompt(prompt, language)
-          audio_part = format_audio_part(attachment)
+          audio_part = render_audio_part(attachment)
 
           raise UnsupportedAttachmentError, attachment.mime_type unless attachment.audio?
 
@@ -63,7 +63,7 @@ module RubyLLM
           prompt
         end
 
-        def format_audio_part(attachment)
+        def render_audio_part(attachment)
           {
             inline_data: {
               mime_type: attachment.mime_type,
@@ -74,10 +74,10 @@ module RubyLLM
 
         def parse_transcription_response(response, model:)
           data = response.body
-          text = extract_text(data)
+          text = parse_text(data)
           raise_if_transcription_blocked(data, text, response)
 
-          usage = extract_usage(data)
+          usage = parse_usage(data)
 
           RubyLLM::Transcription.new(
             text: text,
@@ -94,12 +94,12 @@ module RubyLLM
           reason = data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
           return unless data.dig('candidates', 0).nil? || normalize_finish_reason(reason) == :content_filter
 
-          usage = extract_usage(data)
+          usage = parse_usage(data)
           @usage_tracker&.observe_tokens(Tokens.new(input: usage[:input_tokens], output: usage[:output_tokens]))
           raise ContentFilterError.new(['Gemini blocked the transcription', reason].compact.join(': '), response:)
         end
 
-        def extract_text(data)
+        def parse_text(data)
           candidate = data.is_a?(Hash) ? data.dig('candidates', 0) : nil
           return unless candidate
 
@@ -108,7 +108,7 @@ module RubyLLM
           texts.join if texts.any?
         end
 
-        def extract_usage(data)
+        def parse_usage(data)
           metadata = data.is_a?(Hash) ? data['usageMetadata'] : nil
           return { input_tokens: nil, output_tokens: nil } unless metadata
 

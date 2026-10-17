@@ -23,7 +23,7 @@ module RubyLLM
           raise ArgumentError, "#{model} takes task instructions and titles in the text" if task_type || title
 
           payload = {
-            content: { parts: Protocols::Gemini::Media.format_content(text.is_a?(Array) ? text.first : text, with) },
+            content: { parts: Protocols::Gemini::Media.render_content(text.is_a?(Array) ? text.first : text, with) },
             outputDimensionality: dimensions
           }.compact
           Support::Utils.deep_merge(payload, provider_options)

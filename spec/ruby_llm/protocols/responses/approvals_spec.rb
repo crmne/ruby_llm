@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Approvals do
 
       expect(response).to have_attributes(role: :tool, tool_call_id: 'invocation_1', provider_call_id: 'approval_1')
       expected = { type: 'mcp_approval_response', approval_request_id: 'approval_1', approve: approved }
-      expect(protocol.send(:format_tool_items, response)).to eq([expected])
+      expect(protocol.send(:render_tool_items, response)).to eq([expected])
     end
   end
 

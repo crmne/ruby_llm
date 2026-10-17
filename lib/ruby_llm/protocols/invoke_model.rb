@@ -25,7 +25,7 @@ module RubyLLM
       end
 
       def parse_single_embedding_responses(responses, model:, text:)
-        vectors = responses.map { |response| extract_embedding(response.body) }
+        vectors = responses.map { |response| parse_embedding(response.body) }
         input_tokens = Tokens.aggregate(embedding_attempt_tokens(responses)).input
         vectors = vectors.first unless text.is_a?(Array)
 
@@ -46,7 +46,7 @@ module RubyLLM
         Support::Utils.deep_merge(payload, provider_options)
       end
 
-      def extract_embedding(body)
+      def parse_embedding(body)
         body['embedding'] || body.dig('embeddingsByType', 'float') || body['embeddingsByType']&.values&.first
       end
     end

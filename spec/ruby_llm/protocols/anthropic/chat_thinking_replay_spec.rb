@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   end
 
   def rendered_content(message)
-    JSON.parse(JSON.generate(protocol.send(:format_message, message))).fetch('content')
+    JSON.parse(JSON.generate(protocol.send(:render_message, message))).fetch('content')
   end
 
   it 'replays every signed and redacted block in order' do

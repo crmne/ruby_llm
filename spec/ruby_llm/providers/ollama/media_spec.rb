@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Ollama::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     it 'encodes audio attachments in the released Ollama input_audio format' do
       attachment = RubyLLM::Attachment.new(StringIO.new('wav bytes'), filename: 'meeting.wav')
 
-      content = described_class.format_content('Summarize this recording', [attachment])
+      content = described_class.render_content('Summarize this recording', [attachment])
 
       expect(content).to eq(
         [
@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Providers::Ollama::Media do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}

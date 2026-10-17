@@ -70,28 +70,28 @@ module RubyLLM
           end
         end
 
-        def extract_model_id(data)
+        def parse_model_id(data)
           data.dig('message', 'model')
         end
 
-        def extract_input_tokens(data)
+        def parse_input_tokens(data)
           message_usage(data)['input_tokens'] || delta_usage(data)['input_tokens']
         end
 
-        def extract_output_tokens(data)
+        def parse_output_tokens(data)
           message_usage(data)['output_tokens'] || delta_usage(data)['output_tokens']
         end
 
-        def extract_thinking_tokens(data)
+        def parse_thinking_tokens(data)
           message_usage(data).dig('output_tokens_details', 'thinking_tokens') ||
             delta_usage(data).dig('output_tokens_details', 'thinking_tokens')
         end
 
-        def extract_cache_read_tokens(data)
+        def parse_cache_read_tokens(data)
           message_usage(data)['cache_read_input_tokens'] || delta_usage(data)['cache_read_input_tokens']
         end
 
-        def extract_cache_write_tokens(data)
+        def parse_cache_write_tokens(data)
           direct = message_usage(data)['cache_creation_input_tokens'] ||
                    delta_usage(data)['cache_creation_input_tokens']
           return direct if direct
@@ -102,7 +102,7 @@ module RubyLLM
           breakdown.values.compact.sum
         end
 
-        def extract_cache_write_by_ttl(data)
+        def parse_cache_write_by_ttl(data)
           breakdown = message_usage(data)['cache_creation'] || delta_usage(data)['cache_creation']
           return unless breakdown.is_a?(Hash)
 

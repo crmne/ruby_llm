@@ -101,7 +101,7 @@ RSpec.describe RubyLLM::Protocol do
     end
 
     it 'never uploads attachments on its own' do
-      expect(protocol.send(:supports_provider_file_references?)).to be(false)
+      expect(protocol.send(:provider_file_references?)).to be(false)
       expect(protocol.send(:provider_file_attachable?, nil)).to be(false)
       expect(protocol.send(:provider_file_upload_options, nil)).to eq({})
       expect(protocol.send(:default_large_file_upload_threshold)).to eq(Float::INFINITY)

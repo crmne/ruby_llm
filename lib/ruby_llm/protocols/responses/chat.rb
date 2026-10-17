@@ -23,8 +23,8 @@ module RubyLLM
           # to ride back in the response. xAI only encrypts it when asked.
           payload = {
             model: model.id,
-            input: format_input(messages, caching:),
-            instructions: format_instructions(messages, caching:),
+            input: render_input(messages, caching:),
+            instructions: render_instructions(messages, caching:),
             stream: stream,
             store: false,
             include: ['reasoning.encrypted_content']
@@ -294,31 +294,31 @@ module RubyLLM
         # The +instructions+ parameter is a plain string and cannot carry a
         # breakpoint marker or a file. When any system message needs one, every
         # system message rides along as an input item, so their order holds.
-        def format_instructions(messages, caching: nil)
+        def render_instructions(messages, caching: nil)
           system = messages.select { |msg| msg.role == :system }
           return if system.empty? || system_input_items?(system, caching:)
 
           system.map { |msg| msg.content.to_s }.join("\n\n")
         end
 
-        def format_input(messages, caching: nil)
+        def render_input(messages, caching: nil)
           system, conversation = messages.partition { |msg| msg.role == :system }
           system_items = if system_input_items?(system, caching:)
-                           system.flat_map { |msg| [format_item(msg, caching:)].flatten(1) }
+                           system.flat_map { |msg| [render_item(msg, caching:)].flatten(1) }
                          else
                            []
                          end
 
-          system_items + format_conversation(conversation, caching:)
+          system_items + render_conversation(conversation, caching:)
         end
 
-        def format_conversation(messages, caching: nil)
+        def render_conversation(messages, caching: nil)
           messages.each_with_object([]) do |message, input|
             raw = message.raw_content
             if raw.is_a?(Hash) && raw['object'] == 'response.compaction'
               input.replace(raw.fetch('output'))
             else
-              input.concat([format_item(message, caching:)].flatten(1))
+              input.concat([render_item(message, caching:)].flatten(1))
             end
           end
         end
@@ -331,17 +331,17 @@ module RubyLLM
           msg.role == :system && ((caching != false && msg.cache_until_here?) || msg.attachments.any?)
         end
 
-        def format_item(msg, caching: nil)
+        def render_item(msg, caching: nil)
           case msg.role
           when :system
-            item = { role: 'system', content: format_content(msg.content, msg.attachments) }
+            item = { role: 'system', content: render_content(msg.content, msg.attachments) }
             caching != false && msg.cache_until_here? ? inject_cache_breakpoint(item) : item
           when :tool
-            format_tool_items(msg)
+            render_tool_items(msg)
           when :assistant
-            format_assistant_items(msg)
+            render_assistant_items(msg)
           else
-            item = { role: 'user', content: format_content(msg.content, msg.attachments) }
+            item = { role: 'user', content: render_content(msg.content, msg.attachments) }
             caching != false && msg.cache_until_here? ? inject_cache_breakpoint(item) : item
           end
         end
@@ -363,44 +363,44 @@ module RubyLLM
 
         # Function call outputs are text-only on the wire, so tool attachments
         # ride a user item spliced in right after the result.
-        def format_tool_items(msg)
+        def render_tool_items(msg)
           return msg.raw_content if msg.raw_content
 
           items = [{
             type: 'function_call_output',
             call_id: msg.provider_call_id,
-            output: format_content(msg.content)
+            output: render_content(msg.content)
           }]
 
           if msg.attachments.any?
-            items << format_attachment_item("Attachments from tool call #{msg.provider_call_id}:", msg.attachments)
+            items << render_attachment_item("Attachments from tool call #{msg.provider_call_id}:", msg.attachments)
           end
 
           items
         end
 
-        def format_attachment_item(label, attachments)
+        def render_attachment_item(label, attachments)
           parts = [{ type: 'input_text', text: label }]
-          parts.concat(format_content(nil, attachments))
+          parts.concat(render_content(nil, attachments))
           { role: 'user', content: parts }
         end
 
         # Assistant output is text-only on the wire, so the attachments of a
         # replayed assistant turn ride a user item spliced in after it.
-        def format_assistant_items(msg)
+        def render_assistant_items(msg)
           # Turns that used server tools replay their output items verbatim,
           # reasoning and tool results included, as stateless chaining expects.
           return msg.raw_content if msg.raw_content
 
           items = []
-          items << format_reasoning_item(msg.thinking) if own_signature(msg)
-          items << { role: 'assistant', content: format_output_content(msg) } unless empty_content?(msg.content)
-          items.concat(format_function_call_items(msg.tool_calls)) if msg.tool_call?
-          items << format_attachment_item('Attachments from the assistant:', msg.attachments) if msg.attachments.any?
+          items << render_reasoning_item(msg.thinking) if own_signature(msg)
+          items << { role: 'assistant', content: render_output_content(msg) } unless empty_content?(msg.content)
+          items.concat(render_function_call_items(msg.tool_calls)) if msg.tool_call?
+          items << render_attachment_item('Attachments from the assistant:', msg.attachments) if msg.attachments.any?
           items
         end
 
-        def format_reasoning_item(thinking)
+        def render_reasoning_item(thinking)
           {
             type: 'reasoning',
             summary: thinking.text ? [{ type: 'summary_text', text: thinking.text }] : [],
@@ -408,7 +408,7 @@ module RubyLLM
           }
         end
 
-        def format_function_call_items(tool_calls)
+        def render_function_call_items(tool_calls)
           tool_calls.map do |_, tc|
             {
               type: 'function_call',
@@ -419,7 +419,7 @@ module RubyLLM
           end
         end
 
-        def format_output_content(msg)
+        def render_output_content(msg)
           [{ type: 'output_text', text: msg.content }]
         end
 
@@ -492,7 +492,7 @@ module RubyLLM
           output.find { |item| item['type'] == 'reasoning' }&.dig('encrypted_content')
         end
 
-        def supports_provider_file_references?
+        def provider_file_references?
           true
         end
 

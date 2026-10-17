@@ -76,7 +76,7 @@ module RubyLLM
             contents: [
               {
                 role: 'user',
-                parts: Media.format_content(prompt, image_attachments(with))
+                parts: Media.render_content(prompt, image_attachments(with))
               }
             ],
             generationConfig: generation_config

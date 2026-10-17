@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Protocols::GPUStack::Responses do
     message = RubyLLM::Message.new(role: :assistant, content: 'Ruby', raw_content: raw)
     protocol = described_class.new(chat.provider, chat.model)
 
-    rendered = protocol.format_assistant_items(message)
+    rendered = protocol.render_assistant_items(message)
 
     expect(rendered.map { |item| item[:role] }).to eq(%w[assistant assistant])
     expect(rendered.map { |item| JSON.parse(item[:content].first[:text]) }).to eq(raw)

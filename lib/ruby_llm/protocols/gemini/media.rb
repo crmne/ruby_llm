@@ -14,27 +14,27 @@ module RubyLLM
           %i[image audio video pdf text].include?(attachment.type)
         end
 
-        def format_content(content, attachments = [])
+        def render_content(content, attachments = [])
           parts = []
-          parts << format_text(content) if content
+          parts << render_text(content) if content
 
           attachments.each do |attachment|
-            part = with_media_resolution(format_content_attachment(attachment), attachment)
+            part = with_media_resolution(render_content_attachment(attachment), attachment)
             parts << with_media_processing(part, attachment)
           end
 
           parts
         end
 
-        def format_content_attachment(attachment)
+        def render_content_attachment(attachment)
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
-          return format_file_data(attachment) if attachment.provider_file?
+          return render_file_data(attachment) if attachment.provider_file?
 
-          attachment.type == :text ? format_text_file(attachment) : format_attachment(attachment)
+          attachment.type == :text ? render_text_file(attachment) : render_attachment(attachment)
         end
 
-        def format_attachment(attachment)
+        def render_attachment(attachment)
           {
             inline_data: {
               mime_type: attachment.mime_type,
@@ -57,7 +57,7 @@ module RubyLLM
           part.merge(media_processing: attachment.processing.to_s.upcase)
         end
 
-        def format_file_data(attachment)
+        def render_file_data(attachment)
           uri = attachment.provider_file_uri || attachment.provider_file_id
           {
             file_data: {
@@ -67,13 +67,13 @@ module RubyLLM
           }
         end
 
-        def format_text_file(text_file)
+        def render_text_file(text_file)
           {
             text: text_file.for_llm
           }
         end
 
-        def format_text(text)
+        def render_text(text)
           {
             text: text
           }

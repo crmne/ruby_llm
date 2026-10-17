@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Anthropic::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     let(:pdf_path) { File.join('spec', 'fixtures', 'sample.pdf') }
 
     it 'serializes text with attachments into Anthropic blocks' do
       attachments = RubyLLM::Attachment.wrap(pdf_path)
 
-      blocks = described_class.format_content('Summarize this', attachments)
+      blocks = described_class.render_content('Summarize this', attachments)
 
       expect(blocks).to all(be_a(Hash))
       expect(blocks.first).to include(type: 'text', text: 'Summarize this')
@@ -22,8 +22,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
     it 'makes PDFs and text files citable documents only when citations are on' do
       text_path = File.join('spec', 'fixtures', 'ruby.txt')
 
-      plain = described_class.format_content(nil, RubyLLM::Attachment.wrap([pdf_path, text_path]))
-      cited = described_class.format_content(nil, RubyLLM::Attachment.wrap([pdf_path, text_path]), citations: true)
+      plain = described_class.render_content(nil, RubyLLM::Attachment.wrap([pdf_path, text_path]))
+      cited = described_class.render_content(nil, RubyLLM::Attachment.wrap([pdf_path, text_path]), citations: true)
 
       expect(plain.map { |block| block[:type] }).to eq(%w[document text])
       expect(plain.first).not_to have_key(:citations)
@@ -36,15 +36,15 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
     it 'skips empty content rather than rendering an empty text block' do
       attachments = RubyLLM::Attachment.wrap(pdf_path)
 
-      expect(described_class.format_content('', attachments).map { |block| block[:type] }).to eq(['document'])
-      expect(described_class.format_content('')).to eq([])
+      expect(described_class.render_content('', attachments).map { |block| block[:type] }).to eq(['document'])
+      expect(described_class.render_content('')).to eq([])
     end
 
     it 'raises an actionable error for unsupported Office documents' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
     it 'formats provider-managed PDFs as document file sources' do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
 
-      blocks = described_class.format_content('Summarize this', RubyLLM::Attachment.wrap(file), citations: true)
+      blocks = described_class.render_content('Summarize this', RubyLLM::Attachment.wrap(file), citations: true)
 
       expect(blocks.second).to eq(
         type: 'document',
@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
     it 'formats provider-managed images as image file sources' do
       file = RubyLLM::UploadedFile.new(id: 'file_456', filename: 'chart.png', mime_type: 'image/png')
 
-      blocks = described_class.format_content('Describe this', RubyLLM::Attachment.wrap(file))
+      blocks = described_class.render_content('Describe this', RubyLLM::Attachment.wrap(file))
 
       expect(blocks.second).to eq(
         type: 'image',

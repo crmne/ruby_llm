@@ -41,7 +41,7 @@ module RubyLLM
           )
         end
 
-        def extract_embedding(body)
+        def parse_embedding(body)
           body.dig('embeddings', 0, 'embedding')
         end
       end

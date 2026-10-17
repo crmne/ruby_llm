@@ -30,7 +30,7 @@ module RubyLLM
 
           payload = {
             model: model.id,
-            messages: format_messages(messages, citations: citations),
+            messages: render_messages(messages, citations: citations),
             stream: stream
           }
 
@@ -43,7 +43,7 @@ module RubyLLM
         def add_optional_fields(payload, messages, temperature:, max_output_tokens:, citations:, schema:)
           payload[:temperature] = temperature unless temperature.nil?
           payload[:max_tokens] = max_output_tokens unless max_output_tokens.nil?
-          payload[:documents] = Media.format_documents(messages) if citations && Media.documents?(messages)
+          payload[:documents] = Media.render_documents(messages) if citations && Media.documents?(messages)
           payload[:response_format] = build_response_format(schema) if schema
         end
 
@@ -81,28 +81,28 @@ module RubyLLM
           payload[:thinking] = { type: 'enabled', token_budget: thinking.budget }.compact
         end
 
-        def format_messages(messages, citations: false)
-          messages.map { |msg| format_message(msg, citations: citations) }
+        def render_messages(messages, citations: false)
+          messages.map { |msg| render_message(msg, citations: citations) }
         end
 
-        def format_message(msg, citations: false)
-          return Tools.format_tool_result(msg) if msg.tool_result?
-          return format_assistant_message(msg) if msg.role == :assistant
+        def render_message(msg, citations: false)
+          return Tools.render_tool_result(msg) if msg.tool_result?
+          return render_assistant_message(msg) if msg.role == :assistant
 
           {
             role: msg.role.to_s,
-            content: Media.format_content(msg.content, msg.attachments, citations: citations)
+            content: Media.render_content(msg.content, msg.attachments, citations: citations)
           }
         end
 
         # Cohere returns tool_plan alongside tool calls, and RubyLLM surfaces
         # it as thinking, but the newer models reject it on the way back in.
         # It is optional in a request, so the plan stays out of the history.
-        def format_assistant_message(msg)
+        def render_assistant_message(msg)
           message = { role: 'assistant' }
-          content = Media.format_content(msg.content, msg.attachments)
+          content = Media.render_content(msg.content, msg.attachments)
           message[:content] = content unless content.empty?
-          message[:tool_calls] = Tools.format_tool_calls(msg.tool_calls) if msg.tool_call?
+          message[:tool_calls] = Tools.render_tool_calls(msg.tool_calls) if msg.tool_call?
           message
         end
 
@@ -111,14 +111,14 @@ module RubyLLM
 
           message_data = data['message'] || {}
           blocks = Array(message_data['content'])
-          content, offsets = extract_text(blocks)
+          content, offsets = parse_text(blocks)
           finish_reason = normalize_finish_reason(data['finish_reason'])
 
           Message.new(
             role: :assistant,
             content: content,
             citations: parse_citations(message_data['citations'], offsets),
-            thinking: Thinking.build(text: extract_thinking(blocks, message_data)),
+            thinking: Thinking.build(text: parse_thinking(blocks, message_data)),
             tool_calls: Tools.parse_tool_calls(message_data['tool_calls'], response: raw, finish_reason:),
             finish_reason: finish_reason,
             model: model&.id,
@@ -150,7 +150,7 @@ module RubyLLM
         # Returns the joined text of the response along with the offset each
         # content block starts at, so citation spans resolve against the
         # content string RubyLLM exposes.
-        def extract_text(blocks)
+        def parse_text(blocks)
           text = +''
           offsets = {}
 
@@ -166,7 +166,7 @@ module RubyLLM
 
         # The tool plan is the model's reasoning for a tool-calling turn, and
         # is the only reasoning Cohere returns when thinking blocks are absent.
-        def extract_thinking(blocks, message_data)
+        def parse_thinking(blocks, message_data)
           thoughts = blocks.select { |block| block['type'] == 'thinking' }
                            .map { |block| block['thinking'] }.join
           thoughts.empty? ? message_data['tool_plan'] : thoughts

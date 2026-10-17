@@ -5,14 +5,14 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
   let(:tools) { described_class }
 
-  describe '#format_tool_call_with_thinking' do
+  describe '#render_tool_call_with_thinking' do
     let(:provider) { RubyLLM::Protocols::Anthropic.allocate }
     let(:msg) do
       message_double(content: 'Some content')
     end
 
-    def format_tool_call(msg)
-      provider.send(:format_tool_call_with_thinking, msg)
+    def render_tool_call(msg)
+      provider.send(:render_tool_call_with_thinking, msg)
     end
 
     def message_double(content:, attachments: [])
@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
 
     it 'formats a message with content and tool call' do
-      result = format_tool_call(msg)
+      result = render_tool_call(msg)
 
       expect(result).to eq({
                              role: 'assistant',
@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       end
 
       it 'formats a message with only tool call' do
-        result = format_tool_call(msg)
+        result = render_tool_call(msg)
 
         expect(result).to eq({
                                role: 'assistant',
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       end
 
       it 'formats a message with only tool call' do
-        result = format_tool_call(msg)
+        result = render_tool_call(msg)
 
         expect(result).to eq({
                                role: 'assistant',
@@ -97,7 +97,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       msg = message_double(content: 'Read this before calling the tool',
                            attachments: RubyLLM::Attachment.wrap(text_path))
 
-      formatted = format_tool_call(msg)
+      formatted = render_tool_call(msg)
 
       expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
       expect(formatted[:content].second).to include(type: 'text')
@@ -118,7 +118,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
         tool_calls: tool_calls
       )
 
-      formatted = format_tool_call(msg)
+      formatted = render_tool_call(msg)
 
       expect(formatted[:role]).to eq('assistant')
       expect(formatted[:content].size).to eq(4) # 1 text + 3 tool_use blocks
@@ -143,7 +143,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
         tool_calls: tool_calls
       )
 
-      formatted = format_tool_call(msg)
+      formatted = render_tool_call(msg)
 
       expect(formatted[:role]).to eq('assistant')
       expect(formatted[:content].size).to eq(1) # Only tool_use block, no text
@@ -151,7 +151,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
   end
 
-  describe '.format_tool_result' do
+  describe '.render_tool_result' do
     let(:msg) do
       instance_double(RubyLLM::Message,
                       provider_call_id: 'tool_123',
@@ -160,7 +160,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
 
     it 'formats a tool result message' do
-      result = tools.format_tool_result(msg)
+      result = tools.render_tool_result(msg)
 
       expect(result).to eq({
                              role: 'user',
@@ -185,7 +185,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
                             content: '',
                             attachments: [])
 
-      result = tools.format_tool_result(msg)
+      result = tools.render_tool_result(msg)
 
       expect(result).to eq({
                              role: 'user',
@@ -207,7 +207,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     it 'uses a placeholder when the tool returns only whitespace' do
       msg = instance_double(RubyLLM::Message, provider_call_id: 'tool_123', content: " \n", attachments: [])
 
-      result = tools.format_tool_result(msg)
+      result = tools.render_tool_result(msg)
 
       expect(result.dig(:content, 0, :content)).to eq([{ type: 'text', text: '(no output)' }])
     end
@@ -314,13 +314,13 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
   end
 
-  describe '.format_tool_result_content' do
+  describe '.render_tool_result_content' do
     it 'renders search results as citable search_result blocks' do
       results = RubyLLM::SearchResults.new({ title: 'Guide', url: 'https://example.com/guide', text: 'Ruby is fun.' },
                                            { title: 'Notes', text: 'Matz, 1993.' })
       message = RubyLLM::Message.new(role: :tool, content: results.to_json, tool_call_id: 'tool_1')
 
-      expect(described_class.format_tool_result_content(message)).to eq(
+      expect(described_class.render_tool_result_content(message)).to eq(
         [
           { type: 'search_result', source: 'https://example.com/guide', title: 'Guide',
             content: [{ type: 'text', text: 'Ruby is fun.' }], citations: { enabled: true } },

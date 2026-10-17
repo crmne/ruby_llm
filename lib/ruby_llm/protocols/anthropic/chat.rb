@@ -87,7 +87,7 @@ module RubyLLM
           # (each optionally with cache_control); each :system message becomes its
           # own block in the resulting array.
           system_messages.flat_map do |msg|
-            blocks = Media.format_content(msg.content, msg.attachments).dup
+            blocks = Media.render_content(msg.content, msg.attachments).dup
             cache_boundary?(msg, caching:) ? inject_cache_control(blocks, caching:, ttl: msg.cache_ttl) : blocks
           end
         end
@@ -96,7 +96,7 @@ module RubyLLM
                                max_output_tokens: nil)
           payload = {
             model: model.id,
-            messages: format_messages(chat_messages, thinking:, citations:, caching:),
+            messages: render_messages(chat_messages, thinking:, citations:, caching:),
             stream: stream,
             max_tokens: max_output_tokens || model.max_output_tokens || DEFAULT_MAX_OUTPUT_TOKENS
           }
@@ -106,13 +106,13 @@ module RubyLLM
           payload
         end
 
-        def format_messages(messages, thinking: nil, citations: false, caching: nil)
+        def render_messages(messages, thinking: nil, citations: false, caching: nil)
           rendered = []
           tool_result_blocks = []
 
           messages.each do |msg|
             if msg.tool_result?
-              tool_result_blocks << Tools.format_tool_result_block(msg)
+              tool_result_blocks << Tools.render_tool_result_block(msg)
               inject_cache_control(tool_result_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
               next
             end
@@ -122,7 +122,7 @@ module RubyLLM
               tool_result_blocks = []
             end
 
-            formatted = format_message(msg, thinking:, citations:, caching:)
+            formatted = render_message(msg, thinking:, citations:, caching:)
             rendered << formatted unless formatted[:content].empty?
           end
 
@@ -186,7 +186,7 @@ module RubyLLM
           (existing.to_s.split(',').map(&:strip).reject(&:empty?) + [beta]).uniq.join(',')
         end
 
-        def supports_provider_file_references?
+        def provider_file_references?
           true
         end
 
@@ -208,11 +208,11 @@ module RubyLLM
         def parse_completion_body(data, raw:)
           content_blocks = data['content'] || []
 
-          text_content, citations = extract_text_and_citations(content_blocks)
-          thinking_content = extract_thinking_content(content_blocks)
-          thinking_signature = extract_thinking_signature(content_blocks)
+          text_content, citations = parse_text_and_citations(content_blocks)
+          thinking_content = parse_thinking_content(content_blocks)
+          thinking_signature = parse_thinking_signature(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
-          server_tool_calls = extract_server_tool_calls(content_blocks)
+          server_tool_calls = parse_server_tool_calls(content_blocks)
 
           build_message(data, content: text_content, citations:, thinking: thinking_content,
                               thinking_signature:, tool_use_blocks:, server_tool_calls:,
@@ -228,7 +228,7 @@ module RubyLLM
             type.end_with?('_tool_result')
         end
 
-        def extract_server_tool_calls(blocks)
+        def parse_server_tool_calls(blocks)
           blocks.select { |block| server_tool_block?(block) }.map do |block|
             ServerToolCall.new(
               type: block['type'],
@@ -241,7 +241,7 @@ module RubyLLM
           end
         end
 
-        def extract_text_and_citations(blocks)
+        def parse_text_and_citations(blocks)
           text = +''
           citations = []
 
@@ -284,14 +284,14 @@ module RubyLLM
 
         # An empty thinking text is a real block whose display was omitted;
         # collapsing it to nil would replay the signature as redacted data.
-        def extract_thinking_content(blocks)
+        def parse_thinking_content(blocks)
           thinking_blocks = blocks.select { |c| c['type'] == 'thinking' }
           return nil if thinking_blocks.empty?
 
           thinking_blocks.map { |c| c['thinking'] || c['text'] }.join
         end
 
-        def extract_thinking_signature(blocks)
+        def parse_thinking_signature(blocks)
           thinking_block = blocks.find { |c| c['type'] == 'thinking' } ||
                            blocks.find { |c| c['type'] == 'redacted_thinking' }
           thinking_block&.dig('signature') || thinking_block&.dig('data')
@@ -321,9 +321,9 @@ module RubyLLM
             raw_content: raw_content,
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
-            cache_read_tokens: extract_cache_read_tokens(data),
-            cache_write_tokens: extract_cache_write_tokens(data),
-            cache_write_tokens_by_ttl: extract_cache_write_by_ttl(data),
+            cache_read_tokens: parse_cache_read_tokens(data),
+            cache_write_tokens: parse_cache_write_tokens(data),
+            cache_write_tokens_by_ttl: parse_cache_write_by_ttl(data),
             thinking_tokens: thinking_tokens,
             server_tool_use: usage['server_tool_use'],
             finish_reason: normalize_finish_reason(data['stop_reason']),
@@ -335,15 +335,15 @@ module RubyLLM
         # Stored thinking blocks replay whether or not this request asks for
         # thinking: Claude emits them on its own and requires them back on
         # tool-use turns.
-        def format_message(msg, thinking: nil, citations: false, caching: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def render_message(msg, thinking: nil, citations: false, caching: nil) # rubocop:disable Lint/UnusedMethodArgument
           if msg.role == :assistant && msg.raw_content
-            format_raw_assistant_message(msg, caching:)
+            render_raw_assistant_message(msg, caching:)
           elsif msg.tool_call?
-            format_tool_call_with_thinking(msg, caching:)
+            render_tool_call_with_thinking(msg, caching:)
           elsif msg.tool_result?
-            Tools.format_tool_result(msg)
+            Tools.render_tool_result(msg)
           else
-            format_basic_message_with_thinking(msg, citations: citations, caching:)
+            render_basic_message_with_thinking(msg, citations: citations, caching:)
           end
         end
 
@@ -358,15 +358,15 @@ module RubyLLM
         # Turns that used server tools replay their provider-shaped blocks
         # verbatim: the API requires the tool_use/result blocks and their
         # citations back exactly as returned.
-        def format_raw_assistant_message(msg, caching: nil)
+        def render_raw_assistant_message(msg, caching: nil)
           blocks = msg.raw_content.dup
           inject_cache_control(blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           { role: 'assistant', content: blocks }
         end
 
-        def format_basic_message_with_thinking(msg, citations: false, caching: nil)
-          content_blocks = msg.role == :assistant ? format_thinking_blocks(msg) : []
+        def render_basic_message_with_thinking(msg, citations: false, caching: nil)
+          content_blocks = msg.role == :assistant ? render_thinking_blocks(msg) : []
 
           append_formatted_content(content_blocks, msg, citations: citations)
           inject_cache_control(content_blocks, caching:, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
@@ -377,7 +377,7 @@ module RubyLLM
           }
         end
 
-        def format_tool_call_with_thinking(msg, caching: nil)
+        def render_tool_call_with_thinking(msg, caching: nil)
           content_blocks = prepend_thinking_blocks([], msg)
           append_formatted_content(content_blocks, msg) unless msg.content.nil? || msg.content.empty?
 
@@ -398,12 +398,12 @@ module RubyLLM
         end
 
         def prepend_thinking_blocks(content_blocks, msg)
-          content_blocks.unshift(*format_thinking_blocks(msg))
+          content_blocks.unshift(*render_thinking_blocks(msg))
 
           content_blocks
         end
 
-        def format_thinking_blocks(msg)
+        def render_thinking_blocks(msg)
           blocks = msg.raw_reasoning['anthropic'] if msg.raw_reasoning.is_a?(Hash)
           return Support::Utils.deep_dup(blocks) if blocks
 
@@ -420,7 +420,7 @@ module RubyLLM
         end
 
         def append_formatted_content(content_blocks, msg, citations: false)
-          content_blocks.concat(Media.format_content(msg.content, msg.attachments, citations: citations))
+          content_blocks.concat(Media.render_content(msg.content, msg.attachments, citations: citations))
         end
 
         def cache_boundary?(message, caching: nil)

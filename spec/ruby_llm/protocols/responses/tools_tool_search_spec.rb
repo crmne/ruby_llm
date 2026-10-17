@@ -70,14 +70,14 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
 
       expect(message.raw_content).to eq([call])
       expect(message.tool_calls['c1'].to_h).not_to have_key(:namespace)
-      expect(chat_protocol.format_assistant_items(message)).to eq([call])
+      expect(chat_protocol.render_assistant_items(message)).to eq([call])
     end
 
     it 'leaves an ordinary function call to the plain replay' do
       message = parse([call.except('namespace')])
 
       expect(message.raw_content).to be_nil
-      expect(chat_protocol.format_function_call_items(message.tool_calls).first).not_to have_key(:namespace)
+      expect(chat_protocol.render_function_call_items(message.tool_calls).first).not_to have_key(:namespace)
     end
   end
 
@@ -97,12 +97,12 @@ RSpec.describe RubyLLM::Protocols::Responses::Tools do
     end
 
     it 'replays the items verbatim while the request still declares deferred tools' do
-      types = protocol.send(:format_assistant_items, message).map { |i| i['type'] }
+      types = protocol.send(:render_assistant_items, message).map { |i| i['type'] }
       expect(types).to eq(%w[tool_search_call tool_search_output function_call])
     end
 
     def replayed(tools)
-      payload = { tools:, input: protocol.send(:format_assistant_items, message) }
+      payload = { tools:, input: protocol.send(:render_assistant_items, message) }
       described_class.apply_tool_search(payload)[:input]
     end
 

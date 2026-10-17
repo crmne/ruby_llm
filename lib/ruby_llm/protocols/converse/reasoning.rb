@@ -14,17 +14,17 @@ module RubyLLM
 
         module_function
 
-        def format_reasoning_fields(thinking, model, max_output_tokens = nil)
+        def render_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
-          return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
+          return render_nova_reasoning_fields(thinking, model) if nova_model?(model)
           return disabled_reasoning_fields(model) if thinking.enabled == false
-          return format_adaptive_reasoning_fields(thinking) if adaptive_thinking?(thinking, model)
+          return render_adaptive_reasoning_fields(thinking) if adaptive_thinking?(thinking, model)
 
           effort = thinking.effort.to_s
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
           return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
 
-          format_effort_fields(effort, model) unless effort.empty?
+          render_effort_fields(effort, model) unless effort.empty?
         end
 
         def disabled_reasoning_fields(model)
@@ -42,7 +42,7 @@ module RubyLLM
 
         # Models that publish a reasoning_config enum, such as OpenAI's GPT
         # models, take the effort as its value and reject reasoning_effort.
-        def format_effort_fields(effort, model)
+        def render_effort_fields(effort, model)
           return { reasoning_config: effort } if reasoning_config_schema(model)
 
           { reasoning_effort: effort } unless effort == 'none'
@@ -59,7 +59,7 @@ module RubyLLM
             registered.reasoning_option(:budget_tokens).nil?
         end
 
-        def format_adaptive_reasoning_fields(thinking)
+        def render_adaptive_reasoning_fields(thinking)
           effort = thinking.effort.to_s
           return nil if effort == 'none'
           return { thinking: { type: 'adaptive' } } if effort.empty?
@@ -89,7 +89,7 @@ module RubyLLM
 
         # Nova 2 takes reasoningConfig with an effort level instead of a token budget,
         # and rejects an enabled reasoningConfig that names no effort.
-        def format_nova_reasoning_fields(thinking, model)
+        def render_nova_reasoning_fields(thinking, model)
           if thinking.budget
             raise ArgumentError,
                   "#{model&.id} takes a reasoning effort, not a token budget of #{thinking.budget}. " \

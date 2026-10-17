@@ -11,31 +11,31 @@ module RubyLLM
           attachment.provider_file? || %i[image pdf document text].include?(attachment.type)
         end
 
-        def format_content(content, attachments = [])
+        def render_content(content, attachments = [])
           return content if attachments.empty?
 
           parts = []
           parts << { type: 'input_text', text: content } if content
-          attachments.each { |attachment| parts << format_attachment(attachment) }
+          attachments.each { |attachment| parts << render_attachment(attachment) }
           parts
         end
 
-        def format_attachment(attachment)
+        def render_attachment(attachment)
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
-          return format_provider_file(attachment) if attachment.provider_file?
+          return render_provider_file(attachment) if attachment.provider_file?
 
           case attachment.type
           when :image
-            format_image(attachment)
+            render_image(attachment)
           when :pdf, :document
-            format_document(attachment)
+            render_document(attachment)
           when :text
             { type: 'input_text', text: attachment.for_llm }
           end
         end
 
-        def format_image(image, image_url: image.url_or_data_uri, original_detail: @provider&.original_image_detail?)
+        def render_image(image, image_url: image.url_or_data_uri, original_detail: @provider&.original_image_detail?)
           part = { type: 'input_image', image_url: }
           return part unless image.resolution
 
@@ -45,7 +45,7 @@ module RubyLLM
         # The Responses API extracts text from documents, presentations, and
         # spreadsheets as well as PDFs, so every document attachment rides
         # along as a native input_file.
-        def format_document(document)
+        def render_document(document)
           {
             type: 'input_file',
             filename: document.filename,
@@ -53,7 +53,7 @@ module RubyLLM
           }
         end
 
-        def format_provider_file(file)
+        def render_provider_file(file)
           {
             type: 'input_file',
             file_id: file.provider_file_id

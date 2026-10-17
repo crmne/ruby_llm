@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic do
     it 'replays the compaction block verbatim in later turns' do
       message = protocol.send(:parse_completion_body, body, raw: nil)
 
-      formatted = protocol.send(:format_message, message)
+      formatted = protocol.send(:render_message, message)
 
       expect(formatted[:content].first).to eq(body['content'].first)
     end

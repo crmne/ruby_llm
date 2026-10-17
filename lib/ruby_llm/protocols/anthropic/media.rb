@@ -11,39 +11,39 @@ module RubyLLM
           attachment.provider_file? || %i[image pdf text].include?(attachment.type)
         end
 
-        def format_content(content, attachments = [], citations: false)
+        def render_content(content, attachments = [], citations: false)
           parts = []
-          parts << format_text(content) unless content.nil? || content.empty?
+          parts << render_text(content) unless content.nil? || content.empty?
 
           attachments.each do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
             if attachment.provider_file?
-              parts << format_provider_file(attachment, citations: citations)
+              parts << render_provider_file(attachment, citations: citations)
               next
             end
 
             case attachment.type
             when :image
-              parts << format_image(attachment)
+              parts << render_image(attachment)
             when :pdf
-              parts << format_pdf(attachment, citations: citations)
+              parts << render_pdf(attachment, citations: citations)
             when :text
-              parts << (citations ? format_text_document(attachment) : format_text_file(attachment))
+              parts << (citations ? render_text_document(attachment) : render_text_file(attachment))
             end
           end
 
           parts
         end
 
-        def format_text(text)
+        def render_text(text)
           {
             type: 'text',
             text: text
           }
         end
 
-        def format_image(image)
+        def render_image(image)
           if image.url?
             {
               type: 'image',
@@ -64,8 +64,8 @@ module RubyLLM
           end
         end
 
-        def format_provider_file(file, citations: false)
-          return format_provider_image(file) if file.image?
+        def render_provider_file(file, citations: false)
+          return render_provider_image(file) if file.image?
 
           document = {
             type: 'document',
@@ -78,7 +78,7 @@ module RubyLLM
           document
         end
 
-        def format_provider_image(image)
+        def render_provider_image(image)
           {
             type: 'image',
             source: {
@@ -88,7 +88,7 @@ module RubyLLM
           }
         end
 
-        def format_pdf(pdf, citations: false)
+        def render_pdf(pdf, citations: false)
           document = {
             type: 'document',
             source: pdf_source(pdf)
@@ -113,7 +113,7 @@ module RubyLLM
           end
         end
 
-        def format_text_file(text_file)
+        def render_text_file(text_file)
           {
             type: 'text',
             text: text_file.for_llm
@@ -121,7 +121,7 @@ module RubyLLM
         end
 
         # Text attachments become citable documents when citations are enabled.
-        def format_text_document(text_file)
+        def render_text_document(text_file)
           document = {
             type: 'document',
             source: {

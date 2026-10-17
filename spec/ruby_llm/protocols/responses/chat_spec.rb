@@ -537,7 +537,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         message = protocol.send(:parse_completion_response, response_with(output))
 
         expect(message.raw_content).to eq(output)
-        expect(protocol.send(:format_input, [message])).to eq(output)
+        expect(protocol.send(:render_input, [message])).to eq(output)
       end
 
       it 'keeps no raw output for a single reasoning item' do
