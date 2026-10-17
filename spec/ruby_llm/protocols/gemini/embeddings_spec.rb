@@ -60,4 +60,30 @@ RSpec.describe RubyLLM::Protocols::Gemini::Embeddings do
       )
     end
   end
+
+  describe '#parse_embedding_response' do
+    def response_for(body)
+      Struct.new(:body).new(body)
+    end
+
+    it 'reads the input tokens from the usage metadata' do
+      response = response_for(
+        'embeddings' => [{ 'values' => [0.1, 0.2] }],
+        'usageMetadata' => { 'promptTokenCount' => 8 }
+      )
+
+      embedding = protocol.send(:parse_embedding_response, response, model: 'gemini-embedding-2', text: 'Ruby')
+
+      expect(embedding.vectors).to eq([0.1, 0.2])
+      expect(embedding.tokens.input).to eq(8)
+    end
+
+    it 'leaves the input tokens unknown when the response reports no usage' do
+      response = response_for('embeddings' => [{ 'values' => [0.1, 0.2] }])
+
+      embedding = protocol.send(:parse_embedding_response, response, model: 'gemini-embedding-001', text: 'Ruby')
+
+      expect(embedding.tokens.input).to be_nil
+    end
+  end
 end

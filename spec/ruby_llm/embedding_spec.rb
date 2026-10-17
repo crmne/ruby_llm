@@ -88,6 +88,8 @@ RSpec.describe RubyLLM::Embedding, :live do
       expect(embedding.vectors.length).to eq(test_dimensions)
       expect(embedding.vectors.first).to be_a(Float)
       expect(embedding.model).to eq(model_for(:gemini, :multimodal_embedding))
+      expect(embedding.tokens.input).to be_positive
+      expect(embedding.cost.total).to be_positive
     end
 
     it "gemini/#{model_for(:gemini, :multimodal_embedding)} embeds an image alongside text" do
