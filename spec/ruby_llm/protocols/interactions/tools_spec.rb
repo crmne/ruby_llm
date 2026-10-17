@@ -26,6 +26,11 @@ RSpec.describe RubyLLM::Protocols::Interactions::Tools do
       expect(call({ 'tz' => 'UTC' }).arguments).to eq({ 'tz' => 'UTC' })
     end
 
+    it 'reads null arguments as none and refuses other values that are not objects' do
+      expect(call('null').arguments).to eq({})
+      expect { call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+    end
+
     it 'wraps malformed JSON in a RubyLLM error' do
       expect { call('{"tz":') }.to raise_error(RubyLLM::ToolCallParseError) do |error|
         expect(error).to be_a(RubyLLM::Error)

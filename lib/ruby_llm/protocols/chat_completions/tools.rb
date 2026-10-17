@@ -71,9 +71,9 @@ module RubyLLM
           if arguments.nil? || arguments.empty?
             {}
           else
-            JSON.parse(arguments)
+            Hash(JSON.parse(arguments))
           end
-        rescue JSON::ParserError => e
+        rescue JSON::ParserError, TypeError => e
           raise ToolCallParseError.new(response: response, finish_reason: finish_reason), cause: e
         end
 

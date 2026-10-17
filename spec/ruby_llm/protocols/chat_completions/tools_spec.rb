@@ -79,6 +79,17 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
       expect(described_class.parse_tool_calls([])).to be_nil
     end
 
+    it 'reads null arguments as none and refuses other values that are not objects' do
+      parse = lambda do |json|
+        described_class.parse_tool_calls([{ 'id' => 'call_1', 'function' => { 'name' => 'now', 'arguments' => json } }])
+      end
+
+      expect(parse.call('null')['call_1'].arguments).to eq({})
+      ['"x"', '5', '[1]'].each do |arguments|
+        expect { parse.call(arguments) }.to raise_error(RubyLLM::ToolCallParseError)
+      end
+    end
+
     it 'wraps malformed argument JSON in a RubyLLM error' do
       response = instance_double(Faraday::Response)
       tool_calls = [

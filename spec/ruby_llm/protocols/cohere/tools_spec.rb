@@ -105,6 +105,15 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
       expect(calls['abc'].arguments).to eq({})
     end
 
+    it 'reads null arguments as none and refuses other values that are not objects' do
+      parse = lambda do |json|
+        described_class.parse_tool_calls([{ 'id' => 'abc', 'function' => { 'name' => 'now', 'arguments' => json } }])
+      end
+
+      expect(parse.call('null')['abc'].arguments).to eq({})
+      expect { parse.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
+    end
+
     it 'raises when the model returns truncated arguments' do
       expect do
         described_class.parse_tool_calls(

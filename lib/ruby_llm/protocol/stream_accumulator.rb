@@ -121,8 +121,8 @@ module RubyLLM
       end
 
       def parse_tool_call_arguments(arguments, response)
-        JSON.parse(arguments)
-      rescue JSON::ParserError => e
+        Hash(JSON.parse(arguments))
+      rescue JSON::ParserError, TypeError => e
         raise ToolCallParseError.new(response: response, finish_reason: @finish_reason), cause: e
       end
 
