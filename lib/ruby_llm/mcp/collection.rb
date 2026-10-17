@@ -26,6 +26,7 @@ module RubyLLM
       def connect(server, chat) # :nodoc:
         server = server.new.tap { |built| @built[built] = chat } if server.is_a?(Class)
         replaced = self[server.name]
+        check_name(server, replaced) if replaced
         release(replaced, chat) unless replaced.equal?(server)
         @servers[server.name.to_sym] = server
       end
@@ -54,6 +55,14 @@ module RubyLLM
       end
 
       private
+
+      def check_name(server, connected)
+        return unless server.class.derived_name? && connected.class.derived_name?
+        return if server.class.endpoint == connected.class.endpoint
+
+        raise ArgumentError, "MCP servers #{connected.class.endpoint} and #{server.class.endpoint} are both named " \
+                             "#{server.name.inspect}. Pass name: to RubyLLM.mcp to tell them apart"
+      end
 
       def release(server, chat)
         server.close if @built[server].equal?(chat) && @built.delete(server)

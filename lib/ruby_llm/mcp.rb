@@ -457,6 +457,14 @@ module RubyLLM
         default_name_for(url:, command:) if url || command
       end
 
+      def derived_name? # :nodoc:
+        name.nil? && @default_name.nil?
+      end
+
+      def endpoint # :nodoc:
+        url || Array(command).join(' ')
+      end
+
       # Builds an anonymous MCP class from keywords, as RubyLLM.mcp does.
       def define(name: nil, headers: {}, env: {}, oauth: nil, extensions: nil, **settings) # :nodoc:
         check_inline_settings(name, settings)
