@@ -62,6 +62,20 @@ RSpec.describe RubyLLM::Tokens do
     end
   end
 
+  describe '#without_reported_cost' do
+    it 'keeps every count and drops only the reported cost' do
+      tokens = described_class.new(input: 10, output: 2, cache_read: 3, cache_write: 4, thinking: 1,
+                                   cache_write_by_ttl: { '1h' => 4 }, server_tool_use: { 'web_search_requests' => 1 },
+                                   reported_cost: 0.01)
+
+      stripped = tokens.without_reported_cost
+
+      expect(stripped.to_h).to eq(tokens.to_h)
+      expect(stripped.reported_cost).to be_nil
+      expect(tokens.reported_cost).to eq(0.01)
+    end
+  end
+
   describe '#cache_write_by_ttl' do
     it 'leaves out lifetimes with no writes' do
       tokens = described_class.new(cache_write_by_ttl: { '5m' => 0, :'1h' => 20 })

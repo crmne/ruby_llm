@@ -113,6 +113,10 @@ module RubyLLM
       end)
     end
 
+    def without_reported_cost # :nodoc:
+      self.class.new(**(READERS - [:reported_cost]).to_h { |reader| [reader, public_send(reader)] })
+    end
+
     def self.aggregate_counts(tokens, reader) # :nodoc:
       tokens.filter_map(&reader).each_with_object({}) do |counters, total|
         counters.each { |key, count| total[key] = total.fetch(key, 0) + count.to_i }

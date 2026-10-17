@@ -233,7 +233,7 @@ module RubyLLM
       return ruby_llm_usage_cost if model.nil? && ruby_llm_usage_entries.any?
       return @supplied_cost if model.nil? && @supplied_cost
 
-      Cost.new(tokens:, model: model || model_info)
+      Cost.new(tokens: model ? tokens.without_reported_cost : tokens, model: model || model_info)
     end
 
     # Marks this message as an explicit prompt cache boundary. Providers

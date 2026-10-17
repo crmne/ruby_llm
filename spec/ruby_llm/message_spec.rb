@@ -284,6 +284,27 @@ RSpec.describe RubyLLM::Message do
       expect(message.cost(model: model).total).to eq(0.005)
     end
 
+    it 'reprices tokens that carry a provider-reported cost when given a model' do
+      message = described_class.new(role: :assistant, content: 'Report', input_tokens: 1_000, output_tokens: 2_000,
+                                    reported_cost: 0.015)
+
+      expect(message.cost.total).to eq(0.015)
+      expect(message.cost(model: model).total).to eq(0.005)
+      expect(message.cost(model: model).to_h).to include(input: 0.001, output: 0.004, total: 0.005)
+      expect(message.tokens.reported_cost).to eq(0.015)
+    end
+
+    it 'reprices attempts that reported their cost when given a model' do
+      entry = RubyLLM::Accounting::Usage::Entry.new(
+        operation: :chat, provider: model.provider, model: model.id, status: :succeeded,
+        tokens: RubyLLM::Tokens.new(input: 1_000, output: 2_000, reported_cost: 0.015)
+      )
+      message = described_class.new(role: :assistant, content: 'Report', usage_entries: [entry])
+
+      expect(message.cost.total).to eq(0.015)
+      expect(message.cost(model: model).total).to eq(0.005)
+    end
+
     it 'uses actual attempt accounting before a supplied cost' do
       entry = RubyLLM::Accounting::Usage::Entry.new(
         operation: :chat, provider: model.provider, model: model.id,
