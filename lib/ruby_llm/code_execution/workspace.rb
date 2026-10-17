@@ -35,7 +35,10 @@ module RubyLLM
       end
 
       def self.filename(name)
-        base = File.basename(name.to_s.tr('\\', '/'))
+        path = name.to_s.tr('\\', '/')
+        return path unless path.empty? || path.split('/', -1).intersect?(['', '.', '..'])
+
+        base = File.basename(path)
         ['', '.', '..'].include?(base) ? 'file' : base
       end
 
@@ -75,7 +78,9 @@ module RubyLLM
 
       def copy_in(attachments)
         attachments.reject(&:provider_file?).each do |attachment|
-          File.binwrite(File.join(inputs, self.class.filename(attachment.filename)), attachment.content)
+          path = File.join(inputs, self.class.filename(attachment.filename))
+          make_room(path)
+          File.binwrite(path, attachment.content)
         end
       end
 
@@ -95,6 +100,16 @@ module RubyLLM
       end
 
       private
+
+      def make_room(path)
+        parent = inputs
+        File.dirname(path).delete_prefix(inputs).split('/').reject(&:empty?).each do |part|
+          parent = File.join(parent, part)
+          FileUtils.rm_f(parent) unless File.directory?(parent)
+        end
+        FileUtils.mkdir_p(File.dirname(path))
+        FileUtils.rm_rf(path) if File.directory?(path)
+      end
 
       def output_paths
         paths = []
