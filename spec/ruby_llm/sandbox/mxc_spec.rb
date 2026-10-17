@@ -177,6 +177,22 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     end
   end
 
+  it 'loads the extensions Ruby links against libraries outside its installation' do
+    output = report(run_code("require 'yaml'; require 'openssl'; print YAML.dump(OpenSSL::VERSION.class.name)"))
+
+    expect(output['exit_code']).to eq(0)
+    expect(output['stdout']).to eq("--- String\n")
+  end
+
+  it 'loads Ruby extensions in the isolated package installer' do
+    packages = RubyLLM::CodeExecution::Packages.new(sandbox: sandbox.isolated, cache_dir:)
+    result = packages.run('ruby', '-e', "require 'yaml'; require 'openssl'; print YAML.dump(OpenSSL::VERSION.class.name)",
+                          home: cache_dir)
+
+    expect(result.exit_code).to eq(0)
+    expect(result.stdout).to eq("--- String\n")
+  end
+
   it 'installs declared gems once, with only RubyGems reachable' do
     skip 'host allow-lists are not available on this machine' unless SandboxBackend.network_policy?
 
