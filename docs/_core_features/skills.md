@@ -176,7 +176,15 @@ Rails does not autoload skills. RubyLLM keeps `app/skills` and every root regist
 
 RubyLLM ships no skills and never downloads them. Put a skill's folder in a root and it is ready to use: copy it into `app/skills`, or keep a repository of skills as a Git submodule and add the folder that holds its skills to `Skill.roots`.
 
-A standalone installer, `gem exec skill add owner/repo`, is coming. It will fetch skills from a repository into these folders.
+The [`skill`](https://github.com/crmne/skill) gem does the copying for you. Run it from your application with `gem exec` (RubyGems 3.5 or newer), without adding it to your bundle:
+
+```sh
+gem exec skill find pdf                                    # search skills.sh
+gem exec skill add anthropics/skills --list                # what a repository holds
+gem exec skill add anthropics/skills@pdf --agent rubyllm   # install one into app/skills
+```
+
+It reads GitHub repositories (`owner/repo`, `owner/repo@skill`, `owner/repo#tag`), plugin marketplaces, and local folders, and checks every `SKILL.md` with the same rules as `RubyLLM::Skill`. It records each skill's source and commit in `skills.lock` at the root of your application, so commit that file with the skills. `gem exec skill update` shows the commits and files that changed and applies them only after you say yes, and `gem exec skill list` names any skill you edited since. Without `--agent`, it installs into `app/skills` and into the folders of the coding agents your project uses, such as `.claude/skills`; `--agent rubyllm` keeps a skill for your application out of your coding agent's folders. Pass `--dir` to install into another root, such as `vendor/skills`.
 
 A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project, and commit it so you see every change in a diff.
 
