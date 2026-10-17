@@ -11,7 +11,19 @@ module RubyLLM
       class ClaimLost < StandardError; end # :nodoc:
       private_constant :ClaimLost
 
+      RUN_STATE = %i[
+        @chat @message @last_message_id @last_cancellation_poll_at @unpersisted_instructions
+        @usage_records_by_entry @run_claim_token @run_claimed_until @run_claim_renewed_at
+        @synced_run_claim_token @tool_call_claims
+      ].freeze
+      private_constant :RUN_STATE
+
       private
+
+      def initialize_dup(*)
+        super
+        RUN_STATE.each { |name| instance_variable_set(name, nil) }
+      end
 
       def exclusively(busy, &)
         return yield if @run_claim_token
