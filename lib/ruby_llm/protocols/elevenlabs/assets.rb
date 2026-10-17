@@ -10,7 +10,7 @@ module RubyLLM
           url = file.metadata['content_url']
           raise Error, 'ElevenLabs asset is still processing; retrieve it again before downloading' unless url
 
-          Transport::Connection.basic(@config).get(url).body
+          Transport::Connection.download(url, @config)
         end
 
         private

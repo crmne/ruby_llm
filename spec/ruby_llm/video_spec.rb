@@ -64,6 +64,16 @@ RSpec.describe RubyLLM::Video, :live do
     end
   end
 
+  describe '#to_blob', live: false do
+    it 'follows redirects to the video' do
+      stub_request(:get, 'https://example.com/clip.mp4')
+        .to_return(status: 302, body: 'Moved', headers: { 'Location' => 'https://cdn.example.com/clip.mp4' })
+      stub_request(:get, 'https://cdn.example.com/clip.mp4').to_return(body: 'mp4 bytes')
+
+      expect(described_class.new(url: 'https://example.com/clip.mp4').to_blob).to eq('mp4 bytes')
+    end
+  end
+
   describe RubyLLM::VideoJob do
     let(:instrumenter) { CaptureInstrumenter.new }
     let(:config) { RubyLLM.context { |config| config.instrumenter = instrumenter }.config }

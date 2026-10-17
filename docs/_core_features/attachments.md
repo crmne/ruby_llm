@@ -37,6 +37,8 @@ RubyLLM can upload large local attachments automatically. To upload once and reu
 
 String sources are instructions to read a local file or fetch a URL. Only pass paths and URLs that your application trusts and the current user is authorized to access. RubyLLM does not restrict them to a directory or public network addresses. Reading can begin during attachment construction to detect the file type.
 
+RubyLLM follows up to five HTTP or HTTPS redirects when it fetches a URL, never from HTTPS to plain HTTP, so a URL you trust can lead to another host. Checking a URL's host before you pass it does not limit where the download ends. A download that ends on a redirect raises `RubyLLM::Error`.
+
 Passing an unchecked upload parameter to `with:` or `RubyLLM::Attachment.new` lets a user supply a URL or server-side path instead of a file. This can expose internal services through server-side request forgery (SSRF), or disclose local files when their contents are sent to a model. The same restriction applies to file inputs for standalone operations such as `RubyLLM.upload` and `RubyLLM.transcribe`.
 
 For browser uploads, validate that each value is an actual uploaded file before passing it to RubyLLM. The [Rails persistence example]({% link _advanced/rails-persistence.md %}#attachments-and-structured-output) shows this check. For stored files, load attachments through records the current user is authorized to access.

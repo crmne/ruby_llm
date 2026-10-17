@@ -30,6 +30,15 @@ RSpec.describe RubyLLM::Protocols::ElevenLabs::Assets do
     expect(download).to have_been_requested.once
   end
 
+  it 'follows a redirect from the signed asset URL to the file' do
+    stub_request(:get, 'https://api.elevenlabs.io/v1/assets/asset_ruby').to_return_json(body: asset)
+    stub_request(:get, asset.fetch(:content_url))
+      .to_return(status: 302, body: 'Moved', headers: { 'Location' => 'https://cdn.example.test/ruby.png' })
+    stub_request(:get, 'https://cdn.example.test/ruby.png').to_return(body: 'PNG bytes')
+
+    expect(context.download('asset_ruby', provider: :elevenlabs)).to eq('PNG bytes')
+  end
+
   it 'reports processing assets clearly and fetches fresh metadata before every download' do
     stub_request(:get, 'https://api.elevenlabs.io/v1/assets/processing')
       .to_return_json(body: asset.merge(content_url: nil))

@@ -89,6 +89,56 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment.byte_size).to be_nil
   end
 
+  describe 'URL downloads' do
+    def redirect_to(location)
+      { status: 302, body: '<html>Moved</html>', headers: { 'Location' => location } }
+    end
+
+    it 'follows redirects to the file' do
+      stub_request(:get, 'http://example.com/logo.png').to_return(redirect_to('https://cdn.example.com/files/logo.png'))
+      stub_request(:get, 'https://cdn.example.com/files/logo.png').to_return(redirect_to('../signed/logo.png?token=1'))
+      stub_request(:get, 'https://cdn.example.com/signed/logo.png?token=1').to_return(body: 'png bytes')
+
+      expect(described_class.new('http://example.com/logo.png').content).to eq('png bytes')
+    end
+
+    it 'stops following redirects after five' do
+      loop_request = stub_request(:get, 'https://example.com/loop.png').to_return(redirect_to('/loop.png'))
+
+      expect { described_class.new('https://example.com/loop.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com failed with status 302')
+      expect(loop_request).to have_been_requested.times(6)
+    end
+
+    it 'refuses a redirect from HTTPS to plain HTTP' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(redirect_to('http://example.com/logo.png'))
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an unsafe http URL')
+    end
+
+    it 'refuses a redirect to a scheme other than HTTP' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(redirect_to('file:///etc/passwd'))
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an unsafe file URL')
+    end
+
+    it 'raises for a redirect to a location that is not a URL' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(redirect_to('http://[cdn.example.com/logo.png'))
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an invalid URL')
+    end
+
+    it 'raises for a redirect that names no location' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(status: 302, body: '<html>Moved</html>')
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com failed with status 302')
+    end
+  end
+
   it 'recognizes URL schemes regardless of case' do
     attachment = described_class.new('HTTPS://example.com/report.pdf')
 

@@ -137,8 +137,7 @@ module RubyLLM
       if base64?
         Base64.decode64 @data
       else
-        response = Transport::Connection.basic(config).get @url
-        response.body
+        Transport::Connection.download(@url, config)
       end
     end
 
