@@ -22,7 +22,7 @@ module RubyLLM
           payload = {
             input_type: task_type || 'search_document'
           }
-          texts = [text].flatten.compact.map(&:to_s).reject(&:empty?)
+          texts = text.is_a?(Array) ? text.map(&:to_s) : [text.to_s].reject(&:empty?)
           payload[:texts] = texts unless texts.empty?
           payload[:output_dimension] = dimensions if dimensions
 
