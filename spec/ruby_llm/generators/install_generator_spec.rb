@@ -246,7 +246,6 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
   describe 'with model names in a nested namespace' do
     it 'writes a module for the whole namespace so its prefix matches the tables' do
       Dir.mktmpdir do |destination|
-        allow(Rails).to receive(:root).and_return(Pathname.new(destination))
         described_class.new(%w[chat:Admin::Support::Chat message:Admin::Support::Message], {},
                             destination_root: destination, shell: Thor::Shell::Basic.new)
                        .create_model_files
