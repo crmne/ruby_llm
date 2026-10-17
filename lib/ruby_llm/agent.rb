@@ -317,7 +317,7 @@ module RubyLLM
       # +nil+ to remove the store a parent agent declared.
       #
       #   file_store
-      #   file_store spill_over: 20_000
+      #   file_store spill_to_file: 20_000
       #   file_store -> { RubyLLM.file_store.directory("tmp/chats/#{chat.id}") }
       #   file_store owner: -> { chat.user }
       #   file_store nil
@@ -326,13 +326,13 @@ module RubyLLM
       # FileStore::Memory, or for a persisted chat, its files in Active
       # Storage.
       #
-      # :call-seq: file_store(store = default, spill_over: 10_000, owner: nil)
-      def file_store(store = Chat::FileReferences::DEFAULT_STORE, spill_over: Chat::FileReferences::SPILL_OVER,
+      # :call-seq: file_store(store = default, spill_to_file: 10_000, owner: nil)
+      def file_store(store = Chat::FileReferences::DEFAULT_STORE, spill_to_file: Chat::FileReferences::SPILL_TO_FILE,
                      owner: nil)
         return @file_store = false if store.nil?
 
-        Chat::FileReferences.validate(store, spill_over:, store_lambda: true)
-        @file_store = { store:, spill_over:, owner: }.compact.freeze
+        Chat::FileReferences.validate(store, spill_to_file:, store_lambda: true)
+        @file_store = { store:, spill_to_file:, owner: }.compact.freeze
       end
 
       # Gives chats this agent builds the skills named, applied via
@@ -1163,7 +1163,7 @@ module RubyLLM
 
     ##
     # :method: with_file_store
-    # :call-seq: with_file_store(store = RubyLLM.file_store.memory, spill_over: 10_000)
+    # :call-seq: with_file_store(store = RubyLLM.file_store.memory, spill_to_file: 10_000)
     #
     # Delegates to Chat#with_file_store. See that method for arguments and return values.
 

@@ -8,7 +8,9 @@ module RubyLLM
     # Keeps files in a folder on disk, created when missing. Files someone
     # puts in the folder are the chat's files too. Hidden files and
     # folders, whose names start with a dot, are left out, and symbolic
-    # links are never followed.
+    # links are never followed. Code execution runs in the folder itself
+    # and can change anything in it, so give each store a folder of its
+    # own.
     #
     #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
     #
@@ -24,6 +26,11 @@ module RubyLLM
         super()
         FileUtils.mkdir_p(root)
         @root = File.realpath(root)
+      end
+
+      # Returns #root: code execution runs in this folder.
+      def local_root
+        root
       end
 
       # Returns the files inside the folder +prefix+, or every file.

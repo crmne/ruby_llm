@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::FileStore::Tools do
 
   it 'gives the model five tools that send their results whole' do
     expect(chat.tools.keys).to eq(%i[list_files read_file search_files write_file edit_file])
-    expect(chat.tools.values.map(&:spill_over)).to all(be(false))
+    expect(chat.tools.values.map(&:spill_to_file)).to all(be(false))
     expect(chat.tools.values.map(&:description)).to all(include("chat's file"))
   end
 

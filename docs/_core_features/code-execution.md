@@ -99,10 +99,12 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
-In a chat with a [file store]({% link _core_features/chat-files.md %}), runs work with the chat's files instead. Each run starts with a copy of them in its run directory, and what the code writes or changes there is saved back to them, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. The tool result then lists the paths it saved instead of carrying the files:
+In a chat with a [file store]({% link _core_features/chat-files.md %}), runs work with the chat's files instead, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. With a store in a folder, code runs in that folder and changes the files in place. With any other store, the model names the files its code reads in `run_code`'s `files` argument, they are copied into the run directory, and what the code writes is saved back. The tool result lists the paths instead of carrying the files. See [Code Execution]({% link _core_features/chat-files.md %}#code-execution) in the Chat Files guide.
 
 ```ruby
-chat = RubyLLM.chat.with_file_store.with_code_execution(python: %w[pandas matplotlib])
+chat = RubyLLM.chat
+  .with_file_store(RubyLLM.file_store.directory("tmp/work"))
+  .with_code_execution(python: %w[pandas matplotlib])
 chat.ask "Plot monthly revenue from this export", with: "revenue.csv"
 
 chat.file_store.list.map(&:path) # => ["revenue.csv", "revenue.png"]

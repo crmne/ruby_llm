@@ -109,8 +109,8 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
       memory = RubyLLM::FileStore::Memory.new
       expect(chat.with_file_store(memory).file_store).to be(memory)
-      expect(chat.with_file_store(spill_over: 5).file_store).to be_a(described_class)
-      expect(chat.to_llm.instance_variable_get(:@file_references).spill_over).to eq(5)
+      expect(chat.with_file_store(spill_to_file: 5).file_store).to be_a(described_class)
+      expect(chat.to_llm.instance_variable_get(:@file_references).spill_to_file).to eq(5)
       expect(chat.with_file_store(nil).file_store).to be_nil
       expect(chat.with_file_store(owner: chat).file_store.owner).to eq(chat)
       expect { chat.with_file_store(memory, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)

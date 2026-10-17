@@ -161,11 +161,11 @@ A tool that returns a lot, like a search with hundreds of hits, sends all of it 
 
 ```ruby
 class ExportOrders < RubyLLM::Tool
-  spill_over 50_000
+  spill_to_file 50_000
 end
 
 class SearchDocs < RubyLLM::Tool
-  spill_over false
+  spill_to_file false
 end
 ```
 

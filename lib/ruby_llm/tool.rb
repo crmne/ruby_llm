@@ -52,7 +52,7 @@ module RubyLLM
       @approval_resolver
       @deferred
       @max_run_time
-      @spill_over
+      @spill_to_file
     ].freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
 
@@ -240,9 +240,9 @@ module RubyLLM
       end
 
       # :call-seq:
-      #   spill_over(characters) -> characters
-      #   spill_over(false) -> false
-      #   spill_over -> characters, false, or nil
+      #   spill_to_file(characters) -> characters
+      #   spill_to_file(false) -> false
+      #   spill_to_file -> characters, false, or nil
       #
       # Sets how many characters this tool's results may have before a
       # chat with files saves them as a file and sends the model their
@@ -252,16 +252,16 @@ module RubyLLM
       # returns the declared value, or +nil+.
       #
       #   class ExportOrders < RubyLLM::Tool
-      #     spill_over 50_000
+      #     spill_to_file 50_000
       #   end
       #
-      def spill_over(characters = (get = true))
-        return @spill_over if get
+      def spill_to_file(characters = (get = true))
+        return @spill_to_file if get
         unless characters == false || (characters.is_a?(Integer) && characters.positive?)
-          raise ArgumentError, 'spill_over takes a positive number of characters or false'
+          raise ArgumentError, 'spill_to_file takes a positive number of characters or false'
         end
 
-        @spill_over = characters
+        @spill_to_file = characters
       end
 
       def split_result(result) # :nodoc:
@@ -321,10 +321,10 @@ module RubyLLM
       self.class.approval_resolver
     end
 
-    # Returns the limit declared on the class with ::spill_over: a number
+    # Returns the limit declared on the class with ::spill_to_file: a number
     # of characters, +false+, or +nil+ to use the chat's.
-    def spill_over
-      self.class.spill_over
+    def spill_to_file
+      self.class.spill_to_file
     end
 
     # Returns the run time declared on the class with ::max_run_time, or

@@ -26,13 +26,13 @@ RSpec.describe RubyLLM::Agent do
     root = Dir.mktmpdir('ruby_llm-agent-files')
     agent = agent_with do
       inputs :folder
-      file_store -> { RubyLLM::FileStore::Directory.new(File.join(folder, 'chat')) }, spill_over: 20
+      file_store -> { RubyLLM::FileStore::Directory.new(File.join(folder, 'chat')) }, spill_to_file: 20
     end
 
     chat = agent.new(folder: root)
 
     expect(chat.file_store.root).to eq(File.realpath(File.join(root, 'chat')))
-    expect(chat.chat.instance_variable_get(:@file_references).spill_over).to eq(20)
+    expect(chat.chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
   ensure
     FileUtils.rm_rf(root)
   end
@@ -44,9 +44,9 @@ RSpec.describe RubyLLM::Agent do
     expect(child.new.file_store).to be_nil
   end
 
-  it 'refuses a store that is not one, and a spill-over limit that is not one' do
+  it 'refuses a store that is not one, and a spill_to_file limit that is not one' do
     expect { agent_with { file_store 'tmp' } }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore/)
-    expect { RubyLLM::Tool.spill_over(0) }.to raise_error(ArgumentError, /positive number/)
+    expect { RubyLLM::Tool.spill_to_file(0) }.to raise_error(ArgumentError, /positive number/)
   end
 
   it 'has no store unless asked' do

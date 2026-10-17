@@ -204,7 +204,7 @@ module RubyLLM
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
       with_code_execution(**@code_execution) if @code_execution
-      with_file_store(file_store, spill_over: @file_references.spill_over) if @file_references
+      with_file_store(file_store, spill_to_file: @file_references.spill_to_file) if @file_references
       @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)
       @cancelled = false
     end
@@ -938,9 +938,10 @@ module RubyLLM
     # +run_code+, that runs Ruby, Python, JavaScript, or a shell script in a fresh run
     # directory, with read-only copies of the conversation's files, and
     # returns the output and every file the code writes there as
-    # attachments on the tool result. With #with_file_store, each run starts
-    # with a copy of the chat's files instead, and what the code writes is
-    # saved back to them. The options are:
+    # attachments on the tool result. With #with_file_store, runs work with
+    # the chat's files instead: in the store's folder when it has one
+    # (FileStore#local_root), otherwise on copies of the files the model
+    # names, with what the code writes saved back. The options are:
     #
     # +sandbox+:: the sandbox every call runs in. Default:
     #             Configuration#sandbox.
@@ -1034,30 +1035,32 @@ module RubyLLM
     #   attached to the latest question, and those it opens with
     #   +read_file+, in full until the next question; after that, and for
     #   files other tools return, it sees one line naming the file.
-    # * A tool result longer than +spill_over+ characters is saved under
+    # * A tool result longer than +spill_to_file+ characters is saved under
     #   +results/+, and the model gets its start and the file's path.
-    # * With #with_code_execution, each run starts with a copy of the
-    #   files, and what the code writes is saved back to the store.
+    # * With #with_code_execution, code runs in the store's folder when it
+    #   has one, such as FileStore::Directory, changing the files in place.
+    #   With other stores, each run copies in the files the model names,
+    #   and what the code writes is saved back to the store.
     #
     # Without +store+, the chat gets a new FileStore::Memory, or for a
-    # persisted chat, its files in Active Storage. +spill_over+ is the
+    # persisted chat, its files in Active Storage. +spill_to_file+ is the
     # characters a tool result may have before it is saved as a file, or
     # +false+ to send every result whole; tools can set their own with
-    # Tool.spill_over. Default: 10,000.
+    # Tool.spill_to_file. Default: 10,000.
     #
     # Pass +nil+ to remove the store and its tools. Returns +self+.
     #
     #   chat.with_file_store
     #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
-    #   chat.with_file_store(spill_over: 20_000)
+    #   chat.with_file_store(spill_to_file: 20_000)
     #   chat.with_file_store(nil)
     #
     # Text, PDFs, and Word, Excel, and PowerPoint files are read as text;
     # see Configuration#file_converters to read more.
-    def with_file_store(store = RubyLLM.file_store.memory, spill_over: FileReferences::SPILL_OVER)
-      FileReferences.validate(store, spill_over:) unless store.nil?
+    def with_file_store(store = RubyLLM.file_store.memory, spill_to_file: FileReferences::SPILL_TO_FILE)
+      FileReferences.validate(store, spill_to_file:) unless store.nil?
       @file_references = if store
-                           FileReferences.new(store:, spill_over:,
+                           FileReferences.new(store:, spill_to_file:,
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
                          end
       @file_tools = store ? build_file_tools : []

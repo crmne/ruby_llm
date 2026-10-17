@@ -10,11 +10,11 @@ module RubyLLM
     # while it is new: on the latest question, and on read_file results
     # since then. Before that, and on other tools' results, the model sees
     # one line naming the file, and reads it again with the file tools. A
-    # tool result longer than the spill-over limit is saved as a file, and
+    # tool result longer than the spill_to_file limit is saved as a file, and
     # the model gets its start and the path. An attachment the provider
     # cannot take, such as a Word file, becomes that line too.
     class FileReferences # :nodoc:
-      SPILL_OVER = 10_000
+      SPILL_TO_FILE = 10_000
       PREVIEW = 2_000
       READ_TOOL = 'read_file'
 
@@ -22,22 +22,22 @@ module RubyLLM
       # FileStore::Memory, or a persisted chat's files in Active Storage.
       DEFAULT_STORE = Object.new.tap { |default| def default.inspect = 'the default store' }.freeze
 
-      attr_reader :spill_over, :store
+      attr_reader :spill_to_file, :store
 
       class << self
-        def validate(store, spill_over:, store_lambda: false)
+        def validate(store, spill_to_file:, store_lambda: false)
           unless store.is_a?(FileStore) || store.equal?(DEFAULT_STORE) || (store_lambda && store.is_a?(Proc))
             raise ArgumentError, "with_file_store takes a RubyLLM::FileStore or nil, got #{store.inspect}"
           end
-          return if spill_over == false || (spill_over.is_a?(Integer) && spill_over.positive?)
+          return if spill_to_file == false || (spill_to_file.is_a?(Integer) && spill_to_file.positive?)
 
-          raise ArgumentError, 'spill_over: takes a positive number of characters or false'
+          raise ArgumentError, 'spill_to_file: takes a positive number of characters or false'
         end
       end
 
-      def initialize(store:, spill_over:, written:)
+      def initialize(store:, spill_to_file:, written:)
         @store = store
-        @spill_over = spill_over
+        @spill_to_file = spill_to_file
         @written = written
         @stored = {}.compare_by_identity
       end
@@ -51,8 +51,8 @@ module RubyLLM
       end
 
       def spill(tool, tool_call, content)
-        limit = tool.respond_to?(:spill_over) ? tool.spill_over : nil
-        limit = @spill_over if limit.nil?
+        limit = tool.respond_to?(:spill_to_file) ? tool.spill_to_file : nil
+        limit = @spill_to_file if limit.nil?
         return content unless limit && content.is_a?(String) && content.length > limit
 
         text, extension = readable(content)

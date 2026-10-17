@@ -139,6 +139,16 @@ module RubyLLM
       raise NotImplementedError, "#{self.class} must implement delete"
     end
 
+    # Returns the folder on disk that holds the files, or +nil+. A store
+    # with one has code execution run in that folder, reading and writing
+    # the files in place; a store without one has each run copy in the
+    # files it names. FileStore::Directory returns its root. Override it
+    # in a store of your own that keeps its files in a folder, and give
+    # the store a folder of its own: the sandbox can change anything in it.
+    def local_root
+      nil
+    end
+
     # Yields each StoredFile, as #list returns them.
     def each(&)
       list.each(&)

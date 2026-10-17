@@ -40,7 +40,7 @@ The first question sends both PDFs. For the second, the model sees two lines lik
 ```ruby
 chat.with_file_store
 chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
-chat.with_file_store(RubyLLM.file_store.memory, spill_over: 20_000)
+chat.with_file_store(RubyLLM.file_store.memory, spill_to_file: 20_000)
 chat.with_file_store(nil)
 ```
 
@@ -91,15 +91,15 @@ results/search_drive-8f3a2b1c.json: read more with read_file, or search it with 
 
 JSON is saved pretty printed, one value per line, so the model can read and search it by line. The message keeps only what the model saw, so a persisted chat stores the start too.
 
-Change the limit with `spill_over:`, or send every result whole with `spill_over: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
+Change the limit with `spill_to_file:`, or send every result whole with `spill_to_file: false`. A tool that already returns what it finds in pages can opt out, and a tool with very long results can set its own limit:
 
 ```ruby
 class SearchDocs < RubyLLM::Tool
-  spill_over false
+  spill_to_file false
 end
 
 class ExportOrders < RubyLLM::Tool
-  spill_over 50_000
+  spill_to_file 50_000
 end
 ```
 
@@ -168,7 +168,7 @@ A store is any `RubyLLM::FileStore`. RubyLLM ships three:
 
 `RubyLLM.file_store.memory` builds a `RubyLLM::FileStore::Memory`, and `RubyLLM.file_store.directory(path)` a `RubyLLM::FileStore::Directory`, creating the folder when it is missing.
 
-A `Directory` store reads the files someone else puts in its folder too. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names.
+A `Directory` store reads the files someone else puts in its folder too, and code execution runs in that folder, so give each store a folder of its own. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names.
 
 ### Writing Your Own Store
 
@@ -190,7 +190,7 @@ class BucketStore < RubyLLM::FileStore
 end
 ```
 
-RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. Conversions are kept in memory unless the store overrides `cached_text(file)` and `cache_text(file, text)`. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
+RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. A store that keeps its files in a folder on disk can also define `local_root`, returning the folder, so code execution runs there instead of copying files (see [Code Execution](#code-execution)). Conversions are kept in memory unless the store overrides `cached_text(file)` and `cache_text(file, text)`. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
 
 ## Following Writes
 
@@ -204,16 +204,26 @@ end
 
 ## Code Execution
 
-With [code execution]({% link _core_features/code-execution.md %}) on, each run starts with a copy of the chat's files in its run directory, instead of the read-only `attachments/` folder. What the code writes or changes there is saved back to the store when the run ends, and the tool result lists the paths instead of carrying the files:
+With [code execution]({% link _core_features/code-execution.md %}) on, `run_code` works with the chat's files instead of the read-only `attachments/` folder. How depends on the store, with nothing to configure.
+
+**A store in a folder** (`RubyLLM.file_store.directory`) works like a coding agent's workspace: code runs in the folder itself, reads the files where they are, and what it writes, changes, or deletes there is in the store at once. Nothing is copied in or out. The tool result lists the files the run created or changed, and `after_file_write` receives each of them:
 
 ```ruby
-chat = RubyLLM.chat.with_file_store.with_code_execution(python: %w[pandas matplotlib])
+chat = RubyLLM.chat
+  .with_file_store(RubyLLM.file_store.directory("tmp/work"))
+  .with_code_execution(python: %w[pandas matplotlib])
 chat.ask "Plot monthly revenue from this export", with: "revenue.csv"
 
 chat.file_store.list.map(&:path) # => ["revenue.csv", "revenue.png"]
 ```
 
-The model can then read the chart back with `read_file`, change a script it wrote with `edit_file`, and run it again. Deleting a file in the run directory leaves it in the store. Mounted folders and skills keep their places, so a file in the store under `skills/` or a mount's path is not copied.
+The sandbox can read and write everything in the folder, hidden files included, so give each store a folder of its own, never one that holds anything else. Skills and mounted folders are linked into the folder for the run, read-only, and removed after it. Where the folder has its own file or folder at that path, the run sees that instead, and the tool result says so.
+
+**Any other store** (memory, Active Storage, or your own) has each run start in an empty directory. The model names the files its code reads in `run_code`'s `files` argument, after finding them with `list_files`, and they are copied in at the same paths; a folder copies everything in it. A name with no file is an error the model sees. What the code writes or changes is saved back to the store when the run ends, and the tool result lists the paths instead of carrying the files. Deleting a file in the run directory leaves it in the store.
+
+Either way, the model can then read a chart back with `read_file`, change a script it wrote with `edit_file`, and run it again.
+
+A store of your own that keeps its files in a folder gets the first behavior by returning the folder from `local_root`.
 
 ## Agents
 
@@ -221,7 +231,7 @@ Agents attach a store with the `file_store` macro, which takes the same argument
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  file_store spill_over: 20_000
+  file_store spill_to_file: 20_000
 end
 
 class ProjectAgent < RubyLLM::Agent

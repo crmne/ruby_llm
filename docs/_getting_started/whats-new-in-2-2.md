@@ -141,7 +141,7 @@ chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
 chat.ask "Quote the new termination clause"
 ```
 
-The model sees the PDFs on the question they came with, and one line naming each after that. It works with them through five tools, `list_files`, `read_file`, `search_files`, `write_file`, and `edit_file`, which read PDFs, Word, Excel, and PowerPoint files as text, and scans too once you register the OCR converter. A tool result longer than 10,000 characters is saved as a file, and the model gets its start and the path. With code execution, each run starts with a copy of the files and saves what it writes back to them.
+The model sees the PDFs on the question they came with, and one line naming each after that. It works with them through five tools, `list_files`, `read_file`, `search_files`, `write_file`, and `edit_file`, which read PDFs, Word, Excel, and PowerPoint files as text, and scans too once you register the OCR converter. A tool result longer than 10,000 characters is saved as a file, and the model gets its start and the path. With code execution, code runs in the store's folder when it has one, like a coding agent's workspace, and otherwise copies in the files the model names and saves what it writes back.
 
 Files live in memory, in a folder with `RubyLLM.file_store.directory(path)`, or for a persisted chat in Active Storage, in the new `ruby_llm_chat_files` table. `chat.file_store` is the store, agents attach one with `file_store`, and a store of your own subclasses `RubyLLM::FileStore`.
 

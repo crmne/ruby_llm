@@ -17,7 +17,7 @@ module RubyLLM
       #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
       #   chat.with_file_store(nil)
       #
-      # :call-seq: with_file_store(store = active_storage_store, owner: nil, spill_over: 10_000)
+      # :call-seq: with_file_store(store = active_storage_store, owner: nil, spill_to_file: 10_000)
       def with_file_store(store = RubyLLM::Chat::FileReferences::DEFAULT_STORE, owner: nil, **)
         if store.equal?(RubyLLM::Chat::FileReferences::DEFAULT_STORE)
           store = RubyLLM::ActiveRecord::FileStore.new(self, owner:)

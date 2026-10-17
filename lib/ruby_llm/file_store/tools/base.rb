@@ -8,7 +8,7 @@ module RubyLLM
       class Base < Tool # :nodoc:
         class ToolError < StandardError; end # :nodoc:
 
-        spill_over false
+        spill_to_file false
 
         def initialize(store:, config: -> { RubyLLM.config }, written: ->(_file) {})
           super()

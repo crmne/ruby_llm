@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Chat do
 
   class ShortSpill < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Returns sixty characters'
-    spill_over 50
+    spill_to_file 50
 
     def execute
       'x' * 60
@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Chat do
 
   class NeverSpill < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Returns a long page'
-    spill_over false
+    spill_to_file false
 
     def execute
       'y' * 20_000
@@ -70,12 +70,12 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.tools.keys).to include(:list_files, :read_file, :search_files, :write_file, :edit_file)
     end
 
-    it 'takes a store and a spill-over limit' do
+    it 'takes a store and a spill_to_file limit' do
       store = RubyLLM::FileStore::Memory.new
 
       expect(chat.with_file_store(store).file_store).to be(store)
-      expect(chat.with_file_store(store, spill_over: 20).file_store).to be(store)
-      expect(chat.instance_variable_get(:@file_references).spill_over).to eq(20)
+      expect(chat.with_file_store(store, spill_to_file: 20).file_store).to be(store)
+      expect(chat.instance_variable_get(:@file_references).spill_to_file).to eq(20)
     end
 
     it 'removes the store and its tools with nil' do
@@ -87,8 +87,8 @@ RSpec.describe RubyLLM::Chat do
 
     it 'rejects unknown options, bad limits, and stores that are none' do
       expect { chat.with_file_store(quota: 1) }.to raise_error(ArgumentError, /unknown keyword: :quota/)
-      expect { chat.with_file_store(spill_over: 0) }.to raise_error(ArgumentError, /positive number/)
-      expect { chat.with_file_store(spill_over: nil) }.to raise_error(ArgumentError, /positive number/)
+      expect { chat.with_file_store(spill_to_file: 0) }.to raise_error(ArgumentError, /positive number/)
+      expect { chat.with_file_store(spill_to_file: nil) }.to raise_error(ArgumentError, /positive number/)
       expect { chat.with_file_store('tmp') }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore or nil/)
       expect { chat.with_file_store(false) }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore or nil/)
     end
@@ -226,7 +226,7 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe 'spill-over' do
+  describe 'spilling results to files' do
     let(:tool_call) { RubyLLM::ToolCall.new(id: 'call/1', name: 'search_drive', arguments: { 'query' => 'q' }) }
 
     before { chat.with_tools(SearchDrive, ShortSpill, NeverSpill) }
@@ -249,7 +249,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'saves long JSON pretty printed, so lines can be read and searched' do
-      chat.with_file_store(spill_over: 10)
+      chat.with_file_store(spill_to_file: 10)
 
       tool_result(tool_call, { 'items' => [1, 2] })
 
@@ -265,10 +265,10 @@ RSpec.describe RubyLLM::Chat do
       expect(tool_result(never, 'y' * 20_000).content).to eq('y' * 20_000)
     end
 
-    it 'sends every result whole with spill_over: false, or without files' do
+    it 'sends every result whole with spill_to_file: false, or without files' do
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
 
-      chat.with_file_store(spill_over: false)
+      chat.with_file_store(spill_to_file: false)
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
     end
   end
