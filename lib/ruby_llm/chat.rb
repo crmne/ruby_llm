@@ -580,7 +580,9 @@ module RubyLLM
     # keywords whose options use the provider's own vocabulary, and raw
     # Hashes passed to the provider verbatim, so provider tools RubyLLM has
     # no alias for yet work without a gem update. Entries add to any tools
-    # enabled earlier; pass +nil+ to clear them all. Returns +self+.
+    # enabled earlier. Enabling an alias again replaces its options, and an
+    # identical raw Hash or MCP server is not repeated, so a chat sends
+    # each tool once. Pass +nil+ to clear them all. Returns +self+.
     #
     #   chat.with_provider_tools(:web_search)
     #   chat.with_provider_tools(:web_search, :code_execution)
@@ -600,7 +602,8 @@ module RubyLLM
         return self
       end
 
-      @provider_tools += RubyLLM::Tools::ProviderTools.normalize(tools, tools_with_options)
+      additions = RubyLLM::Tools::ProviderTools.normalize(tools, tools_with_options)
+      @provider_tools = RubyLLM::Tools::ProviderTools.merge(@provider_tools, additions)
       self
     end
 

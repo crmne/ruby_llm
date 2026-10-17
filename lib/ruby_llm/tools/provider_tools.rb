@@ -85,6 +85,23 @@ module RubyLLM
         hash.key?(:raw) ? hash.size == 1 : hash.size == 2 && hash.key?(:name) && hash.key?(:options)
       end
 
+      # Adds normalized entries to those a chat already holds. An alias
+      # keeps one entry, in its place, with the latest options. A raw tool
+      # and an MCP server, which may be enabled several times, are entered
+      # once per identical definition.
+      def merge(entries, additions)
+        additions.each_with_object(entries.dup) do |entry, merged|
+          index = merged.index { |existing| same_tool?(existing, entry) }
+          index ? merged[index] = entry : merged << entry
+        end
+      end
+
+      def same_tool?(existing, entry)
+        return existing == entry if entry.key?(:raw) || entry[:name] == :mcp
+
+        existing[:name] == entry[:name]
+      end
+
       # Resolves normalized entries against a protocol's alias table.
       def resolve(entries, aliases:, owner:)
         entries.each_with_object(Resolution.new) do |entry, resolution|
