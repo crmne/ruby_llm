@@ -208,19 +208,20 @@ module RubyLLM
       # record.
       def to_llm
         @chat ||= build_llm_chat
-        return @chat unless @chat_model_stale
-
-        @chat.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:)
+        @chat.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:) if @chat_model_stale
         @chat_model_stale = false
         @chat
       end
 
       # Reloads the record from the database, Rails-style, and refreshes the
       # underlying chat's persisted message history to match. Runtime-only
-      # configuration such as tools, temperature, and callbacks is preserved.
+      # configuration such as tools, temperature, and callbacks is preserved;
+      # a model or provider assigned since the last save is discarded.
       # Returns +self+.
       def reload(...)
         super
+        @chat_model_stale = true if @chat && (@pending_model_id || @pending_provider)
+        @pending_model_id = @pending_provider = nil
         sync_messages if @chat
         self
       end

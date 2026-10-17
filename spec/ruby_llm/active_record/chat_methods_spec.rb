@@ -170,6 +170,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(llm_chat.temperature).to eq(0.2)
     end
 
+    it 'discards a model assigned since the last save on reload' do
+      chat = Chat.create!(model: model_id)
+      chat.model = model_for(:openai, :alternate_chat)
+      chat.to_llm
+
+      chat.reload
+
+      expect(chat.model_id).to eq(model_id)
+      expect(chat.to_llm.model.id).to eq(model_id)
+      expect(chat.tap(&:save!).reload.model_id).to eq(model_id)
+    end
+
     it 'uses a provider assigned to a saved record' do
       chat = Chat.create!(model: model_id)
 
