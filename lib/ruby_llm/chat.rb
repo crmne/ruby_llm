@@ -699,8 +699,9 @@ module RubyLLM
     # selects the error classes that trigger a fallback; the default covers
     # transient provider and network errors. Cancelling the chat never
     # triggers a fallback, and neither does another process taking over a
-    # persisted chat. Pass +nil+ to remove all fallbacks and restore the
-    # default error classes. Returns +self+.
+    # persisted chat or an error your streaming block raises. Pass +nil+ to
+    # remove all fallbacks and restore the default error classes. Returns
+    # +self+.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
@@ -1461,17 +1462,24 @@ module RubyLLM
       active_fallback = nil
       streaming = block_given?
       usage_start = usage_entries.length
+      block_failed = false
+      on_chunk = block && proc do |chunk|
+        block.call(chunk)
+      rescue StandardError
+        block_failed = true
+        raise
+      end
 
       loop do
         chunks_yielded = false
 
         begin
-          result = generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &block)
+          result = generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &on_chunk)
           finish_fallback(active_fallback, response: result)
           return result
         rescue StandardError => e
           finish_fallback(active_fallback, fallback_error: e)
-          raise e unless fallback_error?(e)
+          raise e if block_failed || !fallback_error?(e)
 
           active_fallback, attempt = fallback_to_next_model!(
             fallback_queue,
