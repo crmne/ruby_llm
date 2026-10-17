@@ -144,6 +144,17 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
     expect([judgment.tokens.input, judgment.tokens.output, judgment.tokens.cache_read]).to eq([100, 3, 20])
   end
 
+  it 'pairs answers with questions by name when they arrive in another order' do
+    reordered = instance_double(Faraday::Response, body: body.merge('answers' => body['answers'].reverse))
+
+    judgment = protocol.parse_judgment_response(reordered, questions:)
+
+    expect(judgment.answers.keys).to eq([:urgent, 'team', :severity])
+    expect(judgment[:urgent].probability).to eq(0.9)
+    expect(judgment['team'].choice).to eq('Billing & payments')
+    expect(judgment[:severity].score).to eq(0.2)
+  end
+
   it 'records reasoning tokens and tolerates missing usage' do
     reasoning = body.merge('usage' => body['usage'].merge('output_tokens_details' => { 'reasoning_tokens' => 2 }))
     parse = ->(parsed) { protocol.parse_judgment_response(instance_double(Faraday::Response, body: parsed), questions:) }
@@ -158,6 +169,7 @@ RSpec.describe RubyLLM::Protocols::OpenAI::Decisions do
       body.except('answers'),
       body.except('model'),
       body.merge('answers' => body['answers'].take(2)),
+      body.merge('answers' => body['answers'].map { |answer| answer.except('name') }),
       body.merge('answers' => [body['answers'][0], body['answers'][1].merge('choice' => 'sales'), body['answers'][2]])
     ]
 
