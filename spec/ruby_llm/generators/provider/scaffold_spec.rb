@@ -93,6 +93,7 @@ RSpec.describe RubyLLM::Generators::Provider::Scaffold do
       expect(vcr).not_to include('RUN_PROVIDER_INTEGRATION')
 
       live_specs = Dir[File.join(dir, 'spec/ruby_llm/*_spec.rb')].map { |path| File.read(path) }.join
+      expect(live_specs).not_to include('be_in(')
       expect(live_specs).not_to include('RUN_PROVIDER_INTEGRATION')
 
       spec_helper = File.read(File.join(dir, 'spec/spec_helper.rb'))

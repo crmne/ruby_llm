@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Moderation, :live do
 
       expect(moderation).to be_a(described_class)
       expect(moderation.results).to all(be_a(RubyLLM::Moderation::Result))
-      expect(moderation.flagged?).to be_in([true, false])
+      expect(moderation.flagged?).to be(true).or be(false)
     end
   end
 end
