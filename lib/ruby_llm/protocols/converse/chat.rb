@@ -244,7 +244,8 @@ module RubyLLM
           search_results = RubyLLM::SearchResults.from_content(msg.content)
           return search_results.results.map { |result| search_result_block(result) } if search_results
 
-          blocks = Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names)
+          content = msg.content unless msg.content&.strip&.empty?
+          blocks = Media.format_content(content, msg.attachments, used_document_names: @used_document_names)
           blocks.empty? ? [text_tool_result_block(nil)] : blocks
         end
 

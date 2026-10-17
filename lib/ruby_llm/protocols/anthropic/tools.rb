@@ -42,7 +42,7 @@ module RubyLLM
           return search_results.results.map { |result| search_result_block(result) } if search_results
 
           content = msg.content
-          content = nil if content && content.empty?
+          content = nil if content&.strip&.empty?
           content = '(no output)' if content.nil? && msg.attachments.empty?
 
           Media.format_content(content, msg.attachments)

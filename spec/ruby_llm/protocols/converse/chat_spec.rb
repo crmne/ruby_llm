@@ -157,6 +157,13 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(result).to eq([{ text: '(no output)' }])
     end
+
+    it 'uses a placeholder when the tool returns only whitespace' do
+      msg = instance_double(RubyLLM::Message, content: " \n", attachments: [])
+      result = described_class.format_tool_result_content(msg)
+
+      expect(result).to eq([{ text: '(no output)' }])
+    end
   end
 
   describe '.render_payload' do
