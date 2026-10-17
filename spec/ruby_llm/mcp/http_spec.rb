@@ -430,6 +430,19 @@ RSpec.describe RubyLLM::MCP::HTTP do
         expect(a_request(:get, url).with(headers: { 'Last-Event-ID' => 'event-2' })).to have_been_made.once
       end
 
+      it 'resumes again from the last event when a resumed stream carries no event ID' do
+        call = nil
+        stub_method('tools/call', headers: events, body: lambda { |request|
+          call = request
+          event(progress, id: 'event-1', retry_after: 0)
+        })
+        stub_request(:get, url).to_return({ headers: events, body: ": keepalive\n\n#{event(progress)}" },
+                                          { headers: events, body: ->(_) { event(answer(call), id: 'event-2') } })
+
+        expect(client.request('tools/call', { name: 'slow' })).to eq('content' => [])
+        expect(a_request(:get, url).with(headers: { 'Last-Event-ID' => 'event-1' })).to have_been_made.twice
+      end
+
       it 'gives up on a stream without event IDs' do
         stub_method('tools/call', headers: events, body: event(progress))
 
