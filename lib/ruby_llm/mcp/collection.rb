@@ -14,11 +14,18 @@ module RubyLLM
 
       def initialize # :nodoc:
         @servers = {}
+        @built = {}.compare_by_identity
       end
 
-      def <<(server) # :nodoc:
+      def connect(server, chat) # :nodoc:
+        server = server.new.tap { |built| @built[built] = chat } if server.is_a?(Class)
+        replaced = self[server.name]
+        release(replaced, chat) unless replaced.equal?(server)
         @servers[server.name.to_sym] = server
-        self
+      end
+
+      def disconnect(chat) # :nodoc:
+        each { |server| release(server, chat) }
       end
 
       # Returns the server named +name+, or +nil+.
@@ -41,6 +48,10 @@ module RubyLLM
       end
 
       private
+
+      def release(server, chat)
+        server.close if @built[server].equal?(chat) && @built.delete(server)
+      end
 
       def method_missing(name, *arguments)
         return super unless arguments.empty? && @servers.key?(name)
