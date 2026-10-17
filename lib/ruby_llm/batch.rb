@@ -95,6 +95,11 @@ module RubyLLM
         new(provider:, store: config.batch_store, **provider.find_batch(id))
       end
 
+      def awaiting_response?(chat) # :nodoc:
+        last = chat.messages.reverse.find { |message| message.role != :system }
+        AWAITING_ROLES.include?(last&.role)
+      end
+
       private
 
       def submit_chats(records)
@@ -153,7 +158,7 @@ module RubyLLM
       end
 
       def awaiting_model?(chat)
-        !chat.complete? && AWAITING_ROLES.include?(chat.messages.last&.role)
+        !chat.complete? && awaiting_response?(chat)
       end
 
       def shared_provider(chats)
@@ -373,7 +378,7 @@ module RubyLLM
     def attach_batch_usage(result, operation:, model:, category:, instrument:)
       return unless result.ruby_llm_usage_entries.empty?
 
-      model ||= RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
+      model ||= result_model(result)
       entry = Accounting::Usage::Entry.new(
         operation:,
         provider: @provider.slug,
@@ -394,11 +399,17 @@ module RubyLLM
       end
     end
 
-    # A plain answer is the chat's last message once it arrives. A tool-call
+    def result_model(result)
+      RubyLLM.models.find(result.model, provider: @provider.slug, config: @provider.config)
+    rescue ModelNotFoundError
+      nil
+    end
+
+    # A plain answer is the chat's last non-system message once it arrives. A tool-call
     # answer is not: running its tools adds messages after it, so we match on its
     # tool-call ids instead.
     def already_in_chat?(chat, message)
-      return !AWAITING_ROLES.include?(chat.messages.last&.role) unless message.tool_call?
+      return !self.class.awaiting_response?(chat) unless message.tool_call?
 
       tool_calls_delivered?(chat, message)
     end

@@ -24,6 +24,14 @@ RSpec.describe RubyLLM::Batch, :live do
         .to raise_error(ArgumentError, /awaiting the model/)
     end
 
+    it 'accepts a chat whose instructions follow the staged question' do
+      chat = RubyLLM.chat(model: model).ask_later('Hi').with_instructions('Answer with one word.')
+      allow(chat.provider).to receive(:create_batch)
+        .and_return(id: 'msgbatch_test', raw_status: 'in_progress', completed: false)
+
+      expect(RubyLLM.batch(chat).chats).to eq([chat])
+    end
+
     it 'rejects mixed providers' do
       chats = [
         RubyLLM.chat(model: model).ask_later('Hi'),
@@ -130,6 +138,20 @@ RSpec.describe RubyLLM::Batch, :live do
       expect(provider).to have_received(:batch_results).once
     end
 
+    it 'delivers an answer to a chat whose instructions were set while the batch was in flight' do
+      chat = RubyLLM.chat(model: model).ask_later('Hi')
+      message = RubyLLM::Message.new(role: :assistant, content: 'Hello', input_tokens: 1, output_tokens: 1)
+      allow(chat.provider).to receive(:batch_results).and_return([[0, message]])
+      batch = described_class.new(provider: chat.provider, chats: [chat], id: 'msgbatch_test',
+                                  raw_status: 'ended', completed: true)
+
+      chat.with_instructions('Answer with one word.')
+      batch.messages
+
+      expect(chat.messages.last).to be(message)
+      expect(chat).to be_complete
+    end
+
     it 'records successful responses at batch prices' do
       instrumenter = CaptureInstrumenter.new
       context = RubyLLM.context { |config| config.instrumenter = instrumenter }
@@ -161,6 +183,21 @@ RSpec.describe RubyLLM::Batch, :live do
       expect(message.cost.total).to eq(0.0055)
       expect(chat.cost.total).to eq(0.0055)
       expect(chat.usage_entries).to eq(message.ruby_llm_usage_entries)
+    end
+
+    it 'returns results with unknown cost when a result names a model missing from the registry' do
+      provider = RubyLLM::Provider.resolve!(:openai).new(RubyLLM.config)
+      fine_tune = "ft:#{model_for(:openai)}:acme::abc123"
+      message = RubyLLM::Message.new(role: :assistant, content: 'Paris', model: fine_tune,
+                                     input_tokens: 10, output_tokens: 2)
+      allow(provider).to receive(:batch_results).and_return([[0, message]])
+
+      batch = described_class.new(provider:, id: 'batch_test', raw_status: 'completed', completed: true)
+
+      expect(batch.messages).to eq([message])
+      expect(message.ruby_llm_usage_entries.sole.model).to eq(fine_tune)
+      expect(batch.tokens.to_h).to eq(input_tokens: 10, output_tokens: 2)
+      expect(batch.cost.total).to be_nil
     end
 
     it 'applies the provider batch discount when the model has no batch tier' do
