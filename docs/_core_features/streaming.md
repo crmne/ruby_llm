@@ -117,7 +117,7 @@ end
 
 ## Cancelling a Stream
 
-Call `cancel` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused.
+Call `cancel` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused. Tool calls that run concurrently each stop at their next checkpoint.
 
 ```ruby
 chat = RubyLLM.chat

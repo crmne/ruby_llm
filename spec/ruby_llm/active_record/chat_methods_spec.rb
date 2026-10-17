@@ -79,6 +79,39 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       end
     end
 
+    it 'stops every tool call running concurrently' do
+      stub_const("#{described_class}::CANCELLATION_POLL_INTERVAL", 0.05)
+      command = [RbConfig.ruby, File.expand_path('../../fixtures/mcp/server.rb', __dir__)]
+      servers = %w[alpha beta].map do |name|
+        Class.new(RubyLLM::MCP) do
+          command(*command)
+          prefix name
+          timeout 5
+          self.default_name = name
+        end.new
+      end
+      calls = %w[alpha_wait beta_wait].to_h { |name| [name, tool_call(id: name, name:)] }
+      chat = Chat.create!(model: model_id)
+      allow(chat.to_llm.provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls))
+      running = Queue.new
+      chat.with_mcp(*servers).with_tool_options(concurrency: :threads).before_tool_call { running << true }
+      cancelled_at = nil
+      canceller = Thread.new do
+        2.times { running.pop }
+        Chat.connection_pool.with_connection { Chat.find(chat.id).cancel }
+        cancelled_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      end
+
+      expect { chat.ask('Wait on both') }.to raise_error(RubyLLM::CancelledError)
+
+      expect(Process.clock_gettime(Process::CLOCK_MONOTONIC) - cancelled_at).to be < 2
+      expect(chat.reload).not_to be_cancelled
+    ensure
+      canceller&.join
+      servers&.each(&:close)
+    end
+
     it 'ignores an unsaved record' do
       expect(Chat.new(model: model_id).send(:consume_persisted_cancellation_request)).to be_nil
     end

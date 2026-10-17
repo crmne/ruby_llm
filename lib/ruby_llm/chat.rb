@@ -224,6 +224,9 @@ module RubyLLM
       return generate_once(&) if fallbacks.empty?
 
       with_model_restored { generate_with_fallbacks(&) }
+    rescue CancelledError
+      @cancelled = false
+      raise
     end
 
     # Executes the tool calls pending in the latest response and appends
@@ -243,6 +246,7 @@ module RubyLLM
       execute_pending_tool_calls(message) if message
       self
     rescue CancelledError
+      @cancelled = false
       cancel_tasks
       raise
     end
@@ -261,6 +265,7 @@ module RubyLLM
       run_tools
       messages.last if messages.length > before
     rescue CancelledError
+      @cancelled = false
       cancel_tasks
       raise
     end
@@ -442,10 +447,11 @@ module RubyLLM
       settle_input(request, &:decline)
     end
 
-    # Cancels the current in-flight chat operation. The next cancellation
-    # checkpoint raises CancelledError and clears the flag so the chat can be
-    # reused. The MCP tasks that pending tool calls wait on are cancelled
-    # then too; see #pending_tasks.
+    # Cancels the current in-flight chat operation. Every cancellation
+    # checkpoint raises CancelledError until the operation ends, so tool
+    # calls running concurrently all stop, and the flag is cleared then so
+    # the chat can be reused. The MCP tasks that pending tool calls wait on
+    # are cancelled then too; see #pending_tasks.
     def cancel
       @cancelled = true
       self
@@ -1131,6 +1137,9 @@ module RubyLLM
         record_completion_event(event, result)
         result
       end
+    rescue CancelledError
+      @cancelled = false
+      raise
     end
 
     # Replaces the conversation with +new_messages+, coercing each element
@@ -1324,11 +1333,8 @@ module RubyLLM
     end
 
     def raise_if_cancelled!
-      external_cancelled = @cancellation_checker&.call
-      return unless @cancelled || external_cancelled
-
-      @cancelled = false
-      raise CancelledError
+      @cancelled = true if @cancellation_checker&.call
+      raise CancelledError if @cancelled
     end
 
     def generate_once(stream_tracker: nil, usage_start: nil, &block)
