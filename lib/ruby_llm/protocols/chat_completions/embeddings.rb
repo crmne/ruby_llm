@@ -23,7 +23,7 @@ module RubyLLM
         def parse_embedding_response(response, model:, text:)
           data = response.body
           input_tokens = data.dig('usage', 'prompt_tokens')
-          rows = data['data']
+          rows = order_embedding_rows(data['data'])
           single = rows.length == 1 && !text.is_a?(Array)
 
           vectors = rows.map { |row| row['embedding'] }
@@ -32,6 +32,23 @@ module RubyLLM
 
           Embedding.new(vectors:, sparse_vectors:, model:, input_tokens:,
                         reported_cost: reported_cost(data['usage'] || {}))
+        end
+
+        # A row's index names the input its vector belongs to, so rows are put
+        # back in that order and positions that are not exactly 0...N raise
+        # rather than pairing vectors with the wrong texts. Servers that send
+        # no index keep the order of the response.
+        def order_embedding_rows(rows)
+          return rows if rows.none? { |row| row.key?('index') }
+          raise Error, 'Invalid or duplicate embedding record positions' unless valid_embedding_positions?(rows)
+
+          rows.sort_by { |row| row['index'] }
+        end
+
+        def valid_embedding_positions?(rows)
+          positions = rows.map { |row| row.is_a?(Hash) ? row['index'] : nil }
+
+          positions.all?(Integer) && positions.sort == (0...positions.size).to_a
         end
 
         # Sparse-capable models return a token-to-weight map beside the dense

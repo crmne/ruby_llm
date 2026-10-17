@@ -63,5 +63,28 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Embeddings do
 
       expect(embedding.sparse_vectors).to eq([{ 1 => 0.5 }, nil])
     end
+
+    it 'pairs each vector with the input its row index names' do
+      embedding = parse(
+        [
+          { 'index' => 2, 'embedding' => [0.3], 'lexical_weights' => { '3' => 0.75 } },
+          { 'index' => 0, 'embedding' => [0.1], 'lexical_weights' => { '1' => 0.25 } },
+          { 'index' => 1, 'embedding' => [0.2], 'lexical_weights' => { '2' => 0.5 } }
+        ],
+        text: %w[Ruby Python Elixir]
+      )
+
+      expect(embedding.vectors).to eq([[0.1], [0.2], [0.3]])
+      expect(embedding.sparse_vectors).to eq([{ 1 => 0.25 }, { 2 => 0.5 }, { 3 => 0.75 }])
+    end
+
+    [[0, 0], [0, 2], [1], [nil, 0]].each do |positions|
+      it "raises when the row positions are #{positions.inspect}" do
+        rows = positions.map { |position| { 'index' => position, 'embedding' => [0.1] } }
+
+        expect { parse(rows, text: %w[Ruby Python]) }
+          .to raise_error(RubyLLM::Error, 'Invalid or duplicate embedding record positions')
+      end
+    end
   end
 end

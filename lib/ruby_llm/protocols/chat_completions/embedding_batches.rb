@@ -38,17 +38,7 @@ module RubyLLM
                     batch_failure(line['custom_id'], 'Invalid or duplicate embedding record positions')]
           end
 
-          ordered = body.merge('data' => body['data'].sort_by { |row| row['index'] })
-          super(line.merge('response' => line['response'].merge('body' => ordered)))
-        end
-
-        # A row's index names the input its vector belongs to, so rows are put
-        # back in that order and positions that are not exactly 0...N fail the
-        # request rather than pairing vectors with the wrong texts.
-        def valid_embedding_positions?(rows)
-          positions = rows.map { |row| row.is_a?(Hash) ? row['index'] : nil }
-
-          positions.all?(Integer) && positions.sort == (0...positions.size).to_a
+          super
         end
       end
     end
