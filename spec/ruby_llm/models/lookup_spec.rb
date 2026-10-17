@@ -56,6 +56,17 @@ RSpec.describe RubyLLM::Models::Lookup do
       expect(models.find(exact.id, provider: :vertexai)).to equal(other)
     end
 
+    it 'ignores providers the alias does not name when resolving a bare name' do
+      first_party = RubyLLM::Model.new(id: 'grok-4.3', provider: 'xai')
+      aliased = RubyLLM::Model.new(id: 'xai/grok-4.3', provider: 'vertexai')
+      unrelated = RubyLLM::Model.new(id: aliased.id, provider: 'perplexity')
+      allow(RubyLLM::Models::Aliases).to receive(:aliases)
+        .and_return(first_party.id => { 'vertexai' => aliased.id })
+
+      expect(RubyLLM::Models.new([unrelated, aliased, first_party]).find(first_party.id)).to equal(first_party)
+      expect(RubyLLM::Models.new([unrelated, aliased]).find(first_party.id)).to equal(aliased)
+    end
+
     it 'preserves catalog order for duplicate ids from the same provider' do
       models = RubyLLM::Models.new([original, replacement])
 

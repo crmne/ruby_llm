@@ -51,9 +51,15 @@ module RubyLLM
         resolved_id = Aliases.resolve(model_id)
         index = models_by_id
         matches = Array(index[model_id])
-        matches += Array(index[resolved_id]) unless resolved_id == model_id
+        matches += aliased_matches(model_id, resolved_id) unless resolved_id == model_id
 
         preferred_match(matches) || raise_model_not_found(model_id)
+      end
+
+      def aliased_matches(model_id, resolved_id)
+        Array(models_by_id[resolved_id]).select do |model|
+          Aliases.resolve(model_id, model.provider) == resolved_id
+        end
       end
 
       def raise_model_not_found(model_id, provider: nil)

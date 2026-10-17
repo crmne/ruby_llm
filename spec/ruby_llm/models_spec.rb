@@ -159,6 +159,7 @@ RSpec.describe RubyLLM::Models do
       expect(RubyLLM.models.find('claude-haiku-4-5').provider).to eq('anthropic')
       expect(RubyLLM.models.find('mistral-medium-3').provider).to eq('mistral')
       expect(RubyLLM.models.find('gemini-2.5-flash').provider).to eq('gemini')
+      expect(RubyLLM.models.find('grok-4.3').provider).to eq('xai')
     end
 
     it 'prefers bedrock region-resolved inference profile IDs over exact unprefixed IDs' do
