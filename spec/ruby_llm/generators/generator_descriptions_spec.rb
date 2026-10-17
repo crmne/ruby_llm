@@ -5,7 +5,7 @@ require 'generators/ruby_llm/install/install_generator'
 require 'generators/ruby_llm/upgrade/upgrade_generator'
 require 'generators/ruby_llm/chat_ui/chat_ui_generator'
 
-RSpec.describe 'Generator descriptions' do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Generator descriptions', :generator do # rubocop:disable RSpec/DescribeClass
   [
     RubyLLM::Generators::InstallGenerator,
     RubyLLM::Generators::UpgradeGenerator,
