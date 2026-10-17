@@ -110,6 +110,17 @@ RSpec.describe RubyLLM::MCP::Listener do
     end
   end
 
+  context 'when started on behalf of a usage owner' do
+    let(:owners) { Queue.new }
+    let(:callback) { ->(_notification) { owners << RubyLLM::Accounting::Usage.owner } }
+
+    it 'attributes nothing to that owner' do
+      RubyLLM.with_usage_owner('alice') { listener.start(tools) }
+
+      expect(owners.pop).to be_nil
+    end
+  end
+
   context 'with Rails loaded' do
     let(:executor) do
       Class.new do
