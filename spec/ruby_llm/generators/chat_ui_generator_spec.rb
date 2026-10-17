@@ -174,11 +174,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     excludes.each { |line| expect(content).not_to include(line) }
   end
 
-  def expect_job_file(path:, class_name:, lookup_line:, ask_line:)
+  def expect_job_file(path:, class_name:, perform_line:, complete_line:)
     job_content = File.read(path)
     expect(job_content).to include(class_name)
-    expect(job_content).to include(lookup_line)
-    expect(job_content).to include(ask_line)
+    expect(job_content).to include(perform_line)
+    expect(job_content).to include(complete_line)
     expect(job_content).not_to include('broadcast_refresh_to')
   end
 
@@ -330,6 +330,37 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     RUBY
   end
 
+  def job_retry_script(agent:, chats_path:, job:, message_key:, **)
+    <<~RUBY
+      ActiveJob::Base.queue_adapter = :test
+      ActionController::Base.allow_forgery_protection = false
+      chat = #{agent}.create!
+      session = ActionDispatch::Integration::Session.new(Rails.application)
+      session.host! "localhost"
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
+      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" }
+      abort "jobs \#{jobs}" unless jobs.map { |job| job["arguments"] } == [ [ chat.id ] ]
+
+      attempts = 0
+      RubyLLM::Chat.prepend(Module.new do
+        define_method(:complete) do |&_block|
+          attempts += 1
+          raise RubyLLM::ServerError, "The model is overloaded" if attempts == 1
+
+          add_message(role: :assistant, content: "Hello")
+        end
+      end)
+      2.times do
+        #{job}.perform_now(chat.id)
+      rescue RubyLLM::ServerError
+        next
+      end
+
+      asked = chat.reload.#{message_key}s.where(role: "user").pluck(:content)
+      abort "asked \#{asked} in \#{attempts} attempts" unless attempts == 2 && asked == [ "Hi" ]
+    RUBY
+  end
+
   def expect_chat_script_to_succeed(script)
     success, output = run_rails_runner(script)
     expect(success).to be(true), output
@@ -402,7 +433,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
         'if prompt.present?',
-        'ChatResponseJob.set(wait: 1.second).perform_later(@chat.id, prompt)',
+        '@chat.ask_later(prompt)',
+        'ChatResponseJob.set(wait: 1.second).perform_later(@chat.id)',
         'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
         '@chat = ChatAgent.create!(**{ model: model.presence, provider: provider.presence }.compact)',
         '@chat.errors.add(:prompt, "can\'t be blank")',
@@ -416,7 +448,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'if @chat.pending_approvals.any?',
         'elsif @chat.running?',
         'if content.present?',
-        'ChatResponseJob.perform_later',
+        '@chat.ask_later(content)',
+        'ChatResponseJob.perform_later(@chat.id)',
         'format.turbo_stream',
         '@message = @chat.messages.build',
         '@message.errors.add(:content, "can\'t be blank")',
@@ -445,8 +478,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       job_options: {
         path: 'app/jobs/chat_response_job.rb',
         class_name: 'class ChatResponseJob',
-        lookup_line: 'chat = ChatAgent.find(chat_id)',
-        ask_line: 'content ? chat.ask(content, &:broadcast) : chat.complete(&:broadcast)'
+        perform_line: 'def perform(chat_id)',
+        complete_line: 'ChatAgent.find(chat_id).complete(&:broadcast)'
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -510,7 +543,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'if @llm_chat.pending_approvals.any?',
         'elsif @llm_chat.running?',
         'if content.present?',
-        'LlmChatResponseJob.perform_later',
+        '@llm_chat.ask_later(content)',
+        'LlmChatResponseJob.perform_later(@llm_chat.id)',
         'format.turbo_stream',
         '@llm_message = @llm_chat.llm_messages.build',
         '@llm_message.errors.add(:content, "can\'t be blank")',
@@ -539,8 +573,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       job_options: {
         path: 'app/jobs/llm_chat_response_job.rb',
         class_name: 'class LlmChatResponseJob',
-        lookup_line: 'llm_chat = Llm::ChatAgent.find(llm_chat_id)',
-        ask_line: 'content ? llm_chat.ask(content, &:broadcast) : llm_chat.complete(&:broadcast)'
+        perform_line: 'def perform(llm_chat_id)',
+        complete_line: 'Llm::ChatAgent.find(llm_chat_id).complete(&:broadcast)'
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -879,6 +913,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       it 'shows Thinking and Replying while a reply runs, and refuses messages' do
         within_test_app(app_path) do
           output, status = run_rails_runner_outside_executor(running_reply_script(**config[:approval_flow]))
+          expect(status.success?).to be(true), output
+        end
+      end
+
+      it 'saves a message once, however often its job runs' do
+        within_test_app(app_path) do
+          output, status = run_rails_runner_outside_executor(job_retry_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output
         end
       end

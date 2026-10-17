@@ -83,20 +83,19 @@ bin/rails generate ruby_llm:chat_ui
 The generator creates:
 
 - **Agent**: `ChatAgent`, which the controllers and job create and load chats through
-- **Controllers**: Create chats, enqueue message processing, and record approval decisions
+- **Controllers**: Create chats, save messages and enqueue their replies, and record approval decisions
 - **Views**: Render messages, their attachments, and approval cards, and update them with Turbo Streams
 - **Jobs**: Request AI responses in the background and continue the conversation after a decision
 - **Routes**: RESTful routes for chats, messages, and approvals
 
 Start your server and visit `http://localhost:3000/chats`.
 
-The generated job streams each reply with the chunks' own `broadcast`. `ChatsController#create` enqueues a new chat's first reply a second later, so the new page has subscribed to the chat's stream before the reply starts:
+The controllers save the user's message with `chat.ask_later` before they enqueue the job, so the message shows right away and a job that runs again after a failure does not repeat it. The generated job streams each reply with the chunks' own `broadcast`. `ChatsController#create` enqueues a new chat's first reply a second later, so the new page has subscribed to the chat's stream before the reply starts:
 
 ```ruby
 class ChatResponseJob < ApplicationJob
-  def perform(chat_id, content = nil)
-    chat = ChatAgent.find(chat_id)
-    content ? chat.ask(content, &:broadcast) : chat.complete(&:broadcast)
+  def perform(chat_id)
+    ChatAgent.find(chat_id).complete(&:broadcast)
   end
 end
 ```

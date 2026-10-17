@@ -8,7 +8,8 @@ class <%= message_controller_class_name %> < ApplicationController
     elsif @<%= chat_variable_name %>.running?
       redirect_to @<%= chat_variable_name %>, notice: "Wait for the reply to finish.", status: :see_other
     elsif content.present?
-      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, content)
+      @<%= chat_variable_name %>.ask_later(content)
+      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
 
       respond_to do |format|
         format.turbo_stream
