@@ -213,6 +213,12 @@ module RubyLLM
           @pending.dup.each { |entry| fail_attempt(entry, error) }
         end
 
+        # Finishes the attempts an exception outside StandardError
+        # interrupted, such as a stopped task or a shutdown.
+        def cancel_pending
+          @pending.dup.each { |entry| finish(entry, status: :cancelled, tokens: entry.tokens) }
+        end
+
         def succeed(result)
           # A request that produced several results, like a multi-image
           # generation, is billed once: the first result carries the call.

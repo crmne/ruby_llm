@@ -690,6 +690,7 @@ module RubyLLM
       @usage_tracker.fail_pending(e)
       raise
     ensure
+      @usage_tracker.cancel_pending
       @usage_tracker = nil
     end
 

@@ -427,6 +427,15 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     expect(entry).to be_cancelled
   end
 
+  it 'records an attempt that a non-StandardError interrupts as cancelled' do
+    stub_request(:post, /api\.openai\.com/).to_raise(Interrupt)
+    chat = RubyLLM.chat(model: model_for(:openai), provider: :openai)
+
+    expect { chat.ask('Hello') }.to raise_error(Interrupt)
+    expect(chat.usage_entries.map(&:status)).to eq([:cancelled])
+    expect(chat.usage_entries.first.tokens.to_h).to be_empty
+  end
+
   it 'ignores a second failure for an attempt that already finished' do
     tracker = build_tracker
     entry = tracker.start
