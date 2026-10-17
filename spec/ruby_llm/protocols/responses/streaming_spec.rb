@@ -18,6 +18,18 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.raw_content).to eq([item])
   end
 
+  it 'keeps the raw output when a streamed response holds several reasoning items' do
+    output = [
+      { 'type' => 'reasoning', 'id' => 'rs_1', 'encrypted_content' => 'first', 'summary' => [] },
+      { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Checking.' }] },
+      { 'type' => 'reasoning', 'id' => 'rs_2', 'encrypted_content' => 'second', 'summary' => [] }
+    ]
+    chunk = build_chunk({ 'type' => 'response.completed',
+                          'response' => { 'output' => output, 'status' => 'completed' } })
+
+    expect(chunk.raw_content).to eq(output)
+  end
+
   it 'streams output text deltas as content' do
     chunk = build_chunk({ 'type' => 'response.output_text.delta', 'delta' => 'Hel' })
 
