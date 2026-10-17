@@ -97,6 +97,17 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
+  describe '#normalize_finish_reason' do
+    it 'reports a response cut off by the context window as max_tokens' do
+      expect(provider.send(:normalize_finish_reason, 'model_length')).to eq(:max_tokens)
+    end
+
+    it 'keeps the shared Chat Completions finish reasons' do
+      expect(provider.send(:normalize_finish_reason, 'length')).to eq(:max_tokens)
+      expect(provider.send(:normalize_finish_reason, 'tool_calls')).to eq(:tool_calls)
+    end
+  end
+
   describe '#format_messages' do
     it 'keeps parallel tool results consecutive and moves attachment carriers after the run' do
       attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'chart.png')
