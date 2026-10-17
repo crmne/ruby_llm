@@ -106,6 +106,22 @@ RSpec.describe RubyLLM::Protocols::Cohere::Batches do
     expect(batch.statuses).to eq(%i[failed succeeded])
   end
 
+  it 'reads the results of a batch whose model is missing from the registry' do
+    fine_tune = "#{model}-ft-acme"
+    answered = { 'finish_reason' => 'COMPLETE',
+                 'message' => { 'role' => 'assistant', 'content' => [{ 'type' => 'text', 'text' => 'Hi.' }] },
+                 'usage' => { 'tokens' => { 'input_tokens' => 12, 'output_tokens' => 7 } } }
+    stub_datasets([{ 'custom_id' => '0', 'error' => '', 'body' => answered }])
+    response = batch_data(model: fine_tune, count: 1)
+    stub_request(:get, 'https://api.cohere.com/v2/batches/batch_ruby').to_return_json(body: { batch: response })
+
+    index, message = protocol.batch_results('batch_ruby').sole
+
+    expect(index).to eq(0)
+    expect(message).to have_attributes(content: 'Hi.', model: fine_tune)
+    expect(message.tokens).to have_attributes(input: 12, output: 7)
+  end
+
   it 'normalizes batch-only tool, image and thinking fields without changing a chat render' do
     image = { type: 'image_url', image_url: { url: 'https://example.test/ruby.png' } }
     body = {

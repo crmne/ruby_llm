@@ -38,7 +38,7 @@ module RubyLLM
           return [] if data['output_dataset_id'].to_s.empty?
 
           file = datasets.wait_for_validation(data.fetch('output_dataset_id'))
-          model = RubyLLM.models.find(data.fetch('model'), provider: @provider.slug, config: @config)
+          model = batch_model(data.fetch('model'))
           parser = self.class.new(@provider, model)
           datasets.records(file).map { |row| parse_batch_result(row, parser:, model: model.id) }
         end
@@ -47,6 +47,12 @@ module RubyLLM
 
         def datasets
           @datasets ||= Cohere::Datasets.new(@provider)
+        end
+
+        def batch_model(id)
+          RubyLLM.models.find(id, provider: @provider.slug, config: @config)
+        rescue ModelNotFoundError
+          Model.default(id, @provider.slug)
         end
 
         def batch_data(id)
