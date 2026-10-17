@@ -30,21 +30,21 @@ module RubyLLM
           raise Error, 'bedrock batch requests do not support tools or structured output'
         end
 
-        def parse_bedrock_outputs(outputs, **)
-          outputs.flat_map { |body| parse_bedrock_output(body) }
+        def parse_bedrock_outputs(outputs, model:)
+          outputs.flat_map { |body| parse_bedrock_output(body, model:) }
         end
 
-        def parse_bedrock_output(body)
-          body.to_s.each_line.filter_map { |line| parse_bedrock_record(JSON.parse(line)) }
+        def parse_bedrock_output(body, model:)
+          body.to_s.each_line.filter_map { |line| parse_bedrock_record(JSON.parse(line), model:) }
         end
 
-        def parse_bedrock_record(line)
+        def parse_bedrock_record(line, model:)
           record_id = line['recordId'] || line['record_id']
           index = batch_result_index(record_id)
 
           if line['modelOutput']
             body = line['modelOutput']
-            [index, parse_completion_body(body, raw: body)]
+            [index, parse_completion_body({ 'modelId' => model }.merge(body), raw: body)]
           else
             [index, nil, batch_failure(record_id, line.dig('error', 'message') || line['errorMessage'])]
           end

@@ -163,7 +163,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
         }
       }
 
-      index, message = protocol.send(:parse_bedrock_record, line)
+      index, message = protocol.send(:parse_bedrock_record, line, model: nil)
 
       expect(index).to eq(1)
       expect(message.content).to eq('Hello')
@@ -224,6 +224,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
 
       expect(results.length).to eq(1)
       expect(results.first.last.content).to eq('Hello')
+      expect(results.first.last.model).to eq('anthropic.claude-haiku-4-5')
     end
   end
 
@@ -232,7 +233,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
       allow(RubyLLM.logger).to receive(:warn)
 
       index, message = protocol.send(
-        :parse_bedrock_record, { 'record_id' => '2', 'error' => { 'message' => 'throttled' } }
+        :parse_bedrock_record, { 'record_id' => '2', 'error' => { 'message' => 'throttled' } }, model: nil
       )
 
       expect(index).to eq(2)
@@ -243,7 +244,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
     it 'falls back to the flat error message field' do
       allow(RubyLLM.logger).to receive(:warn)
 
-      protocol.send(:parse_bedrock_record, { 'recordId' => '3', 'errorMessage' => 'bad input' })
+      protocol.send(:parse_bedrock_record, { 'recordId' => '3', 'errorMessage' => 'bad input' }, model: nil)
 
       expect(RubyLLM.logger).to have_received(:warn).with('Batch request 3 failed: bad input')
     end
