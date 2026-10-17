@@ -26,6 +26,12 @@ RSpec.describe RubyLLM::FileStore::Converters do
     expect(described_class.convert(text_file(html, 'page.html'), config:)).to eq("Title\nFish & chips today\nOne\nTwo")
   end
 
+  it 'reads HTML in time linear in its length, keeping a stray < as text' do
+    expect(described_class.convert(text_file('<p>1 < 2', 'math.html'), config:)).to eq('1 < 2')
+    expect(described_class.convert(text_file("<p>x</p>#{'<a ' * 100_000}", 'hostile.html'),
+                                   config:)).to start_with('x')
+  end
+
   it 'reads Word documents' do
     expect(described_class.convert(fixture('sample.docx'), config:))
       .to eq('RubyLLM document attachment probe. The project codename is BLUE-LANTERN-42. ' \
