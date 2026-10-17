@@ -120,6 +120,18 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(chunk.finish_reason).to eq(:tool_calls)
     end
 
+    it 'streams refusal deltas as content' do
+      chunk = provider.send(
+        :build_chunk,
+        {
+          'model' => model_for(:openrouter),
+          'choices' => [{ 'delta' => { 'content' => nil, 'refusal' => 'I cannot help' } }]
+        }
+      )
+
+      expect(chunk.content).to eq('I cannot help')
+    end
+
     it 'captures the reported cost from the final usage chunk' do
       chunk = provider.send(
         :build_chunk,
