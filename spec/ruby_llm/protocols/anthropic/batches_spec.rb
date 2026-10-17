@@ -29,6 +29,16 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
 
       expect(attributes).to include(completed: true)
     end
+
+    it 'names how an ended batch finished from its request counts' do
+      counts = { 'processing' => 0, 'succeeded' => 1, 'errored' => 1, 'canceled' => 0, 'expired' => 0 }
+      statuses = [counts, counts.merge('canceled' => 2), counts.merge('expired' => 2)].map do |request_counts|
+        protocol.send(:parse_batch_response, 'id' => 'msgbatch_123', 'processing_status' => 'ended',
+                                             'request_counts' => request_counts)[:raw_status]
+      end
+
+      expect(statuses).to eq(%w[ended canceled expired])
+    end
   end
 
   describe '#create_batch' do
@@ -55,6 +65,14 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       end
 
       expect(statuses).to eq(%i[succeeded pending pending])
+    end
+
+    it 'tells a cancelled or expired batch from one that succeeded' do
+      statuses = %w[canceled expired].map do |raw_status|
+        protocol.send(:parse_batch_status, raw_status, completed: true)
+      end
+
+      expect(statuses).to eq(%i[cancelled failed])
     end
   end
 

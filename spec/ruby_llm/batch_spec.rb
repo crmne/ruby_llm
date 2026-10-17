@@ -408,8 +408,8 @@ RSpec.describe RubyLLM::Batch, :live do
 
       batch.cancel
 
-      expect(batch.status).to be_in(%i[pending succeeded])
-      expect(batch.raw_status).to be_in(%w[canceling ended])
+      expect(batch.status).to be_in(%i[pending succeeded cancelled])
+      expect(batch.raw_status).to be_in(%w[canceling ended canceled])
     end
   end
 end

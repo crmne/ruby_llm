@@ -41,18 +41,32 @@ module RubyLLM
 
         def parse_batch_response(data)
           request_counts = data['request_counts']
+          completed = data['processing_status'] == 'ended'
 
           {
             id: data['id'],
-            raw_status: data['processing_status'],
-            completed: data['processing_status'] == 'ended',
+            raw_status: completed ? ended_batch_status(request_counts) : data['processing_status'],
+            completed:,
             request_counts:,
             request_count: request_counts&.values&.sum
           }
         end
 
+        # Anthropic ends every batch as "ended"; only the request counts say
+        # whether it was cancelled or ran out of time.
+        def ended_batch_status(request_counts)
+          %w[canceled expired].find { |outcome| request_counts&.fetch(outcome, 0).to_i.positive? } || 'ended'
+        end
+
         def parse_batch_status(raw_status, completed:)
-          completed && raw_status == 'ended' ? :succeeded : :pending
+          return :pending unless completed
+
+          case raw_status
+          when 'ended' then :succeeded
+          when 'canceled' then :cancelled
+          when 'expired' then :failed
+          else :pending
+          end
         end
 
         def parse_batch_result(line)

@@ -71,7 +71,7 @@ batch.complete? # => true
 sleep 60 until batch.refresh.complete?
 ```
 
-`status` normalizes the lifecycle to `:pending`, `:succeeded`, `:failed`, or `:cancelled`. `raw_status` preserves the provider's own string. The matching `succeeded?`, `failed?`, and `cancelled?` predicates let a poller distinguish a successful completion from a failed, expired, or cancelled provider job.
+`status` normalizes the lifecycle to `:pending`, `:succeeded`, `:failed`, or `:cancelled`. `raw_status` preserves the provider's own string. Anthropic reports every finished batch as `ended`, so RubyLLM reads the outcome from its request counts and reports `canceled` or `expired` instead when any request ended that way. The matching `succeeded?`, `failed?`, and `cancelled?` predicates let a poller distinguish a successful completion from a failed, expired, or cancelled provider job.
 
 Once processing ends, `messages` returns the responses in submission order:
 
