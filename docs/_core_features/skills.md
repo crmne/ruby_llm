@@ -184,7 +184,11 @@ gem exec skill add anthropics/skills --list                # what a repository h
 gem exec skill add anthropics/skills@pdf --agents ruby_llm # install one into app/skills
 ```
 
-It reads GitHub repositories (`owner/repo`, `owner/repo@skill`, `owner/repo#tag`), plugin marketplaces, and local folders, and checks every `SKILL.md` with the same rules as `RubyLLM::Skill`. It records each skill's source and commit in `skills.lock` at the root of your application, so commit that file with the skills. `gem exec skill update` shows the commits and files that changed and applies them only after you say yes, and `gem exec skill list` names any skill you edited since. Without `--agents`, it installs into `app/skills` and into the folders of the coding agents your project uses, such as `.claude/skills`; `--agents ruby_llm` keeps a skill for your application out of your coding agent's folders, and `--agents coding` keeps a skill for your coding agent out of `app/skills`. On a fresh clone, `gem exec skill install` installs what `skills.lock` records, at its recorded commits. Pass `--dir` to install into another root, such as `vendor/skills`.
+Name a GitHub repository (`owner/repo`, `owner/repo@skill`, `owner/repo#tag`), a plugin marketplace, or a local folder. `skill` checks every `SKILL.md` with the same rules as `RubyLLM::Skill`.
+
+Choose where a skill goes with `--agents`. Without it, `skill` installs into `app/skills` and into the folders of the coding agents your project uses, such as `.claude/skills`. Pass `--agents ruby_llm` for a skill your application uses, and `--agents coding` for one your coding agent uses. Pass `--dir` to install into another root, such as `vendor/skills`.
+
+Commit `skills.lock` with the skills: it records each skill's source and commit. On a fresh clone, `gem exec skill install` installs what it records, at those commits. `gem exec skill update` shows the commits and files that changed and applies them only after you say yes. `gem exec skill list` names any skill you edited since you installed it.
 
 A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project, and commit it so you see every change in a diff.
 
