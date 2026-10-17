@@ -189,6 +189,22 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.fallback_errors).to eq([RubyLLM::BadRequestError])
   end
 
+  it 'does not fall back when the chat is cancelled' do
+    chat = described_class.new(model: 'primary-model')
+                          .with_fallbacks('fallback-model', on: StandardError)
+    allow(primary_provider).to receive(:complete) do |_messages, **_kwargs, &block|
+      block.call(RubyLLM::Chunk.new(role: :assistant, content: 'primary partial', model: 'primary-model'))
+      RubyLLM::Message.new(role: :assistant, content: 'primary partial', model: 'primary-model')
+    end
+    allow(fallback_provider).to receive(:complete)
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'from fallback', model: 'fallback-model'))
+
+    chat.ask_later('Hello')
+
+    expect { chat.generate { chat.cancel } }.to raise_error(RubyLLM::CancelledError)
+    expect(fallback_provider).not_to have_received(:complete)
+  end
+
   it 'runs fallback callbacks before retrying' do
     chat = described_class.new(model: 'primary-model')
                           .with_fallbacks(fallback_model)
