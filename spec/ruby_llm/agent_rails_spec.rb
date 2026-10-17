@@ -232,6 +232,49 @@ RSpec.describe RubyLLM::Agent do
     expect(loaded.to_llm.messages.map(&:cache_until_here?)).to eq([true, false])
   end
 
+  it 'leaves unchanged system rows in place when applied to an existing record' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model model_for(:openai, :temperature)
+
+      instructions 'You are a helpful assistant.'
+      instructions 'Answer in French.', append: true
+    end
+    record = agent_class.create!
+    record.add_message(role: :user, content: 'Hello')
+    rows = record.messages.order(:id).pluck(:id, :role, :content)
+
+    2.times { agent_class.new(chat: Chat.find(record.id)) }
+
+    expect(record.messages.order(:id).pluck(:id, :role, :content)).to eq(rows)
+    expect(agent_class.new(chat: Chat.find(record.id)).messages.map(&:content))
+      .to eq(['You are a helpful assistant.', 'Answer in French.', 'Hello'])
+  end
+
+  it 'replaces system rows when the declared instructions change' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model model_for(:openai, :temperature)
+      inputs :language
+
+      instructions 'You are a helpful assistant.'
+      instructions(append: true) { "Answer in #{language}." }
+      instructions(append: true) { 'Be brief.' if language == 'French' }
+    end
+    record = agent_class.create!(language: 'French')
+    system_rows = -> { record.messages.where(role: 'system').order(:id).pluck(:content, :cache_until_here) }
+
+    agent_class.new(chat: Chat.find(record.id), language: 'Dutch')
+    expect(system_rows.call).to eq([['You are a helpful assistant.', false], ['Answer in Dutch.', false]])
+
+    cached = Class.new(agent_class) do
+      instructions 'You are a helpful assistant.', cache_until_here: true
+      instructions(append: true) { "Answer in #{language}." }
+    end
+    cached.new(chat: Chat.find(record.id), language: 'Dutch')
+    expect(system_rows.call).to eq([['You are a helpful assistant.', true], ['Answer in Dutch.', false]])
+  end
+
   it 'syncs only persistent instruction declarations' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat

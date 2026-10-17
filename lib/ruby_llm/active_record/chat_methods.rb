@@ -5,6 +5,7 @@ require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
+require 'ruby_llm/active_record/system_instructions'
 
 module RubyLLM
   module ActiveRecord
@@ -27,6 +28,7 @@ module RubyLLM
       include RunClaims
       include ChatApprovals
       include ChatCancellation
+      include SystemInstructions
 
       CANCELLATION_POLL_INTERVAL = 1.0 # :nodoc:
       COMPLETION_ERRORS = [ # :nodoc:
@@ -1064,9 +1066,7 @@ module RubyLLM
       # Rewriting the same instructions every turn would move the system row
       # behind the user messages and rebroadcast it each time.
       def update_persisted_system_instruction(record, instructions, cache_until_here:)
-        boundary = cache_boundary_attributes(cache_until_here)
-        boundary.delete(:cache_until_here) unless record.has_attribute?(:cache_until_here)
-        attributes = { content: instructions, **boundary }
+        attributes = system_instruction_attributes(record, instructions, cache_until_here)
         changed = attributes.any? { |column, value| record[column] != value }
         record.update!(attributes) if changed
         messages_association.reset
