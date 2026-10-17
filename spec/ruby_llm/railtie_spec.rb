@@ -22,6 +22,7 @@ RSpec.describe 'RubyLLM::Railtie' do
         require 'bundler/setup'
         require 'logger'
         require 'rails'
+        require 'action_controller/railtie'
         require 'ruby_llm'
         require 'ruby_llm/railtie'
         #{"require #{engine.inspect}" if engine}
