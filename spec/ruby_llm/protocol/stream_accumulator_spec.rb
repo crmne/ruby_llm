@@ -294,6 +294,61 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       expect(accumulator.tool_calls).to be_empty
     end
 
+    it 'appends fragments that repeat the id of their tool call' do
+      accumulator = described_class.new
+      ['', '{"city":', '"Paris"}'].each do |arguments|
+        accumulator.add(
+          RubyLLM::Chunk.new(
+            role: :assistant, content: nil,
+            tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments:) }
+          )
+        )
+      end
+
+      expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq('city' => 'Paris')
+    end
+
+    it 'replaces a complete tool call that arrives again' do
+      accumulator = described_class.new
+      tool_call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'weather', arguments: { 'city' => 'Rome' })
+      2.times do
+        accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call }))
+      end
+
+      expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq('city' => 'Rome')
+    end
+
+    it 'starts a named tool call that never carries an id' do
+      accumulator = described_class.new
+      [['weather', ''], [nil, '{"city":"Paris"}']].each do |name, arguments|
+        accumulator.add(
+          RubyLLM::Chunk.new(
+            role: :assistant, content: nil,
+            tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: nil, name:, arguments:) }
+          )
+        )
+      end
+
+      tool_call = accumulator.to_message(nil).tool_calls.values.first
+      expect(tool_call).to have_attributes(name: 'weather', arguments: { 'city' => 'Paris' })
+      expect(tool_call.provider_call_id).to match(/\A[0-9a-f-]{36}\z/)
+    end
+
+    it 'appends fragments that repeat an empty id' do
+      accumulator = described_class.new
+      [['weather', ''], [nil, '{"city":'], [nil, '"Paris"}']].each do |name, arguments|
+        accumulator.add(
+          RubyLLM::Chunk.new(
+            role: :assistant, content: nil,
+            tool_calls: { 0 => RubyLLM::ToolCall.new(provider_call_id: '', name:, arguments:) }
+          )
+        )
+      end
+
+      expect(accumulator.to_message(nil).tool_calls.values.map { |call| [call.name, call.arguments] })
+        .to eq([['weather', { 'city' => 'Paris' }]])
+    end
+
     it 'treats a nil argument fragment as empty' do
       accumulator = described_class.new
       accumulator.add(

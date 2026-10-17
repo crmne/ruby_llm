@@ -129,15 +129,24 @@ module RubyLLM
       def accumulate_tool_calls(new_tool_calls)
         RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
         new_tool_calls.each do |stream_key, tool_call|
-          if tool_call.provider_call_id == ''
-            tool_call = ToolCall.new(**tool_call.to_h, provider_call_id: SecureRandom.uuid)
-            new_tool_calls[stream_key] = tool_call
-          end
-          if tool_call.provider_call_id
-            start_tool_call(stream_key, tool_call)
-          else
+          if continues_tool_call?(stream_key, tool_call)
             append_tool_call_fragment(stream_key, tool_call)
+          else
+            if tool_call.provider_call_id.to_s.empty?
+              tool_call = ToolCall.new(**tool_call.to_h, provider_call_id: SecureRandom.uuid)
+              new_tool_calls[stream_key] = tool_call
+            end
+            start_tool_call(stream_key, tool_call)
           end
+        end
+      end
+
+      def continues_tool_call?(stream_key, tool_call)
+        case tool_call.provider_call_id
+        when nil then tool_call.name.to_s.empty? || !find_tool_call(stream_key).nil?
+        when '' then tool_call.name.to_s.empty?
+        else
+          !tool_call.arguments.is_a?(Hash) && @provider_call_ids_by_index[stream_key] == tool_call.provider_call_id
         end
       end
 
