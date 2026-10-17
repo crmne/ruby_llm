@@ -20,7 +20,7 @@ module RubyLLM
         def format_message_group(group, **options)
           content = group.first.raw_content
           return super unless group.one? && content.is_a?(Array) &&
-                              content.all? { |entry| entry.is_a?(Hash) && entry['role'] }
+                              content.all? { |entry| entry.is_a?(Hash) && entry['role'] && !entry['type'] }
 
           content.map { |entry| entry.except('index') }
         end

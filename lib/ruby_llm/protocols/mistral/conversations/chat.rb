@@ -70,13 +70,17 @@ module RubyLLM
           end
 
           def format_entry(message)
-            if message.raw_content
-              Array(message.raw_content)
+            if conversation_entries?(message.raw_content)
+              message.raw_content
             elsif message.tool_result?
               [{ type: 'function.result', tool_call_id: message.provider_call_id, result: message.content.to_s }]
             else
               format_conversation_message(message)
             end
+          end
+
+          def conversation_entries?(content)
+            content.is_a?(Array) && content.all? { |entry| entry.is_a?(Hash) && entry['type'] }
           end
 
           def replay_conversation_entry(entry, index)

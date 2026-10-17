@@ -148,6 +148,18 @@ RSpec.describe RubyLLM::Protocols::Mistral::Conversations do
     expect(entries.first['type']).to eq('tool.execution')
   end
 
+  it 'renders a Chat Completions turn as conversation entries instead of replaying its messages' do
+    messages = [
+      { 'role' => 'assistant', 'content' => '', 'tool_calls' => [{ 'id' => 'imagecall', 'type' => 'function' }] },
+      { 'role' => 'tool', 'tool_call_id' => 'imagecall', 'content' => '{"url":"https://example.com/image.jpg"}' },
+      { 'role' => 'assistant', 'content' => 'Your image.' }
+    ]
+    message = RubyLLM::Message.new(role: :assistant, content: 'Your image.', raw_content: messages)
+
+    expect(protocol.send(:format_entries, [message]))
+      .to eq([{ type: 'message.input', role: 'assistant', content: 'Your image.' }])
+  end
+
   it 'rejects truncated conversation streams and reports provider stream errors' do
     allow(protocol).to receive(:stream_events).and_return(instance_double(Faraday::Response))
     expect { protocol.send(:stream_response, {}) { |_chunk| nil } }
