@@ -64,6 +64,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(resumed).not_to be_awaiting_tasks
   end
 
+  it 'keeps the task when checking on it fails' do
+    chat = paused_chat
+    resumed = Chat.find(chat.id).with_mcp(reports)
+    allow(reports).to receive(:poll_task).and_raise(RubyLLM::MCP::Error.new('Connection lost'))
+
+    expect { resumed.complete }.to raise_error(RubyLLM::MCP::Error, 'Connection lost')
+
+    expect(tool_call_record.mcp_state['task']).to include('taskId' => 'task-1')
+    expect(Chat.find(chat.id).with_mcp(reports)).to be_awaiting_tasks
+  end
+
   it 'cancels the task when another process cancels the chat' do
     chat = paused_chat('endless_report')
     Chat.find(chat.id).cancel

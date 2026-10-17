@@ -704,7 +704,7 @@ reports = Reports.new.listen(tasks: chat.pending_tasks)
 
 A server decides whether it announces the status of a task, and servers that predate 2026-07-28 never do, so `listen` raises `RubyLLM::MCP::Error` for tasks it won't hear about. Checking with `complete` works either way.
 
-A task that needs input pauses the chat on [input requests](#input-requests): answer them and call `complete`. A task that fails raises `RubyLLM::MCP::Error` from `complete`. Cancelling the chat cancels its tasks the next time it runs, so after `chat.cancel`, or the persisted flag on a Rails record, `complete` cancels them and raises `RubyLLM::CancelledError`. `task.cancel` asks the server right away; the server may still finish the task.
+A task that needs input pauses the chat on [input requests](#input-requests): answer them and call `complete`. A task that fails raises `RubyLLM::MCP::Error` from `complete`. When checking on a task raises, a Rails chat keeps the paused tool call and its task, so `complete` checks again, and `cancel` drops them. Cancelling the chat cancels its tasks the next time it runs, so after `chat.cancel`, or the persisted flag on a Rails record, `complete` cancels them and raises `RubyLLM::CancelledError`. `task.cancel` asks the server right away; the server may still finish the task.
 
 Outside a chat, `call` waits for the task of a tool you call directly, and `wait` waits for any task, both up to the server's `timeout`:
 
