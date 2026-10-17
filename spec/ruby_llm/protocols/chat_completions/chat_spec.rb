@@ -249,6 +249,78 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(formatted.dig(1, :content, 1, :image_url, :detail)).to eq('original')
     end
 
+    it 'sends assistant attachments in a user message after the assistant text' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Draw a boat'),
+        RubyLLM::Message.new(role: :assistant, content: 'Here it is', attachments: [image]),
+        RubyLLM::Message.new(role: :user, content: 'Make it red')
+      ]
+
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, messages)
+
+      expect(formatted.map { |message| message[:role] }).to eq(%w[user assistant user user])
+      expect(formatted[1]).to eq(role: 'assistant', content: 'Here it is')
+      expect(formatted[2][:content].map { |part| part[:type] }).to eq(%w[text image_url])
+      expect(formatted[2][:content].first[:text]).to eq('Attachments from the assistant:')
+      expect(formatted[3]).to eq(role: 'user', content: 'Make it red')
+    end
+
+    it 'keeps an assistant turn that only carries attachments' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Draw a boat'),
+        RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image])
+      ]
+
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, messages)
+
+      expect(formatted.map { |message| message[:role] }).to eq(%w[user user])
+      expect(formatted[1][:content].map { |part| part[:type] }).to eq(%w[text image_url])
+    end
+
+    it 'keeps the thinking of an assistant turn that only carries attachments' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      message = RubyLLM::Message.new(role: :assistant, content: nil, attachments: [image],
+                                     thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig'))
+
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, [message])
+
+      expect(formatted.map { |entry| entry[:role] }).to eq(%w[assistant user])
+      expect(formatted[0]).to include(content: '', reasoning_content: 'why')
+    end
+
+    it 'sends assistant attachments after the results of the same turn' do
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      calls = %w[call_1 call_2].to_h do |id|
+        [id, RubyLLM::ToolCall.new(id:, provider_call_id: id, name: 'weather', arguments: {})]
+      end
+      messages = [
+        RubyLLM::Message.new(role: :assistant, content: '', attachments: [image], tool_calls: calls),
+        RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1'),
+        RubyLLM::Message.new(role: :tool, content: 'Rainy', tool_call_id: 'call_2', attachments: [image])
+      ]
+
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, messages)
+
+      expect(formatted.map { |message| message[:role] }).to eq(%w[assistant tool tool user user])
+      expect(formatted[0][:content]).to eq('')
+      expect(formatted[0][:tool_calls].length).to eq(2)
+      expect(formatted[3][:content].first[:text]).to eq('Attachments from the assistant:')
+      expect(formatted[4][:content].first[:text]).to eq('Attachments from tool call call_2:')
+    end
+
+    it 'keeps assistant attachments out of the assistant message on OpenRouter' do
+      provider = RubyLLM::Providers::OpenRouter::ChatCompletions.allocate
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      message = RubyLLM::Message.new(role: :assistant, content: 'Here it is', attachments: [image])
+
+      formatted = provider.send(:format_messages, [message])
+
+      expect(formatted.map { |entry| entry[:role] }).to eq(%w[assistant user])
+      expect(formatted[0][:content]).to eq('Here it is')
+    end
+
     it 'renders system messages before conversation messages' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'Hi'),
