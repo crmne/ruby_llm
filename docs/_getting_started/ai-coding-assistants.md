@@ -20,21 +20,21 @@ The RubyLLM gem includes an [Agent Skill](https://agentskills.io/) for building 
 
 ## Install the Skill
 
-From your application directory, install the skill packaged with your RubyLLM version:
+From your application directory, install the skill packaged with your RubyLLM version with the [`skill`](https://github.com/crmne/skill) installer:
 
 ```bash
-npx skills add "$(bundle show ruby_llm)" --skill rubyllm
+gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agent claude-code
 ```
 
-The [skills installer](https://github.com/vercel-labs/skills) prompts you to choose your coding assistant and installation scope. Installing from the gem keeps the skill aligned with the version in your bundle.
+`--agent` names your coding assistant: `claude-code`, `codex`, `cursor`, `gemini-cli`, `github-copilot`, or several separated by commas. `gem exec skill agents` lists them all. Name it rather than letting `skill` detect it, so the skill goes only to your coding assistant: in a RubyLLM application `skill` also installs into `app/skills`, where your own chats would load it. Installing from the gem keeps the skill aligned with the version in your bundle. `gem exec` needs RubyGems 3.5 or newer; with an older RubyGems, run `gem install skill` once and use `skill add`.
 
 You can also install the skill from the repository:
 
 ```bash
-npx skills add crmne/ruby_llm --skill rubyllm
+gem exec skill add crmne/ruby_llm@rubyllm --agent claude-code
 ```
 
-The repository version follows RubyLLM development. For an application pinned to a released version, prefer the skill packaged with that gem. To install without the CLI, copy the gem's `skills/rubyllm` directory into the skill directory supported by your coding assistant.
+The repository version follows RubyLLM development. For an application pinned to a released version, prefer the skill packaged with that gem, or name the tag of your version, like `crmne/ruby_llm#v2.1.1@rubyllm`. `skill` records the source and commit in `skills.lock`. To install without the installer, copy the gem's `skills/rubyllm` directory into the skill directory supported by your coding assistant.
 
 ## Use the Skill
 
@@ -46,6 +46,6 @@ The skill asks the assistant to check your installed version and consult the rel
 
 ## Keep It Current
 
-After updating RubyLLM, repeat the installation command from your application directory. Review skill updates alongside dependency updates.
+After updating RubyLLM, repeat the installation command from your application directory: it replaces the skill with the one from your new version. If you installed from the repository's `main`, `gem exec skill update` shows what changed and asks before applying it. Review skill updates alongside dependency updates.
 
 The skill is maintained with the source and guides. It contains API conventions and links to versioned documentation, rather than a generated copy of every guide. It does not run an automatic updater or change your application when RubyLLM publishes a new version.
