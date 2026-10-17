@@ -22,6 +22,13 @@
     <%% end %>
   </div>
 
+  <div id="queued_<%= message_table_name %>" class="space-y-5 my-5">
+    <%% @<%= chat_variable_name %>.queued_messages.each do |queued_message| %>
+      <%%= render "<%= message_model_name.underscore.pluralize %>/queued_message",
+        queued_message: queued_message, <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
+    <%% end %>
+  </div>
+
   <%%= render "<%= chat_model_name.underscore.pluralize %>/approvals", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
   <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>

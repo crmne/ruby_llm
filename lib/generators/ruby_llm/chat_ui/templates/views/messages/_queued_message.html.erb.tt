@@ -1,0 +1,8 @@
+<div id="queued_message_<%%= queued_message.id %>" class="queued-<%= message_variable_name %>"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #007bff; opacity: 0.6;">
+  <div style="font-weight: bold; margin-bottom: 5px;">User <span style="font-weight: normal; color: #666;">(queued)</span></div>
+  <div style="white-space: pre-wrap;"><%%= queued_message.content %></div>
+  <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: queued_message %>
+  <%%= button_to "Cancel", <%= chat_variable_name %>_queued_message_path(<%= chat_model_name.demodulize.underscore %>, queued_message),
+    method: :delete, form: { style: "display: inline-block; margin-top: 5px;" } %>
+</div>

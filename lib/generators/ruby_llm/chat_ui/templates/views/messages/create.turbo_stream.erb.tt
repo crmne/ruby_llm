@@ -3,3 +3,8 @@
     <%= chat_variable_name %>: @<%= chat_variable_name %>,
     <%= message_variable_name %>: @<%= chat_variable_name %>.<%= message_table_name %>.build %>
 <%% end %>
+<%% if @queued_message %>
+  <%%= turbo_stream.append "queued_<%= message_table_name %>",
+    partial: "<%= message_model_name.underscore.pluralize %>/queued_message",
+    locals: { queued_message: @queued_message, <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> } %>
+<%% end %>

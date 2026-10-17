@@ -83,10 +83,10 @@ bin/rails generate ruby_llm:chat_ui
 The generator creates:
 
 - **Agent**: `ChatAgent`, which the controllers and job create and load chats through
-- **Controllers**: Create chats, save messages and enqueue their replies, and record approval decisions
-- **Views**: Render messages, their attachments, and approval cards, and update them with Turbo Streams
-- **Jobs**: Request AI responses in the background and continue the conversation after a decision
-- **Routes**: RESTful routes for chats, messages, and approvals
+- **Controllers**: Create chats, save messages and enqueue their replies, queue and unqueue messages sent during a reply, and record approval decisions
+- **Views**: Render messages, their attachments, queued messages, and approval cards, and update them with Turbo Streams
+- **Jobs**: Request AI responses in the background and continue the conversation after a decision or with queued messages
+- **Routes**: RESTful routes for chats, messages, queued messages, and approvals
 
 Start your server and visit `http://localhost:3000/chats`.
 
@@ -95,12 +95,14 @@ The controllers save the user's message with `chat.ask_later` before they enqueu
 ```ruby
 class ChatResponseJob < ApplicationJob
   def perform(chat_id)
-    ChatAgent.find(chat_id).complete(&:broadcast)
+    chat = ChatAgent.find(chat_id)
+    chat.complete(&:broadcast)
+    self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?
   end
 end
 ```
 
-Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller, `app/javascript/controllers/chat_message_controller.js`, puts the chunks in order and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. The generator pins its two dependencies, `marked` and `dompurify`, with `bin/importmap pin` at exact versions. In an app that bundles its JavaScript, it prints the `yarn add` command and `bin/rails stimulus:manifest:update` instead. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues). While the job runs the chat, an empty reply shows "Thinking…" and the message form gives way to "Replying…". The page refreshes when the job finishes, which brings the form back. `MessagesController` refuses a message sent in the meantime. It reads `chat.running?`, so a job that dies frees the chat once its claim expires.
+Replies stream into the page chunk by chunk, and the finished message replaces the streamed text once when it is saved. New messages, approval cards, and the form appear through page refreshes, so the page always matches what a reload would show. A Stimulus controller, `app/javascript/controllers/chat_message_controller.js`, puts the chunks in order and renders assistant replies as Markdown, sanitized with DOMPurify. Images in a reply show as text, so a prompt injection cannot make the browser fetch a URL that leaks the chat, while attachments still show. The generator pins its two dependencies, `marked` and `dompurify`, with `bin/importmap pin` at exact versions. In an app that bundles its JavaScript, it prints the `yarn add` command and `bin/rails stimulus:manifest:update` instead. Without JavaScript, replies show as plain text. See [Message Ordering Issues]({% link _advanced/rails-streaming.md %}#message-ordering-issues). While the job runs the chat, an empty reply shows "Thinking…" and the message form stays. A message sent in the meantime is [queued]({% link _advanced/rails-persistence.md %}#queued-messages): `MessagesController` calls `chat.queue` while `chat.running?`, and the message shows under the transcript, faded, with a Cancel button that posts to `QueuedMessagesController#destroy`, which calls `chat.unqueue`. The running job takes it at its next step, so the reply goes on to answer it, and the page refresh then shows it in the transcript. `chat.running?` reads the chat's claim, so a job that dies frees the chat once its claim expires.
 
 The UI generator also supports custom model names:
 

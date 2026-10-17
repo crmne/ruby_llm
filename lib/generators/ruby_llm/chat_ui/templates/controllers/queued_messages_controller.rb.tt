@@ -1,0 +1,14 @@
+class <%= queued_message_controller_class_name %> < ApplicationController
+  before_action :set_<%= chat_variable_name %>
+
+  def destroy
+    @<%= chat_variable_name %>.unqueue(params[:id])
+    redirect_to @<%= chat_variable_name %>, status: :see_other
+  end
+
+  private
+
+  def set_<%= chat_variable_name %>
+    @<%= chat_variable_name %> = <%= chat_agent_class_name %>.find(params[:<%= chat_model_name.include?('::') ? chat_model_name.demodulize.underscore : chat_variable_name %>_id])
+  end
+end

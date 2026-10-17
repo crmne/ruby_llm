@@ -84,6 +84,8 @@ module RubyLLM
         template ui_template('views/messages/_attachments.html.erb'),
                  "app/views/#{message_view_path}/_attachments.html.erb"
         template ui_template('views/messages/_form.html.erb'), "app/views/#{message_view_path}/_form.html.erb"
+        template ui_template('views/messages/_queued_message.html.erb'),
+                 "app/views/#{message_view_path}/_queued_message.html.erb"
 
         # Model views
         template ui_template('views/models/index.html.erb'), "app/views/#{model_view_path}/index.html.erb"
@@ -102,6 +104,8 @@ module RubyLLM
         template 'controllers/messages_controller.rb', "app/controllers/#{message_controller_path}_controller.rb"
         template 'controllers/models_controller.rb', "app/controllers/#{model_controller_path}_controller.rb"
         template 'controllers/approvals_controller.rb', "app/controllers/#{approval_view_path}_controller.rb"
+        template 'controllers/queued_messages_controller.rb',
+                 "app/controllers/#{queued_message_controller_path}_controller.rb"
       end
 
       def create_agent
@@ -171,6 +175,7 @@ module RubyLLM
             end
             resources :#{chat_resource} do
               resources :#{message_resource}, only: [ :create ]
+              resources :queued_messages, only: [ :destroy ]
               resources :approvals, only: [ :create ]
             end
           ROUTES
@@ -190,6 +195,7 @@ module RubyLLM
           chat_routes = <<~ROUTES.strip
             resources :#{chat_table_name} do
               resources :#{message_table_name}, only: [ :create ]
+              resources :queued_messages, only: [ :destroy ]
               resources :approvals, only: [ :create ]
             end
           ROUTES
@@ -248,6 +254,15 @@ module RubyLLM
 
       def approval_view_path = approval_model_name.underscore.pluralize
       def approval_controller_class_name = controller_class_name_for(approval_model_name)
+
+      def queued_message_model_name
+        return 'QueuedMessage' unless chat_model_name.include?('::')
+
+        "#{chat_model_name.deconstantize}::QueuedMessage"
+      end
+
+      def queued_message_controller_path = queued_message_model_name.underscore.pluralize
+      def queued_message_controller_class_name = controller_class_name_for(queued_message_model_name)
       def chat_agent_class_name = "#{chat_model_name}Agent"
 
       def application_agent_chat_model?
