@@ -118,6 +118,7 @@ RSpec.describe RubyLLM::Embedding, :live do
       expect(embedding.vectors).to be_an(Array)
       expect(embedding.vectors.first).to be_a(Float)
       expect(embedding.model).to eq(model_for(:bedrock, :multimodal_embedding))
+      expect(embedding.tokens.input).to be_positive
     end
 
     it "bedrock/#{model_for(:bedrock, :multimodal_embedding)} embeds multiple texts with custom dimensions" do
