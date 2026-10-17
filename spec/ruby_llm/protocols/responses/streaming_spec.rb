@@ -30,6 +30,18 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.raw_content).to eq(output)
   end
 
+  it 'keeps the raw output when a streamed response holds a phased message' do
+    output = [
+      { 'type' => 'reasoning', 'id' => 'rs_1', 'encrypted_content' => 'only', 'summary' => [] },
+      { 'type' => 'message', 'role' => 'assistant', 'phase' => 'commentary',
+        'content' => [{ 'type' => 'output_text', 'text' => 'Checking.' }] }
+    ]
+    chunk = build_chunk({ 'type' => 'response.completed',
+                          'response' => { 'output' => output, 'status' => 'completed' } })
+
+    expect(chunk.raw_content).to eq(output)
+  end
+
   it 'streams output text deltas as content' do
     chunk = build_chunk({ 'type' => 'response.output_text.delta', 'delta' => 'Hel' })
 

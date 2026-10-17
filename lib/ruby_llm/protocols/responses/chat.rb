@@ -109,10 +109,11 @@ module RubyLLM
 
         PORTABLE_OUTPUT_ITEM_TYPES = (%w[message function_call] + TOOL_SEARCH_ITEM_TYPES).freeze
 
-        # A message carries one thinking signature, so output with more
-        # reasoning items than that only replays whole from its raw items.
+        # A message carries one thinking signature and no phase, so output
+        # with more reasoning items than that, or with a phase OpenAI asks to
+        # have sent back, only replays whole from its raw items.
         def keep_raw_output?(output, server_tool_calls)
-          server_tool_calls.any? || output.any? { |item| namespaced_call?(item) } ||
+          server_tool_calls.any? || output.any? { |item| namespaced_call?(item) || item['phase'] } ||
             output.count { |item| item['type'] == 'reasoning' } > 1
         end
 

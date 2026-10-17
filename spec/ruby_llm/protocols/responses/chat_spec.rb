@@ -547,6 +547,31 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       end
     end
 
+    context 'with a phased assistant message' do
+      let(:output) do
+        [
+          { 'type' => 'reasoning', 'id' => 'rs_1', 'encrypted_content' => 'only', 'summary' => [] },
+          { 'type' => 'message', 'id' => 'msg_1', 'role' => 'assistant', 'status' => 'completed',
+            'phase' => 'final_answer', 'content' => [{ 'type' => 'output_text', 'text' => 'Done.' }] }
+        ]
+      end
+
+      it 'keeps the raw output so the phase replays with the message' do
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.raw_content).to eq(output)
+        expect(protocol.send(:format_input, [message]).last).to include('phase' => 'final_answer')
+      end
+
+      it 'keeps no raw output for a message whose phase is null' do
+        output.last['phase'] = nil
+
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.raw_content).to be_nil
+      end
+    end
+
     it 'preserves incomplete_details reason as finish_reason when present' do
       response = instance_double(
         Faraday::Response,
