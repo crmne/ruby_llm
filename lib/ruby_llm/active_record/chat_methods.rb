@@ -171,47 +171,59 @@ module RubyLLM
           @pending_model_id = value.respond_to?(:id) ? value.id : value
           @pending_provider = value.provider if value.respond_to?(:provider)
         end
+        @chat_model_stale = true if @chat
       end
 
       # Stores +value+ as the model id, resolved to a model record before save.
       def model_id=(value)
-        @pending_model_id = value
+        self.model = value
       end
 
-      # Returns the model id of the associated model record, or +nil+.
+      # Returns the model id assigned since the last save, or that of the
+      # associated model record, or +nil+.
       #
       #   chat.model_id # => "gpt-6-luna"
       #
       def model_id
-        model&.model_id || @pending_model_id
+        @pending_model_id || model&.model_id
       end
 
       # Stores +value+ as the provider used when resolving the model id
       # before save.
       def provider=(value)
         @pending_provider = value
+        @chat_model_stale = true if @chat
       end
 
-      # Returns the provider of the associated model record, or +nil+.
+      # Returns the provider assigned since the last save, or that of the
+      # associated model record, or +nil+. A model id assigned without a
+      # provider has none until save resolves it.
       def provider
-        model&.provider || @pending_provider
+        @pending_provider || (model&.provider unless @pending_model_id)
       end
 
       # Returns the underlying RubyLLM::Chat for this record, building it on
       # first call and memoizing it. The chat is loaded with the persisted
       # messages and wired to persist new ones. Subsequent calls return the
-      # same chat without touching the database; use #reload to refresh its
-      # message history from the record.
+      # same chat without touching the database, switched to any model
+      # assigned since; use #reload to refresh its message history from the
+      # record.
       def to_llm
-        @chat ||= build_llm_chat # rubocop:disable Naming/MemoizedInstanceVariableName
+        @chat ||= build_llm_chat
+        @chat.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:) if @chat_model_stale
+        @chat_model_stale = false
+        @chat
       end
 
       # Reloads the record from the database, Rails-style, and refreshes the
       # underlying chat's persisted message history to match. Runtime-only
-      # configuration such as tools, temperature, and callbacks is preserved.
+      # configuration such as tools, temperature, and callbacks is preserved;
+      # a model or provider assigned since the last save is discarded.
       # Returns +self+.
       def reload(...)
         super
+        @chat_model_stale = true if @chat && (@pending_model_id || @pending_provider)
+        @pending_model_id = @pending_provider = nil
         sync_messages if @chat
         self
       end
@@ -857,7 +869,7 @@ module RubyLLM
       def resolve_model
         config = context&.config || RubyLLM.config
         @pending_model_id ||= config.default_model unless model
-        return unless @pending_model_id
+        return unless @pending_model_id || (@pending_provider && model)
 
         model_info = resolve_model_info
 
@@ -874,12 +886,12 @@ module RubyLLM
         begin
           find_registered_model
         rescue RubyLLM::ModelNotFoundError
-          RubyLLM::Model.default(@pending_model_id, @pending_provider)
+          RubyLLM::Model.default(model_id, @pending_provider)
         end
       end
 
       def find_registered_model
-        RubyLLM.models.find(@pending_model_id, provider: @pending_provider, config: context&.config)
+        RubyLLM.models.find(model_id, provider: @pending_provider, config: context&.config)
       end
 
       # An empty store would otherwise hold only this chat's model on the next
