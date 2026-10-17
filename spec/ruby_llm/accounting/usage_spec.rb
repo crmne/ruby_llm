@@ -21,11 +21,54 @@ RSpec.describe 'RubyLLM::Accounting::Usage::Tracker' do
     tracker = build_tracker
     entry = tracker.start
 
-    tracker.fail_attempt(entry, Faraday::ConnectionFailed.new('connection refused'))
+    tracker.fail_attempt(entry, Faraday::ConnectionFailed.new(Errno::ECONNREFUSED.new))
 
     expect(entry.status).to eq(:failed)
     expect(entry.tokens.to_h).to eq(input_tokens: 0, output_tokens: 0)
     expect(entry).to be_usage_available
+  end
+
+  it 'records zero tokens for a failed TLS handshake' do
+    tracker = build_tracker
+    entry = tracker.start
+    handshake = OpenSSL::SSL::SSLError.new('SSL_connect returned=1 errno=0 state=error: certificate verify failed')
+
+    tracker.fail_attempt(entry, Faraday::SSLError.new(handshake))
+
+    expect(entry.tokens.to_h).to eq(input_tokens: 0, output_tokens: 0)
+  end
+
+  it 'keeps usage unknown when the connection drops after the request was sent' do
+    [Errno::ECONNRESET.new, Errno::EPIPE.new, EOFError.new('end of file reached')].each do |cause|
+      tracker = build_tracker
+      entry = tracker.start
+
+      tracker.fail_attempt(entry, Faraday::ConnectionFailed.new(cause))
+
+      expect(entry.status).to eq(:failed)
+      expect(entry.tokens.to_h).to eq({})
+      expect(entry).not_to be_usage_available
+    end
+  end
+
+  it 'keeps usage unknown when a TLS connection breaks after the handshake' do
+    tracker = build_tracker
+    entry = tracker.start
+    broken = OpenSSL::SSL::SSLError.new('SSL_read: unexpected eof while reading')
+
+    tracker.fail_attempt(entry, Faraday::SSLError.new(broken))
+
+    expect(entry).not_to be_usage_available
+  end
+
+  it 'keeps usage unknown once the stream delivered a chunk' do
+    tracker = build_tracker
+    entry = tracker.start
+    tracker.observe(RubyLLM::Chunk.new(role: :assistant, content: 'Hello'))
+
+    tracker.fail_attempt(entry, Faraday::ConnectionFailed.new(Errno::ECONNREFUSED.new))
+
+    expect(entry).not_to be_usage_available
   end
 
   it 'retains absent model identity and unknown token accounting for model-free operations' do
