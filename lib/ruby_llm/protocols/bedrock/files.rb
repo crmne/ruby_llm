@@ -5,6 +5,10 @@ module RubyLLM
     module Bedrock
       # S3-backed file storage for Bedrock batch input and output.
       class Files < Protocols::Files
+        # S3 object keys allow spaces and other characters URI() rejects or
+        # reads as a query or fragment.
+        S3_URI = %r{\As3://([^/]+)/?(.*)\z}m
+
         # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, purpose: nil, expires_in: nil, uri: nil, content_type: nil,
                    provider_options: {})
@@ -99,10 +103,10 @@ module RubyLLM
         end
 
         def parse_s3_uri(uri)
-          parsed = URI(uri)
-          raise ArgumentError, "Expected an s3:// URI, got: #{uri}" unless parsed.scheme == 's3'
+          match = S3_URI.match(uri.to_s)
+          raise ArgumentError, "Expected an s3:// URI, got: #{uri}" unless match
 
-          [parsed.host, parsed.path.delete_prefix('/')]
+          [match[1], match[2]]
         end
       end
     end
