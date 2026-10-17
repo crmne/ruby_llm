@@ -68,10 +68,11 @@ module RubyLLM
       end
 
       # Returns the resource as an Attachment, which is how chats take it
-      # through +with:+.
+      # through +with:+. The attachment has the MIME type the server reports
+      # when the URI has no file extension.
       def to_attachment
         filename = Content.filename(uri)
-        Attachment.new(StringIO.new(to_blob), filename: filename.empty? ? name : filename)
+        Content.file(to_blob, mime_type, filename.empty? ? name : filename)
       end
 
       private

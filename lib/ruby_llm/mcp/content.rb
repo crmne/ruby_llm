@@ -29,9 +29,14 @@ module RubyLLM
       end
 
       def attachment(data, mime_type, name)
+        file(Base64.decode64(data.to_s), mime_type, name)
+      end
+
+      def file(bytes, mime_type, name)
+        name = name.to_s.empty? ? 'resource' : name.to_s
         extension = Marcel::TYPE_EXTS[mime_type]&.first
-        name = "#{name}.#{extension}" unless name.to_s.include?('.') || extension.nil?
-        Attachment.new(StringIO.new(Base64.decode64(data.to_s)), filename: name.to_s)
+        name = "#{name}.#{extension}" unless name.include?('.') || extension.nil?
+        Attachment.new(StringIO.new(bytes), filename: name)
       end
 
       def filename(uri)
