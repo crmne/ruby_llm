@@ -52,16 +52,31 @@ module RubyLLM
           end
 
           def format_entries(messages)
-            entries = messages.reject { |message| message.role == :system }.flat_map do |message|
-              if message.raw_content
-                Array(message.raw_content)
-              elsif message.tool_result?
-                [{ type: 'function.result', tool_call_id: message.provider_call_id, result: message.content.to_s }]
-              else
-                format_conversation_message(message)
-              end
-            end
+            entries = messages.reject { |message| message.role == :system }
+                              .chunk_while { |previous, current| previous.tool_result? && current.tool_result? }
+                              .flat_map { |group| format_entry_group(group) }
             entries.each_with_index.flat_map { |entry, index| replay_conversation_entry(entry, index) }
+          end
+
+          # Function results are text-only on the wire and a round's results
+          # stay consecutive, so tool attachments ride a user entry after them.
+          def format_entry_group(group)
+            carriers = group.select do |message|
+              message.tool_result? && message.raw_content.nil? && message.attachments.any?
+            end
+
+            group.flat_map { |message| format_entry(message) } +
+              carriers.map { |message| { type: 'message.input', **tool_attachment_message(message) } }
+          end
+
+          def format_entry(message)
+            if message.raw_content
+              Array(message.raw_content)
+            elsif message.tool_result?
+              [{ type: 'function.result', tool_call_id: message.provider_call_id, result: message.content.to_s }]
+            else
+              format_conversation_message(message)
+            end
           end
 
           def replay_conversation_entry(entry, index)
