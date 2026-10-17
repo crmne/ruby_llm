@@ -143,8 +143,8 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
       expect(protocol.send(:parse_batch_response, data)).to include(raw_status: 'processing', completed: false)
     end
 
-    it 'reports a batch with no cancellation as succeeded' do
-      data = { 'batch_id' => 'batch_1', 'cancel_time' => nil,
+    it 'reports a batch cancelled after every request finished as succeeded' do
+      data = { 'batch_id' => 'batch_1', 'cancel_time' => '2026-10-11T00:00:00Z',
                'state' => { 'num_requests' => 2, 'num_pending' => 0, 'num_success' => 2, 'num_cancelled' => 0 } }
 
       attributes = protocol.send(:parse_batch_response, data)
