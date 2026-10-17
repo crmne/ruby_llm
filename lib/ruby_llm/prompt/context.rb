@@ -7,7 +7,7 @@
 # RubyLLM lexical scope: +Chat+ in a template is the application's model,
 # not RubyLLM::Chat.
 class RubyLLM::Prompt::Context # rubocop:disable Style/ClassAndModuleChildren
-  LOCAL_VARIABLE_NAME = /\A(?![A-Z0-9])[[:alnum:]_[:^ascii:]]+\z/
+  LOCAL_VARIABLE_NAME = /\A(?![[:upper:]\p{Lt}0-9])[[:alnum:]_[:^ascii:]]+\z/
   private_constant :LOCAL_VARIABLE_NAME
 
   # Returns the locals passed to the current prompt or partial. Use it to
