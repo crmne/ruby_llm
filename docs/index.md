@@ -640,14 +640,14 @@ SupportAgent.find(chat_id).ask "Where's my refund?"
     <div class="home-skill-install home-code-grid home-code-grid--bare" markdown="1">
 
 ```sh
-gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agent claude-code
+gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
 ```
 {: .home-code-card }
 
 </div>
 
     <p class="home-small-note">
-      Run this from your application after installing RubyLLM. Name your coding assistant with <code>--agent</code>: <code>claude-code</code>, <code>codex</code>, <code>cursor</code>, and more.
+      Run this from your application after installing RubyLLM. <code>--agents coding</code> installs it for the coding assistants your project uses, and keeps it out of your app's <code>app/skills</code>.
       <a href="{% link _getting_started/ai-coding-assistants.md %}">Skill setup and updates</a>
     </p>
   </div>
