@@ -473,7 +473,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tokens.cache_write).to eq(100)
     end
 
-    it 'reports the completed status as finish_reason for function calls' do
+    it 'reports a tool-call stop as finish_reason for function calls' do
       response = response_with([
                                  { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
                                    'arguments' => '{}' }
@@ -481,9 +481,21 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.finish_reason).to eq(:stop)
+      expect(message.finish_reason).to eq(:tool_calls)
       expect(message).to be_tool_call_stop
       expect(message).not_to be_stopped
+    end
+
+    it 'reports a normal stop when the provider ran every tool itself' do
+      response = response_with([
+                                 { 'type' => 'web_search_call', 'id' => 'ws_1', 'status' => 'completed' },
+                                 { 'type' => 'message', 'content' => [{ 'type' => 'output_text', 'text' => 'Done' }] }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq(:stop)
+      expect(message).to be_stopped
     end
 
     it 'preserves incomplete_details reason as finish_reason when present' do
