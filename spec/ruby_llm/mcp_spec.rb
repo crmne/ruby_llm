@@ -1207,6 +1207,11 @@ RSpec.describe RubyLLM::MCP do
       expect(docs.inspect).to eq('#<RubyLLM::MCP name: "learn_microsoft", url: "https://learn.microsoft.com/api/mcp">')
     end
 
+    it 'names a server on a local host after the whole host' do
+      expect(RubyLLM.mcp(url: 'http://localhost:3001/mcp').name).to eq('localhost')
+      expect(RubyLLM.mcp(url: 'http://127.0.0.1:3001/mcp').name).to eq('127_0_0_1')
+    end
+
     it 'accepts a prefix and OAuth settings' do
       owner = Object.new
       linear = RubyLLM.mcp(url: 'https://mcp.linear.app/mcp', prefix: 'mcp_1', oauth: { owner:, scopes: %w[read] })
