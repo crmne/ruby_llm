@@ -58,16 +58,21 @@ module RubyLLM
     # Seconds a run may take when the sandbox sets no timeout.
     DEFAULT_TIMEOUT = 120
 
+    # The values Configuration#sandbox_backend accepts.
+    BACKENDS = %i[bubblewrap landlock].freeze
+
     class << self
       # Returns a runner for the sandbox +value+ describes, or +nil+ for
       # none. A String names the sandbox class, looked up on each call.
+      # An MXC::Sandbox runs on +backend+ on Linux unless it names its own.
       #
-      # Raises ConfigurationError for a value that is not a sandbox.
-      def resolve(value) # :nodoc:
+      # Raises ConfigurationError for a value that is not a sandbox, or for
+      # a backend other than those in BACKENDS.
+      def resolve(value, backend: RubyLLM.config.sandbox_backend) # :nodoc:
         return if value.nil?
 
         value = constant(value) if value.is_a?(String)
-        return MXC.new(value) if mxc?(value)
+        return MXC.new(value, backend: backend_name(backend)) if mxc?(value)
 
         instance = value.is_a?(Class) ? value.new : value
         return instance if instance.respond_to?(:run) && instance.respond_to?(:supported?)
@@ -107,6 +112,14 @@ module RubyLLM
       end
 
       private
+
+      def backend_name(backend)
+        name = backend.respond_to?(:to_sym) ? backend.to_sym : backend
+        return name if BACKENDS.include?(name)
+
+        raise ConfigurationError,
+              "config.sandbox_backend is #{BACKENDS.map(&:inspect).join(' or ')}, got #{backend.inspect}"
+      end
 
       def class_name(value)
         return value if value.is_a?(String)

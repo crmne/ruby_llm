@@ -5,17 +5,6 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Sandbox::MXC do
   include_context 'with configured RubyLLM'
 
-  def self.mxc_supported?
-    require 'mxc'
-    MXC.supported?
-  rescue LoadError
-    false
-  end
-
-  def self.network_policy_supported?
-    mxc_supported? && MXC.supports?(:network_policy)
-  end
-
   let(:sandbox) { RubyLLM::Sandbox.resolve(MXC::Sandbox) }
   let(:cache_dir) { Dir.mktmpdir('ruby_llm-packages-spec') }
   let(:chat) do
@@ -25,7 +14,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     end.chat(model: model_for(:openai), provider: :openai)
   end
 
-  before { skip 'mxc cannot start a sandbox on this machine' unless self.class.mxc_supported? }
+  before { skip 'mxc cannot start a sandbox on this machine' unless SandboxBackend.supported? }
   after { FileUtils.rm_rf(cache_dir) }
 
   def run_code(code, language: 'ruby', **options)
@@ -36,9 +25,10 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     JSON.parse(Array(result).first)
   end
 
-  it 'runs here' do
+  it 'runs here, on the configured backend' do
     expect(sandbox).to be_supported
     expect(sandbox.reason).to be_nil
+    expect(sandbox.backend).to eq(SandboxBackend.name)
   end
 
   it 'runs a command with the paths, directory, and environment it is given' do
@@ -122,7 +112,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
     output = report(run_code("puts File.read('attachments/data.csv'); File.write('attachments/data.csv', 'x')"))
 
     expect(output['stdout']).to eq("1,2\n")
-    expect(output['stderr']).to match(/Read-only file system|Operation not permitted/)
+    expect(output['stderr']).to match(/Read-only file system|Operation not permitted|Permission denied/)
   end
 
   it 'runs shell scripts' do
@@ -154,6 +144,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   it 'runs LibreOffice, Poppler, and fontconfig with a writable home and cache' do
     installed = %w[soffice pdftoppm fc-list].all? { |tool| system('which', tool, out: File::NULL) }
     skip 'LibreOffice and Poppler are not installed' unless installed
+    skip 'LibreOffice writes to /tmp, which Landlock leaves out' if SandboxBackend.landlock?
 
     text, *files = run_code(<<~SH, language: 'shell')
       printf 'Quarterly report' > report.txt
@@ -181,7 +172,7 @@ RSpec.describe RubyLLM::Sandbox::MXC do
   end
 
   it 'installs declared gems once, with only RubyGems reachable' do
-    skip 'host allow-lists are not available on this machine' unless self.class.network_policy_supported?
+    skip 'host allow-lists are not available on this machine' unless SandboxBackend.network_policy?
 
     output = report(run_code("require 'rainbow'; puts Gem.loaded_specs.fetch('rainbow').version", gems: %w[rainbow]))
 

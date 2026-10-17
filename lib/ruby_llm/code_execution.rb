@@ -108,7 +108,7 @@ module RubyLLM
 
       def available?(key, sandbox, language, **) # :nodoc:
         CHECKS_LOCK.synchronize do
-          checks = CHECKS[language.name]
+          checks = CHECKS[[language.name, (sandbox.backend if sandbox.respond_to?(:backend))]]
           return checks[key] if checks.key?(key)
 
           checks[key] = runs?(sandbox, language, **)
@@ -213,6 +213,7 @@ module RubyLLM
                    languages: %i[ruby shell], **packages)
       super()
       @sandbox = sandbox
+      @config = config
       self.sandbox
       @escalate_to = self.class.escalations(escalate_to)
       @attachments = attachments
@@ -220,7 +221,6 @@ module RubyLLM
       @mounts = mounts
       @approval = approval
       @chat = chat
-      @config = config
       @requested_languages = languages
       node = NodeInstallation.current if languages.include?(:javascript)
       @packages = Packages.new(sandbox: -> { isolated(self.sandbox) }, cache_dir: package_cache_dir, node:, **packages)
@@ -229,7 +229,7 @@ module RubyLLM
     # Returns the default Sandbox calls run in. Raises ConfigurationError
     # when there is none.
     def sandbox
-      current = Sandbox.resolve(@sandbox.is_a?(Proc) ? @sandbox.call : @sandbox)
+      current = resolve(@sandbox.is_a?(Proc) ? @sandbox.call : @sandbox)
       current || raise(ConfigurationError, 'Code execution needs a sandbox. Set config.sandbox to a sandbox class.')
     end
 
@@ -277,7 +277,7 @@ module RubyLLM
     # sandbox can run. Raises ConfigurationError when it can run none.
     def languages
       (@languages ||= {}.compare_by_identity)[sandbox_key] ||= begin
-        options = { env: @packages.base_env(Dir.tmpdir), readable: RubyInstallation.current.readable,
+        options = { env: @packages.base_env(Dir.tmpdir), readable: @packages.runtimes,
                     denied: @packages.denied }
         available = @requested_languages.select do |name|
           self.class.available?(sandbox_key, sandbox, Language[name], **options)
@@ -343,7 +343,7 @@ module RubyLLM
       return [nil, "Unknown sandbox #{name}. Use one of: #{escalations.join(', ')}"] unless escalation
       return [nil, "Running in the #{name} sandbox was not approved."] unless approved?(tool_call, name, code)
 
-      [Sandbox.resolve(escalation), nil]
+      [resolve(escalation), nil]
     end
 
     def approved?(tool_call, name, code)
@@ -361,7 +361,12 @@ module RubyLLM
     end
 
     def escalation_sandboxes
-      @escalation_sandboxes ||= @escalate_to.select { |_, sandbox| Sandbox.resolve(sandbox).supported? }
+      @escalation_sandboxes ||= @escalate_to.select { |_, sandbox| resolve(sandbox).supported? }
+    end
+
+    def resolve(value)
+      config = @config.is_a?(Proc) ? @config.call : @config
+      Sandbox.resolve(value, backend: (config || RubyLLM.config).sandbox_backend)
     end
 
     def sandbox_key
@@ -495,7 +500,7 @@ module RubyLLM
       return if escalations.empty?
 
       sandboxes = escalation_sandboxes.map do |name, sandbox|
-        runner = Sandbox.resolve(sandbox)
+        runner = resolve(sandbox)
         "#{name}: #{[directory_note(runner), describe_sandbox(runner, directory: false)].compact.join(' ')}"
       end
       'When the code needs more than this sandbox allows, set sandbox to one of these and explain why in reason. ' \
@@ -504,7 +509,7 @@ module RubyLLM
     end
 
     def describe_sandbox(sandbox, directory: true)
-      runner = sandbox.respond_to?(:run) ? sandbox : Sandbox.resolve(sandbox)
+      runner = sandbox.respond_to?(:run) ? sandbox : resolve(sandbox)
       [(directory_sentence(runner) if directory), paths_sentence('Can read', setting(runner, :readable)),
        paths_sentence('Can change', setting(runner, :writable)), network_sentence(setting(runner, :network)),
        limits_sentence(setting(runner, :limits)), "Stops after #{timeout_for(runner)} seconds."].compact.join(' ')

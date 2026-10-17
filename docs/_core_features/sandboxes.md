@@ -16,6 +16,7 @@ After reading this guide, you will know:
 * What a sandbox is and how to define one.
 * Where sandbox classes live in a Rails application.
 * How a chat picks its default sandbox.
+* What Linux needs to run sandboxes, and what Landlock gives up.
 * How the model asks to run one call in a wider sandbox, and how you approve it.
 * Why escalation is safe by construction.
 * How to build a coding agent with ask, workspace, and unrestricted modes.
@@ -88,6 +89,44 @@ chat.with_code_execution(sandbox: WorkspaceSandbox)
 ```
 
 Make the default the smallest sandbox that does the job. Everything wider is reached by asking.
+
+## Running on Linux
+
+On Linux, sandboxes run on Bubblewrap, which gives each run its own namespaces: its own view of the file system, its own `/tmp`, its own processes, and its own network. Install it with your package manager, such as `sudo apt-get install bubblewrap`.
+
+Bubblewrap needs unprivileged user namespaces. Ubuntu 23.10 and later, including 24.04, allow them only for programs with an AppArmor profile, and Docker's default seccomp profile blocks them. When Bubblewrap cannot start, `RubyLLM.sandbox.supported?` returns `false`, and the error Rails raises at boot says what to change.
+
+On Ubuntu, give `bwrap` an AppArmor profile that allows user namespaces:
+
+```
+# /etc/apparmor.d/bwrap
+abi <abi/4.0>,
+include <tunables/global>
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+}
+```
+
+Load it with `sudo apparmor_parser -r /etc/apparmor.d/bwrap`. Where you cannot add a profile, `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` lifts the restriction for every program on the host. That turns off a mitigation Ubuntu added against kernel exploits that use user namespaces, so prefer the profile. In a container, see [Running in Docker](https://crmne.github.io/mxc/running-in-docker/).
+
+### Running on Landlock
+
+Where you cannot change the host, opt in to Landlock, which needs Linux 6.2 or later and mxc 0.3:
+
+```ruby
+RubyLLM.configure do |config|
+  config.sandbox_backend = :landlock
+end
+```
+
+A sandbox class that declares `backend :landlock` opts in on its own. RubyLLM never falls back to Landlock by itself, and macOS and Windows ignore the setting.
+
+Landlock isolates less than Bubblewrap. It decides which files the code may open, and nothing else:
+
+* The code has no network at all. A sandbox that allows the network cannot run, and declared `gems:`, `python:`, and `npm:` packages cannot be installed, so mount prebuilt ones with `gem_home:`, `virtualenv:`, and `node_modules:`.
+* The code shares your server's processes and `/tmp` instead of getting its own. It can see your other processes, and programs that write to `/tmp` whatever `TMPDIR` says, such as LibreOffice, fail.
+* Landlock grants whole folders and cannot hide part of one. To keep your application's gems hidden inside the Ruby installation, RubyLLM grants the folders and gems around them one by one. Anything added to a folder granted this way after the run starts stays hidden.
 
 ## Asking for a Wider Sandbox
 

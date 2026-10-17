@@ -578,7 +578,7 @@ module RubyLLM
     #
     # Raises ConfigurationError when the configured value is not a sandbox.
     def sandbox
-      Sandbox.resolve(config.sandbox)
+      Sandbox.resolve(config.sandbox, backend: config.sandbox_backend)
     end
 
     def logger # :nodoc:

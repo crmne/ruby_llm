@@ -7,10 +7,12 @@ require 'tmpdir'
 
 module RubyLLM
   class CodeExecution
-    # The directories one run gets: a fresh working directory holding
-    # read-only copies of the conversation's files under +attachments+ and
-    # links to read-only mounts, separate home and temporary directories,
-    # and the source file. Everything is removed when the run ends.
+    # The directories one run gets: a fresh working directory holding a
+    # link, +attachments+, to read-only copies of the conversation's files
+    # beside it, and links to read-only mounts, separate home and temporary
+    # directories, and the source file. Nothing read-only sits inside the
+    # writable working directory, which Landlock could not keep read-only.
+    # Everything is removed when the run ends.
     class Workspace # :nodoc:
       ATTACHMENTS = 'attachments'
       IGNORED = %w[__pycache__].freeze
@@ -44,11 +46,13 @@ module RubyLLM
 
       def initialize(root)
         @directory = File.join(root, 'work')
-        @inputs = File.join(@directory, ATTACHMENTS)
+        @inputs = File.join(root, 'inputs')
         @home = File.join(root, 'home')
         @tmp = File.join(root, 'tmp')
         @source = File.join(root, 'source')
-        [@inputs, @home, @tmp, @source].each { |path| FileUtils.mkdir_p(path) }
+        [@directory, @inputs, @home, @tmp, @source].each { |path| FileUtils.mkdir_p(path) }
+        @attachments = File.join(@directory, ATTACHMENTS)
+        File.symlink(@inputs, @attachments)
       end
 
       def self.mount_path(name)
@@ -115,7 +119,7 @@ module RubyLLM
         paths = []
         Find.find(directory) do |path|
           name = File.basename(path)
-          Find.prune if path == inputs || IGNORED.include?(name) || (path != directory && name.start_with?('.'))
+          Find.prune if path == @attachments || IGNORED.include?(name) || (path != directory && name.start_with?('.'))
           size = output_size(path)
           paths << [path, size] if size
         end

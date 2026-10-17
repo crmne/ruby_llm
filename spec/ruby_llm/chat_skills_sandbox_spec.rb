@@ -5,13 +5,6 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
-  def self.mxc_supported?
-    require 'mxc'
-    MXC.supported?
-  rescue LoadError
-    false
-  end
-
   let(:fixtures) { File.expand_path('../fixtures/skills', __dir__) }
   let(:cache_dir) { Dir.mktmpdir('ruby_llm-packages-spec') }
   let(:chat) do
@@ -22,7 +15,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   before do
-    skip 'mxc cannot start a sandbox on this machine' unless self.class.mxc_supported?
+    skip 'mxc cannot start a sandbox on this machine' unless SandboxBackend.supported?
     RubyLLM::Skill.roots << fixtures
   end
 

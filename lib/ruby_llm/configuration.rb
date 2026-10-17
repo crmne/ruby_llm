@@ -205,6 +205,16 @@ module RubyLLM
     option :sandbox, nil
 
     ##
+    # :attr_accessor: sandbox_backend
+    #
+    # What isolates an MXC::Sandbox on Linux: +:bubblewrap+, which gives
+    # each run its own namespaces, or +:landlock+, which only restricts
+    # the files it can open and runs without network access. Other
+    # platforms ignore it, and so does a sandbox class that names its own
+    # backend. Default: +:bubblewrap+.
+    option :sandbox_backend, :bubblewrap
+
+    ##
     # :attr_accessor: package_cache_dir
     #
     # Directory holding the gems and Python packages declared with

@@ -67,7 +67,11 @@ module RubyLLM
 
       def readable
         home = gem_home
-        [*@installation.readable, *@node&.readable, home, (ruby_gems if home), virtualenv, node_modules].compact
+        [*runtimes, home, (ruby_gems if home), virtualenv, node_modules].compact
+      end
+
+      def runtimes
+        [*@installation.readable, *@node&.readable]
       end
 
       def denied
@@ -127,7 +131,7 @@ module RubyLLM
 
       def run(*command, home:, readable: [], writable: [], network: false, env: {})
         sandbox = @sandbox.is_a?(Proc) ? @sandbox.call : @sandbox
-        sandbox.run(*command, readable: [*@installation.readable, *@node&.readable, *resolver_config(network),
+        sandbox.run(*command, readable: [*runtimes, *resolver_config(network),
                                          *readable], denied:,
                               writable: [*writable, home], network:,
                               env: base_env(home).merge(env), timeout: INSTALL_TIMEOUT)

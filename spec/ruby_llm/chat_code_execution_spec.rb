@@ -446,7 +446,7 @@ RSpec.describe RubyLLM::Chat do
       sandbox = FakeSandbox.new do |run|
         inputs = File.join(run[:directory], 'attachments')
         seen = Dir.children(inputs).sort.to_h { |name| [name, File.binread(File.join(inputs, name))] }
-        expect(run[:readable]).to include(inputs)
+        expect(run[:readable]).to include(File.readlink(inputs))
         FakeSandbox.result
       end
       chat = RubyLLM.context { |config| config.sandbox = sandbox }.chat(model: model_for(:openai), provider: :openai)
@@ -607,18 +607,11 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'running code locally', :live do
-    def mxc_supported
-      require 'mxc'
-      MXC.supported?
-    rescue LoadError
-      false
-    end
-
     %i[openai anthropic].each do |provider|
       model = model_for(provider)
 
       it "#{provider}/#{model} runs code and returns the file it writes" do
-        skip 'mxc cannot start a sandbox on this machine' unless mxc_supported
+        skip 'mxc cannot start a sandbox on this machine' unless SandboxBackend.supported?
 
         chat = RubyLLM.context { |config| config.sandbox = MXC::Sandbox }
                       .chat(model:, provider:).with_code_execution(languages: [:ruby])
