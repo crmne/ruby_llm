@@ -240,6 +240,20 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
       expect(status).to eq(500)
     end
 
+    it 'classifies an invalid API key reported by a flat error event' do
+      status, = parse_streaming_error({ type: 'error', code: 'invalid_api_key', message: 'Invalid API key' })
+
+      expect(status).to eq(401)
+    end
+
+    it 'classifies an overloaded or unavailable service as a server-side failure' do
+      statuses = %w[overloaded_error service_unavailable].map do |type|
+        parse_streaming_error({ error: { type:, message: 'Try again later' } }).first
+      end
+
+      expect(statuses).to eq([529, 503])
+    end
+
     it 'falls back to a 400 for other flat error codes' do
       status, message = parse_streaming_error({ type: 'error', code: 'invalid_prompt', message: 'Bad prompt' })
 

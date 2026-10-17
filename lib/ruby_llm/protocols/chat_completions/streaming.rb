@@ -7,6 +7,16 @@ module RubyLLM
     class ChatCompletions
       # Streaming methods of the OpenAI API integration
       module Streaming
+        ERROR_STATUSES = {
+          'authentication_error' => 401,
+          'invalid_api_key' => 401,
+          'rate_limit_exceeded' => 429,
+          'insufficient_quota' => 429,
+          'server_error' => 500,
+          'service_unavailable' => 503,
+          'overloaded_error' => 529
+        }.freeze
+
         module_function
 
         def stream_url
@@ -57,14 +67,7 @@ module RubyLLM
           code = error['code']
           return [code, error['message']] if code.is_a?(Integer) && code.between?(400, 599)
 
-          case error['type']
-          when 'server_error'
-            [500, error['message']]
-          when 'rate_limit_exceeded', 'insufficient_quota'
-            [429, error['message']]
-          else
-            [400, error['message']]
-          end
+          [ERROR_STATUSES.fetch(error['type'], 400), error['message']]
         end
       end
     end

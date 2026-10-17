@@ -6,12 +6,7 @@ module RubyLLM
       # Streaming methods of the OpenAI Responses API. Events are semantic:
       # each SSE data frame carries a `type` describing what changed.
       module Streaming
-        ERROR_STATUSES = {
-          'server_error' => 500,
-          'rate_limit_exceeded' => 429,
-          'too_many_requests' => 429,
-          'insufficient_quota' => 429
-        }.freeze
+        ERROR_STATUSES = ChatCompletions::Streaming::ERROR_STATUSES.merge('too_many_requests' => 429).freeze
 
         module_function
 
