@@ -45,6 +45,24 @@ RSpec.describe RubyLLM::Generators::AgentGenerator, :generator, type: :generator
     end
   end
 
+  it "names the prompt folder the way the agent looks it up, whatever the app's inflections" do
+    within_test_app(app_path) do
+      File.write('config/initializers/graphql_inflection.rb',
+                 "ActiveSupport::Inflector.inflections(:en) { |inflect| inflect.acronym 'GraphQL' }\n")
+      output, status = run_rails_generate('ruby_llm:agent', 'Admin::GraphQL')
+      expect(status.success?).to be(true), output
+
+      expect(File.exist?('app/agents/admin/graphql_agent.rb')).to be true
+      expect(File.exist?('app/prompts/admin/graph_ql_agent/instructions.txt.erb')).to be true
+      success, runner_output = run_rails_runner(
+        'exit(Admin::GraphQLAgent.send(:default_instructions_prompt_exists?) ? 0 : 1)'
+      )
+      expect(success).to be(true), runner_output
+    ensure
+      FileUtils.rm_f('config/initializers/graphql_inflection.rb')
+    end
+  end
+
   it 'gives the agent its own chat model when there is no ApplicationAgent' do
     within_test_app(app_path) do
       FileUtils.mv('app/agents/application_agent.rb', 'tmp/application_agent.rb')

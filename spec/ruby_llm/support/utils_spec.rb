@@ -21,6 +21,26 @@ RSpec.describe RubyLLM::Support::Utils do
     end
   end
 
+  describe '.file_path' do
+    it 'underscores a namespaced class name into a path' do
+      expect(described_class.file_path('Support::HTTPProxyAgent')).to eq('support/http_proxy_agent')
+    end
+
+    it "follows the application's acronym inflections" do
+      inflections = ActiveSupport::Inflector.inflections.dup
+      inflections.acronym('GraphQL')
+      allow(ActiveSupport::Inflector).to receive(:inflections).and_return(inflections)
+
+      expect(described_class.file_path('GraphQLAgent')).to eq('graphql_agent')
+    end
+
+    it 'underscores without Active Support' do
+      hide_const('ActiveSupport::Inflector')
+
+      expect(described_class.file_path('Support::HTTPProxyAgent')).to eq('support/http_proxy_agent')
+    end
+  end
+
   describe '.underscore' do
     it 'separates words and keeps acronyms together' do
       expect(described_class.underscore('MyTool')).to eq('my_tool')

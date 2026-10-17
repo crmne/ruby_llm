@@ -48,6 +48,14 @@ module RubyLLM
         name.gsub(UNDERSCORE_BOUNDARY, '_').downcase
       end
 
+      # The path Rails autoloads a class from, which follows the application's
+      # inflections when Active Support is loaded.
+      def file_path(class_name)
+        return ActiveSupport::Inflector.underscore(class_name) if defined?(ActiveSupport::Inflector)
+
+        underscore(class_name.gsub('::', '/'))
+      end
+
       def to_safe_array(item)
         case item
         when Array then item

@@ -151,6 +151,22 @@ RSpec.describe RubyLLM::Evaluation do
     end
   end
 
+  it "discovers datasets named with the application's acronym inflections" do
+    inflections = ActiveSupport::Inflector.inflections.dup
+    inflections.acronym('GraphQL')
+    allow(ActiveSupport::Inflector).to receive(:inflections).and_return(inflections)
+
+    Dir.mktmpdir do |directory|
+      allow(RubyLLM::Prompt).to receive(:root).and_return(Pathname.new(directory).join('app/prompts'))
+      root = File.join(directory, 'app/evals')
+      FileUtils.mkdir_p(root)
+      stub_const('GraphQLEvaluation', evaluation)
+      File.write(File.join(root, 'graphql_evaluation.yml'), YAML.dump('cases' => cases.map(&:to_h).as_json))
+
+      expect(evaluation.run).to be_passed
+    end
+  end
+
   it 'loads YAML, JSON, and JSONL with the same data and explicit paths' do
     Dir.mktmpdir do |directory|
       files = { 'yml' => YAML.dump('cases' => cases.map(&:to_h).as_json),

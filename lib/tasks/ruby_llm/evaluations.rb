@@ -28,7 +28,7 @@ module RubyLLM
 
       def discover(name)
         root = Prompt.root.parent.join('evals')
-        inflector = Zeitwerk::Inflector.new
+        inflector = defined?(Rails.autoloaders) ? Rails.autoloaders.main.inflector : Zeitwerk::Inflector.new
         files = root.glob('**/*_evaluation.rb').sort.to_h do |file|
           parts = file.relative_path_from(root).to_s.delete_suffix('.rb').split('/')
           [file, parts.map { |part| inflector.camelize(part, file.to_s) }.join('::')]

@@ -17,9 +17,8 @@ module RubyLLM
       end
 
       def create_prompt_file
-        empty_directory File.join('app/prompts', class_path, agent_file_name)
-        template 'instructions.txt.erb.tt',
-                 File.join('app/prompts', class_path, agent_file_name, 'instructions.txt.erb')
+        empty_directory File.join('app/prompts', agent_prompt_path)
+        template 'instructions.txt.erb.tt', File.join('app/prompts', agent_prompt_path, 'instructions.txt.erb')
       end
 
       private
@@ -30,6 +29,11 @@ module RubyLLM
 
       def agent_file_name
         agent_class_name.demodulize.underscore
+      end
+
+      # Mirrors RubyLLM::Agent's prompt lookup, which ignores the app's inflections.
+      def agent_prompt_path
+        RubyLLM::Support::Utils.underscore(agent_class_name.gsub('::', '/')).tr('-', '_')
       end
 
       def application_agent?
