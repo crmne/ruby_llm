@@ -1004,7 +1004,8 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       record = chat.instance_variable_get(:@message)
       restored = record.to_llm
       expect(restored.server_tool_calls.first.type).to eq('server_tool_use')
-      expect(restored.server_tool_calls.first.raw).to eq(RubyLLM::Support::Utils.deep_symbolize_keys(raw_block))
+      expect(restored.server_tool_calls.first.input).to eq('query' => 'ruby')
+      expect(restored.server_tool_calls.first.raw).to eq(raw_block)
       expect(restored.raw_content.length).to eq(2)
     end
   end
