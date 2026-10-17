@@ -46,6 +46,12 @@ The skill asks the assistant to check your installed version and consult the rel
 
 ## Keep It Current
 
-After updating RubyLLM, repeat the installation command from your application directory: it replaces the skill with the one from your new version. If you installed from the repository's `main`, `gem exec skill update` shows what changed and asks before applying it. Review skill updates alongside dependency updates.
+After updating RubyLLM, install the skill from your new version, with `--force`:
+
+```bash
+gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agent claude-code --force
+```
+
+The gem's folder changes with its version, and `skill` replaces a skill installed from another folder, or one you edited since, only with `--force`. Keep your own conventions in your project's instructions rather than in the skill, so nothing is lost. If you installed from the repository's `main`, `gem exec skill update` shows what changed and asks before applying it. Review skill updates alongside dependency updates.
 
 The skill is maintained with the source and guides. It contains API conventions and links to versioned documentation, rather than a generated copy of every guide. It does not run an automatic updater or change your application when RubyLLM publishes a new version.
