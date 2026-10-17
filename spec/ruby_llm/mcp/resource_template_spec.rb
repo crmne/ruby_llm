@@ -15,7 +15,11 @@ RSpec.describe RubyLLM::MCP::ResourceTemplate do
     ['items{/path*}', { path: %w[a b] }] => 'items/a/b',
     ['items{/path}', { path: %w[a b] }] => 'items/a,b',
     ['search{?tags*}', { tags: %w[x y] }] => 'search?tags=x&tags=y',
-    ['id/{id:3}', { id: 'abcdef' }] => 'id/abc'
+    ['id/{id:3}', { id: 'abcdef' }] => 'id/abc',
+    ['search{?q,lang}', { q: 'ruby', lang: nil }] => 'search?q=ruby',
+    ['search{?q,tags}', { q: 'ruby', tags: [] }] => 'search?q=ruby',
+    ['search{?q,lang}', { q: 'ruby', lang: '' }] => 'search?q=ruby&lang=',
+    ['file:///{root}{/dir,name}', { root: 'app', dir: nil, name: 'Gemfile' }] => 'file:///app/Gemfile'
   }.each do |(template, variables), expanded|
     it "expands #{template} with #{variables}" do
       expect(described_class.expand(template, variables)).to eq(expanded)
