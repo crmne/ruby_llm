@@ -38,6 +38,16 @@ RSpec.describe RubyLLM::Chat do
       expect(payload[:thinking]).to eq(type: 'adaptive')
     end
 
+    it 'turns a provider toggle into the smallest budget when the model needs one' do
+      payload = RubyLLM.chat(model: model_for(:bedrock, :thinking), provider: :bedrock)
+                       .with_thinking
+                       .render
+
+      expect(payload[:additionalModelRequestFields]).to eq(
+        reasoning_config: { type: 'enabled', budget_tokens: 1024 }
+      )
+    end
+
     it 'sends the registered off control with false' do
       payload = RubyLLM.chat(model: model_for(:openai, :reasoning_effort), provider: :openai)
                        .with_thinking(false)

@@ -107,6 +107,13 @@ RSpec.describe RubyLLM::Protocols::Converse::Reasoning do
           .to eq(reasoning_config: { type: 'enabled', budget_tokens: 1024 })
       end
 
+      it 'turns thinking on with the smallest budget on Claude models that take one' do
+        model = RubyLLM.models.find('us.anthropic.claude-haiku-4-5-20251001-v1:0', provider: :bedrock)
+
+        expect(reasoning_fields(config(enabled: true), model: model))
+          .to eq(reasoning_config: { type: 'enabled', budget_tokens: 1024 })
+      end
+
       it 'thinks adaptively on Claude models whose schema names output_config.effort' do
         model = RubyLLM.models.find('us.anthropic.claude-fable-5-1', provider: :bedrock)
 

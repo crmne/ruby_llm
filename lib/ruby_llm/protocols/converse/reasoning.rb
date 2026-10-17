@@ -52,7 +52,7 @@ module RubyLLM
         # adaptively, and reject a reasoning_config that enables a budget.
         def adaptive_thinking?(thinking, model)
           return false unless thinking.budget.nil?
-          return false unless Chat.foundation_model_id(model&.id).start_with?('anthropic.claude')
+          return false unless claude_model?(model)
 
           registered = registered_model(model)
           !registered.nil? && !registered.reasoning_option(:effort).nil? &&
@@ -79,6 +79,10 @@ module RubyLLM
           end
         end
 
+        def claude_model?(model)
+          Chat.foundation_model_id(model&.id).start_with?('anthropic.claude')
+        end
+
         def nova_model?(model)
           Chat.foundation_model_id(model&.id).start_with?('amazon.nova')
         end
@@ -103,10 +107,20 @@ module RubyLLM
 
         def reasoning_budget(thinking, effort, model, max_output_tokens)
           return thinking.budget if thinking.budget.is_a?(Integer)
-          return nil if effort.empty? || effort == 'none'
+          return nil if effort == 'none'
+          return toggle_budget(thinking, model) if effort.empty?
 
           schema = reasoning_budget_schema(model)
           schema && effort_budget_tokens(effort, schema, max_output_tokens)
+        end
+
+        # Claude generations that take a budget have no bare switch, so
+        # turning thinking on sends the smallest budget the model accepts.
+        def toggle_budget(thinking, model)
+          return nil unless thinking.enabled == true && claude_model?(model)
+
+          minimum = registered_model(model)&.reasoning_option(:budget_tokens)&.fetch(:min, nil)
+          [minimum, MINIMUM_BUDGET_TOKENS].max if minimum.is_a?(Integer)
         end
 
         def reasoning_budget_schema(model)
