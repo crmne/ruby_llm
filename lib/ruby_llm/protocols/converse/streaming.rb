@@ -35,6 +35,9 @@ module RubyLLM
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'
             (req.options.context ||= {})[RubyLLM::Transport::Connection::STREAM_PROGRESS_KEY] = progress
+            req.options.context[RubyLLM::Transport::ErrorMiddleware::STREAM_RESET_KEY] = lambda {
+              decoder = event_stream_decoder
+            }
 
             if faraday_v1
               req.options[:on_data] = on_data
