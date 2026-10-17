@@ -1166,6 +1166,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(restored.server_tool_calls.first.raw).to eq(raw_block)
       expect(restored.raw_content.length).to eq(2)
     end
+
+    it 'round-trips the phase of an answer through the row' do
+      chat = Chat.create!(model: model_id)
+      chat.send(:persist_new_message)
+
+      chat.send(:persist_message_completion,
+                RubyLLM::Message.new(role: :assistant, content: 'Done.', phase: 'final_answer'))
+
+      record = chat.instance_variable_get(:@message)
+      expect(record.reload.phase).to eq('final_answer')
+      expect(record.to_llm.phase).to eq('final_answer')
+    end
   end
 
   describe 'tool call approval read back from the row' do

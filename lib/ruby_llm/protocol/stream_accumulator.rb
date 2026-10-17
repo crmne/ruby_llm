@@ -36,6 +36,7 @@ module RubyLLM
         accumulate_server_tool_calls(chunk.server_tool_calls)
         @raw_content = chunk.raw_content if chunk.raw_content
         @raw_reasoning = chunk.raw_reasoning if chunk.raw_reasoning
+        @phase = chunk.phase if chunk.phase
         @finish_reason = chunk.finish_reason if chunk.finish_reason
         count_tokens chunk
         RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
@@ -55,6 +56,7 @@ module RubyLLM
           server_tool_calls: @server_tool_calls,
           raw_content: @raw_content,
           raw_reasoning: @raw_reasoning,
+          phase: @phase,
           finish_reason: @finish_reason,
           model: model,
           tool_calls: tool_calls_from_stream(response),

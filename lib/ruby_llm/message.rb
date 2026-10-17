@@ -82,6 +82,11 @@ module RubyLLM
     # +nil+ when the provider returned none.
     attr_reader :raw_reasoning # :nodoc:
 
+    # The provider's label for this assistant text within its turn, such as
+    # OpenAI's +commentary+ or +final_answer+, kept so later requests can
+    # send it back. +nil+ when the provider gave none.
+    attr_reader :phase # :nodoc:
+
     # The Chat this message belongs to, set when it is added to a
     # conversation. Backs #tool_results.
     attr_accessor :conversation # :nodoc:
@@ -112,6 +117,7 @@ module RubyLLM
       @server_tool_calls = Array(options[:server_tool_calls]).map { |call| coerce_value(call, ServerToolCall) }
       @raw_content = options[:raw_content]
       @raw_reasoning = options[:raw_reasoning]
+      @phase = options[:phase]
       @mcp_result = coerce_mcp_result(options[:mcp_result])
       @finish_reason = options[:finish_reason]&.to_sym
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
@@ -150,6 +156,7 @@ module RubyLLM
       dup.tap do |message|
         message.instance_variable_set(:@thinking, nil)
         message.instance_variable_set(:@raw_reasoning, nil)
+        message.instance_variable_set(:@phase, nil)
         message.instance_variable_set(:@raw_content, raw_content)
         message.instance_variable_set(:@tool_calls, tool_calls_without_thought_signatures)
       end
@@ -292,6 +299,7 @@ module RubyLLM
         server_tool_calls: list_to_h(server_tool_calls),
         raw_content: raw_content,
         raw_reasoning: raw_reasoning,
+        phase: phase,
         mcp_result: mcp_result&.dump,
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil,

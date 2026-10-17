@@ -619,7 +619,7 @@ module RubyLLM
     end
 
     def carries_native_content?(message)
-      return true if message.thinking || message.raw_reasoning || message.raw_content
+      return true if message.thinking || message.raw_reasoning || message.raw_content || message.phase
 
       message.tool_call? && message.tool_calls.each_value.any?(&:thought_signature)
     end

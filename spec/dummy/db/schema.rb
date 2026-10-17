@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_017_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_017_130_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 20_261_017_120_000) do
     t.boolean 'cache_until_here', default: false, null: false
     t.string 'cache_ttl'
     t.string 'finish_reason'
+    t.string 'phase'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['chat_id'], name: 'index_messages_on_chat_id'

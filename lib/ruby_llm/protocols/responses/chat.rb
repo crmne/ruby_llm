@@ -69,6 +69,7 @@ module RubyLLM
             tool_calls: parse_pending_tool_calls(output, response: raw, finish_reason: finish_reason),
             server_tool_calls: server_tool_calls,
             raw_content: keep_raw_output?(output, server_tool_calls) ? output : nil,
+            phase: parse_phase(output),
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
@@ -109,11 +110,20 @@ module RubyLLM
 
         PORTABLE_OUTPUT_ITEM_TYPES = (%w[message function_call] + TOOL_SEARCH_ITEM_TYPES).freeze
 
-        # A message carries one thinking signature, so output with more
-        # reasoning items than that only replays whole from its raw items.
+        # A message carries one thinking signature and one phase, so output
+        # with more reasoning items or phases than that only replays whole
+        # from its raw items.
         def keep_raw_output?(output, server_tool_calls)
           server_tool_calls.any? || output.any? { |item| namespaced_call?(item) } ||
-            output.count { |item| item['type'] == 'reasoning' } > 1
+            output.count { |item| item['type'] == 'reasoning' } > 1 || message_phases(output).uniq.size > 1
+        end
+
+        def parse_phase(output)
+          message_phases(output).compact.last
+        end
+
+        def message_phases(output)
+          output.select { |item| item['type'] == 'message' }.map { |item| item['phase'] }
         end
 
         def namespaced_call?(item)
@@ -394,7 +404,7 @@ module RubyLLM
 
           items = []
           items << render_reasoning_item(msg.thinking) if own_signature(msg)
-          items << { role: 'assistant', content: render_output_content(msg) } unless empty_content?(msg.content)
+          items << render_output_item(msg) unless empty_content?(msg.content)
           items.concat(render_function_call_items(msg.tool_calls)) if msg.tool_call?
           items << render_attachment_item('Attachments from the assistant:', msg.attachments) if msg.attachments.any?
           items
@@ -419,8 +429,8 @@ module RubyLLM
           end
         end
 
-        def render_output_content(msg)
-          [{ type: 'output_text', text: msg.content }]
+        def render_output_item(msg)
+          { role: 'assistant', content: [{ type: 'output_text', text: msg.content }], phase: msg.phase }.compact
         end
 
         def empty_content?(content)

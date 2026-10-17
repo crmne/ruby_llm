@@ -46,6 +46,14 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       expect(accumulator.to_message(nil).attachments).to eq([image])
     end
 
+    it 'keeps the phase the final chunk carries' do
+      accumulator = described_class.new
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Done.'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, phase: 'final_answer'))
+
+      expect(accumulator.to_message(nil).phase).to eq('final_answer')
+    end
+
     it 'ignores an empty model id from an initial chunk' do
       accumulator = described_class.new
 

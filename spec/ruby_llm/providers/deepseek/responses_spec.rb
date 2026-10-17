@@ -145,4 +145,16 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Responses do
     expect(chunks.filter_map(&:thinking)).not_to be_empty
     expect(chat.render[:input].map { |item| item[:type] }).to include('reasoning', 'function_call_output')
   end
+
+  it 'sends the phase of a streamed answer back on the next turn', :live do
+    skip_without_cassette_or_key('DEEPSEEK_API_KEY')
+    chat = RubyLLM.chat(model: model_for(:deepseek), provider: :deepseek, protocol: :responses)
+
+    chat.ask('What is 6 times 7? Reply with the number only.') { |_chunk| nil }
+    response = chat.ask('Add one to it. Reply with the number only.') { |_chunk| nil }
+
+    expect(response.content).to include('43')
+    expect(chat.messages.select { |message| message.role == :assistant }.map(&:phase)).to all(eq('final_answer'))
+    expect(chat.render[:input].filter_map { |item| item[:phase] }).to eq(%w[final_answer final_answer])
+  end
 end

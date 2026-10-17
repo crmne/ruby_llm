@@ -74,4 +74,23 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
       expect(connection).not_to have_received(:post)
     end
   end
+
+  it 'sends the phase of each answer back on later turns', :live do
+    skip_without_cassette_or_key('OPENAI_API_KEY')
+    stub_const('LookupNumber', Class.new(RubyLLM::Tool) do
+      description 'Returns the current reference number'
+
+      def execute
+        137
+      end
+    end)
+    chat = RubyLLM.chat(model: model_for(:openai, :thinking), provider: :openai).with_tools(LookupNumber)
+
+    chat.ask('Say in one short sentence what you will do, then call lookup_number and tell me the number.')
+    response = chat.ask('Add one to it and give me only the result.')
+
+    expect(response.content).to include('138')
+    expect(chat.messages.filter_map(&:phase)).to include('commentary', 'final_answer')
+    expect(chat.render[:input].filter_map { |item| item[:phase] }).to include('commentary', 'final_answer')
+  end
 end

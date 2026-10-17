@@ -1236,6 +1236,7 @@ module RubyLLM
         assign_supported_attribute(attrs, :server_tool_calls, message.server_tool_calls.map(&:to_h).presence)
         assign_supported_attribute(attrs, :raw_content, message.raw_content)
         assign_supported_attribute(attrs, :raw_reasoning, message.raw_reasoning)
+        assign_supported_attribute(attrs, :phase, message.phase)
         assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         assign_supported_attribute(attrs, :cache_ttl, message.cache_ttl)

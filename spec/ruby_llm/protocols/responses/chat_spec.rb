@@ -132,6 +132,13 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(payload[:input].map { |item| item[:type] || item[:role] }).to eq(%w[function_call user])
     end
 
+    it 'sends the phase stored on an assistant message with its edited text' do
+      message = RubyLLM::Message.new(role: :assistant, content: 'Edited answer', phase: 'commentary')
+
+      expect(render_payload([message])[:input])
+        .to eq([{ role: 'assistant', content: [{ type: 'output_text', text: 'Edited answer' }], phase: 'commentary' }])
+    end
+
     it 'uses flat non-strict function definitions' do
       tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' }, provider_options: {})
@@ -544,6 +551,53 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
         message = protocol.send(:parse_completion_response, response_with(output.first(2)))
 
         expect(message.raw_content).to be_nil
+      end
+    end
+
+    context 'with a phased assistant message' do
+      before { protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate) }
+
+      let(:output) do
+        [
+          { 'type' => 'reasoning', 'id' => 'rs_1', 'encrypted_content' => 'only', 'summary' => [] },
+          { 'type' => 'message', 'id' => 'msg_1', 'role' => 'assistant', 'status' => 'completed',
+            'phase' => 'final_answer', 'content' => [{ 'type' => 'output_text', 'text' => 'Done.' }] }
+        ]
+      end
+
+      it 'keeps the phase on the message and sends it back with the rebuilt turn' do
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.phase).to eq('final_answer')
+        expect(message.raw_content).to be_nil
+        expect(protocol.send(:render_input, [message]).last)
+          .to eq(role: 'assistant', content: [{ type: 'output_text', text: 'Done.' }], phase: 'final_answer')
+      end
+
+      it 'keeps no phase when the provider sends a null one' do
+        output.last['phase'] = nil
+
+        message = protocol.send(:parse_completion_response, response_with(output))
+
+        expect(message.phase).to be_nil
+        expect(protocol.send(:render_input, [message]).last).not_to have_key(:phase)
+      end
+
+      it 'keeps the raw output when its messages carry different phases' do
+        phased = output.insert(1, output.last.merge('id' => 'msg_0', 'phase' => 'commentary'))
+
+        message = protocol.send(:parse_completion_response, response_with(phased))
+
+        expect(message.raw_content).to eq(phased)
+      end
+
+      it 'keeps the raw output when only some of its messages carry a phase' do
+        phased = output.insert(1, output.last.merge('id' => 'msg_0', 'phase' => nil))
+
+        message = protocol.send(:parse_completion_response, response_with(phased))
+
+        expect(message.raw_content).to eq(phased)
+        expect(message.phase).to eq('final_answer')
       end
     end
 

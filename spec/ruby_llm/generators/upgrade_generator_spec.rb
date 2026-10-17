@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     namespace.const_get(File.basename(path, '.rb').sub(/\A\d+_/, '').camelize, false)
   end
 
-  it 'adds the run claims and provider call IDs 2.2 needs to a 2.1 schema' do
+  it 'adds the run claims, provider call IDs, and message phases 2.2 needs to a 2.1 schema' do
     upgrade = migration_class
 
     ActiveRecord::Base.transaction do
@@ -25,6 +25,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       connection.remove_column(:chats, :claimed_until)
       connection.remove_column(:ruby_llm_tool_calls, :claimed_until)
       connection.remove_column(:ruby_llm_tool_calls, :provider_call_id)
+      connection.remove_column(:messages, :phase)
 
       ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
 
@@ -32,10 +33,11 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:chats, :claimed_until, :datetime)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until, :datetime)).to be(true)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id, :string)).to be(true)
+      expect(connection.column_exists?(:messages, :phase, :string)).to be(true)
       raise ActiveRecord::Rollback
     end
   ensure
-    [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+    [Chat, Message, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
   end
 
   it 'removes what it added when rolled back' do
@@ -48,11 +50,12 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:chats, :claimed_until)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id)).to be(false)
+      expect(connection.column_exists?(:messages, :phase)).to be(false)
       expect(connection.table_exists?(:ruby_llm_queued_messages)).to be(false)
       raise ActiveRecord::Rollback
     end
   ensure
-    [Chat, RubyLLM::ActiveRecord::ToolCall, RubyLLM::ActiveRecord::QueuedMessage].each(&:reset_column_information)
+    [Chat, Message, RubyLLM::ActiveRecord::ToolCall, RubyLLM::ActiveRecord::QueuedMessage].each(&:reset_column_information)
   end
 
   it 'creates the queued messages table 2.2 needs' do
