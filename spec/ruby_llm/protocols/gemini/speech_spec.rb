@@ -69,6 +69,29 @@ RSpec.describe RubyLLM::Protocols::Gemini::Speech do
       expect(speech.mime_type).to eq('audio/pcm')
     end
 
+    it 'reads the prompt and audio token counts' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'candidates' => [
+            { 'content' => { 'parts' => [{ 'inlineData' => { 'data' => Base64.strict_encode64('pcm bytes') } }] } }
+          ],
+          'usageMetadata' => {
+            'promptTokenCount' => 11,
+            'candidatesTokenCount' => 108,
+            'totalTokenCount' => 119,
+            'promptTokensDetails' => [{ 'modality' => 'TEXT', 'tokenCount' => 11 }],
+            'candidatesTokensDetails' => [{ 'modality' => 'AUDIO', 'tokenCount' => 108 }]
+          }
+        }
+      )
+
+      speech = protocol.parse_speech_response(response, model: 'gemini-2.5-flash-preview-tts', voice: nil, format: nil)
+
+      expect(speech.tokens.input).to eq(11)
+      expect(speech.tokens.output).to eq(108)
+    end
+
     it 'raises a clear error for unexpected responses' do
       response = instance_double(Faraday::Response, body: {})
 
