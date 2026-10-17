@@ -76,4 +76,16 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
     expect(described_class.read('key')).to eq('access_token' => 'second')
     expect { described_class.delete('key') }.to change(described_class, :count).by(-1)
   end
+
+  it 'replaces credentials another process wrote first' do
+    allow(described_class).to receive(:new).and_wrap_original do |original, *arguments, &block|
+      allow(described_class).to receive(:new).and_call_original
+      Thread.new { described_class.create!(key: 'key', data: { 'access_token' => 'first' }) }.join
+      original.call(*arguments, &block)
+    end
+
+    described_class.write('key', { 'access_token' => 'second' })
+
+    expect(described_class.read('key')).to eq('access_token' => 'second')
+  end
 end
