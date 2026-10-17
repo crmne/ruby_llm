@@ -124,6 +124,13 @@ RSpec.describe RubyLLM::Attachment do
         .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an unsafe file URL')
     end
 
+    it 'raises for a redirect to a location that is not a URL' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(redirect_to('http://[cdn.example.com/logo.png'))
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an invalid URL')
+    end
+
     it 'raises for a redirect that names no location' do
       stub_request(:get, 'https://example.com/logo.png').to_return(status: 302, body: '<html>Moved</html>')
 

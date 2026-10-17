@@ -67,6 +67,8 @@ module RubyLLM
         return target if target.scheme == 'https' || (target.scheme == 'http' && from.scheme == 'http')
 
         raise Error, "Download from #{from.host} redirected to an unsafe #{target.scheme} URL"
+      rescue URI::InvalidURIError
+        raise Error, "Download from #{from.host} redirected to an invalid URL"
       end
       private_class_method :redirect_target
 
