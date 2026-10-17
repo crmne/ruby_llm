@@ -10,7 +10,7 @@ module RubyLLM
       def self.answer(result, messages)
         calls = unanswered(messages)
         call = calls.find { |candidate| candidate.id == result.tool_call_id } ||
-               calls.reverse.find { |candidate| candidate.provider_call_id == result.tool_call_id }
+               calls.reverse.find { |candidate| candidate.provider_call_id == result.provider_call_id }
         call ? result.with_tool_call_id(call.id) : result
       end
 
