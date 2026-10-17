@@ -35,7 +35,7 @@ module RubyLLM
         end
 
         def image_references(sources)
-          Array(sources).filter_map do |source|
+          Support::Utils.to_safe_array(sources).filter_map do |source|
             next if blank_attachment?(source)
 
             { type: 'image_url', url: image_reference_url(source) }

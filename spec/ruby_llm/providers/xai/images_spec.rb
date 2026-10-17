@@ -43,6 +43,15 @@ RSpec.describe RubyLLM::Providers::XAI::Images do
 
       expect(payload[:images]).to eq([{ type: 'image_url', url: 'https://example.com/logo.png' }])
     end
+
+    it 'sends a reference image given as a bare IO' do
+      image = File.binread(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      payload = described_class.render_image_payload('combine the logos', model: 'grok-imagine-image-quality',
+                                                                          size: nil, with: StringIO.new(image))
+
+      expect(payload[:images].length).to eq(1)
+      expect(payload[:images].first[:url]).to start_with('data:image/png;base64,')
+    end
   end
 
   describe '.images_url' do

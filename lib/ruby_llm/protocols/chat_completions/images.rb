@@ -72,7 +72,7 @@ module RubyLLM
         end
 
         def build_image_references(sources)
-          Array(sources).filter_map do |source|
+          Support::Utils.to_safe_array(sources).filter_map do |source|
             next if blank_attachment?(source)
 
             build_image_reference(source)
@@ -90,7 +90,7 @@ module RubyLLM
         end
 
         def build_upload_parts(sources)
-          Array(sources).filter_map do |source|
+          Support::Utils.to_safe_array(sources).filter_map do |source|
             next if blank_attachment?(source)
 
             build_upload_part(source)
@@ -113,7 +113,7 @@ module RubyLLM
         end
 
         def attachments?(value)
-          Array(value).any? { |item| !blank_attachment?(item) }
+          Support::Utils.to_safe_array(value).any? { |item| !blank_attachment?(item) }
         end
 
         def blank_attachment?(value)

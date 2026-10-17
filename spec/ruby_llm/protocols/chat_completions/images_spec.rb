@@ -60,6 +60,25 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
 
       expect(payload).not_to have_key(:size)
     end
+
+    it 'sends an image given as a bare IO' do
+      image = File.binread(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      payload = described_class.render_image_payload(
+        'make it green', model: 'gpt-image-1', size: nil, with: StringIO.new(image)
+      )
+
+      expect(payload[:images].length).to eq(1)
+      expect(payload[:images].first[:image_url]).to start_with('data:image/png;base64,')
+    end
+  end
+
+  describe '#images_url' do
+    it 'targets the edits endpoint for a bare IO without reading it' do
+      image = StringIO.new("first\nsecond")
+
+      expect(described_class.images_url(with: image)).to eq('images/edits')
+      expect(image.pos).to eq(0)
+    end
   end
 
   describe '#parse_image_responses' do
