@@ -27,6 +27,12 @@ RSpec.describe RubyLLM::MCP::InputRequest do
     expect(request.response[:content]).to eq('status' => 'inactive')
   end
 
+  it 'lists the choices of a multi-select field without titles' do
+    request = form('colors' => { 'type' => 'array', 'items' => { 'type' => 'string', 'enum' => %w[red green blue] } })
+
+    expect(request.fields.first.choices).to eq(%w[red green blue])
+  end
+
   it 'accepts a URL request without content' do
     request = described_class.new('connect', { 'mode' => 'url', 'url' => 'https://example.com/connect' })
 
