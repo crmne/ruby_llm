@@ -25,7 +25,7 @@ module RubyLLM
 
       def check_model_exists
         model_path = "app/models/#{message_model_name.underscore}.rb"
-        return if File.exist?(model_path)
+        return if app_file?(model_path)
 
         # Build the argument string for the install/upgrade commands
         args = []
@@ -141,10 +141,8 @@ module RubyLLM
 
       def add_available_chat_models_to_application_controller
         path = 'app/controllers/application_controller.rb'
-        return unless File.exist?(path)
-
-        application_controller = File.read(path)
-        return if application_controller.include?('def available_chat_models')
+        return unless app_file?(path)
+        return if File.read(File.join(destination_root, path)).include?('def available_chat_models')
 
         inject_into_file path, <<-RUBY, before: /^end\s*\z/
 

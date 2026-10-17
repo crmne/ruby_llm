@@ -217,6 +217,19 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
+  it 'keeps a namespace module the destination already has' do
+    Dir.mktmpdir do |destination|
+      FileUtils.mkdir_p(File.join(destination, 'app/models'))
+      File.write(File.join(destination, 'app/models/llm.rb'), "module Llm\nend\n")
+      generator = described_class.new(%w[chat:Llm::Chat message:Llm::Message], { force: true },
+                                      destination_root: destination, shell: Thor::Shell::Basic.new)
+      allow(generator.shell).to receive(:say_status)
+      generator.send(:create_namespace_modules)
+
+      expect(File.read(File.join(destination, 'app/models/llm.rb'))).to eq("module Llm\nend\n")
+    end
+  end
+
   describe 'with a mapped chat model' do
     it 'points ApplicationAgent at that model' do
       Dir.mktmpdir do |destination|
