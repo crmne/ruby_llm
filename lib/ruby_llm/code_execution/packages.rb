@@ -17,6 +17,7 @@ module RubyLLM
       SYSTEM_PATH = %w[/usr/local/bin /usr/bin /bin].freeze
       RESOLVER_CONFIG = '/etc/resolv.conf'
       INSTALL_TIMEOUT = 600
+      MAX_FAILURE_OUTPUT = 2000
       REGISTRIES = {
         ruby: %w[rubygems.org *.rubygems.org],
         python: %w[pypi.org files.pythonhosted.org],
@@ -202,8 +203,15 @@ module RubyLLM
 
         stderr = result.stderr.to_s.strip
         blocked = result.respond_to?(:blocked) ? Array(result.blocked) : []
-        details = stderr[[stderr.length - 2000, 0].max..]
+        details = failure_details(stderr)
         blocked.empty? ? details : "#{details} (blocked: #{blocked.join(', ')})"
+      end
+
+      def failure_details(stderr)
+        return stderr if stderr.length <= MAX_FAILURE_OUTPUT
+
+        half = MAX_FAILURE_OUTPUT / 2
+        "#{stderr[0, half]}\n[#{stderr.length - MAX_FAILURE_OUTPUT} characters omitted]\n#{stderr[-half..]}"
       end
 
       def cache_key(kind, packages)

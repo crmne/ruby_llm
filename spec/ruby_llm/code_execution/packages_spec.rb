@@ -108,6 +108,29 @@ RSpec.describe RubyLLM::CodeExecution::Packages do
       expect(Dir.glob(File.join(cache_dir, 'ruby-*.ready'))).to be_empty
     end
 
+    it 'keeps the start and the end of a long installer output' do
+      stderr = "ERROR:  While executing gem ... (Gem::Exception)\n    OpenSSL is not available\n" \
+               "#{"\t/ruby/lib/rubygems/request.rb:53:in `configure_connection_for_https'\n" * 40}" \
+               "\t/ruby/bin/gem:12:in `<main>'"
+      sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: 1, stderr:) }
+
+      expect { described_class.new(sandbox:, cache_dir:, gems: %w[prawn]).gem_home }
+        .to raise_error(RubyLLM::Error) { |error|
+          expect(error.message).to start_with('Could not install gems prawn: ERROR:  While executing gem ... ' \
+                                              "(Gem::Exception)\n    OpenSSL is not available\n")
+          expect(error.message).to include("[#{stderr.length - 2000} characters omitted]")
+          expect(error.message).to end_with("\t/ruby/bin/gem:12:in `<main>'")
+        }
+    end
+
+    it 'keeps an installer output of exactly the limit whole' do
+      stderr = "ERROR: #{'x' * 1993}"
+      sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: 1, stderr:) }
+
+      expect { described_class.new(sandbox:, cache_dir:, gems: %w[prawn]).gem_home }
+        .to raise_error(RubyLLM::Error, "Could not install gems prawn: #{stderr}")
+    end
+
     it 'reports an install that ran out of time' do
       sandbox = FakeSandbox.new { FakeSandbox.result(exit_code: nil, timed_out: true) }
 
