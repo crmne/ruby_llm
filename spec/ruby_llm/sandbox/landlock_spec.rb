@@ -48,6 +48,14 @@ RSpec.describe RubyLLM::Sandbox::Landlock do
     expect(described_class.policy(sandbox).readable).to eq([path('ruby/lib')])
   end
 
+  it 'refuses a denied path inside a writable one, which Landlock cannot split' do
+    tree('work/secret')
+    sandbox = MXC::Sandbox.new(writable: [path('work')], denied: [path('work/secret')])
+
+    expect { described_class.policy(sandbox) }
+      .to raise_error(RubyLLM::ConfigurationError, /Landlock cannot hide .*secret inside the writable .*work/)
+  end
+
   it 'keeps the rest of the policy' do
     sandbox = MXC::Sandbox.new(readable: [path], env: { 'LANG' => 'C.UTF-8' }, directory: path, timeout: 30,
                                limits: { cpu_time: 60 }, priority: :low)

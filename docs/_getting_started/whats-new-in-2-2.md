@@ -172,7 +172,7 @@ If a process dies, its claims expire and another process picks the chat up. See 
 
 `bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
-Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, and methods that read a response start with `parse_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
+Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, methods that read a response start with `parse_`, and the capability predicates drop `supports_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
 
 ## Try 2.2
 

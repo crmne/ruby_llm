@@ -23,6 +23,8 @@ module SandboxBackend
 
     false
   rescue LoadError
+    raise if ENV['RUBYLLM_REQUIRE_SANDBOX'] == 'true'
+
     false
   end
 

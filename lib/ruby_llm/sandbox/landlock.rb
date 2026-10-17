@@ -7,12 +7,15 @@ module RubyLLM
     # holds a denied one is replaced by the entries around it, down to the
     # denied path, so the policy hides the same paths without denying
     # anything inside a granted tree. Entries added later to a directory
-    # granted entry by entry stay hidden.
+    # granted entry by entry stay hidden. A writable path cannot be split
+    # that way, since creating files needs the directory itself, so a
+    # denied path inside one raises ConfigurationError.
     module Landlock # :nodoc:
       module_function
 
       def policy(sandbox)
         denied = sandbox.denied.map { |path| File.expand_path(path) }
+        refuse_writable(sandbox.writable, denied)
         granted = [*sandbox.readable, *sandbox.writable].map { |path| File.expand_path(path) }
         options = {
           readable: around(sandbox.readable, denied), writable: around(sandbox.writable, denied),
@@ -21,6 +24,17 @@ module RubyLLM
           limits: sandbox.limits, priority: sandbox.priority, backend: :landlock
         }
         ::MXC::Sandbox.new(**options.compact)
+      end
+
+      def refuse_writable(writable, denied)
+        writable.each do |path|
+          path = File.expand_path(path)
+          hidden = denied.find { |candidate| candidate != path && inside?(candidate, path) }
+          next unless hidden
+
+          raise ConfigurationError, "Landlock cannot hide #{hidden} inside the writable #{path}. " \
+                                    'Leave it out of the writable path, or run on Bubblewrap'
+        end
       end
 
       def around(paths, denied)

@@ -12,10 +12,11 @@ module RubyLLM
       NAMESPACES = /namespace/i
       BUBBLEWRAP_REMEDIATION =
         'Allow unprivileged user namespaces for Bubblewrap: on Ubuntu 23.10 and later, including 24.04, ' \
-        'run sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 (keep it in /etc/sysctl.d), ' \
-        'or give bwrap an AppArmor profile that allows userns; on kernels with ' \
+        'give bwrap an AppArmor profile that allows userns, or, host-wide and weaker, run ' \
+        'sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0; on kernels with ' \
         'kernel.unprivileged_userns_clone, set it to 1. In Docker, run with a seccomp profile that allows ' \
-        'namespaces: https://crmne.github.io/mxc/running-in-docker/'
+        'namespaces: https://crmne.github.io/mxc/running-in-docker/. ' \
+        'See https://rubyllm.com/sandboxes/#running-on-linux'
       LANDLOCK_OPT_IN = 'Or set config.sandbox_backend = :landlock to run on Landlock, which isolates less ' \
                         "and has no network access: #{DOCS}".freeze
 

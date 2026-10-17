@@ -58,7 +58,8 @@ RSpec.describe RubyLLM::Sandbox do
 
       expect(runner).not_to be_supported
       expect(runner.reason).to start_with('Bubblewrap could not start the sandbox: bwrap: setting up uid map')
-      expect(runner.reason).to include('sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0',
+      expect(runner.reason).to include('AppArmor profile',
+                                       'sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0',
                                        'Or set config.sandbox_backend = :landlock')
     end
 

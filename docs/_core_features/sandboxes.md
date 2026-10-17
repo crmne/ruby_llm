@@ -94,13 +94,21 @@ Make the default the smallest sandbox that does the job. Everything wider is rea
 
 On Linux, sandboxes run on Bubblewrap, which gives each run its own namespaces: its own view of the file system, its own `/tmp`, its own processes, and its own network. Install it with your package manager, such as `sudo apt-get install bubblewrap`.
 
-Bubblewrap needs unprivileged user namespaces. Ubuntu 23.10 and later, including 24.04, allow them only for programs with an AppArmor profile, and Docker's default seccomp profile blocks them. When Bubblewrap cannot start, `RubyLLM.sandbox.supported?` returns `false`, and the error Rails raises at boot says what to change. On Ubuntu, allow them for every program:
+Bubblewrap needs unprivileged user namespaces. Ubuntu 23.10 and later, including 24.04, allow them only for programs with an AppArmor profile, and Docker's default seccomp profile blocks them. When Bubblewrap cannot start, `RubyLLM.sandbox.supported?` returns `false`, and the error Rails raises at boot says what to change.
 
-```sh
-sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+On Ubuntu, give `bwrap` an AppArmor profile that allows user namespaces:
+
+```
+# /etc/apparmor.d/bwrap
+abi <abi/4.0>,
+include <tunables/global>
+
+profile bwrap /usr/bin/bwrap flags=(unconfined) {
+  userns,
+}
 ```
 
-Keep that setting in a file under `/etc/sysctl.d/` so it survives a reboot, or give `bwrap` an AppArmor profile that allows user namespaces instead. In a container, see [Running in Docker](https://crmne.github.io/mxc/running-in-docker/).
+Load it with `sudo apparmor_parser -r /etc/apparmor.d/bwrap`. Where you cannot add a profile, `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` lifts the restriction for every program on the host. That turns off a mitigation Ubuntu added against kernel exploits that use user namespaces, so prefer the profile. In a container, see [Running in Docker](https://crmne.github.io/mxc/running-in-docker/).
 
 ### Running on Landlock
 
