@@ -161,17 +161,22 @@ module RubyLLM
               next
             end
 
+            message = format_non_tool_message(msg, caching:, automatic_cache_target:, citations:)
+            next tool_result_blocks.concat(message[:content]) if joins_tool_results?(message, tool_result_blocks)
+
             unless tool_result_blocks.empty?
               rendered << { role: 'user', content: tool_result_blocks }
               tool_result_blocks = []
             end
-
-            message = format_non_tool_message(msg, caching:, automatic_cache_target:, citations:)
             rendered << message if message
           end
 
           rendered << { role: 'user', content: tool_result_blocks } unless tool_result_blocks.empty?
           rendered
+        end
+
+        def joins_tool_results?(message, tool_result_blocks)
+          message && message[:role] == 'user' && !tool_result_blocks.empty?
         end
 
         def format_non_tool_message(msg, caching: nil, automatic_cache_target: nil, citations: false)
