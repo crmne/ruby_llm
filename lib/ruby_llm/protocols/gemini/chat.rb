@@ -371,9 +371,8 @@ module RubyLLM
         end
 
         def calculate_output_tokens(data)
-          candidates = data.dig('usageMetadata', 'candidatesTokenCount') || 0
-          thoughts = data.dig('usageMetadata', 'thoughtsTokenCount') || 0
-          candidates + thoughts
+          counts = (data['usageMetadata'] || {}).values_at('candidatesTokenCount', 'thoughtsTokenCount').compact
+          counts.sum unless counts.empty?
         end
 
         def build_json_schema(schema)
