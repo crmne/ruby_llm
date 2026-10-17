@@ -68,6 +68,14 @@ RSpec.describe RubyLLM::Protocols::Gemini::Transcription do
       expect(transcription.tokens.output).to eq(4)
     end
 
+    it 'leaves thought parts out of the transcript' do
+      parts = [{ 'text' => 'The speaker greets someone.', 'thought' => true }, { 'text' => 'Ruby is fun' }]
+
+      transcription = parse({ 'candidates' => [{ 'content' => { 'parts' => parts } }] })
+
+      expect(transcription.text).to eq('Ruby is fun')
+    end
+
     it 'leaves the text nil when the response is not a JSON object' do
       expect(parse('not a hash').text).to be_nil
     end
