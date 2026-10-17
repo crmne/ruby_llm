@@ -7,16 +7,16 @@ module RubyLLM
     # Keeps a persisted chat's files in +ruby_llm_chat_files+, with their
     # content in Active Storage, so they live on whatever service Active
     # Storage uses: a disk now, a bucket later. A persisted chat uses one
-    # when ChatMethods#with_files is given no store.
+    # when ChatFiles#with_file_store is given no store.
     #
-    #   chat.with_files
-    #   chat.files.list
+    #   chat.with_file_store
+    #   chat.file_store.list
     #
     # With +owner:+, the store writes files for that owner and sees only
     # their files and the files without an owner, so in a chat several
     # people share, one person's tool results stay theirs:
     #
-    #   chat.with_files(store: chat.file_store(owner: Current.user))
+    #   chat.with_file_store(owner: Current.user)
     #
     # Converted text is kept in the row's +text+ column. Encrypt it, like
     # anything else the model reads, with

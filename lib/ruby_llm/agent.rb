@@ -73,7 +73,7 @@ module RubyLLM
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
       with_temperature with_max_output_tokens with_thinking with_citations
-      with_end_user with_compaction with_caching with_code_execution with_skills with_files with_context
+      with_end_user with_compaction with_caching with_code_execution with_skills with_file_store with_context
       with_provider_options
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
@@ -86,7 +86,7 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers schema
       concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
-      max_output_tokens skills files
+      max_output_tokens skills file_store
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
       queue queued_messages unqueue
@@ -97,7 +97,7 @@ module RubyLLM
       @citations
       @code_execution
       @skills
-      @files
+      @file_store
       @end_user
       @schema
       @context
@@ -309,23 +309,30 @@ module RubyLLM
         @code_execution = CodeExecution.options(enabled, options)
       end
 
-      # Gives chats this agent builds a FileStore and the tools to work
-      # with it, applied via Chat#with_files. Accepts the same options as
-      # keywords or a Hash. A +store+ lambda runs once for each chat, with
+      # Attaches a FileStore to chats this agent builds, with the tools to
+      # work with it, applied via Chat#with_file_store, which takes the
+      # same arguments. A +store+ lambda runs once for each chat, with
       # +chat+ and the agent's inputs in scope, like the agent's other
-      # lambdas. Pass +false+ to disable it. Passing +nil+ raises
-      # ArgumentError.
+      # lambdas, and so does an +owner+ lambda for a persisted chat. Pass
+      # +nil+ to remove the store a parent agent declared.
       #
-      #   files
-      #   files spill_over: 20_000
-      #   files store: -> { RubyLLM::FileStore::Directory.new("tmp/chats/#{chat.id}") }
-      #   files false
+      #   file_store
+      #   file_store spill_over: 20_000
+      #   file_store -> { RubyLLM.file_store.directory("tmp/chats/#{chat.id}") }
+      #   file_store owner: -> { chat.user }
+      #   file_store nil
       #
       # Each chat gets a store of its own: without +store+, a new
       # FileStore::Memory, or for a persisted chat, its files in Active
       # Storage.
-      def files(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
-        @files = Chat::FileReferences.options(enabled, options, store_lambda: true)
+      #
+      # :call-seq: file_store(store = default, spill_over: 10_000, owner: nil)
+      def file_store(store = Chat::FileReferences::DEFAULT_STORE, spill_over: Chat::FileReferences::SPILL_OVER,
+                     owner: nil)
+        return @file_store = false if store.nil?
+
+        Chat::FileReferences.validate(store, spill_over:, store_lambda: true)
+        @file_store = { store:, spill_over:, owner: }.compact.freeze
       end
 
       # Gives chats this agent builds the skills named, applied via
@@ -702,7 +709,7 @@ module RubyLLM
         apply_compaction(chat)
         apply_code_execution(chat, runtime)
         apply_skills(chat)
-        apply_files(chat, runtime)
+        apply_file_store(chat, runtime)
         apply_tool_options(chat, runtime)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
@@ -876,13 +883,15 @@ module RubyLLM
         chat.with_code_execution(**options)
       end
 
-      def apply_files(chat, runtime)
-        return if @files.nil?
-        return chat.with_files(false) if @files == false
+      def apply_file_store(chat, runtime)
+        return if @file_store.nil?
+        return chat.with_file_store(nil) if @file_store == false
 
-        store = @files[:store]
-        options = store.is_a?(Proc) ? @files.merge(store: evaluate(store, runtime)) : @files
-        chat.with_files(**options)
+        store = @file_store[:store]
+        options = @file_store.except(:store).transform_values { |value| evaluate(value, runtime) }
+        return chat.with_file_store(**options) if store.equal?(Chat::FileReferences::DEFAULT_STORE)
+
+        chat.with_file_store(evaluate(store, runtime), **options)
       end
 
       def apply_skills(chat)
@@ -1153,10 +1162,10 @@ module RubyLLM
     # Delegates to Chat#with_skills. See that method for arguments and return values.
 
     ##
-    # :method: with_files
-    # :call-seq: with_files(enabled = true, **options)
+    # :method: with_file_store
+    # :call-seq: with_file_store(store = RubyLLM.file_store.memory, spill_over: 10_000)
     #
-    # Delegates to Chat#with_files. See that method for arguments and return values.
+    # Delegates to Chat#with_file_store. See that method for arguments and return values.
 
     ##
     # :method: with_context
@@ -1399,10 +1408,10 @@ module RubyLLM
     # Delegates to Chat#skills. See that method for arguments and return values.
 
     ##
-    # :method: files
-    # :call-seq: files
+    # :method: file_store
+    # :call-seq: file_store
     #
-    # Delegates to Chat#files. See that method for arguments and return values.
+    # Delegates to Chat#file_store. See that method for arguments and return values.
 
     ##
     # :method: compaction

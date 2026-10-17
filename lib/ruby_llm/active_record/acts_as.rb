@@ -54,7 +54,7 @@ module RubyLLM
       # +has_many :ruby_llm_queued_messages+ association over the messages
       # waiting in its queue (see ChatMethods#queue), and a
       # +has_many :ruby_llm_chat_files+ association over its files (see
-      # ChatMethods#with_files).
+      # ChatFiles#with_file_store).
       #
       # Options:
       #

@@ -13,7 +13,7 @@ description: Give a chat its own files, so attachments and long tool results sto
 
 After reading this guide, you will know:
 
-* How to give a chat files, and the five tools the model gets to work with them.
+* How to attach a file store to a chat, and the five tools the model gets to work with it.
 * What the model sees of attachments and long tool results.
 * How PDFs, Office files, and scans become text the model can read and search.
 * Where the files live: in memory, in a folder, or in Active Storage.
@@ -26,7 +26,7 @@ Attachments and tool results usually travel with the conversation. A 40-page PDF
 A chat with files keeps them out of the conversation instead. Each file is kept once, the model sees one line naming it, and reads the part it needs when it needs it:
 
 ```ruby
-chat = RubyLLM.chat.with_files
+chat = RubyLLM.chat.with_file_store
 chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
 chat.ask "Quote the new termination clause"
 ```
@@ -35,14 +35,16 @@ The first question sends both PDFs. For the second, the model sees two lines lik
 
 ## Giving a Chat Files
 
-`with_files` follows the same shape as `with_code_execution`: call it bare to turn it on, pass options to tune it, and pass `false` to turn it off:
+`with_file_store` attaches a store to the chat, like `with_tools` attaches tools and `with_schema` a schema. Call it bare for the default store, pass the store you want, and pass `nil` to remove it:
 
 ```ruby
-chat.with_files
-chat.with_files(spill_over: 20_000)
-chat.with_files(store: RubyLLM::FileStore::Directory.new("tmp/chats/42"))
-chat.with_files(false)
+chat.with_file_store
+chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
+chat.with_file_store(RubyLLM.file_store.memory, spill_over: 20_000)
+chat.with_file_store(nil)
 ```
+
+The default store is `RubyLLM.file_store.memory`, or for a persisted chat, its files in Active Storage (see [Files in Rails](#files-in-rails)).
 
 The model gets five tools:
 
@@ -56,14 +58,14 @@ The model gets five tools:
 
 `read_file` and `search_files` read PDFs, Word, Excel, and PowerPoint files as text (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF without a text layer, come back from `read_file` as the file itself, so a model with vision sees it.
 
-`chat.files` returns the store, so your code works with the same files:
+`chat.file_store` returns the store, so your code works with the same files:
 
 ```ruby
-chat.files.write("brief.md", brief)
-chat.files.list   # => [#<RubyLLM::StoredFile path: "brief.md", byte_size: 812, content_type: "text/markdown">]
-chat.files.read("brief.md")
-chat.files.text("contract-v2.pdf") # => "## Page 1\n\nThis agreement..."
-chat.files.delete("brief.md")
+chat.file_store.write("brief.md", brief)
+chat.file_store.list   # => [#<RubyLLM::StoredFile path: "brief.md", byte_size: 812, content_type: "text/markdown">]
+chat.file_store.read("brief.md")
+chat.file_store.text("contract-v2.pdf") # => "## Page 1\n\nThis agreement..."
+chat.file_store.delete("brief.md")
 ```
 
 Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `content_type`, `digest`, and `updated_at`. Paths are relative, with forward slashes, like `reports/q3.pdf`. A path with `..` raises `ArgumentError`, and reading a missing file raises `RubyLLM::FileNotFoundError`.
@@ -76,7 +78,7 @@ An attachment the provider cannot take, such as a Word file for most models, bec
 
 When two different files share a name, the second gets a number, like `report-2.pdf`. The same file attached twice is kept once.
 
-The messages themselves don't change. `chat.messages` still holds every attachment, so your interface shows them as before, and turning files off sends them in full again.
+The messages themselves don't change. `chat.messages` still holds every attachment, so your interface shows them as before, and removing the store sends them in full again.
 
 **Long tool results.** A tool result longer than 10,000 characters is saved under `results/`, and the model gets its first 2,000 characters and the path:
 
@@ -103,7 +105,7 @@ end
 
 ## Reading Files as Text
 
-`read_file`, `search_files`, and `chat.files.text` read a file through converters. RubyLLM ships converters for:
+`read_file`, `search_files`, and `chat.file_store.text` read a file through converters. RubyLLM ships converters for:
 
 * Text files, including source code, CSV, JSON, YAML, and Markdown, as they are.
 * HTML, without its tags, scripts, and styles.
@@ -119,18 +121,16 @@ Each version of a file is converted once. A persisted chat keeps the text in the
 
 ### Scans and Photos
 
-A scanned PDF has no text layer, and a photo of a whiteboard has no text at all. `RubyLLM::FileStore::Converters::OCR` reads both with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}). Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
+A scanned PDF has no text layer, and a photo of a whiteboard has no text at all. The OCR converter, `RubyLLM.file_store.converter.ocr`, reads both with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}). Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.file_converters = {
-    "image/*" => RubyLLM::FileStore::Converters::OCR.new,
-    "application/pdf" => RubyLLM::FileStore::Converters::OCR.new(model: "{{ site.models.default_ocr }}")
-  }
+  config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
+  config.file_converters["application/pdf"] = RubyLLM.file_store.converter.ocr(model: "{{ site.models.default_ocr }}")
 end
 ```
 
-Converters you register run before the built-in ones. Registering OCR for PDFs reads every PDF with OCR, even those with a text layer. To use OCR only for scans, leave PDFs to the built-in converter: `read_file` hands a PDF without text to the model as the file itself.
+`ocr` takes the options [`RubyLLM.ocr`]({% link _core_features/ocr.md %}) does, such as `model:` and `provider:`. Converters you register run before the built-in ones. Registering OCR for PDFs reads every PDF with OCR, even those with a text layer. To use OCR only for scans, leave PDFs to the built-in converter: `read_file` hands a PDF without text to the model as the file itself.
 
 ### Your Own Converters
 
@@ -147,15 +147,26 @@ end
 
 Types match exactly or by family, like `"image/*"`. `"*/*"` matches every file. Exact types run before families, and a type can take an Array of converters, tried in order.
 
+The built-in converters are there to register for other types that hold the same content: `RubyLLM.file_store.converter` has `text`, `html`, `office`, `pdf`, and `ocr`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.file_converters["application/x-subrip"] = RubyLLM.file_store.converter.text # .srt subtitles
+  config.file_converters["application/xhtml+xml"] = RubyLLM.file_store.converter.html
+end
+```
+
 ## Where the Files Live
 
 A store is any `RubyLLM::FileStore`. RubyLLM ships three:
 
 | Store | Keeps files | Use it for |
 | --- | --- | --- |
-| `RubyLLM::FileStore::Memory` | In memory, for as long as the chat lives | Scripts, tests, and the default in plain Ruby |
-| `RubyLLM::FileStore::Directory` | In a folder on disk | A chat that lives across runs, or a folder you share with other tools |
-| `RubyLLM::ActiveRecord::FileStore` | In Active Storage, in `ruby_llm_chat_files` | Persisted chats; see [Rails](#files-in-rails) |
+| `RubyLLM.file_store.memory` | In memory, for as long as the chat lives | Scripts, tests, and the default in plain Ruby |
+| `RubyLLM.file_store.directory(path)` | In a folder on disk | A chat that lives across runs, or a folder you share with other tools |
+| Active Storage | In `ruby_llm_chat_files` | Persisted chats, by default; see [Rails](#files-in-rails) |
+
+`RubyLLM.file_store.memory` builds a `RubyLLM::FileStore::Memory`, and `RubyLLM.file_store.directory(path)` a `RubyLLM::FileStore::Directory`, creating the folder when it is missing.
 
 A `Directory` store reads the files someone else puts in its folder too. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names.
 
@@ -196,40 +207,40 @@ end
 With [code execution]({% link _core_features/code-execution.md %}) on, each run starts with a copy of the chat's files in its run directory, instead of the read-only `attachments/` folder. What the code writes or changes there is saved back to the store when the run ends, and the tool result lists the paths instead of carrying the files:
 
 ```ruby
-chat = RubyLLM.chat.with_files.with_code_execution(python: %w[pandas matplotlib])
+chat = RubyLLM.chat.with_file_store.with_code_execution(python: %w[pandas matplotlib])
 chat.ask "Plot monthly revenue from this export", with: "revenue.csv"
 
-chat.files.list.map(&:path) # => ["revenue.csv", "revenue.png"]
+chat.file_store.list.map(&:path) # => ["revenue.csv", "revenue.png"]
 ```
 
 The model can then read the chart back with `read_file`, change a script it wrote with `edit_file`, and run it again. Deleting a file in the run directory leaves it in the store. Mounted folders and skills keep their places, so a file in the store under `skills/` or a mount's path is not copied.
 
 ## Agents
 
-Agents declare files with the `files` macro, which takes the same options. Each chat gets a store of its own. To choose one, pass a lambda: it runs once for each chat, with `chat` and the agent's inputs in scope:
+Agents attach a store with the `file_store` macro, which takes the same arguments as `with_file_store`. Each chat gets a store of its own. To choose one, pass a lambda: it runs once for each chat, with `chat` and the agent's inputs in scope:
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  files spill_over: 20_000
+  file_store spill_over: 20_000
 end
 
 class ProjectAgent < RubyLLM::Agent
   inputs :project
-  files store: -> { RubyLLM::FileStore::Directory.new(project.files_path) }
+  file_store -> { RubyLLM.file_store.directory(project.files_path) }
 end
 ```
 
-`files false` removes the files a parent agent declared.
+`file_store nil` removes the store a parent agent declared.
 
 ## Files in Rails
 
 A persisted chat keeps its files in Active Storage, on whatever service your application uses: a disk today, a bucket tomorrow, with nothing to change in RubyLLM. Each file is a row in RubyLLM's `ruby_llm_chat_files` table:
 
 ```ruby
-chat = Chat.create!(model: "{{ site.models.default_chat }}").with_files
+chat = Chat.create!(model: "{{ site.models.default_chat }}").with_file_store
 chat.ask "Summarize these", with: params[:files]
 
-chat.files.list
+chat.file_store.list
 chat.ruby_llm_chat_files.with_attached_file # the rows, for your views
 ```
 
@@ -249,12 +260,14 @@ end
 In a chat several people share, files a tool fetched for one of them may not be for the others. Give the store an owner:
 
 ```ruby
-chat.with_files(store: chat.file_store(owner: Current.user))
+chat.with_file_store(owner: Current.user)
 ```
+
+An agent takes the owner as a lambda, like its store: `file_store owner: -> { Current.user }`.
 
 That store writes files for its owner and sees only their files and the files without an owner, preferring theirs when both have the same path. A store without an owner sees only the files without one.
 
-The `ruby_llm:chat_ui` generator lists a chat's files on its page, with links to download them. Add `files` to the chat's agent to turn them on.
+The `ruby_llm:chat_ui` generator lists a chat's files on its page, with links to download them. Add `file_store` to the chat's agent to turn them on.
 
 ## Next Steps
 

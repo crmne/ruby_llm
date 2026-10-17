@@ -204,7 +204,7 @@ module RubyLLM
       @callbacks = @callbacks.dup.transform_values!(&:dup)
       @skill_loader = build_skill_loader
       with_code_execution(**@code_execution) if @code_execution
-      with_files(store: files, spill_over: @file_references.spill_over) if @file_references
+      with_file_store(file_store, spill_over: @file_references.spill_over) if @file_references
       @message_queue = build_message_queue(@message_queue.to_a) if @message_queue.is_a?(MessageQueue)
       @cancelled = false
     end
@@ -938,7 +938,7 @@ module RubyLLM
     # +run_code+, that runs Ruby, Python, JavaScript, or a shell script in a fresh run
     # directory, with read-only copies of the conversation's files, and
     # returns the output and every file the code writes there as
-    # attachments on the tool result. With #with_files, each run starts
+    # attachments on the tool result. With #with_file_store, each run starts
     # with a copy of the chat's files instead, and what the code writes is
     # saved back to them. The options are:
     #
@@ -985,7 +985,7 @@ module RubyLLM
                                CodeExecution.new(
                                  sandbox: options.fetch(:sandbox) { -> { @config.sandbox } },
                                  attachments: -> { messages.flat_map(&:attachments) },
-                                 files: -> { files },
+                                 file_store: -> { file_store },
                                  written: ->(file) { run_callbacks(:after_file_write, file) },
                                  skills: -> { skills.to_h { |skill| [Skill::Loader.mount_path(skill), skill.path] } },
                                  chat: self,
@@ -1026,9 +1026,9 @@ module RubyLLM
       self
     end
 
-    # Gives the chat a FileStore and the model five tools to work with it:
-    # +list_files+, +read_file+, +search_files+, +write_file+, and
-    # +edit_file+. Files stop filling the conversation:
+    # Attaches +store+, a FileStore, to the chat and gives the model five
+    # tools to work with it: +list_files+, +read_file+, +search_files+,
+    # +write_file+, and +edit_file+. Files stop filling the conversation:
     #
     # * Every attachment is kept in the store. The model sees the files
     #   attached to the latest question, and those it opens with
@@ -1039,42 +1039,37 @@ module RubyLLM
     # * With #with_code_execution, each run starts with a copy of the
     #   files, and what the code writes is saved back to the store.
     #
-    # The options are:
+    # Without +store+, the chat gets a new FileStore::Memory, or for a
+    # persisted chat, its files in Active Storage. +spill_over+ is the
+    # characters a tool result may have before it is saved as a file, or
+    # +false+ to send every result whole; tools can set their own with
+    # Tool.spill_over. Default: 10,000.
     #
-    # +store+:: the FileStore. Default: a new FileStore::Memory, or for a
-    #           persisted chat, its files in Active Storage.
-    # +spill_over+:: the characters a tool result may have before it is
-    #                saved as a file, or +false+ to send every result
-    #                whole. Tools can set their own with Tool.spill_over.
-    #                Default: 10,000.
+    # Pass +nil+ to remove the store and its tools. Returns +self+.
     #
-    # Accepts keywords or an options Hash. Pass +false+ to remove the
-    # store and its tools. Passing +nil+ raises ArgumentError. Returns
-    # +self+.
-    #
-    #   chat.with_files
-    #   chat.with_files(store: RubyLLM::FileStore::Directory.new("tmp/chats/42"))
-    #   chat.with_files(spill_over: 20_000)
-    #   chat.with_files(false)
+    #   chat.with_file_store
+    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
+    #   chat.with_file_store(spill_over: 20_000)
+    #   chat.with_file_store(nil)
     #
     # Text, PDFs, and Word, Excel, and PowerPoint files are read as text;
     # see Configuration#file_converters to read more.
-    def with_files(enabled = true, **options)
-      options = FileReferences.options(enabled, options)
-      @file_references = if options
-                           FileReferences.new(store: options[:store] || FileStore::Memory.new,
-                                              spill_over: options.fetch(:spill_over, FileReferences::SPILL_OVER),
+    def with_file_store(store = RubyLLM.file_store.memory, spill_over: FileReferences::SPILL_OVER)
+      FileReferences.validate(store, spill_over:) unless store.nil?
+      @file_references = if store
+                           FileReferences.new(store:, spill_over:,
                                               written: ->(file) { run_callbacks(:after_file_write, file) })
                          end
-      @file_tools = options ? build_file_tools : []
+      @file_tools = store ? build_file_tools : []
       self
     end
 
-    # Returns the FileStore given with #with_files, or +nil+ without one.
+    # Returns the FileStore attached with #with_file_store, or +nil+
+    # without one.
     #
-    #   chat.files.list
-    #   chat.files.read("notes/plan.md")
-    def files
+    #   chat.file_store.list
+    #   chat.file_store.read("notes/plan.md")
+    def file_store
       @file_references&.store
     end
 
@@ -1224,7 +1219,7 @@ module RubyLLM
     end
 
     # Registers a callback that receives each StoredFile the conversation
-    # writes to the chat's files (see #with_files): attachments as they
+    # writes to the chat's FileStore (see #with_file_store): attachments as they
     # are kept, long tool results, and the files tools and code write.
     def after_file_write(&)
       add_callback(:after_file_write, &)
@@ -1467,7 +1462,7 @@ module RubyLLM
     def build_file_tools
       written = ->(file) { run_callbacks(:after_file_write, file) }
       [FileStore::Tools::List, FileStore::Tools::Read, FileStore::Tools::Search, FileStore::Tools::Write,
-       FileStore::Tools::Edit].map { |tool| tool.new(store: -> { files }, config: -> { @config }, written:) }
+       FileStore::Tools::Edit].map { |tool| tool.new(store: -> { file_store }, config: -> { @config }, written:) }
     end
 
     def resolved_thinking

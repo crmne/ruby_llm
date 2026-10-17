@@ -314,7 +314,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         "call_mail" => RubyLLM::ToolCall.new(id: "call_mail", name: "send_mail", arguments: { "to" => "ops" })
       }))
       chat = #{agent}.find(chat.id)
-      chat.with_files.files.write("notes/summary.md", "# Summary")
+      chat.with_file_store.file_store.write("notes/summary.md", "# Summary")
 
       html = #{controller}.render(:show, assigns: #{assigns})
       [ "\#{chat.class.name.underscore.tr('/', '_')}_\#{chat.id}_approvals", "Approve search_docs?", "refunds",

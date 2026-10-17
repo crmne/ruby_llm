@@ -247,7 +247,7 @@ module RubyLLM
       # Sets how many characters this tool's results may have before a
       # chat with files saves them as a file and sends the model their
       # start and the file's path, overriding the chat's own limit (see
-      # Chat#with_files). +false+ always sends them whole, for tools that
+      # Chat#with_file_store). +false+ always sends them whole, for tools that
       # already return what they find in pages. Without an argument,
       # returns the declared value, or +nil+.
       #

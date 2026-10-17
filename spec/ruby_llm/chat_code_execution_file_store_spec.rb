@@ -26,14 +26,14 @@ RSpec.describe RubyLLM::Chat do
       config.package_cache_dir = cache_dir
     end
   end
-  let(:chat) { context.chat(model: model_for(:openai), provider: :openai).with_code_execution.with_files }
+  let(:chat) { context.chat(model: model_for(:openai), provider: :openai).with_code_execution.with_file_store }
 
   after { FileUtils.rm_rf(cache_dir) }
 
   before do
-    chat.files.write('notes.md', 'original')
-    chat.files.write('keep.txt', 'kept')
-    chat.files.write('same.csv', "a,b\n")
+    chat.file_store.write('notes.md', 'original')
+    chat.file_store.write('keep.txt', 'kept')
+    chat.file_store.write('same.csv', "a,b\n")
   end
 
   def run_code
@@ -55,9 +55,9 @@ RSpec.describe RubyLLM::Chat do
 
     expect(result).to be_a(String)
     expect(JSON.parse(result)).to include('stdout' => 'done', 'files' => %w[notes.md out/chart.svg])
-    expect(chat.files.read('notes.md')).to eq('changed')
-    expect(chat.files.read('out/chart.svg')).to eq('<svg/>')
-    expect(chat.files.read('keep.txt')).to eq('kept')
+    expect(chat.file_store.read('notes.md')).to eq('changed')
+    expect(chat.file_store.read('out/chart.svg')).to eq('<svg/>')
+    expect(chat.file_store.read('keep.txt')).to eq('kept')
     expect(written).to eq(%w[notes.md out/chart.svg])
   end
 
@@ -72,7 +72,7 @@ RSpec.describe RubyLLM::Chat do
     templates = Dir.mktmpdir('ruby_llm-templates')
     File.write(File.join(templates, 'report.md'), 'template')
     chat.with_code_execution(mounts: { 'templates' => templates })
-    chat.files.write('templates/mine.md', 'shadowed')
+    chat.file_store.write('templates/mine.md', 'shadowed')
 
     run_code
 

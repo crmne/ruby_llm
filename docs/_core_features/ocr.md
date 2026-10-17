@@ -123,11 +123,11 @@ OCR extracts the text, then a chat model structures it. See [Structured Output](
 
 ## Reading Scans in a Chat
 
-A chat with [files]({% link _core_features/chat-files.md %}) reads scans and photos with OCR when you register the OCR converter for their types. The model then reads and searches them like any other file, and each file is read once:
+A chat with a [file store]({% link _core_features/chat-files.md %}) reads scans and photos with OCR when you register the OCR converter for their types. The model then reads and searches them like any other file, and each file is read once:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.file_converters = { "image/*" => RubyLLM::FileStore::Converters::OCR.new }
+  config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
 end
 ```
 

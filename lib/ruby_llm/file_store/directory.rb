@@ -10,7 +10,7 @@ module RubyLLM
     # folders, whose names start with a dot, are left out, and symbolic
     # links are never followed.
     #
-    #   chat.with_files(store: RubyLLM::FileStore::Directory.new("tmp/chats/42"))
+    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/chats/42"))
     #
     class Directory < FileStore
       OPEN_FLAGS = File::RDONLY | File::BINARY | (defined?(File::NOFOLLOW) ? File::NOFOLLOW : 0)

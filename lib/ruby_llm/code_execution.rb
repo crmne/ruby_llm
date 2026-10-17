@@ -8,8 +8,8 @@ module RubyLLM
   # model. Each call runs Ruby, Python, JavaScript, or a shell script in a Sandbox, in a
   # fresh run directory with read-only copies of the conversation's files,
   # and returns the exit code, the output, and every file the code wrote
-  # there as an attachment on the tool result. In a chat with files (see
-  # Chat#with_files), the run directory starts with a copy of the chat's
+  # there as an attachment on the tool result. In a chat with a file store (see
+  # Chat#with_file_store), the run directory starts with a copy of the chat's
   # files instead, and what the code writes is saved back to them.
   #
   # Calls run in the chat's default sandbox. With +escalate_to:+, the model
@@ -203,7 +203,7 @@ module RubyLLM
     # +escalate_to+ the sandboxes the model may ask for, an Array or a Hash
     # of names to sandboxes. +attachments+ returns the conversation's files
     # when called, and +skills+ a Hash of paths under +skills/+ to the
-    # skill folders mounted there. +files+ returns the chat's FileStore, or
+    # skill folders mounted there. +file_store+ returns the chat's FileStore, or
     # +nil+: with one, each run starts with a copy of its files instead of
     # the attachments, and the files a run writes or changes are saved to
     # it, each passed to +written+. +mounts+ is a Hash of paths inside the
@@ -213,7 +213,7 @@ module RubyLLM
     # ahead only when it returns +true+. +chat+ and +config+ describe where
     # the instrumentation events go.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, files: -> {}, written: ->(_file) {},
+    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, written: ->(_file) {},
                    skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil, config: nil,
                    package_cache_dir: nil, languages: %i[ruby shell], **packages)
       super()
@@ -222,7 +222,7 @@ module RubyLLM
       self.sandbox
       @escalate_to = self.class.escalations(escalate_to)
       @attachments = attachments
-      @files = files
+      @file_store = file_store
       @written = written
       @skills = skills
       @mounts = mounts
@@ -334,7 +334,7 @@ module RubyLLM
       runner, error = runner_for(sandbox, code, tool_call)
       return { error: } if error
 
-      store = @files.call
+      store = @file_store.call
       Workspace.open(attachments: store.nil?) do |workspace|
         run(Language[language], code, workspace, runner:, name: sandbox, tool_call:, store:)
       end
@@ -489,7 +489,7 @@ module RubyLLM
     end
 
     def files_note
-      if @files.call
+      if @file_store.call
         ["Each call gets a new run directory holding a copy of this chat's files, the ones list_files shows.",
          'Files the code writes or changes there are saved to the chat\'s files when it ends, where read_file ' \
          'and later runs find them. Deleting a file there does not delete it from the chat\'s files.']

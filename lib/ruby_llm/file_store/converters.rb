@@ -13,15 +13,15 @@ module RubyLLM
     # * Word, Excel, and PowerPoint files (+.docx+, +.xlsx+, +.pptx+)
     # * PDFs, with the pdf-reader gem in your bundle
     #
-    # Converters::OCR reads scans and photos with RubyLLM.ocr. It costs a
-    # request per file, so it only runs where you register it:
+    # The OCR converter reads scans and photos with RubyLLM.ocr. It costs
+    # a request per file, so it only runs where you register it.
+    # RubyLLM.file_store.converter returns the converters RubyLLM ships
+    # (see Converters::Factory):
     #
     #   RubyLLM.configure do |config|
-    #     config.file_converters = {
-    #       "image/*" => RubyLLM::FileStore::Converters::OCR.new,
-    #       "application/pdf" => RubyLLM::FileStore::Converters::OCR.new,
-    #       "application/vnd.oasis.opendocument.text" => ->(file) { OdtText.call(file.content) }
-    #     }
+    #     config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
+    #     config.file_converters["application/pdf"] = RubyLLM.file_store.converter.ocr
+    #     config.file_converters["application/vnd.oasis.opendocument.text"] = ->(file) { OdtText.call(file.content) }
     #   end
     #
     # A PDF with a text layer is read by the built-in converter only when

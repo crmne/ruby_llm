@@ -5,7 +5,7 @@ require 'stringio'
 
 module RubyLLM
   class Chat
-    # What Chat#with_files changes in a conversation. Every attachment is
+    # What Chat#with_file_store changes in a conversation. Every attachment is
     # kept in the chat's FileStore, and each request shows it in full only
     # while it is new: on the latest question, and on read_file results
     # since then. Before that, and on other tools' results, the model sees
@@ -14,41 +14,24 @@ module RubyLLM
     # the model gets its start and the path. An attachment the provider
     # cannot take, such as a Word file, becomes that line too.
     class FileReferences # :nodoc:
-      OPTIONS = %i[store spill_over].freeze
       SPILL_OVER = 10_000
       PREVIEW = 2_000
       READ_TOOL = 'read_file'
 
+      # Stands for the store a chat picks when given none: a new
+      # FileStore::Memory, or a persisted chat's files in Active Storage.
+      DEFAULT_STORE = Object.new.tap { |default| def default.inspect = 'the default store' }.freeze
+
       attr_reader :spill_over, :store
 
       class << self
-        def options(enabled, options, store_lambda: false)
-          return options(true, enabled.transform_keys(&:to_sym).merge(options), store_lambda:) if enabled.is_a?(Hash)
-          raise ArgumentError, 'with_files accepts true, false, or file options' unless [true, false].include?(enabled)
-          raise ArgumentError, 'with_files(false) does not accept options' if !enabled && options.any?
-          return false unless enabled
-
-          validate(options, store_lambda:)
-          options.freeze
-        end
-
-        private
-
-        def validate(options, store_lambda:)
-          unknown = options.keys - OPTIONS
-          raise ArgumentError, "with_files accepts #{OPTIONS.join(', ')}, got #{unknown.join(', ')}" if unknown.any?
-
-          validate_store(options[:store], store_lambda:)
-          spill_over = options.fetch(:spill_over, SPILL_OVER)
+        def validate(store, spill_over:, store_lambda: false)
+          unless store.is_a?(FileStore) || store.equal?(DEFAULT_STORE) || (store_lambda && store.is_a?(Proc))
+            raise ArgumentError, "with_file_store takes a RubyLLM::FileStore or nil, got #{store.inspect}"
+          end
           return if spill_over == false || (spill_over.is_a?(Integer) && spill_over.positive?)
 
           raise ArgumentError, 'spill_over: takes a positive number of characters or false'
-        end
-
-        def validate_store(store, store_lambda:)
-          return if store.nil? || store.is_a?(FileStore) || (store_lambda && store.is_a?(Proc))
-
-          raise ArgumentError, "store: takes a RubyLLM::FileStore, got #{store.inspect}"
         end
       end
 

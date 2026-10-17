@@ -513,10 +513,10 @@ module RubyLLM
       # Delegates to Chat#skills. See that method for arguments and return values.
 
       ##
-      # :method: files
-      # :call-seq: files
+      # :method: file_store
+      # :call-seq: file_store
       #
-      # Delegates to Chat#files. See that method for arguments and return values.
+      # Delegates to Chat#file_store. See that method for arguments and return values.
 
       ##
       # :method: compaction
@@ -648,7 +648,7 @@ module RubyLLM
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations code_execution compaction concurrency end_user fallbacks headers max_output_tokens
         provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
-        skills files
+        skills file_store
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 

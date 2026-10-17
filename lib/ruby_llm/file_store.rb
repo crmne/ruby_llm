@@ -5,18 +5,20 @@ require 'stringio'
 
 module RubyLLM
   # A FileStore keeps a chat's files: what people attach, what tools
-  # return, long tool results, and what code writes. Chat#with_files gives
+  # return, long tool results, and what code writes. Chat#with_file_store gives
   # a chat one, and the model works with it through five tools that list,
   # read, search, write, and edit its files, so a file reaches the model
   # only when the model asks for it.
   #
-  #   chat = RubyLLM.chat.with_files
+  #   chat = RubyLLM.chat.with_file_store
   #   chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
-  #   chat.files.list.map(&:path) # => ["contract-v1.pdf", "contract-v2.pdf"]
+  #   chat.file_store.list.map(&:path) # => ["contract-v1.pdf", "contract-v2.pdf"]
   #
   # RubyLLM ships FileStore::Memory, the default, and FileStore::Directory,
-  # which keeps the files in a folder. The Rails integration keeps a
-  # persisted chat's files in Active Storage.
+  # which keeps the files in a folder; RubyLLM.file_store builds them. The
+  # Rails integration keeps a persisted chat's files in Active Storage.
+  #
+  #   chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
   #
   # Write your own store by subclassing FileStore and implementing #list,
   # #find, #read, #write, and #delete. RubyLLM only ever passes them paths
@@ -106,7 +108,7 @@ module RubyLLM
     # Returns the files inside the folder +prefix+, or every file, as
     # StoredFile objects sorted by path.
     #
-    #   chat.files.list("reports")
+    #   chat.file_store.list("reports")
     def list(prefix = nil)
       raise NotImplementedError, "#{self.class} must implement list"
     end
@@ -126,7 +128,7 @@ module RubyLLM
     # there, and returns its StoredFile. The content type is detected from
     # the path and the content unless given.
     #
-    #   chat.files.write("notes/plan.md", "# Plan")
+    #   chat.file_store.write("notes/plan.md", "# Plan")
     def write(path, content, content_type: nil)
       raise NotImplementedError, "#{self.class} must implement write"
     end
@@ -153,7 +155,7 @@ module RubyLLM
     # Conversions are kept, so each version of a file is converted once.
     # Raises FileNotFoundError when there is no file at +path+.
     #
-    #   chat.files.text("contract.pdf") # => "## Page 1\n\nThis agreement..."
+    #   chat.file_store.text("contract.pdf") # => "## Page 1\n\nThis agreement..."
     #
     # See Configuration#file_converters for adding converters.
     def text(path, config: nil)

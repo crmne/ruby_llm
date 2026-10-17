@@ -10,7 +10,7 @@ module RubyLLM
     #   chat.ruby_llm_chat_files.pluck(:path) # => ["contract.pdf", "results/search-call_1.json"]
     #
     # Rows with an +owner+ are seen only through a store for that owner
-    # (see ChatMethods#file_store); rows without one are seen by every
+    # (see ChatFiles#with_file_store); rows without one are seen by every
     # store of the chat.
     class ChatFile < Record
       self.table_name = 'ruby_llm_chat_files'

@@ -133,17 +133,17 @@ See [Skills]({% link _core_features/skills.md %}).
 
 ## Chat Files
 
-A 40-page PDF attached to the first question used to travel with every question after it, and a search that returned 30,000 characters stayed in every request. A chat with files keeps them out of the conversation:
+A 40-page PDF attached to the first question used to travel with every question after it, and a search that returned 30,000 characters stayed in every request. A chat with a file store keeps them out of the conversation:
 
 ```ruby
-chat = RubyLLM.chat.with_files
+chat = RubyLLM.chat.with_file_store
 chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
 chat.ask "Quote the new termination clause"
 ```
 
 The model sees the PDFs on the question they came with, and one line naming each after that. It works with them through five tools, `list_files`, `read_file`, `search_files`, `write_file`, and `edit_file`, which read PDFs, Word, Excel, and PowerPoint files as text, and scans too once you register the OCR converter. A tool result longer than 10,000 characters is saved as a file, and the model gets its start and the path. With code execution, each run starts with a copy of the files and saves what it writes back to them.
 
-Files live in memory, in a folder with `RubyLLM::FileStore::Directory`, or for a persisted chat in Active Storage, in the new `ruby_llm_chat_files` table. Agents declare them with `files`.
+Files live in memory, in a folder with `RubyLLM.file_store.directory(path)`, or for a persisted chat in Active Storage, in the new `ruby_llm_chat_files` table. `chat.file_store` is the store, agents attach one with `file_store`, and a store of your own subclasses `RubyLLM::FileStore`.
 
 See [Chat Files]({% link _core_features/chat-files.md %}).
 

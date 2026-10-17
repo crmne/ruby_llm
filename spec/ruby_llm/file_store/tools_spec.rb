@@ -5,8 +5,8 @@ require 'spec_helper'
 RSpec.describe RubyLLM::FileStore::Tools do
   include_context 'with configured RubyLLM'
 
-  let(:chat) { RubyLLM.chat(model: model_for(:openai), provider: :openai).with_files }
-  let(:files) { chat.files }
+  let(:chat) { RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store }
+  let(:files) { chat.file_store }
 
   def call(name, **arguments)
     chat.tools[name].call(**arguments)

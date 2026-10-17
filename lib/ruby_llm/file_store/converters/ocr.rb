@@ -8,10 +8,8 @@ module RubyLLM
       # kept after that. Register it in Configuration#file_converters for
       # the types it should read:
       #
-      #   config.file_converters = {
-      #     "image/*" => RubyLLM::FileStore::Converters::OCR.new,
-      #     "application/pdf" => RubyLLM::FileStore::Converters::OCR.new(model: "mistral-ocr-latest")
-      #   }
+      #   config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
+      #   config.file_converters["application/pdf"] = RubyLLM.file_store.converter.ocr(model: "mistral-ocr-latest")
       #
       class OCR
         # Creates a converter that calls RubyLLM.ocr with +options+, such as

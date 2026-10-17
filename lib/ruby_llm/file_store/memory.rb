@@ -3,9 +3,9 @@
 module RubyLLM
   class FileStore
     # Keeps files in memory, for as long as the chat lives. It is the
-    # store Chat#with_files uses when given none.
+    # store Chat#with_file_store uses when given none.
     #
-    #   chat.with_files(store: RubyLLM::FileStore::Memory.new)
+    #   chat.with_file_store(RubyLLM.file_store.memory)
     #
     class Memory < FileStore
       def initialize # :nodoc:

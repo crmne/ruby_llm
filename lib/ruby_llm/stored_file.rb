@@ -6,7 +6,7 @@ module RubyLLM
   # Chat#after_file_write callbacks receive each one the conversation
   # writes.
   #
-  #   chat.files.list
+  #   chat.file_store.list
   #   # => [#<RubyLLM::StoredFile path: "report.pdf", byte_size: 2201344, content_type: "application/pdf">]
   #
   class StoredFile

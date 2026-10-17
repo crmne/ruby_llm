@@ -103,22 +103,36 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
 
   describe 'a persisted chat with files' do
     it 'keeps its files in Active Storage, or a store it is given' do
-      expect(chat.with_files).to be(chat)
-      expect(chat.files).to be_a(described_class)
-      expect(chat.files.chat).to eq(chat)
+      expect(chat.with_file_store).to be(chat)
+      expect(chat.file_store).to be_a(described_class)
+      expect(chat.file_store.chat).to eq(chat)
 
       memory = RubyLLM::FileStore::Memory.new
-      expect(chat.with_files(store: memory).files).to be(memory)
-      expect(chat.with_files({ 'spill_over' => 5 }).files).to be_a(described_class)
+      expect(chat.with_file_store(memory).file_store).to be(memory)
+      expect(chat.with_file_store(spill_over: 5).file_store).to be_a(described_class)
       expect(chat.to_llm.instance_variable_get(:@file_references).spill_over).to eq(5)
-      expect(chat.with_files(false).files).to be_nil
-      expect(chat.file_store(owner: chat).owner).to eq(chat)
+      expect(chat.with_file_store(nil).file_store).to be_nil
+      expect(chat.with_file_store(owner: chat).file_store.owner).to eq(chat)
+      expect { chat.with_file_store(memory, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)
+    end
+
+    it "takes an agent's owner lambda, run with the chat in scope" do
+      agent = Class.new(RubyLLM::Agent) do
+        chat_model Chat
+        file_store owner: -> { chat }
+      end
+      agent.model model_for(:openai), provider: :openai
+
+      record = agent.create!
+
+      expect(record.file_store).to be_a(described_class)
+      expect(record.file_store.owner).to eq(record)
     end
 
     it 'keeps an attachment by sharing its blob, which outlives the message' do
       allow(chat.to_llm.provider).to receive(:complete).and_return(answer('A logo.'))
       chat.ask('What is this?', with: image_path)
-      job = Chat.find(chat.id).with_files
+      job = Chat.find(chat.id).with_file_store
       allow(job.to_llm.provider).to receive(:complete).and_return(answer('Red.'))
 
       expect { job.ask('What color?') }.not_to change(ActiveStorage::Blob, :count)
@@ -133,12 +147,12 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
     end
 
     it 'sends earlier attachments as a line naming the file, across processes' do
-      chat.with_files
+      chat.with_file_store
       allow(chat.to_llm.provider).to receive(:complete).and_return(answer('A logo.'))
       chat.ask('What is this?', with: image_path)
 
       requests = []
-      job = Chat.find(chat.id).with_files
+      job = Chat.find(chat.id).with_file_store
       allow(job.to_llm.provider).to receive(:complete) do |messages, **|
         requests << messages
         answer('Red.')
@@ -156,7 +170,7 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
         define_method(:execute) { 'item ' * 5_000 }
       end
       call = RubyLLM::ToolCall.new(id: 'call_1', name: 'list_everything', arguments: {})
-      chat.with_files.with_tools(tool)
+      chat.with_file_store.with_tools(tool)
       allow(chat.to_llm.provider).to receive(:complete).and_return(
         RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => call },
                              input_tokens: 1, output_tokens: 1),
@@ -168,11 +182,11 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       result = chat.messages.find_by(role: 'tool')
       path = result.content[%r{All of it is in (results/list_everything-\w{8}\.txt)}, 1]
       expect(result.content.length).to be < 2_500
-      expect(chat.files.read(path)).to eq('item ' * 5_000)
+      expect(chat.file_store.read(path)).to eq('item ' * 5_000)
     end
 
     it 'deletes its files with the chat' do
-      chat.with_files.files.write('a.txt', 'x')
+      chat.with_file_store.file_store.write('a.txt', 'x')
 
       expect { chat.destroy }.to change(RubyLLM::ActiveRecord::ChatFile, :count).by(-1)
     end

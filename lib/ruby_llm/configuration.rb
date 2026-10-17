@@ -233,7 +233,7 @@ module RubyLLM
     # returns its text, or +nil+ to pass it on. See FileStore::Converters.
     # Default: <tt>{}</tt>.
     #
-    #   config.file_converters = { "image/*" => RubyLLM::FileStore::Converters::OCR.new }
+    #   config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
     #
     option :file_converters, -> { {} }
 
@@ -390,6 +390,14 @@ module RubyLLM
         value = default.respond_to?(:call) ? instance_exec(&default) : default
         public_send("#{key}=", value)
       end
+    end
+
+    # Copies file_converters too, so registering one on a context's copy,
+    # <tt>config.file_converters["image/*"] = ...</tt>, leaves the
+    # original alone.
+    def initialize_copy(source) # :nodoc:
+      super
+      @file_converters = @file_converters.dup
     end
 
     def instance_variables # :nodoc:

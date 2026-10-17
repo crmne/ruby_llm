@@ -320,6 +320,21 @@ module RubyLLM
       MCP.define(...).new
     end
 
+    # Returns a factory for the file stores RubyLLM ships, to attach with
+    # Chat#with_file_store: +memory+ for a FileStore::Memory, and
+    # +directory(path)+ for a FileStore::Directory, and +converter+ for
+    # the converters that read files as text. For a store of your own,
+    # subclass FileStore.
+    #
+    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
+    #   chat.with_file_store(RubyLLM.file_store.memory)
+    #   config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
+    #
+    # Returns FileStore::Factory.
+    def file_store
+      FileStore::Factory
+    end
+
     # Counts the tokens +text+ would consume as a single user message,
     # without requesting a completion. Builds a minimal Chat and delegates
     # to Chat#count_tokens. Returns an Integer.

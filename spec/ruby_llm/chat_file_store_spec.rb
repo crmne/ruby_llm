@@ -63,34 +63,34 @@ RSpec.describe RubyLLM::Chat do
     chat.send(:add_tool_result_message, tool_call, result)
   end
 
-  describe '#with_files' do
+  describe '#with_file_store' do
     it 'gives the chat a store in memory and five tools' do
-      expect(chat.with_files).to be(chat)
-      expect(chat.files).to be_a(RubyLLM::FileStore::Memory)
+      expect(chat.with_file_store).to be(chat)
+      expect(chat.file_store).to be_a(RubyLLM::FileStore::Memory)
       expect(chat.tools.keys).to include(:list_files, :read_file, :search_files, :write_file, :edit_file)
     end
 
-    it 'takes a store and options as keywords or a Hash' do
+    it 'takes a store and a spill-over limit' do
       store = RubyLLM::FileStore::Memory.new
 
-      expect(chat.with_files(store:).files).to be(store)
-      expect(chat.with_files({ 'store' => store, 'spill_over' => 20 }).files).to be(store)
+      expect(chat.with_file_store(store).file_store).to be(store)
+      expect(chat.with_file_store(store, spill_over: 20).file_store).to be(store)
+      expect(chat.instance_variable_get(:@file_references).spill_over).to eq(20)
     end
 
-    it 'removes the store and its tools with false' do
-      chat.with_files.with_files(false)
+    it 'removes the store and its tools with nil' do
+      chat.with_file_store.with_file_store(nil)
 
-      expect(chat.files).to be_nil
+      expect(chat.file_store).to be_nil
       expect(chat.tools.keys).not_to include(:read_file)
     end
 
-    it 'rejects nil, unknown options, bad limits, stores that are none, and options with false' do
-      expect { chat.with_files(nil) }.to raise_error(ArgumentError, /accepts true, false, or file options/)
-      expect { chat.with_files(quota: 1) }.to raise_error(ArgumentError, /got quota/)
-      expect { chat.with_files(spill_over: 0) }.to raise_error(ArgumentError, /positive number/)
-      expect { chat.with_files(spill_over: nil) }.to raise_error(ArgumentError, /positive number/)
-      expect { chat.with_files(store: 'tmp') }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore/)
-      expect { chat.with_files(false, spill_over: 1) }.to raise_error(ArgumentError, /does not accept options/)
+    it 'rejects unknown options, bad limits, and stores that are none' do
+      expect { chat.with_file_store(quota: 1) }.to raise_error(ArgumentError, /unknown keyword: :quota/)
+      expect { chat.with_file_store(spill_over: 0) }.to raise_error(ArgumentError, /positive number/)
+      expect { chat.with_file_store(spill_over: nil) }.to raise_error(ArgumentError, /positive number/)
+      expect { chat.with_file_store('tmp') }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore or nil/)
+      expect { chat.with_file_store(false) }.to raise_error(ArgumentError, /takes a RubyLLM::FileStore or nil/)
     end
 
     it 'refuses a tool of the same name' do
@@ -98,27 +98,27 @@ RSpec.describe RubyLLM::Chat do
         def self.tool_name = 'read_file'
         def execute = 'mine'
       end
-      chat.with_tools(own).with_files
+      chat.with_tools(own).with_file_store
 
       expect { chat.tools }.to raise_error(ArgumentError, /Two tools are named read_file/)
     end
 
     it 'keeps the store in a copy, which tells its own callbacks' do
-      chat.with_files
+      chat.with_file_store
       copy = chat.dup
       written = []
       copy.after_file_write { |file| written << file.path }
 
       copy.tools[:write_file].call(path: 'a.md', content: 'x')
 
-      expect(copy.files).to be(chat.files)
-      expect(chat.files.read('a.md')).to eq('x')
+      expect(copy.file_store).to be(chat.file_store)
+      expect(chat.file_store.read('a.md')).to eq('x')
       expect(written).to eq(['a.md'])
     end
   end
 
   describe 'attachments' do
-    before { chat.with_files }
+    before { chat.with_file_store }
 
     it 'keeps every attachment and shows the latest question its own in full' do
       chat.add_message(role: :user, content: 'What is this?', attachments: [image_path])
@@ -126,7 +126,7 @@ RSpec.describe RubyLLM::Chat do
       view = request_view
       expect(view.last.attachments.map(&:filename)).to eq(['ruby.png'])
       expect(view.last.attachments.first.mime_type).to eq('image/png')
-      expect(chat.files.list.map(&:path)).to eq(['ruby.png'])
+      expect(chat.file_store.list.map(&:path)).to eq(['ruby.png'])
     end
 
     it 'turns the attachments of earlier questions into a line naming the file' do
@@ -151,11 +151,11 @@ RSpec.describe RubyLLM::Chat do
       tool_result(tool_call, ['Here it is', RubyLLM::Attachment.new(image_path)])
 
       expect(request_view.last.attachments.first.content).to start_with('ruby.png (image/png,')
-      expect(chat.files.exists?('ruby.png')).to be(true)
+      expect(chat.file_store.exists?('ruby.png')).to be(true)
     end
 
     it 'shows what read_file returns until the next question, without keeping it twice' do
-      chat.files.write('images/logo.png', File.binread(image_path))
+      chat.file_store.write('images/logo.png', File.binread(image_path))
       tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'read_file', arguments: { 'path' => 'images/logo.png' })
       chat.add_message(role: :user, content: 'Show me the logo')
       chat.add_message(calls('read_file', { 'path' => 'images/logo.png' }))
@@ -168,7 +168,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect(request_view[2].attachments.first.content)
         .to eq('logo.png was shown here. Open it again with read_file to see it.')
-      expect(chat.files.list.map(&:path)).to eq(['images/logo.png'])
+      expect(chat.file_store.list.map(&:path)).to eq(['images/logo.png'])
     end
 
     it 'tells after_file_write once about each attachment it keeps' do
@@ -189,14 +189,14 @@ RSpec.describe RubyLLM::Chat do
       chat.add_message(role: :user, content: 'Again')
 
       expect(request_view.first.attachments.first).to be_provider_file
-      expect(chat.files.list).to be_empty
+      expect(chat.file_store.list).to be_empty
     end
 
     it 'sends an attachment it cannot keep as it is' do
       store = RubyLLM::FileStore::Memory.new
       allow(store).to receive(:store_attachment).and_raise(IOError)
       allow(RubyLLM.logger).to receive(:warn)
-      chat.with_files(store:)
+      chat.with_file_store(store)
       chat.add_message(role: :user, content: 'Look', attachments: [image_path])
       chat.add_message(answer)
       chat.add_message(role: :user, content: 'Again')
@@ -211,12 +211,12 @@ RSpec.describe RubyLLM::Chat do
     let(:docx) { File.expand_path('../fixtures/sample.docx', __dir__) }
 
     it 'sends a line naming the file, for the model to read with read_file' do
-      chat.with_files
+      chat.with_file_store
       chat.add_message(role: :user, content: 'What is the codename?', attachments: [docx])
 
       expect(chat.render.to_json).to include('sample.docx (application/vnd.openxmlformats-officedocument.' \
                                              'wordprocessingml.document, ')
-      expect(chat.files.text('sample.docx')).to include('BLUE-LANTERN-42')
+      expect(chat.file_store.text('sample.docx')).to include('BLUE-LANTERN-42')
     end
 
     it 'leaves the error in place without files' do
@@ -232,7 +232,7 @@ RSpec.describe RubyLLM::Chat do
     before { chat.with_tools(SearchDrive, ShortSpill, NeverSpill) }
 
     it 'saves a long result as a file and sends its start and path' do
-      chat.with_files
+      chat.with_file_store
       written = []
       chat.after_file_write { |file| written << file.path }
 
@@ -244,20 +244,20 @@ RSpec.describe RubyLLM::Chat do
         'results/search_drive-call1.txt: read more with read_file, or search it with search_files.]'
       )
       expect(message.content.length).to be < 2_200
-      expect(chat.files.read('results/search_drive-call1.txt')).to eq(SearchDrive.new.call(query: 'q'))
+      expect(chat.file_store.read('results/search_drive-call1.txt')).to eq(SearchDrive.new.call(query: 'q'))
       expect(written).to eq(['results/search_drive-call1.txt'])
     end
 
     it 'saves long JSON pretty printed, so lines can be read and searched' do
-      chat.with_files(spill_over: 10)
+      chat.with_file_store(spill_over: 10)
 
       tool_result(tool_call, { 'items' => [1, 2] })
 
-      expect(chat.files.read('results/search_drive-call1.json')).to eq(%({\n  "items": [\n    1,\n    2\n  ]\n}))
+      expect(chat.file_store.read('results/search_drive-call1.json')).to eq(%({\n  "items": [\n    1,\n    2\n  ]\n}))
     end
 
     it 'follows a limit the tool sets, and sends whole what it says never to save' do
-      chat.with_files
+      chat.with_file_store
       short = RubyLLM::ToolCall.new(id: 'call_2', name: 'short_spill', arguments: {})
       never = RubyLLM::ToolCall.new(id: 'call_3', name: 'never_spill', arguments: {})
 
@@ -268,14 +268,14 @@ RSpec.describe RubyLLM::Chat do
     it 'sends every result whole with spill_over: false, or without files' do
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
 
-      chat.with_files(spill_over: false)
+      chat.with_file_store(spill_over: false)
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
     end
   end
 
   describe 'a conversation' do
     it 'lets the model read an earlier attachment back with read_file' do
-      chat.with_files
+      chat.with_file_store
       respond_with(answer('A sample PDF.'), calls('read_file', { 'path' => 'sample.pdf', 'limit' => 3 }),
                    answer('It says Sample PDF.'))
 
@@ -303,7 +303,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it "anthropic/#{model_for(:anthropic)} reads a Word document it cannot take as an attachment" do
-      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_files
+      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_file_store
       response = chat.ask 'What is the project codename in this document?', with: docx
 
       expect(tools_called(chat)).to include('read_file').or include('search_files')
@@ -314,8 +314,8 @@ RSpec.describe RubyLLM::Chat do
       model = model_for(provider)
 
       it "#{provider}/#{model} finds one line in a long file" do
-        chat = RubyLLM.chat(model:, provider:).with_files
-        chat.files.write('handbook.md', handbook)
+        chat = RubyLLM.chat(model:, provider:).with_file_store
+        chat.file_store.write('handbook.md', handbook)
         response = chat.ask 'What is the parking garage door code? It is in handbook.md in your files.'
 
         expect(tools_called(chat)).to include('search_files').or include('read_file')
