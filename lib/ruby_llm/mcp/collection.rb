@@ -17,6 +17,12 @@ module RubyLLM
         @built = {}.compare_by_identity
       end
 
+      def initialize_copy(source) # :nodoc:
+        super
+        @servers = @servers.dup
+        @built = @built.dup
+      end
+
       def connect(server, chat) # :nodoc:
         server = server.new.tap { |built| @built[built] = chat } if server.is_a?(Class)
         replaced = self[server.name]
