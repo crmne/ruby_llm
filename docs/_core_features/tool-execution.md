@@ -122,7 +122,7 @@ chat.deny(tool_call)
 chat.complete # appends the denial result and asks the model to respond
 ```
 
-Calls that need no approval still run while protected calls wait.
+Calls that need no approval still run while protected calls wait. `ask` and `complete` return the assistant message that holds the waiting calls, so `response.tool_calls` is always there to inspect. Use `chat.pending_approvals` to pick out the calls that still need a decision.
 
 When the user approves a call and says "don't ask again", pass `remember: true`:
 
