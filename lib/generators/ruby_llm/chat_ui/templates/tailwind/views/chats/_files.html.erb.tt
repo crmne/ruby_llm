@@ -1,4 +1,5 @@
-<%% files = <%= chat_model_name.demodulize.underscore %>.ruby_llm_chat_files.with_attached_file %>
+<%%# The files every store of the chat sees. Files a store wrote for an owner stay theirs: add them with .or(...where(owner: Current.user)). %>
+<%% files = <%= chat_model_name.demodulize.underscore %>.ruby_llm_chat_files.where(owner_id: nil).with_attached_file %>
 <%% if files.any? %>
   <section id="<%= chat_variable_name %>_<%%= <%= chat_model_name.demodulize.underscore %>.id %>_files" class="my-5">
     <h2 class="font-bold text-lg mb-2">Files</h2>

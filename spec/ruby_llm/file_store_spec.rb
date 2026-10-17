@@ -27,6 +27,15 @@ RSpec.describe RubyLLM::FileStore do
     end
   end
 
+  describe '.filename' do
+    it 'keeps the base name, without leading dots a folder store would refuse' do
+      expect(described_class.filename('uploads/.env')).to eq('env')
+      expect(described_class.filename('..notes.txt')).to eq('notes.txt')
+      expect(described_class.filename('..')).to eq('file')
+      expect(described_class.filename('report.pdf')).to eq('report.pdf')
+    end
+  end
+
   it 'leaves the five operations to subclasses' do
     store = Class.new(described_class).new
 

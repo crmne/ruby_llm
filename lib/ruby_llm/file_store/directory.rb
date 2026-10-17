@@ -66,7 +66,8 @@ module RubyLLM
         full = full_path(path)
         make_room(full)
         content = FileStore.bytes(content)
-        temporary = "#{full}.#{Process.pid}.#{Thread.current.object_id}.tmp"
+        temporary = File.join(File.dirname(full),
+                              ".#{File.basename(full)}.#{Process.pid}.#{Thread.current.object_id}.tmp")
         File.binwrite(temporary, content)
         File.rename(temporary, full)
         file = stored_file(full, File.lstat(full))

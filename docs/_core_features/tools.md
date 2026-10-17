@@ -157,17 +157,7 @@ A run that takes longer than its `max_run_time` counts as crashed, and another p
 
 ## Long Results
 
-A tool that returns a lot, like a search with hundreds of hits, sends all of it to the model, and all of it stays in every later request. In a chat with a [file store]({% link _core_features/chat-files.md %}), a result longer than 10,000 characters is saved as a file instead, and the model gets its start and the file's path to read or search the rest. A tool can set its own limit, or send its results whole when it already returns them in pages:
-
-```ruby
-class ExportOrders < RubyLLM::Tool
-  spill_to_file 50_000
-end
-
-class SearchDocs < RubyLLM::Tool
-  spill_to_file false
-end
-```
+A tool that returns a lot, like a search with hundreds of hits, sends all of it to the model, and all of it stays in every later request. In a chat with a [file store]({% link _core_features/chat-files.md %}), a result longer than 10,000 characters is saved as a file instead, and the model gets its start and the file's path to read or search the rest. A tool can set its own limit, or send its results whole when it already returns them in pages, with `spill_to_file`: see [Long tool results]({% link _core_features/chat-files.md %}#what-the-model-sees) in the Chat Files guide.
 
 ## Error Handling in Tools
 

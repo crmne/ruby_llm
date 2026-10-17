@@ -77,8 +77,8 @@ module RubyLLM
 
       # Returns a safe file name for an attachment called +name+.
       def filename(name) # :nodoc:
-        base = File.basename(name.to_s.tr('\\', '/')).gsub(UNSAFE_CHARACTERS, '_').strip
-        ['', '.', '..'].include?(base) ? 'file' : base
+        base = File.basename(name.to_s.tr('\\', '/')).gsub(UNSAFE_CHARACTERS, '_').strip.sub(/\A\.+/, '')
+        base.empty? ? 'file' : base
       end
 
       # Returns the SHA-256 of +content+ in hex.

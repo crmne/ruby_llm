@@ -44,7 +44,7 @@ module RubyLLM
 
       def view(list)
         current = list.rindex { |message| message.role == :user } || 0
-        reads = read_call_ids(list)
+        reads = read_paths(list)
         list.each_with_index.map do |message, index|
           message.attachments.empty? ? message : view_message(message, current: index >= current, reads:)
         end
@@ -56,9 +56,12 @@ module RubyLLM
         return content unless limit && content.is_a?(String) && content.length > limit
 
         text, extension = readable(content)
-        file = write("results/#{tool_call.name}-#{safe_id(tool_call.id)}.#{extension}", text)
+        file = write("results/#{safe_name(tool_call.name)}-#{safe_id(tool_call.id)}.#{extension}", text)
         "#{text[0, PREVIEW]}\n\n[This result has #{text.length} characters, so only the start is shown. " \
           "All of it is in #{file.path}: read more with read_file, or search it with search_files.]"
+      rescue StandardError => e
+        RubyLLM.logger.warn { "Could not save a long tool result in the chat's files: #{e.class}" }
+        content
       end
 
       def store_attachment(attachment)
@@ -73,7 +76,7 @@ module RubyLLM
       private
 
       def view_message(message, current:, reads:)
-        read = message.tool_result? && reads.include?(message.tool_call_id)
+        read = (reads[message.tool_call_id] if message.tool_result?)
         shown = current && (!message.tool_result? || read)
         attachments = message.attachments.map { |attachment| view_of(attachment, shown:, read:) }
         shown ? message : message.with_attachments(attachments)
@@ -81,7 +84,7 @@ module RubyLLM
 
       def view_of(attachment, shown:, read:)
         return attachment if attachment.provider_file?
-        return (shown ? attachment : reference(attachment.filename, nil)) if read
+        return (shown ? attachment : reference(read, nil)) if read
 
         file = store_attachment(attachment)
         shown ? attachment : reference(file.path, file)
@@ -100,9 +103,16 @@ module RubyLLM
         Attachment.new(StringIO.new(text), filename: "#{File.basename(path)}.txt")
       end
 
-      def read_call_ids(list)
+      # Returns the path each read_file call asked for, by call id.
+      def read_paths(list)
         list.flat_map { |message| (message.tool_calls || {}).values }
-            .select { |call| call.name == READ_TOOL }.to_set(&:id)
+            .select { |call| call.name == READ_TOOL }
+            .to_h { |call| [call.id, read_path(call)] }
+      end
+
+      def read_path(call)
+        path = call.arguments.to_h.transform_keys(&:to_s)['path'].to_s
+        path.empty? ? 'the file' : path
       end
 
       def write(path, content)
@@ -115,6 +125,10 @@ module RubyLLM
         [JSON.pretty_generate(JSON.parse(content)), 'json']
       rescue JSON::ParserError
         [content, 'txt']
+      end
+
+      def safe_name(name)
+        name.to_s.gsub(/[^A-Za-z0-9_-]/, '_')[0, 64]
       end
 
       def safe_id(id)

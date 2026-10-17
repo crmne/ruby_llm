@@ -44,7 +44,7 @@ module RubyLLM
         private
 
         def scope(path)
-          return store.list if path.to_s.strip.empty?
+          return store.list if path.to_s.strip.empty? || %w[. /].include?(path.to_s.strip)
 
           file = store.find(path_for(path))
           files = file ? [file] : store.list(path_for(path))

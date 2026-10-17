@@ -151,6 +151,8 @@ RSpec.describe RubyLLM::FileStore::Tools do
     it 'searches one file or folder' do
       expect(call(:search_files, query: 'orchid', path: 'sub')).to eq("sub/sheet.xlsx:4: spreadsheet_code\tORCHID-97")
       expect(call(:search_files, query: 'orchid', path: 'a.md')).to eq('a.md:2: the ORCHID line')
+      expect(call(:search_files, query: 'orchid', path: '/')).to eq(call(:search_files, query: 'orchid'))
+      expect(call(:search_files, query: 'orchid', path: '.')).to eq(call(:search_files, query: 'orchid'))
       expect(call(:search_files, query: 'x', path: 'missing')[:error]).to eq('There is no file or folder at missing.')
     end
 

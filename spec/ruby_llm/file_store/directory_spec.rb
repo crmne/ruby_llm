@@ -19,6 +19,19 @@ RSpec.describe RubyLLM::FileStore::Directory do
     expect(store.root).to eq(File.realpath(folder))
   end
 
+  it 'writes through a hidden temporary file, which listings never show' do
+    seen = nil
+    allow(File).to receive(:rename).and_wrap_original do |original, from, to|
+      seen = [File.basename(from), store.list.map(&:path)]
+      original.call(from, to)
+    end
+
+    store.write('notes/plan.md', 'x')
+
+    expect(seen.first).to start_with('.plan.md.')
+    expect(seen.last).to be_empty
+  end
+
   it 'lists files someone put in the folder, leaving out hidden ones' do
     FileUtils.mkdir_p(File.join(root, 'in', '.git'))
     File.write(File.join(root, 'in', 'a.txt'), 'a')

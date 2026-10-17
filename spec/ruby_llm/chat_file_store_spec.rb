@@ -167,7 +167,7 @@ RSpec.describe RubyLLM::Chat do
       chat.add_message(role: :user, content: 'Thanks')
 
       expect(request_view[2].attachments.first.content)
-        .to eq('logo.png was shown here. Open it again with read_file to see it.')
+        .to eq('images/logo.png was shown here. Open it again with read_file to see it.')
       expect(chat.file_store.list.map(&:path)).to eq(['images/logo.png'])
     end
 
@@ -263,6 +263,18 @@ RSpec.describe RubyLLM::Chat do
 
       expect(tool_result(short, 'x' * 60).content).to include('results/short_spill-call2.txt')
       expect(tool_result(never, 'y' * 20_000).content).to eq('y' * 20_000)
+    end
+
+    it 'keeps the result whole when the store cannot save it, and names files only with safe characters' do
+      failing = RubyLLM.file_store.memory
+      allow(failing).to receive(:write).and_raise(IOError)
+      allow(RubyLLM.logger).to receive(:warn)
+      chat.with_file_store(failing)
+      expect(tool_result(tool_call, 'w' * 20_000).content).to eq('w' * 20_000)
+
+      chat.with_file_store
+      odd = RubyLLM::ToolCall.new(id: 'call_4', name: '../odd tool', arguments: {})
+      expect(tool_result(odd, 'v' * 20_000).content).to include('results/___odd_tool-call4.txt')
     end
 
     it 'sends every result whole with spill_to_file: false, or without files' do
