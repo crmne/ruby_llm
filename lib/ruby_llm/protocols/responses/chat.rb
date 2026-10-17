@@ -370,14 +370,20 @@ module RubyLLM
           }]
 
           if msg.attachments.any?
-            parts = [{ type: 'input_text', text: "Attachments from tool call #{msg.provider_call_id}:" }]
-            parts.concat(format_content(nil, msg.attachments))
-            items << { role: 'user', content: parts }
+            items << format_attachment_item("Attachments from tool call #{msg.provider_call_id}:", msg.attachments)
           end
 
           items
         end
 
+        def format_attachment_item(label, attachments)
+          parts = [{ type: 'input_text', text: label }]
+          parts.concat(format_content(nil, attachments))
+          { role: 'user', content: parts }
+        end
+
+        # Assistant output is text-only on the wire, so the attachments of a
+        # replayed assistant turn ride a user item spliced in after it.
         def format_assistant_items(msg)
           # Turns that used server tools replay their output items verbatim,
           # reasoning and tool results included, as stateless chaining expects.
@@ -387,6 +393,7 @@ module RubyLLM
           items << format_reasoning_item(msg.thinking) if own_signature(msg)
           items << { role: 'assistant', content: format_output_content(msg) } unless empty_content?(msg.content)
           items.concat(format_function_call_items(msg.tool_calls)) if msg.tool_call?
+          items << format_attachment_item('Attachments from the assistant:', msg.attachments) if msg.attachments.any?
           items
         end
 
