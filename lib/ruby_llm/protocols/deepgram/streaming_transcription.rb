@@ -37,9 +37,7 @@ module RubyLLM
 
         def streaming_transcription_url(model:, language:, speaker_names:, provider_options:, prompt:)
           params = { model:, language:, smart_format: true, interim_results: true }
-          params[:diarize_model] = DIARIZE_MODEL if speaker_names
-          params[:keyterm] = Array(prompt) if prompt
-          params.merge!(provider_options)
+          params.merge!(transcription_hint_params(speaker_names:, prompt:), provider_options)
           params = params.compact.flat_map { |key, value| Array(value).map { |item| [key, item] } }
           uri = URI.join("#{@provider.api_base.sub(%r{/+\z}, '')}/", "v1/listen?#{URI.encode_www_form(params)}")
           uri.scheme = uri.scheme == 'https' ? 'wss' : 'ws'

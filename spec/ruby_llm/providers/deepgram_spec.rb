@@ -101,6 +101,17 @@ RSpec.describe RubyLLM::Providers::Deepgram do
 
       expect(stub).to have_been_requested
     end
+
+    it 'carries the prompt in the query string as a key term' do
+      stub = stub_request(:post, 'https://api.deepgram.com/v1/listen')
+             .with(query: { model: 'nova-3-general', smart_format: 'true', utterances: 'true', keyterm: 'RubyLLM' })
+             .to_return(status: 200, body: listen_response.to_json,
+                        headers: { 'Content-Type' => 'application/json' })
+
+      RubyLLM.transcribe(audio_path, model: 'nova-3', provider: :deepgram, prompt: 'RubyLLM')
+
+      expect(stub).to have_been_requested
+    end
   end
 
   describe 'the speech requests it sends' do

@@ -42,22 +42,21 @@ module RubyLLM
 
           track_usage(:transcription) do
             attachment = audio_file.is_a?(Attachment) ? audio_file : Attachment.new(audio_file, config: @config)
-            url = transcription_url(model:, language:, speaker_names:, provider_options:)
+            url = transcription_url(model:, language:, speaker_names:, provider_options:, prompt:)
             payload = render_transcription_payload(attachment)
             response = post_transcription(url, payload, attachment)
             parse_transcription_response(response, model:)
           end
         end
 
-        def transcription_url(model:, language: nil, speaker_names: nil, provider_options: {})
+        def transcription_url(model:, language: nil, speaker_names: nil, provider_options: {}, prompt: nil)
           "v1/listen?#{URI.encode_www_form(transcription_params(model:, language:, speaker_names:,
-                                                                provider_options:))}"
+                                                                provider_options:, prompt:))}"
         end
 
-        def transcription_params(model:, language: nil, speaker_names: nil, provider_options: {})
+        def transcription_params(model:, language: nil, speaker_names: nil, provider_options: {}, prompt: nil)
           params = { model: model, language: language }.merge(DEFAULT_PARAMS)
-          params[:diarize_model] = DIARIZE_MODEL if speaker_names
-          params.merge(provider_options).compact
+          params.merge(transcription_hint_params(speaker_names:, prompt:)).merge(provider_options).compact
         end
 
         # Deepgram fetches remote audio itself, so a url attachment is sent
@@ -84,6 +83,13 @@ module RubyLLM
         end
 
         private
+
+        def transcription_hint_params(speaker_names:, prompt:)
+          params = {}
+          params[:diarize_model] = DIARIZE_MODEL if speaker_names
+          params[:keyterm] = Array(prompt) if prompt
+          params
+        end
 
         def post_transcription(url, payload, attachment)
           @connection.post(url, payload, usage: @usage_tracker) do |request|
