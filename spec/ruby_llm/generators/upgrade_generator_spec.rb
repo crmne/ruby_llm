@@ -38,6 +38,22 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
   end
 
+  it 'removes what it added when rolled back' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:down) }
+
+      expect(connection.column_exists?(:chats, :claim_token)).to be(false)
+      expect(connection.column_exists?(:chats, :claimed_until)).to be(false)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until)).to be(false)
+      expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id)).to be(false)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+  end
+
   it 'adds the run claims to a mapped chat table' do
     described_class.new(['chat:Conversation'], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
                    .create_migration_file
