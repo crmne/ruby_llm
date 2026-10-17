@@ -62,6 +62,26 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     expect(final_chunk.tokens.server_tool_use).to eq('web_search_requests' => 1)
   end
 
+  it 'places streamed citations in the text streamed so far' do
+    grounding = { 'groundingChunks' => [{ 'web' => { 'uri' => 'https://ruby-lang.org', 'title' => 'Ruby' } }],
+                  'groundingSupports' => [{ 'segment' => { 'startIndex' => 17, 'endIndex' => 36,
+                                                           'text' => 'It dates from 1995.' },
+                                            'groundingChunkIndices' => [0] }] }
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [{ 'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Matz créa Ruby. ' }] } }] },
+     { 'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'It dates from 1995.' }] },
+                          'finishReason' => 'STOP', 'groundingMetadata' => grounding }] }].each do |event|
+      accumulator.add(test_obj.send(:build_chunk, event))
+    end
+    message = accumulator.to_message(nil)
+
+    expect(message.citations.map(&:to_h)).to eq(
+      [{ url: 'https://ruby-lang.org', title: 'Ruby', text: 'It dates from 1995.',
+         start_index: 16, end_index: 35, source_index: 0 }]
+    )
+    expect(message.content[16...35]).to eq('It dates from 1995.')
+  end
+
   it 'streams the search suggestions on the live search call only' do
     suggestions = '<style>.container { display: flex; }</style><div class="container">Ruby 4.0.7</div>'
     chunk = test_obj.send(:build_chunk, {

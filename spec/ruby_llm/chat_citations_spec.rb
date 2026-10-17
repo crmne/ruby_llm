@@ -85,7 +85,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks.any? { |chunk| chunk.citations.any? }).to be true
         expect(response.citations).not_to be_empty
-        expect(response.citations.first.cited_text).to be_present
+        citation = response.citations.first
+        expect(citation.cited_text).to be_present
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
       end
     end
 
@@ -134,7 +136,9 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(chunks.any? { |chunk| chunk.citations.any? }).to be true
         expect(response.citations).not_to be_empty
-        expect(response.citations.first.cited_text).to be_present
+        citation = response.citations.first
+        expect(citation.cited_text).to be_present
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
       end
     end
 

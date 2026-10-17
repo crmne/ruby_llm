@@ -19,6 +19,8 @@ module RubyLLM
 
         def stream_response(payload, additional_headers = {}, &block)
           @thinking_stream = ThinkingStream.new
+          @stream_text_lengths = Hash.new(0)
+          @stream_citations = {}
           accumulator = RubyLLM::Protocol::StreamAccumulator.new
           decoder = event_stream_decoder
           body = JSON.generate(payload)
@@ -193,7 +195,7 @@ module RubyLLM
             role: :assistant,
             model: event['modelId'] || @model&.id,
             content: extract_content_delta(event),
-            citations: extract_citations_delta(event),
+            citations: extract_block_citations(event),
             thinking: Thinking.build(
               text: extract_thinking_delta(event),
               signature: extract_thinking_signature(event)
@@ -280,14 +282,38 @@ module RubyLLM
           normalized_delta(event)['text']
         end
 
-        # The cited span itself streams as ordinary text deltas; the citation
-        # delta carries the source. The final message resolves the span text
-        # from the accumulated content when indices are known.
-        def extract_citations_delta(event)
-          citation = normalized_delta(event)['citation']
-          return nil unless citation.is_a?(Hash)
+        # A citation delta arrives before the text it supports, so a block's
+        # citations wait for the block to stop and take its span of the response.
+        # A block still open when the message stops gives up what it has.
+        def extract_block_citations(event)
+          track_citation_block(event)
+          finished_citation_blocks(event).flat_map { |index| parse_block_citations(index) }
+        end
 
-          [Chat.parse_citation(citation)]
+        def track_citation_block(event)
+          @stream_text_lengths ||= Hash.new(0)
+          @stream_citations ||= {}
+          index = event_block_index(event)
+          return unless index
+
+          delta = normalized_delta(event)
+          @stream_text_lengths[index] += delta['text'].length if delta['text'].is_a?(String)
+          (@stream_citations[index] ||= []) << delta['citation'] if delta['citation'].is_a?(Hash)
+        end
+
+        def finished_citation_blocks(event)
+          return @stream_citations.keys.sort if event.key?('messageStop') || event.key?('stopReason')
+          return [] if %w[delta start contentBlockDelta contentBlockStart].any? { |key| event.key?(key) }
+
+          [event_block_index(event)].compact
+        end
+
+        def parse_block_citations(index)
+          length = @stream_text_lengths[index]
+          start_index = @stream_text_lengths.sum { |block_index, size| block_index < index ? size : 0 }
+          span = length.zero? ? {} : { start_index:, end_index: start_index + length }
+
+          Array(@stream_citations.delete(index)).map { |citation| Chat.parse_citation(citation, **span) }
         end
 
         def extract_thinking_delta(event)
