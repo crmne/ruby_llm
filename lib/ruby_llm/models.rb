@@ -149,9 +149,7 @@ module RubyLLM
           existing_models = read_existing_models
 
           provider_fetch = fetch_provider_models(remote_only: remote_only)
-          @last_provider_failures = provider_fetch[:failed]
-          log_provider_fetch(provider_fetch)
-          payload[:failed_providers] = provider_fetch[:failed].map { |failure| failure[:slug] }
+          record_provider_fetch(provider_fetch, payload)
 
           models_dev_fetch = fetch_models_dev_models(existing_models)
           log_models_dev_fetch(models_dev_fetch)
@@ -160,6 +158,12 @@ module RubyLLM
           payload[:model_count] = merged_models.size
           merged_models
         end
+      end
+
+      def record_provider_fetch(provider_fetch, payload) # :nodoc:
+        @last_provider_failures = provider_fetch[:failed]
+        log_provider_fetch(provider_fetch)
+        payload[:failed_providers] = provider_fetch[:failed].map { |failure| failure[:slug] }
       end
 
       def fetch_provider_models(remote_only: true) # :nodoc:
@@ -668,7 +672,7 @@ module RubyLLM
     def refresh(remote_only: false)
       RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
         published = fetch_published_models
-        main_models = merge_discovered_models(published.models, remote_only:)
+        main_models = merge_discovered_models(published.models, payload, remote_only:)
         merged_models = self.class.merge_models(self.class.models_from_provider_gems, main_models)
         persisted_models = RubyLLM.config.model_registry_store ? merged_models : main_models
         persist_registry!(persisted_models, published:)
@@ -728,9 +732,9 @@ module RubyLLM
       nil
     end
 
-    def merge_discovered_models(published, remote_only:)
+    def merge_discovered_models(published, payload, remote_only:)
       provider_fetch = self.class.fetch_provider_models(remote_only: remote_only)
-      self.class.log_provider_fetch(provider_fetch)
+      self.class.record_provider_fetch(provider_fetch, payload)
       preserved = preserved_providers(provider_fetch, published)
       preserved_models = all.select { |model| preserved.include?(model.provider) }
       self.class.merge_models(provider_fetch[:models] + preserved_models, published)
