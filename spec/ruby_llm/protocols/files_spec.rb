@@ -406,6 +406,40 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect(protocol.find('file_123').filename).to eq('batch.jsonl')
     end
 
+    context 'when the provider reports no MIME type' do
+      let(:response) { Struct.new(:body).new({ 'id' => 'file_123', 'filename' => 'ruby.txt' }) }
+
+      before { allow(connection).to receive_messages(post: response, get: response) }
+
+      it 'reports the content type the upload sent' do
+        expect(protocol.upload(fixture_path, purpose: 'batch').mime_type).to eq('text/plain')
+        expect(protocol.upload(StringIO.new('{}'), filename: 'batch.jsonl').mime_type).to eq('application/jsonl')
+      end
+
+      it 'reports the same for xAI' do
+        xai = RubyLLM::Providers::XAI.new(RubyLLM::Configuration.new.tap { |config| config.xai_api_key = 'test' })
+        protocol = RubyLLM::Protocols::XAI::Files.new(xai)
+        protocol.instance_variable_set(:@connection, connection)
+
+        expect(protocol.upload(fixture_path).mime_type).to eq('text/plain')
+      end
+
+      it 'leaves the MIME type unknown when finding the file later' do
+        expect(protocol.find('file_123').mime_type).to be_nil
+      end
+    end
+
+    it 'keeps the MIME type the provider reports' do
+      mistral = RubyLLM::Providers::Mistral.new(RubyLLM::Configuration.new.tap { |c| c.mistral_api_key = 'test' })
+      protocol = RubyLLM::Protocols::Mistral::Files.new(mistral)
+      protocol.instance_variable_set(:@connection, connection)
+      allow(connection).to receive(:post).and_return(
+        Struct.new(:body).new({ 'id' => 'file_123', 'mimetype' => 'application/octet-stream' })
+      )
+
+      expect(protocol.upload(fixture_path).mime_type).to eq('application/octet-stream')
+    end
+
     it 'downloads file content' do
       allow(connection).to receive(:get) do |url, &block|
         request = Struct.new(:headers).new({})

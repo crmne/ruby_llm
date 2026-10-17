@@ -38,6 +38,8 @@ file.byte_size  # => 1234
 file.mime_type  # => "application/jsonl"
 ```
 
+OpenAI, Azure, DeepSeek, and xAI do not report a MIME type for stored files. After an upload, `mime_type` is the content type RubyLLM sent. When you [find the file later](#finding-and-downloading), it is `nil`.
+
 When `provider:` is omitted, RubyLLM uses the provider of `config.default_model`. Select another provider explicitly:
 
 ```ruby

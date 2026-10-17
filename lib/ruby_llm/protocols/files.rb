@@ -15,7 +15,7 @@ module RubyLLM
           request.headers.delete('Content-Type')
           upload_headers(request)
         end
-        parse_file_response(response.body)
+        parse_upload_response(response.body, attachment)
       end
 
       def find(file_id)
@@ -57,6 +57,10 @@ module RubyLLM
 
       def multipart_payload(attachment, **fields)
         { file: file_part(attachment) }.merge(fields.compact)
+      end
+
+      def parse_upload_response(data, _attachment)
+        parse_file_response(data)
       end
 
       def upload_headers(_request); end
