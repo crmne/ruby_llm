@@ -41,6 +41,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(Chat.find(chat.id).to_llm.messages.find(&:tool_result?).mcp_result.ui_uri).to eq('ui://spec/forecast')
   end
 
+  it 'keeps the result of a tool with a UI when a tool result is added to the chat' do
+    chat = Chat.create!(model: 'gpt-4.1-nano')
+    tool_call = RubyLLM::ToolCall.new(id: call_id, name: 'forecast', arguments: {})
+    chat.add_message(RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { call_id => tool_call }))
+    result = RubyLLM::MCP::Result.new({ 'content' => [{ 'type' => 'text', 'text' => 'Sunny' }] }, 'ui://spec/forecast')
+    chat.add_message(RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: call_id, mcp_result: result))
+
+    tool_message = Chat.find(chat.id).messages_association.find_by(role: 'tool')
+    expect(tool_message.mcp_result).to have_attributes(ui_uri: 'ui://spec/forecast', text: 'Sunny')
+  end
+
   it 'stores a failed call as 2.0 did' do
     chat = answered_chat('fail', {})
 
