@@ -834,6 +834,32 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
             end
           end
         end
+
+        it 'nests routes for models under more than one namespace' do
+          Dir.mktmpdir do |destination|
+            FileUtils.cp_r("#{app_path}/.", destination)
+            within_test_app(destination) do
+              FileUtils.mkdir_p('app/models/admin/support')
+              File.write('app/models/admin/support/message.rb', <<~RUBY)
+                class Admin::Support::Message < ApplicationRecord
+                end
+              RUBY
+
+              output, status = run_rails_generate(
+                'ruby_llm:chat_ui', '--ui', 'scaffold',
+                'chat:Admin::Support::Chat', 'message:Admin::Support::Message', chdir: destination
+              )
+              expect(status.success?).to be(true), output
+
+              expect_chat_script_to_succeed(<<~RUBY)
+                path = Rails.application.routes.url_helpers.admin_support_chat_messages_path(1)
+                abort "messages at \#{path}" unless path == "/admin/support/chats/1/messages"
+              RUBY
+              expect(File.read('app/views/admin/support/messages/_form.html.erb'))
+                .to include('url: admin_support_chat_messages_path(admin_support_chat)')
+            end
+          end
+        end
       end
 
       it config[:routes_example] do

@@ -158,24 +158,25 @@ module RubyLLM
       def add_routes
         # For namespaced models, use Rails convention with namespace blocks
         if chat_model_name.include?('::')
-          namespace = chat_model_name.deconstantize.underscore
+          namespaces = chat_model_name.deconstantize.underscore.split('/')
           chat_resource = chat_model_name.demodulize.underscore.pluralize
           message_resource = message_model_name.demodulize.underscore.pluralize
           model_resource = model_model_name.demodulize.underscore.pluralize
 
           routes_content = <<~ROUTES.strip
-            namespace :#{namespace} do
-              resources :#{model_resource}, only: [ :index, :show ], constraints: { id: /[^\\/]+/ } do
-                collection do
-                  post :refresh
-                end
-              end
-              resources :#{chat_resource} do
-                resources :#{message_resource}, only: [ :create ]
-                resources :approvals, only: [ :create ]
+            resources :#{model_resource}, only: [ :index, :show ], constraints: { id: /[^\\/]+/ } do
+              collection do
+                post :refresh
               end
             end
+            resources :#{chat_resource} do
+              resources :#{message_resource}, only: [ :create ]
+              resources :approvals, only: [ :create ]
+            end
           ROUTES
+          routes_content = namespaces.reverse.reduce(routes_content) do |routes, namespace|
+            "namespace :#{namespace} do\n#{routes.indent(2)}\nend"
+          end
           route routes_content
         else
           model_routes = <<~ROUTES.strip
