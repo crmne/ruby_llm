@@ -154,6 +154,7 @@ module RubyLLM
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
+      @interruptions = []
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
       @attachment_replacements = {}.compare_by_identity
       @cancelled = false
@@ -697,8 +698,9 @@ module RubyLLM
     # Sets fallback models to try, in order, when generation fails. +on:+
     # selects the error classes that trigger a fallback; the default covers
     # transient provider and network errors. Cancelling the chat never
-    # triggers a fallback. Pass +nil+ to remove all fallbacks and restore
-    # the default error classes. Returns +self+.
+    # triggers a fallback, and neither does another process taking over a
+    # persisted chat. Pass +nil+ to remove all fallbacks and restore the
+    # default error classes. Returns +self+.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
     #   chat.with_fallbacks(nil)
@@ -1199,7 +1201,8 @@ module RubyLLM
 
     # Hooks installed by the Rails integration.
     attr_writer :cancellation_checker, :usage_recorder, :approval_checker, :input_checker, :input_recorder,
-                :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker # :nodoc:
+                :tool_call_claimer, :tool_call_releaser, :running_checker, :remembered_checker,
+                :interruptions # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -1542,7 +1545,7 @@ module RubyLLM
     end
 
     def fallback_error?(error)
-      return false if error.is_a?(CancelledError)
+      return false if [CancelledError, *@interruptions].any? { |interruption| error.is_a?(interruption) }
 
       fallback_errors.any? { |error_class| error.is_a?(error_class) }
     end

@@ -844,7 +844,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     it 'classifies every method defined on Chat' do
       integration_methods = %i[
-        approval_checker= cancellation_checker= fallback_errors input_checker= input_recorder=
+        approval_checker= cancellation_checker= fallback_errors input_checker= input_recorder= interruptions=
         prepare_message raise_if_pending_tool_calls! remembered_checker= running_checker= tool_call_claimer=
         tool_call_releaser= tool_prefs
         usage_entries usage_entries= usage_recorder=

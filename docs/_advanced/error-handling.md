@@ -211,7 +211,7 @@ chat.with_fallbacks(
 )
 ```
 
-Cancelling a chat never triggers a fallback, whatever `on:` lists. `chat.cancel` raises `RubyLLM::CancelledError` and no fallback model runs.
+Cancelling a chat never triggers a fallback, whatever `on:` lists. `chat.cancel` raises `RubyLLM::CancelledError` and no fallback model runs. The same holds for a persisted chat that another process takes over mid-run: this process steps aside and no fallback model runs.
 
 Fallbacks can be model IDs or `RubyLLM::Model` objects:
 
