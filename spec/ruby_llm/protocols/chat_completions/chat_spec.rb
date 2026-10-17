@@ -33,6 +33,19 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(message.tokens.cache_write).to eq(0)
     end
 
+    it 'leaves cache write tokens unknown when the response reports no usage' do
+      response_body = {
+        'model' => model_for(:openai, :temperature),
+        'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => 'Hello!' } }]
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+
+      message = described_class.parse_completion_body(response_body, raw: response)
+
+      expect(message.tokens.to_h).to be_empty
+    end
+
     it 'captures cache write tokens for models that bill cache writes' do
       response_body = {
         'model' => 'gpt-5.6',
