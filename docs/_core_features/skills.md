@@ -151,12 +151,14 @@ chat = Chat.create!(model: "{{ site.models.default_chat }}").with_skills(:invoic
 RubyLLM looks for skills in `app/skills` under `Rails.root`, or under the current directory outside Rails. An engine adds its own folder in an initializer:
 
 ```ruby
-initializer "billing_engine.skills" do
+initializer "billing_engine.skills", before: "ruby_llm.skills" do
   RubyLLM::Skill.roots << BillingEngine::Engine.root.join("app/skills")
 end
 ```
 
 The application's folder comes first, so a skill in `app/skills` replaces an engine's skill with the same name.
+
+Rails does not autoload skills. RubyLLM keeps `app/skills` and every root registered before its `ruby_llm.skills` initializer out of the autoloader, so a skill's Ruby scripts are never loaded at boot and a hyphenated folder is never read as a namespace.
 
 RubyLLM ships no skills and never downloads them. A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project.
 

@@ -65,7 +65,7 @@ module RubyLLM
       # Returns the ordered skill directories. Append engine directories
       # with +<<+:
       #
-      #   initializer "my_engine.skills" do
+      #   initializer "my_engine.skills", before: "ruby_llm.skills" do
       #     RubyLLM::Skill.roots << MyEngine::Engine.root.join("app/skills")
       #   end
       #

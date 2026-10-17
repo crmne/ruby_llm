@@ -13,6 +13,10 @@ if defined?(Rails::Railtie)
         RubyLLM.config.instrumenter ||= ActiveSupport::Notifications
       end
 
+      initializer 'ruby_llm.skills', before: :setup_main_autoloader do
+        Rails.autoloaders.main.ignore(*RubyLLM::Skill.roots)
+      end
+
       initializer 'ruby_llm.active_record' do
         ActiveSupport.on_load :active_record do
           require 'ruby_llm/active_record/record'
