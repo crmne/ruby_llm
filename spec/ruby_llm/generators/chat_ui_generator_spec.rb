@@ -62,6 +62,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       messages/tool_results/_default.html.erb
       messages/create.turbo_stream.erb
       messages/_form.html.erb
+      messages/_queued_message.html.erb
       models/index.html.erb
       models/show.html.erb
       models/_model.html.erb
@@ -121,8 +122,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     message_form = File.read(File.join(base_path, 'messages/_form.html.erb'))
     expect(message_form).to include('chat.pending_approvals.any?')
     expect(message_form).to include('Approve or deny the requests above to continue.')
-    expect(message_form.index('pending_approvals.any?')).to be < message_form.index('chat.running?')
-    expect(message_form).to include('Replying…')
+    expect(message_form).not_to include('Replying…')
+    expect_queued_message_views(base_path, approvals_path_helper.sub('approvals', 'queued_message'))
     expect(assistant_partial).to include('.running? %>')
     expect(assistant_partial).to include('" data-streaming" if streaming')
     expect(assistant_partial).to include('data-controller="chat-message"')
@@ -147,11 +148,23 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(models_index).to include(%(render "#{model_partial_path}",))
   end
 
+  def expect_queued_message_views(base_path, path_helper)
+    queued_message = File.read(File.join(base_path, 'messages/_queued_message.html.erb'))
+    expect(queued_message).to include('id="queued_message_<%= queued_message.id %>"')
+    expect(queued_message).to include("#{path_helper}(chat, queued_message)")
+    expect(queued_message).to include('method: :delete')
+    chat_show = File.read(File.join(base_path, 'chats/show.html.erb'))
+    expect(chat_show).to include('.queued_messages.each do |queued_message|')
+    create_stream = File.read(File.join(base_path, 'messages/create.turbo_stream.erb'))
+    expect(create_stream).to include('turbo_stream.append "queued_')
+  end
+
   def expect_routes(path, namespaced: false)
     routes_content = File.read(path)
     expect(routes_content).to include('resources :chats')
     expect(routes_content).to include('resources :messages, only: [ :create ]')
     expect(routes_content).to include('resources :approvals, only: [ :create ]')
+    expect(routes_content).to include('resources :queued_messages, only: [ :destroy ]')
     expect(routes_content).to include('resources :models, only: [ :index, :show ]')
     expect(routes_content).to include('namespace :llm') if namespaced
   end
@@ -174,11 +187,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     excludes.each { |line| expect(content).not_to include(line) }
   end
 
-  def expect_job_file(path:, class_name:, perform_line:, complete_line:)
+  def expect_job_file(path:, class_name:, perform_line:, complete_line:, requeue_line:)
     job_content = File.read(path)
     expect(job_content).to include(class_name)
     expect(job_content).to include(perform_line)
     expect(job_content).to include(complete_line)
+    expect(job_content).to include(requeue_line)
     expect(job_content).not_to include('broadcast_refresh_to')
   end
 
@@ -250,22 +264,40 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       chat.update_columns(claim_token: "reply", claimed_until: 5.minutes.from_now)
 
       html = #{controller}.render(:show, assigns: #{assigns})
-      [ "Thinking…", '<p id="new_#{message_key}"', "Replying…" ].each do |text|
-        abort "running page lacks \#{text}" unless html.include?(text)
-      end
-      abort "running page offers the form" if html.include?('name="#{message_key}[content]"')
+      abort "running page lacks Thinking…" unless html.include?("Thinking…")
+      abort "running page lacks the form" unless html.include?('name="#{message_key}[content]"')
 
       session = ActionDispatch::Integration::Session.new(Rails.application)
       session.host! "localhost"
-      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
-      abort "message answered \#{session.response.status}" unless session.response.status == 303
-      jobs = ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" }
-      abort "enqueued \#{jobs}" if jobs.any?
+      jobs = -> { ActiveJob::Base.queue_adapter.enqueued_jobs.select { |job| job["job_class"] == "#{job}" } }
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Use the EU file" } }
+      abort "message answered \#{session.response.status}" unless session.response.status == 302
+      queued = chat.queued_messages.to_a
+      abort "queued \#{queued.map(&:content)}" unless queued.map(&:content) == [ "Use the EU file" ]
+      abort "enqueued \#{jobs.call}" if jobs.call.any?
+
+      html = #{controller}.render(:show, assigns: #{assigns})
+      [ "Use the EU file", "queued_message_\#{queued.first.id}", "Cancel" ].each do |text|
+        abort "running page lacks \#{text}" unless html.include?(text)
+      end
+
+      stream = { "Accept" => "text/vnd.turbo-stream.html" }
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "And Q4" } }, headers: stream
+      abort "streamed message answered \#{session.response.status}" unless session.response.status == 200
+      abort "stream lacks the queued message" unless session.response.body.include?("And Q4")
+
+      session.delete "#{chats_path}/\#{chat.id}/queued_messages/\#{queued.first.id}"
+      abort "unqueue answered \#{session.response.status}" unless session.response.status == 303
+      left = chat.queued_messages.map(&:content)
+      abort "left queued \#{left}" unless left == [ "And Q4" ]
 
       chat.update_columns(claim_token: nil, claimed_until: nil)
       html = #{controller}.render(:show, assigns: #{assigns})
       abort "finished page still thinks" if html.include?("Thinking…")
       abort "finished page lacks the form" unless html.include?('name="#{message_key}[content]"')
+      session.post "#{chats_path}/\#{chat.id}/messages", params: { #{message_key}: { content: "Hi" } }
+      abort "idle message enqueued \#{jobs.call}" unless jobs.call.map { |job| job["arguments"] } == [ [ chat.id ] ]
+      abort "idle message not saved" unless chat.reload.to_llm.messages.last.content == "Hi"
     RUBY
   end
 
@@ -403,6 +435,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         app/controllers/messages_controller.rb
         app/controllers/models_controller.rb
         app/controllers/approvals_controller.rb
+        app/controllers/queued_messages_controller.rb
       ],
       helper_path: 'app/helpers/messages_helper.rb',
       view_example: 'creates view files with default paths',
@@ -446,7 +479,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat = ChatAgent.find(params[:chat_id])',
         'content = params.dig(:message, :content)',
         'if @chat.pending_approvals.any?',
-        'elsif @chat.running?',
+        'if @chat.running?',
+        '@queued_message = @chat.queue(content)',
+        'ChatResponseJob.perform_later(@chat.id) unless @chat.running?',
         'if content.present?',
         '@chat.ask_later(content)',
         'ChatResponseJob.perform_later(@chat.id)',
@@ -454,6 +489,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@message = @chat.messages.build',
         '@message.errors.add(:content, "can\'t be blank")',
         'render "chats/show", status:'
+      ],
+      queued_messages_controller_path: 'app/controllers/queued_messages_controller.rb',
+      queued_messages_controller_expectations: [
+        'class QueuedMessagesController',
+        '@chat = ChatAgent.find(params[:chat_id])',
+        '@chat.unqueue(params[:id])',
+        'redirect_to @chat, status: :see_other'
       ],
       approvals_controller_path: 'app/controllers/approvals_controller.rb',
       approvals_controller_expectations: [
@@ -479,7 +521,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         path: 'app/jobs/chat_response_job.rb',
         class_name: 'class ChatResponseJob',
         perform_line: 'def perform(chat_id)',
-        complete_line: 'ChatAgent.find(chat_id).complete(&:broadcast)'
+        complete_line: 'chat.complete(&:broadcast)',
+        requeue_line: 'self.class.perform_later(chat_id) if chat.queued_messages.any? && !chat.waiting?'
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -498,6 +541,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         app/controllers/llm/messages_controller.rb
         app/controllers/llm/models_controller.rb
         app/controllers/llm/approvals_controller.rb
+        app/controllers/llm/queued_messages_controller.rb
       ],
       helper_path: 'app/helpers/llm/messages_helper.rb',
       view_example: 'creates view files with namespaced paths',
@@ -541,7 +585,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
         'content = params.dig(:llm_message, :content)',
         'if @llm_chat.pending_approvals.any?',
-        'elsif @llm_chat.running?',
+        'if @llm_chat.running?',
+        '@queued_message = @llm_chat.queue(content)',
+        'LlmChatResponseJob.perform_later(@llm_chat.id) unless @llm_chat.running?',
         'if content.present?',
         '@llm_chat.ask_later(content)',
         'LlmChatResponseJob.perform_later(@llm_chat.id)',
@@ -549,6 +595,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@llm_message = @llm_chat.llm_messages.build',
         '@llm_message.errors.add(:content, "can\'t be blank")',
         'render "llm/chats/show", status:'
+      ],
+      queued_messages_controller_path: 'app/controllers/llm/queued_messages_controller.rb',
+      queued_messages_controller_expectations: [
+        'class Llm::QueuedMessagesController',
+        '@llm_chat = Llm::ChatAgent.find(params[:chat_id])',
+        '@llm_chat.unqueue(params[:id])',
+        'redirect_to @llm_chat, status: :see_other'
       ],
       approvals_controller_path: 'app/controllers/llm/approvals_controller.rb',
       approvals_controller_expectations: [
@@ -574,7 +627,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         path: 'app/jobs/llm_chat_response_job.rb',
         class_name: 'class LlmChatResponseJob',
         perform_line: 'def perform(llm_chat_id)',
-        complete_line: 'Llm::ChatAgent.find(llm_chat_id).complete(&:broadcast)'
+        complete_line: 'llm_chat.complete(&:broadcast)',
+        requeue_line: 'self.class.perform_later(llm_chat_id) if llm_chat.queued_messages.any? && !llm_chat.waiting?'
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do
@@ -893,6 +947,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           expect(chat_agent).to start_with("class #{config[:approval_flow][:agent]} < ApplicationAgent\n")
           expect(chat_agent).not_to include('chat_model')
 
+          queued_messages_controller = File.read(config[:queued_messages_controller_path])
+          config[:queued_messages_controller_expectations].each do |line|
+            expect(queued_messages_controller).to include(line)
+          end
+
           approvals_controller = File.read(config[:approvals_controller_path])
           config[:approvals_controller_expectations].each do |line|
             expect(approvals_controller).to include(line)
@@ -936,7 +995,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         end
       end
 
-      it 'shows Thinking and Replying while a reply runs, and refuses messages' do
+      it 'shows Thinking while a reply runs, and queues the messages sent meanwhile' do
         within_test_app(app_path) do
           output, status = run_rails_runner_outside_executor(running_reply_script(**config[:approval_flow]))
           expect(status.success?).to be(true), output

@@ -67,6 +67,13 @@ Naming/MethodParameterName:
   AllowedNames:
     - n # the image count, named after the provider parameter
 
+Naming/PredicateMethod:
+  inherit_mode:
+    merge:
+      - AllowedMethods
+  AllowedMethods:
+    - unqueue # answers whether it withdrew the message before the loop took it
+
 Style/OptionalBooleanParameter:
   AllowedMethods:
     - with_citations

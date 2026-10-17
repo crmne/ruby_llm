@@ -17,6 +17,7 @@ After reading this guide, you will know:
 * Why callbacks are additive and what replaced the 1.x `on_*` handlers.
 * How chat callbacks differ from retry- and cancellation-safe usage instrumentation.
 * How to observe tool calls, their progress, and tool results as they happen.
+* How to observe messages as they are queued, join the conversation, or are withdrawn.
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
 
@@ -59,6 +60,18 @@ end
 ```
 
 See [Reporting Progress]({% link _core_features/tool-execution.md %}#reporting-progress).
+
+## Queue Events
+
+[Queued messages]({% link _advanced/agentic-workflows.md %}#queueing-messages) wait outside the conversation until the loop takes them. Three callbacks follow them:
+
+```ruby
+chat.after_queue { |queued| puts "Queued: #{queued.content}" }
+chat.after_dequeue { |message, queued| puts "Joined: #{message.content}" }
+chat.after_unqueue { |queued| puts "Withdrawn: #{queued.content}" }
+```
+
+`after_queue` runs once `queue` has stored the message, and `after_unqueue` once `unqueue` has taken it back, each in the thread that called it. `after_dequeue` runs in the loop's thread when a queued message joins the conversation. It receives the user message it became, then the queued message, before `before_message` runs for the reply that answers it. On a persisted chat, each callback receives the records: the `RubyLLM::ActiveRecord::QueuedMessage`, and for `after_dequeue` the message record first.
 
 ## Fallback Events
 

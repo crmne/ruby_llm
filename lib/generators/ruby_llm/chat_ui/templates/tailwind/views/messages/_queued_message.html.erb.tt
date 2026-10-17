@@ -1,0 +1,18 @@
+<div id="queued_message_<%%= queued_message.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-blue-50 opacity-60">
+  <div>
+    <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700">
+      User
+    </span>
+    <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600">
+      Queued
+    </span>
+  </div>
+
+  <div class="whitespace-pre-wrap"><%%= queued_message.content %></div>
+
+  <%%= render "<%= message_model_name.underscore.pluralize %>/attachments", message: queued_message %>
+
+  <%%= button_to "Cancel", <%= chat_variable_name %>_queued_message_path(<%= chat_model_name.demodulize.underscore %>, queued_message),
+    method: :delete,
+    class: "rounded-md px-3 py-1.5 bg-gray-100 hover:bg-gray-50 text-sm font-medium cursor-pointer" %>
+</div>

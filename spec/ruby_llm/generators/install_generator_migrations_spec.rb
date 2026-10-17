@@ -55,6 +55,18 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
     expect(usages).to include('t.index [ :owner_type, :owner_id ]')
   end
 
+  it 'creates the queued messages table for any chat, with an optional owner' do
+    generator = described_class.new([], {}, destination_root: destination, shell: Thor::Shell::Basic.new)
+    generator.create_migration_files
+    migration = File.read(Dir.glob(File.join(destination, 'db/migrate/*_create_ruby_llm_records.rb')).sole)
+    queued = migration[/create_table :ruby_llm_queued_messages.*?^    end$/m]
+
+    expect(queued).to include('t.references :chat, polymorphic: true, null: false, type: :bigint, index: false')
+    expect(queued).to include('t.references :owner, polymorphic: true, type: :bigint, index: false')
+    expect(queued).to include('t.boolean :steer, default: true, null: false')
+    expect(queued).to include('t.index [ :chat_type, :chat_id ]')
+  end
+
   [nil, :uuid, :integer].each do |primary_key_type|
     context "with #{primary_key_type || 'default'} primary keys" do
       before do
@@ -71,12 +83,12 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator do
           prefix = mappings.empty? ? '' : 'llm_'
 
           %W[#{prefix}chats #{prefix}messages ruby_llm_models ruby_llm_tool_calls ruby_llm_mcp_credentials
-             ruby_llm_usages ruby_llm_batches ruby_llm_provider_files]
+             ruby_llm_usages ruby_llm_queued_messages ruby_llm_batches ruby_llm_provider_files]
             .each do |table|
               expect(migrations).to include("create_table :#{table}, id: :#{key_type} do |t|")
             end
           references = migrations.lines.grep(/t.references/)
-          expect(references.size).to eq(8)
+          expect(references.size).to eq(10)
           expect(references).to all(include("type: :#{key_type}"))
         end
       end

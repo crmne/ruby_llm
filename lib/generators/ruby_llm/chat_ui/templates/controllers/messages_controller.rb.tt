@@ -5,11 +5,14 @@ class <%= message_controller_class_name %> < ApplicationController
     content = params.dig(:<%= message_variable_name %>, :content)
     if @<%= chat_variable_name %>.pending_approvals.any?
       redirect_to @<%= chat_variable_name %>, notice: "Approve or deny the requests above to continue.", status: :see_other
-    elsif @<%= chat_variable_name %>.running?
-      redirect_to @<%= chat_variable_name %>, notice: "Wait for the reply to finish.", status: :see_other
     elsif content.present?
-      @<%= chat_variable_name %>.ask_later(content)
-      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
+      if @<%= chat_variable_name %>.running?
+        @queued_message = @<%= chat_variable_name %>.queue(content)
+        <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id) unless @<%= chat_variable_name %>.running?
+      else
+        @<%= chat_variable_name %>.ask_later(content)
+        <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id)
+      end
 
       respond_to do |format|
         format.turbo_stream

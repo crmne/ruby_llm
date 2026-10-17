@@ -48,10 +48,29 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:chats, :claimed_until)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :claimed_until)).to be(false)
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id)).to be(false)
+      expect(connection.table_exists?(:ruby_llm_queued_messages)).to be(false)
       raise ActiveRecord::Rollback
     end
   ensure
-    [Chat, RubyLLM::ActiveRecord::ToolCall].each(&:reset_column_information)
+    [Chat, RubyLLM::ActiveRecord::ToolCall, RubyLLM::ActiveRecord::QueuedMessage].each(&:reset_column_information)
+  end
+
+  it 'creates the queued messages table 2.2 needs' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      connection.drop_table(:ruby_llm_queued_messages)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      %w[chat_type chat_id owner_type owner_id content steer created_at updated_at].each do |column|
+        expect(connection.column_exists?(:ruby_llm_queued_messages, column)).to be(true)
+      end
+      expect(connection.index_exists?(:ruby_llm_queued_messages, %i[chat_type chat_id])).to be(true)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::QueuedMessage.reset_column_information
   end
 
   it 'adds the run claims to a mapped chat table' do

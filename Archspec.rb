@@ -42,6 +42,7 @@ component :domain, in: %w[
   lib/ruby_llm/mcp/**/*.rb
   lib/ruby_llm/probability.rb
   lib/ruby_llm/progress.rb
+  lib/ruby_llm/queued_message.rb
   lib/ruby_llm/choice.rb
   lib/ruby_llm/score.rb
   lib/ruby_llm/fallback.rb

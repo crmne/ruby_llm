@@ -16,6 +16,7 @@ After reading this guide, you will know:
 *   How to show user messages instantly while the AI responds in the background.
 *   How to stream assistant responses to the browser with Turbo Streams.
 *   How to wire a background job to `complete` and broadcast each chunk.
+*   How to accept messages while a reply streams.
 *   How to handle out-of-order message delivery from Action Cable.
 
 The default persistence flow is built for real-time UIs. Because RubyLLM creates the assistant message before streaming starts, you get a stable DOM target to append tokens into. This guide assembles a controller, a model, a background job, and views into a complete streaming chat, then covers the ordering quirks of Action Cable.
@@ -142,6 +143,37 @@ class ChatStreamJob < ApplicationJob
   end
 end
 ```
+
+## Messages Sent During a Reply
+
+A message sent while the job streams a reply goes in the chat's queue. The running job takes it at its next step, and it broadcasts like any other message once it joins:
+
+```ruby
+# app/controllers/messages_controller.rb
+def create
+  @chat = Chat.find(params[:chat_id])
+  @chat.queue(params[:content])
+  ChatStreamJob.perform_later(@chat.id) unless @chat.running?
+
+  redirect_to @chat
+end
+```
+
+Render what waits beside the transcript, with a way to take it back:
+
+```erb
+<%# app/views/chats/show.html.erb %>
+<div id="queued_messages">
+  <% @chat.queued_messages.each do |queued| %>
+    <div id="queued_message_<%= queued.id %>">
+      <%= queued.content %>
+      <%= button_to "Cancel", chat_queued_message_path(@chat, queued), method: :delete %>
+    </div>
+  <% end %>
+</div>
+```
+
+When a queued message joins, its message saves and the page refreshes, so the queued entry gives way to the message in the transcript. A cancelled reply leaves the queue alone: the next `complete` takes those messages. See [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages) for the job that runs messages queued with `steer: false`.
 
 ## Message Ordering Issues
 

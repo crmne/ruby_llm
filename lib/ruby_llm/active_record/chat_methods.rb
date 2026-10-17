@@ -6,6 +6,7 @@ require 'ruby_llm/active_record/run_claims'
 require 'ruby_llm/active_record/chat_approvals'
 require 'ruby_llm/active_record/chat_cancellation'
 require 'ruby_llm/active_record/system_instructions'
+require 'ruby_llm/active_record/chat_queue'
 
 module RubyLLM
   module ActiveRecord
@@ -287,7 +288,7 @@ module RubyLLM
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback
+        before_fallback after_fallback after_queue after_dequeue after_unqueue
       ].freeze
 
       ##
@@ -458,6 +459,28 @@ module RubyLLM
       # :call-seq: after_fallback(&block)
       #
       # Applies Chat#after_fallback and returns this record.
+
+      ##
+      # :method: after_queue
+      # :call-seq: after_queue(&block)
+      #
+      # Applies Chat#after_queue and returns this record. The block
+      # receives the QueuedMessage record, in the process that queued it.
+
+      ##
+      # :method: after_dequeue
+      # :call-seq: after_dequeue(&block)
+      #
+      # Applies Chat#after_dequeue and returns this record. The block
+      # receives the message record and the QueuedMessage record, in the
+      # process that runs the chat.
+
+      ##
+      # :method: after_unqueue
+      # :call-seq: after_unqueue(&block)
+      #
+      # Applies Chat#after_unqueue and returns this record. The block
+      # receives the QueuedMessage record, in the process that unqueued it.
 
       ##
       # :method: caching
@@ -732,9 +755,10 @@ module RubyLLM
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:cost_available?))
       end
 
-      # Persists +message+ as a user message, then runs the conversation loop
-      # and returns the latest assistant RubyLLM::Message. The loop pauses
-      # when #awaiting_approval? is true. Yields streaming chunks to a block.
+      # Persists +message+ as a user message, after every queued message
+      # (see #queue), then runs the conversation loop and returns the latest
+      # assistant RubyLLM::Message. The loop pauses when #awaiting_approval?
+      # is true. Yields streaming chunks to a block.
       #
       #   chat.ask "What is the capital of France?"
       #   chat.ask "What's in this file?", with: "diagram.png"
@@ -747,13 +771,15 @@ module RubyLLM
       alias say ask
 
       # Persists +message+ as a user message without calling the model, so
-      # #complete can run later. Returns +self+.
+      # #complete can run later. Every queued message (see #queue) is
+      # persisted first, in order. Returns +self+.
       #
       #   chat.ask_later "Summarize this document."
       #   chat.complete
       #
       def ask_later(message = nil, with: nil)
         to_llm.raise_if_pending_tool_calls!
+        to_llm.take_queued_messages
         if message.is_a?(RubyLLM::MCP::Prompt)
           message.messages.each { |prompt_message| add_message(prompt_message) }
         else
@@ -825,17 +851,54 @@ module RubyLLM
       # run ends.
       #
       #   chat.complete(&:broadcast)
+      #
+      # Queued messages join as RubyLLM::Chat#complete describes, including
+      # those another process queues while this one runs. A message that
+      # steers, queued as the run ends, starts another loop before
+      # #complete returns.
       def complete(&block)
+        operation = :complete
         loop do
           busy = false
           response = exclusively(-> { busy = true }) do
-            completing(block) { |on_chunk| to_llm.complete(&on_chunk) }
+            completing(block) { |on_chunk| to_llm.public_send(operation, &on_chunk) }
           end
           return latest_message if busy
           return response unless work_arrived_during_run?
+
+          operation = :continue_turn
         end
       ensure
         broadcast_refresh_to(self) if broadcasts_messages?
+      end
+
+      # Queues +message+ in the chat's +ruby_llm_queued_messages+ table, as
+      # RubyLLM::Chat#queue describes, and returns the QueuedMessage record.
+      # Attachments given with +with:+ are stored with Active Storage and
+      # move to the message it becomes. +owner+ is any record, such as the
+      # user who asked; it is stored and handed back, never interpreted.
+      #
+      # Any process can queue a message. The process that runs the chat
+      # takes it at its next step; when none is running, run #complete,
+      # usually in a job.
+      #
+      #   chat.queue params[:content], owner: Current.user
+      #   ChatResponseJob.perform_later(chat.id) unless chat.running?
+      #
+      def queue(message = nil, with: nil, steer: true, owner: nil)
+        to_llm.queue(message, with:, steer:, owner:)
+      end
+
+      # Returns the QueuedMessage records waiting in the queue, oldest
+      # first, ready to render.
+      def queued_messages = ruby_llm_queued_messages.scope
+
+      # Takes +queued+, a QueuedMessage record or its id, out of the queue
+      # and deletes its attachments. Returns +true+, or +false+ once the
+      # loop has taken it into the conversation or it was unqueued already.
+      # See RubyLLM::Chat#unqueue.
+      def unqueue(queued)
+        to_llm.unqueue(queued)
       end
 
       private
@@ -1012,6 +1075,7 @@ module RubyLLM
         chat.remembered_checker = proc { |name| persisted_remembered_tool?(name) }
         chat.input_checker = proc { |tool_call| persisted_tool_call_input(tool_call) }
         chat.input_recorder = proc { |tool_call, input| persist_tool_call_input(tool_call, input) }
+        chat.message_queue = ChatQueue.new(self)
         install_tool_call_claims(chat)
         install_persistence_callbacks(chat)
       end

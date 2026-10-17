@@ -37,6 +37,10 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
+  # Keep jobs, like Active Storage purges, out of background threads that
+  # would write to SQLite while a spec does.
+  config.active_job.queue_adapter = :test
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

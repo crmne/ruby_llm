@@ -1,5 +1,7 @@
 class <%= chat_job_class_name %> < ApplicationJob
   def perform(<%= chat_variable_name %>_id)
-    <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id).complete(&:broadcast)
+    <%= chat_variable_name %> = <%= chat_agent_class_name %>.find(<%= chat_variable_name %>_id)
+    <%= chat_variable_name %>.complete(&:broadcast)
+    self.class.perform_later(<%= chat_variable_name %>_id) if <%= chat_variable_name %>.queued_messages.any? && !<%= chat_variable_name %>.waiting?
   end
 end

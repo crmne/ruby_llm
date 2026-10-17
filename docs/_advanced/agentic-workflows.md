@@ -17,6 +17,7 @@ After reading this guide, you will know:
 
 * How to drive the agentic loop yourself, one move at a time.
 * Why the loop is safe to interrupt and resume between moves.
+* How to queue messages that join a running loop or wait for its turn to end.
 * How to implement common workflow patterns with plain Ruby classes.
 * How to compose sequential, routing, parallel, and fan-in workflows.
 * When to reach for an evaluator loop to iterate on output quality.
@@ -51,6 +52,44 @@ With Rails persistence, each method reads the saved transcript and skips tool ca
 Stop scheduling work while `waiting?` is true: the chat waits on something outside it. `awaiting_approval?` tells you it waits on an approval, so record one or a denial, then resume the loop. `awaiting_input?` and `awaiting_tasks?` cover [MCP servers]({% link _core_features/mcp.md %}#input-requests) asking for input and running tasks.
 
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
+
+## Queueing Messages
+
+People keep typing while an agent works. `queue` adds a user message without touching the conversation, from any thread, even while `complete` runs in another one, and the loop takes it between two of its moves:
+
+```ruby
+chat = RubyLLM.chat.with_tools(Search, SendEmail)
+worker = Thread.new { chat.ask "Find the Q3 report and email it to finance" }
+
+chat.queue "Use the EU numbers, not the US ones"
+worker.join
+```
+
+By default a queued message steers the turn that is running. It joins after the next round of tool results, so the model reads it on its next request, still inside its tool loop. If the model is writing its final answer, the message waits for the answer to finish, and the loop then asks the model again so it answers the new message too. Nothing is cut short.
+
+Pass `steer: false` to wait for the turn boundary instead. `complete` finishes the turn and returns, the chat is `complete?`, and the message stays queued until the conversation moves on:
+
+```ruby
+chat.queue "Then draft the board summary", steer: false
+chat.complete while chat.queued_messages.any?
+```
+
+Every `ask`, `ask_later`, `complete`, or `step` first takes every queued message, steering or not, oldest first, before the model is asked and before the new question `ask` adds. Within one `complete`, after that first moment, only steering messages join, so a steering message can join before a waiting one queued earlier. Messages that join together become separate user messages, in order.
+
+`queue` never runs the loop. When nothing is running, call `complete` yourself. A few more rules:
+
+* While the chat is `waiting?` on an approval, an input, or a task, nothing joins: the round's tool calls need their results first. Record the decision and call `complete`. The tools run, then the queued messages join.
+* `cancel` stops the loop and leaves the queue as it is. The next `ask` or `complete` takes those messages as ordinary user messages.
+* `unqueue` withdraws a message before the loop takes it. It returns `false` once the loop has taken it, so a Cancel button and the loop can race safely.
+* `queued_messages` lists what waits, oldest first, as `RubyLLM::QueuedMessage` values with `content`, `attachments`, `owner`, `queued_at`, and `steer?`.
+
+```ruby
+queued = chat.queue "Also check this file", with: "q3.pdf", owner: current_user
+chat.queued_messages # => [#<RubyLLM::QueuedMessage ...>]
+chat.unqueue(queued) # => true
+```
+
+`owner` is stored with the message and handed back on it. RubyLLM does not interpret it, so use it for whatever your application needs to know about who asked. [Queue events]({% link _core_features/chat-callbacks.md %}#queue-events) tell you when a message is queued, joins, or is withdrawn. With Rails, queued messages live in their own table, so a request can queue a message for a reply a job is running; see [Queued Messages]({% link _advanced/rails-persistence.md %}#queued-messages).
 
 ## Workflow Patterns
 
