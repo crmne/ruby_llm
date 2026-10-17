@@ -26,19 +26,29 @@ module RubyLLM
           payload.key?(:input) || payload.key?('input')
         end
 
-        def parse_batch_completion_response(body)
-          parse_embedding_response(Response.new(body), model: body['model'], text: nil)
+        def batch_request_line(request)
+          line = super
+          line[:custom_id] = "#{line[:custom_id]}:array" if request[:text].is_a?(Array)
+          line
+        end
+
+        def parse_batch_completion_response(body, shape: nil)
+          parse_embedding_response(Response.new(body), model: body['model'], text: shape == 'array' ? [] : nil)
         end
 
         def parse_batch_result(line)
+          custom_id, shape = line['custom_id'].split(':', 2)
+          line = line.merge('custom_id' => custom_id)
           body = line.dig('response', 'body')
           return super unless body.is_a?(Hash) && body['data'].is_a?(Array)
-          unless valid_embedding_positions?(body['data'])
-            return [batch_result_index(line['custom_id']), nil,
-                    batch_failure(line['custom_id'], 'Invalid or duplicate embedding record positions')]
-          end
 
-          super
+          index = batch_result_index(custom_id)
+          unless valid_embedding_positions?(body['data'])
+            return [index, nil, batch_failure(custom_id, 'Invalid or duplicate embedding record positions')]
+          end
+          return super unless batch_response_succeeded?(line['response'])
+
+          [index, parse_batch_completion_response(body, shape:)]
         end
       end
     end

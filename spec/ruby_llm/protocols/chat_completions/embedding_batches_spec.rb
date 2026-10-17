@@ -55,6 +55,19 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::EmbeddingBatches do
     end
   end
 
+  describe '#batch_request_line' do
+    it 'records an Array input in the custom_id' do
+      line = protocol.send(:batch_request_line, {
+                             custom_id: '0',
+                             model: 'text-embedding-3-small',
+                             text: ['Ruby'],
+                             payload: { model: 'text-embedding-3-small', input: ['Ruby'] }
+                           })
+
+      expect(line[:custom_id]).to eq('0:array')
+    end
+  end
+
   describe '#validate_batch_requests!' do
     it 'rejects unsupported payload shapes' do
       expect { protocol.send(:validate_batch_requests!, [{ payload: { messages: [] } }]) }
@@ -84,6 +97,25 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::EmbeddingBatches do
       expect(embedding.vectors).to eq([0.1, -0.2, 0.3])
       expect(embedding.model).to eq('text-embedding-3-small')
       expect(embedding.tokens.input).to eq(5)
+    end
+
+    it 'keeps a single vector nested when the input was an Array' do
+      line = embedding_line([0.1]).merge('custom_id' => '3:array')
+
+      index, embedding = protocol.send(:parse_batch_result, line)
+
+      expect(index).to eq(3)
+      expect(embedding.vectors).to eq([[0.1]])
+    end
+
+    it 'maps a failed Array input back by custom_id' do
+      line = { 'custom_id' => '3:array', 'response' => { 'status_code' => 400, 'body' => { 'error' => {} } } }
+
+      index, embedding, failure = protocol.send(:parse_batch_result, line)
+
+      expect(index).to eq(3)
+      expect(embedding).to be_nil
+      expect(failure).to eq(:failed)
     end
 
     it 'orders embedding rows by the index that names their input' do
