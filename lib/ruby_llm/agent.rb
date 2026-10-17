@@ -73,11 +73,11 @@ module RubyLLM
     CHAINABLE_CHAT_DELEGATES = %i[
       with_instructions with_tools with_mcp with_provider_tools with_tool_options with_model
       with_temperature with_max_output_tokens with_thinking with_citations
-      with_end_user with_compaction with_caching with_code_execution with_skills with_context
+      with_end_user with_compaction with_caching with_code_execution with_skills with_files with_context
       with_provider_options
       with_headers with_schema with_fallbacks
       before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-      before_fallback after_fallback after_queue after_dequeue after_unqueue
+      before_fallback after_fallback after_queue after_dequeue after_unqueue after_file_write
       convert_unsupported_attachments
       cancel approve deny answer decline cache_until_here
     ].freeze
@@ -86,7 +86,7 @@ module RubyLLM
     PASSTHROUGH_CHAT_DELEGATES = %i[
       model provider messages tools deferred_tools mcp provider_tools tool_options provider_options headers schema
       concurrency caching citations code_execution compaction context end_user fallbacks thinking temperature
-      max_output_tokens skills
+      max_output_tokens skills files
       each complete? cancelled? waiting? awaiting_approval? pending_approvals awaiting_input? pending_inputs
       awaiting_tasks? pending_tasks add_message add_completion tokens cost render
       queue queued_messages unqueue
@@ -97,6 +97,7 @@ module RubyLLM
       @citations
       @code_execution
       @skills
+      @files
       @end_user
       @schema
       @context
@@ -306,6 +307,25 @@ module RubyLLM
       # agent's inputs in scope, like the agent's other lambdas.
       def code_execution(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
         @code_execution = CodeExecution.options(enabled, options)
+      end
+
+      # Gives chats this agent builds a FileStore and the tools to work
+      # with it, applied via Chat#with_files. Accepts the same options as
+      # keywords or a Hash. A +store+ lambda runs once for each chat, with
+      # +chat+ and the agent's inputs in scope, like the agent's other
+      # lambdas. Pass +false+ to disable it. Passing +nil+ raises
+      # ArgumentError.
+      #
+      #   files
+      #   files spill_over: 20_000
+      #   files store: -> { RubyLLM::FileStore::Directory.new("tmp/chats/#{chat.id}") }
+      #   files false
+      #
+      # Each chat gets a store of its own: without +store+, a new
+      # FileStore::Memory, or for a persisted chat, its files in Active
+      # Storage.
+      def files(enabled = true, **options) # rubocop:disable Style/OptionalBooleanParameter
+        @files = Chat::FileReferences.options(enabled, options, store_lambda: true)
       end
 
       # Gives chats this agent builds the skills named, applied via
@@ -682,6 +702,7 @@ module RubyLLM
         apply_compaction(chat)
         apply_code_execution(chat, runtime)
         apply_skills(chat)
+        apply_files(chat, runtime)
         apply_tool_options(chat, runtime)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
@@ -853,6 +874,15 @@ module RubyLLM
         mounts = options[:mounts]
         options = options.merge(mounts: -> { evaluate(mounts, runtime) }) if mounts.is_a?(Proc)
         chat.with_code_execution(**options)
+      end
+
+      def apply_files(chat, runtime)
+        return if @files.nil?
+        return chat.with_files(false) if @files == false
+
+        store = @files[:store]
+        options = store.is_a?(Proc) ? @files.merge(store: evaluate(store, runtime)) : @files
+        chat.with_files(**options)
       end
 
       def apply_skills(chat)
@@ -1123,6 +1153,12 @@ module RubyLLM
     # Delegates to Chat#with_skills. See that method for arguments and return values.
 
     ##
+    # :method: with_files
+    # :call-seq: with_files(enabled = true, **options)
+    #
+    # Delegates to Chat#with_files. See that method for arguments and return values.
+
+    ##
     # :method: with_context
     # :call-seq: with_context(context)
     #
@@ -1223,6 +1259,12 @@ module RubyLLM
     # :call-seq: after_unqueue(&block)
     #
     # Delegates to Chat#after_unqueue. See that method for arguments and return values.
+
+    ##
+    # :method: after_file_write
+    # :call-seq: after_file_write(&block)
+    #
+    # Delegates to Chat#after_file_write. See that method for arguments and return values.
 
     ##
     # :method: cancel
@@ -1355,6 +1397,12 @@ module RubyLLM
     # :call-seq: skills
     #
     # Delegates to Chat#skills. See that method for arguments and return values.
+
+    ##
+    # :method: files
+    # :call-seq: files
+    #
+    # Delegates to Chat#files. See that method for arguments and return values.
 
     ##
     # :method: compaction

@@ -47,6 +47,8 @@ component :domain, in: %w[
   lib/ruby_llm/score.rb
   lib/ruby_llm/fallback.rb
   lib/ruby_llm/downloaded_file.rb
+  lib/ruby_llm/file_store.rb
+  lib/ruby_llm/file_store/**/*.rb
   lib/ruby_llm/message.rb
   lib/ruby_llm/moderation.rb
   lib/ruby_llm/ocr.rb
@@ -60,6 +62,7 @@ component :domain, in: %w[
   lib/ruby_llm/skill/**/*.rb
   lib/ruby_llm/speech.rb
   lib/ruby_llm/speech_chunk.rb
+  lib/ruby_llm/stored_file.rb
   lib/ruby_llm/protocol/**/*.rb
   lib/ruby_llm/request_shape.rb
   lib/ruby_llm/request_shape/**/*.rb

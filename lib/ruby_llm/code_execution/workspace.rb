@@ -9,8 +9,8 @@ module RubyLLM
   class CodeExecution
     # The directories one run gets: a fresh working directory holding a
     # link, +attachments+, to read-only copies of the conversation's files
-    # beside it, and links to read-only mounts, separate home and temporary
-    # directories, and the source file. Nothing read-only sits inside the
+    # beside it, or copies of a chat's FileStore, and links to read-only
+    # mounts, separate home and temporary directories, and the source file. Nothing read-only sits inside the
     # writable working directory, which Landlock could not keep read-only.
     # Everything is removed when the run ends.
     class Workspace # :nodoc:
@@ -20,9 +20,9 @@ module RubyLLM
 
       attr_reader :directory, :home, :tmp, :inputs, :source
 
-      def self.open
+      def self.open(attachments: true)
         Dir.mktmpdir('ruby_llm-code-') do |root|
-          yield new(root)
+          yield new(root, attachments:)
         ensure
           unlock(root)
         end
@@ -44,7 +44,7 @@ module RubyLLM
         ['', '.', '..'].include?(base) ? 'file' : base
       end
 
-      def initialize(root)
+      def initialize(root, attachments: true)
         @directory = File.join(root, 'work')
         @inputs = File.join(root, 'inputs')
         @home = File.join(root, 'home')
@@ -52,7 +52,7 @@ module RubyLLM
         @source = File.join(root, 'source')
         [@directory, @inputs, @home, @tmp, @source].each { |path| FileUtils.mkdir_p(path) }
         @attachments = File.join(@directory, ATTACHMENTS)
-        File.symlink(@inputs, @attachments)
+        File.symlink(@inputs, @attachments) if attachments
       end
 
       def self.mount_path(name)
@@ -83,16 +83,31 @@ module RubyLLM
       def copy_in(attachments)
         attachments.reject(&:provider_file?).each do |attachment|
           path = File.join(inputs, self.class.filename(attachment.filename))
-          make_room(path)
+          make_room(path, inputs)
           File.binwrite(path, attachment.content)
+        end
+        {}
+      end
+
+      def copy_files(store, skip: [])
+        store.list.each_with_object({}) do |file, copied|
+          next if file.path.split('/').any? { |part| part.start_with?('.') }
+          next if skip.any? { |mount| FileStore.inside?(file.path, mount) || FileStore.inside?(mount, file.path) }
+
+          content = store.read(file.path)
+          path = File.join(directory, file.path)
+          make_room(path, directory)
+          File.binwrite(path, content)
+          copied[file.path] = FileStore.digest(content)
         end
       end
 
-      def outputs(max_files:, max_size:)
+      def outputs(max_files:, max_size:, unchanged: {})
         files = []
         skipped = []
         output_paths.each do |path, size|
           name = path.delete_prefix(File.join(directory, ''))
+          next if unchanged.key?(name) && unchanged[name] == FileStore.digest(read(path))
           next skipped << "#{name} (larger than #{max_size} bytes)" if size > max_size
           next skipped << "#{name} (more than #{max_files} files)" if files.size >= max_files
 
@@ -105,9 +120,9 @@ module RubyLLM
 
       private
 
-      def make_room(path)
-        parent = inputs
-        File.dirname(path).delete_prefix(inputs).split('/').reject(&:empty?).each do |part|
+      def make_room(path, base)
+        parent = base
+        File.dirname(path).delete_prefix(base).split('/').reject(&:empty?).each do |part|
           parent = File.join(parent, part)
           FileUtils.rm_f(parent) unless File.directory?(parent)
         end

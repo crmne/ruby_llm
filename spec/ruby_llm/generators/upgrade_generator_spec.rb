@@ -52,6 +52,7 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
       expect(connection.column_exists?(:ruby_llm_tool_calls, :provider_call_id)).to be(false)
       expect(connection.column_exists?(:messages, :phase)).to be(false)
       expect(connection.table_exists?(:ruby_llm_queued_messages)).to be(false)
+      expect(connection.table_exists?(:ruby_llm_chat_files)).to be(false)
       raise ActiveRecord::Rollback
     end
   ensure
@@ -74,6 +75,24 @@ RSpec.describe RubyLLM::Generators::UpgradeGenerator, :generator do
     end
   ensure
     RubyLLM::ActiveRecord::QueuedMessage.reset_column_information
+  end
+
+  it 'creates the chat files table 2.2 needs' do
+    upgrade = migration_class
+
+    ActiveRecord::Base.transaction do
+      connection.drop_table(:ruby_llm_chat_files)
+
+      ActiveRecord::Migration.suppress_messages { upgrade.migrate(:up) }
+
+      %w[chat_type chat_id owner_type owner_id path content_type byte_size digest text].each do |column|
+        expect(connection.column_exists?(:ruby_llm_chat_files, column)).to be(true)
+      end
+      expect(connection.index_exists?(:ruby_llm_chat_files, %i[chat_type chat_id path])).to be(true)
+      raise ActiveRecord::Rollback
+    end
+  ensure
+    RubyLLM::ActiveRecord::ChatFile.reset_column_information
   end
 
   it 'adds the run claims to a mapped chat table' do

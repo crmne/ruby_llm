@@ -26,6 +26,8 @@
 
 <%%= render "<%= chat_model_name.underscore.pluralize %>/approvals", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
 
+<%%= render "<%= chat_model_name.underscore.pluralize %>/files", <%= chat_model_name.demodulize.underscore %>: @<%= chat_variable_name %> %>
+
 <div style="margin-top: 30px;">
   <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>
 </div>

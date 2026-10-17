@@ -12,6 +12,9 @@ ignore:
   # has no row to claim.
   - 4d8df17b0a5a
   - f54357e76833
+  # ActiveRecord::FileStore#initialize: the store keeps converted text in
+  # its rows, so the memory cache super sets up is never read.
+  - 94ac200a2929
   # Chat#initialize: an unset instance variable reads nil too.
   - cdd92a72524b
   - a628cf763df0

@@ -223,6 +223,20 @@ module RubyLLM
     # cache directory.
     option :package_cache_dir, -> { (directory = Support::Utils.cache_directory) && File.join(directory, 'packages') }
 
+    ##
+    # :attr_accessor: file_converters
+    #
+    # Converters that turn a chat's files into text for the model, as a
+    # Hash of MIME types to converters, tried before the ones RubyLLM
+    # ships. A type may end in <tt>/*</tt>, like <tt>"image/*"</tt>, and a
+    # converter is anything that answers +call+ with an Attachment and
+    # returns its text, or +nil+ to pass it on. See FileStore::Converters.
+    # Default: <tt>{}</tt>.
+    #
+    #   config.file_converters = { "image/*" => RubyLLM::FileStore::Converters::OCR.new }
+    #
+    option :file_converters, -> { {} }
+
     # Keeps custom 1.x initializers bootable long enough to run the 2.0
     # upgrade generator. The registry is always RubyLLM-owned in 2.0.
     def model_registry_class=(_value) # :nodoc:

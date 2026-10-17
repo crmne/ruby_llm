@@ -121,6 +121,18 @@ response.parsed
 
 OCR extracts the text, then a chat model structures it. See [Structured Output]({% link _core_features/structured-output.md %}) for schemas and typed fields.
 
+## Reading Scans in a Chat
+
+A chat with [files]({% link _core_features/chat-files.md %}) reads scans and photos with OCR when you register the OCR converter for their types. The model then reads and searches them like any other file, and each file is read once:
+
+```ruby
+RubyLLM.configure do |config|
+  config.file_converters = { "image/*" => RubyLLM::FileStore::Converters::OCR.new }
+end
+```
+
+See [Scans and Photos]({% link _core_features/chat-files.md %}#scans-and-photos).
+
 ## Error Handling
 
 A provider without OCR support raises `RubyLLM::Error`. Rejected files or options raise `RubyLLM::BadRequestError`. See [Error Handling]({% link _advanced/error-handling.md %}) for retries and [Connection Settings]({% link _getting_started/configuration-connection.md %}#connection-settings) for longer document timeouts.

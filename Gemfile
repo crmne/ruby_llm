@@ -30,6 +30,8 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'nokogiri'
   gem 'opentelemetry-sdk', '~> 1.0'
   gem 'overcommit', '>= 0.66'
+  # Optional dependency for reading the text of PDFs in a chat's files
+  gem 'pdf-reader'
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'

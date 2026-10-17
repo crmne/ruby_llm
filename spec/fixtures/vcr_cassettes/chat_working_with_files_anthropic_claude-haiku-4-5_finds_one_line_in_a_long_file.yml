@@ -1,0 +1,532 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the parking garage door code? It is in handbook.md in your files."}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"list_files","description":"Lists
+        the files in this chat''s file store, with their sizes and types: files people
+        attached, files tools returned, long tool results, and files you or your code
+        wrote. Pass path to list one folder.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list. Leave it out for every file"}},"additionalProperties":false}},{"name":"read_file","description":"Reads
+        a file from this chat''s file store. Text comes back with line numbers, 1000
+        lines or 20000 characters at a time: pass offset and limit to read further.
+        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
+        as the image itself. With unit \"characters\", offset and limit count characters
+        instead of lines, for files with very long lines.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false}},{"name":"search_files","description":"Searches
+        the text of this chat''s files, PDFs and Office files included, for lines
+        matching a regular expression, ignoring case, and returns each match with
+        its path and line number. Read around a match with read_file and its offset.
+        Pass path to search one file or folder.","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false}},{"name":"write_file","description":"Writes
+        a text file to this chat''s file store, replacing any file at that path. Use
+        it for notes, drafts, data, and results you want to keep or come back to.
+        To change part of a file, use edit_file.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false}},{"name":"edit_file","description":"Changes
+        a text file in this chat''s file store by replacing old_text, which must appear
+        exactly once, with new_text. Include enough of the surrounding text to make
+        old_text unique, or set replace_all to replace every occurrence.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to change"},"old_text":{"type":"string","description":"The exact text
+        to replace"},"new_text":{"type":"string","description":"The text to put in
+        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 17 Oct 2026 20:44:25 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9999000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-17T20:44:24Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-17T20:44:24Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-17T20:44:24Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11999000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-17T20:44:24Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-d1f455712f6bd2dc022f3e484c63fc2e-e82a141297778519-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg8TibA7sY6bFFNhEoyLz","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01Q2CDVd4WgvzQ31aLuvrws7","name":"read_file","input":{"path":"handbook.md"},"caller":{"type":"direct"}}],"container":null,"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":1374,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":72,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Sat, 17 Oct 2026 20:44:25 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the parking garage door code? It is in handbook.md in your files."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        search for the parking garage door code in the handbook.md file."},{"type":"tool_use","id":"toolu_01Q2CDVd4WgvzQ31aLuvrws7","name":"read_file","input":{"path":"handbook.md"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Q2CDVd4WgvzQ31aLuvrws7","content":[{"type":"text","text":"handbook.md,
+        lines 1-401 of 401:\n     1\t1. Section 1 covers office policy number 1.\n     2\t2.
+        Section 2 covers office policy number 2.\n     3\t3. Section 3 covers office
+        policy number 3.\n     4\t4. Section 4 covers office policy number 4.\n     5\t5.
+        Section 5 covers office policy number 5.\n     6\t6. Section 6 covers office
+        policy number 6.\n     7\t7. Section 7 covers office policy number 7.\n     8\t8.
+        Section 8 covers office policy number 8.\n     9\t9. Section 9 covers office
+        policy number 9.\n    10\t10. Section 10 covers office policy number 10.\n    11\t11.
+        Section 11 covers office policy number 11.\n    12\t12. Section 12 covers
+        office policy number 12.\n    13\t13. Section 13 covers office policy number
+        13.\n    14\t14. Section 14 covers office policy number 14.\n    15\t15. Section
+        15 covers office policy number 15.\n    16\t16. Section 16 covers office policy
+        number 16.\n    17\t17. Section 17 covers office policy number 17.\n    18\t18.
+        Section 18 covers office policy number 18.\n    19\t19. Section 19 covers
+        office policy number 19.\n    20\t20. Section 20 covers office policy number
+        20.\n    21\t21. Section 21 covers office policy number 21.\n    22\t22. Section
+        22 covers office policy number 22.\n    23\t23. Section 23 covers office policy
+        number 23.\n    24\t24. Section 24 covers office policy number 24.\n    25\t25.
+        Section 25 covers office policy number 25.\n    26\t26. Section 26 covers
+        office policy number 26.\n    27\t27. Section 27 covers office policy number
+        27.\n    28\t28. Section 28 covers office policy number 28.\n    29\t29. Section
+        29 covers office policy number 29.\n    30\t30. Section 30 covers office policy
+        number 30.\n    31\t31. Section 31 covers office policy number 31.\n    32\t32.
+        Section 32 covers office policy number 32.\n    33\t33. Section 33 covers
+        office policy number 33.\n    34\t34. Section 34 covers office policy number
+        34.\n    35\t35. Section 35 covers office policy number 35.\n    36\t36. Section
+        36 covers office policy number 36.\n    37\t37. Section 37 covers office policy
+        number 37.\n    38\t38. Section 38 covers office policy number 38.\n    39\t39.
+        Section 39 covers office policy number 39.\n    40\t40. Section 40 covers
+        office policy number 40.\n    41\t41. Section 41 covers office policy number
+        41.\n    42\t42. Section 42 covers office policy number 42.\n    43\t43. Section
+        43 covers office policy number 43.\n    44\t44. Section 44 covers office policy
+        number 44.\n    45\t45. Section 45 covers office policy number 45.\n    46\t46.
+        Section 46 covers office policy number 46.\n    47\t47. Section 47 covers
+        office policy number 47.\n    48\t48. Section 48 covers office policy number
+        48.\n    49\t49. Section 49 covers office policy number 49.\n    50\t50. Section
+        50 covers office policy number 50.\n    51\t51. Section 51 covers office policy
+        number 51.\n    52\t52. Section 52 covers office policy number 52.\n    53\t53.
+        Section 53 covers office policy number 53.\n    54\t54. Section 54 covers
+        office policy number 54.\n    55\t55. Section 55 covers office policy number
+        55.\n    56\t56. Section 56 covers office policy number 56.\n    57\t57. Section
+        57 covers office policy number 57.\n    58\t58. Section 58 covers office policy
+        number 58.\n    59\t59. Section 59 covers office policy number 59.\n    60\t60.
+        Section 60 covers office policy number 60.\n    61\t61. Section 61 covers
+        office policy number 61.\n    62\t62. Section 62 covers office policy number
+        62.\n    63\t63. Section 63 covers office policy number 63.\n    64\t64. Section
+        64 covers office policy number 64.\n    65\t65. Section 65 covers office policy
+        number 65.\n    66\t66. Section 66 covers office policy number 66.\n    67\t67.
+        Section 67 covers office policy number 67.\n    68\t68. Section 68 covers
+        office policy number 68.\n    69\t69. Section 69 covers office policy number
+        69.\n    70\t70. Section 70 covers office policy number 70.\n    71\t71. Section
+        71 covers office policy number 71.\n    72\t72. Section 72 covers office policy
+        number 72.\n    73\t73. Section 73 covers office policy number 73.\n    74\t74.
+        Section 74 covers office policy number 74.\n    75\t75. Section 75 covers
+        office policy number 75.\n    76\t76. Section 76 covers office policy number
+        76.\n    77\t77. Section 77 covers office policy number 77.\n    78\t78. Section
+        78 covers office policy number 78.\n    79\t79. Section 79 covers office policy
+        number 79.\n    80\t80. Section 80 covers office policy number 80.\n    81\t81.
+        Section 81 covers office policy number 81.\n    82\t82. Section 82 covers
+        office policy number 82.\n    83\t83. Section 83 covers office policy number
+        83.\n    84\t84. Section 84 covers office policy number 84.\n    85\t85. Section
+        85 covers office policy number 85.\n    86\t86. Section 86 covers office policy
+        number 86.\n    87\t87. Section 87 covers office policy number 87.\n    88\t88.
+        Section 88 covers office policy number 88.\n    89\t89. Section 89 covers
+        office policy number 89.\n    90\t90. Section 90 covers office policy number
+        90.\n    91\t91. Section 91 covers office policy number 91.\n    92\t92. Section
+        92 covers office policy number 92.\n    93\t93. Section 93 covers office policy
+        number 93.\n    94\t94. Section 94 covers office policy number 94.\n    95\t95.
+        Section 95 covers office policy number 95.\n    96\t96. Section 96 covers
+        office policy number 96.\n    97\t97. Section 97 covers office policy number
+        97.\n    98\t98. Section 98 covers office policy number 98.\n    99\t99. Section
+        99 covers office policy number 99.\n   100\t100. Section 100 covers office
+        policy number 100.\n   101\t101. Section 101 covers office policy number 101.\n   102\t102.
+        Section 102 covers office policy number 102.\n   103\t103. Section 103 covers
+        office policy number 103.\n   104\t104. Section 104 covers office policy number
+        104.\n   105\t105. Section 105 covers office policy number 105.\n   106\t106.
+        Section 106 covers office policy number 106.\n   107\t107. Section 107 covers
+        office policy number 107.\n   108\t108. Section 108 covers office policy number
+        108.\n   109\t109. Section 109 covers office policy number 109.\n   110\t110.
+        Section 110 covers office policy number 110.\n   111\t111. Section 111 covers
+        office policy number 111.\n   112\t112. Section 112 covers office policy number
+        112.\n   113\t113. Section 113 covers office policy number 113.\n   114\t114.
+        Section 114 covers office policy number 114.\n   115\t115. Section 115 covers
+        office policy number 115.\n   116\t116. Section 116 covers office policy number
+        116.\n   117\t117. Section 117 covers office policy number 117.\n   118\t118.
+        Section 118 covers office policy number 118.\n   119\t119. Section 119 covers
+        office policy number 119.\n   120\t120. Section 120 covers office policy number
+        120.\n   121\t121. Section 121 covers office policy number 121.\n   122\t122.
+        Section 122 covers office policy number 122.\n   123\t123. Section 123 covers
+        office policy number 123.\n   124\t124. Section 124 covers office policy number
+        124.\n   125\t125. Section 125 covers office policy number 125.\n   126\t126.
+        Section 126 covers office policy number 126.\n   127\t127. Section 127 covers
+        office policy number 127.\n   128\t128. Section 128 covers office policy number
+        128.\n   129\t129. Section 129 covers office policy number 129.\n   130\t130.
+        Section 130 covers office policy number 130.\n   131\t131. Section 131 covers
+        office policy number 131.\n   132\t132. Section 132 covers office policy number
+        132.\n   133\t133. Section 133 covers office policy number 133.\n   134\t134.
+        Section 134 covers office policy number 134.\n   135\t135. Section 135 covers
+        office policy number 135.\n   136\t136. Section 136 covers office policy number
+        136.\n   137\t137. Section 137 covers office policy number 137.\n   138\t138.
+        Section 138 covers office policy number 138.\n   139\t139. Section 139 covers
+        office policy number 139.\n   140\t140. Section 140 covers office policy number
+        140.\n   141\t141. Section 141 covers office policy number 141.\n   142\t142.
+        Section 142 covers office policy number 142.\n   143\t143. Section 143 covers
+        office policy number 143.\n   144\t144. Section 144 covers office policy number
+        144.\n   145\t145. Section 145 covers office policy number 145.\n   146\t146.
+        Section 146 covers office policy number 146.\n   147\t147. Section 147 covers
+        office policy number 147.\n   148\t148. Section 148 covers office policy number
+        148.\n   149\t149. Section 149 covers office policy number 149.\n   150\t150.
+        Section 150 covers office policy number 150.\n   151\t151. Section 151 covers
+        office policy number 151.\n   152\t152. Section 152 covers office policy number
+        152.\n   153\t153. Section 153 covers office policy number 153.\n   154\t154.
+        Section 154 covers office policy number 154.\n   155\t155. Section 155 covers
+        office policy number 155.\n   156\t156. Section 156 covers office policy number
+        156.\n   157\t157. Section 157 covers office policy number 157.\n   158\t158.
+        Section 158 covers office policy number 158.\n   159\t159. Section 159 covers
+        office policy number 159.\n   160\t160. Section 160 covers office policy number
+        160.\n   161\t161. Section 161 covers office policy number 161.\n   162\t162.
+        Section 162 covers office policy number 162.\n   163\t163. Section 163 covers
+        office policy number 163.\n   164\t164. Section 164 covers office policy number
+        164.\n   165\t165. Section 165 covers office policy number 165.\n   166\t166.
+        Section 166 covers office policy number 166.\n   167\t167. Section 167 covers
+        office policy number 167.\n   168\t168. Section 168 covers office policy number
+        168.\n   169\t169. Section 169 covers office policy number 169.\n   170\t170.
+        Section 170 covers office policy number 170.\n   171\t171. Section 171 covers
+        office policy number 171.\n   172\t172. Section 172 covers office policy number
+        172.\n   173\t173. Section 173 covers office policy number 173.\n   174\t174.
+        Section 174 covers office policy number 174.\n   175\t175. Section 175 covers
+        office policy number 175.\n   176\t176. Section 176 covers office policy number
+        176.\n   177\t177. Section 177 covers office policy number 177.\n   178\t178.
+        Section 178 covers office policy number 178.\n   179\t179. Section 179 covers
+        office policy number 179.\n   180\t180. Section 180 covers office policy number
+        180.\n   181\t181. Section 181 covers office policy number 181.\n   182\t182.
+        Section 182 covers office policy number 182.\n   183\t183. Section 183 covers
+        office policy number 183.\n   184\t184. Section 184 covers office policy number
+        184.\n   185\t185. Section 185 covers office policy number 185.\n   186\t186.
+        Section 186 covers office policy number 186.\n   187\t187. Section 187 covers
+        office policy number 187.\n   188\t188. Section 188 covers office policy number
+        188.\n   189\t189. Section 189 covers office policy number 189.\n   190\t190.
+        Section 190 covers office policy number 190.\n   191\t191. Section 191 covers
+        office policy number 191.\n   192\t192. Section 192 covers office policy number
+        192.\n   193\t193. Section 193 covers office policy number 193.\n   194\t194.
+        Section 194 covers office policy number 194.\n   195\t195. Section 195 covers
+        office policy number 195.\n   196\t196. Section 196 covers office policy number
+        196.\n   197\t197. Section 197 covers office policy number 197.\n   198\t198.
+        Section 198 covers office policy number 198.\n   199\t199. Section 199 covers
+        office policy number 199.\n   200\t200. Section 200 covers office policy number
+        200.\n   201\t201. Section 201 covers office policy number 201.\n   202\t202.
+        Section 202 covers office policy number 202.\n   203\t203. Section 203 covers
+        office policy number 203.\n   204\t204. Section 204 covers office policy number
+        204.\n   205\t205. Section 205 covers office policy number 205.\n   206\t206.
+        Section 206 covers office policy number 206.\n   207\t207. Section 207 covers
+        office policy number 207.\n   208\t208. Section 208 covers office policy number
+        208.\n   209\t209. Section 209 covers office policy number 209.\n   210\t210.
+        Section 210 covers office policy number 210.\n   211\t211. Section 211 covers
+        office policy number 211.\n   212\t212. Section 212 covers office policy number
+        212.\n   213\t213. Section 213 covers office policy number 213.\n   214\t214.
+        Section 214 covers office policy number 214.\n   215\t215. Section 215 covers
+        office policy number 215.\n   216\t216. Section 216 covers office policy number
+        216.\n   217\t217. Section 217 covers office policy number 217.\n   218\t218.
+        Section 218 covers office policy number 218.\n   219\t219. Section 219 covers
+        office policy number 219.\n   220\t220. Section 220 covers office policy number
+        220.\n   221\t221. Section 221 covers office policy number 221.\n   222\t222.
+        Section 222 covers office policy number 222.\n   223\t223. Section 223 covers
+        office policy number 223.\n   224\t224. Section 224 covers office policy number
+        224.\n   225\t225. Section 225 covers office policy number 225.\n   226\t226.
+        Section 226 covers office policy number 226.\n   227\t227. Section 227 covers
+        office policy number 227.\n   228\t228. Section 228 covers office policy number
+        228.\n   229\t229. Section 229 covers office policy number 229.\n   230\t230.
+        Section 230 covers office policy number 230.\n   231\t231. Section 231 covers
+        office policy number 231.\n   232\t232. Section 232 covers office policy number
+        232.\n   233\t233. Section 233 covers office policy number 233.\n   234\t234.
+        Section 234 covers office policy number 234.\n   235\t235. Section 235 covers
+        office policy number 235.\n   236\t236. Section 236 covers office policy number
+        236.\n   237\t237. Section 237 covers office policy number 237.\n   238\t238.
+        Section 238 covers office policy number 238.\n   239\t239. Section 239 covers
+        office policy number 239.\n   240\t240. Section 240 covers office policy number
+        240.\n   241\t241. Section 241 covers office policy number 241.\n   242\t242.
+        Section 242 covers office policy number 242.\n   243\t243. Section 243 covers
+        office policy number 243.\n   244\t244. Section 244 covers office policy number
+        244.\n   245\t245. Section 245 covers office policy number 245.\n   246\t246.
+        Section 246 covers office policy number 246.\n   247\t247. Section 247 covers
+        office policy number 247.\n   248\t248. Section 248 covers office policy number
+        248.\n   249\t249. Section 249 covers office policy number 249.\n   250\t250.
+        Section 250 covers office policy number 250.\n   251\t251. Section 251 covers
+        office policy number 251.\n   252\t252. Section 252 covers office policy number
+        252.\n   253\t253. Section 253 covers office policy number 253.\n   254\t254.
+        Section 254 covers office policy number 254.\n   255\t255. Section 255 covers
+        office policy number 255.\n   256\t256. Section 256 covers office policy number
+        256.\n   257\t257. Section 257 covers office policy number 257.\n   258\t258.
+        Section 258 covers office policy number 258.\n   259\t259. Section 259 covers
+        office policy number 259.\n   260\t260. Section 260 covers office policy number
+        260.\n   261\t261. Section 261 covers office policy number 261.\n   262\t262.
+        Section 262 covers office policy number 262.\n   263\t263. Section 263 covers
+        office policy number 263.\n   264\t264. Section 264 covers office policy number
+        264.\n   265\t265. Section 265 covers office policy number 265.\n   266\t266.
+        Section 266 covers office policy number 266.\n   267\t267. Section 267 covers
+        office policy number 267.\n   268\t268. Section 268 covers office policy number
+        268.\n   269\t269. Section 269 covers office policy number 269.\n   270\t270.
+        Section 270 covers office policy number 270.\n   271\t271. Section 271 covers
+        office policy number 271.\n   272\t272. Section 272 covers office policy number
+        272.\n   273\t273. Section 273 covers office policy number 273.\n   274\t274.
+        Section 274 covers office policy number 274.\n   275\t275. Section 275 covers
+        office policy number 275.\n   276\t276. Section 276 covers office policy number
+        276.\n   277\t277. Section 277 covers office policy number 277.\n   278\t278.
+        Section 278 covers office policy number 278.\n   279\t279. Section 279 covers
+        office policy number 279.\n   280\t280. Section 280 covers office policy number
+        280.\n   281\t281. Section 281 covers office policy number 281.\n   282\t282.
+        Section 282 covers office policy number 282.\n   283\t283. Section 283 covers
+        office policy number 283.\n   284\t284. Section 284 covers office policy number
+        284.\n   285\t285. Section 285 covers office policy number 285.\n   286\t286.
+        Section 286 covers office policy number 286.\n   287\t287. Section 287 covers
+        office policy number 287.\n   288\t288. The parking garage door code is 4471-KESTREL.\n   289\t288.
+        Section 288 covers office policy number 288.\n   290\t289. Section 289 covers
+        office policy number 289.\n   291\t290. Section 290 covers office policy number
+        290.\n   292\t291. Section 291 covers office policy number 291.\n   293\t292.
+        Section 292 covers office policy number 292.\n   294\t293. Section 293 covers
+        office policy number 293.\n   295\t294. Section 294 covers office policy number
+        294.\n   296\t295. Section 295 covers office policy number 295.\n   297\t296.
+        Section 296 covers office policy number 296.\n   298\t297. Section 297 covers
+        office policy number 297.\n   299\t298. Section 298 covers office policy number
+        298.\n   300\t299. Section 299 covers office policy number 299.\n   301\t300.
+        Section 300 covers office policy number 300.\n   302\t301. Section 301 covers
+        office policy number 301.\n   303\t302. Section 302 covers office policy number
+        302.\n   304\t303. Section 303 covers office policy number 303.\n   305\t304.
+        Section 304 covers office policy number 304.\n   306\t305. Section 305 covers
+        office policy number 305.\n   307\t306. Section 306 covers office policy number
+        306.\n   308\t307. Section 307 covers office policy number 307.\n   309\t308.
+        Section 308 covers office policy number 308.\n   310\t309. Section 309 covers
+        office policy number 309.\n   311\t310. Section 310 covers office policy number
+        310.\n   312\t311. Section 311 covers office policy number 311.\n   313\t312.
+        Section 312 covers office policy number 312.\n   314\t313. Section 313 covers
+        office policy number 313.\n   315\t314. Section 314 covers office policy number
+        314.\n   316\t315. Section 315 covers office policy number 315.\n   317\t316.
+        Section 316 covers office policy number 316.\n   318\t317. Section 317 covers
+        office policy number 317.\n   319\t318. Section 318 covers office policy number
+        318.\n   320\t319. Section 319 covers office policy number 319.\n   321\t320.
+        Section 320 covers office policy number 320.\n   322\t321. Section 321 covers
+        office policy number 321.\n   323\t322. Section 322 covers office policy number
+        322.\n   324\t323. Section 323 covers office policy number 323.\n   325\t324.
+        Section 324 covers office policy number 324.\n   326\t325. Section 325 covers
+        office policy number 325.\n   327\t326. Section 326 covers office policy number
+        326.\n   328\t327. Section 327 covers office policy number 327.\n   329\t328.
+        Section 328 covers office policy number 328.\n   330\t329. Section 329 covers
+        office policy number 329.\n   331\t330. Section 330 covers office policy number
+        330.\n   332\t331. Section 331 covers office policy number 331.\n   333\t332.
+        Section 332 covers office policy number 332.\n   334\t333. Section 333 covers
+        office policy number 333.\n   335\t334. Section 334 covers office policy number
+        334.\n   336\t335. Section 335 covers office policy number 335.\n   337\t336.
+        Section 336 covers office policy number 336.\n   338\t337. Section 337 covers
+        office policy number 337.\n   339\t338. Section 338 covers office policy number
+        338.\n   340\t339. Section 339 covers office policy number 339.\n   341\t340.
+        Section 340 covers office policy number 340.\n   342\t341. Section 341 covers
+        office policy number 341.\n   343\t342. Section 342 covers office policy number
+        342.\n   344\t343. Section 343 covers office policy number 343.\n   345\t344.
+        Section 344 covers office policy number 344.\n   346\t345. Section 345 covers
+        office policy number 345.\n   347\t346. Section 346 covers office policy number
+        346.\n   348\t347. Section 347 covers office policy number 347.\n   349\t348.
+        Section 348 covers office policy number 348.\n   350\t349. Section 349 covers
+        office policy number 349.\n   351\t350. Section 350 covers office policy number
+        350.\n   352\t351. Section 351 covers office policy number 351.\n   353\t352.
+        Section 352 covers office policy number 352.\n   354\t353. Section 353 covers
+        office policy number 353.\n   355\t354. Section 354 covers office policy number
+        354.\n   356\t355. Section 355 covers office policy number 355.\n   357\t356.
+        Section 356 covers office policy number 356.\n   358\t357. Section 357 covers
+        office policy number 357.\n   359\t358. Section 358 covers office policy number
+        358.\n   360\t359. Section 359 covers office policy number 359.\n   361\t360.
+        Section 360 covers office policy number 360.\n   362\t361. Section 361 covers
+        office policy number 361.\n   363\t362. Section 362 covers office policy number
+        362.\n   364\t363. Section 363 covers office policy number 363.\n   365\t364.
+        Section 364 covers office policy number 364.\n   366\t365. Section 365 covers
+        office policy number 365.\n   367\t366. Section 366 covers office policy number
+        366.\n   368\t367. Section 367 covers office policy number 367.\n   369\t368.
+        Section 368 covers office policy number 368.\n   370\t369. Section 369 covers
+        office policy number 369.\n   371\t370. Section 370 covers office policy number
+        370.\n   372\t371. Section 371 covers office policy number 371.\n   373\t372.
+        Section 372 covers office policy number 372.\n   374\t373. Section 373 covers
+        office policy number 373.\n   375\t374. Section 374 covers office policy number
+        374.\n   376\t375. Section 375 covers office policy number 375.\n   377\t376.
+        Section 376 covers office policy number 376.\n   378\t377. Section 377 covers
+        office policy number 377.\n   379\t378. Section 378 covers office policy number
+        378.\n   380\t379. Section 379 covers office policy number 379.\n   381\t380.
+        Section 380 covers office policy number 380.\n   382\t381. Section 381 covers
+        office policy number 381.\n   383\t382. Section 382 covers office policy number
+        382.\n   384\t383. Section 383 covers office policy number 383.\n   385\t384.
+        Section 384 covers office policy number 384.\n   386\t385. Section 385 covers
+        office policy number 385.\n   387\t386. Section 386 covers office policy number
+        386.\n   388\t387. Section 387 covers office policy number 387.\n   389\t388.
+        Section 388 covers office policy number 388.\n   390\t389. Section 389 covers
+        office policy number 389.\n   391\t390. Section 390 covers office policy number
+        390.\n   392\t391. Section 391 covers office policy number 391.\n   393\t392.
+        Section 392 covers office policy number 392.\n   394\t393. Section 393 covers
+        office policy number 393.\n   395\t394. Section 394 covers office policy number
+        394.\n   396\t395. Section 395 covers office policy number 395.\n   397\t396.
+        Section 396 covers office policy number 396.\n   398\t397. Section 397 covers
+        office policy number 397.\n   399\t398. Section 398 covers office policy number
+        398.\n   400\t399. Section 399 covers office policy number 399.\n   401\t400.
+        Section 400 covers office policy number 400."}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"list_files","description":"Lists
+        the files in this chat''s file store, with their sizes and types: files people
+        attached, files tools returned, long tool results, and files you or your code
+        wrote. Pass path to list one folder.","input_schema":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list. Leave it out for every file"}},"additionalProperties":false}},{"name":"read_file","description":"Reads
+        a file from this chat''s file store. Text comes back with line numbers, 1000
+        lines or 20000 characters at a time: pass offset and limit to read further.
+        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
+        as the image itself. With unit \"characters\", offset and limit count characters
+        instead of lines, for files with very long lines.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false}},{"name":"search_files","description":"Searches
+        the text of this chat''s files, PDFs and Office files included, for lines
+        matching a regular expression, ignoring case, and returns each match with
+        its path and line number. Read around a match with read_file and its offset.
+        Pass path to search one file or folder.","input_schema":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false}},{"name":"write_file","description":"Writes
+        a text file to this chat''s file store, replacing any file at that path. Use
+        it for notes, drafts, data, and results you want to keep or come back to.
+        To change part of a file, use edit_file.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false}},{"name":"edit_file","description":"Changes
+        a text file in this chat''s file store by replacing old_text, which must appear
+        exactly once, with new_text. Include enough of the surrounding text to make
+        old_text unique, or set replace_all to replace every occurrence.","input_schema":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to change"},"old_text":{"type":"string","description":"The exact text
+        to replace"},"new_text":{"type":"string","description":"The text to put in
+        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 17 Oct 2026 20:44:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9992000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-10-17T20:44:25Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-10-17T20:44:26Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-10-17T20:44:25Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11992000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-10-17T20:44:25Z'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Request-Id:
+      - "<REQUEST_ID>"
+      Traceresponse:
+      - 00-aac4a1368c6ca51bcd109dee03dc49a0-d482b047aa77e62b-01
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - "<ANTHROPIC_WORKSPACE_ID>"
+      Vary:
+      - Accept-Encoding
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Server:
+      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011Cg8TigxsNJHTyKdHsgijB","type":"message","role":"assistant","content":[{"type":"text","text":"Found
+        it! The parking garage door code is **4471-KESTREL** (located on line 288
+        of the handbook)."}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":8292,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":32,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}'
+  recorded_at: Sat, 17 Oct 2026 20:44:26 GMT
+recorded_with: VCR 6.4.0

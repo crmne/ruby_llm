@@ -1,0 +1,14 @@
+<%% files = <%= chat_model_name.demodulize.underscore %>.ruby_llm_chat_files.with_attached_file %>
+<%% if files.any? %>
+  <section id="<%= chat_variable_name %>_<%%= <%= chat_model_name.demodulize.underscore %>.id %>_files">
+    <h2>Files</h2>
+    <ul>
+      <%% files.each do |file| %>
+        <li>
+          <%%= link_to file.path, rails_blob_path(file.file, disposition: "attachment") %>
+          (<%%= number_to_human_size(file.byte_size) %>)
+        </li>
+      <%% end %>
+    </ul>
+  </section>
+<%% end %>

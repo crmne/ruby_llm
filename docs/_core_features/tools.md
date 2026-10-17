@@ -155,6 +155,20 @@ end
 
 A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; long MCP operations that run as [tasks]({% link _core_features/mcp.md %}#tasks) pause the chat and release their claim instead. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
 
+## Long Results
+
+A tool that returns a lot, like a search with hundreds of hits, sends all of it to the model, and all of it stays in every later request. In a chat with [files]({% link _core_features/chat-files.md %}), a result longer than 10,000 characters is saved as a file instead, and the model gets its start and the file's path to read or search the rest. A tool can set its own limit, or send its results whole when it already returns them in pages:
+
+```ruby
+class ExportOrders < RubyLLM::Tool
+  spill_over 50_000
+end
+
+class SearchDocs < RubyLLM::Tool
+  spill_over false
+end
+```
+
 ## Error Handling in Tools
 
 Tools should handle errors based on whether they're recoverable:

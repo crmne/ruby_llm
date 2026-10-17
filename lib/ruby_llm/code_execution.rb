@@ -8,7 +8,9 @@ module RubyLLM
   # model. Each call runs Ruby, Python, JavaScript, or a shell script in a Sandbox, in a
   # fresh run directory with read-only copies of the conversation's files,
   # and returns the exit code, the output, and every file the code wrote
-  # there as an attachment on the tool result.
+  # there as an attachment on the tool result. In a chat with files (see
+  # Chat#with_files), the run directory starts with a copy of the chat's
+  # files instead, and what the code writes is saved back to them.
   #
   # Calls run in the chat's default sandbox. With +escalate_to:+, the model
   # may name a wider sandbox for one call and say why; that call waits for
@@ -201,22 +203,27 @@ module RubyLLM
     # +escalate_to+ the sandboxes the model may ask for, an Array or a Hash
     # of names to sandboxes. +attachments+ returns the conversation's files
     # when called, and +skills+ a Hash of paths under +skills/+ to the
-    # skill folders mounted there. +mounts+ is a Hash of paths inside the
+    # skill folders mounted there. +files+ returns the chat's FileStore, or
+    # +nil+: with one, each run starts with a copy of its files instead of
+    # the attachments, and the files a run writes or changes are saved to
+    # it, each passed to +written+. +mounts+ is a Hash of paths inside the
     # run directory to directories mounted there read-only, or a Proc called
     # before each run that returns one. +approval+ is called with the
     # ToolCall of each escalated run right before it runs, and the run goes
     # ahead only when it returns +true+. +chat+ and +config+ describe where
     # the instrumentation events go.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, skills: -> { {} }, mounts: {},
-                   approval: ->(_tool_call) { false }, chat: nil, config: nil, package_cache_dir: nil,
-                   languages: %i[ruby shell], **packages)
+    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, files: -> {}, written: ->(_file) {},
+                   skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil, config: nil,
+                   package_cache_dir: nil, languages: %i[ruby shell], **packages)
       super()
       @sandbox = sandbox
       @config = config
       self.sandbox
       @escalate_to = self.class.escalations(escalate_to)
       @attachments = attachments
+      @files = files
+      @written = written
       @skills = skills
       @mounts = mounts
       @approval = approval
@@ -293,9 +300,7 @@ module RubyLLM
     def description
       [
         "Runs #{language_list} code in a sandbox and returns its exit code, output, and the files it writes.",
-        'Each call gets a new empty run directory, and nothing carries over between calls.',
-        "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \
-        '(read-only). Write files to the run directory to return them to the user.',
+        *files_note,
         mounts_note,
         packages_note,
         directory_note(sandbox),
@@ -329,8 +334,9 @@ module RubyLLM
       runner, error = runner_for(sandbox, code, tool_call)
       return { error: } if error
 
-      Workspace.open do |workspace|
-        run(Language[language], code, workspace, runner:, name: sandbox, tool_call:)
+      store = @files.call
+      Workspace.open(attachments: store.nil?) do |workspace|
+        run(Language[language], code, workspace, runner:, name: sandbox, tool_call:, store:)
       end
     end
 
@@ -387,17 +393,27 @@ module RubyLLM
       }
     end
 
-    def run(language, code, workspace, runner:, name:, tool_call:)
-      workspace.copy_in(@attachments.call)
-      mounted = workspace.mount(mounts.merge(@skills.call))
+    def run(language, code, workspace, runner:, name:, tool_call:, store:)
+      all_mounts = mounts.merge(@skills.call)
+      copied = store ? workspace.copy_files(store, skip: all_mounts.keys) : workspace.copy_in(@attachments.call)
+      mounted = workspace.mount(all_mounts)
       script = workspace.write_source(language, code)
       workspace.link_packages(@packages.node_modules) if language.name == :javascript && @packages.node_modules
       instrument(language, runner, name, tool_call) do |event|
         result = run_in_sandbox(runner, language.command(script), workspace, readable: mounted)
-        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE)
+        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE, unchanged: copied)
         record(event, result, files)
+        next save(store, result, files, skipped) if store
+
         files.empty? ? report(result, files, skipped) : [report(result, files, skipped), *files]
       end
+    end
+
+    def save(store, result, files, skipped)
+      saved = files.map do |file|
+        store.write(file.filename, file.content).tap { |stored| @written.call(stored) }
+      end
+      report(result, saved.map(&:path), skipped)
     end
 
     def run_in_sandbox(runner, command, workspace, readable:)
@@ -447,7 +463,7 @@ module RubyLLM
         stderr: truncate(result.stderr),
         error: run_error(result),
         blocked_hosts: (blocked if blocked&.any?),
-        files: (files.map(&:filename) if files.any?),
+        files: (files.map { |file| file.is_a?(String) ? file : file.filename } if files.any?),
         skipped_files: (skipped if skipped.any?)
       }.compact.to_json
     end
@@ -470,6 +486,18 @@ module RubyLLM
     def language_list
       labels = languages.map { |name| Language[name].label }
       labels.size > 1 ? "#{labels[0..-2].join(', ')} or #{labels.last}" : labels.first
+    end
+
+    def files_note
+      if @files.call
+        ["Each call gets a new run directory holding a copy of this chat's files, the ones list_files shows.",
+         'Files the code writes or changes there are saved to the chat\'s files when it ends, where read_file ' \
+         'and later runs find them. Deleting a file there does not delete it from the chat\'s files.']
+      else
+        ['Each call gets a new empty run directory, and nothing carries over between calls.',
+         "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \
+         '(read-only). Write files to the run directory to return them to the user.']
+      end
     end
 
     def mounts_note

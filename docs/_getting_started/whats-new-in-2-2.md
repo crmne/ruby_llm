@@ -131,6 +131,22 @@ Every request lists each skill's name and description. The model loads a skill's
 
 See [Skills]({% link _core_features/skills.md %}).
 
+## Chat Files
+
+A 40-page PDF attached to the first question used to travel with every question after it, and a search that returned 30,000 characters stayed in every request. A chat with files keeps them out of the conversation:
+
+```ruby
+chat = RubyLLM.chat.with_files
+chat.ask "Which clauses changed?", with: ["contract-v1.pdf", "contract-v2.pdf"]
+chat.ask "Quote the new termination clause"
+```
+
+The model sees the PDFs on the question they came with, and one line naming each after that. It works with them through five tools, `list_files`, `read_file`, `search_files`, `write_file`, and `edit_file`, which read PDFs, Word, Excel, and PowerPoint files as text, and scans too once you register the OCR converter. A tool result longer than 10,000 characters is saved as a file, and the model gets its start and the path. With code execution, each run starts with a copy of the files and saves what it writes back to them.
+
+Files live in memory, in a folder with `RubyLLM::FileStore::Directory`, or for a persisted chat in Active Storage, in the new `ruby_llm_chat_files` table. Agents declare them with `files`.
+
+See [Chat Files]({% link _core_features/chat-files.md %}).
+
 ## A Generator for Every Building Block
 
 Every building block now has a generator that puts it in its `app/` folder, ready to use:
@@ -170,7 +186,7 @@ If a process dies, its claims expire and another process picks the chat up. See 
 
 ## Upgrades
 
-`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
+`bin/rails generate ruby_llm:upgrade` in 2.2 adds the columns chats and tool calls use for their claims, the tables for queued messages and chat files, and any of the conventional `app/` folders your application lacks, such as `app/skills` and `app/sandboxes`. Applications on 2.0 upgrade to 2.1 first. See [Upgrading]({% link _reference/upgrading.md %}).
 
 Provider gems and custom providers that override protocol methods rename them: methods that build a request start with `render_`, methods that read a response start with `parse_`, and the capability predicates drop `supports_` ([#1136](https://github.com/crmne/ruby_llm/pull/1136)). See [Rename Protocol Method Overrides]({% link _reference/upgrading.md %}#rename-protocol-method-overrides).
 
