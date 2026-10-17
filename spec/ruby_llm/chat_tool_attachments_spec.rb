@@ -23,6 +23,16 @@ RSpec.describe RubyLLM::Chat do
       expect(message.attachments).to eq([attachment])
     end
 
+    it "downloads a returned URL attachment with the chat's configuration" do
+      context = RubyLLM.context { |config| config.request_timeout = 7 }
+      chat = context.chat(model: model_for(:anthropic), provider: 'anthropic')
+      attachment = RubyLLM::Attachment.new('https://example.com/ruby.png')
+
+      chat.send(:add_tool_result_message, tool_call, attachment)
+
+      expect(attachment.config.request_timeout).to eq(7)
+    end
+
     it 'accepts content, [attachments] returns' do
       message = tool_message_for(['Found ruby.png', [attachment]])
 

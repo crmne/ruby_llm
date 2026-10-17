@@ -417,4 +417,24 @@ RSpec.describe RubyLLM::Attachment do
       expect(described_class.wrap([original.to_h], config:).first.config).to be(config)
     end
   end
+
+  describe 'wrapping an attachment that is already built' do
+    let(:config) { RubyLLM.config.dup }
+
+    it 'gives it the configuration when it has none of its own' do
+      attachment = described_class.new('https://example.com/ruby.png')
+
+      expect(described_class.wrap(attachment, config:)).to eq([attachment])
+      expect(attachment.config).to be(config)
+    end
+
+    it 'keeps the configuration it was built with' do
+      own = RubyLLM.config.dup
+      attachment = described_class.new('https://example.com/ruby.png', config: own)
+
+      described_class.wrap(attachment, config:)
+
+      expect(attachment.config).to be(own)
+    end
+  end
 end
