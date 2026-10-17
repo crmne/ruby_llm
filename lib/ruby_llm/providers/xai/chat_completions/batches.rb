@@ -76,13 +76,18 @@ module RubyLLM
           def parse_batch_status(raw_status, completed:)
             return :pending unless completed
 
-            raw_status == 'failed' ? :failed : :succeeded
+            case raw_status
+            when 'failed' then :failed
+            when 'cancelled' then :cancelled
+            else :succeeded
+            end
           end
 
           def xai_batch_status(state, completed:)
             return 'failed' unless state['error'].to_s.empty?
+            return 'processing' unless completed
 
-            completed ? 'completed' : 'processing'
+            state['num_cancelled'].to_i.positive? ? 'cancelled' : 'completed'
           end
 
           def completed_batch_state?(state)

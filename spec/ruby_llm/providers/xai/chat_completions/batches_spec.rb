@@ -125,6 +125,33 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
       expect(protocol.send(:parse_batch_response, data)).to include(raw_status: 'failed', completed: false)
     end
 
+    it 'reports a batch whose requests were cancelled as cancelled' do
+      data = { 'batch_id' => 'batch_1', 'cancel_time' => '2026-10-11T00:00:00Z', 'cancel_by_xai_message' => nil,
+               'state' => { 'num_requests' => 3, 'num_pending' => 0, 'num_success' => 1, 'num_error' => 0,
+                            'num_cancelled' => 2 } }
+
+      attributes = protocol.send(:parse_batch_response, data)
+
+      expect(attributes).to include(raw_status: 'cancelled', completed: true)
+      expect(protocol.send(:parse_batch_status, attributes[:raw_status], completed: true)).to eq(:cancelled)
+    end
+
+    it 'keeps a batch being cancelled pending while requests are still running' do
+      data = { 'batch_id' => 'batch_1', 'cancel_time' => '2026-10-11T00:00:00Z',
+               'state' => { 'num_requests' => 3, 'num_pending' => 1, 'num_cancelled' => 2 } }
+
+      expect(protocol.send(:parse_batch_response, data)).to include(raw_status: 'processing', completed: false)
+    end
+
+    it 'reports a batch cancelled after every request finished as succeeded' do
+      data = { 'batch_id' => 'batch_1', 'cancel_time' => '2026-10-11T00:00:00Z',
+               'state' => { 'num_requests' => 2, 'num_pending' => 0, 'num_success' => 2, 'num_cancelled' => 0 } }
+
+      attributes = protocol.send(:parse_batch_response, data)
+
+      expect(protocol.send(:parse_batch_status, attributes[:raw_status], completed: true)).to eq(:succeeded)
+    end
+
     it 'falls back to a plain status field' do
       expect(protocol.send(:parse_batch_response, { 'id' => 'batch_1', 'status' => 'queued' })).to include(
         raw_status: 'queued', completed: false
