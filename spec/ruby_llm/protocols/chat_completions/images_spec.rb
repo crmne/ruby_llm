@@ -108,6 +108,23 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
       expect(images.last.tokens.input).to be_nil
     end
 
+    it 'labels images with the output format the response reports' do
+      webp = instance_double(
+        Faraday::Response,
+        body: { 'data' => [{ 'b64_json' => 'first-image' }], 'output_format' => 'webp' }
+      )
+
+      images = described_class.parse_image_responses(webp, model: 'gpt-image-1')
+
+      expect(images.map(&:mime_type)).to eq(['image/webp'])
+    end
+
+    it 'labels images as PNG when the response reports no output format' do
+      images = described_class.parse_image_responses(response, model: 'gpt-image-1')
+
+      expect(images.map(&:mime_type)).to eq(%w[image/png image/png])
+    end
+
     it 'raises when the response carries no image' do
       empty = instance_double(Faraday::Response, body: { 'data' => [] })
 
