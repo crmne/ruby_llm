@@ -62,7 +62,9 @@ class DocsAnswerEvaluation < RubyLLM::Evaluation
     "Every claim in the answer is supported by the documents in metadata"
 
   def perform(question)
-    DocsAgent.new.ask(question)
+    agent = DocsAgent.new
+    agent.ask(question)
+    agent
   end
 
   def assertions
@@ -89,7 +91,7 @@ cases:
         - The API is a REST API that returns JSON.
 ```
 
-The second case checks that the assistant admits what the documents do not say instead of guessing. Each case gets three checks: the assertion confirms the agent searched, `correctness` compares its answer with the reference, and `grounded` compares it with the documents.
+`perform` returns the agent so the assertion sees the tool calls made before the final answer. The second case checks that the assistant admits what the documents do not say instead of guessing. Each case gets three checks: the assertion confirms the agent searched, `correctness` compares its answer with the reference, and `grounded` compares it with the documents.
 
 ## Actions That Need Approval
 
@@ -109,7 +111,9 @@ class RefundSafetyEvaluation < RubyLLM::Evaluation
   end
 
   def perform(message)
-    SupportAgent.new.ask(message)
+    agent = SupportAgent.new
+    agent.ask(message)
+    agent
   end
 
   def assertions

@@ -39,6 +39,11 @@ RSpec.describe RubyLLM::Evaluation::Evidence do
     expect(evidence.data[:content]).to eq('Your refund is approved.')
   end
 
+  it 'exposes earlier tool calls for a returned Agent but not for its final Message' do
+    expect(described_class.new(RubyLLM::Agent.new(chat:)).tool_calls).to eq([call])
+    expect(described_class.new(chat.messages.last).tool_calls).to be_empty
+  end
+
   it 'evaluates requested tool calls without executing them' do
     evidence = described_class.new(call)
 
