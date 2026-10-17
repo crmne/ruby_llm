@@ -10,6 +10,7 @@ module RubyLLM
 
       def initialize
         @content = +''
+        @attachments = []
         @citations = []
         @citation_keys = {}
         @thinking_text = nil
@@ -29,6 +30,7 @@ module RubyLLM
         @model = chunk.model if @model.to_s.empty?
 
         handle_chunk_content(chunk)
+        @attachments.concat(chunk.attachments)
         accumulate_citations(chunk.citations)
         append_thinking_from_chunk(chunk)
         accumulate_server_tool_calls(chunk.server_tool_calls)
@@ -43,6 +45,7 @@ module RubyLLM
         Message.new(
           role: :assistant,
           content: content.empty? ? nil : content,
+          attachments: @attachments,
           citations: resolved_citations,
           thinking: Thinking.build(
             text: @thinking_text,

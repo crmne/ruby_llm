@@ -19,6 +19,7 @@ module RubyLLM
             role: :assistant,
             model: data['modelVersion'],
             content: extract_text_content(parts),
+            attachments: build_response_content(parts.reject { |part| part['thought'] }).last,
             citations: extract_citations(data, nil),
             thinking: Thinking.build(
               text: extract_thought_parts(parts),

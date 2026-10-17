@@ -36,6 +36,16 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       end.to raise_error(RubyLLM::Error, /Duplicate tool call ID in one response/)
     end
 
+    it 'keeps the attachments chunks carry' do
+      accumulator = described_class.new
+      image = RubyLLM::Attachment.new(StringIO.new('image'), filename: 'ruby.png')
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Here it is.'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, attachments: [image]))
+
+      expect(accumulator.to_message(nil).attachments).to eq([image])
+    end
+
     it 'ignores an empty model id from an initial chunk' do
       accumulator = described_class.new
 
