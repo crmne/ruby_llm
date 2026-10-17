@@ -311,17 +311,32 @@ module RubyLLM
 
         def render_messages(messages, caching: nil)
           messages_for_provider(messages)
-            .chunk_while { |previous, current| previous.tool_result? && current.tool_result? }
+            .chunk_while { |previous, current| current.tool_result? && (previous.tool_result? || carrier?(previous)) }
             .flat_map { |group| render_message_group(group, caching: caching) }
         end
 
         # An assistant turn's tool results must stay consecutive, so the
-        # attachment carriers of a parallel round follow the whole run.
+        # attachment carriers of a round follow the whole run.
         def render_message_group(group, caching: nil)
-          formatted = group.map { |msg| render_message(msg, caching: caching) }
-          carriers = group.select { |msg| msg.tool_result? && msg.attachments.any? }
+          formatted = group.filter_map do |msg|
+            next if attachments_only_assistant_message?(msg)
 
-          formatted + carriers.map { |msg| tool_attachment_message(msg) }
+            render_message(msg.role == :assistant ? msg.with_attachments([]) : msg, caching: caching)
+          end
+          carriers = group.select { |msg| carrier?(msg) }.map do |msg|
+            msg.tool_result? ? tool_attachment_message(msg) : assistant_attachment_message(msg)
+          end
+
+          formatted + carriers
+        end
+
+        def carrier?(msg)
+          (msg.tool_result? || msg.role == :assistant) && msg.attachments.any?
+        end
+
+        def attachments_only_assistant_message?(msg)
+          msg.role == :assistant && msg.attachments.any? && !msg.tool_call? && msg.thinking.nil? &&
+            msg.content.to_s.empty?
         end
 
         def render_message(msg, caching: nil)
@@ -336,8 +351,18 @@ module RubyLLM
         # Chat Completions tool messages are text-only on the wire, so tool
         # attachments ride a user message spliced in after the results.
         def tool_attachment_message(msg)
-          parts = [Media.render_text("Attachments from tool call #{msg.provider_call_id}:")]
-          parts.concat(render_content(nil, msg.attachments))
+          attachment_message("Attachments from tool call #{msg.provider_call_id}:", msg.attachments)
+        end
+
+        # Assistant messages take only text, so a replayed turn's attachments
+        # ride a user message after it, as on Responses.
+        def assistant_attachment_message(msg)
+          attachment_message('Attachments from the assistant:', msg.attachments)
+        end
+
+        def attachment_message(label, attachments)
+          parts = [Media.render_text(label)]
+          parts.concat(render_content(nil, attachments))
           { role: 'user', content: parts }
         end
 
