@@ -17,7 +17,7 @@ module RubyLLM
 
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName ...'
 
-      desc 'Creates models and migrations for RubyLLM Rails integration\n' \
+      desc "Creates models and migrations for RubyLLM Rails integration\n" \
            'Usage: bin/rails g ruby_llm:install [chat:ChatName] [message:MessageName] ...'
 
       def self.next_migration_number(dirname)

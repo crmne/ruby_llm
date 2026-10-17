@@ -20,7 +20,7 @@ module RubyLLM
       class_option :ui, type: :string, default: 'auto', enum: %w[scaffold tailwind auto],
                         desc: 'UI template style (scaffold, tailwind, auto)'
 
-      desc 'Creates a chat UI scaffold with Turbo streaming\n' \
+      desc "Creates a chat UI scaffold with Turbo streaming\n" \
            'Usage: bin/rails g ruby_llm:chat_ui [chat:ChatName] [message:MessageName] ...'
 
       def check_model_exists

@@ -16,7 +16,7 @@ module RubyLLM
 
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName'
 
-      desc 'Upgrades a RubyLLM 2.1 Rails schema to 2.2\n' \
+      desc "Upgrades a RubyLLM 2.1 Rails schema to 2.2\n" \
            'Usage: bin/rails g ruby_llm:upgrade [chat:ChatName] [message:MessageName]'
 
       def self.next_migration_number(dirname)
