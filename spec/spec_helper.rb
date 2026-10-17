@@ -27,5 +27,6 @@ require_relative 'support/keep_alive_server'
 require_relative 'support/reactor_helpers'
 require_relative 'support/git_environment'
 require_relative 'support/fake_sandbox'
+require_relative 'support/sandbox_backend'
 
 RubyLLM.config.deprecation_behavior = ENV['RUBYLLM_STRICT_DEPRECATIONS'] == 'true' ? :raise : :silence

@@ -231,6 +231,7 @@ RubyLLM.configure do |config|
 
   # Code Execution
   config.sandbox = "ApplicationSandbox" # The name of an MXC::Sandbox class or your own sandbox; defaults to nil
+  config.sandbox_backend = :bubblewrap # Or :landlock, which isolates less; Linux only
   config.package_cache_dir = String # Declared gems and Python packages; defaults to the OS user cache directory
 
   # Logging

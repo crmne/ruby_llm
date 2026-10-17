@@ -23,10 +23,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'json', '< 3'
   gem 'json_schemer'
   gem 'minitest', '>= 5', '< 7'
-  # 0.3 runs sandboxes on Landlock where Bubblewrap cannot start, and code
-  # execution's Ruby policy (the Ruby install readable, the app's gems
-  # denied inside it) is one Landlock refuses.
-  gem 'mxc', '~> 0.2.0', platform: :mri
+  gem 'mxc', '~> 0.3', platform: :mri
   # Mutation testing runs on MRI 3.4 and later; see CONTRIBUTING.md.
   gem 'mutineer', '~> 1.6', require: false if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '3.4'
   gem 'net-http-persistent'

@@ -89,6 +89,46 @@ jobs:
           SPEC_OPTS: --tag ~generator
           SKIP_COVERAGE: true
 
+  sandbox:
+    name: Sandbox (${{ matrix.backend }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [bubblewrap, landlock]
+    env:
+      RUBYLLM_SANDBOX_BACKEND: ${{ matrix.backend }}
+      RUBYLLM_REQUIRE_SANDBOX: "true"
+      SKIP_COVERAGE: true
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: ${{ inputs.bundler-cache }}
+
+      - name: Install dependencies
+        if: ${{ !inputs.bundler-cache }}
+        run: bundle install
+
+      # Ubuntu 24.04 lets only programs with an AppArmor profile create
+      # user namespaces, and Bubblewrap needs one.
+      - name: Allow Bubblewrap
+        if: matrix.backend == 'bubblewrap'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bubblewrap slirp4netns iptables util-linux
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+      - name: Run the sandbox specs
+        run: >-
+          bundle exec rspec spec/ruby_llm/sandbox spec/ruby_llm/sandbox_spec.rb
+          spec/ruby_llm/code_execution spec/ruby_llm/chat_code_execution_spec.rb
+          spec/ruby_llm/chat_code_execution_escalation_spec.rb spec/ruby_llm/agent_code_execution_spec.rb
+          spec/ruby_llm/chat_skills_sandbox_spec.rb
+
   mcp-conformance:
     name: MCP conformance
     runs-on: ubuntu-latest

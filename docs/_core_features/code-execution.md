@@ -45,7 +45,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-The sandbox decides what the code may read, write, and reach, and how long it runs. [Sandboxes]({% link _core_features/sandboxes.md %}) covers defining them, checking that they run on your servers, and letting the model ask for a wider one.
+The sandbox decides what the code may read, write, and reach, and how long it runs. [Sandboxes]({% link _core_features/sandboxes.md %}) covers defining them, checking that they run on your servers, [what Linux needs]({% link _core_features/sandboxes.md %}#running-on-linux), and letting the model ask for a wider one.
 
 ## Running Code
 
