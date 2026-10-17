@@ -56,6 +56,23 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       )
     end
 
+    it 'formats provider-managed text files as file_data parts' do
+      file = RubyLLM::UploadedFile.new(
+        id: 'files/abc',
+        filename: 'notes.txt',
+        mime_type: 'text/plain',
+        uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
+      )
+      parts = described_class.format_content('Summarize this', RubyLLM::Attachment.wrap(file))
+
+      expect(parts.second).to eq(
+        file_data: {
+          mime_type: 'text/plain',
+          file_uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
+        }
+      )
+    end
+
     it 'sends high resolution when ultra high is requested for a PDF' do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'page.pdf', resolution: :ultra_high)
 

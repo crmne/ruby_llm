@@ -29,17 +29,12 @@ module RubyLLM
         def format_content_attachment(attachment)
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
-          case attachment.type
-          when :text
-            format_text_file(attachment)
-          else
-            format_attachment(attachment)
-          end
+          return format_file_data(attachment) if attachment.provider_file?
+
+          attachment.type == :text ? format_text_file(attachment) : format_attachment(attachment)
         end
 
         def format_attachment(attachment)
-          return format_file_data(attachment) if attachment.provider_file?
-
           {
             inline_data: {
               mime_type: attachment.mime_type,
