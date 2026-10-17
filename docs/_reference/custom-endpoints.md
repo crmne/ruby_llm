@@ -92,7 +92,7 @@ image = RubyLLM.paint(
 *   **No Validation:** RubyLLM won't check the registry for the model ID.
 *   **Capability Assumptions:** The model is assumed to support `function_calling`, `streaming`, `vision`, and `structured_output`; checks outside that set return `false`. You are responsible for ensuring the model supports the features you use.
 *   **Your Responsibility:** Ensure the model ID is correct for the target endpoint.
-*   **Warning Log:** A warning is logged indicating validation was skipped.
+*   **Metadata Warning:** Nothing is logged. The model's `metadata[:warning]` says its capabilities are assumed. See [Model Resolution]({% link _reference/model-resolution.md %}#models-the-registry-doesnt-list).
 
 Use these features when the standard registry doesn't cover your specific model or endpoint needs. For standard models, rely on the registry for validation and capability awareness.
 
