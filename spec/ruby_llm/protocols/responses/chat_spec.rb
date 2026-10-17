@@ -132,6 +132,22 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(payload[:input].map { |item| item[:type] || item[:role] }).to eq(%w[function_call user])
     end
 
+    it 'sends assistant attachments after a turn replayed from its raw output' do
+      protocol.instance_variable_set(:@provider, RubyLLM::Providers::OpenAI.allocate)
+      image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
+      raw = [{ 'type' => 'message', 'role' => 'assistant', 'phase' => 'final_answer',
+               'content' => [{ 'type' => 'output_text', 'text' => 'Here it is' }] }]
+      message = RubyLLM::Message.new(role: :assistant, content: 'Here it is', attachments: [image], raw_content: raw)
+
+      payload = render_payload([message])
+
+      expect(payload[:input].first).to eq(raw.first)
+      expect(payload[:input].last[:content].map { |part| part[:type] }).to eq(%w[input_text input_image])
+      expect(payload[:input].last[:content].first[:text]).to eq('Attachments from the assistant:')
+      expect(render_payload([message])[:input].length).to eq(2)
+      expect(message.raw_content.length).to eq(1)
+    end
+
     it 'uses flat non-strict function definitions' do
       tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' }, provider_options: {})

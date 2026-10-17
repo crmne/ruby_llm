@@ -391,13 +391,16 @@ module RubyLLM
         def format_assistant_items(msg)
           # Turns that used server tools replay their output items verbatim,
           # reasoning and tool results included, as stateless chaining expects.
-          return msg.raw_content if msg.raw_content
+          items = msg.raw_content ? [msg.raw_content].flatten(1) : format_portable_assistant_items(msg)
+          items << format_attachment_item('Attachments from the assistant:', msg.attachments) if msg.attachments.any?
+          items
+        end
 
+        def format_portable_assistant_items(msg)
           items = []
           items << format_reasoning_item(msg.thinking) if own_signature(msg)
           items << { role: 'assistant', content: format_output_content(msg) } unless empty_content?(msg.content)
           items.concat(format_function_call_items(msg.tool_calls)) if msg.tool_call?
-          items << format_attachment_item('Attachments from the assistant:', msg.attachments) if msg.attachments.any?
           items
         end
 
