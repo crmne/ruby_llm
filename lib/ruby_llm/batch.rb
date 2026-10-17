@@ -172,13 +172,14 @@ module RubyLLM
       end
     end
 
-    def initialize(provider:, chats: nil, requests: nil, batch_protocol: nil, store: nil, **attributes) # :nodoc:
+    def initialize(provider:, chats: nil, requests: nil, batch_protocol: nil, store: nil, delivered: [], # :nodoc:
+                   **attributes)
       @provider = provider
       @chats = chats
       @requests = requests
       @batch_protocol = protocol_name(batch_protocol)
       @store = store
-      @delivered = {}
+      @delivered = delivered.to_h { |index| [index, true] }
       @statuses = []
       apply(attributes)
     end

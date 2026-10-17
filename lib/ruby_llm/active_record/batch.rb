@@ -68,9 +68,11 @@ module RubyLLM
       def to_llm(context: nil, store: nil)
         config = context&.config || RubyLLM.config
         provider_instance = RubyLLM::Provider.resolve!(provider).new(config)
+        records = chats
         RubyLLM::Batch.new(
           provider: provider_instance,
-          chats: chats.map { |chat| chat&.to_llm },
+          chats: records.map { |chat| chat&.to_llm },
+          delivered: records.each_index.select { |index| answered?(records[index]) },
           id: provider_batch_id,
           raw_status: raw_status,
           completed: completed,
@@ -91,6 +93,20 @@ module RubyLLM
         }
         attributes[:reported_cost] = batch.reported_cost.to_h if batch.reported_cost
         update!(attributes)
+      end
+
+      private
+
+      # The chat was awaiting the model when the batch was submitted, so an
+      # assistant message newer than the batch answers that turn, whatever
+      # the chat went on to stage after it.
+      def answered?(chat)
+        return false unless chat
+
+        messages = chat.messages_association
+        messages.klass.uncached do
+          messages.where(role: :assistant).where(messages.klass.arel_table[:created_at].gt(created_at)).exists?
+        end
       end
     end
   end
