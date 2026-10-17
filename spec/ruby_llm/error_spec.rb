@@ -38,6 +38,14 @@ RSpec.describe RubyLLM::Error do
         error = described_class.new(response: response)
         expect(error.message).to eq('raw body')
       end
+
+      ['', {}].each do |body|
+        it "falls back to the default message when the body is #{body.inspect}" do
+          response.body = body
+
+          expect(RubyLLM::ServerError.new(response: response).message).to eq(RubyLLM::ServerError.default_message)
+        end
+      end
     end
 
     context 'with no arguments' do
