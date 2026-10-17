@@ -47,7 +47,9 @@ module RubyLLM
       processes: 'The code started more processes than it may and was stopped'
     }.freeze
 
-    CHECKS = {}.compare_by_identity
+    # A WeakMap holds its values weakly too, so each check is kept as true
+    # or false, which are never collected.
+    CHECKS = Hash.new { |checks, language| checks[language] = ObjectSpace::WeakMap.new }
     CHECKS_LOCK = Mutex.new
     private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :LIMIT_ERRORS
 
@@ -106,10 +108,10 @@ module RubyLLM
 
       def available?(key, sandbox, language, **) # :nodoc:
         CHECKS_LOCK.synchronize do
-          checks = CHECKS[key] ||= {}
-          return checks[language.name] if checks.key?(language.name)
+          checks = CHECKS[language.name]
+          return checks[key] if checks.key?(key)
 
-          checks[language.name] = runs?(sandbox, language, **)
+          checks[key] = runs?(sandbox, language, **)
         end
       end
 

@@ -144,6 +144,25 @@ RSpec.describe RubyLLM::Chat do
       expect { tool.languages }.to raise_error(RubyLLM::ConfigurationError, /cannot run python/)
     end
 
+    it 'checks what a sandbox can run once, however many chats use it' do
+      chats = Array.new(2) { context.chat(model: model_for(:openai), provider: :openai).with_code_execution }
+
+      chats.each { |chat| chat.tools[:run_code].languages }
+
+      expect(sandbox.runs.size).to eq(2)
+    end
+
+    it 'lets go of a sandbox once nothing else uses it' do
+      sandbox_class = Class.new(FakeSandbox)
+      Thread.new do
+        10.times { chat.with_code_execution(sandbox: sandbox_class.new).tools[:run_code].languages }
+        chat.with_code_execution(false)
+      end.join
+      GC.start
+
+      expect(ObjectSpace.each_object(sandbox_class).count).to be < 10
+    end
+
     it "describes the sandbox's timeout and network, and the declared packages" do
       online = FakeSandbox.new(timeout: 30, network: { allow: ['pypi.org'] })
       tool = chat.with_code_execution(sandbox: online, gems: %w[prawn], python: %w[pandas]).tools[:run_code]
