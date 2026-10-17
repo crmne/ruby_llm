@@ -528,6 +528,15 @@ RSpec.describe RubyLLM::Agent, :live do
     end.to raise_error(ArgumentError, /fallback model/)
   end
 
+  it 'rejects an unknown fallback option when the class is defined' do
+    expect do
+      Class.new(described_class) do
+        model model_for(:openai, :temperature)
+        fallbacks model_for(:openai, :alternate_chat), bogus: 1
+      end
+    end.to raise_error(ArgumentError, /unknown keyword: :bogus/)
+  end
+
   it 'supports Enumerable by delegating each to chat' do
     fake_chat = Class.new do
       def each(&block)
