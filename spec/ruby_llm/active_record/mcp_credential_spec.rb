@@ -78,11 +78,10 @@ RSpec.describe RubyLLM::ActiveRecord::MCPCredential do
   end
 
   it 'replaces credentials another process wrote first' do
-    unsaved = described_class.new(key: 'key')
-    described_class.write('key', { 'access_token' => 'first' })
-    lookups = 0
-    allow(described_class).to receive(:find_or_initialize_by).and_wrap_original do |original, **attributes|
-      (lookups += 1) == 1 ? unsaved : original.call(**attributes)
+    allow(described_class).to receive(:new).and_wrap_original do |original, *arguments, &block|
+      allow(described_class).to receive(:new).and_call_original
+      Thread.new { described_class.create!(key: 'key', data: { 'access_token' => 'first' }) }.join
+      original.call(*arguments, &block)
     end
 
     described_class.write('key', { 'access_token' => 'second' })
