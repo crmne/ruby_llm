@@ -67,7 +67,7 @@ module RubyLLM
       def copy_in(attachments)
         attachments.reject(&:provider_file?).each do |attachment|
           path = File.join(inputs, self.class.filename(attachment.filename))
-          FileUtils.mkdir_p(File.dirname(path))
+          make_room(path)
           File.binwrite(path, attachment.content)
         end
       end
@@ -86,6 +86,16 @@ module RubyLLM
       end
 
       private
+
+      def make_room(path)
+        parent = inputs
+        File.dirname(path).delete_prefix(inputs).split('/').reject(&:empty?).each do |part|
+          parent = File.join(parent, part)
+          FileUtils.rm_f(parent) unless File.directory?(parent)
+        end
+        FileUtils.mkdir_p(File.dirname(path))
+        FileUtils.rm_rf(path) if File.directory?(path)
+      end
 
       def output_paths
         paths = []
