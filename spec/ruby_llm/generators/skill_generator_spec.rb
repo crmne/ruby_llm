@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::Generators::SkillGenerator, :generator, type: :generator
 
       expect(status.success?).to be(false)
       expect(output).to include('must be lowercase')
-      expect(Dir.exist?('app/skills/Invoices')).to be(false)
+      expect(Dir.glob('*', base: 'app/skills')).not_to include('Invoices')
     end
   end
 end
