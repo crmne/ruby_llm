@@ -149,7 +149,7 @@ module RubyLLM
       end
 
       def messages_association # :nodoc:
-        send(messages_association_name)
+        association(messages_association_name).reader
       end
 
       def refresh_messages # :nodoc:
