@@ -12,19 +12,19 @@ module RubyLLM
           attachment.video? || Protocols::ChatCompletions::Media.supported_attachment?(attachment)
         end
 
-        def format_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
+        def render_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
             if attachment.type == :video
-              format_video(attachment)
+              render_video(attachment)
             else
-              Protocols::ChatCompletions::Media.format_attachment(
+              Protocols::ChatCompletions::Media.render_attachment(
                 attachment, document_attachments: :pdf, image_attachments: true, audio_attachments: true
               )
             end
           end
         end
 
-        def format_video(video)
+        def render_video(video)
           {
             type: 'video_url',
             video_url: {

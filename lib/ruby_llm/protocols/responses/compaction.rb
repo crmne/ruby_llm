@@ -10,8 +10,8 @@ module RubyLLM
         end
 
         def render_compaction_payload(messages)
-          { model: model.id, input: format_input(messages, caching: false),
-            instructions: format_instructions(messages, caching: false) }.compact
+          { model: model.id, input: render_input(messages, caching: false),
+            instructions: render_instructions(messages, caching: false) }.compact
         end
 
         def parse_compaction_response(response)

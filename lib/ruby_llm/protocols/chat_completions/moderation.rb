@@ -36,15 +36,15 @@ module RubyLLM
           return input if attachments.empty?
 
           parts = []
-          parts << Media.format_text(input) if input
-          parts.concat(attachments.map { |attachment| format_moderation_attachment(attachment) })
+          parts << Media.render_text(input) if input
+          parts.concat(attachments.map { |attachment| render_moderation_attachment(attachment) })
           parts
         end
 
-        def format_moderation_attachment(attachment)
+        def render_moderation_attachment(attachment)
           raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
 
-          Media.format_image(attachment)
+          Media.render_image(attachment)
         end
       end
     end

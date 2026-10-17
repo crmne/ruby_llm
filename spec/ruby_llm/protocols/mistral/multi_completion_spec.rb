@@ -34,7 +34,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::MultiCompletion do
     expect(message).not_to be_tool_call
     expect(message.server_tool_calls.first).to have_attributes(name: 'generate_image', id: 'imagecall')
     expect(message.raw_content).to eq(messages)
-    expect(protocol.send(:format_messages, [message])).to eq(messages.map { |entry| entry.except('index') })
+    expect(protocol.send(:render_messages, [message])).to eq(messages.map { |entry| entry.except('index') })
   end
 
   it 'renders a Conversations turn as a chat message instead of replaying its entries' do
@@ -42,7 +42,7 @@ RSpec.describe RubyLLM::Protocols::Mistral::MultiCompletion do
                  'content' => 'Paris.' }]
     message = RubyLLM::Message.new(role: :assistant, content: 'Paris.', raw_content: entries)
 
-    expect(protocol.send(:format_messages, [message])).to eq([{ role: 'assistant', content: 'Paris.' }])
+    expect(protocol.send(:render_messages, [message])).to eq([{ role: 'assistant', content: 'Paris.' }])
   end
 
   it 'keeps an unanswered local function call separate from completed hosted calls' do

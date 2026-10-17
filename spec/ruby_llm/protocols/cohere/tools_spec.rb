@@ -52,21 +52,21 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
     end
   end
 
-  describe '.format_tool_calls' do
+  describe '.render_tool_calls' do
     it 'renders assistant tool calls with JSON string arguments' do
       calls = { 'abc' => RubyLLM::ToolCall.new(id: 'abc', name: 'cohere_weather', arguments: { 'city' => 'Berlin' }) }
 
-      expect(described_class.format_tool_calls(calls)).to eq(
+      expect(described_class.render_tool_calls(calls)).to eq(
         [{ id: 'abc', type: 'function', function: { name: 'cohere_weather', arguments: '{"city":"Berlin"}' } }]
       )
     end
   end
 
-  describe '.format_tool_result' do
+  describe '.render_tool_result' do
     it 'renders plain output as a tool message' do
       message = RubyLLM::Message.new(role: :tool, content: '{"temp": 20}', tool_call_id: 'abc')
 
-      expect(described_class.format_tool_result(message)).to eq(
+      expect(described_class.render_tool_result(message)).to eq(
         role: 'tool', tool_call_id: 'abc', content: '{"temp": 20}'
       )
     end
@@ -75,7 +75,7 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
       results = RubyLLM::SearchResults.new(title: 'Ruby Facts', url: 'https://example.com/ruby', text: 'Matz, 1993.')
       message = RubyLLM::Message.new(role: :tool, content: results.to_json, tool_call_id: 'abc')
 
-      expect(described_class.format_tool_result(message)[:content]).to eq(
+      expect(described_class.render_tool_result(message)[:content]).to eq(
         [{
           type: 'document',
           document: {

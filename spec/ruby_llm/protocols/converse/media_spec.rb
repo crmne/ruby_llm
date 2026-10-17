@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Converse::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     it 'renders supported Office documents as Bedrock document blocks' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
-      rendered = described_class.format_content('Summarize this file', [attachment])
+      rendered = described_class.render_content('Summarize this file', [attachment])
 
       expect(rendered.second).to eq(
         document: {
@@ -27,7 +27,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
         filename: 'report.pdf',
         mime_type: 'application/pdf'
       )
-      rendered = described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file))
+      rendered = described_class.render_content('Summarize this file', RubyLLM::Attachment.wrap(file))
 
       expect(rendered.second).to eq(
         document: {
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
     it 'renders audio attachments as audio blocks' do
       attachment = RubyLLM::Attachment.new(StringIO.new('wav bytes'), filename: 'clip.wav')
 
-      rendered = described_class.format_content('What is said?', [attachment])
+      rendered = described_class.render_content('What is said?', [attachment])
 
       expect(rendered.second).to eq(
         audio: {
@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
     it 'renders video attachments as video blocks' do
       attachment = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4')
 
-      rendered = described_class.format_content('What is shown?', [attachment])
+      rendered = described_class.render_content('What is shown?', [attachment])
 
       expect(rendered.second).to eq(
         video: {
@@ -76,15 +76,15 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       mov = RubyLLM::Attachment.new(StringIO.new('mov bytes'), filename: 'clip.mov')
       three_gp = RubyLLM::Attachment.new(StringIO.new('3gp bytes'), filename: 'clip.3gp')
 
-      expect(described_class.format_content(nil, [mov]).first[:video][:format]).to eq('mov')
-      expect(described_class.format_content(nil, [three_gp]).first[:video][:format]).to eq('three_gp')
+      expect(described_class.render_content(nil, [mov]).first[:video][:format]).to eq('mov')
+      expect(described_class.render_content(nil, [three_gp]).first[:video][:format]).to eq('three_gp')
     end
 
     it 'raises for audio formats Bedrock does not accept' do
       attachment = RubyLLM::Attachment.new(StringIO.new('amr bytes'), filename: 'clip.amr')
 
       expect do
-        described_class.format_content(nil, [attachment])
+        described_class.render_content(nil, [attachment])
       end.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end
 
@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       %w[csv txt md html json].each do |extension|
         attachment = RubyLLM::Attachment.new(StringIO.new('notes'), filename: "notes.#{extension}")
 
-        rendered = described_class.format_content('Summarize this file', [attachment])
+        rendered = described_class.render_content('Summarize this file', [attachment])
 
         expect(rendered.second).to eq(text: attachment.for_llm)
       end
@@ -103,7 +103,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
         RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename:)
       end
 
-      rendered = described_class.format_content(nil, attachments)
+      rendered = described_class.render_content(nil, attachments)
 
       expect(rendered.map { |block| block.dig(:document, :name) }).to eq(%w[report report_2 report_2_2 report_3])
     end
@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
     it 'enables citations on document blocks when citations are requested' do
       attachment = RubyLLM::Attachment.new(StringIO.new('%PDF-1.4'), filename: 'report.pdf')
 
-      rendered = described_class.format_content('Summarize this file', [attachment], citations: true)
+      rendered = described_class.render_content('Summarize this file', [attachment], citations: true)
 
       expect(rendered.second[:document][:citations]).to eq(enabled: true)
     end
@@ -119,7 +119,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
     it 'renders text files as citable text documents when citations are requested' do
       attachment = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
 
-      rendered = described_class.format_content('Who created Ruby?', [attachment], citations: true)
+      rendered = described_class.render_content('Who created Ruby?', [attachment], citations: true)
 
       expect(rendered.second).to eq(
         document: {
@@ -139,7 +139,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
         mime_type: 'application/pdf'
       )
 
-      rendered = described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file),
+      rendered = described_class.render_content('Summarize this file', RubyLLM::Attachment.wrap(file),
                                                 citations: true)
 
       expect(rendered.second[:document][:citations]).to eq(enabled: true)
@@ -149,7 +149,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       attachment = RubyLLM::Attachment.new(StringIO.new('pptx bytes'), filename: 'deck.pptx')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.presentationml.presentation}

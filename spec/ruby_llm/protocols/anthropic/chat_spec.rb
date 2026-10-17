@@ -105,7 +105,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
-  describe '.format_messages' do
+  describe '.render_messages' do
     it 'drops a turn that rendered no content blocks' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'Hello'),
@@ -113,7 +113,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         RubyLLM::Message.new(role: :user, content: 'Still there?')
       ]
 
-      expect(described_class.format_messages(messages)).to eq(
+      expect(described_class.render_messages(messages)).to eq(
         [
           { role: 'user', content: [{ type: 'text', text: 'Hello' }] },
           { role: 'user', content: [{ type: 'text', text: 'Still there?' }] }
@@ -124,7 +124,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'adds cache_control to a tool result marked as a cache boundary' do
       message = RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'tool_1').cache_until_here
 
-      rendered = described_class.format_messages([message], caching: { ttl: '1h' })
+      rendered = described_class.render_messages([message], caching: { ttl: '1h' })
 
       expect(rendered.first[:content].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
     end
@@ -134,7 +134,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'adds the Files API beta when a message references an uploaded file' do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
       message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [file])
-      payload = { messages: described_class.format_messages([message]) }
+      payload = { messages: described_class.render_messages([message]) }
 
       expect(described_class.apply_files_beta({}, payload)).to eq('anthropic-beta' => 'files-api-2025-04-14')
     end
@@ -156,7 +156,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
-  describe '.format_message' do
+  describe '.render_message' do
     it 'formats attachments before tool calls' do
       text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
       tool_calls = {
@@ -173,7 +173,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         tool_calls: tool_calls
       )
 
-      formatted = described_class.format_message(message)
+      formatted = described_class.render_message(message)
 
       expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
       expect(formatted[:content].second).to include(type: 'text')
@@ -184,7 +184,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'does not send finish_reason back to the provider' do
       message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
 
-      formatted = described_class.format_message(message)
+      formatted = described_class.render_message(message)
 
       expect(formatted).not_to have_key(:finish_reason)
       expect(formatted[:content].first).to eq({ type: 'text', text: 'Done' })
@@ -193,7 +193,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'adds cache_control to a user message marked as a cache boundary' do
       message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
-      formatted = described_class.format_message(message)
+      formatted = described_class.render_message(message)
 
       expect(formatted[:content].last).to include(cache_control: { type: 'ephemeral' })
     end
@@ -203,7 +203,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
                      { 'type' => 'text', 'text' => 'Found it' }]
       message = RubyLLM::Message.new(role: :assistant, content: 'Found it', raw_content:).cache_until_here
 
-      formatted = described_class.format_message(message)
+      formatted = described_class.render_message(message)
 
       expect(formatted[:content].first).not_to have_key(:cache_control)
       expect(formatted[:content].last).to eq('type' => 'text', 'text' => 'Found it',
@@ -214,7 +214,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'leaves cache boundaries unmarked when caching is turned off' do
       message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here
 
-      formatted = described_class.format_message(message, caching: false)
+      formatted = described_class.render_message(message, caching: false)
 
       expect(formatted[:content].last).not_to have_key(:cache_control)
     end
@@ -223,7 +223,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       tool_calls = { 'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'lookup', arguments: {}) }
       message = claude_answer(RubyLLM::Thinking.new(text: 'Look it up', signature: 'sig'), tool_calls:)
 
-      formatted = anthropic_protocol.send(:format_message, message.cache_until_here)
+      formatted = anthropic_protocol.send(:render_message, message.cache_until_here)
 
       expect(formatted[:content].map { |block| block[:type] }).to eq(%w[thinking text tool_use])
       expect(formatted[:content].first).not_to have_key(:cache_control)
@@ -878,7 +878,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'weather', arguments: {}) }
       )
 
-      formatted = protocol.send(:format_message, message, thinking: nil)
+      formatted = protocol.send(:render_message, message, thinking: nil)
 
       expect(formatted[:content].map { |block| block[:type] }).to eq(%w[thinking text tool_use])
     end
@@ -886,8 +886,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     it 'keeps a display-omitted thinking block as thinking, not redacted data' do
       blocks = [{ 'type' => 'thinking', 'thinking' => '', 'signature' => 'sig' }, { 'type' => 'text', 'text' => 'hi' }]
       thinking = RubyLLM::Thinking.build(
-        text: protocol.send(:extract_thinking_content, blocks),
-        signature: protocol.send(:extract_thinking_signature, blocks)
+        text: protocol.send(:parse_thinking_content, blocks),
+        signature: protocol.send(:parse_thinking_signature, blocks)
       )
 
       expect(protocol.send(:build_thinking_block, claude_answer(thinking))).to eq(
@@ -940,24 +940,24 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
-  describe '.extract_thinking_signature' do
+  describe '.parse_thinking_signature' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 
     it 'reads the data field off a redacted thinking block' do
       blocks = [{ 'type' => 'redacted_thinking', 'data' => 'blob' }]
 
-      expect(protocol.send(:extract_thinking_signature, blocks)).to eq('blob')
+      expect(protocol.send(:parse_thinking_signature, blocks)).to eq('blob')
     end
 
     it 'is nil when no block carries thinking' do
-      expect(protocol.send(:extract_thinking_signature, [{ 'type' => 'text' }])).to be_nil
-      expect(protocol.send(:extract_thinking_content, [{ 'type' => 'text' }])).to be_nil
+      expect(protocol.send(:parse_thinking_signature, [{ 'type' => 'text' }])).to be_nil
+      expect(protocol.send(:parse_thinking_content, [{ 'type' => 'text' }])).to be_nil
     end
 
     it 'falls back to the text field of a thinking block' do
       blocks = [{ 'type' => 'thinking', 'text' => 'why' }]
 
-      expect(protocol.send(:extract_thinking_content, blocks)).to eq('why')
+      expect(protocol.send(:parse_thinking_content, blocks)).to eq('why')
     end
   end
 

@@ -124,7 +124,7 @@ module RubyLLM
       def merge_raw_content(segments)
         return unless segments.any?(&:raw_content)
 
-        segments.flat_map { |segment| segment.raw_content || format_message(segment)[:content] }
+        segments.flat_map { |segment| segment.raw_content || render_message(segment)[:content] }
       end
 
       def merge_tool_calls(segments)

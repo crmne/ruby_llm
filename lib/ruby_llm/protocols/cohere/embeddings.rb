@@ -28,7 +28,7 @@ module RubyLLM
           Support::Utils.deep_merge(payload, provider_options)
         end
 
-        def supports_embedding_media?
+        def embedding_media?
           true
         end
 
@@ -63,7 +63,7 @@ module RubyLLM
 
           raise ArgumentError, 'embed one text at a time when embedding attachments' if text.is_a?(Array)
 
-          { inputs: [{ content: Media.format_content(text, attachments) }] }
+          { inputs: [{ content: Media.render_content(text, attachments) }] }
         end
       end
     end

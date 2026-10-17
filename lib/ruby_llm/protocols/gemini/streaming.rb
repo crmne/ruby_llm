@@ -18,22 +18,22 @@ module RubyLLM
           Chunk.new(
             role: :assistant,
             model: data['modelVersion'],
-            content: extract_text_content(parts),
+            content: parse_text_content(parts),
             attachments: build_response_content(parts.reject { |part| part['thought'] }).last,
-            citations: extract_stream_citations(data),
+            citations: parse_stream_citations(data),
             thinking: Thinking.build(
-              text: extract_thought_parts(parts),
-              signature: extract_thought_signature(parts)
+              text: parse_thought_parts(parts),
+              signature: parse_thought_signature(parts)
             ),
             input_tokens: input_tokens(data),
-            output_tokens: extract_output_tokens(data),
+            output_tokens: parse_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             server_tool_use: parse_server_tool_use(data),
             finish_reason: normalize_finish_reason(
               data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason')
             ),
-            tool_calls: extract_tool_calls(data),
+            tool_calls: parse_tool_calls(data),
             **stream_end_fields(data)
           )
         end
@@ -69,19 +69,19 @@ module RubyLLM
           }
         end
 
-        def extract_stream_citations(data)
+        def parse_stream_citations(data)
           return [] unless data.dig('candidates', 0, 'groundingMetadata')
 
-          extract_citations(data, extract_text_content(@stream_parts))
+          parse_citations(data, parse_text_content(@stream_parts))
         end
 
-        def extract_text_content(parts)
+        def parse_text_content(parts)
           text_parts = parts.reject { |p| p['thought'] }
           text = text_parts.filter_map { |p| p['text'] }.join
           text.empty? ? nil : text
         end
 
-        def extract_output_tokens(data)
+        def parse_output_tokens(data)
           candidates = data.dig('usageMetadata', 'candidatesTokenCount') || 0
           thoughts = data.dig('usageMetadata', 'thoughtsTokenCount') || 0
           total = candidates + thoughts

@@ -32,7 +32,7 @@ module RubyLLM
             normalize_conversation_choice(options)
             {
               model: model.id,
-              inputs: format_entries(messages),
+              inputs: render_entries(messages),
               instructions: messages.select { |message| message.role == :system }.map(&:content).join("\n\n"),
               completion_args: options.slice(:temperature, :max_tokens, :response_format, :reasoning_effort,
                                              :tool_choice),
@@ -51,31 +51,31 @@ module RubyLLM
             options[:tool_choice] = 'any' if choice == 'required'
           end
 
-          def format_entries(messages)
+          def render_entries(messages)
             entries = messages.reject { |message| message.role == :system }
                               .chunk_while { |previous, current| previous.tool_result? && current.tool_result? }
-                              .flat_map { |group| format_entry_group(group) }
+                              .flat_map { |group| render_entry_group(group) }
             entries.each_with_index.flat_map { |entry, index| replay_conversation_entry(entry, index) }
           end
 
           # Function results are text-only on the wire and a round's results
           # stay consecutive, so tool attachments ride a user entry after them.
-          def format_entry_group(group)
+          def render_entry_group(group)
             carriers = group.select do |message|
               message.tool_result? && message.raw_content.nil? && message.attachments.any?
             end
 
-            group.flat_map { |message| format_entry(message) } +
+            group.flat_map { |message| render_entry(message) } +
               carriers.map { |message| { type: 'message.input', **tool_attachment_message(message) } }
           end
 
-          def format_entry(message)
+          def render_entry(message)
             if conversation_entries?(message.raw_content)
               message.raw_content
             elsif message.tool_result?
               [{ type: 'function.result', tool_call_id: message.provider_call_id, result: message.content.to_s }]
             else
-              format_conversation_message(message)
+              render_conversation_message(message)
             end
           end
 
@@ -110,12 +110,12 @@ module RubyLLM
             ]
           end
 
-          def format_conversation_message(message)
+          def render_conversation_message(message)
             entries = []
             if message.content || message.attachments.any?
               entries << {
                 type: 'message.input', role: message.role.to_s,
-                content: format_message_content(message)
+                content: render_message_content(message)
               }
             end
             message.tool_calls&.each_value do |call|

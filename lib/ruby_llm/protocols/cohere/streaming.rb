@@ -19,9 +19,9 @@ module RubyLLM
           Chunk.new(
             role: :assistant,
             model: model&.id,
-            content: extract_content_delta(data, type),
-            citations: extract_citations_delta(data, type),
-            thinking: Thinking.build(text: extract_thinking_delta(data, type)),
+            content: parse_content_delta(data, type),
+            citations: parse_citations_delta(data, type),
+            thinking: Thinking.build(text: parse_thinking_delta(data, type)),
             tool_calls: extract_tool_calls(data, type),
             finish_reason: normalize_finish_reason(data.dig('delta', 'finish_reason')),
             **stream_usage(data.dig('delta', 'usage'))
@@ -51,18 +51,18 @@ module RubyLLM
           @stream_content_lengths.sum { |block_index, length| block_index < index ? length : 0 }
         end
 
-        def extract_content_delta(data, type)
+        def parse_content_delta(data, type)
           data.dig('delta', 'message', 'content', 'text') if type == 'content-delta'
         end
 
-        def extract_thinking_delta(data, type)
+        def parse_thinking_delta(data, type)
           case type
           when 'content-delta' then data.dig('delta', 'message', 'content', 'thinking')
           when 'tool-plan-delta' then data.dig('delta', 'message', 'tool_plan')
           end
         end
 
-        def extract_citations_delta(data, type)
+        def parse_citations_delta(data, type)
           return nil unless type == 'citation-start'
 
           citation = data.dig('delta', 'message', 'citations')

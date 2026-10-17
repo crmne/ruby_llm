@@ -9,7 +9,7 @@ module RubyLLM
 
         module_function
 
-        def supports_embedding_media?
+        def embedding_media?
           true
         end
 
@@ -18,7 +18,7 @@ module RubyLLM
           input = if with.any?
                     raise ArgumentError, 'embed one text at a time when embedding attachments' if text.is_a?(Array)
 
-                    [{ content: format_embedding_content(text, with) }]
+                    [{ content: render_embedding_content(text, with) }]
                   else
                     text
                   end
@@ -28,21 +28,21 @@ module RubyLLM
           payload.merge(provider_options)
         end
 
-        def format_embedding_content(text, attachments)
-          Protocols::ChatCompletions::Media.format_parts(text, attachments) do |attachment|
-            format_embedding_attachment(attachment)
+        def render_embedding_content(text, attachments)
+          Protocols::ChatCompletions::Media.render_parts(text, attachments) do |attachment|
+            render_embedding_attachment(attachment)
           end
         end
 
-        def format_embedding_attachment(attachment)
+        def render_embedding_attachment(attachment)
           raise UnsupportedAttachmentError, attachment.mime_type if attachment.provider_file?
 
           if (type = EMBEDDING_MEDIA_TYPES[attachment.type])
             { type: type.to_s, type => { data: attachment.for_llm, format: attachment.format } }
           elsif attachment.type == :image
-            Protocols::ChatCompletions::Media.format_image(attachment)
+            Protocols::ChatCompletions::Media.render_image(attachment)
           else
-            Protocols::ChatCompletions::Media.format_attachment(
+            Protocols::ChatCompletions::Media.render_attachment(
               attachment, document_attachments: :none, image_attachments: true, audio_attachments: false
             )
           end

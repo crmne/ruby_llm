@@ -62,9 +62,9 @@ RSpec.describe RubyLLM::Protocols::Cohere::Embeddings do
     end
   end
 
-  describe '#supports_embedding_media?' do
+  describe '#embedding_media?' do
     it 'accepts attachments' do
-      expect(protocol.send(:supports_embedding_media?)).to be(true)
+      expect(protocol.send(:embedding_media?)).to be(true)
     end
   end
 

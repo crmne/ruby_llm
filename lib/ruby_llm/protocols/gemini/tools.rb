@@ -14,7 +14,7 @@ module RubyLLM
         # make, such as one from another provider. Vertex AI accepts no other.
         PLACEHOLDER_SIGNATURE = 'skip_thought_signature_validator'
 
-        def format_tools(tools)
+        def render_tools(tools)
           return [] if tools.empty?
 
           [{
@@ -24,10 +24,10 @@ module RubyLLM
 
         # Gemini signs only the first of parallel calls, so each call goes back
         # with its own signature or none, never one another part carried.
-        def format_tool_call(msg)
+        def render_tool_call(msg)
           parts = []
 
-          parts.concat(Media.format_content(msg.content, msg.attachments)) if msg.content && !msg.content.empty?
+          parts.concat(Media.render_content(msg.content, msg.attachments)) if msg.content && !msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
             part = {
@@ -43,7 +43,7 @@ module RubyLLM
           parts
         end
 
-        def format_tool_result(msg, function_name = nil)
+        def render_tool_result(msg, function_name = nil)
           function_name ||= msg.tool_call_id
           content = msg.content
           content = nil if content && content.empty?
@@ -54,7 +54,7 @@ module RubyLLM
             name: function_name,
             response: {
               name: function_name,
-              content: Media.format_content(content) + texts.map { |text| Media.format_content_attachment(text) }
+              content: Media.render_content(content) + texts.map { |text| Media.render_content_attachment(text) }
             }
           }
 
@@ -64,7 +64,7 @@ module RubyLLM
           [{ functionResponse: function_response }, *sibling_parts]
         end
 
-        def extract_tool_calls(data) # rubocop:disable Metrics/PerceivedComplexity
+        def parse_tool_calls(data) # rubocop:disable Metrics/PerceivedComplexity
           return nil unless data
 
           candidate = data.is_a?(Hash) ? data.dig('candidates', 0) : nil
@@ -112,7 +112,7 @@ module RubyLLM
         def partition_tool_result_attachments(attachments)
           return [[], []] if attachments.empty?
 
-          parts = attachments.map { |attachment| Media.format_content_attachment(attachment) }
+          parts = attachments.map { |attachment| Media.render_content_attachment(attachment) }
           return [[], parts] unless multimodal_function_responses_supported?(@model)
 
           parts.partition { |part| part.key?(:inline_data) }

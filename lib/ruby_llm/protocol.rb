@@ -256,7 +256,7 @@ module RubyLLM
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
       attachments = Attachment.wrap(with, config: @config)
-      raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any? && !supports_embedding_media?
+      raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any? && !embedding_media?
 
       track_usage(:embedding) do
         payload = if attachments.any?
@@ -450,7 +450,7 @@ module RubyLLM
     # Whether the protocol can embed media attachments alongside text.
     # Protocols that support multimodal embeddings override this and accept
     # a +with:+ array of Attachments in render_embedding_payload.
-    def supports_embedding_media?
+    def embedding_media?
       false
     end
 
@@ -702,10 +702,10 @@ module RubyLLM
     end
 
     def auto_upload_large_files?
-      @config.auto_upload_large_files && @provider.files? && supports_provider_file_references?
+      @config.auto_upload_large_files && @provider.files? && provider_file_references?
     end
 
-    def supports_provider_file_references?
+    def provider_file_references?
       false
     end
 

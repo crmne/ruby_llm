@@ -52,7 +52,7 @@ module RubyLLM
           raise UnsupportedAttachmentError, image.mime_type unless image.image?
           return { type: 'input_image', file_id: image.provider_file_id } if image.provider_file?
 
-          Responses::Media.format_image(image, image_url: image.for_llm,
+          Responses::Media.render_image(image, image_url: image.for_llm,
                                                original_detail: @provider.original_image_detail?)
         end
 

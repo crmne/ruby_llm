@@ -36,10 +36,10 @@ module RubyLLM
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           payload = {
-            contents: format_messages(messages.reject { |msg| msg.role == :system }),
+            contents: render_messages(messages.reject { |msg| msg.role == :system }),
             generationConfig: {}
           }
-          system_instruction = format_system_instruction(messages)
+          system_instruction = render_system_instruction(messages)
           payload[:systemInstruction] = system_instruction if system_instruction
 
           payload[:generationConfig][:temperature] = temperature unless temperature.nil?
@@ -49,7 +49,7 @@ module RubyLLM
           payload[:generationConfig][:thinkingConfig] = build_thinking_config(model, thinking) if thinking&.enabled?
 
           if tools.any?
-            payload[:tools] = format_tools(tools)
+            payload[:tools] = render_tools(tools)
             # Gemini doesn't support controlling parallel tool calls
             payload[:toolConfig] = build_tool_config(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
           end
@@ -119,7 +119,7 @@ module RubyLLM
           config
         end
 
-        def supports_provider_file_references?
+        def provider_file_references?
           true
         end
 
@@ -133,20 +133,20 @@ module RubyLLM
 
         private
 
-        def format_system_instruction(messages)
+        def render_system_instruction(messages)
           parts = messages.select { |msg| msg.role == :system }.flat_map do |msg|
             text = msg.content.to_s
-            Media.format_content(text.empty? ? nil : text, msg.attachments)
+            Media.render_content(text.empty? ? nil : text, msg.attachments)
           end
 
           { parts: parts } if parts.any?
         end
 
-        def format_messages(messages)
+        def render_messages(messages)
           MessageFormatter.new(self, messages).format
         end
 
-        def format_role(role)
+        def render_role(role)
           case role
           when :assistant then 'model'
           when :system, :tool then 'user'
@@ -154,20 +154,20 @@ module RubyLLM
           end
         end
 
-        def format_parts(msg)
+        def render_parts(msg)
           if msg.role == :assistant && msg.raw_content.is_a?(Array)
             msg.raw_content
           elsif msg.tool_call?
-            format_tool_call(msg)
+            render_tool_call(msg)
           elsif msg.tool_result?
-            format_tool_result(msg)
+            render_tool_result(msg)
           else
-            format_message_parts(msg)
+            render_message_parts(msg)
           end
         end
 
-        def format_message_parts(msg)
-          parts = Media.format_content(msg.content, msg.attachments)
+        def render_message_parts(msg)
+          parts = Media.render_content(msg.content, msg.attachments)
           thinking = msg.thinking if msg.role == :assistant
           return parts unless thinking
 
@@ -179,26 +179,26 @@ module RubyLLM
         # Gemini signs the last part of an answer. An answer without parts gets
         # the empty text part a stream ends with: Gemini refuses a part without data.
         def sign_last_part(parts, signature)
-          parts = [Media.format_text('')] if parts.empty?
+          parts = [Media.render_text('')] if parts.empty?
           [*parts[...-1], parts.last.merge(thoughtSignature: signature)]
         end
 
         def parse_completion_body(data, raw:)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
-          tool_calls = extract_tool_calls(data)
+          tool_calls = parse_tool_calls(data)
           content, attachments = parse_content(data)
 
           Message.new(
             role: :assistant,
             content: content,
             attachments: attachments,
-            citations: extract_citations(data, content),
+            citations: parse_citations(data, content),
             thinking: Thinking.build(
-              text: extract_thought_parts(parts),
-              signature: extract_thought_signature(parts)
+              text: parse_thought_parts(parts),
+              signature: parse_thought_signature(parts)
             ),
             tool_calls: tool_calls,
-            server_tool_calls: extract_server_tool_calls(data, parts),
+            server_tool_calls: parse_server_tool_calls(data, parts),
             raw_content: parts.any? { |part| server_tool_part?(part) } ? without_search_suggestions(parts) : nil,
             input_tokens: input_tokens(data),
             output_tokens: calculate_output_tokens(data),
@@ -264,7 +264,7 @@ module RubyLLM
           end
         end
 
-        def extract_server_tool_calls(data, parts)
+        def parse_server_tool_calls(data, parts)
           calls = parts.select { |part| server_tool_part?(part) }.map do |part|
             ServerToolCall.new(
               type: part.key?('executableCode') ? 'executable_code' : 'code_execution_result',
@@ -295,7 +295,7 @@ module RubyLLM
         end
 
         # Normalizes grounding metadata (Google Search grounding) into citations.
-        def extract_citations(data, content)
+        def parse_citations(data, content)
           metadata = data.dig('candidates', 0, 'groundingMetadata')
           return [] unless metadata
 
@@ -348,7 +348,7 @@ module RubyLLM
           content.byteslice(0, byte_index)&.length
         end
 
-        def extract_thought_parts(parts)
+        def parse_thought_parts(parts)
           thought_parts = parts.select { |p| p['thought'] }
           thoughts = thought_parts.filter_map { |p| p['text'] }.join
           thoughts.empty? ? nil : thoughts
@@ -356,7 +356,7 @@ module RubyLLM
 
         # Agentic video navigation steps carry signatures of their own, which
         # Gemini refuses on the answer they precede.
-        def extract_thought_signature(parts)
+        def parse_thought_signature(parts)
           parts.each do |part|
             next if part.key?('toolCall') || part.key?('toolResponse')
 
@@ -437,7 +437,7 @@ module RubyLLM
             end
 
             parts = in_call_order(results).flat_map do |tool_message|
-              format_tool_result(tool_message, @tool_call_names.delete(tool_message.tool_call_id))
+              render_tool_result(tool_message, @tool_call_names.delete(tool_message.tool_call_id))
             end
 
             [parts, index]
@@ -464,11 +464,11 @@ module RubyLLM
           end
 
           def build_standard_message(message)
-            parts = @provider.send(:format_parts, message)
+            parts = @provider.send(:render_parts, message)
             parts = @provider.send(:sign_step, parts) if message.tool_call? && current_turn?
 
             {
-              role: @provider.send(:format_role, message.role),
+              role: @provider.send(:render_role, message.role),
               parts: parts
             }
           end
@@ -479,8 +479,8 @@ module RubyLLM
             @turn_start.nil? || @index > @turn_start
           end
 
-          def format_tool_result(message, tool_name)
-            @provider.send(:format_tool_result, message, tool_name)
+          def render_tool_result(message, tool_name)
+            @provider.send(:render_tool_result, message, tool_name)
           end
         end
       end

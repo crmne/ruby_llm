@@ -18,15 +18,15 @@ module RubyLLM
         def render_cache_payload(content, model:, ttl: nil, instructions: nil, attachments: [])
           payload = {
             model: cache_model_name(model),
-            contents: [{ role: 'user', parts: Media.format_content(content, attachments) }]
+            contents: [{ role: 'user', parts: Media.render_content(content, attachments) }]
           }
           payload[:systemInstruction] = { parts: [{ text: instructions }] } if instructions
-          payload[:ttl] = format_cache_ttl(ttl) if ttl
+          payload[:ttl] = render_cache_ttl(ttl) if ttl
           payload
         end
 
         def render_cache_update_payload(ttl:)
-          { ttl: format_cache_ttl(ttl) }
+          { ttl: render_cache_ttl(ttl) }
         end
 
         def parse_cache_response(data)
@@ -50,7 +50,7 @@ module RubyLLM
           "models/#{model_id}"
         end
 
-        def format_cache_ttl(ttl)
+        def render_cache_ttl(ttl)
           ttl.is_a?(String) ? ttl : "#{ttl.to_i}s"
         end
       end

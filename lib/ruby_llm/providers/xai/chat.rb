@@ -6,7 +6,7 @@ module RubyLLM
       # Chat implementation for xAI
       # https://docs.x.ai/docs/api-reference#chat-completions
       module Chat
-        def format_role(role)
+        def render_role(role)
           role.to_s
         end
 
@@ -16,8 +16,8 @@ module RubyLLM
           )
         end
 
-        def format_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.format_content(
+        def render_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.render_content(
             content,
             attachments,
             document_attachments: :none,

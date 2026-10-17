@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
     Object.new.tap { |obj| obj.extend(RubyLLM::Protocols::Gemini::Chat, described_class) }
   end
 
-  describe '#extract_tool_calls' do
+  describe '#parse_tool_calls' do
     it 'captures all function calls returned in a single candidate' do
       data = {
         'candidates' => [
@@ -25,7 +25,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
         ]
       }
 
-      tool_calls = test_obj.extract_tool_calls(data)
+      tool_calls = test_obj.parse_tool_calls(data)
 
       expect(tool_calls&.size).to eq(2)
       expect(tool_calls.values.map(&:name)).to eq(%w[weather best_language_to_learn])
@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
     end
   end
 
-  describe '#format_tool_call' do
+  describe '#render_tool_call' do
     it 'outputs a functionCall part for each tool call and preserves assistant text' do
       tool_calls = {
         'a' => RubyLLM::ToolCall.new(id: 'a', name: 'weather', arguments: { 'latitude' => '52.5200' }),
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
       }
       message = RubyLLM::Message.new(role: :assistant, content: 'Working on it...', tool_calls:)
 
-      result = test_obj.format_tool_call(message)
+      result = test_obj.render_tool_call(message)
 
       expect(result.length).to eq(3)
       expect(result.first).to eq({ text: 'Working on it...' })
@@ -60,11 +60,11 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
         :parse_completion_body, { 'candidates' => [{ 'content' => { 'parts' => parts } }] }, raw: nil
       )
 
-      expect(JSON.parse(JSON.generate(test_obj.format_tool_call(message)))).to eq(parts)
+      expect(JSON.parse(JSON.generate(test_obj.render_tool_call(message)))).to eq(parts)
     end
   end
 
-  describe '#format_tool_result' do
+  describe '#render_tool_result' do
     it 'uses the tool call id for Gemini function responses' do
       message = RubyLLM::Message.new(
         role: :tool,
@@ -72,7 +72,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
         tool_call_id: 'uuid-123'
       )
 
-      result = test_obj.format_tool_result(message)
+      result = test_obj.render_tool_result(message)
 
       expect(result).to eq([
                              {
@@ -94,7 +94,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
         tool_call_id: 'uuid-123'
       )
 
-      result = test_obj.format_tool_result(message)
+      result = test_obj.render_tool_result(message)
 
       expect(result).to eq([
                              {
@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
       def format_for(model_id, attachments)
         test_obj.instance_variable_set(:@model, RubyLLM.models.find(model_id))
         message = RubyLLM::Message.new(role: :tool, content: 'Found it', attachments:, tool_call_id: 'uuid-123')
-        test_obj.format_tool_result(message)
+        test_obj.render_tool_result(message)
       end
 
       it 'nests media inside functionResponse.parts for Gemini 3 models' do
@@ -173,9 +173,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
     end
   end
 
-  describe '#format_tools' do
+  describe '#render_tools' do
     it 'sends nothing when there are no tools' do
-      expect(test_obj.format_tools({})).to eq([])
+      expect(test_obj.render_tools({})).to eq([])
     end
 
     it 'declares a tool with no parameters' do
@@ -184,7 +184,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
                        declared_parameters: {}, provider_options: {}
       )
 
-      expect(test_obj.format_tools({ 'ping' => tool })).to eq(
+      expect(test_obj.render_tools({ 'ping' => tool })).to eq(
         [{ functionDeclarations: [{ name: 'ping', description: 'Pings' }] }]
       )
     end
@@ -195,18 +195,18 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
                        declared_parameters: {}, provider_options: { behavior: 'BLOCKING' }
       )
 
-      expect(test_obj.format_tools({ 'search' => tool }).first[:functionDeclarations].first).to include(
+      expect(test_obj.render_tools({ 'search' => tool }).first[:functionDeclarations].first).to include(
         behavior: 'BLOCKING'
       )
     end
   end
 
-  describe '#extract_tool_calls on malformed responses' do
+  describe '#parse_tool_calls on malformed responses' do
     it 'is nil for a response Gemini did not send' do
-      expect(test_obj.send(:extract_tool_calls, nil)).to be_nil
-      expect(test_obj.send(:extract_tool_calls, 'not a hash')).to be_nil
-      expect(test_obj.send(:extract_tool_calls, { 'candidates' => [] })).to be_nil
-      expect(test_obj.send(:extract_tool_calls, { 'candidates' => [{ 'content' => {} }] })).to be_nil
+      expect(test_obj.send(:parse_tool_calls, nil)).to be_nil
+      expect(test_obj.send(:parse_tool_calls, 'not a hash')).to be_nil
+      expect(test_obj.send(:parse_tool_calls, { 'candidates' => [] })).to be_nil
+      expect(test_obj.send(:parse_tool_calls, { 'candidates' => [{ 'content' => {} }] })).to be_nil
     end
   end
 
@@ -244,7 +244,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
                        declared_parameters: {}, provider_options: {}
       )
 
-      test_obj.format_tools({ 'lookup' => tool }).first[:functionDeclarations].first
+      test_obj.render_tools({ 'lookup' => tool }).first[:functionDeclarations].first
     end
 
     it 'sends the schema as parametersJsonSchema' do

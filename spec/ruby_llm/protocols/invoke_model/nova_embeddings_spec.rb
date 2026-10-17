@@ -53,7 +53,7 @@ RSpec.describe RubyLLM::Protocols::InvokeModel::NovaEmbeddings do
     it 'reads the embedding out of the embeddings array' do
       body = { 'embeddings' => [{ 'embeddingType' => 'TEXT', 'embedding' => [0.1, 0.2] }] }
 
-      expect(protocol.send(:extract_embedding, body)).to eq([0.1, 0.2])
+      expect(protocol.send(:parse_embedding, body)).to eq([0.1, 0.2])
     end
   end
 end

@@ -21,10 +21,10 @@ module RubyLLM
           end
         end
 
-        def format_content(content, attachments = [], document_attachments: :pdf, image_attachments: true,
+        def render_content(content, attachments = [], document_attachments: :pdf, image_attachments: true,
                            audio_attachments: true)
-          format_parts(content, attachments) do |attachment|
-            format_attachment(
+          render_parts(content, attachments) do |attachment|
+            render_attachment(
               attachment,
               document_attachments:,
               image_attachments:,
@@ -35,11 +35,11 @@ module RubyLLM
 
         # Shared preamble and attachment loop for OpenAI-compatible providers.
         # The block formats a single attachment in the provider's dialect.
-        def format_parts(content, attachments = [])
+        def render_parts(content, attachments = [])
           return content if attachments.empty?
 
           parts = []
-          parts << format_text(content) if content
+          parts << render_text(content) if content
 
           attachments.each do |attachment|
             parts << yield(attachment)
@@ -48,26 +48,26 @@ module RubyLLM
           parts
         end
 
-        def format_attachment(attachment, document_attachments:, image_attachments:, audio_attachments:)
+        def render_attachment(attachment, document_attachments:, image_attachments:, audio_attachments:)
           unless supported_attachment?(attachment, document_attachments:, image_attachments:, audio_attachments:)
             raise UnsupportedAttachmentError, attachment.mime_type
           end
 
-          return format_provider_file(attachment, document_attachments:) if attachment.provider_file?
+          return render_provider_file(attachment, document_attachments:) if attachment.provider_file?
 
           case attachment.type
           when :image
-            with_image_detail(format_image(attachment), attachment)
+            with_image_detail(render_image(attachment), attachment)
           when :audio
-            format_audio(attachment)
+            render_audio(attachment)
           when :pdf, :document
-            format_document_attachment(attachment, document_attachments)
+            render_document_attachment(attachment, document_attachments)
           when :text
-            format_text_file(attachment)
+            render_text_file(attachment)
           end
         end
 
-        def format_image(image)
+        def render_image(image)
           {
             type: 'image_url',
             image_url: {
@@ -90,7 +90,7 @@ module RubyLLM
           'high'
         end
 
-        def format_document(document)
+        def render_document(document)
           {
             type: 'file',
             file: {
@@ -100,7 +100,7 @@ module RubyLLM
           }
         end
 
-        def format_provider_file(file, document_attachments:)
+        def render_provider_file(file, document_attachments:)
           raise UnsupportedAttachmentError, file.mime_type if document_attachments == :none
 
           {
@@ -111,14 +111,14 @@ module RubyLLM
           }
         end
 
-        def format_text_file(text_file)
+        def render_text_file(text_file)
           {
             type: 'text',
             text: text_file.for_llm
           }
         end
 
-        def format_audio(audio)
+        def render_audio(audio)
           {
             type: 'input_audio',
             input_audio: {
@@ -128,16 +128,16 @@ module RubyLLM
           }
         end
 
-        def format_text(text)
+        def render_text(text)
           {
             type: 'text',
             text: text
           }
         end
 
-        def format_document_attachment(attachment, strategy)
-          return format_document(attachment) if strategy == :all
-          return format_document(attachment) if strategy == :pdf && attachment.pdf?
+        def render_document_attachment(attachment, strategy)
+          return render_document(attachment) if strategy == :all
+          return render_document(attachment) if strategy == :pdf && attachment.pdf?
 
           raise UnsupportedAttachmentError, attachment.mime_type
         end

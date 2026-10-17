@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Protocol, '#supported_attachment?' do
             if protocol.is_a?(RubyLLM::Protocols::Interactions)
               protocol.send(:render_interaction_attachment, attachment)
             else
-              protocol.send(:format_content, 'Read this.', [attachment])
+              protocol.send(:render_content, 'Read this.', [attachment])
             end
           end
 

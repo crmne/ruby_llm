@@ -7,11 +7,11 @@ module RubyLLM
       module Chat
         module_function
 
-        def format_content(content, attachments = [])
-          GPUStack::Media.format_content(content, attachments)
+        def render_content(content, attachments = [])
+          GPUStack::Media.render_content(content, attachments)
         end
 
-        def format_role(role)
+        def render_role(role)
           role.to_s
         end
       end

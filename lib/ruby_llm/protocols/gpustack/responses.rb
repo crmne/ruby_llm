@@ -40,12 +40,12 @@ module RubyLLM
           super(payload, merge_mcp_filters(tools))
         end
 
-        def format_assistant_items(message)
+        def render_assistant_items(message)
           super.flat_map do |item|
             data = Support::Utils.deep_symbolize_keys(item)
             next item unless data[:type] && !Protocols::Responses::Chat::CLIENT_OUTPUT_ITEM_TYPES.include?(data[:type])
 
-            format_server_tool_history(data)
+            render_server_tool_history(data)
           end
         end
 
@@ -81,7 +81,7 @@ module RubyLLM
           existing[:allowed_tools] |= tool[:allowed_tools]
         end
 
-        def format_server_tool_history(item)
+        def render_server_tool_history(item)
           if item[:type] == 'mcp_call' && item[:name] && item[:id] && !item[:output].nil?
             output = item[:output].is_a?(String) ? item[:output] : JSON.generate(item[:output])
             [{ type: 'function_call', call_id: item[:id], name: item[:name], arguments: item[:arguments] },

@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Responses::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     it 'formats provider-managed files as input_file file_id parts' do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
 
-      formatted = described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file))
+      formatted = described_class.render_content('Summarize this file', RubyLLM::Attachment.wrap(file))
 
       expect(formatted.second).to eq(
         type: 'input_file',
@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
     it 'formats PDFs as inline input_file parts' do
       pdf = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/sample.pdf', __dir__))
 
-      formatted = described_class.format_content('Summarize this file', [pdf])
+      formatted = described_class.render_content('Summarize this file', [pdf])
 
       expect(formatted.second[:type]).to eq('input_file')
       expect(formatted.second[:filename]).to eq('sample.pdf')
@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
       it "formats #{File.extname(filename).delete_prefix('.')} documents as inline input_file parts" do
         document = RubyLLM::Attachment.new(File.expand_path("../../../fixtures/#{filename}", __dir__))
 
-        formatted = described_class.format_content('Summarize this file', [document])
+        formatted = described_class.render_content('Summarize this file', [document])
 
         expect(formatted.second[:type]).to eq('input_file')
         expect(formatted.second[:filename]).to eq(filename)
@@ -40,7 +40,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
     it 'keeps text files inline' do
       text = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.txt', __dir__))
 
-      formatted = described_class.format_content('Summarize this file', [text])
+      formatted = described_class.render_content('Summarize this file', [text])
 
       expect(formatted.second[:type]).to eq('input_text')
     end
@@ -48,14 +48,14 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
     it 'still rejects attachments the API cannot take' do
       audio = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.wav', __dir__))
 
-      expect { described_class.format_content('Listen', [audio]) }
+      expect { described_class.render_content('Listen', [audio]) }
         .to raise_error(RubyLLM::UnsupportedAttachmentError, %r{audio/wav})
     end
 
     it 'maps low resolution to low image detail' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :low)
 
-      formatted = described_class.format_content('Describe this', [image])
+      formatted = described_class.render_content('Describe this', [image])
 
       expect(formatted.second[:detail]).to eq('low')
     end
@@ -64,7 +64,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :ultra_high)
 
       protocol = RubyLLM::Protocols::Responses.new(RubyLLM::Providers::OpenAI.allocate)
-      formatted = protocol.send(:format_content, 'Describe this', [image])
+      formatted = protocol.send(:render_content, 'Describe this', [image])
 
       expect(formatted.second[:detail]).to eq('high')
     end
@@ -77,7 +77,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
         protocol = provider_class.protocols.fetch(:responses).new(provider_class.allocate)
         image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
 
-        formatted = protocol.send(:format_content, 'Read the small print', [image])
+        formatted = protocol.send(:render_content, 'Read the small print', [image])
 
         expect(formatted.second[:detail]).to eq(detail)
       end
@@ -86,7 +86,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Media do
     it 'omits image detail when no resolution is set' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
 
-      formatted = described_class.format_content('Describe this', [image])
+      formatted = described_class.render_content('Describe this', [image])
 
       expect(formatted.second).not_to have_key(:detail)
     end

@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     it 'returns the content string unchanged when there are no attachments' do
-      formatted = described_class.format_content('Hello')
+      formatted = described_class.render_content('Hello')
 
       expect(formatted).to eq('Hello')
     end
@@ -13,7 +13,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
     it 'formats arbitrary files as file parts when the provider opts in' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
-      formatted = described_class.format_content('Summarize this file', [attachment], document_attachments: :all)
+      formatted = described_class.render_content('Summarize this file', [attachment], document_attachments: :all)
 
       expect(formatted.second).to eq(
         type: 'file',
@@ -27,7 +27,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
     it 'formats provider-managed files as file_id parts when file attachments are enabled' do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
 
-      formatted = described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file))
+      formatted = described_class.render_content('Summarize this file', RubyLLM::Attachment.wrap(file))
 
       expect(formatted.second).to eq(
         type: 'file',
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
 
       expect do
-        described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file),
+        described_class.render_content('Summarize this file', RubyLLM::Attachment.wrap(file),
                                        document_attachments: :none)
       end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
     end
@@ -50,7 +50,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
     it 'maps low resolution to low image detail' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :low)
 
-      formatted = described_class.format_content('Describe this', [image])
+      formatted = described_class.render_content('Describe this', [image])
 
       expect(formatted.second[:image_url][:detail]).to eq('low')
     end
@@ -70,7 +70,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
         image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution:)
 
         protocol = RubyLLM::Protocols::ChatCompletions.new(RubyLLM::Providers::OpenAI.allocate)
-        formatted = protocol.send(:format_content, 'Describe this', [image])
+        formatted = protocol.send(:render_content, 'Describe this', [image])
 
         expect(formatted.second[:image_url][:detail]).to eq('high')
       end
@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
         protocol = provider_class.protocols.fetch(:chat_completions).new(provider_class.allocate)
         image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
 
-        formatted = protocol.send(:format_content, 'Read the small print', [image])
+        formatted = protocol.send(:render_content, 'Read the small print', [image])
 
         expect(formatted.second[:image_url][:detail]).to eq(detail)
       end
@@ -93,7 +93,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
     it 'omits image detail when no resolution is set' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__))
 
-      formatted = described_class.format_content('Describe this', [image])
+      formatted = described_class.render_content('Describe this', [image])
 
       expect(formatted.second[:image_url]).not_to have_key(:detail)
     end

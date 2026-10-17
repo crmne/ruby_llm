@@ -7,7 +7,7 @@ module RubyLLM
       module Chat
         module_function
 
-        def format_role(role)
+        def render_role(role)
           role.to_s
         end
 
@@ -15,8 +15,8 @@ module RubyLLM
           Perplexity::Media.supported_attachment?(attachment)
         end
 
-        def format_content(content, attachments = [])
-          Perplexity::Media.format_content(content, attachments)
+        def render_content(content, attachments = [])
+          Perplexity::Media.render_content(content, attachments)
         end
       end
     end

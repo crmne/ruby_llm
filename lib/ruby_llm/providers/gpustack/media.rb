@@ -11,24 +11,24 @@ module RubyLLM
           %i[image audio video text].include?(attachment.type)
         end
 
-        def format_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
+        def render_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
             case attachment.type
             when :image
-              format_image(attachment)
+              render_image(attachment)
             when :audio
-              Protocols::ChatCompletions::Media.format_audio(attachment)
+              Protocols::ChatCompletions::Media.render_audio(attachment)
             when :video
-              format_video(attachment)
+              render_video(attachment)
             when :text
-              Protocols::ChatCompletions::Media.format_text_file(attachment)
+              Protocols::ChatCompletions::Media.render_text_file(attachment)
             end
           end
         end
 
-        def format_image(image)
+        def render_image(image)
           {
             type: 'image_url',
             image_url: {
@@ -38,7 +38,7 @@ module RubyLLM
           }
         end
 
-        def format_video(video)
+        def render_video(video)
           {
             type: 'video_url',
             video_url: { url: video.for_llm }

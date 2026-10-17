@@ -55,7 +55,7 @@ module RubyLLM
           end
         end
 
-        def format_tool_calls(tool_calls)
+        def render_tool_calls(tool_calls)
           tool_calls.map do |_, tool_call|
             {
               id: tool_call.provider_call_id,
@@ -68,11 +68,11 @@ module RubyLLM
           end
         end
 
-        def format_tool_result(msg)
+        def render_tool_result(msg)
           {
             role: 'tool',
             tool_call_id: msg.provider_call_id,
-            content: format_tool_result_content(msg)
+            content: render_tool_result_content(msg)
           }
         end
 
@@ -84,15 +84,15 @@ module RubyLLM
         # cites tool output against. A tool that attaches files sends its
         # text and each attachment as blocks, so the model reads what the
         # tool fetched rather than only the sentence describing it.
-        def format_tool_result_content(msg)
+        def render_tool_result_content(msg)
           search_results = RubyLLM::SearchResults.from_content(msg.content)
           return document_blocks(search_results) if search_results
           return msg.content.to_s if msg.attachments.empty?
 
-          [Media.format_text(msg.content.to_s)] + msg.attachments.map do |attachment|
+          [Media.render_text(msg.content.to_s)] + msg.attachments.map do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless supported_message_attachment?(msg, attachment)
 
-            Media.format_text(attachment.for_llm)
+            Media.render_text(attachment.for_llm)
           end
         end
 

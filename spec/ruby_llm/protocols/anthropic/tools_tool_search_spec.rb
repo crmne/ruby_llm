@@ -98,12 +98,12 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     end
 
     it 'replays the search pair verbatim while the request still declares deferred tools' do
-      expect(types(protocol.send(:format_message, message)))
+      expect(types(protocol.send(:render_message, message)))
         .to eq(%w[text server_tool_use tool_search_tool_result server_tool_use tool_use])
     end
 
     def replayed(tools)
-      payload = { tools:, messages: [protocol.send(:format_message, message)] }
+      payload = { tools:, messages: [protocol.send(:render_message, message)] }
       described_class.apply_tool_search(payload)[:messages].first
     end
 

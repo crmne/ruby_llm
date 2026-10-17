@@ -17,10 +17,10 @@ module RubyLLM
             role: :assistant,
             model: data['model'],
             content: delta['content'] || delta['refusal'],
-            citations: extract_chunk_citations(delta, data),
+            citations: parse_chunk_citations(delta, data),
             thinking: Thinking.build(
-              text: extract_thinking_text(delta),
-              signature: extract_thinking_signature(delta)
+              text: parse_thinking_text(delta),
+              signature: parse_thinking_signature(delta)
             ),
             raw_reasoning: accumulate_raw_reasoning(delta['reasoning_details']),
             tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false, stream_keys: true),

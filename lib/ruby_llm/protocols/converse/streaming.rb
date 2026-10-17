@@ -194,22 +194,22 @@ module RubyLLM
           Chunk.new(
             role: :assistant,
             model: event['modelId'] || @model&.id,
-            content: extract_content_delta(event),
-            citations: extract_block_citations(event),
+            content: parse_content_delta(event),
+            citations: parse_block_citations(event),
             thinking: Thinking.build(
-              text: extract_thinking_delta(event),
-              signature: extract_thinking_signature(event)
+              text: parse_thinking_delta(event),
+              signature: parse_thinking_signature(event)
             ),
             raw_reasoning: streamed_thinking_blocks(event),
             tool_calls: extract_tool_calls(event),
-            server_tool_calls: extract_server_tool_call_events(event),
-            input_tokens: extract_input_tokens(metadata_usage, usage),
-            output_tokens: extract_output_tokens(metadata_usage, usage),
-            cache_read_tokens: extract_cache_read_tokens(metadata_usage, usage),
-            cache_write_tokens: extract_cache_write_tokens(metadata_usage, usage),
+            server_tool_calls: parse_server_tool_call_events(event),
+            input_tokens: parse_input_tokens(metadata_usage, usage),
+            output_tokens: parse_output_tokens(metadata_usage, usage),
+            cache_read_tokens: parse_cache_read_tokens(metadata_usage, usage),
+            cache_write_tokens: parse_cache_write_tokens(metadata_usage, usage),
             cache_write_tokens_by_ttl: Chat.cache_write_by_ttl(metadata_usage) || Chat.cache_write_by_ttl(usage),
-            thinking_tokens: extract_reasoning_tokens(metadata_usage, usage),
-            finish_reason: extract_finish_reason(event)
+            thinking_tokens: parse_reasoning_tokens(metadata_usage, usage),
+            finish_reason: parse_finish_reason(event)
           )
         end
 
@@ -219,7 +219,7 @@ module RubyLLM
           @thinking_stream.raw_reasoning if event.key?('messageStop') || event.key?('stopReason')
         end
 
-        def extract_finish_reason(event)
+        def parse_finish_reason(event)
           normalize_finish_reason(event.dig('messageStop', 'stopReason') || event['stopReason'])
         end
 
@@ -230,24 +230,24 @@ module RubyLLM
           ]
         end
 
-        def extract_input_tokens(metadata_usage, usage)
+        def parse_input_tokens(metadata_usage, usage)
           bedrock_usage = metadata_usage['inputTokens'] ? metadata_usage : usage
           Chat.input_tokens(bedrock_usage) if bedrock_usage['inputTokens']
         end
 
-        def extract_output_tokens(metadata_usage, usage)
+        def parse_output_tokens(metadata_usage, usage)
           metadata_usage['outputTokens'] || usage['outputTokens']
         end
 
-        def extract_cache_read_tokens(metadata_usage, usage)
+        def parse_cache_read_tokens(metadata_usage, usage)
           metadata_usage['cacheReadInputTokens'] || usage['cacheReadInputTokens']
         end
 
-        def extract_cache_write_tokens(metadata_usage, usage)
+        def parse_cache_write_tokens(metadata_usage, usage)
           metadata_usage['cacheWriteInputTokens'] || usage['cacheWriteInputTokens']
         end
 
-        def extract_reasoning_tokens(metadata_usage, usage)
+        def parse_reasoning_tokens(metadata_usage, usage)
           Chat.reasoning_tokens(metadata_usage) || Chat.reasoning_tokens(usage)
         end
 
@@ -278,16 +278,16 @@ module RubyLLM
           Transport::ErrorMiddleware.parse_error(provider: self, response: response)
         end
 
-        def extract_content_delta(event)
+        def parse_content_delta(event)
           normalized_delta(event)['text']
         end
 
         # A citation delta arrives before the text it supports, so a block's
         # citations wait for the block to stop and take its span of the response.
         # A block still open when the message stops gives up what it has.
-        def extract_block_citations(event)
+        def parse_block_citations(event)
           track_citation_block(event)
-          finished_citation_blocks(event).flat_map { |index| parse_block_citations(index) }
+          finished_citation_blocks(event).flat_map { |index| take_block_citations(index) }
         end
 
         def track_citation_block(event)
@@ -308,7 +308,7 @@ module RubyLLM
           [event_block_index(event)].compact
         end
 
-        def parse_block_citations(index)
+        def take_block_citations(index)
           length = @stream_text_lengths[index]
           start_index = @stream_text_lengths.sum { |block_index, size| block_index < index ? size : 0 }
           span = length.zero? ? {} : { start_index:, end_index: start_index + length }
@@ -316,7 +316,7 @@ module RubyLLM
           Array(@stream_citations.delete(index)).map { |citation| Chat.parse_citation(citation, **span) }
         end
 
-        def extract_thinking_delta(event)
+        def parse_thinking_delta(event)
           reasoning_content = normalized_delta(event)['reasoningContent'] || {}
 
           reasoning_text = reasoning_content['reasoningText'] || {}
@@ -324,33 +324,33 @@ module RubyLLM
           return reasoning_content['text'] if reasoning_content.key?('text')
           return '' if [reasoning_text, reasoning_content].any? { |block| block.key?('signature') }
 
-          extract_thinking_from_start(event)
+          parse_thinking_from_start(event)
         end
 
-        def extract_thinking_from_start(event)
+        def parse_thinking_from_start(event)
           start = event.dig('contentBlockStart', 'start', 'reasoningContent') || {}
           return unless start.key?('reasoningText')
 
           start.dig('reasoningText', 'text').to_s
         end
 
-        def extract_thinking_signature(event)
-          signature = extract_signature_from_delta(event)
+        def parse_thinking_signature(event)
+          signature = parse_signature_from_delta(event)
           return signature if signature
 
-          signature = extract_signature_from_start(event)
+          signature = parse_signature_from_start(event)
           return signature if signature
 
           nil
         end
 
-        def extract_signature_from_delta(event)
+        def parse_signature_from_delta(event)
           reasoning_content = normalized_delta(event)['reasoningContent'] || {}
           reasoning_text = reasoning_content['reasoningText'] || {}
           reasoning_text['signature'] || reasoning_content['signature'] || reasoning_content['redactedContent']
         end
 
-        def extract_signature_from_start(event)
+        def parse_signature_from_start(event)
           start = event.dig('contentBlockStart', 'start', 'reasoningContent')
           return nil unless start
 
@@ -362,8 +362,8 @@ module RubyLLM
         end
 
         def extract_tool_calls(event)
-          return extract_tool_call_start(event) if tool_call_start_event?(event)
-          return extract_tool_call_delta(event) if tool_call_delta_event?(event)
+          return parse_tool_call_start(event) if tool_call_start_event?(event)
+          return parse_tool_call_delta(event) if tool_call_delta_event?(event)
 
           nil
         end
@@ -376,7 +376,7 @@ module RubyLLM
           event['contentBlockDelta'] || event.dig('delta', 'toolUse')
         end
 
-        def extract_tool_call_start(event)
+        def parse_tool_call_start(event)
           tool_use = event.dig('contentBlockStart', 'start', 'toolUse') || event.dig('start', 'toolUse')
           return nil unless tool_use
 
@@ -395,7 +395,7 @@ module RubyLLM
           }
         end
 
-        def extract_tool_call_delta(event)
+        def parse_tool_call_delta(event)
           return nil if server_tool_block_event?(event)
 
           input = normalized_delta(event).dig('toolUse', 'input')
@@ -407,7 +407,7 @@ module RubyLLM
         # Server-executed tool steps stream as typed toolUse and toolResult
         # block starts. Their input deltas are not function-call arguments,
         # so the block index is remembered and its deltas skipped.
-        def extract_server_tool_call_events(event)
+        def parse_server_tool_call_events(event)
           start = event.dig('contentBlockStart', 'start') || event['start']
           return [] unless start.is_a?(Hash)
 

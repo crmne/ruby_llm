@@ -231,6 +231,18 @@ chat_protocol_families.must_implement :render_payload, :completion_url, :parse_c
 protocols.method_names.matching(/\A(serialize|deserialize|to_wire|from_wire)_/)
          .forbidden(because: 'serialize with render_*, deserialize with parse_*')
 
+# format_* and extract_* are the same two jobs under older names, in protocols
+# and in the provider dialects that override them. The exceptions do neither
+# job (they word an option list, resolve a speech format, or guess from a
+# model id) or would collide with a parse_* of another meaning in the same
+# class.
+protocols.method_names.matching(/\A(format|extract)_/)
+         .forbidden(except: %i[format_cache_option_keys format_for extract_tool_calls extract_citations],
+                    because: 'serialize with render_*, deserialize with parse_*')
+providers.method_names.matching(/\A(format|extract)_/)
+         .forbidden(except: %i[format_cache_option_keys extract_capabilities],
+                    because: 'serialize with render_*, deserialize with parse_*')
+
 # Protocols render and parse provider wire formats. They may create domain
 # objects, but should not reach into concrete provider adapters. A protocol
 # that needs something only the provider knows, such as a signed request or
@@ -275,6 +287,11 @@ preset :ruby_conventions
 
 # Capabilities are one query, supports?(:name), never a supports_*? predicate.
 support.method_names.matching(/\Asupports_\w+\?\z/).forbidden(because: 'query capabilities with supports?(:name)')
+
+# What a wire format can carry is a bare predicate, like Provider#files?.
+protocol_contract.method_names.matching(/\Asupports_\w+\?\z/).forbidden(because: 'name the predicate after the thing')
+protocols.method_names.matching(/\Asupports_\w+\?\z/).forbidden(because: 'name the predicate after the thing')
+providers.method_names.matching(/\Asupports_\w+\?\z/).forbidden(because: 'name the predicate after the thing')
 
 provider_capabilities.method_names
                      .matching(

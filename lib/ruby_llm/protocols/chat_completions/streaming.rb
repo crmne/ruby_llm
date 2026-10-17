@@ -27,13 +27,13 @@ module RubyLLM
           usage = data['usage'] || {}
           delta = data.dig('choices', 0, 'delta') || {}
           content_source = delta['content'] || delta['refusal'] || data.dig('choices', 0, 'message', 'content')
-          content, thinking_from_blocks = extract_content_and_thinking(content_source)
+          content, thinking_from_blocks = parse_content_and_thinking(content_source)
 
           Chunk.new(
             role: :assistant,
             model: data['model'],
             content: content,
-            citations: extract_chunk_citations(delta, data),
+            citations: parse_chunk_citations(delta, data),
             thinking: Thinking.build(
               text: thinking_from_blocks || delta['reasoning_content'] || delta['reasoning'],
               signature: delta['reasoning_signature']
@@ -50,7 +50,7 @@ module RubyLLM
           )
         end
 
-        def extract_chunk_citations(delta, data)
+        def parse_chunk_citations(delta, data)
           annotations = parse_annotations(delta['annotations'], nil)
           return annotations if annotations.any?
 

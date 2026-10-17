@@ -23,7 +23,7 @@ module RubyLLM
         def render_transcription_payload(attachment, language:, speaker_names:, provider_options:, prompt:, **)
           config = { languageCodes: language && Array(language), customVocabulary: prompt && Array(prompt),
                      diarization: speaker_names && true }.compact
-          payload = { contents: [{ role: 'user', parts: [format_audio_part(attachment)] }],
+          payload = { contents: [{ role: 'user', parts: [render_audio_part(attachment)] }],
                       generationConfig: { audioTranscriptionConfig: config } }
           Support::Utils.deep_merge(payload, provider_options)
         end
@@ -38,7 +38,7 @@ module RubyLLM
           raise_if_transcription_blocked(data, text, response)
           words = segments.flat_map { |segment| segment['words'] }
           RubyLLM::Transcription.new(text:, model:, segments: segments.empty? ? nil : segments,
-                                     words: words.empty? ? nil : words, **extract_usage(data))
+                                     words: words.empty? ? nil : words, **parse_usage(data))
         end
 
         def parse_transcription_segment(part)

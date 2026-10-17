@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Providers::GPUStack::Media do
       .to_return(body: 'video bytes', headers: { 'Content-Type' => 'video/mp4' })
     attachment = RubyLLM::Attachment.new('https://example.com/clip.mp4')
 
-    content = described_class.format_content('Describe this clip', [attachment])
+    content = described_class.render_content('Describe this clip', [attachment])
 
     data_url = "data:video/mp4;base64,#{Base64.strict_encode64('video bytes')}"
     expect(content).to eq(
@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Providers::GPUStack::Media do
   it 'encodes local video attachments as data URLs' do
     attachment = RubyLLM::Attachment.new(StringIO.new('video bytes'), filename: 'clip.mp4')
 
-    content = described_class.format_content(nil, [attachment])
+    content = described_class.render_content(nil, [attachment])
 
     expect(content).to eq(
       [{ type: 'video_url', video_url: { url: "data:video/mp4;base64,#{Base64.strict_encode64('video bytes')}" } }]

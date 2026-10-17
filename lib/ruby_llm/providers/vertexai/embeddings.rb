@@ -11,7 +11,7 @@ module RubyLLM
           "#{@provider.model_path(model)}:predict"
         end
 
-        def supports_embedding_media?
+        def embedding_media?
           false
         end
 

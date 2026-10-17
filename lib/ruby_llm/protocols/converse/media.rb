@@ -21,37 +21,37 @@ module RubyLLM
           end
         end
 
-        def format_content(content, attachments = [], used_document_names: nil, citations: false)
+        def render_content(content, attachments = [], used_document_names: nil, citations: false)
           used_document_names ||= {}
           blocks = []
           blocks << { text: content } unless content.nil? || content.empty?
           attachments.each do |attachment|
-            blocks << format_attachment(attachment, used_document_names:, citations:)
+            blocks << render_attachment(attachment, used_document_names:, citations:)
           end
           blocks
         end
 
-        def format_attachment(attachment, used_document_names:, citations: false)
+        def render_attachment(attachment, used_document_names:, citations: false)
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
           if attachment.provider_file?
-            return format_provider_file_attachment(attachment, used_document_names:, citations:)
+            return render_provider_file_attachment(attachment, used_document_names:, citations:)
           end
 
           case attachment.type
           when :image
-            format_image_attachment(attachment)
+            render_image_attachment(attachment)
           when :audio
-            format_audio_attachment(attachment)
+            render_audio_attachment(attachment)
           when :video
-            format_video_attachment(attachment)
+            render_video_attachment(attachment)
           when :pdf, :document
-            format_document_attachment(attachment, used_document_names:, citations:)
+            render_document_attachment(attachment, used_document_names:, citations:)
           when :text
             if citations
-              format_text_document_attachment(attachment, used_document_names:)
+              render_text_document_attachment(attachment, used_document_names:)
             else
-              format_text_attachment(attachment)
+              render_text_attachment(attachment)
             end
           end
         end
@@ -71,7 +71,7 @@ module RubyLLM
           '3gpp' => 'three_gp'
         }.freeze
 
-        def format_image_attachment(attachment)
+        def render_image_attachment(attachment)
           {
             image: {
               format: attachment.format,
@@ -82,7 +82,7 @@ module RubyLLM
           }
         end
 
-        def format_audio_attachment(attachment)
+        def render_audio_attachment(attachment)
           {
             audio: {
               format: media_format(attachment, AUDIO_FORMAT_ALIASES, SUPPORTED_AUDIO_FORMATS),
@@ -93,7 +93,7 @@ module RubyLLM
           }
         end
 
-        def format_video_attachment(attachment)
+        def render_video_attachment(attachment)
           {
             video: {
               format: media_format(attachment, VIDEO_FORMAT_ALIASES, SUPPORTED_VIDEO_FORMATS),
@@ -112,11 +112,11 @@ module RubyLLM
           format
         end
 
-        def format_text_attachment(attachment)
+        def render_text_attachment(attachment)
           { text: attachment.for_llm }
         end
 
-        def format_document_attachment(attachment, used_document_names:, citations: false)
+        def render_document_attachment(attachment, used_document_names:, citations: false)
           format = document_format(attachment)
 
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_document_format?(attachment)
@@ -136,7 +136,7 @@ module RubyLLM
         # Text attachments become citable documents when citations are
         # enabled. Bedrock rejects text-format documents sent as bytes when
         # citations are on, so the text rides in the source's text member.
-        def format_text_document_attachment(attachment, used_document_names:)
+        def render_text_document_attachment(attachment, used_document_names:)
           document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
           {
             document: {
@@ -148,7 +148,7 @@ module RubyLLM
           }
         end
 
-        def format_provider_file_attachment(attachment, used_document_names:, citations: false)
+        def render_provider_file_attachment(attachment, used_document_names:, citations: false)
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_document_format?(attachment)
 
           document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)

@@ -64,7 +64,7 @@ module RubyLLM
             raise UnsupportedAttachmentError, attachment.mime_type unless attachment.audio?
 
             content = [
-              Protocols::ChatCompletions::Media.format_audio(attachment),
+              Protocols::ChatCompletions::Media.render_audio(attachment),
               { type: 'text', text: transcription_prompt(prompt, language) }
             ]
             payload = { model:, messages: [{ role: 'user', content: }], temperature: temperature || 0 }

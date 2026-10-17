@@ -11,22 +11,22 @@ module RubyLLM
           %i[image pdf document text].include?(attachment.type)
         end
 
-        def format_content(content, attachments = [])
-          Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
+        def render_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.render_parts(content, attachments) do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless supported_attachment?(attachment)
 
             case attachment.type
             when :image
-              Protocols::ChatCompletions::Media.format_image(attachment)
+              Protocols::ChatCompletions::Media.render_image(attachment)
             when :pdf, :document
-              format_document(attachment)
+              render_document(attachment)
             when :text
-              Protocols::ChatCompletions::Media.format_text_file(attachment)
+              Protocols::ChatCompletions::Media.render_text_file(attachment)
             end
           end
         end
 
-        def format_document(attachment)
+        def render_document(attachment)
           {
             type: 'file_url',
             file_url: {

@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Azure::Media do
-  describe '.format_content' do
+  describe '.render_content' do
     it 'sends the media resolution as image detail' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :low)
 
-      formatted = described_class.format_content('Describe this', [image])
+      formatted = described_class.render_content('Describe this', [image])
 
       expect(formatted.second[:image_url][:detail]).to eq('low')
     end
@@ -15,7 +15,7 @@ RSpec.describe RubyLLM::Providers::Azure::Media do
     it 'sends original resolution as original image detail' do
       image = RubyLLM::Attachment.new(File.expand_path('../../../fixtures/ruby.png', __dir__), resolution: :original)
 
-      formatted = described_class.format_content('Read the small print', [image])
+      formatted = described_class.render_content('Read the small print', [image])
 
       expect(formatted.second[:image_url][:detail]).to eq('original')
     end
@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Providers::Azure::Media do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::Providers::Azure::Media do
       attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
       expect do
-        described_class.format_content('Summarize this file', [attachment])
+        described_class.render_content('Summarize this file', [attachment])
       end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: application/pdf})
     end
   end

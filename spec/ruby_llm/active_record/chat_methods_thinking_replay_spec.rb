@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                             { 'model' => model_for(:anthropic), 'content' => blocks, 'usage' => {} }, raw: nil)
 
     restored = persist_thinking(message)
-    rendered = protocol.send(:format_message, restored)
+    rendered = protocol.send(:render_message, restored)
 
     expect(JSON.parse(JSON.generate(rendered)).fetch('content')).to eq(blocks)
   end
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
                             raw: nil)
 
     restored = persist_thinking(message)
-    rendered = protocol.send(:format_message_content, restored)
+    rendered = protocol.send(:render_message_content, restored)
 
     expect(JSON.parse(JSON.generate(rendered))).to eq(blocks)
   end
