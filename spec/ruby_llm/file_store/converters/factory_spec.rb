@@ -19,13 +19,14 @@ RSpec.describe RubyLLM::FileStore::Converters::Factory do
     expect(RubyLLM).to have_received(:ocr).with(attachment, model: 'mistral-ocr-latest')
   end
 
-  it 'returns the built-in converters, which read the files they are registered for' do
-    html = RubyLLM::Attachment.new(StringIO.new('<p>Hello <b>there</b></p>'), filename: 'page.xhtml')
+  it 'returns the text converter, which reads a file as it is' do
     text = RubyLLM::Attachment.new(StringIO.new('{"a":1}'), filename: 'rows.ndjson')
 
-    expect(converters.html.call(html)).to include('Hello there')
     expect(converters.text.call(text)).to eq('{"a":1}')
-    expect([converters.office, converters.pdf]).to all(respond_to(:call))
+  end
+
+  it 'offers only the converters RubyLLM ships' do
+    expect(described_class.singleton_methods.sort).to eq(%i[ocr text])
   end
 
   it 'reads a type registered with a built-in converter' do

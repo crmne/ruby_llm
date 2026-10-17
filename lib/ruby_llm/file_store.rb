@@ -160,8 +160,8 @@ module RubyLLM
     end
 
     # Returns the text of the file at +path+: its content when it is text,
-    # or what a converter makes of it, such as the text of a PDF or a Word
-    # document. Returns +nil+ when no converter can read the file.
+    # or what a converter makes of it, such as the text OCR reads from a
+    # PDF. Returns +nil+ when no converter can read the file.
     # Conversions are kept, so each version of a file is converted once.
     # Raises FileNotFoundError when there is no file at +path+.
     #

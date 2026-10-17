@@ -6,15 +6,11 @@ module RubyLLM
     # converter is any object that answers +call+ with an Attachment and
     # returns the file's text, or +nil+ when it cannot read that file, so
     # the next converter gets a turn. FileStore#text tries the converters
-    # in Configuration#file_converters first, then the ones RubyLLM ships:
+    # in Configuration#file_converters first, then reads text files,
+    # including source code, CSV, JSON, and Markdown, as they are.
     #
-    # * text files, including source code, CSV, JSON, and Markdown, as they are
-    # * HTML, without its tags
-    # * Word, Excel, and PowerPoint files (+.docx+, +.xlsx+, +.pptx+)
-    # * PDFs, with the pdf-reader gem in your bundle
-    #
-    # The OCR converter reads scans and photos with RubyLLM.ocr. It costs
-    # a request per file, so it only runs where you register it.
+    # The OCR converter reads PDFs, scans, and photos with RubyLLM.ocr. It
+    # costs a request per file, so it only runs where you register it.
     # RubyLLM.file_store.converter returns the converters RubyLLM ships
     # (see Converters::Factory):
     #
@@ -24,17 +20,9 @@ module RubyLLM
     #     config.file_converters["application/vnd.oasis.opendocument.text"] = ->(file) { OdtText.call(file.content) }
     #   end
     #
-    # A PDF with a text layer is read by the built-in converter only when
-    # yours returns +nil+, so register OCR after your own converters, or
-    # as the only one for scans.
+    # Converters for other formats can ship as gems named
+    # <tt>ruby_llm-converters-NAME</tt>, like provider gems.
     module Converters
-      OFFICE_TYPES = [
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-      ].freeze
-      private_constant :OFFICE_TYPES
-
       class << self
         # Returns the text the first converter for +attachment+ makes of it,
         # or +nil+ when none can read it.
@@ -64,12 +52,7 @@ module RubyLLM
         end
 
         def built_in(type)
-          return [HTML] if type == 'text/html' || type.end_with?('+html')
-          return [Text] if Files::MimeType.text?(type)
-          return [Office] if OFFICE_TYPES.include?(type)
-          return [PDF] if Files::MimeType.pdf?(type)
-
-          []
+          Files::MimeType.text?(type) ? [Text] : []
         end
       end
     end

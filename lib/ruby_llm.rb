@@ -25,7 +25,6 @@ loader.inflector.inflect(
   'elevenlabs' => 'ElevenLabs',
   'gpustack' => 'GPUStack',
   'hetzner' => 'Hetzner',
-  'html' => 'HTML',
   'http' => 'HTTP',
   'llm' => 'LLM',
   'mcp' => 'MCP',
@@ -42,8 +41,7 @@ loader.inflector.inflect(
   'ruby_llm' => 'RubyLLM',
   'typesafe' => 'TypeSafe',
   'vertexai' => 'VertexAI',
-  'xai' => 'XAI',
-  'xml' => 'XML'
+  'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")

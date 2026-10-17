@@ -1055,8 +1055,9 @@ module RubyLLM
     #   chat.with_file_store(spill_to_file: 20_000)
     #   chat.with_file_store(nil)
     #
-    # Text, PDFs, and Word, Excel, and PowerPoint files are read as text;
-    # see Configuration#file_converters to read more.
+    # Text files are read as text; register converters, such as the OCR
+    # converter for PDFs and images, in Configuration#file_converters to
+    # read more.
     def with_file_store(store = RubyLLM.file_store.memory, spill_to_file: FileReferences::SPILL_TO_FILE)
       FileReferences.validate(store, spill_to_file:) unless store.nil?
       @file_references = if store

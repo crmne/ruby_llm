@@ -216,7 +216,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.render.to_json).to include('sample.docx (application/vnd.openxmlformats-officedocument.' \
                                              'wordprocessingml.document, ')
-      expect(chat.file_store.text('sample.docx')).to include('BLUE-LANTERN-42')
+      expect(chat.file_store.exists?('sample.docx')).to be(true)
     end
 
     it 'leaves the error in place without files' do
@@ -276,7 +276,7 @@ RSpec.describe RubyLLM::Chat do
   describe 'a conversation' do
     it 'lets the model read an earlier attachment back with read_file' do
       chat.with_file_store
-      respond_with(answer('A sample PDF.'), calls('read_file', { 'path' => 'sample.pdf', 'limit' => 3 }),
+      respond_with(answer('A sample PDF.'), calls('read_file', { 'path' => 'sample.pdf' }),
                    answer('It says Sample PDF.'))
 
       chat.ask('What is this?', with: pdf_path)
@@ -285,14 +285,12 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to eq('It says Sample PDF.')
       expect(requests[0].last.attachments.first.mime_type).to eq('application/pdf')
       expect(requests[1].first.attachments.first.mime_type).to eq('text/plain')
-      expect(requests[2].last.content).to eq("sample.pdf (text read from application/pdf), lines 1-3 of 49:\n     " \
-                                             "1\t## Page 1\n     2\t\n     3\tSample PDF\n" \
-                                             '[46 more lines. Continue with offset 4.]')
+      expect(requests[2].last.content).to start_with('sample.pdf (application/pdf, ')
+      expect(requests[2].last.attachments.sole.mime_type).to eq('application/pdf')
     end
   end
 
   describe 'working with files', :live do
-    let(:docx) { File.expand_path('../fixtures/sample.docx', __dir__) }
     let(:handbook) do
       (1..400).map { |number| "#{number}. Section #{number} covers office policy number #{number}." }
               .insert(287, '288. The parking garage door code is 4471-KESTREL.').join("\n")
@@ -300,14 +298,6 @@ RSpec.describe RubyLLM::Chat do
 
     def tools_called(chat)
       chat.messages.flat_map { |message| (message.tool_calls || {}).values }.map(&:name)
-    end
-
-    it "anthropic/#{model_for(:anthropic)} reads a Word document it cannot take as an attachment" do
-      chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_file_store
-      response = chat.ask 'What is the project codename in this document?', with: docx
-
-      expect(tools_called(chat)).to include('read_file').or include('search_files')
-      expect(response.content).to include('BLUE-LANTERN-42')
     end
 
     %i[openai anthropic].each do |provider|

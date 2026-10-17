@@ -173,7 +173,7 @@ chat.ask "Summarize this report.", with: "report.pdf"
 chat.ask "What does it say about churn?" # the model searches report.pdf instead of rereading it
 ```
 
-The same tools read Word, Excel, and PowerPoint files as text, so they work with models that cannot take those formats.
+With a converter registered for a format, such as the OCR converter for PDFs and scans, the same tools read it as text, so they work with models that cannot take that format.
 
 ### Choosing the Media Resolution
 

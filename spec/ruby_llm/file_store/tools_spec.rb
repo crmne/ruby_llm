@@ -5,7 +5,12 @@ require 'spec_helper'
 RSpec.describe RubyLLM::FileStore::Tools do
   include_context 'with configured RubyLLM'
 
-  let(:chat) { RubyLLM.chat(model: model_for(:openai), provider: :openai).with_file_store }
+  let(:sheet) { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
+  let(:chat) do
+    RubyLLM.context do |config|
+      config.file_converters[sheet] = ->(_file) { "## Sheet\n\nlabel\tvalue\nspreadsheet_code\tORCHID-97" }
+    end.chat(model: model_for(:openai), provider: :openai).with_file_store
+  end
   let(:files) { chat.file_store }
 
   def call(name, **arguments)
@@ -77,12 +82,11 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(result).to end_with('[2 more lines. Continue with offset 2.]')
     end
 
-    it 'reads converted text with the type it came from' do
-      files.write('deck.pptx', fixture('sample.pptx'))
+    it 'reads the text a converter makes, with the type it came from' do
+      files.write('sheet.xlsx', fixture('sample.xlsx'))
 
-      expect(call(:read_file, path: 'deck.pptx'))
-        .to start_with('deck.pptx (text read from application/vnd.openxmlformats-officedocument.presentationml.' \
-                       "presentation), lines 1-8 of 8:\n     1\t## Slide 1")
+      expect(call(:read_file, path: 'sheet.xlsx'))
+        .to start_with("sheet.xlsx (text read from #{sheet}), lines 1-4 of 4:\n     1\t## Sheet")
     end
 
     it 'returns an image as an attachment' do
@@ -94,7 +98,6 @@ RSpec.describe RubyLLM::FileStore::Tools do
     end
 
     it 'returns a PDF it cannot read as an attachment' do
-      allow(RubyLLM::FileStore::Converters::PDF).to receive(:available?).and_return(false)
       files.write('scan.pdf', fixture('sample.pdf'))
 
       expect(call(:read_file, path: 'scan.pdf').last).to have_attributes(mime_type: 'application/pdf')

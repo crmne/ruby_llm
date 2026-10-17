@@ -15,7 +15,7 @@ module RubyLLM
         end
 
         def description
-          "Searches the text of this chat's files, PDFs and Office files included, for lines matching a " \
+          "Searches the text of this chat's files, every file that can be read as text, for lines matching a " \
             'regular expression, ignoring case, and returns each match with its path and line number. Read ' \
             'around a match with read_file and its offset. Pass path to search one file or folder.'
         end

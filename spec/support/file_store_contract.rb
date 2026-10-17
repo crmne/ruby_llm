@@ -67,10 +67,10 @@ RSpec.shared_examples 'a file store' do
   end
 
   it 'reads text through the converters and keeps the conversion' do
-    store.write('sheet.xlsx', File.binread(File.expand_path('../fixtures/sample.xlsx', __dir__)))
+    store.write('notes/plan.md', "# Plan\n\nShip the ORCHID-97 release")
     allow(RubyLLM::FileStore::Converters).to receive(:convert).and_call_original
 
-    2.times { expect(store.text('sheet.xlsx')).to include("spreadsheet_code\tORCHID-97") }
+    2.times { expect(store.text('notes/plan.md')).to include('ORCHID-97') }
     expect(RubyLLM::FileStore::Converters).to have_received(:convert).once
   end
 

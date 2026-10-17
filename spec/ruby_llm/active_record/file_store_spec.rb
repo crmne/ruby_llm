@@ -26,13 +26,13 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
   end
 
   it 'keeps converted text in the row until the file changes' do
-    store.write('sheet.xlsx', File.binread(File.expand_path('../../fixtures/sample.xlsx', __dir__)))
-    store.text('sheet.xlsx')
-    expect(chat.ruby_llm_chat_files.sole.text).to include('ORCHID-97')
+    store.write('notes.md', 'ORCHID-97')
+    store.text('notes.md')
+    expect(chat.ruby_llm_chat_files.sole.text).to eq('ORCHID-97')
 
-    store.write('sheet.xlsx', File.binread(File.expand_path('../../fixtures/sample.docx', __dir__)))
+    store.write('notes.md', 'BLUE-LANTERN-42')
     expect(chat.ruby_llm_chat_files.sole.text).to be_nil
-    expect(described_class.new(chat).text('sheet.xlsx')).to include('BLUE-LANTERN-42')
+    expect(described_class.new(chat).text('notes.md')).to eq('BLUE-LANTERN-42')
   end
 
   it 'keeps no text for a version of the file it no longer has' do

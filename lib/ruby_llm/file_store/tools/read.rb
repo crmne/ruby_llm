@@ -4,8 +4,9 @@ module RubyLLM
   class FileStore
     module Tools
       # The +read_file+ tool: a range of a file's text, by lines or by
-      # characters, with converted text for PDFs and Office files. Images,
-      # and PDFs without text, come back as an attachment the model sees.
+      # characters, with the text a converter makes of other files. Images,
+      # and PDFs no converter reads, come back as an attachment the model
+      # sees.
       class Read < Base # :nodoc:
         MAX_LINES = 1_000
         MAX_CHARACTERS = 20_000
@@ -18,8 +19,9 @@ module RubyLLM
 
         def description
           "Reads a file from this chat's file store. Text comes back with line numbers, #{MAX_LINES} lines " \
-            "or #{MAX_CHARACTERS} characters at a time: pass offset and limit to read further. PDFs, Word, " \
-            'Excel, and PowerPoint files come back as their text, and images as the image itself. With ' \
+            "or #{MAX_CHARACTERS} characters at a time: pass offset and limit to read further. Other files " \
+            'that can be read as text come back as their text, and images and PDFs that cannot as the file ' \
+            'itself. With ' \
             'unit "characters", offset and limit count characters instead of lines, for files with very ' \
             'long lines.'
         end

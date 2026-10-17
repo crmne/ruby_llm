@@ -15,7 +15,7 @@ After reading this guide, you will know:
 
 * How to attach a file store to a chat, and the five tools the model gets to work with it.
 * What the model sees of attachments and long tool results.
-* How PDFs, Office files, and scans become text the model can read and search.
+* How converters turn PDFs, scans, and other formats into text the model can read and search.
 * Where the files live: in memory, in a folder, or in Active Storage.
 * How code execution reads and writes the same files.
 
@@ -56,7 +56,7 @@ The model gets five tools:
 | `write_file` | Writes a text file, replacing any file at that path |
 | `edit_file` | Replaces one exact span of a text file, or every occurrence with `replace_all` |
 
-`read_file` and `search_files` read PDFs, Word, Excel, and PowerPoint files as text (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF without a text layer, come back from `read_file` as the file itself, so a model with vision sees it.
+`read_file` and `search_files` read text files, and other formats through the converters you register, such as OCR for PDFs (see [Reading Files as Text](#reading-files-as-text)). An image, and a PDF no converter reads, come back from `read_file` as the file itself, so a model with vision sees it.
 
 `chat.file_store` returns the store, so your code works with the same files:
 
@@ -74,7 +74,7 @@ Each file is a `RubyLLM::StoredFile` with `path`, `filename`, `byte_size`, `cont
 
 **Attachments.** Every attachment is kept in the chat's files under its file name. The model sees the files attached to the latest question in full, as it would without files. From the next question on, it sees one line naming each of them, and opens them again with `read_file` when it needs to. Files that tools return, such as a PDF an MCP server fetched, become a line at once: the model reads them with `read_file`, which it sees in full until the next question.
 
-An attachment the provider cannot take, such as a Word file for most models, becomes that line on its own question too, so the model reads it with `read_file` instead of the request failing.
+An attachment the provider cannot take, such as a Word file for most models, becomes that line on its own question too, instead of the request failing. The model reads it with `read_file` when a converter you registered reads that format, or with code when it can run code.
 
 When two different files share a name, the second gets a number, like `report-2.pdf`. The same file attached twice is kept once.
 
@@ -105,23 +105,13 @@ end
 
 ## Reading Files as Text
 
-`read_file`, `search_files`, and `chat.file_store.text` read a file through converters. RubyLLM ships converters for:
-
-* Text files, including source code, CSV, JSON, YAML, and Markdown, as they are.
-* HTML, without its tags, scripts, and styles.
-* Word, Excel, and PowerPoint files (`.docx`, `.xlsx`, `.pptx`): paragraphs, sheets with tab-separated cells, and slides.
-* PDFs, page by page, when your bundle has the [pdf-reader](https://github.com/yob/pdf-reader) gem.
-
-```ruby
-# Gemfile
-gem "pdf-reader"
-```
+`read_file`, `search_files`, and `chat.file_store.text` read a file through converters. Text files, including source code, CSV, JSON, YAML, and Markdown, are read as they are. Other formats need a converter you register; without one, `read_file` hands an image or a PDF to the model as the file itself, so a model with vision sees it, and says any other file has no text to read.
 
 Each version of a file is converted once. A persisted chat keeps the text in the file's row, and the other stores keep it in memory, so the next read or search is free.
 
-### Scans and Photos
+### PDFs, Scans, and Photos
 
-A scanned PDF has no text layer, and a photo of a whiteboard has no text at all. The OCR converter, `RubyLLM.file_store.converter.ocr`, reads both with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}). Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
+The OCR converter, `RubyLLM.file_store.converter.ocr`, reads PDFs, scans, and photos with [`RubyLLM.ocr`]({% link _core_features/ocr.md %}), tables and all. Each file costs one OCR request the first time the model reads or searches it, so OCR only runs where you register it:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -130,31 +120,33 @@ RubyLLM.configure do |config|
 end
 ```
 
-`ocr` takes the options [`RubyLLM.ocr`]({% link _core_features/ocr.md %}) does, such as `model:` and `provider:`. Converters you register run before the built-in ones. Registering OCR for PDFs reads every PDF with OCR, even those with a text layer. To use OCR only for scans, leave PDFs to the built-in converter: `read_file` hands a PDF without text to the model as the file itself.
+`ocr` takes the options [`RubyLLM.ocr`]({% link _core_features/ocr.md %}) does, such as `model:` and `provider:`.
 
-### Your Own Converters
-
-A converter is anything that answers `call` with an `Attachment` and returns the file's text, or `nil` to pass it to the next converter for its type:
+`RubyLLM.file_store.converter.text` reads a file as it is, for types that hold plain text but don't say so:
 
 ```ruby
+config.file_converters["application/x-subrip"] = RubyLLM.file_store.converter.text # .srt subtitles
+```
+
+### Writing a Converter
+
+A converter is anything that answers `call` with an `Attachment` and returns the file's text, or `nil` to pass it to the next converter for its type. Register it for the types it reads:
+
+```ruby
+class OdtConverter
+  def self.call(file)
+    OdtReader.new(file.content).text
+  end
+end
+
 RubyLLM.configure do |config|
-  config.file_converters = {
-    "application/vnd.oasis.opendocument.text" => ->(file) { OdtReader.new(file.content).text },
-    "application/zip" => ZipListing
-  }
+  config.file_converters["application/vnd.oasis.opendocument.text"] = OdtConverter
 end
 ```
 
-Types match exactly or by family, like `"image/*"`. `"*/*"` matches every file. Exact types run before families, and a type can take an Array of converters, tried in order.
+Types match exactly or by family, like `"image/*"`. `"*/*"` matches every file. Exact types run before families, a type can take an Array of converters, tried in order, and registered converters run before the text one RubyLLM ships.
 
-The built-in converters are there to register for other types that hold the same content: `RubyLLM.file_store.converter` has `text`, `html`, `office`, `pdf`, and `ocr`:
-
-```ruby
-RubyLLM.configure do |config|
-  config.file_converters["application/x-subrip"] = RubyLLM.file_store.converter.text # .srt subtitles
-  config.file_converters["application/xhtml+xml"] = RubyLLM.file_store.converter.html
-end
-```
+To share a converter, ship it as a gem named `ruby_llm-converters-<name>`, like the `ruby_llm-providers-<name>` gems for providers, with a line in its README that registers it.
 
 ## Where the Files Live
 
@@ -189,6 +181,8 @@ class BucketStore < RubyLLM::FileStore
   def delete(path) = ...                               # the StoredFile, or nil
 end
 ```
+
+To share a store, ship it as a gem named `ruby_llm-file_stores-<name>`, like the `ruby_llm-providers-<name>` gems for providers.
 
 RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. A store that keeps its files in a folder on disk can also define `local_root`, returning the folder, so code execution runs there instead of copying files (see [Code Execution](#code-execution)). Conversions are kept in memory unless the store overrides `cached_text(file)` and `cache_text(file, text)`. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
 
