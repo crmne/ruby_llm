@@ -243,6 +243,25 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
     end
   end
 
+  describe 'with model names in a nested namespace' do
+    it 'writes a module for the whole namespace so its prefix matches the tables' do
+      Dir.mktmpdir do |destination|
+        described_class.new(%w[chat:Admin::Support::Chat message:Admin::Support::Message], {},
+                            destination_root: destination, shell: Thor::Shell::Basic.new)
+                       .create_model_files
+
+        expect(File.read(File.join(destination, 'app/models/admin/support.rb'))).to eq(<<~RUBY)
+          module Admin::Support
+            def self.table_name_prefix
+              "admin_support_"
+            end
+          end
+        RUBY
+        expect(File.exist?(File.join(destination, 'app/models/admin.rb'))).to be(false)
+      end
+    end
+  end
+
   describe 'with namespaced model names' do
     let(:app_name) { 'test_install_namespaced' }
     let(:app_path) { File.join(Dir.tmpdir, app_name) }
