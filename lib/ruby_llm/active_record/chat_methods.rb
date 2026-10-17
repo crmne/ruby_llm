@@ -46,10 +46,10 @@ module RubyLLM
       # provider default. Not persisted; set it again after reloading the record.
       attr_accessor :protocol
 
-      # An optional RubyLLM::Context supplying per-chat configuration, used
-      # when building the underlying chat. Not persisted; set it again after
-      # reloading the record.
-      attr_accessor :context
+      # An optional RubyLLM::Context supplying per-chat configuration. Not
+      # persisted; set it again after reloading the record. Assigning one
+      # rebinds the underlying chat, like #with_context.
+      attr_reader :context
 
       # Requests cancellation of the current in-flight chat operation. The
       # request is persisted so a background job can observe it from another
@@ -233,10 +233,11 @@ module RubyLLM
       # configuration. The Context itself is runtime-only and is not
       # persisted.
       def with_context(value)
-        self.context = value
+        @context = value
         @chat&.with_context(value)
         self
       end
+      alias context= with_context
 
       # Sets the system instructions, persisting them as a message with the
       # +:system+ role. Replaces any persisted system messages unless
