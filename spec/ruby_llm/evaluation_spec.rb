@@ -208,6 +208,18 @@ RSpec.describe RubyLLM::Evaluation do
     end
   end
 
+  it 'saves reports under the home directory a path names' do
+    report = evaluation.run(dataset: cases)
+    Dir.mktmpdir do |home|
+      original_home = Dir.home
+      ENV['HOME'] = home
+      expect(report.save('~/report.json')).to eq('~/report.json')
+      expect(JSON.parse(File.read(File.join(home, 'report.json'))).fetch('id')).to eq(report.id)
+    ensure
+      ENV['HOME'] = original_home
+    end
+  end
+
   it 'rejects imported executable evaluators instead of silently ignoring their checks' do
     expect do
       evaluation.run(dataset: { cases:, evaluators: ['EqualsExpected'] })

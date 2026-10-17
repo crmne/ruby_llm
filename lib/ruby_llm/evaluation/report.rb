@@ -68,7 +68,7 @@ module RubyLLM
 
       # Writes a JSON report and returns the supplied path.
       def save(path)
-        File.write(path, JSON.pretty_generate(to_h))
+        File.write(File.expand_path(path), JSON.pretty_generate(to_h))
         path
       end
 
