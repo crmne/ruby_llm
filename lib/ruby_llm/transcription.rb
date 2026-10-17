@@ -93,7 +93,8 @@ module RubyLLM
     # while Gemini takes a MIME type such as <tt>"text/plain"</tt>.
     # +speaker_names:+ and +speaker_references:+ label the speakers on
     # models that support diarization; references may be paths, URLs, IO
-    # objects, or Attachments. Option support depends on the selected model and provider.
+    # objects, or Attachments. Option support depends on the selected model
+    # and provider.
     # +timestamps:+ requests +:word+ timestamps. Some providers also accept
     # +:segment+ or +:character+; unsupported granularities raise ArgumentError.
     # +provider_options:+ takes options in the provider's request vocabulary
