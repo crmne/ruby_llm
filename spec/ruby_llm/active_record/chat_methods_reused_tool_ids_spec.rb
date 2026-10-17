@@ -33,11 +33,11 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
   it 'gives a call appended to another chat its own ID' do
     first, second = Array.new(2) { process(Chat.create!(model: model_for(:openai))) }
-    first.add_message(response('Paris', id: 'call_1'))
-    call = second.add_message(response('London', id: 'call_1')).tool_calls.values.first
+    first.add_message(response('Paris', id: 'call_elsewhere'))
+    call = second.add_message(response('London', id: 'call_elsewhere')).tool_calls.values.first
     second.add_message(role: :tool, content: 'Weather in London', tool_call_id: 'call_1')
 
-    expect(call.id).not_to eq('call_1')
+    expect(call.id).not_to eq('call_elsewhere')
     expect(call.provider_call_id).to eq('call_1')
     expect(results_of(first)).to eq([nil])
     expect(results_of(second)).to eq(['Weather in London'])
