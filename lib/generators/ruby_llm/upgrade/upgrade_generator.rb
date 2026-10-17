@@ -48,9 +48,13 @@ module RubyLLM
       private
 
       def chat_ui_uses_generated_broadcasting?
+        return false unless behavior == :invoke
+
         model = File.join(destination_root, "app/models/#{message_model_name.underscore}.rb")
         return false unless File.exist?(model)
-        return false unless generated_broadcasting_blocks.any? { |block| File.read(model).include?(block) }
+
+        source = File.read(model)
+        return false unless generated_broadcasting_blocks.any? { |block| source.include?(block) }
 
         stream = %("#{chat_variable_name}_\#{)
         Dir.glob(File.join(destination_root, 'app/**/*.{rb,erb}')).without(model).any? do |path|
