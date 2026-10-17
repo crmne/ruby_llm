@@ -39,6 +39,53 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.mcp.files).to be_a(Files)
   end
 
+  describe 'servers named after their URL or command' do
+    it 'refuses two different servers that would take the same name' do
+      notes = RubyLLM.mcp(command: %w[node notes/server.js])
+      tasks = RubyLLM.mcp(command: %w[node tasks/server.js])
+
+      expect { chat.with_mcp(notes, tasks) }.to raise_error(
+        ArgumentError,
+        'MCP servers node notes/server.js and node tasks/server.js are both named "node". ' \
+        'Pass name: to RubyLLM.mcp to tell them apart'
+      )
+    end
+
+    it 'refuses them across calls' do
+      chat.with_mcp(RubyLLM.mcp(url: 'https://mcp.example.com/notes'))
+
+      expect { chat.with_mcp(RubyLLM.mcp(url: 'https://mcp.example.com/tasks')) }
+        .to raise_error(ArgumentError, %r{example\.com/notes and .*example\.com/tasks are both named "example"})
+    end
+
+    it 'connects them once one is named' do
+      notes = RubyLLM.mcp(command: %w[node notes/server.js])
+      tasks = RubyLLM.mcp(command: %w[node tasks/server.js], name: 'tasks')
+
+      chat.with_mcp(notes, tasks)
+
+      expect(chat.mcp.map(&:name)).to eq(%w[node tasks])
+    end
+
+    it 'replaces a server connected again' do
+      first = RubyLLM.mcp(url: 'https://mcp.example.com/notes')
+      second = RubyLLM.mcp(url: 'https://mcp.example.com/notes')
+
+      chat.with_mcp(first).with_mcp(first, second)
+
+      expect(chat.mcp.to_a).to eq([second])
+    end
+
+    it 'lets a server named by hand replace another' do
+      first = RubyLLM.mcp(command: %w[node notes/server.js], name: 'apps')
+      second = RubyLLM.mcp(command: %w[node tasks/server.js], name: 'apps')
+
+      chat.with_mcp(first, second)
+
+      expect(chat.mcp.to_a).to eq([second])
+    end
+  end
+
   describe 'disconnecting' do
     it 'closes the servers it built from a class' do
       built = chat.with_mcp(Files).mcp.files

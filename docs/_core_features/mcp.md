@@ -122,6 +122,8 @@ RubyLLM.mcp(url: server.endpoint, name: "mcp_#{server.id}", prefix: "mcp_#{serve
 
 A server with a `transport:` also needs a `name:`, since it has no URL or command to be named after.
 
+Without a `name:`, a server is named after the host of its URL or after its command, so two servers started with `node`, or two on `mcp.example.com`, would share a name. Connecting both to one chat raises an `ArgumentError` that names the two servers; give one of them a `name:`.
+
 ## Exploring a Server
 
 A server is a Ruby object. Open a console and ask it what it can do:
