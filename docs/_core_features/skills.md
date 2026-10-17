@@ -181,10 +181,10 @@ The [`skill`](https://github.com/crmne/skill) gem does the copying for you. Run 
 ```sh
 gem exec skill find pdf                                    # search skills.sh
 gem exec skill add anthropics/skills --list                # what a repository holds
-gem exec skill add anthropics/skills@pdf --agent rubyllm   # install one into app/skills
+gem exec skill add anthropics/skills@pdf --agents ruby_llm # install one into app/skills
 ```
 
-It reads GitHub repositories (`owner/repo`, `owner/repo@skill`, `owner/repo#tag`), plugin marketplaces, and local folders, and checks every `SKILL.md` with the same rules as `RubyLLM::Skill`. It records each skill's source and commit in `skills.lock` at the root of your application, so commit that file with the skills. `gem exec skill update` shows the commits and files that changed and applies them only after you say yes, and `gem exec skill list` names any skill you edited since. Without `--agent`, it installs into `app/skills` and into the folders of the coding agents your project uses, such as `.claude/skills`; `--agent rubyllm` keeps a skill for your application out of your coding agent's folders. Pass `--dir` to install into another root, such as `vendor/skills`.
+It reads GitHub repositories (`owner/repo`, `owner/repo@skill`, `owner/repo#tag`), plugin marketplaces, and local folders, and checks every `SKILL.md` with the same rules as `RubyLLM::Skill`. It records each skill's source and commit in `skills.lock` at the root of your application, so commit that file with the skills. `gem exec skill update` shows the commits and files that changed and applies them only after you say yes, and `gem exec skill list` names any skill you edited since. Without `--agents`, it installs into `app/skills` and into the folders of the coding agents your project uses, such as `.claude/skills`; `--agents ruby_llm` keeps a skill for your application out of your coding agent's folders, and `--agents coding` keeps a skill for your coding agent out of `app/skills`. On a fresh clone, `gem exec skill install` installs what `skills.lock` records, at its recorded commits. Pass `--dir` to install into another root, such as `vendor/skills`.
 
 A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project, and commit it so you see every change in a diff.
 

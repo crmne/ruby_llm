@@ -301,10 +301,10 @@ Configure the other providers used by the examples as needed: Gemini for files, 
 Give your coding assistant the RubyLLM API and documentation that match your application. From your application directory, install the skill packaged with your gem:
 
 ```bash
-gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agent claude-code
+gem exec skill add "$(bundle show ruby_llm)" --skill rubyllm --agents coding
 ```
 
-Name your coding assistant with `--agent`: `claude-code`, `codex`, `cursor`, and more. See [AI Coding Assistants](https://rubyllm.com/ai-coding-assistants/) for setup and updates.
+`--agents coding` installs it for the coding assistants your project uses, not into your app's `app/skills`. See [AI Coding Assistants](https://rubyllm.com/ai-coding-assistants/) for setup and updates.
 
 ## Documentation
 
