@@ -458,6 +458,23 @@ RSpec.describe RubyLLM::Cost do
       expect(aggregate.total).to be_within(0.0000000001).of(0.0075)
     end
 
+    it 'aggregates stored costs that recorded different components the way it aggregated the live ones' do
+      live = [RubyLLM::Tokens.new(input: 1_000, output: 1_000),
+              RubyLLM::Tokens.new(input: 1_000, output: 1_000, cache_read: 1_000)]
+             .map { |tokens| described_class.new(tokens:, model:) }
+      stored = live.map { |cost| described_class.from_h(cost.to_h) }
+
+      expect(described_class.aggregate(stored).cache_read).to eq(live.last.cache_read)
+      expect(described_class.aggregate(stored).to_h).to eq(described_class.aggregate(live).to_h)
+    end
+
+    it 'keeps the components of a stored total without a breakdown unknown' do
+      stored = described_class.from_h({ total: 0.005 })
+      live = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model:)
+
+      expect(described_class.aggregate([stored, live]).input).to be_nil
+    end
+
     it 'aggregates a stored cost mixed with a live cost' do
       stored = described_class.from_h({ 'input' => 0.001, 'output' => 0.004, 'total' => 0.005 })
       live = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model:)
