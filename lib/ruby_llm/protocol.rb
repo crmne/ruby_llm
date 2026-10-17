@@ -694,8 +694,10 @@ module RubyLLM
     end
 
     def apply_before_request_hooks(payload, hooks)
-      Array(hooks).each { |hook| hook.call(payload) }
-      payload
+      hooks = Array(hooks)
+      return payload if hooks.empty?
+
+      Support::Utils.deep_dup(payload).tap { |copy| hooks.each { |hook| hook.call(copy) } }
     end
 
     def auto_upload_large_files?
