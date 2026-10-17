@@ -16,7 +16,7 @@ After reading this guide, you will know:
 * What a skill is, and how the model finds and loads one.
 * How to give skills to a chat or an agent.
 * How a skill's scripts run with code execution.
-* How engines ship skills of their own.
+* Which folders RubyLLM reads skills from, and how to fill them.
 * What makes a `SKILL.md` invalid, and when RubyLLM tells you.
 
 ## What Is a Skill?
@@ -146,9 +146,23 @@ Persisted chats take the same calls, and `BillingAgent.find(id)` applies the age
 chat = Chat.create!(model: "{{ site.models.default_chat }}").with_skills(:invoices)
 ```
 
-## Skills From Engines
+## Where Skills Live
 
-RubyLLM looks for skills in `app/skills` under `Rails.root`, or under the current directory outside Rails. An engine adds its own folder in an initializer:
+RubyLLM reads skills from the folders in `RubyLLM::Skill.roots`, in order:
+
+1. `app/skills` under `Rails.root`, or under the current directory outside Rails. It is always first.
+2. Every folder you append to `RubyLLM::Skill.roots`, in the order you append them.
+
+A skill is a folder directly under one of these roots, holding a `SKILL.md`. RubyLLM does not look deeper. When two roots have a skill with the same name, the earlier root wins, so a skill in `app/skills` replaces any other with that name. `with_skills` with no arguments gives the chat the skills of every root.
+
+Add a root in an initializer:
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM::Skill.roots << Rails.root.join("vendor/skills")
+```
+
+An engine adds its own folder the same way, before RubyLLM's `ruby_llm.skills` initializer:
 
 ```ruby
 initializer "billing_engine.skills", before: "ruby_llm.skills" do
@@ -156,11 +170,15 @@ initializer "billing_engine.skills", before: "ruby_llm.skills" do
 end
 ```
 
-The application's folder comes first, so a skill in `app/skills` replaces an engine's skill with the same name.
+Rails does not autoload skills. RubyLLM keeps `app/skills` and every root registered before its `ruby_llm.skills` initializer out of the autoloader, so a skill's Ruby scripts are never loaded at boot and a hyphenated folder is never read as a namespace. Keep the roots you add in `config/initializers` outside `app/`.
 
-Rails does not autoload skills. RubyLLM keeps `app/skills` and every root registered before its `ruby_llm.skills` initializer out of the autoloader, so a skill's Ruby scripts are never loaded at boot and a hyphenated folder is never read as a namespace.
+### Adding Skills Written Elsewhere
 
-RubyLLM ships no skills and never downloads them. A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project.
+RubyLLM ships no skills and never downloads them. Put a skill's folder in a root and it is ready to use: copy it into `app/skills`, or keep a repository of skills as a Git submodule and add the folder that holds its skills to `Skill.roots`.
+
+A standalone installer, `gem exec skill add owner/repo`, is coming. It will fetch skills from a repository into these folders.
+
+A skill's instructions steer the model and its scripts run with what your sandbox grants, so review a skill written elsewhere like any other code you add to your project, and commit it so you see every change in a diff.
 
 ## Writing a Skill
 
