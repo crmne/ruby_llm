@@ -345,4 +345,94 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       expect(chat.to_llm.messages.map(&:content)).to eq(%w[Hello Hi])
     end
   end
+
+  describe 'namespaced application models' do
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      ActiveRecord::Migration.suppress_messages do
+        %i[helpdesk_chats desk_threads].each do |table|
+          ActiveRecord::Migration.create_table table, force: true do |t|
+            t.references :ruby_llm_model
+            t.boolean :cancelled, null: false, default: false
+            t.timestamps
+          end
+        end
+        { helpdesk_messages: :chat, desk_turns: :thread }.each do |table, chat|
+          ActiveRecord::Migration.create_table table, force: true do |t|
+            t.references chat
+            t.string :role
+            t.text :content
+            t.timestamps
+          end
+        end
+      end
+    end
+
+    after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      ActiveRecord::Migration.suppress_messages do
+        %i[helpdesk_messages helpdesk_chats desk_turns desk_threads].each do |table|
+          ActiveRecord::Migration.drop_table table, if_exists: true
+        end
+      end
+    end
+
+    # rubocop:disable-next Lint/ConstantDefinitionInBlock, RSpec/LeakyConstantDeclaration
+    module Helpdesk
+      def self.table_name_prefix = 'helpdesk_'
+
+      class Chat < ActiveRecord::Base
+        acts_as_chat
+      end
+
+      class Message < ActiveRecord::Base
+        acts_as_message
+      end
+    end
+
+    # rubocop:disable-next Lint/ConstantDefinitionInBlock, RSpec/LeakyConstantDeclaration
+    module Desk
+      def self.table_name_prefix = 'desk_'
+
+      class Thread < ActiveRecord::Base
+        acts_as_chat messages: :turns
+      end
+
+      class Turn < ActiveRecord::Base
+        acts_as_message chat: :thread
+      end
+    end
+
+    let(:weather) do
+      Class.new(RubyLLM::Tool) do
+        def name = 'weather'
+        def execute = 'sunny'
+      end
+    end
+
+    it 'links tool results when a top-level class shares the inferred name' do
+      chat = Helpdesk::Chat.create!(model: model).with_tools(weather)
+      tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_1' => tool_call }),
+        RubyLLM::Message.new(role: :assistant, content: 'It is sunny')
+      )
+
+      chat.ask('Weather?')
+      result = Helpdesk::Chat.find(chat.id).messages.find_by!(role: 'tool')
+
+      expect(result).to be_a(Helpdesk::Message)
+      expect(result.parent_tool_call.name).to eq('weather')
+    end
+
+    it 'infers the message class when no top-level class has its name' do
+      chat = Desk::Thread.create!(model: model)
+      allow(chat.to_llm.provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(role: :assistant, content: 'Hi')
+      )
+
+      chat.ask('Hello')
+
+      expect(chat.turns.map(&:class).uniq).to eq([Desk::Turn])
+      expect(chat.turns.pluck(:content)).to eq(%w[Hello Hi])
+    end
+  end
 end

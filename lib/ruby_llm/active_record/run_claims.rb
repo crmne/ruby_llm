@@ -198,7 +198,7 @@ module RubyLLM
       def tool_call_rows(tool_call_ids)
         RubyLLM::ActiveRecord::ToolCall.where(
           tool_call_id: tool_call_ids,
-          message_type: self.class.message_class.constantize.polymorphic_name,
+          message_type: messages_association.klass.polymorphic_name,
           message_id: messages_association.select(:id)
         ).pluck(:tool_call_id, :id).to_h
       end
