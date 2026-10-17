@@ -417,6 +417,27 @@ RSpec.describe RubyLLM::Protocols::Files do
       expect(protocol.download('file_123')).to eq('contents')
     end
 
+    it 'downloads JSON files without parsing their contents' do
+      body = "{\"content\":\"Hello\"}\n"
+      request = stub_request(:get, 'https://api.openai.com/v1/files/file_123/content')
+                .with(headers: { 'Authorization' => 'Bearer test' })
+                .to_return(body: body, headers: { 'Content-Type' => 'application/json' })
+
+      expect(RubyLLM::Protocols::OpenAI::Files.new(provider).download('file_123')).to eq(body)
+      expect(request).to have_been_requested
+    end
+
+    it 'raises the provider error when a download fails' do
+      stub_request(:get, 'https://api.openai.com/v1/files/file_123/content').to_return(
+        status: 404,
+        body: '{"error":{"message":"No such File object: file_123"}}',
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+      expect { RubyLLM::Protocols::OpenAI::Files.new(provider).download('file_123') }
+        .to raise_error(RubyLLM::Error, 'No such File object: file_123')
+    end
+
     it 'refuses to list files for providers without listing' do
       expect { protocol.list_uris('gs://bucket') }.to raise_error(
         RubyLLM::Error, "openai doesn't support file listing"
