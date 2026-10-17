@@ -31,7 +31,7 @@ transcription = RubyLLM.transcribe("meeting.wav")
 puts transcription.text
 ```
 
-Pass a local path, URL, IO object, or Active Storage attachment. Supported audio formats depend on the model.
+Pass a local path, URL, IO object, `RubyLLM::Attachment`, or Active Storage attachment. Supported audio formats depend on the model.
 
 ## Choosing Models
 
@@ -113,7 +113,7 @@ transcription = RubyLLM.transcribe(
 )
 ```
 
-References accept file paths, URLs, IO objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities. ElevenLabs uses the number of supplied names as a speaker-count limit.
+References accept file paths, URLs, IO objects, `RubyLLM::Attachment` objects, or Active Storage attachments. Other diarization providers assign speaker labels without matching known identities. ElevenLabs uses the number of supplied names as a speaker-count limit.
 
 ## Segments and Timestamps
 
