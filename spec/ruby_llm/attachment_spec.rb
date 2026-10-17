@@ -110,6 +110,20 @@ RSpec.describe RubyLLM::Attachment do
       expect(loop_request).to have_been_requested.times(6)
     end
 
+    it 'refuses a redirect from HTTPS to plain HTTP' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(redirect_to('http://example.com/logo.png'))
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an unsafe http URL')
+    end
+
+    it 'refuses a redirect to a scheme other than HTTP' do
+      stub_request(:get, 'https://example.com/logo.png').to_return(redirect_to('file:///etc/passwd'))
+
+      expect { described_class.new('https://example.com/logo.png').content }
+        .to raise_error(RubyLLM::Error, 'Download from example.com redirected to an unsafe file URL')
+    end
+
     it 'raises for a redirect that names no location' do
       stub_request(:get, 'https://example.com/logo.png').to_return(status: 302, body: '<html>Moved</html>')
 
