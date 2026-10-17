@@ -142,6 +142,10 @@ module RubyLLM
       dup.tap { |message| message.instance_variable_set(:@tool_calls, tool_calls) }
     end
 
+    def with_tool_call_id(tool_call_id) # :nodoc:
+      dup.tap { |message| message.instance_variable_set(:@tool_call_id, tool_call_id) }
+    end
+
     def without_native_content(raw_content: nil) # :nodoc:
       dup.tap do |message|
         message.instance_variable_set(:@thinking, nil)

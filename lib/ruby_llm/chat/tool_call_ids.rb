@@ -7,6 +7,20 @@ require 'json'
 module RubyLLM
   class Chat
     class ToolCallIds # :nodoc:
+      def self.answer(result, messages)
+        calls = unanswered(messages)
+        call = calls.find { |candidate| candidate.id == result.tool_call_id } ||
+               calls.reverse.find { |candidate| candidate.provider_call_id == result.tool_call_id }
+        call ? result.with_tool_call_id(call.id) : result
+      end
+
+      def self.unanswered(messages)
+        answered = messages.select(&:tool_result?).to_set(&:tool_call_id)
+        messages.select(&:tool_call?).flat_map { |message| message.tool_calls.values }
+                .reject { |call| answered.include?(call.id) }
+      end
+      private_class_method :unanswered
+
       def initialize(namespace: nil)
         @ids = {}
         @namespace = namespace

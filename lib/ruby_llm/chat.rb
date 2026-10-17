@@ -1215,10 +1215,11 @@ module RubyLLM
 
     def prepare_message(message_or_attributes) # :nodoc:
       message = coerce_message(message_or_attributes)
-      if message.tool_call? && message.tool_calls.values.any? { |call| call.id.nil? || find_tool_call(call.id) }
-        message = ToolCallIds.new.assign(message)
-      end
-      message
+      return ToolCallIds.answer(message, messages) if message.tool_result?
+      return message unless message.tool_call?
+      return message if message.tool_calls.values.none? { |call| call.id.nil? || find_tool_call(call.id) }
+
+      ToolCallIds.new.assign(message)
     end
 
     # Marks the latest message as an explicit prompt cache boundary, asking
