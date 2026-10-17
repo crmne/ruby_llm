@@ -101,9 +101,55 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
                                          'delta' => { 'type' => 'text_delta', 'text' => 'Hi' } })
 
     expect([thinking.content, thinking.thinking.text, thinking.thinking.signature]).to eq([nil, 'Hmm', nil])
-    expect([signature.content, signature.thinking.text, signature.thinking.signature]).to eq([nil, nil, 'sig'])
+    expect([signature.content, signature.thinking.text, signature.thinking.signature]).to eq([nil, '', 'sig'])
     expect(text.thinking).to be_nil
     expect(text.citations).to be_empty
+  end
+
+  def accumulate(events)
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    events.each { |event| accumulator.add(protocol.send(:build_chunk, event)) }
+    accumulator.to_message(nil)
+  end
+
+  def block_start(index, block)
+    { 'type' => 'content_block_start', 'index' => index, 'content_block' => block }
+  end
+
+  def signature_delta(index, signature)
+    { 'type' => 'content_block_delta', 'index' => index,
+      'delta' => { 'type' => 'signature_delta', 'signature' => signature } }
+  end
+
+  it 'keeps redacted thinking distinct from omitted thinking' do
+    message = accumulate([{ 'type' => 'message_start' },
+                          block_start(0, { 'type' => 'redacted_thinking', 'data' => 'redacted-thinking' }),
+                          { 'type' => 'content_block_stop', 'index' => 0 },
+                          { 'type' => 'message_stop' }])
+
+    expect(message.thinking.text).to be_nil
+    expect(message.thinking.signature).to eq('redacted-thinking')
+  end
+
+  it 'preserves omitted thinking through stream accumulation' do
+    message = accumulate([{ 'type' => 'message_start' },
+                          block_start(0, { 'type' => 'thinking', 'thinking' => '', 'signature' => '' }),
+                          signature_delta(0, 'thinking-signature'),
+                          { 'type' => 'content_block_stop', 'index' => 0 },
+                          { 'type' => 'message_stop' }])
+
+    expect(message.thinking.text).to eq('')
+    expect(message.thinking.signature).to eq('thinking-signature')
+  end
+
+  it 'prefers a thinking signature over redacted thinking that streamed first' do
+    message = accumulate([{ 'type' => 'message_start' },
+                          block_start(0, { 'type' => 'redacted_thinking', 'data' => 'redacted-thinking' }),
+                          block_start(1, { 'type' => 'thinking', 'thinking' => '', 'signature' => '' }),
+                          signature_delta(1, 'thinking-signature'),
+                          { 'type' => 'message_stop' }])
+
+    expect(message.thinking.signature).to eq('thinking-signature')
   end
 
   it 'starts each streamed message of a pause_turn continuation with no blocks' do
