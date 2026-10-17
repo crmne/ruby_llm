@@ -141,7 +141,7 @@ This assumes your `Recording` model has an `audio` attachment and a `transcript`
 
 ## Understanding the Persistence Flow
 
-When you call `ask`, RubyLLM saves the user message, calls the provider, and saves the assistant's response. For streaming, it creates the assistant record before the first chunk arrives, giving Turbo Streams a stable target. A failed request removes its empty placeholder.
+When you call `ask`, RubyLLM saves the user message, calls the provider, and saves the assistant's response. For streaming, it creates the assistant record before the first chunk arrives, giving Turbo Streams a stable target. A failed request removes its empty placeholder, and so does an error raised by your streaming block.
 
 Only one process runs a chat at a time. `complete`, `step`, `generate`, `run_tools`, and `compact` claim the chat in the database before they call the model or run tools, and each tool call is claimed before it runs. A second process that finds the chat claimed returns without doing anything, and `chat.running?` tells you another process is on it. See [One Process at a Time]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
 

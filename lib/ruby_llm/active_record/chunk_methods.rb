@@ -13,11 +13,17 @@ module RubyLLM
                          'turbo-rails and Action Cable loaded.' # :nodoc:
 
       # Returns a block that gives each chunk the record +message+ returns
-      # before passing it to +block+, or +nil+ without a block.
-      def self.streaming(block, &message) # :nodoc:
+      # before passing it to +block+, or +nil+ without a block. Calls
+      # +on_error+ when +block+ raises, then re-raises the error.
+      def self.streaming(block, on_error: nil, &message) # :nodoc:
         return unless block
 
-        ->(chunk) { block.call(attach(chunk, message.call)) }
+        lambda do |chunk|
+          block.call(attach(chunk, message.call))
+        rescue StandardError
+          on_error&.call
+          raise
+        end
       end
 
       # Gives +chunk+ the record +message+ it streams into. Returns +chunk+.

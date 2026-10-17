@@ -742,6 +742,19 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(Message.find_by(id: blank.id)).to be_nil
       expect(RubyLLM.logger).to have_received(:warn).with(/chat cancelled/)
     end
+
+    it 'destroys the blank assistant message when the streaming block raises' do
+      chat = Chat.create!(model: model_id)
+      allow(chat.to_llm.provider).to receive(:complete) do |*, **, &block|
+        block.call(RubyLLM::Chunk.new(role: :assistant, content: 'Hi'))
+      end
+      allow(RubyLLM.logger).to receive(:warn)
+
+      expect { chat.ask('Hello') { raise ArgumentError, 'broken block' } }
+        .to raise_error(ArgumentError, 'broken block')
+      expect(chat.messages.reload.pluck(:role)).to eq(['user'])
+      expect(RubyLLM.logger).to have_received(:warn).with(/streaming block failed/)
+    end
   end
 
   describe 'orphaned tool result cleanup' do

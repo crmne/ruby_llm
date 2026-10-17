@@ -779,7 +779,8 @@ module RubyLLM
       # Runs the completion loop on the underlying chat, persisting each
       # message, and returns the latest RubyLLM::Message. Pauses when a tool
       # requires approval. When the API call fails, destroys the empty assistant
-      # message and any orphaned tool results, then re-raises the error.
+      # message and any orphaned tool results, then re-raises the error. When
+      # the block raises, destroys the empty assistant message and re-raises.
       #
       # Only one process runs a chat at a time. While another process is
       # #running? it, returns the latest message without calling the model
@@ -793,7 +794,7 @@ module RubyLLM
       #
       #   chat.complete(&:broadcast)
       def complete(&block)
-        on_chunk = ChunkMethods.streaming(block) { @message }
+        on_chunk = ChunkMethods.streaming(block, on_error: method(:cleanup_after_block_failure)) { @message }
         loop do
           busy = false
           response = exclusively(-> { busy = true }) { completing { to_llm.complete(&on_chunk) } }
@@ -911,6 +912,10 @@ module RubyLLM
         reason = error.is_a?(RubyLLM::CancelledError) ? 'chat cancelled' : 'API call failed'
         cleanup_failed_messages(reason:) if blank_placeholder?
         cleanup_orphaned_tool_results
+      end
+
+      def cleanup_after_block_failure
+        cleanup_failed_messages(reason: 'streaming block failed') if blank_placeholder?
       end
 
       def cleanup_failed_messages(reason:)
