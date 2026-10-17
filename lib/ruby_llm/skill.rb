@@ -223,7 +223,7 @@ module RubyLLM
       unless name == name.downcase && name.match?(NAME_FORMAT)
         invalid("name #{name.inspect} must be lowercase letters, digits, and single hyphens between them")
       end
-      folder = path.basename.to_s.unicode_normalize(:nfkc)
+      folder = path.basename.to_s.dup.force_encoding(Encoding::UTF_8).scrub.unicode_normalize(:nfkc)
       invalid("name #{name.inspect} must match its folder name, #{folder}") unless name == folder
 
       name
