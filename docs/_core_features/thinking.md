@@ -33,7 +33,7 @@ Call `with_thinking` without options to enable thinking with the current model's
 chat = RubyLLM.chat(model: 'claude-opus-4-5').with_thinking
 ```
 
-RubyLLM resolves those controls when it builds the request, so it follows later model changes and fallbacks. The registry may select an effort, a token budget, a provider toggle, or no request option for a model that always thinks. If the registry does not know how to enable thinking for the selected model, RubyLLM raises an `ArgumentError` instead of guessing.
+RubyLLM resolves those controls when it builds the request, so it follows later model changes and fallbacks. The registry may select an effort, a token budget, a provider toggle, or no request option for a model that always thinks. If the registry does not know how to enable thinking for the selected model, RubyLLM raises an `ArgumentError` instead of guessing. The error comes with the request. Reading `chat.thinking` never raises: for such a model it returns `{ enabled: true }`, or `{ enabled: false }` after `with_thinking(false)`.
 
 When the registry lists several controls, RubyLLM prefers an explicit default, then a provider toggle, then `medium` effort when available, then the smallest positive token budget the model accepts. Each protocol then sends what its provider needs. Claude never turns thinking on from an effort alone, so RubyLLM adds the thinking block that generation takes. See [Provider Notes](#provider-notes).
 
