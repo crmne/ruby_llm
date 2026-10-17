@@ -164,6 +164,23 @@ RSpec.describe RubyLLM::Evaluation do
     end
   end
 
+  it 'loads UTF-8 JSON and JSONL datasets under an ASCII locale' do
+    original_encoding = Encoding.default_external
+    Encoding.default_external = Encoding::US_ASCII
+    row = { name: 'accueil', inputs: 'café', expected_output: 'CAFÉ' }
+
+    Dir.mktmpdir do |directory|
+      { 'json' => JSON.generate([row]), 'jsonl' => JSON.generate(row) }.each do |extension, body|
+        path = File.join(directory, "cases.#{extension}")
+        File.binwrite(path, body)
+        evaluation.dataset(path)
+        expect(evaluation.run).to be_passed
+      end
+    end
+  ensure
+    Encoding.default_external = original_encoding
+  end
+
   it 'loads enumerable cases from a dataset block once per run' do
     runs = 0
     rows = cases

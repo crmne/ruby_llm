@@ -33,6 +33,16 @@ RSpec.describe RubyLLM::Prompt do
       expect(described_class.render('work_assistant/instructions', user: 'Bob')).to eq('You assist Bob.')
     end
 
+    it 'renders UTF-8 text under an ASCII locale' do
+      original_encoding = Encoding.default_external
+      Encoding.default_external = Encoding::US_ASCII
+      prompt_dir.join('accueil.txt.erb').binwrite('Vous êtes <%= name %>.')
+
+      expect(described_class.render('accueil', name: 'Zoé')).to eq('Vous êtes Zoé.')
+    ensure
+      Encoding.default_external = original_encoding
+    end
+
     it 'renders without locals' do
       create_prompt('simple', 'Just a static prompt.')
       expect(described_class.render('simple')).to eq('Just a static prompt.')
