@@ -32,6 +32,8 @@ response = chat.ask("Summarize the public API changes.", with: "large_diff.patch
 
 Keep reusable instructions and documents at the beginning of the conversation. Changing that prefix can prevent a cache hit. Read the result through `response.tokens.cache_read` and `response.tokens.cache_write`.
 
+Bedrock Converse has no automatic caching of its own, so for Claude and Nova models RubyLLM places the cache points itself: at the end of the conversation, after the system prompt (or the tools, on Claude, when there is no system prompt), and after the previous assistant message. Each tool round and each new question then reads everything sent before it from the cache, and the system prompt stays cached when an earlier message changes. Boundaries you mark with `cache_until_here` come first, within Bedrock's limit of four points per request. Bedrock caches a prefix only once it reaches the model's minimum, between 512 and 4,096 tokens, and below it the request still succeeds, uncached. Other Converse models get no automatic points.
+
 Use options when you need a cache key or lifetime:
 
 ```ruby

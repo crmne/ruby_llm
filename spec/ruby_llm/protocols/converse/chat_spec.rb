@@ -250,6 +250,115 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(payload.dig(:messages, 1, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
     end
 
+    context 'with automatic cache points' do
+      let(:call) { RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: {}) }
+      let(:point) { { cachePoint: { type: 'default' } } }
+      let(:tool_loop) do
+        [
+          RubyLLM::Message.new(role: :system, content: 'Stable instructions'),
+          RubyLLM::Message.new(role: :user, content: 'Look it up'),
+          RubyLLM::Message.new(role: :assistant, content: 'Looking', tool_calls: { 'call_a' => call }),
+          RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'call_a')
+        ]
+      end
+
+      def cache_point_paths(payload)
+        paths = payload.fetch(:system, []).each_index.select { |i| payload[:system][i].key?(:cachePoint) }
+                       .map { |i| [:system, i] }
+        payload[:messages].each_with_index do |message, m|
+          message[:content].each_with_index { |block, b| paths << [m, b] if block.key?(:cachePoint) }
+        end
+        paths
+      end
+
+      it 'caches a tool round through its results, the system prompt, and the call before them' do
+        payload = render_payload(tool_loop, caching: {})
+
+        expect(payload[:system]).to eq([{ text: 'Stable instructions' }, point])
+        expect(payload[:messages].map { |message| message[:role] }).to eq(%w[user assistant user])
+        expect(payload.dig(:messages, 2, :content).map { |block| block.keys.first }).to eq(%i[toolResult cachePoint])
+        expect(payload.dig(:messages, 1, :content).last).to eq(point)
+        expect(payload.dig(:messages, 0, :content).last).not_to eq(point)
+      end
+
+      it 'gives automatic points the chat lifetime' do
+        payload = render_payload(tool_loop, caching: { ttl: '1h' })
+
+        expect(payload.dig(:messages, 2, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+        expect(payload[:system].last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+      end
+
+      it 'sends no more than four cache points, keeping the ones messages mark' do
+        marked = [
+          RubyLLM::Message.new(role: :user, content: 'One').cache_until_here,
+          RubyLLM::Message.new(role: :assistant, content: 'Two').cache_until_here,
+          RubyLLM::Message.new(role: :user, content: 'Three').cache_until_here,
+          RubyLLM::Message.new(role: :assistant, content: 'Four'),
+          RubyLLM::Message.new(role: :user, content: 'Five')
+        ]
+
+        payload = render_payload([RubyLLM::Message.new(role: :system, content: 'Rules'), *marked], caching: {})
+
+        expect(cache_point_paths(payload)).to eq([[0, 1], [1, 1], [2, 1], [4, 1]])
+      end
+
+      it 'does not add a second point where a message marks one' do
+        messages = [RubyLLM::Message.new(role: :user, content: 'Question').cache_until_here]
+
+        payload = render_payload(messages, caching: {})
+
+        expect(payload.dig(:messages, 0, :content)).to eq([{ text: 'Question' }, point])
+      end
+
+      it 'renders a cache boundary marked on a tool result' do
+        tool_loop.last.cache_until_here
+
+        payload = render_payload(tool_loop)
+
+        expect(cache_point_paths(payload)).to eq([[2, 1]])
+      end
+
+      it 'caches the tools when there is no system prompt' do
+        payload = render_payload(tool_loop.drop(1), caching: {}, tools: { 'lookup' => tool_double })
+
+        expect(payload.dig(:toolConfig, :tools).last).to eq(point)
+      end
+
+      it 'puts no point in the tools of a Nova model' do
+        nova = instance_double(RubyLLM::Model, id: 'eu.amazon.nova-pro-v1:0', max_output_tokens: nil, metadata: {})
+
+        payload = render_payload(tool_loop.drop(1), caching: {}, tools: { 'lookup' => tool_double }, model: nova)
+
+        expect(payload.dig(:toolConfig, :tools)).to all(satisfy { |entry| !entry.key?(:cachePoint) })
+        expect(payload.dig(:messages, 2, :content).last).to eq(point)
+      end
+
+      it 'adds no automatic points for a model Converse cannot cache explicitly' do
+        llama = instance_double(RubyLLM::Model, id: 'meta.llama3-3-70b-instruct-v1:0', max_output_tokens: nil,
+                                                metadata: {})
+        tool_loop[1].cache_until_here
+
+        payload = render_payload(tool_loop, caching: {}, model: llama)
+
+        expect(cache_point_paths(payload)).to eq([[0, 1]])
+      end
+
+      it 'caches through an application inference profile, which does not name its model' do
+        profile = instance_double(RubyLLM::Model,
+                                  id: 'arn:aws:bedrock:eu-central-1:123456789012:application-inference-profile/a1b2c3',
+                                  max_output_tokens: nil, metadata: {})
+
+        payload = render_payload(tool_loop, caching: {}, model: profile)
+
+        expect(payload.dig(:messages, 2, :content).last).to eq(point)
+      end
+
+      def tool_double
+        instance_double(RubyLLM::Tool, name: 'lookup', description: 'Looks things up', parameters_schema: nil,
+                                       declared_parameters: {}, provider_options: {})
+      end
+    end
+
     it 'rejects caching options it cannot render' do
       expect do
         render_payload(caching: { retention: '24h' })
