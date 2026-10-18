@@ -123,6 +123,15 @@ RSpec.describe RubyLLM::Protocols::Cohere::Tools do
       end.to raise_error(RubyLLM::ToolCallParseError)
     end
 
+    it 'raises ToolCallTruncatedError for arguments the token limit cut off' do
+      expect do
+        described_class.parse_tool_calls(
+          [{ 'id' => 'abc', 'function' => { 'name' => 'cohere_weather', 'arguments' => '{"city":' } }],
+          finish_reason: :max_tokens
+        )
+      end.to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
+
     it 'returns nil when there are no tool calls' do
       expect(described_class.parse_tool_calls(nil)).to be_nil
       expect(described_class.parse_tool_calls([])).to be_nil

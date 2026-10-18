@@ -106,6 +106,8 @@ module RubyLLM
           arguments = if tc.arguments.is_a?(String) && !tc.arguments.empty?
                         parse_tool_call_arguments(tc.arguments, response)
                       elsif tc.arguments.is_a?(String)
+                        raise ToolCallTruncatedError.new(response:) if cut_off?(tc)
+
                         {}
                       else
                         tc.arguments
@@ -125,7 +127,11 @@ module RubyLLM
       def parse_tool_call_arguments(arguments, response)
         Hash(JSON.parse(arguments))
       rescue JSON::ParserError, TypeError => e
-        raise ToolCallParseError.new(response: response, finish_reason: @finish_reason), cause: e
+        raise ToolCallParseError.for(response:, finish_reason: @finish_reason), cause: e
+      end
+
+      def cut_off?(tool_call)
+        @finish_reason == :max_tokens && tool_calls.values.last.equal?(tool_call)
       end
 
       def accumulate_tool_calls(new_tool_calls)

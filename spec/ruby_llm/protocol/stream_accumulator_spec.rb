@@ -125,6 +125,37 @@ RSpec.describe RubyLLM::Protocol::StreamAccumulator do
       expect { message.call('"x"') }.to raise_error(RubyLLM::ToolCallParseError)
     end
 
+    it 'raises ToolCallTruncatedError when a token limit cuts off the last tool call' do
+      accumulator = described_class.new
+      complete = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'list', arguments: '{"path":"/"}')
+      cut_off = RubyLLM::ToolCall.new(provider_call_id: 'call_2', name: 'move', arguments: '{"from":"a.txt","to')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 0 => complete }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 1 => cut_off }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: :max_tokens))
+
+      expect { accumulator.to_message(nil) }.to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
+
+    it 'raises ToolCallTruncatedError when a token limit stops the last tool call before its arguments' do
+      accumulator = described_class.new
+      call = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'move', arguments: '')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 0 => call }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: :max_tokens))
+
+      expect { accumulator.to_message(nil) }.to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
+
+    it 'keeps a call without arguments before the last one when a token limit stops the response' do
+      accumulator = described_class.new
+      first = RubyLLM::ToolCall.new(provider_call_id: 'call_1', name: 'now', arguments: '')
+      last = RubyLLM::ToolCall.new(provider_call_id: 'call_2', name: 'list', arguments: '{"path":"/"}')
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 0 => first }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 1 => last }))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: :max_tokens))
+
+      expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq({})
+    end
+
     it 'wraps malformed streamed tool call arguments in a RubyLLM error' do
       accumulator = described_class.new
       response = instance_double(Faraday::Response)

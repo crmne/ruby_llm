@@ -181,11 +181,27 @@ module RubyLLM
     # Returns the normalized reason generation stopped, or +nil+.
     attr_reader :finish_reason
 
+    def self.for(response: nil, finish_reason: nil) # :nodoc:
+      return ToolCallTruncatedError.new(response:) if finish_reason == :max_tokens
+
+      new(response:, finish_reason:)
+    end
+
     def initialize(message = nil, response: nil, finish_reason: nil) # :nodoc:
       @finish_reason = finish_reason
       message ||= 'Provider returned malformed tool call arguments'
       message = "#{message} (finish_reason: #{finish_reason})" if finish_reason
       super(message, response: response)
+    end
+  end
+
+  # Raised when the response reached its output token limit while the model
+  # was writing a tool call, so the call's arguments are incomplete. Raise
+  # the limit with Chat#with_max_output_tokens, or ask for less at once.
+  class ToolCallTruncatedError < ToolCallParseError
+    def initialize(message = nil, response: nil) # :nodoc:
+      super(message || 'The response reached its output token limit while writing a tool call',
+            response:, finish_reason: :max_tokens)
     end
   end
 

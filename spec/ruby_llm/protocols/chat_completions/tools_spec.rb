@@ -90,6 +90,15 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
       end
     end
 
+    it 'raises ToolCallTruncatedError for arguments the token limit cut off' do
+      expect do
+        described_class.parse_tool_calls(
+          [{ 'id' => 'call_1', 'function' => { 'name' => 'move', 'arguments' => '{"from":"a.txt","to' } }],
+          finish_reason: :max_tokens
+        )
+      end.to raise_error(RubyLLM::ToolCallTruncatedError)
+    end
+
     it 'wraps malformed argument JSON in a RubyLLM error' do
       response = instance_double(Faraday::Response)
       tool_calls = [

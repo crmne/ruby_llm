@@ -125,7 +125,7 @@ module RubyLLM
 
           Hash(JSON.parse(arguments))
         rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.new(response: response, finish_reason: finish_reason), cause: e
+          raise ToolCallParseError.for(response:, finish_reason:), cause: e
         end
       end
     end

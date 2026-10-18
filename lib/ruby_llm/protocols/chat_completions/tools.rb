@@ -74,7 +74,7 @@ module RubyLLM
             Hash(JSON.parse(arguments))
           end
         rescue JSON::ParserError, TypeError => e
-          raise ToolCallParseError.new(response: response, finish_reason: finish_reason), cause: e
+          raise ToolCallParseError.for(response:, finish_reason:), cause: e
         end
 
         # Streaming deltas key by index so id-less argument fragments find
