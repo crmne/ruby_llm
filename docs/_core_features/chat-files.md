@@ -39,12 +39,19 @@ The first question sends both PDFs. For the second, the model sees two lines lik
 
 ```ruby
 chat.with_file_store
-chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
 chat.with_file_store(RubyLLM.file_store.memory, spill_to_file: 20_000)
 chat.with_file_store(nil)
 ```
 
-The default store is `RubyLLM.file_store.memory`, or for a persisted chat, its files in Active Storage (see [Files in Rails](#files-in-rails)).
+RubyLLM builds three stores, all from `RubyLLM.file_store`:
+
+```ruby
+chat.with_file_store(RubyLLM.file_store.memory)
+chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
+chat.with_file_store(RubyLLM.file_store.active_storage(chat_record, owner: user))
+```
+
+The default store is `RubyLLM.file_store.memory`, or for a persisted chat, `RubyLLM.file_store.active_storage` with its files in Active Storage (see [Files in Rails](#files-in-rails)).
 
 The model gets five tools:
 
@@ -156,9 +163,9 @@ A store is any `RubyLLM::FileStore`. RubyLLM ships three:
 | --- | --- | --- |
 | `RubyLLM.file_store.memory` | In memory, for as long as the chat lives | Scripts, tests, and the default in plain Ruby |
 | `RubyLLM.file_store.directory(path)` | In a folder on disk | A chat that lives across runs, or a folder you share with other tools |
-| Active Storage | In `ruby_llm_chat_files` | Persisted chats, by default; see [Rails](#files-in-rails) |
+| `RubyLLM.file_store.active_storage(chat_record, owner: nil)` | In `ruby_llm_chat_files`, with their content in Active Storage | Persisted chats, by default; see [Rails](#files-in-rails) |
 
-`RubyLLM.file_store.memory` builds a `RubyLLM::FileStore::Memory`, and `RubyLLM.file_store.directory(path)` a `RubyLLM::FileStore::Directory`, creating the folder when it is missing.
+`RubyLLM.file_store.memory` builds a `RubyLLM::FileStore::Memory`, `RubyLLM.file_store.directory(path)` a `RubyLLM::FileStore::Directory`, creating the folder when it is missing, and `RubyLLM.file_store.active_storage(chat_record)` a `RubyLLM::ActiveRecord::FileStore` for an `acts_as_chat` record. The last needs RubyLLM's Rails integration and Active Storage, and raises `RubyLLM::ConfigurationError` without them.
 
 A `Directory` store reads the files someone else puts in its folder too, and code execution runs in that folder, so give each store a folder of its own. It leaves out hidden files and folders, never follows symbolic links, and refuses paths that would leave the folder. It detects content types from file names.
 
@@ -238,10 +245,13 @@ end
 
 ## Files in Rails
 
-A persisted chat keeps its files in Active Storage, on whatever service your application uses: a disk today, a bucket tomorrow, with nothing to change in RubyLLM. Each file is a row in RubyLLM's `ruby_llm_chat_files` table:
+A persisted chat keeps its files in Active Storage, on whatever service your application uses: a disk today, a bucket tomorrow, with nothing to change in RubyLLM. Each file is a row in RubyLLM's `ruby_llm_chat_files` table. `with_file_store` with no store gives an `acts_as_chat` record that store, the one `RubyLLM.file_store.active_storage` builds:
 
 ```ruby
 chat = Chat.create!(model: "{{ site.models.default_chat }}").with_file_store
+# the same as
+chat.with_file_store(RubyLLM.file_store.active_storage(chat))
+
 chat.ask "Summarize these", with: params[:files]
 
 chat.file_store.list
@@ -265,6 +275,8 @@ In a chat several people share, files a tool fetched for one of them may not be 
 
 ```ruby
 chat.with_file_store(owner: Current.user)
+# short for
+chat.with_file_store(RubyLLM.file_store.active_storage(chat, owner: Current.user))
 ```
 
 An agent takes the owner as a lambda, like its store: `file_store owner: -> { Current.user }`.

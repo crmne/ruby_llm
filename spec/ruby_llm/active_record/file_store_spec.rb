@@ -116,6 +116,36 @@ RSpec.describe RubyLLM::ActiveRecord::FileStore do
       expect { chat.with_file_store(memory, owner: chat) }.to raise_error(ArgumentError, /owner: applies/)
     end
 
+    it 'is the store RubyLLM.file_store.active_storage builds, for the chat and owner' do
+      built = RubyLLM.file_store.active_storage(chat, owner: chat)
+
+      expect(built).to be_a(described_class)
+      expect(built).to have_attributes(chat:, owner: chat)
+      expect(RubyLLM.file_store.active_storage(chat).owner).to be_nil
+      expect(chat.with_file_store(built).file_store).to be(built)
+      expect(chat.to_llm.file_store).to be(built)
+    end
+
+    it 'builds the default store through RubyLLM.file_store.active_storage' do
+      allow(RubyLLM.file_store).to receive(:active_storage).and_call_original
+
+      chat.with_file_store(owner: chat)
+
+      expect(RubyLLM.file_store).to have_received(:active_storage).with(chat, owner: chat)
+    end
+
+    it 'refuses an Active Storage store for anything but an acts_as_chat record' do
+      expect { RubyLLM.file_store.active_storage(chat.to_llm) }
+        .to raise_error(ArgumentError, /needs an acts_as_chat record, not RubyLLM::Chat/)
+    end
+
+    it 'refuses an Active Storage store when Active Storage is not loaded' do
+      allow(RubyLLM::ActiveRecord::ChatFile).to receive(:reflect_on_attachment).with(:file).and_return(nil)
+
+      expect { RubyLLM.file_store.active_storage(chat) }
+        .to raise_error(RubyLLM::ConfigurationError, /needs Active Storage/)
+    end
+
     it "takes an agent's owner lambda, run with the chat in scope" do
       agent = Class.new(RubyLLM::Agent) do
         chat_model Chat

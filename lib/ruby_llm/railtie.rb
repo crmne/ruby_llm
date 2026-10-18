@@ -32,6 +32,7 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/file_store'
           require 'ruby_llm/active_record/chat_methods'
           require 'ruby_llm/active_record/chat_files'
+          require 'ruby_llm/active_record/file_store_factory'
           require 'ruby_llm/active_record/message_methods'
           require 'ruby_llm/active_record/message_broadcasting'
           require 'ruby_llm/active_record/chunk_methods'

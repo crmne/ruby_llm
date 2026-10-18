@@ -7,9 +7,11 @@ module RubyLLM
     # Keeps a persisted chat's files in +ruby_llm_chat_files+, with their
     # content in Active Storage, so they live on whatever service Active
     # Storage uses: a disk now, a bucket later. A persisted chat uses one
-    # when ChatFiles#with_file_store is given no store.
+    # when ChatFiles#with_file_store is given no store, and
+    # RubyLLM.file_store.active_storage builds one.
     #
     #   chat.with_file_store
+    #   chat.with_file_store(RubyLLM.file_store.active_storage(chat))
     #   chat.file_store.list
     #
     # With +owner:+, the store writes files for that owner and sees only
