@@ -392,4 +392,19 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
         .to raise_error(RubyLLM::BadRequestError, 'messages: at least one message is required')
     end
   end
+
+  it 'raises ToolCallTruncatedError when max_tokens cuts off a tool call' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [{ 'type' => 'message_start', 'message' => { 'model' => 'claude-sonnet-4-5', 'usage' => {} } },
+     { 'type' => 'content_block_start', 'index' => 0,
+       'content_block' => { 'type' => 'tool_use', 'id' => 'toolu_1', 'name' => 'move', 'input' => {} } },
+     { 'type' => 'content_block_delta', 'index' => 0,
+       'delta' => { 'type' => 'input_json_delta', 'partial_json' => '{"from":"a.txt","to' } },
+     { 'type' => 'message_delta', 'delta' => { 'stop_reason' => 'max_tokens' }, 'usage' => { 'output_tokens' => 64 } },
+     { 'type' => 'message_stop' }].each do |event|
+      accumulator.add(protocol.send(:build_chunk, event))
+    end
+
+    expect { accumulator.to_message(nil) }.to raise_error(RubyLLM::ToolCallTruncatedError)
+  end
 end

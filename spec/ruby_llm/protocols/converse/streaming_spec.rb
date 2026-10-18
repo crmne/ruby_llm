@@ -681,4 +681,17 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       expect(streaming).not_to have_received(:parse_stream_chunk)
     end
   end
+
+  it 'raises ToolCallTruncatedError when maxTokens cuts off a tool call' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    [{ 'contentBlockStart' => { 'contentBlockIndex' => 0,
+                                'start' => { 'toolUse' => { 'toolUseId' => 'call_1', 'name' => 'move' } } } },
+     { 'contentBlockDelta' => { 'contentBlockIndex' => 0,
+                                'delta' => { 'toolUse' => { 'input' => '{"from":"a.txt","to":' } } } },
+     { 'messageStop' => { 'stopReason' => 'max_tokens' } }].each do |event|
+      accumulator.add(streaming.send(:build_chunk, event))
+    end
+
+    expect { accumulator.to_message(nil) }.to raise_error(RubyLLM::ToolCallTruncatedError)
+  end
 end

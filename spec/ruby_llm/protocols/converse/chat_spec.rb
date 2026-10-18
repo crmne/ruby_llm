@@ -187,6 +187,15 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       described_class.render_payload(messages, **base_args, **overrides)
     end
 
+    it 'asks for the model output limit unless told otherwise' do
+      model = instance_double(RubyLLM::Model, id: 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0',
+                                              max_output_tokens: 64_000, metadata: {})
+
+      expect(render_payload(model:).dig(:inferenceConfig, :maxTokens)).to eq(64_000)
+      expect(render_payload(model:, max_output_tokens: 1000).dig(:inferenceConfig, :maxTokens)).to eq(1000)
+      expect(render_payload[:inferenceConfig]).to eq({})
+    end
+
     it 'appends cachePoint to a system message marked as a cache boundary' do
       message = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here
 

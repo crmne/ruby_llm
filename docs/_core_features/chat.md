@@ -198,6 +198,8 @@ response.finish_reason # => :stop, :max_tokens, :tool_calls, or :content_filter
 
 Anthropic's `end_turn`, Gemini's `MAX_TOKENS`, Cohere's `COMPLETE`, and the Responses API's `completed` all arrive as `:stop`, so the same code reads every provider. A response that carries tool calls answers `tool_call_stop?`, not `stopped?`. A finish reason describes a response the provider completed. A failed request raises an error instead. RubyLLM never sends `finish_reason` back to a provider.
 
+When a token limit cuts the response off while the model writes a tool call, the call's arguments are incomplete, and the chat raises `RubyLLM::ToolCallTruncatedError`, a kind of `RubyLLM::ToolCallParseError`. Unless you call `with_max_output_tokens`, RubyLLM asks providers that need a number for the model's whole output limit, so this only happens when the model writes more than it can.
+
 ## Advanced: Replacing the LLM Transcript
 
 For advanced context management, `chat.messages` is whatever you show the LLM. Your application can keep and render a different user-visible transcript if needed. This is useful for chat compaction, moderation, redaction, or any workflow where the LLM should see a different transcript from the user.

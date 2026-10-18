@@ -37,6 +37,7 @@ RubyLLM::Error                    # Base error class for provider-operation issu
     RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
     RubyLLM::ContentFilterError   # Provider content filters blocked a transcription
     RubyLLM::ToolCallParseError   # Provider returned malformed tool-call arguments
+        RubyLLM::ToolCallTruncatedError # The output token limit cut off a tool call
     RubyLLM::UnsupportedAttachmentError # Attachment cannot be sent to this provider/model
     RubyLLM::UnsupportedServerToolError # Provider/protocol does not define this server tool
     RubyLLM::RateLimitError       # 429: Rate limit exceeded

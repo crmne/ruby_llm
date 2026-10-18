@@ -122,6 +122,17 @@ RSpec.describe RubyLLM::Error do
     end
   end
 
+  describe RubyLLM::ToolCallTruncatedError do
+    it 'is a tool call parse error that names the output token limit' do
+      error = described_class.new
+
+      expect(error).to be_a(RubyLLM::ToolCallParseError)
+      expect(error.finish_reason).to eq(:max_tokens)
+      expect(error.message).to eq('The response reached its output token limit while writing a tool call ' \
+                                  '(finish_reason: max_tokens)')
+    end
+  end
+
   describe RubyLLM::UnsupportedAttachmentError do
     it 'is a RubyLLM operation error' do
       error = described_class.new('audio/wav')

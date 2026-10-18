@@ -41,6 +41,7 @@ module RubyLLM
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           tool_prefs ||= {}
+          max_output_tokens ||= model.max_output_tokens
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
           prompt_cache_options(caching)

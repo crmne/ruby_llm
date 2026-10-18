@@ -430,6 +430,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       expect(error).to be_a(RubyLLM::Error)
       expect(error.response).to eq(response)
+      expect(error).to be_a(RubyLLM::ToolCallTruncatedError)
       expect(error.finish_reason).to eq(:max_tokens)
       expect(error.cause).to be_a(JSON::ParserError)
     end
