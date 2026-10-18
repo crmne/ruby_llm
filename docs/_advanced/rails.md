@@ -88,6 +88,8 @@ chat.ask "Summarize this report.", with: report.document
 
 Here `report.document` is an Active Storage attachment. RubyLLM handles reading it and stores message attachments through the association created by the install generator. See [Attachments]({% link _core_features/attachments.md %}) for other file sources.
 
+`with_file_store` gives a chat its own files in Active Storage, so attachments and long tool results stop riding along with every request, and the model reads them with tools when it needs them. Attachments already in Active Storage share their blobs with the chat's files. See [Chat Files]({% link _core_features/chat-files.md %}#files-in-rails).
+
 ## Hotwire Streaming
 
 Generate a working chat interface with controllers, views, Turbo Streams, and an Active Job:

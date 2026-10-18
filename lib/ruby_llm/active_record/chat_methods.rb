@@ -288,7 +288,7 @@ module RubyLLM
         with_provider_options with_headers with_schema
         convert_unsupported_attachments
         before_request before_message after_message before_tool_call after_tool_result after_tool_progress
-        before_fallback after_fallback after_queue after_dequeue after_unqueue
+        before_fallback after_fallback after_queue after_dequeue after_unqueue after_file_write
       ].freeze
 
       ##
@@ -387,6 +387,12 @@ module RubyLLM
       # :call-seq: with_skills(*skills)
       #
       # Applies Chat#with_skills and returns this record.
+
+      ##
+      # :method: after_file_write
+      # :call-seq: after_file_write(&block)
+      #
+      # Applies Chat#after_file_write and returns this record.
 
       ##
       # :method: with_provider_options
@@ -505,6 +511,12 @@ module RubyLLM
       # :call-seq: skills
       #
       # Delegates to Chat#skills. See that method for arguments and return values.
+
+      ##
+      # :method: file_store
+      # :call-seq: file_store
+      #
+      # Delegates to Chat#file_store. See that method for arguments and return values.
 
       ##
       # :method: compaction
@@ -636,7 +648,7 @@ module RubyLLM
       PASSTHROUGH_CHAT_DELEGATES = %i[
         caching citations code_execution compaction concurrency end_user fallbacks headers max_output_tokens
         provider_options schema provider_tools temperature thinking tool_options tools deferred_tools mcp
-        skills
+        skills file_store
         awaiting_input? pending_inputs awaiting_tasks? pending_tasks add_completion count_tokens each render
       ].freeze
 

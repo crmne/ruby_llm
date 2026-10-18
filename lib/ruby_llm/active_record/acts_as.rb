@@ -50,9 +50,11 @@ module RubyLLM
       # Adds the RubyLLM::Chat API (see ChatMethods), a +has_many+
       # association to the messages, a +belongs_to :model+ association to
       # the registry row, a +has_many :ruby_llm_usages+ association over
-      # the attempts the chat paid for, and a
+      # the attempts the chat paid for, a
       # +has_many :ruby_llm_queued_messages+ association over the messages
-      # waiting in its queue (see ChatMethods#queue).
+      # waiting in its queue (see ChatMethods#queue), and a
+      # +has_many :ruby_llm_chat_files+ association over its files (see
+      # ChatFiles#with_file_store).
       #
       # Options:
       #
@@ -92,6 +94,7 @@ module RubyLLM
       class_methods do # rubocop:disable Metrics/BlockLength
         def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil)
           include RubyLLM::ActiveRecord::ChatMethods
+          include RubyLLM::ActiveRecord::ChatFiles
 
           class_attribute :messages_association_name, :message_class
           self.messages_association_name = messages
@@ -122,7 +125,15 @@ module RubyLLM
                    inverse_of: :chat,
                    dependent: :destroy
 
+          has_many :ruby_llm_chat_files,
+                   -> { order(:path, :id) },
+                   as: :chat,
+                   class_name: 'RubyLLM::ActiveRecord::ChatFile',
+                   inverse_of: :chat,
+                   dependent: :destroy
+
           RubyLLM::ActiveRecord::QueuedMessage.declare_attachments
+          RubyLLM::ActiveRecord::ChatFile.declare_attachments
         end
 
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, broadcasts: nil)

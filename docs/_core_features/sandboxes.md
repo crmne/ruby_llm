@@ -235,7 +235,7 @@ class ReportAgent < RubyLLM::Agent
 end
 ```
 
-Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone.
+Without `escalate_to:`, the model has no way to ask for more, and no call waits for anyone. Add `file_store` to the agent, and runs work with the chat's [files]({% link _core_features/chat-files.md %}), in the store's folder when it has one, so the report a run builds is still there for the next question.
 
 `limits` caps the CPU time and memory each process the code starts may use, and `priority :low` keeps your application responsive while code runs. When the code uses up a limit, the sandbox stops it and the model is told which limit it hit. The limits apply to each process, so to bound a run that starts many workers, also limit the container your application runs in. See [mxc's limits on each platform](https://crmne.github.io/mxc/policies/#limits-on-each-platform) for what each platform enforces.
 

@@ -42,12 +42,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     approvals_base_path:,
     approvals_path_helper:
   )
-    expect(File.exist?(File.join(base_path, 'chats/index.html.erb'))).to be true
-    expect(File.exist?(File.join(base_path, 'chats/new.html.erb'))).to be true
-    expect(File.exist?(File.join(base_path, 'chats/show.html.erb'))).to be true
-    expect(File.exist?(File.join(base_path, 'chats/_chat.html.erb'))).to be true
-    expect(File.exist?(File.join(base_path, 'chats/_form.html.erb'))).to be true
-    expect(File.exist?(File.join(base_path, 'chats/_approvals.html.erb'))).to be true
+    %w[index new show _chat _form _approvals _files].each do |view|
+      expect(File.exist?(File.join(base_path, "chats/#{view}.html.erb"))).to be true
+    end
 
     %w[
       messages/_assistant.html.erb
@@ -317,13 +314,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         "call_mail" => RubyLLM::ToolCall.new(id: "call_mail", name: "send_mail", arguments: { "to" => "ops" })
       }))
       chat = #{agent}.find(chat.id)
+      chat.with_file_store.file_store.write("notes/summary.md", "# Summary")
 
       html = #{controller}.render(:show, assigns: #{assigns})
       [ "\#{chat.class.name.underscore.tr('/', '_')}_\#{chat.id}_approvals", "Approve search_docs?", "refunds",
         "Approve send_mail?", "<img", "chart.png", "report.csv", "disposition=attachment",
         '[id="#{message_key}_tool_call_call_search"] { display: none; }',
         '<p id="new_#{message_key}"', "Approve or deny the requests above to continue.",
-        "Checking the docs first." ].each do |text|
+        "Checking the docs first.", "notes/summary.md" ].each do |text|
         abort "show page lacks \#{text}" unless html.include?(text)
       end
       abort "show page offers the message form" if html.include?('name="#{message_key}[content]"')

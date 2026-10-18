@@ -8,7 +8,13 @@ module RubyLLM
   # model. Each call runs Ruby, Python, JavaScript, or a shell script in a Sandbox, in a
   # fresh run directory with read-only copies of the conversation's files,
   # and returns the exit code, the output, and every file the code wrote
-  # there as an attachment on the tool result.
+  # there as an attachment on the tool result. In a chat with a file store
+  # (see Chat#with_file_store), runs work with the chat's files instead.
+  # With a store that keeps its files in a folder (FileStore#local_root),
+  # such as FileStore::Directory, code runs in that folder and changes the
+  # files in place. With any other store, each run starts empty, copies in
+  # the files the model names in +files+, and what the code writes is saved
+  # back to the store.
   #
   # Calls run in the chat's default sandbox. With +escalate_to:+, the model
   # may name a wider sandbox for one call and say why; that call waits for
@@ -51,7 +57,12 @@ module RubyLLM
     # or false, which are never collected.
     CHECKS = Hash.new { |checks, language| checks[language] = ObjectSpace::WeakMap.new }
     CHECKS_LOCK = Mutex.new
-    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :LIMIT_ERRORS
+    FILES_PROPERTY = {
+      'type' => %w[array null], 'items' => { 'type' => 'string' },
+      'description' => "Paths of this chat's files (see list_files) the code reads, copied into the run directory " \
+                       'at the same paths; a folder copies everything in it. null copies nothing'
+    }.freeze
+    private_constant :CHECKS, :CHECKS_LOCK, :ESCALATION_NAME, :LIMIT_ERRORS, :FILES_PROPERTY
 
     class << self
       def tool_name # :nodoc:
@@ -201,22 +212,27 @@ module RubyLLM
     # +escalate_to+ the sandboxes the model may ask for, an Array or a Hash
     # of names to sandboxes. +attachments+ returns the conversation's files
     # when called, and +skills+ a Hash of paths under +skills/+ to the
-    # skill folders mounted there. +mounts+ is a Hash of paths inside the
+    # skill folders mounted there. +file_store+ returns the chat's
+    # FileStore, or +nil+: with one, runs work with its files instead of
+    # the attachments, in its folder when it has one, and each file a run
+    # writes or changes is passed to +written+. +mounts+ is a Hash of paths inside the
     # run directory to directories mounted there read-only, or a Proc called
     # before each run that returns one. +approval+ is called with the
     # ToolCall of each escalated run right before it runs, and the run goes
     # ahead only when it returns +true+. +chat+ and +config+ describe where
     # the instrumentation events go.
     # Raises ConfigurationError without a sandbox.
-    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, skills: -> { {} }, mounts: {},
-                   approval: ->(_tool_call) { false }, chat: nil, config: nil, package_cache_dir: nil,
-                   languages: %i[ruby shell], **packages)
+    def initialize(sandbox:, escalate_to: [], attachments: -> { [] }, file_store: -> {}, written: ->(_file) {},
+                   skills: -> { {} }, mounts: {}, approval: ->(_tool_call) { false }, chat: nil, config: nil,
+                   package_cache_dir: nil, languages: %i[ruby shell], **packages)
       super()
       @sandbox = sandbox
       @config = config
       self.sandbox
       @escalate_to = self.class.escalations(escalate_to)
       @attachments = attachments
+      @file_store = file_store
+      @written = written
       @skills = skills
       @mounts = mounts
       @approval = approval
@@ -293,9 +309,7 @@ module RubyLLM
     def description
       [
         "Runs #{language_list} code in a sandbox and returns its exit code, output, and the files it writes.",
-        'Each call gets a new empty run directory, and nothing carries over between calls.',
-        "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \
-        '(read-only). Write files to the run directory to return them to the user.',
+        *files_note,
         mounts_note,
         packages_note,
         directory_note(sandbox),
@@ -304,23 +318,27 @@ module RubyLLM
       ].compact.join(' ')
     end
 
-    # Returns the JSON Schema of the arguments: +language+ and +code+, and
-    # +sandbox+ and +reason+ when the model may ask for another sandbox.
+    # Returns the JSON Schema of the arguments: +language+ and +code+,
+    # +files+ when runs copy in the chat's files, and +sandbox+ and
+    # +reason+ when the model may ask for another sandbox.
     def parameters_schema
       properties = {
         'language' => { 'type' => 'string', 'enum' => languages.map(&:to_s),
                         'description' => 'The language the code is written in' },
         'code' => { 'type' => 'string', 'description' => 'The complete program to run' }
       }
+      properties['files'] = FILES_PROPERTY if copies_files?
       properties.merge!(escalation_properties) if escalations.any?
       { 'type' => 'object', 'properties' => properties, 'required' => properties.keys,
         'additionalProperties' => false, 'strict' => true }
     end
 
     # Runs +code+ written in +language+ and returns its report, followed by
-    # the files it wrote as Attachments. With +sandbox+, runs in that
-    # sandbox only when the chat recorded an approval for +tool_call+.
-    def execute(language:, code:, sandbox: nil, reason: nil, tool_call: nil) # rubocop:disable Lint/UnusedMethodArgument
+    # the files it wrote as Attachments. +files+ names the chat's files to
+    # copy into the run directory, for a store without a folder. With
+    # +sandbox+, runs in that sandbox only when the chat recorded an
+    # approval for +tool_call+.
+    def execute(language:, code:, sandbox: nil, reason: nil, files: nil, tool_call: nil) # rubocop:disable Lint/UnusedMethodArgument
       language = language.to_s.downcase.to_sym
       unless languages.include?(language)
         return { error: "Unsupported language #{language}. Use one of: #{languages.join(', ')}" }
@@ -329,9 +347,16 @@ module RubyLLM
       runner, error = runner_for(sandbox, code, tool_call)
       return { error: } if error
 
-      Workspace.open do |workspace|
-        run(Language[language], code, workspace, runner:, name: sandbox, tool_call:)
+      store = @file_store.call
+      Workspace.open(attachments: store.nil?) do |workspace|
+        options = { runner:, name: sandbox, tool_call:, store: }
+        root = store&.local_root
+        next run_in_place(Language[language], code, workspace, root:, **options) if root
+
+        run(Language[language], code, workspace, names: files, **options)
       end
+    rescue Workspace::Unavailable => e
+      { error: e.message }
     end
 
     private
@@ -387,27 +412,92 @@ module RubyLLM
       }
     end
 
-    def run(language, code, workspace, runner:, name:, tool_call:)
-      workspace.copy_in(@attachments.call)
-      mounted = workspace.mount(mounts.merge(@skills.call))
-      script = workspace.write_source(language, code)
-      workspace.link_packages(@packages.node_modules) if language.name == :javascript && @packages.node_modules
+    def run(language, code, workspace, runner:, name:, tool_call:, store:, names:)
+      all_mounts = mounts.merge(@skills.call)
+      copied = if store
+                 workspace.copy_files(store, stored_files(store, names, all_mounts.keys))
+               else
+                 workspace.copy_in(@attachments.call)
+               end
+      mounted = workspace.mount(all_mounts)
+      script = prepare(workspace, language, code)
       instrument(language, runner, name, tool_call) do |event|
         result = run_in_sandbox(runner, language.command(script), workspace, readable: mounted)
-        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE)
-        record(event, result, files)
+        files, skipped = workspace.outputs(max_files: MAX_FILES, max_size: MAX_FILE_SIZE, unchanged: copied)
+        record(event, result, files.map(&:filename))
+        next save(store, result, files, skipped) if store
+
         files.empty? ? report(result, files, skipped) : [report(result, files, skipped), *files]
       end
     end
 
-    def run_in_sandbox(runner, command, workspace, readable:)
+    # Runs in the store's own folder: the code reads and writes the files in
+    # place, and each file it creates or changes is passed to +written+.
+    def run_in_place(language, code, workspace, root:, runner:, name:, tool_call:, store:)
+      mounted = workspace.mount(mounts.merge(@skills.call), into: root)
+      script = prepare(workspace, language, code)
+      before = snapshot(store)
+      instrument(language, runner, name, tool_call) do |event|
+        result = run_in_sandbox(runner, language.command(script), workspace, readable: mounted, directory: root)
+        changed = store.list.reject { |file| before[file.path] == [file.byte_size, file.updated_at] }
+        changed.each { |file| @written.call(file) }
+        record(event, result, changed.map(&:path))
+        unmounted = workspace.unmounted
+        report(result, changed.map(&:path), [], unmounted: (unmounted_note(unmounted) if unmounted.any?))
+      end
+    end
+
+    def prepare(workspace, language, code)
+      workspace.write_source(language, code).tap do
+        workspace.link_packages(@packages.node_modules) if language.name == :javascript && @packages.node_modules
+      end
+    end
+
+    def snapshot(store)
+      store.list.to_h { |file| [file.path, [file.byte_size, file.updated_at]] }
+    end
+
+    # Returns the StoredFiles +names+ asks for: each a file, or a folder
+    # standing for every file in it. Raises Workspace::Unavailable for a
+    # name with no file, or one under a read-only folder.
+    def stored_files(store, names, read_only)
+      Array(names).flat_map { |name| stored_files_at(store, name, read_only) }.uniq(&:path)
+    end
+
+    def stored_files_at(store, name, read_only)
+      path = FileStore.path(name)
+      mount = read_only.find { |folder| FileStore.inside?(path, folder) || FileStore.inside?(folder, path) }
+      raise Workspace::Unavailable, "#{name} is in the read-only folder #{mount}, which every run has" if mount
+
+      files = [store.find(path)].compact
+      files = store.list(path) if files.empty?
+      raise Workspace::Unavailable, "No file or folder #{name} in this chat's files. See list_files." if files.empty?
+
+      files
+    rescue ArgumentError => e
+      raise Workspace::Unavailable, e.message
+    end
+
+    def copies_files?
+      store = @file_store.call
+      !store.nil? && store.local_root.nil?
+    end
+
+    def save(store, result, files, skipped)
+      saved = files.map do |file|
+        store.write(file.filename, file.content).tap { |stored| @written.call(stored) }
+      end
+      report(result, saved.map(&:path), skipped)
+    end
+
+    def run_in_sandbox(runner, command, workspace, readable:, directory: workspace.directory)
       runner.run(*command,
                  readable: [*@packages.readable, *@packages.resolver_config(setting(runner, :network)), *readable,
                             workspace.source, workspace.inputs],
                  denied: @packages.denied,
-                 writable: [workspace.directory, workspace.home, workspace.tmp],
-                 timeout: timeout_for(runner), directory: (workspace.directory unless setting(runner, :directory)),
-                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => workspace.directory))
+                 writable: [directory, workspace.home, workspace.tmp],
+                 timeout: timeout_for(runner), directory: (directory unless setting(runner, :directory)),
+                 env: @packages.env(workspace.home, workspace.tmp).merge(RUN_DIR => directory))
     end
 
     def setting(runner, name)
@@ -430,16 +520,16 @@ module RubyLLM
       end
     end
 
-    def record(event, result, files)
+    def record(event, result, paths)
       event[:exit_code] = result.exit_code
       event[:timed_out] = result.timed_out?
       event[:blocked_hosts] = Array(result.blocked) if result.respond_to?(:blocked)
       event[:cpu_time] = result.cpu_time if result.respond_to?(:cpu_time)
       event[:limit_exceeded] = result.limit_exceeded if result.respond_to?(:limit_exceeded)
-      event[:files] = files.map(&:filename)
+      event[:files] = paths
     end
 
-    def report(result, files, skipped)
+    def report(result, files, skipped, **notes)
       blocked = Array(result.blocked) if result.respond_to?(:blocked)
       {
         exit_code: result.exit_code,
@@ -447,9 +537,15 @@ module RubyLLM
         stderr: truncate(result.stderr),
         error: run_error(result),
         blocked_hosts: (blocked if blocked&.any?),
-        files: (files.map(&:filename) if files.any?),
-        skipped_files: (skipped if skipped.any?)
+        files: (files.map { |file| file.is_a?(String) ? file : file.filename } if files.any?),
+        skipped_files: (skipped if skipped.any?),
+        **notes
       }.compact.to_json
+    end
+
+    def unmounted_note(paths)
+      "The read-only folders #{paths.join(', ')} were not mounted, because this chat's files have something " \
+        'of their own at those paths: the code saw that instead.'
     end
 
     def run_error(result)
@@ -470,6 +566,24 @@ module RubyLLM
     def language_list
       labels = languages.map { |name| Language[name].label }
       labels.size > 1 ? "#{labels[0..-2].join(', ')} or #{labels.last}" : labels.first
+    end
+
+    def files_note
+      store = @file_store.call
+      if store&.local_root
+        ["Code runs in the folder that holds this chat's files, the ones list_files shows, and reads them " \
+         'there by their paths.',
+         'What it writes, changes, or deletes there changes the chat\'s files at once, for read_file and later runs.']
+      elsif store
+        ['Each call gets a new empty run directory. To use files from this chat\'s files, the ones list_files ' \
+         'shows, name them in files and they are copied in at the same paths; a folder copies everything in it.',
+         'Files the code writes or changes there are saved to the chat\'s files when it ends, where read_file ' \
+         'and later runs find them. Deleting a file there does not delete it from the chat\'s files.']
+      else
+        ['Each call gets a new empty run directory, and nothing carries over between calls.',
+         "Files attached to the conversation, and files earlier calls returned, are in ./#{Workspace::ATTACHMENTS} " \
+         '(read-only). Write files to the run directory to return them to the user.']
+      end
     end
 
     def mounts_note

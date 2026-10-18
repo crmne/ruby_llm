@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_261_017_130_000) do
+ActiveRecord::Schema[7.1].define(version: 20_261_017_140_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -71,6 +71,22 @@ ActiveRecord::Schema[7.1].define(version: 20_261_017_130_000) do
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
     t.index %w[provider model_id], name: 'index_messages_on_provider_and_model_id'
     t.index ['role'], name: 'index_messages_on_role'
+  end
+
+  create_table 'ruby_llm_chat_files', force: :cascade do |t|
+    t.string 'chat_type', null: false
+    t.integer 'chat_id', null: false
+    t.string 'owner_type'
+    t.integer 'owner_id'
+    t.string 'path', null: false
+    t.string 'content_type'
+    t.bigint 'byte_size'
+    t.string 'digest'
+    t.text 'text'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[chat_type chat_id path], name: 'index_ruby_llm_chat_files_on_chat_type_and_chat_id_and_path'
+    t.index %w[owner_type owner_id], name: 'index_ruby_llm_chat_files_on_owner_type_and_owner_id'
   end
 
   create_table 'ruby_llm_mcp_credentials', force: :cascade do |t|

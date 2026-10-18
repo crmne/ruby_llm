@@ -41,7 +41,7 @@ end
 
 That is the complete application-facing persistence setup. There is no `Model`, `ToolCall`, `UsageEntry`, or `Batch` model to add to `app/models`.
 
-RubyLLM owns seven supporting tables under the `ruby_llm_` prefix:
+RubyLLM owns eight supporting tables under the `ruby_llm_` prefix:
 
 * `ruby_llm_models` for the model registry.
 * `ruby_llm_tool_calls` for provider tool requests and their result links.
@@ -50,8 +50,9 @@ RubyLLM owns seven supporting tables under the `ruby_llm_` prefix:
 * `ruby_llm_mcp_credentials` for encrypted MCP OAuth credentials.
 * `ruby_llm_provider_files` for the provider uploads of stored attachments.
 * `ruby_llm_queued_messages` for user messages waiting to join a chat.
+* `ruby_llm_chat_files` for the files of chats with [files]({% link _core_features/chat-files.md %}#files-in-rails).
 
-They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below. The one exception is `RubyLLM::ActiveRecord::QueuedMessage`, whose records `queued_messages` hands you to render.
+They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below. The exceptions are `RubyLLM::ActiveRecord::QueuedMessage`, whose records `queued_messages` hands you to render, and `RubyLLM::ActiveRecord::ChatFile`, the rows behind a chat's files, which `ruby_llm_chat_files` gives you to list and download.
 
 Their shared abstract base, `RubyLLM::ActiveRecord::Record`, inherits the default database connection. If your chats and messages use a secondary database, [configure the shared connection]({% link _advanced/rails-advanced-config.md %}#using-a-secondary-database) so all related tables stay together.
 

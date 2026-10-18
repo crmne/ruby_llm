@@ -99,6 +99,17 @@ result = chat.messages.find(&:tool_result?)
 result.attachments.first.filename # => "revenue.png"
 ```
 
+In a chat with a [file store]({% link _core_features/chat-files.md %}), runs work with the chat's files instead, so the model reads a chart it drew with `read_file`, edits the script it wrote with `edit_file`, and runs it again. With a store in a folder, code runs in that folder and changes the files in place. With any other store, the model names the files its code reads in `run_code`'s `files` argument, they are copied into the run directory, and what the code writes is saved back. The tool result lists the paths instead of carrying the files. See [Code Execution]({% link _core_features/chat-files.md %}#code-execution) in the Chat Files guide.
+
+```ruby
+chat = RubyLLM.chat
+  .with_file_store(RubyLLM.file_store.directory("tmp/work"))
+  .with_code_execution(python: %w[pandas matplotlib])
+chat.ask "Plot monthly revenue from this export", with: "revenue.csv"
+
+chat.file_store.list.map(&:path) # => ["revenue.csv", "revenue.png"]
+```
+
 With a sandbox that grants nothing more, the code sees the system's programs and libraries read-only, its run directory, and nothing else: no project, no home directory, and no environment variables beyond `PATH`, `LANG`, `RUN_DIR`, and those the declared packages need. `HOME`, `XDG_CACHE_HOME`, and `TMPDIR` point to writable directories that live as long as the call, so programs such as LibreOffice and fontconfig can keep their profiles and caches.
 
 ### Your Own Folders
@@ -201,7 +212,7 @@ chat = Chat.create!(model: "{{ site.models.default_chat }}").with_code_execution
 chat.ask "Turn this export into a PDF report", with: params[:export]
 ```
 
-The files a run returns are stored with Active Storage on the tool result message, like any other attachment, and later runs find them in `attachments/` after a reload or in another process.
+The files a run returns are stored with Active Storage on the tool result message, like any other attachment, and later runs find them in `attachments/` after a reload or in another process. With `with_file_store`, they are saved to the chat's files in Active Storage instead. See [Chat Files]({% link _core_features/chat-files.md %}#files-in-rails).
 
 ## Agents
 

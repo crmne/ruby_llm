@@ -1,0 +1,1379 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        parking garage door code? It is in handbook.md in your files."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
+        the files in this chat''s file store, with their sizes and types: files people
+        attached, files tools returned, long tool results, and files you or your code
+        wrote. Pass path to list one folder.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list. Leave it out for every file"}},"additionalProperties":false},"strict":false},{"type":"function","name":"read_file","description":"Reads
+        a file from this chat''s file store. Text comes back with line numbers, 1000
+        lines or 20000 characters at a time: pass offset and limit to read further.
+        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
+        as the image itself. With unit \"characters\", offset and limit count characters
+        instead of lines, for files with very long lines.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false},"strict":false},{"type":"function","name":"search_files","description":"Searches
+        the text of this chat''s files, PDFs and Office files included, for lines
+        matching a regular expression, ignoring case, and returns each match with
+        its path and line number. Read around a match with read_file and its offset.
+        Pass path to search one file or folder.","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","name":"write_file","description":"Writes
+        a text file to this chat''s file store, replacing any file at that path. Use
+        it for notes, drafts, data, and results you want to keep or come back to.
+        To change part of a file, use edit_file.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false},"strict":false},{"type":"function","name":"edit_file","description":"Changes
+        a text file in this chat''s file store by replacing old_text, which must appear
+        exactly once, with new_text. Include enough of the surrounding text to make
+        old_text unique, or set replace_all to replace every occurrence.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to change"},"old_text":{"type":"string","description":"The exact text
+        to replace"},"new_text":{"type":"string","description":"The text to put in
+        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 17 Oct 2026 20:44:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3473'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4998'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999885'
+      X-Ratelimit-Reset-Requests:
+      - 24ms
+      X-Ratelimit-Reset-Tokens:
+      - 3ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_092f3d2c606e5e13016ad3de1e4ab087d28ee06b6312d169ab",
+          "object": "response",
+          "created_at": 1792269854,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1792269857,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_092f3d2c606e5e13016ad3de1f035887d293fcaf4220e951b8",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq094homUIKxVWDIWVxgkArDQVIlO6odhGyY_N6w2Vk7SMjLvUFsQAnHN0V_TaVg31H_I4lHur9bQxpeZzJbpRv3i_9u0ErjSJFAxJ9IBreJ5SUh6u7sKNoTtkt5jB1-Cc0tXN80GkUzKRyXJxNR9S1gQVEdmA9xAh1sPQ8pxzF2CuVGWlRzI3uyMAwMzscqHUP82-veBVNGlDiDdvd1SpB2r7h6E4Bzv1GNxFGkQAv16Ue1BZgMa0JMtmBmo_X5J4qc4s9EYdFELH2p2EC93zDbyeMsG26Zub22vmReF1AH_z_nmJ5l3t71JKwCiA8QrSAe4zLXqZunDh5C7igF3MdBSj43hKA525cMjM1-6HqY0_22CeA6nHIl4DL9L0nztdIQT2OolEsIWGDkzwU2tI0DRFLx1JYaCUqfEXdPFMXroOAHlUncDbespFf47aSvKCT_uUIqIYYQsSiEZdd6gnXo0wW2HVTOYAUtahy6uuH9jM-nicusKFp4w916w7TaibRSQ9GGYYyUkTbMSQTekSA09rIhzTU1qhPpO2KLcclJLBE9uIyIX5AuR-MpgQRQzu1V0gAsFT9pXHEQUwlJftrH2QtGcwrqs6JtkNVJXH-wHYcYFhRDioikrrElCGwOYoqJi6B26tgVZIErnfxEwA7gT3CF6nvPaWq6D6IGSLfziRaPAONMiN1n5AZeBXH5f8KcLoqdg2pyPOwd_ZyWRJ_Yi7HElNBM1w4THTO27ntVXpc-cy7MzhFzFRwsKqQ14q4aJROpW7mKXfQzJeowr5HyTTxA820TU8x3ycl4W-bS_qUzw-Q1XQLGpcfg0fX26TAEnLIyFCss8QgIXy0unwBpzbJVL5-rH_OFSK0aLmQDF1-RhaiMFkPyK8oSAchhtYc8JL0dr_HpRdhFIldIQTmCLMp4cN8-C4niYvScU-nKZNegj4iBBHGKkha0a0XbDJfwpOSS0KKrYfcCzB5FVpTYqgou_EnxqP6_Cv746Hw6wlkRMCv_TFTAYpXxVRMNoTpVUCRlvv2I1-bJGgeX8tUZ_X7URQKXwXiowucYN3rGNPaWrfj456Bae-n0lPuoKYkaIgPXtR-h90zzxcKZVWT1i6CxLdoIQIfAXymOzcwFMDxA8x_FY64IjgkSFBKGoK2-HSk9TTVzbydM57ZAMJzgEoPlbyvdDg3PHql96boZ49XNqXqON8MjytXx-cLAEigGHCKa0GFnOz8n20DW09VBFdtfBT438aUBBS7wxP7Md1UrGmlrgAPWuRt4zpWhdQEc5o5EI8BN1W0ZC-qD_Gz39lg6RlYE3XPuopEyC1dOdIckd0Lwy_Hw1blmL9El20M8dy6ZnH3DGOYjWduI1kkBRHuexZ1pQYiBbTHhk3LR8sUsh69oHzgYzBE0MyrCaa70NFq2lhnPj7ob8EcL8ZvOgW3djq3jyRjX4sk5beu-r_1VKGNJNgOi9sbQgUj9Z6Bf4R2U2cOd9gcIuooRPEUPoVHBL_8pRKWyos-UhYIp5gr-jK5XKH4mtgUHy_H3APJdmbTOqn09PeqMviwuFD7N3SP4rle2DqI6N_ZHYzWmaD_iPYw0fTsfpdGg8a6B085tsk3SjQt2oTKgAjgAAiAnzFdy4KfzkYsL_WseBOeFOqgmLh8q0H8yMo6S8iaifUlxWDTT0bNxIEpsrLDKe2uVC06qqVwZ2N7K4yu4hk9Gb_W-DLuTgwTc9HQD5OGRCp4A25vUVXZktvmJl66c2XgwmDxIq6cSkvhrHXxLUsR6mX1Q15IojQRiBfB6szvm3Grrz0xSNzcx7GIrEoOuqE0PE_07qwXXJ_IbDnr7vknmLGUvIqX6xlDPTkf3rKyqrkPqRTtKnd_3yFtfGNH1sQ5GHgWwhjyrTBZ2jcGAKb8zlIrY1N8ZrjPpeoPPcp4kWfKVbLMvunmAL8v2lgDM324TCdGcvPss7nBY65ntv8FpoO4qJ0H4gPh-J61vIb_0YQ6myXsz1-TvOC_oA8yuV3WRqh0AoO-QE0pEBT8-v2gIiVbp1RW0j9489NVn_pD5eDLkVb_jBc4ZLe6EXdYgaLScOVVhFjWd8SMQNq3lLSSdyS7HXcaY6pVxX8QpwUCNQRABXYe9tiS1XekWPBpOkf3jRBzTPSl-cMTC3V2lhtww_ecDKQqiB5isGF_ZMmx2uKreBM5mKCXQzDfHA3dNHSmsveKm6de4Arrt3JR1qqajnfzU0IISYk24OZf8So1Zdhth6xnoFsSTbVzbvJcfVuVspLlh00gtLcDW5FRtODRP5YAbYagf758XCS0ZpTHTBO4iIRpOLb_vQKa1VH5mHtAgq_CQBUsdAUrqEltITQ3bdkKei27QZ7dC2XivoFsPwG_ihQXIZHYuPjzlD2NFhilWPu6maz_mW_Glr29c8loXpqEr5yX0czl_lQS0Zei2s19BwZHiSMFQ_-dHWFXMX8MQvMCvkfEKqM9coAPO5tpMZH_J7lJl-9ceG_6CSAvfILMjTt_VMmwbRv4cq7XtZpN9dXwmt63XIRs_5b2kDfMyPZ6QdW8n4kkWTL_xMuADU9AJDinhhCaHjM4uU7OeyzxBCGUknVjty3ddC7K6EqbhJp9WSWijqOxwnKLvTczSM4xntedNIu4HEDf5QoCWS82X1bRJG1VZ8BwWG0qt15F7HMGkVzdqGJmh3Ei8s26fQtYv9nOploL1UE4EHaHsbn42Uy6wJeJDP4N6iTI43Jf-JWeyNpp8XLlfGT_nU_qxCJT8rmMas15P2go6zNAsCKIkeg4hjdLlKXc6nS783SqDC_H3r-cK6DItCAFCVulikW_1e95XHG63L1hchVHQLpyRFHSxiPozQkxdyAt3N03on7d1PDkV_oEYFWzgqlDYIGHbYi97l_Ahtpo68iu8UgP6dmUoG2ST_yxlY_wek-RC2glBAQGcUw6u29omw23EJpzIGXWcz-f_8YjsEJW9h0iy8P2Pj68EFf_w5Vr2BtUzI2n7O8BUaXuNjMNpKxnJo1owDAVJ3OeKapZESbyRvv7VU1BPQKRSGl5IZyfZekXgoNTenKj0uOVEYL39aIC95s7yr2j34kEwR9DnM7Zklw6fvWcN5SkHDRKEexAhVtanJClYsdP_B5R4byWJsDxoearNZ0nFzbISFkkTX4Y9V_hGK-RnZoWIWxRCHIQP4SlB4qyrRwNZuYcQKri5nGzMiP3y4ilMITkRni_AUGT7fkFLIfohN5wPjMwKPwhW2INt4v7hANl_sZE1Dp5YmYyOw3AOWgwn57tslNKwYoMWFLYlfrh7qyGNKg5plOJxDfmUXdkvAizK3NbDY3tI9-k9S0xBUSe8qVnngSKHosi8AbtanZTflaMxyK3SP91XDmuzMEM4EstCLKbdlCTDSwX419ykrEqJESOQBNvnrZlgylCoA0kH17uU9svHa9_wLdoyecRVa7jhVCAkl14ZIWBSTj5TrxLsX4B982ubKFY9eYoDDB1Vfu9CqR453-M0MfJqG0woOy88eDOraQNA3UR8QuqDckyMjzKVyXeYHp_9iHYzhNiXL-AFAOVdQfN7g1HDIR-av9RQPROvk3l3ntpja0oPq1vDrjazElIclNNvJsyYccY96_HnVPLixdbCvtLbakemsaUymGeecGEO8KFGbFZvmRJQjHHO3g0ltF8giyh3umLYf2rzzj-S1OpG6w7HRMBaYL81D5FuZibYPaKG3ZDw83RhBPoTKXudI8O7wbpPxR-wc6UbMcvjU_sGOTvVg5NSTej5XhgN9Bm5Q3dol3NemtbQNPtC8Gs2IZsAC-WRGBTS3vE5x1zxZxtDR471p0sH_91bzSeLlx9B6yU9emhvGpq_Ez_Mp3LDoHDlSpWQIF8E9UZEHbxM8lrPrWsNoo6bmqDpBA5VJB7cpKHYMPud0aSenDVkZelzCYR5ChtA4wA4CY4gNFotrsvvRGBs4CuHjspJYG21tcFTrbmXHLgl95vC2EUET36jsnbVUygBvHniQHekzSHwmCFK3Fl4YQYST2nnmXcVkFr7tvto0bAWevkXwwjeIm_LtrgmFQvKn7Vk7pDEvp_rXAzprubTG9RXa8_8nWA8JAL_ZD2qfTcIXqbfoQTd3CyyvpfCF5dDs19VUhA1ETBrnLlnFcJaTYDTP964RWxgZ_y5oez6DqyOyMIeiF5NHFdP6vEU-zqWg6p0ii9i1IK23IMDKdJm-huaNHejBOzLCP77QueGbL3gp6DT7CAgfddxBykKvZWSC8bQrbf1h7cxcI1UJjQuRx9sqxW7DH0GuwASDWwEacopoGb5MrpmuVFyHAFmL10bjckaZOAYfrF3ZF83N2XPFKZ9OxuBLOYvfoim1kcmZmUUZa3cOURDgdKS8z2dixCcvSEEs2r0YPnoFHZcwHpayrogV8DBswocm7ilDvNwZ1mSgn-h19GAK9A4N_7zuVN_FnYpq-T2-EYW1LMJw3NC304y4Idwc9_zJ0IfCnQq3OttqcUFT5SopfljqDYcNHFcryZoKl9LgcdzQq6HLpJxAk7TcZcpNN45Bzo5eianF5UVMXNUIacKJb3ONLvq2Vkl-caCHBq1bOG6FGttKSJlQHAKADyXiMVt8OeuRtNnkHg1a90CkD-Gj5ULyGOpWKYi3Pa9ZZxm0HIqJ6FqlOTvcBkmFduv4IAalw5OVSb8_3xhoWDsaWbc9BLB99T1Kjsr2c6Bf7cHjba_03IDUidjZoCndNCMCEuKBOqLfb_rb2HhGncHKnN0HG1TZ7umwulAMjQrDFgqxwqVasL7UpI6Y70Z9s_A2weuA5Y1v-E-aRCJspbfR64YkH6HSdHQnDy6Bxa_L7CaFcBcVNqOK30PLHfHXR6CCIZUJLPZCuz9roAalqFPuxhRtXtwGIYY2T7OSIwPDxQlWisegC4R-8XmUAzdYr_O44FpIq2Vjp2Cmi17wu2KZotoC74VRVjcIf3j8UAGHPrgD7XD1g18eTAkDzj_qRQjJ1K9SgUL651GJJhoO3SNpcGMqJ1VvDpgdTgiBvrLYyeql1Qc4bzhhw3Glg5xjAU6_OjBMfXS88Q8E-7NFIWNX8bf6A7uvaqcgrueGf0BWtd4TQP7YTF157nG041i1O4MHC6iaDKLTSjxk3tJIKeoeYxm2UzgZhTMIbLvblP2whLth_KkkL-wJY_OliQddJl92tII_4VL2rKk9NpJRDropZsg7obLiiARMs7y3BZ4vNQ84As9vy4jfoZ9f2kNbQU4Gmvwy_qjYC9u3RvtUejE7GeaoeYh5E8xaBlZBYh2zebiGSyAs402W7Uar3mafeFdLMZJo7A0OnLiAVwSBDKlhhVEBshuyic_05Ga8sz4pbUPqU54Al7jrcET4ywa0qct41Wfa8WidLJLy4tcdncoozHOmwRZnIee9j0tqJgK4yWhOgLEA1E1Nja3H43JoTX15jn_f-w4x9ix5rB6g7DTVIXQBZiLpRH5lJJKOkVlGuYLky933zUQrz4_nCglC72mED6Zpv4M8tV1973jZ-UO-LHYTgUgPSb_gN_lfdyKXmhHKcqBORKZ_kAc1lQSNdSvuMbYoPBiZHQHlysD9770z1yQRoVxqyprPTpSFQBTaij1rZkqNhDxD6ca1kXmmzla9e0vT_dxSCmr3lyZm6XQar7psQXJuzbcFMwYs6NVLibPtVnFpmelb1KI_o547En1pGeUC6B55cYrWCnWMvnsRB6nQP0NJtGxWGEXf5uCcqErym4AevfnBDqnFlSeHqdnpX2kcx8G80B83fpx13TpYkx_-NL1vRsoMKGiiAlLdk-JKxS1EEtkmx82vtGob8BRBkA34LXhRFc9FgiM1bL7ucbC3FcpAQxya57MdWBhfERbxtiVJXqhy3Pe9QIctf9PY07j8wNg5Lm3nI4Rf9NuTBlG8KGV5JBPQ7aUQ0hE7McH068U94G4qjV9KKnvFH-F_GuXRP7_pZseZSscOuy_5hD6T1xg7X_VeMxUXRpj_SOGKncWbBX2kAV-AyS39twVIzKrFRjUXKx_9MR7n_ouWwZxE-3h5W4UWm9IyMejlgSZDVKFdy1RPq3COpkePtUMOAV8bEhpMGfTX6qMPQzt6r3aNeKNGuUEnCLOVyASlrRncN2p9r86E08921OrZLJ4x3jdPtAczAsvh5FF7OkzXZxwKRINcoH-O-fLr0xI5Tt96Fr6bUSQ-kV9OIp62j0VmbkGa6E34VkF4nF9LLVdLuk_nAtENyPL9IQ6wbSPcGvsGzrQJ-N7O7aDDrgnyeWJq-GO6yebswefLhZd5xsFpSGe5o4A4G_0rtL7LGaBFth17iMcJAyOR7sLbfhn3-35xcsM9lAxUu6XPWrw9Dnu_Ed3MIR5DWHUTXMJixauAHeSi46u5ARBp83Rbdf8Zq1oUM8izS0C-e_Ip3n3vyNFBbFuiqNzXG6NtLYoKXGn5Rxa2xaeGch9tHwifED_uY6rJlJOq4xhRyiN62qr5-_JA1lUvjl0iaostFjWyAHRGvRys6TSroDT078JW7pVxiRhmzTXh7obwnGaoy37FAcZ4TeTOY7PAYA9WBdXyLvZTao2KCNmHMAG0Jd-ewDoUVMo2wIcYckv9ebQuFRRgZ8F5e0Bi54WSLRPtf5aBrGQNWoc__99N7mg-joEHfi-aQ2DKlxI2S_876wkleMPcbqFhq1QZKpOUu9C8GcKhqgX1iB1iHa3_u9DA9G4kODzvtBrZSdfuo3IZyZxi7Upiz_8AfX_u6Ko6rvCLaU3Z2PhdWJfwgx07AX4H4vF9iqVREduPn0fXOx63pFTKGCP2ijaUbMF-arrxMEG_cGwxa2xVp6p4w-zkiddjtb0WWcQ9xAF5eZrpBERUFgDIvOVT0bkRB9PeZmMKh1iXSD-AbH-bKia4_Iikl3V4VxkPhRaqEH6BMTLHXhcod23YC7-XmKUYVl4w5Jh9FSINcjrmt2neiLbc_TK_pgNITIdl5-ZAQElweQNqVFG8_qDt-Ik1L6e-rW7jUs05Ztezr5Tbaxvop9ZQXmO8vcESOf9nYYBZD9i1x3kteIJkq4WBqpZCOVgusPXsAqQC6B5f4AJWbN3mVnvnPVW-cQZKJSoWDH9Mhc47jHHqUWoBgZdyPNl4uA8QNtNV76io1odog4PD9iPOtzY4HJHf42ye42fF5y_MnBZvfiaTewBeZ82TGxUP03JPLLcouoVQVAFc8Z9YgGICiOmLa0ikVNgJma4QoNte2CHXtu5z2CrFAtuPn7CvevssoB3O6Vk2mrl9aUshKq9h917ATK0TGmTghiDSczJttNT-lFuoJ1-mnUSE2cNWqKZcWIaLu1N3xJ-edLypa_tGw0Fitpa2BR4zT_HhQwmA853alJfleFwcMSWT0UBuXIU7MDxLv4U2H5TT1UPxHwhvVNgS4yaJ5oXn8NNKF1z8LUVR3vUbyZVN-9GM1EHKvbQVjFDIgFJ2wQVmO29FX6hLuWM5xdnOh4L03I7DgApNC0IlFWGURnep0Nnci_jkx-hl25GTXhSfQ8HArVw9eBWQ_uZ7mrFmkXsS3or0sM6Lq2FVM3nNaZy-DLWJYWpI8_V0f_49XeOQYezqQMgkX0lCo5W0vbkyHt024Se2kgw2hoqjEyKzB49znfWfUJUV_gjTWbILGu77zZWDeV_6zHJxuoLyfOqoUL-Rj4NR_WkqF1FRZqSp0FhjeAf_olY2sZ4HA1cGG2zBdu48nDJkGcrE_c5oeFpi79EjvmxmpH9CuEQaVUdRG7O8LdmMO68DCwfvEbZNnV7b3zJKZh9ZF9SPuAfup6_mCL2k-u-YhBGizLdiEMsBh2pZfqx9uyqKE2fAFzDJRYYOsOG_yH7qaODvpyPjw2xauQa5p5uBviRAQZVJP759b0V7OTaF5_YEUyfaHJrFItxp1G0-iWhTWnlzZhfFLMTpn2aW6y8OqBGmmfF8UcbraXDTFVICP8n31ApPz5WhWqQGOroQSqt3yuXhiXW-b8KNkilxBaX0YFhSWi0gprjknqld5GD-cjfRJVA42nwECSKw3_oDk4_9qdPjl6xCYDh1v6xoIUdXWe-AcNIeQpmVMPKD8ksSpuSCAxGuuPpTMsZPX-XJ3a-rA2ZpTsVocy3NE4V5qOqm1w5NmJyqploJoqEhtmgs1SXpdfGFBS-1b1QaK_wuBUvRQJX5aw0Tp1FbEEyAaQX6Uumi2jsbC4-dfz_NF_lJ3EoAlt1PMfjMHbbw0uKmgAcWIvt3yd9HDqFVxrPI1RQzAOJkEEW394W5oJZeSzudD-4sVHoFRgF0ko1LeBMFfmVVL8e2--eG-BkHYMiFILldRqBbYrssPNwXHtlNrmecYktOqrgqzOw4JNJJjKi63Pf9G5lXdkHzVJVQ1sNZRS8hh-jTIlGmDRMvc2WRq-2gJG946G7KpuMPjkqT1v9MqOpLv0O-qVNFVSL-nFXb3T8eQkdH8Ub4k7l9XQlPubhY3qibziGki3qZNRlmR2cuGUJKjdpJCLgYVbuX3Xguo7oXx9iUPgCfjkNEzfJPVnqbhaTTA6xqoo7EJTC1Bc-HmEpw63-sDBWPpxsSHSf9zEdlX-tXhvALPdgWumMPQUfFdM5AXGb6B1D75BfUeA34LSmAXG_YUuSUdfWJNcRk2wGPN-rP82d5NaMR5aJpA0mZX5JpgF3XxxdWU4loB8gn5aoVA2GMkt6cGR4MvMADfLP-fAwhJeTBqz7j2YMfKgV8NmCyy5vOqEZmTi6a-p-vP1OIrTQchDpo0TQtNsZhEe8WKD3ZB5NuMZREldDnvnjnE9KjDJ1tjLLqi-IDQ35NRHVTUpSHKTKZ3pm8sb1AzvA9v8t0GDSIDcdSzIHzlxvUF_2ufHQ7etj5UUcquVw1ZnDYpFhE5aZE0FtnfQEDx33xjF0Nod_AM2Zx0ib5AByWnpIdFJwjLzFEkOFyyF3EheObOCzlMKyfiYVuN7drSuYt7Y1JN1erVL0h_mDT6GjLl-R3tINvS-G_lbnLtqYnF5aQEgrkFzds15kt_v5kn7BdouP-WCvpYfKfRXIxp2zNl-bWyf_J9DBa2TMAY2rK7_qinoaMfVDVzFWjHnynN2SX42TsyeNGuGAmabSDkJwL4HMMA8jv-Fo1KlXXlCAmfvNPh_hO_PwrXh49_bLbdEX4qgygRhhEjMOyjpkvfx9ngSVE6lnXAEy4Ya1dTEcEW7PFtrqMDcrunngfwoPOd6I1CRvJm-o_RHtc9hNr43zAdqKztqo0VZSIdwbxki_OrqTigqef2jAdWsmI1QDiGZG-9i_eb7YfCyZnK2TUXYC7LHluP",
+              "summary": []
+            },
+            {
+              "id": "fc_092f3d2c606e5e13016ad3de21a75087d2a7abca06facfd443",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_QnXqkAYAnySRHOOu0uywltxk",
+              "name": "list_files"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Lists the files in this chat's file store, with their sizes and types: files people attached, files tools returned, long tool results, and files you or your code wrote. Pass path to list one folder.",
+              "name": "list_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A folder to list. Leave it out for every file"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Reads a file from this chat's file store. Text comes back with line numbers, 1000 lines or 20000 characters at a time: pass offset and limit to read further. PDFs, Word, Excel, and PowerPoint files come back as their text, and images as the image itself. With unit \"characters\", offset and limit count characters instead of lines, for files with very long lines.",
+              "name": "read_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to read"
+                  },
+                  "offset": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "The line to start at, from 1, or the character, from 0"
+                  },
+                  "limit": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "How many lines or characters to read"
+                  },
+                  "unit": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "lines",
+                      "characters",
+                      null
+                    ],
+                    "description": "lines (the default) or characters"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Searches the text of this chat's files, PDFs and Office files included, for lines matching a regular expression, ignoring case, and returns each match with its path and line number. Read around a match with read_file and its offset. Pass path to search one file or folder.",
+              "name": "search_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A regular expression, or plain words"
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A file or folder to search. Leave it out for all"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Writes a text file to this chat's file store, replacing any file at that path. Use it for notes, drafts, data, and results you want to keep or come back to. To change part of a file, use edit_file.",
+              "name": "write_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Where to write, such as notes/summary.md"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The complete content of the file"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Changes a text file in this chat's file store by replacing old_text, which must appear exactly once, with new_text. Include enough of the surrounding text to make old_text unique, or set replace_all to replace every occurrence.",
+              "name": "edit_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to change"
+                  },
+                  "old_text": {
+                    "type": "string",
+                    "description": "The exact text to replace"
+                  },
+                  "new_text": {
+                    "type": "string",
+                    "description": "The text to put in its place"
+                  },
+                  "replace_all": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Replace every occurrence"
+                  }
+                },
+                "required": [
+                  "path",
+                  "old_text",
+                  "new_text"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 556,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 611,
+            "output_tokens_details": {
+              "reasoning_tokens": 576
+            },
+            "total_tokens": 1167
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sat, 17 Oct 2026 20:44:17 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq094homUIKxVWDIWVxgkArDQVIlO6odhGyY_N6w2Vk7SMjLvUFsQAnHN0V_TaVg31H_I4lHur9bQxpeZzJbpRv3i_9u0ErjSJFAxJ9IBreJ5SUh6u7sKNoTtkt5jB1-Cc0tXN80GkUzKRyXJxNR9S1gQVEdmA9xAh1sPQ8pxzF2CuVGWlRzI3uyMAwMzscqHUP82-veBVNGlDiDdvd1SpB2r7h6E4Bzv1GNxFGkQAv16Ue1BZgMa0JMtmBmo_X5J4qc4s9EYdFELH2p2EC93zDbyeMsG26Zub22vmReF1AH_z_nmJ5l3t71JKwCiA8QrSAe4zLXqZunDh5C7igF3MdBSj43hKA525cMjM1-6HqY0_22CeA6nHIl4DL9L0nztdIQT2OolEsIWGDkzwU2tI0DRFLx1JYaCUqfEXdPFMXroOAHlUncDbespFf47aSvKCT_uUIqIYYQsSiEZdd6gnXo0wW2HVTOYAUtahy6uuH9jM-nicusKFp4w916w7TaibRSQ9GGYYyUkTbMSQTekSA09rIhzTU1qhPpO2KLcclJLBE9uIyIX5AuR-MpgQRQzu1V0gAsFT9pXHEQUwlJftrH2QtGcwrqs6JtkNVJXH-wHYcYFhRDioikrrElCGwOYoqJi6B26tgVZIErnfxEwA7gT3CF6nvPaWq6D6IGSLfziRaPAONMiN1n5AZeBXH5f8KcLoqdg2pyPOwd_ZyWRJ_Yi7HElNBM1w4THTO27ntVXpc-cy7MzhFzFRwsKqQ14q4aJROpW7mKXfQzJeowr5HyTTxA820TU8x3ycl4W-bS_qUzw-Q1XQLGpcfg0fX26TAEnLIyFCss8QgIXy0unwBpzbJVL5-rH_OFSK0aLmQDF1-RhaiMFkPyK8oSAchhtYc8JL0dr_HpRdhFIldIQTmCLMp4cN8-C4niYvScU-nKZNegj4iBBHGKkha0a0XbDJfwpOSS0KKrYfcCzB5FVpTYqgou_EnxqP6_Cv746Hw6wlkRMCv_TFTAYpXxVRMNoTpVUCRlvv2I1-bJGgeX8tUZ_X7URQKXwXiowucYN3rGNPaWrfj456Bae-n0lPuoKYkaIgPXtR-h90zzxcKZVWT1i6CxLdoIQIfAXymOzcwFMDxA8x_FY64IjgkSFBKGoK2-HSk9TTVzbydM57ZAMJzgEoPlbyvdDg3PHql96boZ49XNqXqON8MjytXx-cLAEigGHCKa0GFnOz8n20DW09VBFdtfBT438aUBBS7wxP7Md1UrGmlrgAPWuRt4zpWhdQEc5o5EI8BN1W0ZC-qD_Gz39lg6RlYE3XPuopEyC1dOdIckd0Lwy_Hw1blmL9El20M8dy6ZnH3DGOYjWduI1kkBRHuexZ1pQYiBbTHhk3LR8sUsh69oHzgYzBE0MyrCaa70NFq2lhnPj7ob8EcL8ZvOgW3djq3jyRjX4sk5beu-r_1VKGNJNgOi9sbQgUj9Z6Bf4R2U2cOd9gcIuooRPEUPoVHBL_8pRKWyos-UhYIp5gr-jK5XKH4mtgUHy_H3APJdmbTOqn09PeqMviwuFD7N3SP4rle2DqI6N_ZHYzWmaD_iPYw0fTsfpdGg8a6B085tsk3SjQt2oTKgAjgAAiAnzFdy4KfzkYsL_WseBOeFOqgmLh8q0H8yMo6S8iaifUlxWDTT0bNxIEpsrLDKe2uVC06qqVwZ2N7K4yu4hk9Gb_W-DLuTgwTc9HQD5OGRCp4A25vUVXZktvmJl66c2XgwmDxIq6cSkvhrHXxLUsR6mX1Q15IojQRiBfB6szvm3Grrz0xSNzcx7GIrEoOuqE0PE_07qwXXJ_IbDnr7vknmLGUvIqX6xlDPTkf3rKyqrkPqRTtKnd_3yFtfGNH1sQ5GHgWwhjyrTBZ2jcGAKb8zlIrY1N8ZrjPpeoPPcp4kWfKVbLMvunmAL8v2lgDM324TCdGcvPss7nBY65ntv8FpoO4qJ0H4gPh-J61vIb_0YQ6myXsz1-TvOC_oA8yuV3WRqh0AoO-QE0pEBT8-v2gIiVbp1RW0j9489NVn_pD5eDLkVb_jBc4ZLe6EXdYgaLScOVVhFjWd8SMQNq3lLSSdyS7HXcaY6pVxX8QpwUCNQRABXYe9tiS1XekWPBpOkf3jRBzTPSl-cMTC3V2lhtww_ecDKQqiB5isGF_ZMmx2uKreBM5mKCXQzDfHA3dNHSmsveKm6de4Arrt3JR1qqajnfzU0IISYk24OZf8So1Zdhth6xnoFsSTbVzbvJcfVuVspLlh00gtLcDW5FRtODRP5YAbYagf758XCS0ZpTHTBO4iIRpOLb_vQKa1VH5mHtAgq_CQBUsdAUrqEltITQ3bdkKei27QZ7dC2XivoFsPwG_ihQXIZHYuPjzlD2NFhilWPu6maz_mW_Glr29c8loXpqEr5yX0czl_lQS0Zei2s19BwZHiSMFQ_-dHWFXMX8MQvMCvkfEKqM9coAPO5tpMZH_J7lJl-9ceG_6CSAvfILMjTt_VMmwbRv4cq7XtZpN9dXwmt63XIRs_5b2kDfMyPZ6QdW8n4kkWTL_xMuADU9AJDinhhCaHjM4uU7OeyzxBCGUknVjty3ddC7K6EqbhJp9WSWijqOxwnKLvTczSM4xntedNIu4HEDf5QoCWS82X1bRJG1VZ8BwWG0qt15F7HMGkVzdqGJmh3Ei8s26fQtYv9nOploL1UE4EHaHsbn42Uy6wJeJDP4N6iTI43Jf-JWeyNpp8XLlfGT_nU_qxCJT8rmMas15P2go6zNAsCKIkeg4hjdLlKXc6nS783SqDC_H3r-cK6DItCAFCVulikW_1e95XHG63L1hchVHQLpyRFHSxiPozQkxdyAt3N03on7d1PDkV_oEYFWzgqlDYIGHbYi97l_Ahtpo68iu8UgP6dmUoG2ST_yxlY_wek-RC2glBAQGcUw6u29omw23EJpzIGXWcz-f_8YjsEJW9h0iy8P2Pj68EFf_w5Vr2BtUzI2n7O8BUaXuNjMNpKxnJo1owDAVJ3OeKapZESbyRvv7VU1BPQKRSGl5IZyfZekXgoNTenKj0uOVEYL39aIC95s7yr2j34kEwR9DnM7Zklw6fvWcN5SkHDRKEexAhVtanJClYsdP_B5R4byWJsDxoearNZ0nFzbISFkkTX4Y9V_hGK-RnZoWIWxRCHIQP4SlB4qyrRwNZuYcQKri5nGzMiP3y4ilMITkRni_AUGT7fkFLIfohN5wPjMwKPwhW2INt4v7hANl_sZE1Dp5YmYyOw3AOWgwn57tslNKwYoMWFLYlfrh7qyGNKg5plOJxDfmUXdkvAizK3NbDY3tI9-k9S0xBUSe8qVnngSKHosi8AbtanZTflaMxyK3SP91XDmuzMEM4EstCLKbdlCTDSwX419ykrEqJESOQBNvnrZlgylCoA0kH17uU9svHa9_wLdoyecRVa7jhVCAkl14ZIWBSTj5TrxLsX4B982ubKFY9eYoDDB1Vfu9CqR453-M0MfJqG0woOy88eDOraQNA3UR8QuqDckyMjzKVyXeYHp_9iHYzhNiXL-AFAOVdQfN7g1HDIR-av9RQPROvk3l3ntpja0oPq1vDrjazElIclNNvJsyYccY96_HnVPLixdbCvtLbakemsaUymGeecGEO8KFGbFZvmRJQjHHO3g0ltF8giyh3umLYf2rzzj-S1OpG6w7HRMBaYL81D5FuZibYPaKG3ZDw83RhBPoTKXudI8O7wbpPxR-wc6UbMcvjU_sGOTvVg5NSTej5XhgN9Bm5Q3dol3NemtbQNPtC8Gs2IZsAC-WRGBTS3vE5x1zxZxtDR471p0sH_91bzSeLlx9B6yU9emhvGpq_Ez_Mp3LDoHDlSpWQIF8E9UZEHbxM8lrPrWsNoo6bmqDpBA5VJB7cpKHYMPud0aSenDVkZelzCYR5ChtA4wA4CY4gNFotrsvvRGBs4CuHjspJYG21tcFTrbmXHLgl95vC2EUET36jsnbVUygBvHniQHekzSHwmCFK3Fl4YQYST2nnmXcVkFr7tvto0bAWevkXwwjeIm_LtrgmFQvKn7Vk7pDEvp_rXAzprubTG9RXa8_8nWA8JAL_ZD2qfTcIXqbfoQTd3CyyvpfCF5dDs19VUhA1ETBrnLlnFcJaTYDTP964RWxgZ_y5oez6DqyOyMIeiF5NHFdP6vEU-zqWg6p0ii9i1IK23IMDKdJm-huaNHejBOzLCP77QueGbL3gp6DT7CAgfddxBykKvZWSC8bQrbf1h7cxcI1UJjQuRx9sqxW7DH0GuwASDWwEacopoGb5MrpmuVFyHAFmL10bjckaZOAYfrF3ZF83N2XPFKZ9OxuBLOYvfoim1kcmZmUUZa3cOURDgdKS8z2dixCcvSEEs2r0YPnoFHZcwHpayrogV8DBswocm7ilDvNwZ1mSgn-h19GAK9A4N_7zuVN_FnYpq-T2-EYW1LMJw3NC304y4Idwc9_zJ0IfCnQq3OttqcUFT5SopfljqDYcNHFcryZoKl9LgcdzQq6HLpJxAk7TcZcpNN45Bzo5eianF5UVMXNUIacKJb3ONLvq2Vkl-caCHBq1bOG6FGttKSJlQHAKADyXiMVt8OeuRtNnkHg1a90CkD-Gj5ULyGOpWKYi3Pa9ZZxm0HIqJ6FqlOTvcBkmFduv4IAalw5OVSb8_3xhoWDsaWbc9BLB99T1Kjsr2c6Bf7cHjba_03IDUidjZoCndNCMCEuKBOqLfb_rb2HhGncHKnN0HG1TZ7umwulAMjQrDFgqxwqVasL7UpI6Y70Z9s_A2weuA5Y1v-E-aRCJspbfR64YkH6HSdHQnDy6Bxa_L7CaFcBcVNqOK30PLHfHXR6CCIZUJLPZCuz9roAalqFPuxhRtXtwGIYY2T7OSIwPDxQlWisegC4R-8XmUAzdYr_O44FpIq2Vjp2Cmi17wu2KZotoC74VRVjcIf3j8UAGHPrgD7XD1g18eTAkDzj_qRQjJ1K9SgUL651GJJhoO3SNpcGMqJ1VvDpgdTgiBvrLYyeql1Qc4bzhhw3Glg5xjAU6_OjBMfXS88Q8E-7NFIWNX8bf6A7uvaqcgrueGf0BWtd4TQP7YTF157nG041i1O4MHC6iaDKLTSjxk3tJIKeoeYxm2UzgZhTMIbLvblP2whLth_KkkL-wJY_OliQddJl92tII_4VL2rKk9NpJRDropZsg7obLiiARMs7y3BZ4vNQ84As9vy4jfoZ9f2kNbQU4Gmvwy_qjYC9u3RvtUejE7GeaoeYh5E8xaBlZBYh2zebiGSyAs402W7Uar3mafeFdLMZJo7A0OnLiAVwSBDKlhhVEBshuyic_05Ga8sz4pbUPqU54Al7jrcET4ywa0qct41Wfa8WidLJLy4tcdncoozHOmwRZnIee9j0tqJgK4yWhOgLEA1E1Nja3H43JoTX15jn_f-w4x9ix5rB6g7DTVIXQBZiLpRH5lJJKOkVlGuYLky933zUQrz4_nCglC72mED6Zpv4M8tV1973jZ-UO-LHYTgUgPSb_gN_lfdyKXmhHKcqBORKZ_kAc1lQSNdSvuMbYoPBiZHQHlysD9770z1yQRoVxqyprPTpSFQBTaij1rZkqNhDxD6ca1kXmmzla9e0vT_dxSCmr3lyZm6XQar7psQXJuzbcFMwYs6NVLibPtVnFpmelb1KI_o547En1pGeUC6B55cYrWCnWMvnsRB6nQP0NJtGxWGEXf5uCcqErym4AevfnBDqnFlSeHqdnpX2kcx8G80B83fpx13TpYkx_-NL1vRsoMKGiiAlLdk-JKxS1EEtkmx82vtGob8BRBkA34LXhRFc9FgiM1bL7ucbC3FcpAQxya57MdWBhfERbxtiVJXqhy3Pe9QIctf9PY07j8wNg5Lm3nI4Rf9NuTBlG8KGV5JBPQ7aUQ0hE7McH068U94G4qjV9KKnvFH-F_GuXRP7_pZseZSscOuy_5hD6T1xg7X_VeMxUXRpj_SOGKncWbBX2kAV-AyS39twVIzKrFRjUXKx_9MR7n_ouWwZxE-3h5W4UWm9IyMejlgSZDVKFdy1RPq3COpkePtUMOAV8bEhpMGfTX6qMPQzt6r3aNeKNGuUEnCLOVyASlrRncN2p9r86E08921OrZLJ4x3jdPtAczAsvh5FF7OkzXZxwKRINcoH-O-fLr0xI5Tt96Fr6bUSQ-kV9OIp62j0VmbkGa6E34VkF4nF9LLVdLuk_nAtENyPL9IQ6wbSPcGvsGzrQJ-N7O7aDDrgnyeWJq-GO6yebswefLhZd5xsFpSGe5o4A4G_0rtL7LGaBFth17iMcJAyOR7sLbfhn3-35xcsM9lAxUu6XPWrw9Dnu_Ed3MIR5DWHUTXMJixauAHeSi46u5ARBp83Rbdf8Zq1oUM8izS0C-e_Ip3n3vyNFBbFuiqNzXG6NtLYoKXGn5Rxa2xaeGch9tHwifED_uY6rJlJOq4xhRyiN62qr5-_JA1lUvjl0iaostFjWyAHRGvRys6TSroDT078JW7pVxiRhmzTXh7obwnGaoy37FAcZ4TeTOY7PAYA9WBdXyLvZTao2KCNmHMAG0Jd-ewDoUVMo2wIcYckv9ebQuFRRgZ8F5e0Bi54WSLRPtf5aBrGQNWoc__99N7mg-joEHfi-aQ2DKlxI2S_876wkleMPcbqFhq1QZKpOUu9C8GcKhqgX1iB1iHa3_u9DA9G4kODzvtBrZSdfuo3IZyZxi7Upiz_8AfX_u6Ko6rvCLaU3Z2PhdWJfwgx07AX4H4vF9iqVREduPn0fXOx63pFTKGCP2ijaUbMF-arrxMEG_cGwxa2xVp6p4w-zkiddjtb0WWcQ9xAF5eZrpBERUFgDIvOVT0bkRB9PeZmMKh1iXSD-AbH-bKia4_Iikl3V4VxkPhRaqEH6BMTLHXhcod23YC7-XmKUYVl4w5Jh9FSINcjrmt2neiLbc_TK_pgNITIdl5-ZAQElweQNqVFG8_qDt-Ik1L6e-rW7jUs05Ztezr5Tbaxvop9ZQXmO8vcESOf9nYYBZD9i1x3kteIJkq4WBqpZCOVgusPXsAqQC6B5f4AJWbN3mVnvnPVW-cQZKJSoWDH9Mhc47jHHqUWoBgZdyPNl4uA8QNtNV76io1odog4PD9iPOtzY4HJHf42ye42fF5y_MnBZvfiaTewBeZ82TGxUP03JPLLcouoVQVAFc8Z9YgGICiOmLa0ikVNgJma4QoNte2CHXtu5z2CrFAtuPn7CvevssoB3O6Vk2mrl9aUshKq9h917ATK0TGmTghiDSczJttNT-lFuoJ1-mnUSE2cNWqKZcWIaLu1N3xJ-edLypa_tGw0Fitpa2BR4zT_HhQwmA853alJfleFwcMSWT0UBuXIU7MDxLv4U2H5TT1UPxHwhvVNgS4yaJ5oXn8NNKF1z8LUVR3vUbyZVN-9GM1EHKvbQVjFDIgFJ2wQVmO29FX6hLuWM5xdnOh4L03I7DgApNC0IlFWGURnep0Nnci_jkx-hl25GTXhSfQ8HArVw9eBWQ_uZ7mrFmkXsS3or0sM6Lq2FVM3nNaZy-DLWJYWpI8_V0f_49XeOQYezqQMgkX0lCo5W0vbkyHt024Se2kgw2hoqjEyKzB49znfWfUJUV_gjTWbILGu77zZWDeV_6zHJxuoLyfOqoUL-Rj4NR_WkqF1FRZqSp0FhjeAf_olY2sZ4HA1cGG2zBdu48nDJkGcrE_c5oeFpi79EjvmxmpH9CuEQaVUdRG7O8LdmMO68DCwfvEbZNnV7b3zJKZh9ZF9SPuAfup6_mCL2k-u-YhBGizLdiEMsBh2pZfqx9uyqKE2fAFzDJRYYOsOG_yH7qaODvpyPjw2xauQa5p5uBviRAQZVJP759b0V7OTaF5_YEUyfaHJrFItxp1G0-iWhTWnlzZhfFLMTpn2aW6y8OqBGmmfF8UcbraXDTFVICP8n31ApPz5WhWqQGOroQSqt3yuXhiXW-b8KNkilxBaX0YFhSWi0gprjknqld5GD-cjfRJVA42nwECSKw3_oDk4_9qdPjl6xCYDh1v6xoIUdXWe-AcNIeQpmVMPKD8ksSpuSCAxGuuPpTMsZPX-XJ3a-rA2ZpTsVocy3NE4V5qOqm1w5NmJyqploJoqEhtmgs1SXpdfGFBS-1b1QaK_wuBUvRQJX5aw0Tp1FbEEyAaQX6Uumi2jsbC4-dfz_NF_lJ3EoAlt1PMfjMHbbw0uKmgAcWIvt3yd9HDqFVxrPI1RQzAOJkEEW394W5oJZeSzudD-4sVHoFRgF0ko1LeBMFfmVVL8e2--eG-BkHYMiFILldRqBbYrssPNwXHtlNrmecYktOqrgqzOw4JNJJjKi63Pf9G5lXdkHzVJVQ1sNZRS8hh-jTIlGmDRMvc2WRq-2gJG946G7KpuMPjkqT1v9MqOpLv0O-qVNFVSL-nFXb3T8eQkdH8Ub4k7l9XQlPubhY3qibziGki3qZNRlmR2cuGUJKjdpJCLgYVbuX3Xguo7oXx9iUPgCfjkNEzfJPVnqbhaTTA6xqoo7EJTC1Bc-HmEpw63-sDBWPpxsSHSf9zEdlX-tXhvALPdgWumMPQUfFdM5AXGb6B1D75BfUeA34LSmAXG_YUuSUdfWJNcRk2wGPN-rP82d5NaMR5aJpA0mZX5JpgF3XxxdWU4loB8gn5aoVA2GMkt6cGR4MvMADfLP-fAwhJeTBqz7j2YMfKgV8NmCyy5vOqEZmTi6a-p-vP1OIrTQchDpo0TQtNsZhEe8WKD3ZB5NuMZREldDnvnjnE9KjDJ1tjLLqi-IDQ35NRHVTUpSHKTKZ3pm8sb1AzvA9v8t0GDSIDcdSzIHzlxvUF_2ufHQ7etj5UUcquVw1ZnDYpFhE5aZE0FtnfQEDx33xjF0Nod_AM2Zx0ib5AByWnpIdFJwjLzFEkOFyyF3EheObOCzlMKyfiYVuN7drSuYt7Y1JN1erVL0h_mDT6GjLl-R3tINvS-G_lbnLtqYnF5aQEgrkFzds15kt_v5kn7BdouP-WCvpYfKfRXIxp2zNl-bWyf_J9DBa2TMAY2rK7_qinoaMfVDVzFWjHnynN2SX42TsyeNGuGAmabSDkJwL4HMMA8jv-Fo1KlXXlCAmfvNPh_hO_PwrXh49_bLbdEX4qgygRhhEjMOyjpkvfx9ngSVE6lnXAEy4Ya1dTEcEW7PFtrqMDcrunngfwoPOd6I1CRvJm-o_RHtc9hNr43zAdqKztqo0VZSIdwbxki_OrqTigqef2jAdWsmI1QDiGZG-9i_eb7YfCyZnK2TUXYC7LHluP"},{"type":"function_call","call_id":"call_QnXqkAYAnySRHOOu0uywltxk","name":"list_files","arguments":"{}"},{"type":"function_call_output","call_id":"call_QnXqkAYAnySRHOOu0uywltxk","output":"handbook.md\t19.3
+        KB\ttext/markdown"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
+        the files in this chat''s file store, with their sizes and types: files people
+        attached, files tools returned, long tool results, and files you or your code
+        wrote. Pass path to list one folder.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list. Leave it out for every file"}},"additionalProperties":false},"strict":false},{"type":"function","name":"read_file","description":"Reads
+        a file from this chat''s file store. Text comes back with line numbers, 1000
+        lines or 20000 characters at a time: pass offset and limit to read further.
+        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
+        as the image itself. With unit \"characters\", offset and limit count characters
+        instead of lines, for files with very long lines.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false},"strict":false},{"type":"function","name":"search_files","description":"Searches
+        the text of this chat''s files, PDFs and Office files included, for lines
+        matching a regular expression, ignoring case, and returns each match with
+        its path and line number. Read around a match with read_file and its offset.
+        Pass path to search one file or folder.","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","name":"write_file","description":"Writes
+        a text file to this chat''s file store, replacing any file at that path. Use
+        it for notes, drafts, data, and results you want to keep or come back to.
+        To change part of a file, use edit_file.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false},"strict":false},{"type":"function","name":"edit_file","description":"Changes
+        a text file in this chat''s file store by replacing old_text, which must appear
+        exactly once, with new_text. Include enough of the surrounding text to make
+        old_text unique, or set replace_all to replace every occurrence.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to change"},"old_text":{"type":"string","description":"The exact text
+        to replace"},"new_text":{"type":"string","description":"The text to put in
+        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 17 Oct 2026 20:44:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '737'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1998729'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 38ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_00913745b97fc21c016ad3de22188087d2bda3aa7aa4f2e151",
+          "object": "response",
+          "created_at": 1792269858,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1792269858,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_00913745b97fc21c016ad3de225c7887d2b7022f36463cf42f",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq094iwziTfyhTc7SAStNn_yQrDLGQFjA7NTPf8hEH74qsvd7-W_G4esIJk7BKkWN6JinSDctc69ygkrWPyW3o_dy3dMv2NNBnJY3ZrBX6_DG1HylcZ46WQTTGqD3Bon28H958Fz9h1WKJnDzisX_NAxa7FFe0NerYLsEjGMo4cT1wxJSjLjmKJNhVMegccqjF78QPkfgfR551zsXMnKxTbrk0nzWRRSM712YAH6k3dR5AwKmq3HtoKVrFLbcl8PCD1RFIY_iBqbnceD1vU_RAG08WUJGVqyFy0OSXv_Nvp7eHGS5gm2SAPi0WpgNv9VFYbGXJLsMWX_K9e4aXRUbn4iGjH-6flw0N0fg-kacAQEjXfEKRQLHH3lBeb-wdPmBCo8_NRBDzbD1weQN9Fm_hfbbT0K55RZMXqHijDd1tV0n4rFYYDsFV94zwrRgbuigwyhjqX8Gow8oKYWaD4ED6HjPUN-klDs_hEkE_reUdm9eakcxnOfHcty093qdWd72p6qqNS8-vw0IUWy8ftWHWwMza3BIOxSa1ODEer4OZj9sA3PLIjkuzoiZq0nCKMaYiAbFFwjRfp20OZA27iFiJ27IIuRQDlX5Q2SP46gMQNOubIZpJs6N3BGosd6tjEscviF5IuAn3n7ZPWequcEU_3KMzkUdIFu0WhJRyFdm1WrpAqZ9yJlTqX_rdlfu_xIRTqUrNZL2lSJ7zmIYW-36_wty7qcsJx42bJrzw1w0yB_Ueg4zfEjMf-AASMpG9IIWH6uvdfD19Rk0SPYq1o87ykZES9oF0bpdwMcMsNqgDWp-IH2bdSzlzDgCj43n3eY6d-z8S1FhqvHqyMJncIVtulsc_BzGKa3L8brblwAp9ltj0QIM2rEbjpZbEl4DB41fGrYKjXfo8q05QVKQSs0DHyeNO1CIltzYBJgFoqpyesJJXnT58phw4hGHiBC8fc34q53rOZpzQ984ut-zcEQW1cwnfz5NPEu9ggTvybOvjBtGEd4c5bDfm4rMJJm1IBej6m3fVGmep5oPRvRmPLlERqJl-SlztSwzoLNU7_eBlrkYFawf8g78iGtGLwt569s8Ao4IpV8aJlDSeW_F9raygz7HopZ92tMqxSssAJr_iW_5jydpORgrZQiomxrDFGYN0jrFM1kQZ0Yl0hotTqDc2XWhkswCEdQKUwm3Lix1e7SAJp1RvTxXcdtqmLnjoVR9yZ27mQBaDxTOjIymU9Of09C3LXZoErvq1Kaj8gcSsRxsBPiI_k-7zpbSrW3qP7PZUernUWHcD0tjs8WY7tZbbOn6TT64oj1-82-ZSi4rNrnQ3YxVGvVY132oC_abHADPkMsiSr00lk-_0UzIr-uhR-qdWaZWPwk_aE7_hQsVBblEz-6_IKQEDZmjB8FgNvMWTdTdmJ6FZei-E1NUOEyMNjhQwVQYKbzeIlbTWOAdfPFtWLLXsKZimfD7NXv3_j5Je2UtnuWDVrGf95tsxYmh-It54G5rKWLOVWVU4y4edyJj5nsUCb7rVtbgPMjVjirtvrZHcPMs96xLCUwXY3SOTnSE17vu397mtimcMY0Xj-p6G0dzy_3jXERjuMWmEF3kG5XYFemF3uNYlKmAL8C-iw7-oF7M9i4pOM-AJ7N8eSgEA9OUoxkqImRoLoiSBDzs5JTBj2n_9v8dTpt83_2MEE_ZsH2gD8SsYvzbLYEa9sALclrZYOddnoFOivJvQyigRSinZs_R3welYp67Y5otoQerrD-lgwPjcGGsbEf6fCT5kRGBs_b3bMad2asy5bZS7BKbURoEpgPmsMJfr1egIF4OpViX_ySfIs_cvrsdClEM1pR3ZSJXWM-BbKLx-2LREQ8plEmHFN9IkCk4G6irMBZiAWKgNUYvmdH0k6Jz2Sjl4ReRgMfzfSTBdE8lPunZTwC1JYZ8aNfasDhA1Pr_Qco3rqj_42mbw_RKJs3Dv9MKgiy0V8zb2zINv3UUcX5A9uvo6DmUWsn6-F7WHNNONupbHrHjW4Gq372ryEO6Q1b9VW-awdJvn2GZlL8VWWJv2fsjQJKo4-b2bxeSePHxZnFGOffiiO-B6fex3ULKdurVapmgWcD4weHcBJwYm1cbtB2dS",
+              "summary": []
+            },
+            {
+              "id": "fc_00913745b97fc21c016ad3de22a76c87d2b49c1c79581715a4",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"path\":\"handbook.md\",\"offset\":0,\"limit\":2000,\"unit\":\"lines\"}",
+              "call_id": "call_F7GVQ5VW4TsvvJPcVP0rfNRF",
+              "name": "read_file"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Lists the files in this chat's file store, with their sizes and types: files people attached, files tools returned, long tool results, and files you or your code wrote. Pass path to list one folder.",
+              "name": "list_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A folder to list. Leave it out for every file"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Reads a file from this chat's file store. Text comes back with line numbers, 1000 lines or 20000 characters at a time: pass offset and limit to read further. PDFs, Word, Excel, and PowerPoint files come back as their text, and images as the image itself. With unit \"characters\", offset and limit count characters instead of lines, for files with very long lines.",
+              "name": "read_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to read"
+                  },
+                  "offset": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "The line to start at, from 1, or the character, from 0"
+                  },
+                  "limit": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "How many lines or characters to read"
+                  },
+                  "unit": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "lines",
+                      "characters",
+                      null
+                    ],
+                    "description": "lines (the default) or characters"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Searches the text of this chat's files, PDFs and Office files included, for lines matching a regular expression, ignoring case, and returns each match with its path and line number. Read around a match with read_file and its offset. Pass path to search one file or folder.",
+              "name": "search_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A regular expression, or plain words"
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A file or folder to search. Leave it out for all"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Writes a text file to this chat's file store, replacing any file at that path. Use it for notes, drafts, data, and results you want to keep or come back to. To change part of a file, use edit_file.",
+              "name": "write_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Where to write, such as notes/summary.md"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The complete content of the file"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Changes a text file in this chat's file store by replacing old_text, which must appear exactly once, with new_text. Include enough of the surrounding text to make old_text unique, or set replace_all to replace every occurrence.",
+              "name": "edit_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to change"
+                  },
+                  "old_text": {
+                    "type": "string",
+                    "description": "The exact text to replace"
+                  },
+                  "new_text": {
+                    "type": "string",
+                    "description": "The text to put in its place"
+                  },
+                  "replace_all": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Replace every occurrence"
+                  }
+                },
+                "required": [
+                  "path",
+                  "old_text",
+                  "new_text"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 1186,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 1024
+            },
+            "output_tokens": 85,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 1271
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sat, 17 Oct 2026 20:44:18 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        parking garage door code? It is in handbook.md in your files."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq094homUIKxVWDIWVxgkArDQVIlO6odhGyY_N6w2Vk7SMjLvUFsQAnHN0V_TaVg31H_I4lHur9bQxpeZzJbpRv3i_9u0ErjSJFAxJ9IBreJ5SUh6u7sKNoTtkt5jB1-Cc0tXN80GkUzKRyXJxNR9S1gQVEdmA9xAh1sPQ8pxzF2CuVGWlRzI3uyMAwMzscqHUP82-veBVNGlDiDdvd1SpB2r7h6E4Bzv1GNxFGkQAv16Ue1BZgMa0JMtmBmo_X5J4qc4s9EYdFELH2p2EC93zDbyeMsG26Zub22vmReF1AH_z_nmJ5l3t71JKwCiA8QrSAe4zLXqZunDh5C7igF3MdBSj43hKA525cMjM1-6HqY0_22CeA6nHIl4DL9L0nztdIQT2OolEsIWGDkzwU2tI0DRFLx1JYaCUqfEXdPFMXroOAHlUncDbespFf47aSvKCT_uUIqIYYQsSiEZdd6gnXo0wW2HVTOYAUtahy6uuH9jM-nicusKFp4w916w7TaibRSQ9GGYYyUkTbMSQTekSA09rIhzTU1qhPpO2KLcclJLBE9uIyIX5AuR-MpgQRQzu1V0gAsFT9pXHEQUwlJftrH2QtGcwrqs6JtkNVJXH-wHYcYFhRDioikrrElCGwOYoqJi6B26tgVZIErnfxEwA7gT3CF6nvPaWq6D6IGSLfziRaPAONMiN1n5AZeBXH5f8KcLoqdg2pyPOwd_ZyWRJ_Yi7HElNBM1w4THTO27ntVXpc-cy7MzhFzFRwsKqQ14q4aJROpW7mKXfQzJeowr5HyTTxA820TU8x3ycl4W-bS_qUzw-Q1XQLGpcfg0fX26TAEnLIyFCss8QgIXy0unwBpzbJVL5-rH_OFSK0aLmQDF1-RhaiMFkPyK8oSAchhtYc8JL0dr_HpRdhFIldIQTmCLMp4cN8-C4niYvScU-nKZNegj4iBBHGKkha0a0XbDJfwpOSS0KKrYfcCzB5FVpTYqgou_EnxqP6_Cv746Hw6wlkRMCv_TFTAYpXxVRMNoTpVUCRlvv2I1-bJGgeX8tUZ_X7URQKXwXiowucYN3rGNPaWrfj456Bae-n0lPuoKYkaIgPXtR-h90zzxcKZVWT1i6CxLdoIQIfAXymOzcwFMDxA8x_FY64IjgkSFBKGoK2-HSk9TTVzbydM57ZAMJzgEoPlbyvdDg3PHql96boZ49XNqXqON8MjytXx-cLAEigGHCKa0GFnOz8n20DW09VBFdtfBT438aUBBS7wxP7Md1UrGmlrgAPWuRt4zpWhdQEc5o5EI8BN1W0ZC-qD_Gz39lg6RlYE3XPuopEyC1dOdIckd0Lwy_Hw1blmL9El20M8dy6ZnH3DGOYjWduI1kkBRHuexZ1pQYiBbTHhk3LR8sUsh69oHzgYzBE0MyrCaa70NFq2lhnPj7ob8EcL8ZvOgW3djq3jyRjX4sk5beu-r_1VKGNJNgOi9sbQgUj9Z6Bf4R2U2cOd9gcIuooRPEUPoVHBL_8pRKWyos-UhYIp5gr-jK5XKH4mtgUHy_H3APJdmbTOqn09PeqMviwuFD7N3SP4rle2DqI6N_ZHYzWmaD_iPYw0fTsfpdGg8a6B085tsk3SjQt2oTKgAjgAAiAnzFdy4KfzkYsL_WseBOeFOqgmLh8q0H8yMo6S8iaifUlxWDTT0bNxIEpsrLDKe2uVC06qqVwZ2N7K4yu4hk9Gb_W-DLuTgwTc9HQD5OGRCp4A25vUVXZktvmJl66c2XgwmDxIq6cSkvhrHXxLUsR6mX1Q15IojQRiBfB6szvm3Grrz0xSNzcx7GIrEoOuqE0PE_07qwXXJ_IbDnr7vknmLGUvIqX6xlDPTkf3rKyqrkPqRTtKnd_3yFtfGNH1sQ5GHgWwhjyrTBZ2jcGAKb8zlIrY1N8ZrjPpeoPPcp4kWfKVbLMvunmAL8v2lgDM324TCdGcvPss7nBY65ntv8FpoO4qJ0H4gPh-J61vIb_0YQ6myXsz1-TvOC_oA8yuV3WRqh0AoO-QE0pEBT8-v2gIiVbp1RW0j9489NVn_pD5eDLkVb_jBc4ZLe6EXdYgaLScOVVhFjWd8SMQNq3lLSSdyS7HXcaY6pVxX8QpwUCNQRABXYe9tiS1XekWPBpOkf3jRBzTPSl-cMTC3V2lhtww_ecDKQqiB5isGF_ZMmx2uKreBM5mKCXQzDfHA3dNHSmsveKm6de4Arrt3JR1qqajnfzU0IISYk24OZf8So1Zdhth6xnoFsSTbVzbvJcfVuVspLlh00gtLcDW5FRtODRP5YAbYagf758XCS0ZpTHTBO4iIRpOLb_vQKa1VH5mHtAgq_CQBUsdAUrqEltITQ3bdkKei27QZ7dC2XivoFsPwG_ihQXIZHYuPjzlD2NFhilWPu6maz_mW_Glr29c8loXpqEr5yX0czl_lQS0Zei2s19BwZHiSMFQ_-dHWFXMX8MQvMCvkfEKqM9coAPO5tpMZH_J7lJl-9ceG_6CSAvfILMjTt_VMmwbRv4cq7XtZpN9dXwmt63XIRs_5b2kDfMyPZ6QdW8n4kkWTL_xMuADU9AJDinhhCaHjM4uU7OeyzxBCGUknVjty3ddC7K6EqbhJp9WSWijqOxwnKLvTczSM4xntedNIu4HEDf5QoCWS82X1bRJG1VZ8BwWG0qt15F7HMGkVzdqGJmh3Ei8s26fQtYv9nOploL1UE4EHaHsbn42Uy6wJeJDP4N6iTI43Jf-JWeyNpp8XLlfGT_nU_qxCJT8rmMas15P2go6zNAsCKIkeg4hjdLlKXc6nS783SqDC_H3r-cK6DItCAFCVulikW_1e95XHG63L1hchVHQLpyRFHSxiPozQkxdyAt3N03on7d1PDkV_oEYFWzgqlDYIGHbYi97l_Ahtpo68iu8UgP6dmUoG2ST_yxlY_wek-RC2glBAQGcUw6u29omw23EJpzIGXWcz-f_8YjsEJW9h0iy8P2Pj68EFf_w5Vr2BtUzI2n7O8BUaXuNjMNpKxnJo1owDAVJ3OeKapZESbyRvv7VU1BPQKRSGl5IZyfZekXgoNTenKj0uOVEYL39aIC95s7yr2j34kEwR9DnM7Zklw6fvWcN5SkHDRKEexAhVtanJClYsdP_B5R4byWJsDxoearNZ0nFzbISFkkTX4Y9V_hGK-RnZoWIWxRCHIQP4SlB4qyrRwNZuYcQKri5nGzMiP3y4ilMITkRni_AUGT7fkFLIfohN5wPjMwKPwhW2INt4v7hANl_sZE1Dp5YmYyOw3AOWgwn57tslNKwYoMWFLYlfrh7qyGNKg5plOJxDfmUXdkvAizK3NbDY3tI9-k9S0xBUSe8qVnngSKHosi8AbtanZTflaMxyK3SP91XDmuzMEM4EstCLKbdlCTDSwX419ykrEqJESOQBNvnrZlgylCoA0kH17uU9svHa9_wLdoyecRVa7jhVCAkl14ZIWBSTj5TrxLsX4B982ubKFY9eYoDDB1Vfu9CqR453-M0MfJqG0woOy88eDOraQNA3UR8QuqDckyMjzKVyXeYHp_9iHYzhNiXL-AFAOVdQfN7g1HDIR-av9RQPROvk3l3ntpja0oPq1vDrjazElIclNNvJsyYccY96_HnVPLixdbCvtLbakemsaUymGeecGEO8KFGbFZvmRJQjHHO3g0ltF8giyh3umLYf2rzzj-S1OpG6w7HRMBaYL81D5FuZibYPaKG3ZDw83RhBPoTKXudI8O7wbpPxR-wc6UbMcvjU_sGOTvVg5NSTej5XhgN9Bm5Q3dol3NemtbQNPtC8Gs2IZsAC-WRGBTS3vE5x1zxZxtDR471p0sH_91bzSeLlx9B6yU9emhvGpq_Ez_Mp3LDoHDlSpWQIF8E9UZEHbxM8lrPrWsNoo6bmqDpBA5VJB7cpKHYMPud0aSenDVkZelzCYR5ChtA4wA4CY4gNFotrsvvRGBs4CuHjspJYG21tcFTrbmXHLgl95vC2EUET36jsnbVUygBvHniQHekzSHwmCFK3Fl4YQYST2nnmXcVkFr7tvto0bAWevkXwwjeIm_LtrgmFQvKn7Vk7pDEvp_rXAzprubTG9RXa8_8nWA8JAL_ZD2qfTcIXqbfoQTd3CyyvpfCF5dDs19VUhA1ETBrnLlnFcJaTYDTP964RWxgZ_y5oez6DqyOyMIeiF5NHFdP6vEU-zqWg6p0ii9i1IK23IMDKdJm-huaNHejBOzLCP77QueGbL3gp6DT7CAgfddxBykKvZWSC8bQrbf1h7cxcI1UJjQuRx9sqxW7DH0GuwASDWwEacopoGb5MrpmuVFyHAFmL10bjckaZOAYfrF3ZF83N2XPFKZ9OxuBLOYvfoim1kcmZmUUZa3cOURDgdKS8z2dixCcvSEEs2r0YPnoFHZcwHpayrogV8DBswocm7ilDvNwZ1mSgn-h19GAK9A4N_7zuVN_FnYpq-T2-EYW1LMJw3NC304y4Idwc9_zJ0IfCnQq3OttqcUFT5SopfljqDYcNHFcryZoKl9LgcdzQq6HLpJxAk7TcZcpNN45Bzo5eianF5UVMXNUIacKJb3ONLvq2Vkl-caCHBq1bOG6FGttKSJlQHAKADyXiMVt8OeuRtNnkHg1a90CkD-Gj5ULyGOpWKYi3Pa9ZZxm0HIqJ6FqlOTvcBkmFduv4IAalw5OVSb8_3xhoWDsaWbc9BLB99T1Kjsr2c6Bf7cHjba_03IDUidjZoCndNCMCEuKBOqLfb_rb2HhGncHKnN0HG1TZ7umwulAMjQrDFgqxwqVasL7UpI6Y70Z9s_A2weuA5Y1v-E-aRCJspbfR64YkH6HSdHQnDy6Bxa_L7CaFcBcVNqOK30PLHfHXR6CCIZUJLPZCuz9roAalqFPuxhRtXtwGIYY2T7OSIwPDxQlWisegC4R-8XmUAzdYr_O44FpIq2Vjp2Cmi17wu2KZotoC74VRVjcIf3j8UAGHPrgD7XD1g18eTAkDzj_qRQjJ1K9SgUL651GJJhoO3SNpcGMqJ1VvDpgdTgiBvrLYyeql1Qc4bzhhw3Glg5xjAU6_OjBMfXS88Q8E-7NFIWNX8bf6A7uvaqcgrueGf0BWtd4TQP7YTF157nG041i1O4MHC6iaDKLTSjxk3tJIKeoeYxm2UzgZhTMIbLvblP2whLth_KkkL-wJY_OliQddJl92tII_4VL2rKk9NpJRDropZsg7obLiiARMs7y3BZ4vNQ84As9vy4jfoZ9f2kNbQU4Gmvwy_qjYC9u3RvtUejE7GeaoeYh5E8xaBlZBYh2zebiGSyAs402W7Uar3mafeFdLMZJo7A0OnLiAVwSBDKlhhVEBshuyic_05Ga8sz4pbUPqU54Al7jrcET4ywa0qct41Wfa8WidLJLy4tcdncoozHOmwRZnIee9j0tqJgK4yWhOgLEA1E1Nja3H43JoTX15jn_f-w4x9ix5rB6g7DTVIXQBZiLpRH5lJJKOkVlGuYLky933zUQrz4_nCglC72mED6Zpv4M8tV1973jZ-UO-LHYTgUgPSb_gN_lfdyKXmhHKcqBORKZ_kAc1lQSNdSvuMbYoPBiZHQHlysD9770z1yQRoVxqyprPTpSFQBTaij1rZkqNhDxD6ca1kXmmzla9e0vT_dxSCmr3lyZm6XQar7psQXJuzbcFMwYs6NVLibPtVnFpmelb1KI_o547En1pGeUC6B55cYrWCnWMvnsRB6nQP0NJtGxWGEXf5uCcqErym4AevfnBDqnFlSeHqdnpX2kcx8G80B83fpx13TpYkx_-NL1vRsoMKGiiAlLdk-JKxS1EEtkmx82vtGob8BRBkA34LXhRFc9FgiM1bL7ucbC3FcpAQxya57MdWBhfERbxtiVJXqhy3Pe9QIctf9PY07j8wNg5Lm3nI4Rf9NuTBlG8KGV5JBPQ7aUQ0hE7McH068U94G4qjV9KKnvFH-F_GuXRP7_pZseZSscOuy_5hD6T1xg7X_VeMxUXRpj_SOGKncWbBX2kAV-AyS39twVIzKrFRjUXKx_9MR7n_ouWwZxE-3h5W4UWm9IyMejlgSZDVKFdy1RPq3COpkePtUMOAV8bEhpMGfTX6qMPQzt6r3aNeKNGuUEnCLOVyASlrRncN2p9r86E08921OrZLJ4x3jdPtAczAsvh5FF7OkzXZxwKRINcoH-O-fLr0xI5Tt96Fr6bUSQ-kV9OIp62j0VmbkGa6E34VkF4nF9LLVdLuk_nAtENyPL9IQ6wbSPcGvsGzrQJ-N7O7aDDrgnyeWJq-GO6yebswefLhZd5xsFpSGe5o4A4G_0rtL7LGaBFth17iMcJAyOR7sLbfhn3-35xcsM9lAxUu6XPWrw9Dnu_Ed3MIR5DWHUTXMJixauAHeSi46u5ARBp83Rbdf8Zq1oUM8izS0C-e_Ip3n3vyNFBbFuiqNzXG6NtLYoKXGn5Rxa2xaeGch9tHwifED_uY6rJlJOq4xhRyiN62qr5-_JA1lUvjl0iaostFjWyAHRGvRys6TSroDT078JW7pVxiRhmzTXh7obwnGaoy37FAcZ4TeTOY7PAYA9WBdXyLvZTao2KCNmHMAG0Jd-ewDoUVMo2wIcYckv9ebQuFRRgZ8F5e0Bi54WSLRPtf5aBrGQNWoc__99N7mg-joEHfi-aQ2DKlxI2S_876wkleMPcbqFhq1QZKpOUu9C8GcKhqgX1iB1iHa3_u9DA9G4kODzvtBrZSdfuo3IZyZxi7Upiz_8AfX_u6Ko6rvCLaU3Z2PhdWJfwgx07AX4H4vF9iqVREduPn0fXOx63pFTKGCP2ijaUbMF-arrxMEG_cGwxa2xVp6p4w-zkiddjtb0WWcQ9xAF5eZrpBERUFgDIvOVT0bkRB9PeZmMKh1iXSD-AbH-bKia4_Iikl3V4VxkPhRaqEH6BMTLHXhcod23YC7-XmKUYVl4w5Jh9FSINcjrmt2neiLbc_TK_pgNITIdl5-ZAQElweQNqVFG8_qDt-Ik1L6e-rW7jUs05Ztezr5Tbaxvop9ZQXmO8vcESOf9nYYBZD9i1x3kteIJkq4WBqpZCOVgusPXsAqQC6B5f4AJWbN3mVnvnPVW-cQZKJSoWDH9Mhc47jHHqUWoBgZdyPNl4uA8QNtNV76io1odog4PD9iPOtzY4HJHf42ye42fF5y_MnBZvfiaTewBeZ82TGxUP03JPLLcouoVQVAFc8Z9YgGICiOmLa0ikVNgJma4QoNte2CHXtu5z2CrFAtuPn7CvevssoB3O6Vk2mrl9aUshKq9h917ATK0TGmTghiDSczJttNT-lFuoJ1-mnUSE2cNWqKZcWIaLu1N3xJ-edLypa_tGw0Fitpa2BR4zT_HhQwmA853alJfleFwcMSWT0UBuXIU7MDxLv4U2H5TT1UPxHwhvVNgS4yaJ5oXn8NNKF1z8LUVR3vUbyZVN-9GM1EHKvbQVjFDIgFJ2wQVmO29FX6hLuWM5xdnOh4L03I7DgApNC0IlFWGURnep0Nnci_jkx-hl25GTXhSfQ8HArVw9eBWQ_uZ7mrFmkXsS3or0sM6Lq2FVM3nNaZy-DLWJYWpI8_V0f_49XeOQYezqQMgkX0lCo5W0vbkyHt024Se2kgw2hoqjEyKzB49znfWfUJUV_gjTWbILGu77zZWDeV_6zHJxuoLyfOqoUL-Rj4NR_WkqF1FRZqSp0FhjeAf_olY2sZ4HA1cGG2zBdu48nDJkGcrE_c5oeFpi79EjvmxmpH9CuEQaVUdRG7O8LdmMO68DCwfvEbZNnV7b3zJKZh9ZF9SPuAfup6_mCL2k-u-YhBGizLdiEMsBh2pZfqx9uyqKE2fAFzDJRYYOsOG_yH7qaODvpyPjw2xauQa5p5uBviRAQZVJP759b0V7OTaF5_YEUyfaHJrFItxp1G0-iWhTWnlzZhfFLMTpn2aW6y8OqBGmmfF8UcbraXDTFVICP8n31ApPz5WhWqQGOroQSqt3yuXhiXW-b8KNkilxBaX0YFhSWi0gprjknqld5GD-cjfRJVA42nwECSKw3_oDk4_9qdPjl6xCYDh1v6xoIUdXWe-AcNIeQpmVMPKD8ksSpuSCAxGuuPpTMsZPX-XJ3a-rA2ZpTsVocy3NE4V5qOqm1w5NmJyqploJoqEhtmgs1SXpdfGFBS-1b1QaK_wuBUvRQJX5aw0Tp1FbEEyAaQX6Uumi2jsbC4-dfz_NF_lJ3EoAlt1PMfjMHbbw0uKmgAcWIvt3yd9HDqFVxrPI1RQzAOJkEEW394W5oJZeSzudD-4sVHoFRgF0ko1LeBMFfmVVL8e2--eG-BkHYMiFILldRqBbYrssPNwXHtlNrmecYktOqrgqzOw4JNJJjKi63Pf9G5lXdkHzVJVQ1sNZRS8hh-jTIlGmDRMvc2WRq-2gJG946G7KpuMPjkqT1v9MqOpLv0O-qVNFVSL-nFXb3T8eQkdH8Ub4k7l9XQlPubhY3qibziGki3qZNRlmR2cuGUJKjdpJCLgYVbuX3Xguo7oXx9iUPgCfjkNEzfJPVnqbhaTTA6xqoo7EJTC1Bc-HmEpw63-sDBWPpxsSHSf9zEdlX-tXhvALPdgWumMPQUfFdM5AXGb6B1D75BfUeA34LSmAXG_YUuSUdfWJNcRk2wGPN-rP82d5NaMR5aJpA0mZX5JpgF3XxxdWU4loB8gn5aoVA2GMkt6cGR4MvMADfLP-fAwhJeTBqz7j2YMfKgV8NmCyy5vOqEZmTi6a-p-vP1OIrTQchDpo0TQtNsZhEe8WKD3ZB5NuMZREldDnvnjnE9KjDJ1tjLLqi-IDQ35NRHVTUpSHKTKZ3pm8sb1AzvA9v8t0GDSIDcdSzIHzlxvUF_2ufHQ7etj5UUcquVw1ZnDYpFhE5aZE0FtnfQEDx33xjF0Nod_AM2Zx0ib5AByWnpIdFJwjLzFEkOFyyF3EheObOCzlMKyfiYVuN7drSuYt7Y1JN1erVL0h_mDT6GjLl-R3tINvS-G_lbnLtqYnF5aQEgrkFzds15kt_v5kn7BdouP-WCvpYfKfRXIxp2zNl-bWyf_J9DBa2TMAY2rK7_qinoaMfVDVzFWjHnynN2SX42TsyeNGuGAmabSDkJwL4HMMA8jv-Fo1KlXXlCAmfvNPh_hO_PwrXh49_bLbdEX4qgygRhhEjMOyjpkvfx9ngSVE6lnXAEy4Ya1dTEcEW7PFtrqMDcrunngfwoPOd6I1CRvJm-o_RHtc9hNr43zAdqKztqo0VZSIdwbxki_OrqTigqef2jAdWsmI1QDiGZG-9i_eb7YfCyZnK2TUXYC7LHluP"},{"type":"function_call","call_id":"call_QnXqkAYAnySRHOOu0uywltxk","name":"list_files","arguments":"{}"},{"type":"function_call_output","call_id":"call_QnXqkAYAnySRHOOu0uywltxk","output":"handbook.md\t19.3
+        KB\ttext/markdown"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABq094iwziTfyhTc7SAStNn_yQrDLGQFjA7NTPf8hEH74qsvd7-W_G4esIJk7BKkWN6JinSDctc69ygkrWPyW3o_dy3dMv2NNBnJY3ZrBX6_DG1HylcZ46WQTTGqD3Bon28H958Fz9h1WKJnDzisX_NAxa7FFe0NerYLsEjGMo4cT1wxJSjLjmKJNhVMegccqjF78QPkfgfR551zsXMnKxTbrk0nzWRRSM712YAH6k3dR5AwKmq3HtoKVrFLbcl8PCD1RFIY_iBqbnceD1vU_RAG08WUJGVqyFy0OSXv_Nvp7eHGS5gm2SAPi0WpgNv9VFYbGXJLsMWX_K9e4aXRUbn4iGjH-6flw0N0fg-kacAQEjXfEKRQLHH3lBeb-wdPmBCo8_NRBDzbD1weQN9Fm_hfbbT0K55RZMXqHijDd1tV0n4rFYYDsFV94zwrRgbuigwyhjqX8Gow8oKYWaD4ED6HjPUN-klDs_hEkE_reUdm9eakcxnOfHcty093qdWd72p6qqNS8-vw0IUWy8ftWHWwMza3BIOxSa1ODEer4OZj9sA3PLIjkuzoiZq0nCKMaYiAbFFwjRfp20OZA27iFiJ27IIuRQDlX5Q2SP46gMQNOubIZpJs6N3BGosd6tjEscviF5IuAn3n7ZPWequcEU_3KMzkUdIFu0WhJRyFdm1WrpAqZ9yJlTqX_rdlfu_xIRTqUrNZL2lSJ7zmIYW-36_wty7qcsJx42bJrzw1w0yB_Ueg4zfEjMf-AASMpG9IIWH6uvdfD19Rk0SPYq1o87ykZES9oF0bpdwMcMsNqgDWp-IH2bdSzlzDgCj43n3eY6d-z8S1FhqvHqyMJncIVtulsc_BzGKa3L8brblwAp9ltj0QIM2rEbjpZbEl4DB41fGrYKjXfo8q05QVKQSs0DHyeNO1CIltzYBJgFoqpyesJJXnT58phw4hGHiBC8fc34q53rOZpzQ984ut-zcEQW1cwnfz5NPEu9ggTvybOvjBtGEd4c5bDfm4rMJJm1IBej6m3fVGmep5oPRvRmPLlERqJl-SlztSwzoLNU7_eBlrkYFawf8g78iGtGLwt569s8Ao4IpV8aJlDSeW_F9raygz7HopZ92tMqxSssAJr_iW_5jydpORgrZQiomxrDFGYN0jrFM1kQZ0Yl0hotTqDc2XWhkswCEdQKUwm3Lix1e7SAJp1RvTxXcdtqmLnjoVR9yZ27mQBaDxTOjIymU9Of09C3LXZoErvq1Kaj8gcSsRxsBPiI_k-7zpbSrW3qP7PZUernUWHcD0tjs8WY7tZbbOn6TT64oj1-82-ZSi4rNrnQ3YxVGvVY132oC_abHADPkMsiSr00lk-_0UzIr-uhR-qdWaZWPwk_aE7_hQsVBblEz-6_IKQEDZmjB8FgNvMWTdTdmJ6FZei-E1NUOEyMNjhQwVQYKbzeIlbTWOAdfPFtWLLXsKZimfD7NXv3_j5Je2UtnuWDVrGf95tsxYmh-It54G5rKWLOVWVU4y4edyJj5nsUCb7rVtbgPMjVjirtvrZHcPMs96xLCUwXY3SOTnSE17vu397mtimcMY0Xj-p6G0dzy_3jXERjuMWmEF3kG5XYFemF3uNYlKmAL8C-iw7-oF7M9i4pOM-AJ7N8eSgEA9OUoxkqImRoLoiSBDzs5JTBj2n_9v8dTpt83_2MEE_ZsH2gD8SsYvzbLYEa9sALclrZYOddnoFOivJvQyigRSinZs_R3welYp67Y5otoQerrD-lgwPjcGGsbEf6fCT5kRGBs_b3bMad2asy5bZS7BKbURoEpgPmsMJfr1egIF4OpViX_ySfIs_cvrsdClEM1pR3ZSJXWM-BbKLx-2LREQ8plEmHFN9IkCk4G6irMBZiAWKgNUYvmdH0k6Jz2Sjl4ReRgMfzfSTBdE8lPunZTwC1JYZ8aNfasDhA1Pr_Qco3rqj_42mbw_RKJs3Dv9MKgiy0V8zb2zINv3UUcX5A9uvo6DmUWsn6-F7WHNNONupbHrHjW4Gq372ryEO6Q1b9VW-awdJvn2GZlL8VWWJv2fsjQJKo4-b2bxeSePHxZnFGOffiiO-B6fex3ULKdurVapmgWcD4weHcBJwYm1cbtB2dS"},{"type":"function_call","call_id":"call_F7GVQ5VW4TsvvJPcVP0rfNRF","name":"read_file","arguments":"{\"path\":\"handbook.md\",\"unit\":\"lines\",\"limit\":2000,\"offset\":0}"},{"type":"function_call_output","call_id":"call_F7GVQ5VW4TsvvJPcVP0rfNRF","output":"handbook.md,
+        lines 1-401 of 401:\n     1\t1. Section 1 covers office policy number 1.\n     2\t2.
+        Section 2 covers office policy number 2.\n     3\t3. Section 3 covers office
+        policy number 3.\n     4\t4. Section 4 covers office policy number 4.\n     5\t5.
+        Section 5 covers office policy number 5.\n     6\t6. Section 6 covers office
+        policy number 6.\n     7\t7. Section 7 covers office policy number 7.\n     8\t8.
+        Section 8 covers office policy number 8.\n     9\t9. Section 9 covers office
+        policy number 9.\n    10\t10. Section 10 covers office policy number 10.\n    11\t11.
+        Section 11 covers office policy number 11.\n    12\t12. Section 12 covers
+        office policy number 12.\n    13\t13. Section 13 covers office policy number
+        13.\n    14\t14. Section 14 covers office policy number 14.\n    15\t15. Section
+        15 covers office policy number 15.\n    16\t16. Section 16 covers office policy
+        number 16.\n    17\t17. Section 17 covers office policy number 17.\n    18\t18.
+        Section 18 covers office policy number 18.\n    19\t19. Section 19 covers
+        office policy number 19.\n    20\t20. Section 20 covers office policy number
+        20.\n    21\t21. Section 21 covers office policy number 21.\n    22\t22. Section
+        22 covers office policy number 22.\n    23\t23. Section 23 covers office policy
+        number 23.\n    24\t24. Section 24 covers office policy number 24.\n    25\t25.
+        Section 25 covers office policy number 25.\n    26\t26. Section 26 covers
+        office policy number 26.\n    27\t27. Section 27 covers office policy number
+        27.\n    28\t28. Section 28 covers office policy number 28.\n    29\t29. Section
+        29 covers office policy number 29.\n    30\t30. Section 30 covers office policy
+        number 30.\n    31\t31. Section 31 covers office policy number 31.\n    32\t32.
+        Section 32 covers office policy number 32.\n    33\t33. Section 33 covers
+        office policy number 33.\n    34\t34. Section 34 covers office policy number
+        34.\n    35\t35. Section 35 covers office policy number 35.\n    36\t36. Section
+        36 covers office policy number 36.\n    37\t37. Section 37 covers office policy
+        number 37.\n    38\t38. Section 38 covers office policy number 38.\n    39\t39.
+        Section 39 covers office policy number 39.\n    40\t40. Section 40 covers
+        office policy number 40.\n    41\t41. Section 41 covers office policy number
+        41.\n    42\t42. Section 42 covers office policy number 42.\n    43\t43. Section
+        43 covers office policy number 43.\n    44\t44. Section 44 covers office policy
+        number 44.\n    45\t45. Section 45 covers office policy number 45.\n    46\t46.
+        Section 46 covers office policy number 46.\n    47\t47. Section 47 covers
+        office policy number 47.\n    48\t48. Section 48 covers office policy number
+        48.\n    49\t49. Section 49 covers office policy number 49.\n    50\t50. Section
+        50 covers office policy number 50.\n    51\t51. Section 51 covers office policy
+        number 51.\n    52\t52. Section 52 covers office policy number 52.\n    53\t53.
+        Section 53 covers office policy number 53.\n    54\t54. Section 54 covers
+        office policy number 54.\n    55\t55. Section 55 covers office policy number
+        55.\n    56\t56. Section 56 covers office policy number 56.\n    57\t57. Section
+        57 covers office policy number 57.\n    58\t58. Section 58 covers office policy
+        number 58.\n    59\t59. Section 59 covers office policy number 59.\n    60\t60.
+        Section 60 covers office policy number 60.\n    61\t61. Section 61 covers
+        office policy number 61.\n    62\t62. Section 62 covers office policy number
+        62.\n    63\t63. Section 63 covers office policy number 63.\n    64\t64. Section
+        64 covers office policy number 64.\n    65\t65. Section 65 covers office policy
+        number 65.\n    66\t66. Section 66 covers office policy number 66.\n    67\t67.
+        Section 67 covers office policy number 67.\n    68\t68. Section 68 covers
+        office policy number 68.\n    69\t69. Section 69 covers office policy number
+        69.\n    70\t70. Section 70 covers office policy number 70.\n    71\t71. Section
+        71 covers office policy number 71.\n    72\t72. Section 72 covers office policy
+        number 72.\n    73\t73. Section 73 covers office policy number 73.\n    74\t74.
+        Section 74 covers office policy number 74.\n    75\t75. Section 75 covers
+        office policy number 75.\n    76\t76. Section 76 covers office policy number
+        76.\n    77\t77. Section 77 covers office policy number 77.\n    78\t78. Section
+        78 covers office policy number 78.\n    79\t79. Section 79 covers office policy
+        number 79.\n    80\t80. Section 80 covers office policy number 80.\n    81\t81.
+        Section 81 covers office policy number 81.\n    82\t82. Section 82 covers
+        office policy number 82.\n    83\t83. Section 83 covers office policy number
+        83.\n    84\t84. Section 84 covers office policy number 84.\n    85\t85. Section
+        85 covers office policy number 85.\n    86\t86. Section 86 covers office policy
+        number 86.\n    87\t87. Section 87 covers office policy number 87.\n    88\t88.
+        Section 88 covers office policy number 88.\n    89\t89. Section 89 covers
+        office policy number 89.\n    90\t90. Section 90 covers office policy number
+        90.\n    91\t91. Section 91 covers office policy number 91.\n    92\t92. Section
+        92 covers office policy number 92.\n    93\t93. Section 93 covers office policy
+        number 93.\n    94\t94. Section 94 covers office policy number 94.\n    95\t95.
+        Section 95 covers office policy number 95.\n    96\t96. Section 96 covers
+        office policy number 96.\n    97\t97. Section 97 covers office policy number
+        97.\n    98\t98. Section 98 covers office policy number 98.\n    99\t99. Section
+        99 covers office policy number 99.\n   100\t100. Section 100 covers office
+        policy number 100.\n   101\t101. Section 101 covers office policy number 101.\n   102\t102.
+        Section 102 covers office policy number 102.\n   103\t103. Section 103 covers
+        office policy number 103.\n   104\t104. Section 104 covers office policy number
+        104.\n   105\t105. Section 105 covers office policy number 105.\n   106\t106.
+        Section 106 covers office policy number 106.\n   107\t107. Section 107 covers
+        office policy number 107.\n   108\t108. Section 108 covers office policy number
+        108.\n   109\t109. Section 109 covers office policy number 109.\n   110\t110.
+        Section 110 covers office policy number 110.\n   111\t111. Section 111 covers
+        office policy number 111.\n   112\t112. Section 112 covers office policy number
+        112.\n   113\t113. Section 113 covers office policy number 113.\n   114\t114.
+        Section 114 covers office policy number 114.\n   115\t115. Section 115 covers
+        office policy number 115.\n   116\t116. Section 116 covers office policy number
+        116.\n   117\t117. Section 117 covers office policy number 117.\n   118\t118.
+        Section 118 covers office policy number 118.\n   119\t119. Section 119 covers
+        office policy number 119.\n   120\t120. Section 120 covers office policy number
+        120.\n   121\t121. Section 121 covers office policy number 121.\n   122\t122.
+        Section 122 covers office policy number 122.\n   123\t123. Section 123 covers
+        office policy number 123.\n   124\t124. Section 124 covers office policy number
+        124.\n   125\t125. Section 125 covers office policy number 125.\n   126\t126.
+        Section 126 covers office policy number 126.\n   127\t127. Section 127 covers
+        office policy number 127.\n   128\t128. Section 128 covers office policy number
+        128.\n   129\t129. Section 129 covers office policy number 129.\n   130\t130.
+        Section 130 covers office policy number 130.\n   131\t131. Section 131 covers
+        office policy number 131.\n   132\t132. Section 132 covers office policy number
+        132.\n   133\t133. Section 133 covers office policy number 133.\n   134\t134.
+        Section 134 covers office policy number 134.\n   135\t135. Section 135 covers
+        office policy number 135.\n   136\t136. Section 136 covers office policy number
+        136.\n   137\t137. Section 137 covers office policy number 137.\n   138\t138.
+        Section 138 covers office policy number 138.\n   139\t139. Section 139 covers
+        office policy number 139.\n   140\t140. Section 140 covers office policy number
+        140.\n   141\t141. Section 141 covers office policy number 141.\n   142\t142.
+        Section 142 covers office policy number 142.\n   143\t143. Section 143 covers
+        office policy number 143.\n   144\t144. Section 144 covers office policy number
+        144.\n   145\t145. Section 145 covers office policy number 145.\n   146\t146.
+        Section 146 covers office policy number 146.\n   147\t147. Section 147 covers
+        office policy number 147.\n   148\t148. Section 148 covers office policy number
+        148.\n   149\t149. Section 149 covers office policy number 149.\n   150\t150.
+        Section 150 covers office policy number 150.\n   151\t151. Section 151 covers
+        office policy number 151.\n   152\t152. Section 152 covers office policy number
+        152.\n   153\t153. Section 153 covers office policy number 153.\n   154\t154.
+        Section 154 covers office policy number 154.\n   155\t155. Section 155 covers
+        office policy number 155.\n   156\t156. Section 156 covers office policy number
+        156.\n   157\t157. Section 157 covers office policy number 157.\n   158\t158.
+        Section 158 covers office policy number 158.\n   159\t159. Section 159 covers
+        office policy number 159.\n   160\t160. Section 160 covers office policy number
+        160.\n   161\t161. Section 161 covers office policy number 161.\n   162\t162.
+        Section 162 covers office policy number 162.\n   163\t163. Section 163 covers
+        office policy number 163.\n   164\t164. Section 164 covers office policy number
+        164.\n   165\t165. Section 165 covers office policy number 165.\n   166\t166.
+        Section 166 covers office policy number 166.\n   167\t167. Section 167 covers
+        office policy number 167.\n   168\t168. Section 168 covers office policy number
+        168.\n   169\t169. Section 169 covers office policy number 169.\n   170\t170.
+        Section 170 covers office policy number 170.\n   171\t171. Section 171 covers
+        office policy number 171.\n   172\t172. Section 172 covers office policy number
+        172.\n   173\t173. Section 173 covers office policy number 173.\n   174\t174.
+        Section 174 covers office policy number 174.\n   175\t175. Section 175 covers
+        office policy number 175.\n   176\t176. Section 176 covers office policy number
+        176.\n   177\t177. Section 177 covers office policy number 177.\n   178\t178.
+        Section 178 covers office policy number 178.\n   179\t179. Section 179 covers
+        office policy number 179.\n   180\t180. Section 180 covers office policy number
+        180.\n   181\t181. Section 181 covers office policy number 181.\n   182\t182.
+        Section 182 covers office policy number 182.\n   183\t183. Section 183 covers
+        office policy number 183.\n   184\t184. Section 184 covers office policy number
+        184.\n   185\t185. Section 185 covers office policy number 185.\n   186\t186.
+        Section 186 covers office policy number 186.\n   187\t187. Section 187 covers
+        office policy number 187.\n   188\t188. Section 188 covers office policy number
+        188.\n   189\t189. Section 189 covers office policy number 189.\n   190\t190.
+        Section 190 covers office policy number 190.\n   191\t191. Section 191 covers
+        office policy number 191.\n   192\t192. Section 192 covers office policy number
+        192.\n   193\t193. Section 193 covers office policy number 193.\n   194\t194.
+        Section 194 covers office policy number 194.\n   195\t195. Section 195 covers
+        office policy number 195.\n   196\t196. Section 196 covers office policy number
+        196.\n   197\t197. Section 197 covers office policy number 197.\n   198\t198.
+        Section 198 covers office policy number 198.\n   199\t199. Section 199 covers
+        office policy number 199.\n   200\t200. Section 200 covers office policy number
+        200.\n   201\t201. Section 201 covers office policy number 201.\n   202\t202.
+        Section 202 covers office policy number 202.\n   203\t203. Section 203 covers
+        office policy number 203.\n   204\t204. Section 204 covers office policy number
+        204.\n   205\t205. Section 205 covers office policy number 205.\n   206\t206.
+        Section 206 covers office policy number 206.\n   207\t207. Section 207 covers
+        office policy number 207.\n   208\t208. Section 208 covers office policy number
+        208.\n   209\t209. Section 209 covers office policy number 209.\n   210\t210.
+        Section 210 covers office policy number 210.\n   211\t211. Section 211 covers
+        office policy number 211.\n   212\t212. Section 212 covers office policy number
+        212.\n   213\t213. Section 213 covers office policy number 213.\n   214\t214.
+        Section 214 covers office policy number 214.\n   215\t215. Section 215 covers
+        office policy number 215.\n   216\t216. Section 216 covers office policy number
+        216.\n   217\t217. Section 217 covers office policy number 217.\n   218\t218.
+        Section 218 covers office policy number 218.\n   219\t219. Section 219 covers
+        office policy number 219.\n   220\t220. Section 220 covers office policy number
+        220.\n   221\t221. Section 221 covers office policy number 221.\n   222\t222.
+        Section 222 covers office policy number 222.\n   223\t223. Section 223 covers
+        office policy number 223.\n   224\t224. Section 224 covers office policy number
+        224.\n   225\t225. Section 225 covers office policy number 225.\n   226\t226.
+        Section 226 covers office policy number 226.\n   227\t227. Section 227 covers
+        office policy number 227.\n   228\t228. Section 228 covers office policy number
+        228.\n   229\t229. Section 229 covers office policy number 229.\n   230\t230.
+        Section 230 covers office policy number 230.\n   231\t231. Section 231 covers
+        office policy number 231.\n   232\t232. Section 232 covers office policy number
+        232.\n   233\t233. Section 233 covers office policy number 233.\n   234\t234.
+        Section 234 covers office policy number 234.\n   235\t235. Section 235 covers
+        office policy number 235.\n   236\t236. Section 236 covers office policy number
+        236.\n   237\t237. Section 237 covers office policy number 237.\n   238\t238.
+        Section 238 covers office policy number 238.\n   239\t239. Section 239 covers
+        office policy number 239.\n   240\t240. Section 240 covers office policy number
+        240.\n   241\t241. Section 241 covers office policy number 241.\n   242\t242.
+        Section 242 covers office policy number 242.\n   243\t243. Section 243 covers
+        office policy number 243.\n   244\t244. Section 244 covers office policy number
+        244.\n   245\t245. Section 245 covers office policy number 245.\n   246\t246.
+        Section 246 covers office policy number 246.\n   247\t247. Section 247 covers
+        office policy number 247.\n   248\t248. Section 248 covers office policy number
+        248.\n   249\t249. Section 249 covers office policy number 249.\n   250\t250.
+        Section 250 covers office policy number 250.\n   251\t251. Section 251 covers
+        office policy number 251.\n   252\t252. Section 252 covers office policy number
+        252.\n   253\t253. Section 253 covers office policy number 253.\n   254\t254.
+        Section 254 covers office policy number 254.\n   255\t255. Section 255 covers
+        office policy number 255.\n   256\t256. Section 256 covers office policy number
+        256.\n   257\t257. Section 257 covers office policy number 257.\n   258\t258.
+        Section 258 covers office policy number 258.\n   259\t259. Section 259 covers
+        office policy number 259.\n   260\t260. Section 260 covers office policy number
+        260.\n   261\t261. Section 261 covers office policy number 261.\n   262\t262.
+        Section 262 covers office policy number 262.\n   263\t263. Section 263 covers
+        office policy number 263.\n   264\t264. Section 264 covers office policy number
+        264.\n   265\t265. Section 265 covers office policy number 265.\n   266\t266.
+        Section 266 covers office policy number 266.\n   267\t267. Section 267 covers
+        office policy number 267.\n   268\t268. Section 268 covers office policy number
+        268.\n   269\t269. Section 269 covers office policy number 269.\n   270\t270.
+        Section 270 covers office policy number 270.\n   271\t271. Section 271 covers
+        office policy number 271.\n   272\t272. Section 272 covers office policy number
+        272.\n   273\t273. Section 273 covers office policy number 273.\n   274\t274.
+        Section 274 covers office policy number 274.\n   275\t275. Section 275 covers
+        office policy number 275.\n   276\t276. Section 276 covers office policy number
+        276.\n   277\t277. Section 277 covers office policy number 277.\n   278\t278.
+        Section 278 covers office policy number 278.\n   279\t279. Section 279 covers
+        office policy number 279.\n   280\t280. Section 280 covers office policy number
+        280.\n   281\t281. Section 281 covers office policy number 281.\n   282\t282.
+        Section 282 covers office policy number 282.\n   283\t283. Section 283 covers
+        office policy number 283.\n   284\t284. Section 284 covers office policy number
+        284.\n   285\t285. Section 285 covers office policy number 285.\n   286\t286.
+        Section 286 covers office policy number 286.\n   287\t287. Section 287 covers
+        office policy number 287.\n   288\t288. The parking garage door code is 4471-KESTREL.\n   289\t288.
+        Section 288 covers office policy number 288.\n   290\t289. Section 289 covers
+        office policy number 289.\n   291\t290. Section 290 covers office policy number
+        290.\n   292\t291. Section 291 covers office policy number 291.\n   293\t292.
+        Section 292 covers office policy number 292.\n   294\t293. Section 293 covers
+        office policy number 293.\n   295\t294. Section 294 covers office policy number
+        294.\n   296\t295. Section 295 covers office policy number 295.\n   297\t296.
+        Section 296 covers office policy number 296.\n   298\t297. Section 297 covers
+        office policy number 297.\n   299\t298. Section 298 covers office policy number
+        298.\n   300\t299. Section 299 covers office policy number 299.\n   301\t300.
+        Section 300 covers office policy number 300.\n   302\t301. Section 301 covers
+        office policy number 301.\n   303\t302. Section 302 covers office policy number
+        302.\n   304\t303. Section 303 covers office policy number 303.\n   305\t304.
+        Section 304 covers office policy number 304.\n   306\t305. Section 305 covers
+        office policy number 305.\n   307\t306. Section 306 covers office policy number
+        306.\n   308\t307. Section 307 covers office policy number 307.\n   309\t308.
+        Section 308 covers office policy number 308.\n   310\t309. Section 309 covers
+        office policy number 309.\n   311\t310. Section 310 covers office policy number
+        310.\n   312\t311. Section 311 covers office policy number 311.\n   313\t312.
+        Section 312 covers office policy number 312.\n   314\t313. Section 313 covers
+        office policy number 313.\n   315\t314. Section 314 covers office policy number
+        314.\n   316\t315. Section 315 covers office policy number 315.\n   317\t316.
+        Section 316 covers office policy number 316.\n   318\t317. Section 317 covers
+        office policy number 317.\n   319\t318. Section 318 covers office policy number
+        318.\n   320\t319. Section 319 covers office policy number 319.\n   321\t320.
+        Section 320 covers office policy number 320.\n   322\t321. Section 321 covers
+        office policy number 321.\n   323\t322. Section 322 covers office policy number
+        322.\n   324\t323. Section 323 covers office policy number 323.\n   325\t324.
+        Section 324 covers office policy number 324.\n   326\t325. Section 325 covers
+        office policy number 325.\n   327\t326. Section 326 covers office policy number
+        326.\n   328\t327. Section 327 covers office policy number 327.\n   329\t328.
+        Section 328 covers office policy number 328.\n   330\t329. Section 329 covers
+        office policy number 329.\n   331\t330. Section 330 covers office policy number
+        330.\n   332\t331. Section 331 covers office policy number 331.\n   333\t332.
+        Section 332 covers office policy number 332.\n   334\t333. Section 333 covers
+        office policy number 333.\n   335\t334. Section 334 covers office policy number
+        334.\n   336\t335. Section 335 covers office policy number 335.\n   337\t336.
+        Section 336 covers office policy number 336.\n   338\t337. Section 337 covers
+        office policy number 337.\n   339\t338. Section 338 covers office policy number
+        338.\n   340\t339. Section 339 covers office policy number 339.\n   341\t340.
+        Section 340 covers office policy number 340.\n   342\t341. Section 341 covers
+        office policy number 341.\n   343\t342. Section 342 covers office policy number
+        342.\n   344\t343. Section 343 covers office policy number 343.\n   345\t344.
+        Section 344 covers office policy number 344.\n   346\t345. Section 345 covers
+        office policy number 345.\n   347\t346. Section 346 covers office policy number
+        346.\n   348\t347. Section 347 covers office policy number 347.\n   349\t348.
+        Section 348 covers office policy number 348.\n   350\t349. Section 349 covers
+        office policy number 349.\n   351\t350. Section 350 covers office policy number
+        350.\n   352\t351. Section 351 covers office policy number 351.\n   353\t352.
+        Section 352 covers office policy number 352.\n   354\t353. Section 353 covers
+        office policy number 353.\n   355\t354. Section 354 covers office policy number
+        354.\n   356\t355. Section 355 covers office policy number 355.\n   357\t356.
+        Section 356 covers office policy number 356.\n   358\t357. Section 357 covers
+        office policy number 357.\n   359\t358. Section 358 covers office policy number
+        358.\n   360\t359. Section 359 covers office policy number 359.\n   361\t360.
+        Section 360 covers office policy number 360.\n   362\t361. Section 361 covers
+        office policy number 361.\n   363\t362. Section 362 covers office policy number
+        362.\n   364\t363. Section 363 covers office policy number 363.\n   365\t364.
+        Section 364 covers office policy number 364.\n   366\t365. Section 365 covers
+        office policy number 365.\n   367\t366. Section 366 covers office policy number
+        366.\n   368\t367. Section 367 covers office policy number 367.\n   369\t368.
+        Section 368 covers office policy number 368.\n   370\t369. Section 369 covers
+        office policy number 369.\n   371\t370. Section 370 covers office policy number
+        370.\n   372\t371. Section 371 covers office policy number 371.\n   373\t372.
+        Section 372 covers office policy number 372.\n   374\t373. Section 373 covers
+        office policy number 373.\n   375\t374. Section 374 covers office policy number
+        374.\n   376\t375. Section 375 covers office policy number 375.\n   377\t376.
+        Section 376 covers office policy number 376.\n   378\t377. Section 377 covers
+        office policy number 377.\n   379\t378. Section 378 covers office policy number
+        378.\n   380\t379. Section 379 covers office policy number 379.\n   381\t380.
+        Section 380 covers office policy number 380.\n   382\t381. Section 381 covers
+        office policy number 381.\n   383\t382. Section 382 covers office policy number
+        382.\n   384\t383. Section 383 covers office policy number 383.\n   385\t384.
+        Section 384 covers office policy number 384.\n   386\t385. Section 385 covers
+        office policy number 385.\n   387\t386. Section 386 covers office policy number
+        386.\n   388\t387. Section 387 covers office policy number 387.\n   389\t388.
+        Section 388 covers office policy number 388.\n   390\t389. Section 389 covers
+        office policy number 389.\n   391\t390. Section 390 covers office policy number
+        390.\n   392\t391. Section 391 covers office policy number 391.\n   393\t392.
+        Section 392 covers office policy number 392.\n   394\t393. Section 393 covers
+        office policy number 393.\n   395\t394. Section 394 covers office policy number
+        394.\n   396\t395. Section 395 covers office policy number 395.\n   397\t396.
+        Section 396 covers office policy number 396.\n   398\t397. Section 397 covers
+        office policy number 397.\n   399\t398. Section 398 covers office policy number
+        398.\n   400\t399. Section 399 covers office policy number 399.\n   401\t400.
+        Section 400 covers office policy number 400."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"list_files","description":"Lists
+        the files in this chat''s file store, with their sizes and types: files people
+        attached, files tools returned, long tool results, and files you or your code
+        wrote. Pass path to list one folder.","parameters":{"type":"object","properties":{"path":{"type":["string","null"],"description":"A
+        folder to list. Leave it out for every file"}},"additionalProperties":false},"strict":false},{"type":"function","name":"read_file","description":"Reads
+        a file from this chat''s file store. Text comes back with line numbers, 1000
+        lines or 20000 characters at a time: pass offset and limit to read further.
+        PDFs, Word, Excel, and PowerPoint files come back as their text, and images
+        as the image itself. With unit \"characters\", offset and limit count characters
+        instead of lines, for files with very long lines.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to read"},"offset":{"type":["integer","null"],"description":"The line
+        to start at, from 1, or the character, from 0"},"limit":{"type":["integer","null"],"description":"How
+        many lines or characters to read"},"unit":{"type":["string","null"],"enum":["lines","characters",null],"description":"lines
+        (the default) or characters"}},"required":["path"],"additionalProperties":false},"strict":false},{"type":"function","name":"search_files","description":"Searches
+        the text of this chat''s files, PDFs and Office files included, for lines
+        matching a regular expression, ignoring case, and returns each match with
+        its path and line number. Read around a match with read_file and its offset.
+        Pass path to search one file or folder.","parameters":{"type":"object","properties":{"query":{"type":"string","description":"A
+        regular expression, or plain words"},"path":{"type":["string","null"],"description":"A
+        file or folder to search. Leave it out for all"}},"required":["query"],"additionalProperties":false},"strict":false},{"type":"function","name":"write_file","description":"Writes
+        a text file to this chat''s file store, replacing any file at that path. Use
+        it for notes, drafts, data, and results you want to keep or come back to.
+        To change part of a file, use edit_file.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"Where
+        to write, such as notes/summary.md"},"content":{"type":"string","description":"The
+        complete content of the file"}},"required":["path","content"],"additionalProperties":false},"strict":false},{"type":"function","name":"edit_file","description":"Changes
+        a text file in this chat''s file store by replacing old_text, which must appear
+        exactly once, with new_text. Include enough of the surrounding text to make
+        old_text unique, or set replace_all to replace every occurrence.","parameters":{"type":"object","properties":{"path":{"type":"string","description":"The
+        file to change"},"old_text":{"type":"string","description":"The exact text
+        to replace"},"new_text":{"type":"string","description":"The text to put in
+        its place"},"replace_all":{"type":["boolean","null"],"description":"Replace
+        every occurrence"}},"required":["path","old_text","new_text"],"additionalProperties":false},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 17 Oct 2026 20:44:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2481'
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4998'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
+      X-Ratelimit-Reset-Requests:
+      - 24ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_07d1e949dca3d78b016ad3de231e0487d2bde67825052acb99",
+          "object": "response",
+          "created_at": 1792269859,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1792269861,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_07d1e949dca3d78b016ad3de23c96487d28906667b5f3339f4",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABq094lmPI-VqN8OrYPRnrIK0UjamFMZFf6dgstlEwAZ873SrJXdajIBxsIVXN9hLy94GqH7LhI95e7YI7xqnIVoO2xYPY6TPWpMU41v6hbYv29fFFHMawF8ytkxXBaMayYYP37UWMSQkzdQNXmt6z0vgyPl9rA8E3uCyP0xAtqOp0Cb-G_FV-IguYkx4c79O6p9BJQCao15odqcOYPsW_oU7VZ6UbNqc12TSgImExcLIcmgSJVF_kXj2KMJaIx26_kkoHJUqlBJhB7P_Xe_n03lUL9h3McEjbxKdDGinkBRDfMIXvgzLoj1nyLOsQyL8okTlT9SyS3tMglVyLxHFydKhGI_7FnXr4w-k9hriD7afi4FD8SWKkz0_i9rxe-oZ_TzYQ8fHp-vNKn3jsM_71p6RnCQ9i8L05ubTAbvldBVf0M6SBL3BLEheh17lAGhFZeiSIfzq4Zvf62y0xx8iB-wkVi9LKsjpqo8OcqraOLl0uAgftFjjbX3HBwjhIYgN9_N3vcnnemhVfyYjR1MsRlXPWYqIYB6yI5kV2hQThul-0KLh3VUgizxj1DJcIXepUokd8-rRGxMMxUGtpQzsdZJiXCoecelhBSk7ExslNEeedy5AkdWgm-AYQ2pRSzjlELjMIgLtJJAdtvW3VuUZu0N0oCbJkMwB2rDWbU6djBnvMEf3w-LSnQYsNzdIQ3WaZ5ZNX-B5PFJFaHXYk6u7fGiaIIyPYGXDsPSmT_W8RidPZ2LQ6Aq3GmfIERKocpSHV6AdpJP0GJNrYfiljtxDgbckp0HES-q4MVvHlPzgK3sWVuaFIBLeksndQf6EtMQLsdaidO9HPopgm7_t7P3NSScUwi5RXoI4EzJDz8f3BxBZbdntmTNfNqOFQ3yE6iIWWBxY5iOv5iXqoXwID0-_oupu6uzE2aRI5WoPOfeI9BgeXd5owGR2ud5HhYcG3VOkyDRGXUlWeNsuYfZBPBRNn909rfIUJ9pqPmEbeqpBZTOZu9nofLFCUwds7-i9txx5XWVj8XpjkYUfRY7i4qHVIlFFyu1CqTzDztLzzqsBaE4gLDuiDJEMR0BAuhv3zJrPcLXNhxIgFYCD_MIgCbwRTenTND2-VwvwKlVrieLLwKOxopgLkEsBCxGItT2jOMjcINiJLO5o-Y6lAofZTesOX2LDKvSDWz2_ZoAk550KHSkGPH2IKHhsSEqet8ojcYYHp5IEJ7wgtWF_kbzcv_K8ZwVocr0c6QD4UIKo5gtOjDkYyz4BrSNaon1zBWc3OVhE-D9sDju_7ra_-sXjFQEvHzuJtPwWZ_Z49H5CW_3TWw03xnE77Ux5vTIEqbkXt4FPsI3Aco5AZAwmUcWXW_j0FenRjIFpSszBLctIbtjvbBfEZFOybYpoaoRurX2_ZBsVKjW48VFYT58g5uMMyhay9fsHoSeON9JtDiu_Njktw4w_iawXpYlnMhkMCwdpZb9SkW8Ec31fJjQCDup-vSz5psjwK8y5F_1C5qgjENEnhttEslBc_3th2gDVcCdRafhJ-LPxD6H6VHft5iXk9NVpMQEQJMtJmqZI1KlUm-YpUgHdMvY1yL_3QpFk6Bop7jNWC8_N-2-0OpN-lxojVFJ1mfpNvkBFyX5aWodzLJtsZlenLxuey8dAhwkDTIKiGaq7POKzIMoZQzWJFY8X8wv6Ze9yw_nBw7eTrgYbkaxZPtasasQkmP6HZIydIwQBiK3RIDdriQahEw4axBNEPtYN7a_D5n1U5e9zmMmQr_aDWD1SkgXxb-hoG8ee4RKOZ51-zeLATtBlfkhnkT-sajTm3CAwkof0pAZgoBgpeEt7PNnqbWSElDYp-WiUIp_5h2_70tKfHffrIC9bgotI-HoN0Z0KK1yjExI-cAYjU8eXekExOrcLPG-A4MH9ifsIq7H3xcRVpiF2Fdp2Sqi6BnJ9U18itH8qKFEFrN05h5yjVaERgZ3Da8Azx_CQSPHQo_A7Q4vGwdpqYAe6c7D7lNRLnR7_gooL_sWkKq_k6UqbPV-x9bO_n9lKGrzBTZt7GGRxzncibj71SYyfKG9PwGbyVJl5hQLOgEI3Dkc9sgGB28nwOGXGAijjytVEv8jeFeJqkQm29u64F4B2aGkh26NolaH6qXmC8QdSSovcv6gh5-ylZpjXmcaJ79pRPEvL0W4cBzjZ7EhlfL0wEMR7Jt65L8A7Wg70o7le1FPUOgVIMpEKobrBKdjTFiFRkQSC62MaYLLLPgFw76Pa40nX1nQD-qigfGH1zpGzXmtas1auVlJPSY-QfJJcD8vyzRPgn_WynMJVaIpdufC6TYeVwveNiW-yGunNR4M09BguTihh-GpdOAHf_550cfQRIjMf6UZaDdJ67ze8aTMC1N3dYcxKEASSjCo-PM0GSp7NiJROZehJcoj0zqLcKnNl6xCVZz6-EKyDPwiIqLpSxjv57krQhMfihccqcq3_Cc2XF5fs6Ca3XWU5wY5ArlS2y1z9ad8anxIwuWxlGHAaVw6tIKBl1cgIEmHfwP-3LU8tW7NWzuEQky9MNMzbyB7loCIEGV_xvUlNbBS4phj3Np2CiIRFvNgwQUpMVI6pIFL9ZFJP0DwwrjzuFX3iok70LPwZMoNkA4NEEM40p7IK6vZ5lazE5m1qVWrGh78McyHdLhPEINW1e_6jqUyRBss4ByVDgNI_sL5jk-Di3vzo2eKQ0321igmrzjtssy-HTkHOlyNSPTLmeUivxUicZYgHNIik-Amf-a43mFpG3_vrPCe5kUCiuUPoG6zpSNJF4FXcI9Q-trPP0rLlxyccx8xU5162sre__q4sv1vlRU4nEgcAA7VVTYm1KSQPPbb3hrBHPIZZhrCU7UpckvKiF1VNKCI9DF0dpl1M_IBm1ZK9zrIXhlqCHWAct-7yMR2rkYnZzbLq3LXKavNwFseHUBUjI562mp4j6Bf-spb_YgEohW6kMfir1ly-kLPC5KJ_VJ3vh9ikMUFg5ydYX0SGaQ78xliESdUJ3a6rAFVDiDNvmV46sFge3aTHHGYwQJDSVxZKlxCnO-7TEryqli1AhYZCr_rcxWBLca-UMAnusyXf5SOkVE3w25Zp1pEZ-BElW1h6I_EiZK8RwfZEtsyT39jm4WKusj8y3dc5vs16Jgt3vbFGR2rztteuw_MK2YVZ1PnRbYLyWDXdq6PlFfKcWNo33SNCcuX-0pFwlruLN26eWYhdbWXpCaxnGMUw4S3hwm7utuxxDJR1D4acXtf49d6Kw1DFoRXjEKfm1_qFJ0p6yBQphrR1CehSi4OZLgS2K4bYrgvoZaLb3rpT7um7rjI2FOcgHbu2g4r1quQ7Pbk3Eh7iUdhS1fxKPpOHtwxfku8TcKBrHO2kpIlenRfXysfy21ryZALWUN7oYzQ65l_ovBAE2UaK3KU8FY2opidgKaY9FZDRRGnEVmOjoM4g7OjjftWVqpzNdxuL_sjkJhWaGWQa5nO5r8hC0OLNoirbLea-p_JtO0JoiYRH0_gjRQO03eU9yQLHkv1DgXBlHlEzdYWQLdUY2FjLsuc8p-5kPIWfk9bJA12XLoCyb5iTppQ67H8WQ2Hizg2xS8NW2jTXiaf0QGUf5UxtSy1aJ3EBeQibO1sJJME3batMYjWmeS0LG1wMjfaJRYGwUHop3CpdSJcY-7hH06zEKGapmL7QsqUWFApJ6iFqq4CWcC1pR7etoUT3l6FgYok-hgXsR4AC3fqQ_C8MTuhS3_aEGQlPISiaRSfcXu1gXjOFXfSBKQ0AOm79ISebd0G6WqIexp4btFxFrMbVk7xNEiNG-LLpdqXF-0j3Uom6m_IZgmQxg9CepLDCozVGto2yJbWlNcQ_LeGO-T5QvcBWRo8l3cPaR6Davo7gu8-EV7R8Rm9IV3BBcaxLlGUXl4UcydSX31eCMKENM0p9-GzOL628jywKM-rs7OM5tdY5ZEE9zMdb7jV-yfe6GkQRVZBWiNXcYpyHyma6zKNBeaKroNS2b-AY4z7I27LQ3UjT_K7mEJb-SuLuFbAqVEsRIKF8N7qhwO8Ialv4NKOmqbMGryTYdhzVNjLFEHGzAMXV-G5fxC--bQoq0dQfTOaE7_WfAmAi47hIJWzi_JlyRrwNJZayDxo1e2GIcoh7N9obOMZqd-wQkyXvliTbWpjcfauzTli4bZisLT2_0n7ffdcYN7FRQ8fTCLeXx5jj9P7Rf5r9alKzMGXRK_lEaT-nOB_UxxOW678L3BErqxuIz33F6feBZJ1LtZVEatZD7FGSYfN40X2462H9YPHfNxnzspukCfEoJruqkLbn8MhZgOmDXJP8o5fKJr2p2l_wAJEytVJKxqa61ZA2SgBVDKmZrUEPqLKhNConn6ACIkyi_VahfoXD7cAYzuSjIjhyLoUBWb5uT93CBuYZ8DRIOCoqBDP_DK_RusJDGE05KqE6RKBEBwn_sEFOzF6fx9U7iiyOq4fKWdA0kDRlfJe5zXTywRd7n9-rK3YLK77oBO6lXlargBYHDjMui2ZvgoDRxIyeBxerK9HarHPBN5bFcfEkCgC73-4HAtun5PUEwtnRJFIrzbyC1gElvQjKyrMyoEnKYE-l6hmdRm01-klWce5Gyz6Bcc1P4DLgvxJTXG8YcnGTkPDAsdRcOwJJyFG4bV47OqOmAq2M1khhQ8RbNddAp0qTOQfxObn71-QCAwVKTlqOOrY7vj-2gdh6DLoBYh8_8ixlyP7eD4QYyGejFqmOJjof2oNpDWEvCf5IE6mMhq9NoCKPtEwffpY2FY9IwK89Z1vUKpw9x-edqeGemt5yi9sZa1VYP-z7XtXksOH8DILsHfeXlyr2PQo76ux_fqwCEzRTr3lcyOqNH_-c05zFyMcQ52QDmtBM6ZgRnSMsA7jDsQEj6Tl1KGGDcgODSDqO8RcybxCxscCB6QuB-DTXkf7yPkEX4Bxx0nqW7mmkmHG9ArvgYbVWGdxOk3ojqDIfby3lByqvj4Y8St9g20WlluxyvHtF-lkxvi8OtD_W7bd18vIYfXhAfgpbGyokYqtcnhUO-Dkoly1Rsg89jI7dwN_ZCY8QdFHWUZuocYHahQE6zVsuigYc2cciIS5N50ncoTjyFbwfiUR8I-Qs8tEb_2YaKK06Bp35qexK0CBsXwvMd3YDbkO5BfUkD5udgpVXBRw4CMQ3hB2djz_Gyx2iMkBVetKnrMJhmECwxpMm3tKUKlkVbPXUejUqpeJQ5NnPo2AD0jqv32m5q81ZT6cT8hVLMj7jjywOLZCTD9aK0Sw32O3shVyAhAmjtRgvkxktRDHfjMrddvKS3-srFwwC6-tjH9DnNlNtUiI24ibzUWtxo70WXhSHVwrpnaFwxFHjkJ40oKoCzhDFp6PD5PFXkx6N4iAnJkmUmMgDBvDS-Ymcswj5vDNuR5Oujdy6jsYu6PueBriIgIlv2aUnhaXX4mC5PSEIX8v7UtfikDthiR6dgbGg-rGoM7HjVdrBaMO-W3nNKPxqCTHFrnq8t--VPkIN9lkSEUnv3xd2hUFDjEXNUSeQtxz5w1aAFPoYKOTZZtIOpf5nBfJd0M20Q7dhFmHDyVIeqhxVha8-qjepCCltdWX2ynDc9YPmf-WLivyHEufuedeLwwX66VtYN4YM3_0sz3h5NN798USldJls6Lg75peTOKiMZfOA2EMP1GRm9zCyiyX0_-V29cMUAtn_v7LC_in4oT3xuoKEiQDipewfeIj-UHnVICVhCeuSFVuhd9t3BOLBfuBbqIXOQoaVb7OsvfEl2i7lSgBFXYynHHcVjwb-0b_bWHUeV-lCYsZs3elRmbg-GpXg2M4IoPTI3ibSBS",
+              "summary": []
+            },
+            {
+              "id": "msg_07d1e949dca3d78b016ad3de2571f087d29eb064193e7ed297",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The parking garage door code is: 4471-KESTREL."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [
+            {
+              "type": "function",
+              "description": "Lists the files in this chat's file store, with their sizes and types: files people attached, files tools returned, long tool results, and files you or your code wrote. Pass path to list one folder.",
+              "name": "list_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A folder to list. Leave it out for every file"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Reads a file from this chat's file store. Text comes back with line numbers, 1000 lines or 20000 characters at a time: pass offset and limit to read further. PDFs, Word, Excel, and PowerPoint files come back as their text, and images as the image itself. With unit \"characters\", offset and limit count characters instead of lines, for files with very long lines.",
+              "name": "read_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to read"
+                  },
+                  "offset": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "The line to start at, from 1, or the character, from 0"
+                  },
+                  "limit": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "How many lines or characters to read"
+                  },
+                  "unit": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "lines",
+                      "characters",
+                      null
+                    ],
+                    "description": "lines (the default) or characters"
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Searches the text of this chat's files, PDFs and Office files included, for lines matching a regular expression, ignoring case, and returns each match with its path and line number. Read around a match with read_file and its offset. Pass path to search one file or folder.",
+              "name": "search_files",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A regular expression, or plain words"
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A file or folder to search. Leave it out for all"
+                  }
+                },
+                "required": [
+                  "query"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Writes a text file to this chat's file store, replacing any file at that path. Use it for notes, drafts, data, and results you want to keep or come back to. To change part of a file, use edit_file.",
+              "name": "write_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Where to write, such as notes/summary.md"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The complete content of the file"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            },
+            {
+              "type": "function",
+              "description": "Changes a text file in this chat's file store by replacing old_text, which must appear exactly once, with new_text. Include enough of the surrounding text to make old_text unique, or set replace_all to replace every occurrence.",
+              "name": "edit_file",
+              "output_schema": null,
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "The file to change"
+                  },
+                  "old_text": {
+                    "type": "string",
+                    "description": "The exact text to replace"
+                  },
+                  "new_text": {
+                    "type": "string",
+                    "description": "The text to put in its place"
+                  },
+                  "replace_all": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ],
+                    "description": "Replace every occurrence"
+                  }
+                },
+                "required": [
+                  "path",
+                  "old_text",
+                  "new_text"
+                ],
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 7712,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 1152
+            },
+            "output_tokens": 388,
+            "output_tokens_details": {
+              "reasoning_tokens": 320
+            },
+            "total_tokens": 8100
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Sat, 17 Oct 2026 20:44:21 GMT
+recorded_with: VCR 6.4.0

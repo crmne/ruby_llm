@@ -95,6 +95,9 @@ module RubyLLM
   # missing or malformed front matter, or a name or description it rejects.
   class InvalidSkillError < StandardError; end
 
+  # Raised when a FileStore has no file at the path asked for.
+  class FileNotFoundError < StandardError; end
+
   # Raised when a message role outside +:system+, +:user+, +:assistant+, or
   # +:tool+ is used.
   class InvalidRoleError < StandardError; end

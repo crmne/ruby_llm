@@ -37,6 +37,7 @@ Read the relevant page instead of loading the entire documentation site:
 | Configure a provider or select a model | `configuration/`, `configuration-providers/`, `models/` |
 | Chat, stream, or attach files | `chat/`, `streaming/`, `attachments/` |
 | Declare tools or require approval | `tools/`, `tool-parameters/`, `tool-execution/` |
+| Keep attachments and long tool results out of the conversation (2.2) | `chat-files/` |
 | Use tools from MCP servers (2.1) | `mcp/` |
 | Use provider-hosted tools such as web search | `provider-tools/`, `citations/` |
 | Parse structured output | `structured-output/` |
@@ -67,6 +68,7 @@ Markdown guides use the same name with `.md`, such as `chat.md`. The API referen
 - Read text through `message.content` and structured output through `message.parsed`. Declare schemas with `Schematist::Schema` or the schema DSL. Do not assume `content` is a parsed Hash.
 - Subclass `RubyLLM::Tool`. Use `description`, `parameter`, or a `parameters` block, and keyword arguments on `execute`. Register tools with `with_tools`; configure choice and concurrency with `with_tool_options`. Keep application authorization in the tool or underlying service. Use `requires_approval` when the product needs a user's decision before execution. With large tool sets, pass `defer: true` to `with_tools` or `with_mcp` (or declare `defer` on the class) so the model searches for tools instead of receiving them all (2.1).
 - Use `with_thinking`, `with_caching`, `with_compaction`, and `with_citations` without arguments to enable them and `false` to disable them. They reject `nil`. Read the relevant guide for supported options and model requirements.
+- When attachments or tool results are large, use `with_file_store` (or the agent `file_store` macro) instead of pasting text into prompts (2.2): the model reads and searches files with its own tools, and `chat.file_store` is the store. Build stores with `RubyLLM.file_store.memory` or `.directory(path)`. Only text files are read as text out of the box: register `config.file_converters` for more, such as `RubyLLM.file_store.converter.ocr` for PDFs and images.
 - Connect MCP servers by subclassing `RubyLLM::MCP` (`url` or `command`, then `only` and `requires_approval` to shape tools) and attach them with `chat.with_mcp(...)` or the agent `mcp` macro (2.1). Do not add a separate MCP client gem.
 - For a yes/no probability, a choice, or a score about application data, subclass `RubyLLM::Judge` and call `.judge(input)` instead of parsing free text from a chat (2.1). Backends are TypeSafe's Jev, OpenAI Decisions, and local decision models such as Clef with `provider: :ollama`.
 - Use `with_fallbacks` for alternate models, `with_provider_tools` for provider-hosted tools, and `progress` inside a long-running tool with `after_tool_progress` on the chat (2.1) to report it.

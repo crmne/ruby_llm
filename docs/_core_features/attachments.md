@@ -163,6 +163,18 @@ If the provider deletes an uploaded replacement, RubyLLM uploads the cached repl
 
 This handles formats the protocol cannot send. A model can still reject an attachment the protocol can represent; that API error does not trigger the callback.
 
+### Keeping Attachments Out of the Conversation
+
+Every attachment travels with the conversation, so a long PDF attached to the first question is sent again with every later one. With [chat files]({% link _core_features/chat-files.md %}), the model sees a file in full on the question it came with, and one line naming it after that. It reads the parts it needs with its `read_file` and `search_files` tools:
+
+```ruby
+chat = RubyLLM.chat.with_file_store
+chat.ask "Summarize this report.", with: "report.pdf"
+chat.ask "What does it say about churn?" # the model searches report.pdf instead of rereading it
+```
+
+With a converter registered for a format, such as the OCR converter for PDFs and scans, the same tools read it as text, so they work with models that cannot take that format.
+
 ### Choosing the Media Resolution
 
 Small print and dense tables need more detail than a photo of a cat. Build the attachment yourself and set `resolution:` to control how many tokens the model spends on it:
