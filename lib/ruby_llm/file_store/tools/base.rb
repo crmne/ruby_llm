@@ -51,7 +51,7 @@ module RubyLLM
 
         def guarded
           yield
-        rescue ToolError => e
+        rescue ToolError, FileStoreFullError => e
           { error: e.message }
         end
       end

@@ -98,6 +98,11 @@ module RubyLLM
   # Raised when a FileStore has no file at the path asked for.
   class FileNotFoundError < StandardError; end
 
+  # Raised by a FileStore when a write would take it past its limit. Its
+  # message is what the model reads, so say what to do. The file tools and
+  # +run_code+ answer the model with it instead of failing the reply.
+  class FileStoreFullError < StandardError; end
+
   # Raised when a message role outside +:system+, +:user+, +:assistant+, or
   # +:tool+ is used.
   class InvalidRoleError < StandardError; end

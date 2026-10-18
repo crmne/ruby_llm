@@ -207,4 +207,17 @@ RSpec.describe RubyLLM::FileStore::Tools do
       expect(call(:edit_file, path: 'missing.md', old_text: 'a', new_text: 'b')[:error]).to include('There is no file')
     end
   end
+
+  describe 'a full store' do
+    it 'answers write_file and edit_file with the reason, and keeps the file as it was' do
+      files.write('notes.md', 'hello')
+      allow(files).to receive(:write).and_raise(RubyLLM::FileStoreFullError, 'The files are full: delete some.')
+
+      expect(call(:write_file, path: 'big.txt', content: 'x')).to eq(error: 'The files are full: delete some.')
+      expect(call(:edit_file, path: 'notes.md', old_text: 'hello', new_text: 'bye'))
+        .to eq(error: 'The files are full: delete some.')
+      expect(files.read('notes.md')).to eq('hello')
+      expect(files.exists?('big.txt')).to be(false)
+    end
+  end
 end

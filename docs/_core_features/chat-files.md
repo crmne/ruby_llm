@@ -191,6 +191,8 @@ end
 
 To share a store, ship it as a gem named `ruby_llm-file_stores-<name>`, like the `ruby_llm-providers-<name>` gems for providers.
 
+A store with a limit raises `RubyLLM::FileStoreFullError` from `write` when a file wouldn't fit. Its message goes to the model, so say what to do, such as "This chat's files are full: delete or overwrite files." The file tools answer with it as an error, `run_code` saves what fits and lists the rest under `unsaved_files` with the message as `files_error`, and a long tool result that can't be saved goes to the model whole.
+
 RubyLLM passes only paths `RubyLLM::FileStore.path` accepts. A store that keeps its files in a folder on disk can also define `local_root`, returning the folder, so code execution runs there instead of copying files (see [Code Execution](#code-execution)). Conversions are kept in memory unless the store overrides `cached_text(file)` and `cache_text(file, text)`. Give your `StoredFile`s a `digest` when you can: it tells RubyLLM a file changed without reading it.
 
 ## Following Writes
