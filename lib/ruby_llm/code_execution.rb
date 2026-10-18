@@ -483,11 +483,20 @@ module RubyLLM
       !store.nil? && store.local_root.nil?
     end
 
+    # Saves what the run wrote. A file the store has no room for is left
+    # out, and the report names it with the store's reason, so the model
+    # reads why instead of the reply failing.
     def save(store, result, files, skipped)
-      saved = files.map do |file|
-        store.write(file.filename, file.content).tap { |stored| @written.call(stored) }
+      saved = []
+      unsaved = []
+      reason = nil
+      files.each do |file|
+        saved << store.write(file.filename, file.content).tap { |stored| @written.call(stored) }
+      rescue FileStoreFullError => e
+        unsaved << file.filename
+        reason ||= e.message
       end
-      report(result, saved.map(&:path), skipped)
+      report(result, saved.map(&:path), skipped, unsaved_files: (unsaved if unsaved.any?), files_error: reason)
     end
 
     def run_in_sandbox(runner, command, workspace, readable:, directory: workspace.directory)

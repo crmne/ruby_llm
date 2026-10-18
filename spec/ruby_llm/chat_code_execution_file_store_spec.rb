@@ -74,6 +74,28 @@ RSpec.describe RubyLLM::Chat do
       expect(written).to eq(%w[notes.md out/chart.svg])
     end
 
+    it 'saves what fits when the store fills up, and tells the model what was left out' do
+      written = []
+      chat.after_file_write { |file| written << file.path }
+      store = chat.file_store
+      original = store.method(:write)
+      allow(store).to receive(:write) do |path, content, **options|
+        raise RubyLLM::FileStoreFullError, 'The files are full.' if path == 'out/chart.svg'
+
+        original.call(path, content, **options)
+      end
+
+      result = nil
+      expect { result = run_code(files: %w[notes.md]) }.not_to raise_error
+
+      expect(JSON.parse(result)).to include('stdout' => 'done', 'exit_code' => 0, 'files' => %w[notes.md],
+                                            'unsaved_files' => %w[out/chart.svg],
+                                            'files_error' => 'The files are full.')
+      expect(JSON.parse(result)).not_to have_key('error')
+      expect(written).to eq(%w[notes.md])
+      expect(store.exists?('out/chart.svg')).to be(false)
+    end
+
     it 'refuses a name with no file, a path that leaves the store, and a file under a read-only folder' do
       templates = Dir.mktmpdir('ruby_llm-templates')
       chat.with_code_execution(mounts: { 'templates' => templates })

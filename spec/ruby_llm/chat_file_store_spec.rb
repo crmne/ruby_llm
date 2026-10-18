@@ -277,6 +277,15 @@ RSpec.describe RubyLLM::Chat do
       expect(tool_result(odd, 'v' * 20_000).content).to include('results/___odd_tool-call4.txt')
     end
 
+    it 'sends the result whole when the store is full' do
+      full = RubyLLM.file_store.memory
+      allow(full).to receive(:write).and_raise(RubyLLM::FileStoreFullError, 'The files are full.')
+      allow(RubyLLM.logger).to receive(:warn)
+      chat.with_file_store(full)
+
+      expect(tool_result(tool_call, 'w' * 20_000).content).to eq('w' * 20_000)
+    end
+
     it 'sends every result whole with spill_to_file: false, or without files' do
       expect(tool_result(tool_call, 'z' * 20_000).content.length).to eq(20_000)
 
