@@ -301,6 +301,28 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    it "bedrock/#{model_for(:bedrock, :thinking)} reads the cache from the second call of a tool round" do
+      stub_const('ReleaseChecklistTool', Class.new(RubyLLM::Tool) do
+        description 'Returns the release checklist for a version'
+        parameter :version, description: 'Version number, such as 2.1.0'
+
+        def execute(version:)
+          "Checklist for #{version}: changelog written, cassettes re-recorded, docs updated."
+        end
+      end)
+      chat = RubyLLM.chat(model: model_for(:bedrock, :thinking), provider: :bedrock).with_caching
+      chat.with_instructions(cacheable_instructions).with_tools(ReleaseChecklistTool)
+
+      chat.ask('Fetch the release checklist for version 2.1.0 with the tool, then reply with its first item.')
+
+      calls = chat.messages.select { |message| message.role == :assistant }
+      expect(calls.size).to be >= 2
+      first_prefix = calls.first.tokens.cache_write.to_i + calls.first.tokens.cache_read.to_i
+      expect(first_prefix).to be_positive
+      expect(calls[1].tokens.cache_read).to be >= first_prefix
+      expect(calls[1].cost.cache_read).to be < calls[1].tokens.cache_read * calls[1].model_info.price(:input) / 1e6
+    end
+
     it "anthropic/#{model_for(:anthropic)} writes a one-hour boundary and prices it as one" do
       chat = RubyLLM.chat(model: model_for(:anthropic), provider: :anthropic).with_caching
       chat.with_instructions("#{cacheable_instructions}\nKeep this prefix for an hour.").cache_until_here(ttl: '1h')

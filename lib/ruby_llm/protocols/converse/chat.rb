@@ -15,6 +15,15 @@ module RubyLLM
 
         BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+        # Bedrock accepts at most four cache points in one request, and
+        # Converse takes them only for Claude and Nova models; Nova takes none
+        # in toolConfig.tools. See "Supported models, Regions, and explicit
+        # caching limits" in
+        # https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
+        MAX_CACHE_POINTS = 4
+        CACHE_POINT_MODELS = %w[anthropic. amazon.nova].freeze
+        TOOL_CACHE_POINT_MODELS = %w[anthropic.].freeze
+        CACHE_LIFETIME_UNITS = { 's' => 1, 'm' => 60, 'h' => 3600 }.freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
 
         module_function
@@ -45,12 +54,11 @@ module RubyLLM
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
           prompt_cache_options(caching)
-          automatic_cache_target = automatic_cache_target(system_messages, chat_messages, caching)
           payload = {
-            messages: render_messages(chat_messages, caching:, automatic_cache_target:, citations:)
+            messages: render_messages(chat_messages, caching:, citations:)
           }
 
-          system_blocks = render_system(system_messages, caching:, automatic_cache_target:)
+          system_blocks = render_system(system_messages, caching:)
           payload[:system] = system_blocks unless system_blocks.empty?
 
           payload[:inferenceConfig] = render_inference_config(model, temperature, max_output_tokens)
@@ -64,6 +72,7 @@ module RubyLLM
           output_config = build_output_config(schema)
           payload[:outputConfig] = output_config if output_config
 
+          add_automatic_cache_points(payload, model, caching)
           payload
         end
 
@@ -152,17 +161,17 @@ module RubyLLM
           end
         end
 
-        def render_messages(messages, caching: nil, automatic_cache_target: nil, citations: false)
+        def render_messages(messages, caching: nil, citations: false)
           rendered = []
           tool_result_blocks = []
 
           messages.each do |msg|
             if msg.tool_result?
-              tool_result_blocks << render_tool_result_block(msg)
+              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:))
               next
             end
 
-            message = render_non_tool_message(msg, caching:, automatic_cache_target:, citations:)
+            message = render_non_tool_message(msg, caching:, citations:)
             next tool_result_blocks.concat(message[:content]) if joins_tool_results?(message, tool_result_blocks)
 
             unless tool_result_blocks.empty?
@@ -180,8 +189,8 @@ module RubyLLM
           message && message[:role] == 'user' && !tool_result_blocks.empty?
         end
 
-        def render_non_tool_message(msg, caching: nil, automatic_cache_target: nil, citations: false)
-          content = render_message_content(msg, caching:, automatic_cache_target:, citations:)
+        def render_non_tool_message(msg, caching: nil, citations: false)
+          content = render_message_content(msg, caching:, citations:)
           return nil if content.empty?
 
           {
@@ -190,7 +199,7 @@ module RubyLLM
           }
         end
 
-        def render_message_content(msg, caching: nil, automatic_cache_target: nil, citations: false)
+        def render_message_content(msg, caching: nil, citations: false)
           blocks = render_structured_message_content(msg, citations:)
 
           if msg.tool_call?
@@ -204,9 +213,7 @@ module RubyLLM
               }
             end
           end
-          if cache_boundary?(msg, automatic_cache_target, caching:)
-            blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl)
-          end
+          blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
 
           blocks
         end
@@ -230,6 +237,12 @@ module RubyLLM
           return [] unless msg.thinking && producer_slug(msg) == @provider.slug
 
           [render_thinking_block(msg.thinking)].compact
+        end
+
+        def render_tool_result_blocks(msg, caching: nil)
+          blocks = [render_tool_result_block(msg)]
+          blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
+          blocks
         end
 
         def render_tool_result_block(msg)
@@ -274,29 +287,83 @@ module RubyLLM
           end
         end
 
-        def render_system(messages, caching: nil, automatic_cache_target: nil)
+        def render_system(messages, caching: nil)
           messages.flat_map do |msg|
             blocks = Media.render_content(msg.content, msg.attachments, used_document_names: @used_document_names)
-            if cache_boundary?(msg, automatic_cache_target, caching:)
-              blocks + [converse_cache_block_for(caching, ttl: msg.cache_ttl)]
-            else
-              blocks
-            end
+            cache_boundary?(msg, caching:) ? blocks + [converse_cache_block_for(caching, ttl: msg.cache_ttl)] : blocks
           end
         end
 
-        def automatic_cache_target(system_messages, chat_messages, caching)
-          return unless caching
-
-          (chat_messages.reverse + system_messages.reverse).find { |msg| cacheable_message?(msg) }
+        def cache_boundary?(message, caching: nil)
+          caching != false && message.cache_until_here?
         end
 
-        def cacheable_message?(message)
-          !message.tool_result?
+        # Bedrock's own caching of Claude and Nova prompts is best effort, so
+        # with caching on RubyLLM places explicit points: at the end of the
+        # conversation, so the next tool round or question can read what was
+        # sent so far; after the system prompt (or the tools without one),
+        # which stays cached when a later message changes; and after the
+        # previous assistant message, because Bedrock looks for an earlier
+        # cache entry only about 20 content blocks back from each point, and
+        # a round of parallel tool calls can be longer than that. Points the
+        # messages already mark count toward the limit of four, and an
+        # automatic point never puts a shorter lifetime before a longer one,
+        # which Bedrock refuses.
+        def add_automatic_cache_points(payload, model, caching)
+          return unless caching && automatic_cache_points?(model)
+
+          budget = MAX_CACHE_POINTS - cache_points(payload).size
+          automatic_cache_targets(payload, model).each do |blocks|
+            next if cache_point?(blocks.last)
+            break if budget <= 0
+
+            blocks << converse_cache_block_for(caching)
+            next blocks.pop unless cache_lifetimes_descend?(payload)
+
+            budget -= 1
+          end
         end
 
-        def cache_boundary?(message, automatic_cache_target, caching: nil)
-          caching != false && (message.cache_until_here? || message.equal?(automatic_cache_target))
+        def automatic_cache_points?(model)
+          model_id = foundation_model_id(model&.id)
+          # An application inference profile ARN does not name its model.
+          CACHE_POINT_MODELS.any? { |prefix| model_id.start_with?(prefix) } || !model_id.include?('.')
+        end
+
+        def automatic_cache_targets(payload, model)
+          messages = payload[:messages]
+          earlier_answer = messages[0...-1].reverse.find { |message| message[:role] == 'assistant' }
+
+          [messages.last&.dig(:content), stable_prefix_blocks(payload, model), earlier_answer&.dig(:content)].compact
+        end
+
+        def stable_prefix_blocks(payload, model)
+          return payload[:system] if payload[:system]
+
+          tools = payload.dig(:toolConfig, :tools)
+          tools if tools && TOOL_CACHE_POINT_MODELS.any? { |prefix| foundation_model_id(model&.id).start_with?(prefix) }
+        end
+
+        # In the order Bedrock reads them: tools, system, then messages.
+        def cache_points(payload)
+          blocks = Array(payload.dig(:toolConfig, :tools)) + Array(payload[:system]) +
+                   payload[:messages].flat_map { |message| message[:content] }
+          blocks.select { |block| cache_point?(block) }
+        end
+
+        def cache_lifetimes_descend?(payload)
+          lifetimes = cache_points(payload).map { |block| cache_lifetime(block[:cachePoint] || block['cachePoint']) }
+          lifetimes.each_cons(2).all? { |earlier, later| earlier >= later }
+        end
+
+        def cache_lifetime(point)
+          ttl = point.is_a?(Hash) ? (point[:ttl] || point['ttl']) : nil
+          amount, unit = ttl.to_s.match(/\A(\d+)([smh])\z/)&.captures
+          amount ? amount.to_i * CACHE_LIFETIME_UNITS.fetch(unit) : 300
+        end
+
+        def cache_point?(block)
+          block.is_a?(Hash) && (block.key?(:cachePoint) || block.key?('cachePoint'))
         end
 
         def converse_cache_block_for(caching, ttl: nil)
