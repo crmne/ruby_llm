@@ -26,6 +26,13 @@ RSpec.describe RubyLLM::FileStore::Factory do
     FileUtils.rm_rf(root)
   end
 
+  it 'refuses an Active Storage store without the Rails integration' do
+    plain = Object.new.extend(described_class)
+
+    expect { plain.send(:active_storage, Object.new) }
+      .to raise_error(RubyLLM::ConfigurationError, /needs RubyLLM's Rails integration/)
+  end
+
   it 'gives a chat the store it builds' do
     store = RubyLLM.file_store.memory
     chat = RubyLLM::Chat.new(model: model_for(:openai), provider: :openai)

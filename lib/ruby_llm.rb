@@ -319,13 +319,15 @@ module RubyLLM
     end
 
     # Returns a factory for the file stores RubyLLM ships, to attach with
-    # Chat#with_file_store: +memory+ for a FileStore::Memory, and
-    # +directory(path)+ for a FileStore::Directory, and +converter+ for
-    # the converters that read files as text. For a store of your own,
-    # subclass FileStore.
+    # Chat#with_file_store: +memory+ for a FileStore::Memory,
+    # +directory(path)+ for a FileStore::Directory,
+    # +active_storage(chat_record, owner: nil)+ for a persisted chat's
+    # ActiveRecord::FileStore in Rails, and +converter+ for the converters
+    # that read files as text. For a store of your own, subclass FileStore.
     #
-    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
     #   chat.with_file_store(RubyLLM.file_store.memory)
+    #   chat.with_file_store(RubyLLM.file_store.directory("tmp/work"))
+    #   chat_record.with_file_store(RubyLLM.file_store.active_storage(chat_record, owner: user))
     #   config.file_converters["image/*"] = RubyLLM.file_store.converter.ocr
     #
     # Returns FileStore::Factory.
