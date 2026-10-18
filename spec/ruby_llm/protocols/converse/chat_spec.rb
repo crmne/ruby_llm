@@ -302,6 +302,23 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         expect(cache_point_paths(payload)).to eq([[0, 1], [1, 1], [2, 1], [4, 1]])
       end
 
+      it 'adds no automatic point with a shorter lifetime before a longer marked one' do
+        tool_loop.last.cache_until_here(ttl: '1h')
+
+        payload = render_payload(tool_loop, caching: {})
+
+        expect(cache_point_paths(payload)).to eq([[2, 1]])
+      end
+
+      it 'adds automatic points with a longer lifetime before a shorter marked one' do
+        tool_loop[1].cache_until_here(ttl: '5m')
+
+        payload = render_payload(tool_loop, caching: { ttl: '1h' })
+
+        expect(cache_point_paths(payload)).to eq([[:system, 1], [0, 1]])
+        expect(payload[:system].last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+      end
+
       it 'does not add a second point where a message marks one' do
         messages = [RubyLLM::Message.new(role: :user, content: 'Question').cache_until_here]
 

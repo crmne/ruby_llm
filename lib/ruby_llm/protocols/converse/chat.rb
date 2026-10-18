@@ -23,6 +23,7 @@ module RubyLLM
         MAX_CACHE_POINTS = 4
         CACHE_POINT_MODELS = %w[anthropic. amazon.nova].freeze
         TOOL_CACHE_POINT_MODELS = %w[anthropic.].freeze
+        CACHE_LIFETIME_UNITS = { 's' => 1, 'm' => 60, 'h' => 3600 }.freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
 
         module_function
@@ -297,24 +298,28 @@ module RubyLLM
           caching != false && message.cache_until_here?
         end
 
-        # Converse has no automatic caching of its own, so with caching on
-        # RubyLLM places the points: at the end of the conversation, so the
-        # next tool round or question reads everything sent so far; after
-        # the system prompt (or the tools without one), which stays cached
-        # when a later message changes; and after the previous assistant
-        # message, because Bedrock looks for an earlier cache entry only
-        # about 20 content blocks back from each point, and a round of
-        # parallel tool calls can be longer than that. Points the messages
-        # already mark count toward the limit of four.
+        # Bedrock's own caching of Claude and Nova prompts is best effort, so
+        # with caching on RubyLLM places explicit points: at the end of the
+        # conversation, so the next tool round or question can read what was
+        # sent so far; after the system prompt (or the tools without one),
+        # which stays cached when a later message changes; and after the
+        # previous assistant message, because Bedrock looks for an earlier
+        # cache entry only about 20 content blocks back from each point, and
+        # a round of parallel tool calls can be longer than that. Points the
+        # messages already mark count toward the limit of four, and an
+        # automatic point never puts a shorter lifetime before a longer one,
+        # which Bedrock refuses.
         def add_automatic_cache_points(payload, model, caching)
           return unless caching && automatic_cache_points?(model)
 
-          budget = MAX_CACHE_POINTS - cache_point_count(payload)
+          budget = MAX_CACHE_POINTS - cache_points(payload).size
           automatic_cache_targets(payload, model).each do |blocks|
             next if cache_point?(blocks.last)
             break if budget <= 0
 
             blocks << converse_cache_block_for(caching)
+            next blocks.pop unless cache_lifetimes_descend?(payload)
+
             budget -= 1
           end
         end
@@ -339,10 +344,22 @@ module RubyLLM
           tools if tools && TOOL_CACHE_POINT_MODELS.any? { |prefix| foundation_model_id(model&.id).start_with?(prefix) }
         end
 
-        def cache_point_count(payload)
-          blocks = Array(payload[:system]) + Array(payload.dig(:toolConfig, :tools)) +
+        # In the order Bedrock reads them: tools, system, then messages.
+        def cache_points(payload)
+          blocks = Array(payload.dig(:toolConfig, :tools)) + Array(payload[:system]) +
                    payload[:messages].flat_map { |message| message[:content] }
-          blocks.count { |block| cache_point?(block) }
+          blocks.select { |block| cache_point?(block) }
+        end
+
+        def cache_lifetimes_descend?(payload)
+          lifetimes = cache_points(payload).map { |block| cache_lifetime(block[:cachePoint] || block['cachePoint']) }
+          lifetimes.each_cons(2).all? { |earlier, later| earlier >= later }
+        end
+
+        def cache_lifetime(point)
+          ttl = point.is_a?(Hash) ? (point[:ttl] || point['ttl']) : nil
+          amount, unit = ttl.to_s.match(/\A(\d+)([smh])\z/)&.captures
+          amount ? amount.to_i * CACHE_LIFETIME_UNITS.fetch(unit) : 300
         end
 
         def cache_point?(block)
