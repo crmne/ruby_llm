@@ -34,8 +34,6 @@ module RubyLLM
         return [] unless call.sequential?
 
         response = messages.reverse.find { |message| message.tool_calls&.key?(call.id) }
-        return [] unless response
-
         response.tool_calls.values.take_while { |candidate| candidate.id != call.id }
                 .select { |candidate| candidate.sequential? && candidate.namespace == call.namespace }
       end

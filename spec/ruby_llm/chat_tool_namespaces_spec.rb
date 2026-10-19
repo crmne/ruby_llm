@@ -174,6 +174,35 @@ RSpec.describe RubyLLM::Chat do
     expect(executed).to eq(%i[click screenshot])
   end
 
+  it 'holds later members behind a member paused on input while other calls proceed' do
+    request = RubyLLM::MCP::InputRequest.new('unlock', { 'message' => 'Unlock the display?' })
+    paused = local_tool('left_click', namespace: 'computer') do
+      executed << :click
+      raise RubyLLM::MCP::InputRequiredError.new('desktop', 'requests' => [request])
+    end
+    log = executed
+    paused.define_singleton_method(:resume) do |_input, _arguments|
+      log << :resumed
+      'OK'
+    end
+    later = local_tool('screenshot', namespace: 'computer') { executed << :screenshot }
+    lookup = local_tool('lookup') { executed << :lookup }
+    publish = local_tool('publish', approval: true) { executed << :publish }
+    stub_turns([call('first', 'left_click', namespace: 'computer'), call('second', 'screenshot', namespace: 'computer'),
+                call('third', 'lookup'), call('fourth', 'publish')], finish)
+
+    enable_computer.with_tools(paused, later, lookup, publish).ask('Inspect')
+    expect(executed).to eq(%i[click lookup])
+
+    chat.approve(chat.pending_approvals.first).complete
+    expect(executed).to eq(%i[click lookup publish])
+    expect(chat).to be_awaiting_input
+
+    chat.answer(chat.pending_inputs.first).complete
+    expect(executed).to eq(%i[click lookup publish resumed screenshot])
+    expect(requests.size).to eq(2)
+  end
+
   it 'answers denied and skipped actions without requiring approval to skip the rest' do
     first = local_tool('left_click', namespace: 'computer', approval: true) do
       executed << :click
@@ -281,6 +310,12 @@ RSpec.describe RubyLLM::Chat do
     other = RubyLLM.chat(model: model_for(:gemini), provider: :gemini).with_tools(native)
 
     expect { other.render }.to raise_error(RubyLLM::Error, /namespace/i)
+  end
+
+  it 'rejects an Anthropic namespace that is not a native client toolset instead of dropping the tool' do
+    grouped = local_tool('lookup', namespace: 'crm')
+
+    expect { chat.with_tools(grouped).render }.to raise_error(RubyLLM::Error, /crm/)
   end
 
   it 'rejects namespaced history on an incompatible protocol after the tools are removed' do

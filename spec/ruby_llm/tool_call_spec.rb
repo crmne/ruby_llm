@@ -29,6 +29,14 @@ RSpec.describe RubyLLM::ToolCall do
     expect(tool_call.arguments).to eq('{"q":"ruby"}')
   end
 
+  it 'shows the namespace of a namespaced call in inspect' do
+    tool_call = described_class.new(id: 'call_1', name: 'screenshot', namespace: :computer)
+
+    expect(tool_call.namespace).to eq('computer')
+    expect(tool_call.inspect).to include('namespace: "computer"')
+    expect(described_class.new(id: 'call_2', name: 'screenshot').inspect).not_to include('namespace')
+  end
+
   %i[anthropic openai].each do |provider|
     it "renders the same #{provider} request before and after a jsonb round trip" do
       context = RubyLLM.context do |config|

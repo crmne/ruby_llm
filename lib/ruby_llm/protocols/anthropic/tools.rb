@@ -68,8 +68,19 @@ module RubyLLM
           }
         end
 
+        # Anthropic declares the members of its client toolsets itself and has
+        # no namespaces for application-defined functions.
+        CLIENT_TOOLSETS = %w[computer browser].freeze
+
         def render_tools(tools)
-          tools.values.reject(&:namespace).map { |tool| function_for(tool) }
+          members, functions = tools.values.partition(&:namespace)
+          unknown = members.map(&:namespace).uniq - CLIENT_TOOLSETS
+          if unknown.any?
+            raise RubyLLM::Error, "The Anthropic protocol cannot express the #{unknown.join(', ')} tool namespace; " \
+                                  "only its #{CLIENT_TOOLSETS.join(' and ')} client toolsets take namespaced tools"
+          end
+
+          functions.map { |tool| function_for(tool) }
         end
 
         def function_for(tool)

@@ -2118,7 +2118,6 @@ module RubyLLM
                  else
                    execute_tool_with_callbacks(tool_call)
                  end
-        break if result.equal?(PAUSED) && tool_call.sequential?
         next if result.equal?(PAUSED)
 
         run_callbacks(:before_message)
