@@ -290,6 +290,19 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       expect(citation.url).to eq('HTTPS://example.com/source')
     end
 
+    it 'keeps the id of a cited tool output as its source_id' do
+      body['message']['citations'].first['sources'] = [
+        { 'type' => 'tool', 'id' => 'gid://app/Document/42',
+          'tool_output' => { 'title' => 'Q4 Report', 'text' => 'Revenue grew 12%.', 'url' => 'https://example.com/q4' } }
+      ]
+
+      citation = protocol.send(:parse_completion_body, body, raw: nil).citations.first
+
+      expect(citation).to have_attributes(
+        url: 'https://example.com/q4', source_id: 'gid://app/Document/42', title: 'Q4 Report'
+      )
+    end
+
     it 'offsets spans by the text blocks that came before' do
       body['message']['content'].unshift({ 'type' => 'text', 'text' => 'Answer: ' })
       body['message']['citations'].first['content_index'] = 1

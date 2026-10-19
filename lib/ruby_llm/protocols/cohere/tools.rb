@@ -101,7 +101,7 @@ module RubyLLM
             {
               type: 'document',
               document: {
-                id: result[:url] || "tool:#{index}",
+                id: result[:source_id] || result[:url] || "tool:#{index}",
                 data: { title: result[:title], text: result[:text], url: result[:url] }.compact
               }
             }

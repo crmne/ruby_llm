@@ -9,6 +9,14 @@ RSpec.describe RubyLLM::SearchResults do
     expect(results.results).to eq([{ title: 'Doc', url: 'https://example.com', text: 'Hello' }])
   end
 
+  it 'keeps an optional source_id that identifies the result' do
+    with_id = described_class.new(title: 'Doc', source_id: 'gid://app/Document/42', text: 'Hello')
+    without_id = described_class.new(title: 'Doc', text: 'Hello')
+
+    expect(with_id.results).to eq([{ title: 'Doc', text: 'Hello', source_id: 'gid://app/Document/42' }])
+    expect(without_id.results.first).not_to have_key(:source_id)
+  end
+
   it 'accepts multiple results' do
     results = described_class.new({ title: 'A', text: 'one' }, { title: 'B', text: 'two' })
 

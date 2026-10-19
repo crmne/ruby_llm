@@ -164,6 +164,19 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(result).to eq([{ text: '(no output)' }])
     end
+
+    it 'labels a search result with its source_id in place of its url' do
+      results = RubyLLM::SearchResults.new(
+        title: 'Ruby Facts',
+        url: 'https://example.com/ruby-facts',
+        source_id: 'gid://app/Document/42',
+        text: 'Matz created Ruby in 1993.'
+      )
+      msg = instance_double(RubyLLM::Message, content: results.to_json, attachments: [])
+
+      expect(described_class.render_tool_result_content(msg, search_results: true).first.dig(:searchResult, :source))
+        .to eq('gid://app/Document/42')
+    end
   end
 
   describe '.render_payload' do
@@ -906,8 +919,22 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       )
 
       expect(citation.url).to eq('https://example.com/ruby-facts')
+      expect(citation.source_id).to eq('https://example.com/ruby-facts')
       expect(citation.title).to eq('Ruby Facts')
       expect(citation.source_index).to eq(0)
+    end
+
+    it 'keeps a search result source that is not a web URL as its source_id' do
+      citation = described_class.parse_citation(
+        {
+          'location' => { 'searchResultLocation' => { 'searchResultIndex' => 0, 'start' => 0, 'end' => 1 } },
+          'source' => 'gid://app/Document/42',
+          'sourceContent' => [{ 'text' => 'Revenue grew 12%.' }],
+          'title' => 'Q4 Report'
+        }
+      )
+
+      expect(citation).to have_attributes(url: nil, source_id: 'gid://app/Document/42', source_index: 0)
     end
 
     it 'reads web locations from grounded citations' do

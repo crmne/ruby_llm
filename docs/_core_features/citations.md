@@ -92,7 +92,18 @@ response.citations.first.cited_text # => the quoted passage
 
 For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
 
-`SearchResults` gives Claude citable passages, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
+To find the record a citation points to, give each result a `source_id` string, such as a Global ID. Its citations return the same `source_id`:
+
+```ruby
+RubyLLM::SearchResults.new(title: doc.name, source_id: doc.to_global_id.to_s, text: doc.body)
+
+citation.source_id # => "gid://app/Document/42"
+GlobalID::Locator.locate(citation.source_id, only: Document) # => the Document
+```
+
+RubyLLM sends `source_id` in place of `url`, so `citation.url` can be `nil`; look the link up through the record. The model sees the `source_id` as the result's label and may quote it in its answer.
+
+`SearchResults` gives citable passages to Cohere and to Claude, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
 
 ## Citing the Web
 
@@ -137,7 +148,7 @@ Each citation exposes a normalized set of fields. Fields a provider doesn't repo
 | `cited_text` | The quoted snippet from the source |
 | `text` | The span of the response this citation supports |
 | `start_index` / `end_index` | Character range of that span in `response.content` |
-| `source_id` | Provider identifier for the source, such as a file ID |
+| `source_id` | Provider identifier for the source, such as a file ID or a search result's `source_id` |
 | `source_index` | 0-indexed position of the source document or search result |
 | `start_page` / `end_page` | Page range for PDF citations (1-indexed, inclusive) |
 

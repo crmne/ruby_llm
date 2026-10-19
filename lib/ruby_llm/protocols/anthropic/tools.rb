@@ -51,7 +51,7 @@ module RubyLLM
         def search_result_block(result)
           {
             type: 'search_result',
-            source: result[:url] || result[:title],
+            source: result[:source_id] || result[:url] || result[:title],
             title: result[:title],
             content: [{ type: 'text', text: result[:text] }],
             citations: { enabled: true }
