@@ -4,8 +4,6 @@ module RubyLLM
   module Protocols
     class Gemini
       module LongDecode # :nodoc:
-        private
-
         def complete_request(payload, headers, usage_recorder: nil, &)
           original = Support::Utils.deep_dup(payload)
           segments = []
@@ -34,6 +32,8 @@ module RubyLLM
           @response_parts = nil
         end
 
+        private
+
         def sync_response(payload, additional_headers = {})
           super.tap do |message|
             @response_parts = message.raw.body.dig('candidates', 0, 'content', 'parts') || []
@@ -56,7 +56,7 @@ module RubyLLM
             thinking: decode_thinking(segments),
             attachments: segments.flat_map(&:attachments),
             citations: decode_citations(segments),
-            tool_calls: segments.filter_map(&:tool_calls).reduce({}, :merge),
+            tool_calls: decode_tool_calls(segments),
             server_tool_calls: segments.flat_map(&:server_tool_calls),
             raw_content: decode_raw_content(segments, parts),
             tokens: Tokens.aggregate(segments.map(&:tokens)),
@@ -75,6 +75,11 @@ module RubyLLM
         def decode_thinking(segments)
           thoughts = segments.filter_map(&:thinking)
           Thinking.build(text: decode_text(thoughts.map(&:text)), signature: thoughts.filter_map(&:signature).last)
+        end
+
+        def decode_tool_calls(segments)
+          calls = segments.filter_map(&:tool_calls).reduce({}, :merge)
+          calls unless calls.empty?
         end
 
         def decode_raw_content(segments, parts)

@@ -117,6 +117,7 @@ module RubyLLM
     end
 
     def complete_request(payload, headers, usage_recorder: nil) # :nodoc:
+      # The caller's block can raise the error of another operation it ran.
       yielding = false
       track_usage(:chat, on_finish: usage_recorder) do
         if block_given?

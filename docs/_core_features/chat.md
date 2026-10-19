@@ -205,11 +205,12 @@ When a token limit cuts the response off while the model writes a tool call, the
 Set a total output budget for a Gemini model that supports long decode:
 
 ```ruby
-response = chat.with_max_output_tokens(262_144).ask("Work through this proof in full")
-puts response.content
+response = chat.with_max_output_tokens(262_144).ask("Work through this proof in full") do |chunk|
+  print chunk.content
+end
 ```
 
-When Gemini returns a continuation token, RubyLLM requests the remaining output and returns one assembled message. The same call works with a streaming block. Thinking-only intermediate responses do not create blank messages in the conversation. Each request keeps its own usage entry, and the response's tokens and cost include them all.
+When Gemini returns a continuation token, RubyLLM requests the remaining output and returns one assembled message. Without a block, RubyLLM continues the same way. Thinking-only intermediate responses do not create blank messages in the conversation. Each request keeps its own usage entry, and the response's tokens and cost include them all.
 
 RubyLLM keeps the original request unchanged between continuations, including changes from your `before_request` hooks, which run once for the generation. The continuation token belongs to that generation and is not reused for the next question. The local transcript receives the completed turn, with the signed parts needed for later questions.
 
