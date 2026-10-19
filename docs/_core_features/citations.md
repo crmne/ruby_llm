@@ -94,6 +94,26 @@ For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: 
 
 `SearchResults` gives Claude citable passages, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
 
+Tools can also return whole files as [attachments]({% link _core_features/tool-parameters.md %}#returning-attachments-from-tools). With `with_citations` on, the model cites them the same way it cites files you attach yourself:
+
+```ruby
+class PolicyLookup < RubyLLM::Tool
+  description "Fetches a company policy"
+  parameter :policy, description: "The policy to fetch"
+
+  def execute(policy:)
+    return "Found the #{policy} policy", [RubyLLM::Attachment.new("policies/#{policy}.pdf")]
+  end
+end
+
+response = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+  .with_tools(PolicyLookup)
+  .with_citations
+  .ask "How many vacation days do I get?"
+
+response.citations.first.start_page # => 3
+```
+
 ## Citing the Web
 
 Search citations arrive automatically. Enable [web search]({% link _core_features/provider-tools.md %}) and read the returned sources:

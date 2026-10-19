@@ -164,6 +164,28 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(result).to eq([{ text: '(no output)' }])
     end
+
+    it 'makes an attached document citable when citations are on' do
+      report = RubyLLM::Attachment.new(StringIO.new('%PDF-1.4'), filename: 'report.pdf')
+      msg = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [report])
+
+      cited = described_class.render_tool_result_content(msg, citations: true)
+      plain = described_class.render_tool_result_content(msg)
+
+      expect(cited.last[:document][:citations]).to eq(enabled: true)
+      expect(plain.last[:document]).not_to have_key(:citations)
+    end
+
+    it 'sends an attached text file as a citable txt document when citations are on' do
+      facts = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
+      msg = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [facts])
+
+      document = described_class.render_tool_result_content(msg, citations: true).last[:document]
+
+      expect(document.except(:name)).to eq(
+        format: 'txt', source: { text: 'Matz created Ruby.' }, citations: { enabled: true }
+      )
+    end
   end
 
   describe '.render_payload' do
@@ -642,6 +664,21 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(payload[:messages].first).not_to have_key(:finishReason)
       expect(payload[:messages].first[:content]).to eq([{ text: 'Done' }])
+    end
+
+    it 'names a citable document a tool returns apart from the documents the user attached' do
+      facts = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Who created Ruby?', attachments: [facts]),
+        RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [facts])
+      ]
+
+      tool_result = render_payload(messages, citations: true)[:messages].last[:content].first[:toolResult]
+
+      expect(tool_result[:content].last).to eq(
+        document: { format: 'txt', name: 'facts_2', source: { text: 'Matz created Ruby.' },
+                    citations: { enabled: true } }
+      )
     end
   end
 
