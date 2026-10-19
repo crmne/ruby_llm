@@ -14,6 +14,7 @@ module RubyLLM
         def build_chunk(data)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           track_stream_parts(data, parts)
+          @continuation_token = data.dig('candidates', 0, 'continuationToken') || @continuation_token
 
           Chunk.new(
             role: :assistant,

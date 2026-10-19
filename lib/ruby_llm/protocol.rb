@@ -111,7 +111,12 @@ module RubyLLM
                   stream: block_given?
       )
 
-      # The caller's block can raise the error of another operation it ran.
+      complete_request(payload, headers, usage_recorder:, &)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support chat"
+    end
+
+    def complete_request(payload, headers, usage_recorder: nil) # :nodoc:
       yielding = false
       track_usage(:chat, on_finish: usage_recorder) do
         if block_given?
@@ -125,8 +130,6 @@ module RubyLLM
           sync_response payload, headers
         end
       end
-    rescue NotImplementedError
-      raise Error, "#{@provider.name} doesn't support chat"
     rescue Error => e
       claim_error(e, payload) unless yielding
       raise

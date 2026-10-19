@@ -200,6 +200,21 @@ Anthropic's `end_turn`, Gemini's `MAX_TOKENS`, Cohere's `COMPLETE`, and the Resp
 
 When a token limit cuts the response off while the model writes a tool call, the call's arguments are incomplete, and the chat raises `RubyLLM::ToolCallTruncatedError`, a kind of `RubyLLM::ToolCallParseError`. Unless you call `with_max_output_tokens`, RubyLLM asks providers that need a number for the model's whole output limit, so this only happens when the model writes more than it can.
 
+## Long Responses
+
+Set a total output budget for a Gemini model that supports long decode:
+
+```ruby
+response = chat.with_max_output_tokens(262_144).ask("Work through this proof in full")
+puts response.content
+```
+
+When Gemini returns a continuation token, RubyLLM requests the remaining output and returns one assembled message. The same call works with a streaming block. Thinking-only intermediate responses do not create blank messages in the conversation. Each request keeps its own usage entry, and the response's tokens and cost include them all.
+
+RubyLLM keeps the original request unchanged between continuations, including changes from your `before_request` hooks, which run once for the generation. The continuation token belongs to that generation and is not reused for the next question. The local transcript receives the completed turn, with the signed parts needed for later questions.
+
+The provider validates the output budget and decides when to stop. Reaching the requested budget still returns `:max_tokens`. A missing or repeated continuation token raises `RubyLLM::Error`. A stream that disconnects after delivering chunks raises instead of restarting and duplicating output. Checkpoint recovery and hosted background jobs are separate from this continuation loop.
+
 ## Advanced: Replacing the LLM Transcript
 
 For advanced context management, `chat.messages` is whatever you show the LLM. Your application can keep and render a different user-visible transcript if needed. This is useful for chat compaction, moderation, redaction, or any workflow where the LLM should see a different transcript from the user.
