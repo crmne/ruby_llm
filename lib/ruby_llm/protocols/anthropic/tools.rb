@@ -22,10 +22,10 @@ module RubyLLM
           block['type'] == 'server_tool_use' && block['name'].to_s.start_with?('tool_search_tool_')
         end
 
-        def render_tool_result(msg)
+        def render_tool_result(msg, citations: false)
           {
             role: 'user',
-            content: [render_tool_result_block(msg)]
+            content: [render_tool_result_block(msg, citations:)]
           }
         end
 

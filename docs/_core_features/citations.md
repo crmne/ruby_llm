@@ -16,7 +16,7 @@ redirect_from:
 After reading this guide, you will know:
 
 * How to enable document citations with `with_citations`
-* How to make tool results citable with `RubyLLM::SearchResults`
+* How to make tool results citable with `RubyLLM::SearchResults` or by returning files
 * How to read normalized citations from responses and streams
 * Which citation fields your application can use
 * How to persist citations with ActiveRecord
@@ -102,7 +102,8 @@ class PolicyLookup < RubyLLM::Tool
   parameter :policy, description: "The policy to fetch"
 
   def execute(policy:)
-    return "Found the #{policy} policy", [RubyLLM::Attachment.new("policies/#{policy}.pdf")]
+    found = Policy.find_by!(name: policy)
+    return "Found the #{found.name} policy", [RubyLLM::Attachment.new(found.file_path)]
   end
 end
 

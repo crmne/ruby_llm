@@ -164,28 +164,6 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(result).to eq([{ text: '(no output)' }])
     end
-
-    it 'makes an attached document citable when citations are on' do
-      report = RubyLLM::Attachment.new(StringIO.new('%PDF-1.4'), filename: 'report.pdf')
-      msg = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [report])
-
-      cited = described_class.render_tool_result_content(msg, citations: true)
-      plain = described_class.render_tool_result_content(msg)
-
-      expect(cited.last[:document][:citations]).to eq(enabled: true)
-      expect(plain.last[:document]).not_to have_key(:citations)
-    end
-
-    it 'sends an attached text file as a citable txt document when citations are on' do
-      facts = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
-      msg = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a', attachments: [facts])
-
-      document = described_class.render_tool_result_content(msg, citations: true).last[:document]
-
-      expect(document.except(:name)).to eq(
-        format: 'txt', source: { text: 'Matz created Ruby.' }, citations: { enabled: true }
-      )
-    end
   end
 
   describe '.render_payload' do
@@ -664,6 +642,23 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(payload[:messages].first).not_to have_key(:finishReason)
       expect(payload[:messages].first[:content]).to eq([{ text: 'Done' }])
+    end
+
+    it 'makes the documents a tool returns citable only when citations are on' do
+      pdf_path = File.expand_path('../../../fixtures/sample.pdf', __dir__)
+      facts = RubyLLM::Attachment.new(StringIO.new('Matz created Ruby.'), filename: 'facts.txt')
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'call_a',
+                                     attachments: [pdf_path, facts])
+      attachment_blocks = lambda do |**options|
+        tool_result = render_payload([message], **options)[:messages].first[:content].first[:toolResult]
+        tool_result[:content].drop(1).map { |block| block[:document]&.except(:source) || block.keys }
+      end
+
+      expect(attachment_blocks.call(citations: true)).to eq(
+        [{ format: 'pdf', name: 'sample', citations: { enabled: true } },
+         { format: 'txt', name: 'facts', citations: { enabled: true } }]
+      )
+      expect(attachment_blocks.call).to eq([{ format: 'pdf', name: 'sample' }, [:text]])
     end
 
     it 'names a citable document a tool returns apart from the documents the user attached' do
