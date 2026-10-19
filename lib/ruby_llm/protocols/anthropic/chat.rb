@@ -270,6 +270,7 @@ module RubyLLM
             text: text,
             start_index: start_index,
             end_index: end_index,
+            source_id: data['source'],
             source_index: data['document_index'] || data['search_result_index'],
             start_page: data['start_page_number'],
             end_page: end_page && (end_page - 1)

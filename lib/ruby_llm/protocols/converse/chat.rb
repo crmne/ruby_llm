@@ -269,7 +269,7 @@ module RubyLLM
         def search_result_block(result)
           {
             searchResult: {
-              source: result[:url] || result[:title],
+              source: result[:source_id] || result[:url] || result[:title],
               title: result[:title],
               content: [{ text: result[:text] }],
               citations: { enabled: true }
@@ -550,6 +550,7 @@ module RubyLLM
             text: text,
             start_index: start_index,
             end_index: end_index,
+            source_id: data['source'],
             source_index: citation_source_index(location),
             start_page: page['start'],
             end_page: end_page && (end_page - 1)
