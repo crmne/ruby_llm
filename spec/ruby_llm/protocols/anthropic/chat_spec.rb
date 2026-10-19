@@ -129,13 +129,19 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(rendered.first[:content].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
     end
 
-    it 'makes a document in a tool result citable when citations are on' do
-      pdf_path = File.expand_path('../../../fixtures/sample.pdf', __dir__)
-      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: [pdf_path])
+    it 'makes the documents a tool returns citable only when citations are on' do
+      files = %w[sample.pdf ruby.txt].map { |name| File.expand_path("../../../fixtures/#{name}", __dir__) }
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: files)
+      attachment_blocks = lambda do |**options|
+        tool_result = described_class.render_messages([message], **options).first[:content].first
+        tool_result[:content].drop(1).map { |block| block.slice(:type, :title, :citations) }
+      end
 
-      rendered = described_class.render_messages([message], citations: true)
-
-      expect(rendered.first[:content].first[:content].last[:citations]).to eq(enabled: true)
+      expect(attachment_blocks.call(citations: true)).to eq(
+        [{ type: 'document', title: 'sample.pdf', citations: { enabled: true } },
+         { type: 'document', title: 'ruby.txt', citations: { enabled: true } }]
+      )
+      expect(attachment_blocks.call).to eq([{ type: 'document' }, { type: 'text' }])
     end
   end
 
@@ -226,6 +232,15 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       formatted = described_class.render_message(message, caching: false)
 
       expect(formatted[:content].last).not_to have_key(:cache_control)
+    end
+
+    it 'makes a document in a tool result citable when citations are on' do
+      pdf_path = File.expand_path('../../../fixtures/sample.pdf', __dir__)
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: [pdf_path])
+
+      formatted = described_class.render_message(message, citations: true)
+
+      expect(formatted[:content].first[:content].last[:citations]).to eq(enabled: true)
     end
 
     it 'adds cache_control to the last tool call of a turn marked as a cache boundary' do

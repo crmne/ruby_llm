@@ -341,7 +341,7 @@ module RubyLLM
           elsif msg.tool_call?
             render_tool_call_with_thinking(msg, caching:)
           elsif msg.tool_result?
-            Tools.render_tool_result(msg)
+            Tools.render_tool_result(msg, citations:)
           else
             render_basic_message_with_thinking(msg, citations: citations, caching:)
           end

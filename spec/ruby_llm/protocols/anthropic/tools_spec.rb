@@ -329,29 +329,6 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
         ]
       )
     end
-
-    context 'with attached files' do
-      let(:message) do
-        files = %w[sample.pdf ruby.txt].map { |name| File.expand_path("../../../fixtures/#{name}", __dir__) }
-        RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: files)
-      end
-
-      def attachment_blocks(**options)
-        blocks = described_class.render_tool_result_content(message, **options).drop(1)
-        blocks.map { |block| block.slice(:type, :title, :citations) }
-      end
-
-      it 'renders them as citable documents when citations are on' do
-        expect(attachment_blocks(citations: true)).to eq(
-          [{ type: 'document', title: 'sample.pdf', citations: { enabled: true } },
-           { type: 'document', title: 'ruby.txt', citations: { enabled: true } }]
-        )
-      end
-
-      it 'renders them without citations by default' do
-        expect(attachment_blocks).to eq([{ type: 'document' }, { type: 'text' }])
-      end
-    end
   end
 
   describe '.apply_tool_search' do
