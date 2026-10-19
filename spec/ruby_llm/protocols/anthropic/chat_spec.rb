@@ -128,6 +128,15 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(rendered.first[:content].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
     end
+
+    it 'makes a document in a tool result citable when citations are on' do
+      pdf_path = File.expand_path('../../../fixtures/sample.pdf', __dir__)
+      message = RubyLLM::Message.new(role: :tool, content: 'Found it', tool_call_id: 'tool_1', attachments: [pdf_path])
+
+      rendered = described_class.render_messages([message], citations: true)
+
+      expect(rendered.first[:content].first[:content].last[:citations]).to eq(enabled: true)
+    end
   end
 
   describe '.apply_files_beta' do
