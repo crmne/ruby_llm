@@ -135,6 +135,7 @@ module RubyLLM
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                stream: false, provider_tools: [], compaction: nil, end_user: nil)
+      validate_tool_namespaces(messages, tools)
       payload = render_payload(
         messages,
         tools: tools,
@@ -156,6 +157,19 @@ module RubyLLM
       apply_before_request_hooks(payload, before_request)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support chat"
+    end
+
+    def tool_namespaces? # :nodoc:
+      false
+    end
+
+    def validate_tool_namespaces(messages, tools) # :nodoc:
+      return if tool_namespaces?
+
+      calls = messages.flat_map { |message| (message.tool_calls || {}).values }
+      return unless (tools.values + calls).any?(&:namespace)
+
+      raise Error, "#{@provider.name} cannot express tool namespaces with this protocol"
     end
 
     # Writes the chat's safety identifier into the request payload and

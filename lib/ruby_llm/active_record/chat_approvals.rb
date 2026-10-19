@@ -34,12 +34,12 @@ module RubyLLM
         end
       end
 
-      def persisted_remembered_tool?(name)
+      def persisted_remembered_tool?(call)
         return false unless persisted? && row_supports_approval?
 
         RubyLLM::ActiveRecord::ToolCall.uncached do
           RubyLLM::ActiveRecord::ToolCall.where(
-            name:, approval: 'remembered',
+            name: call.name, namespace: call.namespace, approval: 'remembered',
             message_type: messages_association.klass.polymorphic_name,
             message_id: messages_association.select(:id)
           ).exists?

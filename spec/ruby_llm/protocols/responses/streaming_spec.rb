@@ -18,6 +18,20 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.raw_content).to eq([item])
   end
 
+  it 'keeps the namespace while accumulating function arguments' do
+    accumulator = RubyLLM::Protocol::StreamAccumulator.new
+    item = { 'type' => 'function_call', 'call_id' => 'c1', 'name' => 'lookup',
+             'namespace' => 'crm', 'arguments' => '' }
+    accumulator.add(build_chunk({ 'type' => 'response.output_item.added', 'output_index' => 0, 'item' => item }))
+    accumulator.add(build_chunk({ 'type' => 'response.function_call_arguments.delta', 'output_index' => 0,
+                                  'delta' => '{}' }))
+
+    call = accumulator.to_message(nil).tool_calls.values.first
+    expect(call.namespace).to eq('crm')
+    expect(call.arguments).to eq({})
+    expect(call).not_to be_sequential
+  end
+
   it 'keeps the raw output when a streamed response holds several reasoning items' do
     output = [
       { 'type' => 'reasoning', 'id' => 'rs_1', 'encrypted_content' => 'first', 'summary' => [] },

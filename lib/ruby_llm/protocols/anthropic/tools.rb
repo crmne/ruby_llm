@@ -22,19 +22,29 @@ module RubyLLM
           block['type'] == 'server_tool_use' && block['name'].to_s.start_with?('tool_search_tool_')
         end
 
-        def render_tool_result(msg)
+        def render_tool_result(msg, tool_call: nil)
           {
             role: 'user',
-            content: [render_tool_result_block(msg)]
+            content: [render_tool_result_block(msg, tool_call:)]
           }
         end
 
-        def render_tool_result_block(msg)
-          {
+        def render_tool_result_block(msg, tool_call: nil)
+          block = {
             type: 'tool_result',
             tool_use_id: msg.provider_call_id,
             content: render_tool_result_content(msg)
           }
+          return block unless tool_call&.namespace
+
+          block[:toolset_name] = tool_call.namespace
+          if (error = msg.tool_error_message)
+            block[:is_error] = true
+            error = 'Not executed: an earlier computer action in this turn failed.' if msg.tool_result_skipped? &&
+                                                                                       tool_call.namespace == 'computer'
+            block[:content] = [{ type: 'text', text: error.to_s }]
+          end
+          block
         end
 
         def render_tool_result_content(msg)
@@ -56,6 +66,10 @@ module RubyLLM
             content: [{ type: 'text', text: result[:text] }],
             citations: { enabled: true }
           }
+        end
+
+        def render_tools(tools)
+          tools.values.reject(&:namespace).map { |tool| function_for(tool) }
         end
 
         def function_for(tool)
@@ -137,6 +151,8 @@ module RubyLLM
             ToolCall.new(
               provider_call_id: block['id'],
               name: block['name'],
+              namespace: block['toolset_name'],
+              sequential: !block['toolset_name'].nil?,
               arguments: block['input']
             )
           end
