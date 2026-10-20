@@ -136,6 +136,8 @@ bundle exec rspec --tag ~live
 overcommit --run
 ```
 
-Never push and never post to GitHub. Commit locally with a plain subject of at
-most 60 characters and a body wrapped at 72 that says why, with no generated
-footers or co-author tags.
+Commit with a plain subject of at most 60 characters and a body wrapped at 72
+that says why, with no generated footers or co-author tags. Push branches and
+open pull requests, never push straight to `main`, and merge your own pull
+request (squash) once CI is green and CodeRabbit and GitHub code scanning have
+reviewed it, with every finding fixed or answered.
