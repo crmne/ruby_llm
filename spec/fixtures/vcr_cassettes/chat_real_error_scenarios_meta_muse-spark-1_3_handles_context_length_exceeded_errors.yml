@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.meta.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"muse-spark-1.3","input":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":[{"type":"output_text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":"Hi"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/json
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Date:
+      - Tue, 20 Oct 2026 16:01:13 GMT
+      X-Route:
+      - model-api-rust
+      Proxy-Status:
+      - "<PROXY_STATUS>"
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '216'
+    body:
+      encoding: UTF-8
+      string: '{"error":{"code":"context_length_exceeded","message":"The input (1250666
+        tokens) exceeds the model''s context window of 1048576 tokens. Reduce the
+        length of the input.","param":"input","type":"invalid_request_error"}}'
+  recorded_at: Tue, 20 Oct 2026 16:01:13 GMT
+recorded_with: VCR 6.4.0

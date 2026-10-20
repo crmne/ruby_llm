@@ -223,6 +223,8 @@ RubyLLM.chat(model: 'muse-spark-1.3').ask('Hello from Muse')
 
 RubyLLM talks to Meta through its Responses API, which carries the model's encrypted reasoning from one turn to the next, so tool loops keep their chain of thought. Meta runs web search as a provider tool, `with_provider_tools(:web_search)`, and caches prompts by itself. `with_caching` takes `key:` and a `ttl:` of `"in_memory"` or `"24h"`.
 
+Meta won't fetch many remote images, so RubyLLM downloads them and sends them inline.
+
 ## MiniMax
 
 MiniMax serves its M3 models through an Anthropic-compatible API. Create a key on the MiniMax platform and set `minimax_api_key`:

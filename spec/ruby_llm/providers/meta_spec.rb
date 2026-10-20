@@ -132,6 +132,18 @@ RSpec.describe RubyLLM::Providers::Meta do
     end
   end
 
+  it 'sends remote images inline, because Meta refuses to fetch many of them' do
+    png = File.binread(File.expand_path('../../fixtures/ruby.png', __dir__))
+    stub_request(:get, 'https://example.com/ruby')
+      .to_return(status: 200, body: png, headers: { 'Content-Type' => 'image/png' })
+    stub_response
+
+    context.chat(model: model_id, provider: :meta).ask('What is this?', with: 'https://example.com/ruby')
+
+    data_uri = "data:image/png;base64,#{Base64.strict_encode64(png)}"
+    expect(sent_body['input'].last['content'].last).to eq('type' => 'input_image', 'image_url' => data_uri)
+  end
+
   it 'counts input tokens with the Responses endpoint' do
     stub_request(:post, 'https://api.meta.ai/v1/responses/input_tokens')
       .to_return(status: 200, body: { object: 'response.input_tokens', input_tokens: 7 }.to_json,

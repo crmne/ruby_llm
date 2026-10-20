@@ -39,6 +39,11 @@ module RubyLLM
         def inject_cache_breakpoint(item)
           item
         end
+
+        # Meta refuses to fetch many remote images, so images travel inline.
+        def render_image(image, image_url: image.for_llm, **)
+          super
+        end
       end
     end
   end

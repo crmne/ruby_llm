@@ -121,6 +121,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<X_REQUEST_ID>') { |interaction| interaction.response.headers['X-Request-Id']&.first }
   config.filter_sensitive_data('<REQUEST_ID>') { |interaction| interaction.response.headers['Request-Id']&.first }
   config.filter_sensitive_data('<CF_RAY>') { |interaction| interaction.response.headers['Cf-Ray']&.first }
+  config.filter_sensitive_data('<PROXY_STATUS>') { |interaction| interaction.response.headers['Proxy-Status']&.first }
 
   # Filter large strings used to test "context length exceeded" error handling
   config.filter_sensitive_data('<MASSIVE_TEXT>') { 'a' * 1_000_000 }
