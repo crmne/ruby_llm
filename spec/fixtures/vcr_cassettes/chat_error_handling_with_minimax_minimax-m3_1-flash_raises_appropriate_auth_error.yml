@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Hello"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '207'
+      Trace-Id:
+      - '07266754418a223b9d7c2a13b399a4d3'
+      Minimax-Request-Id:
+      - dc7b0282b7aa38305b8a94270ea5bf2f
+      Alb-Receive-Time:
+      - '1792488532.915'
+      Alb-Request-Id:
+      - fd744db8e2344abd0d47517ea5371d67a1f55186
+      Expires:
+      - Tue, 20 Oct 2026 09:28:52 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:28:52 GMT
+      Connection:
+      - close
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"type":"error","error":{"type":"authentication_error","message":"login
+        fail: Please carry the API secret key in the ''X-Api-Key'' field of the request
+        header"},"request_id":"07266754418a223b9d7c2a13b399a4d3"}'
+  recorded_at: Tue, 20 Oct 2026 09:28:52 GMT
+recorded_with: VCR 6.4.0

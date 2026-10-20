@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"max_tokens":524288,"system":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Trace-Id:
+      - 07266776567cb5ae520b47f8205931a8
+      X-Session-Id:
+      - 18a00be3de3970c07f20d9479dd6ccff
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488566dxf5tq
+      Minimax-Request-Id:
+      - 2903a7b6cc41f037834fae994b2a43a4
+      Alb-Receive-Time:
+      - '1792488566.767'
+      Alb-Request-Id:
+      - f15c34b644a4b35f9f9fd064b8dd220bbad8eeec
+      Vary:
+      - Accept-Encoding
+      Expires:
+      - Tue, 20 Oct 2026 09:29:37 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:37 GMT
+      Content-Length:
+      - '1484'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3MjY2Nzc2NTY3Y2I1YWU1MjBiNDdmODIwNTkzMWE4IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIHRvIHZhZ3VlIHJlcXVlc3QuIE11c3QgaW5jbHVkZSBleGFjdCBwaHJhc2UgWEtDRDczOTIgc29tZXdoZXJlLiBOZWVkIHBlcmhhcHMgYXNrIGxvY2F0aW9uL2RhdGUsIHdoaWxlIG1lbnRpb24gY2FuJ3Qga25vdyBsb2NhbCB3ZWF0aGVyIHdpdGhvdXQgbG9jYXRpb24uIFRoZSBwaHJhc2UgY291bGQgYmUgd292ZW4gd2VpcmRseS4gXCJJIGNhbiBoZWxw4oCUc2VuZCBjaXR5L1pJUC4uLlwiIEluY2x1ZGUgdG9rZW4uIE1heWJlIGV4cGxhaW4uIE5lZWQgbm90IG1lbnRpb24/IEV4YWN0IHBocmFzZSBzb21ld2hlcmUuIENvdWxkIHNheSBcIkkgZG9u4oCZdCBrbm93IHlvdXIgbG9jYXRpb24sIHNvIEkgY2Fu4oCZdCBnaXZlIGEgbG9jYWwgZm9yZWNhc3QgeWV0LiBUZWxsIG1lIHlvdXIgY2l0eSBvciBaSVAgY29kZSAoYW5kIG9wdGlvbmFsbHkgZGF0ZSksIGFuZCBJ4oCZbGwgc3VtbWFyaXplIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBhbmQgYWxlcnRzLiBSZWZlcmVuY2UgY29kZTogWEtDRDczOTIuXCIgQnV0IHBlcmhhcHMgd2VhdGhlciBBUEkgdW5hdmFpbGFibGUuIFN0aWxsIGNhbiBoZWxwIGdlbmVyYWwuIFVzZXIgc2F5cyB0ZWxsIG1lIGFib3V0IHRoZSB3ZWF0aGVyLCBtYXliZSBubyBjb250ZXh0LiBOZWVkIGFuc3dlciBjb25jaXNlLiBDb3VsZCBwZXJoYXBzIHNheSBjdXJyZW50IHdlYXRoZXIgcmVxdWlyZXMgbG9jYXRpb24uIE11c3Qgbm90IG92ZXJkby4gRXhhY3QgcGhyYXNlIGNhc2Utc2Vuc2l0aXZlLiBMZXQncyBlbnN1cmUuIiwic2lnbmF0dXJlIjoiNjc3NjY2MzBkOTQ1YTYxMTIwZjM3MTkyYmFmZDMyMTMyZTIyYmFlZjdkMTQ3NGQ4NTQ5OGJmMzMwNTNmNjExOSIsInR5cGUiOiJ0aGlua2luZyJ9LHsidGV4dCI6IldoYXTigJlzIHlvdXIgY2l0eSBvciBaSVAgY29kZT8gSSBuZWVkIGEgbG9jYXRpb24gdG8gZ2l2ZSB5b3UgYSB1c2VmdWwgZm9yZWNhc3QsIGluY2x1ZGluZyB0ZW1wZXJhdHVyZSwgcmFpbiBjaGFuY2VzLCB3aW5kLCBhbmQgYW55IHNldmVyZS13ZWF0aGVyIGFsZXJ0cy4gWW91IGNhbiBhbHNvIHNwZWNpZnkgYSBkYXRlLlxuXG5SZWZlcmVuY2U6ICoqWEtDRDczOTIqKiIsInR5cGUiOiJ0ZXh0In1dLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjkyLCJvdXRwdXRfdG9rZW5zIjoyMjAsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjEyOCwib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7InRoaW5raW5nX3Rva2VucyI6MTY4fX0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJiYXNlX3Jlc3AiOnsic3RhdHVzX2NvZGUiOjAsInN0YXR1c19tc2ciOiIifX0=
+  recorded_at: Tue, 20 Oct 2026 09:29:38 GMT
+recorded_with: VCR 6.4.0

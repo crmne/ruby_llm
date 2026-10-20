@@ -1,0 +1,131 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '574'
+      Trace-Id:
+      - '072668547342105495bf52545325b898'
+      X-Session-Id:
+      - 8a0567856d21bfffe521d4c4381e5b39
+      X-Mm-Request-Id:
+      - 2092934004998157135_17924887885h52er
+      Minimax-Request-Id:
+      - 3ba1aca6b76557aa2a25a080253125b3
+      Alb-Receive-Time:
+      - '1792488788.066'
+      Alb-Request-Id:
+      - 8836c017daaf8b30008c091f2158d173e40125c7
+      Expires:
+      - Tue, 20 Oct 2026 09:33:09 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:09 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"072668547342105495bf52545325b898","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        check both for you.","type":"text"},{"type":"tool_use","id":"call_ae679aabfcf54972b250368f","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"call_77f4952c21af4e289dfcf401","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":559,"output_tokens":63,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:09 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll check
+        both for you."},{"type":"tool_use","id":"call_ae679aabfcf54972b250368f","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"call_77f4952c21af4e289dfcf401","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_ae679aabfcf54972b250368f","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"type":"tool_result","tool_use_id":"call_77f4952c21af4e289dfcf401","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '517'
+      Trace-Id:
+      - '07266855b6e747a592bd9d426c50a7c7'
+      X-Session-Id:
+      - 8a0567856d21bfffe521d4c4381e5b39
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488789hfi0r6
+      Minimax-Request-Id:
+      - dcb7f4a19fb3a879bfd534fdb470797a
+      Alb-Receive-Time:
+      - '1792488789.174'
+      Alb-Request-Id:
+      - 5848629398b690cfc03de8222c5d3aad05bc53c4
+      Expires:
+      - Tue, 20 Oct 2026 09:33:10 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:10 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3MjY2ODU1YjZlNzQ3YTU5MmJkOWQ0MjZjNTBhN2M3IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0ZXh0IjoiSGVyZSdzIHdoYXQgSSBmb3VuZDpcblxuKipXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46KiogUnVieVxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIG1vcmUgZGV0YWlscyBvbiBlaXRoZXIhIiwidHlwZSI6InRleHQifV0sInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NDEzLCJvdXRwdXRfdG9rZW5zIjo1OCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MjU2fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Tue, 20 Oct 2026 09:33:10 GMT
+recorded_with: VCR 6.4.0

@@ -76,6 +76,10 @@ RubyLLM.configure do |config|
   config.hetzner_api_key = ENV['HETZNER_API_KEY'] # Token from the Hetzner Console
   config.hetzner_api_base = ENV['HETZNER_API_BASE'] # Optional, defaults to https://inference.hetzner.com/api/v1
 
+  # MiniMax
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_base = ENV['MINIMAX_API_BASE'] # Optional, defaults to https://api.minimax.io/anthropic
+
   # Mistral
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.mistral_api_base = ENV['MISTRAL_API_BASE'] # optional custom Mistral endpoint
@@ -197,6 +201,29 @@ RubyLLM.models.by_provider(:hetzner).map(&:id)
 ```
 
 Hetzner models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent.
+
+## MiniMax
+
+MiniMax serves its M3 models through an Anthropic-compatible API. Create a key on the MiniMax platform and set `minimax_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+end
+
+RubyLLM.chat(model: 'MiniMax-M3.1-Flash').ask('Hello from MiniMax')
+```
+
+Keys from MiniMax's China platform only work on its own endpoint. Point `minimax_api_base` at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_base = 'https://api.minimax.cn/anthropic'
+end
+```
+
+MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`. Of the [provider tools]({% link _core_features/provider-tools.md %}), it runs only `with_provider_tools(:web_search)`, a beta on MiniMax's side; the others raise `RubyLLM::UnsupportedServerToolError`.
 
 ## Moonshot AI
 

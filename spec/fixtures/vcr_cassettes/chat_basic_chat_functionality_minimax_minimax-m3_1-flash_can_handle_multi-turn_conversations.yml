@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        is the creator of the programming language Ruby?"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '772'
+      Trace-Id:
+      - 0726677414de3fe00bc1271816c28836
+      X-Session-Id:
+      - 0707da963dbb1caa87709b220644d741
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488564lcohlt
+      Minimax-Request-Id:
+      - f6bc93077be5d6daebdd79e1a9905646
+      Alb-Receive-Time:
+      - '1792488564.332'
+      Alb-Request-Id:
+      - cde535e3478cee8e5ecab7063bad592be291fe70
+      Expires:
+      - Tue, 20 Oct 2026 09:29:25 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:25 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA3MjY2Nzc0MTRkZTNmZTAwYmMxMjcxODE2YzI4ODM2IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJNaW5pTWF4LU0zLjEtRmxhc2giLCJjb250ZW50IjpbeyJ0aGlua2luZyI6IldlIG5lZWQgYW5zd2VyIHNpbXBsZS4gTmVlZCBpZGVudGlmeSBjcmVhdG9yIFJ1Ynk6IFl1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90by4gQ291bGQgbWVudGlvbiBKYXBhbmVzZSBwcm9ncmFtbWVyLCBjcmVhdGVkIGluIG1pZC0xOTkwcywgcmVsZWFzZWQgMTk5NS4gQXNrZWQgc2luZ3VsYXIuIEFuc3dlciBjb25jaXNlLiIsInNpZ25hdHVyZSI6IjFjM2RjNGE4NWE1ODE4MDhmZGUyOGVlZGIwZDIwMTZhNGI4ZjIyODY4NWVkZThmZmI0MDAzNjdjYTRiNDViMDgiLCJ0eXBlIjoidGhpbmtpbmcifSx7InRleHQiOiJSdWJ5IHdhcyBjcmVhdGVkIGJ5IEphcGFuZXNlIHByb2dyYW1tZXIgKipZdWtpaGlybyDigJxNYXR64oCdIE1hdHN1bW90byoqLCB3aG8gZmlyc3QgcmVsZWFzZWQgaXQgaW4gMTk5NS4iLCJ0eXBlIjoidGV4dCJ9XSwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxNSwib3V0cHV0X3Rva2VucyI6NzQsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjE5Nywib3V0cHV0X3Rva2Vuc19kZXRhaWxzIjp7InRoaW5raW5nX3Rva2VucyI6NDR9fSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsImJhc2VfcmVzcCI6eyJzdGF0dXNfY29kZSI6MCwic3RhdHVzX21zZyI6IiJ9fQ==
+  recorded_at: Tue, 20 Oct 2026 09:29:25 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        is the creator of the programming language Ruby?"}]},{"role":"assistant","content":[{"thinking":"We
+        need answer simple. Need identify creator Ruby: Yukihiro \"Matz\" Matsumoto.
+        Could mention Japanese programmer, created in mid-1990s, released 1995. Asked
+        singular. Answer concise.","signature":"1c3dc4a85a581808fde28eedb0d2016a4b8f228685ede8ffb400367ca4b45b08","type":"thinking"},{"type":"text","text":"Ruby
+        was created by Japanese programmer **Yukihiro “Matz” Matsumoto**, who first
+        released it in 1995."}]},{"role":"user","content":[{"type":"text","text":"What
+        year did he create Ruby?"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '801'
+      Trace-Id:
+      - 072667755e17daad5e23100d6e376342
+      X-Session-Id:
+      - 0707da963dbb1caa87709b220644d741
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488565q2463e
+      Minimax-Request-Id:
+      - fbe1b4fa16e0934e283d972702856e32
+      Alb-Receive-Time:
+      - '1792488565.427'
+      Alb-Request-Id:
+      - b1365118014add26ef357f79eba7db6e9f9fb9e4
+      Expires:
+      - Tue, 20 Oct 2026 09:29:26 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:26 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"072667755e17daad5e23100d6e376342","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer clarify development began 1993, first public release 1995. Question
+        refers \"what year did he create Ruby?\" Common answer 1995. Could state created
+        mid-1990s, officially released in 1995. Need concise.","signature":"d5519e301e31a578787fadd7f4d62b28e898ba319679c56bc665284f69acd36e","type":"thinking"},{"text":"Yukihiro
+        Matsumoto began creating Ruby in **1993**, and the first official release
+        came in **1995**.","type":"text"}],"usage":{"input_tokens":90,"output_tokens":80,"cache_creation_input_tokens":0,"cache_read_input_tokens":212,"output_tokens_details":{"thinking_tokens":52}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:29:26 GMT
+recorded_with: VCR 6.4.0

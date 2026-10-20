@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]}],"stream":false,"max_tokens":524288,"thinking":{"type":"adaptive"},"output_config":{"effort":"medium"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '527'
+      Trace-Id:
+      - '0726683e78617feeafb812d446501fdb'
+      X-Session-Id:
+      - 274551bcc9e22f9f6058802300eb6876
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488766h808m5
+      Minimax-Request-Id:
+      - 51fef2c15cbd9935b7c0de9de9974072
+      Alb-Receive-Time:
+      - '1792488766.875'
+      Alb-Request-Id:
+      - b92d22d7d977d833eb6091910c72a95105910755
+      Expires:
+      - Tue, 20 Oct 2026 09:32:47 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:32:47 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726683e78617feeafb812d446501fdb","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer simple. Need perhaps \"8\".","signature":"897a144e3e43221a328942b8a8c92b4629ab504c43e6616c89206a9935cd445b","type":"thinking"},{"text":"8","type":"text"}],"usage":{"input_tokens":82,"output_tokens":14,"cache_creation_input_tokens":0,"cache_read_input_tokens":128,"output_tokens_details":{"thinking_tokens":10}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:32:47 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]},{"role":"assistant","content":[{"thinking":"We need answer simple.
+        Need perhaps \"8\".","signature":"897a144e3e43221a328942b8a8c92b4629ab504c43e6616c89206a9935cd445b","type":"thinking"},{"type":"text","text":"8"}]},{"role":"user","content":[{"type":"text","text":"Now
+        multiply that by 2"}]}],"stream":false,"max_tokens":524288,"thinking":{"type":"adaptive"},"output_config":{"effort":"medium"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '561'
+      Trace-Id:
+      - '07266840df0f784ed080cbd27a81cdab'
+      X-Session-Id:
+      - 274551bcc9e22f9f6058802300eb6876
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488768ehxtl3
+      Minimax-Request-Id:
+      - 8deacea4ae76fc52293ebb741eb21e16
+      Alb-Receive-Time:
+      - '1792488768.153'
+      Alb-Request-Id:
+      - 6d30cf486978ab43c401e3285cb450459adb3683
+      Expires:
+      - Tue, 20 Oct 2026 09:33:05 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:05 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"07266840df0f784ed080cbd27a81cdab","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer 16. Need interpret now multiply that by 2, refer 8. concise.","signature":"0d864e559bb2839e306d9e0c280a633c3a0cf7a7caecbc733a64fd57fbfa32e8","type":"thinking"},{"text":"16","type":"text"}],"usage":{"input_tokens":29,"output_tokens":25,"cache_creation_input_tokens":0,"cache_read_input_tokens":210,"output_tokens_details":{"thinking_tokens":21}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:05 GMT
+recorded_with: VCR 6.4.0
