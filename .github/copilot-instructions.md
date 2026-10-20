@@ -83,9 +83,10 @@ Look for these, in this order, and treat the first four as blockers:
 
 Give concrete findings tied to changed lines, with the rule from `AGENTS.md`
 that applies. Do not spend comments on formatting RuboCop enforces. CI passing
-is necessary, not proof of correctness. Copilot may request changes and name
-blockers, but must never approve, recommend approval in prose, close, or merge
-a pull request.
+is necessary, not proof of correctness. Reviewing someone else's pull request,
+Copilot may request changes and name blockers, but must never approve,
+recommend approval in prose, close, or merge it. It merges only its own pull
+requests, as "Writing code in this repository" describes.
 
 ## Triaging an issue
 
