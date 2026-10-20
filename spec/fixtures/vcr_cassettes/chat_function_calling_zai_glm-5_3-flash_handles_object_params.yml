@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.z.ai/api/paas/v4/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"glm-5.3-flash","messages":[{"role":"user","content":"Call
+        the object params tool with window start 2025-01-01 and end 2025-01-02 and
+        include the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 15:38:02 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1092'
+      Connection:
+      - keep-alive
+      Alt-Svc:
+      - h3=":443"; ma=3600
+      Set-Cookie:
+      - "<COOKIE>"
+      Ga-Traceid:
+      - 1a923749bf35c9f650ce3c07e7d588d7
+      Vary:
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Headers
+      - Access-Control-Request-Method
+      - Access-Control-Request-Method
+      - Origin
+      - Origin
+      - Origin
+      X-Log-Id:
+      - 20261020233755b8d7475825da4787
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"","reasoning_content":"The
+        user wants me to call the object_params tool with a window starting 2025-01-01
+        and ending 2025-01-02. These are just dates, not full ISO datetimes. I''ll
+        format them as ISO dates or ISO datetimes. The schema says \"ISO start\" and
+        \"ISO end\". A date like \"2025-01-01\" is valid ISO 8601. I''ll use the dates
+        as given, perhaps expanding to full timestamps. The user said \"window start
+        2025-01-01 and end 2025-01-02\" - I''ll use those exact values.","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":
+        \"2025-01-02\", \"start\": \"2025-01-01\"}}","name":"object_params"},"id":"call_-7148594110637535333","index":0,"type":"function"}]}}],"created":1792510682,"id":"20261020233755b8d7475825da4787","model":"glm-5.3-flash","object":"chat.completion","request_id":"20261020233755b8d7475825da4787","usage":{"completion_tokens":163,"completion_tokens_details":{"reasoning_tokens":130},"prompt_tokens":248,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":411}}'
+  recorded_at: Tue, 20 Oct 2026 15:38:02 GMT
+recorded_with: VCR 6.4.0

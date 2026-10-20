@@ -275,6 +275,8 @@ end
 
 GLM models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
 
+GLM-5.3 Flash always thinks, so `with_thinking(false)` raises, and it takes only the efforts `:low`, `:high`, and `:max`: Z.ai rejects any other.
+
 ## Bedrock Credential Providers
 
 For IAM roles, assume-role flows, and rotating credentials, configure an AWS SDK credential provider instead of static keys:
