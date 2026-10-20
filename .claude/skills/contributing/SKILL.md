@@ -35,7 +35,7 @@ rake vcr:record[openai,anthropic]  # several providers
 rake vcr:record[all]               # everything (long, needs many keys)
 ```
 
-Recording needs real API keys in `.env`. To re-record a single spec, delete its cassette file and run the spec with the provider's key set.
+Recording needs real API keys. The committed `.env` reads them from 1Password with `op-cache read` lookups (never values; there is no `.env.example`), or export them in your shell. An empty key counts as unset, so a failed lookup replays cassettes. To re-record a single spec, delete its cassette file and run the spec with the provider's key set.
 
 Rules that bite:
 

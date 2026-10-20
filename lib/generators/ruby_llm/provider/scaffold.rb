@@ -112,7 +112,7 @@ module RubyLLM
           write_template 'core/provider_spec.rb.erb', "spec/ruby_llm/providers/#{slug}_spec.rb"
 
           update_core_registration
-          update_core_env_example
+          update_core_env
           update_core_spec_configuration
           update_core_vcr_configuration
           update_core_models_dev_map if models_dev_provider
@@ -168,11 +168,12 @@ module RubyLLM
           )
         end
 
-        def update_core_env_example
-          path = file_path('.env.example')
+        def update_core_env
+          path = file_path('.env')
           return unless File.exist?(path)
 
-          insert_sorted_line(path, "#{api_key_env}=$(op read \"op://RubyLLM/#{class_name}/credential\")", ENV_LINE)
+          insert_sorted_line(path, "#{api_key_env}=$(op-cache read \"op://RubyLLM/#{class_name}/credential\")",
+                             ENV_LINE)
           insert_sorted_line(path, "#{api_base_env}=#{api_base}", ENV_LINE)
         end
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'dotenv/load'
+require 'dotenv'
+# .env holds 1Password lookups; CI passes its secrets as environment variables.
+Dotenv.load unless ENV['CI']
 require 'ruby_llm'
 require 'json'
 require 'json_schemer'

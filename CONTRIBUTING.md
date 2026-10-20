@@ -142,8 +142,18 @@ Weaver reports the GenAI attributes as development conventions; violations
 fail the task. SDK assertions separately check span kinds, names, parents,
 context cleanup, errors, and streaming lifetimes.
 
-The provider specs use VCR. With credentials in `.env`, missing cassettes
-record real calls; otherwise existing cassettes replay without API access.
+The provider specs use VCR. With credentials, missing cassettes record real
+calls; otherwise existing cassettes replay without API access.
+
+`.env` is committed and holds only 1Password lookups, never values:
+`OPENAI_API_KEY=$(op-cache read "op://RubyLLM/OpenAI/credential")`. dotenv
+runs each lookup when the specs, `rake models`, or `bin/console` start (CI
+skips the file). There is no `.env.example`. Without `op-cache` or access to
+the RubyLLM vault, export the keys you have in your shell instead: dotenv
+never overrides a variable that is already set. A key that comes back empty,
+because a lookup failed, counts as unset, so its cassettes replay and a
+partial `.env` never deletes recordings. When you add a provider, add its
+lookup to `.env` (the provider generator does).
 
 ## Documentation
 
