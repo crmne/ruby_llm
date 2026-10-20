@@ -121,6 +121,22 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       expect(model.knowledge_cutoff).to be_nil
     end
 
+    it 'derives vision and video capabilities from the input modalities' do
+      response = response_for(
+        { 'id' => 'google/gemini-3.5-flash-lite',
+          'architecture' => { 'input_modalities' => %w[text image video file audio],
+                              'output_modalities' => ['text'] } },
+        { 'id' => 'inception/mercury-3',
+          'architecture' => { 'input_modalities' => ['text'], 'output_modalities' => ['text'] } }
+      )
+
+      gemini, mercury = parser.parse_list_models_response(response, 'openrouter')
+
+      expect(gemini.supports?(:vision)).to be(true)
+      expect(gemini.supports?(:video)).to be(true)
+      expect(mercury.supports?(:vision)).to be(false)
+    end
+
     it 'preserves the rerank output modality' do
       response = response_for(
         'id' => 'voyageai/rerank-2.5-lite',
