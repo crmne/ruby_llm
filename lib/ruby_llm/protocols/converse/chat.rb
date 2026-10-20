@@ -23,7 +23,8 @@ module RubyLLM
         MAX_CACHE_POINTS = 4
         CACHE_POINT_MODELS = %w[anthropic. amazon.nova].freeze
         TOOL_CACHE_POINT_MODELS = %w[anthropic.].freeze
-        # Converse refuses searchResult blocks from every model but Claude.
+        # Converse refuses searchResult blocks from every model but Claude, so an
+        # application inference profile, which doesn't name its model, gets text.
         SEARCH_RESULT_MODELS = %w[anthropic.].freeze
         CACHE_LIFETIME_UNITS = { 's' => 1, 'm' => 60, 'h' => 3600 }.freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
@@ -328,7 +329,7 @@ module RubyLLM
 
         def search_results?(model)
           model_id = foundation_model_id(model&.id)
-          SEARCH_RESULT_MODELS.any? { |prefix| model_id.start_with?(prefix) } || !model_id.include?('.')
+          SEARCH_RESULT_MODELS.any? { |prefix| model_id.start_with?(prefix) }
         end
 
         def automatic_cache_points?(model)

@@ -1027,6 +1027,8 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(payload.call('openai.gpt-oss-120b-1:0')).not_to include('searchResult')
       expect(payload.call('eu.anthropic.claude-haiku-4-5-20251001-v1:0')).to include('searchResult')
+      expect(payload.call('arn:aws:bedrock:eu-central-1:123456789012:application-inference-profile/a1b2c3d4'))
+        .not_to include('searchResult')
     end
   end
 

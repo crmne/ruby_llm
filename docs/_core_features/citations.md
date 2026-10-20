@@ -92,7 +92,7 @@ response.citations.first.cited_text # => the quoted passage
 
 For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
 
-`SearchResults` gives Claude citable passages, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, and other models on Bedrock, receive the results as JSON text.
+`SearchResults` gives Claude citable passages, on Anthropic and on Bedrock, including after a Rails conversation is reloaded. Other providers, other models on Bedrock, and Bedrock application inference profiles, which don't name their model, receive the results as JSON text.
 
 ## Citing the Web
 
