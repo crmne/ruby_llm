@@ -982,7 +982,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(described_class.parse_server_tool_calls(blocks)).to be_empty
     end
 
-    it 'renders SearchResults tool output as citable searchResult blocks' do
+    it 'renders SearchResults tool output as citable searchResult blocks for Claude' do
       results = RubyLLM::SearchResults.new(
         title: 'Ruby Facts',
         url: 'https://example.com/ruby-facts',
@@ -990,7 +990,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       )
       msg = instance_double(RubyLLM::Message, content: results.to_json, attachments: [])
 
-      expect(described_class.render_tool_result_content(msg)).to eq(
+      expect(described_class.render_tool_result_content(msg, search_results: true)).to eq(
         [
           {
             searchResult: {
@@ -1002,6 +1002,33 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
           }
         ]
       )
+    end
+
+    it 'renders SearchResults tool output as text for other models' do
+      results = RubyLLM::SearchResults.new(title: 'Ruby Facts', text: 'Matz created Ruby in 1993.')
+      msg = instance_double(RubyLLM::Message, content: results.to_json, attachments: [])
+
+      expect(described_class.render_tool_result_content(msg)).to eq([{ text: results.to_json }])
+    end
+
+    it 'sends search results as searchResult blocks only to Claude' do
+      results = RubyLLM::SearchResults.new(title: 'Ruby Facts', text: 'Matz created Ruby in 1993.')
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Who created Ruby?'),
+        RubyLLM::Message.new(role: :assistant, content: '',
+                             tool_calls: { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'search',
+                                                                             arguments: {}) }),
+        RubyLLM::Message.new(role: :tool, content: results.to_json, tool_call_id: 'call_1')
+      ]
+      payload = lambda do |id|
+        model = instance_double(RubyLLM::Model, id:, max_output_tokens: 4096, supports?: false)
+        described_class.render_payload(messages, tools: {}, temperature: nil, model:).to_json
+      end
+
+      expect(payload.call('openai.gpt-oss-120b-1:0')).not_to include('searchResult')
+      expect(payload.call('eu.anthropic.claude-haiku-4-5-20251001-v1:0')).to include('searchResult')
+      expect(payload.call('arn:aws:bedrock:eu-central-1:123456789012:application-inference-profile/a1b2c3d4'))
+        .not_to include('searchResult')
     end
   end
 
