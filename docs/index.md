@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 19 providers.'
+description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 20 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -33,7 +33,7 @@ hero:
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">19 providers. One API.</h2>
+    <h2 class="home-heading">20 providers. One API.</h2>
     <p class="home-lead">
       Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
     </p>
