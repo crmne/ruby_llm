@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the capital of France?"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '359'
+      Trace-Id:
+      - 07266773ea63c5af146fc2c36761afd1
+      X-Session-Id:
+      - 6577a2154023899d76717b5d8c783cfa
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488563izdlcx
+      Minimax-Request-Id:
+      - 53baa49472ab99f7b9157455bd965cab
+      Alb-Receive-Time:
+      - '1792488563.785'
+      Alb-Request-Id:
+      - 130bc30948ff4fb6cfe83784356adecdb8488114
+      Expires:
+      - Tue, 20 Oct 2026 09:29:24 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:29:24 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"07266773ea63c5af146fc2c36761afd1","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"The
+        capital of France is **Paris**.","type":"text"}],"usage":{"input_tokens":12,"output_tokens":10,"cache_creation_input_tokens":0,"cache_read_input_tokens":197},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:29:24 GMT
+recorded_with: VCR 6.4.0

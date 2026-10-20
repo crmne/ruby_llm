@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '722'
+      Trace-Id:
+      - 0726673c55a58b5900e10832fb0a2cd3
+      X-Session-Id:
+      - 343b5c1465bbfd9851d68cdc366ac592
+      X-Mm-Request-Id:
+      - 2092934004998157135_17924885088g0iok
+      Minimax-Request-Id:
+      - e5af835cf382cac6d85994c89d9a2bf8
+      Alb-Receive-Time:
+      - '1792488508.119'
+      Alb-Request-Id:
+      - f1232cb1de3167c87f7ed4d4698e34e032a0f97c
+      Expires:
+      - Tue, 20 Oct 2026 09:28:31 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:28:31 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726673c55a58b5900e10832fb0a2cd3","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer file contents. Straight: Ruby is the best. Need perhaps quote.
+        User asks what''s in this file and embeds. We can say it contains one sentence:
+        \"Ruby is the best.\" Avoid claiming tools.","signature":"c9a835f66997867ecd9f48cc3b025c55de55762704269932e365737875368ff4","type":"thinking"},{"text":"The
+        file contains: `Ruby is the best.`","type":"text"}],"usage":{"input_tokens":29,"output_tokens":58,"cache_creation_input_tokens":0,"cache_read_input_tokens":197,"output_tokens_details":{"thinking_tokens":45}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:28:31 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":[{"thinking":"We need
+        answer file contents. Straight: Ruby is the best. Need perhaps quote. User
+        asks what''s in this file and embeds. We can say it contains one sentence:
+        \"Ruby is the best.\" Avoid claiming tools.","signature":"c9a835f66997867ecd9f48cc3b025c55de55762704269932e365737875368ff4","type":"thinking"},{"type":"text","text":"The
+        file contains: `Ruby is the best.`"}]},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false,"max_tokens":524288}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '746'
+      Trace-Id:
+      - 07266740a3b6a5996b69e7cd9bfd80f9
+      X-Session-Id:
+      - 343b5c1465bbfd9851d68cdc366ac592
+      X-Mm-Request-Id:
+      - 2092934004998157135_179248851284kc3b
+      Minimax-Request-Id:
+      - aa060c4ffc69cfb6d75412ea3edf6964
+      Alb-Receive-Time:
+      - '1792488512.156'
+      Alb-Request-Id:
+      - dd125b7e4b7cc1100c03e1ec791fc73a55b28569
+      Expires:
+      - Tue, 20 Oct 2026 09:28:34 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:28:34 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"07266740a3b6a5996b69e7cd9bfd80f9","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"thinking":"We
+        need answer describe XML. It contains truism root/element with text Ruby is
+        the best no period. Need maybe quote. Concise.","signature":"5d3633a8edc1bf8d7359959be15b020b8e19744d6cdee6ed01d67a8aa829a09f","type":"thinking"},{"text":"The
+        XML file contains a `\u003ctruism\u003e` element with the text:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```","type":"text"}],"usage":{"input_tokens":97,"output_tokens":62,"cache_creation_input_tokens":0,"cache_read_input_tokens":226,"output_tokens_details":{"thinking_tokens":29}},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:28:34 GMT
+recorded_with: VCR 6.4.0

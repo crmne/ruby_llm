@@ -28,6 +28,7 @@ loader.inflector.inflect(
   'http' => 'HTTP',
   'llm' => 'LLM',
   'mcp' => 'MCP',
+  'minimax' => 'MiniMax',
   'oauth' => 'OAuth',
   'mistral' => 'Mistral',
   'mxc' => 'MXC',
@@ -618,6 +619,7 @@ RubyLLM::Provider.register :elevenlabs, RubyLLM::Providers::ElevenLabs
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
 RubyLLM::Provider.register :hetzner, RubyLLM::Providers::Hetzner
+RubyLLM::Provider.register :minimax, RubyLLM::Providers::MiniMax
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
 RubyLLM::Provider.register :moonshot, RubyLLM::Providers::Moonshot
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama

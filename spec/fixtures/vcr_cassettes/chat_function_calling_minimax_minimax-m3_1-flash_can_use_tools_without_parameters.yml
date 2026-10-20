@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        the best_language_to_learn tool to tell me which language to learn."}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '447'
+      Trace-Id:
+      - '0726685c6e063086991a26d6a29d07fa'
+      X-Session-Id:
+      - 2d0af558050409753676d45251536c2f
+      X-Mm-Request-Id:
+      - 2092934004998157135_17924887960dwq1g
+      Minimax-Request-Id:
+      - eeae664743234c2cf1782b1f0df27958
+      Alb-Receive-Time:
+      - '1792488796.195'
+      Alb-Request-Id:
+      - 6822e4a1b85d98c49b2e7e8585244cf474a50699
+      Expires:
+      - Tue, 20 Oct 2026 09:33:17 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:17 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726685c6e063086991a26d6a29d07fa","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        check that for you.","type":"text"},{"type":"tool_use","id":"call_ce15a1cc9ed7476bb6df8055","name":"best_language_to_learn","input":{}}],"usage":{"input_tokens":446,"output_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:17 GMT
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        the best_language_to_learn tool to tell me which language to learn."}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        check that for you."},{"type":"tool_use","id":"call_ce15a1cc9ed7476bb6df8055","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"call_ce15a1cc9ed7476bb6df8055","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '939'
+      Trace-Id:
+      - '0726685dd3c1a4fa9e8d5887198248f9'
+      X-Session-Id:
+      - 2d0af558050409753676d45251536c2f
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488797jxiw9n
+      Minimax-Request-Id:
+      - 8dcef19f211f990667dbcec2c7f56d83
+      Alb-Receive-Time:
+      - '1792488797.595'
+      Alb-Request-Id:
+      - e4cb5a1b6f642048be6ddf1742ac58119717ac6c
+      Expires:
+      - Tue, 20 Oct 2026 09:33:19 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:19 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726685dd3c1a4fa9e8d5887198248f9","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"The
+        tool says **Ruby** is the best language to learn.\n\nRuby is a dynamic, open-source
+        programming language focused on developer productivity and simplicity. It''s
+        known for its clean, readable syntax (\"Rails-style\" conventions), and it''s
+        the language behind the Ruby on Rails web framework, which powers many web
+        applications. It''s also popular for scripting, static site generation (Jekyll),
+        and DevOps tooling (Chef, Vagrant).\n\nIf you''d like, I can suggest some
+        good resources for getting started with Ruby, or tell you about what makes
+        it a good first language versus alternatives like Python or JavaScript.","type":"text"}],"usage":{"input_tokens":490,"output_tokens":121,"cache_creation_input_tokens":0,"cache_read_input_tokens":0},"stop_reason":"end_turn","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:19 GMT
+recorded_with: VCR 6.4.0

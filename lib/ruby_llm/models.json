@@ -40745,6 +40745,492 @@
     }
   },
   {
+    "id": "MiniMax-M2",
+    "name": "MiniMax-M2",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2025-10-27 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-10-27",
+      "status": "deprecated",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.3,
+        "output": 1.2
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M2.1",
+    "name": "MiniMax-M2.1",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2025-12-23 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.03,
+          "cache_write_input_per_million": 0.375
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-23",
+      "status": "deprecated",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.03,
+        "cache_write": 0.375
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M2.1-highspeed",
+    "name": "MiniMax-M2.1-Highspeed",
+    "provider": "minimax",
+    "family": null,
+    "created_at": "2025-12-23 02:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {}
+  },
+  {
+    "id": "MiniMax-M2.5",
+    "name": "MiniMax-M2.5",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2026-02-12 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.03,
+          "cache_write_input_per_million": 0.375
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-12",
+      "status": "deprecated",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.03,
+        "cache_write": 0.375
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M2.5-highspeed",
+    "name": "MiniMax-M2.5-highspeed",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2026-02-13 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.4,
+          "cache_read_input_per_million": 0.03,
+          "cache_write_input_per_million": 0.375
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-13",
+      "status": "deprecated",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.6,
+        "output": 2.4,
+        "cache_read": 0.03,
+        "cache_write": 0.375
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M2.7",
+    "name": "MiniMax-M2.7",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2026-03-18 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.06,
+          "cache_write_input_per_million": 0.375
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-03-18",
+      "status": "deprecated",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.06,
+        "cache_write": 0.375
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M2.7-highspeed",
+    "name": "MiniMax-M2.7-highspeed",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2026-03-18 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.4,
+          "cache_read_input_per_million": 0.06,
+          "cache_write_input_per_million": 0.375
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-03-18",
+      "status": "deprecated",
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.6,
+        "output": 2.4,
+        "cache_read": 0.06,
+        "cache_write": 0.375
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M3",
+    "name": "MiniMax-M3",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2026-06-01 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 524288,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
+          "cache_read_input_per_million": 0.06
+        },
+        "long_context": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.4,
+          "cache_read_input_per_million": 0.12
+        },
+        "long_context_threshold": 512000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-06-25",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.3,
+        "output": 1.2,
+        "cache_read": 0.06,
+        "tiers": [
+          {
+            "input": 0.6,
+            "output": 2.4,
+            "cache_read": 0.12,
+            "tier": {
+              "type": "context",
+              "size": 512000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 0.6,
+          "output": 2.4,
+          "cache_read": 0.12
+        }
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 524288
+      }
+    }
+  },
+  {
+    "id": "MiniMax-M3.1-Flash",
+    "name": "MiniMax-M3.1-Flash",
+    "provider": "minimax",
+    "family": "minimax",
+    "created_at": "2026-10-19 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 524288,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "cache_read_input_per_million": 0.015
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "minimax",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-10-19",
+      "tool_call": true,
+      "structured_output": false,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.15,
+        "output": 0.6,
+        "cache_read": 0.015
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 524288
+      }
+    }
+  },
+  {
     "id": "codestral-2508",
     "name": "Codestral (latest)",
     "provider": "mistral",

@@ -139,6 +139,18 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    minimax: {
+      url: 'https://api.minimax.io/anthropic/v1/messages',
+      error_response: {
+        type: 'error',
+        error: {
+          type: 'overloaded_error',
+          message: 'Overloaded'
+        }
+      },
+      chunk_status: 529,
+      expected_error: RubyLLM::OverloadedError
+    },
     bedrock: {
       url: %r{\Ahttps://bedrock-runtime\.us-west-2\.amazonaws\.com/model/.+/converse-stream\z},
       error_response: {

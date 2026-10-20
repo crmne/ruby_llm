@@ -63,6 +63,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://hetzner-proxy.example.com/api/v1',
         default: 'https://inference.hetzner.com/api/v1'
       },
+      minimax: {
+        provider: RubyLLM::Providers::MiniMax,
+        key: :minimax_api_base,
+        custom: 'https://api.minimax.cn/anthropic',
+        default: 'https://api.minimax.io/anthropic'
+      },
       mistral: {
         provider: RubyLLM::Providers::Mistral,
         key: :mistral_api_base,
@@ -152,6 +158,8 @@ RSpec.describe RubyLLM::Provider do
         config.gpustack_api_key = 'gpustack-key'
       when :hetzner
         config.hetzner_api_key = 'hetzner-key'
+      when :minimax
+        config.minimax_api_key = 'minimax-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
       when :moonshot

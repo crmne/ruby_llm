@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.minimax.io/anthropic/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"MiniMax-M3.1-Flash","messages":[{"role":"user","content":[{"type":"text","text":"Call
+        the any-of params tool for task \"Review PR\" with status \"pending\" and
+        report the result."}]}],"stream":false,"max_tokens":524288,"tools":[{"name":"any_of_params","description":"Uses
+        params DSL any_of support","input_schema":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '494'
+      Trace-Id:
+      - '0726686f392bf4443103524d6107e688'
+      X-Session-Id:
+      - b649cb0b0231d372ae130757f931b6c5
+      X-Mm-Request-Id:
+      - 2092934004998157135_1792488815pj65sy
+      Minimax-Request-Id:
+      - 3241e0525ad545f9ce0cc6e2e7b3fc4f
+      Alb-Receive-Time:
+      - '1792488815.935'
+      Alb-Request-Id:
+      - 135858fb8fa0329399ad33b67c47163e5b91b503
+      Expires:
+      - Tue, 20 Oct 2026 09:33:37 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 20 Oct 2026 09:33:37 GMT
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-From:
+      - ak
+    body:
+      encoding: UTF-8
+      string: '{"id":"0726686f392bf4443103524d6107e688","type":"message","role":"assistant","model":"MiniMax-M3.1-Flash","content":[{"text":"I''ll
+        call the tool with those parameters.","type":"text"},{"type":"tool_use","id":"call_01a158a8c1f477e885be748f","name":"any_of_params","input":{"status":"pending","task":"Review
+        PR"}}],"usage":{"input_tokens":275,"output_tokens":47,"cache_creation_input_tokens":0,"cache_read_input_tokens":229},"stop_reason":"tool_use","base_resp":{"status_code":0,"status_msg":""}}'
+  recorded_at: Tue, 20 Oct 2026 09:33:37 GMT
+recorded_with: VCR 6.4.0
