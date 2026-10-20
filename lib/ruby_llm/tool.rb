@@ -400,6 +400,37 @@ module RubyLLM
       raise NotImplementedError, 'Subclasses must implement #execute'
     end
 
+    # Carries on a call that paused on +task+, the Task #execute returned,
+    # with the call's +arguments+. Each Chat#complete calls it once for
+    # every paused call of the round. Return the call's result to finish
+    # it, or a Task, +task+ itself or a new one, to keep it paused. Tools
+    # that return a Task must implement this method; the base
+    # implementation raises NotImplementedError.
+    #
+    #   def resume(task, **)
+    #     run = SubAgentRun.find(task.data["run_id"]).continue
+    #     run.finished? ? run.answer : task
+    #   end
+    #
+    def resume(task, **arguments)
+      raise NotImplementedError, "#{self.class} returned a Task, so it must implement #resume"
+    end
+
+    # Returns the Task that +tool_call+ paused on, from +state+, the Hash
+    # Task#to_h returned. Override it to return a Task subclass.
+    #
+    #   def task(state, tool_call: nil)
+    #     SubAgentTask.load(state, tool_call:)
+    #   end
+    #
+    def task(state, tool_call: nil)
+      Task.load(state, tool_call:)
+    end
+
+    def resume_call(state, arguments, tool_call:) # :nodoc:
+      resume(task(state, tool_call:), **arguments.transform_keys(&:to_sym))
+    end
+
     # Reports what the tool is doing while #execute runs, so an application
     # can show it before the result arrives. Chat#after_tool_progress
     # callbacks receive it as a Progress. Pass +value:+ and +total:+ when

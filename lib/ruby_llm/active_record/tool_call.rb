@@ -32,7 +32,7 @@ module RubyLLM
         (result_id.nil? && has_attribute?(:claimed_until) && claimed_until&.future?) || false
       end
 
-      # Returns whether the call waits on an MCP task or input request.
+      # Returns whether the call waits on a task or an MCP input request.
       def paused?
         has_attribute?(:mcp_state) && mcp_state.present?
       end
