@@ -69,6 +69,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://mistral-proxy.example.com/v1',
         default: 'https://api.mistral.ai/v1'
       },
+      moonshot: {
+        provider: RubyLLM::Providers::Moonshot,
+        key: :moonshot_api_base,
+        custom: 'https://api.moonshot.cn/v1',
+        default: 'https://api.moonshot.ai/v1'
+      },
       ollama: {
         provider: RubyLLM::Providers::Ollama,
         key: :ollama_api_base,
@@ -148,6 +154,8 @@ RSpec.describe RubyLLM::Provider do
         config.hetzner_api_key = 'hetzner-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
+      when :moonshot
+        config.moonshot_api_key = 'moonshot-key'
       when :ollama
         config.ollama_api_base = 'https://ollama.example.com/v1'
         config.ollama_api_key = 'ollama-key'

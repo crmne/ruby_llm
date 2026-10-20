@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/519fcb20-ab8c-4af3-9185-0953b3ba7b81
 
 ---
 
-## 19 providers. One API.
+## 20 providers. One API.
 
 Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
 
@@ -74,7 +74,7 @@ More than a client for model APIs. RubyLLM gives your application the convention
 * **Batches:** Provider-side batch processing with provider-specific discounts via `RubyLLM.batch`
 * **Compaction:** Let providers condense long conversations with `with_compaction`
 * **Token counting:** Count a request before you send it with `count_tokens`
-* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, and any OpenAI-compatible API
+* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Hetzner, Mistral, Moonshot AI, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, TypeSafe, and any OpenAI-compatible API
 
 ## Evaluate your agents
 

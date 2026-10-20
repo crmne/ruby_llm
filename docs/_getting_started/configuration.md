@@ -159,6 +159,10 @@ RubyLLM.configure do |config|
   config.mistral_api_key = String
   config.mistral_api_base = String
 
+  # Moonshot AI
+  config.moonshot_api_key = String
+  config.moonshot_api_base = String
+
   # Ollama
   config.ollama_api_base = String
   config.ollama_api_key = String

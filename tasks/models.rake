@@ -48,6 +48,7 @@ def configure_from_env
     config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.hetzner_api_key = ENV.fetch('HETZNER_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.moonshot_api_key = ENV.fetch('MOONSHOT_API_KEY', nil)
     config.ollama_cloud_api_key = ENV.fetch('OLLAMA_CLOUD_API_KEY', nil)
     config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)

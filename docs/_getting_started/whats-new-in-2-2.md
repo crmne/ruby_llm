@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How sandboxes decide what code can do, and how the model asks for more.
 * How skills teach the model your workflows, and run their scripts in the sandbox.
 * How persisted chats now run in one process at a time.
+* How to chat with Kimi models on Moonshot AI.
 * How to upgrade.
 
 RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets it ask for more access one call at a time, teaches it your workflows with skills, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
@@ -183,6 +184,16 @@ end
 ```
 
 If a process dies, its claims expire and another process picks the chat up. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time).
+
+## Moonshot AI
+
+Moonshot AI joins the built-in providers, bringing the total to twenty. Its Kimi models read text and images, think before they answer, and call tools:
+
+```ruby
+RubyLLM.chat(model: "kimi-k3").ask("Hello from Kimi")
+```
+
+Set `moonshot_api_key` to a key from the Kimi platform. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#moonshot-ai).
 
 ## Upgrades
 

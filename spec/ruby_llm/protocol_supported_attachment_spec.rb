@@ -24,6 +24,7 @@ RSpec.describe RubyLLM::Protocol, '#supported_attachment?' do
     [RubyLLM::Providers::DeepSeek::ChatCompletions, :deepseek, %w[png txt]],
     [RubyLLM::Providers::DeepSeek::Responses, :deepseek, %w[png txt]],
     [RubyLLM::Providers::Hetzner::ChatCompletions, :hetzner, %w[png txt]],
+    [RubyLLM::Providers::Moonshot::ChatCompletions, :moonshot, %w[png txt]],
     [RubyLLM::Providers::XAI::ChatCompletions, :xai, %w[png txt]]
   ]
 

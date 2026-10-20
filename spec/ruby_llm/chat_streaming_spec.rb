@@ -41,7 +41,9 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{token_model} reports token usage with and without streaming" do
         model = token_model
 
-        chat = basic_chat(model: model, provider: provider, temperature: 0.0)
+        # Kimi fixes its own temperature and rejects any other.
+        temperature = provider == :moonshot ? nil : 0.0
+        chat = basic_chat(model: model, provider: provider, temperature:)
         # DeepSeek ignores temperature while thinking is enabled.
         chat.with_thinking(false) if provider == :deepseek
         chunks = []
@@ -51,7 +53,7 @@ RSpec.describe RubyLLM::Chat, :live do
           chunks << chunk
         end
 
-        chat = basic_chat(model: model, provider: provider, temperature: 0.0)
+        chat = basic_chat(model: model, provider: provider, temperature:)
         chat.with_thinking(false) if provider == :deepseek
         sync_message = chat.ask(prompt)
 

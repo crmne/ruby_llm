@@ -29,6 +29,7 @@ module RubyLLM
       'deepseek' => 'deepseek',
       'hetzner' => 'hetzner',
       'mistral' => 'mistral',
+      'moonshotai' => 'moonshot',
       'ollama-cloud' => 'ollama_cloud',
       'openrouter' => 'openrouter',
       'perplexity' => 'perplexity',
@@ -39,7 +40,7 @@ module RubyLLM
     MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation rerank judgment].freeze # :nodoc:
     # First-party providers outrank the aggregators that resell their models.
     PROVIDER_PREFERENCE = %w[
-      openai anthropic gemini deepseek mistral cohere typesafe perplexity xai
+      openai anthropic gemini deepseek mistral cohere typesafe perplexity xai moonshot
       vertexai bedrock openrouter azure hetzner ollama_cloud ollama gpustack
     ].freeze # :nodoc:
     INSTANCE_DELEGATES = (Enumerable.instance_methods(false) + %i[

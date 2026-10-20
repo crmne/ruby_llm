@@ -1,0 +1,145 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Use the
+        best_language_to_learn tool to tell me which language to learn."}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - ff863e84-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[best_language_to_learn].parameters is not a valid moonshot
+        flavored json schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 82ae4580409c886425c0569038d66ce7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7531771ccc4585508e184","object":"chat.completion","created":1792496407,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"best_language_to_learn_0_0e28de81","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the `best_language_to_learn` tool. Looking at the function
+        definition, it takes no required parameters (the properties is empty and there
+        are no required fields). I should call this function to get the result."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":69,"completion_tokens":65,"total_tokens":134,"completion_tokens_details":{"reasoning_tokens":50}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:08 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Use the
+        best_language_to_learn tool to tell me which language to learn."},{"role":"assistant","content":"","tool_calls":[{"id":"best_language_to_learn_0_0e28de81","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning_content":"The
+        user wants me to use the `best_language_to_learn` tool. Looking at the function
+        definition, it takes no required parameters (the properties is empty and there
+        are no required fields). I should call this function to get the result."},{"role":"tool","content":"Ruby","tool_call_id":"best_language_to_learn_0_0e28de81"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:10 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 00d1e91b-cc7b-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[best_language_to_learn].parameters is not a valid moonshot
+        flavored json schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 9ee111550aa102c50785eb9eb3fe8ac8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad753198e1ae1f609f44178","object":"chat.completion","created":1792496409,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"According
+        to the tool, the best language to learn is **Ruby**.","reasoning_content":"The
+        function returned \"Ruby\". I should present this clearly to the user."},"finish_reason":"stop"}],"usage":{"prompt_tokens":155,"completion_tokens":32,"total_tokens":187,"completion_tokens_details":{"reasoning_tokens":16}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:10 GMT
+recorded_with: VCR 6.4.0

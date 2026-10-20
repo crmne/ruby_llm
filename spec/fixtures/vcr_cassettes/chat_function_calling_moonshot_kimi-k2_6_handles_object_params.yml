@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Call the
+        object params tool with window start 2025-01-01 and end 2025-01-02 and include
+        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 100a51ba-cc7b-11f1-9579-ea5b02502701
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - 7dbe5e79aed82fbf312105ee2589c0de
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad75332a0b102d9c6a1d14f","object":"chat.completion","created":1792496434,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"object_params_0_cd1956b4","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}],"reasoning_content":"The
+        user wants me to call the `object_params` tool with a window object that has
+        start \"2025-01-01\" and end \"2025-01-02\". The tool expects ISO format strings
+        for start and end within a window object.\n\nLet me check the schema:\n- window:
+        object with start (ISO string) and end (ISO string), no additional properties
+        allowed.\n\nI need to call the tool with:\nwindow: {\n  start: \"2025-01-01\",\n  end:
+        \"2025-01-02\"\n}\n\nThe user also said \"include the result\", so I should
+        wait for the function result and include it in my response.\n\nWait, the schema
+        says \"ISO start\" and \"ISO end\", but 2025-01-01 is a date, not a full ISO
+        datetime. However, ISO 8601 allows date-only format. I should probably provide
+        full ISO datetimes to be safe, but the user specifically asked for \"2025-01-01\"
+        and \"2025-01-02\". I''ll provide them as requested since they are valid ISO
+        8601 date strings. Or maybe I should append T00:00:00Z? The user asked exactly
+        for those dates. Let me just use the exact strings.\n\nActually, looking at
+        the schema description: \"ISO start\" and \"ISO end\". The examples or common
+        usage might imply full timestamps, but the user explicitly said to use those
+        values. I''ll use them.\n\nLet me call the function."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":119,"completion_tokens":344,"total_tokens":463,"completion_tokens_details":{"reasoning_tokens":308}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:42 GMT
+recorded_with: VCR 6.4.0

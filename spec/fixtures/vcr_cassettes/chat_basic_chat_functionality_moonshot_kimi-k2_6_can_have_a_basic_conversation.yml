@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:34:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 30de3196-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - da61d7fbf58085d2c0a48df469b94fb4
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad751bceae4b229cc898014","object":"chat.completion","created":1792496060,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"2
+        + 2 = **4**","reasoning_content":"The user is asking a simple math question:
+        \"What''s 2 + 2?\" \n\nThis is a straightforward arithmetic problem. The answer
+        is 4.\n\nI should provide the correct answer clearly and concisely. There''s
+        no need for complex explanation, but I can be friendly and direct.\n\nNo safety
+        concerns here. This is a basic factual question.\n\nAnswer: 4"},"finish_reason":"stop"}],"usage":{"prompt_tokens":14,"completion_tokens":84,"total_tokens":98,"completion_tokens_details":{"reasoning_tokens":74}}}'
+  recorded_at: Tue, 20 Oct 2026 11:34:22 GMT
+recorded_with: VCR 6.4.0

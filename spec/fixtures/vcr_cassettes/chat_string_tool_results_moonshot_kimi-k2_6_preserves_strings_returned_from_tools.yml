@@ -1,0 +1,149 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Process
+        this query: test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 16df37df-cc7b-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[content_returning].parameters is not a valid moonshot flavored
+        json schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 0662000a40aacccbce4cdbe50c821f73
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7533eb91ec56967d3bdb1","object":"chat.completion","created":1792496446,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"content_returning_0_8d70f351","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user wants me to process the query \"test
+        data\" using the available content_returning function. I''ll call this function
+        with the query parameter set to \"test data\"."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":67,"completion_tokens":53,"total_tokens":120,"completion_tokens_details":{"reasoning_tokens":35}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:47 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Process
+        this query: test data"},{"role":"assistant","content":"","tool_calls":[{"id":"content_returning_0_8d70f351","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}],"reasoning_content":"The user wants me to process the query \"test
+        data\" using the available content_returning function. I''ll call this function
+        with the query parameter set to \"test data\"."},{"role":"tool","content":"Processed:
+        test data","tool_call_id":"content_returning_0_8d70f351"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:48 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 17d018a5-cc7b-11f1-8aea-72ccf2e9daa1
+      Msh-Schema-Warning:
+      - 'tools.function[content_returning].parameters is not a valid moonshot flavored
+        json schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 44d916f14ea1ffac68c65d90e410e6ac
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7533fda6ec6ff7a9d2259","object":"chat.completion","created":1792496447,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        query has been processed. Result: **Processed: test data**","reasoning_content":"The
+        function returned \"Processed: test data\". I should present this result to
+        the user."},"finish_reason":"stop"}],"usage":{"prompt_tokens":142,"completion_tokens":35,"total_tokens":177,"completion_tokens_details":{"reasoning_tokens":19}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:48 GMT
+recorded_with: VCR 6.4.0

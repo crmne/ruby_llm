@@ -52,6 +52,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<OLLAMA_API_ORIGIN>') do
     URI.join(ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1'), '/').to_s.delete_suffix('/')
   end
+  config.filter_sensitive_data('<MOONSHOT_API_KEY>') { ENV.fetch('MOONSHOT_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_CLOUD_API_KEY>') { ENV.fetch('OLLAMA_CLOUD_API_KEY', nil) }
   config.filter_sensitive_data('<OPENAI_API_KEY>') { ENV.fetch('OPENAI_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
@@ -109,6 +110,10 @@ VCR.configure do |config|
   end
   config.filter_sensitive_data('<ANTHROPIC_WORKSPACE_ID>') do |interaction|
     interaction.response.headers['Anthropic-Workspace-Id']&.first
+  end
+  { 'Msh-Uid' => '<MOONSHOT_USER_ID>', 'Msh-Gid' => '<MOONSHOT_GROUP_ID>', 'Msh-Org-Id' => '<MOONSHOT_ORGANIZATION_ID>',
+    'Msh-Project-Id' => '<MOONSHOT_PROJECT_ID>' }.each do |header, placeholder|
+    config.filter_sensitive_data(placeholder) { |interaction| interaction.response.headers[header]&.first }
   end
   config.filter_sensitive_data('<X_REQUEST_ID>') { |interaction| interaction.response.headers['X-Request-Id']&.first }
   config.filter_sensitive_data('<REQUEST_ID>') { |interaction| interaction.response.headers['Request-Id']&.first }
