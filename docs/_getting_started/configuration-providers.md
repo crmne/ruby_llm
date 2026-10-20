@@ -273,7 +273,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-GLM models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
+GLM-5.3 Flash and FlashX and the vision models, whose names carry a `v`, accept images alongside text; the other GLM models take text only. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
 
 GLM-5.3 Flash always thinks, so `with_thinking(false)` raises, and it takes only the efforts `:low`, `:high`, and `:max`: Z.ai rejects any other.
 

@@ -209,7 +209,7 @@ Set `minimax_api_key` to a key from the MiniMax platform. See [Provider Setup]({
 
 ## Z.ai
 
-Z.ai joins the built-in providers, bringing the total to twenty-two. It serves Zhipu's GLM models, which think before they answer, call tools, and, in the Flash models, read images:
+Z.ai joins the built-in providers, bringing the total to twenty-two. It serves Zhipu's GLM models, which think before they answer, call tools, and, in GLM-5.3 Flash and FlashX and the vision models, read images:
 
 ```ruby
 RubyLLM.chat(model: "glm-5.3").ask("Hello from Z.ai")
