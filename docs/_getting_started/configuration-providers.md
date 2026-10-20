@@ -126,6 +126,10 @@ RubyLLM.configure do |config|
   # xAI
   config.xai_api_key = ENV['XAI_API_KEY']
   config.xai_api_base = ENV['XAI_API_BASE'] # optional custom xAI endpoint
+
+  # Z.ai
+  config.zai_api_key = ENV['ZAI_API_KEY']
+  config.zai_api_base = ENV['ZAI_API_BASE'] # Optional, defaults to https://api.z.ai/api/paas/v4
 end
 ```
 
@@ -247,6 +251,29 @@ end
 ```
 
 Kimi models read images only from the request itself, so RubyLLM sends remote images inline. Documents and audio raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Kimi models fix their own temperature and reject any other, so leave `with_temperature` unset. Kimi K2.6 ignores a schema while it thinks, so turn thinking off with `with_thinking(false)` to get structured output from it; Kimi K3 follows a schema either way.
+
+## Z.ai
+
+Z.ai serves Zhipu's GLM models. Create an API key on the Z.ai platform and set `zai_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.zai_api_key = ENV['ZAI_API_KEY']
+end
+
+RubyLLM.chat(model: 'glm-5.3').ask('Hello from Z.ai')
+```
+
+BigModel, Zhipu's platform in China, serves the same API with its own keys. Point `zai_api_base` at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.zai_api_key = ENV['BIGMODEL_API_KEY']
+  config.zai_api_base = 'https://open.bigmodel.cn/api/paas/v4'
+end
+```
+
+GLM models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Z.ai caches repeated prompts by itself, so `with_caching` sends nothing, and it accepts no `with_tool_options(choice:)` other than `:auto`.
 
 ## Bedrock Credential Providers
 

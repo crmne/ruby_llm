@@ -119361,5 +119361,1155 @@
     "capabilities": [],
     "pricing": {},
     "metadata": {}
+  },
+  {
+    "id": "glm-4.5",
+    "name": "GLM-4.5",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2025-07-28 00:00:00 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 98304,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.2,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-07-28",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.6,
+        "output": 2.2,
+        "cache_read": 0.11,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 131072,
+        "output": 98304
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.5-air",
+    "name": "GLM-4.5-Air",
+    "provider": "zai",
+    "family": "glm-air",
+    "created_at": "2025-07-28 00:00:00 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 98304,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.2,
+          "output_per_million": 1.1,
+          "cache_read_input_per_million": 0.03,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-07-28",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.2,
+        "output": 1.1,
+        "cache_read": 0.03,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 131072,
+        "output": 98304
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.5-flash",
+    "name": "GLM-4.5-Flash",
+    "provider": "zai",
+    "family": "glm-flash",
+    "created_at": "2025-07-28 00:00:00 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 98304,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0,
+          "cache_read_input_per_million": 0,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-07-28",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cache_read": 0,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 131072,
+        "output": 98304
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.5v",
+    "name": "GLM-4.5V",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2025-08-11 00:00:00 UTC",
+    "context_window": 64000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 1.8,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-08-11",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.6,
+        "output": 1.8,
+        "cache_read": 0.11,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 64000,
+        "output": 16384
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.6",
+    "name": "GLM-4.6",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2025-09-30 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.2,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-09-30",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.6,
+        "output": 2.2,
+        "cache_read": 0.11,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.6v",
+    "name": "GLM-4.6V",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2025-12-08 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 0.9,
+          "cache_read_input_per_million": 0.05,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-12-08",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.3,
+        "output": 0.9,
+        "cache_read": 0.05,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 128000,
+        "output": 32768
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.6v-flash",
+    "name": "GLM-4.6V-Flash",
+    "provider": "zai",
+    "family": "glm-flash",
+    "created_at": "2025-12-08 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0,
+          "cache_read_input_per_million": 0,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-12-08",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cache_read": 0,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 128000,
+        "output": 32768
+      }
+    }
+  },
+  {
+    "id": "glm-4.7",
+    "name": "GLM-4.7",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2025-12-22 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.2,
+          "cache_read_input_per_million": 0.11,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-22",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.6,
+        "output": 2.2,
+        "cache_read": 0.11,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.7-flash",
+    "name": "GLM-4.7-Flash",
+    "provider": "zai",
+    "family": "glm-flash",
+    "created_at": "2026-01-19 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0,
+          "output_per_million": 0,
+          "cache_read_input_per_million": 0,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-01-19",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cache_read": 0,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 200000,
+        "output": 131072
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-4.7-flashx",
+    "name": "GLM-4.7-FlashX",
+    "provider": "zai",
+    "family": "glm-flash",
+    "created_at": "2026-01-19 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.07,
+          "output_per_million": 0.4,
+          "cache_read_input_per_million": 0.01,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-01-19",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 0.07,
+        "output": 0.4,
+        "cache_read": 0.01,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 200000,
+        "output": 131072
+      },
+      "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "glm-5",
+    "name": "GLM-5",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2026-02-12 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1,
+          "output_per_million": 3.2,
+          "cache_read_input_per_million": 0.2,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-12",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 1,
+        "output": 3.2,
+        "cache_read": 0.2,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5-turbo",
+    "name": "GLM-5-Turbo",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2026-03-16 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.2,
+          "output_per_million": 4,
+          "cache_read_input_per_million": 0.24,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-03-16",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 1.2,
+        "output": 4,
+        "cache_read": 0.24,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 200000,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5.1",
+    "name": "GLM-5.1",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2026-04-07 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.4,
+          "output_per_million": 4.4,
+          "cache_read_input_per_million": 0.26,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-04-07",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 200000,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5.2",
+    "name": "GLM-5.2",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2026-06-13 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.4,
+          "output_per_million": 4.4,
+          "cache_read_input_per_million": 0.26,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-06-13",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        },
+        {
+          "type": "effort",
+          "values": [
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5.3",
+    "name": "GLM-5.3",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2026-08-14 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.4,
+          "output_per_million": 4.4,
+          "cache_read_input_per_million": 0.26,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-08-14",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5.3-flash",
+    "name": "GLM-5.3-Flash",
+    "provider": "zai",
+    "family": "glm-flash",
+    "created_at": "2026-08-26 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.5,
+          "cache_read_input_per_million": 0.03,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-08-26",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.15,
+        "output": 0.5,
+        "cache_read": 0.03,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5.3-flashx",
+    "name": "GLM-5.3-FlashX",
+    "provider": "zai",
+    "family": "glm-flash",
+    "created_at": "2026-09-18 00:00:00 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.37,
+          "output_per_million": 1.25,
+          "cache_read_input_per_million": 0.075,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-09-18",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "structured_output": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "low",
+            "high",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.37,
+        "output": 1.25,
+        "cache_read": 0.075,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 131072
+      }
+    }
+  },
+  {
+    "id": "glm-5v-turbo",
+    "name": "GLM-5V-Turbo",
+    "provider": "zai",
+    "family": "glm",
+    "created_at": "2026-04-01 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "video"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.2,
+          "output_per_million": 4,
+          "cache_read_input_per_million": 0.24,
+          "cache_write_input_per_million": 0
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "zai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-04-01",
+      "interleaved": {
+        "field": "reasoning_content"
+      },
+      "tool_call": true,
+      "reasoning": true,
+      "reasoning_options": [
+        {
+          "type": "toggle"
+        }
+      ],
+      "cost": {
+        "input": 1.2,
+        "output": 4,
+        "cache_read": 0.24,
+        "cache_write": 0
+      },
+      "limit": {
+        "context": 200000,
+        "output": 131072
+      }
+    }
   }
 ]

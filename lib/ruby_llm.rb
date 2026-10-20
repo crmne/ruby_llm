@@ -42,7 +42,8 @@ loader.inflector.inflect(
   'ruby_llm' => 'RubyLLM',
   'typesafe' => 'TypeSafe',
   'vertexai' => 'VertexAI',
-  'xai' => 'XAI'
+  'xai' => 'XAI',
+  'zai' => 'ZAI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
@@ -631,5 +632,6 @@ RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :typesafe, RubyLLM::Providers::TypeSafe
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
+RubyLLM::Provider.register :zai, RubyLLM::Providers::ZAI
 
 require 'ruby_llm/railtie' if defined?(Rails::Railtie)

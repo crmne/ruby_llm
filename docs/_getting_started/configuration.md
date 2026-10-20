@@ -206,6 +206,10 @@ RubyLLM.configure do |config|
   config.xai_api_key = String
   config.xai_api_base = String
 
+  # Z.ai
+  config.zai_api_key = String
+  config.zai_api_base = String
+
   # Default Models
   config.default_model = String
   config.default_embedding_model = String

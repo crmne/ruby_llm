@@ -21,6 +21,7 @@ After reading this guide, you will know:
 * How persisted chats now run in one process at a time.
 * How to chat with Kimi models on Moonshot AI.
 * How to chat with MiniMax's M3 models.
+* How to chat with GLM models on Z.ai.
 * How to upgrade.
 
 RubyLLM 2.2 lets a model run the code it writes, safely, on your own servers, lets it ask for more access one call at a time, teaches it your workflows with skills, and makes persisted chats safe to complete from several processes at once. For everything that arrived in 2.1, see [What's New in 2.1]({% link _reference/whats-new-in-2-1.md %}).
@@ -205,6 +206,16 @@ RubyLLM.chat(model: "MiniMax-M3.1-Flash").ask("Hello from MiniMax")
 ```
 
 Set `minimax_api_key` to a key from the MiniMax platform. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#minimax).
+
+## Z.ai
+
+Z.ai joins the built-in providers, bringing the total to twenty-two. It serves Zhipu's GLM models, which think before they answer, call tools, and, in the Flash models, read images:
+
+```ruby
+RubyLLM.chat(model: "glm-5.3").ask("Hello from Z.ai")
+```
+
+Set `zai_api_key` to a key from Z.ai, or point `zai_api_base` at BigModel for Zhipu's platform in China. See [Provider Setup]({% link _getting_started/configuration-providers.md %}#zai).
 
 ## Upgrades
 
