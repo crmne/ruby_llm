@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/519fcb20-ab8c-4af3-9185-0953b3ba7b81
 
 ---
 
-## 20 providers. One API.
+## 21 providers. One API.
 
 Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
 
