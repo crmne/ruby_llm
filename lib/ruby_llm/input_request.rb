@@ -27,10 +27,12 @@ module RubyLLM
         @response = response.to_h.transform_keys(&:to_s)
       end
 
+      # Returns whether the user answered the question.
       def accepted?
         @response['action'] == 'accept'
       end
 
+      # Returns whether the user declined the question.
       def declined?
         !accepted?
       end
@@ -40,6 +42,8 @@ module RubyLLM
         @response.fetch('content', nil).to_h.transform_keys(&:to_s)[name.to_s]
       end
 
+      # Returns the values given, by field name as Symbols, or an empty
+      # Hash for a declined question or a page to visit.
       def to_h
         @response.fetch('content', nil).to_h.transform_keys(&:to_sym)
       end

@@ -119,6 +119,56 @@ RSpec.describe RubyLLM::Tool do
     expect(result).to eq('Deployed to staging')
   end
 
+  it 'keeps the questions of a tool it calls apart from its own' do
+    inner = Class.new(RubyLLM::Tool) do
+      def self.name = 'Inner'
+
+      description 'Asks its own question'
+
+      def execute
+        ask('Inner?', answer: { type: 'string' })
+        'Inner answered'
+      end
+    end
+    outer = Class.new(RubyLLM::Tool) do
+      def self.name = 'Outer'
+
+      description 'Asks, calls another tool, and asks again'
+      define_method(:execute) do
+        name = ask('Name?', name: { type: 'string' })[:name]
+        inner_result = begin
+          inner.new.call
+        rescue RubyLLM::InputRequiredError => e
+          "Inner asked #{e.requests.map(&:message).join}"
+        end
+        color = ask('Color?', color: { type: 'string' })[:color]
+        "#{name} likes #{color}. #{inner_result}"
+      end
+    end
+    allow(chat.provider).to receive(:complete).and_return(tool_call('outer', {}), answer)
+
+    chat.with_tools(outer).ask('Survey me')
+    chat.answer(chat.pending_inputs.first, name: 'Ada').complete
+
+    expect(chat.pending_inputs.map(&:message)).to eq(['Color?'])
+
+    chat.answer(chat.pending_inputs.first, color: 'blue').complete
+
+    expect(result).to eq('Ada likes blue. Inner asked Inner?')
+  end
+
+  it 'refuses a form field named url, which names the page to visit' do
+    tool = Class.new(RubyLLM::Tool) do
+      def self.name = 'Repo'
+
+      description 'Asks for a repository'
+
+      def execute = ask('Which repository?', url: { type: 'string' })
+    end
+
+    expect { tool.new.call }.to raise_error(ArgumentError, /give a form field another name/)
+  end
+
   it 'raises outside a chat' do
     expect { ask_handler.new.call(question: 'Anyone?') }
       .to raise_error(RubyLLM::InputRequiredError, /AskHandler|ask_handler/)

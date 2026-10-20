@@ -41,6 +41,7 @@ module RubyLLM
     KEYWORD_PARAMETER_KINDS = %i[keyreq key].freeze # :nodoc:
     TOOL_CALL_KEYWORD = :tool_call # :nodoc:
     ASKING = :ruby_llm_tool_asking # :nodoc:
+    RESUMING = :ruby_llm_tool_resuming # :nodoc:
 
     DUPED_INHERITED_CONFIG = {
       :@declared_parameters => {},
@@ -396,8 +397,11 @@ module RubyLLM
     #   end
     #
     # Each call may ask several questions, one after another. Outside a chat,
-    # an unanswered question raises InputRequiredError.
+    # an unanswered question raises InputRequiredError. +url:+ is reserved
+    # for the page, so name a form field for a URL something else.
     def ask(message, url: nil, **fields)
+      raise ArgumentError, 'url: takes the page to visit; give a form field another name' if url.is_a?(Hash)
+
       state = (Fiber[ASKING] ||= { 'input' => nil, 'asked' => 0 })
       index = state['asked']
       state['asked'] += 1
@@ -500,21 +504,27 @@ module RubyLLM
     end
 
     # A call's questions are counted from its start; one resumed keeps the
-    # answers it was given (#resume).
+    # answers it was given (#answered), and a call it makes of another tool
+    # neither sees them nor moves its count.
     # A fresh Hash each time: fibers inherit their parent's storage, and
     # parallel calls mustn't share a count.
     def asking # :nodoc:
-      Fiber[ASKING] = { 'input' => Fiber[ASKING]&.[]('input'), 'asked' => 0 }
+      previous = Fiber[ASKING]
+      input = Fiber[RESUMING]
+      Fiber[RESUMING] = nil
+      Fiber[ASKING] = { 'input' => input, 'asked' => 0 }
       yield
+    ensure
+      Fiber[ASKING] = previous
     end
 
     # Runs a call again that paused on its questions (#ask), now answered or
     # declined, with +input+, the state Chat saved for it.
     def answered(input, arguments, tool_call:) # :nodoc:
-      Fiber[ASKING] = { 'input' => input, 'asked' => 0 }
+      Fiber[RESUMING] = input
       call(**arguments, tool_call:)
     ensure
-      Fiber[ASKING] = nil
+      Fiber[RESUMING] = nil
     end
 
     def execute_accepts_tool_call? # :nodoc:
