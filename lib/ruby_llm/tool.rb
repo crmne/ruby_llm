@@ -40,6 +40,8 @@ module RubyLLM
   class Tool
     KEYWORD_PARAMETER_KINDS = %i[keyreq key].freeze # :nodoc:
     TOOL_CALL_KEYWORD = :tool_call # :nodoc:
+    ASKING = :ruby_llm_tool_asking # :nodoc:
+    RESUMING = :ruby_llm_tool_resuming # :nodoc:
 
     DUPED_INHERITED_CONFIG = {
       :@declared_parameters => {},
@@ -376,9 +378,42 @@ module RubyLLM
 
       RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
       normalized_args[TOOL_CALL_KEYWORD] = tool_call if execute_accepts_tool_call?
-      result = execute(**normalized_args)
+      result = asking { execute(**normalized_args) }
       RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
+    end
+
+    # Asks the user something while #execute runs, and returns their
+    # InputRequest::Answer. In a chat, the call pauses until Chat#answer or
+    # Chat#decline settles the question (see Chat#pending_inputs), then runs
+    # again from the start, and this +ask+ returns the answer. Code before
+    # it runs again too, so do work after asking. Pass the fields to ask for
+    # as JSON Schema properties, with <tt>required: true</tt> on the ones
+    # the user must fill, or +url:+ to ask them to visit a page.
+    #
+    #   def execute(question:)
+    #     answer = ask(question, answer: { type: "string", title: "Answer" })
+    #     answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered." }
+    #   end
+    #
+    # Each call may ask several questions, one after another. Outside a chat,
+    # an unanswered question raises InputRequiredError. +url:+ is reserved
+    # for the page, so name a form field for a URL something else.
+    def ask(message, url: nil, **fields)
+      raise ArgumentError, 'url: takes the page to visit; give a form field another name' if url.is_a?(Hash)
+
+      state = (Fiber[ASKING] ||= { 'input' => nil, 'asked' => 0 })
+      index = state['asked']
+      state['asked'] += 1
+      requests = Array(state['input']&.[]('requests'))
+
+      if (data = requests[index]) && data['response']
+        InputRequest::Answer.new(data['response'])
+      else
+        asked = requests.first(index).map { |data| InputRequest.from_h(data) }
+        asked << InputRequest.ask(index, message, url:, fields:)
+        raise InputRequiredError.new(name, { 'requests' => asked })
+      end
     end
 
     # Runs the tool with the arguments chosen by the model. Subclasses must
@@ -428,6 +463,8 @@ module RubyLLM
     end
 
     def resume_call(state, arguments, tool_call:) # :nodoc:
+      return answered(state, arguments, tool_call:) unless state.key?('task')
+
       resume(task(state, tool_call:), **arguments.transform_keys(&:to_sym))
     end
 
@@ -464,6 +501,30 @@ module RubyLLM
       return "unknown keyword: #{unknown_keyword}" if unknown_keyword
 
       nil
+    end
+
+    # A call's questions are counted from its start; one resumed keeps the
+    # answers it was given (#answered), and a call it makes of another tool
+    # neither sees them nor moves its count.
+    # A fresh Hash each time: fibers inherit their parent's storage, and
+    # parallel calls mustn't share a count.
+    def asking # :nodoc:
+      previous = Fiber[ASKING]
+      input = Fiber[RESUMING]
+      Fiber[RESUMING] = nil
+      Fiber[ASKING] = { 'input' => input, 'asked' => 0 }
+      yield
+    ensure
+      Fiber[ASKING] = previous
+    end
+
+    # Runs a call again that paused on its questions (#ask), now answered or
+    # declined, with +input+, the state Chat saved for it.
+    def answered(input, arguments, tool_call:) # :nodoc:
+      Fiber[RESUMING] = input
+      call(**arguments, tool_call:)
+    ensure
+      Fiber[RESUMING] = nil
     end
 
     def execute_accepts_tool_call? # :nodoc:

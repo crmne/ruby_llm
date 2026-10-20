@@ -20,6 +20,7 @@ After reading this guide, you will know:
 * How to attach Tools to a `RubyLLM::Chat` and trigger them.
 * What happens step by step when a model uses a Tool.
 * How a Tool pauses its call and resumes it later.
+* How a Tool asks the user something while it runs.
 * How to handle errors inside a Tool.
 * What security considerations apply when you let a model run your code.
 
@@ -197,6 +198,27 @@ A task's `status` is `:working` while the work runs on its own, so you check aga
 `data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
 
 MCP tools pause the same way when a server runs a call as a [task]({% link _core_features/mcp.md %}#tasks).
+
+## Asking the User
+
+A tool can ask the user something while it runs, the way an MCP server asks for input. `ask` takes the question and the fields to fill, as JSON Schema properties (`required: true` on the ones the user must fill), or `url:` for a page to visit:
+
+```ruby
+class AskTeam < RubyLLM::Tool
+  description "Ask the team something you can't answer from the docs"
+
+  parameters do
+    string :question, description: "Written for a colleague"
+  end
+
+  def execute(question:)
+    answer = ask(question, answer: { type: "string", title: "Answer", required: true })
+    answer.accepted? ? { answer: answer[:answer] } : { error: "Nobody answered" }
+  end
+end
+```
+
+In a chat, the call pauses on the question as on a server's: the chat is `awaiting_input?`, `pending_inputs` lists it, and `answer` or `decline` settles it before `complete` resumes. Resuming runs `execute` again from the start, and this time `ask` returns the answer, so code before `ask` runs twice: ask first, then do the work. A call can ask several questions, one after another. Outside a chat, an unanswered `ask` raises `RubyLLM::InputRequiredError`, which `RubyLLM::MCP::InputRequiredError` now inherits from.
 
 ## Long Results
 
