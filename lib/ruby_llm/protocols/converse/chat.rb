@@ -23,6 +23,8 @@ module RubyLLM
         MAX_CACHE_POINTS = 4
         CACHE_POINT_MODELS = %w[anthropic. amazon.nova].freeze
         TOOL_CACHE_POINT_MODELS = %w[anthropic.].freeze
+        # Converse refuses searchResult blocks from every model but Claude.
+        SEARCH_RESULT_MODELS = %w[anthropic.].freeze
         CACHE_LIFETIME_UNITS = { 's' => 1, 'm' => 60, 'h' => 3600 }.freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
 
@@ -55,7 +57,7 @@ module RubyLLM
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
           prompt_cache_options(caching)
           payload = {
-            messages: render_messages(chat_messages, caching:, citations:)
+            messages: render_messages(chat_messages, caching:, citations:, search_results: search_results?(model))
           }
 
           system_blocks = render_system(system_messages, caching:)
@@ -161,13 +163,13 @@ module RubyLLM
           end
         end
 
-        def render_messages(messages, caching: nil, citations: false)
+        def render_messages(messages, caching: nil, citations: false, search_results: false)
           rendered = []
           tool_result_blocks = []
 
           messages.each do |msg|
             if msg.tool_result?
-              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:))
+              tool_result_blocks.concat(render_tool_result_blocks(msg, caching:, search_results:))
               next
             end
 
@@ -239,24 +241,24 @@ module RubyLLM
           [render_thinking_block(msg.thinking)].compact
         end
 
-        def render_tool_result_blocks(msg, caching: nil)
-          blocks = [render_tool_result_block(msg)]
+        def render_tool_result_blocks(msg, caching: nil, search_results: false)
+          blocks = [render_tool_result_block(msg, search_results:)]
           blocks << converse_cache_block_for(caching, ttl: msg.cache_ttl) if cache_boundary?(msg, caching:)
           blocks
         end
 
-        def render_tool_result_block(msg)
+        def render_tool_result_block(msg, search_results: false)
           {
             toolResult: {
               toolUseId: msg.provider_call_id,
-              content: render_tool_result_content(msg)
+              content: render_tool_result_content(msg, search_results:)
             }
           }
         end
 
-        def render_tool_result_content(msg)
-          search_results = RubyLLM::SearchResults.from_content(msg.content)
-          return search_results.results.map { |result| search_result_block(result) } if search_results
+        def render_tool_result_content(msg, search_results: false)
+          results = RubyLLM::SearchResults.from_content(msg.content) if search_results
+          return results.results.map { |result| search_result_block(result) } if results
 
           content = msg.content unless msg.content&.strip&.empty?
           blocks = Media.render_content(content, msg.attachments, used_document_names: @used_document_names)
@@ -322,6 +324,11 @@ module RubyLLM
 
             budget -= 1
           end
+        end
+
+        def search_results?(model)
+          model_id = foundation_model_id(model&.id)
+          SEARCH_RESULT_MODELS.any? { |prefix| model_id.start_with?(prefix) } || !model_id.include?('.')
         end
 
         def automatic_cache_points?(model)
