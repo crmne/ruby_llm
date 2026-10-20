@@ -223,7 +223,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`, and it runs none of the tools `with_provider_tools` adds.
+MiniMax decides on its own when to call your tools: it accepts no `with_tool_options(choice:)` other than `:auto`. Of the [provider tools]({% link _core_features/provider-tools.md %}), it runs only `with_provider_tools(:web_search)`, a beta on MiniMax's side; the others raise `RubyLLM::UnsupportedServerToolError`.
 
 ## Moonshot AI
 

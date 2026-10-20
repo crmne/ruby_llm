@@ -69,10 +69,18 @@ RSpec.describe RubyLLM::Providers::MiniMax do
     expect(RubyLLM.models.find(model_id, provider: :minimax).context_window).to eq(1_000_000)
   end
 
-  it 'rejects provider tools, which the endpoint does not run' do
-    chat = context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search)
+  it 'sends web search as the version MiniMax runs' do
+    stub_messages(reply([{ type: 'text', text: 'Found it' }]))
 
-    expect { chat.ask('Search the web') }.to raise_error(RubyLLM::UnsupportedServerToolError)
+    context.chat(model: model_id, provider: :minimax).with_provider_tools(:web_search).ask('Search the web')
+
+    expect(sent_body['tools']).to eq([{ 'type' => 'web_search_20250305', 'name' => 'web_search' }])
+  end
+
+  it 'rejects the other provider tools, which the endpoint does not run' do
+    chat = context.chat(model: model_id, provider: :minimax).with_provider_tools(:code_execution)
+
+    expect { chat.ask('Run this') }.to raise_error(RubyLLM::UnsupportedServerToolError)
   end
 
   describe 'chat' do
