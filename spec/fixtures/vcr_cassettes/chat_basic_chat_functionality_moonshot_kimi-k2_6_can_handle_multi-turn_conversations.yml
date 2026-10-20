@@ -1,0 +1,175 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:34:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 3442f548-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - 6296c0ed06d7cf860125b78892958e14
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad751c239927c2f294b5935","object":"chat.completion","created":1792496066,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        creator of Ruby is **Yukihiro Matsumoto**, also commonly known by his online
+        handle **\"Matz.\"**\n\nHe is a Japanese computer scientist who designed Ruby
+        in the mid-1990s, with the first public release (version 0.95) appearing in
+        1995. Matsumoto created Ruby with a focus on programmer happiness and productivity,
+        drawing inspiration from languages like Perl, Smalltalk, Eiffel, Ada, and
+        Lisp.","reasoning_content":"The user is asking for the creator of the programming
+        language Ruby. This is a straightforward factual question. The answer is Yukihiro
+        Matsumoto, often known as \"Matz\". \n\nI should provide:\n1. The name: Yukihiro
+        Matsumoto\n2. His commonly used nickname: Matz\n3. Maybe a brief context about
+        when/where he created it (Japan, mid-1990s) to be helpful, but keep it concise
+        since the core question is just \"who\".\n\nNo need for anything controversial
+        or sensitive here. Just a direct factual answer.\n\nPlan:\n- State clearly:
+        Yukihiro Matsumoto (Matz)\n- Add brief helpful context: Japanese software
+        engineer, created it in the mid-1990s, first release in 1995.\n- Keep it short
+        and accurate."},"finish_reason":"stop"}],"usage":{"prompt_tokens":17,"completion_tokens":265,"total_tokens":282,"completion_tokens_details":{"reasoning_tokens":169}}}'
+  recorded_at: Tue, 20 Oct 2026 11:34:32 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of Ruby is **Yukihiro Matsumoto**, also commonly known by his online
+        handle **\"Matz.\"**\n\nHe is a Japanese computer scientist who designed Ruby
+        in the mid-1990s, with the first public release (version 0.95) appearing in
+        1995. Matsumoto created Ruby with a focus on programmer happiness and productivity,
+        drawing inspiration from languages like Perl, Smalltalk, Eiffel, Ada, and
+        Lisp.","reasoning_content":"The user is asking for the creator of the programming
+        language Ruby. This is a straightforward factual question. The answer is Yukihiro
+        Matsumoto, often known as \"Matz\". \n\nI should provide:\n1. The name: Yukihiro
+        Matsumoto\n2. His commonly used nickname: Matz\n3. Maybe a brief context about
+        when/where he created it (Japan, mid-1990s) to be helpful, but keep it concise
+        since the core question is just \"who\".\n\nNo need for anything controversial
+        or sensitive here. Just a direct factual answer.\n\nPlan:\n- State clearly:
+        Yukihiro Matsumoto (Matz)\n- Add brief helpful context: Japanese software
+        engineer, created it in the mid-1990s, first release in 1995.\n- Keep it short
+        and accurate."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:34:38 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 3837ffcb-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - c07dd920ca15658d74a55b4e13a58448
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad751c868104018fd3b545f","object":"chat.completion","created":1792496072,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        Matsumoto began developing Ruby in **1993**, and the first public release
+        (version 0.95) was in **December 1995**.\n\nSo while he started working on
+        it in 1993, **1995** is generally considered the official birth year of Ruby.","reasoning_content":"The
+        user is asking for the year Yukihiro Matsumoto created Ruby. I already mentioned
+        in the previous response that the first public release (version 0.95) was
+        in 1995, and that he designed it in the mid-1990s. I should provide the specific
+        year he started working on it and when it was released.\n\nKey facts:\n- Matsumoto
+        started working on Ruby in 1993\n- First public release (Ruby 0.95) was in
+        December 1995\n- Often cited as 1995 being the \"birth year\" of Ruby\n\nI
+        should give a clear, concise answer mentioning both when he started development
+        (1993) and when it was publicly released (1995), since \"created\" could refer
+        to either. But if they want a single year, 1995 is the standard answer for
+        when Ruby was created/released, though 1993 is when development began.\n\nLet
+        me provide both dates for accuracy."},"finish_reason":"stop"}],"usage":{"prompt_tokens":128,"completion_tokens":262,"total_tokens":390,"completion_tokens_details":{"reasoning_tokens":199}}}'
+  recorded_at: Tue, 20 Oct 2026 11:34:38 GMT
+recorded_with: VCR 6.4.0

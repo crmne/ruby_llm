@@ -1,0 +1,145 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}},"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 12:01:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - fe3eb74d-cc7d-11f1-9579-ea5b02502701
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 9f716da3d53eb774091aa031fb95f1fa
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7581d61f98c10b8748a3c","object":"chat.completion","created":1792497693,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"weather_0_7c7ad093","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"}}],"reasoning_content":""},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":92,"completion_tokens":30,"total_tokens":122,"completion_tokens_details":{"reasoning_tokens":1}}}'
+  recorded_at: Tue, 20 Oct 2026 12:01:34 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"weather_0_7c7ad093","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_7c7ad093"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"thinking":{"type":"disabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 12:01:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - fed80e3a-cc7d-11f1-9579-ea5b02502701
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - 549520eb27963e5c6004a3945146a3e2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTZhZDc1ODFlMTI1MThhYjkwMWM1NTJjOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTI0OTc2OTQsIm1vZGVsIjoia2ltaS1rMi42IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgKipGYWxsIG9mIFJvbWUqKiByZWZlcnMgdG8gdGhlIGNvbGxhcHNlIG9mIHRoZSAqKldlc3Rlcm4gUm9tYW4gRW1waXJlKiogaW4gKio0NzYgQ0UqKiwgdHJhZGl0aW9uYWxseSBtYXJrZWQgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluICoqT2RvYWNlcioqIGRlcG9zZWQgdGhlIGxhc3QgUm9tYW4gZW1wZXJvciwgKipSb211bHVzIEF1Z3VzdHVsdXMqKi4gSG93ZXZlciwgdGhlIGRlY2xpbmUgd2FzIGEgZ3JhZHVhbCBwcm9jZXNzIHNwYW5uaW5nIGNlbnR1cmllcyByYXRoZXIgdGhhbiBhIHNpbmdsZSBldmVudC5cblxuIyMgS2V5IEZhY3RvcnMgaW4gUm9tZSdzIERlY2xpbmU6XG5cbioqUG9saXRpY2FsIFx1MDAyNiBNaWxpdGFyeSoqXG4tIENvbnN0YW50IGNpdmlsIHdhcnMgYW5kIHBvbGl0aWNhbCBpbnN0YWJpbGl0eVxuLSBNaWxpdGFyeSBvdmVyLXJlbGlhbmNlIG9uIG1lcmNlbmFyaWVzIGFuZCBiYXJiYXJpYW4gdHJvb3BzXG4tIEVtcGlyZSBiZWNhbWUgdG9vIGxhcmdlIHRvIGdvdmVybiBlZmZlY3RpdmVseVxuLSBGcmVxdWVudCBhc3Nhc3NpbmF0aW9ucyBhbmQgcG93ZXIgc3RydWdnbGVzXG5cbioqRWNvbm9taWMqKlxuLSBIZWF2eSB0YXhhdGlvbiBhbmQgaW5mbGF0aW9uXG4tIERlY2xpbmluZyB0cmFkZSBhbmQgYWdyaWN1bHR1cmFsIHByb2R1Y3Rpdml0eVxuLSBXZWFsdGggaW5lcXVhbGl0eSBiZXR3ZWVuIGNsYXNzZXNcblxuKipTb2NpYWwgXHUwMDI2IEN1bHR1cmFsKipcbi0gTG9zcyBvZiBjaXZpYyB2aXJ0dWUgYW5kIHRyYWRpdGlvbmFsIFJvbWFuIHZhbHVlc1xuLSBCcmFpbiBkcmFpbiBhcyB0YWxlbnRlZCBwZW9wbGUgYXZvaWRlZCBwdWJsaWMgc2VydmljZVxuLSBHcm93aW5nIGRpdmlkZSBiZXR3ZWVuIHJpY2ggYW5kIHBvb3JcblxuKipFeHRlcm5hbCBQcmVzc3VyZXMqKlxuLSBJbnZhc2lvbnMgYnkgR2VybWFuaWMgdHJpYmVzIChWaXNpZ290aHMsIFZhbmRhbHMsIE9zdHJvZ290aHMsIGV0Yy4pXG4tIFByZXNzdXJlIGZyb20gdGhlIEh1bnMgcHVzaGluZyB0cmliZXMgd2VzdHdhcmRcbi0gR3JhZHVhbCBsb3NzIG9mIHRlcnJpdG9yeVxuXG4jIyBJbXBvcnRhbnQgQ2xhcmlmaWNhdGlvbjpcblxuVGhlICoqRWFzdGVybiBSb21hbiBFbXBpcmUqKiAoQnl6YW50aW5lIEVtcGlyZSkgYWN0dWFsbHkgc3Vydml2ZWQgdW50aWwgKioxNDUzIENFKiogd2hlbiBDb25zdGFudGlub3BsZSBmZWxsIHRvIHRoZSBPdHRvbWFuIFR1cmtzLiBTbyBpbiBtYW55IHdheXMsIFJvbWUgZGlkbid0IHRydWx5IFwiZmFsbFwiIGZvciBhbm90aGVyIHRob3VzYW5kIHllYXJzIGluIHRoZSBlYXN0LlxuXG5UaGUgXCJmYWxsXCIgaXMgb2Z0ZW4gZGViYXRlZCBieSBoaXN0b3JpYW5z4oCUc29tZSBzZWUgaXQgYXMgYSB0cmFuc2Zvcm1hdGlvbiByYXRoZXIgdGhhbiBhIGNvbGxhcHNlLCBhcyBSb21hbiBjdWx0dXJlLCBsYXcsIGFuZCBpbnN0aXR1dGlvbnMgY29udGludWVkIHRvIGluZmx1ZW5jZSBtZWRpZXZhbCBFdXJvcGUuIiwicmVhc29uaW5nX2NvbnRlbnQiOiIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE2MSwiY29tcGxldGlvbl90b2tlbnMiOjMxNiwidG90YWxfdG9rZW5zIjo0NzcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MX19fQ==
+  recorded_at: Tue, 20 Oct 2026 12:01:41 GMT
+recorded_with: VCR 6.4.0

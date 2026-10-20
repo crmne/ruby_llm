@@ -272,6 +272,16 @@ RSpec.describe RubyLLM::Transport::ErrorMiddleware do
       end.to raise_error(RubyLLM::ContextLengthExceededError, msg)
     end
 
+    it "maps Moonshot's exceeded model token limit to ContextLengthExceededError" do
+      msg = 'Invalid request: Your request exceeded model token limit: 262144 (requested: 1250059)'
+      response = Faraday::Env.from(status: 400)
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::ContextLengthExceededError, msg)
+    end
+
     it 'keeps an invalid context-size setting as BadRequestError' do
       msg = 'Invalid context size: must be a positive integer'
       response = Faraday::Env.from(status: 400)

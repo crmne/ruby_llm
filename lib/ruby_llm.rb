@@ -619,6 +619,7 @@ RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
 RubyLLM::Provider.register :hetzner, RubyLLM::Providers::Hetzner
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
+RubyLLM::Provider.register :moonshot, RubyLLM::Providers::Moonshot
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :ollama_cloud, RubyLLM::Providers::OllamaCloud
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI

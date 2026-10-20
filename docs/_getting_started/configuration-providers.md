@@ -80,6 +80,10 @@ RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.mistral_api_base = ENV['MISTRAL_API_BASE'] # optional custom Mistral endpoint
 
+  # Moonshot AI
+  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+  config.moonshot_api_base = ENV['MOONSHOT_API_BASE'] # Optional, defaults to https://api.moonshot.ai/v1
+
   # Ollama
   config.ollama_api_base = 'http://localhost:11434/v1'
   config.ollama_api_key = ENV['OLLAMA_API_KEY'] # optional for authenticated/remote Ollama endpoints
@@ -193,6 +197,29 @@ RubyLLM.models.by_provider(:hetzner).map(&:id)
 ```
 
 Hetzner models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent.
+
+## Moonshot AI
+
+Moonshot AI serves the Kimi models. Create an API key on the Kimi platform and set `moonshot_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+end
+
+RubyLLM.chat(model: 'kimi-k3').ask('Hello from Kimi')
+```
+
+Keys from Moonshot's China platform only work on its own endpoint. Point `moonshot_api_base` at it:
+
+```ruby
+RubyLLM.configure do |config|
+  config.moonshot_api_key = ENV['MOONSHOT_API_KEY']
+  config.moonshot_api_base = 'https://api.moonshot.cn/v1'
+end
+```
+
+Kimi models read images only from the request itself, so RubyLLM sends remote images inline. Documents and audio raise `RubyLLM::UnsupportedAttachmentError` before the request is sent. Kimi models fix their own temperature and reject any other, so leave `with_temperature` unset. Kimi K2.6 ignores a schema while it thinks, so turn thinking off with `with_thinking(false)` to get structured output from it; Kimi K3 follows a schema either way.
 
 ## Bedrock Credential Providers
 

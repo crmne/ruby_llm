@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"Call the
+        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:40:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 0c292c4d-cc7b-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 23f377d8d0898c7fec2383b4589ffdc0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7532cabaf172c946cd165","object":"chat.completion","created":1792496428,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"array_params_0_832ae793","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}],"reasoning_content":"The
+        user wants me to call the `array_params` tool with tags [\"red\", \"blue\"]
+        and then tell them the combined tags.\n\nLet me look at the function definition:\n-
+        Function name: `array_params`\n- Parameters:\n  - `tags`: array of strings
+        (required)\n  \nSo I need to call it with:\n```json\n{\n  \"tags\": [\"red\",
+        \"blue\"]\n}\n```\n\nThen I need to report back what the combined tags are
+        based on the result."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":82,"completion_tokens":119,"total_tokens":201,"completion_tokens_details":{"reasoning_tokens":100}}}'
+  recorded_at: Tue, 20 Oct 2026 11:40:30 GMT
+recorded_with: VCR 6.4.0

@@ -80,7 +80,8 @@ module RubyLLM
           /input or output tokens? must be reduced/i,
           /reduce the length of messages/i,
           /prompt is too long/i,
-          /context limit/i
+          /context limit/i,
+          /exceeded model token limit/i
         ].freeze
 
         RATE_LIMIT_PATTERNS = [

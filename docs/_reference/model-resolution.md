@@ -76,7 +76,7 @@ Provider preference puts first-party providers ahead of the aggregators that res
 
 | Rank | Providers |
 | --- | --- |
-| First-party | `openai`, `anthropic`, `gemini`, `deepseek`, `mistral`, `cohere`, `perplexity`, `xai` |
+| First-party | `openai`, `anthropic`, `gemini`, `deepseek`, `mistral`, `cohere`, `perplexity`, `xai`, `moonshot` |
 | Cloud platforms | `vertexai`, `bedrock` |
 | Aggregators and local | `openrouter`, `azure`, `hetzner`, `ollama_cloud`, `ollama`, `gpustack` |
 

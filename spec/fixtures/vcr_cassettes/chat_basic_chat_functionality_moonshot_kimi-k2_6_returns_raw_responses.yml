@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What is
+        the capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:34:25 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 324e27c6-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - ee39a92d2a2e9a0c03062b300e31d8ad
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad751be5d668e059cb356a9","object":"chat.completion","created":1792496062,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**.","reasoning_content":"The user is asking a
+        very simple factual question: \"What is the capital of France?\" This is straightforward
+        and requires a direct answer. The capital of France is Paris. I should provide
+        this clearly and concisely. No need for complex reasoning or additional context
+        unless helpful, but since it''s such a simple question, just answering \"Paris\"
+        is sufficient, though I could add a brief confirmation.\n\nWait, let me check
+        if there''s any trick or ambiguity. France''s capital is indeed Paris. It''s
+        been the capital for centuries. There''s no trick here.\n\nI will answer:
+        Paris."},"finish_reason":"stop"}],"usage":{"prompt_tokens":14,"completion_tokens":126,"total_tokens":140,"completion_tokens_details":{"reasoning_tokens":116}}}'
+  recorded_at: Tue, 20 Oct 2026 11:34:25 GMT
+recorded_with: VCR 6.4.0

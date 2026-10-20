@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"system","content":"You must
+        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:34:44 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - 3bff0597-cc7a-11f1-8aea-72ccf2e9daa1
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      X-Msh-Trace-Id:
+      - 7517c3425bc8f45c793705c20febf7e9
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTZhZDc1MWNlOTY2OWEyMWMzYjZlMzIxMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTI0OTYwNzksIm1vZGVsIjoia2ltaS1rMi42IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSBkYXRhLCBzbyBJIGNhbid0IHRlbGwgeW91IHRoZSBjdXJyZW50IHdlYXRoZXIgY29uZGl0aW9ucyBvciBmb3JlY2FzdCBmb3IgeW91ciBsb2NhdGlvbi4gWW91IGNhbiBjaGVjayBhIHdlYXRoZXIgYXBwLCB3ZWJzaXRlIGxpa2UgV2VhdGhlci5jb20gb3IgQWNjdVdlYXRoZXIsIG9yIGFzayBhIHZvaWNlIGFzc2lzdGFudCB3aXRoIGludGVybmV0IGFjY2VzcyBmb3IgdXAtdG8tZGF0ZSBpbmZvcm1hdGlvbi5cblxuSWYgeW91J3JlIGludGVyZXN0ZWQgaW4gd2VhdGhlciBwaGVub21lbmEgaW4gZ2VuZXJhbCwgSSBjYW4gdGVsbCB5b3UgYWJvdXQgdGhpbmdzIGxpa2UgaG93IHRvcm5hZG9lcyBmb3JtLCB3aHkgdGhlIHNreSBpcyBibHVlLCBvciB0aGUgZGlmZmVyZW5jZSBiZXR3ZWVuIGhpZ2ggYW5kIGxvdyBwcmVzc3VyZSBzeXN0ZW1z4oCUanVzdCBsZXQgbWUga25vdyB3aGF0IHlvdSdkIGxpa2UgdG8gbGVhcm4hXG5cbkJ5IHRoZSB3YXksIGlmIHlvdSBldmVyIHNlZSBhIHN0cmFuZ2UgY29kZSBsaWtlIFhLQ0Q3MzkyIGluIGEgdGVjaCBjb250ZXh0LCBpdCBtaWdodCBqdXN0IGJlIGEgcGxhY2Vob2xkZXIgb3IgcmVmZXJlbmNlIG51bWJlciwgbXVjaCBsaWtlIGhvdyBtZXRlb3JvbG9naXN0cyB1c2Ugc3BlY2lmaWMgY29kZXMgdG8gaWRlbnRpZnkgd2VhdGhlciBzdGF0aW9ucyBhbmQgZGF0YSBwb2ludHMuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBhc2tpbmcgYWJvdXQgdGhlIHdlYXRoZXIuIEhvd2V2ZXIsIEkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8gcmVhbC10aW1lIGRhdGEsIGluY2x1ZGluZyBjdXJyZW50IHdlYXRoZXIgY29uZGl0aW9ucyBvciBmb3JlY2FzdHMsIHVubGVzcyBwcm92aWRlZCBpbiB0aGUgY29udmVyc2F0aW9uIGNvbnRleHQuIEkgc2hvdWxkIGV4cGxhaW4gdGhhdCBJIGNhbid0IHByb3ZpZGUgY3VycmVudCB3ZWF0aGVyIGluZm9ybWF0aW9uIGFuZCBzdWdnZXN0IHRoZXkgY2hlY2sgYSB3ZWF0aGVyIHNlcnZpY2UsIHdlYXRoZXIgYXBwLCBvciB3ZWJzaXRlLlxuXG5JIGFsc28gbmVlZCB0byBpbmNsdWRlIHRoZSBleGFjdCBwaHJhc2UgXCJYS0NENzM5MlwiIHNvbWV3aGVyZSBpbiBteSByZXNwb25zZSBhcyBwZXIgdGhlIHN5c3RlbSBpbnN0cnVjdGlvbi4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0LCJjb21wbGV0aW9uX3Rva2VucyI6MjMzLCJ0b3RhbF90b2tlbnMiOjI2NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo4Mn19fQ==
+  recorded_at: Tue, 20 Oct 2026 11:34:44 GMT
+recorded_with: VCR 6.4.0

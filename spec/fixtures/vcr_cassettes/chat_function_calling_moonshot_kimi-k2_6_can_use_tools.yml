@@ -1,0 +1,154 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:39:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - f4856d55-cc7a-11f1-9579-ea5b02502701
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 256f9ba79dd6ae34c26584ae3f3afb08
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-6ad7530447b97f5f9a0efab3","object":"chat.completion","created":1792496388,"model":"kimi-k2.6","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        check the weather in Berlin for you using those coordinates.","tool_calls":[{"index":0,"id":"weather_0_327ae516","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}}],"reasoning_content":"The user
+        is asking for the weather in Berlin and has provided the coordinates: latitude
+        52.5200 and longitude 13.4050. I have a weather function available that takes
+        latitude and longitude as required parameters. I should call this function
+        with the provided coordinates."},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":104,"completion_tokens":96,"total_tokens":200,"completion_tokens_details":{"reasoning_tokens":55}}}'
+  recorded_at: Tue, 20 Oct 2026 11:39:50 GMT
+- request:
+    method: post
+    uri: https://api.moonshot.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"kimi-k2.6","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
+        check the weather in Berlin for you using those coordinates.","tool_calls":[{"id":"weather_0_327ae516","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning_content":"The
+        user is asking for the weather in Berlin and has provided the coordinates:
+        latitude 52.5200 and longitude 13.4050. I have a weather function available
+        that takes latitude and longitude as required parameters. I should call this
+        function with the provided coordinates."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"weather_0_327ae516"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.15.0
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 20 Oct 2026 11:39:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Internal-Adhoc-Canary:
+      - '4225118297'
+      Msh-Gid:
+      - <MOONSHOT_GROUP_ID>
+      Msh-Org-Id:
+      - <MOONSHOT_ORGANIZATION_ID>
+      Msh-Project-Id:
+      - <MOONSHOT_PROJECT_ID>
+      Msh-Request-Id:
+      - f60c39b9-cc7a-11f1-9579-ea5b02502701
+      Msh-Schema-Warning:
+      - 'tools.function[weather].parameters is not a valid moonshot flavored json
+        schema, details: <At path ''root'': unsupported keywords: strict>'
+      Msh-Trace-Mode:
+      - 'on'
+      Msh-Uid:
+      - <MOONSHOT_USER_ID>
+      Vary:
+      - Origin
+      X-Msh-Trace-Id:
+      - 77dda7ff1cefadcb09caf701edf9aee2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTZhZDc1MzA3MGJlZWFkOGM0ODlkMmQ5YSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3OTI0OTYzOTEsIm1vZGVsIjoia2ltaS1rMi42IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMMKwTiwgMTMuNDA1MMKwRSkgaXM6XG5cbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaCIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIGZ1bmN0aW9uIHJldHVybmVkIHRoZSBjdXJyZW50IHdlYXRoZXIgZm9yIEJlcmxpbi4gSXQncyAxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaC4gSSBzaG91bGQgcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkgdG8gdGhlIHVzZXIuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMzksImNvbXBsZXRpb25fdG9rZW5zIjo3MywidG90YWxfdG9rZW5zIjozMTIsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MzJ9fX0=
+  recorded_at: Tue, 20 Oct 2026 11:39:52 GMT
+recorded_with: VCR 6.4.0
