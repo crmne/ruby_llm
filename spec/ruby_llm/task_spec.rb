@@ -36,6 +36,10 @@ RSpec.describe RubyLLM::Task do
     expect(%i[completed failed cancelled].map { |status| described_class.new(status:) }).to all(be_done)
   end
 
+  it 'refuses a status it does not know' do
+    expect { described_class.new(status: :complete) }.to raise_error(ArgumentError, /Unknown task status: :complete/)
+  end
+
   it 'is the base of MCP tasks' do
     expect(RubyLLM::MCP::Task.new(nil, { 'taskId' => 'task-1', 'status' => 'input_required' }))
       .to be_a(described_class).and be_input_required

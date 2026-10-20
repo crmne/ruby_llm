@@ -28,7 +28,8 @@ module RubyLLM
     include Support::Inspectable
 
     DONE = %i[completed failed cancelled].freeze
-    private_constant :DONE
+    STATUSES = %i[working input_required].concat(DONE).freeze
+    private_constant :DONE, :STATUSES
 
     # The task's state as a Symbol: +:working+, +:input_required+,
     # +:completed+, +:failed+, or +:cancelled+.
@@ -56,9 +57,12 @@ module RubyLLM
 
     # Returns a task with +status+, +:working+ unless the call waits on a
     # person, +:input_required+. +data+ is what Tool#resume needs to carry
-    # the call on, as a Hash that serializes to JSON.
+    # the call on, as a Hash that serializes to JSON. Raises ArgumentError
+    # for a status other than the five #status lists.
     def initialize(status: :working, status_message: nil, poll_interval: nil, data: {}, tool_call: nil)
       @status = status.to_sym
+      raise ArgumentError, "Unknown task status: #{status.inspect}" unless STATUSES.include?(@status)
+
       @status_message = status_message
       @poll_interval = poll_interval
       @data = Support::Utils.deep_stringify_keys(Support::Utils.deep_dup(data))
