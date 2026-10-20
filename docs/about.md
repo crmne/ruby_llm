@@ -20,7 +20,7 @@ topics:
 
 # About RubyLLM
 
-RubyLLM is an open source Ruby gem that gives developers one consistent framework for building AI applications across OpenAI, Anthropic, Gemini, Vertex AI, Bedrock, Azure AI, Cohere, DeepSeek, Hetzner, MiniMax, Mistral, Moonshot AI, Ollama, Ollama Cloud, OpenRouter, Perplexity, Deepgram, ElevenLabs, GPUStack, xAI, Z.ai, and OpenAI-compatible providers.
+RubyLLM is an open source Ruby gem that gives developers one consistent framework for building AI applications across OpenAI, Anthropic, Gemini, Vertex AI, Bedrock, Azure AI, Cohere, DeepSeek, Hetzner, Meta, MiniMax, Mistral, Moonshot AI, Ollama, Ollama Cloud, OpenRouter, Perplexity, Deepgram, ElevenLabs, GPUStack, xAI, Z.ai, and OpenAI-compatible providers.
 
 It supports chat, file attachments, streaming, tools, agents, structured output, embeddings, reranking, image and video generation, speech synthesis, audio transcription, document OCR, moderation, batch processing, Rails integration, async workloads, and model registry access.
 

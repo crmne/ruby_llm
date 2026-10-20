@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 22 providers.'
+description: 'The Ruby AI framework: models, tools, agents, sandboxed code, evaluations, and Rails conventions across 23 providers.'
 permalink: /
 redirect_from:
   - /guides/
@@ -33,7 +33,7 @@ hero:
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">22 providers. One API.</h2>
+    <h2 class="home-heading">23 providers. One API.</h2>
     <p class="home-lead">
       Build with the models you want. Move between hosted and local providers without rewriting your application, or connect an OpenAI-compatible endpoint.
     </p>
@@ -60,6 +60,7 @@ chat.ask "Hello!"
       <a href="https://ai.google.dev" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/gemini-color.svg' | relative_url }}" alt="Gemini" class="logo-mark"><img src="{{ '/assets/images/providers/gemini-text.svg' | relative_url }}" alt="" class="logo-text"></a>
       <a href="https://gpustack.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/gpustack-logo.png' | relative_url }}" alt="GPUStack" class="logo-wide"></a>
       <a href="https://www.hetzner.com/" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/hetzner-color.svg' | relative_url }}" alt="" class="logo-mark"><span class="logo-wordmark">Hetzner</span></a>
+      <a href="https://dev.meta.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/meta-color.svg' | relative_url }}" alt="Meta" class="logo-mark"><img src="{{ '/assets/images/providers/meta-text.svg' | relative_url }}" alt="" class="logo-text"></a>
       <a href="https://www.minimax.io" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/minimax-color.svg' | relative_url }}" alt="MiniMax" class="logo-mark"><img src="{{ '/assets/images/providers/minimax-text.svg' | relative_url }}" alt="" class="logo-text"></a>
       <a href="https://mistral.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/mistral-color.svg' | relative_url }}" alt="Mistral AI" class="logo-mark"><img src="{{ '/assets/images/providers/mistral-text.svg' | relative_url }}" alt="" class="logo-text"></a>
       <a href="https://www.moonshot.ai" target="_blank" rel="noreferrer" class="provider-logo"><img src="{{ '/assets/images/providers/moonshot.svg' | relative_url }}" alt="Moonshot AI" class="logo-mark logo-mono"><img src="{{ '/assets/images/providers/moonshot-text.svg' | relative_url }}" alt="" class="logo-text"></a>

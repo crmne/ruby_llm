@@ -126,6 +126,19 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    meta: {
+      url: 'https://api.meta.ai/v1/responses',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     moonshot: {
       url: 'https://api.moonshot.ai/v1/chat/completions',
       error_response: {
