@@ -73,7 +73,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'does not add controls for an always-thinking model' do
-      payload = RubyLLM.chat(model: model_for(:mistral, :always_thinking), provider: :mistral)
+      payload = RubyLLM.chat(model: model_for(:minimax, :always_thinking), provider: :minimax)
                        .with_thinking
                        .render
 
@@ -88,7 +88,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'raises when the registry has no off control for the model' do
-      chat = RubyLLM.chat(model: model_for(:mistral, :always_thinking), provider: :mistral).with_thinking(false)
+      chat = RubyLLM.chat(model: model_for(:minimax, :always_thinking), provider: :minimax).with_thinking(false)
 
       expect { chat.render }.to raise_error(ArgumentError, /does not know how to disable thinking/)
     end
