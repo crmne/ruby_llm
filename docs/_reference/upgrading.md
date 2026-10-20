@@ -18,7 +18,7 @@ After reading this guide, you will know:
 * How RubyLLM upgrades move from one release to the next.
 * How to upgrade a 2.1 application and its Rails schema to 2.2.
 * How persisted chats now run in one process at a time.
-* What changes for a crashed job, a denial, and a deploy that mixes versions.
+* What changes for a crashed job, a denial, an MCP input error, and a deploy that mixes versions.
 
 This guide covers **2.1 to 2.2**. Coming from 2.0? Follow the [2.1 upgrade guide](https://github.com/crmne/ruby_llm/blob/v2.1.1/docs/_reference/upgrading.md) with RubyLLM 2.1 first.
 
@@ -136,6 +136,20 @@ rescue_from RubyLLM::ToolCallRunningError do
   redirect_back fallback_location: root_path, alert: "That action is already running."
 end
 ```
+
+## Rescue Input Errors as Input Errors
+
+Tools can now [ask the user]({% link _core_features/tools.md %}#asking-the-user) something, the way MCP servers do, so `RubyLLM::MCP::InputRequiredError` now inherits from the new `RubyLLM::InputRequiredError` instead of `RubyLLM::MCP::Error`. A `rescue RubyLLM::MCP::Error` no longer catches it. Rescue the general error, which also catches a tool's own unanswered questions:
+
+```ruby
+begin
+  tool.call(**arguments)
+rescue RubyLLM::InputRequiredError => e
+  e.requests.each { |request| puts request.message }
+end
+```
+
+`RubyLLM::MCP::InputRequest` is now `RubyLLM::InputRequest`, the same class under its old name.
 
 ## Responses Keep No Request Headers
 

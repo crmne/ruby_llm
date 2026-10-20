@@ -2193,7 +2193,7 @@ module RubyLLM
 
       record_tool_call_input(tool_call, nil) if input
       result
-    rescue MCP::InputRequiredError => e
+    rescue InputRequiredError => e
       pause_tool_call(tool_call, e.to_h)
     end
 
