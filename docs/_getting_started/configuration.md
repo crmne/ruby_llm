@@ -155,6 +155,9 @@ RubyLLM.configure do |config|
   config.hetzner_api_key = String
   config.hetzner_api_base = String
 
+  # Meta
+  config.meta_api_key = String
+  config.meta_api_base = String
   # MiniMax
   config.minimax_api_key = String
   config.minimax_api_base = String

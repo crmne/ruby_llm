@@ -621,6 +621,7 @@ RubyLLM::Provider.register :elevenlabs, RubyLLM::Providers::ElevenLabs
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
 RubyLLM::Provider.register :hetzner, RubyLLM::Providers::Hetzner
+RubyLLM::Provider.register :meta, RubyLLM::Providers::Meta
 RubyLLM::Provider.register :minimax, RubyLLM::Providers::MiniMax
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
 RubyLLM::Provider.register :moonshot, RubyLLM::Providers::Moonshot

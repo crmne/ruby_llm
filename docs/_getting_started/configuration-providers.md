@@ -76,6 +76,9 @@ RubyLLM.configure do |config|
   config.hetzner_api_key = ENV['HETZNER_API_KEY'] # Token from the Hetzner Console
   config.hetzner_api_base = ENV['HETZNER_API_BASE'] # Optional, defaults to https://inference.hetzner.com/api/v1
 
+  # Meta
+  config.meta_api_key = ENV['META_API_KEY'] # Key from dev.meta.ai
+  config.meta_api_base = ENV['META_API_BASE'] # Optional, defaults to https://api.meta.ai/v1
   # MiniMax
   config.minimax_api_key = ENV['MINIMAX_API_KEY']
   config.minimax_api_base = ENV['MINIMAX_API_BASE'] # Optional, defaults to https://api.minimax.io/anthropic
@@ -205,6 +208,22 @@ RubyLLM.models.by_provider(:hetzner).map(&:id)
 ```
 
 Hetzner models accept text and images. Other attachments raise `RubyLLM::UnsupportedAttachmentError` before the request is sent.
+
+## Meta
+
+Meta's Model API serves the Muse models. Create an API key at dev.meta.ai and set `meta_api_key`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.meta_api_key = ENV['META_API_KEY']
+end
+
+RubyLLM.chat(model: 'muse-spark-1.3').ask('Hello from Muse')
+```
+
+RubyLLM talks to Meta through its Responses API, which carries the model's encrypted reasoning from one turn to the next, so tool loops keep their chain of thought. Meta runs web search as a provider tool, `with_provider_tools(:web_search)`, and caches prompts by itself. `with_caching` takes `key:` and a `ttl:` of `"in_memory"` or `"24h"`.
+
+Meta won't fetch many remote images, so RubyLLM downloads them and sends them inline.
 
 ## MiniMax
 

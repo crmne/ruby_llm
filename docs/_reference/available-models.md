@@ -2,7 +2,7 @@
 layout: models
 title: Models
 llms: false
-description: Browse 1918 AI models across 20 remote providers, with capabilities, context limits, and pricing.
+description: Browse 1924 AI models across 21 remote providers, with capabilities, context limits, and pricing.
 canonical_url: https://rubyllm.com/available-models/
 redirect_from:
   - /guides/available-models
@@ -12,7 +12,7 @@ redirect_from:
   <header class="catalog-header">
     <div>
       <h1>Models</h1>
-      <p class="catalog-description"><strong>1,918 models</strong> across <strong>20 providers</strong>. Find the capabilities you need and compare what they cost.</p>
+      <p class="catalog-description"><strong>1,924 models</strong> across <strong>21 providers</strong>. Find the capabilities you need and compare what they cost.</p>
       <p class="catalog-updated">Updated <time datetime="2026-10-20">2026-10-20</time></p>
     </div>
     <div class="catalog-usage">
@@ -39,7 +39,7 @@ redirect_from:
 
   <div class="catalog-results-header">
     <h2 data-catalog-heading>All providers</h2>
-    <p data-catalog-count role="status">1,918 models</p>
+    <p data-catalog-count role="status">1,924 models</p>
   </div>
   <p class="catalog-pricing-note">Prices are USD per million text tokens at standard rates. Cache rates appear below input prices when listed. A dash means the value is not listed.</p>
 
@@ -8348,6 +8348,66 @@ redirect_from:
           <td class="catalog-numeric">262,144</td>
           <td class="catalog-numeric">$0<small>Cache read $0</small></td>
           <td class="catalog-numeric">$0</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-1.1&quot;,&quot;name&quot;:&quot;Muse Spark 1.1&quot;,&quot;provider&quot;:&quot;Meta&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;PDF input&quot;,&quot;Video input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.25,&quot;output_price&quot;:4.25&#125;">
+          <th scope="row"><span class="catalog-model-name">Muse Spark 1.1</span><code>muse-spark-1.1</code></th>
+          <td>Meta</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, pdf, video</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.25<small>Cache read $0.15</small></td>
+          <td class="catalog-numeric">$4.25</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-1.2&quot;,&quot;name&quot;:&quot;Muse Spark 1.2&quot;,&quot;provider&quot;:&quot;Meta&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.25,&quot;output_price&quot;:4.25&#125;">
+          <th scope="row"><span class="catalog-model-name">Muse Spark 1.2</span><code>muse-spark-1.2</code></th>
+          <td>Meta</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf, audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.25<small>Cache read $0.15</small></td>
+          <td class="catalog-numeric">$4.25</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-1.2-contributor&quot;,&quot;name&quot;:&quot;Muse Spark 1.2 Contributor&quot;,&quot;provider&quot;:&quot;Meta&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.2&#125;">
+          <th scope="row"><span class="catalog-model-name">Muse Spark 1.2 Contributor</span><code>muse-spark-1.2-contributor</code></th>
+          <td>Meta</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf, audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.1<small>Cache read $0.002</small></td>
+          <td class="catalog-numeric">$0.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-1.3&quot;,&quot;name&quot;:&quot;Muse Spark 1.3&quot;,&quot;provider&quot;:&quot;Meta&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:1.25,&quot;output_price&quot;:4.25&#125;">
+          <th scope="row"><span class="catalog-model-name">Muse Spark 1.3</span><code>muse-spark-1.3</code></th>
+          <td>Meta</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf, audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$1.25<small>Cache read $0.15</small></td>
+          <td class="catalog-numeric">$4.25</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-spark-1.3-contributor&quot;,&quot;name&quot;:&quot;Muse Spark 1.3 Contributor&quot;,&quot;provider&quot;:&quot;Meta&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:0.1,&quot;output_price&quot;:0.2&#125;">
+          <th scope="row"><span class="catalog-model-name">Muse Spark 1.3 Contributor</span><code>muse-spark-1.3-contributor</code></th>
+          <td>Meta</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf, audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$0.1<small>Cache read $0.002</small></td>
+          <td class="catalog-numeric">$0.2</td>
+        </tr>
+        <tr data-model="&#123;&quot;id&quot;:&quot;muse-wonder-1.0&quot;,&quot;name&quot;:&quot;Muse Wonder&quot;,&quot;provider&quot;:&quot;Meta&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Structured output&quot;,&quot;Thinking&quot;,&quot;Vision&quot;,&quot;Video&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Image input&quot;,&quot;Video input&quot;,&quot;PDF input&quot;,&quot;Audio input&quot;,&quot;Text output&quot;],&quot;context&quot;:1048576,&quot;output&quot;:131072,&quot;input_price&quot;:4,&quot;output_price&quot;:20&#125;">
+          <th scope="row"><span class="catalog-model-name">Muse Wonder</span><code>muse-wonder-1.0</code></th>
+          <td>Meta</td>
+          <td class="catalog-modalities"><span><b>In</b> text, image, video, pdf, audio</span><span><b>Out</b> text</span></td>
+          <td><div class="catalog-capabilities"><span>Tools</span><span>Structured output</span><span>Thinking</span><span>Vision</span><span>Video</span></div></td>
+          <td class="catalog-numeric">1,048,576</td>
+          <td class="catalog-numeric">131,072</td>
+          <td class="catalog-numeric">$4<small>Cache read $0.2</small></td>
+          <td class="catalog-numeric">$20</td>
         </tr>
         <tr data-model="&#123;&quot;id&quot;:&quot;MiniMax-M2&quot;,&quot;name&quot;:&quot;MiniMax-M2&quot;,&quot;provider&quot;:&quot;MiniMax&quot;,&quot;capabilities&quot;:[&quot;Tools&quot;,&quot;Thinking&quot;],&quot;modalities&quot;:[&quot;Text input&quot;,&quot;Text output&quot;],&quot;context&quot;:204800,&quot;output&quot;:131072,&quot;input_price&quot;:0.3,&quot;output_price&quot;:1.2&#125;">
           <th scope="row"><span class="catalog-model-name">MiniMax-M2</span><code>MiniMax-M2</code></th>
