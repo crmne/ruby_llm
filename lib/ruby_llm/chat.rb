@@ -2239,7 +2239,7 @@ module RubyLLM
     def cancel_task(task)
       task.cancel
     rescue Error, ConfigurationError, Faraday::Error => e
-      RubyLLM.logger.debug { "RubyLLM could not cancel task #{task.id}: #{e.message}" }
+      RubyLLM.logger.debug { "RubyLLM could not cancel the task of tool call #{task.tool_call&.id}: #{e.message}" }
     end
 
     def tool_call_input(tool_call)

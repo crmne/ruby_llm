@@ -13,6 +13,16 @@ RSpec.describe RubyLLM::Task do
                                       poll_interval: 5, data: { 'run_id' => 7 })
   end
 
+  it 'keeps its own copy of its data, with String keys all the way down' do
+    data = { run: { id: 7, steps: [{ name: :deploy }] } }
+
+    task = described_class.new(data:)
+    data[:run][:id] = 8
+
+    expect(task.data).to eq('run' => { 'id' => 7, 'steps' => [{ 'name' => 'deploy' }] })
+    expect(described_class.load(task.to_h).data).to eq(JSON.parse(task.to_h.to_json)['task']['data'])
+  end
+
   it 'works until it says otherwise' do
     task = described_class.new
 

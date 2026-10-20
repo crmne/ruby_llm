@@ -61,7 +61,7 @@ module RubyLLM
       @status = status.to_sym
       @status_message = status_message
       @poll_interval = poll_interval
-      @data = data.transform_keys(&:to_s)
+      @data = Support::Utils.deep_stringify_keys(Support::Utils.deep_dup(data))
       @tool_call = tool_call
     end
 

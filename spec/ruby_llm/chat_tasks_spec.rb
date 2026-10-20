@@ -84,6 +84,25 @@ RSpec.describe RubyLLM::Chat do
     expect(chat).not_to be_waiting
   end
 
+  it 'clears a call whose task fails to cancel, and logs its tool call' do
+    task_class = Class.new(RubyLLM::Task) do
+      define_method(:cancel) { raise RubyLLM::Error, 'gone' }
+    end
+    tool = Class.new(sub_agent_tool) do
+      define_method(:task) { |state, tool_call: nil| task_class.load(state, tool_call:) }
+    end
+    chat = stubbed_chat(tool)
+    chat.ask('Deploy')
+    logged = []
+    allow(RubyLLM.logger).to receive(:debug) { |&message| logged << message&.call }
+    tool_call_id = chat.messages.find(&:tool_call?).tool_calls.each_key.first
+    chat.cancel
+    expect { chat.complete }.to raise_error(RubyLLM::CancelledError)
+
+    expect(chat).not_to be_waiting
+    expect(logged).to include("RubyLLM could not cancel the task of tool call #{tool_call_id}: gone")
+  end
+
   it 'raises for a tool that returns a task without implementing resume' do
     tool = Class.new(RubyLLM::Tool) do
       define_method(:name) { 'sub_agent' }
