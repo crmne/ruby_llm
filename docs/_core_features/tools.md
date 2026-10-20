@@ -19,6 +19,7 @@ After reading this guide, you will know:
 * How to define a Tool using `RubyLLM::Tool`.
 * How to attach Tools to a `RubyLLM::Chat` and trigger them.
 * What happens step by step when a model uses a Tool.
+* How a Tool pauses its call and resumes it later.
 * How to handle errors inside a Tool.
 * What security considerations apply when you let a model run your code.
 
@@ -153,7 +154,49 @@ class GenerateReport < RubyLLM::Tool
 end
 ```
 
-A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; long MCP operations that run as [tasks]({% link _core_features/mcp.md %}#tasks) pause the chat and release their claim instead. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+A run that takes longer than its `max_run_time` counts as crashed, and another process may start the call again. MCP tools use `config.max_run_time`; tools that [pause their call](#pausing-a-tool-call), like MCP operations that run as [tasks]({% link _core_features/mcp.md %}#tasks), release their claim instead. See [Durable Agents]({% link _advanced/durable-agents.md %}#one-process-at-a-time) for how claims work.
+
+## Pausing a Tool Call
+
+Some calls can't finish while the chat waits. A tool that hands a job to another agent may have to wait for a person to approve a change, and that can take hours. Return a `RubyLLM::Task` from `execute`, and the chat pauses the call the way it pauses for [an approval]({% link _core_features/tool-execution.md %}#requiring-approval), so no process waits for it. Then implement `resume`, which carries the call on:
+
+```ruby
+class RunSubAgent < RubyLLM::Tool
+  description "Hands a job to a sub-agent"
+
+  def execute(job:)
+    run = SubAgentRun.start(job)
+    return run.answer if run.finished?
+
+    RubyLLM::Task.new(status: :input_required, status_message: "Waiting for approval", data: { "run_id" => run.id })
+  end
+
+  def resume(task, job:)
+    run = SubAgentRun.find(task.data["run_id"]).continue
+    run.finished? ? run.answer : task
+  end
+end
+```
+
+`ask` and `complete` return while the call waits. The chat is `waiting?` and `awaiting_tasks?`, and `pending_tasks` returns the tasks:
+
+```ruby
+chat = RubyLLM.chat.with_tools(RunSubAgent)
+chat.ask "Deploy the new pricing page"
+
+chat.awaiting_tasks?               # => true
+task = chat.pending_tasks.first
+task.status_message                # => "Waiting for approval"
+task.input_required?               # => true
+```
+
+Each `complete` calls `resume` once for every paused call, with the task and the call's arguments. Return the call's result to finish it, or a task to keep it paused. Once every call has a result, the model carries on.
+
+A task's `status` is `:working` while the work runs on its own, so you check again after its `poll_interval`, and `:input_required` while it waits on a person, so nothing changes until they act. Call `complete` after they do, such as from the controller that records their decision.
+
+`data` is what `resume` needs, as a Hash that serializes to JSON. In Rails, the task persists on its tool call, so one process can pause the chat and another can resume it, even after a deploy. To rebuild a task as your own subclass of `RubyLLM::Task`, override `task(state, tool_call:)` on the tool and return `YourTask.load(state, tool_call:)`. A subclass can override `refresh` to check on its work and `cancel` to stop it; cancelling the chat calls `cancel` on every task it waits on and drops the paused calls.
+
+MCP tools pause the same way when a server runs a call as a [task]({% link _core_features/mcp.md %}#tasks).
 
 ## Long Results
 

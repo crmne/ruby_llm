@@ -849,7 +849,7 @@ module RubyLLM
       # requires approval. When the API call fails, destroys the empty assistant
       # message and any orphaned tool results, then re-raises the error. When
       # the block raises, destroys the empty assistant message and re-raises.
-      # Tool calls paused on an MCP task or input request stay, so the next
+      # Tool calls paused on a task or an MCP input request stay, so the next
       # #complete picks them up.
       #
       # Only one process runs a chat at a time. While another process is

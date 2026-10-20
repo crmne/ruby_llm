@@ -83,7 +83,8 @@ loader.setup
 # Subclass Tool and implement +execute+ to give the model an application
 # action. Tool.requires_approval pauses execution for a human decision;
 # Chat#approve and Chat#deny record it. Tool#progress reports what a
-# running tool is doing to Chat#after_tool_progress as a Progress.
+# running tool is doing to Chat#after_tool_progress as a Progress. A tool
+# that returns a Task pauses its call until Tool#resume finishes it.
 # Chat#with_provider_tools enables provider-executed tools such as web
 # search, code execution, and remote MCP.
 # Their calls appear as ServerToolCall values, with Citation values for sources.

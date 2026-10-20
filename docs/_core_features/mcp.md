@@ -690,6 +690,8 @@ class CheckTasksJob < ApplicationJob
 end
 ```
 
+Your own tools can pause the same way by returning a `RubyLLM::Task`; see [Pausing a Tool Call]({% link _core_features/tools.md %}#pausing-a-tool-call).
+
 `refresh` checks on a task without resuming the chat, which suits a progress indicator. `done?`, `completed?`, `failed?`, and `cancelled?` tell where it stands, `result` is its `RubyLLM::MCP::Result` once it completes, and `expires_at` is when the server may forget it. Every check also reports the task's status message to `after_progress` and `after_tool_progress`.
 
 Servers can also announce when the status of a task changes, so you check on it when there is news instead of on a schedule. Pass the tasks to [`listen`](#listening-in-the-background), and `after_change` receives each `RubyLLM::MCP::Task` as it stands, with its `result` once it completes:
