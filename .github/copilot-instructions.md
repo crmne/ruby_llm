@@ -138,7 +138,8 @@ overcommit --run
 ```
 
 Commit with a plain subject of at most 60 characters and a body wrapped at 72
-that says why, with no generated footers or co-author tags. Push branches and
-open pull requests, never push straight to `main`, and merge your own pull
-request (squash) once CI is green and CodeRabbit and GitHub code scanning have
-reviewed it, with every finding fixed or answered.
+that says why, with no generated footers or co-author tags. You may push
+straight to `main`, but prefer a pull request for anything beyond a small fix,
+so CodeRabbit and GitHub code scanning review it first. Merge your own pull
+request (squash) once CI is green and those reviews are in, with every finding
+fixed or answered.

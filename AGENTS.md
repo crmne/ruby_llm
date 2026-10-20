@@ -50,7 +50,7 @@ The pitch is the public API. Every change is judged against four things, in this
 - Never invent model ids. Every model name in code, specs, and docs must be a real, callable model. Check with `RubyLLM.models.find`.
 - Keep diffs small and focused. No drive-by refactors, no style sweeps outside the lines you touch.
 - Plain commit messages that describe the change: a subject of at most 60 characters, a body wrapped at 72 that says why. No "Generated with" footers, no Co-Authored-By tags.
-- Agents may push branches and open pull requests, but never push straight to `main`. They merge their own pull requests (squash, for linear history) once CI is green and CodeRabbit and GitHub code scanning have reviewed them, with every finding fixed or answered.
+- Agents may push straight to `main`, but prefer a pull request for anything beyond a small fix, so CodeRabbit and GitHub code scanning review it first. They merge their own pull requests (squash, for linear history) once CI is green and those reviews are in, with every finding fixed or answered.
 - Gem publication starts when a maintainer publishes a GitHub release. A branch or tag push does not publish the gem. Keep the release tag, gem version, and prerelease setting consistent; see CONTRIBUTING.md for the release commands.
 
 ## Setup
