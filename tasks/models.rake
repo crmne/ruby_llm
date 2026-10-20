@@ -275,7 +275,9 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
     openrouter_model = openrouter_variants.find { |v| models['openrouter'].include?(v) }
     vertexai_model = models['vertexai'].include?(model) ? model : nil
 
-    next unless openrouter_model || vertexai_model
+    # Gemini's -latest models keep their short alias (gemini-flash) even
+    # when no other provider serves them.
+    next unless openrouter_model || vertexai_model || model.end_with?('-latest')
 
     alias_key = model.gsub('-latest', '')
     aliases[alias_key] = { 'gemini' => model }
